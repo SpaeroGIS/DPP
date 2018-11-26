@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Model/AppModelInterfaceDPP201811/bin/Debug
+/Model/AppModelInterfaceDPP201811/obj/Debug
+/Model/ArcMapAddin_MilSpace_Profile/bin/Debug
+/Model/ArcMapAddin_MilSpace_Profile/obj/Debug
+/Model/.vs/AppModelInterfaceDPP201811/v15/Server/sqlite3

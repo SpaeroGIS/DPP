@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppModelInterfaceDPP201811", "AppModelInterfaceDPP201811\AppModelInterfaceDPP201811.csproj", "{552B0F87-4846-4B0F-8DEF-4E27E1BB78E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArcMapAddin_MilSpace_Profile", "ArcMapAddin_MilSpace_Profile\ArcMapAddin_MilSpace_Profile.csproj", "{A3CA6E5C-FAC0-4B81-A812-562F1F59CBA5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{552B0F87-4846-4B0F-8DEF-4E27E1BB78E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{552B0F87-4846-4B0F-8DEF-4E27E1BB78E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{552B0F87-4846-4B0F-8DEF-4E27E1BB78E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{552B0F87-4846-4B0F-8DEF-4E27E1BB78E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3CA6E5C-FAC0-4B81-A812-562F1F59CBA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3CA6E5C-FAC0-4B81-A812-562F1F59CBA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3CA6E5C-FAC0-4B81-A812-562F1F59CBA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3CA6E5C-FAC0-4B81-A812-562F1F59CBA5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E31DB1AD-3E9D-4D2A-AA78-ECA99D44C803}
+	EndGlobalSection
+EndGlobal
