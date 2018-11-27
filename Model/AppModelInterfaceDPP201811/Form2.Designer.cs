@@ -766,38 +766,38 @@
             // 
             // toolBarButton54
             // 
-            this.toolBarButton54.Name = "toolBarButton1";
+            this.toolBarButton54.Name = "toolBarButton54";
             this.toolBarButton54.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
             // 
             // toolBarButton55
             // 
             this.toolBarButton55.ImageIndex = 173;
-            this.toolBarButton55.Name = "toolBarButton2";
+            this.toolBarButton55.Name = "toolBarButton55";
             // 
             // toolBarButton56
             // 
-            this.toolBarButton56.Name = "toolBarButton5";
+            this.toolBarButton56.Name = "toolBarButton56";
             this.toolBarButton56.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
             // 
             // toolBarButton57
             // 
             this.toolBarButton57.ImageKey = "Clipboard Copy.png";
-            this.toolBarButton57.Name = "toolBarButton3";
+            this.toolBarButton57.Name = "toolBarButton57";
             // 
             // toolBarButton58
             // 
             this.toolBarButton58.ImageKey = "Clipboard Paste.png";
-            this.toolBarButton58.Name = "toolBarButton4";
+            this.toolBarButton58.Name = "toolBarButton58";
             // 
             // toolBarButton59
             // 
-            this.toolBarButton59.Name = "toolBarButton6";
+            this.toolBarButton59.Name = "toolBarButton59";
             this.toolBarButton59.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
             // 
             // toolBarButton60
             // 
             this.toolBarButton60.ImageKey = "Cancel.png";
-            this.toolBarButton60.Name = "toolBarButton7";
+            this.toolBarButton60.Name = "toolBarButton60";
             // 
             // textBox2
             // 
@@ -1079,43 +1079,43 @@
             // 
             // toolBarButton15
             // 
-            this.toolBarButton15.Name = "toolBarButton1";
+            this.toolBarButton15.Name = "toolBarButton15";
             this.toolBarButton15.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
             // 
             // toolBarButton16
             // 
             this.toolBarButton16.ImageKey = "Write.png";
-            this.toolBarButton16.Name = "toolBarButton61";
+            this.toolBarButton16.Name = "toolBarButton16";
             // 
             // toolBarButton17
             // 
             this.toolBarButton17.ImageIndex = 173;
-            this.toolBarButton17.Name = "toolBarButton2";
+            this.toolBarButton17.Name = "toolBarButton17";
             // 
             // toolBarButton18
             // 
-            this.toolBarButton18.Name = "toolBarButton5";
+            this.toolBarButton18.Name = "toolBarButton18";
             this.toolBarButton18.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
             // 
             // toolBarButton19
             // 
             this.toolBarButton19.ImageKey = "Clipboard Copy.png";
-            this.toolBarButton19.Name = "toolBarButton3";
+            this.toolBarButton19.Name = "toolBarButton19";
             // 
             // toolBarButton20
             // 
             this.toolBarButton20.ImageKey = "Clipboard Paste.png";
-            this.toolBarButton20.Name = "toolBarButton4";
+            this.toolBarButton20.Name = "toolBarButton20";
             // 
             // toolBarButton21
             // 
-            this.toolBarButton21.Name = "toolBarButton6";
+            this.toolBarButton21.Name = "toolBarButton21";
             this.toolBarButton21.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
             // 
             // toolBarButton63
             // 
             this.toolBarButton63.ImageKey = "Cancel.png";
-            this.toolBarButton63.Name = "toolBarButton7";
+            this.toolBarButton63.Name = "toolBarButton63";
             // 
             // textBox5
             // 
@@ -1185,7 +1185,7 @@
             // toolBarButton23
             // 
             this.toolBarButton23.ImageKey = "Cancel.png";
-            this.toolBarButton23.Name = "toolBarButton2";
+            this.toolBarButton23.Name = "toolBarButton23";
             this.toolBarButton23.ToolTipText = "показать на карте";
             // 
             // toolBarButton28
@@ -1196,7 +1196,7 @@
             // toolBarButton25
             // 
             this.toolBarButton25.ImageKey = "Full Screen.png";
-            this.toolBarButton25.Name = "toolBarButton3";
+            this.toolBarButton25.Name = "toolBarButton25";
             this.toolBarButton25.ToolTipText = "скопировать в буфер";
             // 
             // richTextBox4
@@ -1302,23 +1302,23 @@
             // 
             // toolBarButton29
             // 
-            this.toolBarButton29.Name = "toolBarButton1";
+            this.toolBarButton29.Name = "toolBarButton29";
             this.toolBarButton29.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
             // 
             // toolBarButton31
             // 
             this.toolBarButton31.ImageKey = "Write3.png";
-            this.toolBarButton31.Name = "toolBarButton28";
+            this.toolBarButton31.Name = "toolBarButton31";
             // 
             // toolBarButton32
             // 
-            this.toolBarButton32.Name = "toolBarButton5";
+            this.toolBarButton32.Name = "toolBarButton32";
             this.toolBarButton32.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
             // 
             // toolBarButton33
             // 
             this.toolBarButton33.ImageKey = "Directions.png";
-            this.toolBarButton33.Name = "toolBarButton3";
+            this.toolBarButton33.Name = "toolBarButton33";
             this.toolBarButton33.ToolTipText = "скопировать в буфер";
             // 
             // toolBarButton26
@@ -1782,34 +1782,34 @@
             // 
             // toolBarButton41
             // 
-            this.toolBarButton41.Name = "toolBarButton1";
+            this.toolBarButton41.Name = "toolBarButton41";
             this.toolBarButton41.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
             // 
             // toolBarButton42
             // 
             this.toolBarButton42.ImageKey = "Write3.png";
-            this.toolBarButton42.Name = "toolBarButton28";
+            this.toolBarButton42.Name = "toolBarButton42";
             // 
             // toolBarButton43
             // 
-            this.toolBarButton43.Name = "toolBarButton5";
+            this.toolBarButton43.Name = "toolBarButton43";
             this.toolBarButton43.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
             // 
             // toolBarButton44
             // 
             this.toolBarButton44.ImageKey = "Directions.png";
-            this.toolBarButton44.Name = "toolBarButton3";
+            this.toolBarButton44.Name = "toolBarButton44";
             this.toolBarButton44.ToolTipText = "скопировать в буфер";
             // 
             // toolBarButton45
             // 
-            this.toolBarButton45.Name = "toolBarButton26";
+            this.toolBarButton45.Name = "toolBarButton45";
             this.toolBarButton45.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
             // 
             // toolBarButton46
             // 
             this.toolBarButton46.ImageKey = "Light.png";
-            this.toolBarButton46.Name = "toolBarButton27";
+            this.toolBarButton46.Name = "toolBarButton46";
             // 
             // toolBarButton47
             // 
@@ -1961,34 +1961,34 @@
             // 
             // toolBarButton30
             // 
-            this.toolBarButton30.Name = "toolBarButton1";
+            this.toolBarButton30.Name = "toolBarButton30";
             this.toolBarButton30.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
             // 
             // toolBarButton36
             // 
             this.toolBarButton36.ImageKey = "Search.png";
-            this.toolBarButton36.Name = "toolBarButton28";
+            this.toolBarButton36.Name = "toolBarButton36";
             this.toolBarButton36.ToolTipText = "найти";
             // 
             // toolBarButton37
             // 
-            this.toolBarButton37.Name = "toolBarButton5";
+            this.toolBarButton37.Name = "toolBarButton37";
             this.toolBarButton37.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
             // 
             // toolBarButton38
             // 
             this.toolBarButton38.ImageKey = "Trash.png";
-            this.toolBarButton38.Name = "toolBarButton3";
+            this.toolBarButton38.Name = "toolBarButton38";
             // 
             // toolBarButton39
             // 
-            this.toolBarButton39.Name = "toolBarButton26";
+            this.toolBarButton39.Name = "toolBarButton39";
             this.toolBarButton39.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
             // 
             // toolBarButton40
             // 
             this.toolBarButton40.ImageKey = "Arrow1 Down.png";
-            this.toolBarButton40.Name = "toolBarButton27";
+            this.toolBarButton40.Name = "toolBarButton40";
             // 
             // toolBarButton53
             // 
