@@ -1,0 +1,42 @@
+﻿<ESRI.Configuration xmlns="http://schemas.esri.com/Desktop/AddIns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>MilSpace.Profile</Name>
+  <AddInID>{a3ca6e5c-fac0-4b81-a812-562f1f59cba5}</AddInID>
+  <Description>Type in a description for this Add-in.</Description>
+  <Version>1.0</Version>
+  <Image>Images\MilSpace.Profile.png</Image>
+  <Author>admin</Author>
+  <Company>Microsoft</Company>
+  <Date>15.11.2018</Date>
+  <Targets>
+    <Target name="Desktop" version="10.4" />
+  </Targets>
+  <AddIn language="CLR" library="MilSpace.Profile.dll" namespace="MilSpace.Profile">
+    <ArcMap>
+      <Commands>
+        <Button id="Microsoft_MilSpace.Profile_Button1" 
+                class="Button1" 
+                message="MilSpace 3-D solution. Module Profile window" 
+                caption="My Button" 
+                tip="MilSpace 3-D solution. Module Profile" 
+                category="Add-In Controls" 
+                image="Images\Button1.png" />
+      </Commands>
+      <DockableWindows>
+        <DockableWindow id="Microsoft_MilSpace.Profile_DockableWindowMilSpaceProfileCalc" 
+                        class="DockableWindowMilSpaceProfileCalc+AddinImpl" 
+                        caption="MilSpace Profile Calc" 
+                        image="Images\DockableWindowMilSpaceProfileCalc.png">
+            <InitialPlacement height="350" width="780" state="unpinned" position="float" />
+        </DockableWindow>
+
+        <DockableWindow id="Microsoft_MilSpace.Profile_DockableWindowMilSpaceProfileGraph"
+                        class="DockableWindowMilSpaceProfileGraph+AddinImpl"
+                        caption="MilSpace Profile Calc"
+                        image="Images\DockableWindowMilSpaceProfileCalc.png">
+          <InitialPlacement height="350" width="780" state="unpinned" position="float" />
+        </DockableWindow>
+        
+      </DockableWindows>
+    </ArcMap>
+  </AddIn>
+</ESRI.Configuration>
