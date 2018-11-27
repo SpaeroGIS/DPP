@@ -670,13 +670,13 @@
             // toolBarButton12
             // 
             this.toolBarButton12.ImageKey = "Light.png";
-            this.toolBarButton12.Name = "toolBarButton28";
+            this.toolBarButton12.Name = "toolBarButton12";
             this.toolBarButton12.ToolTipText = "найти";
             // 
             // toolBarButton14
             // 
             this.toolBarButton14.ImageKey = "Clipboard Copy.png";
-            this.toolBarButton14.Name = "toolBarButton3";
+            this.toolBarButton14.Name = "toolBarButton14";
             // 
             // panel7
             // 
@@ -825,7 +825,7 @@
             // toolBarButton23
             // 
             this.toolBarButton23.ImageKey = "Arrow1 Down.png";
-            this.toolBarButton23.Name = "toolBarButton27";
+            this.toolBarButton23.Name = "toolBarButton23";
             // 
             // toolBarButton53
             // 
@@ -973,7 +973,7 @@
             // toolBarButton4
             // 
             this.toolBarButton4.ImageKey = "Pointer.png";
-            this.toolBarButton4.Name = "toolBarButton28";
+            this.toolBarButton4.Name = "toolBarButton4";
             this.toolBarButton4.ToolTipText = "найти";
             // 
             // toolBarButton6
@@ -1009,7 +1009,7 @@
             // toolBarButton7
             // 
             this.toolBarButton7.ImageKey = "Full Screen.png";
-            this.toolBarButton7.Name = "toolBarButton3";
+            this.toolBarButton7.Name = "toolBarButton7";
             // 
             // toolBarButton17
             // 
@@ -1019,12 +1019,12 @@
             // toolBarButton9
             // 
             this.toolBarButton9.ImageKey = "Zoom In.png";
-            this.toolBarButton9.Name = "toolBarButton27";
+            this.toolBarButton9.Name = "toolBarButton9";
             // 
             // toolBarButton10
             // 
             this.toolBarButton10.ImageKey = "Zoom Out.png";
-            this.toolBarButton10.Name = "toolBarButton53";
+            this.toolBarButton10.Name = "toolBarButton10";
             // 
             // toolBarButton21
             // 
