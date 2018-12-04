@@ -106,7 +106,7 @@
     </AddInContent>
   </ItemGroup>
   <ItemGroup>
-    <AddInContent Include="Images\ArcMapAddin_MilSpace_Visibility.png" />
+    <AddInContent Include="Images\MilSpaceVisibility.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ButtonMilSpaceMVis.cs" />
