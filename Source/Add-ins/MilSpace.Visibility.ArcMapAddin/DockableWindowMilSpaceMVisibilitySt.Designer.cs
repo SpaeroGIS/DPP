@@ -265,6 +265,7 @@
             this.toolBar9 = new System.Windows.Forms.ToolBar();
             this.toolBarButton36 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton45 = new System.Windows.Forms.ToolBarButton();
+            this.toolBarButton5 = new System.Windows.Forms.ToolBarButton();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Идентификатор = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Тип = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -314,7 +315,6 @@
             this.richTextBox4 = new System.Windows.Forms.RichTextBox();
             this.panel48 = new System.Windows.Forms.Panel();
             this.label47 = new System.Windows.Forms.Label();
-            this.toolBarButton5 = new System.Windows.Forms.ToolBarButton();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel7.SuspendLayout();
@@ -1593,6 +1593,7 @@
             this.toolBar7.ShowToolTips = true;
             this.toolBar7.Size = new System.Drawing.Size(18, 24);
             this.toolBar7.TabIndex = 40;
+            this.toolBar7.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.toolBar7_ButtonClick);
             // 
             // toolBarButton51
             // 
@@ -2644,6 +2645,11 @@
             this.toolBarButton45.Name = "toolBarButton45";
             this.toolBarButton45.ToolTipText = "Удалить";
             // 
+            // toolBarButton5
+            // 
+            this.toolBarButton5.ImageKey = "Plus.png";
+            this.toolBarButton5.Name = "toolBarButton5";
+            // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
@@ -3249,11 +3255,6 @@
             this.label47.Size = new System.Drawing.Size(139, 17);
             this.label47.TabIndex = 2;
             this.label47.Text = "Список результатаов";
-            // 
-            // toolBarButton5
-            // 
-            this.toolBarButton5.ImageKey = "Plus.png";
-            this.toolBarButton5.Name = "toolBarButton5";
             // 
             // DockableWindowMilSpaceMVisibilitySt
             // 

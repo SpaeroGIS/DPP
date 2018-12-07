@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ESRI.ArcGIS.Analyst3DTools;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -60,6 +61,12 @@ namespace MilSpace.Visibility
         private void toolBar9_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
             (new WindowMilSpaceMVisibilityMaster()).ShowDialog();
+        }
+
+        private void toolBar7_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        {
+
+            
         }
     }
 }

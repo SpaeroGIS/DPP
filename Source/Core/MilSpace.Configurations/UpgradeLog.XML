@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="Spaero.Configurations">
+</Property><Property Name="Solution File" Value="C:\Spaero\SRC\trunk\Spaero\Spaero.Configurations\Spaero.Configurations\Spaero.Configurations.sln">
+</Property><Property Name="Date" Value="16 вересня 2013 р.">
+</Property><Property Name="Time" Value="17:37:19">
+</Property></Properties><Event ErrorLevel="0" Project="Spaero.Sigma.IN4XML" Source="..\..\..\ImportXMLs\Spaero.Sigma.IN4XML\Spaero.Sigma.IN4XML.csproj" Description="Project file successfully backed up as C:\Spaero\SRC\trunk\Spaero\Spaero.Configurations\Spaero.Configurations\Backup\Spaero.Sigma.IN4XML.csproj">
+</Event><Event ErrorLevel="2" Project="Spaero.Sigma.IN4XML" Source="..\..\..\ImportXMLs\Spaero.Sigma.IN4XML\Class1.cs" Description="Failed to backup file as C:\Spaero\SRC\trunk\Spaero\Spaero.Configurations\Spaero.Configurations\Backup\Class1.cs">
+</Event><Event ErrorLevel="0" Project="Spaero.Sigma.IN4XML" Source="..\..\..\ImportXMLs\Spaero.Sigma.IN4XML\Properties\AssemblyInfo.cs" Description="File successfully backed up as C:\Spaero\SRC\trunk\Spaero\Spaero.Configurations\Spaero.Configurations\Backup\Properties\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="Spaero.Sigma.IN4XML" Source="..\..\..\ImportXMLs\Spaero.Sigma.IN4XML\Spaero.Sigma.IN4XML.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Spaero.Sigma.IN4XML" Source="..\..\..\ImportXMLs\Spaero.Sigma.IN4XML\Spaero.Sigma.IN4XML.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Spaero.Sigma.IN4XML" Source="..\..\..\ImportXMLs\Spaero.Sigma.IN4XML\Spaero.Sigma.IN4XML.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>
