@@ -7,6 +7,8 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using ESRI.ArcGIS.ArcMapUI;
+using ESRI.ArcGIS.Carto;
 
 namespace MilSpace.Profile
 {
@@ -19,7 +21,9 @@ namespace MilSpace.Profile
         public DockableWindowMilSpaceProfileCalc(object hook)
         {
             InitializeComponent();
+
             this.Hook = hook;
+            SubscribeForEvents();
         }
 
         /// <summary>
@@ -30,6 +34,67 @@ namespace MilSpace.Profile
             get;
             set;
         }
+
+        private void OnRasterComboDropped()
+        {
+            //var cmbItems = new List<string>();
+            //foreach (var layer in ProfileLayers.RasterLayers)
+            //{
+            //    cmbItems.Add(layer.Name);
+            //}
+            //cmbRasterLayers.Items.AddRange(cmbItems.ToArray());
+            cmbRasterLayers.Items.Clear();
+            PopulateComboBox(cmbRasterLayers, ProfileLayers.RasterLayers);
+        }
+    
+
+        private void OnRoadComboDropped()
+        {
+         
+            cmbRoadLayers.Items.Clear();
+            PopulateComboBox(cmbRoadLayers, ProfileLayers.LineLayers);
+        }
+
+        private void OnHydrographyDropped()
+        {
+            cmbHydrographyLayer.Items.Clear();
+            PopulateComboBox(cmbHydrographyLayer, ProfileLayers.LineLayers);
+        }
+
+        private void OnVegetationDropped()
+        {
+            cmbPolygonLayer.Items.Clear();
+            PopulateComboBox(cmbPolygonLayer, ProfileLayers.PolygonLayers);
+        }
+
+        private void OnObservationPointDropped()
+        {
+            cmbPointLayers.Items.Clear();
+            PopulateComboBox(cmbPointLayers, ProfileLayers.PointLayers);
+        }
+
+
+        private static void PopulateComboBox(ComboBox comboBox, List<ILayer> layers)
+        {
+            var cmbItems = new List<string>();
+            foreach (var layer in layers)
+            {
+                cmbItems.Add(layer.Name);
+            }
+            comboBox.Items.AddRange(cmbItems.ToArray());
+        }
+
+        private void SubscribeForEvents()
+        {
+            
+            //((IActiveViewEvents_Event) (ArcMap.Document.FocusMap)).ItemAdded += OnRasterComboDropped;
+            ArcMap.Events.OpenDocument += OnRasterComboDropped;
+            ArcMap.Events.OpenDocument += OnHydrographyDropped;
+            ArcMap.Events.OpenDocument += OnObservationPointDropped;
+            ArcMap.Events.OpenDocument += OnRoadComboDropped;
+            ArcMap.Events.OpenDocument += OnVegetationDropped;
+
+}
 
         /// <summary>
         /// Implementation class of the dockable window add-in. It is responsible for 
@@ -67,5 +132,7 @@ namespace MilSpace.Profile
             IDockableWindow dockWindow = ArcMap.DockableWindowManager.GetDockableWindow(dockWinID);
             dockWindow.Show(true);
         }
+
+   
     }
 }

@@ -177,15 +177,15 @@
             this.label25 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.comboBox6 = new System.Windows.Forms.ComboBox();
+            this.cmbPointLayers = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
+            this.cmbRoadLayers = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.cmbHydrographyLayer = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cmbPolygonLayer = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.cmbRasterLayers = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -494,10 +494,10 @@
             this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl2.ImageList = this.imageList1;
             this.tabControl2.ItemSize = new System.Drawing.Size(63, 20);
-            this.tabControl2.Location = new System.Drawing.Point(3, 315);
+            this.tabControl2.Location = new System.Drawing.Point(3, 340);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(336, 402);
+            this.tabControl2.Size = new System.Drawing.Size(336, 377);
             this.tabControl2.TabIndex = 6;
             // 
             // tabPage3
@@ -517,7 +517,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 24);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(328, 374);
+            this.tabPage3.Size = new System.Drawing.Size(328, 349);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "Отрезком";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -726,7 +726,7 @@
             this.richTextBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.richTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.richTextBox2.Location = new System.Drawing.Point(3, 279);
+            this.richTextBox2.Location = new System.Drawing.Point(3, 254);
             this.richTextBox2.Name = "richTextBox2";
             this.richTextBox2.Size = new System.Drawing.Size(322, 92);
             this.richTextBox2.TabIndex = 21;
@@ -1530,7 +1530,7 @@
             this.panel2.Controls.Add(this.panel11);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(3, 254);
+            this.panel2.Location = new System.Drawing.Point(3, 279);
             this.panel2.Name = "panel2";
             this.panel2.Padding = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.panel2.Size = new System.Drawing.Size(336, 61);
@@ -1586,36 +1586,36 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.comboBox6);
+            this.panel1.Controls.Add(this.cmbPointLayers);
             this.panel1.Controls.Add(this.label7);
-            this.panel1.Controls.Add(this.comboBox5);
+            this.panel1.Controls.Add(this.cmbRoadLayers);
             this.panel1.Controls.Add(this.label6);
-            this.panel1.Controls.Add(this.comboBox4);
+            this.panel1.Controls.Add(this.cmbHydrographyLayer);
             this.panel1.Controls.Add(this.label5);
-            this.panel1.Controls.Add(this.comboBox1);
+            this.panel1.Controls.Add(this.cmbPolygonLayer);
             this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.comboBox3);
+            this.panel1.Controls.Add(this.cmbRasterLayers);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(8, 0, 8, 0);
-            this.panel1.Size = new System.Drawing.Size(336, 251);
+            this.panel1.Size = new System.Drawing.Size(336, 276);
             this.panel1.TabIndex = 1;
             // 
-            // comboBox6
+            // cmbPointLayers
             // 
-            this.comboBox6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.comboBox6.FormattingEnabled = true;
-            this.comboBox6.Items.AddRange(new object[] {
+            this.cmbPointLayers.Dock = System.Windows.Forms.DockStyle.Top;
+            this.cmbPointLayers.FormattingEnabled = true;
+            this.cmbPointLayers.Items.AddRange(new object[] {
             "Указанием отрезка на карте",
             "От \"базовой\" точки",
             "Выбором графики"});
-            this.comboBox6.Location = new System.Drawing.Point(8, 221);
-            this.comboBox6.Name = "comboBox6";
-            this.comboBox6.Size = new System.Drawing.Size(320, 21);
-            this.comboBox6.TabIndex = 10;
+            this.cmbPointLayers.Location = new System.Drawing.Point(8, 221);
+            this.cmbPointLayers.Name = "cmbPointLayers";
+            this.cmbPointLayers.Size = new System.Drawing.Size(320, 21);
+            this.cmbPointLayers.TabIndex = 10;
             // 
             // label7
             // 
@@ -1628,18 +1628,18 @@
             this.label7.TabIndex = 9;
             this.label7.Text = "Слой точек наблюдения ???";
             // 
-            // comboBox5
+            // cmbRoadLayers
             // 
-            this.comboBox5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Items.AddRange(new object[] {
+            this.cmbRoadLayers.Dock = System.Windows.Forms.DockStyle.Top;
+            this.cmbRoadLayers.FormattingEnabled = true;
+            this.cmbRoadLayers.Items.AddRange(new object[] {
             "Указанием отрезка на карте",
             "От \"базовой\" точки",
             "Выбором графики"});
-            this.comboBox5.Location = new System.Drawing.Point(8, 179);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(320, 21);
-            this.comboBox5.TabIndex = 8;
+            this.cmbRoadLayers.Location = new System.Drawing.Point(8, 179);
+            this.cmbRoadLayers.Name = "cmbRoadLayers";
+            this.cmbRoadLayers.Size = new System.Drawing.Size(320, 21);
+            this.cmbRoadLayers.TabIndex = 8;
             // 
             // label6
             // 
@@ -1652,18 +1652,18 @@
             this.label6.TabIndex = 7;
             this.label6.Text = "Слой дорожной сети";
             // 
-            // comboBox4
+            // cmbHydrographyLayer
             // 
-            this.comboBox4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Items.AddRange(new object[] {
+            this.cmbHydrographyLayer.Dock = System.Windows.Forms.DockStyle.Top;
+            this.cmbHydrographyLayer.FormattingEnabled = true;
+            this.cmbHydrographyLayer.Items.AddRange(new object[] {
             "Указанием отрезка на карте",
             "От \"базовой\" точки",
             "Выбором графики"});
-            this.comboBox4.Location = new System.Drawing.Point(8, 137);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(320, 21);
-            this.comboBox4.TabIndex = 6;
+            this.cmbHydrographyLayer.Location = new System.Drawing.Point(8, 137);
+            this.cmbHydrographyLayer.Name = "cmbHydrographyLayer";
+            this.cmbHydrographyLayer.Size = new System.Drawing.Size(320, 21);
+            this.cmbHydrographyLayer.TabIndex = 6;
             // 
             // label5
             // 
@@ -1676,19 +1676,15 @@
             this.label5.TabIndex = 5;
             this.label5.Text = "Слой гидрография";
             // 
-            // comboBox1
+            // cmbPolygonLayer
             // 
-            this.comboBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "Указанием отрезка на карте",
-            "От \"базовой\" точки",
-            "Выбором графики"});
-            this.comboBox1.Location = new System.Drawing.Point(8, 95);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(320, 21);
-            this.comboBox1.TabIndex = 4;
-            this.comboBox1.Text = "слойрастительности (лес) из проекта карты";
+            this.cmbPolygonLayer.Dock = System.Windows.Forms.DockStyle.Top;
+            this.cmbPolygonLayer.FormattingEnabled = true;
+            this.cmbPolygonLayer.Location = new System.Drawing.Point(8, 95);
+            this.cmbPolygonLayer.Name = "cmbPolygonLayer";
+            this.cmbPolygonLayer.Size = new System.Drawing.Size(320, 21);
+            this.cmbPolygonLayer.TabIndex = 4;
+            this.cmbPolygonLayer.Text = "слойрастительности (лес) из проекта карты";
             // 
             // label4
             // 
@@ -1701,19 +1697,15 @@
             this.label4.TabIndex = 3;
             this.label4.Text = "Слой растительность";
             // 
-            // comboBox3
+            // cmbRasterLayers
             // 
-            this.comboBox3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Items.AddRange(new object[] {
-            "Указанием отрезка на карте",
-            "От \"базовой\" точки",
-            "Выбором графики"});
-            this.comboBox3.Location = new System.Drawing.Point(8, 53);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(320, 21);
-            this.comboBox3.TabIndex = 2;
-            this.comboBox3.Text = "слой ЦМР из проекта карты";
+            this.cmbRasterLayers.Dock = System.Windows.Forms.DockStyle.Top;
+            this.cmbRasterLayers.FormattingEnabled = true;
+            this.cmbRasterLayers.Location = new System.Drawing.Point(8, 53);
+            this.cmbRasterLayers.Name = "cmbRasterLayers";
+            this.cmbRasterLayers.Size = new System.Drawing.Size(320, 21);
+            this.cmbRasterLayers.TabIndex = 2;
+            this.cmbRasterLayers.Text = "слой ЦМР из проекта карты";
             // 
             // label3
             // 
@@ -1735,9 +1727,9 @@
             this.label1.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
             this.label1.Name = "label1";
             this.label1.Padding = new System.Windows.Forms.Padding(0, 6, 0, 6);
-            this.label1.Size = new System.Drawing.Size(174, 32);
+            this.label1.Size = new System.Drawing.Size(208, 32);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Слои для расчетов";
+            this.label1.Text = "Слои для расчетовNew";
             // 
             // tabPage2
             // 
@@ -2194,15 +2186,15 @@
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.ComboBox comboBox6;
+        private System.Windows.Forms.ComboBox cmbPointLayers;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ComboBox comboBox5;
+        private System.Windows.Forms.ComboBox cmbRoadLayers;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.ComboBox cmbHydrographyLayer;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cmbPolygonLayer;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox cmbRasterLayers;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TabPage tabPage2;
