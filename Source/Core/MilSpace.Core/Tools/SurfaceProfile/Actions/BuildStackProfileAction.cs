@@ -12,6 +12,11 @@ namespace MilSpace.Core.Tools.SurfaceProfile.Actions
 {
     class BuildStackProfileAction : A.Action<StringActionResult>
     {
+        private string featureClass;
+        private string profileSource;
+        private string outGraphName;
+        private string tableName;
+        private StringActionResult result;
 
         public BuildStackProfileAction() : base()
         {
@@ -21,6 +26,10 @@ namespace MilSpace.Core.Tools.SurfaceProfile.Actions
                 : base(parameters)
         {
 
+            featureClass = parameters.GetParameterWithValidition<string>(ActionParameters.FeatureClass, null).Value;
+            profileSource = parameters.GetParameterWithValidition<string>(ActionParameters.ProfileSource, null).Value;
+            outGraphName = parameters.GetParameterWithValidition<string>(ActionParameters.OutGraphName, null).Value;
+            tableName = parameters.GetParameterWithValidition<string>(ActionParameters.DataWorkSpace, null).Value;
         }
 
         public override string ActionId => ActionsEnum.bsp.ToString();
@@ -31,10 +40,11 @@ namespace MilSpace.Core.Tools.SurfaceProfile.Actions
             {
                 return new IActionParam[]
                {
-                    new ActionParam<string>() { ParamName = ActionParameters.FeatureClass, Value = string.Empty},
-                    new ActionParam<string>() { ParamName = ActionParameters.ProfileSource, Value = string.Empty},
-                    new ActionParam<string>() { ParamName = ActionParameters.OutGraphName, Value = string.Empty},
-                    new ActionParam<string>() { ParamName = ActionParameters.OutGraphFileName, Value = string.Empty},
+                   new ActionParam<string>() { ParamName = ActionParameters.FeatureClass, Value = string.Empty},
+                   new ActionParam<string>() { ParamName = ActionParameters.ProfileSource, Value = string.Empty},
+                   new ActionParam<string>() { ParamName = ActionParameters.DataWorkSpace, Value = string.Empty},
+                   new ActionParam<string>() { ParamName = ActionParameters.OutGraphName, Value = string.Empty},
+                   new ActionParam<string>() { ParamName = ActionParameters.OutGraphFileName, Value = string.Empty},
                };
             }
         }
@@ -42,12 +52,26 @@ namespace MilSpace.Core.Tools.SurfaceProfile.Actions
 
         public override StringActionResult GetResult()
         {
-            throw new NotImplementedException();
+            return result;
         }
 
         public override void Process()
         {
-            throw new NotImplementedException();
+            try
+            {
+                result = new StringActionResult();
+                result.Result = "Error";
+
+                if (ProfileLibrary.GenerateProfileData(featureClass, profileSource, tableName))
+                {
+                    result.Result = "Ok";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result.Exception = ex;
+            }
         }
     }
 }

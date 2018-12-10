@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,6 +49,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\MilSpace.Core\MilSpace.Core.csproj">
+      <Project>{02023d3d-4f73-4e7e-a78f-eeaa5d66deac}</Project>
+      <Name>MilSpace.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\MilSpace.DataAccess\MilSpace.DataAccess\MilSpace.DataAccess.csproj">
+      <Project>{651c40fa-e0b6-45ff-9b3e-9341eb671754}</Project>
+      <Name>MilSpace.DataAccess</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
