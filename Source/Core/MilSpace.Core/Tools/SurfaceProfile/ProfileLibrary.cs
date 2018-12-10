@@ -12,7 +12,7 @@ namespace MilSpace.Core.Tools.SurfaceProfile
 {
     public static class ProfileLibrary
     {
-        public static bool GenerateProfileData(string lineFeatureClass, string profileSource, string outTable, string outGraphName = null, string outGraphFileName = null)
+        internal static bool GenerateProfileData(string lineFeatureClass, string profileSource, string outTable, string outGraphName = null, string outGraphFileName = null)
         {
             Geoprocessor gp = new ESRI.ArcGIS.Geoprocessor.Geoprocessor();
             gp.OverwriteOutput = true;
