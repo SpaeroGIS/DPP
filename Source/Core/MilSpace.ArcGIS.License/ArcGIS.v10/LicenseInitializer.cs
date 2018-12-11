@@ -7,18 +7,18 @@ namespace MilSpace.ArcGIS.License
     using ESRI.ArcGIS.esriSystem;
     using ESRI.ArcGIS;
 
-    public class MilSpacetoolsLicenseInitializer
+    public class MilSpaceToolsLicenseInitializer
     {
-        private static MilSpacetoolsLicenseInitializer instance = null;
+        private static MilSpaceToolsLicenseInitializer instance = null;
         private Version arcGISVersion = null;
 
-        public static MilSpacetoolsLicenseInitializer Instance
+        public static MilSpaceToolsLicenseInitializer Instance
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new MilSpacetoolsLicenseInitializer();
+                    instance = new MilSpaceToolsLicenseInitializer();
                 }
 
                 return instance;
@@ -49,14 +49,14 @@ namespace MilSpace.ArcGIS.License
         }
 
         //-------------------------------------------------------------------------------------------
-        private MilSpacetoolsLicenseInitializer(ProductCode productCode)
+        private MilSpaceToolsLicenseInitializer(ProductCode productCode)
         {
             ResolveBindingEvent += new EventHandler(BindingArcGISRuntime);
             this.productCode = productCode;
         }
 
         //-------------------------------------------------------------------------------------------
-        public MilSpacetoolsLicenseInitializer()
+        public MilSpaceToolsLicenseInitializer()
 //            : this(ProductCode.Desktop)
             : this(ProductCode.EngineOrDesktop)
         {
