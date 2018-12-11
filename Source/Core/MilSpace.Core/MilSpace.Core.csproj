@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{02023D3D-4F73-4E7E-A78F-EEAA5D66DEAC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MilSpace.Core</RootNamespace>
+    <AssemblyName>MilSpace.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ESRI.ArcGIS.ADF.Local, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Desktop.AddIns">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Editor, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.System, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Framework">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Geoprocessor">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Geoprocessing">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Analyst3DTools">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.DataManagementTools">
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\..\Solutions\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Actions\ActionFinishedDelegate.cs" />
+    <Compile Include="Actions\ActionParamNamesCore.cs" />
+    <Compile Include="Actions\ActionProcessDelegate.cs" />
+    <Compile Include="Actions\ActionProcessor.cs" />
+    <Compile Include="Actions\ActionResults\BoolResult.cs" />
+    <Compile Include="Actions\ActionResults\IntCollectionResult.cs" />
+    <Compile Include="Actions\ActionResults\IntResult.cs" />
+    <Compile Include="Actions\ActionResults\StringActionResult.cs" />
+    <Compile Include="Actions\ActionResults\StringCollectionResult.cs" />
+    <Compile Include="Actions\ActionsCore.cs" />
+    <Compile Include="Actions\ActionStatesEnum.cs" />
+    <Compile Include="Actions\Actions\ActionSereilizer.cs" />
+    <Compile Include="Actions\Actions\AreaDescription.cs" />
+    <Compile Include="Actions\LoadedActions.cs" />
+    <Compile Include="Actions\Actions\Python\RunPythonAction.cs" />
+    <Compile Include="Actions\BaseInstance\Action.cs" />
+    <Compile Include="Actions\BaseInstance\ActionDefinition.cs" />
+    <Compile Include="Actions\BaseInstance\ActionDescription.cs" />
+    <Compile Include="Actions\BaseInstance\ActionParam.cs" />
+    <Compile Include="Actions\BaseInstance\ActionResultBase.cs" />
+    <Compile Include="Actions\Exceptions\ActiondescriptionNotDefinedException.cs" />
+    <Compile Include="Actions\Exceptions\ActionNotFoundException.cs" />
+    <Compile Include="Actions\Exceptions\CannotAccessThreadException.cs" />
+    <Compile Include="Actions\Exceptions\CannotOpenConnectionStringException.cs" />
+    <Compile Include="Actions\Exceptions\ExpectActionParameterException.cs" />
+    <Compile Include="Actions\Exceptions\ExpectActionResultException.cs" />
+    <Compile Include="Actions\Exceptions\NoConnectionStringConfiguredException.cs" />
+    <Compile Include="Actions\Exceptions\SpaeroDataException.cs" />
+    <Compile Include="Actions\Exceptions\SpaeroException.cs" />
+    <Compile Include="DataAccess\DataOperationsEnum.cs" />
+    <Compile Include="Helper\Helper.cs" />
+    <Compile Include="Helper\SimpleDataTypesEnum.cs" />
+    <Compile Include="Actions\Interfaces\IAcationResult.cs" />
+    <Compile Include="Actions\Interfaces\IAction.cs" />
+    <Compile Include="Actions\Interfaces\IActionProcessor.cs" />
+    <Compile Include="Actions\Interfaces\IActonParam.cs" />
+    <Compile Include="Actions\Interfaces\IDataEntity.cs" />
+    <Compile Include="Logging\Logging.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools\SurfaceProfile\Actions\ActionParameters.cs" />
+    <Compile Include="Tools\SurfaceProfile\Actions\ActionsEnum.cs" />
+    <Compile Include="Tools\SurfaceProfile\Actions\BuildStackProfileAction.cs" />
+    <Compile Include="Tools\SurfaceProfile\ProfileLibrary.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MilSpace.ArcGIS.License\ArcGIS.v10\MilSpace.ArcGIS.License.csproj">
+      <Project>{7efe422c-b0ae-432c-ac29-de48ca9d0867}</Project>
+      <Name>MilSpace.ArcGIS.License</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MilSpace.Configurations\MilSpace.Configurations.csproj">
+      <Project>{73334b96-54fd-4d83-b56d-967f8728d767}</Project>
+      <Name>MilSpace.Configurations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MilSpace.DataAccess\MilSpace.DataAccess\MilSpace.DataAccess.csproj">
+      <Project>{651c40fa-e0b6-45ff-9b3e-9341eb671754}</Project>
+      <Name>MilSpace.DataAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

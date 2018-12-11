@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<spaero.gis>
+  <landParcels>
+    <import connectionString="" localStorage="" importStorage="" matchingFile="" />
+    <schema path="" />
+  </landParcels>
+
+  <dataPortions>
+    <portion dbField="">
+      <xPath value=""/>
+      <xPath value=""/>
+    </portion>
+  </dataPortions>
+</spaero.gis>
+  
