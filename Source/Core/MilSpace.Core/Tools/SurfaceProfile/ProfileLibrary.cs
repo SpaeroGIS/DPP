@@ -2,6 +2,7 @@
 using ESRI.ArcGIS.DataManagementTools;
 using ESRI.ArcGIS.Geoprocessing;
 using ESRI.ArcGIS.Geoprocessor;
+using MilSpace.ArcGIS.License;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,13 @@ namespace MilSpace.Core.Tools.SurfaceProfile
 {
     public static class ProfileLibrary
     {
+        static ProfileLibrary()
+        {
+            if (!MilSpaceToolsLicenseInitializer.Instance.Initialized)
+            {
+                MilSpaceToolsLicenseInitializer.Instance.InitializeApplication();
+            }
+        }
         internal static bool GenerateProfileData(string lineFeatureClass, string profileSource, string outTable, string outGraphName = null, string outGraphFileName = null)
         {
             Geoprocessor gp = new ESRI.ArcGIS.Geoprocessor.Geoprocessor();
