@@ -177,6 +177,7 @@
             this.label25 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button4 = new System.Windows.Forms.Button();
             this.cmbPointLayers = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.cmbRoadLayers = new System.Windows.Forms.ComboBox();
@@ -764,6 +765,7 @@
             this.toolBar1.ShowToolTips = true;
             this.toolBar1.Size = new System.Drawing.Size(142, 28);
             this.toolBar1.TabIndex = 27;
+            this.toolBar1.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.toolBar1_ButtonClick);
             // 
             // toolBarButton54
             // 
@@ -850,7 +852,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 24);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(328, 374);
+            this.tabPage4.Size = new System.Drawing.Size(328, 349);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "\"Веером\"";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -1044,7 +1046,7 @@
             this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.richTextBox1.Location = new System.Drawing.Point(3, 258);
+            this.richTextBox1.Location = new System.Drawing.Point(3, 233);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(322, 113);
             this.richTextBox1.TabIndex = 20;
@@ -1167,7 +1169,7 @@
             this.tabPage5.ImageKey = "2.png";
             this.tabPage5.Location = new System.Drawing.Point(4, 24);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(328, 374);
+            this.tabPage5.Size = new System.Drawing.Size(328, 349);
             this.tabPage5.TabIndex = 2;
             this.tabPage5.Text = "Примитивом";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -1210,7 +1212,7 @@
             this.richTextBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.richTextBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBox4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.richTextBox4.Location = new System.Drawing.Point(0, 244);
+            this.richTextBox4.Location = new System.Drawing.Point(0, 219);
             this.richTextBox4.Name = "richTextBox4";
             this.richTextBox4.Size = new System.Drawing.Size(328, 130);
             this.richTextBox4.TabIndex = 21;
@@ -1282,7 +1284,7 @@
             this.tabPage6.ImageKey = "3.png";
             this.tabPage6.Location = new System.Drawing.Point(4, 24);
             this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(328, 374);
+            this.tabPage6.Size = new System.Drawing.Size(328, 349);
             this.tabPage6.TabIndex = 3;
             this.tabPage6.Text = "Загрузить";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -1459,7 +1461,7 @@
             this.richTextBox5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.richTextBox5.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBox5.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.richTextBox5.Location = new System.Drawing.Point(0, 274);
+            this.richTextBox5.Location = new System.Drawing.Point(0, 249);
             this.richTextBox5.Name = "richTextBox5";
             this.richTextBox5.Size = new System.Drawing.Size(328, 100);
             this.richTextBox5.TabIndex = 27;
@@ -1586,6 +1588,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.button4);
             this.panel1.Controls.Add(this.cmbPointLayers);
             this.panel1.Controls.Add(this.label7);
             this.panel1.Controls.Add(this.cmbRoadLayers);
@@ -1603,6 +1606,16 @@
             this.panel1.Padding = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.panel1.Size = new System.Drawing.Size(336, 276);
             this.panel1.TabIndex = 1;
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(254, 3);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(74, 20);
+            this.button4.TabIndex = 11;
+            this.button4.Text = "Test";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // cmbPointLayers
             // 
@@ -2225,5 +2238,6 @@
         private System.Windows.Forms.ToolBarButton toolBarButton53;
         private System.Windows.Forms.RichTextBox richTextBox7;
         private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Button button4;
     }
 }

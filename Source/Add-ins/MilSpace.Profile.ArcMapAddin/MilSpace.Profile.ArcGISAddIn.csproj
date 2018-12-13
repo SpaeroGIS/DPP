@@ -96,6 +96,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
@@ -171,6 +172,16 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DockableWindowMilSpaceProfileGraphCommand.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\MilSpace.Configurations\MilSpace.Configurations.csproj">
+      <Project>{73334b96-54fd-4d83-b56d-967f8728d767}</Project>
+      <Name>MilSpace.Configurations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\MilSpace.Core\MilSpace.Core.csproj">
+      <Project>{02023d3d-4f73-4e7e-a78f-eeaa5d66deac}</Project>
+      <Name>MilSpace.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>

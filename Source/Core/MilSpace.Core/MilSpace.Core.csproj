@@ -131,10 +131,6 @@
       <Project>{73334b96-54fd-4d83-b56d-967f8728d767}</Project>
       <Name>MilSpace.Configurations</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MilSpace.DataAccess\MilSpace.DataAccess\MilSpace.DataAccess.csproj">
-      <Project>{651c40fa-e0b6-45ff-9b3e-9341eb671754}</Project>
-      <Name>MilSpace.DataAccess</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
