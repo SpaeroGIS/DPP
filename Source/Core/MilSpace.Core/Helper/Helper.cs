@@ -63,6 +63,11 @@ namespace MilSpace.Core
             return double.TryParse(numericStreing, out result);
         }
 
+        public static string AutoEllipses(this string str, int length = 5)
+        {
+            return str.Substring(0, Math.Min(length, str.Length)) + (str.Length > length ? "..." : "");
+        }
+
         public static bool IsGuid(this string guidString, out Guid guidValue)
         {
 

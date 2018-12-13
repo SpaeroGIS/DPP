@@ -79,6 +79,9 @@ namespace MilSpace.Profile
                 if (!(layer is IFeatureLayer featureLayer)) continue;
                 if (featureLayer.FeatureClass.ShapeType == geomType)
                     pointLayers.Add(layer);
+
+                IGroupLayer a;
+                
             }
 
             return pointLayers;

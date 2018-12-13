@@ -9,6 +9,12 @@ using System.Text;
 using System.Windows.Forms;
 using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
+using MilSpace.Core;
+using MilSpace.Core.Actions;
+using MilSpace.Core.Actions.ActionResults;
+using MilSpace.Core.Actions.Base;
+using MilSpace.Core.Actions.Interfaces;
+using MilSpace.Core.Tools.SurfaceProfile.Actions;
 
 namespace MilSpace.Profile
 {
@@ -35,6 +41,8 @@ namespace MilSpace.Profile
             set;
         }
 
+
+
         private void OnRasterComboDropped()
         {
             //var cmbItems = new List<string>();
@@ -46,11 +54,11 @@ namespace MilSpace.Profile
             cmbRasterLayers.Items.Clear();
             PopulateComboBox(cmbRasterLayers, ProfileLayers.RasterLayers);
         }
-    
+
 
         private void OnRoadComboDropped()
         {
-         
+
             cmbRoadLayers.Items.Clear();
             PopulateComboBox(cmbRoadLayers, ProfileLayers.LineLayers);
         }
@@ -86,7 +94,7 @@ namespace MilSpace.Profile
 
         private void SubscribeForEvents()
         {
-            
+
             //((IActiveViewEvents_Event) (ArcMap.Document.FocusMap)).ItemAdded += OnRasterComboDropped;
             ArcMap.Events.OpenDocument += OnRasterComboDropped;
             ArcMap.Events.OpenDocument += OnHydrographyDropped;
@@ -94,7 +102,7 @@ namespace MilSpace.Profile
             ArcMap.Events.OpenDocument += OnRoadComboDropped;
             ArcMap.Events.OpenDocument += OnVegetationDropped;
 
-}
+        }
 
         /// <summary>
         /// Implementation class of the dockable window add-in. It is responsible for 
@@ -133,6 +141,32 @@ namespace MilSpace.Profile
             dockWindow.Show(true);
         }
 
-   
+        private void toolBar1_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        {
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            var action = new ActionParam<string>()
+            {
+                ParamName = ActionParamNamesCore.Action,
+                Value = ActionsEnum.bsp.ToString()
+            };
+
+
+            var prm = new List<IActionParam> { action,
+                                new ActionParam<string>() { ParamName = ActionParameters.FeatureClass, Value = "" },
+                                new ActionParam<string>() { ParamName = ActionParameters.ProfileSource, Value = ""  },
+                                new ActionParam<string>() { ParamName = ActionParameters.DataWorkSpace, Value = ""  },
+                               new ActionParam<string>() { ParamName = ActionParameters.OutGraphName, Value =  null },
+                               new ActionParam<string>() { ParamName = ActionParameters.OutGraphFileName, Value =  null                              } };
+
+
+            var procc = new ActionProcessor(prm);
+            var res = procc.Process<StringActionResult>();
+
+            MessageBox.Show("Calculated");
+        }
     }
 }
