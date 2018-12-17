@@ -154,13 +154,17 @@ namespace MilSpace.Profile
                 Value = ActionsEnum.bsp.ToString()
             };
 
-
-            var prm = new List<IActionParam> { action,
-                                new ActionParam<string>() { ParamName = ActionParameters.FeatureClass, Value = "" },
-                                new ActionParam<string>() { ParamName = ActionParameters.ProfileSource, Value = ""  },
-                                new ActionParam<string>() { ParamName = ActionParameters.DataWorkSpace, Value = ""  },
-                               new ActionParam<string>() { ParamName = ActionParameters.OutGraphName, Value =  null },
-                               new ActionParam<string>() { ParamName = ActionParameters.OutGraphFileName, Value =  null                              } };
+            string sdtnow = DateTime.Now.ToString("yyyyMMddHHmmss");
+            var prm = new List<IActionParam>
+            {
+                action,
+//                new ActionParam<string>() { ParamName = ActionParameters.FeatureClass, Value = "E:\\Data\\MilSpace3D\\3DUTM368.gdb\\FCProfiles\\Profile01_L"},
+//                new ActionParam<string>() { ParamName = ActionParameters.ProfileSource, Value = "E:\\Data\\MilSpace3D\\3D\\cmr004" },
+                new ActionParam<string>() { ParamName = ActionParameters.FeatureClass, Value = "Profile01_L"},
+                new ActionParam<string>() { ParamName = ActionParameters.ProfileSource, Value = "cmr004" },
+                new ActionParam<string>() { ParamName = ActionParameters.DataWorkSpace, Value = "E:\\Data\\MilSpace3D\\MilSpaceCalc.gdb\\StackProfile"+sdtnow},
+                new ActionParam<string>() { ParamName = ActionParameters.OutGraphName, Value = ""}
+            };
 
 
             var procc = new ActionProcessor(prm);

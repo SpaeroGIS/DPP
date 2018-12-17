@@ -43,8 +43,8 @@ namespace MilSpace.Core.Tools.SurfaceProfile.Actions
                    new ActionParam<string>() { ParamName = ActionParameters.FeatureClass, Value = string.Empty},
                    new ActionParam<string>() { ParamName = ActionParameters.ProfileSource, Value = string.Empty},
                    new ActionParam<string>() { ParamName = ActionParameters.DataWorkSpace, Value = string.Empty},
-                   new ActionParam<string>() { ParamName = ActionParameters.OutGraphName, Value = string.Empty},
-                   new ActionParam<string>() { ParamName = ActionParameters.OutGraphFileName, Value = string.Empty},
+                   new ActionParam<string>() { ParamName = ActionParameters.OutGraphName, Value = string.Empty}
+                   //new ActionParam<string>() { ParamName = ActionParameters.OutGraphFileName, Value = string.Empty},
                };
             }
         }

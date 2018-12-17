@@ -1609,12 +1609,14 @@
             // 
             // button4
             // 
+            this.button4.BackColor = System.Drawing.Color.Red;
+            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button4.Location = new System.Drawing.Point(254, 3);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(74, 20);
             this.button4.TabIndex = 11;
             this.button4.Text = "Test";
-            this.button4.UseVisualStyleBackColor = true;
+            this.button4.UseVisualStyleBackColor = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // cmbPointLayers

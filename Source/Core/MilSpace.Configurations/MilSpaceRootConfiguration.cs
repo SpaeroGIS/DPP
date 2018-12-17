@@ -13,7 +13,7 @@ namespace MilSpace.Configurations
 {
     public abstract class MilSpaceRootConfiguration
     {
-        private const string rootSectionNane = "spaero.gis";
+        private const string rootSectionNane = "milspace";
 
         private static Configuration currentConfig = null;
 

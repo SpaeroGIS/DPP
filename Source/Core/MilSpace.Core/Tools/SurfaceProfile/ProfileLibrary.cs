@@ -2,6 +2,7 @@
 using ESRI.ArcGIS.DataManagementTools;
 using ESRI.ArcGIS.Geoprocessing;
 using ESRI.ArcGIS.Geoprocessor;
+using ESRI.ArcGIS.esriSystem;
 using MilSpace.ArcGIS.License;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace MilSpace.Core.Tools.SurfaceProfile
 {
     public static class ProfileLibrary
     {
+        //-------------------------------------------------------------------------
         static ProfileLibrary()
         {
             if (!MilSpaceToolsLicenseInitializer.Instance.Initialized)
@@ -20,56 +22,51 @@ namespace MilSpace.Core.Tools.SurfaceProfile
                 MilSpaceToolsLicenseInitializer.Instance.InitializeApplication();
             }
         }
-        internal static bool GenerateProfileData(string lineFeatureClass, string profileSource, string outTable, string outGraphName = null, string outGraphFileName = null)
+        //-------------------------------------------------------------------------
+        internal static bool GenerateProfileData(
+            string lineFeatureClass, 
+            string profileSource, 
+            string outTable, 
+            string outGraphName = null 
+            //string outGraphFileName = null
+            )
         {
-            Geoprocessor gp = new ESRI.ArcGIS.Geoprocessor.Geoprocessor();
-            gp.OverwriteOutput = true;
+            Geoprocessor gp = new Geoprocessor();
 
-            StackProfile stackProfile = new StackProfile
-            {
-                in_line_features = lineFeatureClass,
-                profile_targets = profileSource,
-                out_table = outTable
-            };
-
-            if (!string.IsNullOrEmpty(outGraphName))
-            {
-                stackProfile.out_graph = outGraphName;
-            }
+            StackProfile stackProfile = new StackProfile();
+            stackProfile.in_line_features = lineFeatureClass;
+            stackProfile.profile_targets = profileSource;
+            stackProfile.out_table = outTable;
+            if (!string.IsNullOrEmpty(outGraphName)) stackProfile.out_graph = outGraphName;
 
             GeoProcessorResult gpResult = new GeoProcessorResult();
+            gp.SetEnvironmentValue("workspace", @"E:\Temp\ArcGIS\Default.gdb");
+            return RunTool(gp, stackProfile, null);
+        }
+        //-------------------------------------------------------------------------
+        private static bool RunTool(Geoprocessor gp, IGPProcess process, ITrackCancel TC)
+        {
+            gp.OverwriteOutput = true; // Set the overwrite output option to true
             try
-            { gp.Execute(stackProfile, null); }
-
+            {
+                IGeoProcessorResult pResult = (IGeoProcessorResult) gp.Execute(process, null);
+                ReturnMessages(gp);
+            }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-
-                // Print geoprocessing execution error messages.
-                for (int i = 0; i < gp.MessageCount; i++) Console.WriteLine(gp.GetMessage(i));
-
+                ReturnMessages(gp);
                 return false;
             }
-
-            if (!string.IsNullOrEmpty(outGraphName))
-            {
-                SaveGraph saveG = new SaveGraph();
-                saveG.in_graph = outGraphName;
-                saveG.out_graph_file = outGraphFileName;
-                try
-                {
-                    gp.Execute(saveG, null);
-                }
-                catch (Exception ex)
-                { // Print geoprocessing execution error messages.
-                    for (int i = 0; i < gp.MessageCount; i++)
-                        Console.WriteLine(gp.GetMessage(i));
-
-                    return false;
-                }
-            }
-
             return true;
+        }
+        //-------------------------------------------------------------------------
+        private static void ReturnMessages(Geoprocessor gp)
+        {
+            if (gp.MessageCount > 0)
+            {
+                for (int Count = 0; Count < gp.MessageCount; Count++) Console.WriteLine(gp.GetMessage(Count));
+            }
         }
     }
 }

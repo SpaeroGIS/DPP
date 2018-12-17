@@ -10,7 +10,7 @@ namespace MilSpace.Core.Tools.SurfaceProfile.Actions
     public class ActionParameters : ActionParamNamesCore
     {
         public static string ProfileSource = "prfs";
-        public static string OutGraphName = "oupgrpname";
-        public static string OutGraphFileName = "oupgrpflnm";
+        public static string ProfileOutTable = "prfot";
+        public static string OutGraphName = "outgrname";
     }
 }
