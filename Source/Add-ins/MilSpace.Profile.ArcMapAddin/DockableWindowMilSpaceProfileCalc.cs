@@ -15,6 +15,9 @@ using MilSpace.Core.Actions.ActionResults;
 using MilSpace.Core.Actions.Base;
 using MilSpace.Core.Actions.Interfaces;
 using MilSpace.Core.Tools.SurfaceProfile.Actions;
+using MilSpace.Configurations;
+using System.Reflection;
+using System.IO;
 
 namespace MilSpace.Profile
 {
@@ -41,6 +44,10 @@ namespace MilSpace.Profile
             set;
         }
 
+        protected override void OnLoad(EventArgs e)
+        {
+            Helper.SetConfiguration();
+        }
 
 
         private void OnRasterComboDropped()

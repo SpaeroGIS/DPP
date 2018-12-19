@@ -5,6 +5,7 @@ using ESRI.ArcGIS.ADF.BaseClasses;
 using ESRI.ArcGIS.ADF.CATIDs;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.esriSystem;
+using System.Windows.Forms;
 
 namespace MilSpace.Profile
 {
@@ -98,12 +99,15 @@ namespace MilSpace.Profile
 
         #region Overridden Class Methods
 
+        
+
         /// <summary>
         /// Occurs when this command is created
         /// </summary>
         /// <param name="hook">Instance of the application</param>
         public override void OnCreate(object hook)
         {
+
             if (hook != null)
                 m_application = hook as IApplication;
 

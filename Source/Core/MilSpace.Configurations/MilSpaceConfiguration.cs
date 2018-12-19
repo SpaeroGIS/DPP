@@ -55,7 +55,7 @@ namespace MilSpace.Configurations
                 return pythonConfiguration;
             }
         }
-        public static string ConfigurationFilePath
+        public static string ConfigurationFileName
         {
             get { return GetCurrentConfiguration().FilePath; }
         }

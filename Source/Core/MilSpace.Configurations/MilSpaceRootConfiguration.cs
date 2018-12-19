@@ -14,8 +14,31 @@ namespace MilSpace.Configurations
     public abstract class MilSpaceRootConfiguration
     {
         private const string rootSectionNane = "milspace";
+        private static string configurationFilePath;
 
         private static Configuration currentConfig = null;
+
+        public static string ConfigurationFilePath
+        {
+            get { return configurationFilePath; }
+            set {
+
+                if (!Directory.Exists(value))
+                {
+                    throw new DirectoryNotFoundException(value);
+                }
+
+                var assemblyName = Path.Combine(value, new FileInfo(Assembly.GetAssembly(typeof(MilSpaceRootConfiguration)).Location).Name);
+
+                if (!File.Exists(assemblyName))
+                {
+                    throw new FileNotFoundException(assemblyName);
+                }
+
+                configurationFilePath = assemblyName;
+            }
+        }
+            
 
         protected static Configuration GetCurrentConfiguration()
         {
@@ -30,7 +53,9 @@ namespace MilSpace.Configurations
                 {
                     if (Assembly.GetEntryAssembly() == null || Assembly.GetEntryAssembly().EntryPoint == null) // If the entry point in DLL (it was called from an external programm)
                     {
-                        currentConfig = ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location); //ConfigurationUserLevel.PerUserRoamingAndLocal
+                        configurationFilePath = configurationFilePath ?? Assembly.GetExecutingAssembly().Location;
+
+                        currentConfig = ConfigurationManager.OpenExeConfiguration(configurationFilePath); //ConfigurationUserLevel.PerUserRoamingAndLocal
                     }
                     else
                     {
