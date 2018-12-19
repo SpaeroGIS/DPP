@@ -15,12 +15,83 @@ namespace MilSpace.Profile
 {
     static class ProfileLayers
     {
-      
+
         private static readonly List<ILayer> Layers;
+
+        private static esriGeometryType[] lineTypes = new esriGeometryType[] { esriGeometryType.esriGeometryLine, esriGeometryType.esriGeometryPolyline };
+        private static esriGeometryType[] pointTypes = new esriGeometryType[] { esriGeometryType.esriGeometryPoint};
+        private static esriGeometryType[] polygonTypes = new esriGeometryType[] { esriGeometryType.esriGeometryPolygon};
 
         static ProfileLayers()
         {
             Layers = GetAllLayers();
+        }
+
+        private static IEnumerable<IRasterLayer> GetRasterLayers(ILayer layer)
+        {
+            var result = new List<IRasterLayer>();
+
+
+            if (layer is IRasterLayer fLayer)
+            {
+                result.Add(fLayer);
+            }
+
+            if (layer is ICompositeLayer cLayer)
+            {
+
+                for (int j = 0; j < cLayer.Count; j++)
+
+                {
+                    if ((layer is IRasterLayer cRastreLayer))
+                    {
+                        result.Add(cRastreLayer);
+                    }
+                }
+
+            }
+
+            return result;
+        }
+
+
+
+        private static IEnumerable<ILayer> GetFeatureLayers(ILayer layer)
+        {
+            var result = new List<ILayer>();
+
+            if (layer is IFeatureLayer fLayer)
+            {
+                var featureLayer = fLayer;
+                var featureClass = featureLayer.FeatureClass;
+                if ((featureClass.ShapeType == esriGeometryType.esriGeometryLine) ||
+                    (featureClass.ShapeType == esriGeometryType.esriGeometryPolyline) ||
+                    (featureClass.ShapeType == esriGeometryType.esriGeometryPoint) ||
+                    (featureClass.ShapeType == esriGeometryType.esriGeometryPolygon))
+                {
+                    result.Add(fLayer);
+                }
+            }
+            if (layer is ICompositeLayer cLayer)
+            {
+                for (int j = 0; j < cLayer.Count; j++)
+                {
+                    var curLauer = cLayer.Layer[j];
+                    if ((curLauer is IFeatureLayer cfeatureLayer))
+                    {
+                        result.Add(cfeatureLayer);
+                    }
+
+                    if (curLauer is ICompositeLayer ccLayer)
+                    {
+                        // Here can be check by Tag in the Layer description
+                        result.AddRange(GetFeatureLayers(curLauer as ILayer));
+                    }
+                }
+
+            }
+
+            return result;
         }
 
         private static List<ILayer> GetAllLayers()
@@ -33,24 +104,10 @@ namespace MilSpace.Profile
 
                 while (layer != null)
                 {
-                    if ((layer is IRasterLayer)) 
-                    {
-                        layersToReturn.Add(layer);
-                        layer = layers.Next();
-                        continue;
-                    }
 
-                    if (layer is IFeatureLayer fLayer)
-                    {
-                        var featureLayer = fLayer;
-                        var featureClass = featureLayer.FeatureClass;
-                        if ((featureClass.ShapeType == esriGeometryType.esriGeometryLine) ||
-                            (featureClass.ShapeType == esriGeometryType.esriGeometryPoint) ||
-                            (featureClass.ShapeType == esriGeometryType.esriGeometryPolygon))
-                        {
-                            layersToReturn.Add(layer);
-                        }
-                    }
+                    layersToReturn.AddRange(GetRasterLayers(layer));
+                    layersToReturn.AddRange(GetFeatureLayers(layer));
+                 
                     layer = layers.Next();
                 }
 
@@ -65,27 +122,19 @@ namespace MilSpace.Profile
 
         internal static List<ILayer> RasterLayers => Layers.Where(layer => layer is IRasterLayer).ToList();
 
-        internal static List<ILayer> PointLayers => GetFeatureLayers(esriGeometryType.esriGeometryPoint);
-        internal static List<ILayer> LineLayers => GetFeatureLayers(esriGeometryType.esriGeometryLine);
+        internal static IEnumerable<ILayer> PointLayers => GetFeatureLayers(pointTypes);
 
-        internal static List<ILayer> PolygonLayers => GetFeatureLayers(esriGeometryType.esriGeometryPolygon);
-       
+        internal static IEnumerable<ILayer> LineLayers => GetFeatureLayers(lineTypes);
 
-        private static List<ILayer> GetFeatureLayers(esriGeometryType geomType)
+        internal static IEnumerable<ILayer> PolygonLayers => GetFeatureLayers(polygonTypes);
+
+
+        private static IEnumerable<ILayer> GetFeatureLayers(IEnumerable<esriGeometryType> geomType)
         {
-            List<ILayer> pointLayers = new List<ILayer>();
-            foreach (var layer in Layers)
-            {
-                if (!(layer is IFeatureLayer featureLayer)) continue;
-                if (featureLayer.FeatureClass.ShapeType == geomType)
-                    pointLayers.Add(layer);
 
-                IGroupLayer a;
-                
-            }
+            return Layers.Where(l => l is IFeatureLayer && geomType.Any(g => g == ((IFeatureLayer)l).FeatureClass.ShapeType));
 
-            return pointLayers;
         }
 
-       }
+    }
 }
