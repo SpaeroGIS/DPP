@@ -16,14 +16,15 @@ namespace MilSpace.Configurations
                 {
                     try
                     {
-                        var searchPropsConfid = GetRootSectionGroup.Sections[ConnectionSection.SectionName] as ConnectionSection;
+                        var searchPropsConfid = GetRootSectionGroup.SectionGroups[ConnectionsSection.SectionName] as ConnectionsSection;
                     
                     
 
                     connectionProperty = new MilSpaceConnectionProperty()
                     {
-                        ConnectionString = searchPropsConfid.ConnectionString,
-                        TaskTablePrefix = searchPropsConfid.TaskTablePrefix,
+                        TemporaryGDBConnection = searchPropsConfid.TemporaryGDBConnectionSection.ConnectionString,
+                        WorkingDBConnection = searchPropsConfid.WorkingDBConnectionSection.ConnectionString,
+                        WorkingGDBConnection = searchPropsConfid.WorkingGDBConnectionSection.ConnectionString,
                     };
                     }
                     catch (Exception ex)

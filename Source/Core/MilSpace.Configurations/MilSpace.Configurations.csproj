@@ -73,7 +73,10 @@
     <Compile Include="ActionConfiguration\ActionConfiguration.cs" />
     <Compile Include="ActionConfiguration\ActionsAssemblyCollection.cs" />
     <Compile Include="ActionConfiguration\LoadActionAssembliesSection.cs" />
-    <Compile Include="Connection\ConnectionSection.cs" />
+    <Compile Include="Connection\ConnectionsSection.cs" />
+    <Compile Include="Connection\TemporaryGDBConnectionSection.cs" />
+    <Compile Include="Connection\WorkingGDBConnectionSection.cs" />
+    <Compile Include="Connection\WorkingDBConnectionSection.cs" />
     <Compile Include="Connection\MilSpaceConnectionProperty.cs" />
     <Compile Include="Python\PythonConfiguration.cs" />
     <Compile Include="Python\PythonConfiguratuinSection.cs" />

@@ -7,22 +7,17 @@ using MilSpace.Configurations.Base;
 
 namespace MilSpace.Configurations
 {
-    public class ConnectionSection : ConfigurationSection
+    public class WorkingDBConnectionSection : ConfigurationSection
     {
-        internal static string SectionName = ConfigElementNames.SpaeroConnection;
+        internal static string SectionName = ConfigElementNames.WorkingDBConnectionSection;
+
+
 
         [ConfigurationProperty(ConfigElementNames.ConnectionString, IsKey = true, IsRequired = true)]
         public string ConnectionString
         {
             get { return (string)this[ConfigElementNames.ConnectionString]; }
             set { base[ConfigElementNames.ConnectionString] = value; }
-        }
-
-        [ConfigurationProperty(ConfigElementNames.TaskTablePrefix, IsKey = true, IsRequired = true)]
-        public string TaskTablePrefix
-        {
-            get { return (string)base[ConfigElementNames.TaskTablePrefix]; }
-            set { base[ConfigElementNames.TaskTablePrefix] = value; }
         }
     }
 }
