@@ -18,6 +18,7 @@ using MilSpace.Core.Tools.SurfaceProfile.Actions;
 using MilSpace.Configurations;
 using System.Reflection;
 using System.IO;
+using System.Linq;
 
 namespace MilSpace.Profile
 {
@@ -89,14 +90,9 @@ namespace MilSpace.Profile
         }
 
 
-        private static void PopulateComboBox(ComboBox comboBox, List<ILayer> layers)
+        private static void PopulateComboBox(ComboBox comboBox, IEnumerable<ILayer> layers)
         {
-            var cmbItems = new List<string>();
-            foreach (var layer in layers)
-            {
-                cmbItems.Add(layer.Name);
-            }
-            comboBox.Items.AddRange(cmbItems.ToArray());
+            comboBox.Items.AddRange(layers.Select(l => l.Name).ToArray());
         }
 
         private void SubscribeForEvents()
