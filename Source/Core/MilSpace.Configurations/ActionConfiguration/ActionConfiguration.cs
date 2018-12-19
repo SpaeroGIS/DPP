@@ -17,17 +17,13 @@ namespace MilSpace.Configurations
         {
             get
             {
-                //if (loadActionAssemblies == null)
-                //{
-                //    //LoadActionAssembliesSection section = GetRootSectionGroup.Sections[LoadActionAssembliesSection.SectionName] as LoadActionAssembliesSection;
+                if (loadActionAssemblies == null)
+                {
+                    LoadActionAssembliesSection section = GetRootSectionGroup.Sections[LoadActionAssembliesSection.SectionName] as LoadActionAssembliesSection;
+                    loadActionAssemblies = section.AssemblyCollection.Cast<ActionAssemblyElement>().Select(r => new ActionsToLoad() { AssemblyName = r.AssemblyName, AssemblyGroupName = r.ActionsGroupName }).ToArray();
+                }
 
-
-
-
-                //    loadActionAssemblies = section.AssemblyCollection.Cast<ActionAssemblyElement>().Select(r => new ActionsToLoad() { AssemblyName = r.AssemblyName, AssemblyGroupName = r.ActionsGroupName }).ToArray();
-                //}
-
-                return new ActionsToLoad[] { new ActionsToLoad { AssemblyGroupName = "milspace", AssemblyName = "MilSpace.Core" } };
+                return loadActionAssemblies;
             }
         }
     }

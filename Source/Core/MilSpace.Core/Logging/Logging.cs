@@ -21,7 +21,7 @@ namespace MilSpace.Core
         {
         }
 
-        #region Methods to create Spaero.Logger
+        #region Methods to create Logger
         public static Logger GetLoggerEx(Type type)
         {
             Initiate();
@@ -58,7 +58,7 @@ namespace MilSpace.Core
                     XmlElement toConfig = null;
                     try
                     {
-                        FileInfo fi = new FileInfo(MilSpaceConfiguration.ConfigurationFilePath);
+                        FileInfo fi = new FileInfo(MilSpaceConfiguration.ConfigurationFileName);
                         if (fi.Exists)
                         {
                             XDocument xdoc = XDocument.Load(fi.FullName);

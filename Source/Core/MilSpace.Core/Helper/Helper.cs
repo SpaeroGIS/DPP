@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Xml.Serialization;
 using System.Globalization;
+using System.IO;
+using MilSpace.Configurations;
+using System.Reflection;
 
 namespace MilSpace.Core
 {
@@ -128,6 +131,12 @@ namespace MilSpace.Core
         public static string InvariantFormat(this string format, params object[] args)
         {
             return string.Format(CultureInfo.InvariantCulture, format, args);
+        }
+
+        public static void SetConfiguration()
+        {
+            var configFile = new FileInfo(Assembly.GetExecutingAssembly().Location);
+            MilSpaceConfiguration.ConfigurationFilePath = configFile.DirectoryName;
         }
 
     }

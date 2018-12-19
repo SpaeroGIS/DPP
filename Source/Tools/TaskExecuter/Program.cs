@@ -33,8 +33,7 @@ namespace TaskExecuter
                                 new ActionParam<string>() { ParamName = ActionParameters.FeatureClass, Value = args[0] },
                                 new ActionParam<string>() { ParamName = ActionParameters.ProfileSource, Value = args[1]  },
                                 new ActionParam<string>() { ParamName = ActionParameters.DataWorkSpace, Value = args[2]  },
-                               new ActionParam<string>() { ParamName = ActionParameters.OutGraphName, Value = args.Length > 3 ? args[3] : null },
-                               new ActionParam<string>() { ParamName = ActionParameters.OutGraphFileName, Value = args.Length > 4 ? args[4] : null                              } };
+                               new ActionParam<string>() { ParamName = ActionParameters.OutGraphName, Value = args.Length > 3 ? args[3] : null }};
 
 
             var procc = new ActionProcessor(prm);
