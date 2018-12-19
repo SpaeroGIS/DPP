@@ -36,7 +36,13 @@ namespace MilSpace.Configurations.Base
         /// <summary>
         /// Defines the section where the main connection is defined 
         /// </summary>
-        internal const string SpaeroConnection = "connection";
+        
+        internal const string MilSpaceConnections = "connections";
+
+        internal const string WorkingGDBConnectionSection = "workingGDB";
+        internal const string WorkingDBConnectionSection = "workingDB";
+        internal const string TemporaryGDBConnectionSection = "temporatyGDB";
+
 
         /// <summary>
         /// Python configuration section

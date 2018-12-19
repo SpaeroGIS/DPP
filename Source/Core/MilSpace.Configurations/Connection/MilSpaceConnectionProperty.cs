@@ -7,13 +7,17 @@ namespace MilSpace.Configurations.Connection
 {
     public class MilSpaceConnectionProperty
     {
-        public string ConnectionString
+        public string TemporaryGDBConnection
         {
             get;
             internal set;
         }
-
-        public string TaskTablePrefix
+        public string WorkingDBConnection
+        {
+            get;
+            internal set;
+        }
+        public string WorkingGDBConnection
         {
             get;
             internal set;
