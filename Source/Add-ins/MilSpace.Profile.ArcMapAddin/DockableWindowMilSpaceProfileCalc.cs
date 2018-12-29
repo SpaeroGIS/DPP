@@ -19,6 +19,7 @@ using MilSpace.Configurations;
 using System.Reflection;
 using System.IO;
 using System.Linq;
+using MilSpace.DataAccess.Facade;
 
 namespace MilSpace.Profile
 {
@@ -151,6 +152,13 @@ namespace MilSpace.Profile
 
         private void button4_Click(object sender, EventArgs e)
         {
+
+         //   GdbAccess.Instance.EraseProfileLines();
+
+            //Add lines
+            //GdbAccess.Instance.AddPrifileLinesToCalculation();
+
+
             var action = new ActionParam<string>()
             {
                 ParamName = ActionParamNamesCore.Action,
@@ -161,14 +169,16 @@ namespace MilSpace.Profile
             var profileSource = cmbRasterLayers.Text;
             string sdtnow = DateTime.Now.ToString("yyyyMMddHHmmss");
             var resuTable = $"{MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection}\\StackProfile{sdtnow}";
+            var profileLineFeatureClass = GdbAccess.Instance.ProfileLinesFeatureClass;
 
-            
+
+
             var prm = new List<IActionParam>
             {
                 action,
 //                new ActionParam<string>() { ParamName = ActionParameters.FeatureClass, Value = "E:\\Data\\MilSpace3D\\3DUTM368.gdb\\FCProfiles\\Profile01_L"},
 //                new ActionParam<string>() { ParamName = ActionParameters.ProfileSource, Value = "E:\\Data\\MilSpace3D\\3D\\cmr004" },
-                new ActionParam<string>() { ParamName = ActionParameters.FeatureClass, Value = "Profile01_L"},
+                new ActionParam<string>() { ParamName = ActionParameters.FeatureClass, Value = profileLineFeatureClass },
                 new ActionParam<string>() { ParamName = ActionParameters.ProfileSource, Value = profileSource },
                 new ActionParam<string>() { ParamName = ActionParameters.DataWorkSpace, Value = resuTable},
                 new ActionParam<string>() { ParamName = ActionParameters.OutGraphName, Value = ""}

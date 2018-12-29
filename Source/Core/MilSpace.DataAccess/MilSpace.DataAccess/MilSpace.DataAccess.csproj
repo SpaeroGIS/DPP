@@ -35,9 +35,10 @@
   <ItemGroup>
     <Reference Include="ESRI.ArcGIS.ADF.Local, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Desktop.AddIns">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Editor, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -45,7 +46,12 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Geodatabase, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.DataSourcesGDB, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.System, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -65,6 +71,9 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.DataManagementTools">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Geometry">
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -113,6 +122,7 @@
   <ItemGroup>
     <Compile Include="DataTransfer\ProfilePoint.cs" />
     <Compile Include="DataTransfer\ProfileSession.cs" />
+    <Compile Include="Facade\GdbAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -123,10 +133,7 @@
       <Project>{73334b96-54fd-4d83-b56d-967f8728d767}</Project>
       <Name>MilSpace.Configurations</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\MilSpace.Core\MilSpace.Core.csproj">
-      <Project>{02023d3d-4f73-4e7e-a78f-eeaa5d66deac}</Project>
-      <Name>MilSpace.Core</Name>
-    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
