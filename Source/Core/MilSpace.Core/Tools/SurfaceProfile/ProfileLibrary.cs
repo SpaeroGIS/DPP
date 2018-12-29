@@ -9,11 +9,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MilSpace.Configurations;
 
 namespace MilSpace.Core.Tools.SurfaceProfile
 {
     public static class ProfileLibrary
     {
+        private static readonly string environmentName = "workspace";
+        private static readonly string temporaryWorkspace = MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection;
+
         //-------------------------------------------------------------------------
         static ProfileLibrary()
         {
@@ -40,7 +44,8 @@ namespace MilSpace.Core.Tools.SurfaceProfile
             if (!string.IsNullOrEmpty(outGraphName)) stackProfile.out_graph = outGraphName;
 
             GeoProcessorResult gpResult = new GeoProcessorResult();
-            gp.SetEnvironmentValue("workspace", @"E:\Temp\ArcGIS\Default.gdb");
+
+            gp.SetEnvironmentValue(environmentName, temporaryWorkspace);
             return RunTool(gp, stackProfile, null);
         }
         //-------------------------------------------------------------------------

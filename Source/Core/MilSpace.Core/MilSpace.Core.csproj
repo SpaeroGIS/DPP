@@ -115,6 +115,7 @@
     <Compile Include="Actions\Interfaces\IActionProcessor.cs" />
     <Compile Include="Actions\Interfaces\IActonParam.cs" />
     <Compile Include="Actions\Interfaces\IDataEntity.cs" />
+    <Compile Include="Localization\LocalizationManager.cs" />
     <Compile Include="Logging\Logging.cs" />
     <Compile Include="MilSpaceAppDataSet.Designer.cs">
       <AutoGen>True</AutoGen>

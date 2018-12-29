@@ -72,6 +72,8 @@ namespace MilSpace.Profile
         public DockableWindowMilSpaceProfileGraph()
         {
             InitializeComponent();
+
+            
         }
 
         #region IDockableWindowDef Members
@@ -115,5 +117,10 @@ namespace MilSpace.Profile
         }
 
         #endregion
+
+        private void chart1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
