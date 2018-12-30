@@ -71,7 +71,7 @@
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.panel16 = new System.Windows.Forms.Panel();
             this.label23 = new System.Windows.Forms.Label();
-            this.textBox12 = new System.Windows.Forms.TextBox();
+            this.txtSecondHeight = new System.Windows.Forms.TextBox();
             this.label22 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.toolBar2 = new System.Windows.Forms.ToolBar();
@@ -83,12 +83,12 @@
             this.toolBarButton4 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton6 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton7 = new System.Windows.Forms.ToolBarButton();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.txtSecondPointY = new System.Windows.Forms.TextBox();
+            this.txtSecondPointX = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.panel17 = new System.Windows.Forms.Panel();
             this.label28 = new System.Windows.Forms.Label();
-            this.textBox15 = new System.Windows.Forms.TextBox();
+            this.txtFirstHeight = new System.Windows.Forms.TextBox();
             this.label29 = new System.Windows.Forms.Label();
             this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -101,8 +101,8 @@
             this.toolBarButton58 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton59 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton60 = new System.Windows.Forms.ToolBarButton();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtFirstPointY = new System.Windows.Forms.TextBox();
+            this.txtFirstPointX = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.panel12 = new System.Windows.Forms.Panel();
@@ -538,7 +538,7 @@
             // panel16
             // 
             this.panel16.Controls.Add(this.label23);
-            this.panel16.Controls.Add(this.textBox12);
+            this.panel16.Controls.Add(this.txtSecondHeight);
             this.panel16.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel16.Location = new System.Drawing.Point(3, 165);
             this.panel16.Name = "panel16";
@@ -557,14 +557,14 @@
             this.label23.TabIndex = 1;
             this.label23.Text = "м";
             // 
-            // textBox12
+            // txtSecondHeight
             // 
-            this.textBox12.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox12.Location = new System.Drawing.Point(8, 0);
-            this.textBox12.Name = "textBox12";
-            this.textBox12.Size = new System.Drawing.Size(86, 20);
-            this.textBox12.TabIndex = 0;
-            this.textBox12.Text = "25";
+            this.txtSecondHeight.Dock = System.Windows.Forms.DockStyle.Left;
+            this.txtSecondHeight.Location = new System.Drawing.Point(8, 0);
+            this.txtSecondHeight.Name = "txtSecondHeight";
+            this.txtSecondHeight.Size = new System.Drawing.Size(86, 20);
+            this.txtSecondHeight.TabIndex = 0;
+            this.txtSecondHeight.Text = "25";
             // 
             // label22
             // 
@@ -580,8 +580,8 @@
             // panel5
             // 
             this.panel5.Controls.Add(this.toolBar2);
-            this.panel5.Controls.Add(this.textBox3);
-            this.panel5.Controls.Add(this.textBox4);
+            this.panel5.Controls.Add(this.txtSecondPointY);
+            this.panel5.Controls.Add(this.txtSecondPointX);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(3, 118);
             this.panel5.Name = "panel5";
@@ -650,24 +650,24 @@
             this.toolBarButton7.ImageKey = "Cancel.png";
             this.toolBarButton7.Name = "toolBarButton7";
             // 
-            // textBox3
+            // txtSecondPointY
             // 
-            this.textBox3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox3.Location = new System.Drawing.Point(94, 0);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(86, 20);
-            this.textBox3.TabIndex = 1;
-            this.textBox3.Text = "50.54321";
+            this.txtSecondPointY.Dock = System.Windows.Forms.DockStyle.Left;
+            this.txtSecondPointY.Location = new System.Drawing.Point(94, 0);
+            this.txtSecondPointY.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
+            this.txtSecondPointY.Name = "txtSecondPointY";
+            this.txtSecondPointY.Size = new System.Drawing.Size(86, 20);
+            this.txtSecondPointY.TabIndex = 1;
+            this.txtSecondPointY.Text = "50.54321";
             // 
-            // textBox4
+            // txtSecondPointX
             // 
-            this.textBox4.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox4.Location = new System.Drawing.Point(8, 0);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(86, 20);
-            this.textBox4.TabIndex = 0;
-            this.textBox4.Text = "36.54333";
+            this.txtSecondPointX.Dock = System.Windows.Forms.DockStyle.Left;
+            this.txtSecondPointX.Location = new System.Drawing.Point(8, 0);
+            this.txtSecondPointX.Name = "txtSecondPointX";
+            this.txtSecondPointX.Size = new System.Drawing.Size(86, 20);
+            this.txtSecondPointX.TabIndex = 0;
+            this.txtSecondPointX.Text = "36.54333";
             // 
             // label9
             // 
@@ -683,7 +683,7 @@
             // panel17
             // 
             this.panel17.Controls.Add(this.label28);
-            this.panel17.Controls.Add(this.textBox15);
+            this.panel17.Controls.Add(this.txtFirstHeight);
             this.panel17.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel17.Location = new System.Drawing.Point(3, 71);
             this.panel17.Name = "panel17";
@@ -702,14 +702,14 @@
             this.label28.TabIndex = 1;
             this.label28.Text = "м";
             // 
-            // textBox15
+            // txtFirstHeight
             // 
-            this.textBox15.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox15.Location = new System.Drawing.Point(8, 0);
-            this.textBox15.Name = "textBox15";
-            this.textBox15.Size = new System.Drawing.Size(86, 20);
-            this.textBox15.TabIndex = 0;
-            this.textBox15.Text = "25";
+            this.txtFirstHeight.Dock = System.Windows.Forms.DockStyle.Left;
+            this.txtFirstHeight.Location = new System.Drawing.Point(8, 0);
+            this.txtFirstHeight.Name = "txtFirstHeight";
+            this.txtFirstHeight.Size = new System.Drawing.Size(86, 20);
+            this.txtFirstHeight.TabIndex = 0;
+            this.txtFirstHeight.Text = "25";
             // 
             // label29
             // 
@@ -736,8 +736,8 @@
             // panel4
             // 
             this.panel4.Controls.Add(this.toolBar1);
-            this.panel4.Controls.Add(this.textBox2);
-            this.panel4.Controls.Add(this.textBox1);
+            this.panel4.Controls.Add(this.txtFirstPointY);
+            this.panel4.Controls.Add(this.txtFirstPointX);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(3, 24);
             this.panel4.Name = "panel4";
@@ -807,24 +807,24 @@
             this.toolBarButton60.ImageKey = "Cancel.png";
             this.toolBarButton60.Name = "toolBarButton60";
             // 
-            // textBox2
+            // txtFirstPointY
             // 
-            this.textBox2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox2.Location = new System.Drawing.Point(94, 0);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(86, 20);
-            this.textBox2.TabIndex = 1;
-            this.textBox2.Text = "50.12345";
+            this.txtFirstPointY.Dock = System.Windows.Forms.DockStyle.Left;
+            this.txtFirstPointY.Location = new System.Drawing.Point(94, 0);
+            this.txtFirstPointY.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
+            this.txtFirstPointY.Name = "txtFirstPointY";
+            this.txtFirstPointY.Size = new System.Drawing.Size(86, 20);
+            this.txtFirstPointY.TabIndex = 1;
+            this.txtFirstPointY.Text = "50.12345";
             // 
-            // textBox1
+            // txtFirstPointX
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox1.Location = new System.Drawing.Point(8, 0);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(86, 20);
-            this.textBox1.TabIndex = 0;
-            this.textBox1.Text = "36.54321";
+            this.txtFirstPointX.Dock = System.Windows.Forms.DockStyle.Left;
+            this.txtFirstPointX.Location = new System.Drawing.Point(8, 0);
+            this.txtFirstPointX.Name = "txtFirstPointX";
+            this.txtFirstPointX.Size = new System.Drawing.Size(86, 20);
+            this.txtFirstPointX.TabIndex = 0;
+            this.txtFirstPointX.Text = "36.54321";
             // 
             // label8
             // 
@@ -2095,7 +2095,7 @@
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Panel panel16;
         private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.TextBox textBox12;
+        private System.Windows.Forms.TextBox txtSecondHeight;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.ToolBar toolBar2;
@@ -2107,12 +2107,12 @@
         private System.Windows.Forms.ToolBarButton toolBarButton4;
         private System.Windows.Forms.ToolBarButton toolBarButton6;
         private System.Windows.Forms.ToolBarButton toolBarButton7;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox txtSecondPointY;
+        private System.Windows.Forms.TextBox txtSecondPointX;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Panel panel17;
         private System.Windows.Forms.Label label28;
-        private System.Windows.Forms.TextBox textBox15;
+        private System.Windows.Forms.TextBox txtFirstHeight;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.RichTextBox richTextBox2;
         private System.Windows.Forms.Panel panel4;
@@ -2125,8 +2125,8 @@
         private System.Windows.Forms.ToolBarButton toolBarButton58;
         private System.Windows.Forms.ToolBarButton toolBarButton59;
         private System.Windows.Forms.ToolBarButton toolBarButton60;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtFirstPointY;
+        private System.Windows.Forms.TextBox txtFirstPointX;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.Panel panel12;

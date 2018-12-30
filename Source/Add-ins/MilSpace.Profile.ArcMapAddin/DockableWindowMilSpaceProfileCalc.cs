@@ -19,7 +19,11 @@ using MilSpace.Configurations;
 using System.Reflection;
 using System.IO;
 using System.Linq;
+using System.Windows.Media;
+using ESRI.ArcGIS.Display;
+using ESRI.ArcGIS.Geometry;
 using MilSpace.DataAccess.Facade;
+using Point = ESRI.ArcGIS.Geometry.Point;
 
 namespace MilSpace.Profile
 {
@@ -153,10 +157,26 @@ namespace MilSpace.Profile
         private void button4_Click(object sender, EventArgs e)
         {
 
-         //   GdbAccess.Instance.EraseProfileLines();
+            //GdbAccess.Instance.EraseProfileLines();
 
             //Add lines
-            //GdbAccess.Instance.AddPrifileLinesToCalculation();
+            var map = ArcMap.Document.ActiveView.FocusMap;
+            var segment = GetSegment();
+            var geometry = (IGeometry)segment;
+            IRgbColor col = new RgbColorClass();
+            col.Red = 133;
+            col.Green = 135;
+            col.Blue = 43;
+
+            IRgbColor col2 = new RgbColorClass();
+            col.Red = 133;
+            col.Green = 135;
+            col.Blue = 43;
+
+            AddGraphicToMap(map, geometry,col, col2);
+
+
+            GdbAccess.Instance.AddPrifileLinesToCalculation(segment.FromPoint.X, segment.FromPoint.Y, segment.ToPoint.X, segment.ToPoint.Y);
 
 
             var action = new ActionParam<string>()
@@ -190,5 +210,115 @@ namespace MilSpace.Profile
 
             MessageBox.Show("Calculated");
         }
+
+        private ILine GetSegment()
+        {
+            //var firstPoint = new ESRI.ArcGIS.Geometry.Point();
+            //var secondPoint = new ESRI.ArcGIS.Geometry.Point();
+            //firstPoint.PutCoords(Double.Parse(txtFirstPointX.Text), Double.Parse(txtFirstPointY.Text));
+            //secondPoint.PutCoords(Double.Parse(txtSecondPointX.Text), Double.Parse(txtSecondPointY.Text) );
+
+            //var line = new Line();
+            //line.FromPoint = firstPoint;
+            //line.ToPoint = secondPoint;
+            //line.Geom
+
+            Point fromPoint = new PointClass();
+            fromPoint.X = double.Parse(txtFirstPointX.Text, System.Globalization.CultureInfo.InvariantCulture);
+            fromPoint.Y = double.Parse(txtFirstPointY.Text, System.Globalization.CultureInfo.InvariantCulture);
+
+            Point toPoint = new PointClass();
+            toPoint.X = double.Parse(txtSecondPointX.Text, System.Globalization.CultureInfo.InvariantCulture);
+            toPoint.Y = double.Parse(txtSecondPointY.Text, System.Globalization.CultureInfo.InvariantCulture);
+
+            ILine segment = new LineClass();
+            segment.FromPoint = fromPoint;
+            segment.ToPoint = toPoint;
+            return segment;
+
+        }
+
+        public void AddGraphicToMap(ESRI.ArcGIS.Carto.IMap map, ESRI.ArcGIS.Geometry.IGeometry geometry,
+            ESRI.ArcGIS.Display.IRgbColor rgbColor, ESRI.ArcGIS.Display.IRgbColor outlineRgbColor)
+        {
+            ESRI.ArcGIS.Carto.IGraphicsContainer graphicsContainer = (ESRI.ArcGIS.Carto.IGraphicsContainer)map; // Explicit Cast
+            ESRI.ArcGIS.Carto.IElement element = null;
+            if ((geometry.GeometryType) == ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPoint)
+            {
+                // Marker symbols
+                ESRI.ArcGIS.Display.ISimpleMarkerSymbol simpleMarkerSymbol = new ESRI.ArcGIS.Display.SimpleMarkerSymbolClass();
+                simpleMarkerSymbol.Color = rgbColor;
+                simpleMarkerSymbol.Outline = true;
+                simpleMarkerSymbol.OutlineColor = outlineRgbColor;
+                simpleMarkerSymbol.Size = 15;
+                simpleMarkerSymbol.Style = ESRI.ArcGIS.Display.esriSimpleMarkerStyle.esriSMSCircle;
+
+                ESRI.ArcGIS.Carto.IMarkerElement markerElement = new ESRI.ArcGIS.Carto.MarkerElementClass();
+                markerElement.Symbol = simpleMarkerSymbol;
+                element = (ESRI.ArcGIS.Carto.IElement)markerElement; // Explicit Cast
+            }
+            else if ((geometry.GeometryType) == ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPolyline)
+            {
+                //  Line elements
+                ESRI.ArcGIS.Display.ISimpleLineSymbol simpleLineSymbol = new ESRI.ArcGIS.Display.SimpleLineSymbolClass();
+                simpleLineSymbol.Color = rgbColor;
+                simpleLineSymbol.Style = ESRI.ArcGIS.Display.esriSimpleLineStyle.esriSLSSolid;
+                simpleLineSymbol.Width = 5;
+
+                ESRI.ArcGIS.Carto.ILineElement lineElement = new ESRI.ArcGIS.Carto.LineElementClass();
+                lineElement.Symbol = simpleLineSymbol;
+                element = (ESRI.ArcGIS.Carto.IElement)lineElement; // Explicit Cast
+            }
+            else if ((geometry.GeometryType) == ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPolygon)
+            {
+                // Polygon elements
+                ESRI.ArcGIS.Display.ISimpleFillSymbol simpleFillSymbol = new ESRI.ArcGIS.Display.SimpleFillSymbolClass();
+                simpleFillSymbol.Color = rgbColor;
+                simpleFillSymbol.Style = ESRI.ArcGIS.Display.esriSimpleFillStyle.esriSFSForwardDiagonal;
+                ESRI.ArcGIS.Carto.IFillShapeElement fillShapeElement = new ESRI.ArcGIS.Carto.PolygonElementClass();
+                fillShapeElement.Symbol = simpleFillSymbol;
+                element = (ESRI.ArcGIS.Carto.IElement)fillShapeElement; // Explicit Cast
+            }
+            if (!(element == null))
+            {
+                element.Geometry = geometry;
+                graphicsContainer.AddElement(element, 0);
+            }
+        }
+
+        private async void AddPolylineToMap()
+        {
+            Map map = (Map) ArcMap.Document.ActiveView.FocusMap;
+            var graphicLayerUUID = new ESRI.ArcGIS.esriSystem.UIDClass();
+            graphicLayerUUID.Value = "MyGraphics";
+
+
+            var graphicsLayer = ArcMap.Document.ActiveView.FocusMap.Layers[graphicLayerUUID] as Esri.ArcGISRuntime.Layers.GraphicsLayer;
+            if (graphicsLayer == null)
+            {
+                graphicsLayer = new Esri.ArcGISRuntime.Layers.GraphicsLayer();
+                graphicsLayer.ID = "MyGraphics";
+              //  map.Layers.Add(graphicsLayer);
+            }
+            var lineSymbol = new Esri.ArcGISRuntime.Symbology.SimpleLineSymbol();
+            lineSymbol.Color = Colors.Blue;
+            lineSymbol.Style = Esri.ArcGISRuntime.Symbology.SimpleLineStyle.Dash;
+            lineSymbol.Width = 2;
+
+            // use the MapView's Editor to get polyline geometry from the user
+          //  var line = await map.Editor.RequestShapeAsync(Esri.ArcGISRuntime.Controls.DrawShape.Polyline,
+            //    lineSymbol, null);
+
+            // create a new graphic; set the Geometry and Symbol
+            var lineGraphic = new Esri.ArcGISRuntime.Layers.Graphic();
+          //  lineGraphic.Geometry = line;
+            lineGraphic.Symbol = lineSymbol;
+
+            // add the graphic to the graphics layer
+            graphicsLayer.Graphics.Add(lineGraphic);
+        }
+
+
+
     }
 }
