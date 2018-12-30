@@ -60,3 +60,13 @@
 /Model/ArcMapAddin_MilSpace_Profile/obj/Release/MilSpace.Profile.ArcGISAddIn.csproj.CoreCompileInputs.cache
 /Model/ArcMapAddin_MilSpace_Profile/obj/Release/MilSpace.Profile.ArcGISAddIn.csprojAssemblyReference.cache
 /Source/Solutions/.vs/config/applicationhost.config
+/Model/AppModelInterfaceDPP201811/obj/Release/AppModelInterfaceDPP201811.csprojAssemblyReference.cache
+/Source/Core/MilSpace.ArcGIS.License/ArcGIS.v10/bin/Debug
+/Source/Core/MilSpace.ArcGIS.License/LicenseCheck/obj/Release/LicenseCheck.csproj.CoreCompileInputs.cache
+/Source/Core/MilSpace.Core/obj/Release/MilSpace.Core.csproj.CoreCompileInputs.cache
+/Source/Core/MilSpace.Core/obj/Release/MilSpace.Core.csprojAssemblyReference.cache
+/Source/Core/MilSpace.DataAccess/MilSpace.DataAccess/obj/Release/MilSpace.DataAccess.csproj.CoreCompileInputs.cache
+/Source/Modules/MilSpace.Visibility/obj/Release/ArcMapAddin_MilSpace_Visibility.csproj.CoreCompileInputs.cache
+/Source/Modules/MilSpace.Visibility/obj/Release/ArcMapAddin_MilSpace_Visibility.csprojAssemblyReference.cache
+/Source/Solutions/.vs/MilSpace.All/v15/.suo
+/Source/Tools/TaskExecuter/obj/Release/TaskExecuter.csproj.CoreCompileInputs.cache
