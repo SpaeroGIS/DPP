@@ -175,9 +175,7 @@ namespace MilSpace.Profile
 
             AddGraphicToMap(map, geometry,col, col2);
 
-
-            GdbAccess.Instance.AddPrifileLinesToCalculation(segment.FromPoint.X, segment.FromPoint.Y, segment.ToPoint.X, segment.ToPoint.Y);
-
+            string profileSourceName = GdbAccess.Instance.AddProfileLinesToCalculation(new ILine[] { segment });
 
             var action = new ActionParam<string>()
             {
@@ -187,10 +185,9 @@ namespace MilSpace.Profile
 
 
             var profileSource = cmbRasterLayers.Text;
-            string sdtnow = DateTime.Now.ToString("yyyyMMddHHmmss");
+            string sdtnow = MilSpace.DataAccess.Helper.GetTemporaryNameSuffix();
             var resuTable = $"{MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection}\\StackProfile{sdtnow}";
-            var profileLineFeatureClass = GdbAccess.Instance.ProfileLinesFeatureClass;
-
+            var profileLineFeatureClass = GdbAccess.Instance.GetProfileLinesFeatureClass(profileSourceName);
 
 
             var prm = new List<IActionParam>

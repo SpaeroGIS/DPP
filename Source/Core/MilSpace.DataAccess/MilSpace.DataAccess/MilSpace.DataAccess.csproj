@@ -37,6 +37,12 @@
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
+    <Reference Include="ESRI.ArcGIS.ArcMapUI, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Carto, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="ESRI.ArcGIS.Desktop.AddIns">
       <Private>False</Private>
     </Reference>
@@ -120,15 +126,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArcMapInstance.cs" />
     <Compile Include="DataTransfer\ProfilePoint.cs" />
     <Compile Include="DataTransfer\ProfileSession.cs" />
     <Compile Include="Facade\GdbAccess.cs" />
+    <Compile Include="Helper.cs" />
+    <Compile Include="Hooks.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Add-ins\MilSpace.Visibility.ArcMapAddin\MilSpace.Visibility.ArcMapAddin.csproj">
+      <Project>{B8A76C95-CC2B-4643-BBF8-ED33BDA7F512}</Project>
+      <Name>MilSpace.Visibility.ArcMapAddin</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\MilSpace.Configurations\MilSpace.Configurations.csproj">
       <Project>{73334b96-54fd-4d83-b56d-967f8728d767}</Project>
       <Name>MilSpace.Configurations</Name>
