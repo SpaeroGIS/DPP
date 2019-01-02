@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using MilSpace.Configurations;
 using System.Reflection;
+using ESRI.ArcGIS.Geometry;
 
 namespace MilSpace.Core
 {
@@ -138,6 +139,5 @@ namespace MilSpace.Core
             var configFile = new FileInfo(Assembly.GetExecutingAssembly().Location);
             MilSpaceConfiguration.ConfigurationFilePath = configFile.DirectoryName;
         }
-
     }
 }

@@ -9,14 +9,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using ESRI.ArcGIS.Geometry;
+using ESRI.ArcGIS.Framework;
 
 namespace MilSpace.DataAccess.Facade
 {
     public class GdbAccess
     {
         private static GdbAccess instance = null;
+        private static IApplication application = null;
 
-        private static string calcFeatureClass = "CalcProfile_L";
+        private static readonly string calcFeatureClass = "CalcProfile_L";
+
         private GdbAccess()
         {
             string calcGdb = MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection;
@@ -44,48 +47,125 @@ namespace MilSpace.DataAccess.Facade
             }
         }
         private static IWorkspace calcWorkspace = null;
-        public void AddPrifileLinesToCalculation(double xFrom, double yFrom, double xTo, double yTo)
+        public string AddProfileLinesToCalculation(IEnumerable<ILine> profileLines)
+        {
+
+            string featureClassName = GenerateTempProfileLinesStorage();
+
+            IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)calcWorkspace;
+            workspaceEdit.StartEditing(true);
+            workspaceEdit.StartEditOperation();
+
+
+            IFeatureClass calc = GetCalcProfileFeatureClass(featureClassName);
+            var GCS_WGS = Helper.GetBasePointSpatialReference();
+
+
+            profileLines.ToList().ForEach(
+                l =>
+                {
+
+                    var newLine = calc.CreateFeature();
+                    WKSPoint[] segmentWksPoints = new WKSPoint[2];
+                    ISubtypes subtypes = (ISubtypes)calc;
+                    IRowSubtypes rowSubtypes = (IRowSubtypes)newLine;
+                    if (subtypes.HasSubtype)                                // does the feature class have subtypes?        
+                    {
+                        rowSubtypes.SubtypeCode = 1;                        //
+                    }
+                    segmentWksPoints[0].X = l.FromPoint.X;
+                    segmentWksPoints[0].Y = l.FromPoint.Y;
+                    segmentWksPoints[1].X = l.ToPoint.X;
+                    segmentWksPoints[1].Y = l.ToPoint.Y;
+
+                    //TODO: create Id value
+                    //newLine.set_Value(newLine.Fields.FindField("ID"), newId);
+
+                    IPointCollection4 trackLine = new PolylineClass();
+
+                    IGeometryBridge2 m_geometryBridge = new GeometryEnvironmentClass();
+                    m_geometryBridge.AddWKSPoints(trackLine, ref segmentWksPoints);
+                    IGeometry trackGeometry = trackLine as IGeometry;
+                    trackGeometry.SpatialReference = GCS_WGS;
+                    trackGeometry.Project(newLine.Shape.SpatialReference);
+                    newLine.Shape = trackGeometry;
+
+                    newLine.Store();
+                }
+                );
+
+
+            workspaceEdit.StopEditOperation();
+            workspaceEdit.StopEditing(true);
+
+            return featureClassName;
+        }
+
+        public IApplication Application
+        {
+            set
+            {
+                if (application == null)
+                {
+                    ArcMapInstance.Application = application = value;
+                }
+            }
+        }
+
+        public string GenerateTempProfileLinesStorage()
         {
             IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)calcWorkspace;
             workspaceEdit.StartEditing(true);
             workspaceEdit.StartEditOperation();
 
-            IFeatureClass calc = GetCalcProfileFeatureClass();
+            string newFeatureClassName = $"{calcFeatureClass}{MilSpace.DataAccess.Helper.GetTemporaryNameSuffix()}";
 
-            var newLine = calc.CreateFeature();
-            IPolyline polyline = new PolylineClass();
-            WKSPoint[] segmentWksPoints = new WKSPoint[2];
-            ISubtypes subtypes = (ISubtypes)calc;
-            IRowSubtypes rowSubtypes = (IRowSubtypes)newLine;
-            if (subtypes.HasSubtype)                                // does the feature class have subtypes?        
+            IWorkspace2 wsp2 = (IWorkspace2)calcWorkspace;
+            IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)calcWorkspace;
+
+            if (!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, newFeatureClassName))
             {
-                rowSubtypes.SubtypeCode = 1;                        //
+
+                IFeatureClassDescription fcDescription = new FeatureClassDescriptionClass();
+                IObjectClassDescription ocDescription = (IObjectClassDescription)fcDescription;
+                IFields fields = ocDescription.RequiredFields;
+
+
+                // Find the shape field in the required fields and modify its GeometryDef to
+                // use point geometry and to set the spatial reference.
+
+                int shapeFieldIndex = fields.FindField(fcDescription.ShapeFieldName);
+
+                IField field = fields.get_Field(shapeFieldIndex);
+                IGeometryDef geometryDef = field.GeometryDef;
+                IGeometryDefEdit geometryDefEdit = (IGeometryDefEdit)geometryDef;
+                geometryDefEdit.GeometryType_2 = esriGeometryType.esriGeometryPolyline;
+                geometryDefEdit.SpatialReference_2 = ArcMapInstance.Document.FocusMap.SpatialReference; ;
+
+                IFieldsEdit fieldsEdit = (IFieldsEdit)fields;
+                IField nameField = new FieldClass();
+                IFieldEdit nameFieldEdit = (IFieldEdit)nameField;
+                nameFieldEdit.Name_2 = "ID";
+                nameFieldEdit.Type_2 = esriFieldType.esriFieldTypeInteger;
+                fieldsEdit.AddField(nameField);
+
+                IFeatureClass featureClass = featureWorkspace.CreateFeatureClass(newFeatureClassName, fields,
+                    ocDescription.InstanceCLSID, ocDescription.ClassExtensionCLSID, esriFeatureType.esriFTSimple, "shape", "");
+
             }
-            segmentWksPoints[0].X = xFrom;
-            segmentWksPoints[0].Y = yFrom;
-            segmentWksPoints[1].X = xTo;
-            segmentWksPoints[1].Y = yTo;
 
-            //TODO: create Id value
-            //newLine.set_Value(newLine.Fields.FindField("ID"), newId);
-
-            IPointCollection4 trackLine = new PolylineClass();
-            IGeometryBridge2 m_geometryBridge = new GeometryEnvironmentClass();
-            m_geometryBridge.AddWKSPoints(trackLine, ref segmentWksPoints);
-            IGeometry trackGeometry = trackLine as IGeometry;
-            newLine.Shape = trackGeometry;
-
-            newLine.Store();
             workspaceEdit.StopEditOperation();
             workspaceEdit.StopEditing(true);
+
+            return newFeatureClassName;
+
         }
 
         public void EraseProfileLines()
         {
-            IFeatureClass calc = GetCalcProfileFeatureClass();
+            IFeatureClass calc = GetCalcProfileFeatureClass("CalcProfile_L");
             IQueryFilter queryFilter = new QueryFilterClass();
             queryFilter.WhereClause = "OBJECTID > 0";
-
 
             IFeatureCursor featureCursor = calc.Search(queryFilter, true);
 
@@ -103,24 +183,24 @@ namespace MilSpace.DataAccess.Facade
 
         }
 
-        public string ProfileLinesFeatureClass
+        public string GetProfileLinesFeatureClass(string profileSourceName)
         {
-            get { return $"{ MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection}\\{calcFeatureClass}"; }
+            { return $"{ MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection}\\{profileSourceName}"; }
         }
 
-        private IFeatureClass GetCalcProfileFeatureClass()
+        private IFeatureClass GetCalcProfileFeatureClass(string currentFeatureClass)
         {
 
             IWorkspace2 wsp2 = (IWorkspace2)calcWorkspace;
             IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)calcWorkspace;
 
-            if (!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, calcFeatureClass))
+            if (!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, currentFeatureClass))
             {
                 //TODO: Create the feature class
-                throw new FileNotFoundException(calcFeatureClass);
+                throw new FileNotFoundException(currentFeatureClass);
             }
 
-            return featureWorkspace.OpenFeatureClass(calcFeatureClass);
+            return featureWorkspace.OpenFeatureClass(currentFeatureClass);
         }
 
 
