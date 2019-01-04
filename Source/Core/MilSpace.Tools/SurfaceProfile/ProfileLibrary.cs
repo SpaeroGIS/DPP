@@ -3,7 +3,6 @@ using ESRI.ArcGIS.DataManagementTools;
 using ESRI.ArcGIS.Geoprocessing;
 using ESRI.ArcGIS.Geoprocessor;
 using ESRI.ArcGIS.esriSystem;
-using MilSpace.ArcGIS.License;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MilSpace.Configurations;
 
-namespace MilSpace.Core.Tools.SurfaceProfile
+namespace MilSpace.Tools.SurfaceProfile
 {
     public static class ProfileLibrary
     {
@@ -21,10 +20,7 @@ namespace MilSpace.Core.Tools.SurfaceProfile
         //-------------------------------------------------------------------------
         static ProfileLibrary()
         {
-            if (!MilSpaceToolsLicenseInitializer.Instance.Initialized)
-            {
-                MilSpaceToolsLicenseInitializer.Instance.InitializeApplication();
-            }
+           
         }
         //-------------------------------------------------------------------------
         internal static bool GenerateProfileData(

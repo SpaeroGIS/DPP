@@ -188,6 +188,21 @@ namespace MilSpace.DataAccess.Facade
             { return $"{ MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection}\\{profileSourceName}"; }
         }
 
+        public ITable GetProfileTable(string resultTable)
+        {
+            IWorkspace2 wsp2 = (IWorkspace2)calcWorkspace;
+            IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)calcWorkspace;
+
+            if (!wsp2.get_NameExists(esriDatasetType.esriDTTable, resultTable))
+            {
+                //TODO: Create the feature class
+                throw new FileNotFoundException(resultTable);
+            }
+
+            return featureWorkspace.OpenTable(resultTable);
+        }
+
+
         private IFeatureClass GetCalcProfileFeatureClass(string currentFeatureClass)
         {
 
@@ -202,6 +217,8 @@ namespace MilSpace.DataAccess.Facade
 
             return featureWorkspace.OpenFeatureClass(currentFeatureClass);
         }
+
+
 
 
     }

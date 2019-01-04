@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MilSpace.DataAccess.DataTransfer
 {
-    public class ProfilePoint
+    public class ProfileSurface
     {
-        double X;
-        double Y;
+        public ProfileSurfacePoint[] ProfileSurfacePoints;
+        public int LineId;
     }
 }

@@ -14,7 +14,7 @@ using MilSpace.Core.Actions;
 using MilSpace.Core.Actions.ActionResults;
 using MilSpace.Core.Actions.Base;
 using MilSpace.Core.Actions.Interfaces;
-using MilSpace.Core.Tools.SurfaceProfile.Actions;
+using MilSpace.Tools.SurfaceProfile.Actions;
 using MilSpace.Configurations;
 using System.Reflection;
 using System.IO;
@@ -24,6 +24,7 @@ using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.DataAccess.Facade;
 using Point = ESRI.ArcGIS.Geometry.Point;
+using MilSpace.Tools;
 
 namespace MilSpace.Profile
 {
@@ -173,39 +174,23 @@ namespace MilSpace.Profile
             col.Green = 135;
             col.Blue = 43;
 
-            AddGraphicToMap(map, geometry,col, col2);
+            AddGraphicToMap(map, geometry, col, col2);
 
-            string profileSourceName = GdbAccess.Instance.AddProfileLinesToCalculation(new ILine[] { segment });
+            ProfileManager manager = new ProfileManager();
 
-            var action = new ActionParam<string>()
+            try
             {
-                ParamName = ActionParamNamesCore.Action,
-                Value = ActionsEnum.bsp.ToString()
-            };
-
-
-            var profileSource = cmbRasterLayers.Text;
-            string sdtnow = MilSpace.DataAccess.Helper.GetTemporaryNameSuffix();
-            var resuTable = $"{MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection}\\StackProfile{sdtnow}";
-            var profileLineFeatureClass = GdbAccess.Instance.GetProfileLinesFeatureClass(profileSourceName);
-
-
-            var prm = new List<IActionParam>
+                manager.GenerateProfile(cmbRasterLayers.Text, new ILine[] { segment });
+                MessageBox.Show("Calculated");
+            }
+            catch (Exception ex)
             {
-                action,
-//                new ActionParam<string>() { ParamName = ActionParameters.FeatureClass, Value = "E:\\Data\\MilSpace3D\\3DUTM368.gdb\\FCProfiles\\Profile01_L"},
-//                new ActionParam<string>() { ParamName = ActionParameters.ProfileSource, Value = "E:\\Data\\MilSpace3D\\3D\\cmr004" },
-                new ActionParam<string>() { ParamName = ActionParameters.FeatureClass, Value = profileLineFeatureClass },
-                new ActionParam<string>() { ParamName = ActionParameters.ProfileSource, Value = profileSource },
-                new ActionParam<string>() { ParamName = ActionParameters.DataWorkSpace, Value = resuTable},
-                new ActionParam<string>() { ParamName = ActionParameters.OutGraphName, Value = ""}
-            };
+                //TODO log error
+                MessageBox.Show("Calcu;lation error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
 
-            var procc = new ActionProcessor(prm);
-            var res = procc.Process<StringActionResult>();
 
-            MessageBox.Show("Calculated");
         }
 
         private ILine GetSegment()
@@ -285,7 +270,7 @@ namespace MilSpace.Profile
 
         private async void AddPolylineToMap()
         {
-            Map map = (Map) ArcMap.Document.ActiveView.FocusMap;
+            Map map = (Map)ArcMap.Document.ActiveView.FocusMap;
             var graphicLayerUUID = new ESRI.ArcGIS.esriSystem.UIDClass();
             graphicLayerUUID.Value = "MyGraphics";
 
@@ -295,7 +280,7 @@ namespace MilSpace.Profile
             {
                 graphicsLayer = new Esri.ArcGISRuntime.Layers.GraphicsLayer();
                 graphicsLayer.ID = "MyGraphics";
-              //  map.Layers.Add(graphicsLayer);
+                //  map.Layers.Add(graphicsLayer);
             }
             var lineSymbol = new Esri.ArcGISRuntime.Symbology.SimpleLineSymbol();
             lineSymbol.Color = Colors.Blue;
@@ -303,18 +288,17 @@ namespace MilSpace.Profile
             lineSymbol.Width = 2;
 
             // use the MapView's Editor to get polyline geometry from the user
-          //  var line = await map.Editor.RequestShapeAsync(Esri.ArcGISRuntime.Controls.DrawShape.Polyline,
+            //  var line = await map.Editor.RequestShapeAsync(Esri.ArcGISRuntime.Controls.DrawShape.Polyline,
             //    lineSymbol, null);
 
             // create a new graphic; set the Geometry and Symbol
             var lineGraphic = new Esri.ArcGISRuntime.Layers.Graphic();
-          //  lineGraphic.Geometry = line;
+            //  lineGraphic.Geometry = line;
             lineGraphic.Symbol = lineSymbol;
 
             // add the graphic to the graphics layer
             graphicsLayer.Graphics.Add(lineGraphic);
         }
-
 
 
     }
