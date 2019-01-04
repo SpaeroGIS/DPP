@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MilSpace.Core.Tools.SurfaceProfile.Actions
+namespace MilSpace.Tools.SurfaceProfile.Actions
 {
     public class ActionParameters : ActionParamNamesCore
     {

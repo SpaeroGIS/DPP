@@ -205,6 +205,10 @@
       <Project>{651c40fa-e0b6-45ff-9b3e-9341eb671754}</Project>
       <Name>MilSpace.DataAccess</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Core\MilSpace.Tools\MilSpace.Tools.csproj">
+      <Project>{cbd5675b-f382-497d-98cc-70539ed658b9}</Project>
+      <Name>MilSpace.Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>

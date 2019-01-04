@@ -8,15 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using A = MilSpace.Core.Actions.Base;
 
-namespace MilSpace.Core.Tools.SurfaceProfile.Actions
+namespace MilSpace.Tools.SurfaceProfile.Actions
 {
-    class BuildStackProfileAction : A.Action<StringActionResult>
+    class BuildStackProfileAction : A.Action<BoolResult>
     {
         private string featureClass;
         private string profileSource;
         private string outGraphName;
         private string tableName;
-        private StringActionResult result;
+        private BoolResult result;
 
         public BuildStackProfileAction() : base()
         {
@@ -50,23 +50,19 @@ namespace MilSpace.Core.Tools.SurfaceProfile.Actions
         }
 
 
-        public override StringActionResult GetResult()
+        public override BoolResult GetResult()
         {
             return result;
         }
 
         public override void Process()
         {
+            result = new BoolResult();
+            result.Result = false;
+
             try
             {
-                result = new StringActionResult();
-                result.Result = "Error";
-
-                if (ProfileLibrary.GenerateProfileData(featureClass, profileSource, tableName))
-                {
-                    result.Result = "Ok";
-                }
-
+                result.Result = ProfileLibrary.GenerateProfileData(featureClass, profileSource, tableName);
             }
             catch (Exception ex)
             {
