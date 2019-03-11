@@ -10,5 +10,8 @@ namespace MilSpace.DataAccess.DataTransfer
     {
         public double Distance;
         public double Z;
+        public double X;
+        public double Y;
+
     }
 }

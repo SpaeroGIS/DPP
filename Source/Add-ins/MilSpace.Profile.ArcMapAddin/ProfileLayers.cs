@@ -19,8 +19,8 @@ namespace MilSpace.Profile
         private static readonly List<ILayer> Layers;
 
         private static esriGeometryType[] lineTypes = new esriGeometryType[] { esriGeometryType.esriGeometryLine, esriGeometryType.esriGeometryPolyline };
-        private static esriGeometryType[] pointTypes = new esriGeometryType[] { esriGeometryType.esriGeometryPoint};
-        private static esriGeometryType[] polygonTypes = new esriGeometryType[] { esriGeometryType.esriGeometryPolygon};
+        private static esriGeometryType[] pointTypes = new esriGeometryType[] { esriGeometryType.esriGeometryPoint };
+        private static esriGeometryType[] polygonTypes = new esriGeometryType[] { esriGeometryType.esriGeometryPolygon };
 
         static ProfileLayers()
         {
@@ -64,10 +64,12 @@ namespace MilSpace.Profile
             {
                 var featureLayer = fLayer;
                 var featureClass = featureLayer.FeatureClass;
-                if ((featureClass.ShapeType == esriGeometryType.esriGeometryLine) ||
+
+                if (featureClass != null &&
+                    ((featureClass.ShapeType == esriGeometryType.esriGeometryLine) ||
                     (featureClass.ShapeType == esriGeometryType.esriGeometryPolyline) ||
                     (featureClass.ShapeType == esriGeometryType.esriGeometryPoint) ||
-                    (featureClass.ShapeType == esriGeometryType.esriGeometryPolygon))
+                    (featureClass.ShapeType == esriGeometryType.esriGeometryPolygon)))
                 {
                     result.Add(fLayer);
                 }
@@ -94,7 +96,7 @@ namespace MilSpace.Profile
             return result;
         }
 
-        private static List<ILayer> GetAllLayers()
+        internal static List<ILayer> GetAllLayers()
         {
             var layersToReturn = new List<ILayer>();
             try
@@ -107,7 +109,7 @@ namespace MilSpace.Profile
 
                     layersToReturn.AddRange(GetRasterLayers(layer));
                     layersToReturn.AddRange(GetFeatureLayers(layer));
-                 
+
                     layer = layers.Next();
                 }
 
@@ -120,7 +122,7 @@ namespace MilSpace.Profile
             }
         }
 
-        internal static List<ILayer> RasterLayers => Layers.Where(layer => layer is IRasterLayer).ToList();
+        internal static IEnumerable<ILayer> RasterLayers => Layers.Where(layer => layer is IRasterLayer);
 
         internal static IEnumerable<ILayer> PointLayers => GetFeatureLayers(pointTypes);
 
