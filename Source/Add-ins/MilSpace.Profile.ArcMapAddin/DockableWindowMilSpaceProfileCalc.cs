@@ -300,6 +300,9 @@ namespace MilSpace.Profile
             graphicsLayer.Graphics.Add(lineGraphic);
         }
 
-
+        private void panel1_Enter(object sender, EventArgs e)
+        {
+            ProfileLayers.GetAllLayers();
+        }
     }
 }

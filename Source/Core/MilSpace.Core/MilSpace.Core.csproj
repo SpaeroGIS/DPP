@@ -137,10 +137,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MilSpace.ArcGIS.License\ArcGIS.v10\MilSpace.ArcGIS.License.csproj">
-      <Project>{7efe422c-b0ae-432c-ac29-de48ca9d0867}</Project>
-      <Name>MilSpace.ArcGIS.License</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MilSpace.Configurations\MilSpace.Configurations.csproj">
       <Project>{73334b96-54fd-4d83-b56d-967f8728d767}</Project>
       <Name>MilSpace.Configurations</Name>
