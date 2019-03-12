@@ -12,6 +12,5 @@ namespace MilSpace.DataAccess.DataTransfer
         public double Z;
         public double X;
         public double Y;
-
     }
 }

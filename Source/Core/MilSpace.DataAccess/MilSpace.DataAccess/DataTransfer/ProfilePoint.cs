@@ -8,7 +8,7 @@ namespace MilSpace.DataAccess.DataTransfer
 {
     public class ProfilePoint
     {
-        double X;
-        double Y;
+        public double X;
+        public double Y;
     }
 }
