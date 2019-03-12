@@ -136,3 +136,6 @@
 /Source/Add-ins/MilSpace.Visibility.ArcMapAddin
 /Source/Core/MilSpace.ArcGIS.License/LicenseCheck/obj/Release
 /Source/Solutions
+/Model/SurfaceProfileChart/obj/Debug
+/Source/Core/MilSpace.Tools/obj/Debug
+/Source/Core/MilSpace.Tools/bin/Debug

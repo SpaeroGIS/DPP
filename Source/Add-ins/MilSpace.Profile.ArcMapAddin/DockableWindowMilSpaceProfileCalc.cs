@@ -124,6 +124,8 @@ namespace MilSpace.Profile
         {
             private DockableWindowMilSpaceProfileCalc m_windowUI;
 
+
+
             public AddinImpl()
             {
             }
@@ -144,7 +146,11 @@ namespace MilSpace.Profile
 
             internal DockableWindowMilSpaceProfileCalc DockableWindowUI => m_windowUI;
 
+            
+
         }
+
+        internal ToolBarButton ToolbarButtonClicked { get; private set; }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -157,9 +163,12 @@ namespace MilSpace.Profile
 
         private void toolBar1_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
+            ToolbarButtonClicked = e.Button;
             switch (firstPointToolBar.Buttons.IndexOf(e.Button))
             {
+
                 case 0:
+                    
                         var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickCoordinates);
                         if (commandItem == null)
                         {
@@ -338,6 +347,102 @@ namespace MilSpace.Profile
         private void panel1_Enter(object sender, EventArgs e)
         {
             ProfileLayers.GetAllLayers();
+        }
+
+        private void secondPointToolbar_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        {
+            ToolbarButtonClicked = e.Button;
+            switch (firstPointToolBar.Buttons.IndexOf(e.Button))
+            {
+
+                case 1:
+
+                    var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickCoordinates);
+                    if (commandItem == null)
+                    {
+                        var message = $"Please add Pick Coordinates tool to any toolbar first.";
+                        MessageBox.Show(message, "Profile Calc", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        break;
+
+                    }
+                    ArcMap.Application.CurrentTool = commandItem;
+
+                    // Insert code to open the file.
+                    break;
+                case 0:
+                    ;
+                    // Insert code to save the file.
+                    break;
+                case 2:
+
+                    // Insert code to print the file.    
+                    break;
+            }
+        }
+
+        private void toolBar3_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        {
+            ToolbarButtonClicked = e.Button;
+            switch (firstPointToolBar.Buttons.IndexOf(e.Button))
+            {
+
+                case 1:
+
+                    var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickCoordinates);
+                    if (commandItem == null)
+                    {
+                        var message = $"Please add Pick Coordinates tool to any toolbar first.";
+                        MessageBox.Show(message, "Profile Calc", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        break;
+
+                    }
+                    ArcMap.Application.CurrentTool = commandItem;
+
+                    // Insert code to open the file.
+                    break;
+                case 0:
+                    ;
+                    // Insert code to save the file.
+                    break;
+                case 2:
+
+                    // Insert code to print the file.    
+                    break;
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //GdbAccess.Instance.EraseProfileLines();
+
+            //Add lines
+            var map = ArcMap.Document.ActiveView.FocusMap;
+            var segment = GetSegment();
+            var geometry = (IGeometry)segment;
+            IRgbColor col = new RgbColorClass();
+            col.Red = 133;
+            col.Green = 135;
+            col.Blue = 43;
+
+            IRgbColor col2 = new RgbColorClass();
+            col.Red = 133;
+            col.Green = 135;
+            col.Blue = 43;
+
+            AddGraphicToMap(map, geometry, col, col2);
+
+            ProfileManager manager = new ProfileManager();
+
+            try
+            {
+                manager.GenerateProfile(cmbRasterLayers.Text, new ILine[] { segment });
+                MessageBox.Show("Calculated");
+            }
+            catch (Exception ex)
+            {
+                //TODO log error
+                MessageBox.Show("Calcu;lation error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
