@@ -134,7 +134,7 @@ namespace MilSpace.Profile
         private static IEnumerable<ILayer> GetFeatureLayers(IEnumerable<esriGeometryType> geomType)
         {
 
-            return Layers.Where(l => l is IFeatureLayer && geomType.Any(g => g == ((IFeatureLayer)l).FeatureClass.ShapeType));
+            return GetAllLayers().Where(l => l is IFeatureLayer && geomType.Any(g => g == ((IFeatureLayer)l).FeatureClass.ShapeType));
 
         }
 
