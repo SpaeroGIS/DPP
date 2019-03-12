@@ -41,7 +41,7 @@ namespace MilSpace.Profile
         {
             // Required for ArcGIS Component Category Registrar support
             ArcGISCategoryUnregistration(registerType);
-
+           
             //
             // TODO: Add any COM unregistration code here
             //
@@ -77,10 +77,10 @@ namespace MilSpace.Profile
             //
             // TODO: Define values for the public properties
             //
-            base.m_category = "DeveloperTemplate"; //localizable text
-            base.m_caption = "Show/Hide Window";  //localizable text
+            base.m_category = "MilSpace"; //localizable text
+            base.m_caption = "MilSpace Profile";  //localizable text
             base.m_message = "Command toggles dockable window visibility (C#)";  //localizable text 
-            base.m_toolTip = "Toggle Dockable Window (C#)";  //localizable text 
+            base.m_toolTip = "MilSpace Profile";  //localizable text 
             base.m_name = "DeveloperTemplate_DockableWindowMilSpaceProfileGraphCommand";   //unique id, non-localizable (e.g. "MyCategory_ArcMapCommand")
 
             try

@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 
 namespace MilSpace.DataAccess.DataTransfer
 {
-    public class ProfileSession
+    public class ProfileSession 
     {
-        double PointFrom;
-        double PointTo;
-        int SessionId;
-      
-
+        public ProfioleLine[] ProfileLines;
+        public ProfileSurface[] ProfileSurface;
+        public int SessionId;
+        public string SessionName;
     }
 }

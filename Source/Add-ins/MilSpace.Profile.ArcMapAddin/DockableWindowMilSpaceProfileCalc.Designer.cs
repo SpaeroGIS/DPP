@@ -1606,6 +1606,7 @@
             this.panel1.Padding = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.panel1.Size = new System.Drawing.Size(336, 276);
             this.panel1.TabIndex = 1;
+            this.panel1.Enter += new System.EventHandler(this.panel1_Enter);
             // 
             // button4
             // 
