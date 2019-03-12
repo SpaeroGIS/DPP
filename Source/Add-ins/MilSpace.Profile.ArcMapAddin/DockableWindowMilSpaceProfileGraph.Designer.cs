@@ -143,8 +143,8 @@ namespace MilSpace.Profile
             this.toolBarButton2 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton5 = new System.Windows.Forms.ToolBarButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -1097,15 +1097,6 @@ namespace MilSpace.Profile
             this.tabPage2.Text = "Профили набор 2 ";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // tabPage3
-            // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(792, 274);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Профили набор N";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
             // chart1
             // 
             chartArea1.Name = "ChartArea1";
@@ -1123,6 +1114,15 @@ namespace MilSpace.Profile
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             this.chart1.Click += new System.EventHandler(this.chart1_Click);
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(792, 274);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Профили набор N";
+            this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // DockableWindowMilSpaceProfileGraph
             // 
