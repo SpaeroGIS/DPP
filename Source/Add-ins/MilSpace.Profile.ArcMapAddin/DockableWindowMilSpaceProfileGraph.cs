@@ -76,6 +76,10 @@ namespace MilSpace.Profile
             
         }
 
+
+        // Add the event-handler delegate.
+        
+
         #region IDockableWindowDef Members
 
         string IDockableWindowDef.Caption

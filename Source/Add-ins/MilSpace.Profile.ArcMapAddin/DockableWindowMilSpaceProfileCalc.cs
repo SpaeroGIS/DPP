@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Text;
 using System.Windows.Forms;
 using ESRI.ArcGIS.ArcMapUI;
@@ -34,13 +35,21 @@ namespace MilSpace.Profile
     /// </summary>
     public partial class DockableWindowMilSpaceProfileCalc : UserControl
     {
+        public DockableWindowMilSpaceProfileCalc()
+        {
+            this.Instance = this;
+        }        
+
         public DockableWindowMilSpaceProfileCalc(object hook)
         {
             InitializeComponent();
 
             this.Hook = hook;
             SubscribeForEvents();
+            this.Instance = this;
         }
+
+        public  DockableWindowMilSpaceProfileCalc Instance { get; }
 
         /// <summary>
         /// Host object of the dockable window
@@ -56,15 +65,9 @@ namespace MilSpace.Profile
             Helper.SetConfiguration();
         }
 
-
         private void OnRasterComboDropped()
         {
-            //var cmbItems = new List<string>();
-            //foreach (var layer in ProfileLayers.RasterLayers)
-            //{
-            //    cmbItems.Add(layer.Name);
-            //}
-            //cmbRasterLayers.Items.AddRange(cmbItems.ToArray());
+            
             cmbRasterLayers.Items.Clear();
             PopulateComboBox(cmbRasterLayers, ProfileLayers.RasterLayers);
         }
@@ -139,6 +142,8 @@ namespace MilSpace.Profile
                 base.Dispose(disposing);
             }
 
+            internal DockableWindowMilSpaceProfileCalc DockableWindowUI => m_windowUI;
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -152,7 +157,37 @@ namespace MilSpace.Profile
 
         private void toolBar1_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
+            switch (firstPointToolBar.Buttons.IndexOf(e.Button))
+            {
+                case 0:
+                        var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickCoordinates);
+                        if (commandItem == null)
+                        {
+                            var message = $"Please add Pick Coordinates tool to any toolbar first.";
+                            MessageBox.Show(message, "Profile Calc", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            break;
 
+                        }
+                        ArcMap.Application.CurrentTool = commandItem;
+
+                    // Insert code to open the file.
+                    break;
+                case 1:
+                   ;
+                    // Insert code to save the file.
+                    break;
+                case 2:
+                    
+                    // Insert code to print the file.    
+                    break;
+            }
+        }
+
+        public void InitializeMyToolBar()
+        {
+            this.firstPointToolBar
+                .ButtonClick += new ToolBarButtonClickEventHandler(
+                this.toolBar1_ButtonClick);
         }
 
         private void button4_Click(object sender, EventArgs e)
