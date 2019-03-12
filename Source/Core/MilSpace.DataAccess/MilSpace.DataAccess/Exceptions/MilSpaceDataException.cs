@@ -2,10 +2,6 @@
 using MilSpace.Core.DataAccess;
 using MilSpace.Core.Exceptions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MilSpace.DataAccess.Exceptions
 {
@@ -25,5 +21,9 @@ namespace MilSpace.DataAccess.Exceptions
             errorMessage = messageTempleate.InvariantFormat(operation, dataObject);
         }
 
+        public MilSpaceDataException(string dataObject, DataOperationsEnum operation) : base()
+        {
+            errorMessage = messageTempleate.InvariantFormat(operation, dataObject);
+        }
     }
 }

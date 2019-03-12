@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.IO;
 using ESRI.ArcGIS.Geometry;
 using ESRI.ArcGIS.Framework;
+using MilSpace.DataAccess.Exceptions;
 
 namespace MilSpace.DataAccess.Facade
 {
@@ -203,7 +204,7 @@ namespace MilSpace.DataAccess.Facade
         }
 
 
-        private IFeatureClass GetCalcProfileFeatureClass(string currentFeatureClass)
+        public IFeatureClass GetCalcProfileFeatureClass(string currentFeatureClass)
         {
 
             IWorkspace2 wsp2 = (IWorkspace2)calcWorkspace;
@@ -212,14 +213,10 @@ namespace MilSpace.DataAccess.Facade
             if (!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, currentFeatureClass))
             {
                 //TODO: Create the feature class
-                throw new FileNotFoundException(currentFeatureClass);
+                throw new MilSpaceDataException(currentFeatureClass, Core.DataAccess.DataOperationsEnum.Access);
             }
 
             return featureWorkspace.OpenFeatureClass(currentFeatureClass);
         }
-
-
-
-
     }
 }

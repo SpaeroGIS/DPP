@@ -58,8 +58,8 @@
     <Compile Include="..\..\Source\Core\MilSpace.DataAccess\MilSpace.DataAccess\DataTransfer\ProfileSurfacePoint.cs">
       <Link>ProfileSurfacePoint.cs</Link>
     </Compile>
-    <Compile Include="..\..\Source\Core\MilSpace.DataAccess\MilSpace.DataAccess\DataTransfer\ProfioleLine.cs">
-      <Link>ProfioleLine.cs</Link>
+    <Compile Include="..\..\Source\Core\MilSpace.DataAccess\MilSpace.DataAccess\DataTransfer\ProfileLine.cs">
+      <Link>ProfileLine.cs</Link>
     </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -99,6 +99,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TestData.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
