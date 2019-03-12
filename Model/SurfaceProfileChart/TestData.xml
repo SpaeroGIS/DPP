@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <ProfileSession xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ProfileLines>
-    <ProfioleLine>
+    <ProfileLine>
       <PointFrom>
         <X>338411.34798182361</X>
         <Y>5579716.9308021106</Y>
@@ -11,9 +11,9 @@
         <Y>5626444.4002574943</Y>
       </PointTo>
       <Id>1</Id>
-    </ProfioleLine>
+    </ProfileLine>
   </ProfileLines>
-  <ProfileSurface>
+  <ProfileSurfaces>
     <ProfileSurface>
       <ProfileSurfacePoints>
         <ProfileSurfacePoint>
@@ -9595,6 +9595,6 @@
       </ProfileSurfacePoints>
       <LineId>1</LineId>
     </ProfileSurface>
-  </ProfileSurface>
+  </ProfileSurfaces>
   <SessionId>0</SessionId>
 </ProfileSession>

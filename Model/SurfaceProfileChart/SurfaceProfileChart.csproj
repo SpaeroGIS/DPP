@@ -61,6 +61,7 @@
     <Compile Include="..\..\Source\Core\MilSpace.DataAccess\MilSpace.DataAccess\DataTransfer\ProfileLine.cs">
       <Link>ProfileLine.cs</Link>
     </Compile>
+    <Compile Include="DataPreparator.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -101,7 +102,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TestData.xml" />
+    <None Include="TestData.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
