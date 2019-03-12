@@ -14,12 +14,7 @@ namespace MilSpace.DataAccess.DataTransfer
         internal static ProfileSession Get(this MilSp_Profile profileData)
         {
 
-            ProfileSession result = new ProfileSession
-            {
-                SessionId = profileData.idRow,
-                SessionName = profileData.ProfileName
-                
-            };
+            ProfileSession session = null;
 
             XmlSerializer serializer = new XmlSerializer(typeof(ProfileSession));
 
@@ -33,9 +28,9 @@ namespace MilSpace.DataAccess.DataTransfer
 
                     try
                     {
-                        if (serializer.Deserialize(memoryStream) is ProfileSurface[] surface)
+                        if (serializer.Deserialize(memoryStream) is ProfileSession result)
                         {
-                            result.ProfileSurface = surface;
+                            session = result;
                         }
                     }
                     catch (Exception ex)
@@ -45,7 +40,7 @@ namespace MilSpace.DataAccess.DataTransfer
                 }
             }
 
-            return result;
+            return session;
         }
 
         internal static MilSp_Profile Get(this ProfileSession session)
@@ -56,12 +51,12 @@ namespace MilSpace.DataAccess.DataTransfer
                 ProfileName = session.SessionName
             };
 
-            XmlSerializer serializer = new XmlSerializer(typeof(ProfileSurface));
+            XmlSerializer serializer = new XmlSerializer(typeof(ProfileSession));
 
 
             using (MemoryStream stream = new MemoryStream())
             {
-                serializer.Serialize(stream, session.ProfileSurface);
+                serializer.Serialize(stream, session);
                 try
                 {
                     res.ProfileData = Encoding.UTF8.GetString((stream as MemoryStream).ToArray());

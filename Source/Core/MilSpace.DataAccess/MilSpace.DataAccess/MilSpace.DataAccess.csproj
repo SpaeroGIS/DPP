@@ -108,7 +108,7 @@
     <Compile Include="DataTransfer\ProfileSession.cs" />
     <Compile Include="DataTransfer\ProfileSurface.cs" />
     <Compile Include="DataTransfer\ProfileSurfacePoint.cs" />
-    <Compile Include="DataTransfer\ProfioleLine.cs" />
+    <Compile Include="DataTransfer\ProfileLine.cs" />
     <Compile Include="Definition\MilSpaceStorage.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
