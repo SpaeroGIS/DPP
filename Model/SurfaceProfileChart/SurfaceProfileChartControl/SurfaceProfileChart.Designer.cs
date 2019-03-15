@@ -30,39 +30,39 @@
         {
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            this.profile = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            ((System.ComponentModel.ISupportInitialize)(this.profile)).BeginInit();
+            this.profileChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            ((System.ComponentModel.ISupportInitialize)(this.profileChart)).BeginInit();
             this.SuspendLayout();
             // 
-            // profile
+            // profileChart
             // 
             chartArea1.Name = "Default";
-            this.profile.ChartAreas.Add(chartArea1);
-            this.profile.Location = new System.Drawing.Point(0, 0);
-            this.profile.Name = "profile";
+            this.profileChart.ChartAreas.Add(chartArea1);
+            this.profileChart.Location = new System.Drawing.Point(0, 0);
+            this.profileChart.Name = "profileChart";
             series1.ChartArea = "Default";
             series1.Name = "Series1";
-            this.profile.Series.Add(series1);
-            this.profile.Size = new System.Drawing.Size(664, 221);
-            this.profile.TabIndex = 0;
-            this.profile.Text = "chart1";
-            this.profile.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Profile_MouseDown);
+            this.profileChart.Series.Add(series1);
+            this.profileChart.Size = new System.Drawing.Size(664, 221);
+            this.profileChart.TabIndex = 0;
+            this.profileChart.Text = "chart1";
+            this.profileChart.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Profile_MouseDown);
             // 
             // SurfaceProfileChart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.profile);
+            this.Controls.Add(this.profileChart);
             this.Name = "SurfaceProfileChart";
             this.Size = new System.Drawing.Size(664, 221);
             this.Load += new System.EventHandler(this.SurfaceProfileChart_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.profile)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.profileChart)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.DataVisualization.Charting.Chart profile;
+        private System.Windows.Forms.DataVisualization.Charting.Chart profileChart;
     }
 }

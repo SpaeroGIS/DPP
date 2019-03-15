@@ -77,6 +77,7 @@
     <Compile Include="SurfaceProfileChartControl\SurfaceProfileChart.Designer.cs">
       <DependentUpon>SurfaceProfileChart.cs</DependentUpon>
     </Compile>
+    <Compile Include="SurfaceProfileChartControl\SurfaceProfileChartController.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
