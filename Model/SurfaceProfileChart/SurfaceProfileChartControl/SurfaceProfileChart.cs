@@ -14,7 +14,7 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
 {
     public partial class SurfaceProfileChart : UserControl
     {
-        private ProfileSession _profileSession = new ProfileSession();
+        private SurfaceProfileChartController _controller;
 
         [Category("Profile"), Description("")]
         public double PathLength { get; set; }
@@ -32,54 +32,70 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
         public double MaxHeight { get; set; }
 
         public bool Current { get; set; }
+        public int SelectedProfileIndex { get; set; }
 
         public SurfaceProfileChart()
         {
             Current = false;
+            SelectedProfileIndex = -1;
+
+            _controller = new SurfaceProfileChartController(this);
 
             InitializeComponent();
         }
 
-        private void InitializeProfile()
+        public void InitializeProfile(ProfileSession profileSession)
         {
-            profile.Series.Clear();
-
-            _profileSession = DataPreparator.Get();
-
-            foreach (var line in _profileSession.ProfileLines)
+            profileChart.Series.Clear();
+           
+            foreach (var line in profileSession.ProfileLines)
             {
-                profile.Series.Add(new Series
+                profileChart.Series.Add(new Series
                 {
                     ChartType = SeriesChartType.Line,
                     Color = Color.ForestGreen,
+                    Name = line.Id.ToString()
                 });
 
                 var profileSurface =
-                    _profileSession.ProfileSurfaces.First(surface => surface.LineId == line.Id);
+                    profileSession.ProfileSurfaces.First(surface => surface.LineId == line.Id);
 
                 foreach (var point in profileSurface.ProfileSurfacePoints)
                 {
-                    profile.Series.Last().Points.AddXY(point.Distance, point.Z);
+                    profileChart.Series.Last().Points.AddXY(point.Distance, point.Z);
                 }
             }
         }
 
+        public void AddInvisibleLine(ProfileSurface surface)
+        {
+           foreach (var point in surface.ProfileSurfacePoints)
+           {
+               profileChart.Series[surface.LineId.ToString()].Points
+                   .FirstOrDefault(linePoint => linePoint.XValue == point.Distance).Color = Color.Red;
+           }
+        }
+
+
         private void SurfaceProfileChart_Load(object sender, EventArgs e)
         {
-            profile.ChartAreas["Default"].CursorX.IsUserEnabled = true;
-            profile.ChartAreas["Default"].CursorX.IsUserSelectionEnabled = true;
-            profile.ChartAreas["Default"].AxisX.ScaleView.Zoomable = true;
+            profileChart.ChartAreas["Default"].CursorX.IsUserEnabled = true;
+            profileChart.ChartAreas["Default"].CursorX.IsUserSelectionEnabled = true;
+            profileChart.ChartAreas["Default"].AxisX.ScaleView.Zoomable = true;
 
-            InitializeProfile();
+            _controller.LoadSeries();
+            _controller.AddInvisibleZones();
         }
 
         private void Profile_MouseDown(object sender, MouseEventArgs e)
         {
-            var selectedPoint = profile.HitTest(e.X, e.Y);
+            var selectedPoint = profileChart.HitTest(e.X, e.Y);
 
             if (selectedPoint.ChartElementType == ChartElementType.DataPoint)
             {
-              //todo fire event 
+                SelectedProfileIndex = profileChart.Series.IndexOf(selectedPoint.Series.Name);
+
+                //todo fire event 
             }
 
         }
