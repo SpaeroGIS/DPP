@@ -27,8 +27,24 @@ namespace MilSpace.Profile
             var mxdDoc = ArcMap.Document;
             var screenDisplay = mxdDoc.ActiveView.ScreenDisplay;
             Point = screenDisplay.DisplayTransformation.ToMapPoint(arg.X, arg.Y);
-            ProfileForms.ProfileCalcUI.txtFirstPointX.Text = Point.X.ToString(CultureInfo.InvariantCulture);
-            ProfileForms.ProfileCalcUI.txtFirstPointY.Text = Point.Y.ToString(CultureInfo.InvariantCulture);
+            if (ProfileForms.ProfileCalcUI.ToolbarButtonClicked == ProfileForms.ProfileCalcUI.btnPickFirstPoint)
+            {
+                ProfileForms.ProfileCalcUI.txtFirstPointX.Text = Point.X.ToString(CultureInfo.InvariantCulture);
+                ProfileForms.ProfileCalcUI.txtFirstPointY.Text = Point.Y.ToString(CultureInfo.InvariantCulture);
+            }
+
+            if (ProfileForms.ProfileCalcUI.ToolbarButtonClicked == ProfileForms.ProfileCalcUI.btnPickSecondPoint)
+            {
+                ProfileForms.ProfileCalcUI.txtSecondPointX.Text = Point.X.ToString(CultureInfo.InvariantCulture);
+                ProfileForms.ProfileCalcUI.txtSecondPointY.Text = Point.Y.ToString(CultureInfo.InvariantCulture);
+            }
+
+            if (ProfileForms.ProfileCalcUI.ToolbarButtonClicked == ProfileForms.ProfileCalcUI.btnPickBasePoint)
+            {
+                ProfileForms.ProfileCalcUI.txtBasePointX.Text = Point.X.ToString(CultureInfo.InvariantCulture);
+                ProfileForms.ProfileCalcUI.txtBasePointY.Text = Point.Y.ToString(CultureInfo.InvariantCulture);
+            }
+
         }
     }
 
