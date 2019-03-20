@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using MilSpace.DataAccess.DataTransfer;
+﻿using MilSpace.DataAccess.DataTransfer;
 
 namespace SurfaceProfileChart.SurfaceProfileChartControl
 {
@@ -24,15 +23,15 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
             //todo handle invisible zones search
 
             //test example 
-            ProfileSurface surface = new ProfileSurface
-            {
-                LineId = _profileSession.ProfileSurfaces[0].LineId,
-                ProfileSurfacePoints = _profileSession.ProfileSurfaces[0].ProfileSurfacePoints
-                    .Where(point => point.Z < 150).ToArray()
-            };
+            //ProfileSurface surface = new ProfileSurface
+            //{
+            //    LineId = _profileSession.ProfileSurfaces[0].LineId,
+            //    ProfileSurfacePoints = _profileSession.ProfileSurfaces[0].ProfileSurfacePoints
+            //        .Where(point => point.Z < 150).ToArray()
+            //};
             //end test example
 
-            _surfaceProfileChart.AddInvisibleLine(surface);
+            //    _surfaceProfileChart.AddInvisibleLine(visibleSurface);
         }
 
     }

@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using MilSpace.DataAccess.DataTransfer;
@@ -76,15 +73,40 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
            }
         }
 
-
         private void SurfaceProfileChart_Load(object sender, EventArgs e)
+        {
+            _controller.LoadSeries();
+            _controller.AddInvisibleZones();
+
+            SetProfileView();
+        }
+
+        private void SetProfileView()
         {
             profileChart.ChartAreas["Default"].CursorX.IsUserEnabled = true;
             profileChart.ChartAreas["Default"].CursorX.IsUserSelectionEnabled = true;
             profileChart.ChartAreas["Default"].AxisX.ScaleView.Zoomable = true;
+            profileChart.ChartAreas["Default"].AxisX.LabelStyle.Format = "#";
+            profileChart.ChartAreas["Default"].AxisY.LabelStyle.Format = "#";
 
-            _controller.LoadSeries();
-            _controller.AddInvisibleZones();
+            SetYHeight();
+        }
+
+        private void SetYHeight()
+        {
+            var maxPoints = new List<DataPoint>();
+            var minPoints = new List<DataPoint>();
+
+            foreach (var profileChartSeries in profileChart.Series)
+            {
+                maxPoints.Add(profileChartSeries.Points.FindMaxByValue("Y1", 0));
+                minPoints.Add(profileChartSeries.Points.FindMinByValue("Y1", 0));
+            }
+
+            profileChart.ChartAreas["Default"].AxisY.Maximum =
+                maxPoints.Max(point => point.YValues.Max(yValue => yValue));
+            profileChart.ChartAreas["Default"].AxisY.Minimum =
+                minPoints.Min(point => point.YValues.Min(yValue => yValue));
         }
 
         private void Profile_MouseDown(object sender, MouseEventArgs e)
