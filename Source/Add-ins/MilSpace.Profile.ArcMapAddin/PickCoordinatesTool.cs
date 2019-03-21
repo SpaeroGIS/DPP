@@ -29,20 +29,20 @@ namespace MilSpace.Profile
             Point = screenDisplay.DisplayTransformation.ToMapPoint(arg.X, arg.Y);
             if (ProfileForms.ProfileCalcUI.ToolbarButtonClicked == ProfileForms.ProfileCalcUI.btnPickFirstPoint)
             {
-                ProfileForms.ProfileCalcUI.txtFirstPointX.Text = Point.X.ToString(CultureInfo.InvariantCulture);
-                ProfileForms.ProfileCalcUI.txtFirstPointY.Text = Point.Y.ToString(CultureInfo.InvariantCulture);
+                ProfileForms.ProfileCalcUI.txtFirstPointX.Text = Point.X.ToString("F4");//(CultureInfo.InvariantCulture);
+                ProfileForms.ProfileCalcUI.txtFirstPointY.Text = Point.Y.ToString("F4");
             }
 
             if (ProfileForms.ProfileCalcUI.ToolbarButtonClicked == ProfileForms.ProfileCalcUI.btnPickSecondPoint)
             {
-                ProfileForms.ProfileCalcUI.txtSecondPointX.Text = Point.X.ToString(CultureInfo.InvariantCulture);
-                ProfileForms.ProfileCalcUI.txtSecondPointY.Text = Point.Y.ToString(CultureInfo.InvariantCulture);
+                ProfileForms.ProfileCalcUI.txtSecondPointX.Text = Point.X.ToString("F4");
+                ProfileForms.ProfileCalcUI.txtSecondPointY.Text = Point.Y.ToString("F4");
             }
 
             if (ProfileForms.ProfileCalcUI.ToolbarButtonClicked == ProfileForms.ProfileCalcUI.btnPickBasePoint)
             {
-                ProfileForms.ProfileCalcUI.txtBasePointX.Text = Point.X.ToString(CultureInfo.InvariantCulture);
-                ProfileForms.ProfileCalcUI.txtBasePointY.Text = Point.Y.ToString(CultureInfo.InvariantCulture);
+                ProfileForms.ProfileCalcUI.txtBasePointX.Text = Point.X.ToString("F4");
+                ProfileForms.ProfileCalcUI.txtBasePointY.Text = Point.Y.ToString("F4");
             }
 
         }

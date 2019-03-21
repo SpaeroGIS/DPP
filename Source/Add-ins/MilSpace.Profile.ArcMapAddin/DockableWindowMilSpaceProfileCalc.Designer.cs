@@ -30,44 +30,45 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("skt201811071310nikol, 30m, 3.12 km, vsb");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("skt201811071314, 70m, 2.1 km");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Отрезки (2)", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2});
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("fan201811081111nikol_луч1, азм 10");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("fan201811081111nikol_луч2, азм 25");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("fan201811081111nikol_луч3, азм 40");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("fan201811081111nikol_луч1, азм 55");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("fan201811081111nikol, Б 36.12345:50.12345, аз 10:55, 2 км", new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode5,
-            treeNode6,
-            treeNode7});
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("fan201811081111nikol, 1");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("fan201811081111nikol, 2");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("fan201811081111nikol, 3");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("fan201811081111nikol, 4");
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("fan201811081111nikol, БТ 36.12345:50.12345, аз 10:55, 2 км", new System.Windows.Forms.TreeNode[] {
-            treeNode9,
-            treeNode10,
-            treeNode11,
-            treeNode12});
-            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Веер (2)", new System.Windows.Forms.TreeNode[] {
-            treeNode8,
-            treeNode13});
-            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("gr201811111732nikol, lr Road, 15 км");
-            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("gr201811111745nikol, lr Graph, 15 км");
-            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("gr201811111755nikol, lr Graph, 13.1 км");
-            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("Графика (3)", new System.Windows.Forms.TreeNode[] {
-            treeNode15,
-            treeNode16,
-            treeNode17});
+            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("skt201811071310nikol, 30m, 3.12 km, vsb");
+            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("skt201811071314, 70m, 2.1 km");
+            System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("Отрезки (2)", new System.Windows.Forms.TreeNode[] {
+            treeNode19,
+            treeNode20});
+            System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("fan201811081111nikol_луч1, азм 10");
+            System.Windows.Forms.TreeNode treeNode23 = new System.Windows.Forms.TreeNode("fan201811081111nikol_луч2, азм 25");
+            System.Windows.Forms.TreeNode treeNode24 = new System.Windows.Forms.TreeNode("fan201811081111nikol_луч3, азм 40");
+            System.Windows.Forms.TreeNode treeNode25 = new System.Windows.Forms.TreeNode("fan201811081111nikol_луч1, азм 55");
+            System.Windows.Forms.TreeNode treeNode26 = new System.Windows.Forms.TreeNode("fan201811081111nikol, Б 36.12345:50.12345, аз 10:55, 2 км", new System.Windows.Forms.TreeNode[] {
+            treeNode22,
+            treeNode23,
+            treeNode24,
+            treeNode25});
+            System.Windows.Forms.TreeNode treeNode27 = new System.Windows.Forms.TreeNode("fan201811081111nikol, 1");
+            System.Windows.Forms.TreeNode treeNode28 = new System.Windows.Forms.TreeNode("fan201811081111nikol, 2");
+            System.Windows.Forms.TreeNode treeNode29 = new System.Windows.Forms.TreeNode("fan201811081111nikol, 3");
+            System.Windows.Forms.TreeNode treeNode30 = new System.Windows.Forms.TreeNode("fan201811081111nikol, 4");
+            System.Windows.Forms.TreeNode treeNode31 = new System.Windows.Forms.TreeNode("fan201811081111nikol, БТ 36.12345:50.12345, аз 10:55, 2 км", new System.Windows.Forms.TreeNode[] {
+            treeNode27,
+            treeNode28,
+            treeNode29,
+            treeNode30});
+            System.Windows.Forms.TreeNode treeNode32 = new System.Windows.Forms.TreeNode("Веер (2)", new System.Windows.Forms.TreeNode[] {
+            treeNode26,
+            treeNode31});
+            System.Windows.Forms.TreeNode treeNode33 = new System.Windows.Forms.TreeNode("gr201811111732nikol, lr Road, 15 км");
+            System.Windows.Forms.TreeNode treeNode34 = new System.Windows.Forms.TreeNode("gr201811111745nikol, lr Graph, 15 км");
+            System.Windows.Forms.TreeNode treeNode35 = new System.Windows.Forms.TreeNode("gr201811111755nikol, lr Graph, 13.1 км");
+            System.Windows.Forms.TreeNode treeNode36 = new System.Windows.Forms.TreeNode("Графика (3)", new System.Windows.Forms.TreeNode[] {
+            treeNode33,
+            treeNode34,
+            treeNode35});
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabControl2 = new System.Windows.Forms.TabControl();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.sectionTab = new System.Windows.Forms.TabPage();
+            this.button5 = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.panel16 = new System.Windows.Forms.Panel();
             this.label23 = new System.Windows.Forms.Label();
@@ -103,7 +104,7 @@
             this.txtFirstPointY = new System.Windows.Forms.TextBox();
             this.txtFirstPointX = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.fanTab = new System.Windows.Forms.TabPage();
             this.panel12 = new System.Windows.Forms.Panel();
             this.button11 = new System.Windows.Forms.Button();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
@@ -122,7 +123,7 @@
             this.label24 = new System.Windows.Forms.Label();
             this.textBox13 = new System.Windows.Forms.TextBox();
             this.panel7 = new System.Windows.Forms.Panel();
-            this.toolBar3 = new System.Windows.Forms.ToolBar();
+            this.basePointToolbar = new System.Windows.Forms.ToolBar();
             this.toolBarButton15 = new System.Windows.Forms.ToolBarButton();
             this.btnPickBasePoint = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton17 = new System.Windows.Forms.ToolBarButton();
@@ -134,7 +135,7 @@
             this.txtBasePointY = new System.Windows.Forms.TextBox();
             this.txtBasePointX = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.primitiveTab = new System.Windows.Forms.TabPage();
             this.toolBar4 = new System.Windows.Forms.ToolBar();
             this.toolBarButton23 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton28 = new System.Windows.Forms.ToolBarButton();
@@ -145,7 +146,7 @@
             this.panel13 = new System.Windows.Forms.Panel();
             this.comboBox7 = new System.Windows.Forms.ComboBox();
             this.label18 = new System.Windows.Forms.Label();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.loadTab = new System.Windows.Forms.TabPage();
             this.toolBar5 = new System.Windows.Forms.ToolBar();
             this.toolBarButton29 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton31 = new System.Windows.Forms.ToolBarButton();
@@ -171,7 +172,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel11 = new System.Windows.Forms.Panel();
-            this.textBox11 = new System.Windows.Forms.TextBox();
+            this.txtProfileName = new System.Windows.Forms.TextBox();
             this.label25 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -218,20 +219,20 @@
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabControl2.SuspendLayout();
-            this.tabPage3.SuspendLayout();
+            this.sectionTab.SuspendLayout();
             this.panel16.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel17.SuspendLayout();
             this.panel4.SuspendLayout();
-            this.tabPage4.SuspendLayout();
+            this.fanTab.SuspendLayout();
             this.panel12.SuspendLayout();
             this.panel9.SuspendLayout();
             this.panel8.SuspendLayout();
             this.panel10.SuspendLayout();
             this.panel7.SuspendLayout();
-            this.tabPage5.SuspendLayout();
+            this.primitiveTab.SuspendLayout();
             this.panel13.SuspendLayout();
-            this.tabPage6.SuspendLayout();
+            this.loadTab.SuspendLayout();
             this.panel15.SuspendLayout();
             this.panel14.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -486,10 +487,10 @@
             // 
             // tabControl2
             // 
-            this.tabControl2.Controls.Add(this.tabPage3);
-            this.tabControl2.Controls.Add(this.tabPage4);
-            this.tabControl2.Controls.Add(this.tabPage5);
-            this.tabControl2.Controls.Add(this.tabPage6);
+            this.tabControl2.Controls.Add(this.sectionTab);
+            this.tabControl2.Controls.Add(this.fanTab);
+            this.tabControl2.Controls.Add(this.primitiveTab);
+            this.tabControl2.Controls.Add(this.loadTab);
             this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl2.ImageList = this.imageList1;
             this.tabControl2.ItemSize = new System.Drawing.Size(63, 20);
@@ -499,26 +500,37 @@
             this.tabControl2.Size = new System.Drawing.Size(336, 377);
             this.tabControl2.TabIndex = 6;
             // 
-            // tabPage3
+            // sectionTab
             // 
-            this.tabPage3.AllowDrop = true;
-            this.tabPage3.Controls.Add(this.checkBox1);
-            this.tabPage3.Controls.Add(this.panel16);
-            this.tabPage3.Controls.Add(this.label22);
-            this.tabPage3.Controls.Add(this.panel5);
-            this.tabPage3.Controls.Add(this.label9);
-            this.tabPage3.Controls.Add(this.panel17);
-            this.tabPage3.Controls.Add(this.label29);
-            this.tabPage3.Controls.Add(this.panel4);
-            this.tabPage3.Controls.Add(this.label8);
-            this.tabPage3.ImageKey = "0.png";
-            this.tabPage3.Location = new System.Drawing.Point(4, 24);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(328, 349);
-            this.tabPage3.TabIndex = 0;
-            this.tabPage3.Text = "Отрезком";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.sectionTab.AllowDrop = true;
+            this.sectionTab.Controls.Add(this.button5);
+            this.sectionTab.Controls.Add(this.checkBox1);
+            this.sectionTab.Controls.Add(this.panel16);
+            this.sectionTab.Controls.Add(this.label22);
+            this.sectionTab.Controls.Add(this.panel5);
+            this.sectionTab.Controls.Add(this.label9);
+            this.sectionTab.Controls.Add(this.panel17);
+            this.sectionTab.Controls.Add(this.label29);
+            this.sectionTab.Controls.Add(this.panel4);
+            this.sectionTab.Controls.Add(this.label8);
+            this.sectionTab.ImageKey = "0.png";
+            this.sectionTab.Location = new System.Drawing.Point(4, 24);
+            this.sectionTab.Name = "sectionTab";
+            this.sectionTab.Padding = new System.Windows.Forms.Padding(3);
+            this.sectionTab.Size = new System.Drawing.Size(328, 349);
+            this.sectionTab.TabIndex = 0;
+            this.sectionTab.Text = "Отрезком";
+            this.sectionTab.UseVisualStyleBackColor = true;
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(217, 321);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(105, 22);
+            this.button5.TabIndex = 32;
+            this.button5.Text = "Нарисовать отрезок";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // checkBox1
             // 
@@ -820,24 +832,24 @@
             this.label8.TabIndex = 10;
             this.label8.Text = "первая точка (долгота широта)";
             // 
-            // tabPage4
+            // fanTab
             // 
-            this.tabPage4.Controls.Add(this.panel12);
-            this.tabPage4.Controls.Add(this.checkBox2);
-            this.tabPage4.Controls.Add(this.panel9);
-            this.tabPage4.Controls.Add(this.panel8);
-            this.tabPage4.Controls.Add(this.label12);
-            this.tabPage4.Controls.Add(this.panel10);
-            this.tabPage4.Controls.Add(this.panel7);
-            this.tabPage4.Controls.Add(this.label11);
-            this.tabPage4.ImageKey = "1.png";
-            this.tabPage4.Location = new System.Drawing.Point(4, 24);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(328, 349);
-            this.tabPage4.TabIndex = 1;
-            this.tabPage4.Text = "\"Веером\"";
-            this.tabPage4.UseVisualStyleBackColor = true;
+            this.fanTab.Controls.Add(this.panel12);
+            this.fanTab.Controls.Add(this.checkBox2);
+            this.fanTab.Controls.Add(this.panel9);
+            this.fanTab.Controls.Add(this.panel8);
+            this.fanTab.Controls.Add(this.label12);
+            this.fanTab.Controls.Add(this.panel10);
+            this.fanTab.Controls.Add(this.panel7);
+            this.fanTab.Controls.Add(this.label11);
+            this.fanTab.ImageKey = "1.png";
+            this.fanTab.Location = new System.Drawing.Point(4, 24);
+            this.fanTab.Name = "fanTab";
+            this.fanTab.Padding = new System.Windows.Forms.Padding(3);
+            this.fanTab.Size = new System.Drawing.Size(328, 349);
+            this.fanTab.TabIndex = 1;
+            this.fanTab.Text = "\"Веером\"";
+            this.fanTab.UseVisualStyleBackColor = true;
             // 
             // panel12
             // 
@@ -894,6 +906,7 @@
             this.textBox9.Name = "textBox9";
             this.textBox9.Size = new System.Drawing.Size(60, 20);
             this.textBox9.TabIndex = 18;
+            this.textBox9.Text = "0,360";
             // 
             // label15
             // 
@@ -913,6 +926,7 @@
             this.textBox8.Name = "textBox8";
             this.textBox8.Size = new System.Drawing.Size(60, 20);
             this.textBox8.TabIndex = 16;
+            this.textBox8.Text = "0,360";
             // 
             // label14
             // 
@@ -945,6 +959,7 @@
             this.textBox10.Name = "textBox10";
             this.textBox10.Size = new System.Drawing.Size(60, 20);
             this.textBox10.TabIndex = 18;
+            this.textBox10.Text = "8";
             // 
             // label16
             // 
@@ -954,7 +969,7 @@
             this.label16.Padding = new System.Windows.Forms.Padding(4, 4, 8, 4);
             this.label16.Size = new System.Drawing.Size(80, 24);
             this.label16.TabIndex = 17;
-            this.label16.Text = "колмчество";
+            this.label16.Text = "количество";
             // 
             // textBox7
             // 
@@ -965,6 +980,7 @@
             this.textBox7.Name = "textBox7";
             this.textBox7.Size = new System.Drawing.Size(60, 20);
             this.textBox7.TabIndex = 16;
+            this.textBox7.Text = "5";
             // 
             // label13
             // 
@@ -1024,7 +1040,7 @@
             // 
             // panel7
             // 
-            this.panel7.Controls.Add(this.toolBar3);
+            this.panel7.Controls.Add(this.basePointToolbar);
             this.panel7.Controls.Add(this.txtBasePointY);
             this.panel7.Controls.Add(this.txtBasePointX);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
@@ -1034,9 +1050,9 @@
             this.panel7.Size = new System.Drawing.Size(322, 26);
             this.panel7.TabIndex = 13;
             // 
-            // toolBar3
+            // basePointToolbar
             // 
-            this.toolBar3.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
+            this.basePointToolbar.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
             this.toolBarButton15,
             this.btnPickBasePoint,
             this.toolBarButton17,
@@ -1045,16 +1061,16 @@
             this.toolBarButton20,
             this.toolBarButton21,
             this.toolBarButton63});
-            this.toolBar3.ButtonSize = new System.Drawing.Size(18, 18);
-            this.toolBar3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolBar3.DropDownArrows = true;
-            this.toolBar3.ImageList = this.imageList1;
-            this.toolBar3.Location = new System.Drawing.Point(168, 0);
-            this.toolBar3.Name = "toolBar3";
-            this.toolBar3.ShowToolTips = true;
-            this.toolBar3.Size = new System.Drawing.Size(154, 28);
-            this.toolBar3.TabIndex = 28;
-            this.toolBar3.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.toolBar3_ButtonClick);
+            this.basePointToolbar.ButtonSize = new System.Drawing.Size(18, 18);
+            this.basePointToolbar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.basePointToolbar.DropDownArrows = true;
+            this.basePointToolbar.ImageList = this.imageList1;
+            this.basePointToolbar.Location = new System.Drawing.Point(168, 0);
+            this.basePointToolbar.Name = "basePointToolbar";
+            this.basePointToolbar.ShowToolTips = true;
+            this.basePointToolbar.Size = new System.Drawing.Size(154, 28);
+            this.basePointToolbar.TabIndex = 28;
+            this.basePointToolbar.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.toolBar3_ButtonClick);
             // 
             // toolBarButton15
             // 
@@ -1127,21 +1143,21 @@
             this.label11.TabIndex = 12;
             this.label11.Text = "базовая точка (долгота широта)";
             // 
-            // tabPage5
+            // primitiveTab
             // 
-            this.tabPage5.Controls.Add(this.toolBar4);
-            this.tabPage5.Controls.Add(this.richTextBox4);
-            this.tabPage5.Controls.Add(this.richTextBox3);
-            this.tabPage5.Controls.Add(this.label17);
-            this.tabPage5.Controls.Add(this.panel13);
-            this.tabPage5.Controls.Add(this.label18);
-            this.tabPage5.ImageKey = "2.png";
-            this.tabPage5.Location = new System.Drawing.Point(4, 24);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(328, 349);
-            this.tabPage5.TabIndex = 2;
-            this.tabPage5.Text = "Примитивом";
-            this.tabPage5.UseVisualStyleBackColor = true;
+            this.primitiveTab.Controls.Add(this.toolBar4);
+            this.primitiveTab.Controls.Add(this.richTextBox4);
+            this.primitiveTab.Controls.Add(this.richTextBox3);
+            this.primitiveTab.Controls.Add(this.label17);
+            this.primitiveTab.Controls.Add(this.panel13);
+            this.primitiveTab.Controls.Add(this.label18);
+            this.primitiveTab.ImageKey = "2.png";
+            this.primitiveTab.Location = new System.Drawing.Point(4, 24);
+            this.primitiveTab.Name = "primitiveTab";
+            this.primitiveTab.Size = new System.Drawing.Size(328, 349);
+            this.primitiveTab.TabIndex = 2;
+            this.primitiveTab.Text = "Примитивом";
+            this.primitiveTab.UseVisualStyleBackColor = true;
             // 
             // toolBar4
             // 
@@ -1242,21 +1258,21 @@
             this.label18.TabIndex = 16;
             this.label18.Text = "класс (слой) объектов для выбора";
             // 
-            // tabPage6
+            // loadTab
             // 
-            this.tabPage6.Controls.Add(this.toolBar5);
-            this.tabPage6.Controls.Add(this.richTextBox8);
-            this.tabPage6.Controls.Add(this.label10);
-            this.tabPage6.Controls.Add(this.panel15);
-            this.tabPage6.Controls.Add(this.richTextBox5);
-            this.tabPage6.Controls.Add(this.label20);
-            this.tabPage6.ImageKey = "3.png";
-            this.tabPage6.Location = new System.Drawing.Point(4, 24);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(328, 349);
-            this.tabPage6.TabIndex = 3;
-            this.tabPage6.Text = "Загрузить";
-            this.tabPage6.UseVisualStyleBackColor = true;
+            this.loadTab.Controls.Add(this.toolBar5);
+            this.loadTab.Controls.Add(this.richTextBox8);
+            this.loadTab.Controls.Add(this.label10);
+            this.loadTab.Controls.Add(this.panel15);
+            this.loadTab.Controls.Add(this.richTextBox5);
+            this.loadTab.Controls.Add(this.label20);
+            this.loadTab.ImageKey = "3.png";
+            this.loadTab.Location = new System.Drawing.Point(4, 24);
+            this.loadTab.Name = "loadTab";
+            this.loadTab.Size = new System.Drawing.Size(328, 349);
+            this.loadTab.TabIndex = 3;
+            this.loadTab.Text = "Загрузить";
+            this.loadTab.UseVisualStyleBackColor = true;
             // 
             // toolBar5
             // 
@@ -1510,7 +1526,7 @@
             // 
             // panel11
             // 
-            this.panel11.Controls.Add(this.textBox11);
+            this.panel11.Controls.Add(this.txtProfileName);
             this.panel11.Controls.Add(this.label25);
             this.panel11.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel11.Location = new System.Drawing.Point(8, 32);
@@ -1520,15 +1536,15 @@
             this.panel11.Size = new System.Drawing.Size(320, 24);
             this.panel11.TabIndex = 28;
             // 
-            // textBox11
+            // txtProfileName
             // 
-            this.textBox11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox11.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox11.Location = new System.Drawing.Point(104, 0);
-            this.textBox11.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-            this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(173, 20);
-            this.textBox11.TabIndex = 17;
+            this.txtProfileName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtProfileName.Dock = System.Windows.Forms.DockStyle.Left;
+            this.txtProfileName.Location = new System.Drawing.Point(104, 0);
+            this.txtProfileName.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+            this.txtProfileName.Name = "txtProfileName";
+            this.txtProfileName.Size = new System.Drawing.Size(173, 20);
+            this.txtProfileName.TabIndex = 17;
             // 
             // label25
             // 
@@ -1857,64 +1873,64 @@
             this.treeView1.ImageList = this.imageList1;
             this.treeView1.Location = new System.Drawing.Point(3, 65);
             this.treeView1.Name = "treeView1";
-            treeNode1.ImageKey = "2.png";
-            treeNode1.Name = "Узел4";
-            treeNode1.Text = "skt201811071310nikol, 30m, 3.12 km, vsb";
-            treeNode2.ImageKey = "2.png";
-            treeNode2.Name = "Узел6";
-            treeNode2.Text = "skt201811071314, 70m, 2.1 km";
-            treeNode3.ImageKey = "1.png";
-            treeNode3.Name = "Узел1";
-            treeNode3.Text = "Отрезки (2)";
-            treeNode4.ImageKey = "3.png";
-            treeNode4.Name = "Узел12";
-            treeNode4.Text = "fan201811081111nikol_луч1, азм 10";
-            treeNode5.ImageKey = "3.png";
-            treeNode5.Name = "Узел13";
-            treeNode5.Text = "fan201811081111nikol_луч2, азм 25";
-            treeNode6.ImageKey = "3.png";
-            treeNode6.Name = "Узел14";
-            treeNode6.Text = "fan201811081111nikol_луч3, азм 40";
-            treeNode7.ImageKey = "3.png";
-            treeNode7.Name = "Узел15";
-            treeNode7.Text = "fan201811081111nikol_луч1, азм 55";
-            treeNode8.ImageKey = "2.png";
-            treeNode8.Name = "Узел7";
-            treeNode8.Text = "fan201811081111nikol, Б 36.12345:50.12345, аз 10:55, 2 км";
-            treeNode9.ImageKey = "3.png";
-            treeNode9.Name = "Узел16";
-            treeNode9.Text = "fan201811081111nikol, 1";
-            treeNode10.ImageKey = "3.png";
-            treeNode10.Name = "Узел17";
-            treeNode10.Text = "fan201811081111nikol, 2";
-            treeNode11.ImageKey = "3.png";
-            treeNode11.Name = "Узел18";
-            treeNode11.Text = "fan201811081111nikol, 3";
-            treeNode12.ImageKey = "4.png";
-            treeNode12.Name = "Узел19";
-            treeNode12.Text = "fan201811081111nikol, 4";
-            treeNode13.ImageKey = "2.png";
-            treeNode13.Name = "Узел8";
-            treeNode13.Text = "fan201811081111nikol, БТ 36.12345:50.12345, аз 10:55, 2 км";
-            treeNode14.ImageKey = "1.png";
-            treeNode14.Name = "Узел2";
-            treeNode14.Text = "Веер (2)";
-            treeNode15.ImageKey = "2.png";
-            treeNode15.Name = "Узел9";
-            treeNode15.Text = "gr201811111732nikol, lr Road, 15 км";
-            treeNode16.ImageKey = "2.png";
-            treeNode16.Name = "Узел10";
-            treeNode16.Text = "gr201811111745nikol, lr Graph, 15 км";
-            treeNode17.ImageKey = "2.png";
-            treeNode17.Name = "Узел11";
-            treeNode17.Text = "gr201811111755nikol, lr Graph, 13.1 км";
-            treeNode18.ImageKey = "1.png";
-            treeNode18.Name = "Узел3";
-            treeNode18.Text = "Графика (3)";
+            treeNode19.ImageKey = "2.png";
+            treeNode19.Name = "Узел4";
+            treeNode19.Text = "skt201811071310nikol, 30m, 3.12 km, vsb";
+            treeNode20.ImageKey = "2.png";
+            treeNode20.Name = "Узел6";
+            treeNode20.Text = "skt201811071314, 70m, 2.1 km";
+            treeNode21.ImageKey = "1.png";
+            treeNode21.Name = "Узел1";
+            treeNode21.Text = "Отрезки (2)";
+            treeNode22.ImageKey = "3.png";
+            treeNode22.Name = "Узел12";
+            treeNode22.Text = "fan201811081111nikol_луч1, азм 10";
+            treeNode23.ImageKey = "3.png";
+            treeNode23.Name = "Узел13";
+            treeNode23.Text = "fan201811081111nikol_луч2, азм 25";
+            treeNode24.ImageKey = "3.png";
+            treeNode24.Name = "Узел14";
+            treeNode24.Text = "fan201811081111nikol_луч3, азм 40";
+            treeNode25.ImageKey = "3.png";
+            treeNode25.Name = "Узел15";
+            treeNode25.Text = "fan201811081111nikol_луч1, азм 55";
+            treeNode26.ImageKey = "2.png";
+            treeNode26.Name = "Узел7";
+            treeNode26.Text = "fan201811081111nikol, Б 36.12345:50.12345, аз 10:55, 2 км";
+            treeNode27.ImageKey = "3.png";
+            treeNode27.Name = "Узел16";
+            treeNode27.Text = "fan201811081111nikol, 1";
+            treeNode28.ImageKey = "3.png";
+            treeNode28.Name = "Узел17";
+            treeNode28.Text = "fan201811081111nikol, 2";
+            treeNode29.ImageKey = "3.png";
+            treeNode29.Name = "Узел18";
+            treeNode29.Text = "fan201811081111nikol, 3";
+            treeNode30.ImageKey = "4.png";
+            treeNode30.Name = "Узел19";
+            treeNode30.Text = "fan201811081111nikol, 4";
+            treeNode31.ImageKey = "2.png";
+            treeNode31.Name = "Узел8";
+            treeNode31.Text = "fan201811081111nikol, БТ 36.12345:50.12345, аз 10:55, 2 км";
+            treeNode32.ImageKey = "1.png";
+            treeNode32.Name = "Узел2";
+            treeNode32.Text = "Веер (2)";
+            treeNode33.ImageKey = "2.png";
+            treeNode33.Name = "Узел9";
+            treeNode33.Text = "gr201811111732nikol, lr Road, 15 км";
+            treeNode34.ImageKey = "2.png";
+            treeNode34.Name = "Узел10";
+            treeNode34.Text = "gr201811111745nikol, lr Graph, 15 км";
+            treeNode35.ImageKey = "2.png";
+            treeNode35.Name = "Узел11";
+            treeNode35.Text = "gr201811111755nikol, lr Graph, 13.1 км";
+            treeNode36.ImageKey = "1.png";
+            treeNode36.Name = "Узел3";
+            treeNode36.Text = "Графика (3)";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3,
-            treeNode14,
-            treeNode18});
+            treeNode21,
+            treeNode32,
+            treeNode36});
             this.treeView1.SelectedImageKey = "Ok.png";
             this.treeView1.Size = new System.Drawing.Size(336, 325);
             this.treeView1.TabIndex = 35;
@@ -2016,8 +2032,8 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
+            this.sectionTab.ResumeLayout(false);
+            this.sectionTab.PerformLayout();
             this.panel16.ResumeLayout(false);
             this.panel16.PerformLayout();
             this.panel5.ResumeLayout(false);
@@ -2026,8 +2042,8 @@
             this.panel17.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
-            this.tabPage4.ResumeLayout(false);
-            this.tabPage4.PerformLayout();
+            this.fanTab.ResumeLayout(false);
+            this.fanTab.PerformLayout();
             this.panel12.ResumeLayout(false);
             this.panel9.ResumeLayout(false);
             this.panel9.PerformLayout();
@@ -2037,11 +2053,11 @@
             this.panel10.PerformLayout();
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
-            this.tabPage5.ResumeLayout(false);
-            this.tabPage5.PerformLayout();
+            this.primitiveTab.ResumeLayout(false);
+            this.primitiveTab.PerformLayout();
             this.panel13.ResumeLayout(false);
-            this.tabPage6.ResumeLayout(false);
-            this.tabPage6.PerformLayout();
+            this.loadTab.ResumeLayout(false);
+            this.loadTab.PerformLayout();
             this.panel15.ResumeLayout(false);
             this.panel14.ResumeLayout(false);
             this.panel14.PerformLayout();
@@ -2066,7 +2082,7 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabControl tabControl2;
-        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage sectionTab;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Panel panel16;
         private System.Windows.Forms.Label label23;
@@ -2089,14 +2105,13 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.ToolBar firstPointToolBar;
         private System.Windows.Forms.ToolBarButton toolBarButton54;
-        private System.Windows.Forms.ToolBarButton toolBarButton55;
         private System.Windows.Forms.ToolBarButton toolBarButton56;
-        private System.Windows.Forms.ToolBarButton toolBarButton57;
+        private System.Windows.Forms.ToolBarButton btnCopyFirstPoint;
         private System.Windows.Forms.ToolBarButton toolBarButton58;
         private System.Windows.Forms.ToolBarButton toolBarButton59;
         private System.Windows.Forms.ToolBarButton toolBarButton60;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.TabPage fanTab;
         private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.CheckBox checkBox2;
@@ -2115,7 +2130,7 @@
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.TextBox textBox13;
         private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.ToolBar toolBar3;
+        private System.Windows.Forms.ToolBar basePointToolbar;
         private System.Windows.Forms.ToolBarButton toolBarButton15;
         private System.Windows.Forms.ToolBarButton toolBarButton17;
         private System.Windows.Forms.ToolBarButton toolBarButton18;
@@ -2124,7 +2139,7 @@
         private System.Windows.Forms.ToolBarButton toolBarButton21;
         private System.Windows.Forms.ToolBarButton toolBarButton63;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.TabPage primitiveTab;
         private System.Windows.Forms.ToolBar toolBar4;
         private System.Windows.Forms.ToolBarButton toolBarButton23;
         private System.Windows.Forms.ToolBarButton toolBarButton28;
@@ -2135,7 +2150,7 @@
         private System.Windows.Forms.Panel panel13;
         private System.Windows.Forms.ComboBox comboBox7;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.TabPage loadTab;
         private System.Windows.Forms.ToolBar toolBar5;
         private System.Windows.Forms.ToolBarButton toolBarButton29;
         private System.Windows.Forms.ToolBarButton toolBarButton31;
@@ -2161,7 +2176,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel11;
-        private System.Windows.Forms.TextBox textBox11;
+        private System.Windows.Forms.TextBox txtProfileName;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel1;
@@ -2205,15 +2220,25 @@
         private System.Windows.Forms.RichTextBox richTextBox7;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Button button4;
-        internal System.Windows.Forms.ToolBarButton pickCoords;
-        internal System.Windows.Forms.ToolBarButton btnPickFirstPoint;
+        //internal System.Windows.Forms.ToolBarButton pickCoords;
+        //internal System.Windows.Forms.ToolBarButton btnPickFirstPoint;
         internal System.Windows.Forms.TextBox txtFirstPointX;
         internal System.Windows.Forms.TextBox txtFirstPointY;
-        internal System.Windows.Forms.ToolBarButton btnPickSecondPoint;
-        internal System.Windows.Forms.ToolBarButton btnPickBasePoint;
+        //internal System.Windows.Forms.ToolBarButton btnPickSecondPoint;
+        //internal System.Windows.Forms.ToolBarButton btnPickBasePoint;
         internal System.Windows.Forms.TextBox txtSecondPointY;
         internal System.Windows.Forms.TextBox txtSecondPointX;
         internal System.Windows.Forms.TextBox txtBasePointY;
         internal System.Windows.Forms.TextBox txtBasePointX;
+        //internal System.Windows.Forms.ToolBarButton btnPickSecondPoint;
+        //internal System.Windows.Forms.ToolBarButton btnPickFirstPoint;
+        //internal System.Windows.Forms.ToolBarButton btnPickBasePoint;
+        //internal System.Windows.Forms.ToolBarButton btnZoomToFirstPoint;
+        private System.Windows.Forms.Button button5;
+        internal System.Windows.Forms.ToolBarButton btnPickSecondPoint;
+        internal System.Windows.Forms.ToolBarButton btnPickFirstPoint;
+        internal System.Windows.Forms.ToolBarButton toolBarButton55;
+        private System.Windows.Forms.ToolBarButton toolBarButton57;
+        internal System.Windows.Forms.ToolBarButton btnPickBasePoint;
     }
 }
