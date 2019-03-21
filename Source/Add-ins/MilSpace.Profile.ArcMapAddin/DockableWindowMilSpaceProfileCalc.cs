@@ -20,6 +20,7 @@ using MilSpace.Configurations;
 using System.Reflection;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Media;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.Geometry;
@@ -47,7 +48,10 @@ namespace MilSpace.Profile
             this.Hook = hook;
             SubscribeForEvents();
             this.Instance = this;
+            SubscribeForEvents();
         }
+
+        private IActiveView ActiveView => ArcMap.Document.ActiveView;
 
         public  DockableWindowMilSpaceProfileCalc Instance { get; }
 
@@ -113,6 +117,10 @@ namespace MilSpace.Profile
             ArcMap.Events.OpenDocument += OnObservationPointDropped;
             ArcMap.Events.OpenDocument += OnRoadComboDropped;
             ArcMap.Events.OpenDocument += OnVegetationDropped;
+            txtFirstPointX.TextChanged += SetFirstPointCopyButtonState;
+            txtFirstPointY.TextChanged += SetFirstPointCopyButtonState;
+            ArcMap.Events.OpenDocument += SetProfileName;
+            tabControl2.SelectedIndexChanged += OnTabChange;
 
         }
 
@@ -179,17 +187,277 @@ namespace MilSpace.Profile
                         }
                         ArcMap.Application.CurrentTool = commandItem;
 
-                    // Insert code to open the file.
+                    
                     break;
                 case 1:
-                   ;
-                    // Insert code to save the file.
+                   
                     break;
                 case 2:
+                    var point = ParseStringCoordsToPoint(txtFirstPointX.Text, txtFirstPointY.Text);
+                    ZoomToPoint(point);
+                    break;
+
+                case 4:
+
+                    if (txtFirstPointX.Focused)
+                    {
+                        CopyTextToBuffer(txtFirstPointX.Text);
+                    }
+
+
+                    CopyTextToBuffer(txtFirstPointY.Focused ? txtFirstPointY.Text : txtFirstPointX.Text);
+
+                    break;
+
+                case 5:
+                    if (txtFirstPointX.Focused)
+                    {
+                        PasteTextToEditField(txtFirstPointX);
+                    }
+
+
+
+                    PasteTextToEditField(txtFirstPointY.Focused ? txtFirstPointY : txtFirstPointX);
+
+                    break;
+
+                case 7:
+
+                    txtFirstPointX.Clear();
+                    txtFirstPointY.Clear();
+                    break;
                     
-                    // Insert code to print the file.    
+            }
+        }
+
+
+        private void secondPointToolbar_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        {
+            ToolbarButtonClicked = e.Button;
+            switch (secondPointToolbar.Buttons.IndexOf(e.Button))
+            {
+
+                case 1:
+
+                    var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickCoordinates);
+                    if (commandItem == null)
+                    {
+                        var message = $"Please add Pick Coordinates tool to any toolbar first.";
+                        MessageBox.Show(message, "Profile Calc", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        break;
+
+                    }
+                    ArcMap.Application.CurrentTool = commandItem;
+
+                    
+                    break;
+                case 0:
+                    ;
+                   
+                    break;
+                case 2:
+                    var point = ParseStringCoordsToPoint(txtSecondPointX.Text, txtSecondPointY.Text);
+                    ZoomToPoint(point);
+                    break;
+
+                case 4:
+
+                    if (txtSecondPointX.Focused)
+                    {
+                        CopyTextToBuffer(txtSecondPointX.Text);
+                    }
+
+
+                    CopyTextToBuffer(txtSecondPointY.Focused ? txtSecondPointY.Text : txtSecondPointX.Text);
+
+                    break;
+
+                case 5:
+                    if (txtSecondPointX.Focused)
+                    {
+                        PasteTextToEditField(txtSecondPointX);
+                    }
+
+
+
+                    PasteTextToEditField(txtSecondPointY.Focused ? txtSecondPointY : txtSecondPointX);
+
+                    break;
+
+                case 7:
+
+                    txtSecondPointX.Clear();
+                    txtSecondPointY.Clear();
+                    break;
+
+            }
+        }
+
+        private void toolBar3_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        {
+            ToolbarButtonClicked = e.Button;
+            switch (basePointToolbar.Buttons.IndexOf(e.Button))
+            {
+
+                case 1:
+
+                    var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickCoordinates);
+                    if (commandItem == null)
+                    {
+                        var message = $"Please add Pick Coordinates tool to any toolbar first.";
+                        MessageBox.Show(message, "Profile Calc", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        break;
+
+                    }
+                    ArcMap.Application.CurrentTool = commandItem;
+
+                    
+                    break;
+                case 0:
+                    ;
+                    
+                    break;
+                case 2:
+
+                    var point = ParseStringCoordsToPoint(txtBasePointX.Text, txtBasePointY.Text);
+                    ZoomToPoint(point);
+                    break;
+
+
+                case 4:
+
+                    if (txtBasePointX.Focused)
+                    {
+                        CopyTextToBuffer(txtBasePointX.Text);
+                    }
+
+
+                    CopyTextToBuffer(txtBasePointY.Focused ? txtBasePointY.Text : txtBasePointX.Text);
+
+                    break;
+
+                case 5:
+                    if (txtBasePointX.Focused)
+                    {
+                        PasteTextToEditField(txtBasePointX);
+                    }
+
+
+
+                    PasteTextToEditField(txtBasePointY.Focused ? txtBasePointY : txtBasePointX);
+
+                    break;
+
+                case 7:
+
+                    txtBasePointX.Clear();
+                    txtBasePointY.Clear();
+                    break;
+
+            }
+        }
+
+
+        private void ZoomToPoint(IPoint point)
+        {
+            IEnvelope pEnv = new EnvelopeClass();
+            pEnv = ActiveView.Extent;
+            pEnv.CenterAt(point);
+            ActiveView.Extent = pEnv;
+            ActiveView.Refresh();
+        }
+
+        private IPoint ParseStringCoordsToPoint(string coordX, string coordY )
+        {
+            try
+            {
+                var x = double.Parse(coordX);
+                var y = double.Parse(coordY);
+                var point = new Point()
+                {
+                    X = x,
+                    Y = y
+                };
+
+                return point;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Please make sure X and Y values are valid and try again!");
+                throw;
+            }
+            
+        }
+
+        private void CopyTextToBuffer(string text)
+        {
+            if (!string.IsNullOrWhiteSpace(text))
+            {
+                System.Windows.Forms.Clipboard.SetText(text);
+            }
+
+            
+        }
+
+        private void PasteTextToEditField( TextBox textBox)
+        {
+            var text = Clipboard.GetText();
+            textBox.Text = text;
+        }
+
+        private IPolyline GetPolylineFromPoints()
+        {            
+            var firstPoint = ParseStringCoordsToPoint(txtFirstPointX.Text, txtFirstPointY.Text);
+            var secondPoint = ParseStringCoordsToPoint(txtSecondPointX.Text, txtSecondPointY.Text);
+            IPolyline polyline = new PolylineClass();
+            polyline.FromPoint = firstPoint;
+            polyline.ToPoint = secondPoint;
+            return polyline;
+        }
+
+        private void SetProfileName()
+        {
+            var activeTabName = tabControl2.SelectedTab.Name;
+            switch (activeTabName)
+            {
+                case "sectionTab":
+
+                    
+                    txtProfileName.Text = GenerateProfileName("sct");
+                    break;
+
+                case "fanTab":
+                   
+                    txtProfileName.Text = GenerateProfileName("fan");
+                    break;
+
+                case "primitiveTab":
+                    txtProfileName.Text = GenerateProfileName("primitive");
+                    break;
+
+                case "loadTab":
+                    txtProfileName.Clear();
                     break;
             }
+        }
+
+        private void OnTabChange(object sender, EventArgs e)
+        {
+            SetProfileName();
+        }
+
+        private string GenerateProfileName(string prefix)
+        {           
+            var time = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss");
+            var userName = Environment.UserName;
+            var profileName = $"{prefix}{time}_{userName}";
+            return profileName.Replace(" ",string.Empty);
+        }
+
+        private void SetFirstPointCopyButtonState(object sender, EventArgs e)
+        {
+            
+
         }
 
         public void InitializeMyToolBar()
@@ -237,7 +505,39 @@ namespace MilSpace.Profile
 
         }
 
-        private ILine GetSegment()
+        private void FlashPoint(IScreenDisplay Display, IGeometry Geometry)
+        {
+            ISimpleMarkerSymbol MarkerSymbol;
+            ISymbol Symbol;
+            IRgbColor RgbColor;
+
+            try
+            {
+                MarkerSymbol = new SimpleMarkerSymbolClass();
+                MarkerSymbol.Style = esriSimpleMarkerStyle.esriSMSCircle;
+
+                RgbColor = new RgbColorClass();
+                RgbColor.Green = 128;
+
+                Symbol = (ISymbol)MarkerSymbol;
+                Symbol.ROP2 = esriRasterOpCode.esriROPNotXOrPen;
+
+                Display.SetSymbol((ISymbol)MarkerSymbol);
+                Display.DrawPoint(Geometry);
+                Thread.Sleep(300);
+                Display.DrawPoint(Geometry);
+
+            }
+            catch (Exception Err)
+            {
+                MessageBox.Show(Err.Message);
+
+            }
+
+        }
+    
+
+    private ILine GetSegment()
         {
             //var firstPoint = new ESRI.ArcGIS.Geometry.Point();
             //var secondPoint = new ESRI.ArcGIS.Geometry.Point();
@@ -349,68 +649,7 @@ namespace MilSpace.Profile
             ProfileLayers.GetAllLayers();
         }
 
-        private void secondPointToolbar_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
-        {
-            ToolbarButtonClicked = e.Button;
-            switch (firstPointToolBar.Buttons.IndexOf(e.Button))
-            {
-
-                case 1:
-
-                    var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickCoordinates);
-                    if (commandItem == null)
-                    {
-                        var message = $"Please add Pick Coordinates tool to any toolbar first.";
-                        MessageBox.Show(message, "Profile Calc", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                        break;
-
-                    }
-                    ArcMap.Application.CurrentTool = commandItem;
-
-                    // Insert code to open the file.
-                    break;
-                case 0:
-                    ;
-                    // Insert code to save the file.
-                    break;
-                case 2:
-
-                    // Insert code to print the file.    
-                    break;
-            }
-        }
-
-        private void toolBar3_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
-        {
-            ToolbarButtonClicked = e.Button;
-            switch (firstPointToolBar.Buttons.IndexOf(e.Button))
-            {
-
-                case 1:
-
-                    var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickCoordinates);
-                    if (commandItem == null)
-                    {
-                        var message = $"Please add Pick Coordinates tool to any toolbar first.";
-                        MessageBox.Show(message, "Profile Calc", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                        break;
-
-                    }
-                    ArcMap.Application.CurrentTool = commandItem;
-
-                    // Insert code to open the file.
-                    break;
-                case 0:
-                    ;
-                    // Insert code to save the file.
-                    break;
-                case 2:
-
-                    // Insert code to print the file.    
-                    break;
-            }
-        }
-
+        
         private void button2_Click(object sender, EventArgs e)
         {
             //GdbAccess.Instance.EraseProfileLines();
@@ -443,6 +682,25 @@ namespace MilSpace.Profile
                 //TODO log error
                 MessageBox.Show("Calcu;lation error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            var map = ActiveView.FocusMap;
+            //var segment = GetSegment();
+            var geometry = GetPolylineFromPoints();
+            IRgbColor col = new RgbColorClass();
+            col.Red = 255;
+            col.Green = 0;
+            col.Blue = 0;
+
+            IRgbColor col2 = new RgbColorClass();
+            col2.Red = 0;
+            col2.Green = 0;
+            col2.Blue = 0;
+
+            AddGraphicToMap(map, geometry, col, col2);
+            ActiveView.Refresh();
         }
     }
 }
