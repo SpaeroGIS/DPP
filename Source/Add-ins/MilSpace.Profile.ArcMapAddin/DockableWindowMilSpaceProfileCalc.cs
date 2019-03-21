@@ -1,32 +1,19 @@
-﻿using ESRI.ArcGIS.esriSystem;
+﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Display;
+using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
+using ESRI.ArcGIS.Geometry;
+using MilSpace.Core;
+using MilSpace.Core.Tools;
+using MilSpace.Tools;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Globalization;
-using System.Text;
-using System.Windows.Forms;
-using ESRI.ArcGIS.ArcMapUI;
-using ESRI.ArcGIS.Carto;
-using MilSpace.Core;
-using MilSpace.Core.Actions;
-using MilSpace.Core.Actions.ActionResults;
-using MilSpace.Core.Actions.Base;
-using MilSpace.Core.Actions.Interfaces;
-using MilSpace.Tools.SurfaceProfile.Actions;
-using MilSpace.Configurations;
-using System.Reflection;
-using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Windows.Forms;
 using System.Windows.Media;
-using ESRI.ArcGIS.Display;
-using ESRI.ArcGIS.Geometry;
-using MilSpace.DataAccess.Facade;
 using Point = ESRI.ArcGIS.Geometry.Point;
-using MilSpace.Tools;
 
 namespace MilSpace.Profile
 {
@@ -204,7 +191,6 @@ namespace MilSpace.Profile
                         CopyTextToBuffer(txtFirstPointX.Text);
                     }
 
-
                     CopyTextToBuffer(txtFirstPointY.Focused ? txtFirstPointY.Text : txtFirstPointX.Text);
 
                     break;
@@ -214,8 +200,6 @@ namespace MilSpace.Profile
                     {
                         PasteTextToEditField(txtFirstPointX);
                     }
-
-
 
                     PasteTextToEditField(txtFirstPointY.Focused ? txtFirstPointY : txtFirstPointX);
 
@@ -376,8 +360,11 @@ namespace MilSpace.Profile
                 var point = new Point()
                 {
                     X = x,
-                    Y = y
+                    Y = y,
+                    SpatialReference = EsriTools.Wgs84Spatialreference
                 };
+
+                EsriTools.ProjectToMapSpatialReference(point, ArcMap.Document.FocusMap.SpatialReference);
 
                 return point;
             }

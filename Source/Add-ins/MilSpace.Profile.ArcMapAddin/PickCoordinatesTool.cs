@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Geometry;
+using MilSpace.Core.Tools;
 
 namespace MilSpace.Profile
 {
@@ -26,23 +27,28 @@ namespace MilSpace.Profile
             toolId.Value = ThisAddIn.IDs.PickCoordinates;
             var mxdDoc = ArcMap.Document;
             var screenDisplay = mxdDoc.ActiveView.ScreenDisplay;
-            Point = screenDisplay.DisplayTransformation.ToMapPoint(arg.X, arg.Y);
+            var point = screenDisplay.DisplayTransformation.ToMapPoint(arg.X, arg.Y);
+
+            point.SpatialReference = mxdDoc.FocusMap.SpatialReference;
+
+            EsriTools.ProjectToWgs84(point);
+
             if (ProfileForms.ProfileCalcUI.ToolbarButtonClicked == ProfileForms.ProfileCalcUI.btnPickFirstPoint)
             {
-                ProfileForms.ProfileCalcUI.txtFirstPointX.Text = Point.X.ToString("F4");//(CultureInfo.InvariantCulture);
-                ProfileForms.ProfileCalcUI.txtFirstPointY.Text = Point.Y.ToString("F4");
+                ProfileForms.ProfileCalcUI.txtFirstPointX.Text = point.X.ToString("F4");//(CultureInfo.InvariantCulture);
+                ProfileForms.ProfileCalcUI.txtFirstPointY.Text = point.Y.ToString("F4");
             }
 
             if (ProfileForms.ProfileCalcUI.ToolbarButtonClicked == ProfileForms.ProfileCalcUI.btnPickSecondPoint)
             {
-                ProfileForms.ProfileCalcUI.txtSecondPointX.Text = Point.X.ToString("F4");
-                ProfileForms.ProfileCalcUI.txtSecondPointY.Text = Point.Y.ToString("F4");
+                ProfileForms.ProfileCalcUI.txtSecondPointX.Text = point.X.ToString("F4");
+                ProfileForms.ProfileCalcUI.txtSecondPointY.Text = point.Y.ToString("F4");
             }
 
             if (ProfileForms.ProfileCalcUI.ToolbarButtonClicked == ProfileForms.ProfileCalcUI.btnPickBasePoint)
             {
-                ProfileForms.ProfileCalcUI.txtBasePointX.Text = Point.X.ToString("F4");
-                ProfileForms.ProfileCalcUI.txtBasePointY.Text = Point.Y.ToString("F4");
+                ProfileForms.ProfileCalcUI.txtBasePointX.Text = point.X.ToString("F4");
+                ProfileForms.ProfileCalcUI.txtBasePointY.Text = point.Y.ToString("F4");
             }
 
         }
