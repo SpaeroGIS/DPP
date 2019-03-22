@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 namespace MilSpace.Profile
 {
 
+    /// <summary>
+    /// MilSpace Profile Calcs Controller
+    /// </summary>
     public class MilSpaceProfileCalsController
     {
         private IPoint linePropertiesFirstPoint;
