@@ -170,6 +170,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IMilSpaceProfileView.cs" />
     <Compile Include="Config.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Config.esriaddinx</DependentUpon>
@@ -182,6 +183,7 @@
     </Compile>
     <Compile Include="DockableWindowMilSpaceProfileGraphCommand.cs" />
     <Compile Include="DrawPolylineFromClicks.cs" />
+    <Compile Include="MilSpaceProfileCalsController.cs" />
     <Compile Include="PickCoordinatesTool.cs" />
     <Compile Include="ProfileForms.cs" />
     <Compile Include="ProfileLayers.cs" />

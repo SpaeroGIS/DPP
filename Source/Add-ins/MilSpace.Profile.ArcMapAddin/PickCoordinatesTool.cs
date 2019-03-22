@@ -1,7 +1,9 @@
 ﻿using System.Globalization;
+using ESRI.ArcGIS.Desktop.AddIns;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Tools;
+using static MilSpace.Profile.DockableWindowMilSpaceProfileCalc;
 
 namespace MilSpace.Profile
 {
@@ -28,27 +30,47 @@ namespace MilSpace.Profile
             var mxdDoc = ArcMap.Document;
             var screenDisplay = mxdDoc.ActiveView.ScreenDisplay;
             var point = screenDisplay.DisplayTransformation.ToMapPoint(arg.X, arg.Y);
+            var pointToSave = screenDisplay.DisplayTransformation.ToMapPoint(arg.X, arg.Y);
 
             point.SpatialReference = mxdDoc.FocusMap.SpatialReference;
 
+            pointToSave.SpatialReference = mxdDoc.FocusMap.SpatialReference;
+
             EsriTools.ProjectToWgs84(point);
 
-            if (ProfileForms.ProfileCalcUI.ToolbarButtonClicked == ProfileForms.ProfileCalcUI.btnPickFirstPoint)
+            var winImpl = AddIn.FromID<DockableWindowMilSpaceProfileCalc.AddinImpl>(ThisAddIn.IDs.DockableWindowMilSpaceProfileCalc);
+
+            if (winImpl.MilSpaceProfileCalsController.View.ActiveButton == ProfileSettingsPointButton.PointsFist)
             {
-                ProfileForms.ProfileCalcUI.txtFirstPointX.Text = point.X.ToString("F4");//(CultureInfo.InvariantCulture);
-                ProfileForms.ProfileCalcUI.txtFirstPointY.Text = point.Y.ToString("F4");
+
+                var points = ProfileForms.ProfileGeometries[ProfileSettingsTypeEnum.Points] as IPoint[];
+                points[0] = point;
+
+
+                winImpl.MilSpaceProfileCalsController.SetFirsPointForLineProfile(point);
+
+                //ProfileForms.ProfileCalcUI.txtFirstPointX.Text = point.X.ToString("F4");//(CultureInfo.InvariantCulture);
+                //ProfileForms.ProfileCalcUI.txtFirstPointY.Text = point.Y.ToString("F4");
             }
 
-            if (ProfileForms.ProfileCalcUI.ToolbarButtonClicked == ProfileForms.ProfileCalcUI.btnPickSecondPoint)
+            if (winImpl.MilSpaceProfileCalsController.View.ActiveButton == ProfileSettingsPointButton.PointsSecond)
             {
-                ProfileForms.ProfileCalcUI.txtSecondPointX.Text = point.X.ToString("F4");
-                ProfileForms.ProfileCalcUI.txtSecondPointY.Text = point.Y.ToString("F4");
+                var points = ProfileForms.ProfileGeometries[ProfileSettingsTypeEnum.Points] as IPoint[];
+                points[1] = point;
+
+                winImpl.MilSpaceProfileCalsController.SetSecondfPointForLineProfile(point);
+
+                //ProfileForms.ProfileCalcUI.txtSecondPointX.Text = point.X.ToString("F4");
+                //ProfileForms.ProfileCalcUI.txtSecondPointY.Text = point.Y.ToString("F4");
             }
 
-            if (ProfileForms.ProfileCalcUI.ToolbarButtonClicked == ProfileForms.ProfileCalcUI.btnPickBasePoint)
+            if (winImpl.MilSpaceProfileCalsController.View.ActiveButton == ProfileSettingsPointButton.CenterFun)
             {
-                ProfileForms.ProfileCalcUI.txtBasePointX.Text = point.X.ToString("F4");
-                ProfileForms.ProfileCalcUI.txtBasePointY.Text = point.Y.ToString("F4");
+
+                winImpl.MilSpaceProfileCalsController.SetCenterPointForFunProfile(point);
+
+                //ProfileForms.ProfileCalcUI.txtBasePointX.Text = point.X.ToString("F4");
+                //ProfileForms.ProfileCalcUI.txtBasePointY.Text = point.Y.ToString("F4");
             }
 
         }
