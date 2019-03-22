@@ -43,34 +43,22 @@ namespace MilSpace.Profile
             if (winImpl.MilSpaceProfileCalsController.View.ActiveButton == ProfileSettingsPointButton.PointsFist)
             {
 
-                var points = ProfileForms.ProfileGeometries[ProfileSettingsTypeEnum.Points] as IPoint[];
-                points[0] = point;
+                winImpl.MilSpaceProfileCalsController.SetFirsPointForLineProfile(point, pointToSave);
 
-
-                winImpl.MilSpaceProfileCalsController.SetFirsPointForLineProfile(point);
-
-                //ProfileForms.ProfileCalcUI.txtFirstPointX.Text = point.X.ToString("F4");//(CultureInfo.InvariantCulture);
-                //ProfileForms.ProfileCalcUI.txtFirstPointY.Text = point.Y.ToString("F4");
             }
 
             if (winImpl.MilSpaceProfileCalsController.View.ActiveButton == ProfileSettingsPointButton.PointsSecond)
             {
                 var points = ProfileForms.ProfileGeometries[ProfileSettingsTypeEnum.Points] as IPoint[];
                 points[1] = point;
-
-                winImpl.MilSpaceProfileCalsController.SetSecondfPointForLineProfile(point);
-
-                //ProfileForms.ProfileCalcUI.txtSecondPointX.Text = point.X.ToString("F4");
-                //ProfileForms.ProfileCalcUI.txtSecondPointY.Text = point.Y.ToString("F4");
+                winImpl.MilSpaceProfileCalsController.SetSecondfPointForLineProfile(point, pointToSave);
             }
 
             if (winImpl.MilSpaceProfileCalsController.View.ActiveButton == ProfileSettingsPointButton.CenterFun)
             {
 
-                winImpl.MilSpaceProfileCalsController.SetCenterPointForFunProfile(point);
+                winImpl.MilSpaceProfileCalsController.SetCenterPointForFunProfile(point, pointToSave);
 
-                //ProfileForms.ProfileCalcUI.txtBasePointX.Text = point.X.ToString("F4");
-                //ProfileForms.ProfileCalcUI.txtBasePointY.Text = point.Y.ToString("F4");
             }
 
         }
