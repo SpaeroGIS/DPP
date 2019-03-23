@@ -209,8 +209,8 @@ namespace MilSpace.Profile
 
                     break;
                 case 2:
-                    var point = ParseStringCoordsToPoint(txtFirstPointX.Text, txtFirstPointY.Text);
-                    ZoomToPoint(point);
+
+                    controller.FlashPoint(ProfileSettingsPointButton.PointsFist, ActiveView);
                     break;
 
                 case 4:
@@ -328,7 +328,6 @@ namespace MilSpace.Profile
 
                     break;
                 case 0:
-                    ;
 
                     break;
                 case 2:
@@ -375,10 +374,8 @@ namespace MilSpace.Profile
         private void ZoomToPoint(IPoint point)
         {
             IEnvelope pEnv = new EnvelopeClass();
-            pEnv = ActiveView.Extent;
-            pEnv.CenterAt(point);
-            ActiveView.Extent = pEnv;
-            ActiveView.Refresh();
+
+            
         }
 
         private IPoint ParseStringCoordsToPoint(string coordX, string coordY)
@@ -528,7 +525,7 @@ namespace MilSpace.Profile
 
             //Add lines
             var map = ArcMap.Document.ActiveView.FocusMap;
-            var segment = GetSegment();
+            var segment = controller.GetProfileLine();
             var geometry = (IGeometry)segment;
             IRgbColor col = new RgbColorClass();
             col.Red = 133;
@@ -590,29 +587,6 @@ namespace MilSpace.Profile
 
         }
 
-
-        private ILine GetSegment()
-        {
-            //TODO: Check the activew tab
-
-            var points = ProfileForms.ProfileGeometries[ProfileSettingsTypeEnum.Points];
-
-            //Point fromPoint = new PointClass();
-            //fromPoint.X = double.Parse(txtFirstPointX.Text, System.Globalization.CultureInfo.InvariantCulture);
-            //fromPoint.Y = double.Parse(txtFirstPointY.Text, System.Globalization.CultureInfo.InvariantCulture);
-
-            //Point toPoint = new PointClass();
-            //toPoint.X = double.Parse(txtSecondPointX.Text, System.Globalization.CultureInfo.InvariantCulture);
-            //toPoint.Y = double.Parse(txtSecondPointY.Text, System.Globalization.CultureInfo.InvariantCulture);
-
-            ILine segment = new LineClass();
-            segment.FromPoint = ProfileForms.ProfileGeometries[ProfileSettingsTypeEnum.Points].First() as IPoint;
-            segment.ToPoint = ProfileForms.ProfileGeometries[ProfileSettingsTypeEnum.Points].Last() as IPoint;
-
-
-            return segment;
-
-        }
 
         public void AddGraphicToMap(ESRI.ArcGIS.Carto.IMap map, ESRI.ArcGIS.Geometry.IGeometry geometry,
             ESRI.ArcGIS.Display.IRgbColor rgbColor, ESRI.ArcGIS.Display.IRgbColor outlineRgbColor)
@@ -706,7 +680,7 @@ namespace MilSpace.Profile
 
             //Add lines
             var map = ArcMap.Document.ActiveView.FocusMap;
-            var segment = GetSegment();
+            var segment = controller.GetProfileLine();
             var geometry = (IGeometry)segment;
             IRgbColor col = new RgbColorClass();
             col.Red = 133;
