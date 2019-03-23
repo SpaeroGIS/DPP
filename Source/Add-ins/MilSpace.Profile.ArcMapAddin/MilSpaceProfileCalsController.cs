@@ -1,4 +1,6 @@
-﻿using ESRI.ArcGIS.Geometry;
+﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Geometry;
+using MilSpace.Core.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +15,13 @@ namespace MilSpace.Profile
     /// </summary>
     public class MilSpaceProfileCalsController
     {
-        private IPoint linePropertiesFirstPoint;
-        private IPoint linePropertiesSecondPoint;
-        private IPoint funPropertiesCenterPoint;
+
+        private Dictionary<ProfileSettingsPointButton, IPoint> pointsToShow = new Dictionary<ProfileSettingsPointButton, IPoint>()
+        {
+            {ProfileSettingsPointButton.CenterFun, null},
+            {ProfileSettingsPointButton.PointsFist, null},
+            {ProfileSettingsPointButton.PointsSecond, null}
+        };
 
         internal MilSpaceProfileCalsController() { }
 
@@ -31,7 +37,7 @@ namespace MilSpace.Profile
         /// <param name="pointToShow">The point in Map Spatial Reference to be shown on the map</param>
         internal void SetFirsPointForLineProfile(IPoint pointToView, IPoint pointToShow)
         {
-            linePropertiesFirstPoint = pointToShow;
+            pointsToShow[ProfileSettingsPointButton.PointsFist] = pointToShow;
             View.LinePropertiesFirstPoint = pointToView;
         }
 
@@ -44,7 +50,7 @@ namespace MilSpace.Profile
         internal void SetSecondfPointForLineProfile(IPoint pointToView, IPoint pointToShow)
         {
             View.LinePropertiesSecondPoint = pointToView;
-            linePropertiesSecondPoint = pointToShow;
+            pointsToShow[ProfileSettingsPointButton.PointsSecond] = pointToShow;
         }
 
         /// <summary>
@@ -54,10 +60,29 @@ namespace MilSpace.Profile
         /// <param name="pointToShow">The point in Map Spatial Reference to be shown on the map</param>
         internal void SetCenterPointForFunProfile(IPoint pointToView, IPoint pointToShow)
         {
-            funPropertiesCenterPoint = pointToShow;
+            pointsToShow[ProfileSettingsPointButton.CenterFun] = pointToShow;
             View.FunPropertiesCenterPoint = pointToView;
         }
 
+        internal void FlashPoint(ProfileSettingsPointButton pointType, IActiveView view)
+        {
+            IEnvelope env = new EnvelopeClass();
+            env = view.Extent;
+            env.CenterAt(pointsToShow[pointType]);
+            view.Extent = env;
+            view.Refresh();
+            EsriTools.FLashGeometry(view.ScreenDisplay, pointsToShow[pointType]);
+        }
+
+        internal ILine GetProfileLine()
+        {
+            ILine segment = new LineClass();
+            segment.FromPoint = pointsToShow[ProfileSettingsPointButton.PointsFist];
+            segment.ToPoint = pointsToShow[ProfileSettingsPointButton.PointsSecond];
+
+
+            return segment;
+        }
         internal IMilSpaceProfileView View { get; private set; }
     }
 }

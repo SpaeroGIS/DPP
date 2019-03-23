@@ -49,8 +49,6 @@ namespace MilSpace.Profile
 
             if (winImpl.MilSpaceProfileCalsController.View.ActiveButton == ProfileSettingsPointButton.PointsSecond)
             {
-                var points = ProfileForms.ProfileGeometries[ProfileSettingsTypeEnum.Points] as IPoint[];
-                points[1] = point;
                 winImpl.MilSpaceProfileCalsController.SetSecondfPointForLineProfile(point, pointToSave);
             }
 
