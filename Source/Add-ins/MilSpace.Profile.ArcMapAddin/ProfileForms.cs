@@ -4,19 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ESRI.ArcGIS.Desktop.AddIns;
+using ESRI.ArcGIS.Geometry;
 
 namespace MilSpace.Profile
 {
-    internal static class ProfileForms
+   
+    public enum ProfileSettingsPointButton
     {
-        internal static DockableWindowMilSpaceProfileCalc ProfileCalcUI
-        {
-            get
-            {
-                var winImpl = AddIn.FromID<DockableWindowMilSpaceProfileCalc.AddinImpl>(ThisAddIn.IDs.DockableWindowMilSpaceProfileCalc);
-                DockableWindowMilSpaceProfileCalc form = winImpl.DockableWindowUI;
-                return form;
-            }
-        }
+        None,
+        PointsFist,
+        PointsSecond,
+        CenterFun,
+    }
+
+
+    public enum ProfileSettingsTypeEnum
+    {
+        Points,
+        Fun,
+        SelectedFeatures,
+        Load
     }
 }

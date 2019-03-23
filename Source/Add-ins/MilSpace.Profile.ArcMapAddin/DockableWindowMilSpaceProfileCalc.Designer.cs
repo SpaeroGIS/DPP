@@ -77,7 +77,7 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.secondPointToolbar = new System.Windows.Forms.ToolBar();
             this.toolBarButton1 = new System.Windows.Forms.ToolBarButton();
-            this.btnPickSecondPoint = new System.Windows.Forms.ToolBarButton();
+            this.toolBarButton61 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton2 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton5 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton3 = new System.Windows.Forms.ToolBarButton();
@@ -93,7 +93,7 @@
             this.label29 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.firstPointToolBar = new System.Windows.Forms.ToolBar();
-            this.btnPickFirstPoint = new System.Windows.Forms.ToolBarButton();
+            this.toolBarButton8 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton54 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton55 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton56 = new System.Windows.Forms.ToolBarButton();
@@ -125,7 +125,7 @@
             this.panel7 = new System.Windows.Forms.Panel();
             this.basePointToolbar = new System.Windows.Forms.ToolBar();
             this.toolBarButton15 = new System.Windows.Forms.ToolBarButton();
-            this.btnPickBasePoint = new System.Windows.Forms.ToolBarButton();
+            this.toolBarButton16 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton17 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton18 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton19 = new System.Windows.Forms.ToolBarButton();
@@ -499,6 +499,7 @@
             this.tabControl2.SelectedIndex = 0;
             this.tabControl2.Size = new System.Drawing.Size(336, 377);
             this.tabControl2.TabIndex = 6;
+            this.tabControl2.SelectedIndexChanged += new System.EventHandler(this.tabControl2_SelectedIndexChanged);
             // 
             // sectionTab
             // 
@@ -602,7 +603,7 @@
             // 
             this.secondPointToolbar.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
             this.toolBarButton1,
-            this.btnPickSecondPoint,
+            this.toolBarButton61,
             this.toolBarButton2,
             this.toolBarButton5,
             this.toolBarButton3,
@@ -625,10 +626,10 @@
             this.toolBarButton1.Name = "toolBarButton1";
             this.toolBarButton1.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
             // 
-            // btnPickSecondPoint
+            // toolBarButton61
             // 
-            this.btnPickSecondPoint.ImageKey = "Write.png";
-            this.btnPickSecondPoint.Name = "toolBarButton61";
+            this.toolBarButton61.ImageKey = "Write.png";
+            this.toolBarButton61.Name = "toolBarButton61";
             // 
             // toolBarButton2
             // 
@@ -745,7 +746,7 @@
             // firstPointToolBar
             // 
             this.firstPointToolBar.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
-            this.btnPickFirstPoint,
+            this.toolBarButton8,
             this.toolBarButton54,
             this.toolBarButton55,
             this.toolBarButton56,
@@ -764,10 +765,10 @@
             this.firstPointToolBar.TabIndex = 27;
             this.firstPointToolBar.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.toolBar1_ButtonClick);
             // 
-            // btnPickFirstPoint
+            // toolBarButton8
             // 
-            this.btnPickFirstPoint.ImageKey = "Write.png";
-            this.btnPickFirstPoint.Name = "toolBarButton8";
+            this.toolBarButton8.ImageKey = "Write.png";
+            this.toolBarButton8.Name = "toolBarButton8";
             // 
             // toolBarButton54
             // 
@@ -1054,7 +1055,7 @@
             // 
             this.basePointToolbar.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
             this.toolBarButton15,
-            this.btnPickBasePoint,
+            this.toolBarButton16,
             this.toolBarButton17,
             this.toolBarButton18,
             this.toolBarButton19,
@@ -1077,10 +1078,10 @@
             this.toolBarButton15.Name = "toolBarButton15";
             this.toolBarButton15.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
             // 
-            // btnPickBasePoint
+            // toolBarButton16
             // 
-            this.btnPickBasePoint.ImageKey = "Write.png";
-            this.btnPickBasePoint.Name = "toolBarButton16";
+            this.toolBarButton16.ImageKey = "Write.png";
+            this.toolBarButton16.Name = "toolBarButton16";
             // 
             // toolBarButton17
             // 
@@ -2240,5 +2241,8 @@
         internal System.Windows.Forms.ToolBarButton toolBarButton55;
         private System.Windows.Forms.ToolBarButton toolBarButton57;
         internal System.Windows.Forms.ToolBarButton btnPickBasePoint;
+        internal System.Windows.Forms.ToolBarButton toolBarButton61;
+        internal System.Windows.Forms.ToolBarButton toolBarButton8;
+        internal System.Windows.Forms.ToolBarButton toolBarButton16;
     }
 }

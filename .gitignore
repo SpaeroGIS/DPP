@@ -140,3 +140,8 @@
 /Source/Core/MilSpace.Tools/obj/Debug
 /Source/Core/MilSpace.Tools/bin/Debug
 /Model/SurfaceProfileChart/bin/Debug
+/Source/Add-ins/MilSpace.Profile.ArcMapAddin/MilSpace.Profile.ArcGISAddIn.csproj.user
+/Model/SurfaceProfileChart/SurfaceProfileChart.csproj.user
+/Source/Core/MilSpace.Tools/obj/Release
+/Source/Tools/TaskExecuter/obj/Release
+/Source/Core/MilSpace.DataAccess/MilSpace.DataAccess/obj/Release

@@ -1,32 +1,21 @@
-﻿using ESRI.ArcGIS.esriSystem;
+﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Display;
+using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
+using ESRI.ArcGIS.Geometry;
+using MilSpace.Core;
+using MilSpace.Core.Tools;
+using MilSpace.Tools;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Globalization;
-using System.Text;
-using System.Windows.Forms;
-using ESRI.ArcGIS.ArcMapUI;
-using ESRI.ArcGIS.Carto;
-using MilSpace.Core;
-using MilSpace.Core.Actions;
-using MilSpace.Core.Actions.ActionResults;
-using MilSpace.Core.Actions.Base;
-using MilSpace.Core.Actions.Interfaces;
-using MilSpace.Tools.SurfaceProfile.Actions;
-using MilSpace.Configurations;
-using System.Reflection;
-using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Windows.Forms;
 using System.Windows.Media;
-using ESRI.ArcGIS.Display;
-using ESRI.ArcGIS.Geometry;
-using MilSpace.DataAccess.Facade;
+using System.Linq;
 using Point = ESRI.ArcGIS.Geometry.Point;
-using MilSpace.Tools;
+using System.Diagnostics;
 
 namespace MilSpace.Profile
 {
@@ -34,16 +23,27 @@ namespace MilSpace.Profile
     /// Designer class of the dockable window add-in. It contains user interfaces that
     /// make up the dockable window.
     /// </summary>
-    public partial class DockableWindowMilSpaceProfileCalc : UserControl
+    public partial class DockableWindowMilSpaceProfileCalc : UserControl, IMilSpaceProfileView
     {
-        public DockableWindowMilSpaceProfileCalc()
+
+
+        private ProfileSettingsPointButton activeButtton = ProfileSettingsPointButton.None;
+        private static ProfileSettingsTypeEnum[] ProfileSettingsType = Enum.GetValues(typeof(ProfileSettingsTypeEnum)).Cast<ProfileSettingsTypeEnum>().ToArray();
+        MilSpaceProfileCalsController controller;
+
+        public DockableWindowMilSpaceProfileCalc(MilSpaceProfileCalsController controller)
         {
             this.Instance = this;
-        }        
+            SetController(controller);
+            controller.SetView(this);
+        }
 
-        public DockableWindowMilSpaceProfileCalc(object hook)
+        public DockableWindowMilSpaceProfileCalc(object hook, MilSpaceProfileCalsController controller)
         {
             InitializeComponent();
+
+            SetController(controller);
+            controller.SetView(this);
 
             this.Hook = hook;
             SubscribeForEvents();
@@ -53,7 +53,13 @@ namespace MilSpace.Profile
 
         private IActiveView ActiveView => ArcMap.Document.ActiveView;
 
-        public  DockableWindowMilSpaceProfileCalc Instance { get; }
+        public MilSpaceProfileCalsController Controller => controller;
+
+        public ProfileSettingsPointButton ActiveButton => activeButtton;
+
+
+
+        public DockableWindowMilSpaceProfileCalc Instance { get; }
 
         /// <summary>
         /// Host object of the dockable window
@@ -71,7 +77,7 @@ namespace MilSpace.Profile
 
         private void OnRasterComboDropped()
         {
-            
+
             cmbRasterLayers.Items.Clear();
             PopulateComboBox(cmbRasterLayers, ProfileLayers.RasterLayers);
         }
@@ -124,6 +130,11 @@ namespace MilSpace.Profile
 
         }
 
+        public void SetController(MilSpaceProfileCalsController controller)
+        {
+            this.controller = controller;
+        }
+
         /// <summary>
         /// Implementation class of the dockable window add-in. It is responsible for 
         /// creating and disposing the user interface class of the dockable window.
@@ -131,7 +142,7 @@ namespace MilSpace.Profile
         public class AddinImpl : ESRI.ArcGIS.Desktop.AddIns.DockableWindow
         {
             private DockableWindowMilSpaceProfileCalc m_windowUI;
-
+            MilSpaceProfileCalsController controller;
 
 
             public AddinImpl()
@@ -140,7 +151,11 @@ namespace MilSpace.Profile
 
             protected override IntPtr OnCreateChild()
             {
-                m_windowUI = new DockableWindowMilSpaceProfileCalc(this.Hook);
+                controller = new MilSpaceProfileCalsController();
+
+                m_windowUI = new DockableWindowMilSpaceProfileCalc(this.Hook, controller);
+
+
                 return m_windowUI.Handle;
             }
 
@@ -154,7 +169,8 @@ namespace MilSpace.Profile
 
             internal DockableWindowMilSpaceProfileCalc DockableWindowUI => m_windowUI;
 
-            
+
+            internal MilSpaceProfileCalsController MilSpaceProfileCalsController => controller;
 
         }
 
@@ -176,21 +192,21 @@ namespace MilSpace.Profile
             {
 
                 case 0:
-                    
-                        var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickCoordinates);
-                        if (commandItem == null)
-                        {
-                            var message = $"Please add Pick Coordinates tool to any toolbar first.";
-                            MessageBox.Show(message, "Profile Calc", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                            break;
 
-                        }
-                        ArcMap.Application.CurrentTool = commandItem;
+                    var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickCoordinates);
+                    if (commandItem == null)
+                    {
+                        var message = $"Please add Pick Coordinates tool to any toolbar first.";
+                        MessageBox.Show(message, "Profile Calc", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        break;
 
-                    
+                    }
+                    ArcMap.Application.CurrentTool = commandItem;
+                    activeButtton = ProfileSettingsPointButton.PointsFist;
+
                     break;
                 case 1:
-                   
+
                     break;
                 case 2:
                     var point = ParseStringCoordsToPoint(txtFirstPointX.Text, txtFirstPointY.Text);
@@ -204,7 +220,6 @@ namespace MilSpace.Profile
                         CopyTextToBuffer(txtFirstPointX.Text);
                     }
 
-
                     CopyTextToBuffer(txtFirstPointY.Focused ? txtFirstPointY.Text : txtFirstPointX.Text);
 
                     break;
@@ -215,8 +230,6 @@ namespace MilSpace.Profile
                         PasteTextToEditField(txtFirstPointX);
                     }
 
-
-
                     PasteTextToEditField(txtFirstPointY.Focused ? txtFirstPointY : txtFirstPointX);
 
                     break;
@@ -226,7 +239,7 @@ namespace MilSpace.Profile
                     txtFirstPointX.Clear();
                     txtFirstPointY.Clear();
                     break;
-                    
+
             }
         }
 
@@ -236,7 +249,6 @@ namespace MilSpace.Profile
             ToolbarButtonClicked = e.Button;
             switch (secondPointToolbar.Buttons.IndexOf(e.Button))
             {
-
                 case 1:
 
                     var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickCoordinates);
@@ -249,11 +261,12 @@ namespace MilSpace.Profile
                     }
                     ArcMap.Application.CurrentTool = commandItem;
 
-                    
+                    activeButtton = ProfileSettingsPointButton.PointsSecond;
+
                     break;
                 case 0:
                     ;
-                   
+
                     break;
                 case 2:
                     var point = ParseStringCoordsToPoint(txtSecondPointX.Text, txtSecondPointY.Text);
@@ -311,11 +324,12 @@ namespace MilSpace.Profile
                     }
                     ArcMap.Application.CurrentTool = commandItem;
 
-                    
+                    activeButtton = ProfileSettingsPointButton.CenterFun;
+
                     break;
                 case 0:
                     ;
-                    
+
                     break;
                 case 2:
 
@@ -367,7 +381,7 @@ namespace MilSpace.Profile
             ActiveView.Refresh();
         }
 
-        private IPoint ParseStringCoordsToPoint(string coordX, string coordY )
+        private IPoint ParseStringCoordsToPoint(string coordX, string coordY)
         {
             try
             {
@@ -376,8 +390,11 @@ namespace MilSpace.Profile
                 var point = new Point()
                 {
                     X = x,
-                    Y = y
+                    Y = y,
+                    SpatialReference = EsriTools.Wgs84Spatialreference
                 };
+
+                EsriTools.ProjectToMapSpatialReference(point, ArcMap.Document.FocusMap.SpatialReference);
 
                 return point;
             }
@@ -386,7 +403,7 @@ namespace MilSpace.Profile
                 MessageBox.Show("Please make sure X and Y values are valid and try again!");
                 throw;
             }
-            
+
         }
 
         private void CopyTextToBuffer(string text)
@@ -396,17 +413,17 @@ namespace MilSpace.Profile
                 System.Windows.Forms.Clipboard.SetText(text);
             }
 
-            
+
         }
 
-        private void PasteTextToEditField( TextBox textBox)
+        private void PasteTextToEditField(TextBox textBox)
         {
             var text = Clipboard.GetText();
             textBox.Text = text;
         }
 
         private IPolyline GetPolylineFromPoints()
-        {            
+        {
             var firstPoint = ParseStringCoordsToPoint(txtFirstPointX.Text, txtFirstPointY.Text);
             var secondPoint = ParseStringCoordsToPoint(txtSecondPointX.Text, txtSecondPointY.Text);
             IPolyline polyline = new PolylineClass();
@@ -415,27 +432,64 @@ namespace MilSpace.Profile
             return polyline;
         }
 
+        public ProfileSettingsTypeEnum SelectedProfileSettingsType => ProfileSettingsType[tabControl2.SelectedIndex];
+
+        public IPoint LinePropertiesFirstPoint
+        {
+            set
+            {
+                txtFirstPointX.Text = value.X.ToString("F4");//(CultureInfo.InvariantCulture);
+                txtFirstPointY.Text = value.Y.ToString("F4");
+            }
+        }
+
+        /// <summary>
+        /// Second point for Line  Profile setting 
+        /// </summary>
+        public IPoint LinePropertiesSecondPoint
+        {
+            set
+            {
+
+                txtSecondPointX.Text = value.X.ToString("F4");
+                txtSecondPointY.Text = value.Y.ToString("F4");
+            }
+        }
+
+        /// <summary>
+        /// Center point for Fun Profile setting 
+        /// </summary>
+        public IPoint FunPropertiesCenterPoint
+        {
+            set
+            {
+                txtBasePointX.Text = value.X.ToString("F4");
+                txtBasePointY.Text = value.Y.ToString("F4");
+            }
+        }
+
+
         private void SetProfileName()
         {
             var activeTabName = tabControl2.SelectedTab.Name;
-            switch (activeTabName)
-            {
-                case "sectionTab":
 
-                    
+            switch (SelectedProfileSettingsType)
+            {
+                case ProfileSettingsTypeEnum.Points:
+
                     txtProfileName.Text = GenerateProfileName("sct");
                     break;
 
-                case "fanTab":
-                   
+                case ProfileSettingsTypeEnum.Fun:
+
                     txtProfileName.Text = GenerateProfileName("fan");
                     break;
 
-                case "primitiveTab":
+                case ProfileSettingsTypeEnum.SelectedFeatures:
                     txtProfileName.Text = GenerateProfileName("primitive");
                     break;
 
-                case "loadTab":
+                case ProfileSettingsTypeEnum.Load:
                     txtProfileName.Clear();
                     break;
             }
@@ -447,16 +501,16 @@ namespace MilSpace.Profile
         }
 
         private string GenerateProfileName(string prefix)
-        {           
+        {
             var time = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss");
             var userName = Environment.UserName;
             var profileName = $"{prefix}{time}_{userName}";
-            return profileName.Replace(" ",string.Empty);
+            return profileName.Replace(" ", string.Empty);
         }
 
         private void SetFirstPointCopyButtonState(object sender, EventArgs e)
         {
-            
+
 
         }
 
@@ -535,31 +589,27 @@ namespace MilSpace.Profile
             }
 
         }
-    
 
-    private ILine GetSegment()
+
+        private ILine GetSegment()
         {
-            //var firstPoint = new ESRI.ArcGIS.Geometry.Point();
-            //var secondPoint = new ESRI.ArcGIS.Geometry.Point();
-            //firstPoint.PutCoords(Double.Parse(txtFirstPointX.Text), Double.Parse(txtFirstPointY.Text));
-            //secondPoint.PutCoords(Double.Parse(txtSecondPointX.Text), Double.Parse(txtSecondPointY.Text) );
+            //TODO: Check the activew tab
 
-            //var line = new Line();
-            //line.FromPoint = firstPoint;
-            //line.ToPoint = secondPoint;
-            //line.Geom
+            var points = ProfileForms.ProfileGeometries[ProfileSettingsTypeEnum.Points];
 
-            Point fromPoint = new PointClass();
-            fromPoint.X = double.Parse(txtFirstPointX.Text, System.Globalization.CultureInfo.InvariantCulture);
-            fromPoint.Y = double.Parse(txtFirstPointY.Text, System.Globalization.CultureInfo.InvariantCulture);
+            //Point fromPoint = new PointClass();
+            //fromPoint.X = double.Parse(txtFirstPointX.Text, System.Globalization.CultureInfo.InvariantCulture);
+            //fromPoint.Y = double.Parse(txtFirstPointY.Text, System.Globalization.CultureInfo.InvariantCulture);
 
-            Point toPoint = new PointClass();
-            toPoint.X = double.Parse(txtSecondPointX.Text, System.Globalization.CultureInfo.InvariantCulture);
-            toPoint.Y = double.Parse(txtSecondPointY.Text, System.Globalization.CultureInfo.InvariantCulture);
+            //Point toPoint = new PointClass();
+            //toPoint.X = double.Parse(txtSecondPointX.Text, System.Globalization.CultureInfo.InvariantCulture);
+            //toPoint.Y = double.Parse(txtSecondPointY.Text, System.Globalization.CultureInfo.InvariantCulture);
 
             ILine segment = new LineClass();
-            segment.FromPoint = fromPoint;
-            segment.ToPoint = toPoint;
+            segment.FromPoint = ProfileForms.ProfileGeometries[ProfileSettingsTypeEnum.Points].First() as IPoint;
+            segment.ToPoint = ProfileForms.ProfileGeometries[ProfileSettingsTypeEnum.Points].Last() as IPoint;
+
+
             return segment;
 
         }
@@ -649,7 +699,7 @@ namespace MilSpace.Profile
             ProfileLayers.GetAllLayers();
         }
 
-        
+
         private void button2_Click(object sender, EventArgs e)
         {
             //GdbAccess.Instance.EraseProfileLines();
@@ -701,6 +751,11 @@ namespace MilSpace.Profile
 
             AddGraphicToMap(map, geometry, col, col2);
             ActiveView.Refresh();
+        }
+
+        private void tabControl2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
