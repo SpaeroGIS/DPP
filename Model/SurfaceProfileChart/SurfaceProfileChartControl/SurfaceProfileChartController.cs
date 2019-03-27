@@ -91,9 +91,8 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
                 profileProperty.MinHeight = profileSurfacePoints.Min(point => point.Z);
 
                 var angles = FindAngles(profileSurfacePoints);
-                
-                profileProperty.MaxAngle = angles.Max(angle => angle);
-                profileProperty.MinAngle = angles.Min(angle => angle);
+                profileProperty.MaxAngle = Math.Abs(angles.Where(angle => angle > 0).Max());
+                profileProperty.MinAngle = Math.Abs(angles.Where(angle => angle < 0).Min());
 
                 profileProperty.PathLength = FindLength(profileSurfacePoints);
 
@@ -146,7 +145,8 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
         private double CalcAngleOfDeviation(ProfileSurfacePoint leftPoint,
             ProfileSurfacePoint rightPoint)
         {
-            return Math.Atan(Math.Abs(rightPoint.Z - leftPoint.Z) / (rightPoint.Distance - leftPoint.Distance)) * (180 / Math.PI);
+            var angle = Math.Atan(Math.Abs(rightPoint.Z - leftPoint.Z) / (rightPoint.Distance - leftPoint.Distance)) * (180 / Math.PI);
+            return (rightPoint.Z < leftPoint.Z) ? angle * (-1) : angle;
         }
 
         private double CalcAngleOfVisibility(double observerHeight, ProfileSurfacePoint leftPoint,
