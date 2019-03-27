@@ -13,21 +13,10 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
     {
         private SurfaceProfileChartController _controller;
 
-        [Category("Profile"), Description("")]
-        public double PathLength { get; set; }
-
-        [Category("Profile"), Description("")]
-        public double MinAngel { get; set; }
-
-        [Category("Profile"), Description("")]
-        public double MaxAngel { get; set; }
-
-        [Category("Profile"), Description("")]
-        public double MinHeight { get; set; }
-
-        [Category("Profile"), Description("")]
-        public double MaxHeight { get; set; }
-
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public List<ProfileProperty> ProfilesProperties { get; set; }
         public bool Current { get; set; }
         public int SelectedProfileIndex { get; set; }
 
@@ -37,8 +26,14 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
             SelectedProfileIndex = -1;
 
             _controller = new SurfaceProfileChartController(this);
+            ProfilesProperties = new List<ProfileProperty>();
 
             InitializeComponent();
+
+            _controller.LoadSeries();
+            _controller.AddInvisibleZones(profileChart.Series[0].Points[0].YValues[0]);
+            _controller.SetProfilesProperties();
+            AddLegends();
         }
 
         public void InitializeProfile(ProfileSession profileSession)
@@ -51,7 +46,8 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
                 {
                     ChartType = SeriesChartType.Line,
                     Color = Color.ForestGreen,
-                    Name = line.Id.ToString()
+                    Name = line.Id.ToString(),
+                    YValuesPerPoint = 1
                 });
 
                 var profileSurface =
@@ -69,15 +65,17 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
            foreach (var point in surface.ProfileSurfacePoints)
            {
                profileChart.Series[surface.LineId.ToString()].Points
-                   .FirstOrDefault(linePoint => linePoint.XValue == point.Distance).Color = Color.Red;
+                   .FirstOrDefault(linePoint => (linePoint.XValue == point.Distance)).Color = Color.Red;
            }
+        }
+
+        private void SaveChartAsImage()
+        {
+            profileChart.SaveImage("Chart.png", ChartImageFormat.Png);
         }
 
         private void SurfaceProfileChart_Load(object sender, EventArgs e)
         {
-            _controller.LoadSeries();
-            _controller.AddInvisibleZones();
-
             SetProfileView();
         }
 
@@ -86,8 +84,13 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
             profileChart.ChartAreas["Default"].CursorX.IsUserEnabled = true;
             profileChart.ChartAreas["Default"].CursorX.IsUserSelectionEnabled = true;
             profileChart.ChartAreas["Default"].AxisX.ScaleView.Zoomable = true;
+            profileChart.ChartAreas["Default"].CursorY.IsUserEnabled = true;
+            profileChart.ChartAreas["Default"].CursorY.IsUserSelectionEnabled = true;
+            profileChart.ChartAreas["Default"].AxisY.ScaleView.Zoomable = true;
             profileChart.ChartAreas["Default"].AxisX.LabelStyle.Format = "#";
             profileChart.ChartAreas["Default"].AxisY.LabelStyle.Format = "#";
+
+            profileChart.Size = this.Size;
 
             SetYHeight();
         }
@@ -109,17 +112,65 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
                 minPoints.Min(point => point.YValues.Min(yValue => yValue));
         }
 
+        private void SelectProfile(HitTestResult selectedPoint)
+        {
+            if (SelectedProfileIndex != -1)
+            {
+                profileChart.Series[SelectedProfileIndex].BorderWidth -= 1;
+            }
+
+            SelectedProfileIndex = profileChart.Series.IndexOf(selectedPoint.Series.Name);
+            profileChart.Series[SelectedProfileIndex].BorderWidth += 1;
+        }
+
+        private void AddLegends()
+        {
+            profileChart.Legends.Add("Properties");
+
+            profileChart.Legends["Properties"].HeaderSeparator = LegendSeparatorStyle.Line;
+            profileChart.Legends["Properties"].Docking = Docking.Bottom;
+           
+            LegendItem headerItem = new LegendItem();
+           
+            headerItem.Cells.Add(LegendCellType.Text, "Line name", ContentAlignment.MiddleCenter);
+            headerItem.Cells.Add(LegendCellType.Text, "Path length", ContentAlignment.MiddleCenter);
+            headerItem.Cells.Add(LegendCellType.Text, "Max angle", ContentAlignment.MiddleCenter);
+            headerItem.Cells.Add(LegendCellType.Text, "Min angle", ContentAlignment.MiddleCenter);
+            headerItem.Cells.Add(LegendCellType.Text, "Max height", ContentAlignment.MiddleCenter);
+            headerItem.Cells.Add(LegendCellType.Text, "Min height", ContentAlignment.MiddleCenter);
+
+            profileChart.Legends["Properties"].CustomItems.Add(headerItem);
+
+            foreach (var profilesProperties in ProfilesProperties)
+            {
+                LegendItem newItem = new LegendItem();
+
+                newItem.Cells.Add(LegendCellType.Text,profilesProperties.LineId.ToString() , ContentAlignment.MiddleCenter);
+                newItem.Cells.Add(LegendCellType.Text,profilesProperties.PathLength.ToString() , ContentAlignment.MiddleCenter);
+                newItem.Cells.Add(LegendCellType.Text,profilesProperties.MaxAngle.ToString() , ContentAlignment.MiddleCenter);
+                newItem.Cells.Add(LegendCellType.Text,profilesProperties.MinAngle.ToString() , ContentAlignment.MiddleCenter);
+                newItem.Cells.Add(LegendCellType.Text,profilesProperties.MaxHeight.ToString() , ContentAlignment.MiddleCenter);
+                newItem.Cells.Add(LegendCellType.Text, profilesProperties.MinHeight.ToString() , ContentAlignment.MiddleCenter);
+
+                profileChart.Legends["Properties"].CustomItems.Add(newItem);
+            }                                                        
+        }
+
         private void Profile_MouseDown(object sender, MouseEventArgs e)
         {
             var selectedPoint = profileChart.HitTest(e.X, e.Y);
 
             if (selectedPoint.ChartElementType == ChartElementType.DataPoint)
             {
-                SelectedProfileIndex = profileChart.Series.IndexOf(selectedPoint.Series.Name);
-
+                SelectProfile(selectedPoint);
                 //todo fire event 
             }
 
+        }
+
+        private void profileChart_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

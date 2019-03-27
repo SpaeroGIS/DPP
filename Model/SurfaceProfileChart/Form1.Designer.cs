@@ -33,29 +33,25 @@
             // 
             // surfaceProfileChart2
             // 
-            this.surfaceProfileChart2.AutoSize = true;
+            this.surfaceProfileChart2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.surfaceProfileChart2.Current = false;
-            this.surfaceProfileChart2.Location = new System.Drawing.Point(85, 27);
-            this.surfaceProfileChart2.MaxAngel = 0D;
-            this.surfaceProfileChart2.MaxHeight = 0D;
-            this.surfaceProfileChart2.MinAngel = 0D;
-            this.surfaceProfileChart2.MinHeight = 0D;
+            this.surfaceProfileChart2.Location = new System.Drawing.Point(12, 12);
             this.surfaceProfileChart2.Name = "surfaceProfileChart2";
-            this.surfaceProfileChart2.PathLength = 0D;
             this.surfaceProfileChart2.SelectedProfileIndex = -1;
-            this.surfaceProfileChart2.Size = new System.Drawing.Size(667, 224);
+            this.surfaceProfileChart2.Size = new System.Drawing.Size(821, 258);
             this.surfaceProfileChart2.TabIndex = 0;
+            this.surfaceProfileChart2.Load += new System.EventHandler(this.surfaceProfileChart2_Load);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(923, 279);
             this.Controls.Add(this.surfaceProfileChart2);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

@@ -44,21 +44,25 @@
             this.profileChart.Location = new System.Drawing.Point(0, 0);
             this.profileChart.Name = "profileChart";
             series1.ChartArea = "Default";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             series1.Name = "Series1";
+            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int64;
+            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int64;
             this.profileChart.Series.Add(series1);
-            this.profileChart.Size = new System.Drawing.Size(664, 221);
+            this.profileChart.Size = new System.Drawing.Size(681, 240);
             this.profileChart.TabIndex = 0;
             this.profileChart.Text = "chart1";
+            this.profileChart.Click += new System.EventHandler(this.profileChart_Click);
             this.profileChart.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Profile_MouseDown);
             // 
             // SurfaceProfileChart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.profileChart);
             this.Name = "SurfaceProfileChart";
-            this.Size = new System.Drawing.Size(667, 224);
+            this.Size = new System.Drawing.Size(684, 243);
             this.Load += new System.EventHandler(this.SurfaceProfileChart_Load);
             ((System.ComponentModel.ISupportInitialize)(this.profileChart)).EndInit();
             this.ResumeLayout(false);
