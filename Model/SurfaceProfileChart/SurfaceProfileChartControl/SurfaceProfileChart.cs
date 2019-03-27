@@ -39,7 +39,7 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
         public void InitializeProfile(ProfileSession profileSession)
         {
             profileChart.Series.Clear();
-           
+
             foreach (var line in profileSession.ProfileLines)
             {
                 profileChart.Series.Add(new Series
@@ -47,7 +47,8 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
                     ChartType = SeriesChartType.Line,
                     Color = Color.ForestGreen,
                     Name = line.Id.ToString(),
-                    YValuesPerPoint = 1
+                    YValuesPerPoint = 1,
+                    IsVisibleInLegend = false
                 });
 
                 var profileSurface =
@@ -62,11 +63,11 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
 
         public void AddInvisibleLine(ProfileSurface surface)
         {
-           foreach (var point in surface.ProfileSurfacePoints)
-           {
-               profileChart.Series[surface.LineId.ToString()].Points
-                   .FirstOrDefault(linePoint => (linePoint.XValue == point.Distance)).Color = Color.Red;
-           }
+            foreach (var point in surface.ProfileSurfacePoints)
+            {
+                profileChart.Series[surface.LineId.ToString()].Points
+                    .FirstOrDefault(linePoint => (linePoint.XValue == point.Distance)).Color = Color.Red;
+            }
         }
 
         private void SaveChartAsImage()
@@ -117,10 +118,18 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
             if (SelectedProfileIndex != -1)
             {
                 profileChart.Series[SelectedProfileIndex].BorderWidth -= 1;
+                foreach (var cell in profileChart.Legends["Properties"].CustomItems[SelectedProfileIndex + 1].Cells)
+                {
+                    cell.BackColor = Color.White;
+                }
             }
 
             SelectedProfileIndex = profileChart.Series.IndexOf(selectedPoint.Series.Name);
             profileChart.Series[SelectedProfileIndex].BorderWidth += 1;
+            foreach (var cell in profileChart.Legends["Properties"].CustomItems[SelectedProfileIndex+1].Cells)
+            {
+                cell.BackColor = Color.ForestGreen;
+            }
         }
 
         private void AddLegends()
@@ -129,9 +138,12 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
 
             profileChart.Legends["Properties"].HeaderSeparator = LegendSeparatorStyle.Line;
             profileChart.Legends["Properties"].Docking = Docking.Bottom;
-           
+            profileChart.Legends["Properties"].LegendStyle = LegendStyle.Table;
+            profileChart.Legends["Properties"].TableStyle = LegendTableStyle.Tall;
+
+
             LegendItem headerItem = new LegendItem();
-           
+
             headerItem.Cells.Add(LegendCellType.Text, "Line name", ContentAlignment.MiddleCenter);
             headerItem.Cells.Add(LegendCellType.Text, "Path length", ContentAlignment.MiddleCenter);
             headerItem.Cells.Add(LegendCellType.Text, "Max angle", ContentAlignment.MiddleCenter);
@@ -145,15 +157,15 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
             {
                 LegendItem newItem = new LegendItem();
 
-                newItem.Cells.Add(LegendCellType.Text,profilesProperties.LineId.ToString() , ContentAlignment.MiddleCenter);
-                newItem.Cells.Add(LegendCellType.Text,profilesProperties.PathLength.ToString() , ContentAlignment.MiddleCenter);
-                newItem.Cells.Add(LegendCellType.Text,profilesProperties.MaxAngle.ToString() , ContentAlignment.MiddleCenter);
-                newItem.Cells.Add(LegendCellType.Text,profilesProperties.MinAngle.ToString() , ContentAlignment.MiddleCenter);
-                newItem.Cells.Add(LegendCellType.Text,profilesProperties.MaxHeight.ToString() , ContentAlignment.MiddleCenter);
-                newItem.Cells.Add(LegendCellType.Text, profilesProperties.MinHeight.ToString() , ContentAlignment.MiddleCenter);
+                newItem.Cells.Add(LegendCellType.Text, profilesProperties.LineId.ToString(), ContentAlignment.MiddleCenter);
+                newItem.Cells.Add(LegendCellType.Text, Math.Round(profilesProperties.PathLength, 0).ToString(), ContentAlignment.MiddleCenter);
+                newItem.Cells.Add(LegendCellType.Text, Math.Round(profilesProperties.MaxAngle, 1).ToString(), ContentAlignment.MiddleCenter);
+                newItem.Cells.Add(LegendCellType.Text, Math.Round(profilesProperties.MinAngle, 1).ToString(), ContentAlignment.MiddleCenter);
+                newItem.Cells.Add(LegendCellType.Text, Math.Round(profilesProperties.MaxHeight, 0).ToString(), ContentAlignment.MiddleCenter);
+                newItem.Cells.Add(LegendCellType.Text, Math.Round(profilesProperties.MinHeight, 0).ToString(), ContentAlignment.MiddleCenter);
 
-                profileChart.Legends["Properties"].CustomItems.Add(newItem);
-            }                                                        
+                    profileChart.Legends["Properties"].CustomItems.Add(newItem);
+            }
         }
 
         private void Profile_MouseDown(object sender, MouseEventArgs e)
@@ -170,7 +182,7 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
 
         private void profileChart_Click(object sender, EventArgs e)
         {
-            
+
         }
     }
 }
