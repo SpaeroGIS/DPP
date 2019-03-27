@@ -639,7 +639,7 @@ namespace MilSpace.Profile
 
             try
             {
-                manager.GenerateProfile(cmbRasterLayers.Text, new ILine[] { segment });
+                var session = manager.GenerateProfile(cmbRasterLayers.Text, new ILine[] { segment });
                 MessageBox.Show("Calculated");
             }
             catch (Exception ex)
