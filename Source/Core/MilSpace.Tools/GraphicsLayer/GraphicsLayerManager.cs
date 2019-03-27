@@ -40,20 +40,20 @@ namespace MilSpace.Tools.GraphicsLayer
 
             foreach (var line in lines)
             {
-                AddPolyline(line.Source, profileId);
+                AddPolyline(line);
             }
 
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
         }
 
-        public void AddPolyline(GraphicElement graphicElement, int profileId, int elementId, bool doFeresh = false)
+        public void AddPolyline(GraphicElement graphicElement, bool doFeresh = false)
         {
             IPolyline profileLine = graphicElement.Source;
             ILineElement lineElement = new LineElementClass();
 
             int id = profileLine.GetHashCode();
 
-            if (milSpaceGraphics.Any(ge => ge.ElementId == elementId))
+            if (milSpaceGraphics.Any(ge => ge.ElementId == graphicElement.ElementId))
             {
                 return;
             }
