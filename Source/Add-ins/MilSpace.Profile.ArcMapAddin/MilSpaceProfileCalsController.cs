@@ -1,6 +1,8 @@
 ﻿using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Tools;
+using MilSpace.Profile.DTO;
+using MilSpace.Tools.GraphicsLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +18,15 @@ namespace MilSpace.Profile
     public class MilSpaceProfileCalsController
     {
 
+        private int profileId;
+        GraphicsLayerManager graphicsLayerManager;
+
+        public delegate void ProfileSettingsChangedDelegate(ProfileSettingsEventArgs e);
+
+        public event ProfileSettingsChangedDelegate OnProfileSettingsChanged;
+
+        private static ProfileSettingsTypeEnum[] profileSettingsType = Enum.GetValues(typeof(ProfileSettingsTypeEnum)).Cast<ProfileSettingsTypeEnum>().ToArray();
+
         private Dictionary<ProfileSettingsPointButton, IPoint> pointsToShow = new Dictionary<ProfileSettingsPointButton, IPoint>()
         {
             {ProfileSettingsPointButton.CenterFun, null},
@@ -23,11 +34,24 @@ namespace MilSpace.Profile
             {ProfileSettingsPointButton.PointsSecond, null}
         };
 
+
+        private Dictionary<ProfileSettingsTypeEnum, ProfileSettings> profileSettings = new Dictionary<ProfileSettingsTypeEnum, ProfileSettings>()
+        {
+            {ProfileSettingsTypeEnum.Points, null},
+            {ProfileSettingsTypeEnum.Fun, null},
+            {ProfileSettingsTypeEnum.SelectedFeatures, null},
+            {ProfileSettingsTypeEnum.Load, null}
+        };
+
+
+
         internal MilSpaceProfileCalsController() { }
 
         internal void SetView(IMilSpaceProfileView view)
         {
             View = view;
+            SetPeofileId();
+            graphicsLayerManager = new GraphicsLayerManager(view.ActiveView);
         }
 
         /// <summary>
@@ -39,6 +63,8 @@ namespace MilSpace.Profile
         {
             pointsToShow[ProfileSettingsPointButton.PointsFist] = pointToShow;
             View.LinePropertiesFirstPoint = pointToView;
+
+            SetPeofileSettigs(ProfileSettingsTypeEnum.Points);
         }
 
 
@@ -51,6 +77,9 @@ namespace MilSpace.Profile
         {
             View.LinePropertiesSecondPoint = pointToView;
             pointsToShow[ProfileSettingsPointButton.PointsSecond] = pointToShow;
+
+            SetPeofileSettigs(ProfileSettingsTypeEnum.Points);
+
         }
 
         /// <summary>
@@ -62,16 +91,19 @@ namespace MilSpace.Profile
         {
             pointsToShow[ProfileSettingsPointButton.CenterFun] = pointToShow;
             View.FunPropertiesCenterPoint = pointToView;
+
+            SetPeofileSettigs(ProfileSettingsTypeEnum.Fun);
+
         }
 
-        internal void FlashPoint(ProfileSettingsPointButton pointType, IActiveView view)
+        internal void FlashPoint(ProfileSettingsPointButton pointType)
         {
             IEnvelope env = new EnvelopeClass();
-            env = view.Extent;
+            env = View.ActiveView.Extent;
             env.CenterAt(pointsToShow[pointType]);
-            view.Extent = env;
-            view.Refresh();
-            EsriTools.FLashGeometry(view.ScreenDisplay, pointsToShow[pointType]);
+            View.ActiveView.Extent = env;
+            View.ActiveView.Refresh();
+            EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, pointsToShow[pointType]);
         }
 
         internal ILine GetProfileLine()
@@ -84,5 +116,53 @@ namespace MilSpace.Profile
             return segment;
         }
         internal IMilSpaceProfileView View { get; private set; }
+
+        internal ProfileSettingsTypeEnum[] ProfileSettingsType => profileSettingsType;
+
+        internal void SetPeofileSettigs(ProfileSettingsTypeEnum profileType)
+        {
+            List<IPolyline> profileLines = new List<IPolyline>();
+
+            if (profileType == ProfileSettingsTypeEnum.Points)
+            {
+                var line = EsriTools.CreatePolylineFromPoints(pointsToShow[ProfileSettingsPointButton.PointsFist], pointsToShow[ProfileSettingsPointButton.PointsSecond]);
+                if (line != null)
+                {
+                    profileLines.Add(line);
+                }
+            }
+
+            var profileSetting = profileSettings[profileType];
+            if (profileSetting == null)
+            {
+                profileSetting = new ProfileSettings();
+            }
+
+            profileSetting.DemLayerName = View.DemLayerName;
+            profileSetting.ProfileLines = profileLines.ToArray();
+
+            profileSettings[profileType] = profileSetting;
+
+            InvokeOnProfileSettingsChanged();
+
+            graphicsLayerManager.UpdateGraphic(profileSetting.ProfileLines, profileId);
+
+        }
+
+        private void InvokeOnProfileSettingsChanged()
+        {
+            if (OnProfileSettingsChanged != null)
+            {
+                var currentTab = View.SelectedProfileSettingsType;
+                ProfileSettingsEventArgs args = new ProfileSettingsEventArgs(profileSettings[currentTab], currentTab);
+                OnProfileSettingsChanged(args);
+                
+            }
+        }
+
+        private void SetPeofileId()
+        {
+            profileId =  View.ProfileId = (int)(DateTime.Now.ToOADate() * 10000);
+        }
     }
 }

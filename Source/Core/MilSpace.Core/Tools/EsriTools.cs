@@ -1,4 +1,6 @@
 ﻿using ESRI.ArcGIS.Display;
+using ESRI.ArcGIS.esriSystem;
+using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using System;
 using System.Collections.Generic;
@@ -70,7 +72,7 @@ namespace MilSpace.Core.Tools
             }
         }
 
-        public static void FLashGeometry(IDisplay display, IGeometry geometry)
+        public static void FlashGeometry(IDisplay display, IGeometry geometry)
         {
             if (symbolsToFlash.ContainsKey(geometry.GeometryType))
             {
@@ -84,6 +86,28 @@ namespace MilSpace.Core.Tools
             }
             else
             { throw new KeyNotFoundException("{0} cannot be found in the Symbol dictionary".InvariantFormat(geometry.GeometryType)); }
+        }
+
+        public static IPolyline CreatePolylineFromPoints(IPoint pointFrom, IPoint pointTo)
+        {
+            if (pointFrom == null || pointTo == null)
+            {
+                return null;
+            }
+
+
+            WKSPoint[] segmentWksPoints = new WKSPoint[2];
+            segmentWksPoints[0].X = pointFrom.X;
+            segmentWksPoints[0].Y = pointFrom.Y;
+            segmentWksPoints[1].X = pointTo.X;
+            segmentWksPoints[1].Y = pointTo.Y;
+
+            IPointCollection4 trackLine = new PolylineClass();
+
+            IGeometryBridge2 m_geometryBridge = new GeometryEnvironmentClass();
+            m_geometryBridge.AddWKSPoints(trackLine, ref segmentWksPoints);
+
+            return trackLine as IPolyline;
         }
 
     }
