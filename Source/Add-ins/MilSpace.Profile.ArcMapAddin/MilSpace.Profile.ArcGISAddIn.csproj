@@ -170,6 +170,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\ProfileSettings.cs" />
     <Compile Include="IMilSpaceProfileView.cs" />
     <Compile Include="Config.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -185,8 +186,9 @@
     <Compile Include="DrawPolylineFromClicks.cs" />
     <Compile Include="MilSpaceProfileCalsController.cs" />
     <Compile Include="PickCoordinatesTool.cs" />
-    <Compile Include="ProfileForms.cs" />
+    <Compile Include="ProfileEnums.cs" />
     <Compile Include="ProfileLayers.cs" />
+    <Compile Include="ProfileSettingsEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,5 @@
-﻿using ESRI.ArcGIS.Geometry;
+﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,12 @@ namespace MilSpace.Profile
     {
 
         void SetController(MilSpaceProfileCalsController controller);
+
         ProfileSettingsTypeEnum SelectedProfileSettingsType { get; }
 
         ProfileSettingsPointButton ActiveButton { get; }
+
+        IActiveView ActiveView { get; }
 
         /// <summary>
         /// First point for Line  Profile setting 
@@ -32,7 +36,11 @@ namespace MilSpace.Profile
 
         MilSpaceProfileCalsController Controller { get; }
 
+        bool AllowToProfileCalck { get; }
 
+        string DemLayerName { get; }
+
+        int ProfileId { set; }
 
     }
 }

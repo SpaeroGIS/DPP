@@ -1,5 +1,8 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
+using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Desktop.AddIns;
+using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Tools;
@@ -56,8 +59,35 @@ namespace MilSpace.Profile
             {
 
                 winImpl.MilSpaceProfileCalsController.SetCenterPointForFunProfile(point, pointToSave);
-
             }
+
+
+            //Get the active view.  
+            IActiveView activeView = ArcMap.Document.ActiveView;
+
+            //Create a new text element.  
+            ITextElement textElement = new TextElementClass();
+            //Create a text symbol.  
+            ITextSymbol textSymbol = new TextSymbolClass();
+            textSymbol.Size = 25;
+
+            //Set the text element properties.  
+            textElement.Symbol = textSymbol;
+            textElement.Text = DateTime.Now.ToShortDateString();
+
+            //Query interface (QI) for IElement.  
+            IElement element = (IElement)textElement;
+            //Create a point.  
+
+            point = activeView.ScreenDisplay.DisplayTransformation.ToMapPoint(arg.X, arg.Y);
+            //Set the element's geometry.  
+            element.Geometry = point;
+
+            //Add the element to the graphics container.  
+            activeView.GraphicsContainer.AddElement(element, 0);
+            //Refresh the graphics.  
+            activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
+
 
         }
     }

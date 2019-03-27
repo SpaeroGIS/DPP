@@ -28,7 +28,7 @@ namespace MilSpace.Profile
 
 
         private ProfileSettingsPointButton activeButtton = ProfileSettingsPointButton.None;
-        private static ProfileSettingsTypeEnum[] ProfileSettingsType = Enum.GetValues(typeof(ProfileSettingsTypeEnum)).Cast<ProfileSettingsTypeEnum>().ToArray();
+
         MilSpaceProfileCalsController controller;
 
         public DockableWindowMilSpaceProfileCalc(MilSpaceProfileCalsController controller)
@@ -42,21 +42,41 @@ namespace MilSpace.Profile
         {
             InitializeComponent();
 
+
             SetController(controller);
             controller.SetView(this);
 
             this.Hook = hook;
-            SubscribeForEvents();
             this.Instance = this;
             SubscribeForEvents();
         }
 
-        private IActiveView ActiveView => ArcMap.Document.ActiveView;
+        private void OnProfileSettingsChanged(ProfileSettingsEventArgs e)
+        {
+            this.calcProfile.Enabled = e.ProfileSetting.IsReady;
+        }
+
+        public IActiveView ActiveView => ArcMap.Document.ActiveView;
 
         public MilSpaceProfileCalsController Controller => controller;
 
         public ProfileSettingsPointButton ActiveButton => activeButtton;
 
+        public string DemLayerName => cmbRasterLayers.Text;
+
+        public int ProfileId
+        {
+            set { txtProfileName.Text = value.ToString(); }
+        }
+
+
+        public bool AllowToProfileCalck
+        {
+            get
+            {
+                return false;
+            }
+        }
 
 
         public DockableWindowMilSpaceProfileCalc Instance { get; }
@@ -123,10 +143,8 @@ namespace MilSpace.Profile
             ArcMap.Events.OpenDocument += OnObservationPointDropped;
             ArcMap.Events.OpenDocument += OnRoadComboDropped;
             ArcMap.Events.OpenDocument += OnVegetationDropped;
-            txtFirstPointX.TextChanged += SetFirstPointCopyButtonState;
-            txtFirstPointY.TextChanged += SetFirstPointCopyButtonState;
-            ArcMap.Events.OpenDocument += SetProfileName;
-            tabControl2.SelectedIndexChanged += OnTabChange;
+
+            controller.OnProfileSettingsChanged += OnProfileSettingsChanged;
 
         }
 
@@ -210,7 +228,7 @@ namespace MilSpace.Profile
                     break;
                 case 2:
 
-                    controller.FlashPoint(ProfileSettingsPointButton.PointsFist, ActiveView);
+                    controller.FlashPoint(ProfileSettingsPointButton.PointsFist);
                     break;
 
                 case 4:
@@ -238,6 +256,7 @@ namespace MilSpace.Profile
 
                     txtFirstPointX.Clear();
                     txtFirstPointY.Clear();
+                    controller.SetFirsPointForLineProfile(null, null);
                     break;
 
             }
@@ -265,8 +284,6 @@ namespace MilSpace.Profile
 
                     break;
                 case 0:
-                    ;
-
                     break;
                 case 2:
                     var point = ParseStringCoordsToPoint(txtSecondPointX.Text, txtSecondPointY.Text);
@@ -301,6 +318,7 @@ namespace MilSpace.Profile
 
                     txtSecondPointX.Clear();
                     txtSecondPointY.Clear();
+                    controller.SetSecondfPointForLineProfile(null, null);
                     break;
 
             }
@@ -365,6 +383,7 @@ namespace MilSpace.Profile
 
                     txtBasePointX.Clear();
                     txtBasePointY.Clear();
+                    controller.SetCenterPointForFunProfile(null, null);
                     break;
 
             }
@@ -375,7 +394,7 @@ namespace MilSpace.Profile
         {
             IEnvelope pEnv = new EnvelopeClass();
 
-            
+
         }
 
         private IPoint ParseStringCoordsToPoint(string coordX, string coordY)
@@ -429,14 +448,13 @@ namespace MilSpace.Profile
             return polyline;
         }
 
-        public ProfileSettingsTypeEnum SelectedProfileSettingsType => ProfileSettingsType[tabControl2.SelectedIndex];
+        public ProfileSettingsTypeEnum SelectedProfileSettingsType => controller.ProfileSettingsType[profileSettingsTab.SelectedIndex];
 
-        public IPoint LinePropertiesFirstPoint
+        public IPoint LinePropertiesFirstPoint 
         {
             set
             {
-                txtFirstPointX.Text = value.X.ToString("F4");//(CultureInfo.InvariantCulture);
-                txtFirstPointY.Text = value.Y.ToString("F4");
+                SetPointValue(txtFirstPointX, txtFirstPointY, value);
             }
         }
 
@@ -447,10 +465,24 @@ namespace MilSpace.Profile
         {
             set
             {
-
-                txtSecondPointX.Text = value.X.ToString("F4");
-                txtSecondPointY.Text = value.Y.ToString("F4");
+                SetPointValue(txtSecondPointX, txtSecondPointY, value);
             }
+        }
+
+
+        private static void SetPointValue(TextBox controlX, TextBox controlY, IPoint point)
+        {
+
+            if (point != null)
+            {
+                controlX.Text = point.X.ToString("F4");
+                controlY.Text = point.Y.ToString("F4");
+            }
+            else
+            {
+                controlX.Text = controlY.Text = string.Empty;
+            }
+
         }
 
         /// <summary>
@@ -460,101 +492,10 @@ namespace MilSpace.Profile
         {
             set
             {
-                txtBasePointX.Text = value.X.ToString("F4");
-                txtBasePointY.Text = value.Y.ToString("F4");
+                SetPointValue(txtBasePointX, txtBasePointY, value);
             }
         }
 
-
-        private void SetProfileName()
-        {
-            var activeTabName = tabControl2.SelectedTab.Name;
-
-            switch (SelectedProfileSettingsType)
-            {
-                case ProfileSettingsTypeEnum.Points:
-
-                    txtProfileName.Text = GenerateProfileName("sct");
-                    break;
-
-                case ProfileSettingsTypeEnum.Fun:
-
-                    txtProfileName.Text = GenerateProfileName("fan");
-                    break;
-
-                case ProfileSettingsTypeEnum.SelectedFeatures:
-                    txtProfileName.Text = GenerateProfileName("primitive");
-                    break;
-
-                case ProfileSettingsTypeEnum.Load:
-                    txtProfileName.Clear();
-                    break;
-            }
-        }
-
-        private void OnTabChange(object sender, EventArgs e)
-        {
-            SetProfileName();
-        }
-
-        private string GenerateProfileName(string prefix)
-        {
-            var time = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss");
-            var userName = Environment.UserName;
-            var profileName = $"{prefix}{time}_{userName}";
-            return profileName.Replace(" ", string.Empty);
-        }
-
-        private void SetFirstPointCopyButtonState(object sender, EventArgs e)
-        {
-
-
-        }
-
-        public void InitializeMyToolBar()
-        {
-            this.firstPointToolBar
-                .ButtonClick += new ToolBarButtonClickEventHandler(
-                this.toolBar1_ButtonClick);
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-
-            //GdbAccess.Instance.EraseProfileLines();
-
-            //Add lines
-            var map = ArcMap.Document.ActiveView.FocusMap;
-            var segment = controller.GetProfileLine();
-            var geometry = (IGeometry)segment;
-            IRgbColor col = new RgbColorClass();
-            col.Red = 133;
-            col.Green = 135;
-            col.Blue = 43;
-
-            IRgbColor col2 = new RgbColorClass();
-            col.Red = 133;
-            col.Green = 135;
-            col.Blue = 43;
-
-            AddGraphicToMap(map, geometry, col, col2);
-
-            ProfileManager manager = new ProfileManager();
-
-            try
-            {
-                manager.GenerateProfile(cmbRasterLayers.Text, new ILine[] { segment });
-                MessageBox.Show("Calculated");
-            }
-            catch (Exception ex)
-            {
-                //TODO log error
-                MessageBox.Show("Calcu;lation error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-
-
-        }
 
         private void FlashPoint(IScreenDisplay Display, IGeometry Geometry)
         {
@@ -674,7 +615,7 @@ namespace MilSpace.Profile
         }
 
 
-        private void button2_Click(object sender, EventArgs e)
+        private void calcProfile_Click(object sender, EventArgs e)
         {
             //GdbAccess.Instance.EraseProfileLines();
 
@@ -727,9 +668,15 @@ namespace MilSpace.Profile
             ActiveView.Refresh();
         }
 
-        private void tabControl2_SelectedIndexChanged(object sender, EventArgs e)
+        private void profileSettingsTab_SelectedIndexChanged(object sender, EventArgs e)
         {
+            controller.SetPeofileSettigs(SelectedProfileSettingsType);
 
+        }
+
+        private void cmbRasterLayers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            controller.SetPeofileSettigs(SelectedProfileSettingsType);
         }
     }
 }
