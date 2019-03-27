@@ -13,7 +13,7 @@ namespace MilSpace.Tools.GraphicsLayer
     {
         IGraphicsContainer graphics;
         IActiveView activeView;
-        private Dictionary<int, GraphicElement> milSpaceGraphics = new Dictionary<int, GraphicElement>();
+        private List<GraphicElement> milSpaceGraphics = new List<GraphicElement>();
 
         public GraphicsLayerManager(IActiveView activeView)
         {
@@ -22,34 +22,38 @@ namespace MilSpace.Tools.GraphicsLayer
         }
 
 
-        public void UpdateGraphic(IEnumerable<IPolyline> profileLines, int profileId)
+        public void UpdateGraphic(IEnumerable<IPolyline> profileLines, int profileId, int profileTypeId)
         {
-            var toDel = milSpaceGraphics.Keys.Where(k => milSpaceGraphics[k].ProfileId != profileId ||
-                                                    !profileLines.Any(p => p.GetHashCode() == k));
+            int elementId = profileTypeId * 100;
 
-            foreach(int id in toDel)
+            var lines = profileLines.Select(l => new GraphicElement() { Source = l, ElementId = ++elementId, ProfileId = profileId });
+
+
+            var toDel = milSpaceGraphics.Where(k => k.ProfileId != profileId ||
+                                                    !lines.Any(p => p.ElementId == k.ElementId));
+
+            foreach(var ge in toDel)
             {
-                var elem = milSpaceGraphics[id];
 
-                RemovePolyline(elem.Element.Geometry as IPolyline);
+                RemovePolyline(ge);
             }
 
-            foreach (var line in profileLines)
+            foreach (var line in lines)
             {
-                AddPolyline(line, profileId);
+                AddPolyline(line.Source, profileId);
             }
 
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
         }
 
-        public void AddPolyline(IPolyline profileLine, int profileId, bool doFeresh = false)
+        public void AddPolyline(GraphicElement graphicElement, int profileId, int elementId, bool doFeresh = false)
         {
-            
+            IPolyline profileLine = graphicElement.Source;
             ILineElement lineElement = new LineElementClass();
 
             int id = profileLine.GetHashCode();
 
-            if (milSpaceGraphics.ContainsKey(id))
+            if (milSpaceGraphics.Any(ge => ge.ElementId == elementId))
             {
                 return;
             }
@@ -76,7 +80,9 @@ namespace MilSpace.Tools.GraphicsLayer
 
             graphics.AddElement(elem, 0); // Explicit Cast
 
-            milSpaceGraphics.Add(id, new GraphicElement() { Element = elem, ElementId = id, ProfileId = profileId });
+
+            graphicElement.Element = elem;
+            milSpaceGraphics.Add(graphicElement);
 
             if (doFeresh)
             {
@@ -84,15 +90,15 @@ namespace MilSpace.Tools.GraphicsLayer
             }
         }
 
-        public void RemovePolyline(IPolyline profileLine, bool doFeresh = false)
+        public void RemovePolyline(GraphicElement grephicElement, bool doFeresh = false)
         {
             ILineElement lineElement = new ESRI.ArcGIS.Carto.LineElementClass();
             IElement elem = lineElement as IElement;
-            elem.Geometry = profileLine;
+            elem.Geometry = grephicElement.Source;
 
-            if (milSpaceGraphics.ContainsKey(profileLine.GetHashCode()))
+            if (milSpaceGraphics.Any(ge => grephicElement.ElementId == ge.ElementId))
             {
-                Removeelement(milSpaceGraphics[profileLine.GetHashCode()].Element);
+                Removeelement(milSpaceGraphics.First(ge => grephicElement.ElementId == ge.ElementId));
             }
 
             if (doFeresh)
@@ -102,10 +108,10 @@ namespace MilSpace.Tools.GraphicsLayer
 
         }
 
-        private void Removeelement(IElement elem)
+        private void Removeelement(GraphicElement elem)
         {
-            graphics.DeleteElement(elem);
-            milSpaceGraphics.Remove(elem.Geometry.GetHashCode());
+            graphics.DeleteElement(elem.Element);
+            milSpaceGraphics.Remove(elem);
         }
     }
 }

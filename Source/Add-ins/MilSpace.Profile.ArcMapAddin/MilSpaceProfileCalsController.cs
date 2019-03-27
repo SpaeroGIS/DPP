@@ -136,6 +136,7 @@ namespace MilSpace.Profile
             if (profileSetting == null)
             {
                 profileSetting = new ProfileSettings();
+
             }
 
             profileSetting.DemLayerName = View.DemLayerName;
@@ -145,7 +146,7 @@ namespace MilSpace.Profile
 
             InvokeOnProfileSettingsChanged();
 
-            graphicsLayerManager.UpdateGraphic(profileSetting.ProfileLines, profileId);
+            graphicsLayerManager.UpdateGraphic(profileSetting.ProfileLines, profileId, (int)profileType);
 
         }
 
