@@ -221,7 +221,7 @@ namespace MilSpace.Profile
             catch (Exception ex)
             {
                 //TODO log error
-                MessageBox.Show("Calcu;lation error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Calculation error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
 
@@ -339,5 +339,6 @@ namespace MilSpace.Profile
         {
             ProfileLayers.GetAllLayers();
         }
+
     }
 }

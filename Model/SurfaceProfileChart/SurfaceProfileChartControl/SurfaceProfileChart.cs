@@ -36,7 +36,7 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
             AddLegends();
         }
 
-        public void InitializeProfile(ProfileSession profileSession)
+        public void InitializeProfile(ProfileSession profileSession, List<ProfileSurfacePoint> extremePoints)
         {
             profileChart.Series.Clear();
 
@@ -59,6 +59,8 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
                     profileChart.Series.Last().Points.AddXY(point.Distance, point.Z);
                 }
             }
+
+            SetExtremePoints(extremePoints);
         }
 
         public void AddInvisibleLine(ProfileSurface surface)
@@ -68,6 +70,34 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
                 profileChart.Series[surface.LineId.ToString()].Points
                     .FirstOrDefault(linePoint => (linePoint.XValue == point.Distance)).Color = Color.Red;
             }
+        }
+
+        private void SetExtremePoints(List<ProfileSurfacePoint> extremePoints)
+        {
+           
+            for(var i = 1; i < extremePoints.Count; i++)
+            {
+                profileChart.Series.Add(new Series
+                {
+                    ChartType = SeriesChartType.Line,
+                    Color = Color.Blue,
+                    Name = $"ExtremePointsLine{i}",
+                    YValuesPerPoint = 1,
+                    IsVisibleInLegend = false
+                });
+
+
+                profileChart.Series[$"ExtremePointsLine{i}"].Points.AddXY(extremePoints[0].Distance, extremePoints[0].Z);
+                profileChart.Series[$"ExtremePointsLine{i}"].Points[0].MarkerStyle = MarkerStyle.Circle;
+                profileChart.Series[$"ExtremePointsLine{i}"].Points.AddXY(extremePoints[i].Distance, extremePoints[i].Z);
+                profileChart.Series[$"ExtremePointsLine{i}"].Points[1].MarkerStyle = MarkerStyle.Circle;
+            }
+        }
+
+        private void ChangeObserverPointHeight(double height)
+        {
+            var observerPoint = profileChart.Series["ExtremePoints"].Points.First(point => point.XValue == 0);
+            observerPoint.SetValueY(height);
         }
 
         private void SaveChartAsImage()

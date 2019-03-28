@@ -20,7 +20,9 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
 
         public void LoadSeries()
         {
-            _surfaceProfileChart.InitializeProfile(_profileSession);
+            var extremePoints = FindExtremePoints();
+
+            _surfaceProfileChart.InitializeProfile(_profileSession, extremePoints);
         }
 
         public void AddInvisibleZones(double observerHeight)
@@ -53,7 +55,7 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
 
                             }
                         }
-                        
+
                     }
                     else
                     {
@@ -78,7 +80,7 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
 
         public void SetProfilesProperties()
         {
-           
+
             foreach (var profileSessionProfileLine in _profileSession.ProfileLines)
             {
                 var profileProperty = new ProfileProperty();
@@ -99,6 +101,23 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
                 _surfaceProfileChart.ProfilesProperties.Add(profileProperty);
             }
 
+        }
+
+        private List<ProfileSurfacePoint> FindExtremePoints()
+        {
+            List<ProfileSurfacePoint> extremePoints = new List<ProfileSurfacePoint>();
+
+            extremePoints.Add(_profileSession.ProfileSurfaces[0].ProfileSurfacePoints[0]);
+
+            foreach (var profileSessionProfileLine in _profileSession.ProfileLines)
+            {
+                var profileSurfacePoints = _profileSession.ProfileSurfaces.FirstOrDefault(surface =>
+                   surface.LineId == profileSessionProfileLine.Id).ProfileSurfacePoints;
+
+                extremePoints.Add(profileSurfacePoints.Last());
+            }
+
+            return extremePoints;
         }
 
         private double FindLength(ProfileSurfacePoint[] profileSurfacePoints)
@@ -126,11 +145,11 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
                     angles.Add(CalcAngleOfDeviation(deviationPoint, profileSurfacePoints[i + 1]));
                     deviationPoint = profileSurfacePoints[i + 1];
                 }
-                    else
-                    {
-                        _triangle.Add(profileSurfacePoints[i+1]);
-                    }
+                else
+                {
+                    _triangle.Add(profileSurfacePoints[i + 1]);
                 }
+            }
             return angles;
         }
 
