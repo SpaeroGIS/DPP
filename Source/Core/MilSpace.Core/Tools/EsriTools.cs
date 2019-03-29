@@ -2,6 +2,7 @@
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
+using MilSpace.Core.Exceptions;
 using System;
 using System.Collections.Generic;
 
@@ -88,6 +89,47 @@ namespace MilSpace.Core.Tools
             { throw new KeyNotFoundException("{0} cannot be found in the Symbol dictionary".InvariantFormat(geometry.GeometryType)); }
         }
 
+
+        public static IEnumerable<IPolyline> CreatePolylinesFromPointAndAzimuths(IPoint centerPoint, double length, int count, double azimuth1, double azimuth2)
+        {
+
+            if (centerPoint == null)
+            {
+                return null;
+            }
+
+
+            if (count < 2)
+            {
+                //TODO: Localize error message
+                throw new MilSpaceProfileLackOfParameterException("Line numbers", count);
+            }
+
+
+            double minAzimuth = Math.Min(azimuth1, azimuth2);
+            double maxAzimuth = Math.Max(azimuth1, azimuth2);
+
+            double sector = maxAzimuth - minAzimuth;
+
+            if (sector == 0)
+            {
+                //TODO: Localize error message
+                throw new MilSpaceProfileLackOfParameterException("Azimuth", 0);
+            }
+
+            double step = sector / (count - 1);
+
+            List<IPolyline> result = new List<IPolyline>();
+            for (int i = 0; i < count; i++)
+            {
+                IConstructPoint outPoint = new PointClass();
+                outPoint.ConstructAngleDistance(centerPoint, minAzimuth + (i * step), length);
+                result.Add(CreatePolylineFromPoints(centerPoint, outPoint as IPoint));
+            }
+
+            return result;
+        }
+
         public static IPolyline CreatePolylineFromPoints(IPoint pointFrom, IPoint pointTo)
         {
             if (pointFrom == null || pointTo == null)
@@ -107,7 +149,15 @@ namespace MilSpace.Core.Tools
             IGeometryBridge2 m_geometryBridge = new GeometryEnvironmentClass();
             m_geometryBridge.AddWKSPoints(trackLine, ref segmentWksPoints);
 
-            return trackLine as IPolyline;
+
+            var result = trackLine as IPolyline;
+
+            if (pointFrom.SpatialReference != null && pointTo.SpatialReference != null && pointFrom.SpatialReference == pointTo.SpatialReference)
+            {
+                result.SpatialReference = pointFrom.SpatialReference;
+            }
+
+            return result;
         }
 
     }
