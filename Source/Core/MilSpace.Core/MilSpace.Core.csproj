@@ -124,6 +124,7 @@
     <Compile Include="Actions\Exceptions\SpaeroException.cs" />
     <Compile Include="DataAccess\DataOperationsEnum.cs" />
     <Compile Include="Exceptions\MilSpaceException.cs" />
+    <Compile Include="Exceptions\MilSpaceProfileLackOfParameter.cs" />
     <Compile Include="Helper\Helper.cs" />
     <Compile Include="Helper\SimpleDataTypesEnum.cs" />
     <Compile Include="Actions\Interfaces\IAcationResult.cs" />
