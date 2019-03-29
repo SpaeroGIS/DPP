@@ -93,6 +93,11 @@ namespace MilSpace.Profile
             InitializeComponent();
 
             profilesTabControl.TabPages.Clear();
+            string title = $"Профиль графика {profilesTabControl.TabCount + 1}";
+            TabPage tabPage = new TabPage(title);
+            tabPage.Name = $"profileTabPage{profilesTabControl.TabCount}";
+            profilesTabControl.TabPages.Add(tabPage);
+
             SetController(controller);
             controller.SetView(this);
 
@@ -108,7 +113,8 @@ namespace MilSpace.Profile
             tabPage.Name = $"profileTabPage{profilesTabControl.TabCount}";
             profilesTabControl.TabPages.Add(tabPage);
 
-            profilesTabControl.TabPages[profilesTabControl.TabCount-1].Controls.Add(surfaceProfileChart);
+            profilesTabControl.TabPages[profilesTabControl.TabCount-2].Controls.Add(surfaceProfileChart);
+            profilesTabControl.TabPages[profilesTabControl.TabCount - 2].Show();
         }
 
         #region AddIn Instance

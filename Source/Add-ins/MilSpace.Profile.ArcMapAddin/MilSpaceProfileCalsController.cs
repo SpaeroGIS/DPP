@@ -1,4 +1,5 @@
 ﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Desktop.AddIns;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Exceptions;
 using MilSpace.Core.Tools;
@@ -203,6 +204,22 @@ namespace MilSpace.Profile
             {
                 //TODO log error
                 return null;
+            }
+        }
+
+        internal void CallGraphsHandle(ProfileSession profileSession, ProfileSettingsTypeEnum profileType)
+        {
+            var winImpl = AddIn.FromID<DockableWindowMilSpaceProfileGraph.AddinImpl>(ThisAddIn.IDs.DockableWindowMilSpaceProfileGraph);
+
+            winImpl.MilSpaceProfileCalsController.ShowWindow();
+
+            if (profileType == ProfileSettingsTypeEnum.Points)
+            {
+                winImpl.MilSpaceProfileCalsController.AddSession(profileSession);
+            }
+            else
+            {
+                winImpl.MilSpaceProfileCalsController.AddSession(profileSession);
             }
         }
 

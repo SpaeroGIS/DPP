@@ -661,12 +661,12 @@ namespace MilSpace.Profile
             var session = controller.GenerateProfile();
             if (session != null)
             {
-                MessageBox.Show("Calculated");
+                controller.CallGraphsHandle(session, SelectedProfileSettingsType);
             }
             else
             {
                 //TODO log error
-                MessageBox.Show("Calcu;lation error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Calculation error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
