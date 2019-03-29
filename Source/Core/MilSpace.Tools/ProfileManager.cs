@@ -32,7 +32,7 @@ namespace MilSpace.Tools
         { }
 
         public ProfileSession GenerateProfile(string profileSource,
-            IEnumerable<ILine> profileLines)
+            IEnumerable<IPolyline> profileLines)
         {
             string profileSourceName = GdbAccess.Instance.AddProfileLinesToCalculation(profileLines);
 

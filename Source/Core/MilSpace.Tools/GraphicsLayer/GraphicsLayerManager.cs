@@ -24,24 +24,27 @@ namespace MilSpace.Tools.GraphicsLayer
 
         public void UpdateGraphic(IEnumerable<IPolyline> profileLines, int profileId, int profileTypeId)
         {
+
+            EmptyProfileGraphics();
+
             int elementId = profileTypeId * 100;
-
-            var lines = profileLines.Select(l => new GraphicElement() { Source = l, ElementId = ++elementId, ProfileId = profileId });
-
-
-            var toDel = milSpaceGraphics.Where(k => k.ProfileId != profileId ||
-                                                    !lines.Any(p => p.ElementId == k.ElementId));
-
-            foreach(var ge in toDel)
+            foreach (var line in profileLines)
             {
+                var ge = new GraphicElement() { Source = line, ElementId = ++elementId, ProfileId = profileId };
+                AddPolyline(ge);
+            }
 
+            activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
+        }
+
+        public void EmptyProfileGraphics()
+        {
+            foreach (var ge in milSpaceGraphics.ToArray())
+            {
                 RemovePolyline(ge);
             }
 
-            foreach (var line in lines)
-            {
-                AddPolyline(line);
-            }
+            milSpaceGraphics.RemoveRange(0, milSpaceGraphics.Count);
 
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
         }
@@ -62,7 +65,6 @@ namespace MilSpace.Tools.GraphicsLayer
             //  Line elements
             ISimpleLineSymbol simpleLineSymbol = new SimpleLineSymbol();
 
-
             IRgbColor col2 = new RgbColor();
             col2.Red = 255;
             col2.Green = 0;
@@ -70,16 +72,15 @@ namespace MilSpace.Tools.GraphicsLayer
 
             simpleLineSymbol.Color = new RgbColor();
             simpleLineSymbol.Color = col2;
-            simpleLineSymbol.Style = ESRI.ArcGIS.Display.esriSimpleLineStyle.esriSLSSolid;
-            simpleLineSymbol.Width = 15;
-         
+            simpleLineSymbol.Style = esriSimpleLineStyle.esriSLSSolid;
+            simpleLineSymbol.Width = 2;
+
 
             lineElement.Symbol = simpleLineSymbol;
             IElement elem = (IElement)lineElement;
             elem.Geometry = profileLine;
 
-            graphics.AddElement(elem, 0); // Explicit Cast
-
+            graphics.AddElement(elem, 0);
 
             graphicElement.Element = elem;
             milSpaceGraphics.Add(graphicElement);
@@ -92,13 +93,14 @@ namespace MilSpace.Tools.GraphicsLayer
 
         public void RemovePolyline(GraphicElement grephicElement, bool doFeresh = false)
         {
-            ILineElement lineElement = new ESRI.ArcGIS.Carto.LineElementClass();
-            IElement elem = lineElement as IElement;
-            elem.Geometry = grephicElement.Source;
+            //ILineElement lineElement = new LineElementClass();
+            //IElement elem = lineElement as IElement;
+            //elem.Geometry = grephicElement.Source;
 
             if (milSpaceGraphics.Any(ge => grephicElement.ElementId == ge.ElementId))
             {
-                Removeelement(milSpaceGraphics.First(ge => grephicElement.ElementId == ge.ElementId));
+                var elem =  milSpaceGraphics.First(ge => grephicElement.ElementId == ge.ElementId);
+                graphics.DeleteElement(elem.Element);
             }
 
             if (doFeresh)
@@ -108,10 +110,9 @@ namespace MilSpace.Tools.GraphicsLayer
 
         }
 
-        private void Removeelement(GraphicElement elem)
+        private void RemoveElement(GraphicElement elem)
         {
-            graphics.DeleteElement(elem.Element);
-            milSpaceGraphics.Remove(elem);
+
         }
     }
 }

@@ -34,9 +34,16 @@ namespace MilSpace.Profile
         /// </summary>
         IPoint FunPropertiesCenterPoint { set; }
 
+        int FunLinesCount { get; }
+
+        double FunAzimuth1 { get; }
+        double FunAzimuth2 { get; }
+
+        double FunLength { get; }
+
         MilSpaceProfileCalsController Controller { get; }
 
-        bool AllowToProfileCalck { get; }
+        bool AllowToProfileCalc { get; }
 
         string DemLayerName { get; }
 
