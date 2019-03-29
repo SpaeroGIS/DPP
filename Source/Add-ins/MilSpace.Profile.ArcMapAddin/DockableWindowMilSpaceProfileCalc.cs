@@ -65,7 +65,7 @@ namespace MilSpace.Profile
 
         public ProfileSettingsPointButton ActiveButton => activeButtton;
 
-        public string DemLayerName => cmbRasterLayers.Text;
+        public string DemLayerName => cmbRasterLayers.SelectedItem.ToString();
 
         public int ProfileId
         {
@@ -538,117 +538,7 @@ namespace MilSpace.Profile
             }
         }
 
-        private void FlashPoint(IScreenDisplay Display, IGeometry Geometry)
-        {
-            ISimpleMarkerSymbol MarkerSymbol;
-            ISymbol Symbol;
-            IRgbColor RgbColor;
 
-            try
-            {
-                MarkerSymbol = new SimpleMarkerSymbolClass();
-                MarkerSymbol.Style = esriSimpleMarkerStyle.esriSMSCircle;
-
-                RgbColor = new RgbColorClass();
-                RgbColor.Green = 128;
-
-                Symbol = (ISymbol)MarkerSymbol;
-                Symbol.ROP2 = esriRasterOpCode.esriROPNotXOrPen;
-
-                Display.SetSymbol((ISymbol)MarkerSymbol);
-                Display.DrawPoint(Geometry);
-                Thread.Sleep(300);
-                Display.DrawPoint(Geometry);
-
-            }
-            catch (Exception Err)
-            {
-                MessageBox.Show(Err.Message);
-
-            }
-
-        }
-
-
-        public void AddGraphicToMap(ESRI.ArcGIS.Carto.IMap map, ESRI.ArcGIS.Geometry.IGeometry geometry,
-            ESRI.ArcGIS.Display.IRgbColor rgbColor, ESRI.ArcGIS.Display.IRgbColor outlineRgbColor)
-        {
-            ESRI.ArcGIS.Carto.IGraphicsContainer graphicsContainer = (ESRI.ArcGIS.Carto.IGraphicsContainer)map; // Explicit Cast
-            ESRI.ArcGIS.Carto.IElement element = null;
-            if ((geometry.GeometryType) == ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPoint)
-            {
-                // Marker symbols
-                ESRI.ArcGIS.Display.ISimpleMarkerSymbol simpleMarkerSymbol = new ESRI.ArcGIS.Display.SimpleMarkerSymbolClass();
-                simpleMarkerSymbol.Color = rgbColor;
-                simpleMarkerSymbol.Outline = true;
-                simpleMarkerSymbol.OutlineColor = outlineRgbColor;
-                simpleMarkerSymbol.Size = 15;
-                simpleMarkerSymbol.Style = ESRI.ArcGIS.Display.esriSimpleMarkerStyle.esriSMSCircle;
-
-                ESRI.ArcGIS.Carto.IMarkerElement markerElement = new ESRI.ArcGIS.Carto.MarkerElementClass();
-                markerElement.Symbol = simpleMarkerSymbol;
-                element = (ESRI.ArcGIS.Carto.IElement)markerElement; // Explicit Cast
-            }
-            else if ((geometry.GeometryType) == ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPolyline)
-            {
-                //  Line elements
-                ESRI.ArcGIS.Display.ISimpleLineSymbol simpleLineSymbol = new ESRI.ArcGIS.Display.SimpleLineSymbolClass();
-                simpleLineSymbol.Color = rgbColor;
-                simpleLineSymbol.Style = ESRI.ArcGIS.Display.esriSimpleLineStyle.esriSLSSolid;
-                simpleLineSymbol.Width = 5;
-
-                ESRI.ArcGIS.Carto.ILineElement lineElement = new ESRI.ArcGIS.Carto.LineElementClass();
-                lineElement.Symbol = simpleLineSymbol;
-                element = (ESRI.ArcGIS.Carto.IElement)lineElement; // Explicit Cast
-            }
-            else if ((geometry.GeometryType) == ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPolygon)
-            {
-                // Polygon elements
-                ESRI.ArcGIS.Display.ISimpleFillSymbol simpleFillSymbol = new ESRI.ArcGIS.Display.SimpleFillSymbolClass();
-                simpleFillSymbol.Color = rgbColor;
-                simpleFillSymbol.Style = ESRI.ArcGIS.Display.esriSimpleFillStyle.esriSFSForwardDiagonal;
-                ESRI.ArcGIS.Carto.IFillShapeElement fillShapeElement = new ESRI.ArcGIS.Carto.PolygonElementClass();
-                fillShapeElement.Symbol = simpleFillSymbol;
-                element = (ESRI.ArcGIS.Carto.IElement)fillShapeElement; // Explicit Cast
-            }
-            if (!(element == null))
-            {
-                element.Geometry = geometry;
-                graphicsContainer.AddElement(element, 0);
-            }
-        }
-
-        private async void AddPolylineToMap()
-        {
-            Map map = (Map)ArcMap.Document.ActiveView.FocusMap;
-            var graphicLayerUUID = new ESRI.ArcGIS.esriSystem.UIDClass();
-            graphicLayerUUID.Value = "MyGraphics";
-
-
-            var graphicsLayer = ArcMap.Document.ActiveView.FocusMap.Layers[graphicLayerUUID] as Esri.ArcGISRuntime.Layers.GraphicsLayer;
-            if (graphicsLayer == null)
-            {
-                graphicsLayer = new Esri.ArcGISRuntime.Layers.GraphicsLayer();
-                graphicsLayer.ID = "MyGraphics";
-                //  map.Layers.Add(graphicsLayer);
-            }
-            var lineSymbol = new Esri.ArcGISRuntime.Symbology.SimpleLineSymbol();
-            lineSymbol.Color = Colors.Blue;
-            lineSymbol.Style = Esri.ArcGISRuntime.Symbology.SimpleLineStyle.Dash;
-            lineSymbol.Width = 2;
-
-            // use the MapView's Editor to get polyline geometry from the user
-            //  var line = await map.Editor.RequestShapeAsync(Esri.ArcGISRuntime.Controls.DrawShape.Polyline,
-            //    lineSymbol, null);
-
-            // create a new graphic; set the Geometry and Symbol
-            var lineGraphic = new Esri.ArcGISRuntime.Layers.Graphic();
-            //  lineGraphic.Geometry = line;
-            lineGraphic.Symbol = lineSymbol;
-
-            // add the graphic to the graphics layer
-            graphicsLayer.Graphics.Add(lineGraphic);
-        }
 
         private void panel1_Enter(object sender, EventArgs e)
         {
@@ -670,25 +560,6 @@ namespace MilSpace.Profile
             }
         }
 
-        private void button5_Click(object sender, EventArgs e)
-        {
-            var map = ActiveView.FocusMap;
-            //var segment = GetSegment();
-            var geometry = GetPolylineFromPoints();
-            IRgbColor col = new RgbColorClass();
-            col.Red = 255;
-            col.Green = 0;
-            col.Blue = 0;
-
-            IRgbColor col2 = new RgbColorClass();
-            col2.Red = 0;
-            col2.Green = 0;
-            col2.Blue = 0;
-
-            AddGraphicToMap(map, geometry, col, col2);
-            ActiveView.Refresh();
-        }
-
 
         private void ChechDouble_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -698,6 +569,11 @@ namespace MilSpace.Profile
         private void funLinesCount_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = !CheckDouble(e.KeyChar, (TextBox)sender, true);
+        }
+
+        private void UpdateFunProperties(object sender, EventArgs e)
+        {
+            controller.SetPeofileSettigs(ProfileSettingsTypeEnum.Fun);
         }
 
 
@@ -720,7 +596,5 @@ namespace MilSpace.Profile
                   ((charValue == DECIMAL_POINT) && textValue.Text.IndexOf(".") == NOT_FOUND)));
         }
 
-
     }
-
 }
