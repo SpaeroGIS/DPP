@@ -65,7 +65,7 @@ namespace MilSpace.Profile
 
         public ProfileSettingsPointButton ActiveButton => activeButtton;
 
-        public string DemLayerName => cmbRasterLayers.SelectedItem.ToString();
+        public string DemLayerName => cmbRasterLayers.SelectedItem == null ? string.Empty : cmbRasterLayers.SelectedItem.ToString();
 
         public int ProfileId
         {

@@ -184,9 +184,6 @@ namespace MilSpace.Profile
             InvokeOnProfileSettingsChanged();
 
             GraphicsLayerManager.UpdateGraphic(profileSetting.ProfileLines, profileId, (int)profileType);
-
-
-
         }
 
         internal ProfileSession GenerateProfile()
@@ -196,7 +193,10 @@ namespace MilSpace.Profile
 
                 ProfileManager manager = new ProfileManager();
                 var profileSetting = profileSettings[View.SelectedProfileSettingsType];
-                return manager.GenerateProfile(View.DemLayerName, profileSetting.ProfileLines);
+                var session = manager.GenerateProfile(View.DemLayerName, profileSetting.ProfileLines);
+
+                session.SessionId = profileId;
+                return session;
 
             }
             catch (Exception ex)
