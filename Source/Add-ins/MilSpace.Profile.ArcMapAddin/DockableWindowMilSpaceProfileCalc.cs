@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Linq;
 using Point = ESRI.ArcGIS.Geometry.Point;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace MilSpace.Profile
 {
@@ -25,7 +26,11 @@ namespace MilSpace.Profile
     /// </summary>
     public partial class DockableWindowMilSpaceProfileCalc : UserControl, IMilSpaceProfileView
     {
-
+        const int BACKSPACE = 8;
+        const int DECIMAL_POINT = 46;
+        const int ZERO = 48;
+        const int NINE = 57;
+        const int NOT_FOUND = -1;
 
         private ProfileSettingsPointButton activeButtton = ProfileSettingsPointButton.None;
 
@@ -36,19 +41,17 @@ namespace MilSpace.Profile
             this.Instance = this;
             SetController(controller);
             controller.SetView(this);
+
         }
 
         public DockableWindowMilSpaceProfileCalc(object hook, MilSpaceProfileCalsController controller)
         {
             InitializeComponent();
-
-
             SetController(controller);
-            controller.SetView(this);
-
             this.Hook = hook;
             this.Instance = this;
             SubscribeForEvents();
+            controller.SetView(this);
         }
 
         private void OnProfileSettingsChanged(ProfileSettingsEventArgs e)
@@ -70,7 +73,7 @@ namespace MilSpace.Profile
         }
 
 
-        public bool AllowToProfileCalck
+        public bool AllowToProfileCalc
         {
             get
             {
@@ -97,7 +100,6 @@ namespace MilSpace.Profile
 
         private void OnRasterComboDropped()
         {
-
             cmbRasterLayers.Items.Clear();
             PopulateComboBox(cmbRasterLayers, ProfileLayers.RasterLayers);
         }
@@ -227,7 +229,6 @@ namespace MilSpace.Profile
 
                     break;
                 case 2:
-
                     controller.FlashPoint(ProfileSettingsPointButton.PointsFist);
                     break;
 
@@ -262,7 +263,6 @@ namespace MilSpace.Profile
             }
         }
 
-
         private void secondPointToolbar_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
             ToolbarButtonClicked = e.Button;
@@ -286,8 +286,7 @@ namespace MilSpace.Profile
                 case 0:
                     break;
                 case 2:
-                    var point = ParseStringCoordsToPoint(txtSecondPointX.Text, txtSecondPointY.Text);
-                    ZoomToPoint(point);
+                    controller.FlashPoint(ProfileSettingsPointButton.PointsSecond);
                     break;
 
                 case 4:
@@ -350,8 +349,7 @@ namespace MilSpace.Profile
                     break;
                 case 2:
 
-                    var point = ParseStringCoordsToPoint(txtBasePointX.Text, txtBasePointY.Text);
-                    ZoomToPoint(point);
+                    controller.FlashPoint(ProfileSettingsPointButton.CenterFun);
                     break;
 
 
@@ -389,13 +387,6 @@ namespace MilSpace.Profile
             }
         }
 
-
-        private void ZoomToPoint(IPoint point)
-        {
-            IEnvelope pEnv = new EnvelopeClass();
-
-
-        }
 
         private IPoint ParseStringCoordsToPoint(string coordX, string coordY)
         {
@@ -450,7 +441,7 @@ namespace MilSpace.Profile
 
         public ProfileSettingsTypeEnum SelectedProfileSettingsType => controller.ProfileSettingsType[profileSettingsTab.SelectedIndex];
 
-        public IPoint LinePropertiesFirstPoint 
+        public IPoint LinePropertiesFirstPoint
         {
             set
             {
@@ -496,6 +487,56 @@ namespace MilSpace.Profile
             }
         }
 
+        public int FunLinesCount
+        {
+            get
+            {
+                int result;
+                if (int.TryParse(funLinesCount.Text, out result))
+                {
+                    return result;
+                }
+                return 0;
+            }
+        }
+
+        public double FunAzimuth1
+        {
+            get
+            {
+                double result;
+                if (Helper.TryParceToDouble(azimuth1.Text, out result))
+                {
+                    return result;
+                }
+                return -1;
+            }
+        }
+        double IMilSpaceProfileView.FunAzimuth2
+        {
+            get
+            {
+                double result;
+                if (Helper.TryParceToDouble(azimuth2.Text, out result))
+                {
+                    return result;
+                }
+                return -1;
+            }
+        }
+
+        double IMilSpaceProfileView.FunLength
+        {
+            get
+            {
+                double result;
+                if (Helper.TryParceToDouble(profileLength.Text, out result))
+                {
+                    return result;
+                }
+                return -1;
+            }
+        }
 
         private void FlashPoint(IScreenDisplay Display, IGeometry Geometry)
         {
@@ -617,35 +658,15 @@ namespace MilSpace.Profile
 
         private void calcProfile_Click(object sender, EventArgs e)
         {
-            //GdbAccess.Instance.EraseProfileLines();
-
-            //Add lines
-            var map = ArcMap.Document.ActiveView.FocusMap;
-            var segment = controller.GetProfileLine();
-            var geometry = (IGeometry)segment;
-            IRgbColor col = new RgbColorClass();
-            col.Red = 133;
-            col.Green = 135;
-            col.Blue = 43;
-
-            IRgbColor col2 = new RgbColorClass();
-            col.Red = 133;
-            col.Green = 135;
-            col.Blue = 43;
-
-            AddGraphicToMap(map, geometry, col, col2);
-
-            ProfileManager manager = new ProfileManager();
-
-            try
+            var session = controller.GenerateProfile();
+            if (session != null)
             {
-                var session = manager.GenerateProfile(cmbRasterLayers.Text, new ILine[] { segment });
-                controller.CallGraphsHandle(session, SelectedProfileSettingsType);
+                MessageBox.Show("Calculated");
             }
-            catch (Exception ex)
+            else
             {
                 //TODO log error
-                MessageBox.Show("Calculation error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Calcu;lation error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -668,6 +689,18 @@ namespace MilSpace.Profile
             ActiveView.Refresh();
         }
 
+
+        private void ChechDouble_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !CheckDouble(e.KeyChar, (TextBox)sender);
+        }
+
+        private void funLinesCount_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !CheckDouble(e.KeyChar, (TextBox)sender, true);
+        }
+
+
         private void profileSettingsTab_SelectedIndexChanged(object sender, EventArgs e)
         {
             controller.SetPeofileSettigs(SelectedProfileSettingsType);
@@ -678,5 +711,16 @@ namespace MilSpace.Profile
         {
             controller.SetPeofileSettigs(SelectedProfileSettingsType);
         }
+
+        private static bool CheckDouble(char charValue, TextBox textValue, bool justInt = false)
+        {
+
+            return (((charValue == BACKSPACE) || ((charValue >= ZERO) && (charValue <= NINE))) || (justInt ||
+
+                  ((charValue == DECIMAL_POINT) && textValue.Text.IndexOf(".") == NOT_FOUND)));
+        }
+
+
     }
+
 }

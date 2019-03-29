@@ -4,6 +4,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.28307.106
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilSpace.Profile.ArcGISAddIn", "..\Add-ins\MilSpace.Profile.ArcMapAddin\MilSpace.Profile.ArcGISAddIn.csproj", "{A3CA6E5C-FAC0-4B81-A812-562F1F59CBA5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{02023D3D-4F73-4E7E-A78F-EEAA5D66DEAC} = {02023D3D-4F73-4E7E-A78F-EEAA5D66DEAC}
+		{CBD5675B-F382-497D-98CC-70539ED658B9} = {CBD5675B-F382-497D-98CC-70539ED658B9}
+		{73334B96-54FD-4D83-B56D-967F8728D767} = {73334B96-54FD-4D83-B56D-967F8728D767}
+		{651C40FA-E0B6-45FF-9B3E-9341EB671754} = {651C40FA-E0B6-45FF-9B3E-9341EB671754}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilSpace.Visibility.ArcMapAddin", "..\Add-ins\MilSpace.Visibility.ArcMapAddin\MilSpace.Visibility.ArcMapAddin.csproj", "{B8A76C95-CC2B-4643-BBF8-ED33BDA7F512}"
 EndProject

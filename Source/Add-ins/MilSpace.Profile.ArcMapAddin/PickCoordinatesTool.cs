@@ -61,6 +61,7 @@ namespace MilSpace.Profile
                 winImpl.MilSpaceProfileCalsController.SetCenterPointForFunProfile(point, pointToSave);
             }
 
+            var settings = winImpl.MilSpaceProfileCalsController.ProfileSettings[ProfileSettingsTypeEnum.Points];
         }
     }
 

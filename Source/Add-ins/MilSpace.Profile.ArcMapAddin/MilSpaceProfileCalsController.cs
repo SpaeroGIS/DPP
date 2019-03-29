@@ -1,15 +1,17 @@
 ﻿using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Geometry;
+using MilSpace.Core.Exceptions;
 using MilSpace.Core.Tools;
+using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Profile.DTO;
+using MilSpace.Tools;
 using MilSpace.Tools.GraphicsLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MilSpace.DataAccess.DataTransfer;
 using System.Text;
 using System.Threading.Tasks;
-using ESRI.ArcGIS.Desktop.AddIns;
+using System.Windows.Forms;
 
 namespace MilSpace.Profile
 {
@@ -21,8 +23,6 @@ namespace MilSpace.Profile
     {
 
         private int profileId;
-        private MilSpaceProfileGraphsController graphsController = new MilSpaceProfileGraphsController();
-
         GraphicsLayerManager graphicsLayerManager;
 
         public delegate void ProfileSettingsChangedDelegate(ProfileSettingsEventArgs e);
@@ -47,6 +47,7 @@ namespace MilSpace.Profile
             {ProfileSettingsTypeEnum.Load, null}
         };
 
+        internal Dictionary<ProfileSettingsTypeEnum, ProfileSettings> ProfileSettings => profileSettings;
 
 
         internal MilSpaceProfileCalsController() { }
@@ -55,7 +56,6 @@ namespace MilSpace.Profile
         {
             View = view;
             SetPeofileId();
-            graphicsLayerManager = new GraphicsLayerManager(view.ActiveView);
         }
 
         /// <summary>
@@ -110,14 +110,19 @@ namespace MilSpace.Profile
             EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, pointsToShow[pointType]);
         }
 
-        internal ILine GetProfileLine()
+        internal IEnumerable<IPolyline> GetProfileLines()
         {
-            ILine segment = new LineClass();
-            segment.FromPoint = pointsToShow[ProfileSettingsPointButton.PointsFist];
-            segment.ToPoint = pointsToShow[ProfileSettingsPointButton.PointsSecond];
 
+            if (View.SelectedProfileSettingsType == ProfileSettingsTypeEnum.Points)
+            {
+                return new IPolyline[] { EsriTools.CreatePolylineFromPoints(pointsToShow[ProfileSettingsPointButton.PointsFist], pointsToShow[ProfileSettingsPointButton.PointsSecond]) };
+            }
+            if (View.SelectedProfileSettingsType == ProfileSettingsTypeEnum.Fun)
+            {
+                return EsriTools.CreatePolylinesFromPointAndAzimuths(pointsToShow[ProfileSettingsPointButton.CenterFun], View.FunLength, View.FunLinesCount, View.FunAzimuth1, View.FunAzimuth2);
+            }
 
-            return segment;
+            return null;
         }
         internal IMilSpaceProfileView View { get; private set; }
 
@@ -127,46 +132,90 @@ namespace MilSpace.Profile
         {
             List<IPolyline> profileLines = new List<IPolyline>();
 
+            var profileSetting = profileSettings[profileType];
+            if (profileSetting == null)
+            {
+                profileSetting = new ProfileSettings();
+            }
+
+
+            //Check if the View.DemLayerName if Layer name
+            profileSetting.DemLayerName = View.DemLayerName;
+
+
             if (profileType == ProfileSettingsTypeEnum.Points)
             {
+
                 var line = EsriTools.CreatePolylineFromPoints(pointsToShow[ProfileSettingsPointButton.PointsFist], pointsToShow[ProfileSettingsPointButton.PointsSecond]);
                 if (line != null)
                 {
                     profileLines.Add(line);
                 }
+
             }
 
-            var profileSetting = profileSettings[profileType];
-            if (profileSetting == null)
+            if (View.SelectedProfileSettingsType == ProfileSettingsTypeEnum.Fun)
             {
-                profileSetting = new ProfileSettings();
+                try
+                {
+                    var lines = EsriTools.CreatePolylinesFromPointAndAzimuths(pointsToShow[ProfileSettingsPointButton.CenterFun], View.FunLength, View.FunLinesCount, View.FunAzimuth1, View.FunAzimuth2);
+                    if (lines != null)
+                    {
+                        profileLines.AddRange(lines);
+                    }
+                }
+                catch (MilSpaceProfileLackOfParameterException ex)
+                {
+                    //TODO: Wtite log
+                    MessageBox.Show(ex.Message, "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Wtite log
+                }
 
             }
 
-            profileSetting.DemLayerName = View.DemLayerName;
             profileSetting.ProfileLines = profileLines.ToArray();
 
             profileSettings[profileType] = profileSetting;
 
             InvokeOnProfileSettingsChanged();
 
-            graphicsLayerManager.UpdateGraphic(profileSetting.ProfileLines, profileId, (int)profileType);
+            GraphicsLayerManager.UpdateGraphic(profileSetting.ProfileLines, profileId, (int)profileType);
+
+
 
         }
 
-        internal void CallGraphsHandle(ProfileSession profileSession, ProfileSettingsTypeEnum profileType)
+        internal ProfileSession GenerateProfile()
         {
-            var winImpl = AddIn.FromID<DockableWindowMilSpaceProfileGraph.AddinImpl>(ThisAddIn.IDs.DockableWindowMilSpaceProfileGraph);
-
-             winImpl.MilSpaceProfileCalsController.ShowWindow();
-
-            if (profileType == ProfileSettingsTypeEnum.Points)
+            try
             {
-                winImpl.MilSpaceProfileCalsController.AddSession(profileSession);
+
+                ProfileManager manager = new ProfileManager();
+                var profileSetting = profileSettings[View.SelectedProfileSettingsType];
+                return manager.GenerateProfile(View.DemLayerName, profileSetting.ProfileLines);
+
             }
-            else
+            catch (Exception ex)
             {
-                winImpl.MilSpaceProfileCalsController.AddGraph(profileSession);
+                //TODO log error
+                return null;
+            }
+        }
+
+        private GraphicsLayerManager GraphicsLayerManager
+        {
+            get
+            {
+                if (graphicsLayerManager == null)
+                {
+                    graphicsLayerManager = new GraphicsLayerManager(View.ActiveView);
+                }
+
+                return graphicsLayerManager;
             }
         }
 

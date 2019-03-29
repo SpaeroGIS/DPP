@@ -49,7 +49,7 @@ namespace MilSpace.DataAccess.Facade
             }
         }
         private static IWorkspace calcWorkspace = null;
-        public string AddProfileLinesToCalculation(IEnumerable<ILine> profileLines)
+        public string AddProfileLinesToCalculation(IEnumerable<IPolyline> profileLines)
         {
 
             string featureClassName = GenerateTempProfileLinesStorage();
@@ -66,18 +66,17 @@ namespace MilSpace.DataAccess.Facade
             profileLines.ToList().ForEach(
                 l =>
                 {
-
                     var newLine = calc.CreateFeature();
                     
-                    ISubtypes subtypes = (ISubtypes)calc;
-                    IRowSubtypes rowSubtypes = (IRowSubtypes)newLine;
-                    if (subtypes.HasSubtype)                                // does the feature class have subtypes?        
-                    {
-                        rowSubtypes.SubtypeCode = 1;                        //
-                    }
+                    //ISubtypes subtypes = (ISubtypes)calc;
+                    //IRowSubtypes rowSubtypes = (IRowSubtypes)newLine;
+                    //if (subtypes.HasSubtype)                                // does the feature class have subtypes?        
+                    //{
+                    //    rowSubtypes.SubtypeCode = 1;                        //
+                    //}
 
-                    IGeometry trackGeometry = EsriTools.CreatePolylineFromPoints(l.FromPoint, l.ToPoint);
-                    newLine.Shape = trackGeometry;
+                    //IGeometry trackGeometry = EsriTools.CreatePolylineFromPoints(l.FromPoint, l.ToPoint);
+                    newLine.Shape = l;
 
                     newLine.Store();
                 }
