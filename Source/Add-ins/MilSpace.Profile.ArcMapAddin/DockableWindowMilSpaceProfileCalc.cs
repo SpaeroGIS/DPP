@@ -640,12 +640,12 @@ namespace MilSpace.Profile
             try
             {
                 var session = manager.GenerateProfile(cmbRasterLayers.Text, new ILine[] { segment });
-                MessageBox.Show("Calculated");
+                controller.CallGraphsHandle(session, SelectedProfileSettingsType);
             }
             catch (Exception ex)
             {
                 //TODO log error
-                MessageBox.Show("Calcu;lation error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Calculation error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

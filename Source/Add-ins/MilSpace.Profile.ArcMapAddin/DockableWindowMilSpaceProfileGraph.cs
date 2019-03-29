@@ -10,121 +10,152 @@ using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.SystemUI;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.ADF.CATIDs;
+using MilSpace.Profile.SurfaceProfileChartControl;
+using System.Linq;
 
 namespace MilSpace.Profile
 {
     [Guid("80eb5b70-d4ba-476a-a107-49e96cf1b38d")]
     [ClassInterface(ClassInterfaceType.None)]
     [ProgId("MilSpace.Profile.DockableWindowMilSpaceProfileGraph")]
-    public partial class DockableWindowMilSpaceProfileGraph : UserControl, IDockableWindowDef
+    public partial class DockableWindowMilSpaceProfileGraph : UserControl
     {
-        private IApplication m_application;
+        private MilSpaceProfileGraphsController controller;
 
-        #region COM Registration Function(s)
-        [ComRegisterFunction()]
-        [ComVisible(false)]
-        static void RegisterFunction(Type registerType)
+        private object Hook
         {
-            // Required for ArcGIS Component Category Registrar support
-            ArcGISCategoryRegistration(registerType);
-            //
-            // TODO: Add any COM registration code here
-            //
+            get;
+            set;
         }
 
-        [ComUnregisterFunction()]
-        [ComVisible(false)]
-        static void UnregisterFunction(Type registerType)
-        {
-            // Required for ArcGIS Component Category Registrar support
-            ArcGISCategoryUnregistration(registerType);
+        public DockableWindowMilSpaceProfileGraph Instance { get; }
 
-            //
-            // TODO: Add any COM unregistration code here
-            //
+        //private IApplication m_application;
+
+        //#region COM Registration Function(s)
+        //[ComRegisterFunction()]
+        //[ComVisible(false)]
+        //static void RegisterFunction(Type registerType)
+        //{
+        //    // Required for ArcGIS Component Category Registrar support
+        //    ArcGISCategoryRegistration(registerType);
+        //    //
+        //    // TODO: Add any COM registration code here
+        //    //
+        //}
+
+        //[ComUnregisterFunction()]
+        //[ComVisible(false)]
+        //static void UnregisterFunction(Type registerType)
+        //{
+        //    // Required for ArcGIS Component Category Registrar support
+        //    ArcGISCategoryUnregistration(registerType);
+
+        //    //
+        //    // TODO: Add any COM unregistration code here
+        //    //
+        //}
+
+        //#region ArcGIS Component Category Registrar generated code
+        ///// <summary>
+        ///// Required method for ArcGIS Component Category registration -
+        ///// Do not modify the contents of this method with the code editor.
+        ///// </summary>
+        //private static void ArcGISCategoryRegistration(Type registerType)
+        //{
+        //    string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
+        //    MxDockableWindows.Register(regKey);
+
+        //}
+        ///// <summary>
+        ///// Required method for ArcGIS Component Category unregistration -
+        ///// Do not modify the contents of this method with the code editor.
+        ///// </summary>
+        //private static void ArcGISCategoryUnregistration(Type registerType)
+        //{
+        //    string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
+        //    MxDockableWindows.Unregister(regKey);
+
+        //}
+
+        //#endregion
+        //#endregion
+
+        public DockableWindowMilSpaceProfileGraph(MilSpaceProfileGraphsController controller)
+        {
+            this.Instance = this;
+            SetController(controller);
+            controller.SetView(this);
         }
 
-        #region ArcGIS Component Category Registrar generated code
-        /// <summary>
-        /// Required method for ArcGIS Component Category registration -
-        /// Do not modify the contents of this method with the code editor.
-        /// </summary>
-        private static void ArcGISCategoryRegistration(Type registerType)
-        {
-            string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
-            MxDockableWindows.Register(regKey);
-
-        }
-        /// <summary>
-        /// Required method for ArcGIS Component Category unregistration -
-        /// Do not modify the contents of this method with the code editor.
-        /// </summary>
-        private static void ArcGISCategoryUnregistration(Type registerType)
-        {
-            string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
-            MxDockableWindows.Unregister(regKey);
-
-        }
-
-        #endregion
-        #endregion
-
-        public DockableWindowMilSpaceProfileGraph()
+        public DockableWindowMilSpaceProfileGraph(object hook, MilSpaceProfileGraphsController controller)
         {
             InitializeComponent();
 
-            
+            profilesTabControl.TabPages.Clear();
+            SetController(controller);
+            controller.SetView(this);
+
+            this.Hook = hook;
+            this.Instance = this;
+            SubscribeForEvents();
         }
 
-
-        // Add the event-handler delegate.
-        
-
-        #region IDockableWindowDef Members
-
-        string IDockableWindowDef.Caption
+        internal void AddNewTab(SurfaceProfileChart surfaceProfileChart)
         {
-            get
+            string title = $"Профиль графика {profilesTabControl.TabCount + 1}";
+            TabPage tabPage = new TabPage(title);
+            tabPage.Name = $"profileTabPage{profilesTabControl.TabCount}";
+            profilesTabControl.TabPages.Add(tabPage);
+
+            profilesTabControl.TabPages[profilesTabControl.TabCount-1].Controls.Add(surfaceProfileChart);
+        }
+
+        #region AddIn Instance
+
+        public void SetController(MilSpaceProfileGraphsController controller)
+        {
+            this.controller = controller;
+        }
+
+        private void SubscribeForEvents()
+        {
+
+        }
+
+        public class AddinImpl : ESRI.ArcGIS.Desktop.AddIns.DockableWindow
+        {
+            private DockableWindowMilSpaceProfileGraph m_windowUI;
+            private MilSpaceProfileGraphsController controller;
+
+            public AddinImpl()
             {
-                //TODO: Replace with locale-based initial title bar caption
-                return "My C# Dockable Window";
             }
-        }
 
-        int IDockableWindowDef.ChildHWND
-        {
-            get { return this.Handle.ToInt32(); }
-        }
-
-        string IDockableWindowDef.Name
-        {
-            get
+            protected override IntPtr OnCreateChild()
             {
-                //TODO: Replace with any non-localizable string
-                return this.Name;
+                controller = new MilSpaceProfileGraphsController();
+
+                m_windowUI = new DockableWindowMilSpaceProfileGraph(this.Hook, controller);
+
+
+                return m_windowUI.Handle;
             }
-        }
 
-        void IDockableWindowDef.OnCreate(object hook)
-        {
-            m_application = hook as IApplication;
-        }
+            protected override void Dispose(bool disposing)
+            {
+                if (m_windowUI != null)
+                    m_windowUI.Dispose(disposing);
 
-        void IDockableWindowDef.OnDestroy()
-        {
-            //TODO: Release resources and call dispose of any ActiveX control initialized
-        }
+                base.Dispose(disposing);
+            }
 
-        object IDockableWindowDef.UserData
-        {
-            get { return null; }
-        }
+            internal DockableWindowMilSpaceProfileGraph DockableWindowUI => m_windowUI;
 
+
+            internal MilSpaceProfileGraphsController MilSpaceProfileCalsController => controller;
+
+        }
         #endregion
-
-        private void chart1_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

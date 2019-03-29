@@ -6,8 +6,10 @@ using MilSpace.Tools.GraphicsLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MilSpace.DataAccess.DataTransfer;
 using System.Text;
 using System.Threading.Tasks;
+using ESRI.ArcGIS.Desktop.AddIns;
 
 namespace MilSpace.Profile
 {
@@ -19,6 +21,8 @@ namespace MilSpace.Profile
     {
 
         private int profileId;
+        private MilSpaceProfileGraphsController graphsController = new MilSpaceProfileGraphsController();
+
         GraphicsLayerManager graphicsLayerManager;
 
         public delegate void ProfileSettingsChangedDelegate(ProfileSettingsEventArgs e);
@@ -150,6 +154,22 @@ namespace MilSpace.Profile
 
         }
 
+        internal void CallGraphsHandle(ProfileSession profileSession, ProfileSettingsTypeEnum profileType)
+        {
+            var winImpl = AddIn.FromID<DockableWindowMilSpaceProfileGraph.AddinImpl>(ThisAddIn.IDs.DockableWindowMilSpaceProfileGraph);
+
+             winImpl.MilSpaceProfileCalsController.ShowWindow();
+
+            if (profileType == ProfileSettingsTypeEnum.Points)
+            {
+                winImpl.MilSpaceProfileCalsController.AddSession(profileSession);
+            }
+            else
+            {
+                winImpl.MilSpaceProfileCalsController.AddGraph(profileSession);
+            }
+        }
+
         private void InvokeOnProfileSettingsChanged()
         {
             if (OnProfileSettingsChanged != null)
@@ -157,13 +177,13 @@ namespace MilSpace.Profile
                 var currentTab = View.SelectedProfileSettingsType;
                 ProfileSettingsEventArgs args = new ProfileSettingsEventArgs(profileSettings[currentTab], currentTab);
                 OnProfileSettingsChanged(args);
-                
+
             }
         }
 
         private void SetPeofileId()
         {
-            profileId =  View.ProfileId = (int)(DateTime.Now.ToOADate() * 10000);
+            profileId = View.ProfileId = (int)(DateTime.Now.ToOADate() * 10000);
         }
     }
 }
