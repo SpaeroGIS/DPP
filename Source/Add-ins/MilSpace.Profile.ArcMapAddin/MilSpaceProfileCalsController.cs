@@ -212,15 +212,7 @@ namespace MilSpace.Profile
             var winImpl = AddIn.FromID<DockableWindowMilSpaceProfileGraph.AddinImpl>(ThisAddIn.IDs.DockableWindowMilSpaceProfileGraph);
 
             winImpl.MilSpaceProfileCalsController.ShowWindow();
-
-            if (profileType == ProfileSettingsTypeEnum.Points)
-            {
-                winImpl.MilSpaceProfileCalsController.AddSession(profileSession);
-            }
-            else
-            {
-                winImpl.MilSpaceProfileCalsController.AddSession(profileSession);
-            }
+            winImpl.MilSpaceProfileCalsController.AddSession(profileSession);
         }
 
         private GraphicsLayerManager GraphicsLayerManager

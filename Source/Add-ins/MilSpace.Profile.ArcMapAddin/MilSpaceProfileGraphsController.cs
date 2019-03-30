@@ -44,10 +44,5 @@ namespace MilSpace.Profile
 
             View.AddNewTab(surfaceProfileChart);
         } 
-
-        internal void AddGraph(ProfileSession profileSession)
-        {
-
-        }
     }
 }

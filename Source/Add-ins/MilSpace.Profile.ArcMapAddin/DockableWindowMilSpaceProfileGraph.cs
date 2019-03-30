@@ -30,57 +30,6 @@ namespace MilSpace.Profile
 
         public DockableWindowMilSpaceProfileGraph Instance { get; }
 
-        //private IApplication m_application;
-
-        //#region COM Registration Function(s)
-        //[ComRegisterFunction()]
-        //[ComVisible(false)]
-        //static void RegisterFunction(Type registerType)
-        //{
-        //    // Required for ArcGIS Component Category Registrar support
-        //    ArcGISCategoryRegistration(registerType);
-        //    //
-        //    // TODO: Add any COM registration code here
-        //    //
-        //}
-
-        //[ComUnregisterFunction()]
-        //[ComVisible(false)]
-        //static void UnregisterFunction(Type registerType)
-        //{
-        //    // Required for ArcGIS Component Category Registrar support
-        //    ArcGISCategoryUnregistration(registerType);
-
-        //    //
-        //    // TODO: Add any COM unregistration code here
-        //    //
-        //}
-
-        //#region ArcGIS Component Category Registrar generated code
-        ///// <summary>
-        ///// Required method for ArcGIS Component Category registration -
-        ///// Do not modify the contents of this method with the code editor.
-        ///// </summary>
-        //private static void ArcGISCategoryRegistration(Type registerType)
-        //{
-        //    string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
-        //    MxDockableWindows.Register(regKey);
-
-        //}
-        ///// <summary>
-        ///// Required method for ArcGIS Component Category unregistration -
-        ///// Do not modify the contents of this method with the code editor.
-        ///// </summary>
-        //private static void ArcGISCategoryUnregistration(Type registerType)
-        //{
-        //    string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
-        //    MxDockableWindows.Unregister(regKey);
-
-        //}
-
-        //#endregion
-        //#endregion
-
         public DockableWindowMilSpaceProfileGraph(MilSpaceProfileGraphsController controller)
         {
             this.Instance = this;
@@ -93,10 +42,6 @@ namespace MilSpace.Profile
             InitializeComponent();
 
             profilesTabControl.TabPages.Clear();
-            string title = $"Профиль графика {profilesTabControl.TabCount + 1}";
-            TabPage tabPage = new TabPage(title);
-            tabPage.Name = $"profileTabPage{profilesTabControl.TabCount}";
-            profilesTabControl.TabPages.Add(tabPage);
 
             SetController(controller);
             controller.SetView(this);
@@ -113,8 +58,8 @@ namespace MilSpace.Profile
             tabPage.Name = $"profileTabPage{profilesTabControl.TabCount}";
             profilesTabControl.TabPages.Add(tabPage);
 
-            profilesTabControl.TabPages[profilesTabControl.TabCount-2].Controls.Add(surfaceProfileChart);
-            profilesTabControl.TabPages[profilesTabControl.TabCount - 2].Show();
+            profilesTabControl.TabPages[profilesTabControl.TabCount - 1].Controls.Add(surfaceProfileChart);
+            profilesTabControl.TabPages[profilesTabControl.TabCount - 1].Show();
         }
 
         #region AddIn Instance
