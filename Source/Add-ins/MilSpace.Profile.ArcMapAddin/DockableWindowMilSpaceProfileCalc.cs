@@ -1,32 +1,22 @@
-﻿using ESRI.ArcGIS.esriSystem;
+﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Display;
+using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
+using ESRI.ArcGIS.Geometry;
+using MilSpace.Core;
+using MilSpace.Core.Tools;
+using MilSpace.Tools;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Globalization;
-using System.Text;
-using System.Windows.Forms;
-using ESRI.ArcGIS.ArcMapUI;
-using ESRI.ArcGIS.Carto;
-using MilSpace.Core;
-using MilSpace.Core.Actions;
-using MilSpace.Core.Actions.ActionResults;
-using MilSpace.Core.Actions.Base;
-using MilSpace.Core.Actions.Interfaces;
-using MilSpace.Tools.SurfaceProfile.Actions;
-using MilSpace.Configurations;
-using System.Reflection;
-using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Windows.Forms;
 using System.Windows.Media;
-using ESRI.ArcGIS.Display;
-using ESRI.ArcGIS.Geometry;
-using MilSpace.DataAccess.Facade;
+using System.Linq;
 using Point = ESRI.ArcGIS.Geometry.Point;
-using MilSpace.Tools;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace MilSpace.Profile
 {
@@ -34,26 +24,65 @@ namespace MilSpace.Profile
     /// Designer class of the dockable window add-in. It contains user interfaces that
     /// make up the dockable window.
     /// </summary>
-    public partial class DockableWindowMilSpaceProfileCalc : UserControl
+    public partial class DockableWindowMilSpaceProfileCalc : UserControl, IMilSpaceProfileView
     {
-        public DockableWindowMilSpaceProfileCalc()
+        const int BACKSPACE = 8;
+        const int DECIMAL_POINT = 46;
+        const int ZERO = 48;
+        const int NINE = 57;
+        const int NOT_FOUND = -1;
+
+        private ProfileSettingsPointButton activeButtton = ProfileSettingsPointButton.None;
+
+        MilSpaceProfileCalsController controller;
+
+        public DockableWindowMilSpaceProfileCalc(MilSpaceProfileCalsController controller)
         {
             this.Instance = this;
-        }        
+            SetController(controller);
+            controller.SetView(this);
 
-        public DockableWindowMilSpaceProfileCalc(object hook)
-        {
-            InitializeComponent();
-
-            this.Hook = hook;
-            SubscribeForEvents();
-            this.Instance = this;
-            SubscribeForEvents();
         }
 
-        private IActiveView ActiveView => ArcMap.Document.ActiveView;
+        public DockableWindowMilSpaceProfileCalc(object hook, MilSpaceProfileCalsController controller)
+        {
+            InitializeComponent();
+            SetController(controller);
+            this.Hook = hook;
+            this.Instance = this;
+            SubscribeForEvents();
+            controller.SetView(this);
+        }
 
-        public  DockableWindowMilSpaceProfileCalc Instance { get; }
+        private void OnProfileSettingsChanged(ProfileSettingsEventArgs e)
+        {
+            this.calcProfile.Enabled = e.ProfileSetting.IsReady;
+        }
+
+        public IActiveView ActiveView => ArcMap.Document.ActiveView;
+
+        public MilSpaceProfileCalsController Controller => controller;
+
+        public ProfileSettingsPointButton ActiveButton => activeButtton;
+
+        public string DemLayerName => cmbRasterLayers.SelectedItem == null ? string.Empty : cmbRasterLayers.SelectedItem.ToString();
+
+        public int ProfileId
+        {
+            set { txtProfileName.Text = value.ToString(); }
+        }
+
+
+        public bool AllowToProfileCalc
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+
+        public DockableWindowMilSpaceProfileCalc Instance { get; }
 
         /// <summary>
         /// Host object of the dockable window
@@ -71,7 +100,6 @@ namespace MilSpace.Profile
 
         private void OnRasterComboDropped()
         {
-            
             cmbRasterLayers.Items.Clear();
             PopulateComboBox(cmbRasterLayers, ProfileLayers.RasterLayers);
         }
@@ -117,11 +145,14 @@ namespace MilSpace.Profile
             ArcMap.Events.OpenDocument += OnObservationPointDropped;
             ArcMap.Events.OpenDocument += OnRoadComboDropped;
             ArcMap.Events.OpenDocument += OnVegetationDropped;
-            txtFirstPointX.TextChanged += SetFirstPointCopyButtonState;
-            txtFirstPointY.TextChanged += SetFirstPointCopyButtonState;
-            ArcMap.Events.OpenDocument += SetProfileName;
-            tabControl2.SelectedIndexChanged += OnTabChange;
 
+            controller.OnProfileSettingsChanged += OnProfileSettingsChanged;
+
+        }
+
+        public void SetController(MilSpaceProfileCalsController controller)
+        {
+            this.controller = controller;
         }
 
         /// <summary>
@@ -131,7 +162,7 @@ namespace MilSpace.Profile
         public class AddinImpl : ESRI.ArcGIS.Desktop.AddIns.DockableWindow
         {
             private DockableWindowMilSpaceProfileCalc m_windowUI;
-
+            MilSpaceProfileCalsController controller;
 
 
             public AddinImpl()
@@ -140,7 +171,11 @@ namespace MilSpace.Profile
 
             protected override IntPtr OnCreateChild()
             {
-                m_windowUI = new DockableWindowMilSpaceProfileCalc(this.Hook);
+                controller = new MilSpaceProfileCalsController();
+
+                m_windowUI = new DockableWindowMilSpaceProfileCalc(this.Hook, controller);
+
+
                 return m_windowUI.Handle;
             }
 
@@ -154,7 +189,8 @@ namespace MilSpace.Profile
 
             internal DockableWindowMilSpaceProfileCalc DockableWindowUI => m_windowUI;
 
-            
+
+            internal MilSpaceProfileCalsController MilSpaceProfileCalsController => controller;
 
         }
 
@@ -176,25 +212,24 @@ namespace MilSpace.Profile
             {
 
                 case 0:
-                    
-                        var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickCoordinates);
-                        if (commandItem == null)
-                        {
-                            var message = $"Please add Pick Coordinates tool to any toolbar first.";
-                            MessageBox.Show(message, "Profile Calc", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                            break;
 
-                        }
-                        ArcMap.Application.CurrentTool = commandItem;
+                    var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickCoordinates);
+                    if (commandItem == null)
+                    {
+                        var message = $"Please add Pick Coordinates tool to any toolbar first.";
+                        MessageBox.Show(message, "Profile Calc", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        break;
 
-                    
+                    }
+                    ArcMap.Application.CurrentTool = commandItem;
+                    activeButtton = ProfileSettingsPointButton.PointsFist;
+
                     break;
                 case 1:
-                   
+
                     break;
                 case 2:
-                    var point = ParseStringCoordsToPoint(txtFirstPointX.Text, txtFirstPointY.Text);
-                    ZoomToPoint(point);
+                    controller.FlashPoint(ProfileSettingsPointButton.PointsFist);
                     break;
 
                 case 4:
@@ -203,7 +238,6 @@ namespace MilSpace.Profile
                     {
                         CopyTextToBuffer(txtFirstPointX.Text);
                     }
-
 
                     CopyTextToBuffer(txtFirstPointY.Focused ? txtFirstPointY.Text : txtFirstPointX.Text);
 
@@ -215,8 +249,6 @@ namespace MilSpace.Profile
                         PasteTextToEditField(txtFirstPointX);
                     }
 
-
-
                     PasteTextToEditField(txtFirstPointY.Focused ? txtFirstPointY : txtFirstPointX);
 
                     break;
@@ -225,18 +257,17 @@ namespace MilSpace.Profile
 
                     txtFirstPointX.Clear();
                     txtFirstPointY.Clear();
+                    controller.SetFirsPointForLineProfile(null, null);
                     break;
-                    
+
             }
         }
-
 
         private void secondPointToolbar_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
             ToolbarButtonClicked = e.Button;
             switch (secondPointToolbar.Buttons.IndexOf(e.Button))
             {
-
                 case 1:
 
                     var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickCoordinates);
@@ -249,15 +280,13 @@ namespace MilSpace.Profile
                     }
                     ArcMap.Application.CurrentTool = commandItem;
 
-                    
+                    activeButtton = ProfileSettingsPointButton.PointsSecond;
+
                     break;
                 case 0:
-                    ;
-                   
                     break;
                 case 2:
-                    var point = ParseStringCoordsToPoint(txtSecondPointX.Text, txtSecondPointY.Text);
-                    ZoomToPoint(point);
+                    controller.FlashPoint(ProfileSettingsPointButton.PointsSecond);
                     break;
 
                 case 4:
@@ -288,6 +317,7 @@ namespace MilSpace.Profile
 
                     txtSecondPointX.Clear();
                     txtSecondPointY.Clear();
+                    controller.SetSecondfPointForLineProfile(null, null);
                     break;
 
             }
@@ -311,16 +341,15 @@ namespace MilSpace.Profile
                     }
                     ArcMap.Application.CurrentTool = commandItem;
 
-                    
+                    activeButtton = ProfileSettingsPointButton.CenterFun;
+
                     break;
                 case 0:
-                    ;
-                    
+
                     break;
                 case 2:
 
-                    var point = ParseStringCoordsToPoint(txtBasePointX.Text, txtBasePointY.Text);
-                    ZoomToPoint(point);
+                    controller.FlashPoint(ProfileSettingsPointButton.CenterFun);
                     break;
 
 
@@ -352,22 +381,14 @@ namespace MilSpace.Profile
 
                     txtBasePointX.Clear();
                     txtBasePointY.Clear();
+                    controller.SetCenterPointForFunProfile(null, null);
                     break;
 
             }
         }
 
 
-        private void ZoomToPoint(IPoint point)
-        {
-            IEnvelope pEnv = new EnvelopeClass();
-            pEnv = ActiveView.Extent;
-            pEnv.CenterAt(point);
-            ActiveView.Extent = pEnv;
-            ActiveView.Refresh();
-        }
-
-        private IPoint ParseStringCoordsToPoint(string coordX, string coordY )
+        private IPoint ParseStringCoordsToPoint(string coordX, string coordY)
         {
             try
             {
@@ -376,8 +397,11 @@ namespace MilSpace.Profile
                 var point = new Point()
                 {
                     X = x,
-                    Y = y
+                    Y = y,
+                    SpatialReference = EsriTools.Wgs84Spatialreference
                 };
+
+                EsriTools.ProjectToMapSpatialReference(point, ArcMap.Document.FocusMap.SpatialReference);
 
                 return point;
             }
@@ -386,7 +410,7 @@ namespace MilSpace.Profile
                 MessageBox.Show("Please make sure X and Y values are valid and try again!");
                 throw;
             }
-            
+
         }
 
         private void CopyTextToBuffer(string text)
@@ -396,17 +420,17 @@ namespace MilSpace.Profile
                 System.Windows.Forms.Clipboard.SetText(text);
             }
 
-            
+
         }
 
-        private void PasteTextToEditField( TextBox textBox)
+        private void PasteTextToEditField(TextBox textBox)
         {
             var text = Clipboard.GetText();
             textBox.Text = text;
         }
 
         private IPolyline GetPolylineFromPoints()
-        {            
+        {
             var firstPoint = ParseStringCoordsToPoint(txtFirstPointX.Text, txtFirstPointY.Text);
             var secondPoint = ParseStringCoordsToPoint(txtSecondPointX.Text, txtSecondPointY.Text);
             IPolyline polyline = new PolylineClass();
@@ -415,292 +439,162 @@ namespace MilSpace.Profile
             return polyline;
         }
 
-        private void SetProfileName()
+        public ProfileSettingsTypeEnum SelectedProfileSettingsType => controller.ProfileSettingsType[profileSettingsTab.SelectedIndex];
+
+        public IPoint LinePropertiesFirstPoint
         {
-            var activeTabName = tabControl2.SelectedTab.Name;
-            switch (activeTabName)
+            set
             {
-                case "sectionTab":
-
-                    
-                    txtProfileName.Text = GenerateProfileName("sct");
-                    break;
-
-                case "fanTab":
-                   
-                    txtProfileName.Text = GenerateProfileName("fan");
-                    break;
-
-                case "primitiveTab":
-                    txtProfileName.Text = GenerateProfileName("primitive");
-                    break;
-
-                case "loadTab":
-                    txtProfileName.Clear();
-                    break;
+                SetPointValue(txtFirstPointX, txtFirstPointY, value);
             }
         }
 
-        private void OnTabChange(object sender, EventArgs e)
+        /// <summary>
+        /// Second point for Line  Profile setting 
+        /// </summary>
+        public IPoint LinePropertiesSecondPoint
         {
-            SetProfileName();
+            set
+            {
+                SetPointValue(txtSecondPointX, txtSecondPointY, value);
+            }
         }
 
-        private string GenerateProfileName(string prefix)
-        {           
-            var time = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss");
-            var userName = Environment.UserName;
-            var profileName = $"{prefix}{time}_{userName}";
-            return profileName.Replace(" ",string.Empty);
-        }
 
-        private void SetFirstPointCopyButtonState(object sender, EventArgs e)
-        {
-            
-
-        }
-
-        public void InitializeMyToolBar()
-        {
-            this.firstPointToolBar
-                .ButtonClick += new ToolBarButtonClickEventHandler(
-                this.toolBar1_ButtonClick);
-        }
-
-        private void button4_Click(object sender, EventArgs e)
+        private static void SetPointValue(TextBox controlX, TextBox controlY, IPoint point)
         {
 
-            //GdbAccess.Instance.EraseProfileLines();
-
-            //Add lines
-            var map = ArcMap.Document.ActiveView.FocusMap;
-            var segment = GetSegment();
-            var geometry = (IGeometry)segment;
-            IRgbColor col = new RgbColorClass();
-            col.Red = 133;
-            col.Green = 135;
-            col.Blue = 43;
-
-            IRgbColor col2 = new RgbColorClass();
-            col.Red = 133;
-            col.Green = 135;
-            col.Blue = 43;
-
-            AddGraphicToMap(map, geometry, col, col2);
-
-            ProfileManager manager = new ProfileManager();
-
-            try
+            if (point != null)
             {
-                manager.GenerateProfile(cmbRasterLayers.Text, new ILine[] { segment });
-                MessageBox.Show("Calculated");
+                controlX.Text = point.X.ToString("F4");
+                controlY.Text = point.Y.ToString("F4");
             }
-            catch (Exception ex)
+            else
             {
-                //TODO log error
-                MessageBox.Show("Calcu;lation error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                controlX.Text = controlY.Text = string.Empty;
             }
-
-
 
         }
 
-        private void FlashPoint(IScreenDisplay Display, IGeometry Geometry)
+        /// <summary>
+        /// Center point for Fun Profile setting 
+        /// </summary>
+        public IPoint FunPropertiesCenterPoint
         {
-            ISimpleMarkerSymbol MarkerSymbol;
-            ISymbol Symbol;
-            IRgbColor RgbColor;
-
-            try
+            set
             {
-                MarkerSymbol = new SimpleMarkerSymbolClass();
-                MarkerSymbol.Style = esriSimpleMarkerStyle.esriSMSCircle;
-
-                RgbColor = new RgbColorClass();
-                RgbColor.Green = 128;
-
-                Symbol = (ISymbol)MarkerSymbol;
-                Symbol.ROP2 = esriRasterOpCode.esriROPNotXOrPen;
-
-                Display.SetSymbol((ISymbol)MarkerSymbol);
-                Display.DrawPoint(Geometry);
-                Thread.Sleep(300);
-                Display.DrawPoint(Geometry);
-
+                SetPointValue(txtBasePointX, txtBasePointY, value);
             }
-            catch (Exception Err)
-            {
-                MessageBox.Show(Err.Message);
-
-            }
-
         }
-    
 
-    private ILine GetSegment()
+        public int FunLinesCount
         {
-            //var firstPoint = new ESRI.ArcGIS.Geometry.Point();
-            //var secondPoint = new ESRI.ArcGIS.Geometry.Point();
-            //firstPoint.PutCoords(Double.Parse(txtFirstPointX.Text), Double.Parse(txtFirstPointY.Text));
-            //secondPoint.PutCoords(Double.Parse(txtSecondPointX.Text), Double.Parse(txtSecondPointY.Text) );
-
-            //var line = new Line();
-            //line.FromPoint = firstPoint;
-            //line.ToPoint = secondPoint;
-            //line.Geom
-
-            Point fromPoint = new PointClass();
-            fromPoint.X = double.Parse(txtFirstPointX.Text, System.Globalization.CultureInfo.InvariantCulture);
-            fromPoint.Y = double.Parse(txtFirstPointY.Text, System.Globalization.CultureInfo.InvariantCulture);
-
-            Point toPoint = new PointClass();
-            toPoint.X = double.Parse(txtSecondPointX.Text, System.Globalization.CultureInfo.InvariantCulture);
-            toPoint.Y = double.Parse(txtSecondPointY.Text, System.Globalization.CultureInfo.InvariantCulture);
-
-            ILine segment = new LineClass();
-            segment.FromPoint = fromPoint;
-            segment.ToPoint = toPoint;
-            return segment;
-
+            get
+            {
+                int result;
+                if (int.TryParse(funLinesCount.Text, out result))
+                {
+                    return result;
+                }
+                return 0;
+            }
         }
 
-        public void AddGraphicToMap(ESRI.ArcGIS.Carto.IMap map, ESRI.ArcGIS.Geometry.IGeometry geometry,
-            ESRI.ArcGIS.Display.IRgbColor rgbColor, ESRI.ArcGIS.Display.IRgbColor outlineRgbColor)
+        public double FunAzimuth1
         {
-            ESRI.ArcGIS.Carto.IGraphicsContainer graphicsContainer = (ESRI.ArcGIS.Carto.IGraphicsContainer)map; // Explicit Cast
-            ESRI.ArcGIS.Carto.IElement element = null;
-            if ((geometry.GeometryType) == ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPoint)
+            get
             {
-                // Marker symbols
-                ESRI.ArcGIS.Display.ISimpleMarkerSymbol simpleMarkerSymbol = new ESRI.ArcGIS.Display.SimpleMarkerSymbolClass();
-                simpleMarkerSymbol.Color = rgbColor;
-                simpleMarkerSymbol.Outline = true;
-                simpleMarkerSymbol.OutlineColor = outlineRgbColor;
-                simpleMarkerSymbol.Size = 15;
-                simpleMarkerSymbol.Style = ESRI.ArcGIS.Display.esriSimpleMarkerStyle.esriSMSCircle;
-
-                ESRI.ArcGIS.Carto.IMarkerElement markerElement = new ESRI.ArcGIS.Carto.MarkerElementClass();
-                markerElement.Symbol = simpleMarkerSymbol;
-                element = (ESRI.ArcGIS.Carto.IElement)markerElement; // Explicit Cast
-            }
-            else if ((geometry.GeometryType) == ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPolyline)
-            {
-                //  Line elements
-                ESRI.ArcGIS.Display.ISimpleLineSymbol simpleLineSymbol = new ESRI.ArcGIS.Display.SimpleLineSymbolClass();
-                simpleLineSymbol.Color = rgbColor;
-                simpleLineSymbol.Style = ESRI.ArcGIS.Display.esriSimpleLineStyle.esriSLSSolid;
-                simpleLineSymbol.Width = 5;
-
-                ESRI.ArcGIS.Carto.ILineElement lineElement = new ESRI.ArcGIS.Carto.LineElementClass();
-                lineElement.Symbol = simpleLineSymbol;
-                element = (ESRI.ArcGIS.Carto.IElement)lineElement; // Explicit Cast
-            }
-            else if ((geometry.GeometryType) == ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPolygon)
-            {
-                // Polygon elements
-                ESRI.ArcGIS.Display.ISimpleFillSymbol simpleFillSymbol = new ESRI.ArcGIS.Display.SimpleFillSymbolClass();
-                simpleFillSymbol.Color = rgbColor;
-                simpleFillSymbol.Style = ESRI.ArcGIS.Display.esriSimpleFillStyle.esriSFSForwardDiagonal;
-                ESRI.ArcGIS.Carto.IFillShapeElement fillShapeElement = new ESRI.ArcGIS.Carto.PolygonElementClass();
-                fillShapeElement.Symbol = simpleFillSymbol;
-                element = (ESRI.ArcGIS.Carto.IElement)fillShapeElement; // Explicit Cast
-            }
-            if (!(element == null))
-            {
-                element.Geometry = geometry;
-                graphicsContainer.AddElement(element, 0);
+                double result;
+                if (Helper.TryParceToDouble(azimuth1.Text, out result))
+                {
+                    return result;
+                }
+                return -1;
             }
         }
-
-        private async void AddPolylineToMap()
+        double IMilSpaceProfileView.FunAzimuth2
         {
-            Map map = (Map)ArcMap.Document.ActiveView.FocusMap;
-            var graphicLayerUUID = new ESRI.ArcGIS.esriSystem.UIDClass();
-            graphicLayerUUID.Value = "MyGraphics";
-
-
-            var graphicsLayer = ArcMap.Document.ActiveView.FocusMap.Layers[graphicLayerUUID] as Esri.ArcGISRuntime.Layers.GraphicsLayer;
-            if (graphicsLayer == null)
+            get
             {
-                graphicsLayer = new Esri.ArcGISRuntime.Layers.GraphicsLayer();
-                graphicsLayer.ID = "MyGraphics";
-                //  map.Layers.Add(graphicsLayer);
+                double result;
+                if (Helper.TryParceToDouble(azimuth2.Text, out result))
+                {
+                    return result;
+                }
+                return -1;
             }
-            var lineSymbol = new Esri.ArcGISRuntime.Symbology.SimpleLineSymbol();
-            lineSymbol.Color = Colors.Blue;
-            lineSymbol.Style = Esri.ArcGISRuntime.Symbology.SimpleLineStyle.Dash;
-            lineSymbol.Width = 2;
-
-            // use the MapView's Editor to get polyline geometry from the user
-            //  var line = await map.Editor.RequestShapeAsync(Esri.ArcGISRuntime.Controls.DrawShape.Polyline,
-            //    lineSymbol, null);
-
-            // create a new graphic; set the Geometry and Symbol
-            var lineGraphic = new Esri.ArcGISRuntime.Layers.Graphic();
-            //  lineGraphic.Geometry = line;
-            lineGraphic.Symbol = lineSymbol;
-
-            // add the graphic to the graphics layer
-            graphicsLayer.Graphics.Add(lineGraphic);
         }
+
+        double IMilSpaceProfileView.FunLength
+        {
+            get
+            {
+                double result;
+                if (Helper.TryParceToDouble(profileLength.Text, out result))
+                {
+                    return result;
+                }
+                return -1;
+            }
+        }
+
+
 
         private void panel1_Enter(object sender, EventArgs e)
         {
             ProfileLayers.GetAllLayers();
         }
 
-        
-        private void button2_Click(object sender, EventArgs e)
+
+        private void calcProfile_Click(object sender, EventArgs e)
         {
-            //GdbAccess.Instance.EraseProfileLines();
-
-            //Add lines
-            var map = ArcMap.Document.ActiveView.FocusMap;
-            var segment = GetSegment();
-            var geometry = (IGeometry)segment;
-            IRgbColor col = new RgbColorClass();
-            col.Red = 133;
-            col.Green = 135;
-            col.Blue = 43;
-
-            IRgbColor col2 = new RgbColorClass();
-            col.Red = 133;
-            col.Green = 135;
-            col.Blue = 43;
-
-            AddGraphicToMap(map, geometry, col, col2);
-
-            ProfileManager manager = new ProfileManager();
-
-            try
+            var session = controller.GenerateProfile();
+            if (session != null)
             {
-                manager.GenerateProfile(cmbRasterLayers.Text, new ILine[] { segment });
                 MessageBox.Show("Calculated");
             }
-            catch (Exception ex)
+            else
             {
                 //TODO log error
                 MessageBox.Show("Calcu;lation error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void button5_Click(object sender, EventArgs e)
+
+        private void ChechDouble_KeyPress(object sender, KeyPressEventArgs e)
         {
-            var map = ActiveView.FocusMap;
-            //var segment = GetSegment();
-            var geometry = GetPolylineFromPoints();
-            IRgbColor col = new RgbColorClass();
-            col.Red = 255;
-            col.Green = 0;
-            col.Blue = 0;
-
-            IRgbColor col2 = new RgbColorClass();
-            col2.Red = 0;
-            col2.Green = 0;
-            col2.Blue = 0;
-
-            AddGraphicToMap(map, geometry, col, col2);
-            ActiveView.Refresh();
+            e.Handled = !CheckDouble(e.KeyChar, (TextBox)sender);
         }
+
+        private void funLinesCount_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !CheckDouble(e.KeyChar, (TextBox)sender, true);
+        }
+
+        private void UpdateFunProperties(object sender, EventArgs e)
+        {
+            controller.SetPeofileSettigs(ProfileSettingsTypeEnum.Fun);
+        }
+
+
+        private void profileSettingsTab_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            controller.SetPeofileSettigs(SelectedProfileSettingsType);
+
+        }
+
+        private void cmbRasterLayers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            controller.SetPeofileSettigs(SelectedProfileSettingsType);
+        }
+
+        private static bool CheckDouble(char charValue, TextBox textValue, bool justInt = false)
+        {
+
+            return (((charValue == BACKSPACE) || ((charValue >= ZERO) && (charValue <= NINE))) || (justInt ||
+
+                  ((charValue == DECIMAL_POINT) && textValue.Text.IndexOf(".") == NOT_FOUND)));
+        }
+
     }
 }

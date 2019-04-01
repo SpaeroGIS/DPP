@@ -11,6 +11,7 @@ using System.IO;
 using ESRI.ArcGIS.Geometry;
 using ESRI.ArcGIS.Framework;
 using MilSpace.DataAccess.Exceptions;
+using MilSpace.Core.Tools;
 
 namespace MilSpace.DataAccess.Facade
 {
@@ -48,7 +49,7 @@ namespace MilSpace.DataAccess.Facade
             }
         }
         private static IWorkspace calcWorkspace = null;
-        public string AddProfileLinesToCalculation(IEnumerable<ILine> profileLines)
+        public string AddProfileLinesToCalculation(IEnumerable<IPolyline> profileLines)
         {
 
             string featureClassName = GenerateTempProfileLinesStorage();
@@ -65,31 +66,17 @@ namespace MilSpace.DataAccess.Facade
             profileLines.ToList().ForEach(
                 l =>
                 {
-
                     var newLine = calc.CreateFeature();
-                    WKSPoint[] segmentWksPoints = new WKSPoint[2];
-                    ISubtypes subtypes = (ISubtypes)calc;
-                    IRowSubtypes rowSubtypes = (IRowSubtypes)newLine;
-                    if (subtypes.HasSubtype)                                // does the feature class have subtypes?        
-                    {
-                        rowSubtypes.SubtypeCode = 1;                        //
-                    }
-                    segmentWksPoints[0].X = l.FromPoint.X;
-                    segmentWksPoints[0].Y = l.FromPoint.Y;
-                    segmentWksPoints[1].X = l.ToPoint.X;
-                    segmentWksPoints[1].Y = l.ToPoint.Y;
+                    
+                    //ISubtypes subtypes = (ISubtypes)calc;
+                    //IRowSubtypes rowSubtypes = (IRowSubtypes)newLine;
+                    //if (subtypes.HasSubtype)                                // does the feature class have subtypes?        
+                    //{
+                    //    rowSubtypes.SubtypeCode = 1;                        //
+                    //}
 
-                    //TODO: create Id value
-                    //newLine.set_Value(newLine.Fields.FindField("ID"), newId);
-
-                    IPointCollection4 trackLine = new PolylineClass();
-
-                    IGeometryBridge2 m_geometryBridge = new GeometryEnvironmentClass();
-                    m_geometryBridge.AddWKSPoints(trackLine, ref segmentWksPoints);
-                    IGeometry trackGeometry = trackLine as IGeometry;
-                    trackGeometry.SpatialReference = GCS_WGS;
-                    trackGeometry.Project(newLine.Shape.SpatialReference);
-                    newLine.Shape = trackGeometry;
+                    //IGeometry trackGeometry = EsriTools.CreatePolylineFromPoints(l.FromPoint, l.ToPoint);
+                    newLine.Shape = l;
 
                     newLine.Store();
                 }

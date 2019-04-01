@@ -31,8 +31,8 @@ namespace MilSpace.Tools
         public ProfileManager()
         { }
 
-        public void GenerateProfile(string profileSource,
-            IEnumerable<ILine> profileLines)
+        public ProfileSession GenerateProfile(string profileSource,
+            IEnumerable<IPolyline> profileLines)
         {
             string profileSourceName = GdbAccess.Instance.AddProfileLinesToCalculation(profileLines);
 
@@ -160,6 +160,8 @@ namespace MilSpace.Tools
                         //TODO: log the error
                     }
                 }
+
+                return session;
 
             }
             catch (MilSpaceDataException ex)

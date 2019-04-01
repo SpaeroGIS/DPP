@@ -40,6 +40,9 @@
     <Reference Include="ESRI.ArcGIS.Desktop.AddIns">
       <Private>True</Private>
     </Reference>
+    <Reference Include="ESRI.ArcGIS.Display, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="ESRI.ArcGIS.Editor, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>False</EmbedInteropTypes>
@@ -80,6 +83,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -120,6 +124,7 @@
     <Compile Include="Actions\Exceptions\SpaeroException.cs" />
     <Compile Include="DataAccess\DataOperationsEnum.cs" />
     <Compile Include="Exceptions\MilSpaceException.cs" />
+    <Compile Include="Exceptions\MilSpaceProfileLackOfParameter.cs" />
     <Compile Include="Helper\Helper.cs" />
     <Compile Include="Helper\SimpleDataTypesEnum.cs" />
     <Compile Include="Actions\Interfaces\IAcationResult.cs" />
@@ -135,6 +140,7 @@
       <DependentUpon>MilSpaceAppDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools\EsriTools.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MilSpace.Configurations\MilSpace.Configurations.csproj">
@@ -156,8 +162,6 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Tools\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

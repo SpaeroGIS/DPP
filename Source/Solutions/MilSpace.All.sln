@@ -4,6 +4,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.28307.106
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilSpace.Profile.ArcGISAddIn", "..\Add-ins\MilSpace.Profile.ArcMapAddin\MilSpace.Profile.ArcGISAddIn.csproj", "{A3CA6E5C-FAC0-4B81-A812-562F1F59CBA5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{02023D3D-4F73-4E7E-A78F-EEAA5D66DEAC} = {02023D3D-4F73-4E7E-A78F-EEAA5D66DEAC}
+		{CBD5675B-F382-497D-98CC-70539ED658B9} = {CBD5675B-F382-497D-98CC-70539ED658B9}
+		{73334B96-54FD-4D83-B56D-967F8728D767} = {73334B96-54FD-4D83-B56D-967F8728D767}
+		{651C40FA-E0B6-45FF-9B3E-9341EB671754} = {651C40FA-E0B6-45FF-9B3E-9341EB671754}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilSpace.Visibility.ArcMapAddin", "..\Add-ins\MilSpace.Visibility.ArcMapAddin\MilSpace.Visibility.ArcMapAddin.csproj", "{B8A76C95-CC2B-4643-BBF8-ED33BDA7F512}"
 EndProject
@@ -14,8 +20,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilSpace.ArcGIS.License", "..\Core\MilSpace.ArcGIS.License\ArcGIS.v10\MilSpace.ArcGIS.License.csproj", "{7EFE422C-B0AE-432C-AC29-DE48CA9D0867}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilSpace.Core", "..\Core\MilSpace.Core\MilSpace.Core.csproj", "{02023D3D-4F73-4E7E-A78F-EEAA5D66DEAC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskExecuter", "..\Tools\TaskExecuter\TaskExecuter.csproj", "{75DA04B3-9061-45E5-BA02-263C86A1010C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilSpace.Tools", "..\Core\MilSpace.Tools\MilSpace.Tools.csproj", "{CBD5675B-F382-497D-98CC-70539ED658B9}"
 EndProject
@@ -103,18 +107,6 @@ Global
 		{02023D3D-4F73-4E7E-A78F-EEAA5D66DEAC}.Release|x64.Build.0 = Release|Any CPU
 		{02023D3D-4F73-4E7E-A78F-EEAA5D66DEAC}.Release|x86.ActiveCfg = Release|Any CPU
 		{02023D3D-4F73-4E7E-A78F-EEAA5D66DEAC}.Release|x86.Build.0 = Release|Any CPU
-		{75DA04B3-9061-45E5-BA02-263C86A1010C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{75DA04B3-9061-45E5-BA02-263C86A1010C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{75DA04B3-9061-45E5-BA02-263C86A1010C}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{75DA04B3-9061-45E5-BA02-263C86A1010C}.Debug|x64.Build.0 = Debug|Any CPU
-		{75DA04B3-9061-45E5-BA02-263C86A1010C}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{75DA04B3-9061-45E5-BA02-263C86A1010C}.Debug|x86.Build.0 = Debug|Any CPU
-		{75DA04B3-9061-45E5-BA02-263C86A1010C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{75DA04B3-9061-45E5-BA02-263C86A1010C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{75DA04B3-9061-45E5-BA02-263C86A1010C}.Release|x64.ActiveCfg = Release|Any CPU
-		{75DA04B3-9061-45E5-BA02-263C86A1010C}.Release|x64.Build.0 = Release|Any CPU
-		{75DA04B3-9061-45E5-BA02-263C86A1010C}.Release|x86.ActiveCfg = Release|Any CPU
-		{75DA04B3-9061-45E5-BA02-263C86A1010C}.Release|x86.Build.0 = Release|Any CPU
 		{CBD5675B-F382-497D-98CC-70539ED658B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CBD5675B-F382-497D-98CC-70539ED658B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBD5675B-F382-497D-98CC-70539ED658B9}.Debug|x64.ActiveCfg = Debug|Any CPU
