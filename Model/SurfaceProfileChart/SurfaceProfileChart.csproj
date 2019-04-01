@@ -47,21 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Source\Core\MilSpace.DataAccess\MilSpace.DataAccess\DataTransfer\ProfilePoint.cs">
-      <Link>ProfilePoint.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Source\Core\MilSpace.DataAccess\MilSpace.DataAccess\DataTransfer\ProfileSession.cs">
-      <Link>ProfileSession.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Source\Core\MilSpace.DataAccess\MilSpace.DataAccess\DataTransfer\ProfileSurface.cs">
-      <Link>ProfileSurface.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Source\Core\MilSpace.DataAccess\MilSpace.DataAccess\DataTransfer\ProfileSurfacePoint.cs">
-      <Link>ProfileSurfacePoint.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Source\Core\MilSpace.DataAccess\MilSpace.DataAccess\DataTransfer\ProfileLine.cs">
-      <Link>ProfileLine.cs</Link>
-    </Compile>
     <Compile Include="DataPreparator.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

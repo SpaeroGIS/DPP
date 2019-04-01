@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using MilSpace.DataAccess.DataTransfer;
 
-namespace SurfaceProfileChart.SurfaceProfileChartControl
+namespace MilSpace.Profile.SurfaceProfileChartControl
 {
     public partial class SurfaceProfileChart : UserControl
     {
@@ -16,54 +16,62 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public List<ProfileProperty> ProfilesProperties { get; set; }
+        public List<ProfileProperties> ProfilesProperties { get; set; }
         public bool Current { get; set; }
         public int SelectedProfileIndex { get; set; }
 
-        public SurfaceProfileChart()
+        public SurfaceProfileChart(SurfaceProfileChartController controller)
         {
             Current = false;
             SelectedProfileIndex = -1;
 
-            _controller = new SurfaceProfileChartController(this);
-            ProfilesProperties = new List<ProfileProperty>();
+            _controller = controller;
+            ProfilesProperties = new List<ProfileProperties>();
 
             InitializeComponent();
+        }
 
+        internal void InitializeGraph()
+        {
             _controller.LoadSeries();
             _controller.AddInvisibleZones(profileChart.Series[0].Points[0].YValues[0]);
+            _controller.AddExtremePoints();
             _controller.SetProfilesProperties();
             AddLegends();
         }
 
-        public void InitializeProfile(ProfileSession profileSession, List<ProfileSurfacePoint> extremePoints)
+        internal void InitializeProfile(ProfileSession profileSession)
         {
             profileChart.Series.Clear();
 
             foreach (var line in profileSession.ProfileLines)
             {
-                profileChart.Series.Add(new Series
-                {
-                    ChartType = SeriesChartType.Line,
-                    Color = Color.ForestGreen,
-                    Name = line.Id.ToString(),
-                    YValuesPerPoint = 1,
-                    IsVisibleInLegend = false
-                });
-
                 var profileSurface =
                     profileSession.ProfileSurfaces.First(surface => surface.LineId == line.Id);
 
-                foreach (var point in profileSurface.ProfileSurfacePoints)
-                {
-                    profileChart.Series.Last().Points.AddXY(point.Distance, point.Z);
-                }
+                AddSerie(profileSurface);
             }
 
-            SetExtremePoints(extremePoints);
         }
 
-        public void AddInvisibleLine(ProfileSurface surface)
+        internal void AddSerie(ProfileSurface profileSurface)
+        {
+            profileChart.Series.Add(new Series
+            {
+                ChartType = SeriesChartType.Line,
+                Color = Color.ForestGreen,
+                Name = profileSurface.LineId.ToString(),
+                YValuesPerPoint = 1,
+                IsVisibleInLegend = false
+            });
+
+            foreach (var point in profileSurface.ProfileSurfacePoints)
+            {
+                profileChart.Series.Last().Points.AddXY(point.Distance, point.Z);
+            }
+        }
+
+        internal void AddInvisibleLine(ProfileSurface surface)
         {
             foreach (var point in surface.ProfileSurfacePoints)
             {
@@ -72,26 +80,37 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
             }
         }
 
-        private void SetExtremePoints(List<ProfileSurfacePoint> extremePoints)
+        internal void SetExtremePoints(List<ProfileSurfacePoint> extremePoints)
         {
-           
-            for(var i = 1; i < extremePoints.Count; i++)
+            for (var i = 1; i < extremePoints.Count; i++)
             {
-                profileChart.Series.Add(new Series
-                {
-                    ChartType = SeriesChartType.Line,
-                    Color = Color.Blue,
-                    Name = $"ExtremePointsLine{i}",
-                    YValuesPerPoint = 1,
-                    IsVisibleInLegend = false
-                });
-
-
-                profileChart.Series[$"ExtremePointsLine{i}"].Points.AddXY(extremePoints[0].Distance, extremePoints[0].Z);
-                profileChart.Series[$"ExtremePointsLine{i}"].Points[0].MarkerStyle = MarkerStyle.Circle;
-                profileChart.Series[$"ExtremePointsLine{i}"].Points.AddXY(extremePoints[i].Distance, extremePoints[i].Z);
-                profileChart.Series[$"ExtremePointsLine{i}"].Points[1].MarkerStyle = MarkerStyle.Circle;
+                AddExtremePoint(extremePoints[0], extremePoints[i], i);
             }
+        }
+
+        internal void AddExtremePoint(ProfileSurfacePoint observerPoint, ProfileSurfacePoint observationPoint, int order)
+        {
+            profileChart.Series.Add(new Series
+            {
+                ChartType = SeriesChartType.Line,
+                Color = Color.DarkGray,
+                Name = $"ExtremePointsLine{order}",
+                YValuesPerPoint = 1,
+                IsVisibleInLegend = false
+            });
+
+            profileChart.Series[$"ExtremePointsLine{order}"].BorderDashStyle = ChartDashStyle.Dash;
+                                                    
+            profileChart.Series[$"ExtremePointsLine{order}"].Points.AddXY(observerPoint.Distance, observerPoint.Z);
+            profileChart.Series[$"ExtremePointsLine{order}"].Points[0].MarkerStyle = MarkerStyle.Circle;
+                                                    
+            profileChart.Series[$"ExtremePointsLine{order}"].Points.AddXY(observationPoint.Distance, observationPoint.Z);
+
+            if (profileChart.Series[$"{order}"].Points.Last().Color == Color.Red)
+            {
+                profileChart.Series[$"ExtremePointsLine{order}"].Points[1].MarkerColor = Color.Red;
+            }
+            profileChart.Series[$"ExtremePointsLine{order}"].Points[1].MarkerStyle = MarkerStyle.Circle;
         }
 
         private void ChangeObserverPointHeight(double height)
@@ -156,7 +175,7 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
 
             SelectedProfileIndex = profileChart.Series.IndexOf(selectedPoint.Series.Name);
             profileChart.Series[SelectedProfileIndex].BorderWidth += 1;
-            foreach (var cell in profileChart.Legends["Properties"].CustomItems[SelectedProfileIndex+1].Cells)
+            foreach (var cell in profileChart.Legends["Properties"].CustomItems[SelectedProfileIndex + 1].Cells)
             {
                 cell.BackColor = Color.ForestGreen;
             }
@@ -194,7 +213,7 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
                 newItem.Cells.Add(LegendCellType.Text, Math.Round(profilesProperties.MaxHeight, 0).ToString(), ContentAlignment.MiddleCenter);
                 newItem.Cells.Add(LegendCellType.Text, Math.Round(profilesProperties.MinHeight, 0).ToString(), ContentAlignment.MiddleCenter);
 
-                    profileChart.Legends["Properties"].CustomItems.Add(newItem);
+                profileChart.Legends["Properties"].CustomItems.Add(newItem);
             }
         }
 

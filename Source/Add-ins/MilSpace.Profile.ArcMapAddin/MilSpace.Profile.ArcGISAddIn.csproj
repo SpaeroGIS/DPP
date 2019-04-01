@@ -185,11 +185,20 @@
     <Compile Include="DockableWindowMilSpaceProfileGraphCommand.cs" />
     <Compile Include="DrawPolylineFromClicks.cs" />
     <Compile Include="MilSpaceProfileCalsController.cs" />
+    <Compile Include="MilSpaceProfileGraphsController.cs" />
     <Compile Include="PickCoordinatesTool.cs" />
     <Compile Include="ProfileEnums.cs" />
     <Compile Include="ProfileLayers.cs" />
     <Compile Include="ProfileSettingsEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SurfaceProfileChartControl\ProfileProperties.cs" />
+    <Compile Include="SurfaceProfileChartControl\SurfaceProfileChart.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SurfaceProfileChartControl\SurfaceProfileChart.Designer.cs">
+      <DependentUpon>SurfaceProfileChart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SurfaceProfileChartControl\SurfaceProfileChartController.cs" />
   </ItemGroup>
   <ItemGroup>
     <AddInContent Include="Config.esriaddinx">
@@ -255,6 +264,9 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="SurfaceProfileChartControl\SurfaceProfileChart.resx">
+      <DependentUpon>SurfaceProfileChart.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DockableWindowMilSpaceProfileGraphCommand.bmp" />
