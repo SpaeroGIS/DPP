@@ -17,6 +17,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using MilSpace.DataAccess.Facade;
+using MilSpace.Core.Tools;
 
 namespace MilSpace.Tools
 {
@@ -203,6 +204,8 @@ namespace MilSpace.Tools
                         SpatialReference = line.Shape.SpatialReference
                     };
 
+                    from.Project(EsriTools.Wgs84Spatialreference);
+                    to.Project(EsriTools.Wgs84Spatialreference);
 
                     result.Add(new ProfileLine
                     {
