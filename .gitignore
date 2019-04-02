@@ -145,3 +145,10 @@
 /Source/Core/MilSpace.Tools/obj/Release
 /Source/Tools/TaskExecuter/obj/Release
 /Source/Core/MilSpace.DataAccess/MilSpace.DataAccess/obj/Release
+/Source/Add-ins/MilSpace.Profile.ArcMapAddin/bin/Release
+/Source/Add-ins/MilSpace.Profile.ArcMapAddin/obj/Release
+/Source/Core/MilSpace.ArcGIS.License/ArcGIS.v10/bin/Release
+/Source/Core/MilSpace.Core/bin/Release
+/Source/Core/MilSpace.Core/obj/Release
+/Source/Core/MilSpace.DataAccess/MilSpace.DataAccess/bin/Release
+/Source/Core/MilSpace.Tools/bin/Release

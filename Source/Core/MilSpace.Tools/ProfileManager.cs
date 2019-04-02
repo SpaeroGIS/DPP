@@ -1,6 +1,7 @@
 ﻿using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Configurations;
+using MilSpace.Core;
 using MilSpace.Core.Actions;
 using MilSpace.Core.Actions.ActionResults;
 using MilSpace.Core.Actions.Base;
@@ -15,7 +16,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Xml.Serialization;
+using MilSpace.DataAccess.Facade;
 
 namespace MilSpace.Tools
 {
@@ -31,8 +32,10 @@ namespace MilSpace.Tools
         public ProfileManager()
         { }
 
-        public ProfileSession GenerateProfile(string profileSource,
-            IEnumerable<IPolyline> profileLines)
+        public ProfileSession GenerateProfile(
+            string profileSource,
+            IEnumerable<IPolyline> profileLines,
+            int sessionName)
         {
             string profileSourceName = GdbAccess.Instance.AddProfileLinesToCalculation(profileLines);
 
@@ -71,8 +74,9 @@ namespace MilSpace.Tools
                 throw new Exception(res.ErrorMessage);
             }
 
-            //Teke the table and import the data
 
+            //Take the table and import the data
+            ISpatialReference currentSpatialreference = profileLines.First().SpatialReference;
 
             try
             {
@@ -97,7 +101,9 @@ namespace MilSpace.Tools
                 ProfileSession session = new ProfileSession()
                 {
                     ProfileSurfaces = profileSurfaces.ToArray(),
-                    ProfileLines = GetProfileLines(lines).ToArray()
+                    ProfileLines = GetProfileLines(lines).ToArray(),
+                    SessionId = sessionName,
+                    SessionName = sessionName.ToString()
                 };
 
 
@@ -117,10 +123,12 @@ namespace MilSpace.Tools
                         throw new MilSpaceProfileLineNotFound(lineId, profileLineFeatureClass);
                     }
 
+
                     List<ProfileSurfacePoint> points;
                     if (!surface.ContainsKey(lineId))
                     {
                         points = new List<ProfileSurfacePoint>();
+
                         surface.Add(lineId, points);
                     }
                     else
@@ -144,22 +152,12 @@ namespace MilSpace.Tools
                 }
                 ).ToArray();
 
-
-                XmlSerializer serializer = new XmlSerializer(typeof(ProfileSession));
-
-
-                using (MemoryStream stream = new MemoryStream())
+                //Write to DB
+                if (!MilSpaceProfileFacade.SaveProfileSession(session))
                 {
-                    serializer.Serialize(stream, session);
-                    try
-                    {
-                        string resSer = Encoding.UTF8.GetString((stream as MemoryStream).ToArray());
-                    }
-                    catch (Exception ex)
-                    {
-                        //TODO: log the error
-                    }
+                    return null;
                 }
+
 
                 return session;
 
@@ -191,16 +189,28 @@ namespace MilSpace.Tools
             IFeature line = null;
             while ((line = allrecords.NextFeature()) != null)
             {
+
                 if (line.Shape is IPointCollection points)
                 {
                     var from = points.Point[0];
                     var to = points.Point[points.PointCount - 1];
 
+
+                    ILine ln = new Line()
+                    {
+                        FromPoint = from,
+                        ToPoint = to,
+                        SpatialReference = line.Shape.SpatialReference
+                    };
+
+
                     result.Add(new ProfileLine
                     {
                         PointFrom = new ProfilePoint { X = from.X, Y = from.Y },
                         PointTo = new ProfilePoint { X = to.X, Y = to.Y },
-                        Id = line.OID
+                        Id = line.OID,
+                        SpatialReference = line.Shape.SpatialReference,
+                        Angel = ln.Angle
                     });
                 }
 

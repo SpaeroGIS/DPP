@@ -187,6 +187,11 @@ namespace MilSpace.Profile
             GraphicsLayerManager.UpdateGraphic(profileSetting.ProfileLines, profileId, (int)profileType);
         }
 
+
+        /// <summary>
+        /// Do Actions to generate profile(s)? save them and set properties to default values
+        /// </summary>
+        /// <returns>Profile Session data</returns>
         internal ProfileSession GenerateProfile()
         {
             try
@@ -194,9 +199,10 @@ namespace MilSpace.Profile
 
                 ProfileManager manager = new ProfileManager();
                 var profileSetting = profileSettings[View.SelectedProfileSettingsType];
-                var session = manager.GenerateProfile(View.DemLayerName, profileSetting.ProfileLines);
+                var session = manager.GenerateProfile(View.DemLayerName, profileSetting.ProfileLines, profileId);
 
-                session.SessionId = profileId;
+                SetPeofileId();
+
                 return session;
 
             }

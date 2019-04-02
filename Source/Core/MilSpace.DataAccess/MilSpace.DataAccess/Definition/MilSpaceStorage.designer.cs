@@ -30,6 +30,9 @@ namespace MilSpace.DataAccess.Definition
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
+    partial void InsertMilSp_Profile(MilSp_Profile instance);
+    partial void UpdateMilSp_Profile(MilSp_Profile instance);
+    partial void DeleteMilSp_Profile(MilSp_Profile instance);
     #endregion
 		
 		public MilSpaceStorageContext() : 
@@ -72,8 +75,10 @@ namespace MilSpace.DataAccess.Definition
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MilSp_Profile")]
-	internal partial class MilSp_Profile
+	internal partial class MilSp_Profile : INotifyPropertyChanging, INotifyPropertyChanged
 	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private int _idRow;
 		
@@ -81,11 +86,24 @@ namespace MilSpace.DataAccess.Definition
 		
 		private string _ProfileData;
 		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidRowChanging(int value);
+    partial void OnidRowChanged();
+    partial void OnProfileNameChanging(string value);
+    partial void OnProfileNameChanged();
+    partial void OnProfileDataChanging(string value);
+    partial void OnProfileDataChanged();
+    #endregion
+		
 		public MilSp_Profile()
 		{
+			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idRow", DbType="Int NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idRow", DbType="Int NOT NULL", IsPrimaryKey=true)]
 		public int idRow
 		{
 			get
@@ -96,7 +114,11 @@ namespace MilSpace.DataAccess.Definition
 			{
 				if ((this._idRow != value))
 				{
+					this.OnidRowChanging(value);
+					this.SendPropertyChanging();
 					this._idRow = value;
+					this.SendPropertyChanged("idRow");
+					this.OnidRowChanged();
 				}
 			}
 		}
@@ -112,7 +134,11 @@ namespace MilSpace.DataAccess.Definition
 			{
 				if ((this._ProfileName != value))
 				{
+					this.OnProfileNameChanging(value);
+					this.SendPropertyChanging();
 					this._ProfileName = value;
+					this.SendPropertyChanged("ProfileName");
+					this.OnProfileNameChanged();
 				}
 			}
 		}
@@ -128,8 +154,32 @@ namespace MilSpace.DataAccess.Definition
 			{
 				if ((this._ProfileData != value))
 				{
+					this.OnProfileDataChanging(value);
+					this.SendPropertyChanging();
 					this._ProfileData = value;
+					this.SendPropertyChanged("ProfileData");
+					this.OnProfileDataChanged();
 				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}

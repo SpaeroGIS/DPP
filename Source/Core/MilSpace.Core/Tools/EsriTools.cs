@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace MilSpace.Core.Tools
 {
-    public class EsriTools
+    public static class EsriTools
     {
 
         private static ISpatialReference wgs84 = null;
@@ -43,6 +43,20 @@ namespace MilSpace.Core.Tools
                 //ToDO: Loggig
             }
 
+        }
+
+        /// <summary>
+        /// Clone the point with projectin to Wgs84
+        /// </summary>
+        /// <param name="point">Clonning point</param>
+        /// <returns>Point projected to Wgs84 SC</returns>
+        public static IPoint CloneWithProjecting(this IPoint point)
+        {
+
+            var clonedPoint =  new Point() { X = point.X, Y = point.Y, Z = point.Z, SpatialReference = point.SpatialReference };
+            ProjectToWgs84(clonedPoint);
+
+            return clonedPoint;
         }
 
         public static void ProjectToMapSpatialReference(IGeometry geometry, ISpatialReference mapSpatialReference)
@@ -123,7 +137,8 @@ namespace MilSpace.Core.Tools
             for (int i = 0; i < count; i++)
             {
                 IConstructPoint outPoint = new PointClass();
-                outPoint.ConstructAngleDistance(centerPoint, minAzimuth + (i * step), length);
+                double radian = (minAzimuth + (i * step)) * (Math.PI / 180);
+                outPoint.ConstructAngleDistance(centerPoint, radian, length);
                 result.Add(CreatePolylineFromPoints(centerPoint, outPoint as IPoint));
             }
 
