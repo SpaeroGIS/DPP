@@ -1,10 +1,11 @@
 ﻿using MilSpace.DataAccess.Definition;
+using MilSpace.DataAccess.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using MilSpace.Core.DataAccess;
 using System.Xml.Serialization;
 
 namespace MilSpace.DataAccess.DataTransfer
@@ -36,6 +37,7 @@ namespace MilSpace.DataAccess.DataTransfer
                     catch (Exception ex)
                     {
                         //TODO: log the error
+                        throw new MilSpaceDataException("MilSp_Profile", DataOperationsEnum.Convert, ex);
                     }
                 }
             }
@@ -45,28 +47,22 @@ namespace MilSpace.DataAccess.DataTransfer
 
         internal static MilSp_Profile Get(this ProfileSession session)
         {
-            MilSp_Profile res = new MilSp_Profile
+            try
             {
-                idRow = session.SessionId,
-                ProfileName = session.SessionName
-            };
-
-            XmlSerializer serializer = new XmlSerializer(typeof(ProfileSession));
-
-
-            using (MemoryStream stream = new MemoryStream())
-            {
-                serializer.Serialize(stream, session);
-                try
+                MilSp_Profile res = new MilSp_Profile
                 {
-                    res.ProfileData = Encoding.UTF8.GetString((stream as MemoryStream).ToArray());
-                }
-                catch (Exception ex)
-                {
-                    //TODO: log the error
-                }
+                    idRow = session.SessionId,
+                    ProfileName = session.SessionName,
+                    ProfileData = session.Serialized
+                };
+
+                return res;
             }
-            return res;
+            catch (Exception ex)
+            {
+                throw new MilSpaceDataException("ProfileSession", DataOperationsEnum.Convert, ex);
+            }
+
         }
     }
 }

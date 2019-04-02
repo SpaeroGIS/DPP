@@ -39,11 +39,8 @@ namespace MilSpace.Tools.GraphicsLayer
 
         public void EmptyProfileGraphics()
         {
-            foreach (var ge in milSpaceGraphics.ToArray())
-            {
-                RemovePolyline(ge);
-            }
 
+            graphics.DeleteAllElements();
             milSpaceGraphics.RemoveRange(0, milSpaceGraphics.Count);
 
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
@@ -91,28 +88,5 @@ namespace MilSpace.Tools.GraphicsLayer
             }
         }
 
-        public void RemovePolyline(GraphicElement grephicElement, bool doFeresh = false)
-        {
-            //ILineElement lineElement = new LineElementClass();
-            //IElement elem = lineElement as IElement;
-            //elem.Geometry = grephicElement.Source;
-
-            if (milSpaceGraphics.Any(ge => grephicElement.ElementId == ge.ElementId))
-            {
-                var elem =  milSpaceGraphics.First(ge => grephicElement.ElementId == ge.ElementId);
-                graphics.DeleteElement(elem.Element);
-            }
-
-            if (doFeresh)
-            {
-                activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
-            }
-
-        }
-
-        private void RemoveElement(GraphicElement elem)
-        {
-
-        }
     }
 }
