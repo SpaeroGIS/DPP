@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using MilSpace.DataAccess.Facade;
+using MilSpace.DataAccess;
 using MilSpace.Core.Tools;
 
 namespace MilSpace.Tools
@@ -137,10 +137,15 @@ namespace MilSpace.Tools
                         points = surface[lineId];
                     }
 
+                    var profilePoint = EsriTools.GetPointFromAngelAndDistance(profileLine.PointFrom.GetEsriPoint(), profileLine.Angel, (double)profileRow.Value[distanceFld]);
+                    var wgs84Point = profilePoint.CloneWithProjecting();
+
                     points.Add(new ProfileSurfacePoint
                     {
                         Distance = (double)profileRow.Value[distanceFld],
                         Z = (double)profileRow.Value[zFld],
+                        X = wgs84Point.X,
+                        Y = wgs84Point.Y
                     });
                 }
 
