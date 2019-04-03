@@ -59,21 +59,7 @@ namespace MilSpace.Tools.GraphicsLayer
             }
 
 
-            //  Line elements
-            ISimpleLineSymbol simpleLineSymbol = new SimpleLineSymbol();
-
-            IRgbColor col2 = new RgbColor();
-            col2.Red = 255;
-            col2.Green = 0;
-            col2.Blue = 0;
-
-            simpleLineSymbol.Color = new RgbColor();
-            simpleLineSymbol.Color = col2;
-            simpleLineSymbol.Style = esriSimpleLineStyle.esriSLSSolid;
-            simpleLineSymbol.Width = 2;
-
-
-            lineElement.Symbol = simpleLineSymbol;
+            lineElement.Symbol = DefineProfileLineSymbol();
             IElement elem = (IElement)lineElement;
             elem.Geometry = profileLine;
 
@@ -88,5 +74,46 @@ namespace MilSpace.Tools.GraphicsLayer
             }
         }
 
+        private static ILineSymbol DefineProfileLineSymbol()
+        {
+
+            IRgbColor rgbColor = new RgbColor()
+            {
+                Red = 255,
+                Green = 0,
+                Blue = 0
+            };
+
+
+            //Define an arrow marker  
+            IArrowMarkerSymbol arrowMarkerSymbol = new ArrowMarkerSymbolClass();
+            arrowMarkerSymbol.Color = rgbColor;
+            arrowMarkerSymbol.Size = 6;
+            arrowMarkerSymbol.Length = 8;
+            arrowMarkerSymbol.Width = 6;
+            //Add an offset to make sure the square end of the line is hidden  
+            arrowMarkerSymbol.XOffset = 0.8;
+
+            //Create cartographic line symbol  
+            ICartographicLineSymbol cartographicLineSymbol = new CartographicLineSymbolClass();
+            cartographicLineSymbol.Color = rgbColor;
+            cartographicLineSymbol.Width = 1;
+
+            //Define simple line decoration  
+            ISimpleLineDecorationElement simpleLineDecorationElement = new SimpleLineDecorationElementClass();
+            //Place the arrow at the end of the line (the "To" point in the geometry below)  
+            simpleLineDecorationElement.AddPosition(1);
+            simpleLineDecorationElement.MarkerSymbol = arrowMarkerSymbol;
+
+            //Define line decoration  
+            ILineDecoration lineDecoration = new LineDecorationClass();
+            lineDecoration.AddElement(simpleLineDecorationElement);
+
+            //Set line properties  
+            ILineProperties lineProperties = (ILineProperties)cartographicLineSymbol;
+            lineProperties.LineDecoration = lineDecoration;
+
+            return cartographicLineSymbol;
+        }
     }
 }
