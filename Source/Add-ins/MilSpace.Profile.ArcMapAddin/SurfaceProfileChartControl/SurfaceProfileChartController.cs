@@ -3,29 +3,52 @@ using System.Collections.Generic;
 using System.Linq;
 using MilSpace.DataAccess.DataTransfer;
 
-namespace SurfaceProfileChart.SurfaceProfileChartControl
+
+namespace MilSpace.Profile.SurfaceProfileChartControl
 {
-    internal class SurfaceProfileChartController
+    public class SurfaceProfileChartController
     {
         private SurfaceProfileChart _surfaceProfileChart;
         private ProfileSession _profileSession;
+        private List<ProfileSurfacePoint> _extremePoints = new List<ProfileSurfacePoint>();
 
-        private List<ProfileSurfacePoint> _triangle = new List<ProfileSurfacePoint>();
 
-        public SurfaceProfileChartController(SurfaceProfileChart surfaceProfileChart)
+        public SurfaceProfileChartController()
         {
-            _surfaceProfileChart = surfaceProfileChart;
-            _profileSession = DataPreparator.Get();
         }
 
-        public void LoadSeries()
+        internal void GetSession(ProfileSession profileSession)
         {
-            var extremePoints = FindExtremePoints();
-
-            _surfaceProfileChart.InitializeProfile(_profileSession, extremePoints);
+            _profileSession = profileSession;
         }
 
-        public void AddInvisibleZones(double observerHeight)
+        internal SurfaceProfileChart CreateProfileChart()
+        {
+            _surfaceProfileChart = new SurfaceProfileChart(this);
+            _surfaceProfileChart.InitializeGraph();
+
+            return _surfaceProfileChart;
+        }
+
+
+        internal void AddProfile()
+        {
+
+        }
+
+        internal void LoadSeries()
+        {
+            _surfaceProfileChart.InitializeProfile(_profileSession);
+        }
+
+        internal void AddExtremePoints()
+        {
+             _extremePoints = FindExtremePoints();
+
+            _surfaceProfileChart.SetExtremePoints(_extremePoints);
+        }
+
+        internal void AddInvisibleZones(double observerHeight)
         {
             foreach (var profileSessionProfileLine in _profileSession.ProfileLines)
             {
@@ -78,12 +101,12 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
             }
         }
 
-        public void SetProfilesProperties()
+        internal void SetProfilesProperties()
         {
 
             foreach (var profileSessionProfileLine in _profileSession.ProfileLines)
             {
-                var profileProperty = new ProfileProperty();
+                var profileProperty = new ProfileProperties();
                 profileProperty.LineId = profileSessionProfileLine.Id;
 
                 var profileSurfacePoints = _profileSession.ProfileSurfaces.FirstOrDefault(surface =>
@@ -93,8 +116,11 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
                 profileProperty.MinHeight = profileSurfacePoints.Min(point => point.Z);
 
                 var angles = FindAngles(profileSurfacePoints);
-                profileProperty.MaxAngle = Math.Abs(angles.Where(angle => angle > 0).Max());
-                profileProperty.MinAngle = Math.Abs(angles.Where(angle => angle < 0).Min());
+                var n = angles.Exists(angle => angle > 0);
+                var b = angles.Exists(angle => angle > 0);
+                profileProperty.MaxAngle = angles.Exists(angle => angle > 0) ? Math.Abs(angles.Where(angle => angle > 0).Max()): 0;
+
+                profileProperty.MinAngle = angles.Exists(angle => angle > 0) ? Math.Abs(angles.Where(angle => angle < 0).Min()) : 0;
 
                 profileProperty.PathLength = FindLength(profileSurfacePoints);
 
@@ -135,6 +161,8 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
         private List<double> FindAngles(ProfileSurfacePoint[] profileSurfacePoints)
         {
             var angles = new List<double>();
+            List<ProfileSurfacePoint> _triangle = new List<ProfileSurfacePoint>();
+
             ProfileSurfacePoint deviationPoint = profileSurfacePoints[0];
 
             for (var i = 0; i < profileSurfacePoints.Length - 2; i++)
@@ -184,5 +212,4 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
         }
 
     }
-
 }

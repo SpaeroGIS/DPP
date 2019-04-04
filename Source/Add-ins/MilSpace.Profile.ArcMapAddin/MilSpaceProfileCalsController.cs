@@ -1,4 +1,5 @@
 ﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Desktop.AddIns;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Exceptions;
 using MilSpace.Core.Tools;
@@ -186,6 +187,11 @@ namespace MilSpace.Profile
             GraphicsLayerManager.UpdateGraphic(profileSetting.ProfileLines, profileId, (int)profileType);
         }
 
+
+        /// <summary>
+        /// Do Actions to generate profile(s)? save them and set properties to default values
+        /// </summary>
+        /// <returns>Profile Session data</returns>
         internal ProfileSession GenerateProfile()
         {
             try
@@ -193,9 +199,10 @@ namespace MilSpace.Profile
 
                 ProfileManager manager = new ProfileManager();
                 var profileSetting = profileSettings[View.SelectedProfileSettingsType];
-                var session = manager.GenerateProfile(View.DemLayerName, profileSetting.ProfileLines);
+                var session = manager.GenerateProfile(View.DemLayerName, profileSetting.ProfileLines, profileId);
 
-                session.SessionId = profileId;
+                SetPeofileId();
+
                 return session;
 
             }
@@ -204,6 +211,14 @@ namespace MilSpace.Profile
                 //TODO log error
                 return null;
             }
+        }
+
+        internal void CallGraphsHandle(ProfileSession profileSession, ProfileSettingsTypeEnum profileType)
+        {
+            var winImpl = AddIn.FromID<DockableWindowMilSpaceProfileGraph.AddinImpl>(ThisAddIn.IDs.DockableWindowMilSpaceProfileGraph);
+
+            winImpl.MilSpaceProfileCalsController.ShowWindow();
+            winImpl.MilSpaceProfileCalsController.AddSession(profileSession);
         }
 
         private GraphicsLayerManager GraphicsLayerManager
