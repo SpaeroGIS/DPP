@@ -73,9 +73,9 @@
             this.label5 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.cmbBuildings = new System.Windows.Forms.ComboBox();
+            this.label30 = new System.Windows.Forms.Label();
             this.cmbPolygonLayer = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.label30 = new System.Windows.Forms.Label();
             this.calcProfile = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -597,6 +597,17 @@
             this.cmbBuildings.Size = new System.Drawing.Size(370, 21);
             this.cmbBuildings.TabIndex = 42;
             // 
+            // label30
+            // 
+            this.label30.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(379, 17);
+            this.label30.Name = "label30";
+            this.label30.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.label30.Size = new System.Drawing.Size(96, 21);
+            this.label30.TabIndex = 41;
+            this.label30.Text = "Слой сооружения";
+            // 
             // cmbPolygonLayer
             // 
             this.cmbPolygonLayer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -620,17 +631,6 @@
             this.label4.TabIndex = 39;
             this.label4.Text = "Слой растительность";
             // 
-            // label30
-            // 
-            this.label30.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(379, 17);
-            this.label30.Name = "label30";
-            this.label30.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.label30.Size = new System.Drawing.Size(96, 21);
-            this.label30.TabIndex = 41;
-            this.label30.Text = "Слой сооружения";
-            // 
             // calcProfile
             // 
             this.calcProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -642,6 +642,7 @@
             this.calcProfile.TabIndex = 27;
             this.calcProfile.Text = "рассчитать";
             this.calcProfile.UseVisualStyleBackColor = true;
+            this.calcProfile.Click += new System.EventHandler(this.calcProfile_Click);
             // 
             // button12
             // 

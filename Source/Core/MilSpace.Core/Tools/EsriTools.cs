@@ -136,7 +136,7 @@ namespace MilSpace.Core.Tools
             List<IPolyline> result = new List<IPolyline>();
             for (int i = 0; i < count; i++)
             {
-                double radian = (minAzimuth + (i * step)) * (Math.PI / 180);
+                double radian = (90 - (minAzimuth + (i * step))) * (Math.PI / 180);
                 IPoint outPoint = GetPointFromAngelAndDistance(centerPoint, radian, length);
                 result.Add(CreatePolylineFromPoints(centerPoint, outPoint as IPoint));
             }
