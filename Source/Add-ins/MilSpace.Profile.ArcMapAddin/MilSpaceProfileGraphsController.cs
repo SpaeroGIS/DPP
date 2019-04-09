@@ -9,6 +9,8 @@ using MilSpace.DataAccess.DataTransfer;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Desktop.AddIns;
+using ESRI.ArcGIS.Geometry;
+using MilSpace.Core.Tools;
 
 namespace MilSpace.Profile
 {
@@ -26,6 +28,24 @@ namespace MilSpace.Profile
         internal MilSpaceProfileGraphsController()
         {
             _surfaceProfileChartController = new SurfaceProfileChartController();
+            _surfaceProfileChartController.OnProfileGraphClicked += OnProfileGraphClicked;
+        }
+
+        private void OnProfileGraphClicked(GraphProfileClickedArgs e)
+        {
+
+            IPoint point = new Point() { X = e.ProfilePoint.X, Y = e.ProfilePoint.Y, SpatialReference = e.ProfilePoint.SpatialReference };
+
+            IEnvelope env = new EnvelopeClass();
+
+            var av = ArcMap.Document.ActivatedView;
+            point.Project(av.FocusMap.SpatialReference);
+
+            env = av.Extent;
+            env.CenterAt(point);
+            av.Extent = env;
+            av.Refresh();
+            EsriTools.FlashGeometry(av.ScreenDisplay, point);
         }
 
         internal void ShowWindow()
@@ -43,6 +63,6 @@ namespace MilSpace.Profile
             SurfaceProfileChart surfaceProfileChart = _surfaceProfileChartController.CreateProfileChart();
 
             View.AddNewTab(surfaceProfileChart);
-        } 
+        }
     }
 }

@@ -1064,6 +1064,7 @@ namespace MilSpace.Profile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.Controls.Add(this.profilesTabControl);
             this.Name = "DockableWindowMilSpaceProfileGraph";
             this.Size = new System.Drawing.Size(800, 300);

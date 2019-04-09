@@ -156,7 +156,9 @@ namespace MilSpace.Core.Tools
         {
             IConstructPoint outPoint = new PointClass();
             outPoint.ConstructAngleDistance(basePoint, angel, length);
-            return outPoint as IPoint;
+            IPoint resilt = outPoint as IPoint;
+            resilt.SpatialReference = basePoint.SpatialReference;
+            return resilt;
         }
 
 
