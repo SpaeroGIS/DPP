@@ -674,6 +674,5 @@ namespace MilSpace.Profile
 
                   ((charValue == DECIMAL_POINT) && textValue.Text.IndexOf(".") == NOT_FOUND)));
         }
-
     }
 }

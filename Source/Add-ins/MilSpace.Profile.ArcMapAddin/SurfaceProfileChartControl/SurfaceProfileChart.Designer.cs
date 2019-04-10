@@ -36,6 +36,8 @@
             // 
             // profileChart
             // 
+            this.profileChart.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             chartArea1.AxisX.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
             chartArea1.AxisX.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
             chartArea1.AxisX.Minimum = 0D;
@@ -62,7 +64,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.profileChart);
             this.Name = "SurfaceProfileChart";
-            this.Size = new System.Drawing.Size(684, 243);
+            this.Size = new System.Drawing.Size(968, 243);
             this.Load += new System.EventHandler(this.SurfaceProfileChart_Load);
             ((System.ComponentModel.ISupportInitialize)(this.profileChart)).EndInit();
             this.ResumeLayout(false);
