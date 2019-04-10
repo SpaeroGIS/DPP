@@ -22,14 +22,14 @@ namespace MilSpace.DataAccess
             return DateTime.Now.ToString("yyyyMMddHHmmss");
         }
 
-        public static IPoint GetEsriPoint(this ProfilePoint point)
+        public static IPoint GetEsriPoint(this ProfilePoint point, ISpatialReference spatial = null)
         {
             if (point == null)
             {
                 return null;
             }
 
-            return new Point() { X = point.X, Y = point.Y };
+            return new Point() { X = point.X, Y = point.Y, SpatialReference = spatial };
         }
 
     }

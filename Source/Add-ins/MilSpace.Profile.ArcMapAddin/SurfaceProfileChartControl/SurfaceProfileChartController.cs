@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 
 
@@ -11,6 +12,10 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         private SurfaceProfileChart _surfaceProfileChart;
         private ProfileSession _profileSession;
         private List<ProfileSurfacePoint> _extremePoints = new List<ProfileSurfacePoint>();
+
+        internal delegate void ProfileGrapchClickedDelegate(GraphProfileClickedArgs e);
+
+        internal event ProfileGrapchClickedDelegate OnProfileGraphClicked;
 
 
         public SurfaceProfileChartController()
@@ -43,7 +48,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal void AddExtremePoints()
         {
-             _extremePoints = FindExtremePoints();
+            _extremePoints = FindExtremePoints();
 
             _surfaceProfileChart.SetExtremePoints(_extremePoints);
         }
@@ -118,7 +123,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 var angles = FindAngles(profileSurfacePoints);
                 var n = angles.Exists(angle => angle > 0);
                 var b = angles.Exists(angle => angle > 0);
-                profileProperty.MaxAngle = angles.Exists(angle => angle > 0) ? Math.Abs(angles.Where(angle => angle > 0).Max()): 0;
+                profileProperty.MaxAngle = angles.Exists(angle => angle > 0) ? Math.Abs(angles.Where(angle => angle > 0).Max()) : 0;
 
                 profileProperty.MinAngle = angles.Exists(angle => angle > 0) ? Math.Abs(angles.Where(angle => angle < 0).Min()) : 0;
 
@@ -128,6 +133,9 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
 
         }
+
+
+        
 
         private List<ProfileSurfacePoint> FindExtremePoints()
         {
@@ -146,7 +154,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             return extremePoints;
         }
 
-        private double FindLength(ProfileSurfacePoint[] profileSurfacePoints)
+        private static double FindLength(ProfileSurfacePoint[] profileSurfacePoints)
         {
             double result = 0;
 
@@ -158,7 +166,14 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             return result;
         }
 
-        private List<double> FindAngles(ProfileSurfacePoint[] profileSurfacePoints)
+        internal void InvokeOnProfileGraphClicked(double wgs94X, double wgs94Y)
+        {
+            var point = new GraphProfileClickedArgs(wgs94X, wgs94Y);
+            point.ProfilePoint.SpatialReference = EsriTools.Wgs84Spatialreference;
+            OnProfileGraphClicked?.Invoke(point);
+        }
+
+        private static List<double> FindAngles(ProfileSurfacePoint[] profileSurfacePoints)
         {
             var angles = new List<double>();
             List<ProfileSurfacePoint> _triangle = new List<ProfileSurfacePoint>();
@@ -181,7 +196,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             return angles;
         }
 
-        private double CalcVectorLength(ProfileSurfacePoint leftPoint, ProfileSurfacePoint rightPoint)
+        private static double CalcVectorLength(ProfileSurfacePoint leftPoint, ProfileSurfacePoint rightPoint)
         {
             var x = rightPoint.Distance - leftPoint.Distance;
             var y = rightPoint.Z - leftPoint.Z;
@@ -189,14 +204,13 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             return Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2));
         }
 
-        private double CalcAngleOfDeviation(ProfileSurfacePoint leftPoint,
-            ProfileSurfacePoint rightPoint)
+        private static double CalcAngleOfDeviation(ProfileSurfacePoint leftPoint, ProfileSurfacePoint rightPoint)
         {
             var angle = Math.Atan(Math.Abs(rightPoint.Z - leftPoint.Z) / (rightPoint.Distance - leftPoint.Distance)) * (180 / Math.PI);
             return (rightPoint.Z < leftPoint.Z) ? angle * (-1) : angle;
         }
 
-        private double CalcAngleOfVisibility(double observerHeight, ProfileSurfacePoint leftPoint,
+        private static double CalcAngleOfVisibility(double observerHeight, ProfileSurfacePoint leftPoint,
             ProfileSurfacePoint rightPoint)
         {
             var sightLineKoef = (rightPoint.Z - observerHeight) / (rightPoint.Distance);
@@ -206,7 +220,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             return Math.Atan(result);
         }
 
-        private double FindY(double observerHeight, double angleKoef, double x)
+        private static double FindY(double observerHeight, double angleKoef, double x)
         {
             return (angleKoef * x + observerHeight);
         }
