@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MilSpace.DataAccess.DataTransfer;
 
 namespace MilSpace.Profile
 {
@@ -48,6 +49,18 @@ namespace MilSpace.Profile
         string DemLayerName { get; }
 
         int ProfileId { set; }
+
+        void AddSectionProfileNodes(ProfileSession profile);
+
+        void AddFanProfileNode(ProfileSession profile);
+
+        void AddSectionProfileToList(ProfileSession profile);
+
+        void AddFanProfileToList(ProfileSession profile);
+
+        void RemoveSectionProfileFromList(string profileName);
+
+        ProfileSession GetSectionProfile(string profileName);
 
     }
 }

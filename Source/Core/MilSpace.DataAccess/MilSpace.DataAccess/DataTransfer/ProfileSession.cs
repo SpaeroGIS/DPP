@@ -11,7 +11,7 @@ namespace MilSpace.DataAccess.DataTransfer
         public ProfileSurface[] ProfileSurfaces;
         public int SessionId;
         public string SessionName;
-
+        
         [XmlIgnore]
         public  string Serialized
         {
