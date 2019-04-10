@@ -110,7 +110,9 @@ namespace MilSpace.Tools
 
                 Dictionary<int, List<ProfileSurfacePoint>> surface = new Dictionary<int, List<ProfileSurfacePoint>>();
 
-
+                int curLine = -1;
+                IPolyline line = null;
+                IPoint firstPoint = null;
 
                 while ((profileRow = featureCursor.NextRow()) != null)
                 {
@@ -129,7 +131,6 @@ namespace MilSpace.Tools
                     if (!surface.ContainsKey(lineId))
                     {
                         points = new List<ProfileSurfacePoint>();
-
                         surface.Add(lineId, points);
                     }
                     else
@@ -137,15 +138,22 @@ namespace MilSpace.Tools
                         points = surface[lineId];
                     }
 
-                    var profilePoint = EsriTools.GetPointFromAngelAndDistance(profileLine.PointFrom.GetEsriPoint(), profileLine.Angel, (double)profileRow.Value[distanceFld]);
-                    var wgs84Point = profilePoint.CloneWithProjecting();
+                    if (curLine != lineId)
+                    {
+                        curLine = lineId;
+                        line = lines.GetFeature(profileLine.Id).Shape as IPolyline;
+                        firstPoint = line.FromPoint;
+                    }
+
+                    var profilePoint = EsriTools.GetPointFromAngelAndDistance(firstPoint, profileLine.Angel, (double)profileRow.Value[distanceFld]);
+                    profilePoint.Project(EsriTools.Wgs84Spatialreference);
 
                     points.Add(new ProfileSurfacePoint
                     {
                         Distance = (double)profileRow.Value[distanceFld],
                         Z = (double)profileRow.Value[zFld],
-                        X = wgs84Point.X,
-                        Y = wgs84Point.Y
+                        X = profilePoint.X,
+                        Y = profilePoint.Y
                     });
                 }
 
@@ -209,17 +217,15 @@ namespace MilSpace.Tools
                         SpatialReference = line.Shape.SpatialReference
                     };
 
-                    from.Project(EsriTools.Wgs84Spatialreference);
-                    to.Project(EsriTools.Wgs84Spatialreference);
-                    
+                    var transformedFrom =  from.CloneWithProjecting();
+                    var transformedTo = to.CloneWithProjecting();
 
                     result.Add(new ProfileLine
                     {
-                        PointFrom = new ProfilePoint { X = from.X, Y = from.Y },
-                        PointTo = new ProfilePoint { X = to.X, Y = to.Y },
+                        PointFrom = new ProfilePoint { X = transformedFrom.X, Y = transformedFrom.Y },
+                        PointTo = new ProfilePoint { X = transformedTo.X, Y = transformedTo.Y },
                         Id = line.OID,
-                        Length = ln.Length,                      
-                        SpatialReference = line.Shape.SpatialReference,
+                        SpatialReference = EsriTools.Wgs84Spatialreference,
                         Angel = ln.Angle
                     });
                 }

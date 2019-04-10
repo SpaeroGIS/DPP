@@ -1,17 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Text;
-using System.Windows.Forms;
-using System.Runtime.InteropServices;
-using ESRI.ArcGIS.esriSystem;
-using ESRI.ArcGIS.SystemUI;
-using ESRI.ArcGIS.Framework;
-using ESRI.ArcGIS.ADF.CATIDs;
 using MilSpace.Profile.SurfaceProfileChartControl;
-using System.Linq;
+using System;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace MilSpace.Profile
 {
@@ -58,8 +48,10 @@ namespace MilSpace.Profile
             tabPage.Name = $"profileTabPage{profilesTabControl.TabCount}";
             profilesTabControl.TabPages.Add(tabPage);
 
-            profilesTabControl.TabPages[profilesTabControl.TabCount - 1].Controls.Add(surfaceProfileChart);
-            profilesTabControl.TabPages[profilesTabControl.TabCount - 1].Show();
+            var curTab = profilesTabControl.TabPages[profilesTabControl.TabCount - 1];
+            curTab.Controls.Add(surfaceProfileChart);
+            curTab.Show();
+            curTab.Select();
         }
 
         #region AddIn Instance

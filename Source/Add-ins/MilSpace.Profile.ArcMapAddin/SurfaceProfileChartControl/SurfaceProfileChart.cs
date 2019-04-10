@@ -29,6 +29,9 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             ProfilesProperties = new List<ProfileProperties>();
 
             InitializeComponent();
+
+
+
         }
 
         internal void InitializeGraph()
@@ -62,8 +65,11 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 Color = Color.ForestGreen,
                 Name = profileSurface.LineId.ToString(),
                 YValuesPerPoint = 1,
-                IsVisibleInLegend = false
+                IsVisibleInLegend = false,
+                //TODO: Create  a local var to store profileSurface
+                Tag = profileSurface
             });
+
 
             foreach (var point in profileSurface.ProfileSurfacePoints)
             {
@@ -100,10 +106,10 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             });
 
             profileChart.Series[$"ExtremePointsLine{order}"].BorderDashStyle = ChartDashStyle.Dash;
-                                                    
+
             profileChart.Series[$"ExtremePointsLine{order}"].Points.AddXY(observerPoint.Distance, observerPoint.Z);
             profileChart.Series[$"ExtremePointsLine{order}"].Points[0].MarkerStyle = MarkerStyle.Circle;
-                                                    
+
             profileChart.Series[$"ExtremePointsLine{order}"].Points.AddXY(observationPoint.Distance, observationPoint.Z);
 
             if (profileChart.Series[$"{order}"].Points.Last().Color == Color.Red)
@@ -193,28 +199,28 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             LegendItem headerItem = new LegendItem();
 
-            headerItem.Cells.Add(LegendCellType.Text, "Line name", ContentAlignment.MiddleCenter);
-            headerItem.Cells.Add(LegendCellType.Text, "Path length", ContentAlignment.MiddleCenter);
-            headerItem.Cells.Add(LegendCellType.Text, "Max angle", ContentAlignment.MiddleCenter);
-            headerItem.Cells.Add(LegendCellType.Text, "Min angle", ContentAlignment.MiddleCenter);
-            headerItem.Cells.Add(LegendCellType.Text, "Max height", ContentAlignment.MiddleCenter);
-            headerItem.Cells.Add(LegendCellType.Text, "Min height", ContentAlignment.MiddleCenter);
+            //headerItem.Cells.Add(LegendCellType.Text, "Line name", ContentAlignment.MiddleCenter);
+            //headerItem.Cells.Add(LegendCellType.Text, "Path length", ContentAlignment.MiddleCenter);
+            //headerItem.Cells.Add(LegendCellType.Text, "Max angle", ContentAlignment.MiddleCenter);
+            //headerItem.Cells.Add(LegendCellType.Text, "Min angle", ContentAlignment.MiddleCenter);
+            //headerItem.Cells.Add(LegendCellType.Text, "Max height", ContentAlignment.MiddleCenter);
+            //headerItem.Cells.Add(LegendCellType.Text, "Min height", ContentAlignment.MiddleCenter);
 
-            profileChart.Legends["Properties"].CustomItems.Add(headerItem);
+            //profileChart.Legends["Properties"].CustomItems.Add(headerItem);
 
-            foreach (var profilesProperties in ProfilesProperties)
-            {
-                LegendItem newItem = new LegendItem();
+            //foreach (var profilesProperties in ProfilesProperties)
+            //{
+            //    LegendItem newItem = new LegendItem();
 
-                newItem.Cells.Add(LegendCellType.Text, profilesProperties.LineId.ToString(), ContentAlignment.MiddleCenter);
-                newItem.Cells.Add(LegendCellType.Text, Math.Round(profilesProperties.PathLength, 0).ToString(), ContentAlignment.MiddleCenter);
-                newItem.Cells.Add(LegendCellType.Text, Math.Round(profilesProperties.MaxAngle, 1).ToString(), ContentAlignment.MiddleCenter);
-                newItem.Cells.Add(LegendCellType.Text, Math.Round(profilesProperties.MinAngle, 1).ToString(), ContentAlignment.MiddleCenter);
-                newItem.Cells.Add(LegendCellType.Text, Math.Round(profilesProperties.MaxHeight, 0).ToString(), ContentAlignment.MiddleCenter);
-                newItem.Cells.Add(LegendCellType.Text, Math.Round(profilesProperties.MinHeight, 0).ToString(), ContentAlignment.MiddleCenter);
+            //    newItem.Cells.Add(LegendCellType.Text, profilesProperties.LineId.ToString(), ContentAlignment.MiddleCenter);
+            //    newItem.Cells.Add(LegendCellType.Text, Math.Round(profilesProperties.PathLength, 0).ToString(), ContentAlignment.MiddleCenter);
+            //    newItem.Cells.Add(LegendCellType.Text, Math.Round(profilesProperties.MaxAngle, 1).ToString(), ContentAlignment.MiddleCenter);
+            //    newItem.Cells.Add(LegendCellType.Text, Math.Round(profilesProperties.MinAngle, 1).ToString(), ContentAlignment.MiddleCenter);
+            //    newItem.Cells.Add(LegendCellType.Text, Math.Round(profilesProperties.MaxHeight, 0).ToString(), ContentAlignment.MiddleCenter);
+            //    newItem.Cells.Add(LegendCellType.Text, Math.Round(profilesProperties.MinHeight, 0).ToString(), ContentAlignment.MiddleCenter);
 
-                profileChart.Legends["Properties"].CustomItems.Add(newItem);
-            }
+            //    profileChart.Legends["Properties"].CustomItems.Add(newItem);
+            //}
         }
 
         private void Profile_MouseDown(object sender, MouseEventArgs e)
@@ -223,8 +229,13 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             if (selectedPoint.ChartElementType == ChartElementType.DataPoint)
             {
-                SelectProfile(selectedPoint);
-                //todo fire event 
+                //TODO:: Create a list outside the graph
+                //SelectProfile(selectedPoint);
+                if (selectedPoint.Series.Tag is ProfileSurface profileData)
+                {
+                    var point = profileData.ProfileSurfacePoints[selectedPoint.PointIndex];
+                    _controller.InvokeOnProfileGraphClicked(point.X, point.Y);
+                }
             }
 
         }
