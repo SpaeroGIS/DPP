@@ -211,12 +211,14 @@ namespace MilSpace.Tools
 
                     from.Project(EsriTools.Wgs84Spatialreference);
                     to.Project(EsriTools.Wgs84Spatialreference);
+                    
 
                     result.Add(new ProfileLine
                     {
                         PointFrom = new ProfilePoint { X = from.X, Y = from.Y },
                         PointTo = new ProfilePoint { X = to.X, Y = to.Y },
                         Id = line.OID,
+                        Length = ln.Length,                      
                         SpatialReference = line.Shape.SpatialReference,
                         Angel = ln.Angle
                     });

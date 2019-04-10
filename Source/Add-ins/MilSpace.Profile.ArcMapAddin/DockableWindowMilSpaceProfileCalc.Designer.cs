@@ -30,39 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("skt201811071310nikol, 30m, 3.12 km, vsb");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("skt201811071314, 70m, 2.1 km");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Отрезки (2)", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2});
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("fan201811081111nikol_луч1, азм 10");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("fan201811081111nikol_луч2, азм 25");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("fan201811081111nikol_луч3, азм 40");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("fan201811081111nikol_луч1, азм 55");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("fan201811081111nikol, Б 36.12345:50.12345, аз 10:55, 2 км", new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode5,
-            treeNode6,
-            treeNode7});
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("fan201811081111nikol, 1");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("fan201811081111nikol, 2");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("fan201811081111nikol, 3");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("fan201811081111nikol, 4");
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("fan201811081111nikol, БТ 36.12345:50.12345, аз 10:55, 2 км", new System.Windows.Forms.TreeNode[] {
-            treeNode9,
-            treeNode10,
-            treeNode11,
-            treeNode12});
-            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Веер (2)", new System.Windows.Forms.TreeNode[] {
-            treeNode8,
-            treeNode13});
-            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("gr201811111732nikol, lr Road, 15 км");
-            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("gr201811111745nikol, lr Graph, 15 км");
-            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("gr201811111755nikol, lr Graph, 13.1 км");
-            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("Графика (3)", new System.Windows.Forms.TreeNode[] {
-            treeNode15,
-            treeNode16,
-            treeNode17});
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Графика");
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -73,9 +43,9 @@
             this.label5 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.cmbBuildings = new System.Windows.Forms.ComboBox();
+            this.label30 = new System.Windows.Forms.Label();
             this.cmbPolygonLayer = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.label30 = new System.Windows.Forms.Label();
             this.calcProfile = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -185,22 +155,7 @@
             this.richTextBox5 = new System.Windows.Forms.RichTextBox();
             this.label20 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.toolBar7 = new System.Windows.Forms.ToolBar();
-            this.toolBarButton52 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton41 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton42 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton43 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton44 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton45 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton46 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton47 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton48 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton49 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton50 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton51 = new System.Windows.Forms.ToolBarButton();
-            this.richTextBox6 = new System.Windows.Forms.RichTextBox();
-            this.label21 = new System.Windows.Forms.Label();
-            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.profilesTreeView = new System.Windows.Forms.TreeView();
             this.panel6 = new System.Windows.Forms.Panel();
             this.toolBar6 = new System.Windows.Forms.ToolBar();
             this.toolBarButton30 = new System.Windows.Forms.ToolBarButton();
@@ -210,8 +165,17 @@
             this.toolBarButton39 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton40 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton53 = new System.Windows.Forms.ToolBarButton();
-            this.richTextBox7 = new System.Windows.Forms.RichTextBox();
-            this.label19 = new System.Windows.Forms.Label();
+            this.lblProfileList = new System.Windows.Forms.Label();
+            this.toolBarButton9 = new System.Windows.Forms.ToolBarButton();
+            this.toolBarButton10 = new System.Windows.Forms.ToolBarButton();
+            this.toolBarButton11 = new System.Windows.Forms.ToolBarButton();
+            this.toolBarButton12 = new System.Windows.Forms.ToolBarButton();
+            this.toolBarButton13 = new System.Windows.Forms.ToolBarButton();
+            this.toolBarButton14 = new System.Windows.Forms.ToolBarButton();
+            this.toolBarButton22 = new System.Windows.Forms.ToolBarButton();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.attribute = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.value = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -597,6 +561,17 @@
             this.cmbBuildings.Size = new System.Drawing.Size(370, 21);
             this.cmbBuildings.TabIndex = 42;
             // 
+            // label30
+            // 
+            this.label30.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(379, 17);
+            this.label30.Name = "label30";
+            this.label30.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.label30.Size = new System.Drawing.Size(96, 21);
+            this.label30.TabIndex = 41;
+            this.label30.Text = "Слой сооружения";
+            // 
             // cmbPolygonLayer
             // 
             this.cmbPolygonLayer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -620,17 +595,6 @@
             this.label4.TabIndex = 39;
             this.label4.Text = "Слой растительность";
             // 
-            // label30
-            // 
-            this.label30.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(379, 17);
-            this.label30.Name = "label30";
-            this.label30.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.label30.Size = new System.Drawing.Size(96, 21);
-            this.label30.TabIndex = 41;
-            this.label30.Text = "Слой сооружения";
-            // 
             // calcProfile
             // 
             this.calcProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -642,6 +606,7 @@
             this.calcProfile.TabIndex = 27;
             this.calcProfile.Text = "рассчитать";
             this.calcProfile.UseVisualStyleBackColor = true;
+            this.calcProfile.Click += new System.EventHandler(this.calcProfile_Click);
             // 
             // button12
             // 
@@ -1736,13 +1701,10 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.toolBar7);
-            this.tabPage2.Controls.Add(this.richTextBox6);
-            this.tabPage2.Controls.Add(this.label21);
-            this.tabPage2.Controls.Add(this.treeView1);
+            this.tabPage2.Controls.Add(this.listView1);
+            this.tabPage2.Controls.Add(this.profilesTreeView);
             this.tabPage2.Controls.Add(this.panel6);
-            this.tabPage2.Controls.Add(this.richTextBox7);
-            this.tabPage2.Controls.Add(this.label19);
+            this.tabPage2.Controls.Add(this.lblProfileList);
             this.tabPage2.ImageKey = "Table.png";
             this.tabPage2.Location = new System.Drawing.Point(4, 26);
             this.tabPage2.Name = "tabPage2";
@@ -1752,185 +1714,34 @@
             this.tabPage2.Text = "Список профилей";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // toolBar7
+            // profilesTreeView
             // 
-            this.toolBar7.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
-            this.toolBarButton52,
-            this.toolBarButton41,
-            this.toolBarButton42,
-            this.toolBarButton43,
-            this.toolBarButton44,
-            this.toolBarButton45,
-            this.toolBarButton46,
-            this.toolBarButton47,
-            this.toolBarButton48,
-            this.toolBarButton49,
-            this.toolBarButton50,
-            this.toolBarButton51});
-            this.toolBar7.ButtonSize = new System.Drawing.Size(18, 18);
-            this.toolBar7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolBar7.DropDownArrows = true;
-            this.toolBar7.ImageList = this.imageList1;
-            this.toolBar7.Location = new System.Drawing.Point(3, 549);
-            this.toolBar7.Name = "toolBar7";
-            this.toolBar7.ShowToolTips = true;
-            this.toolBar7.Size = new System.Drawing.Size(755, 28);
-            this.toolBar7.TabIndex = 38;
-            // 
-            // toolBarButton52
-            // 
-            this.toolBarButton52.ImageKey = "Refresh.png";
-            this.toolBarButton52.Name = "toolBarButton52";
-            // 
-            // toolBarButton41
-            // 
-            this.toolBarButton41.Name = "toolBarButton41";
-            this.toolBarButton41.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
-            // 
-            // toolBarButton42
-            // 
-            this.toolBarButton42.ImageKey = "Write3.png";
-            this.toolBarButton42.Name = "toolBarButton42";
-            // 
-            // toolBarButton43
-            // 
-            this.toolBarButton43.Name = "toolBarButton43";
-            this.toolBarButton43.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
-            // 
-            // toolBarButton44
-            // 
-            this.toolBarButton44.ImageKey = "Directions.png";
-            this.toolBarButton44.Name = "toolBarButton44";
-            this.toolBarButton44.ToolTipText = "скопировать в буфер";
-            // 
-            // toolBarButton45
-            // 
-            this.toolBarButton45.Name = "toolBarButton45";
-            this.toolBarButton45.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
-            // 
-            // toolBarButton46
-            // 
-            this.toolBarButton46.ImageKey = "Light.png";
-            this.toolBarButton46.Name = "toolBarButton46";
-            // 
-            // toolBarButton47
-            // 
-            this.toolBarButton47.Name = "toolBarButton47";
-            this.toolBarButton47.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
-            // 
-            // toolBarButton48
-            // 
-            this.toolBarButton48.ImageKey = "Stats 3.png";
-            this.toolBarButton48.Name = "toolBarButton48";
-            // 
-            // toolBarButton49
-            // 
-            this.toolBarButton49.Name = "toolBarButton49";
-            this.toolBarButton49.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
-            // 
-            // toolBarButton50
-            // 
-            this.toolBarButton50.ImageKey = "Cancel.png";
-            this.toolBarButton50.Name = "toolBarButton50";
-            // 
-            // toolBarButton51
-            // 
-            this.toolBarButton51.ImageKey = "Save.png";
-            this.toolBarButton51.Name = "toolBarButton51";
-            // 
-            // richTextBox6
-            // 
-            this.richTextBox6.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.richTextBox6.Location = new System.Drawing.Point(3, 419);
-            this.richTextBox6.Name = "richTextBox6";
-            this.richTextBox6.Size = new System.Drawing.Size(755, 130);
-            this.richTextBox6.TabIndex = 37;
-            this.richTextBox6.Text = resources.GetString("richTextBox6.Text");
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label21.Location = new System.Drawing.Point(3, 390);
-            this.label21.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
-            this.label21.Name = "label21";
-            this.label21.Padding = new System.Windows.Forms.Padding(0, 6, 0, 6);
-            this.label21.Size = new System.Drawing.Size(176, 29);
-            this.label21.TabIndex = 36;
-            this.label21.Text = "Информация о выбраном";
-            // 
-            // treeView1
-            // 
-            this.treeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.treeView1.FullRowSelect = true;
-            this.treeView1.ImageKey = "0.png";
-            this.treeView1.ImageList = this.imageList1;
-            this.treeView1.Location = new System.Drawing.Point(3, 65);
-            this.treeView1.Name = "treeView1";
-            treeNode1.ImageKey = "2.png";
-            treeNode1.Name = "Узел4";
-            treeNode1.Text = "skt201811071310nikol, 30m, 3.12 km, vsb";
-            treeNode2.ImageKey = "2.png";
-            treeNode2.Name = "Узел6";
-            treeNode2.Text = "skt201811071314, 70m, 2.1 km";
-            treeNode3.ImageKey = "1.png";
-            treeNode3.Name = "Узел1";
-            treeNode3.Text = "Отрезки (2)";
-            treeNode4.ImageKey = "3.png";
-            treeNode4.Name = "Узел12";
-            treeNode4.Text = "fan201811081111nikol_луч1, азм 10";
-            treeNode5.ImageKey = "3.png";
-            treeNode5.Name = "Узел13";
-            treeNode5.Text = "fan201811081111nikol_луч2, азм 25";
-            treeNode6.ImageKey = "3.png";
-            treeNode6.Name = "Узел14";
-            treeNode6.Text = "fan201811081111nikol_луч3, азм 40";
-            treeNode7.ImageKey = "3.png";
-            treeNode7.Name = "Узел15";
-            treeNode7.Text = "fan201811081111nikol_луч1, азм 55";
-            treeNode8.ImageKey = "2.png";
-            treeNode8.Name = "Узел7";
-            treeNode8.Text = "fan201811081111nikol, Б 36.12345:50.12345, аз 10:55, 2 км";
-            treeNode9.ImageKey = "3.png";
-            treeNode9.Name = "Узел16";
-            treeNode9.Text = "fan201811081111nikol, 1";
-            treeNode10.ImageKey = "3.png";
-            treeNode10.Name = "Узел17";
-            treeNode10.Text = "fan201811081111nikol, 2";
-            treeNode11.ImageKey = "3.png";
-            treeNode11.Name = "Узел18";
-            treeNode11.Text = "fan201811081111nikol, 3";
-            treeNode12.ImageKey = "4.png";
-            treeNode12.Name = "Узел19";
-            treeNode12.Text = "fan201811081111nikol, 4";
-            treeNode13.ImageKey = "2.png";
-            treeNode13.Name = "Узел8";
-            treeNode13.Text = "fan201811081111nikol, БТ 36.12345:50.12345, аз 10:55, 2 км";
-            treeNode14.ImageKey = "1.png";
-            treeNode14.Name = "Узел2";
-            treeNode14.Text = "Веер (2)";
-            treeNode15.ImageKey = "2.png";
-            treeNode15.Name = "Узел9";
-            treeNode15.Text = "gr201811111732nikol, lr Road, 15 км";
-            treeNode16.ImageKey = "2.png";
-            treeNode16.Name = "Узел10";
-            treeNode16.Text = "gr201811111745nikol, lr Graph, 15 км";
-            treeNode17.ImageKey = "2.png";
-            treeNode17.Name = "Узел11";
-            treeNode17.Text = "gr201811111755nikol, lr Graph, 13.1 км";
-            treeNode18.ImageKey = "1.png";
-            treeNode18.Name = "Узел3";
-            treeNode18.Text = "Графика (3)";
-            this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3,
-            treeNode14,
-            treeNode18});
-            this.treeView1.SelectedImageKey = "Ok.png";
-            this.treeView1.Size = new System.Drawing.Size(755, 325);
-            this.treeView1.TabIndex = 35;
+            this.profilesTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.profilesTreeView.Dock = System.Windows.Forms.DockStyle.Top;
+            this.profilesTreeView.FullRowSelect = true;
+            this.profilesTreeView.ImageKey = "0.png";
+            this.profilesTreeView.ImageList = this.imageList1;
+            this.profilesTreeView.Location = new System.Drawing.Point(3, 65);
+            this.profilesTreeView.Name = "profilesTreeView";
+            treeNode4.ImageKey = "vector-path-line.png";
+            treeNode4.Name = "sectionsNode";
+            treeNode4.SelectedImageIndex = 205;
+            treeNode4.Text = "Отрезки";
+            treeNode5.ImageKey = "Editing-Line-icon3.png";
+            treeNode5.Name = "fanNode";
+            treeNode5.SelectedImageIndex = 208;
+            treeNode5.Text = "Веер";
+            treeNode6.ImageKey = "vector-polygon.png";
+            treeNode6.Name = "primitivesNode";
+            treeNode6.SelectedImageIndex = 209;
+            treeNode6.Text = "Графика";
+            this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode4,
+            treeNode5,
+            treeNode6});
+            this.profilesTreeView.SelectedImageKey = "Ok.png";
+            this.profilesTreeView.Size = new System.Drawing.Size(755, 325);
+            this.profilesTreeView.TabIndex = 35;
             // 
             // panel6
             // 
@@ -1950,7 +1761,14 @@
             this.toolBarButton38,
             this.toolBarButton39,
             this.toolBarButton40,
-            this.toolBarButton53});
+            this.toolBarButton53,
+            this.toolBarButton9,
+            this.toolBarButton10,
+            this.toolBarButton11,
+            this.toolBarButton12,
+            this.toolBarButton13,
+            this.toolBarButton14,
+            this.toolBarButton22});
             this.toolBar6.ButtonSize = new System.Drawing.Size(18, 18);
             this.toolBar6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolBar6.DropDownArrows = true;
@@ -1997,29 +1815,80 @@
             this.toolBarButton53.ImageKey = "Arrow1 Up.png";
             this.toolBarButton53.Name = "toolBarButton53";
             // 
-            // richTextBox7
+            // lblProfileList
             // 
-            this.richTextBox7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.richTextBox7.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox7.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.richTextBox7.Location = new System.Drawing.Point(3, 650);
-            this.richTextBox7.Name = "richTextBox7";
-            this.richTextBox7.Size = new System.Drawing.Size(755, 102);
-            this.richTextBox7.TabIndex = 22;
-            this.richTextBox7.Text = resources.GetString("richTextBox7.Text");
+            this.lblProfileList.AutoSize = true;
+            this.lblProfileList.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblProfileList.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblProfileList.Location = new System.Drawing.Point(3, 3);
+            this.lblProfileList.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
+            this.lblProfileList.Name = "lblProfileList";
+            this.lblProfileList.Padding = new System.Windows.Forms.Padding(0, 6, 0, 6);
+            this.lblProfileList.Size = new System.Drawing.Size(161, 32);
+            this.lblProfileList.TabIndex = 1;
+            this.lblProfileList.Text = "Список профилей";
             // 
-            // label19
+            // toolBarButton9
             // 
-            this.label19.AutoSize = true;
-            this.label19.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label19.Location = new System.Drawing.Point(3, 3);
-            this.label19.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
-            this.label19.Name = "label19";
-            this.label19.Padding = new System.Windows.Forms.Padding(0, 6, 0, 6);
-            this.label19.Size = new System.Drawing.Size(188, 32);
-            this.label19.TabIndex = 1;
-            this.label19.Text = "Список профилей (7)";
+            this.toolBarButton9.ImageKey = "Refresh.png";
+            this.toolBarButton9.Name = "toolBarButton9";
+            // 
+            // toolBarButton10
+            // 
+            this.toolBarButton10.ImageKey = "Write3.png";
+            this.toolBarButton10.Name = "toolBarButton10";
+            // 
+            // toolBarButton11
+            // 
+            this.toolBarButton11.ImageKey = "Directions.png";
+            this.toolBarButton11.Name = "toolBarButton11";
+            // 
+            // toolBarButton12
+            // 
+            this.toolBarButton12.ImageKey = "Light.png";
+            this.toolBarButton12.Name = "toolBarButton12";
+            // 
+            // toolBarButton13
+            // 
+            this.toolBarButton13.ImageKey = "Stats 3.png";
+            this.toolBarButton13.Name = "toolBarButton13";
+            // 
+            // toolBarButton14
+            // 
+            this.toolBarButton14.ImageKey = "Cancel.png";
+            this.toolBarButton14.Name = "toolBarButton14";
+            // 
+            // toolBarButton22
+            // 
+            this.toolBarButton22.ImageKey = "Save.png";
+            this.toolBarButton22.Name = "toolBarButton22";
+            // 
+            // listView1
+            // 
+            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.attribute,
+            this.value});
+            this.listView1.GridLines = true;
+            this.listView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.listView1.HoverSelection = true;
+            this.listView1.Location = new System.Drawing.Point(3, 469);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(755, 286);
+            this.listView1.TabIndex = 36;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
+            // 
+            // attribute
+            // 
+            this.attribute.Text = "Аттрибут";
+            this.attribute.Width = 348;
+            // 
+            // value
+            // 
+            this.value.Text = "Значение";
+            this.value.Width = 402;
             // 
             // DockableWindowMilSpaceProfileCalc
             // 
@@ -2166,22 +2035,7 @@
         private System.Windows.Forms.RichTextBox richTextBox5;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.ToolBar toolBar7;
-        private System.Windows.Forms.ToolBarButton toolBarButton52;
-        private System.Windows.Forms.ToolBarButton toolBarButton41;
-        private System.Windows.Forms.ToolBarButton toolBarButton42;
-        private System.Windows.Forms.ToolBarButton toolBarButton43;
-        private System.Windows.Forms.ToolBarButton toolBarButton44;
-        private System.Windows.Forms.ToolBarButton toolBarButton45;
-        private System.Windows.Forms.ToolBarButton toolBarButton46;
-        private System.Windows.Forms.ToolBarButton toolBarButton47;
-        private System.Windows.Forms.ToolBarButton toolBarButton48;
-        private System.Windows.Forms.ToolBarButton toolBarButton49;
-        private System.Windows.Forms.ToolBarButton toolBarButton50;
-        private System.Windows.Forms.ToolBarButton toolBarButton51;
-        private System.Windows.Forms.RichTextBox richTextBox6;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.TreeView profilesTreeView;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.ToolBar toolBar6;
         private System.Windows.Forms.ToolBarButton toolBarButton30;
@@ -2191,8 +2045,7 @@
         private System.Windows.Forms.ToolBarButton toolBarButton39;
         private System.Windows.Forms.ToolBarButton toolBarButton40;
         private System.Windows.Forms.ToolBarButton toolBarButton53;
-        private System.Windows.Forms.RichTextBox richTextBox7;
-        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label lblProfileList;
         //internal System.Windows.Forms.ToolBarButton pickCoords;
         //internal System.Windows.Forms.ToolBarButton btnPickFirstPoint;
         internal System.Windows.Forms.TextBox txtFirstPointX;
@@ -2233,5 +2086,15 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cmbRoadLayers;
+        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ToolBarButton toolBarButton9;
+        private System.Windows.Forms.ToolBarButton toolBarButton10;
+        private System.Windows.Forms.ToolBarButton toolBarButton11;
+        private System.Windows.Forms.ToolBarButton toolBarButton12;
+        private System.Windows.Forms.ToolBarButton toolBarButton13;
+        private System.Windows.Forms.ToolBarButton toolBarButton14;
+        private System.Windows.Forms.ToolBarButton toolBarButton22;
+        private System.Windows.Forms.ColumnHeader attribute;
+        private System.Windows.Forms.ColumnHeader value;
     }
 }

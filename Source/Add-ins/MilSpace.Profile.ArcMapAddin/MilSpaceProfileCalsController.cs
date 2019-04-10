@@ -202,16 +202,40 @@ namespace MilSpace.Profile
                 var session = manager.GenerateProfile(View.DemLayerName, profileSetting.ProfileLines, profileId);
 
                 SetPeofileId();
-
                 return session;
 
             }
             catch (Exception ex)
             {
                 //TODO log error
+                MessageBox.Show(ex.Message);
                 return null;
             }
         }
+
+        internal void AddProfileToList(ProfileSession profile)
+        {
+            switch (View.SelectedProfileSettingsType)
+            {
+                case ProfileSettingsTypeEnum.Points:
+                {
+                    View.AddSectionProfileNodes(profile);
+                    View.AddSectionProfileToList(profile);
+                    break;
+                }
+
+                case ProfileSettingsTypeEnum.Fun:
+                {
+                    View.AddFanProfileNode(profile);
+                    View.AddFanProfileToList(profile);
+                    break;
+                }
+
+
+            }
+        }
+
+
 
         internal void CallGraphsHandle(ProfileSession profileSession, ProfileSettingsTypeEnum profileType)
         {
