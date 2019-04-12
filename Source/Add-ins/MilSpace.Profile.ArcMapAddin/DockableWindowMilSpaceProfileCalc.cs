@@ -610,8 +610,6 @@ namespace MilSpace.Profile
             }
         }
 
-
-
         private void panel1_Enter(object sender, EventArgs e)
         {
             ProfileLayers.GetAllLayers();
@@ -633,7 +631,6 @@ namespace MilSpace.Profile
             }
         }
 
-
         private void ChechDouble_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = !CheckDouble(e.KeyChar, (TextBox)sender);
@@ -648,7 +645,6 @@ namespace MilSpace.Profile
         {
             controller.SetPeofileSettigs(ProfileSettingsTypeEnum.Fun);
         }
-
 
         private void profileSettingsTab_SelectedIndexChanged(object sender, EventArgs e)
         {
