@@ -1,5 +1,6 @@
 using MilSpace.Profile.SurfaceProfileChartControl;
 using System;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -49,9 +50,11 @@ namespace MilSpace.Profile
             profilesTabControl.TabPages.Add(tabPage);
 
             var curTab = profilesTabControl.TabPages[profilesTabControl.TabCount - 1];
+            surfaceProfileChart.Width = curTab.Width - 6;
             curTab.Controls.Add(surfaceProfileChart);
             curTab.Show();
             curTab.Select();
+            surfaceProfileChart.SetControlSize();
         }
 
         #region AddIn Instance
@@ -100,5 +103,15 @@ namespace MilSpace.Profile
 
         }
         #endregion
+
+        private void DockableWindowMilSpaceProfileGraph_Resize(object sender, EventArgs e)
+        {
+            profilesTabControl.Width = this.Width;
+            profilesTabControl.Height = this.Height;
+        }
+
+        private void profilesTabControl_Resize(object sender, EventArgs e)
+        {
+        }
     }
 }

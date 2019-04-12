@@ -29,9 +29,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             ProfilesProperties = new List<ProfileProperties>();
 
             InitializeComponent();
-
-
-
+            profileChart.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
         }
 
         internal void InitializeGraph()
@@ -240,7 +238,18 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         }
 
+        internal void SetControlSize()
+        {
+            profileChart.Width = Width - profileProperties.Width - 3;
+            profileChart.Height = Height;
+        }
+
         private void profileChart_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SurfaceProfileChart_Resize(object sender, EventArgs e)
         {
 
         }

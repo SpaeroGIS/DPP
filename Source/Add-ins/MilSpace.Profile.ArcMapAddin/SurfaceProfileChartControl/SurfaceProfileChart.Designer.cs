@@ -28,18 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.profileChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.LineName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.PathLengt = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.AngelMax = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.AngelMin = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ViewPoint = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.HeightMax = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.HeightMin = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Visibility = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.profileProperties = new System.Windows.Forms.ListView();
+            this.lineName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.pathLength = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.angleMax = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.angleMin = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.heighMax = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.heighMin = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.visibilityPersentage = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.profileChart)).BeginInit();
             this.SuspendLayout();
             // 
@@ -47,95 +47,86 @@
             // 
             this.profileChart.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            chartArea1.AxisX.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
-            chartArea1.AxisX.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
-            chartArea1.AxisX.Minimum = 0D;
-            chartArea1.Name = "Default";
-            this.profileChart.ChartAreas.Add(chartArea1);
+            chartArea3.AxisX.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
+            chartArea3.AxisX.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
+            chartArea3.AxisX.Minimum = 0D;
+            chartArea3.Name = "Default";
+            this.profileChart.ChartAreas.Add(chartArea3);
             this.profileChart.Location = new System.Drawing.Point(0, 0);
             this.profileChart.Name = "profileChart";
-            series1.ChartArea = "Default";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series1.Name = "Series1";
-            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int64;
-            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int64;
-            this.profileChart.Series.Add(series1);
-            this.profileChart.Size = new System.Drawing.Size(681, 240);
+            series3.ChartArea = "Default";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series3.Name = "Series1";
+            series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int64;
+            series3.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int64;
+            this.profileChart.Series.Add(series3);
+            this.profileChart.Size = new System.Drawing.Size(430, 281);
             this.profileChart.TabIndex = 0;
             this.profileChart.Text = "chart1";
             this.profileChart.Click += new System.EventHandler(this.profileChart_Click);
             this.profileChart.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Profile_MouseDown);
             // 
-            // listView1
+            // profileProperties
             // 
-            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.LineName,
-            this.ViewPoint,
-            this.PathLengt,
-            this.AngelMax,
-            this.AngelMin,
-            this.HeightMax,
-            this.HeightMin,
-            this.Visibility});
-            this.listView1.Location = new System.Drawing.Point(700, 0);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(343, 152);
-            this.listView1.TabIndex = 1;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
+            this.profileProperties.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.profileProperties.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lineName,
+            this.pathLength,
+            this.angleMax,
+            this.angleMin,
+            this.heighMax,
+            this.heighMin,
+            this.visibilityPersentage,
+            this.columnHeader1});
+            this.profileProperties.GridLines = true;
+            this.profileProperties.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.profileProperties.HoverSelection = true;
+            this.profileProperties.Location = new System.Drawing.Point(436, 3);
+            this.profileProperties.Name = "profileProperties";
+            this.profileProperties.Size = new System.Drawing.Size(242, 208);
+            this.profileProperties.TabIndex = 37;
+            this.profileProperties.UseCompatibleStateImageBehavior = false;
+            this.profileProperties.View = System.Windows.Forms.View.Details;
             // 
-            // LineName
+            // lineName
             // 
-            this.LineName.Text = "Name";
-            this.LineName.Width = 63;
+            this.lineName.Text = "Name";
             // 
-            // PathLengt
+            // pathLength
             // 
-            this.PathLengt.DisplayIndex = 1;
-            this.PathLengt.Text = "Path length";
-            this.PathLengt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.PathLengt.Width = 55;
+            this.pathLength.Text = "Длинна";
             // 
-            // AngelMax
+            // angleMax
             // 
-            this.AngelMax.DisplayIndex = 2;
-            this.AngelMax.Text = "Angel (max)";
+            this.angleMax.Text = "Угол (max)";
             // 
-            // AngelMin
+            // angleMin
             // 
-            this.AngelMin.DisplayIndex = 3;
-            this.AngelMin.Text = "Angel (min)";
+            this.angleMin.Text = "Угол (min)";
             // 
-            // ViewPoint
+            // heighMax
             // 
-            this.ViewPoint.DisplayIndex = 4;
-            this.ViewPoint.Text = "Point of View";
+            this.heighMax.Text = "Высота (max)";
             // 
-            // HeightMax
+            // heighMin
             // 
-            this.HeightMax.Text = "Height (max)";
+            this.heighMin.Text = "Высота (min)";
             // 
-            // HeightMin
+            // visibilityPersentage
             // 
-            this.HeightMin.Text = "Height (min)";
-            // 
-            // Visibility
-            // 
-            this.Visibility.Text = "Visibility (%)";
+            this.visibilityPersentage.Text = "Видимость % ";
             // 
             // SurfaceProfileChart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.profileProperties);
             this.Controls.Add(this.profileChart);
             this.Name = "SurfaceProfileChart";
-            this.Size = new System.Drawing.Size(1043, 243);
+            this.Size = new System.Drawing.Size(681, 284);
             this.Load += new System.EventHandler(this.SurfaceProfileChart_Load);
+            this.Resize += new System.EventHandler(this.SurfaceProfileChart_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.profileChart)).EndInit();
             this.ResumeLayout(false);
 
@@ -144,14 +135,14 @@
         #endregion
 
         private System.Windows.Forms.DataVisualization.Charting.Chart profileChart;
-        private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.ColumnHeader LineName;
-        private System.Windows.Forms.ColumnHeader PathLengt;
-        private System.Windows.Forms.ColumnHeader AngelMax;
-        private System.Windows.Forms.ColumnHeader AngelMin;
-        private System.Windows.Forms.ColumnHeader ViewPoint;
-        private System.Windows.Forms.ColumnHeader HeightMax;
-        private System.Windows.Forms.ColumnHeader HeightMin;
-        private System.Windows.Forms.ColumnHeader Visibility;
+        private System.Windows.Forms.ListView profileProperties;
+        private System.Windows.Forms.ColumnHeader lineName;
+        private System.Windows.Forms.ColumnHeader pathLength;
+        private System.Windows.Forms.ColumnHeader angleMax;
+        private System.Windows.Forms.ColumnHeader angleMin;
+        private System.Windows.Forms.ColumnHeader heighMax;
+        private System.Windows.Forms.ColumnHeader heighMin;
+        private System.Windows.Forms.ColumnHeader visibilityPersentage;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
     }
 }

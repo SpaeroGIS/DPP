@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Графика");
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -155,6 +155,9 @@
             this.richTextBox5 = new System.Windows.Forms.RichTextBox();
             this.label20 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.attribute = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.value = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.profilesTreeView = new System.Windows.Forms.TreeView();
             this.panel6 = new System.Windows.Forms.Panel();
             this.toolBar6 = new System.Windows.Forms.ToolBar();
@@ -165,7 +168,6 @@
             this.toolBarButton39 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton40 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton53 = new System.Windows.Forms.ToolBarButton();
-            this.lblProfileList = new System.Windows.Forms.Label();
             this.toolBarButton9 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton10 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton11 = new System.Windows.Forms.ToolBarButton();
@@ -173,9 +175,7 @@
             this.toolBarButton13 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton14 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton22 = new System.Windows.Forms.ToolBarButton();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.attribute = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.value = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lblProfileList = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -1714,31 +1714,62 @@
             this.tabPage2.Text = "Список профилей";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // listView1
+            // 
+            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.attribute,
+            this.value});
+            this.listView1.GridLines = true;
+            this.listView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.listView1.HoverSelection = true;
+            this.listView1.Location = new System.Drawing.Point(3, 469);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(755, 286);
+            this.listView1.TabIndex = 36;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
+            // 
+            // attribute
+            // 
+            this.attribute.Text = "Аттрибут";
+            this.attribute.Width = 348;
+            // 
+            // value
+            // 
+            this.value.Text = "Значение";
+            this.value.Width = 402;
+            // 
             // profilesTreeView
             // 
             this.profilesTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.profilesTreeView.CheckBoxes = true;
             this.profilesTreeView.Dock = System.Windows.Forms.DockStyle.Top;
             this.profilesTreeView.FullRowSelect = true;
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.ImageList = this.imageList1;
             this.profilesTreeView.Location = new System.Drawing.Point(3, 65);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode4.ImageKey = "vector-path-line.png";
-            treeNode4.Name = "sectionsNode";
-            treeNode4.SelectedImageIndex = 205;
-            treeNode4.Text = "Отрезки";
-            treeNode5.ImageKey = "Editing-Line-icon3.png";
-            treeNode5.Name = "fanNode";
-            treeNode5.SelectedImageIndex = 208;
-            treeNode5.Text = "Веер";
-            treeNode6.ImageKey = "vector-polygon.png";
-            treeNode6.Name = "primitivesNode";
-            treeNode6.SelectedImageIndex = 209;
-            treeNode6.Text = "Графика";
+            treeNode1.Checked = true;
+            treeNode1.ImageKey = "vector-path-line.png";
+            treeNode1.Name = "sectionsNode";
+            treeNode1.SelectedImageIndex = 205;
+            treeNode1.Text = "Отрезки";
+            treeNode2.Checked = true;
+            treeNode2.ImageKey = "Editing-Line-icon3.png";
+            treeNode2.Name = "fanNode";
+            treeNode2.SelectedImageIndex = 208;
+            treeNode2.Text = "Веер";
+            treeNode3.Checked = true;
+            treeNode3.ImageKey = "vector-polygon.png";
+            treeNode3.Name = "primitivesNode";
+            treeNode3.SelectedImageIndex = 209;
+            treeNode3.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode5,
-            treeNode6});
+            treeNode1,
+            treeNode2,
+            treeNode3});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(755, 325);
             this.profilesTreeView.TabIndex = 35;
@@ -1815,19 +1846,6 @@
             this.toolBarButton53.ImageKey = "Arrow1 Up.png";
             this.toolBarButton53.Name = "toolBarButton53";
             // 
-            // lblProfileList
-            // 
-            this.lblProfileList.AutoSize = true;
-            this.lblProfileList.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblProfileList.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblProfileList.Location = new System.Drawing.Point(3, 3);
-            this.lblProfileList.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
-            this.lblProfileList.Name = "lblProfileList";
-            this.lblProfileList.Padding = new System.Windows.Forms.Padding(0, 6, 0, 6);
-            this.lblProfileList.Size = new System.Drawing.Size(161, 32);
-            this.lblProfileList.TabIndex = 1;
-            this.lblProfileList.Text = "Список профилей";
-            // 
             // toolBarButton9
             // 
             this.toolBarButton9.ImageKey = "Refresh.png";
@@ -1863,32 +1881,18 @@
             this.toolBarButton22.ImageKey = "Save.png";
             this.toolBarButton22.Name = "toolBarButton22";
             // 
-            // listView1
+            // lblProfileList
             // 
-            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.attribute,
-            this.value});
-            this.listView1.GridLines = true;
-            this.listView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.listView1.HoverSelection = true;
-            this.listView1.Location = new System.Drawing.Point(3, 469);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(755, 286);
-            this.listView1.TabIndex = 36;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
-            // 
-            // attribute
-            // 
-            this.attribute.Text = "Аттрибут";
-            this.attribute.Width = 348;
-            // 
-            // value
-            // 
-            this.value.Text = "Значение";
-            this.value.Width = 402;
+            this.lblProfileList.AutoSize = true;
+            this.lblProfileList.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblProfileList.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblProfileList.Location = new System.Drawing.Point(3, 3);
+            this.lblProfileList.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
+            this.lblProfileList.Name = "lblProfileList";
+            this.lblProfileList.Padding = new System.Windows.Forms.Padding(0, 6, 0, 6);
+            this.lblProfileList.Size = new System.Drawing.Size(161, 32);
+            this.lblProfileList.TabIndex = 1;
+            this.lblProfileList.Text = "Список профилей";
             // 
             // DockableWindowMilSpaceProfileCalc
             // 

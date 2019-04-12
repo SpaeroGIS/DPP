@@ -50,9 +50,14 @@ namespace MilSpace.Profile
 
         int ProfileId { set; }
 
-        void AddSectionProfileNodes(ProfileSession profile);
+        /// <summary>
+        /// Adds the <paramref name="profile"/> into the tree view 
+        /// </summary>
+        /// <param name="profile">MilSpace Profile </param>
+        /// <returns>Returns true if the parent node is chacked. Used to add thr Profile to the Graphics layer </returns>
+        bool AddSectionProfileNodes(ProfileSession profile);
 
-        void AddFanProfileNode(ProfileSession profile);
+        bool AddFanProfileNode(ProfileSession profile);
 
         void AddSectionProfileToList(ProfileSession profile);
 
