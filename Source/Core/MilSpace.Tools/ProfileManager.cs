@@ -225,6 +225,7 @@ namespace MilSpace.Tools
                         PointFrom = new ProfilePoint { X = transformedFrom.X, Y = transformedFrom.Y },
                         PointTo = new ProfilePoint { X = transformedTo.X, Y = transformedTo.Y },
                         Id = line.OID,
+                        Length = ln.Length,
                         SpatialReference = EsriTools.Wgs84Spatialreference,
                         Angel = ln.Angle
                     });

@@ -1,22 +1,16 @@
 ﻿using ESRI.ArcGIS.Carto;
-using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core;
 using MilSpace.Core.Tools;
-using MilSpace.Tools;
+using MilSpace.DataAccess.DataTransfer;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Threading;
 using System.Windows.Forms;
-using System.Windows.Media;
-using System.Linq;
 using Point = ESRI.ArcGIS.Geometry.Point;
-using System.Diagnostics;
-using System.Globalization;
 
 namespace MilSpace.Profile
 {
@@ -35,6 +29,10 @@ namespace MilSpace.Profile
         private ProfileSettingsPointButton activeButtton = ProfileSettingsPointButton.None;
 
         MilSpaceProfileCalsController controller;
+
+        List<ProfileSession> _sectionProfiles = new List<ProfileSession>();
+        List<ProfileSession> _fanProfiles = new List<ProfileSession>();
+        List<ProfileSession> _graphicProfiles = new List<ProfileSession>();
 
         public DockableWindowMilSpaceProfileCalc(MilSpaceProfileCalsController controller)
         {
@@ -71,6 +69,82 @@ namespace MilSpace.Profile
         {
             set { txtProfileName.Text = value.ToString(); }
         }
+
+        public bool AddSectionProfileNodes(ProfileSession profile)
+        {
+            return AddNodeToTreeView("sectionsNode", profile, 205, 205);
+        }
+
+        public bool AddFanProfileNode(ProfileSession profile)
+        {
+            return AddNodeToTreeView("fanNode", profile, 208, 208);
+        }
+
+        public void AddSectionProfileToList(ProfileSession profile)
+        {
+            _sectionProfiles.Add(profile);
+        }
+
+        public void AddFanProfileToList(ProfileSession profile)
+        {
+            _fanProfiles.Add(profile);
+        }
+
+        public void RemoveSectionProfileFromList(string profileName)
+        {
+            var profileToRemove = _sectionProfiles
+                .FirstOrDefault(profile => profile.SessionName.Equals(profileName));
+            if (profileToRemove != null)
+            {
+                _sectionProfiles.Remove(profileToRemove);
+            }
+        }
+
+        public ProfileSession GetSectionProfile(string profileName)
+        {
+            var resultProfile = _sectionProfiles.FirstOrDefault(profile => profile.SessionName.Equals(profileName));
+            return resultProfile;
+        }
+
+        private bool AddNodeToTreeView(string parentNodeName, ProfileSession profile, int imageIndex, int selectedImageIndex)
+        {
+            var parentNode = profilesTreeView.Nodes.Find(parentNodeName, false).FirstOrDefault();
+            if (parentNode != null)
+            {
+                var newNode = new TreeNode(profile.SessionName, imageIndex, selectedImageIndex);
+                newNode.Checked = parentNode.Checked;
+                foreach (var line in profile.ProfileLines)
+                {
+                    var childNode = new TreeNode($"X={line.PointFrom.X:F4}; Y={line.PointTo.Y:F4}; Дистанция={line.Length:F4} {MapUnitsText}", 205, 205);
+                    newNode.Nodes.Add(childNode);
+                    childNode.Checked = newNode.Checked;
+                }
+                parentNode.Nodes.Add(newNode);
+            }
+
+            return parentNode.Checked;
+        }
+
+        private string MapUnitsText
+        {
+            get
+            {
+                switch (ActiveView.FocusMap.DistanceUnits)
+                {
+                    case esriUnits.esriMeters:
+                        return "метров";
+                    case esriUnits.esriKilometers:
+                        return "километров";
+                    case esriUnits.esriMiles:
+                        return "миль";
+                    case esriUnits.esriFeet:
+                        return "футов";
+                    default:
+                        return "метров";
+                }
+            }
+        }
+
 
 
         public bool AllowToProfileCalc
@@ -419,8 +493,6 @@ namespace MilSpace.Profile
             {
                 System.Windows.Forms.Clipboard.SetText(text);
             }
-
-
         }
 
         private void PasteTextToEditField(TextBox textBox)
@@ -551,6 +623,8 @@ namespace MilSpace.Profile
             var session = controller.GenerateProfile();
             if (session != null)
             {
+                controller.AddProfileToList(session);
+
                 controller.CallGraphsHandle(session, SelectedProfileSettingsType);
             }
             else

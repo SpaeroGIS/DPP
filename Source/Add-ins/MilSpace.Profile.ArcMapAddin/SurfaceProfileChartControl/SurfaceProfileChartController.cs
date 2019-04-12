@@ -125,7 +125,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 var b = angles.Exists(angle => angle > 0);
                 profileProperty.MaxAngle = angles.Exists(angle => angle > 0) ? Math.Abs(angles.Where(angle => angle > 0).Max()) : 0;
 
-                profileProperty.MinAngle = angles.Exists(angle => angle > 0) ? Math.Abs(angles.Where(angle => angle < 0).Min()) : 0;
+                profileProperty.MinAngle = angles.Exists(angle => angle < 0) ? Math.Abs(angles.Where(angle => angle < 0).Min()) : 0;
 
                 profileProperty.PathLength = FindLength(profileSurfacePoints);
 

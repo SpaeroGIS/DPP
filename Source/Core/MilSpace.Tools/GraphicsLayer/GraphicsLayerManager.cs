@@ -1,6 +1,7 @@
 ﻿using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.Geometry;
+using MilSpace.Core.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,60 +14,102 @@ namespace MilSpace.Tools.GraphicsLayer
     {
         IGraphicsContainer graphics;
         IActiveView activeView;
-        private List<GraphicElement> milSpaceGraphics = new List<GraphicElement>();
+        private List<GraphicElement> milSpaceCalculatingGraphics = new List<GraphicElement>();
+        private List<GraphicElement> milSpaceSessionGraphics = new List<GraphicElement>();
+        private static Dictionary<MilSpaceGraphicsTypeEnum, Func<IRgbColor>> grapchucsTypeColors = new Dictionary<MilSpaceGraphicsTypeEnum, Func<IRgbColor>>
+        {
+            { MilSpaceGraphicsTypeEnum.Calculating, () =>  new RgbColor(){ Red = 255,Green = 0, Blue = 0} },
+            { MilSpaceGraphicsTypeEnum.Session, () =>  new RgbColor(){ Red = 0,Green = 255, Blue = 0} }
+        };
+
+        private Dictionary<MilSpaceGraphicsTypeEnum, List<GraphicElement>> allGraphics = new Dictionary<MilSpaceGraphicsTypeEnum, List<GraphicElement>>();
+
 
         public GraphicsLayerManager(IActiveView activeView)
         {
             this.activeView = activeView;
             graphics = activeView.GraphicsContainer;
+            allGraphics.Add(MilSpaceGraphicsTypeEnum.Calculating, milSpaceCalculatingGraphics);
+            allGraphics.Add(MilSpaceGraphicsTypeEnum.Session, milSpaceSessionGraphics);
+
         }
 
-
-        public void UpdateGraphic(IEnumerable<IPolyline> profileLines, int profileId, int profileTypeId)
+        private void UpdateGraphic(IEnumerable<IPolyline> profileLines, int profileId, int profileTypeId, MilSpaceGraphicsTypeEnum graphicsType)
         {
-
-            EmptyProfileGraphics();
+            EmptyProfileGraphics(graphicsType);
 
             int elementId = profileTypeId * 100;
             foreach (var line in profileLines)
             {
                 var ge = new GraphicElement() { Source = line, ElementId = ++elementId, ProfileId = profileId };
-                AddPolyline(ge);
+                AddPolyline(ge, graphicsType);
             }
 
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
+
         }
 
-        public void EmptyProfileGraphics()
+        public void AddLinesToSessionGraphics(IEnumerable<IPolyline> profileLines, int profileId, int profileTypeId)
         {
 
-            graphics.DeleteAllElements();
-            milSpaceGraphics.RemoveRange(0, milSpaceGraphics.Count);
+            int elementId = profileId * 100;
+            foreach (var line in profileLines)
+            {
+                var graphic = milSpaceSessionGraphics.FirstOrDefault(g => g.ElementId == ++elementId);
+                if (graphic != null)
+                {
+                    graphics.DeleteElement(graphic.Element);
+                    milSpaceSessionGraphics.Remove(graphic);
+                }
 
+                var ge = new GraphicElement() { Source = line, ElementId = elementId, ProfileId = profileId };
+                AddPolyline(ge, MilSpaceGraphicsTypeEnum.Session);
+            }
+        }
+
+        public void UpdateWorkingingGraphics(IEnumerable<IPolyline> profileLines, int profileId, int profileTypeId)
+        {
+            UpdateGraphic(profileLines, profileId, profileTypeId, MilSpaceGraphicsTypeEnum.Session);
+        }
+
+        public void UpdateCalculatingGraphic(IEnumerable<IPolyline> profileLines, int profileId, int profileTypeId)
+        {
+            UpdateGraphic(profileLines, profileId, profileTypeId, MilSpaceGraphicsTypeEnum.Calculating);
+        }
+
+        public void EmptyProfileGraphics(MilSpaceGraphicsTypeEnum profileType)
+        {
+            var curList = allGraphics[profileType];
+            curList.ForEach(e => graphics.DeleteElement(e.Element));
+            curList.RemoveRange(0, curList.Count);
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
         }
 
-        public void AddPolyline(GraphicElement graphicElement, bool doFeresh = false)
+        public void AddCalculationPolyline(GraphicElement graphicElement, bool doFeresh = false)
+        {
+            AddPolyline(graphicElement, MilSpaceGraphicsTypeEnum.Calculating, false);
+        }
+        private void AddPolyline(GraphicElement graphicElement, MilSpaceGraphicsTypeEnum graphicsType, bool doFeresh = false)
         {
             IPolyline profileLine = graphicElement.Source;
             ILineElement lineElement = new LineElementClass();
 
             int id = profileLine.GetHashCode();
 
-            if (milSpaceGraphics.Any(ge => ge.ElementId == graphicElement.ElementId))
+            if (milSpaceCalculatingGraphics.Any(ge => ge.ElementId == graphicElement.ElementId))
             {
                 return;
             }
 
-
-            lineElement.Symbol = DefineProfileLineSymbol();
+            lineElement.Symbol = DefineProfileLineSymbol(graphicsType);
             IElement elem = (IElement)lineElement;
             elem.Geometry = profileLine;
 
             graphics.AddElement(elem, 0);
 
             graphicElement.Element = elem;
-            milSpaceGraphics.Add(graphicElement);
+            var curList = allGraphics[graphicsType];
+            curList.Add(graphicElement);
 
             if (doFeresh)
             {
@@ -74,15 +117,10 @@ namespace MilSpace.Tools.GraphicsLayer
             }
         }
 
-        private static ILineSymbol DefineProfileLineSymbol()
+        private static ILineSymbol DefineProfileLineSymbol(MilSpaceGraphicsTypeEnum graphicsType)
         {
 
-            IRgbColor rgbColor = new RgbColor()
-            {
-                Red = 255,
-                Green = 0,
-                Blue = 0
-            };
+            IRgbColor rgbColor = grapchucsTypeColors[graphicsType]();
 
 
             //Define an arrow marker  

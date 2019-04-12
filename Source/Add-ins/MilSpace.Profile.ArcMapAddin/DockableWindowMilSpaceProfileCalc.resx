@@ -125,7 +125,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABc
-        0AAAAk1TRnQBSQFMAgEB1AEAAVABAgFQAQIBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        0AAAAk1TRnQBSQFMAgEB1AEAAagBAgGoAQIBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAWABAwIAAQEBAAEIBgAB2BgAAYACAAGAAwACgAEAAYADAAGAAQABgAEAAoACAAPAAQABwAHc
         AcABAAHwAcoBpgEAATMFAAEzAQABMwEAATMBAAIzAgADFgEAAxwBAAMiAQADKQEAA1UBAANNAQADQgEA
         AzkBAAGAAXwB/wEAAlAB/wEAAZMBAAHWAQAB/wHsAcwBAAHGAdYB7wEAAdYC5wEAAZABqQGtAgAB/wEz
@@ -1029,26 +1029,6 @@
 Сохранение профилей должно выполнятся на странице "Управление"
 Вид хранения должен позволять восстанавливать геометрию профиля и его происхождение.
 Восстановление происхождения должно позволять проводить редактирование профиля на соответствующих страницах задания параметров.</value>
-  </data>
-  <data name="richTextBox6.Text" xml:space="preserve">
-    <value>При выборе "терминального" элемента
-тип, 
-параметры, (узлы линии?)
-общая длина, 
-сохранен в БД
-тип профиля (с/без расчетом видиомти)
-При выборе "группового" элемента
-колическтво в группе
-Для вееров - параметры генерации, базовая точка</value>
-  </data>
-  <data name="richTextBox7.Text" xml:space="preserve">
-    <value>Обеспечивает (тулбар)
-- вкл/выкл, переход на карте на карте, селект, подсветку
-- переход к редактированию, пересчет
-- удаление из списка, удаление с экрана (для графики)
-- отображение параметров
-- переход к окну графиков
-- сохранениние в БД</value>
   </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>25</value>

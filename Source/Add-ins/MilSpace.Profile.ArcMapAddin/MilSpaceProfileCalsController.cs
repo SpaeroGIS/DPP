@@ -184,7 +184,7 @@ namespace MilSpace.Profile
 
             InvokeOnProfileSettingsChanged();
 
-            GraphicsLayerManager.UpdateGraphic(profileSetting.ProfileLines, profileId, (int)profileType);
+            GraphicsLayerManager.UpdateCalculatingGraphic(profileSetting.ProfileLines, profileId, (int)profileType);
         }
 
 
@@ -202,16 +202,45 @@ namespace MilSpace.Profile
                 var session = manager.GenerateProfile(View.DemLayerName, profileSetting.ProfileLines, profileId);
 
                 SetPeofileId();
-
                 return session;
 
             }
             catch (Exception ex)
             {
                 //TODO log error
+                MessageBox.Show(ex.Message);
                 return null;
             }
         }
+
+        internal void AddProfileToList(ProfileSession profile)
+        {
+            bool isAddToGraphics = false;
+            switch (View.SelectedProfileSettingsType)
+            {
+                case ProfileSettingsTypeEnum.Points:
+                    {
+                        isAddToGraphics = View.AddSectionProfileNodes(profile);
+                        View.AddSectionProfileToList(profile);
+                        break;
+                    }
+
+                case ProfileSettingsTypeEnum.Fun:
+                    {
+                        isAddToGraphics = View.AddFanProfileNode(profile);
+                        View.AddFanProfileToList(profile);
+                        break;
+                    }
+            }
+            //Add graphics 
+            if (isAddToGraphics)
+            {
+                GraphicsLayerManager.AddLinesToSessionGraphics(profile.ConvertLinesToEsriPolypile(ArcMap.Document.FocusMap.SpatialReference), profile.SessionId, (int)View.SelectedProfileSettingsType);
+            }
+            GraphicsLayerManager.EmptyProfileGraphics(MilSpaceGraphicsTypeEnum.Calculating);
+        }
+
+
 
         internal void CallGraphsHandle(ProfileSession profileSession, ProfileSettingsTypeEnum profileType)
         {

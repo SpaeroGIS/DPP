@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MilSpace.DataAccess.DataTransfer;
 
 namespace MilSpace.Profile
 {
@@ -48,6 +49,23 @@ namespace MilSpace.Profile
         string DemLayerName { get; }
 
         int ProfileId { set; }
+
+        /// <summary>
+        /// Adds the <paramref name="profile"/> into the tree view 
+        /// </summary>
+        /// <param name="profile">MilSpace Profile </param>
+        /// <returns>Returns true if the parent node is chacked. Used to add thr Profile to the Graphics layer </returns>
+        bool AddSectionProfileNodes(ProfileSession profile);
+
+        bool AddFanProfileNode(ProfileSession profile);
+
+        void AddSectionProfileToList(ProfileSession profile);
+
+        void AddFanProfileToList(ProfileSession profile);
+
+        void RemoveSectionProfileFromList(string profileName);
+
+        ProfileSession GetSectionProfile(string profileName);
 
     }
 }
