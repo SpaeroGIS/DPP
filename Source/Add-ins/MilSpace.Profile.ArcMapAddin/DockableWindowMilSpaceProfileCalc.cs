@@ -624,7 +624,6 @@ namespace MilSpace.Profile
             if (session != null)
             {
                 controller.AddProfileToList(session);
-
                 controller.CallGraphsHandle(session, SelectedProfileSettingsType);
             }
             else
