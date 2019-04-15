@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ESRI.ArcGIS.Geometry;
+using System.Xml.Serialization;
 
 namespace MilSpace.DataAccess.DataTransfer
 {
@@ -11,5 +8,10 @@ namespace MilSpace.DataAccess.DataTransfer
         public ProfilePoint PointFrom;
         public ProfilePoint PointTo;
         public int Id;
+        public double Angel;
+        public double Length;
+
+        [XmlIgnore]
+        public ISpatialReference SpatialReference;
     }
 }

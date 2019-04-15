@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace MilSpace.Core.Tools
 {
-    public class EsriTools
+    public static class EsriTools
     {
 
         private static ISpatialReference wgs84 = null;
@@ -43,6 +43,20 @@ namespace MilSpace.Core.Tools
                 //ToDO: Loggig
             }
 
+        }
+
+        /// <summary>
+        /// Clone the point with projectin to Wgs84
+        /// </summary>
+        /// <param name="point">Clonning point</param>
+        /// <returns>Point projected to Wgs84 SC</returns>
+        public static IPoint CloneWithProjecting(this IPoint point)
+        {
+
+            var clonedPoint = new Point() { X = point.X, Y = point.Y, Z = point.Z, SpatialReference = point.SpatialReference };
+            ProjectToWgs84(clonedPoint);
+
+            return clonedPoint;
         }
 
         public static void ProjectToMapSpatialReference(IGeometry geometry, ISpatialReference mapSpatialReference)
@@ -122,14 +136,38 @@ namespace MilSpace.Core.Tools
             List<IPolyline> result = new List<IPolyline>();
             for (int i = 0; i < count; i++)
             {
-                IConstructPoint outPoint = new PointClass();
-                outPoint.ConstructAngleDistance(centerPoint, minAzimuth + (i * step), length);
+                double radian = (90 - (minAzimuth + (i * step))) * (Math.PI / 180);
+                IPoint outPoint = GetPointFromAngelAndDistance(centerPoint, radian, length);
                 result.Add(CreatePolylineFromPoints(centerPoint, outPoint as IPoint));
             }
 
             return result;
         }
 
+
+        /// <summary>
+        /// Get new point by distance and angel
+        /// </summary>
+        /// <param name="basePoint">The base point</param>
+        /// <param name="angel">dirrection in radians</param>
+        /// <param name="length">distance to the new point</param>
+        /// <returns>Esri point</returns>
+        public static IPoint GetPointFromAngelAndDistance(IPoint basePoint, double angel, double length)
+        {
+            IConstructPoint outPoint = new PointClass();
+            outPoint.ConstructAngleDistance(basePoint, angel, length);
+            IPoint resilt = outPoint as IPoint;
+            resilt.SpatialReference = basePoint.SpatialReference;
+            return resilt;
+        }
+
+
+        /// <summary>
+        /// Create a Polyline from two Points
+        /// </summary>
+        /// <param name="pointFrom">Start point</param>
+        /// <param name="pointTo">End point</param>
+        /// <returns>Esri poliline</returns>
         public static IPolyline CreatePolylineFromPoints(IPoint pointFrom, IPoint pointTo)
         {
             if (pointFrom == null || pointTo == null)

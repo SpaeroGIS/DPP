@@ -1,31 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 
-namespace SurfaceProfileChart.SurfaceProfileChartControl
+
+namespace MilSpace.Profile.SurfaceProfileChartControl
 {
-    internal class SurfaceProfileChartController
+    public class SurfaceProfileChartController
     {
         private SurfaceProfileChart _surfaceProfileChart;
         private ProfileSession _profileSession;
+        private List<ProfileSurfacePoint> _extremePoints = new List<ProfileSurfacePoint>();
 
-        private List<ProfileSurfacePoint> _triangle = new List<ProfileSurfacePoint>();
+        internal delegate void ProfileGrapchClickedDelegate(GraphProfileClickedArgs e);
 
-        public SurfaceProfileChartController(SurfaceProfileChart surfaceProfileChart)
+        internal event ProfileGrapchClickedDelegate OnProfileGraphClicked;
+
+
+        public SurfaceProfileChartController()
         {
-            _surfaceProfileChart = surfaceProfileChart;
-            _profileSession = DataPreparator.Get();
         }
 
-        public void LoadSeries()
+        internal void GetSession(ProfileSession profileSession)
         {
-            var extremePoints = FindExtremePoints();
-
-            _surfaceProfileChart.InitializeProfile(_profileSession, extremePoints);
+            _profileSession = profileSession;
         }
 
-        public void AddInvisibleZones(double observerHeight)
+        internal SurfaceProfileChart CreateProfileChart()
+        {
+            _surfaceProfileChart = new SurfaceProfileChart(this);
+            _surfaceProfileChart.InitializeGraph();
+
+            return _surfaceProfileChart;
+        }
+
+
+        internal void AddProfile()
+        {
+
+        }
+
+        internal void LoadSeries()
+        {
+            _surfaceProfileChart.InitializeProfile(_profileSession);
+        }
+
+        internal void AddExtremePoints()
+        {
+            _extremePoints = FindExtremePoints();
+
+            _surfaceProfileChart.SetExtremePoints(_extremePoints);
+        }
+
+        internal void AddInvisibleZones(double observerHeight)
         {
             foreach (var profileSessionProfileLine in _profileSession.ProfileLines)
             {
@@ -78,12 +106,12 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
             }
         }
 
-        public void SetProfilesProperties()
+        internal void SetProfilesProperties()
         {
 
             foreach (var profileSessionProfileLine in _profileSession.ProfileLines)
             {
-                var profileProperty = new ProfileProperty();
+                var profileProperty = new ProfileProperties();
                 profileProperty.LineId = profileSessionProfileLine.Id;
 
                 var profileSurfacePoints = _profileSession.ProfileSurfaces.FirstOrDefault(surface =>
@@ -93,8 +121,11 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
                 profileProperty.MinHeight = profileSurfacePoints.Min(point => point.Z);
 
                 var angles = FindAngles(profileSurfacePoints);
-                profileProperty.MaxAngle = Math.Abs(angles.Where(angle => angle > 0).Max());
-                profileProperty.MinAngle = Math.Abs(angles.Where(angle => angle < 0).Min());
+                var n = angles.Exists(angle => angle > 0);
+                var b = angles.Exists(angle => angle > 0);
+                profileProperty.MaxAngle = angles.Exists(angle => angle > 0) ? Math.Abs(angles.Where(angle => angle > 0).Max()) : 0;
+
+                profileProperty.MinAngle = angles.Exists(angle => angle < 0) ? Math.Abs(angles.Where(angle => angle < 0).Min()) : 0;
 
                 profileProperty.PathLength = FindLength(profileSurfacePoints);
 
@@ -102,6 +133,9 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
             }
 
         }
+
+
+        
 
         private List<ProfileSurfacePoint> FindExtremePoints()
         {
@@ -120,7 +154,7 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
             return extremePoints;
         }
 
-        private double FindLength(ProfileSurfacePoint[] profileSurfacePoints)
+        private static double FindLength(ProfileSurfacePoint[] profileSurfacePoints)
         {
             double result = 0;
 
@@ -132,9 +166,18 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
             return result;
         }
 
-        private List<double> FindAngles(ProfileSurfacePoint[] profileSurfacePoints)
+        internal void InvokeOnProfileGraphClicked(double wgs94X, double wgs94Y)
+        {
+            var point = new GraphProfileClickedArgs(wgs94X, wgs94Y);
+            point.ProfilePoint.SpatialReference = EsriTools.Wgs84Spatialreference;
+            OnProfileGraphClicked?.Invoke(point);
+        }
+
+        private static List<double> FindAngles(ProfileSurfacePoint[] profileSurfacePoints)
         {
             var angles = new List<double>();
+            List<ProfileSurfacePoint> _triangle = new List<ProfileSurfacePoint>();
+
             ProfileSurfacePoint deviationPoint = profileSurfacePoints[0];
 
             for (var i = 0; i < profileSurfacePoints.Length - 2; i++)
@@ -153,7 +196,7 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
             return angles;
         }
 
-        private double CalcVectorLength(ProfileSurfacePoint leftPoint, ProfileSurfacePoint rightPoint)
+        private static double CalcVectorLength(ProfileSurfacePoint leftPoint, ProfileSurfacePoint rightPoint)
         {
             var x = rightPoint.Distance - leftPoint.Distance;
             var y = rightPoint.Z - leftPoint.Z;
@@ -161,14 +204,13 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
             return Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2));
         }
 
-        private double CalcAngleOfDeviation(ProfileSurfacePoint leftPoint,
-            ProfileSurfacePoint rightPoint)
+        private static double CalcAngleOfDeviation(ProfileSurfacePoint leftPoint, ProfileSurfacePoint rightPoint)
         {
             var angle = Math.Atan(Math.Abs(rightPoint.Z - leftPoint.Z) / (rightPoint.Distance - leftPoint.Distance)) * (180 / Math.PI);
             return (rightPoint.Z < leftPoint.Z) ? angle * (-1) : angle;
         }
 
-        private double CalcAngleOfVisibility(double observerHeight, ProfileSurfacePoint leftPoint,
+        private static double CalcAngleOfVisibility(double observerHeight, ProfileSurfacePoint leftPoint,
             ProfileSurfacePoint rightPoint)
         {
             var sightLineKoef = (rightPoint.Z - observerHeight) / (rightPoint.Distance);
@@ -178,11 +220,10 @@ namespace SurfaceProfileChart.SurfaceProfileChartControl
             return Math.Atan(result);
         }
 
-        private double FindY(double observerHeight, double angleKoef, double x)
+        private static double FindY(double observerHeight, double angleKoef, double x)
         {
             return (angleKoef * x + observerHeight);
         }
 
     }
-
 }

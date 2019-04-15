@@ -1,13 +1,6 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Xml.Serialization;
-using System.Globalization;
-using System.IO;
-using MilSpace.Configurations;
-using System.Reflection;
-using ESRI.ArcGIS.Geometry;
+﻿using ESRI.ArcGIS.Geometry;
+using MilSpace.DataAccess.DataTransfer;
+using System;
 
 namespace MilSpace.DataAccess
 {
@@ -27,6 +20,16 @@ namespace MilSpace.DataAccess
         public static string GetTemporaryNameSuffix()
         {
             return DateTime.Now.ToString("yyyyMMddHHmmss");
+        }
+
+        public static IPoint GetEsriPoint(this ProfilePoint point, ISpatialReference spatial = null)
+        {
+            if (point == null)
+            {
+                return null;
+            }
+
+            return new Point() { X = point.X, Y = point.Y, SpatialReference = spatial };
         }
 
     }

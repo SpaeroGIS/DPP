@@ -6,6 +6,7 @@
         Insert,
         Update,
         Delete,
-        Submit
+        Submit,
+        Convert
     }
 }
