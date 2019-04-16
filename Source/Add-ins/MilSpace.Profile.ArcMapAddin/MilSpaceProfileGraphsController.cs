@@ -62,7 +62,12 @@ namespace MilSpace.Profile
             _surfaceProfileChartController.GetSession(profileSession);
             SurfaceProfileChart surfaceProfileChart = _surfaceProfileChartController.CreateProfileChart();
 
-            View.AddNewTab(surfaceProfileChart);
+            View.AddNewTab(surfaceProfileChart, profileSession.SessionName);
+        }
+
+        internal void ChangeChart(SurfaceProfileChart currentChart)
+        {
+            _surfaceProfileChartController.GetCurrentChart(currentChart);
         }
     }
 }

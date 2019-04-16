@@ -1,5 +1,6 @@
 using MilSpace.Profile.SurfaceProfileChartControl;
 using System;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -41,17 +42,20 @@ namespace MilSpace.Profile
             SubscribeForEvents();
         }
 
-        internal void AddNewTab(SurfaceProfileChart surfaceProfileChart)
+        internal void AddNewTab(SurfaceProfileChart surfaceProfileChart, string sessionName)
         {
-            string title = $"Профиль графика {profilesTabControl.TabCount + 1}";
+            string title = $"{sessionName}";
             TabPage tabPage = new TabPage(title);
-            tabPage.Name = $"profileTabPage{profilesTabControl.TabCount}";
+            tabPage.Name = $"{sessionName}";
             profilesTabControl.TabPages.Add(tabPage);
 
             var curTab = profilesTabControl.TabPages[profilesTabControl.TabCount - 1];
+            surfaceProfileChart.Width = curTab.Width - 6;
+            surfaceProfileChart.Name = "profileChart";
             curTab.Controls.Add(surfaceProfileChart);
             curTab.Show();
             curTab.Select();
+            surfaceProfileChart.SetControlSize();
         }
 
         #region AddIn Instance
@@ -100,5 +104,25 @@ namespace MilSpace.Profile
 
         }
         #endregion
+
+        private void DockableWindowMilSpaceProfileGraph_Resize(object sender, EventArgs e)
+        {
+            profilesTabControl.Width = this.Width;
+            profilesTabControl.Height = this.Height;
+        }
+
+        private void ProfilesTabControl_Resize(object sender, EventArgs e)
+        {
+           foreach (TabPage page in profilesTabControl.TabPages)
+            {
+                page.Controls["profileChart"].Width = Width - 6;
+                page.Controls["profileChart"].Height = Height - 6;
+            }
+        }
+
+        private void ProfilesTabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            controller.ChangeChart((SurfaceProfileChart)profilesTabControl.SelectedTab.Controls["profileChart"]);
+        }
     }
 }

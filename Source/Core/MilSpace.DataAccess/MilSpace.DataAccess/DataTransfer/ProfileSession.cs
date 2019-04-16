@@ -1,25 +1,45 @@
-﻿using System;
+﻿using ESRI.ArcGIS.Geometry;
+using MilSpace.Core.Tools;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 
 namespace MilSpace.DataAccess.DataTransfer
 {
-    public class ProfileSession 
+    public class ProfileSession
     {
         public ProfileLine[] ProfileLines;
         public ProfileSurface[] ProfileSurfaces;
         public ProfileSettingsTypeEnum ProfileType;
         public int SessionId;
         public string SessionName;
-        
+
         [XmlIgnore]
-        public  string Serialized
+        public string Serialized
         {
-            get {
+            get
+            {
 
                 return Serialize(this);
             }
+        }
+
+        public IEnumerable<IPolyline> ConvertLinesToEsriPolypile(ISpatialReference spatialReference)
+        {
+           return ProfileLines.Select(l =>
+            {
+                var pointFrom = new Point { X = l.PointFrom.X, Y = l.PointFrom.Y, SpatialReference = EsriTools.Wgs84Spatialreference};
+                var pointTo = new Point { X = l.PointTo.X, Y = l.PointTo.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
+
+                pointFrom.Project(spatialReference);
+                pointTo.Project(spatialReference);
+
+                return EsriTools.CreatePolylineFromPoints(pointFrom, pointTo);
+            }
+            ).ToArray();
         }
 
         private static string Serialize(ProfileSession session)
@@ -42,5 +62,8 @@ namespace MilSpace.DataAccess.DataTransfer
                 return null;
             }
         }
+
+
+
     }
 }

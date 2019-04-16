@@ -374,14 +374,18 @@ namespace MilSpace.Profile
             // 
             // profilesTabControl
             // 
+            this.profilesTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.profilesTabControl.Controls.Add(this.tabPage1);
-            this.profilesTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.profilesTabControl.Location = new System.Drawing.Point(0, 0);
             this.profilesTabControl.Name = "profilesTabControl";
             this.profilesTabControl.SelectedIndex = 0;
             this.profilesTabControl.ShowToolTips = true;
             this.profilesTabControl.Size = new System.Drawing.Size(800, 300);
             this.profilesTabControl.TabIndex = 1;
+            this.profilesTabControl.SelectedIndexChanged += new System.EventHandler(this.ProfilesTabControl_SelectedIndexChanged);
+            this.profilesTabControl.Resize += new System.EventHandler(this.ProfilesTabControl_Resize);
             // 
             // tabPage1
             // 
@@ -1067,7 +1071,8 @@ namespace MilSpace.Profile
             this.AutoSize = true;
             this.Controls.Add(this.profilesTabControl);
             this.Name = "DockableWindowMilSpaceProfileGraph";
-            this.Size = new System.Drawing.Size(800, 300);
+            this.Size = new System.Drawing.Size(803, 303);
+            this.Resize += new System.EventHandler(this.DockableWindowMilSpaceProfileGraph_Resize);
             this.profilesTabControl.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
@@ -1099,6 +1104,31 @@ namespace MilSpace.Profile
         private System.Windows.Forms.TabControl profilesTabControl;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Splitter splitter1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.ToolBar toolBar1;
+        private System.Windows.Forms.ToolBarButton toolBarSeparator21;
+        private System.Windows.Forms.ToolBarButton toolBarButton4;
+        private System.Windows.Forms.ToolBarButton toolBarButton6;
+        private System.Windows.Forms.ToolBarButton toolBarButton25;
+        private System.Windows.Forms.ToolBarButton toolBarButton15;
+        private System.Windows.Forms.ToolBarButton toolBarButton16;
+        private System.Windows.Forms.ToolBarButton toolBarSeparator17;
+        private System.Windows.Forms.ToolBarButton toolBarButton18;
+        private System.Windows.Forms.ToolBarButton toolBarButton7;
+        private System.Windows.Forms.ToolBarButton toolBarButton17;
+        private System.Windows.Forms.ToolBarButton toolBarButton9;
+        private System.Windows.Forms.ToolBarButton toolBarButton10;
+        private System.Windows.Forms.ToolBarButton toolBarButton21;
+        private System.Windows.Forms.ToolBarButton toolBarButton22;
+        private System.Windows.Forms.ToolBarButton toolBarButton26;
+        private System.Windows.Forms.ToolBarButton toolBarButton29;
+        private System.Windows.Forms.ToolBarButton toolBarSeparator18;
+        private System.Windows.Forms.ToolBarButton toolBarButton1;
+        private System.Windows.Forms.ToolBarButton toolBarButton20;
+        private System.Windows.Forms.ToolBarButton toolBarSeparator19;
+        private System.Windows.Forms.ToolBarButton toolBarButton2;
+        private System.Windows.Forms.ToolBarButton toolBarButton5;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage tabPage5;
@@ -1141,30 +1171,5 @@ namespace MilSpace.Profile
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.RichTextBox richTextBox1;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel8;
-        private System.Windows.Forms.ToolBar toolBar1;
-        private System.Windows.Forms.ToolBarButton toolBarSeparator21;
-        private System.Windows.Forms.ToolBarButton toolBarButton4;
-        private System.Windows.Forms.ToolBarButton toolBarButton6;
-        private System.Windows.Forms.ToolBarButton toolBarButton25;
-        private System.Windows.Forms.ToolBarButton toolBarButton15;
-        private System.Windows.Forms.ToolBarButton toolBarButton16;
-        private System.Windows.Forms.ToolBarButton toolBarSeparator17;
-        private System.Windows.Forms.ToolBarButton toolBarButton18;
-        private System.Windows.Forms.ToolBarButton toolBarButton7;
-        private System.Windows.Forms.ToolBarButton toolBarButton17;
-        private System.Windows.Forms.ToolBarButton toolBarButton9;
-        private System.Windows.Forms.ToolBarButton toolBarButton10;
-        private System.Windows.Forms.ToolBarButton toolBarButton21;
-        private System.Windows.Forms.ToolBarButton toolBarButton22;
-        private System.Windows.Forms.ToolBarButton toolBarButton26;
-        private System.Windows.Forms.ToolBarButton toolBarButton29;
-        private System.Windows.Forms.ToolBarButton toolBarSeparator18;
-        private System.Windows.Forms.ToolBarButton toolBarButton1;
-        private System.Windows.Forms.ToolBarButton toolBarButton20;
-        private System.Windows.Forms.ToolBarButton toolBarSeparator19;
-        private System.Windows.Forms.ToolBarButton toolBarButton2;
-        private System.Windows.Forms.ToolBarButton toolBarButton5;
     }
 }
