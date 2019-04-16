@@ -9,6 +9,7 @@ namespace MilSpace.DataAccess.DataTransfer
     {
         public ProfileLine[] ProfileLines;
         public ProfileSurface[] ProfileSurfaces;
+        public ProfileSettingsTypeEnum ProfileType;
         public int SessionId;
         public string SessionName;
         

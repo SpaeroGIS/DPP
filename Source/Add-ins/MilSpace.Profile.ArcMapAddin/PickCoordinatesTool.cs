@@ -6,6 +6,7 @@ using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Tools;
+using MilSpace.DataAccess.DataTransfer;
 using static MilSpace.Profile.DockableWindowMilSpaceProfileCalc;
 
 namespace MilSpace.Profile

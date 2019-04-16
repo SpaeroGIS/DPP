@@ -36,7 +36,7 @@ namespace MilSpace.Tools
         public ProfileSession GenerateProfile(
             string profileSource,
             IEnumerable<IPolyline> profileLines,
-            int sessionName)
+            int sessionName, ProfileSettingsTypeEnum profileType)
         {
             string profileSourceName = GdbAccess.Instance.AddProfileLinesToCalculation(profileLines);
 
@@ -103,6 +103,7 @@ namespace MilSpace.Tools
                 {
                     ProfileSurfaces = profileSurfaces.ToArray(),
                     ProfileLines = GetProfileLines(lines).ToArray(),
+                    ProfileType = profileType,
                     SessionId = sessionName,
                     SessionName = sessionName.ToString()
                 };
@@ -226,6 +227,7 @@ namespace MilSpace.Tools
                         PointTo = new ProfilePoint { X = transformedTo.X, Y = transformedTo.Y },
                         Id = line.OID,
                         Length = ln.Length,
+                        Line = line,
                         SpatialReference = EsriTools.Wgs84Spatialreference,
                         Angel = ln.Angle
                     });

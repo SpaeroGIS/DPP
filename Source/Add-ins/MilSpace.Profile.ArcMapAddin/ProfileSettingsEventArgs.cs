@@ -1,5 +1,6 @@
 ﻿using MilSpace.Profile.DTO;
 using System;
+using MilSpace.DataAccess.DataTransfer;
 
 
 namespace MilSpace.Profile

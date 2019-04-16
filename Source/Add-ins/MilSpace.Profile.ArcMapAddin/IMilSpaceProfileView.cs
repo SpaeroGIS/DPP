@@ -62,5 +62,11 @@ namespace MilSpace.Profile
 
         ProfileSession GetSectionProfile(string profileName);
 
+        ProfileSession GetFanProfile(string profileName);
+
+        ProfileSettingsTypeEnum GetProfileTypeFromNode();
+
+        string GetProfileNameFromNode();
+
     }
 }

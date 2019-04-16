@@ -18,11 +18,11 @@ namespace MilSpace.Profile
     }
 
 
-    public enum ProfileSettingsTypeEnum
-    {
-        Points,
-        Fun,
-        SelectedFeatures,
-        Load
-    }
+    //public enum ProfileSettingsTypeEnum
+    //{
+    //    Points,
+    //    Fun,
+    //    SelectedFeatures,
+    //    Load
+    //}
 }

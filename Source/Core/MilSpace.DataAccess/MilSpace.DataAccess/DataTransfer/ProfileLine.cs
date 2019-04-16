@@ -1,5 +1,6 @@
 ﻿using ESRI.ArcGIS.Geometry;
 using System.Xml.Serialization;
+using ESRI.ArcGIS.Geodatabase;
 
 namespace MilSpace.DataAccess.DataTransfer
 {
@@ -10,6 +11,7 @@ namespace MilSpace.DataAccess.DataTransfer
         public int Id;
         public double Angel;
         public double Length;
+        public IFeature Line;
 
         [XmlIgnore]
         public ISpatialReference SpatialReference;

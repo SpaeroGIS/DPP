@@ -50,6 +50,8 @@ namespace MilSpace.Profile
 
         internal Dictionary<ProfileSettingsTypeEnum, ProfileSettings> ProfileSettings => profileSettings;
 
+        private ProfileSettingsTypeEnum ProfileType => View.SelectedProfileSettingsType;
+
 
         internal MilSpaceProfileCalsController() { }
 
@@ -199,7 +201,7 @@ namespace MilSpace.Profile
 
                 ProfileManager manager = new ProfileManager();
                 var profileSetting = profileSettings[View.SelectedProfileSettingsType];
-                var session = manager.GenerateProfile(View.DemLayerName, profileSetting.ProfileLines, profileId);
+                var session = manager.GenerateProfile(View.DemLayerName, profileSetting.ProfileLines, profileId, ProfileType);
 
                 SetPeofileId();
                 return session;
@@ -215,7 +217,7 @@ namespace MilSpace.Profile
 
         internal void AddProfileToList(ProfileSession profile)
         {
-            switch (View.SelectedProfileSettingsType)
+            switch (profile.ProfileType)
             {
                 case ProfileSettingsTypeEnum.Points:
                 {
@@ -234,6 +236,33 @@ namespace MilSpace.Profile
 
             }
         }
+
+        private ProfileSession GetProfileSessionFromSelectedNode()
+        {
+            var profileType = View.GetProfileTypeFromNode();
+            var profileName = View.GetProfileNameFromNode();
+            switch (profileType)
+            {
+                
+                case ProfileSettingsTypeEnum.Points:
+                    return View.GetSectionProfile(profileName);
+                case ProfileSettingsTypeEnum.Fun:
+                    return View.GetFanProfile(profileName);
+                
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        internal void ShowProfileOnMap()
+        {
+            var profile = GetProfileSessionFromSelectedNode();
+            var line = profile.ProfileLines.First();
+            
+            EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, new PointClass{X = line.PointFrom.X, Y = line.PointFrom.Y});
+        }
+
+
 
 
 
