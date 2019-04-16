@@ -69,6 +69,14 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             {
                 var profileSurfacePoints = profileSessionProfileLine.ProfileSurfacePoints;
 
+                if(observerHeight < profileSurfacePoints[0].Z)
+                {
+                    _surfaceProfileChart.AddInvisibleLine(profileSessionProfileLine);
+                    CalcProfilesVisiblePercents(profileSessionProfileLine);
+
+                    continue;
+                }
+
                 var invisibleSurface = new ProfileSurface();
                 var invisiblePoints = new List<ProfileSurfacePoint>();
 
@@ -112,6 +120,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
                 invisibleSurface.ProfileSurfacePoints = invisiblePoints.ToArray();
                 _surfaceProfileChart.AddInvisibleLine(invisibleSurface);
+                CalcProfilesVisiblePercents(invisibleSurface);
             }
         }
 
@@ -130,13 +139,13 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 profileProperty.MinHeight = profileSurfacePoints.Min(point => point.Z);
 
                 var angles = FindAngles(profileSurfacePoints);
-                var n = angles.Exists(angle => angle > 0);
-                var b = angles.Exists(angle => angle > 0);
+             
                 profileProperty.MaxAngle = angles.Exists(angle => angle > 0) ? Math.Abs(angles.Where(angle => angle > 0).Max()) : 0;
-
                 profileProperty.MinAngle = angles.Exists(angle => angle < 0) ? Math.Abs(angles.Where(angle => angle < 0).Min()) : 0;
 
                 profileProperty.PathLength = FindLength(profileSurfacePoints);
+
+                profileProperty.Azimuth = RadiansToDegrees(profileSessionProfileLine.Angel);
 
                 _surfaceProfileChart.ProfilesProperties.Add(profileProperty);
             }
@@ -160,6 +169,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             return extremePoints;
         }
 
+
         private static double FindLength(ProfileSurfacePoint[] profileSurfacePoints)
         {
             double result = 0;
@@ -170,6 +180,22 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
 
             return result;
+        }
+
+        private void CalcProfilesVisiblePercents(ProfileSurface invisibleSurface)
+        {
+            var profileProperty = _surfaceProfileChart.ProfilesProperties[invisibleSurface.LineId - 1];
+
+            double invisibleLegth = 0;
+
+            for (int i = 1; i < invisibleSurface.ProfileSurfacePoints.Count(); i++)
+            {
+                invisibleLegth += CalcVectorLength(invisibleSurface.ProfileSurfacePoints[i - 1],
+                    invisibleSurface.ProfileSurfacePoints[i]);
+            }
+
+            _surfaceProfileChart.ProfilesProperties[invisibleSurface.LineId - 1].VisiblePercent =
+                ((profileProperty.PathLength - invisibleLegth) * 100) / profileProperty.PathLength;
         }
 
         internal void InvokeOnProfileGraphClicked(double wgs94X, double wgs94Y)
@@ -212,7 +238,10 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         private static double CalcAngleOfDeviation(ProfileSurfacePoint leftPoint, ProfileSurfacePoint rightPoint)
         {
-            var angle = Math.Atan(Math.Abs(rightPoint.Z - leftPoint.Z) / (rightPoint.Distance - leftPoint.Distance)) * (180 / Math.PI);
+            var angle = Math.Atan(Math.Abs(rightPoint.Z - leftPoint.Z) / (rightPoint.Distance - leftPoint.Distance));
+
+            angle = RadiansToDegrees(angle);
+
             return (rightPoint.Z < leftPoint.Z) ? angle * (-1) : angle;
         }
 
@@ -229,6 +258,11 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         private static double FindY(double observerHeight, double angleKoef, double x)
         {
             return (angleKoef * x + observerHeight);
+        }
+
+        private static double RadiansToDegrees(double radians)
+        {
+            return radians * 180 / Math.PI;
         }
 
     }

@@ -68,7 +68,6 @@
             this.profileChart.Size = new System.Drawing.Size(430, 260);
             this.profileChart.TabIndex = 0;
             this.profileChart.Text = "chart1";
-            this.profileChart.Click += new System.EventHandler(this.profileChart_Click);
             this.profileChart.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Profile_MouseDown);
             // 
             // observerHeightLabel
@@ -88,7 +87,7 @@
             this.observerHeightTextBox.Name = "observerHeightTextBox";
             this.observerHeightTextBox.Size = new System.Drawing.Size(59, 20);
             this.observerHeightTextBox.TabIndex = 39;
-            this.observerHeightTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.observerHeightTextBox_KeyDown);
+            this.observerHeightTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ObserverHeightTextBox_KeyDown);
             // 
             // profilePropertiesTable
             // 
@@ -117,7 +116,7 @@
             this.profilePropertiesTable.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.profilePropertiesTable.Size = new System.Drawing.Size(352, 206);
             this.profilePropertiesTable.TabIndex = 40;
-            this.profilePropertiesTable.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.profilePropertiesTable_CellClick);
+            this.profilePropertiesTable.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ProfilePropertiesTable_CellClick);
             // 
             // ProfileNumberCol
             // 

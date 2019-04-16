@@ -37,9 +37,9 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         internal void InitializeGraph()
         {
             _controller.LoadSeries();
+            _controller.SetProfilesProperties();
             _controller.AddInvisibleZones(profileChart.Series[0].Points[0].YValues[0]);
             _controller.AddExtremePoints();
-            _controller.SetProfilesProperties();
             FillPropertiesTable();
         }
 
@@ -149,18 +149,26 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
         }
 
+        private void UpdateTable()
+        {
+           int i = 0;
+            foreach (DataGridViewRow row in profilePropertiesTable.Rows)
+            {
+                row.Cells["ObserverPointHeightCol"].Value = ObserverHeight;
+                row.Cells["VisiblePercentCol"].Value = Math.Round(ProfilesProperties[i].VisiblePercent, 2);
+
+                i++;
+            }
+        }
+
         private void ChangeObserverPointHeight(double height)
         {
             ObserverHeight = height;
-
-            foreach (DataGridViewRow row in profilePropertiesTable.Rows)
-            {
-                row.Cells["ObserverPointHeightCol"].Value = height;
-            }
-
+            
             UpdateProfiles();
             _controller.AddInvisibleZones(height, GetSurfacesFromChart());
             UpdateExtremePoins();
+            UpdateTable();
         }
 
         private void SaveChartAsImage()
@@ -245,13 +253,13 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             {
                 profilePropertiesTable.Rows.Add(profilesProperties.LineId.ToString(),
                             Math.Round(ObserverHeight, 1),
-                            "",
+                            Math.Round(profilesProperties.Azimuth, 1).ToString(),
                             Math.Round(profilesProperties.PathLength, 0).ToString(),
                             Math.Round(profilesProperties.MinHeight, 0).ToString(),
                             Math.Round(profilesProperties.MaxHeight, 0).ToString(),
                             Math.Round(profilesProperties.MinAngle, 1).ToString(),
                             Math.Round(profilesProperties.MaxAngle, 1).ToString(),
-                            "");
+                            Math.Round(profilesProperties.VisiblePercent, 2).ToString());
             }
         }
 
@@ -279,17 +287,12 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         }
 
-        private void profileChart_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void SurfaceProfileChart_Resize(object sender, EventArgs e)
         {
             SetControlSize();
         }
 
-        private void observerHeightTextBox_KeyDown(object sender, KeyEventArgs e)
+        private void ObserverHeightTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
@@ -300,7 +303,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
         }
 
-        private void profilePropertiesTable_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void ProfilePropertiesTable_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             SelectProfile(profileChart.Series[profilePropertiesTable.SelectedCells[0].RowIndex].Name);
         }
