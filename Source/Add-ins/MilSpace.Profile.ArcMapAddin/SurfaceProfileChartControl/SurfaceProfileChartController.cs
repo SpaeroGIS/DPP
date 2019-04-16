@@ -27,6 +27,11 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             _profileSession = profileSession;
         }
 
+        internal void GetCurrentChart(SurfaceProfileChart currentChart)
+        {
+            _surfaceProfileChart = currentChart;
+        }
+
         internal SurfaceProfileChart CreateProfileChart()
         {
             _surfaceProfileChart = new SurfaceProfileChart(this);
@@ -53,12 +58,16 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             _surfaceProfileChart.SetExtremePoints(_extremePoints);
         }
 
-        internal void AddInvisibleZones(double observerHeight)
+        internal void AddInvisibleZones(double observerHeight, ProfileSurface[] profileSurfaces = null)
         {
-            foreach (var profileSessionProfileLine in _profileSession.ProfileLines)
+            if (profileSurfaces == null)
             {
-                var profileSurfacePoints = _profileSession.ProfileSurfaces.FirstOrDefault(surface =>
-                    surface.LineId == profileSessionProfileLine.Id).ProfileSurfacePoints;
+                profileSurfaces = _profileSession.ProfileSurfaces;
+            }
+
+            foreach (var profileSessionProfileLine in profileSurfaces)
+            {
+                var profileSurfacePoints = profileSessionProfileLine.ProfileSurfacePoints;
 
                 var invisibleSurface = new ProfileSurface();
                 var invisiblePoints = new List<ProfileSurfacePoint>();
@@ -66,7 +75,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 double sightLineKoef = 0;
                 var isInvisibleZone = false;
 
-                invisibleSurface.LineId = profileSessionProfileLine.Id;
+                invisibleSurface.LineId = profileSessionProfileLine.LineId;
 
                 for (var i = 0; i < profileSurfacePoints.Length; i++)
                 {
@@ -133,9 +142,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
 
         }
-
-
-        
 
         private List<ProfileSurfacePoint> FindExtremePoints()
         {
