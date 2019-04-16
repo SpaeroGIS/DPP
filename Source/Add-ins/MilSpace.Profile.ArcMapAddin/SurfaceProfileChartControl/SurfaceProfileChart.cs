@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using MilSpace.DataAccess.DataTransfer;
+using System.Text.RegularExpressions;
 
 namespace MilSpace.Profile.SurfaceProfileChartControl
 {
@@ -19,6 +20,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         public List<ProfileProperties> ProfilesProperties { get; set; }
         public bool Current { get; set; }
         public int SelectedProfileIndex { get; set; }
+        public double ObserverHeight { get; set; }
 
         public SurfaceProfileChart(SurfaceProfileChartController controller)
         {
@@ -38,7 +40,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             _controller.AddInvisibleZones(profileChart.Series[0].Points[0].YValues[0]);
             _controller.AddExtremePoints();
             _controller.SetProfilesProperties();
-            AddLegends();
+            FillPropertiesTable();
         }
 
         internal void InitializeProfile(ProfileSession profileSession)
@@ -86,6 +88,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal void SetExtremePoints(List<ProfileSurfacePoint> extremePoints)
         {
+            ObserverHeight = extremePoints[0].Z;
+
             for (var i = 1; i < extremePoints.Count; i++)
             {
                 AddExtremePoint(extremePoints[0], extremePoints[i], i);
@@ -117,15 +121,63 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             profileChart.Series[$"ExtremePointsLine{order}"].Points[1].MarkerStyle = MarkerStyle.Circle;
         }
 
+        private void UpdateExtremePoins()
+        {
+            for (int i = 1; i < profileChart.Series.Count / 2 + 1; i++)
+            {
+                profileChart.Series[$"ExtremePointsLine{i}"].Points[0].SetValueY(ObserverHeight);
+
+                if (profileChart.Series[$"{i}"].Points.Last().Color == Color.Red)
+                {
+                    profileChart.Series[$"ExtremePointsLine{i}"].Points[1].MarkerColor = Color.Red;
+                }
+                else
+                {
+                    profileChart.Series[$"ExtremePointsLine{i}"].Points[1].MarkerColor = Color.DarkGray;
+                }
+            }
+        }
+
+        private void UpdateProfiles()
+        {
+            for (int i = 1; i < profileChart.Series.Count / 2 + 1; i++)
+            {
+                foreach (var point in profileChart.Series[$"{i}"].Points)
+                {
+                    point.Color = Color.ForestGreen;
+                }
+            }
+        }
+
         private void ChangeObserverPointHeight(double height)
         {
-            var observerPoint = profileChart.Series["ExtremePoints"].Points.First(point => point.XValue == 0);
-            observerPoint.SetValueY(height);
+            ObserverHeight = height;
+
+            foreach (DataGridViewRow row in profilePropertiesTable.Rows)
+            {
+                row.Cells["ObserverPointHeightCol"].Value = height;
+            }
+
+            UpdateProfiles();
+            _controller.AddInvisibleZones(height, GetSurfacesFromChart());
+            UpdateExtremePoins();
         }
 
         private void SaveChartAsImage()
         {
             profileChart.SaveImage("Chart.png", ChartImageFormat.Png);
+        }
+
+        private ProfileSurface[] GetSurfacesFromChart()
+        {
+            ProfileSurface[] profileSurfaces = new ProfileSurface[profileChart.Series.Count / 2];
+
+            for (int i = 0; i < profileChart.Series.Count / 2; i++)
+            {
+                profileSurfaces[i] = (ProfileSurface)profileChart.Series[i].Tag;
+            }
+
+            return profileSurfaces;
         }
 
         private void SurfaceProfileChart_Load(object sender, EventArgs e)
@@ -151,74 +203,56 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         private void SetYHeight()
         {
-            var maxPoints = new List<DataPoint>();
-            var minPoints = new List<DataPoint>();
-
-            foreach (var profileChartSeries in profileChart.Series)
+            if (ProfilesProperties.Count == 1)
             {
-                maxPoints.Add(profileChartSeries.Points.FindMaxByValue("Y1", 0));
-                minPoints.Add(profileChartSeries.Points.FindMinByValue("Y1", 0));
+                profileChart.ChartAreas["Default"].AxisY.Maximum = ProfilesProperties[0].MaxHeight
+                    + ProfilesProperties[0].MaxHeight / 10;
+                profileChart.ChartAreas["Default"].AxisY.Minimum = ProfilesProperties[0].MinHeight
+                    - ProfilesProperties[0].MaxHeight / 10;
             }
+            else
+            {
+                double maxHeight = ProfilesProperties.Max(profileProperties => profileProperties.MaxHeight);
+                double minHeight = ProfilesProperties.Min(profileProperties => profileProperties.MinHeight);
+                double absHeight = maxHeight - minHeight;
 
-            profileChart.ChartAreas["Default"].AxisY.Maximum =
-                maxPoints.Max(point => point.YValues.Max(yValue => yValue));
-            profileChart.ChartAreas["Default"].AxisY.Minimum =
-                minPoints.Min(point => point.YValues.Min(yValue => yValue));
+                profileChart.ChartAreas["Default"].AxisY.Maximum = maxHeight + absHeight / 10;
+                profileChart.ChartAreas["Default"].AxisY.Minimum = minHeight - absHeight / 10;
+            }
         }
 
-        private void SelectProfile(HitTestResult selectedPoint)
+        private void SelectProfile(string serieName)
         {
             if (SelectedProfileIndex != -1)
             {
                 profileChart.Series[SelectedProfileIndex].BorderWidth -= 1;
-                foreach (var cell in profileChart.Legends["Properties"].CustomItems[SelectedProfileIndex + 1].Cells)
-                {
-                    cell.BackColor = Color.White;
-                }
+
+                profilePropertiesTable.Rows[SelectedProfileIndex].DefaultCellStyle.BackColor = Color.White;
             }
 
-            SelectedProfileIndex = profileChart.Series.IndexOf(selectedPoint.Series.Name);
+            SelectedProfileIndex = profileChart.Series.IndexOf(serieName);
             profileChart.Series[SelectedProfileIndex].BorderWidth += 1;
-            foreach (var cell in profileChart.Legends["Properties"].CustomItems[SelectedProfileIndex + 1].Cells)
-            {
-                cell.BackColor = Color.ForestGreen;
-            }
+
+            profilePropertiesTable.Rows[SelectedProfileIndex].DefaultCellStyle.BackColor =
+                    profileChart.Series[SelectedProfileIndex].Color;
         }
 
-        private void AddLegends()
+        private void FillPropertiesTable()
         {
-            profileChart.Legends.Add("Properties");
+            profilePropertiesTable.Rows.Clear();
 
-            profileChart.Legends["Properties"].HeaderSeparator = LegendSeparatorStyle.Line;
-            profileChart.Legends["Properties"].Docking = Docking.Bottom;
-            profileChart.Legends["Properties"].LegendStyle = LegendStyle.Table;
-            profileChart.Legends["Properties"].TableStyle = LegendTableStyle.Tall;
-
-
-            LegendItem headerItem = new LegendItem();
-
-            //headerItem.Cells.Add(LegendCellType.Text, "Line name", ContentAlignment.MiddleCenter);
-            //headerItem.Cells.Add(LegendCellType.Text, "Path length", ContentAlignment.MiddleCenter);
-            //headerItem.Cells.Add(LegendCellType.Text, "Max angle", ContentAlignment.MiddleCenter);
-            //headerItem.Cells.Add(LegendCellType.Text, "Min angle", ContentAlignment.MiddleCenter);
-            //headerItem.Cells.Add(LegendCellType.Text, "Max height", ContentAlignment.MiddleCenter);
-            //headerItem.Cells.Add(LegendCellType.Text, "Min height", ContentAlignment.MiddleCenter);
-
-            //profileChart.Legends["Properties"].CustomItems.Add(headerItem);
-
-            //foreach (var profilesProperties in ProfilesProperties)
-            //{
-            //    LegendItem newItem = new LegendItem();
-
-            //    newItem.Cells.Add(LegendCellType.Text, profilesProperties.LineId.ToString(), ContentAlignment.MiddleCenter);
-            //    newItem.Cells.Add(LegendCellType.Text, Math.Round(profilesProperties.PathLength, 0).ToString(), ContentAlignment.MiddleCenter);
-            //    newItem.Cells.Add(LegendCellType.Text, Math.Round(profilesProperties.MaxAngle, 1).ToString(), ContentAlignment.MiddleCenter);
-            //    newItem.Cells.Add(LegendCellType.Text, Math.Round(profilesProperties.MinAngle, 1).ToString(), ContentAlignment.MiddleCenter);
-            //    newItem.Cells.Add(LegendCellType.Text, Math.Round(profilesProperties.MaxHeight, 0).ToString(), ContentAlignment.MiddleCenter);
-            //    newItem.Cells.Add(LegendCellType.Text, Math.Round(profilesProperties.MinHeight, 0).ToString(), ContentAlignment.MiddleCenter);
-
-            //    profileChart.Legends["Properties"].CustomItems.Add(newItem);
-            //}
+            foreach (var profilesProperties in ProfilesProperties)
+            {
+                profilePropertiesTable.Rows.Add(profilesProperties.LineId.ToString(),
+                            Math.Round(ObserverHeight, 1),
+                            "",
+                            Math.Round(profilesProperties.PathLength, 0).ToString(),
+                            Math.Round(profilesProperties.MinHeight, 0).ToString(),
+                            Math.Round(profilesProperties.MaxHeight, 0).ToString(),
+                            Math.Round(profilesProperties.MinAngle, 1).ToString(),
+                            Math.Round(profilesProperties.MaxAngle, 1).ToString(),
+                            "");
+            }
         }
 
         private void Profile_MouseDown(object sender, MouseEventArgs e)
@@ -228,7 +262,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             if (selectedPoint.ChartElementType == ChartElementType.DataPoint)
             {
                 //TODO:: Create a list outside the graph
-                //SelectProfile(selectedPoint);
+                SelectProfile(selectedPoint.Series.Name);
                 if (selectedPoint.Series.Tag is ProfileSurface profileData)
                 {
                     var point = profileData.ProfileSurfacePoints[selectedPoint.PointIndex];
@@ -240,8 +274,9 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal void SetControlSize()
         {
-            profileChart.Width = Width - profileProperties.Width - 3;
-            profileChart.Height = Height;
+            profileChart.Width = Width - profilePropertiesTable.Width - 10;
+            profileChart.Height = Height - 10;
+
         }
 
         private void profileChart_Click(object sender, EventArgs e)
@@ -251,7 +286,23 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         private void SurfaceProfileChart_Resize(object sender, EventArgs e)
         {
+            SetControlSize();
+        }
 
+        private void observerHeightTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                if(Regex.IsMatch(observerHeightTextBox.Text, @"^\d+[,|\.]?\d*$"))
+                {
+                    ChangeObserverPointHeight(Convert.ToDouble(observerHeightTextBox.Text.Replace('.', ',')));
+                }
+            }
+        }
+
+        private void profilePropertiesTable_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            SelectProfile(profileChart.Series[profilePropertiesTable.SelectedCells[0].RowIndex].Name);
         }
     }
 }
