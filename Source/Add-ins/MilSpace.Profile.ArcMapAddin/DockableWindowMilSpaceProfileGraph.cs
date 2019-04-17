@@ -44,9 +44,9 @@ namespace MilSpace.Profile
 
         internal void AddNewTab(SurfaceProfileChart surfaceProfileChart, string sessionName)
         {
-            string title = $"{sessionName}";
+            string title = $"Graph {profilesTabControl.TabPages.Count + 1}";
             TabPage tabPage = new TabPage(title);
-            tabPage.Name = $"{sessionName}";
+            tabPage.Name = $"Graph {profilesTabControl.TabPages.Count + 1}";
             profilesTabControl.TabPages.Add(tabPage);
 
             var curTab = profilesTabControl.TabPages[profilesTabControl.TabCount - 1];

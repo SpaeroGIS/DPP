@@ -175,10 +175,14 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
         }
 
-        private void UpdateSelectedRowWithNewObserverHeigth( int index)
+        private void UpdateSelectedRowWithNewObserverHeigth(int index)
         {
-            profilePropertiesTable.Rows[index].Cells["ObserverPointHeightCol"].Value = ObserversHeights[index];
             profilePropertiesTable.Rows[index].Cells["VisiblePercentCol"].Value = Math.Round(ProfilesProperties[index].VisiblePercent, 2);
+
+            if(SelectedProfileIndex != -1)
+            {
+                profileDetailsListBox.Items[3] = $"Высота пункта наблюдения: {Math.Round(ObserversHeights[index], 0)}м;";
+            }
         }
 
         private void ChangeObserverPointHeight(double height)
@@ -294,7 +298,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             foreach (var profilesProperties in ProfilesProperties)
             {
                 profilePropertiesTable.Rows.Add(profilesProperties.LineId.ToString(),
-                            Math.Round(ObserversHeights[profilesProperties.LineId-1], 1),
                             Math.Round(profilesProperties.Azimuth, 1).ToString(),
                             Math.Round(profilesProperties.PathLength, 0).ToString(),
                             Math.Round(profilesProperties.MinHeight, 0).ToString(),
@@ -318,8 +321,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             profileDetailsListBox.Items.Add($"Последняя точка: X={Math.Round(profileChart.Series[selectedIndex].Points.Last().XValue, 0)};" +
                 $" Y={Math.Round(profileChart.Series[selectedIndex].Points.Last().YValues[0], 0)};");
             profileDetailsListBox.Items.Add($"Азимут: {Math.Round(ProfilesProperties[selectedIndex].Azimuth, 1)};");
-            profileDetailsListBox.Items.Add($"Длина:{Math.Round(ProfilesProperties[selectedIndex].PathLength, 0)}м;");
-            profileDetailsListBox.Items.Add($"Высота: {Math.Round(ProfilesProperties[selectedIndex].MinHeight, 0)}м;" +
+            profileDetailsListBox.Items.Add($"Длина: {Math.Round(ProfilesProperties[selectedIndex].PathLength, 0)}м;");
+            profileDetailsListBox.Items.Add($"Высота: {Math.Round(ProfilesProperties[selectedIndex].MinHeight, 0)}м" +
                 $"-{Math.Round(ProfilesProperties[selectedIndex].MaxHeight, 0)}м;");
             profileDetailsListBox.Items.Add($"Максимальный угол подъема(градусы): {Math.Round(ProfilesProperties[selectedIndex].MaxAngle, 1)};");
             profileDetailsListBox.Items.Add($"Максимальный угол спуска(градусы): {Math.Round(ProfilesProperties[selectedIndex].MinAngle, 1)};");
@@ -330,7 +333,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         {
             var selectedPoint = profileChart.HitTest(e.X, e.Y);
 
-            if (selectedPoint.ChartElementType == ChartElementType.DataPoint)
+            if (selectedPoint.ChartElementType == ChartElementType.DataPoint && 
+                Regex.IsMatch(selectedPoint.Series.Name, @"^\d+$"))
             {
                 //TODO:: Create a list outside the graph
                 SelectProfile(selectedPoint.Series.Name);
