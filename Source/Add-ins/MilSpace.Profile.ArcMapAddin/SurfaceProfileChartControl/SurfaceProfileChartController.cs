@@ -58,7 +58,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             _surfaceProfileChart.SetExtremePoints(_extremePoints);
         }
 
-        internal void AddInvisibleZones(double observerHeight, ProfileSurface[] profileSurfaces = null)
+        internal void AddInvisibleZones(List<double> observersHeights, ProfileSurface[] profileSurfaces = null)
         {
             if (profileSurfaces == null)
             {
@@ -69,59 +69,67 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             {
                 var profileSurfacePoints = profileSessionProfileLine.ProfileSurfacePoints;
 
-                if(observerHeight < profileSurfacePoints[0].Z)
+                AddInvisibleZone(observersHeights[profileSessionProfileLine.LineId - 1], profileSessionProfileLine);
+            }
+        }
+
+        internal void AddInvisibleZone(double observerHeight, ProfileSurface profileSurface)
+        {
+            if (observerHeight < profileSurface.ProfileSurfacePoints[0].Z)
+            {
+                _surfaceProfileChart.AddInvisibleLine(profileSurface);
+                CalcProfilesVisiblePercents(profileSurface);
+
+                return;
+            }
+
+            var invisibleSurface = new ProfileSurface();
+            var invisiblePoints = new List<ProfileSurfacePoint>();
+
+            double sightLineKoef = 0;
+            var isInvisibleZone = false;
+
+            invisibleSurface.LineId = profileSurface.LineId;
+
+            for (var i = 0; i < profileSurface.ProfileSurfacePoints.Length; i++)
+            {
+                if (!isInvisibleZone)
                 {
-                    _surfaceProfileChart.AddInvisibleLine(profileSessionProfileLine);
-                    CalcProfilesVisiblePercents(profileSessionProfileLine);
-
-                    continue;
-                }
-
-                var invisibleSurface = new ProfileSurface();
-                var invisiblePoints = new List<ProfileSurfacePoint>();
-
-                double sightLineKoef = 0;
-                var isInvisibleZone = false;
-
-                invisibleSurface.LineId = profileSessionProfileLine.LineId;
-
-                for (var i = 0; i < profileSurfacePoints.Length; i++)
-                {
-                    if (!isInvisibleZone)
+                    if (i < profileSurface.ProfileSurfacePoints.Length - 1)
                     {
-                        if (i < profileSurfacePoints.Length - 1)
+                        if (CalcAngleOfVisibility(observerHeight, profileSurface.ProfileSurfacePoints[i],
+                            profileSurface.ProfileSurfacePoints[i + 1]) < 0)
                         {
-                            if (CalcAngleOfVisibility(observerHeight, profileSurfacePoints[i], profileSurfacePoints[i + 1]) < 0)
-                            {
-                                invisiblePoints.Add(profileSurfacePoints[i + 1]);
-                                isInvisibleZone = true;
-                                sightLineKoef = (profileSurfacePoints[i + 1].Z - observerHeight) / (profileSurfacePoints[i + 1].Distance);
-                                i++;
+                            invisiblePoints.Add(profileSurface.ProfileSurfacePoints[i + 1]);
+                            isInvisibleZone = true;
+                            sightLineKoef = (profileSurface.ProfileSurfacePoints[i + 1].Z - observerHeight) 
+                                / (profileSurface.ProfileSurfacePoints[i + 1].Distance);
+                            i++;
 
-                            }
                         }
+                    }
 
+                }
+                else
+                {
+                    if (FindY(observerHeight, sightLineKoef, profileSurface.ProfileSurfacePoints[i].Distance) 
+                        < profileSurface.ProfileSurfacePoints[i].Z)
+                    {
+                        isInvisibleZone = false;
+                        invisiblePoints.Add(profileSurface.ProfileSurfacePoints[i]);
+                        i++;
                     }
                     else
                     {
-                        if (FindY(observerHeight, sightLineKoef, profileSurfacePoints[i].Distance) < profileSurfacePoints[i].Z)
-                        {
-                            isInvisibleZone = false;
-                            invisiblePoints.Add(profileSurfacePoints[i]);
-                            i++;
-                        }
-                        else
-                        {
-                            invisiblePoints.Add(profileSurfacePoints[i]);
-                        }
+                        invisiblePoints.Add(profileSurface.ProfileSurfacePoints[i]);
                     }
-
                 }
 
-                invisibleSurface.ProfileSurfacePoints = invisiblePoints.ToArray();
-                _surfaceProfileChart.AddInvisibleLine(invisibleSurface);
-                CalcProfilesVisiblePercents(invisibleSurface);
             }
+
+            invisibleSurface.ProfileSurfacePoints = invisiblePoints.ToArray();
+            _surfaceProfileChart.AddInvisibleLine(invisibleSurface);
+            CalcProfilesVisiblePercents(invisibleSurface);
         }
 
         internal void SetProfilesProperties()

@@ -50,7 +50,8 @@ namespace MilSpace.Profile
             profilesTabControl.TabPages.Add(tabPage);
 
             var curTab = profilesTabControl.TabPages[profilesTabControl.TabCount - 1];
-            surfaceProfileChart.Width = curTab.Width - 6;
+            surfaceProfileChart.Width = curTab.Width;
+            surfaceProfileChart.Height = curTab.Height;
             surfaceProfileChart.Name = "profileChart";
             curTab.Controls.Add(surfaceProfileChart);
             curTab.Show();
@@ -115,8 +116,8 @@ namespace MilSpace.Profile
         {
            foreach (TabPage page in profilesTabControl.TabPages)
             {
-                page.Controls["profileChart"].Width = Width - 6;
-                page.Controls["profileChart"].Height = Height - 6;
+                page.Controls["profileChart"].Width = profilesTabControl.Width;
+                page.Controls["profileChart"].Height = profilesTabControl.Height;
             }
         }
 
