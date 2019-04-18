@@ -104,7 +104,6 @@ namespace MilSpace.Tools
                 {
                     ProfileSurfaces = profileSurfaces.ToArray(),
                     ProfileLines = GetProfileLines(lines).ToArray(),
-                    ProfileType = profileType,
                     SessionId = sessionName,
                     SessionName = sessionName.ToString(),
                     DefinitionType = profileSettingsTypeEnum

@@ -74,7 +74,7 @@ namespace MilSpace.Profile
         /// <param name="pointToShow">The point in Map Spatial Reference to be shown on the map</param>
         internal void SetFirsPointForLineProfile(IPoint pointToView, IPoint pointToShow)
         {
-            pointsToShow[ProfileSettingsPointButton.PointsFist] = pointToShow;
+            pointsToShow[ProfileSettingsPointButtonEnum.PointsFist] = pointToShow;
             View.LinePropertiesFirstPoint = pointToView;
 
             SetProfileSettings(ProfileSettingsTypeEnum.Points);
@@ -89,7 +89,7 @@ namespace MilSpace.Profile
         internal void SetSecondfPointForLineProfile(IPoint pointToView, IPoint pointToShow)
         {
             View.LinePropertiesSecondPoint = pointToView;
-            pointsToShow[ProfileSettingsPointButton.PointsSecond] = pointToShow;
+            pointsToShow[ProfileSettingsPointButtonEnum.PointsSecond] = pointToShow;
 
             SetProfileSettings(ProfileSettingsTypeEnum.Points);
 
@@ -102,7 +102,7 @@ namespace MilSpace.Profile
         /// <param name="pointToShow">The point in Map Spatial Reference to be shown on the map</param>
         internal void SetCenterPointForFunProfile(IPoint pointToView, IPoint pointToShow)
         {
-            pointsToShow[ProfileSettingsPointButton.CenterFun] = pointToShow;
+            pointsToShow[ProfileSettingsPointButtonEnum.CenterFun] = pointToShow;
             View.FunPropertiesCenterPoint = pointToView;
 
             SetProfileSettings(ProfileSettingsTypeEnum.Fun);
@@ -165,7 +165,7 @@ namespace MilSpace.Profile
             if (profileType == ProfileSettingsTypeEnum.Points)
             {
 
-                var line = EsriTools.CreatePolylineFromPoints(pointsToShow[ProfileSettingsPointButton.PointsFist], pointsToShow[ProfileSettingsPointButton.PointsSecond]);
+                var line = EsriTools.CreatePolylineFromPoints(pointsToShow[ProfileSettingsPointButtonEnum.PointsFist], pointsToShow[ProfileSettingsPointButtonEnum.PointsSecond]);
                 if (line != null)
                 {
                     profileLines.Add(line);
@@ -266,17 +266,19 @@ namespace MilSpace.Profile
         {
             bool isAddToGraphics = false;
             
-            switch (profile.ProfileType)
+            switch (profile.DefinitionType)
             {
                 case ProfileSettingsTypeEnum.Points:
                     {
                         isAddToGraphics = View.AddSectionProfileNodes(profile);
+                        View.AddSectionProfileToList(profile);
                         break;
                     }
 
                 case ProfileSettingsTypeEnum.Fun:
                     {
                         isAddToGraphics = View.AddFanProfileNode(profile);
+                        View.AddFanProfileToList(profile);
                         break;
                     }
             }
@@ -327,7 +329,7 @@ namespace MilSpace.Profile
             env.CenterAt(envelopeCenter);
             View.ActiveView.Extent = env;
             View.ActiveView.Refresh();            
-            GraphicsLayerManager.UpdateCalculatingGraphic(profileLines, profileId, (int)profile.ProfileType);
+            GraphicsLayerManager.UpdateCalculatingGraphic(profileLines, profileId, (int)profile.DefinitionType);
         }
 
         private IPoint GetEnvelopeCenterPoint(IEnvelope envelope)

@@ -55,6 +55,8 @@ namespace MilSpace.Profile
 
         bool AddFanProfileNode(ProfileSession profile);
 
+        void AddSectionProfileToList(ProfileSession profile);
+        void AddFanProfileToList(ProfileSession profile);
 
         ProfileSession GetSectionProfile(string profileName);
 

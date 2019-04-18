@@ -81,6 +81,10 @@ namespace MilSpace.Profile
             return AddNodeToTreeView("fanNode", profile, 208, 208);
         }
 
+        public void AddSectionProfileToList(ProfileSession profile)
+        {
+            _sectionProfiles.Add(profile);
+        }
 
         public void AddFanProfileToList(ProfileSession profile)
         {
@@ -764,9 +768,9 @@ namespace MilSpace.Profile
             }
         }
 
-        public ProfileSession GetSectionProfile(string profileName)
-        {
-            throw new NotImplementedException();
-        }
+        //public ProfileSession GetSectionProfile(string profileName)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }
