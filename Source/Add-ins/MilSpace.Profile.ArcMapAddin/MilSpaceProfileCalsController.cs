@@ -56,6 +56,8 @@ namespace MilSpace.Profile
 
         internal Dictionary<ProfileSettingsTypeEnum, ProfileSettings> ProfileSettings => profileSettings;
 
+        private ProfileSettingsTypeEnum ProfileType => View.SelectedProfileSettingsType;
+
 
         internal MilSpaceProfileCalsController() { }
 
@@ -75,7 +77,7 @@ namespace MilSpace.Profile
             pointsToShow[ProfileSettingsPointButtonEnum.PointsFist] = pointToShow;
             View.LinePropertiesFirstPoint = pointToView;
 
-            SetProfileSettigs(ProfileSettingsTypeEnum.Points);
+            SetProfileSettings(ProfileSettingsTypeEnum.Points);
         }
 
 
@@ -89,7 +91,7 @@ namespace MilSpace.Profile
             View.LinePropertiesSecondPoint = pointToView;
             pointsToShow[ProfileSettingsPointButtonEnum.PointsSecond] = pointToShow;
 
-            SetProfileSettigs(ProfileSettingsTypeEnum.Points);
+            SetProfileSettings(ProfileSettingsTypeEnum.Points);
 
         }
 
@@ -103,7 +105,7 @@ namespace MilSpace.Profile
             pointsToShow[ProfileSettingsPointButtonEnum.CenterFun] = pointToShow;
             View.FunPropertiesCenterPoint = pointToView;
 
-            SetProfileSettigs(ProfileSettingsTypeEnum.Fun);
+            SetProfileSettings(ProfileSettingsTypeEnum.Fun);
 
         }
 
@@ -135,7 +137,17 @@ namespace MilSpace.Profile
 
         internal ProfileSettingsTypeEnum[] ProfileSettingsType => profileSettingsType;
 
-        internal void SetProfileSettigs(ProfileSettingsTypeEnum profileType)
+        internal void SetProfileSettings(ProfileSettingsTypeEnum profileType)
+        {
+            SetSettings(profileType, profileId);
+        }
+
+        internal void SetProfileSettings(ProfileSettingsTypeEnum profileType, int profileIdValue)
+        {
+            SetSettings(profileType, profileIdValue);
+        }
+
+        private void SetSettings(ProfileSettingsTypeEnum profileType, int profileIdValue)
         {
             List<IPolyline> profileLines = new List<IPolyline>();
 
@@ -190,7 +202,7 @@ namespace MilSpace.Profile
 
             InvokeOnProfileSettingsChanged();
 
-            GraphicsLayerManager.UpdateCalculatingGraphic(profileSetting.ProfileLines, profileId, (int)profileType);
+            GraphicsLayerManager.UpdateCalculatingGraphic(profileSetting.ProfileLines, profileIdValue, (int)profileType);
         }
 
 
@@ -253,17 +265,20 @@ namespace MilSpace.Profile
         internal void AddProfileToList(ProfileSession profile)
         {
             bool isAddToGraphics = false;
-            switch (View.SelectedProfileSettingsType)
+            
+            switch (profile.DefinitionType)
             {
                 case ProfileSettingsTypeEnum.Points:
                     {
                         isAddToGraphics = View.AddSectionProfileNodes(profile);
+                        View.AddSectionProfileToList(profile);
                         break;
                     }
 
                 case ProfileSettingsTypeEnum.Fun:
                     {
                         isAddToGraphics = View.AddFanProfileNode(profile);
+                        View.AddFanProfileToList(profile);
                         break;
                     }
             }
@@ -280,14 +295,53 @@ namespace MilSpace.Profile
             GraphicsLayerManager.EmptyProfileGraphics(MilSpaceGraphicsTypeEnum.Calculating);
         }
 
-        internal void RemoveProfileFromLiist(int profileId)
+        private ProfileSession GetProfileSessionFromSelectedNode()
         {
-            var profile = _workingProfiles.FirstOrDefault(p => p.SessionId == profileId);
-            if (profile != null)
+            var profileType = View.GetProfileTypeFromNode();
+            var profileName = View.GetProfileNameFromNode();
+            switch (profileType)
             {
-                _workingProfiles.Remove(profile);
+                
+                case ProfileSettingsTypeEnum.Points:
+                    return View.GetSectionProfile(profileName);
+                case ProfileSettingsTypeEnum.Fun:
+                    return View.GetFanProfile(profileName);
+                
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
+
+        internal void ShowProfileOnMap()
+        {          
+            var profile = GetProfileSessionFromSelectedNode();
+            var profileLines = profile.ProfileLines.Select(line => line.Line).ToArray();
+            IEnvelope env = new EnvelopeClass();
+            
+            foreach (var line in profileLines)
+            {
+                env.Union(line.Envelope);
+            }
+
+            var envelopeCenter = GetEnvelopeCenterPoint(env);            
+            env.Height = env.Height * 4;
+            env.Width = env.Width * 4;            
+            env.CenterAt(envelopeCenter);
+            View.ActiveView.Extent = env;
+            View.ActiveView.Refresh();            
+            GraphicsLayerManager.UpdateCalculatingGraphic(profileLines, profileId, (int)profile.DefinitionType);
+        }
+
+        private IPoint GetEnvelopeCenterPoint(IEnvelope envelope)
+        {
+            var x = (envelope.XMin + envelope.XMax) / 2;
+            var y = (envelope.YMin + envelope.YMax) / 2;
+            return new PointClass{X = x, Y = y};
+        }
+
+
+
+
 
         internal void CallGraphsHandle(ProfileSession profileSession, ProfileSettingsTypeEnum profileType)
         {

@@ -81,6 +81,41 @@ namespace MilSpace.Profile
             return AddNodeToTreeView("fanNode", profile, 208, 208);
         }
 
+        public void AddSectionProfileToList(ProfileSession profile)
+        {
+            _sectionProfiles.Add(profile);
+        }
+
+        public void AddFanProfileToList(ProfileSession profile)
+        {
+            _fanProfiles.Add(profile);
+        }
+
+        public void RemoveSectionProfileFromList(string profileName)
+        {
+            var profileToRemove = _sectionProfiles
+                .FirstOrDefault(profile => profile.SessionName.Equals(profileName));
+            if (profileToRemove != null)
+            {
+                _sectionProfiles.Remove(profileToRemove);
+            }
+        }
+
+        public ProfileSession GetSectionProfile(string profileName)
+        {
+            return GetProfileFromList(_sectionProfiles, profileName);
+        }
+
+        public ProfileSession GetFanProfile(string profileName)
+        {
+            return GetProfileFromList(_fanProfiles, profileName);
+        }
+
+        private ProfileSession GetProfileFromList(IEnumerable<ProfileSession> listOfProfiles, string profileName)
+        {
+            var resultProfile = listOfProfiles.FirstOrDefault(profile => profile.SessionName.Equals(profileName));
+            return resultProfile;
+        }
 
         private bool AddNodeToTreeView(string parentNodeName, ProfileSession profile, int imageIndex, int selectedImageIndex)
         {
@@ -183,6 +218,23 @@ namespace MilSpace.Profile
             PopulateComboBox(cmbPointLayers, ProfileLayers.PointLayers);
         }
 
+        private void OnNodeSelectionChanged(object sender, TreeViewEventArgs treeViewEventArgs)
+        {
+            if (profilesTreeView.SelectedNode.Parent != null)
+            {
+                toolBtnShowOnMap.Enabled = true;
+                toolBtnFlash.Enabled = true;
+            }
+
+            else
+            {
+                toolBtnShowOnMap.Enabled = false;
+                toolBtnFlash.Enabled = false;
+            }
+
+            
+        }
+
 
         private static void PopulateComboBox(ComboBox comboBox, IEnumerable<ILayer> layers)
         {
@@ -198,6 +250,7 @@ namespace MilSpace.Profile
             ArcMap.Events.OpenDocument += OnObservationPointDropped;
             ArcMap.Events.OpenDocument += OnRoadComboDropped;
             ArcMap.Events.OpenDocument += OnVegetationDropped;
+            profilesTreeView.AfterSelect += OnNodeSelectionChanged;
 
             controller.OnProfileSettingsChanged += OnProfileSettingsChanged;
 
@@ -610,17 +663,18 @@ namespace MilSpace.Profile
 
         private void UpdateFunProperties(object sender, EventArgs e)
         {
-            controller.SetProfileSettigs(ProfileSettingsTypeEnum.Fun);
+            controller.SetProfileSettings(ProfileSettingsTypeEnum.Fun);
         }
 
         private void profileSettingsTab_SelectedIndexChanged(object sender, EventArgs e)
         {
-            controller.SetProfileSettigs(SelectedProfileSettingsType);
+            controller.SetProfileSettings(SelectedProfileSettingsType);
+
         }
 
         private void cmbRasterLayers_SelectedIndexChanged(object sender, EventArgs e)
         {
-            controller.SetProfileSettigs(SelectedProfileSettingsType);
+            controller.SetProfileSettings(SelectedProfileSettingsType);
         }
 
         private static bool CheckDouble(char charValue, TextBox textValue, bool justInt = false)
@@ -629,6 +683,39 @@ namespace MilSpace.Profile
             return (((charValue == BACKSPACE) || ((charValue >= ZERO) && (charValue <= NINE))) || (justInt ||
 
                   ((charValue == DECIMAL_POINT) && textValue.Text.IndexOf(".") == NOT_FOUND)));
+        }
+
+        public ProfileSettingsTypeEnum GetProfileTypeFromNode()
+        {
+            var treeNode = profilesTreeView.SelectedNode;
+            while (treeNode.Parent != null)
+            {
+                treeNode = treeNode.Parent;
+            }
+
+            switch (treeNode.Name)
+            {
+                case "sectionsNode":
+                    return ProfileSettingsTypeEnum.Points;
+                case "fanNode":
+                    return ProfileSettingsTypeEnum.Fun;
+                default:
+                    return ProfileSettingsTypeEnum.SelectedFeatures;
+            }
+        }
+
+        public string GetProfileNameFromNode()
+        {
+            var treeNode = profilesTreeView.SelectedNode;
+
+            while (treeNode.Level > 1)
+                treeNode = treeNode.Parent;
+            return treeNode.Text;
+        }
+
+        private void toolBtnShowOnMap_Click(object sender, EventArgs e)
+        {
+            Controller.ShowProfileOnMap();
         }
 
         private void profilesTreeView_AfterCheck(object sender, TreeViewEventArgs e)
@@ -681,9 +768,9 @@ namespace MilSpace.Profile
             }
         }
 
-        public ProfileSession GetSectionProfile(string profileName)
-        {
-            throw new NotImplementedException();
-        }
+        //public ProfileSession GetSectionProfile(string profileName)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }
