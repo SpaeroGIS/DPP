@@ -6,6 +6,8 @@ using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Tools;
+using MilSpace.DataAccess.DataTransfer;
+using MilSpace.Profile.DTO;
 using static MilSpace.Profile.DockableWindowMilSpaceProfileCalc;
 
 namespace MilSpace.Profile
@@ -43,19 +45,19 @@ namespace MilSpace.Profile
 
             var winImpl = AddIn.FromID<DockableWindowMilSpaceProfileCalc.AddinImpl>(ThisAddIn.IDs.DockableWindowMilSpaceProfileCalc);
 
-            if (winImpl.MilSpaceProfileCalsController.View.ActiveButton == ProfileSettingsPointButton.PointsFist)
+            if (winImpl.MilSpaceProfileCalsController.View.ActiveButton == ProfileSettingsPointButtonEnum.PointsFist)
             {
 
                 winImpl.MilSpaceProfileCalsController.SetFirsPointForLineProfile(point, pointToSave);
 
             }
 
-            if (winImpl.MilSpaceProfileCalsController.View.ActiveButton == ProfileSettingsPointButton.PointsSecond)
+            if (winImpl.MilSpaceProfileCalsController.View.ActiveButton == ProfileSettingsPointButtonEnum.PointsSecond)
             {
                 winImpl.MilSpaceProfileCalsController.SetSecondfPointForLineProfile(point, pointToSave);
             }
 
-            if (winImpl.MilSpaceProfileCalsController.View.ActiveButton == ProfileSettingsPointButton.CenterFun)
+            if (winImpl.MilSpaceProfileCalsController.View.ActiveButton == ProfileSettingsPointButtonEnum.CenterFun)
             {
 
                 winImpl.MilSpaceProfileCalsController.SetCenterPointForFunProfile(point, pointToSave);

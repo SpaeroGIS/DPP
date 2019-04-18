@@ -709,6 +709,7 @@
             this.cmbRasterLayers.Name = "cmbRasterLayers";
             this.cmbRasterLayers.Size = new System.Drawing.Size(752, 21);
             this.cmbRasterLayers.TabIndex = 9;
+            this.cmbRasterLayers.SelectedIndexChanged += new System.EventHandler(this.cmbRasterLayers_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -1773,6 +1774,7 @@
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(755, 325);
             this.profilesTreeView.TabIndex = 35;
+            this.profilesTreeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.profilesTreeView_AfterCheck);
             // 
             // panel6
             // 
