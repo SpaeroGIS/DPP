@@ -32,11 +32,17 @@ namespace MilSpace.Profile
 
         private static ProfileSettingsTypeEnum[] profileSettingsType = Enum.GetValues(typeof(ProfileSettingsTypeEnum)).Cast<ProfileSettingsTypeEnum>().ToArray();
 
-        private Dictionary<ProfileSettingsPointButton, IPoint> pointsToShow = new Dictionary<ProfileSettingsPointButton, IPoint>()
+
+        List<ProfileSession> _workingProfiles = new List<ProfileSession>();
+
+
+
+        private Dictionary<ProfileSettingsPointButtonEnum, IPoint> pointsToShow = new Dictionary<ProfileSettingsPointButtonEnum, IPoint>()
+
         {
-            {ProfileSettingsPointButton.CenterFun, null},
-            {ProfileSettingsPointButton.PointsFist, null},
-            {ProfileSettingsPointButton.PointsSecond, null}
+            {ProfileSettingsPointButtonEnum.CenterFun, null},
+            {ProfileSettingsPointButtonEnum.PointsFist, null},
+            {ProfileSettingsPointButtonEnum.PointsSecond, null}
         };
 
 
@@ -103,7 +109,7 @@ namespace MilSpace.Profile
 
         }
 
-        internal void FlashPoint(ProfileSettingsPointButton pointType)
+        internal void FlashPoint(ProfileSettingsPointButtonEnum pointType)
         {
             IEnvelope env = new EnvelopeClass();
             env = View.ActiveView.Extent;
@@ -118,11 +124,11 @@ namespace MilSpace.Profile
 
             if (View.SelectedProfileSettingsType == ProfileSettingsTypeEnum.Points)
             {
-                return new IPolyline[] { EsriTools.CreatePolylineFromPoints(pointsToShow[ProfileSettingsPointButton.PointsFist], pointsToShow[ProfileSettingsPointButton.PointsSecond]) };
+                return new IPolyline[] { EsriTools.CreatePolylineFromPoints(pointsToShow[ProfileSettingsPointButtonEnum.PointsFist], pointsToShow[ProfileSettingsPointButtonEnum.PointsSecond]) };
             }
             if (View.SelectedProfileSettingsType == ProfileSettingsTypeEnum.Fun)
             {
-                return EsriTools.CreatePolylinesFromPointAndAzimuths(pointsToShow[ProfileSettingsPointButton.CenterFun], View.FunLength, View.FunLinesCount, View.FunAzimuth1, View.FunAzimuth2);
+                return EsriTools.CreatePolylinesFromPointAndAzimuths(pointsToShow[ProfileSettingsPointButtonEnum.CenterFun], View.FunLength, View.FunLinesCount, View.FunAzimuth1, View.FunAzimuth2);
             }
 
             return null;
@@ -171,7 +177,7 @@ namespace MilSpace.Profile
             {
                 try
                 {
-                    var lines = EsriTools.CreatePolylinesFromPointAndAzimuths(pointsToShow[ProfileSettingsPointButton.CenterFun], View.FunLength, View.FunLinesCount, View.FunAzimuth1, View.FunAzimuth2);
+                    var lines = EsriTools.CreatePolylinesFromPointAndAzimuths(pointsToShow[ProfileSettingsPointButtonEnum.CenterFun], View.FunLength, View.FunLinesCount, View.FunAzimuth1, View.FunAzimuth2);
                     if (lines != null)
                     {
                         profileLines.AddRange(lines);
@@ -201,7 +207,7 @@ namespace MilSpace.Profile
 
 
         /// <summary>
-        /// Do Actions to generate profile(s)? save them and set properties to default values
+        /// Do Actions to generate profile(s), save them and set properties to default values
         /// </summary>
         /// <returns>Profile Session data</returns>
         internal ProfileSession GenerateProfile()
@@ -211,7 +217,7 @@ namespace MilSpace.Profile
 
                 ProfileManager manager = new ProfileManager();
                 var profileSetting = profileSettings[View.SelectedProfileSettingsType];
-                var session = manager.GenerateProfile(View.DemLayerName, profileSetting.ProfileLines, profileId, ProfileType);
+                var session = manager.GenerateProfile(View.DemLayerName, profileSetting.ProfileLines, View.SelectedProfileSettingsType, profileId);
 
                 SetPeofileId();
                 return session;
@@ -225,6 +231,37 @@ namespace MilSpace.Profile
             }
         }
 
+        internal void ShowWorkingProfile(int profileId, int lineId = -1)
+        {
+            var profile = _workingProfiles.FirstOrDefault(p => p.SessionId == profileId);
+            if (profile != null)
+            {
+                if (lineId < 0)
+                {
+                    GraphicsLayerManager.AddLinesToWorkingGraphics(profile.ConvertLinesToEsriPolypile(ArcMap.Document.FocusMap.SpatialReference), profile.SessionId);
+                }
+                else if (profile.ProfileLines.Any(l => l.Id == lineId))
+                {
+                    GraphicsLayerManager.ShowLineOnWorkingGraphics(profileId, lineId);
+                }
+            }
+        }
+
+        internal void HideWorkingProfile(int profileId, int lineId = -1)
+        {
+            var profile = _workingProfiles.FirstOrDefault(p => p.SessionId == profileId);
+            if (profile != null)
+            {
+                if (lineId < 0)
+                {
+                    GraphicsLayerManager.RemoveLinesFromWorkingGraphics(profile.ConvertLinesToEsriPolypile(ArcMap.Document.FocusMap.SpatialReference), profile.SessionId);
+                }else if (profile.ProfileLines.Any(l => l.Id == lineId))
+                {
+                    GraphicsLayerManager.HideLineFromWorkingGraphics(profileId, lineId);
+                }
+            }
+        }
+
         internal void AddProfileToList(ProfileSession profile)
         {
             bool isAddToGraphics = false;
@@ -234,22 +271,25 @@ namespace MilSpace.Profile
                 case ProfileSettingsTypeEnum.Points:
                     {
                         isAddToGraphics = View.AddSectionProfileNodes(profile);
-                        View.AddSectionProfileToList(profile);
                         break;
                     }
 
                 case ProfileSettingsTypeEnum.Fun:
                     {
                         isAddToGraphics = View.AddFanProfileNode(profile);
-                        View.AddFanProfileToList(profile);
                         break;
                     }
             }
+
+            //Add Profile to the working list
+            _workingProfiles.Add(profile);
+
             //Add graphics 
             if (isAddToGraphics)
             {
-                GraphicsLayerManager.AddLinesToSessionGraphics(profile.ConvertLinesToEsriPolypile(ArcMap.Document.FocusMap.SpatialReference), profile.SessionId, (int)View.SelectedProfileSettingsType);
+                GraphicsLayerManager.AddLinesToWorkingGraphics(profile.ConvertLinesToEsriPolypile(ArcMap.Document.FocusMap.SpatialReference), profile.SessionId);
             }
+
             GraphicsLayerManager.EmptyProfileGraphics(MilSpaceGraphicsTypeEnum.Calculating);
         }
 
@@ -321,6 +361,7 @@ namespace MilSpace.Profile
                 return graphicsLayerManager;
             }
         }
+
 
         private void InvokeOnProfileSettingsChanged()
         {

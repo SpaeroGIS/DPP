@@ -13,6 +13,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
     public partial class SurfaceProfileChart : UserControl
     {
         private SurfaceProfileChartController _controller;
+        private int _profileId;
+        private bool _isOnlySelectedProfileChangeObserverHeight = false;
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -20,7 +22,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         public List<ProfileProperties> ProfilesProperties { get; set; }
         public bool Current { get; set; }
         public int SelectedProfileIndex { get; set; }
-        public double ObserverHeight { get; set; }
+        public List<double> ObserversHeights { get; set; }
 
         public SurfaceProfileChart(SurfaceProfileChartController controller)
         {
@@ -29,6 +31,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             _controller = controller;
             ProfilesProperties = new List<ProfileProperties>();
+            ObserversHeights = new List<double>();
 
             InitializeComponent();
             profileChart.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
@@ -37,9 +40,15 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         internal void InitializeGraph()
         {
             _controller.LoadSeries();
-            _controller.AddInvisibleZones(profileChart.Series[0].Points[0].YValues[0]);
-            _controller.AddExtremePoints();
             _controller.SetProfilesProperties();
+
+            foreach(var serie in profileChart.Series)
+            {
+                ObserversHeights.Add(serie.Points[0].YValues[0]);
+            }
+
+            _controller.AddInvisibleZones(ObserversHeights);
+            _controller.AddExtremePoints();
             FillPropertiesTable();
         }
 
@@ -55,6 +64,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 AddSerie(profileSurface);
             }
 
+            _profileId = profileSession.SessionId;
         }
 
         internal void AddSerie(ProfileSurface profileSurface)
@@ -88,8 +98,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal void SetExtremePoints(List<ProfileSurfacePoint> extremePoints)
         {
-            ObserverHeight = extremePoints[0].Z;
-
             for (var i = 1; i < extremePoints.Count; i++)
             {
                 AddExtremePoint(extremePoints[0], extremePoints[i], i);
@@ -121,46 +129,85 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             profileChart.Series[$"ExtremePointsLine{order}"].Points[1].MarkerStyle = MarkerStyle.Circle;
         }
 
-        private void UpdateExtremePoins()
+        private void UpdateExtremePoins(SeriesCollection series)
         {
-            for (int i = 1; i < profileChart.Series.Count / 2 + 1; i++)
+            for (int i = 1; i < series.Count / 2 + 1; i++)
             {
-                profileChart.Series[$"ExtremePointsLine{i}"].Points[0].SetValueY(ObserverHeight);
-
-                if (profileChart.Series[$"{i}"].Points.Last().Color == Color.Red)
-                {
-                    profileChart.Series[$"ExtremePointsLine{i}"].Points[1].MarkerColor = Color.Red;
-                }
-                else
-                {
-                    profileChart.Series[$"ExtremePointsLine{i}"].Points[1].MarkerColor = Color.DarkGray;
-                }
+                UpdateProfileExtremePoints(i);
             }
         }
 
-        private void UpdateProfiles()
+        private void UpdateProfileExtremePoints(int index)
         {
-            for (int i = 1; i < profileChart.Series.Count / 2 + 1; i++)
+            profileChart.Series[$"ExtremePointsLine{index}"].Points[0].SetValueY(ObserversHeights[index-1]);
+
+            if (profileChart.Series[$"{index}"].Points.Last().Color == Color.Red)
             {
-                foreach (var point in profileChart.Series[$"{i}"].Points)
-                {
-                    point.Color = Color.ForestGreen;
-                }
+                profileChart.Series[$"ExtremePointsLine{index}"].Points[1].MarkerColor = Color.Red;
+            }
+            else
+            {
+                profileChart.Series[$"ExtremePointsLine{index}"].Points[1].MarkerColor = Color.DarkGray;
+            }
+        }
+
+        private void UpdateProfiles(SeriesCollection series)
+        {
+            for (int i = 1; i < series.Count / 2 + 1; i++)
+            {
+                UpdateProfile(i);
+            }
+        }
+
+        private void UpdateProfile(int index)
+        {
+            foreach (var point in profileChart.Series[$"{index}"].Points)
+            {
+                point.Color = Color.ForestGreen;
+            }
+        }
+
+        private void UpdateTableWithNewObserverHeigth(DataGridViewRowCollection rows)
+        {
+            for(int i = 0; i < profilePropertiesTable.Rows.Count; i++)
+            {
+                UpdateSelectedRowWithNewObserverHeigth(i);
+            }
+        }
+
+        private void UpdateSelectedRowWithNewObserverHeigth(int index)
+        {
+            profilePropertiesTable.Rows[index].Cells["VisiblePercentCol"].Value = Math.Round(ProfilesProperties[index].VisiblePercent, 2);
+
+            if(SelectedProfileIndex != -1)
+            {
+                profileDetailsListBox.Items[3] = $"Высота пункта наблюдения: {Math.Round(ObserversHeights[index], 0)}м;";
             }
         }
 
         private void ChangeObserverPointHeight(double height)
         {
-            ObserverHeight = height;
-
-            foreach (DataGridViewRow row in profilePropertiesTable.Rows)
+            for(int i = 0; i < ObserversHeights.Count; i++)
             {
-                row.Cells["ObserverPointHeightCol"].Value = height;
+                ObserversHeights[i] = height;
             }
 
-            UpdateProfiles();
-            _controller.AddInvisibleZones(height, GetSurfacesFromChart());
-            UpdateExtremePoins();
+            UpdateProfiles(profileChart.Series);
+            _controller.AddInvisibleZones(ObserversHeights, GetSurfacesFromChart());
+            UpdateExtremePoins(profileChart.Series);
+            UpdateTableWithNewObserverHeigth(profilePropertiesTable.Rows);
+        }
+
+        private void ChangeOnlySelectedProfileObserverHeight(double height)
+        {
+            ObserversHeights[SelectedProfileIndex] = height;
+
+            ProfileSurface[] profileSurfaces = GetSurfacesFromChart();
+
+            UpdateProfile(SelectedProfileIndex+1);
+            _controller.AddInvisibleZone(height, profileSurfaces[SelectedProfileIndex]);
+            UpdateProfileExtremePoints(SelectedProfileIndex+1);
+            UpdateSelectedRowWithNewObserverHeigth(SelectedProfileIndex);
         }
 
         private void SaveChartAsImage()
@@ -235,6 +282,13 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             profilePropertiesTable.Rows[SelectedProfileIndex].DefaultCellStyle.BackColor =
                     profileChart.Series[SelectedProfileIndex].Color;
+
+            ShowDetails(SelectedProfileIndex);
+
+            propertiesToolBar.Buttons[0].Enabled = true;
+            propertiesToolBar.Buttons[2].Enabled = true;
+            propertiesToolBar.Buttons[4].Enabled = true;
+            propertiesToolBar.Buttons[5].Enabled = true;
         }
 
         private void FillPropertiesTable()
@@ -244,22 +298,43 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             foreach (var profilesProperties in ProfilesProperties)
             {
                 profilePropertiesTable.Rows.Add(profilesProperties.LineId.ToString(),
-                            Math.Round(ObserverHeight, 1),
-                            "",
+                            Math.Round(profilesProperties.Azimuth, 1).ToString(),
                             Math.Round(profilesProperties.PathLength, 0).ToString(),
                             Math.Round(profilesProperties.MinHeight, 0).ToString(),
                             Math.Round(profilesProperties.MaxHeight, 0).ToString(),
                             Math.Round(profilesProperties.MinAngle, 1).ToString(),
                             Math.Round(profilesProperties.MaxAngle, 1).ToString(),
-                            "");
+                            Math.Round(profilesProperties.VisiblePercent, 2).ToString());
             }
+        }
+
+        private void ShowDetails(int selectedIndex)
+        {
+            profileDetailsListBox.Items.Clear();
+
+            profileDetailsListBox.Items.Add($"Профиль: {_profileId};");
+            profileDetailsListBox.Items.Add($"Состояние: ;");
+            profileDetailsListBox.Items.Add($"Номер в списке: {selectedIndex+1};");
+            profileDetailsListBox.Items.Add($"Высота пункта наблюдения: {Math.Round(ObserversHeights[selectedIndex], 0)}м;");
+            profileDetailsListBox.Items.Add($"Первая точка: X={Math.Round(profileChart.Series[selectedIndex].Points[0].XValue, 0)};" +
+                $" Y={Math.Round(profileChart.Series[selectedIndex].Points[0].YValues[0], 0)};");
+            profileDetailsListBox.Items.Add($"Последняя точка: X={Math.Round(profileChart.Series[selectedIndex].Points.Last().XValue, 0)};" +
+                $" Y={Math.Round(profileChart.Series[selectedIndex].Points.Last().YValues[0], 0)};");
+            profileDetailsListBox.Items.Add($"Азимут: {Math.Round(ProfilesProperties[selectedIndex].Azimuth, 1)};");
+            profileDetailsListBox.Items.Add($"Длина: {Math.Round(ProfilesProperties[selectedIndex].PathLength, 0)}м;");
+            profileDetailsListBox.Items.Add($"Высота: {Math.Round(ProfilesProperties[selectedIndex].MinHeight, 0)}м" +
+                $"-{Math.Round(ProfilesProperties[selectedIndex].MaxHeight, 0)}м;");
+            profileDetailsListBox.Items.Add($"Максимальный угол подъема(градусы): {Math.Round(ProfilesProperties[selectedIndex].MaxAngle, 1)};");
+            profileDetailsListBox.Items.Add($"Максимальный угол спуска(градусы): {Math.Round(ProfilesProperties[selectedIndex].MinAngle, 1)};");
+            profileDetailsListBox.Items.Add($"Процент видимых участков: {Math.Round(ProfilesProperties[selectedIndex].VisiblePercent, 2)}%;");
         }
 
         private void Profile_MouseDown(object sender, MouseEventArgs e)
         {
             var selectedPoint = profileChart.HitTest(e.X, e.Y);
 
-            if (selectedPoint.ChartElementType == ChartElementType.DataPoint)
+            if (selectedPoint.ChartElementType == ChartElementType.DataPoint && 
+                Regex.IsMatch(selectedPoint.Series.Name, @"^\d+$"))
             {
                 //TODO:: Create a list outside the graph
                 SelectProfile(selectedPoint.Series.Name);
@@ -274,14 +349,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal void SetControlSize()
         {
-            profileChart.Width = Width - profilePropertiesTable.Width - 10;
+            profileChart.Width = Width - profilePropertiesTable.Width - 20;
             profileChart.Height = Height - 10;
-
-        }
-
-        private void profileChart_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void SurfaceProfileChart_Resize(object sender, EventArgs e)
@@ -289,20 +358,44 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             SetControlSize();
         }
 
-        private void observerHeightTextBox_KeyDown(object sender, KeyEventArgs e)
+        private void ObserverHeightTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
                 if(Regex.IsMatch(observerHeightTextBox.Text, @"^\d+[,|\.]?\d*$"))
                 {
-                    ChangeObserverPointHeight(Convert.ToDouble(observerHeightTextBox.Text.Replace('.', ',')));
+                    if (_isOnlySelectedProfileChangeObserverHeight)
+                    {
+                        ChangeOnlySelectedProfileObserverHeight(Convert.ToDouble(observerHeightTextBox.Text.Replace('.', ',')));
+                        _isOnlySelectedProfileChangeObserverHeight = false;
+                    }
+                    else
+                    {
+                        ChangeObserverPointHeight(Convert.ToDouble(observerHeightTextBox.Text.Replace('.', ',')));
+                    }
                 }
             }
         }
 
-        private void profilePropertiesTable_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void ProfilePropertiesTable_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             SelectProfile(profileChart.Series[profilePropertiesTable.SelectedCells[0].RowIndex].Name);
+        }
+
+        private void ChangeProfileObserverHeight()
+        {
+            _isOnlySelectedProfileChangeObserverHeight = true;
+            observerHeightTextBox.Focus();
+        }
+
+        private void PropertiesToolBar_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        {
+            switch (propertiesToolBar.Buttons.IndexOf(e.Button))
+            {
+                case 0:
+                    ChangeProfileObserverHeight();
+                    break;
+            }
         }
     }
 }

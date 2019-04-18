@@ -36,7 +36,8 @@ namespace MilSpace.Tools
         public ProfileSession GenerateProfile(
             string profileSource,
             IEnumerable<IPolyline> profileLines,
-            int sessionName, ProfileSettingsTypeEnum profileType)
+            ProfileSettingsTypeEnum profileSettingsTypeEnum,
+            int sessionName)
         {
             string profileSourceName = GdbAccess.Instance.AddProfileLinesToCalculation(profileLines);
 
@@ -105,7 +106,8 @@ namespace MilSpace.Tools
                     ProfileLines = GetProfileLines(lines).ToArray(),
                     ProfileType = profileType,
                     SessionId = sessionName,
-                    SessionName = sessionName.ToString()
+                    SessionName = sessionName.ToString(),
+                    DefinitionType = profileSettingsTypeEnum
                 };
 
 

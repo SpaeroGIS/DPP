@@ -1,11 +1,7 @@
 ﻿using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Geometry;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MilSpace.DataAccess.DataTransfer;
+using MilSpace.Profile.DTO;
 
 namespace MilSpace.Profile
 {
@@ -16,7 +12,7 @@ namespace MilSpace.Profile
 
         ProfileSettingsTypeEnum SelectedProfileSettingsType { get; }
 
-        ProfileSettingsPointButton ActiveButton { get; }
+        ProfileSettingsPointButtonEnum ActiveButton { get; }
 
         IActiveView ActiveView { get; }
 
@@ -59,11 +55,6 @@ namespace MilSpace.Profile
 
         bool AddFanProfileNode(ProfileSession profile);
 
-        void AddSectionProfileToList(ProfileSession profile);
-
-        void AddFanProfileToList(ProfileSession profile);
-
-        void RemoveSectionProfileFromList(string profileName);
 
         ProfileSession GetSectionProfile(string profileName);
 

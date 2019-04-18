@@ -104,7 +104,7 @@
   <ItemGroup>
     <Compile Include="ArcMapInstance.cs" />
     <Compile Include="DataAccessor.cs" />
-    <Compile Include="DataTransfer\ProfileEnums.cs" />
+    <Compile Include="DataTransfer\ProfileSettingsTypeEnum.cs" />
     <Compile Include="DataTransfer\ProfilePoint.cs" />
     <Compile Include="DataTransfer\ProfileSession.cs" />
     <Compile Include="DataTransfer\ProfileSurface.cs" />

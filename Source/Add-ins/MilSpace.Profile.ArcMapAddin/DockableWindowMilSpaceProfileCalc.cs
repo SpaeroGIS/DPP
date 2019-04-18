@@ -5,6 +5,7 @@ using ESRI.ArcGIS.Geometry;
 using MilSpace.Core;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
+using MilSpace.Profile.DTO;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -26,7 +27,7 @@ namespace MilSpace.Profile
         const int NINE = 57;
         const int NOT_FOUND = -1;
 
-        private ProfileSettingsPointButton activeButtton = ProfileSettingsPointButton.None;
+        private ProfileSettingsPointButtonEnum activeButtton = ProfileSettingsPointButtonEnum.None;
 
         MilSpaceProfileCalsController controller;
 
@@ -61,7 +62,7 @@ namespace MilSpace.Profile
 
         public MilSpaceProfileCalsController Controller => controller;
 
-        public ProfileSettingsPointButton ActiveButton => activeButtton;
+        public ProfileSettingsPointButtonEnum ActiveButton => activeButtton;
 
         public string DemLayerName => cmbRasterLayers.SelectedItem == null ? string.Empty : cmbRasterLayers.SelectedItem.ToString();
 
@@ -80,10 +81,6 @@ namespace MilSpace.Profile
             return AddNodeToTreeView("fanNode", profile, 208, 208);
         }
 
-        public void AddSectionProfileToList(ProfileSession profile)
-        {
-            _sectionProfiles.Add(profile);
-        }
 
         public void AddFanProfileToList(ProfileSession profile)
         {
@@ -123,10 +120,13 @@ namespace MilSpace.Profile
             {
                 var newNode = new TreeNode(profile.SessionName, imageIndex, selectedImageIndex);
                 newNode.Checked = parentNode.Checked;
+                newNode.Tag = profile.SessionId;
+
                 foreach (var line in profile.ProfileLines)
                 {
                     var childNode = new TreeNode($"X={line.PointFrom.X:F4}; Y={line.PointTo.Y:F4}; Дистанция={line.Length:F4} {MapUnitsText}", 205, 205);
                     newNode.Nodes.Add(childNode);
+                    childNode.Tag = line.Id;
                     childNode.Checked = newNode.Checked;
                 }
                 parentNode.Nodes.Add(newNode);
@@ -324,14 +324,14 @@ namespace MilSpace.Profile
 
                     }
                     ArcMap.Application.CurrentTool = commandItem;
-                    activeButtton = ProfileSettingsPointButton.PointsFist;
+                    activeButtton = ProfileSettingsPointButtonEnum.PointsFist;
 
                     break;
                 case 1:
 
                     break;
                 case 2:
-                    controller.FlashPoint(ProfileSettingsPointButton.PointsFist);
+                    controller.FlashPoint(ProfileSettingsPointButtonEnum.PointsFist);
                     break;
 
                 case 4:
@@ -382,13 +382,13 @@ namespace MilSpace.Profile
                     }
                     ArcMap.Application.CurrentTool = commandItem;
 
-                    activeButtton = ProfileSettingsPointButton.PointsSecond;
+                    activeButtton = ProfileSettingsPointButtonEnum.PointsSecond;
 
                     break;
                 case 0:
                     break;
                 case 2:
-                    controller.FlashPoint(ProfileSettingsPointButton.PointsSecond);
+                    controller.FlashPoint(ProfileSettingsPointButtonEnum.PointsSecond);
                     break;
 
                 case 4:
@@ -443,7 +443,7 @@ namespace MilSpace.Profile
                     }
                     ArcMap.Application.CurrentTool = commandItem;
 
-                    activeButtton = ProfileSettingsPointButton.CenterFun;
+                    activeButtton = ProfileSettingsPointButtonEnum.CenterFun;
 
                     break;
                 case 0:
@@ -451,7 +451,7 @@ namespace MilSpace.Profile
                     break;
                 case 2:
 
-                    controller.FlashPoint(ProfileSettingsPointButton.CenterFun);
+                    controller.FlashPoint(ProfileSettingsPointButtonEnum.CenterFun);
                     break;
 
 
@@ -472,8 +472,6 @@ namespace MilSpace.Profile
                     {
                         PasteTextToEditField(txtBasePointX);
                     }
-
-
 
                     PasteTextToEditField(txtBasePointY.Focused ? txtBasePointY : txtBasePointX);
 
@@ -527,16 +525,6 @@ namespace MilSpace.Profile
         {
             var text = Clipboard.GetText();
             textBox.Text = text;
-        }
-
-        private IPolyline GetPolylineFromPoints()
-        {
-            var firstPoint = ParseStringCoordsToPoint(txtFirstPointX.Text, txtFirstPointY.Text);
-            var secondPoint = ParseStringCoordsToPoint(txtSecondPointX.Text, txtSecondPointY.Text);
-            IPolyline polyline = new PolylineClass();
-            polyline.FromPoint = firstPoint;
-            polyline.ToPoint = secondPoint;
-            return polyline;
         }
 
         public ProfileSettingsTypeEnum SelectedProfileSettingsType => controller.ProfileSettingsType[profileSettingsTab.SelectedIndex];
@@ -724,6 +712,61 @@ namespace MilSpace.Profile
         private void toolBtnShowOnMap_Click(object sender, EventArgs e)
         {
             Controller.ShowProfileOnMap();
+        }
+
+        private void profilesTreeView_AfterCheck(object sender, TreeViewEventArgs e)
+        {
+
+            if (e.Node.Tag != null && e.Node.Tag.GetType() == typeof(int))
+            {
+                int id = (int)e.Node.Tag;
+                int lineId = -1;
+
+                bool isProfileNode = e.Node.Parent != null && e.Node.Nodes != null && e.Node.Nodes.Count > 0;
+                if (!isProfileNode)//The node is line 
+                {
+
+                    bool chacked = e.Node.Checked;
+                    lineId = id;
+                    id = (int)e.Node.Parent.Tag;
+
+                    if (chacked)
+                    {
+                        controller.ShowWorkingProfile(id, lineId);
+                    }
+                    else
+                    {
+                        controller.HideWorkingProfile(id, lineId);
+                    }
+                }
+            }
+
+            FixChildNodes(e.Node);
+
+        }
+
+
+        private void FixChildNodes(TreeNode parentNode)
+        {
+            for (int i = 0; i < parentNode.Nodes.Count; i++)
+            {
+                var node = parentNode.Nodes[i];
+
+                if (node.Checked != parentNode.Checked)
+                {
+                    node.Checked = parentNode.Checked;
+                }
+
+                if (node.Nodes != null && node.Nodes.Count > 0)
+                {
+                    FixChildNodes(node);
+                }
+            }
+        }
+
+        public ProfileSession GetSectionProfile(string profileName)
+        {
+            throw new NotImplementedException();
         }
     }
 }
