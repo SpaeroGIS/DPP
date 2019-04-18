@@ -11,7 +11,9 @@ namespace MilSpace.DataAccess.DataTransfer
         public int Id;
         public double Angel;
         public double Length;
-        public IFeature Line;
+
+        [XmlIgnore]
+        public IPolyline Line;
 
         [XmlIgnore]
         public ISpatialReference SpatialReference;

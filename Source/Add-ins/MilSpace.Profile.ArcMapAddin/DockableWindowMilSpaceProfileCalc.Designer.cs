@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Графика");
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -160,9 +160,9 @@
             this.value = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.profilesTreeView = new System.Windows.Forms.TreeView();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.lblProfileList = new System.Windows.Forms.Label();
             this.profilesToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolBtnShowOnMap = new System.Windows.Forms.ToolStripButton();
+            this.toolBtnFlash = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -175,7 +175,7 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
-            this.toolBtnFlash = new System.Windows.Forms.ToolStripButton();
+            this.lblProfileList = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -1752,22 +1752,22 @@
             this.profilesTreeView.ImageList = this.imageList1;
             this.profilesTreeView.Location = new System.Drawing.Point(3, 65);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode4.ImageKey = "vector-path-line.png";
-            treeNode4.Name = "sectionsNode";
-            treeNode4.SelectedImageIndex = 205;
-            treeNode4.Text = "Отрезки";
-            treeNode5.ImageKey = "Editing-Line-icon3.png";
-            treeNode5.Name = "fanNode";
-            treeNode5.SelectedImageIndex = 208;
-            treeNode5.Text = "Веер";
-            treeNode6.ImageKey = "vector-polygon.png";
-            treeNode6.Name = "primitivesNode";
-            treeNode6.SelectedImageIndex = 209;
-            treeNode6.Text = "Графика";
+            treeNode1.ImageKey = "vector-path-line.png";
+            treeNode1.Name = "sectionsNode";
+            treeNode1.SelectedImageIndex = 205;
+            treeNode1.Text = "Отрезки";
+            treeNode2.ImageKey = "Editing-Line-icon3.png";
+            treeNode2.Name = "fanNode";
+            treeNode2.SelectedImageIndex = 208;
+            treeNode2.Text = "Веер";
+            treeNode3.ImageKey = "vector-polygon.png";
+            treeNode3.Name = "primitivesNode";
+            treeNode3.SelectedImageIndex = 209;
+            treeNode3.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode5,
-            treeNode6});
+            treeNode1,
+            treeNode2,
+            treeNode3});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(755, 325);
             this.profilesTreeView.TabIndex = 35;
@@ -1780,19 +1780,6 @@
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(755, 30);
             this.panel6.TabIndex = 34;
-            // 
-            // lblProfileList
-            // 
-            this.lblProfileList.AutoSize = true;
-            this.lblProfileList.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblProfileList.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblProfileList.Location = new System.Drawing.Point(3, 3);
-            this.lblProfileList.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
-            this.lblProfileList.Name = "lblProfileList";
-            this.lblProfileList.Padding = new System.Windows.Forms.Padding(0, 6, 0, 6);
-            this.lblProfileList.Size = new System.Drawing.Size(161, 32);
-            this.lblProfileList.TabIndex = 1;
-            this.lblProfileList.Text = "Список профилей";
             // 
             // profilesToolStrip
             // 
@@ -1829,6 +1816,16 @@
             this.toolBtnShowOnMap.Text = "toolStripButton1";
             this.toolBtnShowOnMap.ToolTipText = "Показать на карте";
             this.toolBtnShowOnMap.Click += new System.EventHandler(this.toolBtnShowOnMap_Click);
+            // 
+            // toolBtnFlash
+            // 
+            this.toolBtnFlash.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolBtnFlash.Image = ((System.Drawing.Image)(resources.GetObject("toolBtnFlash.Image")));
+            this.toolBtnFlash.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolBtnFlash.Name = "toolBtnFlash";
+            this.toolBtnFlash.Size = new System.Drawing.Size(23, 27);
+            this.toolBtnFlash.Text = "toolStripButton9";
+            this.toolBtnFlash.ToolTipText = "Подсветить на карте";
             // 
             // toolStripSeparator1
             // 
@@ -1930,15 +1927,18 @@
             this.toolStripButton8.Text = "toolStripButton8";
             this.toolStripButton8.ToolTipText = "Сохранить в базу";
             // 
-            // toolBtnFlash
+            // lblProfileList
             // 
-            this.toolBtnFlash.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolBtnFlash.Image = ((System.Drawing.Image)(resources.GetObject("toolBtnFlash.Image")));
-            this.toolBtnFlash.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolBtnFlash.Name = "toolBtnFlash";
-            this.toolBtnFlash.Size = new System.Drawing.Size(23, 27);
-            this.toolBtnFlash.Text = "toolStripButton9";
-            this.toolBtnFlash.ToolTipText = "Подсветить на карте";
+            this.lblProfileList.AutoSize = true;
+            this.lblProfileList.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblProfileList.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblProfileList.Location = new System.Drawing.Point(3, 3);
+            this.lblProfileList.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
+            this.lblProfileList.Name = "lblProfileList";
+            this.lblProfileList.Padding = new System.Windows.Forms.Padding(0, 6, 0, 6);
+            this.lblProfileList.Size = new System.Drawing.Size(161, 32);
+            this.lblProfileList.TabIndex = 1;
+            this.lblProfileList.Text = "Список профилей";
             // 
             // DockableWindowMilSpaceProfileCalc
             // 

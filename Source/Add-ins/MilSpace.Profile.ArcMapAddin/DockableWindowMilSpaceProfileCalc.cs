@@ -671,18 +671,18 @@ namespace MilSpace.Profile
 
         private void UpdateFunProperties(object sender, EventArgs e)
         {
-            controller.SetPeofileSettigs(ProfileSettingsTypeEnum.Fun);
+            controller.SetProfileSettings(ProfileSettingsTypeEnum.Fun);
         }
 
         private void profileSettingsTab_SelectedIndexChanged(object sender, EventArgs e)
         {
-            controller.SetPeofileSettigs(SelectedProfileSettingsType);
+            controller.SetProfileSettings(SelectedProfileSettingsType);
 
         }
 
         private void cmbRasterLayers_SelectedIndexChanged(object sender, EventArgs e)
         {
-            controller.SetPeofileSettigs(SelectedProfileSettingsType);
+            controller.SetProfileSettings(SelectedProfileSettingsType);
         }
 
         private static bool CheckDouble(char charValue, TextBox textValue, bool justInt = false)

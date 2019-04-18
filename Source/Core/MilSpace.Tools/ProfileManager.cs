@@ -220,6 +220,11 @@ namespace MilSpace.Tools
 
                     var transformedFrom =  from.CloneWithProjecting();
                     var transformedTo = to.CloneWithProjecting();
+                    IPolyline polyline = new PolylineClass
+                    {
+                        FromPoint = from,
+                        ToPoint = to
+                    };
 
                     result.Add(new ProfileLine
                     {
@@ -227,7 +232,7 @@ namespace MilSpace.Tools
                         PointTo = new ProfilePoint { X = transformedTo.X, Y = transformedTo.Y },
                         Id = line.OID,
                         Length = ln.Length,
-                        Line = line,
+                        Line = polyline,
                         SpatialReference = EsriTools.Wgs84Spatialreference,
                         Angel = ln.Angle
                     });

@@ -71,7 +71,7 @@ namespace MilSpace.Profile
             pointsToShow[ProfileSettingsPointButton.PointsFist] = pointToShow;
             View.LinePropertiesFirstPoint = pointToView;
 
-            SetPeofileSettigs(ProfileSettingsTypeEnum.Points);
+            SetProfileSettings(ProfileSettingsTypeEnum.Points);
         }
 
 
@@ -85,7 +85,7 @@ namespace MilSpace.Profile
             View.LinePropertiesSecondPoint = pointToView;
             pointsToShow[ProfileSettingsPointButton.PointsSecond] = pointToShow;
 
-            SetPeofileSettigs(ProfileSettingsTypeEnum.Points);
+            SetProfileSettings(ProfileSettingsTypeEnum.Points);
 
         }
 
@@ -99,7 +99,7 @@ namespace MilSpace.Profile
             pointsToShow[ProfileSettingsPointButton.CenterFun] = pointToShow;
             View.FunPropertiesCenterPoint = pointToView;
 
-            SetPeofileSettigs(ProfileSettingsTypeEnum.Fun);
+            SetProfileSettings(ProfileSettingsTypeEnum.Fun);
 
         }
 
@@ -131,7 +131,17 @@ namespace MilSpace.Profile
 
         internal ProfileSettingsTypeEnum[] ProfileSettingsType => profileSettingsType;
 
-        internal void SetPeofileSettigs(ProfileSettingsTypeEnum profileType)
+        internal void SetProfileSettings(ProfileSettingsTypeEnum profileType)
+        {
+            SetSettings(profileType, profileId);
+        }
+
+        internal void SetProfileSettings(ProfileSettingsTypeEnum profileType, int profileIdValue)
+        {
+            SetSettings(profileType, profileIdValue);
+        }
+
+        private void SetSettings(ProfileSettingsTypeEnum profileType, int profileIdValue)
         {
             List<IPolyline> profileLines = new List<IPolyline>();
 
@@ -186,7 +196,7 @@ namespace MilSpace.Profile
 
             InvokeOnProfileSettingsChanged();
 
-            GraphicsLayerManager.UpdateCalculatingGraphic(profileSetting.ProfileLines, profileId, (int)profileType);
+            GraphicsLayerManager.UpdateCalculatingGraphic(profileSetting.ProfileLines, profileIdValue, (int)profileType);
         }
 
 
@@ -261,11 +271,30 @@ namespace MilSpace.Profile
         }
 
         internal void ShowProfileOnMap()
-        {
+        {          
             var profile = GetProfileSessionFromSelectedNode();
-            var line = profile.ProfileLines.First();
+            var profileLines = profile.ProfileLines.Select(line => line.Line).ToArray();
+            IEnvelope env = new EnvelopeClass();
             
-            EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, new PointClass{X = line.PointFrom.X, Y = line.PointFrom.Y});
+            foreach (var line in profileLines)
+            {
+                env.Union(line.Envelope);
+            }
+
+            var envelopeCenter = GetEnvelopeCenterPoint(env);            
+            env.Height = env.Height * 4;
+            env.Width = env.Width * 4;            
+            env.CenterAt(envelopeCenter);
+            View.ActiveView.Extent = env;
+            View.ActiveView.Refresh();            
+            GraphicsLayerManager.UpdateCalculatingGraphic(profileLines, profileId, (int)profile.ProfileType);
+        }
+
+        private IPoint GetEnvelopeCenterPoint(IEnvelope envelope)
+        {
+            var x = (envelope.XMin + envelope.XMax) / 2;
+            var y = (envelope.YMin + envelope.YMax) / 2;
+            return new PointClass{X = x, Y = y};
         }
 
 
