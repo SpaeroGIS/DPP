@@ -42,15 +42,17 @@ namespace MilSpace.Profile
             SubscribeForEvents();
         }
 
-        internal void AddNewTab(SurfaceProfileChart surfaceProfileChart)
+        internal void AddNewTab(SurfaceProfileChart surfaceProfileChart, string sessionName)
         {
-            string title = $"Профиль графика {profilesTabControl.TabCount + 1}";
+            string title = $"Graph {profilesTabControl.TabPages.Count + 1}";
             TabPage tabPage = new TabPage(title);
-            tabPage.Name = $"profileTabPage{profilesTabControl.TabCount}";
+            tabPage.Name = $"Graph {profilesTabControl.TabPages.Count + 1}";
             profilesTabControl.TabPages.Add(tabPage);
 
             var curTab = profilesTabControl.TabPages[profilesTabControl.TabCount - 1];
-            surfaceProfileChart.Width = curTab.Width - 6;
+            surfaceProfileChart.Width = curTab.Width;
+            surfaceProfileChart.Height = curTab.Height;
+            surfaceProfileChart.Name = "profileChart";
             curTab.Controls.Add(surfaceProfileChart);
             curTab.Show();
             curTab.Select();
@@ -110,8 +112,18 @@ namespace MilSpace.Profile
             profilesTabControl.Height = this.Height;
         }
 
-        private void profilesTabControl_Resize(object sender, EventArgs e)
+        private void ProfilesTabControl_Resize(object sender, EventArgs e)
         {
+           foreach (TabPage page in profilesTabControl.TabPages)
+            {
+                page.Controls["profileChart"].Width = profilesTabControl.Width;
+                page.Controls["profileChart"].Height = profilesTabControl.Height;
+            }
+        }
+
+        private void ProfilesTabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            controller.ChangeChart((SurfaceProfileChart)profilesTabControl.SelectedTab.Controls["profileChart"]);
         }
     }
 }
