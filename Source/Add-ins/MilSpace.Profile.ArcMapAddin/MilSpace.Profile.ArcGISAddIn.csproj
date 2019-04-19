@@ -170,6 +170,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AttributeKeys.cs" />
     <Compile Include="DTO\ProfileSettings.cs" />
     <Compile Include="DTO\ProfileSettingsPointButtonEnum.cs" />
     <Compile Include="IMilSpaceProfileView.cs" />
@@ -191,6 +192,7 @@
     <Compile Include="ProfileLayers.cs" />
     <Compile Include="Exceptions\ProfileSessionNotCreated.cs" />
     <Compile Include="ProfileSettingsEventArgs.cs" />
+    <Compile Include="ProfileTreeNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

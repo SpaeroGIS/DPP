@@ -155,9 +155,7 @@
             this.richTextBox5 = new System.Windows.Forms.RichTextBox();
             this.label20 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.attribute = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.value = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lvProfileAttributes = new System.Windows.Forms.ListView();
             this.profilesTreeView = new System.Windows.Forms.TreeView();
             this.panel6 = new System.Windows.Forms.Panel();
             this.profilesToolStrip = new System.Windows.Forms.ToolStrip();
@@ -176,6 +174,8 @@
             this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
             this.lblProfileList = new System.Windows.Forms.Label();
+            this.Attribute = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Value = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -1703,7 +1703,7 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.listView1);
+            this.tabPage2.Controls.Add(this.lvProfileAttributes);
             this.tabPage2.Controls.Add(this.profilesTreeView);
             this.tabPage2.Controls.Add(this.panel6);
             this.tabPage2.Controls.Add(this.lblProfileList);
@@ -1716,38 +1716,27 @@
             this.tabPage2.Text = "Список профилей";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // listView1
+            // lvProfileAttributes
             // 
-            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.lvProfileAttributes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.attribute,
-            this.value});
-            this.listView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.listView1.HoverSelection = true;
-            this.listView1.Location = new System.Drawing.Point(3, 469);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(755, 286);
-            this.listView1.TabIndex = 36;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
-            this.listView1.Visible = false;
-            // 
-            // attribute
-            // 
-            this.attribute.Text = "Аттрибут";
-            this.attribute.Width = 348;
-            // 
-            // value
-            // 
-            this.value.Text = "Значение";
-            this.value.Width = 402;
+            this.lvProfileAttributes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.Attribute,
+            this.Value});
+            this.lvProfileAttributes.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvProfileAttributes.Location = new System.Drawing.Point(3, 469);
+            this.lvProfileAttributes.Name = "lvProfileAttributes";
+            this.lvProfileAttributes.Size = new System.Drawing.Size(755, 286);
+            this.lvProfileAttributes.TabIndex = 36;
+            this.lvProfileAttributes.UseCompatibleStateImageBehavior = false;
+            this.lvProfileAttributes.View = System.Windows.Forms.View.Details;
+            this.lvProfileAttributes.Visible = false;
             // 
             // profilesTreeView
             // 
-            this.profilesTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.profilesTreeView.Dock = System.Windows.Forms.DockStyle.Top;
+            this.profilesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.profilesTreeView.FullRowSelect = true;
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.ImageList = this.imageList1;
@@ -1770,7 +1759,7 @@
             treeNode2,
             treeNode3});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
-            this.profilesTreeView.Size = new System.Drawing.Size(755, 325);
+            this.profilesTreeView.Size = new System.Drawing.Size(755, 398);
             this.profilesTreeView.TabIndex = 35;
             this.profilesTreeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.profilesTreeView_AfterCheck);
             // 
@@ -1941,6 +1930,16 @@
             this.lblProfileList.Size = new System.Drawing.Size(161, 32);
             this.lblProfileList.TabIndex = 1;
             this.lblProfileList.Text = "Список профилей";
+            // 
+            // Attribute
+            // 
+            this.Attribute.Text = "";
+            this.Attribute.Width = 210;
+            // 
+            // Value
+            // 
+            this.Value.Text = "";
+            this.Value.Width = 542;
             // 
             // DockableWindowMilSpaceProfileCalc
             // 
@@ -2131,9 +2130,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cmbRoadLayers;
-        private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.ColumnHeader attribute;
-        private System.Windows.Forms.ColumnHeader value;
+        private System.Windows.Forms.ListView lvProfileAttributes;
         private System.Windows.Forms.ToolStripButton toolBtnShowOnMap;
         private System.Windows.Forms.ToolStrip profilesToolStrip;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
@@ -2150,5 +2147,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButton8;
         private System.Windows.Forms.ToolStripButton toolBtnFlash;
         internal System.Windows.Forms.TreeView profilesTreeView;
+        private System.Windows.Forms.ColumnHeader Attribute;
+        private System.Windows.Forms.ColumnHeader Value;
     }
 }
