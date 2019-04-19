@@ -160,21 +160,21 @@
             this.value = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.profilesTreeView = new System.Windows.Forms.TreeView();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.toolBar6 = new System.Windows.Forms.ToolBar();
-            this.toolBarButton30 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton36 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton37 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton38 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton39 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton40 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton53 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton9 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton10 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton11 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton12 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton13 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton14 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton22 = new System.Windows.Forms.ToolBarButton();
+            this.profilesToolStrip = new System.Windows.Forms.ToolStrip();
+            this.toolBtnShowOnMap = new System.Windows.Forms.ToolStripButton();
+            this.toolBtnFlash = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
             this.lblProfileList = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -198,6 +198,7 @@
             this.panel14.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.panel6.SuspendLayout();
+            this.profilesToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // imageList1
@@ -1719,10 +1720,10 @@
             // 
             this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.listView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.attribute,
             this.value});
-            this.listView1.GridLines = true;
             this.listView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.listView1.HoverSelection = true;
             this.listView1.Location = new System.Drawing.Point(3, 469);
@@ -1731,6 +1732,7 @@
             this.listView1.TabIndex = 36;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView1.Visible = false;
             // 
             // attribute
             // 
@@ -1745,24 +1747,20 @@
             // profilesTreeView
             // 
             this.profilesTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.profilesTreeView.CheckBoxes = true;
             this.profilesTreeView.Dock = System.Windows.Forms.DockStyle.Top;
             this.profilesTreeView.FullRowSelect = true;
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.ImageList = this.imageList1;
             this.profilesTreeView.Location = new System.Drawing.Point(3, 65);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode1.Checked = true;
             treeNode1.ImageKey = "vector-path-line.png";
             treeNode1.Name = "sectionsNode";
             treeNode1.SelectedImageIndex = 205;
             treeNode1.Text = "Отрезки";
-            treeNode2.Checked = true;
             treeNode2.ImageKey = "Editing-Line-icon3.png";
             treeNode2.Name = "fanNode";
             treeNode2.SelectedImageIndex = 208;
             treeNode2.Text = "Веер";
-            treeNode3.Checked = true;
             treeNode3.ImageKey = "vector-polygon.png";
             treeNode3.Name = "primitivesNode";
             treeNode3.SelectedImageIndex = 209;
@@ -1778,110 +1776,158 @@
             // 
             // panel6
             // 
-            this.panel6.Controls.Add(this.toolBar6);
+            this.panel6.Controls.Add(this.profilesToolStrip);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel6.Location = new System.Drawing.Point(3, 35);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(755, 30);
             this.panel6.TabIndex = 34;
             // 
-            // toolBar6
+            // profilesToolStrip
             // 
-            this.toolBar6.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
-            this.toolBarButton30,
-            this.toolBarButton36,
-            this.toolBarButton37,
-            this.toolBarButton38,
-            this.toolBarButton39,
-            this.toolBarButton40,
-            this.toolBarButton53,
-            this.toolBarButton9,
-            this.toolBarButton10,
-            this.toolBarButton11,
-            this.toolBarButton12,
-            this.toolBarButton13,
-            this.toolBarButton14,
-            this.toolBarButton22});
-            this.toolBar6.ButtonSize = new System.Drawing.Size(18, 18);
-            this.toolBar6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolBar6.DropDownArrows = true;
-            this.toolBar6.ImageList = this.imageList1;
-            this.toolBar6.Location = new System.Drawing.Point(0, 0);
-            this.toolBar6.Name = "toolBar6";
-            this.toolBar6.ShowToolTips = true;
-            this.toolBar6.Size = new System.Drawing.Size(755, 28);
-            this.toolBar6.TabIndex = 33;
+            this.profilesToolStrip.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.profilesToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.profilesToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolBtnShowOnMap,
+            this.toolBtnFlash,
+            this.toolStripSeparator1,
+            this.toolStripButton1,
+            this.toolStripSeparator2,
+            this.toolStripButton2,
+            this.toolStripButton3,
+            this.toolStripButton4,
+            this.toolStripSeparator3,
+            this.toolStripButton5,
+            this.toolStripButton6,
+            this.toolStripSeparator4,
+            this.toolStripButton7,
+            this.toolStripButton8});
+            this.profilesToolStrip.Location = new System.Drawing.Point(0, 0);
+            this.profilesToolStrip.Name = "profilesToolStrip";
+            this.profilesToolStrip.Size = new System.Drawing.Size(755, 30);
+            this.profilesToolStrip.TabIndex = 37;
+            this.profilesToolStrip.Text = "toolStrip1";
             // 
-            // toolBarButton30
+            // toolBtnShowOnMap
             // 
-            this.toolBarButton30.Name = "toolBarButton30";
-            this.toolBarButton30.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
+            this.toolBtnShowOnMap.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolBtnShowOnMap.Image = ((System.Drawing.Image)(resources.GetObject("toolBtnShowOnMap.Image")));
+            this.toolBtnShowOnMap.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolBtnShowOnMap.Name = "toolBtnShowOnMap";
+            this.toolBtnShowOnMap.Size = new System.Drawing.Size(23, 27);
+            this.toolBtnShowOnMap.Text = "toolStripButton1";
+            this.toolBtnShowOnMap.ToolTipText = "Показать на карте";
+            this.toolBtnShowOnMap.Click += new System.EventHandler(this.toolBtnShowOnMap_Click);
             // 
-            // toolBarButton36
+            // toolBtnFlash
             // 
-            this.toolBarButton36.ImageKey = "Search.png";
-            this.toolBarButton36.Name = "toolBarButton36";
-            this.toolBarButton36.ToolTipText = "найти";
+            this.toolBtnFlash.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolBtnFlash.Image = ((System.Drawing.Image)(resources.GetObject("toolBtnFlash.Image")));
+            this.toolBtnFlash.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolBtnFlash.Name = "toolBtnFlash";
+            this.toolBtnFlash.Size = new System.Drawing.Size(23, 27);
+            this.toolBtnFlash.Text = "toolStripButton9";
+            this.toolBtnFlash.ToolTipText = "Подсветить на карте";
             // 
-            // toolBarButton37
+            // toolStripSeparator1
             // 
-            this.toolBarButton37.Name = "toolBarButton37";
-            this.toolBarButton37.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 30);
             // 
-            // toolBarButton38
+            // toolStripButton1
             // 
-            this.toolBarButton38.ImageKey = "Trash.png";
-            this.toolBarButton38.Name = "toolBarButton38";
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 27);
+            this.toolStripButton1.Text = "toolStripButton1";
+            this.toolStripButton1.ToolTipText = "Удалить из базы";
             // 
-            // toolBarButton39
+            // toolStripSeparator2
             // 
-            this.toolBarButton39.Name = "toolBarButton39";
-            this.toolBarButton39.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 30);
             // 
-            // toolBarButton40
+            // toolStripButton2
             // 
-            this.toolBarButton40.ImageKey = "Arrow1 Down.png";
-            this.toolBarButton40.Name = "toolBarButton40";
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(23, 27);
+            this.toolStripButton2.Text = "toolStripButton2";
+            this.toolStripButton2.ToolTipText = "Переместить на позицию вниз";
             // 
-            // toolBarButton53
+            // toolStripButton3
             // 
-            this.toolBarButton53.ImageKey = "Arrow1 Up.png";
-            this.toolBarButton53.Name = "toolBarButton53";
+            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(23, 27);
+            this.toolStripButton3.Text = "toolStripButton3";
+            this.toolStripButton3.ToolTipText = "Переместить на позицию вверх";
             // 
-            // toolBarButton9
+            // toolStripButton4
             // 
-            this.toolBarButton9.ImageKey = "Refresh.png";
-            this.toolBarButton9.Name = "toolBarButton9";
+            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
+            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton4.Name = "toolStripButton4";
+            this.toolStripButton4.Size = new System.Drawing.Size(23, 27);
+            this.toolStripButton4.Text = "toolStripButton4";
+            this.toolStripButton4.ToolTipText = "Редактировать профиль";
             // 
-            // toolBarButton10
+            // toolStripSeparator3
             // 
-            this.toolBarButton10.ImageKey = "Write3.png";
-            this.toolBarButton10.Name = "toolBarButton10";
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 30);
             // 
-            // toolBarButton11
+            // toolStripButton5
             // 
-            this.toolBarButton11.ImageKey = "Directions.png";
-            this.toolBarButton11.Name = "toolBarButton11";
+            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
+            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton5.Name = "toolStripButton5";
+            this.toolStripButton5.Size = new System.Drawing.Size(23, 27);
+            this.toolStripButton5.Text = "toolStripButton5";
+            this.toolStripButton5.ToolTipText = "Показать информацию о профиле";
             // 
-            // toolBarButton12
+            // toolStripButton6
             // 
-            this.toolBarButton12.ImageKey = "Light.png";
-            this.toolBarButton12.Name = "toolBarButton12";
+            this.toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton6.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton6.Image")));
+            this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton6.Name = "toolStripButton6";
+            this.toolStripButton6.Size = new System.Drawing.Size(23, 27);
+            this.toolStripButton6.Text = "toolStripButton6";
+            this.toolStripButton6.ToolTipText = "Перейти к графику";
             // 
-            // toolBarButton13
+            // toolStripSeparator4
             // 
-            this.toolBarButton13.ImageKey = "Stats 3.png";
-            this.toolBarButton13.Name = "toolBarButton13";
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 30);
             // 
-            // toolBarButton14
+            // toolStripButton7
             // 
-            this.toolBarButton14.ImageKey = "Cancel.png";
-            this.toolBarButton14.Name = "toolBarButton14";
+            this.toolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton7.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton7.Image")));
+            this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton7.Name = "toolStripButton7";
+            this.toolStripButton7.Size = new System.Drawing.Size(23, 27);
+            this.toolStripButton7.Text = "toolStripButton7";
+            this.toolStripButton7.ToolTipText = "Убрать из списка";
             // 
-            // toolBarButton22
+            // toolStripButton8
             // 
-            this.toolBarButton22.ImageKey = "Save.png";
-            this.toolBarButton22.Name = "toolBarButton22";
+            this.toolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton8.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton8.Image")));
+            this.toolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton8.Name = "toolStripButton8";
+            this.toolStripButton8.Size = new System.Drawing.Size(23, 27);
+            this.toolStripButton8.Text = "toolStripButton8";
+            this.toolStripButton8.ToolTipText = "Сохранить в базу";
             // 
             // lblProfileList
             // 
@@ -1945,6 +1991,8 @@
             this.tabPage2.PerformLayout();
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
+            this.profilesToolStrip.ResumeLayout(false);
+            this.profilesToolStrip.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2041,16 +2089,7 @@
         private System.Windows.Forms.RichTextBox richTextBox5;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TreeView profilesTreeView;
         private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.ToolBar toolBar6;
-        private System.Windows.Forms.ToolBarButton toolBarButton30;
-        private System.Windows.Forms.ToolBarButton toolBarButton36;
-        private System.Windows.Forms.ToolBarButton toolBarButton37;
-        private System.Windows.Forms.ToolBarButton toolBarButton38;
-        private System.Windows.Forms.ToolBarButton toolBarButton39;
-        private System.Windows.Forms.ToolBarButton toolBarButton40;
-        private System.Windows.Forms.ToolBarButton toolBarButton53;
         private System.Windows.Forms.Label lblProfileList;
         //internal System.Windows.Forms.ToolBarButton pickCoords;
         //internal System.Windows.Forms.ToolBarButton btnPickFirstPoint;
@@ -2093,14 +2132,23 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cmbRoadLayers;
         private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.ToolBarButton toolBarButton9;
-        private System.Windows.Forms.ToolBarButton toolBarButton10;
-        private System.Windows.Forms.ToolBarButton toolBarButton11;
-        private System.Windows.Forms.ToolBarButton toolBarButton12;
-        private System.Windows.Forms.ToolBarButton toolBarButton13;
-        private System.Windows.Forms.ToolBarButton toolBarButton14;
-        private System.Windows.Forms.ToolBarButton toolBarButton22;
         private System.Windows.Forms.ColumnHeader attribute;
         private System.Windows.Forms.ColumnHeader value;
+        private System.Windows.Forms.ToolStripButton toolBtnShowOnMap;
+        private System.Windows.Forms.ToolStrip profilesToolStrip;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.ToolStripButton toolStripButton4;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripButton toolStripButton5;
+        private System.Windows.Forms.ToolStripButton toolStripButton6;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripButton toolStripButton7;
+        private System.Windows.Forms.ToolStripButton toolStripButton8;
+        private System.Windows.Forms.ToolStripButton toolBtnFlash;
+        internal System.Windows.Forms.TreeView profilesTreeView;
     }
 }
