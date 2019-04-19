@@ -157,7 +157,7 @@
             this.profilePropertiesTable.RowHeadersVisible = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
             this.profilePropertiesTable.RowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.profilePropertiesTable.Size = new System.Drawing.Size(334, 124);
+            this.profilePropertiesTable.Size = new System.Drawing.Size(334, 127);
             this.profilePropertiesTable.TabIndex = 40;
             this.profilePropertiesTable.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ProfilePropertiesTable_CellClick);
             // 

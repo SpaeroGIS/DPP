@@ -457,7 +457,43 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         private void GraphToolBar_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
+            Axis axis = profileChart.ChartAreas["Default"].AxisX;
 
+            switch (e.Button.Name)
+            {
+                case "zoomInGraphToolBarBtn":
+
+                    if (double.IsNaN(axis.ScaleView.Size))
+                    {
+                        axis.ScaleView.Size = (axis.Maximum - axis.Minimum)/2;
+                    }
+                    else
+                    {
+                        axis.ScaleView.Size /= 2;
+                    }
+
+                    break;
+
+                 case "zoomOutGraphToolBarBtn":
+
+                    if (axis.ScaleView.Size == axis.Maximum - axis.Minimum)
+                    {
+                        axis.ScaleView.Size = axis.Maximum;
+                        axis.ScaleView.Position = 0;
+                        break;
+                    }
+
+                    if (double.IsNaN(axis.ScaleView.Size))
+                    {
+                        axis.ScaleView.Size = axis.Maximum;
+                    }
+                    else
+                    {
+                        axis.ScaleView.Size *= 2;
+                    }
+
+                    break;
+            }
         }
     }
 }
