@@ -86,7 +86,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             var invisibleSurface = new ProfileSurface();
             var invisiblePoints = new List<ProfileSurfacePoint>();
 
-            double sightLineKoef = 0;
+            var sightLineKoef = 0.0;
             var isInvisibleZone = false;
 
             invisibleSurface.LineId = profileSurface.LineId;

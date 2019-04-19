@@ -117,7 +117,7 @@ namespace MilSpace.Profile
            foreach (TabPage page in profilesTabControl.TabPages)
             {
                 page.Controls["profileChart"].Width = profilesTabControl.Width;
-                page.Controls["profileChart"].Height = profilesTabControl.Height;
+                page.Controls["profileChart"].Height = profilesTabControl.Height - 30;
             }
         }
 
