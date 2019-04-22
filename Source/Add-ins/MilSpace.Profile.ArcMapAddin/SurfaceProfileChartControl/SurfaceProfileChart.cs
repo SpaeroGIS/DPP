@@ -151,6 +151,12 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             profileChart.Series[$"ExtremePointsLine{order}"].Points[1].MarkerStyle = MarkerStyle.Circle;
         }
 
+        internal void SetControlSize()
+        {
+            profileChart.Width = Width - profilePropertiesTable.Width - 20;
+            profileChart.Height = Height - graphToolBar.Height;
+        }
+
         private void UpdateExtremePoins(SeriesCollection series)
         {
             for (int i = 1; i < GetProfiles().Count() + 1; i++)
@@ -336,7 +342,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             profileChart.ChartAreas["Default"].AxisX.LabelStyle.Format = "#";
             profileChart.ChartAreas["Default"].AxisY.LabelStyle.Format = "#";
 
-            profileChart.ChartAreas["Default"].Position = new ElementPosition(0, 4, 95, 92);
+            profileChart.ChartAreas["Default"].Position = new ElementPosition(0, 4, 95, 94);
             profileChart.ChartAreas["Default"].InnerPlotPosition = new ElementPosition(6, 0, 94, 95);
 
             profileChart.Size = this.Size;
@@ -394,8 +400,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 profileChart.Series[SelectedProfileIndex].BorderWidth -= 2;
                 profileChart.Series[SelectedProfileIndex].Font =
                                    new Font(profileChart.Series[SelectedProfileIndex].Font, FontStyle.Regular);
-
-                profilePropertiesTable.Rows[SelectedProfileIndex].DefaultCellStyle.BackColor = Color.White;
             }
 
             profileNameLabel.Text = $"Профиль: {_profileId}";
@@ -406,9 +410,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 profileChart.Series[SelectedProfileIndex].BorderWidth += 2;
                 profileChart.Series[SelectedProfileIndex].Font =
                                     new Font(profileChart.Series[SelectedProfileIndex].Font, FontStyle.Bold);
-
-                profilePropertiesTable.Rows[SelectedProfileIndex].DefaultCellStyle.BackColor =
-                        profileChart.Series[SelectedProfileIndex].Color;
             }
 
             ShowDetails();
@@ -513,10 +514,9 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
         }
 
-        internal void SetControlSize()
+        private void DeleteSelectedProfile()
         {
-            profileChart.Width = Width - profilePropertiesTable.Width - 20;
-            profileChart.Height = Height - graphToolBar.Height - 20;
+
         }
 
         private double GetObserverPointFullHeight(int index)
@@ -568,18 +568,9 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             if (lineColorDialog.ShowDialog() == DialogResult.OK)
             {
                 profileChart.Series[SelectedProfileIndex].Color = lineColorDialog.Color;
-                profileChart.Series[SelectedProfileIndex]
-                                .Points[(int)(profileChart.Series[SelectedProfileIndex].Points.Count / 2)]
-                                .LabelForeColor = lineColorDialog.Color;
 
                 UpdateProfileWithNewColor();
                 visibleLineColorButton.BackColor = lineColorDialog.Color;
-
-                if (profileChart.Series.Count > 2)
-                {
-                    profilePropertiesTable.Rows[SelectedProfileIndex].DefaultCellStyle.BackColor =
-                    profileChart.Series[SelectedProfileIndex].Color;
-                }
             }
         }
 
@@ -620,11 +611,22 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                         foreach (var serie in GetProfiles())
                         {
                             serie.Points[(int)(serie.Points.Count / 2)].Label = $"{serie.Name}";
-                            serie.Points[(int)(serie.Points.Count / 2)].LabelForeColor = serie.Color;
                         }
                     }
 
                     _isCommentDisplay = !_isCommentDisplay;
+
+                    break;
+
+                case "deleteSelectedProfileGraphToolBarBtn":
+
+
+
+                    break;
+
+                case "showAllProfilesGraphToolBarBtn":
+
+                    axis.ScaleView.Size = axis.Maximum;
 
                     break;
 
