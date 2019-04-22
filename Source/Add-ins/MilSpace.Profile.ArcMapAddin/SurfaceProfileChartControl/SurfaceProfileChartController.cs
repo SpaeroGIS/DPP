@@ -75,14 +75,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal void AddInvisibleZone(double observerHeight, ProfileSurface profileSurface)
         {
-            if (observerHeight < profileSurface.ProfileSurfacePoints[0].Z)
-            {
-                _surfaceProfileChart.AddInvisibleLine(profileSurface);
-                CalcProfilesVisiblePercents(profileSurface);
-
-                return;
-            }
-
             var invisibleSurface = new ProfileSurface();
             var invisiblePoints = new List<ProfileSurfacePoint>();
 

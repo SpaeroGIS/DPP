@@ -54,8 +54,9 @@ namespace MilSpace.Profile
             surfaceProfileChart.Height = curTab.Height;
             surfaceProfileChart.Name = "profileChart";
             curTab.Controls.Add(surfaceProfileChart);
-            curTab.Show();
-            curTab.Select();
+
+            profilesTabControl.SelectTab(profilesTabControl.TabCount - 1);
+
             surfaceProfileChart.SetControlSize();
         }
 
