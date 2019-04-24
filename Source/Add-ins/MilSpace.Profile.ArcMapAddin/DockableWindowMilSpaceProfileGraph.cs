@@ -60,6 +60,11 @@ namespace MilSpace.Profile
             surfaceProfileChart.SetControlSize();
         }
 
+        internal void RemoveCurrentTab()
+        {
+            profilesTabControl.TabPages.RemoveAt(profilesTabControl.SelectedIndex);
+        }
+
         #region AddIn Instance
 
         public void SetController(MilSpaceProfileGraphsController controller)
