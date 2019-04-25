@@ -66,6 +66,40 @@ namespace MilSpace.Tools.GraphicsLayer
 
         }
 
+        public void FlashLineOnWorkingGraphics(int profileId, int lineId)
+        {
+            var curList = allGraphics[MilSpaceGraphicsTypeEnum.Session];
+            IGeometry flashGeometry = null;
+            if (lineId > 0)
+            {
+                int elementId = lineId;
+
+                var graphic = curList.FirstOrDefault(g => g.ProfileId == profileId && g.ElementId == elementId);
+                if (graphic != null)
+                {
+                    flashGeometry = graphic.Source;
+                }
+            }
+            else
+            {
+                var graphics = curList.Where(g => g.ProfileId == profileId).Select( g => g.Source).ToList();
+                IGeometryCollection theGeomColl = new GeometryBagClass();
+                graphics.ForEach(pl => theGeomColl.AddGeometry(pl));
+
+                ITopologicalOperator theTopoOp = new PolylineClass();
+                theTopoOp.ConstructUnion((IEnumGeometry)theGeomColl);
+
+                flashGeometry = theTopoOp as IGeometry;
+            }
+
+            if (flashGeometry != null)
+            {
+                EsriTools.FlashGeometry(activeView.ScreenDisplay, flashGeometry);
+                activeView.Refresh();
+            }
+        }
+
+
         public void ShowLineOnWorkingGraphics(int profileId, int lineId)
         {
 
@@ -74,7 +108,7 @@ namespace MilSpace.Tools.GraphicsLayer
 
             var graphic = curList.FirstOrDefault(g => g.ProfileId == profileId && g.ElementId == elementId);
             AddPolyline(graphic, MilSpaceGraphicsTypeEnum.Session, true, true);
-            
+
         }
 
         public void HideLineFromWorkingGraphics(int profileId, int lineId)
@@ -204,7 +238,7 @@ namespace MilSpace.Tools.GraphicsLayer
 
         private static ILineSymbol DefineProfileLineSymbol(MilSpaceGraphicsTypeEnum graphicsType)
         {
-
+            //TODO: Get symbol from ESRITools
             IRgbColor rgbColor = grapchucsTypeColors[graphicsType]();
 
 

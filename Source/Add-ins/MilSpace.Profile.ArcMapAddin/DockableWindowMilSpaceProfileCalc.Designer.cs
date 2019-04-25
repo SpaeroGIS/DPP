@@ -1720,19 +1720,23 @@
             this.profilesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.profilesTreeView.CheckBoxes = true;
             this.profilesTreeView.FullRowSelect = true;
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.ImageList = this.imageList1;
             this.profilesTreeView.Location = new System.Drawing.Point(3, 65);
             this.profilesTreeView.Name = "profilesTreeView";
+            treeNode4.Checked = true;
             treeNode4.ImageKey = "vector-path-line.png";
             treeNode4.Name = "sectionsNode";
             treeNode4.SelectedImageIndex = 205;
             treeNode4.Text = "Отрезки";
+            treeNode5.Checked = true;
             treeNode5.ImageKey = "Editing-Line-icon3.png";
             treeNode5.Name = "fanNode";
             treeNode5.SelectedImageIndex = 208;
             treeNode5.Text = "Веер";
+            treeNode6.Checked = true;
             treeNode6.ImageKey = "vector-polygon.png";
             treeNode6.Name = "primitivesNode";
             treeNode6.SelectedImageIndex = 209;
