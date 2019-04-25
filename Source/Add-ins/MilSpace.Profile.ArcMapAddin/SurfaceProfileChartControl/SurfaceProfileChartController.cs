@@ -108,7 +108,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
                         }
                     }
-
                 }
                 else
                 {
@@ -129,12 +128,11 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             invisibleSurface.ProfileSurfacePoints = invisiblePoints.ToArray();
             _surfaceProfileChart.AddInvisibleLine(invisibleSurface);
-            CalcProfilesVisiblePercents(invisibleSurface);
+            CalcProfilesVisiblePercents(invisibleSurface, profileSurface);
         }
 
         internal void SetProfilesProperties()
         {
-
             foreach (var profileSessionProfileLine in _profileSession.ProfileLines)
             {
                 var profileProperty = new ProfileProperties();
@@ -189,16 +187,33 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             return result;
         }
 
-        private void CalcProfilesVisiblePercents(ProfileSurface invisibleSurface)
+        private void CalcProfilesVisiblePercents(ProfileSurface invisibleSurface, ProfileSurface allSurface)
         {
             var profileProperty = _surfaceProfileChart.ProfilesProperties[invisibleSurface.LineId - 1];
 
             double invisibleLegth = 0;
+            int j = 0;
 
-            for (int i = 1; i < invisibleSurface.ProfileSurfacePoints.Count(); i++)
+            if (invisibleSurface.ProfileSurfacePoints.Count() == 0)
             {
-                invisibleLegth += CalcVectorLength(invisibleSurface.ProfileSurfacePoints[i - 1],
-                    invisibleSurface.ProfileSurfacePoints[i]);
+                _surfaceProfileChart.ProfilesProperties[invisibleSurface.LineId - 1].VisiblePercent = 100;
+
+                return;
+            }
+
+            for (int i = 0; i < allSurface.ProfileSurfacePoints.Count() - 1; i++)
+            {
+                if (allSurface.ProfileSurfacePoints[i] == invisibleSurface.ProfileSurfacePoints[j])
+                {
+                    invisibleLegth += CalcVectorLength(allSurface.ProfileSurfacePoints[i],
+                   allSurface.ProfileSurfacePoints[i + 1]);
+                    j++;
+                }
+
+                if (j >= invisibleSurface.ProfileSurfacePoints.Count())
+                {
+                    i = allSurface.ProfileSurfacePoints.Count() - 1;
+                }
             }
 
             _surfaceProfileChart.ProfilesProperties[invisibleSurface.LineId - 1].VisiblePercent =
