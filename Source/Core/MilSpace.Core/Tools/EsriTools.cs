@@ -170,6 +170,11 @@ namespace MilSpace.Core.Tools
                 return null;
             }
 
+            if ((azimuth1 == 0 && azimuth2 == 360) || (azimuth2 == 0 && azimuth1 == 360))
+            {
+                count -= 1;
+            }
+
 
             if (count < 2)
             {
@@ -178,10 +183,19 @@ namespace MilSpace.Core.Tools
             }
 
 
-            double minAzimuth = Math.Min(azimuth1, azimuth2);
-            double maxAzimuth = Math.Max(azimuth1, azimuth2);
 
-            double sector = maxAzimuth - minAzimuth;
+            //double minAzimuth = Math.Min(azimuth1, azimuth2);
+            //double maxAzimuth = Math.Max(azimuth1, azimuth2);
+
+                double sector;
+            if (azimuth1 > azimuth2) //clockwise
+            {
+                sector = (360 - azimuth1) + azimuth2;
+            }
+            else
+            {
+                sector = azimuth2 - azimuth1;
+            }
 
             if (sector == 0)
             {
@@ -189,12 +203,14 @@ namespace MilSpace.Core.Tools
                 throw new MilSpaceProfileLackOfParameterException("Azimuth", 0);
             }
 
+
+
             double step = sector / (count - 1);
 
             List<IPolyline> result = new List<IPolyline>();
             for (int i = 0; i < count; i++)
             {
-                double radian = (90 - (minAzimuth + (i * step))) * (Math.PI / 180);
+                double radian = (90 - (azimuth1 + (i * step))) * (Math.PI / 180);
                 IPoint outPoint = GetPointFromAngelAndDistance(centerPoint, radian, length);
                 result.Add(CreatePolylineFromPoints(centerPoint, outPoint as IPoint));
             }

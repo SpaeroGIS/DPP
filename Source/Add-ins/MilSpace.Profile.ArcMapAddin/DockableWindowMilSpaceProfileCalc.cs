@@ -372,7 +372,10 @@ namespace MilSpace.Profile
 
             controller.OnProfileSettingsChanged += OnProfileSettingsChanged;
 
+            azimuth1.LostFocus += AzimuthCheck;
+            azimuth2.LostFocus += AzimuthCheck;
         }
+
 
         public void SetController(MilSpaceProfileCalsController controller)
         {
@@ -903,6 +906,23 @@ namespace MilSpace.Profile
             }
 
             return new Tuple<int, int>(id, lineId);
+        }
+
+        private void AzimuthCheck(object sender, EventArgs e)
+        {
+            var athimuthControl = sender as TextBox;
+
+            double result;
+            if (Helper.TryParceToDouble(azimuth2.Text, out result) && (result <= 360 && result >= 0))
+            {
+                UpdateFunProperties(sender, e);
+                return;
+            }
+
+            //TODO - Localize message
+            MessageBox.Show("Значення повинно бути быльше за 0 та меньше 360", "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            athimuthControl.Focus();
         }
 
     }
