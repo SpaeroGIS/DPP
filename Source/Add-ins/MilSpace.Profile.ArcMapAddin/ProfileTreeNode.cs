@@ -70,30 +70,30 @@ namespace MilSpace.Profile
             SetAttributeValue(Attributes, AttributeKeys.ProfileName, profileNameValue);
         }
 
-        internal void SetProfileId(string profileIdValue)
-        {
-            SetAttributeValue(Attributes, AttributeKeys.ProfileId, profileIdValue);
-        }
+        //internal void SetProfileId(string profileIdValue)
+        //{
+        //    SetAttributeValue(Attributes, AttributeKeys.ProfileId, profileIdValue);
+        //}
 
         internal void SetProfileType(string profileTypeValue)
         {
             SetAttributeValue(Attributes, AttributeKeys.ProfileType, profileTypeValue);
         }
 
-        internal void SetProfileDistance(string profileDistanceValue)
-        {
-            SetAttributeValue(Attributes, AttributeKeys.ProfileDistance, profileDistanceValue);
-        }
+        //internal void SetProfileDistance(string profileDistanceValue)
+        //{
+        //    SetAttributeValue(Attributes, AttributeKeys.ProfileDistance, profileDistanceValue);
+        //}
 
         internal void SetLineDistance(string lineDistanceValue)
         {
             SetAttributeValue(Attributes, AttributeKeys.LineDistance, lineDistanceValue);
         }
 
-        internal void SetLineCount(string lineCountValue)
-        {
-            SetAttributeValue(Attributes, AttributeKeys.LinesCount, lineCountValue);
-        }
+        //internal void SetLineCount(string lineCountValue)
+        //{
+        //    SetAttributeValue(Attributes, AttributeKeys.LinesCount, lineCountValue);
+        //}
 
         internal void SetBasePoint(string basePointValue)
         {
@@ -110,15 +110,15 @@ namespace MilSpace.Profile
             SetAttributeValue(Attributes, AttributeKeys.Azimuth1, azimuth1Value);
         }
 
-        internal void SetAzimuth2(string azimuth2Value)
-        {
-            SetAttributeValue(Attributes, AttributeKeys.Azimuth2, azimuth2Value);
-        }
+        //internal void SetAzimuth2(string azimuth2Value)
+        //{
+        //    SetAttributeValue(Attributes, AttributeKeys.Azimuth2, azimuth2Value);
+        //}
 
-        internal void SetMapName(string mapNameValue)
-        {
-            SetAttributeValue(Attributes, AttributeKeys.MapName, mapNameValue);
-        }
+        //internal void SetMapName(string mapNameValue)
+        //{
+        //    SetAttributeValue(Attributes, AttributeKeys.MapName, mapNameValue);
+        //}
 
         internal void SetCreatorName(string creatorNameValue)
         {
@@ -144,30 +144,30 @@ namespace MilSpace.Profile
             profileNameRow[AttributeColumnName] = profileName;
             table.Rows.Add(profileNameRow);
 
-            var profileIdRow = table.NewRow();
-            profileIdRow[KeyColumnName] = AttributeKeys.ProfileId;
-            profileIdRow[AttributeColumnName] = profileId;
-            table.Rows.Add(profileIdRow);
+            //var profileIdRow = table.NewRow();
+            //profileIdRow[KeyColumnName] = AttributeKeys.ProfileId;
+            //profileIdRow[AttributeColumnName] = profileId;
+            //table.Rows.Add(profileIdRow);
 
             var profileTypeRow = table.NewRow();
             profileTypeRow[KeyColumnName] = AttributeKeys.ProfileType;
             profileTypeRow[AttributeColumnName] = profileType;
             table.Rows.Add(profileTypeRow);
 
-            var profileDistanceRow = table.NewRow();
-            profileDistanceRow[KeyColumnName] = AttributeKeys.ProfileDistance;
-            profileDistanceRow[AttributeColumnName] = profileDistance;
-            table.Rows.Add(profileDistanceRow);
+            //var profileDistanceRow = table.NewRow();
+            //profileDistanceRow[KeyColumnName] = AttributeKeys.ProfileDistance;
+            //profileDistanceRow[AttributeColumnName] = profileDistance;
+            //table.Rows.Add(profileDistanceRow);
 
             var lineDistanceRow = table.NewRow();
             lineDistanceRow[KeyColumnName] = AttributeKeys.LineDistance;
             lineDistanceRow[AttributeColumnName] = lineDistance;
             table.Rows.Add(lineDistanceRow);
 
-            var linesCountRow = table.NewRow();
-            linesCountRow[KeyColumnName] = AttributeKeys.LinesCount;
-            linesCountRow[AttributeColumnName] = linesCount;
-            table.Rows.Add(linesCountRow);
+            //var linesCountRow = table.NewRow();
+            //linesCountRow[KeyColumnName] = AttributeKeys.LinesCount;
+            //linesCountRow[AttributeColumnName] = linesCount;
+            //table.Rows.Add(linesCountRow);
 
             var basePointRow = table.NewRow();
             basePointRow[KeyColumnName] = AttributeKeys.BasePoint;
@@ -184,15 +184,15 @@ namespace MilSpace.Profile
             azimuthFirstRow[AttributeColumnName] = azimuth1;
             table.Rows.Add(azimuthFirstRow);
 
-            var azimuthSecondRow = table.NewRow();
-            azimuthSecondRow[KeyColumnName] = AttributeKeys.Azimuth2;
-            azimuthSecondRow[AttributeColumnName] = azimuth2;
-            table.Rows.Add(azimuthSecondRow);
+            //var azimuthSecondRow = table.NewRow();
+            //azimuthSecondRow[KeyColumnName] = AttributeKeys.Azimuth2;
+            //azimuthSecondRow[AttributeColumnName] = azimuth2;
+            //table.Rows.Add(azimuthSecondRow);
 
-            var mapNameRow = table.NewRow();
-            mapNameRow[KeyColumnName] = AttributeKeys.MapName;
-            mapNameRow[AttributeColumnName] = mapName;
-            table.Rows.Add(mapNameRow);
+            //var mapNameRow = table.NewRow();
+            //mapNameRow[KeyColumnName] = AttributeKeys.MapName;
+            //mapNameRow[AttributeColumnName] = mapName;
+            //table.Rows.Add(mapNameRow);
 
             var creatorNameRow = table.NewRow();
             creatorNameRow[KeyColumnName] = AttributeKeys.CreatorName;
