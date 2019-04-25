@@ -117,6 +117,7 @@ namespace MilSpace.Profile
             View.ActiveView.Extent = env;
             View.ActiveView.Refresh();
             EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, pointsToShow[pointType]);
+            View.ActiveView.Refresh();
         }
 
         internal IEnumerable<IPolyline> GetProfileLines()
@@ -312,24 +313,9 @@ namespace MilSpace.Profile
             }
         }
 
-        internal void ShowProfileOnMap()
+        internal void ShowProfileOnMap(int profileId, int lineId)
         {          
-            var profile = GetProfileSessionFromSelectedNode();
-            var profileLines = profile.ProfileLines.Select(line => line.Line).ToArray();
-            IEnvelope env = new EnvelopeClass();
-            
-            foreach (var line in profileLines)
-            {
-                env.Union(line.Envelope);
-            }
-
-            var envelopeCenter = GetEnvelopeCenterPoint(env);            
-            env.Height = env.Height * 4;
-            env.Width = env.Width * 4;            
-            env.CenterAt(envelopeCenter);
-            View.ActiveView.Extent = env;
-            View.ActiveView.Refresh();            
-            GraphicsLayerManager.UpdateCalculatingGraphic(profileLines, profileId, (int)profile.DefinitionType);
+            GraphicsLayerManager.FlashLineOnWorkingGraphics(profileId, lineId);
         }
 
         private IPoint GetEnvelopeCenterPoint(IEnvelope envelope)

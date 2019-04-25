@@ -46,6 +46,7 @@ namespace MilSpace.Profile
             av.Extent = env;
             av.Refresh();
             EsriTools.FlashGeometry(av.ScreenDisplay, point);
+            av.Refresh();
         }
 
         internal void ShowWindow()
@@ -59,7 +60,7 @@ namespace MilSpace.Profile
 
         internal void AddSession(ProfileSession profileSession)
         {
-            _surfaceProfileChartController.GetSession(profileSession);
+            _surfaceProfileChartController.SetSession(profileSession);
             SurfaceProfileChart surfaceProfileChart = _surfaceProfileChartController.CreateProfileChart();
 
             View.AddNewTab(surfaceProfileChart, profileSession.SessionName);
@@ -67,7 +68,12 @@ namespace MilSpace.Profile
 
         internal void ChangeChart(SurfaceProfileChart currentChart)
         {
-            _surfaceProfileChartController.GetCurrentChart(currentChart);
+            _surfaceProfileChartController.SetCurrentChart(currentChart, this);
+        }
+
+        internal void RemoveTab()
+        {
+            View.RemoveCurrentTab();
         }
     }
 }
