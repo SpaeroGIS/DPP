@@ -64,8 +64,7 @@ namespace MilSpace.Profile
         internal MilSpaceProfileCalsController() { }
 
         internal void SetView(IMilSpaceProfileView view)
-        {
-            Debugger.Launch();
+        {           
             View = view;
             SetPeofileId();
             SetProfileName();
