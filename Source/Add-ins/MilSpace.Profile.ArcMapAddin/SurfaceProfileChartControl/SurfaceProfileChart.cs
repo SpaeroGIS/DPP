@@ -114,7 +114,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             {
                 profileChart.Series[surface.LineId.ToString()]
                         .Points
-                        .FirstOrDefault(linePoint => (linePoint.XValue == point.Distance))
+                        .FirstOrDefault(linePoint => (linePoint.XValue.Equals(point.Distance)))
                         .Color = profileChart.Series[surface.LineId.ToString()].BackSecondaryColor;
             }
         }
@@ -263,8 +263,11 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         private void UpdateSelectedRowWithNewObserverHeigth(int index)
         {
-            profilePropertiesTable.Rows[index].Cells["ObserverHeightCol"].Value = Math.Round(ObserversHeights[SelectedProfileIndex], 0);
-            profilePropertiesTable.Rows[index].Cells["VisiblePercentCol"].Value = Math.Round(ProfilesProperties[SelectedProfileIndex].VisiblePercent, 2);
+            profilePropertiesTable.Rows[index].Cells["ObserverHeightCol"].Value
+                                         = Math.Round(ObserversHeights[SelectedProfileIndex], 0);
+
+            profilePropertiesTable.Rows[index].Cells["VisiblePercentCol"].Value
+                                         = Math.Round(ProfilesProperties[SelectedProfileIndex].VisiblePercent, 0);
         }
 
         private void ChangeAllProfilesObserverPointHeights(double height)
@@ -570,15 +573,15 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 profilePropertiesTable.Rows.Add(
                             true,
                             profilesProperties.LineId,
-                            Math.Round(profilesProperties.Azimuth, 1),
+                            Math.Round(profilesProperties.Azimuth, 0),
                             Math.Round(ObserversHeights[profilesProperties.LineId - 1], 0),
                             Math.Round(profilesProperties.PathLength, 0),
                             Math.Round(profilesProperties.MinHeight, 0),
                             Math.Round(profilesProperties.MaxHeight, 0),
                             Math.Round(profilesProperties.MaxHeight - profilesProperties.MinHeight, 0),
-                            Math.Round(profilesProperties.MinAngle, 1),
-                            Math.Round(profilesProperties.MaxAngle, 1),
-                            Math.Round(profilesProperties.VisiblePercent, 2));
+                            Math.Round(profilesProperties.MinAngle, 0),
+                            Math.Round(profilesProperties.MaxAngle, 0),
+                            Math.Round(profilesProperties.VisiblePercent, 0));
             }
         }
 

@@ -502,7 +502,7 @@
             // observerHeightLabel
             // 
             this.observerHeightLabel.AutoSize = true;
-            this.observerHeightLabel.Location = new System.Drawing.Point(3, 4);
+            this.observerHeightLabel.Location = new System.Drawing.Point(3, 5);
             this.observerHeightLabel.Name = "observerHeightLabel";
             this.observerHeightLabel.Size = new System.Drawing.Size(119, 13);
             this.observerHeightLabel.TabIndex = 38;
@@ -515,7 +515,7 @@
             this.visibleLineColorButton.Enabled = false;
             this.visibleLineColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control;
             this.visibleLineColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.visibleLineColorButton.Location = new System.Drawing.Point(332, 10);
+            this.visibleLineColorButton.Location = new System.Drawing.Point(332, 8);
             this.visibleLineColorButton.Name = "visibleLineColorButton";
             this.visibleLineColorButton.Size = new System.Drawing.Size(30, 8);
             this.visibleLineColorButton.TabIndex = 47;
@@ -529,7 +529,7 @@
             this.invisibleLineColorButton.Enabled = false;
             this.invisibleLineColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control;
             this.invisibleLineColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.invisibleLineColorButton.Location = new System.Drawing.Point(240, 10);
+            this.invisibleLineColorButton.Location = new System.Drawing.Point(241, 8);
             this.invisibleLineColorButton.Name = "invisibleLineColorButton";
             this.invisibleLineColorButton.Size = new System.Drawing.Size(30, 8);
             this.invisibleLineColorButton.TabIndex = 48;
@@ -540,7 +540,7 @@
             // 
             this.visibleLineColorLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.visibleLineColorLabel.AutoSize = true;
-            this.visibleLineColorLabel.Location = new System.Drawing.Point(368, 7);
+            this.visibleLineColorLabel.Location = new System.Drawing.Point(274, 5);
             this.visibleLineColorLabel.Name = "visibleLineColorLabel";
             this.visibleLineColorLabel.Size = new System.Drawing.Size(52, 13);
             this.visibleLineColorLabel.TabIndex = 44;
@@ -550,7 +550,7 @@
             // 
             this.InvisibleLineColorLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.InvisibleLineColorLabel.AutoSize = true;
-            this.InvisibleLineColorLabel.Location = new System.Drawing.Point(276, 7);
+            this.InvisibleLineColorLabel.Location = new System.Drawing.Point(368, 5);
             this.InvisibleLineColorLabel.Name = "InvisibleLineColorLabel";
             this.InvisibleLineColorLabel.Size = new System.Drawing.Size(37, 13);
             this.InvisibleLineColorLabel.TabIndex = 45;
@@ -685,9 +685,6 @@
             this.graphPanel.Size = new System.Drawing.Size(498, 327);
             this.graphPanel.TabIndex = 51;
             // 
-            // toolTip
-            // 
-            // 
             // IsVisibleCol
             // 
             this.IsVisibleCol.HeaderText = "IV";
@@ -725,7 +722,7 @@
             this.ProfileLengthCol.Name = "ProfileLengthCol";
             this.ProfileLengthCol.ReadOnly = true;
             this.ProfileLengthCol.ToolTipText = "Длина профиля (м)";
-            this.ProfileLengthCol.Width = 35;
+            this.ProfileLengthCol.Width = 50;
             // 
             // MinHeightCol
             // 
@@ -733,7 +730,7 @@
             this.MinHeightCol.Name = "MinHeightCol";
             this.MinHeightCol.ReadOnly = true;
             this.MinHeightCol.ToolTipText = "Минимальная высота (м)";
-            this.MinHeightCol.Width = 40;
+            this.MinHeightCol.Width = 35;
             // 
             // MaxHeightCol
             // 
@@ -741,14 +738,14 @@
             this.MaxHeightCol.Name = "MaxHeightCol";
             this.MaxHeightCol.ReadOnly = true;
             this.MaxHeightCol.ToolTipText = "Максимальная высота (м)";
-            this.MaxHeightCol.Width = 40;
+            this.MaxHeightCol.Width = 35;
             // 
             // HeightDifferenceCol
             // 
             this.HeightDifferenceCol.HeaderText = "DH";
             this.HeightDifferenceCol.Name = "HeightDifferenceCol";
             this.HeightDifferenceCol.ReadOnly = true;
-            this.HeightDifferenceCol.Width = 40;
+            this.HeightDifferenceCol.Width = 35;
             // 
             // MinAngleCol
             // 
@@ -756,7 +753,7 @@
             this.MinAngleCol.Name = "MinAngleCol";
             this.MinAngleCol.ReadOnly = true;
             this.MinAngleCol.ToolTipText = "Максимальный угол спуска (градусы)";
-            this.MinAngleCol.Width = 40;
+            this.MinAngleCol.Width = 35;
             // 
             // MaxAngleCol
             // 
@@ -764,7 +761,7 @@
             this.MaxAngleCol.Name = "MaxAngleCol";
             this.MaxAngleCol.ReadOnly = true;
             this.MaxAngleCol.ToolTipText = "Максимальный угол подъема (графусы)";
-            this.MaxAngleCol.Width = 40;
+            this.MaxAngleCol.Width = 35;
             // 
             // VisiblePercentCol
             // 
@@ -772,7 +769,7 @@
             this.VisiblePercentCol.Name = "VisiblePercentCol";
             this.VisiblePercentCol.ReadOnly = true;
             this.VisiblePercentCol.ToolTipText = "Процент видимых участков";
-            this.VisiblePercentCol.Width = 40;
+            this.VisiblePercentCol.Width = 35;
             // 
             // SurfaceProfileChart
             // 
