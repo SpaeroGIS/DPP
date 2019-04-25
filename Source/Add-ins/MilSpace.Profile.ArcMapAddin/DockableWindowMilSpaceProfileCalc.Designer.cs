@@ -156,6 +156,8 @@
             this.label20 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.lvProfileAttributes = new System.Windows.Forms.ListView();
+            this.Attribute = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Value = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.profilesTreeView = new System.Windows.Forms.TreeView();
             this.panel6 = new System.Windows.Forms.Panel();
             this.profilesToolStrip = new System.Windows.Forms.ToolStrip();
@@ -174,8 +176,6 @@
             this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
             this.lblProfileList = new System.Windows.Forms.Label();
-            this.Attribute = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Value = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -1732,24 +1732,38 @@
             this.lvProfileAttributes.View = System.Windows.Forms.View.Details;
             this.lvProfileAttributes.Visible = false;
             // 
+            // Attribute
+            // 
+            this.Attribute.Text = "";
+            this.Attribute.Width = 210;
+            // 
+            // Value
+            // 
+            this.Value.Text = "";
+            this.Value.Width = 542;
+            // 
             // profilesTreeView
             // 
             this.profilesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.profilesTreeView.CheckBoxes = true;
             this.profilesTreeView.FullRowSelect = true;
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.ImageList = this.imageList1;
             this.profilesTreeView.Location = new System.Drawing.Point(3, 65);
             this.profilesTreeView.Name = "profilesTreeView";
+            treeNode1.Checked = true;
             treeNode1.ImageKey = "vector-path-line.png";
             treeNode1.Name = "sectionsNode";
             treeNode1.SelectedImageIndex = 205;
             treeNode1.Text = "Отрезки";
+            treeNode2.Checked = true;
             treeNode2.ImageKey = "Editing-Line-icon3.png";
             treeNode2.Name = "fanNode";
             treeNode2.SelectedImageIndex = 208;
             treeNode2.Text = "Веер";
+            treeNode3.Checked = true;
             treeNode3.ImageKey = "vector-polygon.png";
             treeNode3.Name = "primitivesNode";
             treeNode3.SelectedImageIndex = 209;
@@ -1930,16 +1944,6 @@
             this.lblProfileList.Size = new System.Drawing.Size(161, 32);
             this.lblProfileList.TabIndex = 1;
             this.lblProfileList.Text = "Список профилей";
-            // 
-            // Attribute
-            // 
-            this.Attribute.Text = "";
-            this.Attribute.Width = 210;
-            // 
-            // Value
-            // 
-            this.Value.Text = "";
-            this.Value.Width = 542;
             // 
             // DockableWindowMilSpaceProfileCalc
             // 
