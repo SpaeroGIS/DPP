@@ -46,6 +46,8 @@ namespace MilSpace.Profile
 
         int ProfileId { set; }
 
+        string ProfileName { get; set; }
+
         /// <summary>
         /// Adds the <paramref name="profile"/> into the tree view 
         /// </summary>

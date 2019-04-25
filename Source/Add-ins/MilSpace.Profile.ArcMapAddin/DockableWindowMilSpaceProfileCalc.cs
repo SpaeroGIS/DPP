@@ -26,6 +26,7 @@ namespace MilSpace.Profile
         const int ZERO = 48;
         const int NINE = 57;
         const int NOT_FOUND = -1;
+        private const string Degree = "°";
 
         private ProfileSettingsPointButtonEnum activeButtton = ProfileSettingsPointButtonEnum.None;
 
@@ -69,6 +70,18 @@ namespace MilSpace.Profile
         public int ProfileId
         {
             set { txtProfileName.Text = value.ToString(); }
+        }
+
+        public string ProfileName
+        {
+            get => txtProfileName.Text;
+            set
+            {
+                txtProfileName.Clear();
+                txtProfileName.Text = value;
+                var text = txtProfileName.Text;
+            }
+            
         }
 
         public bool AddSectionProfileNodes(ProfileSession profile)
@@ -130,41 +143,53 @@ namespace MilSpace.Profile
                 };
                 
                 newNode.SetProfileName(profile.SessionName);
-                newNode.SetProfileId(profile.SessionId.ToString());
+                //newNode.SetProfileId(profile.SessionId.ToString());
                 newNode.SetProfileType(ConvertProfileTypeToString(profile.DefinitionType));
-                newNode.SetProfileDistance(CalculateProfileDistance(profile.ProfileSurfaces).ToString("F4"));
-                newNode.SetLineCount(profile.ProfileLines.Length.ToString());
+                //newNode.SetProfileDistance(CalculateProfileDistance(profile.ProfileSurfaces).ToString("F4"));
+                //newNode.SetLineCount(profile.ProfileLines.Length.ToString());
                 newNode.SetCreatorName(Environment.UserName);
-                newNode.SetMapName(ArcMap.Application.Document.Title);
+                //newNode.SetMapName(ArcMap.Application.Document.Title);
                 newNode.SetDate($"{date.ToLongDateString()} {date.ToLongTimeString()}");
 
                 newNode.SetLineDistance(string.Empty);
                 newNode.SetBasePoint(string.Empty);
                 newNode.SetToPoint(string.Empty);
                 newNode.SetAzimuth1(string.Empty);
-                newNode.SetAzimuth2(string.Empty);
+                //newNode.SetAzimuth2(string.Empty);
 
                 foreach (var line in profile.ProfileLines)
                 {
-                    var childNode = new ProfileTreeNode($"X={line.PointFrom.X:F4}; Y={line.PointTo.Y:F4}; Дистанция={line.Length:F4} {MapUnitsText}", 205, 205);
+                    var azimuth = (line.Angel * 180 / Math.PI).ToString("F0");
+                    //var childNode = new ProfileTreeNode($"X={line.PointFrom.X:F4}; Y={line.PointTo.Y:F4}; Дистанция={line.Length:F4} {MapUnitsText}", 205, 205);
+                    var childNode = new ProfileTreeNode($"{azimuth}{Degree}", 205, 205);
                     newNode.Nodes.Add(childNode);
                     childNode.Tag = line.Id;
                     childNode.Checked = newNode.Checked;
-                    ProfileId = profile.SessionId;
-
-                    childNode.SetProfileName(profile.SessionName);
-                    childNode.SetProfileId(profile.SessionId.ToString());
-                    childNode.SetProfileType(ConvertProfileTypeToString(profile.DefinitionType));
-                    childNode.SetProfileDistance(CalculateProfileDistance(profile.ProfileSurfaces).ToString("F4"));
-                    childNode.SetLineDistance(line.Length.ToString("F4"));
-                    childNode.SetBasePoint($"X={line.Line.FromPoint.X:F4}; Y={line.Line.FromPoint.Y:F4}");
-                    childNode.SetToPoint($"X={line.Line.ToPoint.X:F4}; Y={line.Line.ToPoint.Y:F4}");
-                    childNode.SetAzimuth1(FunAzimuth1==-1 ? string.Empty : FunAzimuth1.ToString("F0"));
-                    childNode.SetAzimuth2(FunAzimuth2 == -1 ? string.Empty : FunAzimuth2.ToString("F0"));
+                    //ProfileName = profile.SessionName;
+                    //ProfileId = profile.SessionId;
                     
-                    childNode.SetCreatorName(Environment.UserName);
-                    childNode.SetMapName(ArcMap.Application.Document.Title);
-                    childNode.SetDate($"{date.ToLongDateString()} {date.ToLongTimeString()}");                  
+                    //childNode.SetProfileName(profile.SessionName);
+                    //childNode.SetProfileId(profile.SessionId.ToString());
+                    //childNode.SetProfileType(ConvertProfileTypeToString(profile.DefinitionType));
+                    //childNode.SetProfileDistance(CalculateProfileDistance(profile.ProfileSurfaces).ToString("F5"));
+                    childNode.SetLineDistance(line.Length.ToString("F5"));
+                    childNode.SetBasePoint($"X={line.Line.FromPoint.X:F5}; Y={line.Line.FromPoint.Y:F5}");
+                    childNode.SetToPoint($"X={line.Line.ToPoint.X:F5}; Y={line.Line.ToPoint.Y:F5}");
+                    
+                    childNode.SetAzimuth1($"{azimuth}{Degree}");
+                    
+
+                    //if (profile.DefinitionType == ProfileSettingsTypeEnum.Fun)
+                    //{
+                    //    childNode.SetAzimuth1(FunAzimuth1 == -1 ? string.Empty : FunAzimuth1.ToString("F0"));
+                    //    childNode.SetAzimuth2(FunAzimuth2 == -1 ? string.Empty : FunAzimuth2.ToString("F0"));
+                    //}
+
+                    
+                    
+                    //childNode.SetCreatorName(Environment.UserName);
+                    //childNode.SetMapName(ArcMap.Application.Document.Title);
+                    //childNode.SetDate($"{date.ToLongDateString()} {date.ToLongTimeString()}");                  
 
                 }
                 parentNode.Nodes.Add(newNode);

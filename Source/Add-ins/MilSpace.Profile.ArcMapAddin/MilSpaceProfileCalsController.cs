@@ -9,6 +9,7 @@ using MilSpace.Tools;
 using MilSpace.Tools.GraphicsLayer;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,7 @@ namespace MilSpace.Profile
     {
 
         private int profileId;
+        private string profileName;
         GraphicsLayerManager graphicsLayerManager;
 
         public delegate void ProfileSettingsChangedDelegate(ProfileSettingsEventArgs e);
@@ -34,7 +36,7 @@ namespace MilSpace.Profile
 
 
         List<ProfileSession> _workingProfiles = new List<ProfileSession>();
-
+        private const string NewProfilePrefix = "Новый профиль";
 
 
         private Dictionary<ProfileSettingsPointButtonEnum, IPoint> pointsToShow = new Dictionary<ProfileSettingsPointButtonEnum, IPoint>()
@@ -63,8 +65,10 @@ namespace MilSpace.Profile
 
         internal void SetView(IMilSpaceProfileView view)
         {
+            Debugger.Launch();
             View = view;
             SetPeofileId();
+            SetProfileName();
         }
 
         /// <summary>
@@ -217,9 +221,14 @@ namespace MilSpace.Profile
 
                 ProfileManager manager = new ProfileManager();
                 var profileSetting = profileSettings[View.SelectedProfileSettingsType];
-                var session = manager.GenerateProfile(View.DemLayerName, profileSetting.ProfileLines, View.SelectedProfileSettingsType, profileId);
+                var newProfileId = GenerateProfileId();
+                var newProfileName = GenerateProfileName(newProfileId);
+
+                
+                var session = manager.GenerateProfile(View.DemLayerName, profileSetting.ProfileLines, View.SelectedProfileSettingsType, newProfileId, newProfileName);
 
                 SetPeofileId();
+                SetProfileName();
                 return session;
 
             }
@@ -378,7 +387,25 @@ namespace MilSpace.Profile
 
         private void SetPeofileId()
         {
-            profileId = View.ProfileId = (int)(DateTime.Now.ToOADate() * 10000);
+            profileId = GenerateProfileId();
+        }
+
+        private void SetProfileName()
+        {
+            View.ProfileName = $"{NewProfilePrefix} {profileId}"; 
+        }
+
+        private string GenerateProfileName(int id)
+        {
+            if (!string.IsNullOrWhiteSpace(View.ProfileName)) return View.ProfileName;
+            var result = $"{NewProfilePrefix} {id}";
+            return result;
+
+        }
+
+        private int GenerateProfileId()
+        {
+            return (int)(DateTime.Now.ToOADate() * 10000);
         }
     }
 }
