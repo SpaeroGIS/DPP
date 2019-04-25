@@ -46,6 +46,7 @@ namespace MilSpace.Profile
             av.Extent = env;
             av.Refresh();
             EsriTools.FlashGeometry(av.ScreenDisplay, point);
+            av.Refresh();
         }
 
         internal void ShowWindow()

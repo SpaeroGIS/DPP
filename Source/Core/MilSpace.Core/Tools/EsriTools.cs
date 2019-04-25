@@ -13,23 +13,79 @@ namespace MilSpace.Core.Tools
 
         private static ISpatialReference wgs84 = null;
 
-        private static Dictionary<esriGeometryType, Func<ISymbol>> symbolsToFlash = new Dictionary<esriGeometryType, Func<ISymbol>>()
+        private static Dictionary<esriGeometryType, Func<IRgbColor, ISymbol>> symbolsToFlash = new Dictionary<esriGeometryType, Func<IRgbColor, ISymbol>>()
         {
-            { esriGeometryType.esriGeometryPoint, () => {
-              //Set point props to  the flash geometry
-            RgbColor rgbColor = new  RgbColor();
-            rgbColor.Red = 255;
-            ISimpleMarkerSymbol simpleMarkerSymbol = new SimpleMarkerSymbol()
-            {
-                Style = esriSimpleMarkerStyle.esriSMSCross,
-                Size = 10,
-                Color = rgbColor
-            };
+            { esriGeometryType.esriGeometryPoint, (rgbColor) => {
+                  //Set point props to  the flash geometry
+                ISimpleMarkerSymbol simpleMarkerSymbol = new SimpleMarkerSymbol()
+                {
+                    Style = esriSimpleMarkerStyle.esriSMSCross,
+                    Size = 10,
+                    Color = rgbColor
+                };
 
 
-            return (ISymbol)simpleMarkerSymbol; } },
 
-            { esriGeometryType.esriGeometryPolyline, () => {throw new NotImplementedException();} }
+                return (ISymbol)simpleMarkerSymbol; }
+            },
+
+            { esriGeometryType.esriGeometryPolyline, (rgbColor) => {
+                //Define an arrow marker  
+                IArrowMarkerSymbol arrowMarkerSymbol = new ArrowMarkerSymbol();
+
+                arrowMarkerSymbol.Color = rgbColor;
+                arrowMarkerSymbol.Size = 8;
+                arrowMarkerSymbol.Length = 8;
+                arrowMarkerSymbol.Width = 6;
+                //Add an offset to make sure the square end of the line is hidden  
+                arrowMarkerSymbol.XOffset = 0.8;
+
+                //Create cartographic line symbol  
+                ICartographicLineSymbol cartographicLineSymbol = new CartographicLineSymbol();
+                cartographicLineSymbol.Color = rgbColor;
+                cartographicLineSymbol.Width = 1;
+
+                //Define simple line decoration  
+                ISimpleLineDecorationElement simpleLineDecorationElement = new SimpleLineDecorationElement();
+                //Place the arrow at the end of the line (the "To" point in the geometry below)  
+                simpleLineDecorationElement.AddPosition(1);
+                simpleLineDecorationElement.MarkerSymbol = arrowMarkerSymbol;
+
+                //Define line decoration  
+                ILineDecoration lineDecoration = new LineDecoration();
+                lineDecoration.AddElement(simpleLineDecorationElement);
+
+                //Set line properties  
+                ILineProperties lineProperties = (ILineProperties)cartographicLineSymbol;
+                lineProperties.LineDecoration = lineDecoration;
+
+                return (ISymbol)cartographicLineSymbol;
+
+            } }
+        };
+
+        private static Dictionary<esriGeometryType, Func<IDisplay, IGeometry, bool>> actionToFlash = new Dictionary<esriGeometryType, Func<IDisplay, IGeometry, bool>>()
+        {
+            { esriGeometryType.esriGeometryPoint, (display, geometry) => {
+
+                    for(int i =0; i < 4; i++ )
+                    {
+                        display.DrawPoint(geometry);
+                        System.Threading.Thread.Sleep(300);
+                    }
+                    return true;
+                }
+            },
+            { esriGeometryType.esriGeometryPolyline, (display, geometry) => {
+
+                for(int i=0; i < 4; i++ )
+                    {
+                        display.DrawPolyline(geometry);
+                        System.Threading.Thread.Sleep(100);
+                    }
+                    return true;
+                }
+            }
         };
 
         public static void ProjectToWgs84(IGeometry geometry)
@@ -91,13 +147,15 @@ namespace MilSpace.Core.Tools
         {
             if (symbolsToFlash.ContainsKey(geometry.GeometryType))
             {
+                IRgbColor color = new RgbColor();
+                color.Red = 255;
+                var symbol = symbolsToFlash[geometry.GeometryType].Invoke(color);
+
                 display.StartDrawing(display.hDC, (short)ESRI.ArcGIS.Display.esriScreenCache.esriNoScreenCache);
-                var symbol = symbolsToFlash[geometry.GeometryType].Invoke();
                 display.SetSymbol(symbol);
-                display.DrawPoint(geometry);
-                System.Threading.Thread.Sleep(100);
-                display.DrawPoint(geometry);
+                actionToFlash[geometry.GeometryType].Invoke(display, geometry);
                 display.FinishDrawing();
+                
             }
             else
             { throw new KeyNotFoundException("{0} cannot be found in the Symbol dictionary".InvariantFormat(geometry.GeometryType)); }
@@ -112,6 +170,11 @@ namespace MilSpace.Core.Tools
                 return null;
             }
 
+            if ((azimuth1 == 0 && azimuth2 == 360) || (azimuth2 == 0 && azimuth1 == 360))
+            {
+                count -= 1;
+            }
+
 
             if (count < 2)
             {
@@ -120,10 +183,19 @@ namespace MilSpace.Core.Tools
             }
 
 
-            double minAzimuth = Math.Min(azimuth1, azimuth2);
-            double maxAzimuth = Math.Max(azimuth1, azimuth2);
 
-            double sector = maxAzimuth - minAzimuth;
+            //double minAzimuth = Math.Min(azimuth1, azimuth2);
+            //double maxAzimuth = Math.Max(azimuth1, azimuth2);
+
+                double sector;
+            if (azimuth1 > azimuth2) //clockwise
+            {
+                sector = (360 - azimuth1) + azimuth2;
+            }
+            else
+            {
+                sector = azimuth2 - azimuth1;
+            }
 
             if (sector == 0)
             {
@@ -131,12 +203,14 @@ namespace MilSpace.Core.Tools
                 throw new MilSpaceProfileLackOfParameterException("Azimuth", 0);
             }
 
+
+
             double step = sector / (count - 1);
 
             List<IPolyline> result = new List<IPolyline>();
             for (int i = 0; i < count; i++)
             {
-                double radian = (90 - (minAzimuth + (i * step))) * (Math.PI / 180);
+                double radian = (90 - (azimuth1 + (i * step))) * (Math.PI / 180);
                 IPoint outPoint = GetPointFromAngelAndDistance(centerPoint, radian, length);
                 result.Add(CreatePolylineFromPoints(centerPoint, outPoint as IPoint));
             }

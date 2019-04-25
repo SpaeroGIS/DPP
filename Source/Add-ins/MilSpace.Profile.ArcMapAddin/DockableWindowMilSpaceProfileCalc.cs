@@ -128,7 +128,7 @@ namespace MilSpace.Profile
                     Checked = parentNode.Checked,
                     Tag = profile.SessionId
                 };
-                
+
                 newNode.SetProfileName(profile.SessionName);
                 newNode.SetProfileId(profile.SessionId.ToString());
                 newNode.SetProfileType(ConvertProfileTypeToString(profile.DefinitionType));
@@ -159,12 +159,12 @@ namespace MilSpace.Profile
                     childNode.SetLineDistance(line.Length.ToString("F4"));
                     childNode.SetBasePoint($"X={line.Line.FromPoint.X:F4}; Y={line.Line.FromPoint.Y:F4}");
                     childNode.SetToPoint($"X={line.Line.ToPoint.X:F4}; Y={line.Line.ToPoint.Y:F4}");
-                    childNode.SetAzimuth1(FunAzimuth1==-1 ? string.Empty : FunAzimuth1.ToString("F0"));
+                    childNode.SetAzimuth1(FunAzimuth1 == -1 ? string.Empty : FunAzimuth1.ToString("F0"));
                     childNode.SetAzimuth2(FunAzimuth2 == -1 ? string.Empty : FunAzimuth2.ToString("F0"));
-                    
+
                     childNode.SetCreatorName(Environment.UserName);
                     childNode.SetMapName(ArcMap.Application.Document.Title);
-                    childNode.SetDate($"{date.ToLongDateString()} {date.ToLongTimeString()}");                  
+                    childNode.SetDate($"{date.ToLongDateString()} {date.ToLongTimeString()}");
 
                 }
                 parentNode.Nodes.Add(newNode);
@@ -202,16 +202,16 @@ namespace MilSpace.Profile
             {
                 case ProfileSettingsTypeEnum.Points:
                     return "Отрезок";
-                    
+
                 case ProfileSettingsTypeEnum.Fun:
                     return "Веер";
-                    
+
                 case ProfileSettingsTypeEnum.SelectedFeatures:
                     return "Графика";
-                    
+
                 case ProfileSettingsTypeEnum.Load:
                     return "Загрузка";
-                    
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(profileType), profileType, null);
             }
@@ -310,7 +310,7 @@ namespace MilSpace.Profile
             {
                 toolBtnShowOnMap.Enabled = false;
                 toolBtnFlash.Enabled = false;
-            }           
+            }
         }
 
         private void DisplaySelectedNodeAttributes(object sender, TreeViewEventArgs treeViewEventArgs)
@@ -324,7 +324,7 @@ namespace MilSpace.Profile
             }
 
 
-            
+
             lvProfileAttributes.Visible = true;
             if (!(node is ProfileTreeNode)) return;
             ProfileTreeNode profileNode = (ProfileTreeNode)node;
@@ -336,7 +336,7 @@ namespace MilSpace.Profile
                 }
 
                 var lvItem = new ListViewItem(row[AttributeKeys.AttributeColumnName].ToString());
-                lvItem.SubItems.Add(row[AttributeKeys.ValueColumnName].ToString()); 
+                lvItem.SubItems.Add(row[AttributeKeys.ValueColumnName].ToString());
 
                 lvProfileAttributes.Items.Add(lvItem);
             }
@@ -344,8 +344,8 @@ namespace MilSpace.Profile
 
         private void OnListViewResize(object sender, EventArgs eventArgs)
         {
-            lvProfileAttributes.Columns[0].Width = lvProfileAttributes.Width / 2 -10;
-            lvProfileAttributes.Columns[1].Width = lvProfileAttributes.Width / 2 -10;
+            lvProfileAttributes.Columns[0].Width = lvProfileAttributes.Width / 2 - 10;
+            lvProfileAttributes.Columns[1].Width = lvProfileAttributes.Width / 2 - 10;
         }
 
 
@@ -372,7 +372,10 @@ namespace MilSpace.Profile
 
             controller.OnProfileSettingsChanged += OnProfileSettingsChanged;
 
+            azimuth1.LostFocus += AzimuthCheck;
+            azimuth2.LostFocus += AzimuthCheck;
         }
+
 
         public void SetController(MilSpaceProfileCalsController controller)
         {
@@ -833,7 +836,10 @@ namespace MilSpace.Profile
 
         private void toolBtnShowOnMap_Click(object sender, EventArgs e)
         {
-            Controller.ShowProfileOnMap();
+            var node = profilesTreeView.SelectedNode;
+            var ids = GetProfileAndLineIds(node);
+
+            Controller.ShowProfileOnMap(ids.Item1, ids.Item2);
         }
 
         private void profilesTreeView_AfterCheck(object sender, TreeViewEventArgs e)
@@ -841,18 +847,13 @@ namespace MilSpace.Profile
 
             if (e.Node.Tag != null && e.Node.Tag.GetType() == typeof(int))
             {
-                int id = (int)e.Node.Tag;
-                int lineId = -1;
+                var ids = GetProfileAndLineIds(e.Node);
+                int id = ids.Item1;
+                int lineId = ids.Item2;
 
-                bool isProfileNode = e.Node.Parent != null && e.Node.Nodes != null && e.Node.Nodes.Count > 0;
-                if (!isProfileNode)//The node is line 
+                if (lineId > 0)//The node is line 
                 {
-
-                    bool chacked = e.Node.Checked;
-                    lineId = id;
-                    id = (int)e.Node.Parent.Tag;
-
-                    if (chacked)
+                    if (e.Node.Checked)
                     {
                         controller.ShowWorkingProfile(id, lineId);
                     }
@@ -886,9 +887,43 @@ namespace MilSpace.Profile
             }
         }
 
-        //public ProfileSession GetSectionProfile(string profileName)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        private Tuple<int, int> GetProfileAndLineIds(TreeNode node)
+        {
+
+            int id = -1;
+            int lineId = -1;
+
+            if (node != null && node.Tag != null && node.Tag.GetType() == typeof(int))
+            {
+                id = (int)node.Tag;
+
+                bool isProfileNode = node.Parent != null && node.Nodes != null && node.Nodes.Count > 0;
+                if (!isProfileNode)//The node is line 
+                {
+                    lineId = id;
+                    id = (int)node.Parent.Tag;
+                }
+            }
+
+            return new Tuple<int, int>(id, lineId);
+        }
+
+        private void AzimuthCheck(object sender, EventArgs e)
+        {
+            var athimuthControl = sender as TextBox;
+
+            double result;
+            if (Helper.TryParceToDouble(azimuth2.Text, out result) && (result <= 360 && result >= 0))
+            {
+                UpdateFunProperties(sender, e);
+                return;
+            }
+
+            //TODO - Localize message
+            MessageBox.Show("Значення повинно бути быльше за 0 та меньше 360", "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            athimuthControl.Focus();
+        }
+
     }
 }
