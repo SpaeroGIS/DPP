@@ -37,6 +37,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             InitializeComponent();
 
             SetDetailsView();
+            SetControlSize();
 
             profilePropertiesTable.RowTemplate.Height = 18;
             profileChart.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
@@ -216,11 +217,24 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal void SetControlSize()
         {
+            SetPropertiesContainersSize();
+
             graphPanel.Width = Width - propertiesPanel.Width;
             graphPanel.Height = Height;
 
             profileChart.Width = graphPanel.Width - graphPanel.Padding.Right;
             profileChart.Height = graphPanel.Height - graphToolBar.Height;
+        }
+
+        private void SetPropertiesContainersSize()
+        {
+            propertiesPanel.Width = profilePropertiesTable.Width
+                                                + propertiesPanel.Padding.Left
+                                                + propertiesPanel.Padding.Right;
+
+            propertiesSplitContainer.Width = propertiesPanel.Width
+                                                - propertiesPanel.Padding.Left
+                                                - propertiesPanel.Padding.Right;
         }
 
         private void AddCheckBoxHeader()
@@ -956,10 +970,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             ShowDetails();
             ShowColors();
 
-            propertiesToolBar.Buttons[1].Enabled = true;
-            propertiesToolBar.Buttons[2].Enabled = true;
-            propertiesToolBar.Buttons[3].Enabled = true;
-
             invisibleLineColorButton.Visible = true;
             visibleLineColorButton.Visible = true;
         }
@@ -977,10 +987,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             invisibleLineColorButton.Visible = false;
             visibleLineColorButton.Visible = false;
-
-            propertiesToolBar.Buttons[1].Enabled = false;
-            propertiesToolBar.Buttons[2].Enabled = false;
-            propertiesToolBar.Buttons[3].Enabled = false;
         }
 
         private void ShowColors()
@@ -1041,6 +1047,13 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             {
                 profileChart.SaveImage(saveFileDialog.FileName, ChartImageFormat.Png);
             }
+        }
+
+        private void PropertiesSplitContainer_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+            profilePropertiesTable.Height = propertiesSplitContainer.Panel1.Height;
+
+            SetPropertiesContainersSize();
         }
     }
 }
