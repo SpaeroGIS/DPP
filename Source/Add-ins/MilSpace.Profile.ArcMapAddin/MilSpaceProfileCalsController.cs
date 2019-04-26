@@ -326,6 +326,36 @@ namespace MilSpace.Profile
             GraphicsLayerManager.FlashLineOnWorkingGraphics(profileId, lineId);
         }
 
+        internal void ShowProfileOnMap()
+        {
+            var mapScale = View.ActiveView.FocusMap.MapScale;
+            var profile = GetProfileSessionFromSelectedNode();
+            var profileLines = profile.ProfileLines.Select(line => line.Line).ToArray();
+            IEnvelope env = new EnvelopeClass();
+
+            foreach (var line in profileLines)
+            {
+                env.Union(line.Envelope);
+            }
+
+            var envelopeCenter = GetEnvelopeCenterPoint(env);           
+            env.CenterAt(envelopeCenter);
+            View.ActiveView.Extent = env;
+            View.ActiveView.FocusMap.MapScale = mapScale;
+            View.ActiveView.Refresh();
+            //GraphicsLayerManager.UpdateCalculatingGraphic(profileLines, profileId, (int)profile.DefinitionType);
+        }
+
+        internal void ShowLineOnMap()
+        {
+
+        }
+
+        internal void HighlightProfileOnMap(int profileId, int lineId)
+        {
+            GraphicsLayerManager.FlashLineOnWorkingGraphics(profileId, lineId);
+        }
+
         private IPoint GetEnvelopeCenterPoint(IEnvelope envelope)
         {
             var x = (envelope.XMin + envelope.XMax) / 2;
