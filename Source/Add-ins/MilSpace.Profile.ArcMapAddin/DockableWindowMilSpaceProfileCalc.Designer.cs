@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Графика");
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -47,8 +47,6 @@
             this.cmbPolygonLayer = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.calcProfile = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.txtProfileName = new System.Windows.Forms.TextBox();
             this.label25 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -440,8 +438,6 @@
             this.tabPage1.Controls.Add(this.tableLayoutPanel2);
             this.tabPage1.Controls.Add(this.tableLayoutPanel1);
             this.tabPage1.Controls.Add(this.calcProfile);
-            this.tabPage1.Controls.Add(this.button12);
-            this.tabPage1.Controls.Add(this.button1);
             this.tabPage1.Controls.Add(this.txtProfileName);
             this.tabPage1.Controls.Add(this.label25);
             this.tabPage1.Controls.Add(this.label2);
@@ -601,35 +597,13 @@
             this.calcProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.calcProfile.Enabled = false;
             this.calcProfile.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.calcProfile.Location = new System.Drawing.Point(419, 719);
+            this.calcProfile.Location = new System.Drawing.Point(537, 719);
             this.calcProfile.Name = "calcProfile";
-            this.calcProfile.Size = new System.Drawing.Size(110, 30);
+            this.calcProfile.Size = new System.Drawing.Size(214, 30);
             this.calcProfile.TabIndex = 27;
             this.calcProfile.Text = "рассчитать";
             this.calcProfile.UseVisualStyleBackColor = true;
             this.calcProfile.Click += new System.EventHandler(this.calcProfile_Click);
-            // 
-            // button12
-            // 
-            this.button12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button12.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button12.Location = new System.Drawing.Point(529, 719);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(110, 30);
-            this.button12.TabIndex = 26;
-            this.button12.Text = "добавить график";
-            this.button12.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(639, 719);
-            this.button1.Name = "button1";
-            this.button1.Padding = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.button1.Size = new System.Drawing.Size(110, 30);
-            this.button1.TabIndex = 25;
-            this.button1.Text = "добавить в список";
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // txtProfileName
             // 
@@ -639,7 +613,6 @@
             this.txtProfileName.Location = new System.Drawing.Point(98, 315);
             this.txtProfileName.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
             this.txtProfileName.Name = "txtProfileName";
-            this.txtProfileName.ReadOnly = true;
             this.txtProfileName.Size = new System.Drawing.Size(173, 20);
             this.txtProfileName.TabIndex = 24;
             // 
@@ -652,9 +625,9 @@
             this.label25.Location = new System.Drawing.Point(2, 315);
             this.label25.Name = "label25";
             this.label25.Padding = new System.Windows.Forms.Padding(0, 2, 0, 4);
-            this.label25.Size = new System.Drawing.Size(96, 23);
+            this.label25.Size = new System.Drawing.Size(98, 23);
             this.label25.TabIndex = 23;
-            this.label25.Text = "имя профиля";
+            this.label25.Text = "Имя профиля";
             // 
             // label2
             // 
@@ -1753,25 +1726,25 @@
             this.profilesTreeView.ImageList = this.imageList1;
             this.profilesTreeView.Location = new System.Drawing.Point(3, 65);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode1.Checked = true;
-            treeNode1.ImageKey = "vector-path-line.png";
-            treeNode1.Name = "sectionsNode";
-            treeNode1.SelectedImageIndex = 205;
-            treeNode1.Text = "Отрезки";
-            treeNode2.Checked = true;
-            treeNode2.ImageKey = "Editing-Line-icon3.png";
-            treeNode2.Name = "fanNode";
-            treeNode2.SelectedImageIndex = 208;
-            treeNode2.Text = "Веер";
-            treeNode3.Checked = true;
-            treeNode3.ImageKey = "vector-polygon.png";
-            treeNode3.Name = "primitivesNode";
-            treeNode3.SelectedImageIndex = 209;
-            treeNode3.Text = "Графика";
+            treeNode4.Checked = true;
+            treeNode4.ImageKey = "vector-path-line.png";
+            treeNode4.Name = "sectionsNode";
+            treeNode4.SelectedImageIndex = 205;
+            treeNode4.Text = "Отрезки";
+            treeNode5.Checked = true;
+            treeNode5.ImageKey = "Editing-Line-icon3.png";
+            treeNode5.Name = "fanNode";
+            treeNode5.SelectedImageIndex = 208;
+            treeNode5.Text = "Веер";
+            treeNode6.Checked = true;
+            treeNode6.ImageKey = "vector-polygon.png";
+            treeNode6.Name = "primitivesNode";
+            treeNode6.SelectedImageIndex = 209;
+            treeNode6.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
+            treeNode4,
+            treeNode5,
+            treeNode6});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(755, 398);
             this.profilesTreeView.TabIndex = 35;
@@ -2122,8 +2095,6 @@
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button calcProfile;
-        private System.Windows.Forms.Button button12;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.ComboBox cmbBuildings;
