@@ -10,6 +10,7 @@ namespace MilSpace.DataAccess.DataTransfer
         public ProfilePoint PointTo;
         public int Id;
         public double Angel;
+        public double Azimuth;
         public double Length;
 
         [XmlIgnore]

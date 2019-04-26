@@ -235,7 +235,8 @@ namespace MilSpace.Tools
                         Length = ln.Length,
                         Line = polyline,
                         SpatialReference = EsriTools.Wgs84Spatialreference,
-                        Angel = ln.Angle
+                        Angel = ln.Angle,
+                        Azimuth = ln.Azimuth()
                     });
                 }
 

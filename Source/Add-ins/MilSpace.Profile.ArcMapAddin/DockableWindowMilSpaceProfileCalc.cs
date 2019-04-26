@@ -159,7 +159,7 @@ namespace MilSpace.Profile
 
                 foreach (var line in profile.ProfileLines)
                 {
-                    var azimuth = (line.Angel * 180 / Math.PI).ToString("F0");
+                    var azimuth = line.Azimuth.ToString("F0");
                     //var childNode = new ProfileTreeNode($"X={line.PointFrom.X:F4}; Y={line.PointTo.Y:F4}; Дистанция={line.Length:F4} {MapUnitsText}", 205, 205);
                     var childNode = new ProfileTreeNode($"{azimuth}{Degree}", 205, 205);
                     newNode.Nodes.Add(childNode);
@@ -950,5 +950,9 @@ namespace MilSpace.Profile
             athimuthControl.Focus();
         }
 
+        private void azimuth2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
