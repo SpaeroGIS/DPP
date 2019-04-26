@@ -170,11 +170,6 @@ namespace MilSpace.Core.Tools
                 return null;
             }
 
-            if ((azimuth1 == 0 && azimuth2 == 360) || (azimuth2 == 0 && azimuth1 == 360))
-            {
-                count -= 1;
-            }
-
 
             if (count < 2)
             {
@@ -199,13 +194,17 @@ namespace MilSpace.Core.Tools
 
             if (sector == 0)
             {
-                //TODO: Localize error message
-                throw new MilSpaceProfileLackOfParameterException("Azimuth", 0);
+                sector = 360;
             }
 
-
-
             double step = sector / (count - 1);
+
+            //remove one line if the first and last is the same
+            if ((azimuth1 == 0 && azimuth2 == 360) || (azimuth2 == 0 && azimuth1 == 360) || (azimuth2 == azimuth1))
+            {
+                count -= 1;
+            }
+
 
             List<IPolyline> result = new List<IPolyline>();
             for (int i = 0; i < count; i++)
