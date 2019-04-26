@@ -1091,6 +1091,7 @@
             this.azimuth2.Size = new System.Drawing.Size(60, 20);
             this.azimuth2.TabIndex = 18;
             this.azimuth2.Text = "360";
+            this.azimuth2.TextChanged += new System.EventHandler(this.azimuth2_TextChanged);
             this.azimuth2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ChechDouble_KeyPress);
             this.azimuth2.Leave += new System.EventHandler(this.UpdateFunProperties);
             // 
