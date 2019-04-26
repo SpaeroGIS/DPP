@@ -10,5 +10,6 @@
         public double MaxHeight { get; set; }
         public double VisiblePercent { get; set; }
         public double Azimuth { get; set; }
+        public double ObserverHeight { get; set; }
     }
 }
