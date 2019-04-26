@@ -238,6 +238,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             _checkBoxHeader.Name = "checkBoxHeader";
             _checkBoxHeader.BackColor = profilePropertiesTable.ColumnHeadersDefaultCellStyle.BackColor;
             _checkBoxHeader.Size = new Size(15, 15);
+            _checkBoxHeader.CheckState = CheckState.Checked;
 
             _checkBoxHeader.Location = new Point(checkBoxColumnRectangle.X + 4, checkBoxColumnRectangle.Y + 4);
 
