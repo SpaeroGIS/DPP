@@ -195,12 +195,12 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                                     .Add(CreateNewItem($"Азимут:",
                                          $"{Math.Round(ProfilesProperties[SelectedProfileIndex].Azimuth, 1)}"));
             profileDetailsListView.Items
-                                    .Add(CreateNewItem($"Длина:",
-                                            $"{Math.Round(ProfilesProperties[SelectedProfileIndex].PathLength, 0)}м"));
+                                    .Add(CreateNewItem($"Длина (м):",
+                                            $"{Math.Round(ProfilesProperties[SelectedProfileIndex].PathLength, 0)}"));
             profileDetailsListView.Items
-                                    .Add(CreateNewItem($"Высота:",
-                                            $"{Math.Round(ProfilesProperties[SelectedProfileIndex].MinHeight, 0)}м"
-                                            + $"-{Math.Round(ProfilesProperties[SelectedProfileIndex].MaxHeight, 0)}м"));
+                                    .Add(CreateNewItem($"Высота (м):",
+                                            $"{Math.Round(ProfilesProperties[SelectedProfileIndex].MinHeight, 0)}"
+                                            + $"-{Math.Round(ProfilesProperties[SelectedProfileIndex].MaxHeight, 0)}"));
             profileDetailsListView.Items
                                     .Add(CreateNewItem($"Max угол подъема:",
                                         $"{Math.Round(ProfilesProperties[SelectedProfileIndex].MaxAngle, 1)}"));
@@ -208,8 +208,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                                     .Add(CreateNewItem($"Max угол спуска: ",
                                         $"{Math.Round(ProfilesProperties[SelectedProfileIndex].MinAngle, 1)}"));
             profileDetailsListView.Items
-                                    .Add(CreateNewItem($"Видимые зоны: ",
-                                            $"{Math.Round(ProfilesProperties[SelectedProfileIndex].VisiblePercent, 2)}%"));
+                                    .Add(CreateNewItem($"Видимые зоны (%): ",
+                                            $"{Math.Round(ProfilesProperties[SelectedProfileIndex].VisiblePercent, 2)}"));
         }
 
         #endregion
@@ -291,7 +291,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         {
             profileDetailsListView.View = View.Details;
 
-            profileDetailsListView.Columns.Add("Attribute", (int)(profileDetailsListView.Width * 0.3));
+            profileDetailsListView.Columns.Add("Attribute", (int)(profileDetailsListView.Width * 0.35));
             profileDetailsListView.Columns.Add("Value", (profileDetailsListView.Width - profileDetailsListView.Columns[0].Width - 25));
 
             profileDetailsListView.HeaderStyle = ColumnHeaderStyle.None;
