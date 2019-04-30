@@ -29,25 +29,15 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea19 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series19 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle55 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle56 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle57 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SurfaceProfileChart));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.profileChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.profilePropertiesTable = new System.Windows.Forms.DataGridView();
-            this.IsVisibleCol = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.ProfileNumberCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AzimuthCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ObserverHeightCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ProfileLengthCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MinHeightCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MaxHeightCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.HeightDifferenceCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MinAngleCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MaxAngleCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.VisiblePercentCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.lineColorDialog = new System.Windows.Forms.ColorDialog();
             this.propertiesPanel = new System.Windows.Forms.Panel();
@@ -65,7 +55,9 @@
             this.graphToolBar = new System.Windows.Forms.ToolBar();
             this.leftGraphPaddingToolBarSpr = new System.Windows.Forms.ToolBarButton();
             this.displayProfileSignatureGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
+            this.toolBarButton1 = new System.Windows.Forms.ToolBarButton();
             this.deleteSelectedProfileGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
+            this.panToSelectedProfileGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
             this.graphToolBarSpr1 = new System.Windows.Forms.ToolBarButton();
             this.panGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
             this.graphToolBarSpr2 = new System.Windows.Forms.ToolBarButton();
@@ -77,11 +69,20 @@
             this.deletePageGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
             this.toolBarSeparator19 = new System.Windows.Forms.ToolBarButton();
             this.saveGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
+            this.exportGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
             this.graphPanel = new System.Windows.Forms.Panel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.graphToolBarSpr5 = new System.Windows.Forms.ToolBarButton();
-            this.panToSelectedProfileGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
-            this.exportGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
+            this.IsVisibleCol = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ProfileNumberCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AzimuthCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ObserverHeightCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ProfileLengthCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MinHeightCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MaxHeightCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HeightDifferenceCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DescentAngleCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RiseAngleCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VisiblePercentCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.profileChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.profilePropertiesTable)).BeginInit();
             this.propertiesPanel.SuspendLayout();
@@ -95,26 +96,24 @@
             // 
             // profileChart
             // 
-            chartArea19.AxisX.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
-            chartArea19.AxisX.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
-            chartArea19.AxisX.LabelAutoFitStyle = System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.None;
-            chartArea19.AxisX.Minimum = 0D;
-            chartArea19.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            chartArea19.AxisY.LabelAutoFitStyle = ((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)((((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.DecreaseFont | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.StaggeredLabels) 
-            | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.LabelsAngleStep30) 
-            | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.WordWrap)));
-            chartArea19.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            chartArea19.Name = "Default";
-            this.profileChart.ChartAreas.Add(chartArea19);
+            chartArea1.AxisX.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
+            chartArea1.AxisX.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
+            chartArea1.AxisX.LabelAutoFitStyle = System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.None;
+            chartArea1.AxisX.Minimum = 0D;
+            chartArea1.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            chartArea1.AxisY.LabelAutoFitStyle = ((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.LabelsAngleStep30 | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.WordWrap)));
+            chartArea1.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            chartArea1.Name = "Default";
+            this.profileChart.ChartAreas.Add(chartArea1);
             this.profileChart.Dock = System.Windows.Forms.DockStyle.Top;
             this.profileChart.Location = new System.Drawing.Point(0, 0);
             this.profileChart.Name = "profileChart";
-            series19.ChartArea = "Default";
-            series19.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series19.Name = "Series1";
-            series19.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int64;
-            series19.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int64;
-            this.profileChart.Series.Add(series19);
+            series1.ChartArea = "Default";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series1.Name = "Series1";
+            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int64;
+            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int64;
+            this.profileChart.Series.Add(series1);
             this.profileChart.Size = new System.Drawing.Size(498, 300);
             this.profileChart.TabIndex = 0;
             this.profileChart.Text = "chart1";
@@ -128,14 +127,14 @@
             this.profilePropertiesTable.AllowUserToResizeRows = false;
             this.profilePropertiesTable.BackgroundColor = System.Drawing.SystemColors.Control;
             this.profilePropertiesTable.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle55.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle55.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle55.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle55.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle55.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle55.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle55.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.profilePropertiesTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle55;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.profilePropertiesTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.profilePropertiesTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.profilePropertiesTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.IsVisibleCol,
@@ -146,122 +145,34 @@
             this.MinHeightCol,
             this.MaxHeightCol,
             this.HeightDifferenceCol,
-            this.MinAngleCol,
-            this.MaxAngleCol,
+            this.DescentAngleCol,
+            this.RiseAngleCol,
             this.VisiblePercentCol});
-            dataGridViewCellStyle56.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle56.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle56.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle56.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle56.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle56.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle56.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.profilePropertiesTable.DefaultCellStyle = dataGridViewCellStyle56;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.profilePropertiesTable.DefaultCellStyle = dataGridViewCellStyle3;
             this.profilePropertiesTable.Dock = System.Windows.Forms.DockStyle.Top;
             this.profilePropertiesTable.Location = new System.Drawing.Point(0, 0);
             this.profilePropertiesTable.MultiSelect = false;
             this.profilePropertiesTable.Name = "profilePropertiesTable";
             this.profilePropertiesTable.RowHeadersVisible = false;
-            dataGridViewCellStyle57.BackColor = System.Drawing.Color.White;
-            this.profilePropertiesTable.RowsDefaultCellStyle = dataGridViewCellStyle57;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
+            this.profilePropertiesTable.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.profilePropertiesTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.profilePropertiesTable.Size = new System.Drawing.Size(400, 127);
+            this.profilePropertiesTable.Size = new System.Drawing.Size(354, 127);
             this.profilePropertiesTable.TabIndex = 1;
             this.profilePropertiesTable.TabStop = false;
+            this.profilePropertiesTable.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.profilePropertiesTable_CellContentClick);
             this.profilePropertiesTable.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.ProfilePropertiesTable_CellValueChanged);
             this.profilePropertiesTable.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.ProfilePropertiesTable_ColumnHeaderMouseClick);
             this.profilePropertiesTable.CurrentCellDirtyStateChanged += new System.EventHandler(this.ProfilePropertiesTable_CurrentCellDirtyStateChanged);
             this.profilePropertiesTable.SelectionChanged += new System.EventHandler(this.ProfilePropertiesTable_SelectionChanged);
             this.profilePropertiesTable.Resize += new System.EventHandler(this.ProfilePropertiesTable_Resize);
-            // 
-            // IsVisibleCol
-            // 
-            this.IsVisibleCol.HeaderText = "IV";
-            this.IsVisibleCol.Name = "IsVisibleCol";
-            this.IsVisibleCol.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.IsVisibleCol.ToolTipText = "Показать/скрыть профиль";
-            this.IsVisibleCol.Width = 20;
-            // 
-            // ProfileNumberCol
-            // 
-            this.ProfileNumberCol.HeaderText = "N";
-            this.ProfileNumberCol.Name = "ProfileNumberCol";
-            this.ProfileNumberCol.ReadOnly = true;
-            this.ProfileNumberCol.ToolTipText = "Номер профиля";
-            this.ProfileNumberCol.Width = 30;
-            // 
-            // AzimuthCol
-            // 
-            this.AzimuthCol.HeaderText = "AZ";
-            this.AzimuthCol.Name = "AzimuthCol";
-            this.AzimuthCol.ReadOnly = true;
-            this.AzimuthCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
-            this.AzimuthCol.ToolTipText = "Азимут направления от пункта наблюдения к последней точке профиля";
-            this.AzimuthCol.Width = 40;
-            // 
-            // ObserverHeightCol
-            // 
-            this.ObserverHeightCol.HeaderText = "OH";
-            this.ObserverHeightCol.Name = "ObserverHeightCol";
-            this.ObserverHeightCol.ReadOnly = true;
-            this.ObserverHeightCol.ToolTipText = "Высота пункта наблюдения (м)";
-            this.ObserverHeightCol.Width = 40;
-            // 
-            // ProfileLengthCol
-            // 
-            this.ProfileLengthCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.ProfileLengthCol.HeaderText = "L";
-            this.ProfileLengthCol.Name = "ProfileLengthCol";
-            this.ProfileLengthCol.ReadOnly = true;
-            this.ProfileLengthCol.ToolTipText = "Длина профиля (м)";
-            // 
-            // MinHeightCol
-            // 
-            this.MinHeightCol.HeaderText = "MnH";
-            this.MinHeightCol.Name = "MinHeightCol";
-            this.MinHeightCol.ReadOnly = true;
-            this.MinHeightCol.ToolTipText = "Минимальная высота (м)";
-            this.MinHeightCol.Width = 35;
-            // 
-            // MaxHeightCol
-            // 
-            this.MaxHeightCol.HeaderText = "MxH";
-            this.MaxHeightCol.Name = "MaxHeightCol";
-            this.MaxHeightCol.ReadOnly = true;
-            this.MaxHeightCol.ToolTipText = "Максимальная высота (м)";
-            this.MaxHeightCol.Width = 35;
-            // 
-            // HeightDifferenceCol
-            // 
-            this.HeightDifferenceCol.HeaderText = "DH";
-            this.HeightDifferenceCol.Name = "HeightDifferenceCol";
-            this.HeightDifferenceCol.ReadOnly = true;
-            this.HeightDifferenceCol.ToolTipText = "Разница высот (м)";
-            this.HeightDifferenceCol.Width = 35;
-            // 
-            // MinAngleCol
-            // 
-            this.MinAngleCol.HeaderText = "MnA";
-            this.MinAngleCol.Name = "MinAngleCol";
-            this.MinAngleCol.ReadOnly = true;
-            this.MinAngleCol.ToolTipText = "Максимальный угол спуска (градусы)";
-            this.MinAngleCol.Width = 35;
-            // 
-            // MaxAngleCol
-            // 
-            this.MaxAngleCol.HeaderText = "MxA";
-            this.MaxAngleCol.Name = "MaxAngleCol";
-            this.MaxAngleCol.ReadOnly = true;
-            this.MaxAngleCol.ToolTipText = "Максимальный угол подъема (графусы)";
-            this.MaxAngleCol.Width = 35;
-            // 
-            // VisiblePercentCol
-            // 
-            this.VisiblePercentCol.HeaderText = "VP";
-            this.VisiblePercentCol.Name = "VisiblePercentCol";
-            this.VisiblePercentCol.ReadOnly = true;
-            this.VisiblePercentCol.ToolTipText = "Процент видимых участков";
-            this.VisiblePercentCol.Width = 35;
             // 
             // imageList1
             // 
@@ -490,10 +401,10 @@
             this.propertiesPanel.BackColor = System.Drawing.SystemColors.Control;
             this.propertiesPanel.Controls.Add(this.propertiesSplitContainer);
             this.propertiesPanel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.propertiesPanel.Location = new System.Drawing.Point(524, 0);
+            this.propertiesPanel.Location = new System.Drawing.Point(570, 0);
             this.propertiesPanel.Name = "propertiesPanel";
             this.propertiesPanel.Padding = new System.Windows.Forms.Padding(10, 0, 10, 25);
-            this.propertiesPanel.Size = new System.Drawing.Size(420, 327);
+            this.propertiesPanel.Size = new System.Drawing.Size(374, 327);
             this.propertiesPanel.TabIndex = 49;
             // 
             // propertiesSplitContainer
@@ -518,7 +429,7 @@
             this.propertiesSplitContainer.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.propertiesSplitContainer.Panel2MinSize = 150;
             this.propertiesSplitContainer.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.propertiesSplitContainer.Size = new System.Drawing.Size(400, 302);
+            this.propertiesSplitContainer.Size = new System.Drawing.Size(354, 302);
             this.propertiesSplitContainer.SplitterDistance = 127;
             this.propertiesSplitContainer.TabIndex = 53;
             this.propertiesSplitContainer.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.PropertiesSplitContainer_SplitterMoved);
@@ -527,7 +438,7 @@
             // 
             this.profileNameLabel.AutoSize = true;
             this.profileNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.profileNameLabel.Location = new System.Drawing.Point(2, 0);
+            this.profileNameLabel.Location = new System.Drawing.Point(0, 0);
             this.profileNameLabel.Name = "profileNameLabel";
             this.profileNameLabel.Size = new System.Drawing.Size(0, 13);
             this.profileNameLabel.TabIndex = 60;
@@ -544,14 +455,14 @@
             this.propertiesSettingsPanel.Location = new System.Drawing.Point(0, 13);
             this.propertiesSettingsPanel.Name = "propertiesSettingsPanel";
             this.propertiesSettingsPanel.Padding = new System.Windows.Forms.Padding(2);
-            this.propertiesSettingsPanel.Size = new System.Drawing.Size(400, 25);
+            this.propertiesSettingsPanel.Size = new System.Drawing.Size(354, 25);
             this.propertiesSettingsPanel.TabIndex = 52;
             // 
             // changeAllObserversHeightsButton
             // 
             this.changeAllObserversHeightsButton.ImageKey = "Direction Vert.png";
             this.changeAllObserversHeightsButton.ImageList = this.imageList1;
-            this.changeAllObserversHeightsButton.Location = new System.Drawing.Point(183, 2);
+            this.changeAllObserversHeightsButton.Location = new System.Drawing.Point(169, 2);
             this.changeAllObserversHeightsButton.Name = "changeAllObserversHeightsButton";
             this.changeAllObserversHeightsButton.Size = new System.Drawing.Size(20, 20);
             this.changeAllObserversHeightsButton.TabIndex = 49;
@@ -561,7 +472,7 @@
             // 
             // observerHeightTextBox
             // 
-            this.observerHeightTextBox.Location = new System.Drawing.Point(128, 2);
+            this.observerHeightTextBox.Location = new System.Drawing.Point(117, 2);
             this.observerHeightTextBox.Name = "observerHeightTextBox";
             this.observerHeightTextBox.Size = new System.Drawing.Size(50, 20);
             this.observerHeightTextBox.TabIndex = 39;
@@ -571,7 +482,7 @@
             // observerHeightLabel
             // 
             this.observerHeightLabel.AutoSize = true;
-            this.observerHeightLabel.Location = new System.Drawing.Point(3, 5);
+            this.observerHeightLabel.Location = new System.Drawing.Point(0, 5);
             this.observerHeightLabel.Name = "observerHeightLabel";
             this.observerHeightLabel.Size = new System.Drawing.Size(119, 13);
             this.observerHeightLabel.TabIndex = 38;
@@ -583,9 +494,9 @@
             this.visibleLineColorButton.BackColor = System.Drawing.SystemColors.Control;
             this.visibleLineColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control;
             this.visibleLineColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.visibleLineColorButton.Location = new System.Drawing.Point(220, 8);
+            this.visibleLineColorButton.Location = new System.Drawing.Point(200, 9);
             this.visibleLineColorButton.Name = "visibleLineColorButton";
-            this.visibleLineColorButton.Size = new System.Drawing.Size(30, 8);
+            this.visibleLineColorButton.Size = new System.Drawing.Size(25, 8);
             this.visibleLineColorButton.TabIndex = 47;
             this.visibleLineColorButton.UseVisualStyleBackColor = false;
             this.visibleLineColorButton.Click += new System.EventHandler(this.VisibleLineColorButton_Click);
@@ -596,9 +507,9 @@
             this.invisibleLineColorButton.BackColor = System.Drawing.SystemColors.Control;
             this.invisibleLineColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control;
             this.invisibleLineColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.invisibleLineColorButton.Location = new System.Drawing.Point(311, 8);
+            this.invisibleLineColorButton.Location = new System.Drawing.Point(276, 9);
             this.invisibleLineColorButton.Name = "invisibleLineColorButton";
-            this.invisibleLineColorButton.Size = new System.Drawing.Size(30, 8);
+            this.invisibleLineColorButton.Size = new System.Drawing.Size(25, 8);
             this.invisibleLineColorButton.TabIndex = 48;
             this.invisibleLineColorButton.UseVisualStyleBackColor = false;
             this.invisibleLineColorButton.Click += new System.EventHandler(this.InvisibleLineColorButton_Click);
@@ -607,7 +518,7 @@
             // 
             this.visibleLineColorLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.visibleLineColorLabel.AutoSize = true;
-            this.visibleLineColorLabel.Location = new System.Drawing.Point(344, 5);
+            this.visibleLineColorLabel.Location = new System.Drawing.Point(302, 6);
             this.visibleLineColorLabel.Name = "visibleLineColorLabel";
             this.visibleLineColorLabel.Size = new System.Drawing.Size(52, 13);
             this.visibleLineColorLabel.TabIndex = 44;
@@ -617,7 +528,7 @@
             // 
             this.InvisibleLineColorLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.InvisibleLineColorLabel.AutoSize = true;
-            this.InvisibleLineColorLabel.Location = new System.Drawing.Point(256, 5);
+            this.InvisibleLineColorLabel.Location = new System.Drawing.Point(226, 6);
             this.InvisibleLineColorLabel.Name = "InvisibleLineColorLabel";
             this.InvisibleLineColorLabel.Size = new System.Drawing.Size(37, 13);
             this.InvisibleLineColorLabel.TabIndex = 45;
@@ -631,7 +542,7 @@
             this.profileDetailsListView.Location = new System.Drawing.Point(0, 38);
             this.profileDetailsListView.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.profileDetailsListView.Name = "profileDetailsListView";
-            this.profileDetailsListView.Size = new System.Drawing.Size(400, 133);
+            this.profileDetailsListView.Size = new System.Drawing.Size(354, 133);
             this.profileDetailsListView.TabIndex = 50;
             this.profileDetailsListView.UseCompatibleStateImageBehavior = false;
             // 
@@ -641,7 +552,7 @@
             this.graphToolBar.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
             this.leftGraphPaddingToolBarSpr,
             this.displayProfileSignatureGraphToolBarBtn,
-            this.graphToolBarSpr5,
+            this.toolBarButton1,
             this.deleteSelectedProfileGraphToolBarBtn,
             this.panToSelectedProfileGraphToolBarBtn,
             this.graphToolBarSpr1,
@@ -678,11 +589,22 @@
             this.displayProfileSignatureGraphToolBarBtn.Name = "displayProfileSignatureGraphToolBarBtn";
             this.displayProfileSignatureGraphToolBarBtn.ToolTipText = "Отобразить подписи профилей на графике";
             // 
+            // toolBarButton1
+            // 
+            this.toolBarButton1.Name = "toolBarButton1";
+            this.toolBarButton1.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
+            // 
             // deleteSelectedProfileGraphToolBarBtn
             // 
             this.deleteSelectedProfileGraphToolBarBtn.ImageKey = "Cancel.png";
             this.deleteSelectedProfileGraphToolBarBtn.Name = "deleteSelectedProfileGraphToolBarBtn";
             this.deleteSelectedProfileGraphToolBarBtn.ToolTipText = "Удалить выбраный профиль из отображения";
+            // 
+            // panToSelectedProfileGraphToolBarBtn
+            // 
+            this.panToSelectedProfileGraphToolBarBtn.ImageKey = "Wizard.png";
+            this.panToSelectedProfileGraphToolBarBtn.Name = "panToSelectedProfileGraphToolBarBtn";
+            this.panToSelectedProfileGraphToolBarBtn.ToolTipText = "Позиционирование на выбраный профиль";
             // 
             // graphToolBarSpr1
             // 
@@ -746,6 +668,11 @@
             this.saveGraphToolBarBtn.Name = "saveGraphToolBarBtn";
             this.saveGraphToolBarBtn.ToolTipText = "Сохранить изображения графа и данные";
             // 
+            // exportGraphToolBarBtn
+            // 
+            this.exportGraphToolBarBtn.ImageKey = "Download.png";
+            this.exportGraphToolBarBtn.Name = "exportGraphToolBarBtn";
+            // 
             // graphPanel
             // 
             this.graphPanel.Controls.Add(this.profileChart);
@@ -756,21 +683,97 @@
             this.graphPanel.Size = new System.Drawing.Size(498, 327);
             this.graphPanel.TabIndex = 51;
             // 
-            // graphToolBarSpr5
+            // IsVisibleCol
             // 
-            this.graphToolBarSpr5.Name = "toolBarButton1";
-            this.graphToolBarSpr5.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
+            this.IsVisibleCol.HeaderText = "IV";
+            this.IsVisibleCol.Name = "IsVisibleCol";
+            this.IsVisibleCol.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.IsVisibleCol.ToolTipText = "Показать/скрыть профиль";
+            this.IsVisibleCol.Width = 20;
             // 
-            // panToSelectedProfileGraphToolBarBtn
+            // ProfileNumberCol
             // 
-            this.panToSelectedProfileGraphToolBarBtn.ImageKey = "Wizard.png";
-            this.panToSelectedProfileGraphToolBarBtn.Name = "panToSelectedProfileGraphToolBarBtn";
-            this.panToSelectedProfileGraphToolBarBtn.ToolTipText = "Позиционирование на выбраный профиль";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.ProfileNumberCol.DefaultCellStyle = dataGridViewCellStyle2;
+            this.ProfileNumberCol.HeaderText = "N";
+            this.ProfileNumberCol.Name = "ProfileNumberCol";
+            this.ProfileNumberCol.ReadOnly = true;
+            this.ProfileNumberCol.ToolTipText = "Номер профиля";
+            this.ProfileNumberCol.Width = 20;
             // 
-            // exportGraphToolBarBtn
+            // AzimuthCol
             // 
-            this.exportGraphToolBarBtn.ImageKey = "Download.png";
-            this.exportGraphToolBarBtn.Name = "exportGraphToolBarBtn";
+            this.AzimuthCol.HeaderText = "AZ";
+            this.AzimuthCol.Name = "AzimuthCol";
+            this.AzimuthCol.ReadOnly = true;
+            this.AzimuthCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.AzimuthCol.ToolTipText = "Азимут направления от пункта наблюдения к последней точке профиля";
+            this.AzimuthCol.Width = 35;
+            // 
+            // ObserverHeightCol
+            // 
+            this.ObserverHeightCol.HeaderText = "H";
+            this.ObserverHeightCol.Name = "ObserverHeightCol";
+            this.ObserverHeightCol.ReadOnly = true;
+            this.ObserverHeightCol.ToolTipText = "Высота пункта наблюдения (м)";
+            this.ObserverHeightCol.Width = 35;
+            // 
+            // ProfileLengthCol
+            // 
+            this.ProfileLengthCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ProfileLengthCol.HeaderText = "L";
+            this.ProfileLengthCol.Name = "ProfileLengthCol";
+            this.ProfileLengthCol.ReadOnly = true;
+            this.ProfileLengthCol.ToolTipText = "Длина профиля (м)";
+            this.ProfileLengthCol.Width = 5;
+            // 
+            // MinHeightCol
+            // 
+            this.MinHeightCol.HeaderText = "MnH";
+            this.MinHeightCol.Name = "MinHeightCol";
+            this.MinHeightCol.ReadOnly = true;
+            this.MinHeightCol.ToolTipText = "Минимальная высота (м)";
+            this.MinHeightCol.Width = 28;
+            // 
+            // MaxHeightCol
+            // 
+            this.MaxHeightCol.HeaderText = "MxH";
+            this.MaxHeightCol.Name = "MaxHeightCol";
+            this.MaxHeightCol.ReadOnly = true;
+            this.MaxHeightCol.ToolTipText = "Максимальная высота (м)";
+            this.MaxHeightCol.Width = 28;
+            // 
+            // HeightDifferenceCol
+            // 
+            this.HeightDifferenceCol.HeaderText = "DH";
+            this.HeightDifferenceCol.Name = "HeightDifferenceCol";
+            this.HeightDifferenceCol.ReadOnly = true;
+            this.HeightDifferenceCol.ToolTipText = "Разница высот (м)";
+            this.HeightDifferenceCol.Width = 21;
+            // 
+            // DescentAngleCol
+            // 
+            this.DescentAngleCol.HeaderText = "DA";
+            this.DescentAngleCol.Name = "DescentAngleCol";
+            this.DescentAngleCol.ReadOnly = true;
+            this.DescentAngleCol.ToolTipText = "Максимальный угол спуска (градусы)";
+            this.DescentAngleCol.Width = 22;
+            // 
+            // RiseAngleCol
+            // 
+            this.RiseAngleCol.HeaderText = "RA";
+            this.RiseAngleCol.Name = "RiseAngleCol";
+            this.RiseAngleCol.ReadOnly = true;
+            this.RiseAngleCol.ToolTipText = "Максимальный угол подъема (графусы)";
+            this.RiseAngleCol.Width = 20;
+            // 
+            // VisiblePercentCol
+            // 
+            this.VisiblePercentCol.HeaderText = "VP";
+            this.VisiblePercentCol.Name = "VisiblePercentCol";
+            this.VisiblePercentCol.ReadOnly = true;
+            this.VisiblePercentCol.ToolTipText = "Процент видимых участков";
+            this.VisiblePercentCol.Width = 28;
             // 
             // SurfaceProfileChart
             // 
@@ -853,6 +856,11 @@
         private System.Windows.Forms.Panel propertiesSettingsPanel;
         private System.Windows.Forms.Button changeAllObserversHeightsButton;
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.SplitContainer propertiesSplitContainer;
+        private System.Windows.Forms.ToolBarButton graphToolBarSpr5;
+        private System.Windows.Forms.ToolBarButton panToSelectedProfileGraphToolBarBtn;
+        private System.Windows.Forms.ToolBarButton exportGraphToolBarBtn;
+        private System.Windows.Forms.ToolBarButton toolBarButton1;
         private System.Windows.Forms.DataGridViewCheckBoxColumn IsVisibleCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn ProfileNumberCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn AzimuthCol;
@@ -861,12 +869,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn MinHeightCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn MaxHeightCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn HeightDifferenceCol;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MinAngleCol;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MaxAngleCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DescentAngleCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn RiseAngleCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn VisiblePercentCol;
-        private System.Windows.Forms.SplitContainer propertiesSplitContainer;
-        private System.Windows.Forms.ToolBarButton graphToolBarSpr5;
-        private System.Windows.Forms.ToolBarButton panToSelectedProfileGraphToolBarBtn;
-        private System.Windows.Forms.ToolBarButton exportGraphToolBarBtn;
     }
 }

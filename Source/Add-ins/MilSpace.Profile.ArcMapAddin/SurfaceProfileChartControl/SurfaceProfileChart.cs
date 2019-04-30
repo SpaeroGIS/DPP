@@ -36,6 +36,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             InitializeComponent();
 
+            SetTableView();
             SetDetailsView();
             SetControlSize();
 
@@ -235,24 +236,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             propertiesSplitContainer.Width = propertiesPanel.Width
                                                 - propertiesPanel.Padding.Left
                                                 - propertiesPanel.Padding.Right;
-        }
 
-        private void AddCheckBoxHeader()
-        {
-            Rectangle checkBoxColumnRectangle = profilePropertiesTable.GetCellDisplayRectangle(0, -1, true);
-
-            _checkBoxHeader = new CheckBox();
-
-            _checkBoxHeader.Name = "checkBoxHeader";
-            _checkBoxHeader.BackColor = profilePropertiesTable.ColumnHeadersDefaultCellStyle.BackColor;
-            _checkBoxHeader.Size = new Size(15, 15);
-            _checkBoxHeader.CheckState = CheckState.Checked;
-
-            _checkBoxHeader.Location = new Point(checkBoxColumnRectangle.X + 4, checkBoxColumnRectangle.Y + 4);
-
-            _checkBoxHeader.CheckedChanged += new EventHandler(CheckBoxHeader_CheckedChanged);
-
-            profilePropertiesTable.Controls.Add(_checkBoxHeader);
+            propertiesSettingsPanel.Width = propertiesSplitContainer.Width;
         }
 
         private void SetProfileView()
@@ -260,14 +245,46 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             profileChart.ChartAreas["Default"].AxisX.LabelStyle.Format = "#";
             profileChart.ChartAreas["Default"].AxisY.LabelStyle.Format = "#";
 
-            profileChart.ChartAreas["Default"].Position = new ElementPosition(0, 4, 95, 90);
-            profileChart.ChartAreas["Default"].InnerPlotPosition = new ElementPosition(6, 0, 94, 95);
+            profileChart.ChartAreas["Default"].Position = new ElementPosition(0, 4, 96, 90);
+            profileChart.ChartAreas["Default"].InnerPlotPosition = new ElementPosition(4, 0, 96, 95);
 
             profileChart.ChartAreas["Default"].AxisX.ScrollBar.ButtonStyle = ScrollBarButtonStyles.SmallScroll;
 
             profileChart.Size = this.Size;
 
             SetAxisView();
+        }
+
+        private void SetTableView()
+        {
+            var fontPixelSize = profilePropertiesTable.Font.Size * 1.3;
+
+            var twoPositionWidth = (int)Math.Round((fontPixelSize * 2 + 0.4), 0);
+            var threePositionWidth = (int)Math.Round((fontPixelSize * 3), 0);
+            var fourPoristionWidth = (int)Math.Round((fontPixelSize * 4), 0);
+            var fivePoristionWidth = (int)Math.Round((fontPixelSize * 5), 0);
+
+            profilePropertiesTable.Columns["ProfileNumberCol"].Width = twoPositionWidth;
+            profilePropertiesTable.Columns["ProfileLengthCol"].Width = fivePoristionWidth;
+            profilePropertiesTable.Columns["AzimuthCol"].Width = fourPoristionWidth;
+            profilePropertiesTable.Columns["ObserverHeightCol"].Width = fourPoristionWidth;
+            profilePropertiesTable.Columns["MinHeightCol"].Width = threePositionWidth;
+            profilePropertiesTable.Columns["MaxHeightCol"].Width = threePositionWidth;
+            profilePropertiesTable.Columns["HeightDifferenceCol"].Width = twoPositionWidth;
+            profilePropertiesTable.Columns["DescentAngleCol"].Width = twoPositionWidth;
+            profilePropertiesTable.Columns["RiseAngleCol"].Width = twoPositionWidth;
+            profilePropertiesTable.Columns["VisiblePercentCol"].Width = threePositionWidth;
+
+            var tableWidth = 0;
+
+            foreach (DataGridViewColumn column in profilePropertiesTable.Columns)
+            {
+                tableWidth += column.Width;
+            }
+
+            profilePropertiesTable.Width = tableWidth + 10;
+            profilePropertiesTable.Columns["ProfileLengthCol"].AutoSizeMode 
+                                                    = DataGridViewAutoSizeColumnMode.Fill;
         }
 
         private void SetDetailsView()
@@ -405,6 +422,24 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
 
             axis.Interval = intervalSize - (intervalSize % intervalKoef);
+        }
+
+        private void AddCheckBoxHeader()
+        {
+            Rectangle checkBoxColumnRectangle = profilePropertiesTable.GetCellDisplayRectangle(0, -1, true);
+
+            _checkBoxHeader = new CheckBox();
+
+            _checkBoxHeader.Name = "checkBoxHeader";
+            _checkBoxHeader.BackColor = profilePropertiesTable.ColumnHeadersDefaultCellStyle.BackColor;
+            _checkBoxHeader.Size = new Size(15, 15);
+            _checkBoxHeader.CheckState = CheckState.Checked;
+
+            _checkBoxHeader.Location = new Point(checkBoxColumnRectangle.X + 4, checkBoxColumnRectangle.Y + 4);
+
+            _checkBoxHeader.CheckedChanged += new EventHandler(CheckBoxHeader_CheckedChanged);
+
+            profilePropertiesTable.Controls.Add(_checkBoxHeader);
         }
 
         #endregion
@@ -1054,6 +1089,11 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             profilePropertiesTable.Height = propertiesSplitContainer.Panel1.Height;
 
             SetPropertiesContainersSize();
+        }
+
+        private void profilePropertiesTable_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
