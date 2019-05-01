@@ -151,7 +151,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
                 profileProperty.PathLength = FindLength(profileSurfacePoints);
 
-                profileProperty.Azimuth = FindAzimuth(RadiansToDegrees(profileSessionProfileLine.Angel));
+                profileProperty.Azimuth = profileSessionProfileLine.Azimuth;//  FindAzimuth(RadiansToDegrees(profileSessionProfileLine.Angel));
 
                 profileProperty.ObserverHeight = 0;
 

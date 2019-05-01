@@ -139,5 +139,22 @@ namespace MilSpace.Core
             var configFile = new FileInfo(Assembly.GetExecutingAssembly().Location);
             MilSpaceConfiguration.ConfigurationFilePath = configFile.DirectoryName;
         }
+
+        public static double Azimuth (this ILine line)
+        {
+            var degrees = (line.Angle * 180 / Math.PI);
+
+            if (degrees > 90)
+            {
+                return 90 - degrees;
+            }
+
+            if (degrees < -90)
+            {
+                return Math.Abs(degrees) - 270;
+            }
+
+            return Math.Abs(degrees - 90);
+        }
     }
 }

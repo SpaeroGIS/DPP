@@ -36,6 +36,7 @@
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnRefreshLayers = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.cmbHydrographyLayer = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -64,7 +65,6 @@
             this.label22 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.secondPointToolbar = new System.Windows.Forms.ToolBar();
-            this.toolBarButton1 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton61 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton2 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton5 = new System.Windows.Forms.ToolBarButton();
@@ -82,7 +82,6 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.firstPointToolBar = new System.Windows.Forms.ToolBar();
             this.toolBarButton8 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton54 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton55 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton56 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton57 = new System.Windows.Forms.ToolBarButton();
@@ -107,7 +106,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
             this.label24 = new System.Windows.Forms.Label();
-            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.txtFanHeight = new System.Windows.Forms.TextBox();
             this.panel7 = new System.Windows.Forms.Panel();
             this.basePointToolbar = new System.Windows.Forms.ToolBar();
             this.toolBarButton15 = new System.Windows.Forms.ToolBarButton();
@@ -162,16 +161,12 @@
             this.toolBtnShowOnMap = new System.Windows.Forms.ToolStripButton();
             this.toolBtnFlash = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
             this.lblProfileList = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
@@ -435,6 +430,7 @@
             // 
             this.tabPage1.AutoScroll = true;
             this.tabPage1.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage1.Controls.Add(this.btnRefreshLayers);
             this.tabPage1.Controls.Add(this.tableLayoutPanel2);
             this.tabPage1.Controls.Add(this.tableLayoutPanel1);
             this.tabPage1.Controls.Add(this.calcProfile);
@@ -457,11 +453,23 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Параметры профиля";
             // 
+            // btnRefreshLayers
+            // 
+            this.btnRefreshLayers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRefreshLayers.Image = global::MilSpace.Profile.Properties.Resources.Refresh20x20;
+            this.btnRefreshLayers.ImageKey = "(none)";
+            this.btnRefreshLayers.Location = new System.Drawing.Point(733, 3);
+            this.btnRefreshLayers.Name = "btnRefreshLayers";
+            this.btnRefreshLayers.Size = new System.Drawing.Size(25, 25);
+            this.btnRefreshLayers.TabIndex = 43;
+            this.btnRefreshLayers.UseVisualStyleBackColor = true;
+            this.btnRefreshLayers.Click += new System.EventHandler(this.btnRefreshLayers_Click);
+            // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.Controls.Add(this.cmbHydrographyLayer, 0, 1);
@@ -473,6 +481,8 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(752, 53);
             this.tableLayoutPanel2.TabIndex = 41;
             // 
@@ -485,19 +495,19 @@
             "Указанием отрезка на карте",
             "От \"базовой\" точки",
             "Выбором графики"});
-            this.cmbHydrographyLayer.Location = new System.Drawing.Point(3, 29);
+            this.cmbHydrographyLayer.Location = new System.Drawing.Point(3, 15);
             this.cmbHydrographyLayer.Name = "cmbHydrographyLayer";
-            this.cmbHydrographyLayer.Size = new System.Drawing.Size(370, 21);
+            this.cmbHydrographyLayer.Size = new System.Drawing.Size(746, 21);
             this.cmbHydrographyLayer.TabIndex = 38;
             // 
             // label6
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(379, 5);
+            this.label6.Location = new System.Drawing.Point(3, 6);
             this.label6.Name = "label6";
             this.label6.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.label6.Size = new System.Drawing.Size(111, 21);
+            this.label6.Size = new System.Drawing.Size(111, 6);
             this.label6.TabIndex = 39;
             this.label6.Text = "Слой дорожной сети";
             // 
@@ -510,9 +520,9 @@
             "Указанием отрезка на карте",
             "От \"базовой\" точки",
             "Выбором графики"});
-            this.cmbRoadLayers.Location = new System.Drawing.Point(379, 29);
+            this.cmbRoadLayers.Location = new System.Drawing.Point(3, 35);
             this.cmbRoadLayers.Name = "cmbRoadLayers";
-            this.cmbRoadLayers.Size = new System.Drawing.Size(370, 21);
+            this.cmbRoadLayers.Size = new System.Drawing.Size(746, 21);
             this.cmbRoadLayers.TabIndex = 40;
             // 
             // label5
@@ -520,10 +530,10 @@
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 5);
+            this.label5.Location = new System.Drawing.Point(3, 0);
             this.label5.Name = "label5";
             this.label5.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.label5.Size = new System.Drawing.Size(370, 21);
+            this.label5.Size = new System.Drawing.Size(746, 6);
             this.label5.TabIndex = 37;
             this.label5.Text = "Слой гидрография";
             // 
@@ -597,11 +607,11 @@
             this.calcProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.calcProfile.Enabled = false;
             this.calcProfile.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.calcProfile.Location = new System.Drawing.Point(537, 719);
+            this.calcProfile.Location = new System.Drawing.Point(568, 712);
             this.calcProfile.Name = "calcProfile";
-            this.calcProfile.Size = new System.Drawing.Size(214, 30);
+            this.calcProfile.Size = new System.Drawing.Size(183, 37);
             this.calcProfile.TabIndex = 27;
-            this.calcProfile.Text = "рассчитать";
+            this.calcProfile.Text = "Рассчитать";
             this.calcProfile.UseVisualStyleBackColor = true;
             this.calcProfile.Click += new System.EventHandler(this.calcProfile_Click);
             // 
@@ -822,7 +832,6 @@
             // secondPointToolbar
             // 
             this.secondPointToolbar.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
-            this.toolBarButton1,
             this.toolBarButton61,
             this.toolBarButton2,
             this.toolBarButton5,
@@ -840,11 +849,6 @@
             this.secondPointToolbar.Size = new System.Drawing.Size(561, 28);
             this.secondPointToolbar.TabIndex = 28;
             this.secondPointToolbar.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.secondPointToolbar_ButtonClick);
-            // 
-            // toolBarButton1
-            // 
-            this.toolBarButton1.Name = "toolBarButton1";
-            this.toolBarButton1.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
             // 
             // toolBarButton61
             // 
@@ -967,7 +971,6 @@
             // 
             this.firstPointToolBar.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
             this.toolBarButton8,
-            this.toolBarButton54,
             this.toolBarButton55,
             this.toolBarButton56,
             this.toolBarButton57,
@@ -989,11 +992,6 @@
             // 
             this.toolBarButton8.ImageKey = "Write.png";
             this.toolBarButton8.Name = "toolBarButton8";
-            // 
-            // toolBarButton54
-            // 
-            this.toolBarButton54.Name = "toolBarButton54";
-            this.toolBarButton54.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
             // 
             // toolBarButton55
             // 
@@ -1106,6 +1104,7 @@
             this.azimuth2.Size = new System.Drawing.Size(60, 20);
             this.azimuth2.TabIndex = 18;
             this.azimuth2.Text = "360";
+            this.azimuth2.TextChanged += new System.EventHandler(this.azimuth2_TextChanged);
             this.azimuth2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ChechDouble_KeyPress);
             this.azimuth2.Leave += new System.EventHandler(this.UpdateFunProperties);
             // 
@@ -1215,7 +1214,7 @@
             // panel10
             // 
             this.panel10.Controls.Add(this.label24);
-            this.panel10.Controls.Add(this.textBox13);
+            this.panel10.Controls.Add(this.txtFanHeight);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel10.Location = new System.Drawing.Point(3, 54);
             this.panel10.Name = "panel10";
@@ -1235,16 +1234,16 @@
             this.label24.TabIndex = 22;
             this.label24.Text = "высота базовой точки над поверхностью (м)";
             // 
-            // textBox13
+            // txtFanHeight
             // 
-            this.textBox13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox13.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox13.Location = new System.Drawing.Point(8, 2);
-            this.textBox13.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
-            this.textBox13.Name = "textBox13";
-            this.textBox13.Size = new System.Drawing.Size(49, 20);
-            this.textBox13.TabIndex = 6;
-            this.textBox13.Text = "25";
+            this.txtFanHeight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtFanHeight.Dock = System.Windows.Forms.DockStyle.Left;
+            this.txtFanHeight.Location = new System.Drawing.Point(8, 2);
+            this.txtFanHeight.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
+            this.txtFanHeight.Name = "txtFanHeight";
+            this.txtFanHeight.Size = new System.Drawing.Size(49, 20);
+            this.txtFanHeight.TabIndex = 6;
+            this.txtFanHeight.Text = "25";
             // 
             // panel7
             // 
@@ -1767,16 +1766,12 @@
             this.toolBtnShowOnMap,
             this.toolBtnFlash,
             this.toolStripSeparator1,
-            this.toolStripButton1,
-            this.toolStripSeparator2,
-            this.toolStripButton2,
-            this.toolStripButton3,
             this.toolStripButton4,
             this.toolStripSeparator3,
-            this.toolStripButton5,
             this.toolStripButton6,
             this.toolStripSeparator4,
             this.toolStripButton7,
+            this.toolStripButton1,
             this.toolStripButton8});
             this.profilesToolStrip.Location = new System.Drawing.Point(0, 0);
             this.profilesToolStrip.Name = "profilesToolStrip";
@@ -1804,46 +1799,12 @@
             this.toolBtnFlash.Size = new System.Drawing.Size(23, 27);
             this.toolBtnFlash.Text = "toolStripButton9";
             this.toolBtnFlash.ToolTipText = "Подсветить на карте";
+            this.toolBtnFlash.Click += new System.EventHandler(this.toolBtnFlash_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 30);
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 27);
-            this.toolStripButton1.Text = "toolStripButton1";
-            this.toolStripButton1.ToolTipText = "Удалить из базы";
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 30);
-            // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(23, 27);
-            this.toolStripButton2.Text = "toolStripButton2";
-            this.toolStripButton2.ToolTipText = "Переместить на позицию вниз";
-            // 
-            // toolStripButton3
-            // 
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(23, 27);
-            this.toolStripButton3.Text = "toolStripButton3";
-            this.toolStripButton3.ToolTipText = "Переместить на позицию вверх";
             // 
             // toolStripButton4
             // 
@@ -1859,16 +1820,6 @@
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 30);
-            // 
-            // toolStripButton5
-            // 
-            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
-            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton5.Name = "toolStripButton5";
-            this.toolStripButton5.Size = new System.Drawing.Size(23, 27);
-            this.toolStripButton5.Text = "toolStripButton5";
-            this.toolStripButton5.ToolTipText = "Показать информацию о профиле";
             // 
             // toolStripButton6
             // 
@@ -1894,6 +1845,16 @@
             this.toolStripButton7.Size = new System.Drawing.Size(23, 27);
             this.toolStripButton7.Text = "toolStripButton7";
             this.toolStripButton7.ToolTipText = "Убрать из списка";
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 27);
+            this.toolStripButton1.Text = "toolStripButton1";
+            this.toolStripButton1.ToolTipText = "Удалить из базы";
             // 
             // toolStripButton8
             // 
@@ -1987,7 +1948,6 @@
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.ToolBar secondPointToolbar;
-        private System.Windows.Forms.ToolBarButton toolBarButton1;
         private System.Windows.Forms.ToolBarButton toolBarButton2;
         private System.Windows.Forms.ToolBarButton toolBarButton5;
         private System.Windows.Forms.ToolBarButton toolBarButton3;
@@ -2001,7 +1961,6 @@
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.ToolBar firstPointToolBar;
-        private System.Windows.Forms.ToolBarButton toolBarButton54;
         private System.Windows.Forms.ToolBarButton toolBarButton56;
         private System.Windows.Forms.ToolBarButton btnCopyFirstPoint;
         private System.Windows.Forms.ToolBarButton toolBarButton58;
@@ -2022,7 +1981,7 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.TextBox textBox13;
+        private System.Windows.Forms.TextBox txtFanHeight;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.ToolBar basePointToolbar;
         private System.Windows.Forms.ToolBarButton toolBarButton15;
@@ -2110,12 +2069,8 @@
         private System.Windows.Forms.ToolStrip profilesToolStrip;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
         private System.Windows.Forms.ToolStripButton toolStripButton4;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripButton toolStripButton5;
         private System.Windows.Forms.ToolStripButton toolStripButton6;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripButton toolStripButton7;
@@ -2124,5 +2079,6 @@
         internal System.Windows.Forms.TreeView profilesTreeView;
         private System.Windows.Forms.ColumnHeader Attribute;
         private System.Windows.Forms.ColumnHeader Value;
+        private System.Windows.Forms.Button btnRefreshLayers;
     }
 }
