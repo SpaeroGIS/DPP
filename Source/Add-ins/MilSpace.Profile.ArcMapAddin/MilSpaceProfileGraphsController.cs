@@ -66,7 +66,7 @@ namespace MilSpace.Profile
             View.AddNewTab(surfaceProfileChart, profileSession.SessionName);
         }
 
-        internal void ChangeChart(SurfaceProfileChart currentChart)
+        internal void SetChart(SurfaceProfileChart currentChart)
         {
             _surfaceProfileChartController.SetCurrentChart(currentChart, this);
         }
