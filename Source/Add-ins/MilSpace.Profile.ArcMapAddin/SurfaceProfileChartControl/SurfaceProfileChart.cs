@@ -51,7 +51,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             _controller.LoadSeries();
             _controller.SetProfilesProperties();
 
-            var fullHeights = new Dictionary<int,double>();
+            var fullHeights = new Dictionary<int, double>();
 
             for (int i = 0; i < ProfilesProperties.Count; i++)
             {
@@ -283,7 +283,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
 
             profilePropertiesTable.Width = tableWidth + 10;
-            profilePropertiesTable.Columns["ProfileLengthCol"].AutoSizeMode 
+            profilePropertiesTable.Columns["ProfileLengthCol"].AutoSizeMode
                                                     = DataGridViewAutoSizeColumnMode.Fill;
         }
 
@@ -291,7 +291,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         {
             profileDetailsListView.View = View.Details;
 
-            profileDetailsListView.Columns.Add("Attribute", (int)(profileDetailsListView.Width * 0.35));
+            profileDetailsListView.Columns.Add("Attribute", (int)(profileDetailsListView.Width * 0.32));
             profileDetailsListView.Columns.Add("Value", (profileDetailsListView.Width - profileDetailsListView.Columns[0].Width - 25));
 
             profileDetailsListView.HeaderStyle = ColumnHeaderStyle.None;
@@ -367,23 +367,9 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             var axisSize = Math.Truncate(axis.Maximum - axis.Minimum);
             int intervalSize;
 
-            if (axisSize <= 5)
-            {
-                axis.Interval = 1;
-                return;
-            }
-
-            if (axisSize <= 10)
-            {
-                axis.Interval = 2;
-                return;
-            }
-
-            if (axisSize <= 20)
-            {
-                axis.Interval = 5;
-                return;
-            }
+            if (axisSize <= 5) { axis.Interval = 1; return; }
+            if (axisSize <= 10) { axis.Interval = 2; return; }
+            if (axisSize <= 20) { axis.Interval = 5; return; }
 
             if (axisSize <= 50)
             {
@@ -396,30 +382,12 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             int intervalKoef;
 
-            if (intervalSize <= 50)
-            {
-                intervalKoef = 10;
-            }
-            else if (intervalSize <= 250)
-            {
-                intervalKoef = 50;
-            }
-            else if (intervalSize <= 500)
-            {
-                intervalKoef = 100;
-            }
-            else if (intervalSize <= 1000)
-            {
-                intervalKoef = 200;
-            }
-            else if (intervalSize <= 2500)
-            {
-                intervalKoef = 500;
-            }
-            else
-            {
-                intervalKoef = 1000;
-            }
+            if (intervalSize <= 50) { intervalKoef = 10; }
+            else if (intervalSize <= 250) { intervalKoef = 50; }
+            else if (intervalSize <= 500) { intervalKoef = 100; }
+            else if (intervalSize <= 1000) { intervalKoef = 200; }
+            else if (intervalSize <= 2500) { intervalKoef = 500; }
+            else { intervalKoef = 1000; }
 
             axis.Interval = intervalSize - (intervalSize % intervalKoef);
         }
@@ -649,7 +617,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         {
             foreach (DataGridViewRow row in profilePropertiesTable.Rows)
             {
-                if (row.Cells["ProfileNumberCol"].Value.ToString() 
+                if (row.Cells["ProfileNumberCol"].Value.ToString()
                         == (profileChart.Series[SelectedProfileIndex].Name))
                 {
                     return row.Index;
@@ -808,7 +776,14 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
                 case "deleteSelectedProfileGraphToolBarBtn":
 
-                    DeleteSelectedProfile();
+                    if (GetProfiles().Count > 1)
+                    {
+                        DeleteSelectedProfile();
+                    }
+                    else
+                    {
+                        _controller.RemoveCurrentTab();
+                    }
 
                     break;
 
@@ -993,14 +968,11 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             observerHeightTextBox.Text = ProfilesProperties[SelectedProfileIndex].ObserverHeight.ToString();
 
-            if (profileChart.Series.Count > 2)
-            {
-                profileChart.Series[SelectedProfileIndex].BorderWidth += 2;
-                profileChart.Series[SelectedProfileIndex].Font =
-                                    new Font(profileChart.Series[SelectedProfileIndex].Font, FontStyle.Bold);
+            profileChart.Series[SelectedProfileIndex].BorderWidth += 2;
+            profileChart.Series[SelectedProfileIndex].Font =
+                                new Font(profileChart.Series[SelectedProfileIndex].Font, FontStyle.Bold);
 
-                profilePropertiesTable.Rows[GetSelectedProfileRowIndex()].Selected = true;
-            }
+            profilePropertiesTable.Rows[GetSelectedProfileRowIndex()].Selected = true;
 
             ShowDetails();
             ShowColors();
@@ -1089,11 +1061,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             profilePropertiesTable.Height = propertiesSplitContainer.Panel1.Height;
 
             SetPropertiesContainersSize();
-        }
-
-        private void profilePropertiesTable_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
         }
     }
 }

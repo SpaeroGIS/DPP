@@ -34,10 +34,21 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SurfaceProfileChart));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SurfaceProfileChart));
             this.profileChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.profilePropertiesTable = new System.Windows.Forms.DataGridView();
+            this.IsVisibleCol = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ProfileNumberCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AzimuthCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ObserverHeightCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ProfileLengthCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MinHeightCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MaxHeightCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HeightDifferenceCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DescentAngleCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RiseAngleCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VisiblePercentCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.lineColorDialog = new System.Windows.Forms.ColorDialog();
             this.propertiesPanel = new System.Windows.Forms.Panel();
@@ -72,17 +83,6 @@
             this.exportGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
             this.graphPanel = new System.Windows.Forms.Panel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.IsVisibleCol = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.ProfileNumberCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AzimuthCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ObserverHeightCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ProfileLengthCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MinHeightCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MaxHeightCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.HeightDifferenceCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DescentAngleCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RiseAngleCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.VisiblePercentCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.profileChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.profilePropertiesTable)).BeginInit();
             this.propertiesPanel.SuspendLayout();
@@ -167,12 +167,103 @@
             this.profilePropertiesTable.Size = new System.Drawing.Size(354, 127);
             this.profilePropertiesTable.TabIndex = 1;
             this.profilePropertiesTable.TabStop = false;
-            this.profilePropertiesTable.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.profilePropertiesTable_CellContentClick);
             this.profilePropertiesTable.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.ProfilePropertiesTable_CellValueChanged);
             this.profilePropertiesTable.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.ProfilePropertiesTable_ColumnHeaderMouseClick);
             this.profilePropertiesTable.CurrentCellDirtyStateChanged += new System.EventHandler(this.ProfilePropertiesTable_CurrentCellDirtyStateChanged);
             this.profilePropertiesTable.SelectionChanged += new System.EventHandler(this.ProfilePropertiesTable_SelectionChanged);
             this.profilePropertiesTable.Resize += new System.EventHandler(this.ProfilePropertiesTable_Resize);
+            // 
+            // IsVisibleCol
+            // 
+            this.IsVisibleCol.HeaderText = "IV";
+            this.IsVisibleCol.Name = "IsVisibleCol";
+            this.IsVisibleCol.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.IsVisibleCol.ToolTipText = "Показать/скрыть профиль";
+            this.IsVisibleCol.Width = 20;
+            // 
+            // ProfileNumberCol
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.ProfileNumberCol.DefaultCellStyle = dataGridViewCellStyle2;
+            this.ProfileNumberCol.HeaderText = "N";
+            this.ProfileNumberCol.Name = "ProfileNumberCol";
+            this.ProfileNumberCol.ReadOnly = true;
+            this.ProfileNumberCol.ToolTipText = "Номер профиля";
+            this.ProfileNumberCol.Width = 20;
+            // 
+            // AzimuthCol
+            // 
+            this.AzimuthCol.HeaderText = "AZ";
+            this.AzimuthCol.Name = "AzimuthCol";
+            this.AzimuthCol.ReadOnly = true;
+            this.AzimuthCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.AzimuthCol.ToolTipText = "Азимут направления от пункта наблюдения к последней точке профиля";
+            this.AzimuthCol.Width = 35;
+            // 
+            // ObserverHeightCol
+            // 
+            this.ObserverHeightCol.HeaderText = "H";
+            this.ObserverHeightCol.Name = "ObserverHeightCol";
+            this.ObserverHeightCol.ReadOnly = true;
+            this.ObserverHeightCol.ToolTipText = "Высота пункта наблюдения (м)";
+            this.ObserverHeightCol.Width = 35;
+            // 
+            // ProfileLengthCol
+            // 
+            this.ProfileLengthCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ProfileLengthCol.HeaderText = "L";
+            this.ProfileLengthCol.Name = "ProfileLengthCol";
+            this.ProfileLengthCol.ReadOnly = true;
+            this.ProfileLengthCol.ToolTipText = "Длина профиля (м)";
+            this.ProfileLengthCol.Width = 5;
+            // 
+            // MinHeightCol
+            // 
+            this.MinHeightCol.HeaderText = "MnH";
+            this.MinHeightCol.Name = "MinHeightCol";
+            this.MinHeightCol.ReadOnly = true;
+            this.MinHeightCol.ToolTipText = "Минимальная высота (м)";
+            this.MinHeightCol.Width = 28;
+            // 
+            // MaxHeightCol
+            // 
+            this.MaxHeightCol.HeaderText = "MxH";
+            this.MaxHeightCol.Name = "MaxHeightCol";
+            this.MaxHeightCol.ReadOnly = true;
+            this.MaxHeightCol.ToolTipText = "Максимальная высота (м)";
+            this.MaxHeightCol.Width = 28;
+            // 
+            // HeightDifferenceCol
+            // 
+            this.HeightDifferenceCol.HeaderText = "DH";
+            this.HeightDifferenceCol.Name = "HeightDifferenceCol";
+            this.HeightDifferenceCol.ReadOnly = true;
+            this.HeightDifferenceCol.ToolTipText = "Разница высот (м)";
+            this.HeightDifferenceCol.Width = 21;
+            // 
+            // DescentAngleCol
+            // 
+            this.DescentAngleCol.HeaderText = "DA";
+            this.DescentAngleCol.Name = "DescentAngleCol";
+            this.DescentAngleCol.ReadOnly = true;
+            this.DescentAngleCol.ToolTipText = "Максимальный угол спуска (градусы)";
+            this.DescentAngleCol.Width = 22;
+            // 
+            // RiseAngleCol
+            // 
+            this.RiseAngleCol.HeaderText = "RA";
+            this.RiseAngleCol.Name = "RiseAngleCol";
+            this.RiseAngleCol.ReadOnly = true;
+            this.RiseAngleCol.ToolTipText = "Максимальный угол подъема (графусы)";
+            this.RiseAngleCol.Width = 20;
+            // 
+            // VisiblePercentCol
+            // 
+            this.VisiblePercentCol.HeaderText = "VP";
+            this.VisiblePercentCol.Name = "VisiblePercentCol";
+            this.VisiblePercentCol.ReadOnly = true;
+            this.VisiblePercentCol.ToolTipText = "Процент видимых участков";
+            this.VisiblePercentCol.Width = 28;
             // 
             // imageList1
             // 
@@ -419,7 +510,7 @@
             // 
             this.propertiesSplitContainer.Panel1.Controls.Add(this.profilePropertiesTable);
             this.propertiesSplitContainer.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.propertiesSplitContainer.Panel1MinSize = 127;
+            this.propertiesSplitContainer.Panel1MinSize = 80;
             // 
             // propertiesSplitContainer.Panel2
             // 
@@ -430,7 +521,7 @@
             this.propertiesSplitContainer.Panel2MinSize = 150;
             this.propertiesSplitContainer.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.propertiesSplitContainer.Size = new System.Drawing.Size(354, 302);
-            this.propertiesSplitContainer.SplitterDistance = 127;
+            this.propertiesSplitContainer.SplitterDistance = 126;
             this.propertiesSplitContainer.TabIndex = 53;
             this.propertiesSplitContainer.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.PropertiesSplitContainer_SplitterMoved);
             // 
@@ -539,10 +630,11 @@
             this.profileDetailsListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.profileDetailsListView.FullRowSelect = true;
             this.profileDetailsListView.Location = new System.Drawing.Point(0, 38);
             this.profileDetailsListView.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.profileDetailsListView.Name = "profileDetailsListView";
-            this.profileDetailsListView.Size = new System.Drawing.Size(354, 133);
+            this.profileDetailsListView.Size = new System.Drawing.Size(354, 134);
             this.profileDetailsListView.TabIndex = 50;
             this.profileDetailsListView.UseCompatibleStateImageBehavior = false;
             // 
@@ -682,98 +774,6 @@
             this.graphPanel.Name = "graphPanel";
             this.graphPanel.Size = new System.Drawing.Size(498, 327);
             this.graphPanel.TabIndex = 51;
-            // 
-            // IsVisibleCol
-            // 
-            this.IsVisibleCol.HeaderText = "IV";
-            this.IsVisibleCol.Name = "IsVisibleCol";
-            this.IsVisibleCol.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.IsVisibleCol.ToolTipText = "Показать/скрыть профиль";
-            this.IsVisibleCol.Width = 20;
-            // 
-            // ProfileNumberCol
-            // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.ProfileNumberCol.DefaultCellStyle = dataGridViewCellStyle2;
-            this.ProfileNumberCol.HeaderText = "N";
-            this.ProfileNumberCol.Name = "ProfileNumberCol";
-            this.ProfileNumberCol.ReadOnly = true;
-            this.ProfileNumberCol.ToolTipText = "Номер профиля";
-            this.ProfileNumberCol.Width = 20;
-            // 
-            // AzimuthCol
-            // 
-            this.AzimuthCol.HeaderText = "AZ";
-            this.AzimuthCol.Name = "AzimuthCol";
-            this.AzimuthCol.ReadOnly = true;
-            this.AzimuthCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
-            this.AzimuthCol.ToolTipText = "Азимут направления от пункта наблюдения к последней точке профиля";
-            this.AzimuthCol.Width = 35;
-            // 
-            // ObserverHeightCol
-            // 
-            this.ObserverHeightCol.HeaderText = "H";
-            this.ObserverHeightCol.Name = "ObserverHeightCol";
-            this.ObserverHeightCol.ReadOnly = true;
-            this.ObserverHeightCol.ToolTipText = "Высота пункта наблюдения (м)";
-            this.ObserverHeightCol.Width = 35;
-            // 
-            // ProfileLengthCol
-            // 
-            this.ProfileLengthCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ProfileLengthCol.HeaderText = "L";
-            this.ProfileLengthCol.Name = "ProfileLengthCol";
-            this.ProfileLengthCol.ReadOnly = true;
-            this.ProfileLengthCol.ToolTipText = "Длина профиля (м)";
-            this.ProfileLengthCol.Width = 5;
-            // 
-            // MinHeightCol
-            // 
-            this.MinHeightCol.HeaderText = "MnH";
-            this.MinHeightCol.Name = "MinHeightCol";
-            this.MinHeightCol.ReadOnly = true;
-            this.MinHeightCol.ToolTipText = "Минимальная высота (м)";
-            this.MinHeightCol.Width = 28;
-            // 
-            // MaxHeightCol
-            // 
-            this.MaxHeightCol.HeaderText = "MxH";
-            this.MaxHeightCol.Name = "MaxHeightCol";
-            this.MaxHeightCol.ReadOnly = true;
-            this.MaxHeightCol.ToolTipText = "Максимальная высота (м)";
-            this.MaxHeightCol.Width = 28;
-            // 
-            // HeightDifferenceCol
-            // 
-            this.HeightDifferenceCol.HeaderText = "DH";
-            this.HeightDifferenceCol.Name = "HeightDifferenceCol";
-            this.HeightDifferenceCol.ReadOnly = true;
-            this.HeightDifferenceCol.ToolTipText = "Разница высот (м)";
-            this.HeightDifferenceCol.Width = 21;
-            // 
-            // DescentAngleCol
-            // 
-            this.DescentAngleCol.HeaderText = "DA";
-            this.DescentAngleCol.Name = "DescentAngleCol";
-            this.DescentAngleCol.ReadOnly = true;
-            this.DescentAngleCol.ToolTipText = "Максимальный угол спуска (градусы)";
-            this.DescentAngleCol.Width = 22;
-            // 
-            // RiseAngleCol
-            // 
-            this.RiseAngleCol.HeaderText = "RA";
-            this.RiseAngleCol.Name = "RiseAngleCol";
-            this.RiseAngleCol.ReadOnly = true;
-            this.RiseAngleCol.ToolTipText = "Максимальный угол подъема (графусы)";
-            this.RiseAngleCol.Width = 20;
-            // 
-            // VisiblePercentCol
-            // 
-            this.VisiblePercentCol.HeaderText = "VP";
-            this.VisiblePercentCol.Name = "VisiblePercentCol";
-            this.VisiblePercentCol.ReadOnly = true;
-            this.VisiblePercentCol.ToolTipText = "Процент видимых участков";
-            this.VisiblePercentCol.Width = 28;
             // 
             // SurfaceProfileChart
             // 
