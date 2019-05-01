@@ -317,9 +317,9 @@
             this.imageList1.Images.SetKeyName(116, "Mouse.png");
             this.imageList1.Images.SetKeyName(117, "Movie.png");
             this.imageList1.Images.SetKeyName(118, "Music.png");
-            this.imageList1.Images.SetKeyName(119, "Music2.png");
+            this.imageList1.Images.SetKeyName(119, "r");
             this.imageList1.Images.SetKeyName(120, "Nuke.png");
-            this.imageList1.Images.SetKeyName(121, "Ok.png");
+            this.imageList1.Images.SetKeyName(121, "r");
             this.imageList1.Images.SetKeyName(122, "Paragraph.png");
             this.imageList1.Images.SetKeyName(123, "Percent.png");
             this.imageList1.Images.SetKeyName(124, "Phone.png");
@@ -410,6 +410,7 @@
             this.imageList1.Images.SetKeyName(209, "vector-polygon.png");
             this.imageList1.Images.SetKeyName(210, "load.png");
             this.imageList1.Images.SetKeyName(211, "Download.png");
+            this.imageList1.Images.SetKeyName(212, "Refresh20x20.png");
             // 
             // tabControl1
             // 
@@ -456,8 +457,8 @@
             // btnRefreshLayers
             // 
             this.btnRefreshLayers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRefreshLayers.Image = global::MilSpace.Profile.Properties.Resources.Refresh20x20;
-            this.btnRefreshLayers.ImageKey = "(none)";
+            this.btnRefreshLayers.ImageKey = "Refresh20x20.png";
+            this.btnRefreshLayers.ImageList = this.imageList1;
             this.btnRefreshLayers.Location = new System.Drawing.Point(733, 3);
             this.btnRefreshLayers.Name = "btnRefreshLayers";
             this.btnRefreshLayers.Size = new System.Drawing.Size(25, 25);
