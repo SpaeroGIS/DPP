@@ -125,7 +125,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABc
-        0AAAAk1TRnQBSQFMAgEB1AEAAcgBAgHIAQIBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        0AAAAk1TRnQBSQFMAgEB1AEAAfABAgHwAQIBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAWABAwIAAQEBAAEIBgAB2BgAAYACAAGAAwACgAEAAYADAAGAAQABgAEAAoACAAPAAQABwAHc
         AcABAAHwAcoBpgEAATMFAAEzAQABMwEAATMBAAIzAgADFgEAAxwBAAMiAQADKQEAA1UBAANNAQADQgEA
         AzkBAAGAAXwB/wEAAlAB/wEAAZMBAAHWAQAB/wHsAcwBAAHGAdYB7wEAAdYC5wEAAZABqQGtAgAB/wEz
@@ -1017,6 +1017,19 @@
         /wCZAAs=
 </value>
   </data>
+  <data name="richTextBox4.Text" xml:space="preserve">
+    <value>Должен быть обеспечен выбор из слоя или из существующей графике. 
+Выбор осуществляется указанием мышкой на карте.
+Должен быть обеспечен выбор нескольких примитивов в одном слое или графике.
+При выборе нескольких профиль строится непрерывно от начала первого до его конца, до начала второго, до его конца и т.д.
+Должна быть возможность позиционирования и редактирования уже выбранного набора</value>
+  </data>
+  <data name="richTextBox5.Text" xml:space="preserve">
+    <value>Профили хранятся в БД
+Сохранение профилей должно выполнятся на странице "Управление"
+Вид хранения должен позволять восстанавливать геометрию профиля и его происхождение.
+Восстановление происхождения должно позволять проводить редактирование профиля на соответствующих страницах задания параметров.</value>
+  </data>
   <metadata name="profilesToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>127, 3</value>
   </metadata>
@@ -1166,44 +1179,6 @@
         qhmczWbFEoCg4Ntm3Jqnpye5wPZ6kGyvtV5eXnpVh2Dx6OioCZDwR6HvkLlLxTPhvqotHEdGRiAgIAw7
         4Rqs4c6E+6oWZzKZKMBfVm3hvQAEhr+sWlsCEBD6gdOuOilAm0MQHAjaM4GBgDETHAgYM4GBQD9MUDFD
         fM5kMu1/4H9vcQ1jA+MAAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="richTextBox4.Text" xml:space="preserve">
-    <value>Должен быть обеспечен выбор из слоя или из существующей графике. 
-Выбор осуществляется указанием мышкой на карте.
-Должен быть обеспечен выбор нескольких примитивов в одном слое или графике.
-При выборе нескольких профиль строится непрерывно от начала первого до его конца, до начала второго, до его конца и т.д.
-Должна быть возможность позиционирования и редактирования уже выбранного набора</value>
-  </data>
-  <data name="richTextBox5.Text" xml:space="preserve">
-    <value>Профили хранятся в БД
-Сохранение профилей должно выполнятся на странице "Управление"
-Вид хранения должен позволять восстанавливать геометрию профиля и его происхождение.
-Восстановление происхождения должно позволять проводить редактирование профиля на соответствующих страницах задания параметров.</value>
-  </data>
-  <data name="appearance1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAARzSURBVFhHrZdHSyVdEIb7vzljzjmPOWdFzOBqYBDD6EbRjQriuFAxbAQLcaOCimJAQUREEDcG
-        GBOONfWW3Xf69neT+hW8eO+lTz9Vp8I5Gg0NDT0i8qX6+nqX6urqVLW1taqamhpVdXU1VVVVqSorK6mi
-        ooLKy8tVZWVlVFpaSiUlJVRcXExFRUWqwsLCHjgACPuSgFUCVglYJWCVwFnAKoGzwFnAKoGzwFngLHAW
-        MAuYCwoKIPLrgC84wBYc4JaWFp6ZmfkP2BM8Pz+f8/LyvDvwkajHxsb4z58/PDAw4CtqC865ubmeHXhP
-        1ABbW765ucmw379/c3t7u7eoAeacnBz+9u2buwMfidrKNT7f39+rA7CLiwt9xgJ7gHN2djYZAlQH/EWN
-        z/39/bywsMBra2u8s7PDu7u7vL6+zouLizw7O2ui/xl2BA54AHNWVhZnZma+OeAravw2PT3Nt7e35mvf
-        Z1jrBc4ZGRlkCAB97THq1tZWPj09NV/1MUNR9vb2OsGcnp7OaWlpbw44owYcu3J2dma+5nOGomxsbHTC
-        OTU1lQwBqwMW2Cq0paUlc7m7vby8aLE9Pz+bvwRmKErUgwnmlJQUTk5OJkPAGKUuMNTc3MxPT0+6EMDt
-        7W0eGRnRQYPetloLa378+BFQmu7u7jQVNjgnJSWRIS/BHHdrrV+/fumi/f197ujo8DfN+OrqSp932uvr
-        K+/t7fHPnz81/zYwJyYmckJCAhkCxgHi1tdor/n5ea/TzAJDTU1NJu6f3dzc8NzcnNaVY8vtcI6PjydD
-        wDi5XHDM8PHxcRfY3zQbHR1VKKodjvf19WnF+wKbcI6LiyNDwDgyFezr5LKD7X29vLysQwjROircW9QA
-        c2xsLMfExJAhcJzXbmB/UQPc1tbGU1NTmttAwQ44R0dHkyFgXBYCihrDanJyks/Pz3XbV1dXA4Z3dXXZ
-        waqoqCgyBIxbilc4dgcteHBwoHm2W3d3d0BRDw8P88bGhgsuYI6MjOSIiAgyBIzrkRsY31FMWPRkzgOn
-        PTw8aCp8wZGulZUVfX5oaMgJ5/DwcDIEjLuZCw4whoY/w4xA/p1gfMfAwqlpHc+Pj4+aKgtswjksLIwM
-        AZM913Dm5OREF/ozTMnLy0s+Ojriw8NDrQ1PO4ZitUUNsCo0NJQMgZOzwtFSHz1+nXZ8fKyVb4cLWBUS
-        EkKGgMkCQ9ax+f37d43wM4Y0oUgdUQOsCg4OJkPgZAfbj8yJiQnzVe+z6+tr7RwUnIeoAVZ9/fqVDAGT
-        l8uCVjiuXE7Db1tbW1oryDv+4jtuP52dndrvPqIGWPXlyxcyBEyewFZrYXdwlluGewCesQ8Ve2t5ybU9
-        agvOQUFBZAiYvMGt9sJ9wWopRGoHO/o6kKgt+JsDAiZvYGugoIoxSnG+Dw4OfipqG/zNAQGTP7i13fi3
-        CwPrk1G7OyBg8gW25xp//4eo7SJD4D0CJ4GTwEngJHASMAmQBEwSsUrgJGASMAlYJWASsErAJFCVQFWA
-        eFdQz1+mbRLRyPY6lgAAAABJRU5ErkJggg==
 </value>
   </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
