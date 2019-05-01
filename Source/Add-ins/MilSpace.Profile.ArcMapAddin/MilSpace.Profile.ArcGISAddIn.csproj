@@ -283,6 +283,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AddInContent>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Refresh20x20.png" />
+  </ItemGroup>
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>
     <AddInTargetProduct>Desktop</AddInTargetProduct>

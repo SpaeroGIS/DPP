@@ -33,10 +33,10 @@
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отрезки");
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Веер");
             System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Графика");
-            Infragistics.Win.Appearance appearance1 = new Infragistics.Win.Appearance();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnRefreshLayers = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.cmbHydrographyLayer = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -161,15 +161,14 @@
             this.toolBtnShowOnMap = new System.Windows.Forms.ToolStripButton();
             this.toolBtnFlash = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
             this.lblProfileList = new System.Windows.Forms.Label();
-            this.btnRefreshLayers = new Infragistics.Win.Misc.UltraButton();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -454,11 +453,23 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Параметры профиля";
             // 
+            // btnRefreshLayers
+            // 
+            this.btnRefreshLayers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRefreshLayers.Image = global::MilSpace.Profile.Properties.Resources.Refresh20x20;
+            this.btnRefreshLayers.ImageKey = "(none)";
+            this.btnRefreshLayers.Location = new System.Drawing.Point(733, 3);
+            this.btnRefreshLayers.Name = "btnRefreshLayers";
+            this.btnRefreshLayers.Size = new System.Drawing.Size(25, 25);
+            this.btnRefreshLayers.TabIndex = 43;
+            this.btnRefreshLayers.UseVisualStyleBackColor = true;
+            this.btnRefreshLayers.Click += new System.EventHandler(this.btnRefreshLayers_Click);
+            // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.Controls.Add(this.cmbHydrographyLayer, 0, 1);
@@ -470,6 +481,8 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(752, 53);
             this.tableLayoutPanel2.TabIndex = 41;
             // 
@@ -482,19 +495,19 @@
             "Указанием отрезка на карте",
             "От \"базовой\" точки",
             "Выбором графики"});
-            this.cmbHydrographyLayer.Location = new System.Drawing.Point(3, 29);
+            this.cmbHydrographyLayer.Location = new System.Drawing.Point(3, 15);
             this.cmbHydrographyLayer.Name = "cmbHydrographyLayer";
-            this.cmbHydrographyLayer.Size = new System.Drawing.Size(370, 21);
+            this.cmbHydrographyLayer.Size = new System.Drawing.Size(746, 21);
             this.cmbHydrographyLayer.TabIndex = 38;
             // 
             // label6
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(379, 5);
+            this.label6.Location = new System.Drawing.Point(3, 6);
             this.label6.Name = "label6";
             this.label6.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.label6.Size = new System.Drawing.Size(111, 21);
+            this.label6.Size = new System.Drawing.Size(111, 6);
             this.label6.TabIndex = 39;
             this.label6.Text = "Слой дорожной сети";
             // 
@@ -507,9 +520,9 @@
             "Указанием отрезка на карте",
             "От \"базовой\" точки",
             "Выбором графики"});
-            this.cmbRoadLayers.Location = new System.Drawing.Point(379, 29);
+            this.cmbRoadLayers.Location = new System.Drawing.Point(3, 35);
             this.cmbRoadLayers.Name = "cmbRoadLayers";
-            this.cmbRoadLayers.Size = new System.Drawing.Size(370, 21);
+            this.cmbRoadLayers.Size = new System.Drawing.Size(746, 21);
             this.cmbRoadLayers.TabIndex = 40;
             // 
             // label5
@@ -517,10 +530,10 @@
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 5);
+            this.label5.Location = new System.Drawing.Point(3, 0);
             this.label5.Name = "label5";
             this.label5.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.label5.Size = new System.Drawing.Size(370, 21);
+            this.label5.Size = new System.Drawing.Size(746, 6);
             this.label5.TabIndex = 37;
             this.label5.Text = "Слой гидрография";
             // 
@@ -1793,16 +1806,6 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 30);
             // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 27);
-            this.toolStripButton1.Text = "toolStripButton1";
-            this.toolStripButton1.ToolTipText = "Удалить из базы";
-            // 
             // toolStripButton4
             // 
             this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -1843,6 +1846,16 @@
             this.toolStripButton7.Text = "toolStripButton7";
             this.toolStripButton7.ToolTipText = "Убрать из списка";
             // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 27);
+            this.toolStripButton1.Text = "toolStripButton1";
+            this.toolStripButton1.ToolTipText = "Удалить из базы";
+            // 
             // toolStripButton8
             // 
             this.toolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -1865,20 +1878,6 @@
             this.lblProfileList.Size = new System.Drawing.Size(161, 32);
             this.lblProfileList.TabIndex = 1;
             this.lblProfileList.Text = "Список профилей";
-            // 
-            // btnRefreshLayers
-            // 
-            this.btnRefreshLayers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            appearance1.Image = ((object)(resources.GetObject("appearance1.Image")));
-            this.btnRefreshLayers.Appearance = appearance1;
-            this.btnRefreshLayers.ImageList = this.imageList1;
-            this.btnRefreshLayers.ImageSize = new System.Drawing.Size(22, 22);
-            this.btnRefreshLayers.Location = new System.Drawing.Point(568, 15);
-            this.btnRefreshLayers.Name = "btnRefreshLayers";
-            this.btnRefreshLayers.Size = new System.Drawing.Size(183, 37);
-            this.btnRefreshLayers.TabIndex = 42;
-            this.btnRefreshLayers.Text = "Обновить слои";
-            this.btnRefreshLayers.Click += new System.EventHandler(this.btnRefreshLayers_Click);
             // 
             // DockableWindowMilSpaceProfileCalc
             // 
@@ -2080,6 +2079,6 @@
         internal System.Windows.Forms.TreeView profilesTreeView;
         private System.Windows.Forms.ColumnHeader Attribute;
         private System.Windows.Forms.ColumnHeader Value;
-        private Infragistics.Win.Misc.UltraButton btnRefreshLayers;
+        private System.Windows.Forms.Button btnRefreshLayers;
     }
 }

@@ -41,7 +41,7 @@ namespace MilSpace.Profile
             this.Instance = this;
             SetController(controller);
             controller.SetView(this);
-
+            LocalizeStrings();
         }
 
         public DockableWindowMilSpaceProfileCalc(object hook, MilSpaceProfileCalsController controller)
@@ -52,6 +52,7 @@ namespace MilSpace.Profile
             this.Instance = this;
             SubscribeForEvents();
             controller.SetView(this);
+            LocalizeStrings();
         }
 
         private void OnProfileSettingsChanged(ProfileSettingsEventArgs e)
@@ -1018,9 +1019,7 @@ namespace MilSpace.Profile
             cmbBuildings.Items.Clear();
             cmbPolygonLayer.Items.Clear();
             cmbPointLayers.Items.Clear();
-
-
-
+            
             PopulateComboBox(cmbRasterLayers, ProfileLayers.RasterLayers);
             PopulateComboBox(cmbRoadLayers, ProfileLayers.LineLayers);
             PopulateComboBox(cmbHydrographyLayer, ProfileLayers.LineLayers);
@@ -1036,6 +1035,14 @@ namespace MilSpace.Profile
             var ids = GetProfileAndLineIds(node);
 
             Controller.HighlightProfileOnMap(ids.Item1, ids.Item2);
+        }
+
+        private void LocalizeStrings()
+        {
+            //TODO: Set all localization srting here
+
+            ToolTip ToolTip1 = new System.Windows.Forms.ToolTip();
+            ToolTip1.SetToolTip(this.btnRefreshLayers, "Refresh interesing layers");
         }
     }
 }
