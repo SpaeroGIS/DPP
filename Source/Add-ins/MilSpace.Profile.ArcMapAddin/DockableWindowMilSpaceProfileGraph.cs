@@ -50,12 +50,14 @@ namespace MilSpace.Profile
             profilesTabControl.TabPages.Add(tabPage);
 
             var curTab = profilesTabControl.TabPages[profilesTabControl.TabCount - 1];
+           
             surfaceProfileChart.Width = curTab.Width;
             surfaceProfileChart.Height = curTab.Height;
             surfaceProfileChart.Name = "profileChart";
             curTab.Controls.Add(surfaceProfileChart);
 
             profilesTabControl.SelectTab(profilesTabControl.TabCount - 1);
+            controller.SetChart(surfaceProfileChart);
 
             surfaceProfileChart.SetControlSize();
         }
@@ -122,14 +124,17 @@ namespace MilSpace.Profile
         {
            foreach (TabPage page in profilesTabControl.TabPages)
             {
-                page.Controls["profileChart"].Width = profilesTabControl.Width;
+                page.Controls["profileChart"].Width = profilesTabControl.Width - 10;
                 page.Controls["profileChart"].Height = profilesTabControl.Height - 30;
             }
         }
 
         private void ProfilesTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            controller.ChangeChart((SurfaceProfileChart)profilesTabControl.SelectedTab.Controls["profileChart"]);
+            if (profilesTabControl.TabPages.Count > 0)
+            {
+                controller.SetChart((SurfaceProfileChart)profilesTabControl.SelectedTab.Controls["profileChart"]);
+            }
         }
     }
 }

@@ -66,7 +66,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             _surfaceProfileChart.SetExtremePoints(_extremePoints);
         }
 
-        internal void AddInvisibleZones(List<double> observersHeights, ProfileSurface[] profileSurfaces = null)
+        internal void AddInvisibleZones(Dictionary<int, double> observersHeights, ProfileSurface[] profileSurfaces = null)
         {
             if (profileSurfaces == null)
             {
@@ -77,7 +77,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             {
                 var profileSurfacePoints = profileSessionProfileLine.ProfileSurfacePoints;
 
-                AddInvisibleZone(observersHeights[profileSessionProfileLine.LineId - 1], profileSessionProfileLine);
+                AddInvisibleZone(observersHeights[profileSessionProfileLine.LineId], profileSessionProfileLine);
             }
         }
 
@@ -153,6 +153,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
                 profileProperty.Azimuth = profileSessionProfileLine.Azimuth;//  FindAzimuth(RadiansToDegrees(profileSessionProfileLine.Angel));
 
+                profileProperty.ObserverHeight = 0;
+
                 _surfaceProfileChart.ProfilesProperties.Add(profileProperty);
             }
 
@@ -189,14 +191,18 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         private void CalcProfilesVisiblePercents(ProfileSurface invisibleSurface, ProfileSurface allSurface)
         {
-            var profileProperty = _surfaceProfileChart.ProfilesProperties[invisibleSurface.LineId - 1];
+            var profileProperty 
+                    = _surfaceProfileChart
+                       .ProfilesProperties
+                       .First(property => property.LineId == invisibleSurface.LineId);
 
             double invisibleLegth = 0;
             int j = 0;
 
             if (invisibleSurface.ProfileSurfacePoints.Count() == 0)
             {
-                _surfaceProfileChart.ProfilesProperties[invisibleSurface.LineId - 1].VisiblePercent = 100;
+                _surfaceProfileChart.ProfilesProperties
+                                    .First(property => property.LineId == invisibleSurface.LineId).VisiblePercent = 100;
 
                 return;
             }
@@ -216,7 +222,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 }
             }
 
-            _surfaceProfileChart.ProfilesProperties[invisibleSurface.LineId - 1].VisiblePercent =
+            _surfaceProfileChart.ProfilesProperties
+                                .First(property => property.LineId == invisibleSurface.LineId).VisiblePercent =
                 ((profileProperty.PathLength - invisibleLegth) * 100) / profileProperty.PathLength;
         }
 
