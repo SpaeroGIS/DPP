@@ -8,5 +8,18 @@
         <elementListCompartment Id="affb005f-cfe9-4e0d-a265-24e709fead0b" absoluteBounds="3.14, 1.71, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="e67135f7-208c-4515-b400-76f4e4953b7a" absoluteBounds="3.875, 3.75, 2, 1.1939925130208327">
+      <DataClassMoniker Name="/MilSpaceStorageContext/MilSp_Session" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d4e3d1a7-56d3-4058-95d6-98d58d904641" absoluteBounds="3.89, 4.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(4.5 : 2.6362939453125); (4.5 : 3.75)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/MilSpaceStorageContext/MilSp_Profile/MilSp_Profile_MilSp_Session" />
+      <nodes>
+        <classShapeMoniker Id="7c2d5511-5a61-462f-a09b-652ea0f40c1c" />
+        <classShapeMoniker Id="e67135f7-208c-4515-b400-76f4e4953b7a" />
+      </nodes>
+    </associationConnector>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

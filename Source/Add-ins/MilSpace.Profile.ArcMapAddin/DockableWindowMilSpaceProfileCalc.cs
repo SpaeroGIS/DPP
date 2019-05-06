@@ -13,6 +13,7 @@ using System.Linq;
 using System.Windows.Forms;
 using Point = ESRI.ArcGIS.Geometry.Point;
 
+
 namespace MilSpace.Profile
 {
     /// <summary>
@@ -62,6 +63,8 @@ namespace MilSpace.Profile
 
         public IActiveView ActiveView => ArcMap.Document.ActiveView;
 
+        public ISpatialReference MapSpatialreverence => ArcMap.Document.FocusMap.SpatialReference;
+
         public MilSpaceProfileCalsController Controller => controller;
 
         public ProfileSettingsPointButtonEnum ActiveButton => activeButtton;
@@ -82,7 +85,7 @@ namespace MilSpace.Profile
                 txtProfileName.Text = value;
                 var text = txtProfileName.Text;
             }
-            
+
         }
 
         public bool AddSectionProfileNodes(ProfileSession profile)
@@ -152,8 +155,8 @@ namespace MilSpace.Profile
                     var firstY = profile.ProfileLines.First().Line.FromPoint.Y.ToString("F5");
                     var secondX = profile.ProfileLines.First().Line.ToPoint.X.ToString("F5");
                     var secondY = profile.ProfileLines.First().Line.ToPoint.Y.ToString("F5");
-                    newNode.SetBasePoint($"X= {firstX}; Y= {firstY};");
 
+                    newNode.SetBasePoint($"X= {firstX}; Y= {firstY};");
                     newNode.SetToPoint($"X= {secondX}; Y= {secondY};");
                     newNode.SetBasePointHeight(SectionHeightFirst.ToString());
                     newNode.SetToPointHeight(SectionHeightSecond.ToString());
@@ -181,7 +184,7 @@ namespace MilSpace.Profile
                 }
 
                 newNode.SetCreatorName(Environment.UserName);
-                
+
                 newNode.SetDate($"{date.ToLongDateString()} {date.ToLongTimeString()}");
 
                 //newNode.SetLineDistance(string.Empty);
@@ -204,7 +207,7 @@ namespace MilSpace.Profile
                     childNode.IsProfileNode = false;
                     //ProfileName = profile.SessionName;
                     //ProfileId = profile.SessionId;
-                    
+
                     //childNode.SetProfileName(profile.SessionName);
                     //childNode.SetProfileId(profile.SessionId.ToString());
                     //childNode.SetProfileType(ConvertProfileTypeToString(profile.DefinitionType));
@@ -212,9 +215,9 @@ namespace MilSpace.Profile
                     childNode.SetLineDistance(line.Length.ToString("F5"));
                     childNode.SetBasePoint($"X={line.Line.FromPoint.X:F5}; Y={line.Line.FromPoint.Y:F5}");
                     childNode.SetToPoint($"X={line.Line.ToPoint.X:F5}; Y={line.Line.ToPoint.Y:F5}");
-                    
+
                     childNode.SetAzimuth1($"{azimuth}{Degree}");
-               
+
 
                 }
                 parentNode.Nodes.Add(newNode);
@@ -423,6 +426,8 @@ namespace MilSpace.Profile
             ArcMap.Events.OpenDocument += OnObservationPointDropped;
             ArcMap.Events.OpenDocument += OnRoadComboDropped;
             ArcMap.Events.OpenDocument += OnVegetationDropped;
+            ArcMap.Events.OpenDocument += controller.InitiateUserProfiles;
+
 
             profilesTreeView.AfterSelect += SetZoomToState;
             profilesTreeView.AfterSelect += DisplaySelectedNodeAttributes;
@@ -591,7 +596,6 @@ namespace MilSpace.Profile
                     {
                         PasteTextToEditField(txtSecondPointX);
                     }
-
 
 
                     PasteTextToEditField(txtSecondPointY.Focused ? txtSecondPointY : txtSecondPointX);
@@ -799,7 +803,7 @@ namespace MilSpace.Profile
         public int SectionHeightFirst => TryParseHeight(txtFirstHeight);
         public int SectionHeightSecond => TryParseHeight(txtSecondHeight);
         public int FanHeight => TryParseHeight(txtFanHeight);
-        
+
 
         private int TryParseHeight(TextBox heightTextBox)
         {
@@ -1019,7 +1023,7 @@ namespace MilSpace.Profile
             cmbBuildings.Items.Clear();
             cmbPolygonLayer.Items.Clear();
             cmbPointLayers.Items.Clear();
-            
+
             PopulateComboBox(cmbRasterLayers, ProfileLayers.RasterLayers);
             PopulateComboBox(cmbRoadLayers, ProfileLayers.LineLayers);
             PopulateComboBox(cmbHydrographyLayer, ProfileLayers.LineLayers);
@@ -1043,6 +1047,21 @@ namespace MilSpace.Profile
 
             ToolTip ToolTip1 = new System.Windows.Forms.ToolTip();
             ToolTip1.SetToolTip(this.btnRefreshLayers, "Refresh interesing layers");
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmbPointLayers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

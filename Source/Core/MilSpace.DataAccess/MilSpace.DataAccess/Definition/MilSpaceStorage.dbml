@@ -5,6 +5,14 @@
       <Column Name="idRow" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="ProfileName" Type="System.String" DbType="NChar(20) NOT NULL" CanBeNull="false" />
       <Column Name="ProfileData" Type="System.String" DbType="NText NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Association Name="MilSp_Profile_MilSp_Session" Member="MilSp_Sessions" ThisKey="idRow" OtherKey="ProfileId" Type="MilSp_Session" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MilSp_Session" Member="MilSp_Sessions" AccessModifier="Internal">
+    <Type Name="MilSp_Session" AccessModifier="Internal">
+      <Column Name="userName" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ProfileId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="MilSp_Profile_MilSp_Session" Member="MilSp_Profile" ThisKey="ProfileId" OtherKey="idRow" Type="MilSp_Profile" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

@@ -155,7 +155,7 @@ namespace MilSpace.Core.Tools
                 display.SetSymbol(symbol);
                 actionToFlash[geometry.GeometryType].Invoke(display, geometry);
                 display.FinishDrawing();
-                
+
             }
             else
             { throw new KeyNotFoundException("{0} cannot be found in the Symbol dictionary".InvariantFormat(geometry.GeometryType)); }
@@ -182,7 +182,22 @@ namespace MilSpace.Core.Tools
             //double minAzimuth = Math.Min(azimuth1, azimuth2);
             //double maxAzimuth = Math.Max(azimuth1, azimuth2);
 
-                double sector;
+            double sector;
+            
+
+            //Xheck if it is a circle
+            if ((azimuth1 == 0 && azimuth2 == 360) || (azimuth2 == 0 && azimuth1 == 360) || (azimuth2 == azimuth1))
+            {
+                if (count == 2)
+                {
+                    azimuth2 = azimuth1 + 180;
+                }
+                else
+                {
+                    count -= 1;
+                }
+            }
+
             if (azimuth1 > azimuth2) //clockwise
             {
                 sector = (360 - azimuth1) + azimuth2;
@@ -198,13 +213,6 @@ namespace MilSpace.Core.Tools
             }
 
             double step = sector / (count - 1);
-
-            //remove one line if the first and last is the same
-            if ((azimuth1 == 0 && azimuth2 == 360) || (azimuth2 == 0 && azimuth1 == 360) || (azimuth2 == azimuth1))
-            {
-                count -= 1;
-            }
-
 
             List<IPolyline> result = new List<IPolyline>();
             for (int i = 0; i < count; i++)
