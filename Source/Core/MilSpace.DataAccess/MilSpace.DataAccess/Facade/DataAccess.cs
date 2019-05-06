@@ -13,6 +13,56 @@ namespace MilSpace.DataAccess.Facade
         public override string ConnectionString => MilSpaceConfiguration.ConnectionProperty.WorkingDBConnection;
 
 
+        public bool SaveUserSession(int profileIdId, bool submit = false)
+        {
+            bool result = true;
+            try
+            {
+                string userName = Environment.UserName;
+
+                if (context.MilSp_Profiles.Any(p => p.idRow == profileIdId) || !submit)
+                {
+                    if (!context.MilSp_Sessions.Any(s => s.userName == userName && s.ProfileId == profileIdId))
+                    {
+                        var userSession = new MilSp_Session()
+                        {
+                            ProfileId = profileIdId,
+                            userName = userName
+                        };
+
+                        context.MilSp_Sessions.InsertOnSubmit(userSession);
+
+                        if (submit)
+                        {
+                            Submit();
+                        }
+                    }
+
+                }
+                else
+                {
+                    throw new MilSpaceProfileNotFoundException(profileIdId);
+                }
+
+            }
+            catch (MilSpaceDataException ex)
+            {
+                log.WarnEx(ex.Message);
+                if (ex.InnerException != null)
+                {
+                    log.WarnEx(ex.InnerException.Message);
+                }
+
+                result = false;
+            }
+            catch (Exception ex)
+            {
+                log.WarnEx($"Unexpected exception:{ex.Message}");
+                result = false;
+            }
+            return result;
+        }
+
         public bool SaveSession(ProfileSession session)
         {
             bool result = true;
@@ -29,7 +79,11 @@ namespace MilSpace.DataAccess.Facade
                     context.MilSp_Profiles.InsertOnSubmit(profile);
                 }
 
-                Submit();
+
+                if (SaveUserSession(profile.idRow))
+                {
+                    Submit();
+                }
             }
             catch (MilSpaceDataException ex)
             {
@@ -68,11 +122,11 @@ namespace MilSpace.DataAccess.Facade
             return null;
         }
 
-        public IEnumerable<ProfileSession> GetAllSessions()
+        public IEnumerable<ProfileSession> GetAllSessionsFoUser()
         {
             try
             {
-                return context.MilSp_Profiles.Select(s => s.Get()).ToArray();
+                return context.MilSp_Sessions.Where(s => s.userName == Environment.UserName).Select(s => s.MilSp_Profile.Get());
             }
             catch (Exception ex)
             {

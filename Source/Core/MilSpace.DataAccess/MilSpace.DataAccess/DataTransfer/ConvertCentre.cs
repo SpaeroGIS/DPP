@@ -29,6 +29,7 @@ namespace MilSpace.DataAccess.DataTransfer
 
                     try
                     {
+                        memoryStream.Seek(0, SeekOrigin.Begin);
                         if (serializer.Deserialize(memoryStream) is ProfileSession result)
                         {
                             session = result;

@@ -30,18 +30,14 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Графика");
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.btnRefreshLayers = new System.Windows.Forms.Button();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.cmbHydrographyLayer = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.cmbRoadLayers = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.btnRefreshLayers = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.cmbBuildings = new System.Windows.Forms.ComboBox();
             this.label30 = new System.Windows.Forms.Label();
@@ -52,6 +48,10 @@
             this.label25 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.cmbPointLayers = new System.Windows.Forms.ComboBox();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.cmbRoadLayers = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.cmbRasterLayers = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -171,8 +171,8 @@
             this.lblProfileList = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.profileSettingsTab.SuspendLayout();
             this.sectionTab.SuspendLayout();
             this.panel16.SuspendLayout();
@@ -432,13 +432,13 @@
             this.tabPage1.AutoScroll = true;
             this.tabPage1.BackColor = System.Drawing.SystemColors.Control;
             this.tabPage1.Controls.Add(this.btnRefreshLayers);
-            this.tabPage1.Controls.Add(this.tableLayoutPanel2);
             this.tabPage1.Controls.Add(this.tableLayoutPanel1);
             this.tabPage1.Controls.Add(this.calcProfile);
             this.tabPage1.Controls.Add(this.txtProfileName);
             this.tabPage1.Controls.Add(this.label25);
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.cmbPointLayers);
+            this.tabPage1.Controls.Add(this.tableLayoutPanel2);
             this.tabPage1.Controls.Add(this.label7);
             this.tabPage1.Controls.Add(this.cmbRasterLayers);
             this.tabPage1.Controls.Add(this.label3);
@@ -454,6 +454,20 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Параметры профиля";
             // 
+            // cmbHydrographyLayer
+            // 
+            this.cmbHydrographyLayer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbHydrographyLayer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbHydrographyLayer.FormattingEnabled = true;
+            this.cmbHydrographyLayer.Items.AddRange(new object[] {
+            "Указанием отрезка на карте",
+            "От \"базовой\" точки",
+            "Выбором графики"});
+            this.cmbHydrographyLayer.Location = new System.Drawing.Point(373, 32);
+            this.cmbHydrographyLayer.Name = "cmbHydrographyLayer";
+            this.cmbHydrographyLayer.Size = new System.Drawing.Size(376, 21);
+            this.cmbHydrographyLayer.TabIndex = 38;
+            // 
             // btnRefreshLayers
             // 
             this.btnRefreshLayers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -466,95 +480,24 @@
             this.btnRefreshLayers.UseVisualStyleBackColor = true;
             this.btnRefreshLayers.Click += new System.EventHandler(this.btnRefreshLayers_Click);
             // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel2.ColumnCount = 1;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Controls.Add(this.cmbHydrographyLayer, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.label6, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.cmbRoadLayers, 1, 1);
-            this.tableLayoutPanel2.Controls.Add(this.label5, 0, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 167);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(752, 53);
-            this.tableLayoutPanel2.TabIndex = 41;
-            // 
-            // cmbHydrographyLayer
-            // 
-            this.cmbHydrographyLayer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbHydrographyLayer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbHydrographyLayer.FormattingEnabled = true;
-            this.cmbHydrographyLayer.Items.AddRange(new object[] {
-            "Указанием отрезка на карте",
-            "От \"базовой\" точки",
-            "Выбором графики"});
-            this.cmbHydrographyLayer.Location = new System.Drawing.Point(3, 15);
-            this.cmbHydrographyLayer.Name = "cmbHydrographyLayer";
-            this.cmbHydrographyLayer.Size = new System.Drawing.Size(746, 21);
-            this.cmbHydrographyLayer.TabIndex = 38;
-            // 
-            // label6
-            // 
-            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 6);
-            this.label6.Name = "label6";
-            this.label6.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.label6.Size = new System.Drawing.Size(111, 6);
-            this.label6.TabIndex = 39;
-            this.label6.Text = "Слой дорожной сети";
-            // 
-            // cmbRoadLayers
-            // 
-            this.cmbRoadLayers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbRoadLayers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbRoadLayers.FormattingEnabled = true;
-            this.cmbRoadLayers.Items.AddRange(new object[] {
-            "Указанием отрезка на карте",
-            "От \"базовой\" точки",
-            "Выбором графики"});
-            this.cmbRoadLayers.Location = new System.Drawing.Point(3, 35);
-            this.cmbRoadLayers.Name = "cmbRoadLayers";
-            this.cmbRoadLayers.Size = new System.Drawing.Size(746, 21);
-            this.cmbRoadLayers.TabIndex = 40;
-            // 
-            // label5
-            // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 0);
-            this.label5.Name = "label5";
-            this.label5.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.label5.Size = new System.Drawing.Size(746, 6);
-            this.label5.TabIndex = 37;
-            this.label5.Text = "Слой гидрография";
-            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.46809F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.53191F));
             this.tableLayoutPanel1.Controls.Add(this.cmbBuildings, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.label30, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.cmbPolygonLayer, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label4, 0, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 85);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(7, 85);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(752, 76);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(752, 54);
             this.tableLayoutPanel1.TabIndex = 36;
             // 
             // cmbBuildings
@@ -564,16 +507,16 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbBuildings.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBuildings.FormattingEnabled = true;
-            this.cmbBuildings.Location = new System.Drawing.Point(379, 41);
+            this.cmbBuildings.Location = new System.Drawing.Point(375, 30);
             this.cmbBuildings.Name = "cmbBuildings";
-            this.cmbBuildings.Size = new System.Drawing.Size(370, 21);
+            this.cmbBuildings.Size = new System.Drawing.Size(374, 21);
             this.cmbBuildings.TabIndex = 42;
             // 
             // label30
             // 
             this.label30.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(379, 17);
+            this.label30.Location = new System.Drawing.Point(375, 6);
             this.label30.Name = "label30";
             this.label30.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.label30.Size = new System.Drawing.Size(96, 21);
@@ -587,16 +530,16 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbPolygonLayer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbPolygonLayer.FormattingEnabled = true;
-            this.cmbPolygonLayer.Location = new System.Drawing.Point(3, 41);
+            this.cmbPolygonLayer.Location = new System.Drawing.Point(3, 30);
             this.cmbPolygonLayer.Name = "cmbPolygonLayer";
-            this.cmbPolygonLayer.Size = new System.Drawing.Size(370, 21);
+            this.cmbPolygonLayer.Size = new System.Drawing.Size(366, 21);
             this.cmbPolygonLayer.TabIndex = 40;
             // 
             // label4
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(3, 17);
+            this.label4.Location = new System.Drawing.Point(3, 6);
             this.label4.Name = "label4";
             this.label4.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.label4.Size = new System.Drawing.Size(116, 21);
@@ -665,11 +608,70 @@
             "Указанием отрезка на карте",
             "От \"базовой\" точки",
             "Выбором графики"});
-            this.cmbPointLayers.Location = new System.Drawing.Point(3, 244);
+            this.cmbPointLayers.Location = new System.Drawing.Point(7, 236);
             this.cmbPointLayers.Name = "cmbPointLayers";
             this.cmbPointLayers.Size = new System.Drawing.Size(752, 21);
             this.cmbPointLayers.TabIndex = 20;
             this.cmbPointLayers.Tag = "";
+            this.cmbPointLayers.SelectedIndexChanged += new System.EventHandler(this.cmbPointLayers_SelectedIndexChanged);
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.33511F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.66489F));
+            this.tableLayoutPanel2.Controls.Add(this.cmbHydrographyLayer, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.label5, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.label6, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.cmbRoadLayers, 0, 1);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(7, 145);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 53.7037F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 46.2963F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(752, 54);
+            this.tableLayoutPanel2.TabIndex = 41;
+            // 
+            // cmbRoadLayers
+            // 
+            this.cmbRoadLayers.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.cmbRoadLayers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbRoadLayers.FormattingEnabled = true;
+            this.cmbRoadLayers.Items.AddRange(new object[] {
+            "Указанием отрезка на карте",
+            "От \"базовой\" точки",
+            "Выбором графики"});
+            this.cmbRoadLayers.Location = new System.Drawing.Point(3, 32);
+            this.cmbRoadLayers.Name = "cmbRoadLayers";
+            this.cmbRoadLayers.Size = new System.Drawing.Size(364, 21);
+            this.cmbRoadLayers.TabIndex = 41;
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(373, 8);
+            this.label5.Name = "label5";
+            this.label5.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.label5.Size = new System.Drawing.Size(376, 21);
+            this.label5.TabIndex = 42;
+            this.label5.Text = "Слой гидрография";
+            // 
+            // label6
+            // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(3, 8);
+            this.label6.Name = "label6";
+            this.label6.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.label6.Size = new System.Drawing.Size(111, 21);
+            this.label6.TabIndex = 39;
+            this.label6.Text = "Слой дорожной сети";
             // 
             // label7
             // 
@@ -677,12 +679,13 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(3, 223);
+            this.label7.Location = new System.Drawing.Point(6, 215);
             this.label7.Name = "label7";
             this.label7.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.label7.Size = new System.Drawing.Size(128, 21);
             this.label7.TabIndex = 19;
             this.label7.Text = "Слой точек наблюдения";
+            this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
             // cmbRasterLayers
             // 
@@ -690,7 +693,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbRasterLayers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbRasterLayers.Location = new System.Drawing.Point(3, 58);
+            this.cmbRasterLayers.Location = new System.Drawing.Point(7, 58);
             this.cmbRasterLayers.Name = "cmbRasterLayers";
             this.cmbRasterLayers.Size = new System.Drawing.Size(752, 21);
             this.cmbRasterLayers.TabIndex = 9;
@@ -1105,7 +1108,6 @@
             this.azimuth2.Size = new System.Drawing.Size(60, 20);
             this.azimuth2.TabIndex = 18;
             this.azimuth2.Text = "360";
-            this.azimuth2.TextChanged += new System.EventHandler(this.azimuth2_TextChanged);
             this.azimuth2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ChechDouble_KeyPress);
             this.azimuth2.Leave += new System.EventHandler(this.UpdateFunProperties);
             // 
@@ -1726,25 +1728,25 @@
             this.profilesTreeView.ImageList = this.imageList1;
             this.profilesTreeView.Location = new System.Drawing.Point(3, 65);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode1.Checked = true;
-            treeNode1.ImageKey = "vector-path-line.png";
-            treeNode1.Name = "sectionsNode";
-            treeNode1.SelectedImageIndex = 205;
-            treeNode1.Text = "Отрезки";
-            treeNode2.Checked = true;
-            treeNode2.ImageKey = "Editing-Line-icon3.png";
-            treeNode2.Name = "fanNode";
-            treeNode2.SelectedImageIndex = 208;
-            treeNode2.Text = "Веер";
-            treeNode3.Checked = true;
-            treeNode3.ImageKey = "vector-polygon.png";
-            treeNode3.Name = "primitivesNode";
-            treeNode3.SelectedImageIndex = 209;
-            treeNode3.Text = "Графика";
+            treeNode4.Checked = true;
+            treeNode4.ImageKey = "vector-path-line.png";
+            treeNode4.Name = "sectionsNode";
+            treeNode4.SelectedImageIndex = 205;
+            treeNode4.Text = "Отрезки";
+            treeNode5.Checked = true;
+            treeNode5.ImageKey = "Editing-Line-icon3.png";
+            treeNode5.Name = "fanNode";
+            treeNode5.SelectedImageIndex = 208;
+            treeNode5.Text = "Веер";
+            treeNode6.Checked = true;
+            treeNode6.ImageKey = "vector-polygon.png";
+            treeNode6.Name = "primitivesNode";
+            treeNode6.SelectedImageIndex = 209;
+            treeNode6.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
+            treeNode4,
+            treeNode5,
+            treeNode6});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(755, 398);
             this.profilesTreeView.TabIndex = 35;
@@ -1892,10 +1894,10 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             this.profileSettingsTab.ResumeLayout(false);
             this.sectionTab.ResumeLayout(false);
             this.sectionTab.PerformLayout();
@@ -2061,10 +2063,7 @@
         private System.Windows.Forms.ComboBox cmbPolygonLayer;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.ComboBox cmbHydrographyLayer;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox cmbRoadLayers;
         private System.Windows.Forms.ListView lvProfileAttributes;
         private System.Windows.Forms.ToolStripButton toolBtnShowOnMap;
         private System.Windows.Forms.ToolStrip profilesToolStrip;
@@ -2081,5 +2080,8 @@
         private System.Windows.Forms.ColumnHeader Attribute;
         private System.Windows.Forms.ColumnHeader Value;
         private System.Windows.Forms.Button btnRefreshLayers;
+        private System.Windows.Forms.ComboBox cmbHydrographyLayer;
+        private System.Windows.Forms.ComboBox cmbRoadLayers;
+        private System.Windows.Forms.Label label5;
     }
 }

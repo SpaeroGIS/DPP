@@ -1,18 +1,15 @@
-﻿using ESRI.ArcGIS.Carto;
-using ESRI.ArcGIS.Desktop.AddIns;
+﻿using ESRI.ArcGIS.Desktop.AddIns;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Exceptions;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
+using MilSpace.DataAccess.Facade;
 using MilSpace.Profile.DTO;
 using MilSpace.Tools;
 using MilSpace.Tools.GraphicsLayer;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MilSpace.Profile
@@ -64,7 +61,7 @@ namespace MilSpace.Profile
         internal MilSpaceProfileCalsController() { }
 
         internal void SetView(IMilSpaceProfileView view)
-        {           
+        {
             View = view;
             SetPeofileId();
             SetProfileName();
@@ -224,7 +221,7 @@ namespace MilSpace.Profile
                 var newProfileId = GenerateProfileId();
                 var newProfileName = GenerateProfileName(newProfileId);
 
-                
+
                 var session = manager.GenerateProfile(View.DemLayerName, profileSetting.ProfileLines, View.SelectedProfileSettingsType, newProfileId, newProfileName);
 
                 SetPeofileId();
@@ -264,7 +261,8 @@ namespace MilSpace.Profile
                 if (lineId < 0)
                 {
                     GraphicsLayerManager.RemoveLinesFromWorkingGraphics(profile.ConvertLinesToEsriPolypile(ArcMap.Document.FocusMap.SpatialReference), profile.SessionId);
-                }else if (profile.ProfileLines.Any(l => l.Id == lineId))
+                }
+                else if (profile.ProfileLines.Any(l => l.Id == lineId))
                 {
                     GraphicsLayerManager.HideLineFromWorkingGraphics(profileId, lineId);
                 }
@@ -274,7 +272,7 @@ namespace MilSpace.Profile
         internal void AddProfileToList(ProfileSession profile)
         {
             bool isAddToGraphics = false;
-            
+
             switch (profile.DefinitionType)
             {
                 case ProfileSettingsTypeEnum.Points:
@@ -310,19 +308,19 @@ namespace MilSpace.Profile
             var profileName = View.GetProfileNameFromNode();
             switch (profileType)
             {
-                
+
                 case ProfileSettingsTypeEnum.Points:
                     return View.GetSectionProfile(profileName);
                 case ProfileSettingsTypeEnum.Fun:
                     return View.GetFanProfile(profileName);
-                
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
         internal void ShowProfileOnMap(int profileId, int lineId)
-        {          
+        {
             GraphicsLayerManager.FlashLineOnWorkingGraphics(profileId, lineId);
         }
 
@@ -338,7 +336,7 @@ namespace MilSpace.Profile
                 env.Union(line.Envelope);
             }
 
-            var envelopeCenter = GetEnvelopeCenterPoint(env);           
+            var envelopeCenter = GetEnvelopeCenterPoint(env);
             env.CenterAt(envelopeCenter);
             View.ActiveView.Extent = env;
             View.ActiveView.FocusMap.MapScale = mapScale;
@@ -346,25 +344,29 @@ namespace MilSpace.Profile
             //GraphicsLayerManager.UpdateCalculatingGraphic(profileLines, profileId, (int)profile.DefinitionType);
         }
 
-        internal void ShowLineOnMap()
-        {
-
-        }
 
         internal void HighlightProfileOnMap(int profileId, int lineId)
         {
             GraphicsLayerManager.FlashLineOnWorkingGraphics(profileId, lineId);
         }
 
+
+        internal void InitiateUserProfiles()
+        {
+            MilSpaceProfileFacade.GetUserProfileSessions().ToList().ForEach(p =>
+               {
+                   p.ConvertLinesToEsriPolypile(View.ActiveView.FocusMap.SpatialReference);
+                   AddProfileToList(p);
+               }
+            );
+        }
+
         private IPoint GetEnvelopeCenterPoint(IEnvelope envelope)
         {
             var x = (envelope.XMin + envelope.XMax) / 2;
             var y = (envelope.YMin + envelope.YMax) / 2;
-            return new PointClass{X = x, Y = y};
+            return new PointClass { X = x, Y = y };
         }
-
-
-
 
 
         internal void CallGraphsHandle(ProfileSession profileSession, ProfileSettingsTypeEnum profileType)
@@ -407,7 +409,7 @@ namespace MilSpace.Profile
 
         private void SetProfileName()
         {
-            View.ProfileName = $"{NewProfilePrefix} {profileId}"; 
+            View.ProfileName = $"{NewProfilePrefix} {profileId}";
         }
 
         private string GenerateProfileName(int id)

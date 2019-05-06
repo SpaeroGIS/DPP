@@ -115,6 +115,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MilSpaceStorage.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Exceptions\MilSpaceProfileNotFoundException .cs" />
     <Compile Include="Exceptions\MilSpaceDataException.cs" />
     <Compile Include="DataTransfer\ConvertCentre.cs" />
     <Compile Include="Facade\DataAccess.cs" />
