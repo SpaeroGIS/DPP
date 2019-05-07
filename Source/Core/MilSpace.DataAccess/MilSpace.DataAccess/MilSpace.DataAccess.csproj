@@ -120,6 +120,7 @@
     <Compile Include="Facade\DataAccess.cs" />
     <Compile Include="Facade\GdbAccess.cs" />
     <Compile Include="Facade\MilSpaceProfileFacade.cs" />
+    <Compile Include="GroupedLines.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Hooks.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -271,6 +271,5 @@ namespace MilSpace.Core.Tools
 
             return result;
         }
-
     }
 }

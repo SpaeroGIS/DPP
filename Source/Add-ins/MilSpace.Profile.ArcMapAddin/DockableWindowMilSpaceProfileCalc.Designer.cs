@@ -107,7 +107,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
             this.label24 = new System.Windows.Forms.Label();
-            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.txtObserverHeight = new System.Windows.Forms.TextBox();
             this.panel7 = new System.Windows.Forms.Panel();
             this.basePointToolbar = new System.Windows.Forms.ToolBar();
             this.toolBarButton15 = new System.Windows.Forms.ToolBarButton();
@@ -1215,7 +1215,7 @@
             // panel10
             // 
             this.panel10.Controls.Add(this.label24);
-            this.panel10.Controls.Add(this.textBox13);
+            this.panel10.Controls.Add(this.txtObserverHeight);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel10.Location = new System.Drawing.Point(3, 54);
             this.panel10.Name = "panel10";
@@ -1235,16 +1235,16 @@
             this.label24.TabIndex = 22;
             this.label24.Text = "высота базовой точки над поверхностью (м)";
             // 
-            // textBox13
+            // txtObserverHeight
             // 
-            this.textBox13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox13.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox13.Location = new System.Drawing.Point(8, 2);
-            this.textBox13.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
-            this.textBox13.Name = "textBox13";
-            this.textBox13.Size = new System.Drawing.Size(49, 20);
-            this.textBox13.TabIndex = 6;
-            this.textBox13.Text = "25";
+            this.txtObserverHeight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtObserverHeight.Dock = System.Windows.Forms.DockStyle.Left;
+            this.txtObserverHeight.Location = new System.Drawing.Point(8, 2);
+            this.txtObserverHeight.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
+            this.txtObserverHeight.Name = "txtObserverHeight";
+            this.txtObserverHeight.Size = new System.Drawing.Size(49, 20);
+            this.txtObserverHeight.TabIndex = 6;
+            this.txtObserverHeight.Text = "25";
             // 
             // panel7
             // 
@@ -2022,7 +2022,7 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.TextBox textBox13;
+        private System.Windows.Forms.TextBox txtObserverHeight;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.ToolBar basePointToolbar;
         private System.Windows.Forms.ToolBarButton toolBarButton15;

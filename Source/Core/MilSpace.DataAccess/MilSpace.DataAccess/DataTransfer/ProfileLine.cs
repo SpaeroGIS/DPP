@@ -11,6 +11,7 @@ namespace MilSpace.DataAccess.DataTransfer
         public int Id;
         public double Angel;
         public double Length;
+        public bool Visible;
 
         [XmlIgnore]
         public IPolyline Line;
