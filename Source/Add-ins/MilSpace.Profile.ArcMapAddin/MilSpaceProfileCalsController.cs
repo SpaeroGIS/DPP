@@ -22,7 +22,6 @@ namespace MilSpace.Profile
     {
 
         private int profileId;
-        private string profileName;
         GraphicsLayerManager graphicsLayerManager;
 
         public delegate void ProfileSettingsChangedDelegate(ProfileSettingsEventArgs e);
@@ -35,6 +34,7 @@ namespace MilSpace.Profile
         List<ProfileSession> _workingProfiles = new List<ProfileSession>();
         private const string NewProfilePrefix = "Новый профиль";
 
+        private MilSpaceProfileGraphsController graphsController;
 
         private Dictionary<ProfileSettingsPointButtonEnum, IPoint> pointsToShow = new Dictionary<ProfileSettingsPointButtonEnum, IPoint>()
 
@@ -361,34 +361,49 @@ namespace MilSpace.Profile
             );
         }
 
-        private IPoint GetEnvelopeCenterPoint(IEnvelope envelope)
+        private ProfileSession GetProfileSessionById(int profileId)
         {
-            var x = (envelope.XMin + envelope.XMax) / 2;
-            var y = (envelope.YMin + envelope.YMax) / 2;
-            return new PointClass { X = x, Y = y };
+            var profile = MilSpaceProfileFacade.GetProfileSessionById(profileId);
+            profile.ConvertLinesToEsriPolypile(View.ActiveView.FocusMap.SpatialReference);
+            return profile;
         }
 
 
-        internal void CallGraphsHandle(ProfileSession profileSession, ProfileSettingsTypeEnum profileType)
+        internal void CallGraphsHandle(int profileSessionId)
         {
-            var winImpl = AddIn.FromID<DockableWindowMilSpaceProfileGraph.AddinImpl>(ThisAddIn.IDs.DockableWindowMilSpaceProfileGraph);
-
-            winImpl.MilSpaceProfileCalsController.ShowWindow();
-            winImpl.MilSpaceProfileCalsController.AddSession(profileSession);
+            var profileSession = GetProfileSessionById(profileSessionId);
+            if (profileSession != null)
+            {
+                MilSpaceProfileGraphsController.ShowWindow();
+                MilSpaceProfileGraphsController.AddSession(profileSession);
+            }
         }
 
-        private GraphicsLayerManager GraphicsLayerManager
+        internal void CallGraphsHandle(ProfileSession profileSession)
+        {
+            MilSpaceProfileGraphsController.ShowWindow();
+            MilSpaceProfileGraphsController.AddSession(profileSession);
+        }
+
+        internal void ShowGraphsWindow()
+        {
+            MilSpaceProfileGraphsController.ShowWindow();
+        }
+
+        internal MilSpaceProfileGraphsController MilSpaceProfileGraphsController
         {
             get
             {
-                if (graphicsLayerManager == null)
+                if (graphsController ==  null)
                 {
-                    graphicsLayerManager = new GraphicsLayerManager(View.ActiveView);
+                    var winImpl = AddIn.FromID<DockableWindowMilSpaceProfileGraph.AddinImpl>(ThisAddIn.IDs.DockableWindowMilSpaceProfileGraph);
+                    graphsController = winImpl.MilSpaceProfileGraphsController;
                 }
 
-                return graphicsLayerManager;
+                return graphsController;
             }
         }
+
 
 
         private void InvokeOnProfileSettingsChanged()
@@ -423,6 +438,26 @@ namespace MilSpace.Profile
         private int GenerateProfileId()
         {
             return (int)(DateTime.Now.ToOADate() * 10000);
+        }
+
+        private IPoint GetEnvelopeCenterPoint(IEnvelope envelope)
+        {
+            var x = (envelope.XMin + envelope.XMax) / 2;
+            var y = (envelope.YMin + envelope.YMax) / 2;
+            return new PointClass { X = x, Y = y };
+        }
+
+        private GraphicsLayerManager GraphicsLayerManager
+        {
+            get
+            {
+                if (graphicsLayerManager == null)
+                {
+                    graphicsLayerManager = new GraphicsLayerManager(View.ActiveView);
+                }
+
+                return graphicsLayerManager;
+            }
         }
     }
 }

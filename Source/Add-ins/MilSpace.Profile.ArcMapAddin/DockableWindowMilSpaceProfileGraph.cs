@@ -42,15 +42,46 @@ namespace MilSpace.Profile
             SubscribeForEvents();
         }
 
+        internal bool CheckTabExistance(string sessionName)
+        {
+            TabPage tabPage = null;
+            return CheckTabExistance(sessionName, out tabPage);
+        }
+
+        private bool CheckTabExistance(string sessionName, out TabPage foundTab )
+        {
+         
+            foundTab = null;
+            foreach (TabPage tab in profilesTabControl.TabPages)
+            {
+                if (tab.Tag.ToString() == sessionName)
+                {
+                    foundTab = tab;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         internal void AddNewTab(SurfaceProfileChart surfaceProfileChart, string sessionName)
         {
+            TabPage tabPage = null;
+            if (CheckTabExistance(sessionName, out tabPage))
+            {
+                profilesTabControl.SelectedTab = tabPage;
+                return;
+            }
+
             string title = $"Graph {profilesTabControl.TabPages.Count + 1}";
-            TabPage tabPage = new TabPage(title);
+            tabPage = new TabPage(title);
             tabPage.Name = $"Graph {profilesTabControl.TabPages.Count + 1}";
+            tabPage.Tag = sessionName;
+
             profilesTabControl.TabPages.Add(tabPage);
 
             var curTab = profilesTabControl.TabPages[profilesTabControl.TabCount - 1];
-           
+
             surfaceProfileChart.Width = curTab.Width;
             surfaceProfileChart.Height = curTab.Height;
             surfaceProfileChart.Name = "profileChart";
@@ -109,7 +140,7 @@ namespace MilSpace.Profile
             internal DockableWindowMilSpaceProfileGraph DockableWindowUI => m_windowUI;
 
 
-            internal MilSpaceProfileGraphsController MilSpaceProfileCalsController => controller;
+            internal MilSpaceProfileGraphsController MilSpaceProfileGraphsController => controller;
 
         }
         #endregion
@@ -122,7 +153,7 @@ namespace MilSpace.Profile
 
         private void ProfilesTabControl_Resize(object sender, EventArgs e)
         {
-           foreach (TabPage page in profilesTabControl.TabPages)
+            foreach (TabPage page in profilesTabControl.TabPages)
             {
                 page.Controls["profileChart"].Width = profilesTabControl.Width - 10;
                 page.Controls["profileChart"].Height = profilesTabControl.Height - 30;
