@@ -125,7 +125,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAC6
-        0QAAAk1TRnQBSQFMAgEB1QEAASgBAwEoAQMBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        0QAAAk1TRnQBSQFMAgEB1QEAAUABAwFAAQMBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAWABAwIAAQEBAAEIBgAB2BgAAYACAAGAAwACgAEAAYADAAGAAQABgAEAAoACAAPAAQABwAHc
         AcABAAHwAcoBpgEAATMFAAEzAQABMwEAATMBAAIzAgADFgEAAxwBAAMiAQADKQEAA1UBAANNAQADQgEA
         AzkBAAGAAXwB/wEAAlAB/wEAAZMBAAHWAQAB/wHsAcwBAAHGAdYB7wEAAdYC5wEAAZABqQGtAgAB/wEz
@@ -1022,6 +1022,9 @@
         Av//AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AJkACw==
 </value>
   </data>
+  <metadata name="profilesToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>127, 3</value>
+  </metadata>
   <data name="richTextBox4.Text" xml:space="preserve">
     <value>Должен быть обеспечен выбор из слоя или из существующей графике. 
 Выбор осуществляется указанием мышкой на карте.
@@ -1035,9 +1038,6 @@
 Вид хранения должен позволять восстанавливать геометрию профиля и его происхождение.
 Восстановление происхождения должно позволять проводить редактирование профиля на соответствующих страницах задания параметров.</value>
   </data>
-  <metadata name="profilesToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>127, 3</value>
-  </metadata>
   <metadata name="profilesToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>127, 3</value>
   </metadata>
@@ -1128,6 +1128,29 @@
         9G+zSur5+VnDqaqqygRcqdH39dPTE31+frqfVFYIADCcy+WiAOUsd9pplrbDvV6XqhZ4KQCDzX/odQwc
         C8BAkwWudNVJAYoIwXDD0JIZbBgYM8MNA2NmsGHQX2aoNSBpzuVyxT8yhhi/R64oxwAAAABJRU5ErkJg
         gg==
+</value>
+  </data>
+  <data name="openGraphWindow.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAP+SURBVFhHvZXXSixBEIb31WTNOeecc87pFXwPRUH0woD2
+        lTlcqghmREwgGDHV6b9marZ33cg5x4Kfne2d2e+v0D2uzs7Ose7ubhVMHR0dAdXe3s5qaWnxUnNzs2po
+        aPBSfX29qqmpMTXmsiEUTF1dXSxtlqXBLA1mtbW1UWtrK0vDScOpqamJ1djYSBpOGk51dXVUW1tLGkzV
+        1dWQCmkgGBxggQNswk2wP3hVVRVVVFQENvAfs2Z4ZWVlYAORZA1wJFnbYCovL6eSkhJvA/8ra4B94WVl
+        ZZYBDWADv5U1wKWlpYBTcXGxZSCSrLE2OjpKIyMjNDw8zBoaGqLBwUE2FSprA04FBQWWgUiyPjg4oEBx
+        fX0dTtZUVFREhYWFHgMm2F/WZrnv7u4Ydnl5SZOTkzQ+Pk5HR0e8hogATvn5+R4DwbI2ew0Dx8fH/N3s
+        9crKChsIE0x5eXmUk5OjXBqMozRo1uagwQBKjcGVcuO+vb09NhAuPDc31zKgYSpU1uaE397eMuj19ZU2
+        NjZodXWVHh8fee37+ztcMGVnZ1NGRoZlIFTW5taam5tjE2IEUFzf3NzQ2tpa2PCsrCyPgUBZAxxsX0tE
+        kjXAUGZmpmVAg5W/rLE2MDBA/f39rL6+Purt7aWenh7nyJYwh9jfHMGUwG0wpaenU0pKinJpoPKX9f7+
+        vv33fx9XV1cMNuFpaWkeAyZcyi09vr+/d3ouvRZJmGvYIaYQX19fXuDU1FQWG9Bg5a/XYgAlD7S1JAL1
+        GhlLmHANpuTkZEpISFAuDVQmGJ9oiRjAGY+BEzgkg4gdAIk5mBA4PjGMEvjN7jvDk5KSPAYEjj8+PDy0
+        H/EESgsIst7d3bVXf8bZ2ZnTa1z7xunpKYOhxMREy4AGK3NrPT09cVbLy8s0MzNDb29v/DBMIiPpPT6n
+        pqZoYmKCzs/PeQ0hvUZ8fn7yf+C+9/d3XrPBrPj4eOXSUGW+PGBgc3PT6TVeNghUCL0G+OTkhH+TcqPv
+        8i6QXiPm5+edcuPFhbDBrJiYGMuADBkEAzs7O86gwT0CVUIfMdkXFxd8rwwahm9ra4vvkyFDLC0tOeWe
+        np7mNYDj4uJYbEDDlQwRspYWrK+v0+LiIn18fPCDqBAyla318PDAx/Ls7KwzsHhOhky+wwQqgXbgO8Cx
+        sbEsNqChytxeOM9fXl68hEMJWaLkCwsL9Pz8/OMeaHt72yk5rnGfKbTWBrOio6MtA1LuUGe4nGS+h4q5
+        tYwJd3rtk7XAKSoqSrk0UEUC9wWbcJ8Jd3rtC4bcbrfHwG9mLXDHgAar38zaFBvQQBUM/K+z9mdgDCY0
+        XGmoIw1WGuglDVca6CUNVhr0QxrKAiSQ3G732B+7SJeGG3boLwAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="toolStripButton7.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

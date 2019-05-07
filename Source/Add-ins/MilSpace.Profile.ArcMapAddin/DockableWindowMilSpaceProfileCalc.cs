@@ -359,6 +359,7 @@ namespace MilSpace.Profile
 
         private void SetZoomToState(object sender, TreeViewEventArgs treeViewEventArgs)
         {
+
             if (profilesTreeView.SelectedNode.Parent != null)
             {
                 toolBtnShowOnMap.Enabled = true;
@@ -840,7 +841,7 @@ namespace MilSpace.Profile
             if (session != null)
             {
                 controller.AddProfileToList(session);
-                controller.CallGraphsHandle(session, SelectedProfileSettingsType);
+                controller.CallGraphsHandle(session);
             }
             else
             {
@@ -1049,19 +1050,17 @@ namespace MilSpace.Profile
             ToolTip1.SetToolTip(this.btnRefreshLayers, "Refresh interesing layers");
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
 
+        private void addProfileToGraph_Click(object sender, EventArgs e)
+        {
+            var node = profilesTreeView.SelectedNode;
+            var ids = GetProfileAndLineIds(node);
+            controller.CallGraphsHandle(ids.Item1);
         }
 
-        private void label7_Click(object sender, EventArgs e)
+        private void openGraphWindow_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void cmbPointLayers_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
+            controller.ShowGraphsWindow();
         }
     }
 }

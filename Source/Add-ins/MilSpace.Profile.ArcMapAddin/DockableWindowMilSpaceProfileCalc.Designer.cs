@@ -36,7 +36,6 @@
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.cmbHydrographyLayer = new System.Windows.Forms.ComboBox();
             this.btnRefreshLayers = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.cmbBuildings = new System.Windows.Forms.ComboBox();
@@ -49,9 +48,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.cmbPointLayers = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.cmbRoadLayers = new System.Windows.Forms.ComboBox();
+            this.cmbHydrographyLayer = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.cmbRoadLayers = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.cmbRasterLayers = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -164,6 +164,7 @@
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
+            this.openGraphWindow = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
@@ -454,20 +455,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Параметры профиля";
             // 
-            // cmbHydrographyLayer
-            // 
-            this.cmbHydrographyLayer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbHydrographyLayer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbHydrographyLayer.FormattingEnabled = true;
-            this.cmbHydrographyLayer.Items.AddRange(new object[] {
-            "Указанием отрезка на карте",
-            "От \"базовой\" точки",
-            "Выбором графики"});
-            this.cmbHydrographyLayer.Location = new System.Drawing.Point(373, 32);
-            this.cmbHydrographyLayer.Name = "cmbHydrographyLayer";
-            this.cmbHydrographyLayer.Size = new System.Drawing.Size(376, 21);
-            this.cmbHydrographyLayer.TabIndex = 38;
-            // 
             // btnRefreshLayers
             // 
             this.btnRefreshLayers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -613,7 +600,6 @@
             this.cmbPointLayers.Size = new System.Drawing.Size(752, 21);
             this.cmbPointLayers.TabIndex = 20;
             this.cmbPointLayers.Tag = "";
-            this.cmbPointLayers.SelectedIndexChanged += new System.EventHandler(this.cmbPointLayers_SelectedIndexChanged);
             // 
             // tableLayoutPanel2
             // 
@@ -636,6 +622,43 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(752, 54);
             this.tableLayoutPanel2.TabIndex = 41;
             // 
+            // cmbHydrographyLayer
+            // 
+            this.cmbHydrographyLayer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbHydrographyLayer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbHydrographyLayer.FormattingEnabled = true;
+            this.cmbHydrographyLayer.Items.AddRange(new object[] {
+            "Указанием отрезка на карте",
+            "От \"базовой\" точки",
+            "Выбором графики"});
+            this.cmbHydrographyLayer.Location = new System.Drawing.Point(374, 31);
+            this.cmbHydrographyLayer.Name = "cmbHydrographyLayer";
+            this.cmbHydrographyLayer.Size = new System.Drawing.Size(375, 21);
+            this.cmbHydrographyLayer.TabIndex = 38;
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(374, 7);
+            this.label5.Name = "label5";
+            this.label5.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.label5.Size = new System.Drawing.Size(375, 21);
+            this.label5.TabIndex = 42;
+            this.label5.Text = "Слой гидрография";
+            // 
+            // label6
+            // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(3, 7);
+            this.label6.Name = "label6";
+            this.label6.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.label6.Size = new System.Drawing.Size(111, 21);
+            this.label6.TabIndex = 39;
+            this.label6.Text = "Слой дорожной сети";
+            // 
             // cmbRoadLayers
             // 
             this.cmbRoadLayers.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -645,33 +668,10 @@
             "Указанием отрезка на карте",
             "От \"базовой\" точки",
             "Выбором графики"});
-            this.cmbRoadLayers.Location = new System.Drawing.Point(3, 32);
+            this.cmbRoadLayers.Location = new System.Drawing.Point(4, 31);
             this.cmbRoadLayers.Name = "cmbRoadLayers";
             this.cmbRoadLayers.Size = new System.Drawing.Size(364, 21);
             this.cmbRoadLayers.TabIndex = 41;
-            // 
-            // label5
-            // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(373, 8);
-            this.label5.Name = "label5";
-            this.label5.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.label5.Size = new System.Drawing.Size(376, 21);
-            this.label5.TabIndex = 42;
-            this.label5.Text = "Слой гидрография";
-            // 
-            // label6
-            // 
-            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 8);
-            this.label6.Name = "label6";
-            this.label6.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.label6.Size = new System.Drawing.Size(111, 21);
-            this.label6.TabIndex = 39;
-            this.label6.Text = "Слой дорожной сети";
             // 
             // label7
             // 
@@ -685,7 +685,6 @@
             this.label7.Size = new System.Drawing.Size(128, 21);
             this.label7.TabIndex = 19;
             this.label7.Text = "Слой точек наблюдения";
-            this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
             // cmbRasterLayers
             // 
@@ -1772,6 +1771,7 @@
             this.toolStripButton4,
             this.toolStripSeparator3,
             this.toolStripButton6,
+            this.openGraphWindow,
             this.toolStripSeparator4,
             this.toolStripButton7,
             this.toolStripButton1,
@@ -1831,8 +1831,19 @@
             this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton6.Name = "toolStripButton6";
             this.toolStripButton6.Size = new System.Drawing.Size(23, 27);
-            this.toolStripButton6.Text = "toolStripButton6";
+            this.toolStripButton6.Text = "addProfileToGraph";
             this.toolStripButton6.ToolTipText = "Перейти к графику";
+            this.toolStripButton6.Click += new System.EventHandler(this.addProfileToGraph_Click);
+            // 
+            // openGraphWindow
+            // 
+            this.openGraphWindow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.openGraphWindow.Image = ((System.Drawing.Image)(resources.GetObject("openGraphWindow.Image")));
+            this.openGraphWindow.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.openGraphWindow.Name = "openGraphWindow";
+            this.openGraphWindow.Size = new System.Drawing.Size(23, 27);
+            this.openGraphWindow.ToolTipText = "Open Grpah window";
+            this.openGraphWindow.Click += new System.EventHandler(this.openGraphWindow_Click);
             // 
             // toolStripSeparator4
             // 
@@ -2083,5 +2094,6 @@
         private System.Windows.Forms.ComboBox cmbHydrographyLayer;
         private System.Windows.Forms.ComboBox cmbRoadLayers;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ToolStripButton openGraphWindow;
     }
 }
