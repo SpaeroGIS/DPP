@@ -52,6 +52,10 @@ namespace MilSpace.Profile
 
         string ProfileName { get; set; }
 
+        TreeViewSelectedProfileIds SelectedProfileSessionIds { get; }
+
+        bool RemoveTreeViewItem();
+
         /// <summary>
         /// Adds the <paramref name="profile"/> into the tree view 
         /// </summary>

@@ -1025,22 +1025,6 @@
   <metadata name="profilesToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>127, 3</value>
   </metadata>
-  <data name="richTextBox4.Text" xml:space="preserve">
-    <value>Должен быть обеспечен выбор из слоя или из существующей графике. 
-Выбор осуществляется указанием мышкой на карте.
-Должен быть обеспечен выбор нескольких примитивов в одном слое или графике.
-При выборе нескольких профиль строится непрерывно от начала первого до его конца, до начала второго, до его конца и т.д.
-Должна быть возможность позиционирования и редактирования уже выбранного набора</value>
-  </data>
-  <data name="richTextBox5.Text" xml:space="preserve">
-    <value>Профили хранятся в БД
-Сохранение профилей должно выполнятся на странице "Управление"
-Вид хранения должен позволять восстанавливать геометрию профиля и его происхождение.
-Восстановление происхождения должно позволять проводить редактирование профиля на соответствующих страницах задания параметров.</value>
-  </data>
-  <metadata name="profilesToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>127, 3</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="toolBtnShowOnMap.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1108,7 +1092,7 @@
         gg==
 </value>
   </data>
-  <data name="toolStripButton6.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="addProfileToGraph.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOSSURBVFhHvZXHTitBEEXn15AJJuecc845igyGhb8DiQV/
@@ -1153,7 +1137,7 @@
         XGmoIw1WGuglDVca6CUNVhr0QxrKAiSQ3G732B+7SJeGG3boLwAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="toolStripButton7.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="removeProfile.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAN1SURBVFhHvZXHTjNBEIT9asjknHPOOSNyhrMRzwA3BDeE
@@ -1211,6 +1195,19 @@
         4Rqs4c6E+6oWZzKZKMBfVm3hvQAEhr+sWlsCEBD6gdOuOilAm0MQHAjaM4GBgDETHAgYM4GBQD9MUDFD
         fM5kMu1/4H9vcQ1jA+MAAAAASUVORK5CYII=
 </value>
+  </data>
+  <data name="richTextBox4.Text" xml:space="preserve">
+    <value>Должен быть обеспечен выбор из слоя или из существующей графике. 
+Выбор осуществляется указанием мышкой на карте.
+Должен быть обеспечен выбор нескольких примитивов в одном слое или графике.
+При выборе нескольких профиль строится непрерывно от начала первого до его конца, до начала второго, до его конца и т.д.
+Должна быть возможность позиционирования и редактирования уже выбранного набора</value>
+  </data>
+  <data name="richTextBox5.Text" xml:space="preserve">
+    <value>Профили хранятся в БД
+Сохранение профилей должно выполнятся на странице "Управление"
+Вид хранения должен позволять восстанавливать геометрию профиля и его происхождение.
+Восстановление происхождения должно позволять проводить редактирование профиля на соответствующих страницах задания параметров.</value>
   </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>25</value>
