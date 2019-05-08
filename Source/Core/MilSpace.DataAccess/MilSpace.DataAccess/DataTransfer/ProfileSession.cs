@@ -13,13 +13,14 @@ namespace MilSpace.DataAccess.DataTransfer
     {
         public ProfileLine[] ProfileLines;
         public ProfileSurface[] ProfileSurfaces;
+        public double ObserverHeight;
         /// <summary>
         /// Gets or sets the method how the profile limes were defined
         /// </summary>
         public ProfileSettingsTypeEnum DefinitionType;
         public int SessionId;
         public string SessionName;
-
+        
         [XmlIgnore]
         public string Serialized
         {

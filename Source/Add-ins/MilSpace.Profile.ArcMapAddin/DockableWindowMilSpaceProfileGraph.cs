@@ -1,3 +1,4 @@
+using ESRI.ArcGIS.Carto;
 using MilSpace.Profile.SurfaceProfileChartControl;
 using System;
 using System.Drawing;
@@ -104,6 +105,8 @@ namespace MilSpace.Profile
         {
             this.controller = controller;
         }
+
+        public IActiveView ActiveView => ArcMap.Document.ActiveView;
 
         private void SubscribeForEvents()
         {

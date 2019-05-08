@@ -677,6 +677,23 @@ namespace MilSpace.Profile
             }
         }
 
+        double IMilSpaceProfileView.ObserveHeight
+        {
+            get
+            {
+                if (SelectedProfileSettingsType == ProfileSettingsTypeEnum.Fun)
+                {
+                    return Convert.ToDouble(txtObserverHeight.Text);
+                }
+                else if (SelectedProfileSettingsType == ProfileSettingsTypeEnum.Points)
+                {
+                    return Convert.ToDouble(txtFirstHeight.Text);
+                }
+
+                throw new NotImplementedException();
+            }
+        }
+
         private void panel1_Enter(object sender, EventArgs e)
         {
             ProfileLayers.GetAllLayers();
@@ -688,17 +705,6 @@ namespace MilSpace.Profile
             var session = controller.GenerateProfile();
             if (session != null)
             {
-                double observerHeight = 0;
-
-                if (session.DefinitionType == ProfileSettingsTypeEnum.Fun)
-                {
-                    observerHeight = Convert.ToDouble(txtObserverHeight.Text);
-                }
-                else if (session.DefinitionType == ProfileSettingsTypeEnum.Points)
-                {
-                    observerHeight = Convert.ToDouble(txtFirstHeight.Text);
-                }
-
                 controller.AddProfileToList(session);
                 controller.CallGraphsHandle(session, SelectedProfileSettingsType, observerHeight);
             }

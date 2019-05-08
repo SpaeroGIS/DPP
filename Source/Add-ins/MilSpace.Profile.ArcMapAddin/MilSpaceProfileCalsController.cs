@@ -239,6 +239,8 @@ namespace MilSpace.Profile
 
                 var session = manager.GenerateProfile(View.DemLayerName, profileSetting.ProfileLines, View.SelectedProfileSettingsType, newProfileId, newProfileName);
 
+                session.ObserverHeight = View.ObserveHeight;
+
                 SetPeofileId();
                 SetProfileName();
                 return session;
@@ -389,13 +391,6 @@ namespace MilSpace.Profile
                    AddProfileToList(p);
                }
             );
-        }
-
-        internal ProfileSession GetProfileSessionById(int profileId)
-        {
-            var profile = MilSpaceProfileFacade.GetProfileSessionById(profileId);
-            profile.ConvertLinesToEsriPolypile(View.ActiveView.FocusMap.SpatialReference);
-            return profile;
         }
 
         internal void CallGraphsHandle(int profileSessionId)

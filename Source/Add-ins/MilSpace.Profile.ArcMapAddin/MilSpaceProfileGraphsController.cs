@@ -7,7 +7,7 @@ using MilSpace.Core.Tools.Helper;
 using MilSpace.DataAccess;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Profile.SurfaceProfileChartControl;
-
+using MilSpace.Tools.GraphicsLayer;
 
 namespace MilSpace.Profile
 {
@@ -102,7 +102,7 @@ namespace MilSpace.Profile
         
         internal bool IsWindowVisible => Docablewindow.IsVisible();
 
-        internal void AddSession(ProfileSession profileSession, double observerHeight, MilSpaceProfileCalsController calsController)
+        internal void AddSession(ProfileSession profileSession)
         {
             _profileCalcController = calsController;
 
