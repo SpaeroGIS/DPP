@@ -913,6 +913,7 @@ namespace MilSpace.Profile
         {
             var node = profilesTreeView.SelectedNode;
             var ids = GetProfileAndLineIds(node);
+            //TODO set observer height
             controller.CallGraphsHandle(ids.Item1);
         }
 

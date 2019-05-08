@@ -405,7 +405,7 @@ namespace MilSpace.Profile
         internal void CallGraphsHandle(ProfileSession profileSession)
         {
             MilSpaceProfileGraphsController.ShowWindow();
-            MilSpaceProfileGraphsController.AddSession(profileSession);
+            MilSpaceProfileGraphsController.AddSession(profileSession, observerHeight, this);
         }
 
         internal void ShowGraphsWindow()

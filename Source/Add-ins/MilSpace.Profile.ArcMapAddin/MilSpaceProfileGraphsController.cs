@@ -7,8 +7,6 @@ using MilSpace.Core.Tools.Helper;
 using MilSpace.DataAccess;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Profile.SurfaceProfileChartControl;
-using MilSpace.Tools.GraphicsLayer;
-using ESRI.ArcGIS.Desktop.AddIns;
 
 namespace MilSpace.Profile
 {
@@ -31,6 +29,7 @@ namespace MilSpace.Profile
             _surfaceProfileChartController = new SurfaceProfileChartController();
             _surfaceProfileChartController.OnProfileGraphClicked += OnProfileGraphClicked;
             _surfaceProfileChartController.InvisibleZonesChanged += InvisibleZonesChanged;
+            _surfaceProfileChartController.ProfileRemoved += ProfileRemoved;
         }
 
         internal GraphicsLayerManager GraphicsLayerManager
@@ -67,7 +66,8 @@ namespace MilSpace.Profile
         }
 
         private void InvisibleZonesChanged(GroupedLines profileLines, RgbColor rgbVisibleColor,
-                                                RgbColor rgbInvisibleColor, int sessionId, bool update, int profilesCount)
+                                                RgbColor rgbInvisibleColor, int sessionId, bool update,
+                                                List<int> linesIds)
         {
             if (update)
             {
@@ -81,7 +81,7 @@ namespace MilSpace.Profile
             {
                 if (profileLines.LineId == 1)
                 {
-                    GraphicsLayerManager.RemoveGraphic(sessionId, profilesCount);
+                    GraphicsLayerManager.RemoveGraphic(sessionId, linesIds);
                 }
 
                 GraphicsLayerManager
@@ -90,6 +90,11 @@ namespace MilSpace.Profile
                                                                                       .SpatialReference),
                                            sessionId, profileLines, rgbVisibleColor, rgbInvisibleColor);
             }
+        }
+
+        private void ProfileRemoved(int sessionId, int lineId)
+        {
+            GraphicsLayerManager.RemoveLineFromGraphic(sessionId, lineId);
         }
 
         internal void ShowWindow()

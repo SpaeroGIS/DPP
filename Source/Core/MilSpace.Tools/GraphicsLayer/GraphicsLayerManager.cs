@@ -182,12 +182,17 @@ namespace MilSpace.Tools.GraphicsLayer
             RemoveLinesFromGraphics(profileLines, profileId, MilSpaceGraphicsTypeEnum.Session);
         }
 
-        public void RemoveGraphic(int profileId, int profileLinesCount)
+        public void RemoveGraphic(int profileId, List<int> linesIds)
         {
-            for (int i = 1; i < profileLinesCount + 1; i++)
+            foreach(var id in linesIds)
             {
-                RemoveLineFromSessionGraphicsByLineId(profileId, i, MilSpaceGraphicsTypeEnum.Session);
+                RemoveLineFromSessionGraphicsByLineId(profileId, id, MilSpaceGraphicsTypeEnum.Session);
             }
+        }
+
+        public void RemoveLineFromGraphic(int profileId, int lineId)
+        {
+            RemoveLineFromSessionGraphicsByLineId(profileId, lineId, MilSpaceGraphicsTypeEnum.Session);
         }
 
         public void AddLinesToWorkingGraphics(IEnumerable<IPolyline> profileLines, int profileId, GroupedLines profileColorLines = null,
