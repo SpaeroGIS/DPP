@@ -10,7 +10,7 @@ namespace MilSpace.DataAccess.Facade
         {
             using (var accessor = new SemanticDataAccess())
             {
-                return accessor.SaveSession(session);
+                return accessor.SaveProfileSession(session);
             }
         }
 
@@ -26,13 +26,16 @@ namespace MilSpace.DataAccess.Facade
         {
             using (var accessor = new SemanticDataAccess())
             {
-                return accessor.GetSessionById(sessionId);
+                return accessor.GetProfileSessionById(sessionId);
             }
         }
 
-        public static IEnumerable<ProfileSession> GetUserSessions()
+        public static bool DeleteUserSessions(int sessionId)
         {
-            return null;
+            using (var accessor = new SemanticDataAccess())
+            {
+                return accessor.DeleteUserSession(sessionId);
+            }
         }
     }
 

@@ -31,6 +31,8 @@ namespace MilSpace.Profile
 
         private ProfileSettingsPointButtonEnum activeButtton = ProfileSettingsPointButtonEnum.None;
 
+        private TreeViewSelectedProfileIds treeViewselectedIds; //= new TreeViewSelectedProfileIds();
+
         MilSpaceProfileCalsController controller;
 
         List<ProfileSession> _sectionProfiles = new List<ProfileSession>();
@@ -43,6 +45,7 @@ namespace MilSpace.Profile
             SetController(controller);
             controller.SetView(this);
             LocalizeStrings();
+
         }
 
         public DockableWindowMilSpaceProfileCalc(object hook, MilSpaceProfileCalsController controller)
@@ -85,8 +88,9 @@ namespace MilSpace.Profile
                 txtProfileName.Text = value;
                 var text = txtProfileName.Text;
             }
-
         }
+
+        public TreeViewSelectedProfileIds SelectedProfileSessionIds => treeViewselectedIds;
 
         public bool AddSectionProfileNodes(ProfileSession profile)
         {
@@ -126,170 +130,6 @@ namespace MilSpace.Profile
         public ProfileSession GetFanProfile(string profileName)
         {
             return GetProfileFromList(_fanProfiles, profileName);
-        }
-
-        private ProfileSession GetProfileFromList(IEnumerable<ProfileSession> listOfProfiles, string profileName)
-        {
-            var resultProfile = listOfProfiles.FirstOrDefault(profile => profile.SessionName.Equals(profileName));
-            return resultProfile;
-        }
-
-        private bool AddNodeToTreeView(string parentNodeName, ProfileSession profile, int imageIndex, int selectedImageIndex)
-        {
-            var parentNode = profilesTreeView.Nodes.Find(parentNodeName, false).FirstOrDefault();
-            if (parentNode != null)
-            {
-                var date = DateTime.Now;
-                var newNode = new ProfileTreeNode(profile.SessionName, imageIndex, selectedImageIndex)
-                {
-                    Checked = parentNode.Checked,
-                    Tag = profile.SessionId,
-                    IsProfileNode = true
-                };
-
-                newNode.SetProfileName(profile.SessionName);
-                newNode.SetProfileType(ConvertProfileTypeToString(profile.DefinitionType));
-                if (profile.DefinitionType == ProfileSettingsTypeEnum.Points)
-                {
-                    var firstX = profile.ProfileLines.First().Line.FromPoint.X.ToString("F5");
-                    var firstY = profile.ProfileLines.First().Line.FromPoint.Y.ToString("F5");
-                    var secondX = profile.ProfileLines.First().Line.ToPoint.X.ToString("F5");
-                    var secondY = profile.ProfileLines.First().Line.ToPoint.Y.ToString("F5");
-
-                    newNode.SetBasePoint($"X= {firstX}; Y= {firstY};");
-                    newNode.SetToPoint($"X= {secondX}; Y= {secondY};");
-                    newNode.SetBasePointHeight(SectionHeightFirst.ToString());
-                    newNode.SetToPointHeight(SectionHeightSecond.ToString());
-                }
-
-                if (profile.DefinitionType == ProfileSettingsTypeEnum.Fun)
-                {
-                    var basePointX = profile.ProfileLines.FirstOrDefault().Line.FromPoint.X.ToString("F5");
-                    var basePointY = profile.ProfileLines.FirstOrDefault().Line.FromPoint.Y.ToString("F5");
-                    var lineDistance = profile.ProfileLines.FirstOrDefault().Line.Length.ToString("F5");
-                    var linesCount = profile.ProfileLines.ToList().Count.ToString();
-                    var height = FanHeight.ToString();
-                    var az1 = FunAzimuth1.ToString("F0");
-                    var az2 = FunAzimuth2.ToString("F0");
-
-
-                    newNode.SetBasePoint($"X= {basePointX}; Y= {basePointY};");
-                    newNode.SetLineDistance(lineDistance);
-                    newNode.SetLineCount(linesCount);
-                    newNode.SetAzimuth1(az1);
-                    newNode.SetAzimuth2(az2);
-                    newNode.SetBasePointHeight(height);
-
-
-                }
-
-                newNode.SetCreatorName(Environment.UserName);
-
-                newNode.SetDate($"{date.ToLongDateString()} {date.ToLongTimeString()}");
-
-                //newNode.SetLineDistance(string.Empty);
-                //newNode.SetBasePoint(string.Empty);
-                //newNode.SetToPoint(string.Empty);
-                //newNode.SetAzimuth1(string.Empty);
-                //newNode.SetAzimuth2(string.Empty);
-
-                foreach (var line in profile.ProfileLines)
-                {
-                    var azimuth = line.Azimuth.ToString("F0");
-                    //var childNode = new ProfileTreeNode($"X={line.PointFrom.X:F4}; Y={line.PointTo.Y:F4}; Дистанция={line.Length:F4} {MapUnitsText}", 205, 205);
-                    var nodeName = profile.DefinitionType == ProfileSettingsTypeEnum.Points
-                        ? $"{azimuth}{Degree}"
-                        : $"{azimuth}{Degree} ({System.Array.IndexOf(profile.ProfileLines, line) + 1})";
-                    var childNode = new ProfileTreeNode(nodeName, 205, 205);
-                    newNode.Nodes.Add(childNode);
-                    childNode.Tag = line.Id;
-                    childNode.Checked = newNode.Checked;
-                    childNode.IsProfileNode = false;
-                    //ProfileName = profile.SessionName;
-                    //ProfileId = profile.SessionId;
-
-                    //childNode.SetProfileName(profile.SessionName);
-                    //childNode.SetProfileId(profile.SessionId.ToString());
-                    //childNode.SetProfileType(ConvertProfileTypeToString(profile.DefinitionType));
-                    //childNode.SetProfileDistance(CalculateProfileDistance(profile.ProfileSurfaces).ToString("F5"));
-                    childNode.SetLineDistance(line.Length.ToString("F5"));
-                    childNode.SetBasePoint($"X={line.Line.FromPoint.X:F5}; Y={line.Line.FromPoint.Y:F5}");
-                    childNode.SetToPoint($"X={line.Line.ToPoint.X:F5}; Y={line.Line.ToPoint.Y:F5}");
-
-                    childNode.SetAzimuth1($"{azimuth}{Degree}");
-
-
-                }
-                parentNode.Nodes.Add(newNode);
-            }
-
-            return parentNode.Checked;
-        }
-
-        private static double CalculateProfileDistance(IEnumerable<ProfileSurface> profileSurfaces)
-        {
-            double result = 0;
-            foreach (var surface in profileSurfaces)
-            {
-                for (var i = 0; i < surface.ProfileSurfacePoints.Length - 1; i++)
-                {
-                    result += CalculateSectionDistance(surface.ProfileSurfacePoints[i], surface.ProfileSurfacePoints[i + 1]);
-                }
-            }
-
-            return result;
-
-        }
-
-        private static double CalculateSectionDistance(ProfileSurfacePoint pointFrom, ProfileSurfacePoint pointTo)
-        {
-            var x = pointTo.Distance - pointFrom.Distance;
-            var y = pointTo.Z - pointFrom.Z;
-
-            return Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2));
-        }
-
-        private string ConvertProfileTypeToString(ProfileSettingsTypeEnum profileType)
-        {
-            switch (profileType)
-            {
-                case ProfileSettingsTypeEnum.Points:
-                    return "Отрезок";
-
-                case ProfileSettingsTypeEnum.Fun:
-                    return "Веер";
-
-                case ProfileSettingsTypeEnum.SelectedFeatures:
-                    return "Графика";
-
-                case ProfileSettingsTypeEnum.Load:
-                    return "Загрузка";
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(profileType), profileType, null);
-            }
-        }
-
-
-
-        private string MapUnitsText
-        {
-            get
-            {
-                switch (ActiveView.FocusMap.DistanceUnits)
-                {
-                    case esriUnits.esriMeters:
-                        return "метров";
-                    case esriUnits.esriKilometers:
-                        return "километров";
-                    case esriUnits.esriMiles:
-                        return "миль";
-                    case esriUnits.esriFeet:
-                        return "футов";
-                    default:
-                        return "метров";
-                }
-            }
         }
 
 
@@ -357,20 +197,34 @@ namespace MilSpace.Profile
             PopulateComboBox(cmbPointLayers, ProfileLayers.PointLayers);
         }
 
-        private void SetZoomToState(object sender, TreeViewEventArgs treeViewEventArgs)
+        public bool RemoveTreeViewItem()
         {
-
-            if (profilesTreeView.SelectedNode.Parent != null)
+            try
             {
-                toolBtnShowOnMap.Enabled = true;
-                toolBtnFlash.Enabled = true;
+                var node = profilesTreeView.SelectedNode.Parent;
+                profilesTreeView.SelectedNode.Remove();
+                controller.HideUserSessionProfile(treeViewselectedIds.ProfileSessionId);
+            }
+            catch (Exception ex)
+            {
+                //TODO: log exception
+                return false;
             }
 
-            else
-            {
-                toolBtnShowOnMap.Enabled = false;
-                toolBtnFlash.Enabled = false;
-            }
+            return true;
+        }
+
+
+        private void ChangeTreeViewToolbarState(object sender, TreeViewEventArgs treeViewEventArgs)
+        {
+            var node = profilesTreeView.SelectedNode;
+            var ids = GetProfileAndLineIds(node);
+
+            treeViewselectedIds.ProfileLineId = ids.Item2;
+            treeViewselectedIds.ProfileSessionId = ids.Item1;
+
+            removeProfile.Enabled = addProfileToGraph.Enabled = toolBtnShowOnMap.Enabled = toolBtnFlash.Enabled = treeViewselectedIds.ProfileSessionId > 0;
+            openGraphWindow.Enabled = !controller.MilSpaceProfileGraphsController.IsWindowVisible;
         }
 
         private void DisplaySelectedNodeAttributes(object sender, TreeViewEventArgs treeViewEventArgs)
@@ -382,8 +236,6 @@ namespace MilSpace.Profile
                 lvProfileAttributes.Visible = false;
                 return;
             }
-
-
 
             lvProfileAttributes.Visible = true;
             if (!(node is ProfileTreeNode)) return;
@@ -409,9 +261,6 @@ namespace MilSpace.Profile
         }
 
 
-
-
-
         private static void PopulateComboBox(ComboBox comboBox, IEnumerable<ILayer> layers)
         {
             comboBox.Items.AddRange(layers.Select(l => l.Name).ToArray());
@@ -430,7 +279,7 @@ namespace MilSpace.Profile
             ArcMap.Events.OpenDocument += controller.InitiateUserProfiles;
 
 
-            profilesTreeView.AfterSelect += SetZoomToState;
+            profilesTreeView.AfterSelect += ChangeTreeViewToolbarState;
             profilesTreeView.AfterSelect += DisplaySelectedNodeAttributes;
             lvProfileAttributes.Resize += OnListViewResize;
 
@@ -805,7 +654,6 @@ namespace MilSpace.Profile
         public int SectionHeightSecond => TryParseHeight(txtSecondHeight);
         public int FanHeight => TryParseHeight(txtFanHeight);
 
-
         private int TryParseHeight(TextBox heightTextBox)
         {
             if (int.TryParse(heightTextBox.Text, out var result))
@@ -944,11 +792,11 @@ namespace MilSpace.Profile
                 {
                     if (e.Node.Checked)
                     {
-                        controller.ShowWorkingProfile(id, lineId);
+                        controller.ShowUserSessionProfile(id, lineId);
                     }
                     else
                     {
-                        controller.HideWorkingProfile(id, lineId);
+                        controller.HideUserSessionProfile(id, lineId);
                     }
                 }
             }
@@ -1022,13 +870,6 @@ namespace MilSpace.Profile
         private void btnRefreshLayers_Click(object sender, EventArgs e)
         {
 
-            //foreach (var control in tabPage1.Controls)
-            //{
-            //    if (control is ComboBox box)
-            //    {
-            //        box.Items.Clear();
-            //    }
-            //}
             cmbRasterLayers.Items.Clear();
             cmbRoadLayers.Items.Clear();
             cmbHydrographyLayer.Items.Clear();
@@ -1074,5 +915,168 @@ namespace MilSpace.Profile
         {
             controller.ShowGraphsWindow();
         }
+
+        private void removeProfile_Click(object sender, EventArgs e)
+        {
+            //TODO: Localize text
+
+            string loalizedtext = $"Do you realy want to remove \'{profilesTreeView.SelectedNode.Text}\"?";
+            if (MessageBox.Show(loalizedtext, "MilSpace", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                if (!controller.RemoveProfilesFromUserSession())
+                {
+                    MessageBox.Show("There was an error. Look at the log file for more detail", "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+            }
+        }
+
+
+        private ProfileSession GetProfileFromList(IEnumerable<ProfileSession> listOfProfiles, string profileName)
+        {
+            var resultProfile = listOfProfiles.FirstOrDefault(profile => profile.SessionName.Equals(profileName));
+            return resultProfile;
+        }
+
+        private bool AddNodeToTreeView(string parentNodeName, ProfileSession profile, int imageIndex, int selectedImageIndex)
+        {
+            var parentNode = profilesTreeView.Nodes.Find(parentNodeName, false).FirstOrDefault();
+            if (parentNode != null)
+            {
+                var date = DateTime.Now;
+                var newNode = new ProfileTreeNode(profile.SessionName, imageIndex, selectedImageIndex)
+                {
+                    Checked = parentNode.Checked,
+                    Tag = profile.SessionId,
+                    IsProfileNode = true
+                };
+
+                newNode.SetProfileName(profile.SessionName);
+                newNode.SetProfileType(ConvertProfileTypeToString(profile.DefinitionType));
+                if (profile.DefinitionType == ProfileSettingsTypeEnum.Points)
+                {
+                    var firstX = profile.ProfileLines.First().Line.FromPoint.X.ToString("F5");
+                    var firstY = profile.ProfileLines.First().Line.FromPoint.Y.ToString("F5");
+                    var secondX = profile.ProfileLines.First().Line.ToPoint.X.ToString("F5");
+                    var secondY = profile.ProfileLines.First().Line.ToPoint.Y.ToString("F5");
+
+                    newNode.SetBasePoint($"X= {firstX}; Y= {firstY};");
+                    newNode.SetToPoint($"X= {secondX}; Y= {secondY};");
+                    newNode.SetBasePointHeight(SectionHeightFirst.ToString());
+                    newNode.SetToPointHeight(SectionHeightSecond.ToString());
+                }
+
+                if (profile.DefinitionType == ProfileSettingsTypeEnum.Fun)
+                {
+                    var basePointX = profile.ProfileLines.FirstOrDefault().Line.FromPoint.X.ToString("F5");
+                    var basePointY = profile.ProfileLines.FirstOrDefault().Line.FromPoint.Y.ToString("F5");
+                    var lineDistance = profile.ProfileLines.FirstOrDefault().Line.Length.ToString("F5");
+                    var linesCount = profile.ProfileLines.ToList().Count.ToString();
+                    var height = FanHeight.ToString();
+                    var az1 = FunAzimuth1.ToString("F0");
+                    var az2 = FunAzimuth2.ToString("F0");
+
+
+                    newNode.SetBasePoint($"X= {basePointX}; Y= {basePointY};");
+                    newNode.SetLineDistance(lineDistance);
+                    newNode.SetLineCount(linesCount);
+                    newNode.SetAzimuth1(az1);
+                    newNode.SetAzimuth2(az2);
+                    newNode.SetBasePointHeight(height);
+
+
+                }
+
+                newNode.SetCreatorName(Environment.UserName);
+                newNode.SetDate($"{date.ToLongDateString()} {date.ToLongTimeString()}");
+
+                foreach (var line in profile.ProfileLines)
+                {
+                    var azimuth = line.Azimuth.ToString("F0");
+                    var nodeName = profile.DefinitionType == ProfileSettingsTypeEnum.Points
+                        ? $"{azimuth}{Degree}"
+                        : $"{azimuth}{Degree} ({System.Array.IndexOf(profile.ProfileLines, line) + 1})";
+                    var childNode = new ProfileTreeNode(nodeName, 205, 205);
+                    newNode.Nodes.Add(childNode);
+                    childNode.Tag = line.Id;
+                    childNode.Checked = newNode.Checked;
+                    childNode.IsProfileNode = false;
+                    childNode.SetLineDistance(line.Length.ToString("F5"));
+                    childNode.SetBasePoint($"X={line.Line.FromPoint.X:F5}; Y={line.Line.FromPoint.Y:F5}");
+                    childNode.SetToPoint($"X={line.Line.ToPoint.X:F5}; Y={line.Line.ToPoint.Y:F5}");
+
+                    childNode.SetAzimuth1($"{azimuth}{Degree}");
+
+
+                }
+                parentNode.Nodes.Add(newNode);
+            }
+
+            return parentNode.Checked;
+        }
+
+        private static double CalculateProfileDistance(IEnumerable<ProfileSurface> profileSurfaces)
+        {
+            double result = 0;
+            foreach (var surface in profileSurfaces)
+            {
+                for (var i = 0; i < surface.ProfileSurfacePoints.Length - 1; i++)
+                {
+                    result += CalculateSectionDistance(surface.ProfileSurfacePoints[i], surface.ProfileSurfacePoints[i + 1]);
+                }
+            }
+
+            return result;
+
+        }
+
+        private static double CalculateSectionDistance(ProfileSurfacePoint pointFrom, ProfileSurfacePoint pointTo)
+        {
+            var x = pointTo.Distance - pointFrom.Distance;
+            var y = pointTo.Z - pointFrom.Z;
+
+            return Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2));
+        }
+
+        private string ConvertProfileTypeToString(ProfileSettingsTypeEnum profileType)
+        {
+            switch (profileType)
+            {
+                case ProfileSettingsTypeEnum.Points:
+                    return "Отрезок";
+
+                case ProfileSettingsTypeEnum.Fun:
+                    return "Веер";
+
+                case ProfileSettingsTypeEnum.SelectedFeatures:
+                    return "Графика";
+
+                case ProfileSettingsTypeEnum.Load:
+                    return "Загрузка";
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(profileType), profileType, null);
+            }
+        }
+
+        private string MapUnitsText
+        {
+            get
+            {
+                switch (ActiveView.FocusMap.DistanceUnits)
+                {
+                    case esriUnits.esriMeters:
+                        return "метров";
+                    case esriUnits.esriKilometers:
+                        return "километров";
+                    case esriUnits.esriMiles:
+                        return "миль";
+                    case esriUnits.esriFeet:
+                        return "футов";
+                    default:
+                        return "метров";
+                }
+            }
+        }
+
     }
 }

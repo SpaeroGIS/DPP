@@ -163,10 +163,10 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
+            this.addProfileToGraph = new System.Windows.Forms.ToolStripButton();
             this.openGraphWindow = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
+            this.removeProfile = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
             this.lblProfileList = new System.Windows.Forms.Label();
@@ -1562,10 +1562,10 @@
             this.toolStripSeparator1,
             this.toolStripButton4,
             this.toolStripSeparator3,
-            this.toolStripButton6,
+            this.addProfileToGraph,
             this.openGraphWindow,
             this.toolStripSeparator4,
-            this.toolStripButton7,
+            this.removeProfile,
             this.toolStripButton1,
             this.toolStripButton8});
             this.profilesToolStrip.Location = new System.Drawing.Point(0, 0);
@@ -1616,16 +1616,16 @@
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 30);
             // 
-            // toolStripButton6
+            // addProfileToGraph
             // 
-            this.toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton6.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton6.Image")));
-            this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton6.Name = "toolStripButton6";
-            this.toolStripButton6.Size = new System.Drawing.Size(23, 27);
-            this.toolStripButton6.Text = "addProfileToGraph";
-            this.toolStripButton6.ToolTipText = "Перейти к графику";
-            this.toolStripButton6.Click += new System.EventHandler(this.addProfileToGraph_Click);
+            this.addProfileToGraph.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.addProfileToGraph.Image = ((System.Drawing.Image)(resources.GetObject("addProfileToGraph.Image")));
+            this.addProfileToGraph.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.addProfileToGraph.Name = "addProfileToGraph";
+            this.addProfileToGraph.Size = new System.Drawing.Size(23, 27);
+            this.addProfileToGraph.Text = "addProfileToGraph";
+            this.addProfileToGraph.ToolTipText = "Перейти к графику";
+            this.addProfileToGraph.Click += new System.EventHandler(this.addProfileToGraph_Click);
             // 
             // openGraphWindow
             // 
@@ -1642,15 +1642,16 @@
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(6, 30);
             // 
-            // toolStripButton7
+            // removeProfile
             // 
-            this.toolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton7.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton7.Image")));
-            this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton7.Name = "toolStripButton7";
-            this.toolStripButton7.Size = new System.Drawing.Size(23, 27);
-            this.toolStripButton7.Text = "toolStripButton7";
-            this.toolStripButton7.ToolTipText = "Убрать из списка";
+            this.removeProfile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.removeProfile.Image = ((System.Drawing.Image)(resources.GetObject("removeProfile.Image")));
+            this.removeProfile.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.removeProfile.Name = "removeProfile";
+            this.removeProfile.Size = new System.Drawing.Size(23, 27);
+            this.removeProfile.Text = "Remove profile(s) from user session";
+            this.removeProfile.ToolTipText = "Убрать из списка";
+            this.removeProfile.Click += new System.EventHandler(this.removeProfile_Click);
             // 
             // toolStripButton1
             // 
@@ -2091,9 +2092,9 @@
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton4;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripButton toolStripButton6;
+        private System.Windows.Forms.ToolStripButton addProfileToGraph;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripButton toolStripButton7;
+        private System.Windows.Forms.ToolStripButton removeProfile;
         private System.Windows.Forms.ToolStripButton toolStripButton8;
         private System.Windows.Forms.ToolStripButton toolBtnFlash;
         internal System.Windows.Forms.TreeView profilesTreeView;

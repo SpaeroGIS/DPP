@@ -37,7 +37,6 @@ namespace MilSpace.DataAccess.Facade
                             Submit();
                         }
                     }
-
                 }
                 else
                 {
@@ -63,7 +62,30 @@ namespace MilSpace.DataAccess.Facade
             return result;
         }
 
-        public bool SaveSession(ProfileSession session)
+        public bool DeleteUserSession(int profileIdId)
+        {
+            bool result = true;
+            try
+            {
+                string userName = Environment.UserName;
+                if (context.MilSp_Sessions.Any(s => s.userName == userName && s.ProfileId == profileIdId))
+                {
+                    var sessionRow = context.MilSp_Sessions.First(s => s.userName == userName && s.ProfileId == profileIdId);
+                    context.MilSp_Sessions.DeleteOnSubmit(sessionRow);
+
+                    Submit();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                log.WarnEx($"Unexpected exception:{ex.Message}");
+                result = false;
+            }
+            return result;
+        }
+
+        public bool SaveProfileSession(ProfileSession session)
         {
             bool result = true;
             try
@@ -103,7 +125,8 @@ namespace MilSpace.DataAccess.Facade
             return result;
         }
 
-        public ProfileSession GetSessionById(int sessionId)
+
+        public ProfileSession GetProfileSessionById(int sessionId)
         {
             try
             {
@@ -135,6 +158,7 @@ namespace MilSpace.DataAccess.Facade
 
             return null;
         }
+
 
 
     }
