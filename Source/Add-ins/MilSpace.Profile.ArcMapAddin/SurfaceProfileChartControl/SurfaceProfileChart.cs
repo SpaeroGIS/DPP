@@ -315,17 +315,20 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         {
             if (ProfilesProperties.Count == 1)
             {
-                profileChart.ChartAreas["Default"].AxisY.Maximum = ProfilesProperties[0].MaxHeight
-                    + ProfilesProperties[0].MaxHeight / 10;
+                var height = ProfilesProperties[0].MaxHeight + ProfilesProperties.Max(property => property.ObserverHeight);
+
+                profileChart.ChartAreas["Default"].AxisY.Maximum = height + height / 10;
                 profileChart.ChartAreas["Default"].AxisY.Minimum = ProfilesProperties[0].MinHeight
-                    - ProfilesProperties[0].MaxHeight / 10;
+                    - height / 10;
 
                 profileChart.ChartAreas["Default"].AxisX.Maximum = profileChart.Series[0].Points.Last().XValue
                   + profileChart.Series[0].Points.Last().XValue / 10;
             }
             else
             {
-                double maxHeight = ProfilesProperties.Max(profileProperties => profileProperties.MaxHeight);
+                double maxHeight = ProfilesProperties.Max(profileProperties => profileProperties.MaxHeight) 
+                                              + ProfilesProperties.Max(property => property.ObserverHeight);
+
                 double minHeight = ProfilesProperties.Min(profileProperties => profileProperties.MinHeight);
                 double absHeight = maxHeight - minHeight;
 
@@ -815,6 +818,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                     }
                     else
                     {
+                        _controller.InvokeProfileRemoved(1);
+                        profileChart.Series.Clear();
                         _controller.RemoveCurrentTab();
                     }
 
@@ -910,7 +915,10 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         private void ObserverHeightTextBox_Leave(object sender, EventArgs e)
         {
-            ChangeObseverPointHeight();
+            if (GetProfiles().Count() > 0)
+            {
+                ChangeObseverPointHeight();
+            }
         }
 
         private void ProfilePropertiesTable_SelectionChanged(object sender, EventArgs e)
@@ -1043,6 +1051,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
 
             int index = GetSelectedProfileRowIndex();
+
+            _controller.InvokeProfileRemoved(Convert.ToInt32(profileChart.Series[SelectedProfileIndex].Name));
 
             profileChart.Series.Remove(profileChart
                                        .Series[$"ExtremePointsLine{profileChart.Series[SelectedProfileIndex].Name}"]);
