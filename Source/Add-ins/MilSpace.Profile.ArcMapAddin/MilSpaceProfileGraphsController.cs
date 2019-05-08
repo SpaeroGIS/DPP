@@ -8,6 +8,7 @@ using MilSpace.DataAccess;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Profile.SurfaceProfileChartControl;
 using MilSpace.Tools.GraphicsLayer;
+using ESRI.ArcGIS.Desktop.AddIns;
 using System.Collections.Generic;
 
 namespace MilSpace.Profile
@@ -16,7 +17,6 @@ namespace MilSpace.Profile
     {
         private SurfaceProfileChartController _surfaceProfileChartController;
 
-        private MilSpaceProfileCalsController _profileCalcController;
         private GraphicsLayerManager _graphicsLayerManager;
         private IDockableWindow dockableWindow;
 
@@ -35,13 +35,16 @@ namespace MilSpace.Profile
             _surfaceProfileChartController.ProfileRemoved += ProfileRemoved;
         }
 
-        private GraphicsLayerManager GraphicsLayerManager
+        internal GraphicsLayerManager GraphicsLayerManager
         {
             get
             {
                 if (_graphicsLayerManager == null)
                 {
-                    _graphicsLayerManager = new GraphicsLayerManager(_profileCalcController.View.ActiveView);
+                    //Take the GraphicsLayerManager fron the Calc controller to use one
+                    // TODO: reimplement it as singleton. But check if there is a possibility to work with nore then one ActiveView
+                    var winImpl = AddIn.FromID<DockableWindowMilSpaceProfileCalc.AddinImpl>(ThisAddIn.IDs.DockableWindowMilSpaceProfileCalc);
+                    _graphicsLayerManager = winImpl.MilSpaceProfileCalsController.GraphicsLayerManager;
                 }
 
                 return _graphicsLayerManager;
@@ -110,12 +113,11 @@ namespace MilSpace.Profile
         
         internal bool IsWindowVisible => Docablewindow.IsVisible();
 
-        internal void AddSession(ProfileSession profileSession, double observerHeight, MilSpaceProfileCalsController calsController)
+        internal void AddSession(ProfileSession profileSession)
         {
-            _profileCalcController = calsController;
 
             _surfaceProfileChartController.SetSession(profileSession);
-            SurfaceProfileChart surfaceProfileChart = _surfaceProfileChartController.CreateProfileChart(observerHeight);
+            SurfaceProfileChart surfaceProfileChart = _surfaceProfileChartController.CreateProfileChart(profileSession.ObserverHeight);
 
             View.AddNewTab(surfaceProfileChart, profileSession.SessionName);
         }
