@@ -7,7 +7,8 @@ using MilSpace.Core.Tools.Helper;
 using MilSpace.DataAccess;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Profile.SurfaceProfileChartControl;
-
+using MilSpace.Tools.GraphicsLayer;
+using System.Collections.Generic;
 
 namespace MilSpace.Profile
 {
