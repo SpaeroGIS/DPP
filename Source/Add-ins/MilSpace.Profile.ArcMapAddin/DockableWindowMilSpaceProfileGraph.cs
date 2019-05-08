@@ -1,3 +1,4 @@
+using ESRI.ArcGIS.Carto;
 using MilSpace.Profile.SurfaceProfileChartControl;
 using System;
 using System.Drawing;
@@ -22,7 +23,7 @@ namespace MilSpace.Profile
         public DockableWindowMilSpaceProfileGraph Instance { get; }
 
         public DockableWindowMilSpaceProfileGraph(MilSpaceProfileGraphsController controller)
-        {
+        { 
             this.Instance = this;
             SetController(controller);
             controller.SetView(this);
@@ -104,6 +105,8 @@ namespace MilSpace.Profile
         {
             this.controller = controller;
         }
+
+        public IActiveView ActiveView => ArcMap.Document.ActiveView;
 
         private void SubscribeForEvents()
         {
