@@ -1,5 +1,6 @@
 ﻿using MilSpace.DataAccess.DataTransfer;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MilSpace.DataAccess.Facade
 {
@@ -9,15 +10,15 @@ namespace MilSpace.DataAccess.Facade
         {
             using (var accessor = new SemanticDataAccess())
             {
-                return accessor.SaveSession(session);
+                return accessor.SaveProfileSession(session);
             }
         }
 
-        public static IEnumerable<ProfileSession> GetAllProfileSessions()
+        public static IEnumerable<ProfileSession> GetUserProfileSessions()
         {
             using (var accessor = new SemanticDataAccess())
             {
-                return accessor.GetAllSessions();
+                return accessor.GetAllSessionsFoUser().ToArray();
             }
         }
 
@@ -25,7 +26,15 @@ namespace MilSpace.DataAccess.Facade
         {
             using (var accessor = new SemanticDataAccess())
             {
-                return accessor.GetSessionById(sessionId);
+                return accessor.GetProfileSessionById(sessionId);
+            }
+        }
+
+        public static bool DeleteUserSessions(int sessionId)
+        {
+            using (var accessor = new SemanticDataAccess())
+            {
+                return accessor.DeleteUserSession(sessionId);
             }
         }
     }

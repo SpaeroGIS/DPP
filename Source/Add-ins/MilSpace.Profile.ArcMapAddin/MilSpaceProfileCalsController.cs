@@ -1,18 +1,15 @@
-﻿using ESRI.ArcGIS.Carto;
-using ESRI.ArcGIS.Desktop.AddIns;
+﻿using ESRI.ArcGIS.Desktop.AddIns;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Exceptions;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
+using MilSpace.DataAccess.Facade;
 using MilSpace.Profile.DTO;
 using MilSpace.Tools;
 using MilSpace.Tools.GraphicsLayer;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MilSpace.Profile
@@ -25,7 +22,6 @@ namespace MilSpace.Profile
     {
 
         private int profileId;
-        private string profileName;
         GraphicsLayerManager graphicsLayerManager;
 
         public delegate void ProfileSettingsChangedDelegate(ProfileSettingsEventArgs e);
@@ -38,6 +34,7 @@ namespace MilSpace.Profile
         List<ProfileSession> _workingProfiles = new List<ProfileSession>();
         private const string NewProfilePrefix = "Новый профиль";
 
+        private MilSpaceProfileGraphsController graphsController;
 
         private Dictionary<ProfileSettingsPointButtonEnum, IPoint> pointsToShow = new Dictionary<ProfileSettingsPointButtonEnum, IPoint>()
 
@@ -64,7 +61,7 @@ namespace MilSpace.Profile
         internal MilSpaceProfileCalsController() { }
 
         internal void SetView(IMilSpaceProfileView view)
-        {           
+        {
             View = view;
             SetPeofileId();
             SetProfileName();
@@ -109,7 +106,25 @@ namespace MilSpace.Profile
             View.FunPropertiesCenterPoint = pointToView;
 
             SetProfileSettings(ProfileSettingsTypeEnum.Fun);
+        }
 
+      
+        internal IMilSpaceProfileView View { get; private set; }
+
+        internal ProfileSettingsTypeEnum[] ProfileSettingsType => profileSettingsType;
+
+        internal MilSpaceProfileGraphsController MilSpaceProfileGraphsController
+        {
+            get
+            {
+                if (graphsController == null)
+                {
+                    var winImpl = AddIn.FromID<DockableWindowMilSpaceProfileGraph.AddinImpl>(ThisAddIn.IDs.DockableWindowMilSpaceProfileGraph);
+                    graphsController = winImpl.MilSpaceProfileGraphsController;
+                }
+
+                return graphsController;
+            }
         }
 
         internal void FlashPoint(ProfileSettingsPointButtonEnum pointType)
@@ -137,9 +152,6 @@ namespace MilSpace.Profile
 
             return null;
         }
-        internal IMilSpaceProfileView View { get; private set; }
-
-        internal ProfileSettingsTypeEnum[] ProfileSettingsType => profileSettingsType;
 
         internal void SetProfileSettings(ProfileSettingsTypeEnum profileType)
         {
@@ -224,7 +236,7 @@ namespace MilSpace.Profile
                 var newProfileId = GenerateProfileId();
                 var newProfileName = GenerateProfileName(newProfileId);
 
-                
+
                 var session = manager.GenerateProfile(View.DemLayerName, profileSetting.ProfileLines, View.SelectedProfileSettingsType, newProfileId, newProfileName);
 
                 SetPeofileId();
@@ -240,13 +252,26 @@ namespace MilSpace.Profile
             }
         }
 
-        internal void ShowWorkingProfile(int profileId, int lineId = -1)
+        internal bool RemoveProfilesFromUserSession()
+        {
+            var result = MilSpaceProfileFacade.DeleteUserSessions(View.SelectedProfileSessionIds.ProfileSessionId);
+            if (result)
+            {
+                return View.RemoveTreeViewItem();
+            }
+            return true;
+        }
+
+
+        internal void ShowUserSessionProfile(int profileId, int lineId = -1)
         {
             var profile = _workingProfiles.FirstOrDefault(p => p.SessionId == profileId);
             if (profile != null)
             {
                 if (lineId < 0)
                 {
+                    //Remove the references to ESRI lines not to store them in memory. Change creating of the tree view items to use MilSpace points (WGS84);
+                    //profile.ProfileLines.Select( p => p.Line)
                     GraphicsLayerManager.AddLinesToWorkingGraphics(profile.ConvertLinesToEsriPolypile(ArcMap.Document.FocusMap.SpatialReference), profile.SessionId);
                 }
                 else if (profile.ProfileLines.Any(l => l.Id == lineId))
@@ -256,15 +281,18 @@ namespace MilSpace.Profile
             }
         }
 
-        internal void HideWorkingProfile(int profileId, int lineId = -1)
+        internal void HideUserSessionProfile(int profileId, int lineId = -1)
         {
             var profile = _workingProfiles.FirstOrDefault(p => p.SessionId == profileId);
             if (profile != null)
             {
                 if (lineId < 0)
                 {
+                    //Remove the references to ESRI lines not to store them in memory. Change creating of the tree view items to use MilSpace points (WGS84);
+                    //profile.ProfileLines.Select( p => p.Line)
                     GraphicsLayerManager.RemoveLinesFromWorkingGraphics(profile.ConvertLinesToEsriPolypile(ArcMap.Document.FocusMap.SpatialReference), profile.SessionId);
-                }else if (profile.ProfileLines.Any(l => l.Id == lineId))
+                }
+                else if (profile.ProfileLines.Any(l => l.Id == lineId))
                 {
                     GraphicsLayerManager.HideLineFromWorkingGraphics(profileId, lineId);
                 }
@@ -274,7 +302,7 @@ namespace MilSpace.Profile
         internal void AddProfileToList(ProfileSession profile)
         {
             bool isAddToGraphics = false;
-            
+
             switch (profile.DefinitionType)
             {
                 case ProfileSettingsTypeEnum.Points:
@@ -298,7 +326,7 @@ namespace MilSpace.Profile
             //Add graphics 
             if (isAddToGraphics)
             {
-                GraphicsLayerManager.AddLinesToWorkingGraphics(profile.ConvertLinesToEsriPolypile(ArcMap.Document.FocusMap.SpatialReference), profile.SessionId);
+               // GraphicsLayerManager.AddLinesToWorkingGraphics(profile.ConvertLinesToEsriPolypile(ArcMap.Document.FocusMap.SpatialReference), profile.SessionId);
             }
 
             GraphicsLayerManager.EmptyProfileGraphics(MilSpaceGraphicsTypeEnum.Calculating);
@@ -310,19 +338,19 @@ namespace MilSpace.Profile
             var profileName = View.GetProfileNameFromNode();
             switch (profileType)
             {
-                
+
                 case ProfileSettingsTypeEnum.Points:
                     return View.GetSectionProfile(profileName);
                 case ProfileSettingsTypeEnum.Fun:
                     return View.GetFanProfile(profileName);
-                
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
         internal void ShowProfileOnMap(int profileId, int lineId)
-        {          
+        {
             GraphicsLayerManager.FlashLineOnWorkingGraphics(profileId, lineId);
         }
 
@@ -338,7 +366,7 @@ namespace MilSpace.Profile
                 env.Union(line.Envelope);
             }
 
-            var envelopeCenter = GetEnvelopeCenterPoint(env);           
+            var envelopeCenter = GetEnvelopeCenterPoint(env);
             env.CenterAt(envelopeCenter);
             View.ActiveView.Extent = env;
             View.ActiveView.FocusMap.MapScale = mapScale;
@@ -346,46 +374,48 @@ namespace MilSpace.Profile
             //GraphicsLayerManager.UpdateCalculatingGraphic(profileLines, profileId, (int)profile.DefinitionType);
         }
 
-        internal void ShowLineOnMap()
-        {
-
-        }
 
         internal void HighlightProfileOnMap(int profileId, int lineId)
         {
             GraphicsLayerManager.FlashLineOnWorkingGraphics(profileId, lineId);
         }
 
-        private IPoint GetEnvelopeCenterPoint(IEnvelope envelope)
+
+        internal void InitiateUserProfiles()
         {
-            var x = (envelope.XMin + envelope.XMax) / 2;
-            var y = (envelope.YMin + envelope.YMax) / 2;
-            return new PointClass{X = x, Y = y};
+            MilSpaceProfileFacade.GetUserProfileSessions().ToList().ForEach(p =>
+               {
+                   p.ConvertLinesToEsriPolypile(View.ActiveView.FocusMap.SpatialReference);
+                   AddProfileToList(p);
+               }
+            );
         }
 
-
-
-
-
-        internal void CallGraphsHandle(ProfileSession profileSession, ProfileSettingsTypeEnum profileType)
+        internal ProfileSession GetProfileSessionById(int profileId)
         {
-            var winImpl = AddIn.FromID<DockableWindowMilSpaceProfileGraph.AddinImpl>(ThisAddIn.IDs.DockableWindowMilSpaceProfileGraph);
-
-            winImpl.MilSpaceProfileCalsController.ShowWindow();
-            winImpl.MilSpaceProfileCalsController.AddSession(profileSession);
+            var profile = MilSpaceProfileFacade.GetProfileSessionById(profileId);
+            profile.ConvertLinesToEsriPolypile(View.ActiveView.FocusMap.SpatialReference);
+            return profile;
         }
-
-        private GraphicsLayerManager GraphicsLayerManager
+        internal void CallGraphsHandle(int profileSessionId)
         {
-            get
+            var profileSession = GetProfileSessionById(profileSessionId);
+            if (profileSession != null)
             {
-                if (graphicsLayerManager == null)
-                {
-                    graphicsLayerManager = new GraphicsLayerManager(View.ActiveView);
-                }
-
-                return graphicsLayerManager;
+                MilSpaceProfileGraphsController.ShowWindow();
+                MilSpaceProfileGraphsController.AddSession(profileSession, 0, this);
             }
+        }
+
+        internal void CallGraphsHandle(ProfileSession profileSession, ProfileSettingsTypeEnum profileType, double observerHeight)
+        {
+            MilSpaceProfileGraphsController.ShowWindow();
+            MilSpaceProfileGraphsController.AddSession(profileSession, observerHeight, this);
+        }
+
+        internal void ShowGraphsWindow()
+        {
+            MilSpaceProfileGraphsController.ShowWindow();
         }
 
 
@@ -407,7 +437,14 @@ namespace MilSpace.Profile
 
         private void SetProfileName()
         {
-            View.ProfileName = $"{NewProfilePrefix} {profileId}"; 
+            View.ProfileName = $"{NewProfilePrefix} {profileId}";
+        }
+
+        private ProfileSession GetProfileSessionById(int profileId)
+        {
+            var profile = MilSpaceProfileFacade.GetProfileSessionById(profileId);
+            profile.ConvertLinesToEsriPolypile(View.ActiveView.FocusMap.SpatialReference);
+            return profile;
         }
 
         private string GenerateProfileName(int id)
@@ -421,6 +458,26 @@ namespace MilSpace.Profile
         private int GenerateProfileId()
         {
             return (int)(DateTime.Now.ToOADate() * 10000);
+        }
+
+        private IPoint GetEnvelopeCenterPoint(IEnvelope envelope)
+        {
+            var x = (envelope.XMin + envelope.XMax) / 2;
+            var y = (envelope.YMin + envelope.YMax) / 2;
+            return new PointClass { X = x, Y = y };
+        }
+
+        private GraphicsLayerManager GraphicsLayerManager
+        {
+            get
+            {
+                if (graphicsLayerManager == null)
+                {
+                    graphicsLayerManager = new GraphicsLayerManager(View.ActiveView);
+                }
+
+                return graphicsLayerManager;
+            }
         }
     }
 }

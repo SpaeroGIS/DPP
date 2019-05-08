@@ -58,7 +58,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 fullHeights.Add(ProfilesProperties[i].LineId, GetObserverPointFullHeight(i));
             }
 
-            _controller.AddInvisibleZones(fullHeights);
+            _controller.AddInvisibleZones(fullHeights, GetAllColors(true), GetAllColors(false));
             _controller.AddExtremePoints();
 
             FillPropertiesTable();
@@ -119,9 +119,15 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal void SetExtremePoints(List<ProfileSurfacePoint> extremePoints)
         {
-            for (var i = 1; i < extremePoints.Count; i++)
+            for (var i = 0; i < extremePoints.Count; i++)
             {
-                AddExtremePoint(extremePoints[0], extremePoints[i], i);
+                var observerPoint = new ProfileSurfacePoint
+                {
+                    Distance = 0,
+                    Z = GetObserverPointFullHeight(i)
+                };
+
+                AddExtremePoint(observerPoint, extremePoints[i], i + 1);
             }
         }
 
@@ -309,17 +315,20 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         {
             if (ProfilesProperties.Count == 1)
             {
-                profileChart.ChartAreas["Default"].AxisY.Maximum = ProfilesProperties[0].MaxHeight
-                    + ProfilesProperties[0].MaxHeight / 10;
+                var height = ProfilesProperties[0].MaxHeight + ProfilesProperties.Max(property => property.ObserverHeight);
+
+                profileChart.ChartAreas["Default"].AxisY.Maximum = height + height / 10;
                 profileChart.ChartAreas["Default"].AxisY.Minimum = ProfilesProperties[0].MinHeight
-                    - ProfilesProperties[0].MaxHeight / 10;
+                    - height / 10;
 
                 profileChart.ChartAreas["Default"].AxisX.Maximum = profileChart.Series[0].Points.Last().XValue
                   + profileChart.Series[0].Points.Last().XValue / 10;
             }
             else
             {
-                double maxHeight = ProfilesProperties.Max(profileProperties => profileProperties.MaxHeight);
+                double maxHeight = ProfilesProperties.Max(profileProperties => profileProperties.MaxHeight) 
+                                              + ProfilesProperties.Max(property => property.ObserverHeight);
+
                 double minHeight = ProfilesProperties.Min(profileProperties => profileProperties.MinHeight);
                 double absHeight = maxHeight - minHeight;
 
@@ -548,7 +557,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 fullHeights.Add(ProfilesProperties[i].LineId, GetObserverPointFullHeight(i));
             }
 
-            _controller.AddInvisibleZones(fullHeights, GetSurfacesFromChart());
+            _controller.AddInvisibleZones(fullHeights, GetAllColors(true), GetAllColors(false), GetSurfacesFromChart());
             UpdateExtremePoins(profileChart.Series);
             UpdateTableWithNewObserverHeigth(profilePropertiesTable.Rows);
         }
@@ -560,8 +569,9 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             ProfileSurface[] profileSurfaces = GetSurfacesFromChart();
 
             UpdateProfile(SelectedProfileIndex);
-            _controller.AddInvisibleZone(GetObserverPointFullHeight(SelectedProfileIndex)
-                                            , profileSurfaces[SelectedProfileIndex]);
+            _controller.AddInvisibleZone(GetObserverPointFullHeight(SelectedProfileIndex),
+                                             profileSurfaces[SelectedProfileIndex], profileChart.Series[SelectedProfileIndex].Color,
+                                             profileChart.Series[SelectedProfileIndex].BackSecondaryColor);
             UpdateProfileExtremePoints(SelectedProfileIndex);
             UpdateSelectedRowWithNewObserverHeigth(GetSelectedProfileRowIndex());
         }
@@ -638,6 +648,30 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         private double GetObserverPointFullHeight(int index)
         {
             return ProfilesProperties[index].ObserverHeight + profileChart.Series[index].Points[0].YValues[0];
+        }
+
+
+        private List<Color> GetAllColors(bool visible)
+        {
+            var colors = new List<Color>();
+
+            foreach (var serie in profileChart.Series)
+            {
+                Color color;
+
+                if (visible)
+                {
+                    color = serie.Color;
+                }
+                else
+                {
+                    color = serie.BackSecondaryColor;
+                }
+
+                colors.Add(color);
+            }
+
+            return colors;
         }
 
         #endregion
@@ -741,9 +775,11 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
                 ProfileSurface[] profileSurfaces = GetSurfacesFromChart();
 
-                UpdateProfile(SelectedProfileIndex + 1);
-                _controller.AddInvisibleZone(GetObserverPointFullHeight(SelectedProfileIndex), profileSurfaces[SelectedProfileIndex]);
-                UpdateProfileExtremePoints(SelectedProfileIndex + 1);
+                UpdateProfile(SelectedProfileIndex);
+                _controller.AddInvisibleZone(GetObserverPointFullHeight(SelectedProfileIndex), profileSurfaces[SelectedProfileIndex],
+                                                profileChart.Series[SelectedProfileIndex].Color,
+                                                profileChart.Series[SelectedProfileIndex].BackSecondaryColor);
+                UpdateProfileExtremePoints(SelectedProfileIndex);
             }
         }
 
@@ -782,6 +818,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                     }
                     else
                     {
+                        _controller.InvokeProfileRemoved(1);
+                        profileChart.Series.Clear();
                         _controller.RemoveCurrentTab();
                     }
 
@@ -877,7 +915,10 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         private void ObserverHeightTextBox_Leave(object sender, EventArgs e)
         {
-            ChangeObseverPointHeight();
+            if (GetProfiles().Count() > 0)
+            {
+                ChangeObseverPointHeight();
+            }
         }
 
         private void ProfilePropertiesTable_SelectionChanged(object sender, EventArgs e)
@@ -1010,6 +1051,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
 
             int index = GetSelectedProfileRowIndex();
+
+            _controller.InvokeProfileRemoved(Convert.ToInt32(profileChart.Series[SelectedProfileIndex].Name));
 
             profileChart.Series.Remove(profileChart
                                        .Series[$"ExtremePointsLine{profileChart.Series[SelectedProfileIndex].Name}"]);
