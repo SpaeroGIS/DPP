@@ -7,6 +7,9 @@ using MilSpace.Core.Tools.Helper;
 using MilSpace.DataAccess;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Profile.SurfaceProfileChartControl;
+using MilSpace.Tools.GraphicsLayer;
+using ESRI.ArcGIS.Desktop.AddIns;
+using System.Collections.Generic;
 
 namespace MilSpace.Profile
 {

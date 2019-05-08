@@ -328,7 +328,7 @@ namespace MilSpace.Profile
             //Add graphics 
             if (isAddToGraphics)
             {
-               //GraphicsLayerManager.AddLinesToWorkingGraphics(profile.ConvertLinesToEsriPolypile(ArcMap.Document.FocusMap.SpatialReference), profile.SessionId);
+             //GraphicsLayerManager.AddLinesToWorkingGraphics(profile.ConvertLinesToEsriPolypile(ArcMap.Document.FocusMap.SpatialReference), profile.SessionId);
             }
 
             GraphicsLayerManager.EmptyProfileGraphics(MilSpaceGraphicsTypeEnum.Calculating);
@@ -405,7 +405,7 @@ namespace MilSpace.Profile
         internal void CallGraphsHandle(ProfileSession profileSession)
         {
             MilSpaceProfileGraphsController.ShowWindow();
-            MilSpaceProfileGraphsController.AddSession(profileSession, observerHeight, this);
+            MilSpaceProfileGraphsController.AddSession(profileSession);
         }
 
         internal void ShowGraphsWindow()
