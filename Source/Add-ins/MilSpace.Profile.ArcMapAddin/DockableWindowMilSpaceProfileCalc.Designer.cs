@@ -106,6 +106,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
             this.label24 = new System.Windows.Forms.Label();
+            this.txtObserverHeight = new System.Windows.Forms.TextBox();
             this.txtFanHeight = new System.Windows.Forms.TextBox();
             this.panel7 = new System.Windows.Forms.Panel();
             this.basePointToolbar = new System.Windows.Forms.ToolBar();
@@ -1216,6 +1217,7 @@
             // panel10
             // 
             this.panel10.Controls.Add(this.label24);
+            this.panel10.Controls.Add(this.txtObserverHeight);
             this.panel10.Controls.Add(this.txtFanHeight);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel10.Location = new System.Drawing.Point(3, 54);
@@ -1236,6 +1238,16 @@
             this.label24.TabIndex = 22;
             this.label24.Text = "высота базовой точки над поверхностью (м)";
             // 
+            // txtObserverHeight
+            // 
+            this.txtObserverHeight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtObserverHeight.Dock = System.Windows.Forms.DockStyle.Left;
+            this.txtObserverHeight.Location = new System.Drawing.Point(8, 2);
+            this.txtObserverHeight.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
+            this.txtObserverHeight.Name = "txtObserverHeight";
+            this.txtObserverHeight.Size = new System.Drawing.Size(49, 20);
+            this.txtObserverHeight.TabIndex = 6;
+            this.txtObserverHeight.Text = "25";
             // txtFanHeight
             // 
             this.txtFanHeight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -1996,6 +2008,7 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.TextBox txtObserverHeight;
         private System.Windows.Forms.TextBox txtFanHeight;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.ToolBar basePointToolbar;
