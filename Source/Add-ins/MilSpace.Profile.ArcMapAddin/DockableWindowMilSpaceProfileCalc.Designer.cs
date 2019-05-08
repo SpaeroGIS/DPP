@@ -107,7 +107,6 @@
             this.panel10 = new System.Windows.Forms.Panel();
             this.label24 = new System.Windows.Forms.Label();
             this.txtObserverHeight = new System.Windows.Forms.TextBox();
-            this.txtFanHeight = new System.Windows.Forms.TextBox();
             this.panel7 = new System.Windows.Forms.Panel();
             this.basePointToolbar = new System.Windows.Forms.ToolBar();
             this.toolBarButton15 = new System.Windows.Forms.ToolBarButton();
@@ -1218,7 +1217,6 @@
             // 
             this.panel10.Controls.Add(this.label24);
             this.panel10.Controls.Add(this.txtObserverHeight);
-            this.panel10.Controls.Add(this.txtFanHeight);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel10.Location = new System.Drawing.Point(3, 54);
             this.panel10.Name = "panel10";
@@ -1248,16 +1246,6 @@
             this.txtObserverHeight.Size = new System.Drawing.Size(49, 20);
             this.txtObserverHeight.TabIndex = 6;
             this.txtObserverHeight.Text = "25";
-            // txtFanHeight
-            // 
-            this.txtFanHeight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtFanHeight.Dock = System.Windows.Forms.DockStyle.Left;
-            this.txtFanHeight.Location = new System.Drawing.Point(8, 2);
-            this.txtFanHeight.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
-            this.txtFanHeight.Name = "txtFanHeight";
-            this.txtFanHeight.Size = new System.Drawing.Size(49, 20);
-            this.txtFanHeight.TabIndex = 6;
-            this.txtFanHeight.Text = "25";
             // 
             // panel7
             // 
@@ -1839,7 +1827,6 @@
             // addProfileToGraph
             // 
             this.addProfileToGraph.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.addProfileToGraph.Image = ((System.Drawing.Image)(resources.GetObject("addProfileToGraph.Image")));
             this.addProfileToGraph.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.addProfileToGraph.Name = "addProfileToGraph";
             this.addProfileToGraph.Size = new System.Drawing.Size(23, 27);
@@ -1865,7 +1852,6 @@
             // removeProfile
             // 
             this.removeProfile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.removeProfile.Image = ((System.Drawing.Image)(resources.GetObject("removeProfile.Image")));
             this.removeProfile.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.removeProfile.Name = "removeProfile";
             this.removeProfile.Size = new System.Drawing.Size(23, 27);
@@ -2009,7 +1995,6 @@
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.TextBox txtObserverHeight;
-        private System.Windows.Forms.TextBox txtFanHeight;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.ToolBar basePointToolbar;
         private System.Windows.Forms.ToolBarButton toolBarButton15;

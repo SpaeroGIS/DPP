@@ -23,7 +23,7 @@ namespace MilSpace.Profile
         public DockableWindowMilSpaceProfileGraph Instance { get; }
 
         public DockableWindowMilSpaceProfileGraph(MilSpaceProfileGraphsController controller)
-        {
+        { 
             this.Instance = this;
             SetController(controller);
             controller.SetView(this);
