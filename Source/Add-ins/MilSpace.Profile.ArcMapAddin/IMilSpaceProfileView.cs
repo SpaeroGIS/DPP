@@ -36,6 +36,10 @@ namespace MilSpace.Profile
         double FunAzimuth1 { get; }
         double FunAzimuth2 { get; }
 
+        int SectionHeightFirst { get; }
+        int SectionHeightSecond { get; }
+        int FanHeight { get; }
+
         double FunLength { get; }
 
         MilSpaceProfileCalsController Controller { get; }

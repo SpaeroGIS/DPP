@@ -30,17 +30,13 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Графика");
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.cmbHydrographyLayer = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.cmbRoadLayers = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.btnRefreshLayers = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.cmbBuildings = new System.Windows.Forms.ComboBox();
             this.label30 = new System.Windows.Forms.Label();
@@ -51,6 +47,11 @@
             this.label25 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.cmbPointLayers = new System.Windows.Forms.ComboBox();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.cmbHydrographyLayer = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cmbRoadLayers = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.cmbRasterLayers = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -64,7 +65,6 @@
             this.label22 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.secondPointToolbar = new System.Windows.Forms.ToolBar();
-            this.toolBarButton1 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton61 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton2 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton5 = new System.Windows.Forms.ToolBarButton();
@@ -82,7 +82,6 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.firstPointToolBar = new System.Windows.Forms.ToolBar();
             this.toolBarButton8 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton54 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton55 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton56 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton57 = new System.Windows.Forms.ToolBarButton();
@@ -108,6 +107,7 @@
             this.panel10 = new System.Windows.Forms.Panel();
             this.label24 = new System.Windows.Forms.Label();
             this.txtObserverHeight = new System.Windows.Forms.TextBox();
+            this.txtFanHeight = new System.Windows.Forms.TextBox();
             this.panel7 = new System.Windows.Forms.Panel();
             this.basePointToolbar = new System.Windows.Forms.ToolBar();
             this.toolBarButton15 = new System.Windows.Forms.ToolBarButton();
@@ -162,22 +162,19 @@
             this.toolBtnShowOnMap = new System.Windows.Forms.ToolStripButton();
             this.toolBtnFlash = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
+            this.openGraphWindow = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
             this.lblProfileList = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.profileSettingsTab.SuspendLayout();
             this.sectionTab.SuspendLayout();
             this.panel16.SuspendLayout();
@@ -322,9 +319,9 @@
             this.imageList1.Images.SetKeyName(116, "Mouse.png");
             this.imageList1.Images.SetKeyName(117, "Movie.png");
             this.imageList1.Images.SetKeyName(118, "Music.png");
-            this.imageList1.Images.SetKeyName(119, "Music2.png");
+            this.imageList1.Images.SetKeyName(119, "r");
             this.imageList1.Images.SetKeyName(120, "Nuke.png");
-            this.imageList1.Images.SetKeyName(121, "Ok.png");
+            this.imageList1.Images.SetKeyName(121, "r");
             this.imageList1.Images.SetKeyName(122, "Paragraph.png");
             this.imageList1.Images.SetKeyName(123, "Percent.png");
             this.imageList1.Images.SetKeyName(124, "Phone.png");
@@ -415,6 +412,7 @@
             this.imageList1.Images.SetKeyName(209, "vector-polygon.png");
             this.imageList1.Images.SetKeyName(210, "load.png");
             this.imageList1.Images.SetKeyName(211, "Download.png");
+            this.imageList1.Images.SetKeyName(212, "Refresh20x20.png");
             // 
             // tabControl1
             // 
@@ -435,13 +433,14 @@
             // 
             this.tabPage1.AutoScroll = true;
             this.tabPage1.BackColor = System.Drawing.SystemColors.Control;
-            this.tabPage1.Controls.Add(this.tableLayoutPanel2);
+            this.tabPage1.Controls.Add(this.btnRefreshLayers);
             this.tabPage1.Controls.Add(this.tableLayoutPanel1);
             this.tabPage1.Controls.Add(this.calcProfile);
             this.tabPage1.Controls.Add(this.txtProfileName);
             this.tabPage1.Controls.Add(this.label25);
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.cmbPointLayers);
+            this.tabPage1.Controls.Add(this.tableLayoutPanel2);
             this.tabPage1.Controls.Add(this.label7);
             this.tabPage1.Controls.Add(this.cmbRasterLayers);
             this.tabPage1.Controls.Add(this.label3);
@@ -457,93 +456,36 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Параметры профиля";
             // 
-            // tableLayoutPanel2
+            // btnRefreshLayers
             // 
-            this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Controls.Add(this.cmbHydrographyLayer, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.label6, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.cmbRoadLayers, 1, 1);
-            this.tableLayoutPanel2.Controls.Add(this.label5, 0, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 167);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(752, 53);
-            this.tableLayoutPanel2.TabIndex = 41;
-            // 
-            // cmbHydrographyLayer
-            // 
-            this.cmbHydrographyLayer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbHydrographyLayer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbHydrographyLayer.FormattingEnabled = true;
-            this.cmbHydrographyLayer.Items.AddRange(new object[] {
-            "Указанием отрезка на карте",
-            "От \"базовой\" точки",
-            "Выбором графики"});
-            this.cmbHydrographyLayer.Location = new System.Drawing.Point(3, 29);
-            this.cmbHydrographyLayer.Name = "cmbHydrographyLayer";
-            this.cmbHydrographyLayer.Size = new System.Drawing.Size(370, 21);
-            this.cmbHydrographyLayer.TabIndex = 38;
-            // 
-            // label6
-            // 
-            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(379, 5);
-            this.label6.Name = "label6";
-            this.label6.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.label6.Size = new System.Drawing.Size(111, 21);
-            this.label6.TabIndex = 39;
-            this.label6.Text = "Слой дорожной сети";
-            // 
-            // cmbRoadLayers
-            // 
-            this.cmbRoadLayers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbRoadLayers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbRoadLayers.FormattingEnabled = true;
-            this.cmbRoadLayers.Items.AddRange(new object[] {
-            "Указанием отрезка на карте",
-            "От \"базовой\" точки",
-            "Выбором графики"});
-            this.cmbRoadLayers.Location = new System.Drawing.Point(379, 29);
-            this.cmbRoadLayers.Name = "cmbRoadLayers";
-            this.cmbRoadLayers.Size = new System.Drawing.Size(370, 21);
-            this.cmbRoadLayers.TabIndex = 40;
-            // 
-            // label5
-            // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 5);
-            this.label5.Name = "label5";
-            this.label5.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.label5.Size = new System.Drawing.Size(370, 21);
-            this.label5.TabIndex = 37;
-            this.label5.Text = "Слой гидрография";
+            this.btnRefreshLayers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRefreshLayers.ImageKey = "Refresh20x20.png";
+            this.btnRefreshLayers.ImageList = this.imageList1;
+            this.btnRefreshLayers.Location = new System.Drawing.Point(733, 3);
+            this.btnRefreshLayers.Name = "btnRefreshLayers";
+            this.btnRefreshLayers.Size = new System.Drawing.Size(25, 25);
+            this.btnRefreshLayers.TabIndex = 43;
+            this.btnRefreshLayers.UseVisualStyleBackColor = true;
+            this.btnRefreshLayers.Click += new System.EventHandler(this.btnRefreshLayers_Click);
             // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.46809F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.53191F));
             this.tableLayoutPanel1.Controls.Add(this.cmbBuildings, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.label30, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.cmbPolygonLayer, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label4, 0, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 85);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(7, 85);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(752, 76);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(752, 54);
             this.tableLayoutPanel1.TabIndex = 36;
             // 
             // cmbBuildings
@@ -553,16 +495,16 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbBuildings.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBuildings.FormattingEnabled = true;
-            this.cmbBuildings.Location = new System.Drawing.Point(379, 41);
+            this.cmbBuildings.Location = new System.Drawing.Point(375, 30);
             this.cmbBuildings.Name = "cmbBuildings";
-            this.cmbBuildings.Size = new System.Drawing.Size(370, 21);
+            this.cmbBuildings.Size = new System.Drawing.Size(374, 21);
             this.cmbBuildings.TabIndex = 42;
             // 
             // label30
             // 
             this.label30.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(379, 17);
+            this.label30.Location = new System.Drawing.Point(375, 6);
             this.label30.Name = "label30";
             this.label30.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.label30.Size = new System.Drawing.Size(96, 21);
@@ -576,16 +518,16 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbPolygonLayer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbPolygonLayer.FormattingEnabled = true;
-            this.cmbPolygonLayer.Location = new System.Drawing.Point(3, 41);
+            this.cmbPolygonLayer.Location = new System.Drawing.Point(3, 30);
             this.cmbPolygonLayer.Name = "cmbPolygonLayer";
-            this.cmbPolygonLayer.Size = new System.Drawing.Size(370, 21);
+            this.cmbPolygonLayer.Size = new System.Drawing.Size(366, 21);
             this.cmbPolygonLayer.TabIndex = 40;
             // 
             // label4
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(3, 17);
+            this.label4.Location = new System.Drawing.Point(3, 6);
             this.label4.Name = "label4";
             this.label4.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.label4.Size = new System.Drawing.Size(116, 21);
@@ -597,11 +539,11 @@
             this.calcProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.calcProfile.Enabled = false;
             this.calcProfile.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.calcProfile.Location = new System.Drawing.Point(537, 719);
+            this.calcProfile.Location = new System.Drawing.Point(568, 712);
             this.calcProfile.Name = "calcProfile";
-            this.calcProfile.Size = new System.Drawing.Size(214, 30);
+            this.calcProfile.Size = new System.Drawing.Size(183, 37);
             this.calcProfile.TabIndex = 27;
-            this.calcProfile.Text = "рассчитать";
+            this.calcProfile.Text = "Рассчитать";
             this.calcProfile.UseVisualStyleBackColor = true;
             this.calcProfile.Click += new System.EventHandler(this.calcProfile_Click);
             // 
@@ -654,11 +596,83 @@
             "Указанием отрезка на карте",
             "От \"базовой\" точки",
             "Выбором графики"});
-            this.cmbPointLayers.Location = new System.Drawing.Point(3, 244);
+            this.cmbPointLayers.Location = new System.Drawing.Point(7, 236);
             this.cmbPointLayers.Name = "cmbPointLayers";
             this.cmbPointLayers.Size = new System.Drawing.Size(752, 21);
             this.cmbPointLayers.TabIndex = 20;
             this.cmbPointLayers.Tag = "";
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.33511F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.66489F));
+            this.tableLayoutPanel2.Controls.Add(this.cmbHydrographyLayer, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.label5, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.label6, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.cmbRoadLayers, 0, 1);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(7, 145);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 53.7037F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 46.2963F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(752, 54);
+            this.tableLayoutPanel2.TabIndex = 41;
+            // 
+            // cmbHydrographyLayer
+            // 
+            this.cmbHydrographyLayer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbHydrographyLayer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbHydrographyLayer.FormattingEnabled = true;
+            this.cmbHydrographyLayer.Items.AddRange(new object[] {
+            "Указанием отрезка на карте",
+            "От \"базовой\" точки",
+            "Выбором графики"});
+            this.cmbHydrographyLayer.Location = new System.Drawing.Point(374, 31);
+            this.cmbHydrographyLayer.Name = "cmbHydrographyLayer";
+            this.cmbHydrographyLayer.Size = new System.Drawing.Size(375, 21);
+            this.cmbHydrographyLayer.TabIndex = 38;
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(374, 7);
+            this.label5.Name = "label5";
+            this.label5.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.label5.Size = new System.Drawing.Size(375, 21);
+            this.label5.TabIndex = 42;
+            this.label5.Text = "Слой гидрография";
+            // 
+            // label6
+            // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(3, 7);
+            this.label6.Name = "label6";
+            this.label6.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.label6.Size = new System.Drawing.Size(111, 21);
+            this.label6.TabIndex = 39;
+            this.label6.Text = "Слой дорожной сети";
+            // 
+            // cmbRoadLayers
+            // 
+            this.cmbRoadLayers.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.cmbRoadLayers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbRoadLayers.FormattingEnabled = true;
+            this.cmbRoadLayers.Items.AddRange(new object[] {
+            "Указанием отрезка на карте",
+            "От \"базовой\" точки",
+            "Выбором графики"});
+            this.cmbRoadLayers.Location = new System.Drawing.Point(4, 31);
+            this.cmbRoadLayers.Name = "cmbRoadLayers";
+            this.cmbRoadLayers.Size = new System.Drawing.Size(364, 21);
+            this.cmbRoadLayers.TabIndex = 41;
             // 
             // label7
             // 
@@ -666,7 +680,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(3, 223);
+            this.label7.Location = new System.Drawing.Point(6, 215);
             this.label7.Name = "label7";
             this.label7.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.label7.Size = new System.Drawing.Size(128, 21);
@@ -679,7 +693,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbRasterLayers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbRasterLayers.Location = new System.Drawing.Point(3, 58);
+            this.cmbRasterLayers.Location = new System.Drawing.Point(7, 58);
             this.cmbRasterLayers.Name = "cmbRasterLayers";
             this.cmbRasterLayers.Size = new System.Drawing.Size(752, 21);
             this.cmbRasterLayers.TabIndex = 9;
@@ -822,7 +836,6 @@
             // secondPointToolbar
             // 
             this.secondPointToolbar.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
-            this.toolBarButton1,
             this.toolBarButton61,
             this.toolBarButton2,
             this.toolBarButton5,
@@ -840,11 +853,6 @@
             this.secondPointToolbar.Size = new System.Drawing.Size(561, 28);
             this.secondPointToolbar.TabIndex = 28;
             this.secondPointToolbar.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.secondPointToolbar_ButtonClick);
-            // 
-            // toolBarButton1
-            // 
-            this.toolBarButton1.Name = "toolBarButton1";
-            this.toolBarButton1.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
             // 
             // toolBarButton61
             // 
@@ -967,7 +975,6 @@
             // 
             this.firstPointToolBar.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
             this.toolBarButton8,
-            this.toolBarButton54,
             this.toolBarButton55,
             this.toolBarButton56,
             this.toolBarButton57,
@@ -989,11 +996,6 @@
             // 
             this.toolBarButton8.ImageKey = "Write.png";
             this.toolBarButton8.Name = "toolBarButton8";
-            // 
-            // toolBarButton54
-            // 
-            this.toolBarButton54.Name = "toolBarButton54";
-            this.toolBarButton54.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
             // 
             // toolBarButton55
             // 
@@ -1216,6 +1218,7 @@
             // 
             this.panel10.Controls.Add(this.label24);
             this.panel10.Controls.Add(this.txtObserverHeight);
+            this.panel10.Controls.Add(this.txtFanHeight);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel10.Location = new System.Drawing.Point(3, 54);
             this.panel10.Name = "panel10";
@@ -1245,6 +1248,16 @@
             this.txtObserverHeight.Size = new System.Drawing.Size(49, 20);
             this.txtObserverHeight.TabIndex = 6;
             this.txtObserverHeight.Text = "25";
+            // txtFanHeight
+            // 
+            this.txtFanHeight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtFanHeight.Dock = System.Windows.Forms.DockStyle.Left;
+            this.txtFanHeight.Location = new System.Drawing.Point(8, 2);
+            this.txtFanHeight.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
+            this.txtFanHeight.Name = "txtFanHeight";
+            this.txtFanHeight.Size = new System.Drawing.Size(49, 20);
+            this.txtFanHeight.TabIndex = 6;
+            this.txtFanHeight.Text = "25";
             // 
             // panel7
             // 
@@ -1726,25 +1739,25 @@
             this.profilesTreeView.ImageList = this.imageList1;
             this.profilesTreeView.Location = new System.Drawing.Point(3, 65);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode1.Checked = true;
-            treeNode1.ImageKey = "vector-path-line.png";
-            treeNode1.Name = "sectionsNode";
-            treeNode1.SelectedImageIndex = 205;
-            treeNode1.Text = "Отрезки";
-            treeNode2.Checked = true;
-            treeNode2.ImageKey = "Editing-Line-icon3.png";
-            treeNode2.Name = "fanNode";
-            treeNode2.SelectedImageIndex = 208;
-            treeNode2.Text = "Веер";
-            treeNode3.Checked = true;
-            treeNode3.ImageKey = "vector-polygon.png";
-            treeNode3.Name = "primitivesNode";
-            treeNode3.SelectedImageIndex = 209;
-            treeNode3.Text = "Графика";
+            treeNode4.Checked = true;
+            treeNode4.ImageKey = "vector-path-line.png";
+            treeNode4.Name = "sectionsNode";
+            treeNode4.SelectedImageIndex = 205;
+            treeNode4.Text = "Отрезки";
+            treeNode5.Checked = true;
+            treeNode5.ImageKey = "Editing-Line-icon3.png";
+            treeNode5.Name = "fanNode";
+            treeNode5.SelectedImageIndex = 208;
+            treeNode5.Text = "Веер";
+            treeNode6.Checked = true;
+            treeNode6.ImageKey = "vector-polygon.png";
+            treeNode6.Name = "primitivesNode";
+            treeNode6.SelectedImageIndex = 209;
+            treeNode6.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
+            treeNode4,
+            treeNode5,
+            treeNode6});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(755, 398);
             this.profilesTreeView.TabIndex = 35;
@@ -1767,16 +1780,13 @@
             this.toolBtnShowOnMap,
             this.toolBtnFlash,
             this.toolStripSeparator1,
-            this.toolStripButton1,
-            this.toolStripSeparator2,
-            this.toolStripButton2,
-            this.toolStripButton3,
             this.toolStripButton4,
             this.toolStripSeparator3,
-            this.toolStripButton5,
             this.toolStripButton6,
+            this.openGraphWindow,
             this.toolStripSeparator4,
             this.toolStripButton7,
+            this.toolStripButton1,
             this.toolStripButton8});
             this.profilesToolStrip.Location = new System.Drawing.Point(0, 0);
             this.profilesToolStrip.Name = "profilesToolStrip";
@@ -1804,46 +1814,12 @@
             this.toolBtnFlash.Size = new System.Drawing.Size(23, 27);
             this.toolBtnFlash.Text = "toolStripButton9";
             this.toolBtnFlash.ToolTipText = "Подсветить на карте";
+            this.toolBtnFlash.Click += new System.EventHandler(this.toolBtnFlash_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 30);
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 27);
-            this.toolStripButton1.Text = "toolStripButton1";
-            this.toolStripButton1.ToolTipText = "Удалить из базы";
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 30);
-            // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(23, 27);
-            this.toolStripButton2.Text = "toolStripButton2";
-            this.toolStripButton2.ToolTipText = "Переместить на позицию вниз";
-            // 
-            // toolStripButton3
-            // 
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(23, 27);
-            this.toolStripButton3.Text = "toolStripButton3";
-            this.toolStripButton3.ToolTipText = "Переместить на позицию вверх";
             // 
             // toolStripButton4
             // 
@@ -1860,16 +1836,6 @@
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 30);
             // 
-            // toolStripButton5
-            // 
-            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
-            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton5.Name = "toolStripButton5";
-            this.toolStripButton5.Size = new System.Drawing.Size(23, 27);
-            this.toolStripButton5.Text = "toolStripButton5";
-            this.toolStripButton5.ToolTipText = "Показать информацию о профиле";
-            // 
             // toolStripButton6
             // 
             this.toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -1877,8 +1843,19 @@
             this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton6.Name = "toolStripButton6";
             this.toolStripButton6.Size = new System.Drawing.Size(23, 27);
-            this.toolStripButton6.Text = "toolStripButton6";
+            this.toolStripButton6.Text = "addProfileToGraph";
             this.toolStripButton6.ToolTipText = "Перейти к графику";
+            this.toolStripButton6.Click += new System.EventHandler(this.addProfileToGraph_Click);
+            // 
+            // openGraphWindow
+            // 
+            this.openGraphWindow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.openGraphWindow.Image = ((System.Drawing.Image)(resources.GetObject("openGraphWindow.Image")));
+            this.openGraphWindow.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.openGraphWindow.Name = "openGraphWindow";
+            this.openGraphWindow.Size = new System.Drawing.Size(23, 27);
+            this.openGraphWindow.ToolTipText = "Open Grpah window";
+            this.openGraphWindow.Click += new System.EventHandler(this.openGraphWindow_Click);
             // 
             // toolStripSeparator4
             // 
@@ -1894,6 +1871,16 @@
             this.toolStripButton7.Size = new System.Drawing.Size(23, 27);
             this.toolStripButton7.Text = "toolStripButton7";
             this.toolStripButton7.ToolTipText = "Убрать из списка";
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 27);
+            this.toolStripButton1.Text = "toolStripButton1";
+            this.toolStripButton1.ToolTipText = "Удалить из базы";
             // 
             // toolStripButton8
             // 
@@ -1930,10 +1917,10 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             this.profileSettingsTab.ResumeLayout(false);
             this.sectionTab.ResumeLayout(false);
             this.sectionTab.PerformLayout();
@@ -1987,7 +1974,6 @@
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.ToolBar secondPointToolbar;
-        private System.Windows.Forms.ToolBarButton toolBarButton1;
         private System.Windows.Forms.ToolBarButton toolBarButton2;
         private System.Windows.Forms.ToolBarButton toolBarButton5;
         private System.Windows.Forms.ToolBarButton toolBarButton3;
@@ -2001,7 +1987,6 @@
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.ToolBar firstPointToolBar;
-        private System.Windows.Forms.ToolBarButton toolBarButton54;
         private System.Windows.Forms.ToolBarButton toolBarButton56;
         private System.Windows.Forms.ToolBarButton btnCopyFirstPoint;
         private System.Windows.Forms.ToolBarButton toolBarButton58;
@@ -2023,6 +2008,7 @@
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.TextBox txtObserverHeight;
+        private System.Windows.Forms.TextBox txtFanHeight;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.ToolBar basePointToolbar;
         private System.Windows.Forms.ToolBarButton toolBarButton15;
@@ -2101,21 +2087,14 @@
         private System.Windows.Forms.ComboBox cmbPolygonLayer;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.ComboBox cmbHydrographyLayer;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox cmbRoadLayers;
         private System.Windows.Forms.ListView lvProfileAttributes;
         private System.Windows.Forms.ToolStripButton toolBtnShowOnMap;
         private System.Windows.Forms.ToolStrip profilesToolStrip;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
         private System.Windows.Forms.ToolStripButton toolStripButton4;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripButton toolStripButton5;
         private System.Windows.Forms.ToolStripButton toolStripButton6;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripButton toolStripButton7;
@@ -2124,5 +2103,10 @@
         internal System.Windows.Forms.TreeView profilesTreeView;
         private System.Windows.Forms.ColumnHeader Attribute;
         private System.Windows.Forms.ColumnHeader Value;
+        private System.Windows.Forms.Button btnRefreshLayers;
+        private System.Windows.Forms.ComboBox cmbHydrographyLayer;
+        private System.Windows.Forms.ComboBox cmbRoadLayers;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ToolStripButton openGraphWindow;
     }
 }

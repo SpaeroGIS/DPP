@@ -13,6 +13,7 @@ using System.Linq;
 using System.Windows.Forms;
 using Point = ESRI.ArcGIS.Geometry.Point;
 
+
 namespace MilSpace.Profile
 {
     /// <summary>
@@ -41,7 +42,7 @@ namespace MilSpace.Profile
             this.Instance = this;
             SetController(controller);
             controller.SetView(this);
-
+            LocalizeStrings();
         }
 
         public DockableWindowMilSpaceProfileCalc(object hook, MilSpaceProfileCalsController controller)
@@ -52,6 +53,7 @@ namespace MilSpace.Profile
             this.Instance = this;
             SubscribeForEvents();
             controller.SetView(this);
+            LocalizeStrings();
         }
 
         private void OnProfileSettingsChanged(ProfileSettingsEventArgs e)
@@ -60,6 +62,8 @@ namespace MilSpace.Profile
         }
 
         public IActiveView ActiveView => ArcMap.Document.ActiveView;
+
+        public ISpatialReference MapSpatialreverence => ArcMap.Document.FocusMap.SpatialReference;
 
         public MilSpaceProfileCalsController Controller => controller;
 
@@ -81,7 +85,7 @@ namespace MilSpace.Profile
                 txtProfileName.Text = value;
                 var text = txtProfileName.Text;
             }
-            
+
         }
 
         public bool AddSectionProfileNodes(ProfileSession profile)
@@ -139,35 +143,71 @@ namespace MilSpace.Profile
                 var newNode = new ProfileTreeNode(profile.SessionName, imageIndex, selectedImageIndex)
                 {
                     Checked = parentNode.Checked,
-                    Tag = profile.SessionId
+                    Tag = profile.SessionId,
+                    IsProfileNode = true
                 };
 
                 newNode.SetProfileName(profile.SessionName);
-                //newNode.SetProfileId(profile.SessionId.ToString());
                 newNode.SetProfileType(ConvertProfileTypeToString(profile.DefinitionType));
-                //newNode.SetProfileDistance(CalculateProfileDistance(profile.ProfileSurfaces).ToString("F4"));
-                //newNode.SetLineCount(profile.ProfileLines.Length.ToString());
+                if (profile.DefinitionType == ProfileSettingsTypeEnum.Points)
+                {
+                    var firstX = profile.ProfileLines.First().Line.FromPoint.X.ToString("F5");
+                    var firstY = profile.ProfileLines.First().Line.FromPoint.Y.ToString("F5");
+                    var secondX = profile.ProfileLines.First().Line.ToPoint.X.ToString("F5");
+                    var secondY = profile.ProfileLines.First().Line.ToPoint.Y.ToString("F5");
+
+                    newNode.SetBasePoint($"X= {firstX}; Y= {firstY};");
+                    newNode.SetToPoint($"X= {secondX}; Y= {secondY};");
+                    newNode.SetBasePointHeight(SectionHeightFirst.ToString());
+                    newNode.SetToPointHeight(SectionHeightSecond.ToString());
+                }
+
+                if (profile.DefinitionType == ProfileSettingsTypeEnum.Fun)
+                {
+                    var basePointX = profile.ProfileLines.FirstOrDefault().Line.FromPoint.X.ToString("F5");
+                    var basePointY = profile.ProfileLines.FirstOrDefault().Line.FromPoint.Y.ToString("F5");
+                    var lineDistance = profile.ProfileLines.FirstOrDefault().Line.Length.ToString("F5");
+                    var linesCount = profile.ProfileLines.ToList().Count.ToString();
+                    var height = FanHeight.ToString();
+                    var az1 = FunAzimuth1.ToString("F0");
+                    var az2 = FunAzimuth2.ToString("F0");
+
+
+                    newNode.SetBasePoint($"X= {basePointX}; Y= {basePointY};");
+                    newNode.SetLineDistance(lineDistance);
+                    newNode.SetLineCount(linesCount);
+                    newNode.SetAzimuth1(az1);
+                    newNode.SetAzimuth2(az2);
+                    newNode.SetBasePointHeight(height);
+
+
+                }
+
                 newNode.SetCreatorName(Environment.UserName);
-                //newNode.SetMapName(ArcMap.Application.Document.Title);
+
                 newNode.SetDate($"{date.ToLongDateString()} {date.ToLongTimeString()}");
 
-                newNode.SetLineDistance(string.Empty);
-                newNode.SetBasePoint(string.Empty);
-                newNode.SetToPoint(string.Empty);
-                newNode.SetAzimuth1(string.Empty);
+                //newNode.SetLineDistance(string.Empty);
+                //newNode.SetBasePoint(string.Empty);
+                //newNode.SetToPoint(string.Empty);
+                //newNode.SetAzimuth1(string.Empty);
                 //newNode.SetAzimuth2(string.Empty);
 
                 foreach (var line in profile.ProfileLines)
                 {
-                    var azimuth = (line.Angel * 180 / Math.PI).ToString("F0");
+                    var azimuth = line.Azimuth.ToString("F0");
                     //var childNode = new ProfileTreeNode($"X={line.PointFrom.X:F4}; Y={line.PointTo.Y:F4}; Дистанция={line.Length:F4} {MapUnitsText}", 205, 205);
-                    var childNode = new ProfileTreeNode($"{azimuth}{Degree}", 205, 205);
+                    var nodeName = profile.DefinitionType == ProfileSettingsTypeEnum.Points
+                        ? $"{azimuth}{Degree}"
+                        : $"{azimuth}{Degree} ({System.Array.IndexOf(profile.ProfileLines, line) + 1})";
+                    var childNode = new ProfileTreeNode(nodeName, 205, 205);
                     newNode.Nodes.Add(childNode);
                     childNode.Tag = line.Id;
                     childNode.Checked = newNode.Checked;
+                    childNode.IsProfileNode = false;
                     //ProfileName = profile.SessionName;
                     //ProfileId = profile.SessionId;
-                    
+
                     //childNode.SetProfileName(profile.SessionName);
                     //childNode.SetProfileId(profile.SessionId.ToString());
                     //childNode.SetProfileType(ConvertProfileTypeToString(profile.DefinitionType));
@@ -175,21 +215,9 @@ namespace MilSpace.Profile
                     childNode.SetLineDistance(line.Length.ToString("F5"));
                     childNode.SetBasePoint($"X={line.Line.FromPoint.X:F5}; Y={line.Line.FromPoint.Y:F5}");
                     childNode.SetToPoint($"X={line.Line.ToPoint.X:F5}; Y={line.Line.ToPoint.Y:F5}");
-                    
+
                     childNode.SetAzimuth1($"{azimuth}{Degree}");
-                    
 
-                    //if (profile.DefinitionType == ProfileSettingsTypeEnum.Fun)
-                    //{
-                    //    childNode.SetAzimuth1(FunAzimuth1 == -1 ? string.Empty : FunAzimuth1.ToString("F0"));
-                    //    childNode.SetAzimuth2(FunAzimuth2 == -1 ? string.Empty : FunAzimuth2.ToString("F0"));
-                    //}
-
-                    
-                    
-                    //childNode.SetCreatorName(Environment.UserName);
-                    //childNode.SetMapName(ArcMap.Application.Document.Title);
-                    //childNode.SetDate($"{date.ToLongDateString()} {date.ToLongTimeString()}");                  
 
                 }
                 parentNode.Nodes.Add(newNode);
@@ -305,6 +333,12 @@ namespace MilSpace.Profile
             PopulateComboBox(cmbRoadLayers, ProfileLayers.LineLayers);
         }
 
+        private void OnBuildingsComboDropped()
+        {
+            cmbBuildings.Items.Clear();
+            PopulateComboBox(cmbBuildings, ProfileLayers.PolygonLayers);
+        }
+
         private void OnHydrographyDropped()
         {
             cmbHydrographyLayer.Items.Clear();
@@ -325,6 +359,7 @@ namespace MilSpace.Profile
 
         private void SetZoomToState(object sender, TreeViewEventArgs treeViewEventArgs)
         {
+
             if (profilesTreeView.SelectedNode.Parent != null)
             {
                 toolBtnShowOnMap.Enabled = true;
@@ -388,9 +423,13 @@ namespace MilSpace.Profile
             //((IActiveViewEvents_Event) (ArcMap.Document.FocusMap)).ItemAdded += OnRasterComboDropped;
             ArcMap.Events.OpenDocument += OnRasterComboDropped;
             ArcMap.Events.OpenDocument += OnHydrographyDropped;
+            ArcMap.Events.OpenDocument += OnBuildingsComboDropped;
             ArcMap.Events.OpenDocument += OnObservationPointDropped;
             ArcMap.Events.OpenDocument += OnRoadComboDropped;
             ArcMap.Events.OpenDocument += OnVegetationDropped;
+            ArcMap.Events.OpenDocument += controller.InitiateUserProfiles;
+
+
             profilesTreeView.AfterSelect += SetZoomToState;
             profilesTreeView.AfterSelect += DisplaySelectedNodeAttributes;
             lvProfileAttributes.Resize += OnListViewResize;
@@ -520,7 +559,7 @@ namespace MilSpace.Profile
             ToolbarButtonClicked = e.Button;
             switch (secondPointToolbar.Buttons.IndexOf(e.Button))
             {
-                case 1:
+                case 0:
 
                     var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickCoordinates);
                     if (commandItem == null)
@@ -535,7 +574,7 @@ namespace MilSpace.Profile
                     activeButtton = ProfileSettingsPointButtonEnum.PointsSecond;
 
                     break;
-                case 0:
+                case 1:
                     break;
                 case 2:
                     controller.FlashPoint(ProfileSettingsPointButtonEnum.PointsSecond);
@@ -558,7 +597,6 @@ namespace MilSpace.Profile
                     {
                         PasteTextToEditField(txtSecondPointX);
                     }
-
 
 
                     PasteTextToEditField(txtSecondPointY.Focused ? txtSecondPointY : txtSecondPointX);
@@ -704,8 +742,8 @@ namespace MilSpace.Profile
 
             if (point != null)
             {
-                controlX.Text = point.X.ToString("F4");
-                controlY.Text = point.Y.ToString("F4");
+                controlX.Text = point.X.ToString("F5");
+                controlY.Text = point.Y.ToString("F5");
             }
             else
             {
@@ -761,6 +799,21 @@ namespace MilSpace.Profile
                 }
                 return -1;
             }
+        }
+
+        public int SectionHeightFirst => TryParseHeight(txtFirstHeight);
+        public int SectionHeightSecond => TryParseHeight(txtSecondHeight);
+        public int FanHeight => TryParseHeight(txtFanHeight);
+
+
+        private int TryParseHeight(TextBox heightTextBox)
+        {
+            if (int.TryParse(heightTextBox.Text, out var result))
+            {
+                return result;
+            }
+
+            return -1;
         }
 
         double IMilSpaceProfileView.FunLength
@@ -875,7 +928,7 @@ namespace MilSpace.Profile
             var node = profilesTreeView.SelectedNode;
             var ids = GetProfileAndLineIds(node);
 
-            Controller.ShowProfileOnMap(ids.Item1, ids.Item2);
+            Controller.ShowProfileOnMap();//ShowProfileOnMap(ids.Item1, ids.Item2);
         }
 
         private void profilesTreeView_AfterCheck(object sender, TreeViewEventArgs e)
@@ -961,5 +1014,64 @@ namespace MilSpace.Profile
             athimuthControl.Focus();
         }
 
+        private void azimuth2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnRefreshLayers_Click(object sender, EventArgs e)
+        {
+
+            //foreach (var control in tabPage1.Controls)
+            //{
+            //    if (control is ComboBox box)
+            //    {
+            //        box.Items.Clear();
+            //    }
+            //}
+            cmbRasterLayers.Items.Clear();
+            cmbRoadLayers.Items.Clear();
+            cmbHydrographyLayer.Items.Clear();
+            cmbBuildings.Items.Clear();
+            cmbPolygonLayer.Items.Clear();
+            cmbPointLayers.Items.Clear();
+
+            PopulateComboBox(cmbRasterLayers, ProfileLayers.RasterLayers);
+            PopulateComboBox(cmbRoadLayers, ProfileLayers.LineLayers);
+            PopulateComboBox(cmbHydrographyLayer, ProfileLayers.LineLayers);
+            PopulateComboBox(cmbBuildings, ProfileLayers.PolygonLayers);
+            PopulateComboBox(cmbPolygonLayer, ProfileLayers.PolygonLayers);
+            PopulateComboBox(cmbPointLayers, ProfileLayers.PointLayers);
+
+        }
+
+        private void toolBtnFlash_Click(object sender, EventArgs e)
+        {
+            var node = profilesTreeView.SelectedNode;
+            var ids = GetProfileAndLineIds(node);
+
+            Controller.HighlightProfileOnMap(ids.Item1, ids.Item2);
+        }
+
+        private void LocalizeStrings()
+        {
+            //TODO: Set all localization srting here
+
+            ToolTip ToolTip1 = new System.Windows.Forms.ToolTip();
+            ToolTip1.SetToolTip(this.btnRefreshLayers, "Refresh interesing layers");
+        }
+
+
+        private void addProfileToGraph_Click(object sender, EventArgs e)
+        {
+            var node = profilesTreeView.SelectedNode;
+            var ids = GetProfileAndLineIds(node);
+            controller.CallGraphsHandle(ids.Item1);
+        }
+
+        private void openGraphWindow_Click(object sender, EventArgs e)
+        {
+            controller.ShowGraphsWindow();
+        }
     }
 }

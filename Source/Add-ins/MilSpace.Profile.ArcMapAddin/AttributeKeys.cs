@@ -12,6 +12,11 @@ namespace MilSpace.Profile
         internal const string ProfileId = "ProfileId";
         internal const string ProfileType = "ProfileType";
         internal const string ProfileDistance = "ProfileDistance";
+
+        internal const string SectionFirstPoint = "SectionFirstPoint";
+        internal const string SectionSecondPoint = "SectionSecondPoint";
+        internal const string SectionFirstPointHeight = "SectionFirstPointHeight";
+        internal const string SectionSecondPointHeight = "SectionSecondPointHeight";
         internal const string LineDistance = "LineDistance";
         internal const string LinesCount = "LinesCount";
         internal const string BasePoint = "BasePoint";

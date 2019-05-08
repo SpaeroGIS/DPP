@@ -1,18 +1,15 @@
-﻿using ESRI.ArcGIS.Carto;
-using ESRI.ArcGIS.Desktop.AddIns;
+﻿using ESRI.ArcGIS.Desktop.AddIns;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Exceptions;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
+using MilSpace.DataAccess.Facade;
 using MilSpace.Profile.DTO;
 using MilSpace.Tools;
 using MilSpace.Tools.GraphicsLayer;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MilSpace.Profile
@@ -25,7 +22,6 @@ namespace MilSpace.Profile
     {
 
         private int profileId;
-        private string profileName;
         GraphicsLayerManager graphicsLayerManager;
 
         public delegate void ProfileSettingsChangedDelegate(ProfileSettingsEventArgs e);
@@ -38,6 +34,7 @@ namespace MilSpace.Profile
         List<ProfileSession> _workingProfiles = new List<ProfileSession>();
         private const string NewProfilePrefix = "Новый профиль";
 
+        private MilSpaceProfileGraphsController graphsController;
 
         private Dictionary<ProfileSettingsPointButtonEnum, IPoint> pointsToShow = new Dictionary<ProfileSettingsPointButtonEnum, IPoint>()
 
@@ -64,7 +61,7 @@ namespace MilSpace.Profile
         internal MilSpaceProfileCalsController() { }
 
         internal void SetView(IMilSpaceProfileView view)
-        {           
+        {
             View = view;
             SetPeofileId();
             SetProfileName();
@@ -224,7 +221,7 @@ namespace MilSpace.Profile
                 var newProfileId = GenerateProfileId();
                 var newProfileName = GenerateProfileName(newProfileId);
 
-                
+
                 var session = manager.GenerateProfile(View.DemLayerName, profileSetting.ProfileLines, View.SelectedProfileSettingsType, newProfileId, newProfileName);
 
                 SetPeofileId();
@@ -264,7 +261,8 @@ namespace MilSpace.Profile
                 if (lineId < 0)
                 {
                     GraphicsLayerManager.RemoveLinesFromWorkingGraphics(profile.ConvertLinesToEsriPolypile(ArcMap.Document.FocusMap.SpatialReference), profile.SessionId);
-                }else if (profile.ProfileLines.Any(l => l.Id == lineId))
+                }
+                else if (profile.ProfileLines.Any(l => l.Id == lineId))
                 {
                     GraphicsLayerManager.HideLineFromWorkingGraphics(profileId, lineId);
                 }
@@ -274,7 +272,7 @@ namespace MilSpace.Profile
         internal void AddProfileToList(ProfileSession profile)
         {
             bool isAddToGraphics = false;
-            
+
             switch (profile.DefinitionType)
             {
                 case ProfileSettingsTypeEnum.Points:
@@ -310,53 +308,101 @@ namespace MilSpace.Profile
             var profileName = View.GetProfileNameFromNode();
             switch (profileType)
             {
-                
+
                 case ProfileSettingsTypeEnum.Points:
                     return View.GetSectionProfile(profileName);
                 case ProfileSettingsTypeEnum.Fun:
                     return View.GetFanProfile(profileName);
-                
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
         internal void ShowProfileOnMap(int profileId, int lineId)
-        {          
+        {
             GraphicsLayerManager.FlashLineOnWorkingGraphics(profileId, lineId);
         }
 
-        private IPoint GetEnvelopeCenterPoint(IEnvelope envelope)
+        internal void ShowProfileOnMap()
         {
-            var x = (envelope.XMin + envelope.XMax) / 2;
-            var y = (envelope.YMin + envelope.YMax) / 2;
-            return new PointClass{X = x, Y = y};
+            var mapScale = View.ActiveView.FocusMap.MapScale;
+            var profile = GetProfileSessionFromSelectedNode();
+            var profileLines = profile.ProfileLines.Select(line => line.Line).ToArray();
+            IEnvelope env = new EnvelopeClass();
+
+            foreach (var line in profileLines)
+            {
+                env.Union(line.Envelope);
+            }
+
+            var envelopeCenter = GetEnvelopeCenterPoint(env);
+            env.CenterAt(envelopeCenter);
+            View.ActiveView.Extent = env;
+            View.ActiveView.FocusMap.MapScale = mapScale;
+            View.ActiveView.Refresh();
+            //GraphicsLayerManager.UpdateCalculatingGraphic(profileLines, profileId, (int)profile.DefinitionType);
         }
 
 
+        internal void HighlightProfileOnMap(int profileId, int lineId)
+        {
+            GraphicsLayerManager.FlashLineOnWorkingGraphics(profileId, lineId);
+        }
 
 
+        internal void InitiateUserProfiles()
+        {
+            MilSpaceProfileFacade.GetUserProfileSessions().ToList().ForEach(p =>
+               {
+                   p.ConvertLinesToEsriPolypile(View.ActiveView.FocusMap.SpatialReference);
+                   AddProfileToList(p);
+               }
+            );
+        }
+
+        internal ProfileSession GetProfileSessionById(int profileId)
+        {
+            var profile = MilSpaceProfileFacade.GetProfileSessionById(profileId);
+            profile.ConvertLinesToEsriPolypile(View.ActiveView.FocusMap.SpatialReference);
+            return profile;
+        }
+
+        internal void CallGraphsHandle(int profileSessionId)
+        {
+            var profileSession = GetProfileSessionById(profileSessionId);
+            if (profileSession != null)
+            {
+                MilSpaceProfileGraphsController.ShowWindow();
+                MilSpaceProfileGraphsController.AddSession(profileSession);
+            }
+        }
 
         internal void CallGraphsHandle(ProfileSession profileSession, ProfileSettingsTypeEnum profileType, double observerHeight)
         {
-            var winImpl = AddIn.FromID<DockableWindowMilSpaceProfileGraph.AddinImpl>(ThisAddIn.IDs.DockableWindowMilSpaceProfileGraph);
-
-            winImpl.MilSpaceProfileCalsController.ShowWindow();
-            winImpl.MilSpaceProfileCalsController.AddSession(profileSession, observerHeight, this);
+            MilSpaceProfileGraphsController.ShowWindow();
+            MilSpaceProfileGraphsController.AddSession(profileSession);
         }
 
-        private GraphicsLayerManager GraphicsLayerManager
+        internal void ShowGraphsWindow()
+        {
+            MilSpaceProfileGraphsController.ShowWindow();
+        }
+
+        internal MilSpaceProfileGraphsController MilSpaceProfileGraphsController
         {
             get
             {
-                if (graphicsLayerManager == null)
+                if (graphsController ==  null)
                 {
-                    graphicsLayerManager = new GraphicsLayerManager(View.ActiveView);
+                    var winImpl = AddIn.FromID<DockableWindowMilSpaceProfileGraph.AddinImpl>(ThisAddIn.IDs.DockableWindowMilSpaceProfileGraph);
+                    graphsController = winImpl.MilSpaceProfileGraphsController;
                 }
 
-                return graphicsLayerManager;
+                return graphsController;
             }
         }
+
 
 
         private void InvokeOnProfileSettingsChanged()
@@ -377,7 +423,7 @@ namespace MilSpace.Profile
 
         private void SetProfileName()
         {
-            View.ProfileName = $"{NewProfilePrefix} {profileId}"; 
+            View.ProfileName = $"{NewProfilePrefix} {profileId}";
         }
 
         private string GenerateProfileName(int id)
@@ -391,6 +437,26 @@ namespace MilSpace.Profile
         private int GenerateProfileId()
         {
             return (int)(DateTime.Now.ToOADate() * 10000);
+        }
+
+        private IPoint GetEnvelopeCenterPoint(IEnvelope envelope)
+        {
+            var x = (envelope.XMin + envelope.XMax) / 2;
+            var y = (envelope.YMin + envelope.YMax) / 2;
+            return new PointClass { X = x, Y = y };
+        }
+
+        private GraphicsLayerManager GraphicsLayerManager
+        {
+            get
+            {
+                if (graphicsLayerManager == null)
+                {
+                    graphicsLayerManager = new GraphicsLayerManager(View.ActiveView);
+                }
+
+                return graphicsLayerManager;
+            }
         }
     }
 }
