@@ -374,14 +374,14 @@ namespace MilSpace.Profile
             if (profileSession != null)
             {
                 MilSpaceProfileGraphsController.ShowWindow();
-                MilSpaceProfileGraphsController.AddSession(profileSession);
+                MilSpaceProfileGraphsController.AddSession(profileSession, 0, this);
             }
         }
 
         internal void CallGraphsHandle(ProfileSession profileSession, ProfileSettingsTypeEnum profileType, double observerHeight)
         {
             MilSpaceProfileGraphsController.ShowWindow();
-            MilSpaceProfileGraphsController.AddSession(profileSession);
+            MilSpaceProfileGraphsController.AddSession(profileSession, observerHeight, this);
         }
 
         internal void ShowGraphsWindow()

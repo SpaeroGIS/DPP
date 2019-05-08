@@ -21,10 +21,13 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         internal delegate void ProfileGrapchClickedDelegate(GraphProfileClickedArgs e);
         internal delegate void ProfileChangeInvisiblesZonesDelegate(GroupedLines profileLines, RgbColor rgbVisibleColor,
                                                                         RgbColor rgbInvisibleColor, int sessionId,
-                                                                        bool update, int profilesCount);
+                                                                        bool update, List<int> linesIds);
+
+        internal delegate void DeleteProfileDelegate(int sessionId, int lineId);
 
         internal event ProfileGrapchClickedDelegate OnProfileGraphClicked;
         internal event ProfileChangeInvisiblesZonesDelegate InvisibleZonesChanged;
+        internal event DeleteProfileDelegate ProfileRemoved;
 
         public SurfaceProfileChartController()
         {
@@ -84,18 +87,26 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 profileSurfaces = _profileSession.ProfileSurfaces;
             }
 
+            List<int> linesIds = new List<int>();
+
+            foreach (var surface in profileSurfaces)
+            {
+                linesIds.Add(surface.LineId);
+            }
+
             foreach (var profileSessionProfileLine in profileSurfaces)
             {
                 var profileSurfacePoints = profileSessionProfileLine.ProfileSurfacePoints;
 
                 AddInvisibleZone(observersHeights[profileSessionProfileLine.LineId], profileSessionProfileLine,
-                                    visibleColors[i], invisibleColors[i], false);
+                                    visibleColors[i], invisibleColors[i], false, linesIds);
                 i++;
             }
         }
 
         internal void AddInvisibleZone(double observerHeight, ProfileSurface profileSurface,
-                                        Color visibleColor, Color invisibleColor, bool update = true)
+                                        Color visibleColor, Color invisibleColor, bool update = true,
+                                        List<int> linesIds = null)
         {
             var invisibleSurface = new ProfileSurface();
             var invisiblePoints = new List<ProfileSurfacePoint>();
@@ -147,9 +158,11 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             var profileLines = GetLines(profileSurface, invisibleSurface, _profileSession.SessionId);
 
+           
+
             InvisibleZonesChanged?.Invoke(profileLines, ColorToEsriRgb(visibleColor),
                                             ColorToEsriRgb(invisibleColor), _profileSession.SessionId,
-                                            update, _surfaceProfileChart.ProfilesProperties.Count());
+                                            update, linesIds);
         }
 
         internal void SetProfilesProperties()
@@ -179,6 +192,18 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 _surfaceProfileChart.ProfilesProperties.Add(profileProperty);
             }
 
+        }
+
+        internal void InvokeOnProfileGraphClicked(double wgs94X, double wgs94Y)
+        {
+            var point = new GraphProfileClickedArgs(wgs94X, wgs94Y);
+            point.ProfilePoint.SpatialReference = EsriTools.Wgs84Spatialreference;
+            OnProfileGraphClicked?.Invoke(point);
+        }
+
+        internal void InvokeProfileRemoved(int profileId)
+        {
+            ProfileRemoved?.Invoke(_profileSession.SessionId, profileId);
         }
 
         private List<ProfileSurfacePoint> FindExtremePoints()
@@ -246,12 +271,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 ((profileProperty.PathLength - invisibleLegth) * 100) / profileProperty.PathLength;
         }
 
-        internal void InvokeOnProfileGraphClicked(double wgs94X, double wgs94Y)
-        {
-            var point = new GraphProfileClickedArgs(wgs94X, wgs94Y);
-            point.ProfilePoint.SpatialReference = EsriTools.Wgs84Spatialreference;
-            OnProfileGraphClicked?.Invoke(point);
-        }
 
         private static List<double> FindAngles(ProfileSurfacePoint[] profileSurfacePoints)
         {
@@ -475,5 +494,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             return endLine;
         }
+
     }
 }
