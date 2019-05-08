@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
-
+using ESRI.ArcGIS.Display;
+using System.Drawing;
+using MilSpace.DataAccess;
 
 namespace MilSpace.Profile.SurfaceProfileChartControl
 {
@@ -12,13 +14,20 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         private SurfaceProfileChart _surfaceProfileChart;
         private ProfileSession _profileSession;
         private MilSpaceProfileGraphsController _graphsController;
+        private double _defaultObserverHeight;
 
         private List<ProfileSurfacePoint> _extremePoints = new List<ProfileSurfacePoint>();
 
         internal delegate void ProfileGrapchClickedDelegate(GraphProfileClickedArgs e);
+        internal delegate void ProfileChangeInvisiblesZonesDelegate(GroupedLines profileLines, RgbColor rgbVisibleColor,
+                                                                        RgbColor rgbInvisibleColor, int sessionId,
+                                                                        bool update, List<int> linesIds);
+
+        internal delegate void DeleteProfileDelegate(int sessionId, int lineId);
 
         internal event ProfileGrapchClickedDelegate OnProfileGraphClicked;
-
+        internal event ProfileChangeInvisiblesZonesDelegate InvisibleZonesChanged;
+        internal event DeleteProfileDelegate ProfileRemoved;
 
         public SurfaceProfileChartController()
         {
@@ -35,8 +44,10 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             _surfaceProfileChart = currentChart;
         }
 
-        internal SurfaceProfileChart CreateProfileChart()
+        internal SurfaceProfileChart CreateProfileChart(double observerHeight)
         {
+            _defaultObserverHeight = observerHeight;
+
             _surfaceProfileChart = new SurfaceProfileChart(this);
             _surfaceProfileChart.InitializeGraph();
 
@@ -66,22 +77,36 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             _surfaceProfileChart.SetExtremePoints(_extremePoints);
         }
 
-        internal void AddInvisibleZones(Dictionary<int, double> observersHeights, ProfileSurface[] profileSurfaces = null)
+        internal void AddInvisibleZones(Dictionary<int, double> observersHeights, List<Color> visibleColors, List<Color> invisibleColors,
+                                            ProfileSurface[] profileSurfaces = null)
         {
+            var i = 0;
+
             if (profileSurfaces == null)
             {
                 profileSurfaces = _profileSession.ProfileSurfaces;
+            }
+
+            List<int> linesIds = new List<int>();
+
+            foreach (var surface in profileSurfaces)
+            {
+                linesIds.Add(surface.LineId);
             }
 
             foreach (var profileSessionProfileLine in profileSurfaces)
             {
                 var profileSurfacePoints = profileSessionProfileLine.ProfileSurfacePoints;
 
-                AddInvisibleZone(observersHeights[profileSessionProfileLine.LineId], profileSessionProfileLine);
+                AddInvisibleZone(observersHeights[profileSessionProfileLine.LineId], profileSessionProfileLine,
+                                    visibleColors[i], invisibleColors[i], false, linesIds);
+                i++;
             }
         }
 
-        internal void AddInvisibleZone(double observerHeight, ProfileSurface profileSurface)
+        internal void AddInvisibleZone(double observerHeight, ProfileSurface profileSurface,
+                                        Color visibleColor, Color invisibleColor, bool update = true,
+                                        List<int> linesIds = null)
         {
             var invisibleSurface = new ProfileSurface();
             var invisiblePoints = new List<ProfileSurfacePoint>();
@@ -100,12 +125,13 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                         if (CalcAngleOfVisibility(observerHeight, profileSurface.ProfileSurfacePoints[i],
                             profileSurface.ProfileSurfacePoints[i + 1]) < 0)
                         {
-                            invisiblePoints.Add(profileSurface.ProfileSurfacePoints[i + 1]);
-                            isInvisibleZone = true;
-                            sightLineKoef = (profileSurface.ProfileSurfacePoints[i + 1].Z - observerHeight)
-                                / (profileSurface.ProfileSurfacePoints[i + 1].Distance);
-                            i++;
+                            var firstInvisiblePoint = profileSurface.ProfileSurfacePoints[i + 1];
 
+                            invisiblePoints.Add(firstInvisiblePoint);
+
+                            isInvisibleZone = true;
+                            sightLineKoef = (firstInvisiblePoint.Z - observerHeight) / (firstInvisiblePoint.Distance);
+                            i++;
                         }
                     }
                 }
@@ -116,6 +142,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                     {
                         isInvisibleZone = false;
                         invisiblePoints.Add(profileSurface.ProfileSurfacePoints[i]);
+
                         i++;
                     }
                     else
@@ -123,12 +150,19 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                         invisiblePoints.Add(profileSurface.ProfileSurfacePoints[i]);
                     }
                 }
-
             }
 
             invisibleSurface.ProfileSurfacePoints = invisiblePoints.ToArray();
             _surfaceProfileChart.AddInvisibleLine(invisibleSurface);
             CalcProfilesVisiblePercents(invisibleSurface, profileSurface);
+
+            var profileLines = GetLines(profileSurface, invisibleSurface, _profileSession.SessionId);
+
+           
+
+            InvisibleZonesChanged?.Invoke(profileLines, ColorToEsriRgb(visibleColor),
+                                            ColorToEsriRgb(invisibleColor), _profileSession.SessionId,
+                                            update, linesIds);
         }
 
         internal void SetProfilesProperties()
@@ -153,18 +187,28 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
                 profileProperty.Azimuth = profileSessionProfileLine.Azimuth;//  FindAzimuth(RadiansToDegrees(profileSessionProfileLine.Angel));
 
-                profileProperty.ObserverHeight = 0;
+                profileProperty.ObserverHeight = _defaultObserverHeight;
 
                 _surfaceProfileChart.ProfilesProperties.Add(profileProperty);
             }
 
         }
 
+        internal void InvokeOnProfileGraphClicked(double wgs94X, double wgs94Y)
+        {
+            var point = new GraphProfileClickedArgs(wgs94X, wgs94Y);
+            point.ProfilePoint.SpatialReference = EsriTools.Wgs84Spatialreference;
+            OnProfileGraphClicked?.Invoke(point);
+        }
+
+        internal void InvokeProfileRemoved(int profileId)
+        {
+            ProfileRemoved?.Invoke(_profileSession.SessionId, profileId);
+        }
+
         private List<ProfileSurfacePoint> FindExtremePoints()
         {
             List<ProfileSurfacePoint> extremePoints = new List<ProfileSurfacePoint>();
-
-            extremePoints.Add(_profileSession.ProfileSurfaces[0].ProfileSurfacePoints[0]);
 
             foreach (var profileSessionProfileLine in _profileSession.ProfileLines)
             {
@@ -191,7 +235,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         private void CalcProfilesVisiblePercents(ProfileSurface invisibleSurface, ProfileSurface allSurface)
         {
-            var profileProperty 
+            var profileProperty
                     = _surfaceProfileChart
                        .ProfilesProperties
                        .First(property => property.LineId == invisibleSurface.LineId);
@@ -227,12 +271,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 ((profileProperty.PathLength - invisibleLegth) * 100) / profileProperty.PathLength;
         }
 
-        internal void InvokeOnProfileGraphClicked(double wgs94X, double wgs94Y)
-        {
-            var point = new GraphProfileClickedArgs(wgs94X, wgs94Y);
-            point.ProfilePoint.SpatialReference = EsriTools.Wgs84Spatialreference;
-            OnProfileGraphClicked?.Invoke(point);
-        }
 
         private static List<double> FindAngles(ProfileSurfacePoint[] profileSurfacePoints)
         {
@@ -307,6 +345,154 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         private static double RadiansToDegrees(double radians)
         {
             return radians * 180 / Math.PI;
+        }
+
+        private static RgbColor ColorToEsriRgb(Color rgb)
+        {
+            return new RgbColor
+            {
+                Blue = rgb.B,
+                Red = rgb.R,
+                Green = rgb.G
+            };
+        }
+
+        private static GroupedLines GetLines(ProfileSurface allSurface, ProfileSurface invisibleSurface, int sessionId)
+        {
+            var profileLines = new List<ProfileLine>();
+
+            var lineId = 1;
+
+            var j = 0;
+
+            var isInvisiblePointsFinished = false;
+
+            if (invisibleSurface.ProfileSurfacePoints.Count() == 0)
+            {
+                isInvisiblePointsFinished = true;
+            }
+
+            var profileVisibleLine = new ProfileLine
+            {
+                Visible = true
+            };
+
+            var profileInvisibleLine = new ProfileLine
+            {
+                Visible = false
+            };
+
+            var profileVisiblePoints = new List<ProfileSurfacePoint>();
+            var profileInvisiblePoints = new List<ProfileSurfacePoint>();
+
+            for (int i = 0; i < allSurface.ProfileSurfacePoints.Count(); i++)
+            {
+                if (!isInvisiblePointsFinished && allSurface.ProfileSurfacePoints[i] == invisibleSurface.ProfileSurfacePoints[j])
+                {
+                    if (profileInvisiblePoints.Count == 0)
+                    {
+                        StartOfLineHandler(ref profileInvisibleLine, lineId, allSurface, i);
+                        lineId++;
+
+                        if (profileVisiblePoints.Count > 0)
+                        {
+                            profileLines.Add(EndOfLineHandler(profileVisibleLine, allSurface, i));
+
+                            profileVisibleLine = new ProfileLine
+                            {
+                                Visible = true
+                            };
+
+                            profileVisiblePoints = new List<ProfileSurfacePoint>();
+                        }
+                    }
+
+                    if (i == allSurface.ProfileSurfacePoints.Count() - 1)
+                    {
+                       profileLines.Add(EndOfLineHandler(profileInvisibleLine, allSurface, i));
+
+                        profileInvisibleLine = new ProfileLine
+                        {
+                            Visible = false
+                        };
+
+                         profileInvisiblePoints = new List<ProfileSurfacePoint>();
+                    }
+
+                    if (j == invisibleSurface.ProfileSurfacePoints.Count() - 1)
+                    {
+                        isInvisiblePointsFinished = true;
+                    }
+
+                    profileInvisiblePoints.Add(allSurface.ProfileSurfacePoints[i]);
+                    j++;
+                }
+                else
+                {
+                    if (profileVisiblePoints.Count == 0)
+                    {
+                        StartOfLineHandler(ref profileVisibleLine, lineId, allSurface, i);
+
+                        lineId++;
+
+                        if (profileInvisiblePoints.Count > 0)
+                        {
+                            profileLines.Add(EndOfLineHandler(profileInvisibleLine, allSurface, i));
+
+                            profileInvisibleLine = new ProfileLine
+                            {
+                                Visible = false
+                            };
+
+                            profileInvisiblePoints = new List<ProfileSurfacePoint>();
+                        }
+                    }
+
+                    if (i == allSurface.ProfileSurfacePoints.Count() - 1)
+                    {
+                        profileLines.Add(EndOfLineHandler(profileVisibleLine, allSurface, i));
+
+                        profileVisibleLine = new ProfileLine
+                        {
+                            Visible = true
+                        };
+
+                        profileVisiblePoints = new List<ProfileSurfacePoint>();
+                    }
+
+                    profileVisiblePoints.Add(allSurface.ProfileSurfacePoints[i]);
+                }
+            }
+
+            return new GroupedLines
+            {
+                Lines = profileLines,
+                LineId = allSurface.LineId
+            };
+        }
+        
+        private static void StartOfLineHandler(ref ProfileLine startLine,
+                                                int startLineId, ProfileSurface allSurfaces,
+                                                 int pointIndex)
+        {
+            startLine.PointFrom = new ProfilePoint
+            {
+                X = allSurfaces.ProfileSurfacePoints[pointIndex].X,
+                Y = allSurfaces.ProfileSurfacePoints[pointIndex].Y
+            };
+
+            startLine.Id = startLineId;
+        }
+
+        private static ProfileLine EndOfLineHandler(ProfileLine endLine, ProfileSurface allSurfaces, int pointIndex)
+        {
+            endLine.PointTo = new ProfilePoint
+            {
+                X = allSurfaces.ProfileSurfacePoints[pointIndex].X,
+                Y = allSurfaces.ProfileSurfacePoints[pointIndex].Y
+            };
+
+            return endLine;
         }
 
     }

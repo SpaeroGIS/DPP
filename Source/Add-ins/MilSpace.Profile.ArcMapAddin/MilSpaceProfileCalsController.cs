@@ -326,7 +326,7 @@ namespace MilSpace.Profile
             //Add graphics 
             if (isAddToGraphics)
             {
-                GraphicsLayerManager.AddLinesToWorkingGraphics(profile.ConvertLinesToEsriPolypile(ArcMap.Document.FocusMap.SpatialReference), profile.SessionId);
+               // GraphicsLayerManager.AddLinesToWorkingGraphics(profile.ConvertLinesToEsriPolypile(ArcMap.Document.FocusMap.SpatialReference), profile.SessionId);
             }
 
             GraphicsLayerManager.EmptyProfileGraphics(MilSpaceGraphicsTypeEnum.Calculating);
@@ -391,21 +391,26 @@ namespace MilSpace.Profile
             );
         }
 
-       
+        internal ProfileSession GetProfileSessionById(int profileId)
+        {
+            var profile = MilSpaceProfileFacade.GetProfileSessionById(profileId);
+            profile.ConvertLinesToEsriPolypile(View.ActiveView.FocusMap.SpatialReference);
+            return profile;
+        }
         internal void CallGraphsHandle(int profileSessionId)
         {
             var profileSession = GetProfileSessionById(profileSessionId);
             if (profileSession != null)
             {
                 MilSpaceProfileGraphsController.ShowWindow();
-                MilSpaceProfileGraphsController.AddSession(profileSession);
+                MilSpaceProfileGraphsController.AddSession(profileSession, 0, this);
             }
         }
 
-        internal void CallGraphsHandle(ProfileSession profileSession)
+        internal void CallGraphsHandle(ProfileSession profileSession, ProfileSettingsTypeEnum profileType, double observerHeight)
         {
             MilSpaceProfileGraphsController.ShowWindow();
-            MilSpaceProfileGraphsController.AddSession(profileSession);
+            MilSpaceProfileGraphsController.AddSession(profileSession, observerHeight, this);
         }
 
         internal void ShowGraphsWindow()

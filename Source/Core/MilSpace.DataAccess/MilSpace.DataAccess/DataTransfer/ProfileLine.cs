@@ -12,6 +12,7 @@ namespace MilSpace.DataAccess.DataTransfer
         public double Angel;
         public double Azimuth;
         public double Length;
+        public bool Visible;
 
         [XmlIgnore]
         public IPolyline Line;

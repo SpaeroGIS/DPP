@@ -13,6 +13,7 @@ namespace MilSpace.Tools.GraphicsLayer
         public IElement Element;
         public int ProfileId;
         public int ElementId;
+        public int LineId;
         public IPolyline Source;
     }
 }
