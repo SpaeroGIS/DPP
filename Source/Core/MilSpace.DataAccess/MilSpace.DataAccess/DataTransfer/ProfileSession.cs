@@ -40,7 +40,13 @@ namespace MilSpace.DataAccess.DataTransfer
                 pointFrom.Project(spatialReference);
                 pointTo.Project(spatialReference);
 
-                return EsriTools.CreatePolylineFromPoints(pointFrom, pointTo);
+                var result = EsriTools.CreatePolylineFromPoints(pointFrom, pointTo);
+                if (l.Line == null)
+                {
+                    l.Line = result;
+                }
+
+                return result;
             }
             ).ToArray();
         }
@@ -55,6 +61,40 @@ namespace MilSpace.DataAccess.DataTransfer
                 serializer.Serialize(stream, session);
                 try
                 {
+
+                    var resu = Encoding.UTF8.GetString((stream as MemoryStream).ToArray());
+
+
+                    //
+                    ProfileSession sessionOut = null;
+
+                    XmlSerializer serializerOut = new XmlSerializer(typeof(ProfileSession));
+
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        using (var writer = new StreamWriter(memoryStream))
+                        {
+                            // Various for loops etc as necessary that will ultimately do this:
+                            writer.Write(resu);
+                            writer.Flush();
+
+                            try
+                            {
+                                memoryStream.Seek(0, SeekOrigin.Begin);
+                                if (serializer.Deserialize(memoryStream) is ProfileSession result)
+                                {
+                                    sessionOut = result;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                //TODO: log the error
+                                //throw new MilSpaceDataException("MilSp_Profile", DataOperationsEnum.Convert, ex);
+                            }
+                        }
+                    }
+                    //
+
                     return Encoding.UTF8.GetString((stream as MemoryStream).ToArray());
                 }
                 catch (Exception ex)
@@ -65,8 +105,6 @@ namespace MilSpace.DataAccess.DataTransfer
                 return null;
             }
         }
-
-
 
     }
 }

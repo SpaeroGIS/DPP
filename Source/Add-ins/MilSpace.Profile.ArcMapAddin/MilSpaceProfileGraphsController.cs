@@ -1,27 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MilSpace.Tools.GraphicsLayer;
-using MilSpace.Profile.SurfaceProfileChartControl;
-using MilSpace.DataAccess.DataTransfer;
-using ESRI.ArcGIS.esriSystem;
+﻿using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
-using ESRI.ArcGIS.Desktop.AddIns;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Tools;
 using ESRI.ArcGIS.Display;
 using MilSpace.Core.Tools.Helper;
 using MilSpace.DataAccess;
+using MilSpace.DataAccess.DataTransfer;
+using MilSpace.Profile.SurfaceProfileChartControl;
+
 
 namespace MilSpace.Profile
 {
     public class MilSpaceProfileGraphsController
     {
         private SurfaceProfileChartController _surfaceProfileChartController;
+
         private MilSpaceProfileCalsController _profileCalcController;
         private GraphicsLayerManager _graphicsLayerManager;
+        private IDockableWindow dockableWindow;
 
         internal DockableWindowMilSpaceProfileGraph View { get; private set; }
 
@@ -103,11 +99,15 @@ namespace MilSpace.Profile
         internal void ShowWindow()
         {
             ArcMap.Application.CurrentTool = null;
-            UID dockWinID = new UIDClass();
-            dockWinID.Value = ThisAddIn.IDs.DockableWindowMilSpaceProfileGraph;
-            IDockableWindow dockWindow = ArcMap.DockableWindowManager.GetDockableWindow(dockWinID);
-            dockWindow.Show(true);
+            if (!IsWindowVisible)
+            {
+                Docablewindow.Show(true);
+            }
         }
+
+
+        
+        internal bool IsWindowVisible => Docablewindow.IsVisible();
 
         internal void AddSession(ProfileSession profileSession, double observerHeight, MilSpaceProfileCalsController calsController)
         {
@@ -128,5 +128,20 @@ namespace MilSpace.Profile
         {
             View.RemoveCurrentTab();
         }
-    }
+
+        private IDockableWindow Docablewindow
+        {
+            get
+            {
+                if (dockableWindow == null)
+                {
+                    UID dockWinID = new UIDClass();
+                    dockWinID.Value = ThisAddIn.IDs.DockableWindowMilSpaceProfileGraph;
+                    dockableWindow = ArcMap.DockableWindowManager.GetDockableWindow(dockWinID);
+                }
+
+                return dockableWindow;
+            }
+        }
+}
 }
