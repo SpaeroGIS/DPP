@@ -42,6 +42,8 @@ namespace MilSpace.Profile
 
         double FunLength { get; }
 
+        double ObserveHeight { get; }
+
         MilSpaceProfileCalsController Controller { get; }
 
         bool AllowToProfileCalc { get; }

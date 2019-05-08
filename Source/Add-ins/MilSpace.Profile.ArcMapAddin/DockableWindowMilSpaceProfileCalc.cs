@@ -652,7 +652,7 @@ namespace MilSpace.Profile
 
         public int SectionHeightFirst => TryParseHeight(txtFirstHeight);
         public int SectionHeightSecond => TryParseHeight(txtSecondHeight);
-        public int FanHeight => TryParseHeight(txtFanHeight);
+        public int FanHeight => TryParseHeight(txtObserverHeight);
 
         private int TryParseHeight(TextBox heightTextBox)
         {
@@ -677,6 +677,23 @@ namespace MilSpace.Profile
             }
         }
 
+        double IMilSpaceProfileView.ObserveHeight
+        {
+            get
+            {
+                if (SelectedProfileSettingsType == ProfileSettingsTypeEnum.Fun)
+                {
+                    return FanHeight;
+                }
+                else if (SelectedProfileSettingsType == ProfileSettingsTypeEnum.Points)
+                {
+                    return SectionHeightFirst;
+                }
+
+                throw new NotImplementedException();
+            }
+        }
+
         private void panel1_Enter(object sender, EventArgs e)
         {
             ProfileLayers.GetAllLayers();
@@ -688,19 +705,8 @@ namespace MilSpace.Profile
             var session = controller.GenerateProfile();
             if (session != null)
             {
-                double observerHeight = 0;
-
-                if (session.DefinitionType == ProfileSettingsTypeEnum.Fun)
-                {
-                    observerHeight = Convert.ToDouble(txtObserverHeight.Text);
-                }
-                else if (session.DefinitionType == ProfileSettingsTypeEnum.Points)
-                {
-                    observerHeight = Convert.ToDouble(txtFirstHeight.Text);
-                }
-
                 controller.AddProfileToList(session);
-                controller.CallGraphsHandle(session, SelectedProfileSettingsType, observerHeight);
+                controller.CallGraphsHandle(session);
             }
             else
             {
