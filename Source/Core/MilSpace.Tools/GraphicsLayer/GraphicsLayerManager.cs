@@ -123,31 +123,18 @@ namespace MilSpace.Tools.GraphicsLayer
 
         }
 
-        public void FlashLineOnWorkingGraphics(int profileId, int lineId)
+        public void FlashLineOnWorkingGraphics(IEnumerable<IGeometry> flashingGeometry)
         {
             var curList = allGraphics[MilSpaceGraphicsTypeEnum.Session];
             IGeometry flashGeometry = null;
-            if (lineId > 0)
-            {
-                int elementId = lineId;
 
-                var graphic = curList.FirstOrDefault(g => g.ProfileId == profileId && g.ElementId == elementId);
-                if (graphic != null)
-                {
-                    flashGeometry = graphic.Source;
-                }
-            }
-            else
-            {
-                var graphics = curList.Where(g => g.ProfileId == profileId).Select(g => g.Source).ToList();
-                IGeometryCollection theGeomColl = new GeometryBagClass();
-                graphics.ForEach(pl => theGeomColl.AddGeometry(pl));
+            IGeometryCollection theGeomColl = new GeometryBagClass();
+            flashingGeometry.ToList().ForEach(pl => theGeomColl.AddGeometry(pl));
 
-                ITopologicalOperator theTopoOp = new PolylineClass();
-                theTopoOp.ConstructUnion((IEnumGeometry)theGeomColl);
+            ITopologicalOperator theTopoOp = new PolylineClass();
+            theTopoOp.ConstructUnion((IEnumGeometry)theGeomColl);
 
-                flashGeometry = theTopoOp as IGeometry;
-            }
+            flashGeometry = theTopoOp as IGeometry;
 
             if (flashGeometry != null)
             {
@@ -299,7 +286,7 @@ namespace MilSpace.Tools.GraphicsLayer
                                                 MilSpaceGraphicsTypeEnum graphicsType)
         {
             var curList = allGraphics[graphicsType];
-            
+
             foreach (var groupedLine in allGroupedLines)
             {
                 int elementId = 0;
@@ -308,7 +295,7 @@ namespace MilSpace.Tools.GraphicsLayer
                 {
                     elementId++;
 
-                    var graphic = curList.FirstOrDefault(g => g.ProfileId == profileId && g.ElementId == elementId 
+                    var graphic = curList.FirstOrDefault(g => g.ProfileId == profileId && g.ElementId == elementId
                                                                                        && g.LineId == groupedLine.LineId);
 
                     DeleteGraphicsElement(graphic);
