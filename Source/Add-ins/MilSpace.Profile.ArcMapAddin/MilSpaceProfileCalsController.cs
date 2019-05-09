@@ -266,6 +266,7 @@ namespace MilSpace.Profile
             var result = MilSpaceProfileFacade.DeleteUserSessions(View.SelectedProfileSessionIds.ProfileSessionId);
             if (result)
             {
+
                 return View.RemoveTreeViewItem();
             }
             return true;
@@ -407,8 +408,10 @@ namespace MilSpace.Profile
         internal void CallGraphsHandle(int profileSessionId)
         {
             var profileSession = GetProfileSessionById(profileSessionId);
+
             if (profileSession != null)
             {
+                profileSession.SetSegments(ArcMap.Document.FocusMap.SpatialReference);
                 CallGraphsHandle(profileSession);
             }
         }
@@ -473,7 +476,7 @@ namespace MilSpace.Profile
             return new PointClass { X = x, Y = y };
         }
 
-        private void GraphRedrawn(GroupedLines profileLines, int sessionId, bool update, List<int> linesIds)
+        private void GraphRedrawn(GroupedLines profileLines, int sessionId, bool update, List<int> linesIds = null)
         {
             if (update)
             {

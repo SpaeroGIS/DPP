@@ -21,7 +21,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal delegate void ProfileGrapchClickedDelegate(GraphProfileClickedArgs e);
         internal delegate void ProfileChangeInvisiblesZonesDelegate(GroupedLines profileLines, int sessionId,
-                                                                        bool update, List<int> linesIds);
+                                                                        bool update, List<int> linesIds = null);
 
         internal delegate void DeleteProfileDelegate(int sessionId, int lineId);
 
@@ -214,6 +214,14 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         internal void InvokeProfileRemoved(int profileId)
         {
             ProfileRemoved?.Invoke(_profileSession.SessionId, profileId);
+        }
+
+        internal void InvokeGraphRedrawn(int lineId, Color visibleColor)
+        {
+            _profileSession.Segments.First(segment => segment.LineId == lineId).VisibleColor = ColorToEsriRgb(visibleColor);
+
+            InvisibleZonesChanged?.Invoke(_profileSession.Segments.First(segment => segment.LineId == lineId),
+                                                _profileSession.SessionId, true);
         }
 
         private List<ProfileSurfacePoint> FindExtremePoints()

@@ -23,7 +23,7 @@ namespace MilSpace.Profile
 
 
         internal delegate void ProfileRedrawDelegate(GroupedLines profileLines, int sessionId,
-                                                                        bool update, List<int> linesIds);
+                                                                        bool update, List<int> linesIds = null);
 
         internal delegate void DeleteProfileDelegate(int sessionId, int lineId);
 

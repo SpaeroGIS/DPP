@@ -751,6 +751,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 profileChart.Series[SelectedProfileIndex].Color = lineColorDialog.Color;
 
                 UpdateProfileWithNewColor();
+                _controller.InvokeGraphRedrawn(Convert.ToInt32(profileChart.Series[SelectedProfileIndex].Name), lineColorDialog.Color);
+
                 visibleLineColorButton.BackColor = lineColorDialog.Color;
             }
         }
