@@ -242,10 +242,8 @@ namespace MilSpace.Profile
                 var newProfileId = GenerateProfileId();
                 var newProfileName = GenerateProfileName(newProfileId);
 
-
-                var session = manager.GenerateProfile(View.DemLayerName, profileSetting.ProfileLines, View.SelectedProfileSettingsType, newProfileId, newProfileName);
-
-                session.ObserverHeight = View.ObserveHeight;
+                var session = manager.GenerateProfile(View.DemLayerName, profileSetting.ProfileLines, View.SelectedProfileSettingsType, newProfileId, newProfileName, View.ObserveHeight);
+                
                 session.SetSegments(ArcMap.Document.FocusMap.SpatialReference);
 
                 SetPeofileId();
@@ -363,10 +361,10 @@ namespace MilSpace.Profile
             }
         }
 
-        internal void ShowProfileOnMap(int profileId, int lineId)
-        {
-            GraphicsLayerManager.FlashLineOnWorkingGraphics(profileId, lineId);
-        }
+        //internal void ShowProfileOnMap(int profileId, int lineId)
+        //{
+        //    GraphicsLayerManager.FlashLineOnWorkingGraphics(profileId, lineId);
+        //}
 
         internal void ShowProfileOnMap()
         {
@@ -391,7 +389,9 @@ namespace MilSpace.Profile
 
         internal void HighlightProfileOnMap(int profileId, int lineId)
         {
-            GraphicsLayerManager.FlashLineOnWorkingGraphics(profileId, lineId);
+           var profilesToFlas = _workingProfiles.FirstOrDefault(p => p.SessionId == profileId);
+            //if (profilesToFlas != null)
+            //GraphicsLayerManager.FlashLineOnWorkingGraphics(profileId, lineId);
         }
 
 
