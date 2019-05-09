@@ -1,7 +1,10 @@
 ﻿using ESRI.ArcGIS.Desktop.AddIns;
+using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Exceptions;
 using MilSpace.Core.Tools;
+using MilSpace.Core.Tools.Helper;
+using MilSpace.DataAccess;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
 using MilSpace.Profile.DTO;
@@ -123,6 +126,9 @@ namespace MilSpace.Profile
                     graphsController = winImpl.MilSpaceProfileGraphsController;
                 }
 
+                graphsController.ProfileRedrawn += GraphRedrawn;
+                graphsController.ProfileRemoved += ProfileRemove;
+
                 return graphsController;
             }
         }
@@ -240,6 +246,7 @@ namespace MilSpace.Profile
                 var session = manager.GenerateProfile(View.DemLayerName, profileSetting.ProfileLines, View.SelectedProfileSettingsType, newProfileId, newProfileName);
 
                 session.ObserverHeight = View.ObserveHeight;
+                session.SetSegments(ArcMap.Document.FocusMap.SpatialReference);
 
                 SetPeofileId();
                 SetProfileName();
@@ -278,7 +285,9 @@ namespace MilSpace.Profile
                 }
                 else if (profile.ProfileLines.Any(l => l.Id == lineId))
                 {
-                    GraphicsLayerManager.ShowLineOnWorkingGraphics(profileId, lineId);
+                    GraphicsLayerManager.ShowLineOnWorkingGraphics(profileId, 
+                                                                    profile.Segments
+                                                                           .First(segment => segment.LineId == lineId));
                 }
             }
         }
@@ -292,7 +301,7 @@ namespace MilSpace.Profile
                 {
                     //TODO: Remove the references to ESRI lines not to store them in memory. Change creating of the tree view items to use MilSpace points (WGS84);
                     //profile.ProfileLines.Select( p => p.Line)
-                    GraphicsLayerManager.RemoveLinesFromWorkingGraphics(profile.ConvertLinesToEsriPolypile(ArcMap.Document.FocusMap.SpatialReference), profile.SessionId);
+                    GraphicsLayerManager.RemoveLinesFromWorkingGraphics(profile.Segments, profile.SessionId);
                 }
                 else if (profile.ProfileLines.Any(l => l.Id == lineId))
                 {
@@ -328,7 +337,9 @@ namespace MilSpace.Profile
             //Add graphics 
             if (isAddToGraphics)
             {
-             //GraphicsLayerManager.AddLinesToWorkingGraphics(profile.ConvertLinesToEsriPolypile(ArcMap.Document.FocusMap.SpatialReference), profile.SessionId);
+                profile.SetSegments(ArcMap.Document.FocusMap.SpatialReference);
+                GraphicsLayerManager.AddLinesToWorkingGraphics(ProfileLinesConverter.ConvertSolidGroupedLinesToEsriPolylines(profile.Segments, ArcMap.Document.FocusMap.SpatialReference),
+                                                                    profile.SessionId);
             }
 
             GraphicsLayerManager.EmptyProfileGraphics(MilSpaceGraphicsTypeEnum.Calculating);
@@ -460,6 +471,30 @@ namespace MilSpace.Profile
             var x = (envelope.XMin + envelope.XMax) / 2;
             var y = (envelope.YMin + envelope.YMax) / 2;
             return new PointClass { X = x, Y = y };
+        }
+
+        private void GraphRedrawn(GroupedLines profileLines, int sessionId, bool update, List<int> linesIds)
+        {
+            if (update)
+            {
+                GraphicsLayerManager
+                        .UpdateGraphicLine(profileLines, sessionId);
+            }
+            else
+            {
+                if (profileLines.LineId == 1)
+                {
+                    GraphicsLayerManager.RemoveGraphic(sessionId, linesIds);
+                }
+
+                GraphicsLayerManager
+                    .AddLinesToWorkingGraphics(profileLines.Polylines, sessionId, profileLines);
+            }
+        }
+
+        private void ProfileRemove(int sessionId, int lineId)
+        {
+            GraphicsLayerManager.RemoveLineFromGraphic(sessionId, lineId);
         }
 
         internal GraphicsLayerManager GraphicsLayerManager

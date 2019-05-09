@@ -20,6 +20,16 @@ namespace MilSpace.Profile
         private GraphicsLayerManager _graphicsLayerManager;
         private IDockableWindow dockableWindow;
 
+
+
+        internal delegate void ProfileRedrawDelegate(GroupedLines profileLines, int sessionId,
+                                                                        bool update, List<int> linesIds);
+
+        internal delegate void DeleteProfileDelegate(int sessionId, int lineId);
+
+        internal event ProfileRedrawDelegate ProfileRedrawn;
+        internal event DeleteProfileDelegate ProfileRemoved;
+
         internal DockableWindowMilSpaceProfileGraph View { get; private set; }
 
         internal void SetView(DockableWindowMilSpaceProfileGraph view)
@@ -29,10 +39,7 @@ namespace MilSpace.Profile
 
         internal MilSpaceProfileGraphsController()
         {
-            _surfaceProfileChartController = new SurfaceProfileChartController();
-            _surfaceProfileChartController.OnProfileGraphClicked += OnProfileGraphClicked;
-            _surfaceProfileChartController.InvisibleZonesChanged += InvisibleZonesChanged;
-            _surfaceProfileChartController.ProfileRemoved += ProfileRemoved;
+            
         }
 
         internal GraphicsLayerManager GraphicsLayerManager
@@ -68,36 +75,16 @@ namespace MilSpace.Profile
             av.Refresh();
         }
 
-        private void InvisibleZonesChanged(GroupedLines profileLines, RgbColor rgbVisibleColor,
-                                                RgbColor rgbInvisibleColor, int sessionId, bool update,
-                                                List<int> linesIds)
+        private void InvokeInvisibleZonesChanged(GroupedLines profileLines, int sessionId, bool update,
+                                                                                        List<int> linesIds)
         {
-            if (update)
-            {
-                GraphicsLayerManager
-                        .UpdateGraphicLine(Converter.ConvertLinesToEsriPolypile(profileLines.Lines, ArcMap.Document
-                                                                                       .FocusMap
-                                                                                       .SpatialReference),
-                                                        sessionId, profileLines, rgbVisibleColor, rgbInvisibleColor);
-            }
-            else
-            {
-                if (profileLines.LineId == 1)
-                {
-                    GraphicsLayerManager.RemoveGraphic(sessionId, linesIds);
-                }
-
-                GraphicsLayerManager
-                    .AddLinesToWorkingGraphics(Converter.ConvertLinesToEsriPolypile(profileLines.Lines, ArcMap.Document
-                                                                                      .FocusMap
-                                                                                      .SpatialReference),
-                                           sessionId, profileLines, rgbVisibleColor, rgbInvisibleColor);
-            }
+            ProfileRedrawn?.Invoke(profileLines, sessionId, update, linesIds);
         }
 
-        private void ProfileRemoved(int sessionId, int lineId)
+       
+        private void InvokeProfileRemoved(int sessionId, int lineId)
         {
-            GraphicsLayerManager.RemoveLineFromGraphic(sessionId, lineId);
+            ProfileRemoved?.Invoke(sessionId, lineId);
         }
 
         internal void ShowWindow()
@@ -115,6 +102,11 @@ namespace MilSpace.Profile
 
         internal void AddSession(ProfileSession profileSession)
         {
+            _surfaceProfileChartController = new SurfaceProfileChartController();
+
+            _surfaceProfileChartController.OnProfileGraphClicked += OnProfileGraphClicked;
+            _surfaceProfileChartController.InvisibleZonesChanged += InvokeInvisibleZonesChanged;
+            _surfaceProfileChartController.ProfileRemoved += InvokeProfileRemoved;
 
             _surfaceProfileChartController.SetSession(profileSession);
             SurfaceProfileChart surfaceProfileChart = _surfaceProfileChartController.CreateProfileChart(profileSession.ObserverHeight);

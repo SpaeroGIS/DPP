@@ -51,7 +51,6 @@ namespace MilSpace.Profile
 
         private bool CheckTabExistance(string sessionName, out TabPage foundTab )
         {
-         
             foundTab = null;
             foreach (TabPage tab in profilesTabControl.TabPages)
             {
@@ -75,8 +74,16 @@ namespace MilSpace.Profile
             }
 
             string title = $"Graph {profilesTabControl.TabPages.Count + 1}";
+            int i = 1;
+
+            while (profilesTabControl.TabPages.ContainsKey(title))
+            {
+                title = $"Graph {i + 1}";
+                i++;
+            }
+
             tabPage = new TabPage(title);
-            tabPage.Name = $"Graph {profilesTabControl.TabPages.Count + 1}";
+            tabPage.Name = title;
             tabPage.Tag = sessionName;
 
             profilesTabControl.TabPages.Add(tabPage);
