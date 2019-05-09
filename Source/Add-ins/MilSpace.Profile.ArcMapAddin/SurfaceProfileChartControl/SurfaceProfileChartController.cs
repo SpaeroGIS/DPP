@@ -24,10 +24,12 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                                                                         bool update, List<int> linesIds = null);
 
         internal delegate void DeleteProfileDelegate(int sessionId, int lineId);
+        internal delegate void SelectedProfileChangedDelegate(GroupedLines selectedLines, GroupedLines newSelectedLines, int profileId);
 
         internal event ProfileGrapchClickedDelegate OnProfileGraphClicked;
         internal event ProfileChangeInvisiblesZonesDelegate InvisibleZonesChanged;
         internal event DeleteProfileDelegate ProfileRemoved;
+        internal event SelectedProfileChangedDelegate SelectedProfileChanged;
 
         public SurfaceProfileChartController()
         {
@@ -222,6 +224,12 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             InvisibleZonesChanged?.Invoke(_profileSession.Segments.First(segment => segment.LineId == lineId),
                                                 _profileSession.SessionId, true);
+        }
+
+        internal void InvokeSelectedProfile(int selectedLineId, int newSelectedLineId)
+        {
+            SelectedProfileChanged?.Invoke(_profileSession.Segments.FirstOrDefault(segment => segment.LineId == selectedLineId),
+                                               _profileSession.Segments.First(segment => segment.LineId == newSelectedLineId), _profileSession.SessionId);
         }
 
         private List<ProfileSurfacePoint> FindExtremePoints()

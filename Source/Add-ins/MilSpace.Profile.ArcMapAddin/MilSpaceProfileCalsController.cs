@@ -128,6 +128,7 @@ namespace MilSpace.Profile
 
                 graphsController.ProfileRedrawn += GraphRedrawn;
                 graphsController.ProfileRemoved += ProfileRemove;
+                graphsController.SelectedProfileChanged += SelectedProfileChanged;
 
                 return graphsController;
             }
@@ -264,6 +265,8 @@ namespace MilSpace.Profile
             var result = MilSpaceProfileFacade.DeleteUserSessions(View.SelectedProfileSessionIds.ProfileSessionId);
             if (result)
             {
+                MilSpaceProfileGraphsController.RemoveTab(View.SelectedProfileSessionIds.ProfileSessionId);
+                GraphicsLayerManager.RemoveGraphic(View.SelectedProfileSessionIds.ProfileSessionId);
 
                 return View.RemoveTreeViewItem();
             }
@@ -409,6 +412,12 @@ namespace MilSpace.Profile
         {
             var profileSession = GetProfileSessionById(profileSessionId);
 
+            if (_workingProfiles.FirstOrDefault(profile => profile.SessionId == profileSession.SessionId) != null)
+            {
+                _workingProfiles.Remove(_workingProfiles.FirstOrDefault(profile => profile.SessionId == profileSession.SessionId));
+            }
+            _workingProfiles.Add(profileSession);
+
             if (profileSession != null)
             {
                 profileSession.SetSegments(ArcMap.Document.FocusMap.SpatialReference);
@@ -498,6 +507,11 @@ namespace MilSpace.Profile
         private void ProfileRemove(int sessionId, int lineId)
         {
             GraphicsLayerManager.RemoveLineFromGraphic(sessionId, lineId);
+        }
+
+        private void SelectedProfileChanged(GroupedLines selectedLines, GroupedLines newSelectedLines, int profileId)
+        {
+            GraphicsLayerManager.ChangeSelectProfileOnGraph(selectedLines, newSelectedLines, profileId);
         }
 
         internal GraphicsLayerManager GraphicsLayerManager
