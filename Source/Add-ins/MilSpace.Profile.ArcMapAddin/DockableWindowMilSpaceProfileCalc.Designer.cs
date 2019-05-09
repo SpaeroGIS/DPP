@@ -1824,6 +1824,7 @@
             // addProfileToGraph
             // 
             this.addProfileToGraph.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.addProfileToGraph.Image = ((System.Drawing.Image)(resources.GetObject("addProfileToGraph.Image")));
             this.addProfileToGraph.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.addProfileToGraph.Name = "addProfileToGraph";
             this.addProfileToGraph.Size = new System.Drawing.Size(23, 27);
@@ -1849,6 +1850,7 @@
             // removeProfile
             // 
             this.removeProfile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.removeProfile.Image = ((System.Drawing.Image)(resources.GetObject("removeProfile.Image")));
             this.removeProfile.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.removeProfile.Name = "removeProfile";
             this.removeProfile.Size = new System.Drawing.Size(23, 27);
