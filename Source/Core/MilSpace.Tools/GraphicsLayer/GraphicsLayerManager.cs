@@ -2,6 +2,7 @@
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Tools;
+using MilSpace.Core.Tools.Helper;
 using MilSpace.DataAccess;
 using MilSpace.DataAccess.DataTransfer;
 using System;
@@ -51,16 +52,15 @@ namespace MilSpace.Tools.GraphicsLayer
 
         }
 
-        private void UpdateGraphicLine(IEnumerable<IPolyline> profileLines, int profileId,
-                                       MilSpaceGraphicsTypeEnum graphicsType, GroupedLines groupedLines,
-                                       IRgbColor visibleColor, IRgbColor invisibleColor)
+        private void UpdateGraphicLine(GroupedLines groupedLines, int profileId,
+                                       MilSpaceGraphicsTypeEnum graphicsType)
         {
             RemoveLineFromSessionGraphicsByLineId(profileId, groupedLines.LineId, graphicsType);
 
             int elementId = 0;
             int lineNumber = 0;
 
-            foreach (var line in profileLines)
+            foreach (var line in groupedLines.Polylines)
             {
                 var ge = new GraphicElement()
                 {
@@ -70,7 +70,8 @@ namespace MilSpace.Tools.GraphicsLayer
                     LineId = groupedLines.LineId
                 };
 
-                var color = (groupedLines.Lines[lineNumber].Visible) ? visibleColor : invisibleColor;
+                var color = (groupedLines.Lines[lineNumber].Visible) ? groupedLines.VisibleColor
+                                                                     : groupedLines.InvisibleColor;
 
                 if (groupedLines.Lines.Last() == groupedLines.Lines[lineNumber])
                 {
@@ -94,7 +95,7 @@ namespace MilSpace.Tools.GraphicsLayer
 
             if (graphicLine.Count() > 0)
             {
-                foreach(var graphic in graphicLine)
+                foreach (var graphic in graphicLine)
                 {
                     DeleteGraphicsElement(graphic);
                     curList.Remove(graphic);
@@ -122,31 +123,18 @@ namespace MilSpace.Tools.GraphicsLayer
 
         }
 
-        public void FlashLineOnWorkingGraphics(int profileId, int lineId)
+        public void FlashLineOnWorkingGraphics(IEnumerable<IGeometry> flashingGeometry)
         {
             var curList = allGraphics[MilSpaceGraphicsTypeEnum.Session];
             IGeometry flashGeometry = null;
-            if (lineId > 0)
-            {
-                int elementId = lineId;
 
-                var graphic = curList.FirstOrDefault(g => g.ProfileId == profileId && g.ElementId == elementId);
-                if (graphic != null)
-                {
-                    flashGeometry = graphic.Source;
-                }
-            }
-            else
-            {
-                var graphics = curList.Where(g => g.ProfileId == profileId).Select(g => g.Source).ToList();
-                IGeometryCollection theGeomColl = new GeometryBagClass();
-                graphics.ForEach(pl => theGeomColl.AddGeometry(pl));
+            IGeometryCollection theGeomColl = new GeometryBagClass();
+            flashingGeometry.ToList().ForEach(pl => theGeomColl.AddGeometry(pl));
 
-                ITopologicalOperator theTopoOp = new PolylineClass();
-                theTopoOp.ConstructUnion((IEnumGeometry)theGeomColl);
+            ITopologicalOperator theTopoOp = new PolylineClass();
+            theTopoOp.ConstructUnion((IEnumGeometry)theGeomColl);
 
-                flashGeometry = theTopoOp as IGeometry;
-            }
+            flashGeometry = theTopoOp as IGeometry;
 
             if (flashGeometry != null)
             {
@@ -156,35 +144,24 @@ namespace MilSpace.Tools.GraphicsLayer
         }
 
 
-        public void ShowLineOnWorkingGraphics(int profileId, int lineId)
+        public void ShowLineOnWorkingGraphics(int profileId, GroupedLines groupedLines)
         {
-
-            var curList = allGraphics[MilSpaceGraphicsTypeEnum.Session];
-            int elementId = lineId;
-
-            var graphic = curList.FirstOrDefault(g => g.ProfileId == profileId && g.ElementId == elementId);
-            AddPolyline(graphic, MilSpaceGraphicsTypeEnum.Session, null, false, true, true);
-
+            AddLinesToGraphics(groupedLines.Polylines, profileId, MilSpaceGraphicsTypeEnum.Session, groupedLines);
         }
 
         public void HideLineFromWorkingGraphics(int profileId, int lineId)
         {
-
-            var curList = allGraphics[MilSpaceGraphicsTypeEnum.Session];
-            int elementId = lineId;
-
-            var graphic = curList.FirstOrDefault(g => g.ProfileId == profileId && g.ElementId == elementId);
-            DeleteGraphicsElement(graphic, true);
+            RemoveLineFromGraphic(profileId, lineId);
         }
 
-        public void RemoveLinesFromWorkingGraphics(IEnumerable<IPolyline> profileLines, int profileId)
+        public void RemoveLinesFromWorkingGraphics(List<GroupedLines> allGroupedLines, int profileId)
         {
-            RemoveLinesFromGraphics(profileLines, profileId, MilSpaceGraphicsTypeEnum.Session);
+            RemoveLinesFromGraphics(allGroupedLines, profileId, MilSpaceGraphicsTypeEnum.Session);
         }
 
         public void RemoveGraphic(int profileId, List<int> linesIds)
         {
-            foreach(var id in linesIds)
+            foreach (var id in linesIds)
             {
                 RemoveLineFromSessionGraphicsByLineId(profileId, id, MilSpaceGraphicsTypeEnum.Session);
             }
@@ -195,10 +172,10 @@ namespace MilSpace.Tools.GraphicsLayer
             RemoveLineFromSessionGraphicsByLineId(profileId, lineId, MilSpaceGraphicsTypeEnum.Session);
         }
 
-        public void AddLinesToWorkingGraphics(IEnumerable<IPolyline> profileLines, int profileId, GroupedLines profileColorLines = null,
-                                                RgbColor visibleColor = null, RgbColor invisibleColor = null)
+        public void AddLinesToWorkingGraphics(IEnumerable<IPolyline> profileLines, int profileId,
+                                                GroupedLines profileColorLines = null)
         {
-            AddLinesToGraphics(profileLines, profileId, MilSpaceGraphicsTypeEnum.Session, profileColorLines, visibleColor, invisibleColor);
+            AddLinesToGraphics(profileLines, profileId, MilSpaceGraphicsTypeEnum.Session, profileColorLines);
         }
 
         public void AddLinesToCalcGraphics(IEnumerable<IPolyline> profileLines, int profileId)
@@ -217,11 +194,9 @@ namespace MilSpace.Tools.GraphicsLayer
             UpdateGraphic(profileLines, profileId, profileTypeId, MilSpaceGraphicsTypeEnum.Calculating);
         }
 
-        public void UpdateGraphicLine(IEnumerable<IPolyline> profileLines, int profileId, GroupedLines groupedLines,
-                                        IRgbColor visibleColor, IRgbColor invisibleColor)
+        public void UpdateGraphicLine(GroupedLines groupedLines, int profileId)
         {
-            UpdateGraphicLine(profileLines, profileId, MilSpaceGraphicsTypeEnum.Session,
-                                groupedLines, visibleColor, invisibleColor);
+            UpdateGraphicLine(groupedLines, profileId, MilSpaceGraphicsTypeEnum.Session);
         }
 
         public void EmptyProfileGraphics(MilSpaceGraphicsTypeEnum profileType)
@@ -238,8 +213,7 @@ namespace MilSpace.Tools.GraphicsLayer
         }
 
         private void AddLinesToGraphics(IEnumerable<IPolyline> profileLines, int profileId,
-                                            MilSpaceGraphicsTypeEnum graphicsType, GroupedLines profileColorLines = null,
-                                            IRgbColor visibleColor = null, IRgbColor invisibleColor = null)
+                                            MilSpaceGraphicsTypeEnum graphicsType, GroupedLines profileColorLines = null)
         {
             var curList = allGraphics[graphicsType];
             int elementId = 0;
@@ -257,7 +231,8 @@ namespace MilSpace.Tools.GraphicsLayer
                 if (profileColorLines != null)
                 {
                     var ge = new GraphicElement() { Source = line, ElementId = elementId, ProfileId = profileId, LineId = profileColorLines.LineId };
-                    var color = (profileColorLines.Lines[lineNumber].Visible) ? visibleColor : invisibleColor;
+                    var color = (profileColorLines.Lines[lineNumber].Visible) ? profileColorLines.VisibleColor
+                                                                              : profileColorLines.InvisibleColor;
 
                     if (profileColorLines.Lines.Last() == profileColorLines.Lines[lineNumber])
                     {
@@ -279,7 +254,7 @@ namespace MilSpace.Tools.GraphicsLayer
                         curList.Remove(graphic);
                     }
 
-                    var ge = new GraphicElement() { Source = line, ElementId = elementId, ProfileId = profileId };
+                    var ge = new GraphicElement() { Source = line, ElementId = elementId, ProfileId = profileId, LineId = elementId };
                     AddPolyline(ge, graphicsType);
                 }
 
@@ -287,7 +262,8 @@ namespace MilSpace.Tools.GraphicsLayer
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
         }
 
-        public void RemoveLinesFromGraphics(IEnumerable<IPolyline> profileLines, int profileId, MilSpaceGraphicsTypeEnum graphicsType)
+        public void RemoveLinesFromGraphics(IEnumerable<IPolyline> profileLines, int profileId,
+                                                MilSpaceGraphicsTypeEnum graphicsType)
         {
             var curList = allGraphics[graphicsType];
             int elementId = 0;
@@ -306,6 +282,33 @@ namespace MilSpace.Tools.GraphicsLayer
 
         }
 
+        public void RemoveLinesFromGraphics(List<GroupedLines> allGroupedLines, int profileId,
+                                                MilSpaceGraphicsTypeEnum graphicsType)
+        {
+            var curList = allGraphics[graphicsType];
+
+            foreach (var groupedLine in allGroupedLines)
+            {
+                int elementId = 0;
+
+                foreach (var line in groupedLine.Polylines)
+                {
+                    elementId++;
+
+                    var graphic = curList.FirstOrDefault(g => g.ProfileId == profileId && g.ElementId == elementId
+                                                                                       && g.LineId == groupedLine.LineId);
+
+                    DeleteGraphicsElement(graphic);
+
+                    if (graphic != null)
+                    {
+                        curList.Remove(graphic);
+                    }
+                }
+            }
+            activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
+        }
+
         private void AddPolyline(GraphicElement graphicElement, MilSpaceGraphicsTypeEnum graphicsType,
                                     IRgbColor color = null, bool isLine = false, bool doRefresh = false,
                                     bool persist = false)
@@ -315,7 +318,7 @@ namespace MilSpace.Tools.GraphicsLayer
 
             var curList = allGraphics[graphicsType];
 
-            bool exists = curList.Any(ge => ge.ProfileId == graphicElement.ProfileId 
+            bool exists = curList.Any(ge => ge.ProfileId == graphicElement.ProfileId
                                            && ge.ElementId == graphicElement.ElementId
                                            && ge.LineId == graphicElement.LineId);
 
