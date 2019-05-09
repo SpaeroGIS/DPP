@@ -39,10 +39,7 @@ namespace MilSpace.Profile
 
         internal MilSpaceProfileGraphsController()
         {
-            _surfaceProfileChartController = new SurfaceProfileChartController();
-            _surfaceProfileChartController.OnProfileGraphClicked += OnProfileGraphClicked;
-            _surfaceProfileChartController.InvisibleZonesChanged += InvokeInvisibleZonesChanged;
-            _surfaceProfileChartController.ProfileRemoved += InvokeProfileRemoved;
+            
         }
 
         internal GraphicsLayerManager GraphicsLayerManager
@@ -105,6 +102,11 @@ namespace MilSpace.Profile
 
         internal void AddSession(ProfileSession profileSession)
         {
+            _surfaceProfileChartController = new SurfaceProfileChartController();
+
+            _surfaceProfileChartController.OnProfileGraphClicked += OnProfileGraphClicked;
+            _surfaceProfileChartController.InvisibleZonesChanged += InvokeInvisibleZonesChanged;
+            _surfaceProfileChartController.ProfileRemoved += InvokeProfileRemoved;
 
             _surfaceProfileChartController.SetSession(profileSession);
             SurfaceProfileChart surfaceProfileChart = _surfaceProfileChartController.CreateProfileChart(profileSession.ObserverHeight);

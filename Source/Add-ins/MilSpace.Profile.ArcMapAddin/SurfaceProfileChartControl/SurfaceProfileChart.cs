@@ -741,16 +741,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
         }
 
-        private void PropertiesToolBar_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
-        {
-            //switch (e.Button.Name)
-            //{
-            //    case "changeAllProfilesObserverHeightToolBarBtn":
-            //        ChangeProfileObserverHeight();
-            //        break;
-            //}
-        }
-
         private void VisibleLineColorButton_Click(object sender, EventArgs e)
         {
             lineColorDialog.Color = profileChart.Series[SelectedProfileIndex].Color;
@@ -818,7 +808,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                     }
                     else
                     {
-                        _controller.InvokeProfileRemoved(1);
+                        _controller.InvokeProfileRemoved(Convert.ToInt32(profileChart.Series.First().Name));
                         profileChart.Series.Clear();
                         _controller.RemoveCurrentTab();
                     }

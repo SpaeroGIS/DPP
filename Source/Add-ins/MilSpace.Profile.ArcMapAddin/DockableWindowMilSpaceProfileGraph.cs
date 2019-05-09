@@ -51,7 +51,6 @@ namespace MilSpace.Profile
 
         private bool CheckTabExistance(string sessionName, out TabPage foundTab )
         {
-         
             foundTab = null;
             foreach (TabPage tab in profilesTabControl.TabPages)
             {
