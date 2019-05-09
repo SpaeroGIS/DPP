@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using MilSpace.DataAccess.DataTransfer;
 using System.Text.RegularExpressions;
+using System.Text;
 
 namespace MilSpace.Profile.SurfaceProfileChartControl
 {
@@ -978,6 +979,37 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                                         + propertiesPanel.Padding.Left;
         }
 
+        private void PropertiesSplitContainer_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+            profilePropertiesTable.Height = propertiesSplitContainer.Panel1.Height;
+
+            SetPropertiesContainersSize();
+        }
+
+        private void CopyStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                StringBuilder text = new StringBuilder();
+
+                foreach (ListViewItem item in profileDetailsListView.SelectedItems)
+                {
+                    foreach (ListViewItem.ListViewSubItem sub in item.SubItems)
+                    {
+                        text.Append(sub.Text + "\t");
+                    }
+
+                    text.AppendLine();
+                }
+
+                Clipboard.SetDataObject(text.ToString());
+            }
+            catch (System.Runtime.InteropServices.ExternalException)
+            {
+               
+            }
+        }
+
         #endregion
 
         private void SelectProfile(string serieName)
@@ -1087,13 +1119,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             {
                 profileChart.SaveImage(saveFileDialog.FileName, ChartImageFormat.Png);
             }
-        }
-
-        private void PropertiesSplitContainer_SplitterMoved(object sender, SplitterEventArgs e)
-        {
-            profilePropertiesTable.Height = propertiesSplitContainer.Panel1.Height;
-
-            SetPropertiesContainersSize();
         }
     }
 }
