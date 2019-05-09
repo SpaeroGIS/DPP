@@ -1,6 +1,5 @@
 ﻿using ESRI.ArcGIS.Geometry;
 using System.Xml.Serialization;
-using ESRI.ArcGIS.Geodatabase;
 
 namespace MilSpace.DataAccess.DataTransfer
 {
