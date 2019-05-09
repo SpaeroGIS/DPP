@@ -1,4 +1,5 @@
-﻿using ESRI.ArcGIS.Geometry;
+﻿using ESRI.ArcGIS.Display;
+using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Tools;
 using System;
 using System.Collections.Generic;
@@ -20,36 +21,60 @@ namespace MilSpace.DataAccess.DataTransfer
         public ProfileSettingsTypeEnum DefinitionType;
         public int SessionId;
         public string SessionName;
-        
+
         [XmlIgnore]
+        public List<GroupedLines> Segments;
+
         public string Serialized
         {
             get
             {
-
                 return Serialize(this);
             }
         }
 
         public IEnumerable<IPolyline> ConvertLinesToEsriPolypile(ISpatialReference spatialReference)
         {
-           return ProfileLines.Select(l =>
+            return ProfileLines.Select(l =>
+             {
+                 var pointFrom = new Point { X = l.PointFrom.X, Y = l.PointFrom.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
+                 var pointTo = new Point { X = l.PointTo.X, Y = l.PointTo.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
+
+                 pointFrom.Project(spatialReference);
+                 pointTo.Project(spatialReference);
+
+                 var result = EsriTools.CreatePolylineFromPoints(pointFrom, pointTo);
+                 if (l.Line == null)
+                 {
+                     l.Line = result;
+                 }
+
+                 return result;
+             }
+             ).ToArray();
+        }
+
+        public void SetSegments(ISpatialReference spatialReference)
+        {
+            var polylines = ConvertLinesToEsriPolypile(spatialReference).ToArray();
+
+            Segments = ProfileLines.Select(line =>
             {
-                var pointFrom = new Point { X = l.PointFrom.X, Y = l.PointFrom.Y, SpatialReference = EsriTools.Wgs84Spatialreference};
-                var pointTo = new Point { X = l.PointTo.X, Y = l.PointTo.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
+                var lines = new List<ProfileLine> {line};
+                lines[0].Visible = true;
 
-                pointFrom.Project(spatialReference);
-                pointTo.Project(spatialReference);
+                var polyline = new List<IPolyline> { polylines[line.Id - 1] };
 
-                var result = EsriTools.CreatePolylineFromPoints(pointFrom, pointTo);
-                if (l.Line == null)
+                return new GroupedLines
                 {
-                    l.Line = result;
-                }
+                    Lines = lines,
+                    LineId = line.Id,
+                    Polylines = polyline,
+                    InvisibleColor = new RgbColor() { Red = 255, Green = 0, Blue = 0 },
+                    VisibleColor = new RgbColor() { Red = 0, Green = 255, Blue = 0 },
+                };
 
-                return result;
-            }
-            ).ToArray();
+            }).ToList();
         }
 
         private static string Serialize(ProfileSession session)

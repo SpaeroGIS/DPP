@@ -6,6 +6,7 @@ using MilSpace.DataAccess.DataTransfer;
 using ESRI.ArcGIS.Display;
 using System.Drawing;
 using MilSpace.DataAccess;
+using MilSpace.Core.Tools.Helper;
 
 namespace MilSpace.Profile.SurfaceProfileChartControl
 {
@@ -19,8 +20,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         private List<ProfileSurfacePoint> _extremePoints = new List<ProfileSurfacePoint>();
 
         internal delegate void ProfileGrapchClickedDelegate(GraphProfileClickedArgs e);
-        internal delegate void ProfileChangeInvisiblesZonesDelegate(GroupedLines profileLines, RgbColor rgbVisibleColor,
-                                                                        RgbColor rgbInvisibleColor, int sessionId,
+        internal delegate void ProfileChangeInvisiblesZonesDelegate(GroupedLines profileLines, int sessionId,
                                                                         bool update, List<int> linesIds);
 
         internal delegate void DeleteProfileDelegate(int sessionId, int lineId);
@@ -157,12 +157,22 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             CalcProfilesVisiblePercents(invisibleSurface, profileSurface);
 
             var profileLines = GetLines(profileSurface, invisibleSurface, _profileSession.SessionId);
+            profileLines.VisibleColor = ColorToEsriRgb(visibleColor);
+            profileLines.InvisibleColor = ColorToEsriRgb(invisibleColor);
+            profileLines.Polylines = ProfileLinesConverter
+                                        .ConvertLineToEsriPolyline(profileLines.Lines,
+                                                                     ArcMap.Document.FocusMap.SpatialReference);
 
-           
-
-            InvisibleZonesChanged?.Invoke(profileLines, ColorToEsriRgb(visibleColor),
-                                            ColorToEsriRgb(invisibleColor), _profileSession.SessionId,
-                                            update, linesIds);
+            if (_profileSession.Segments.Count < profileSurface.LineId - 1)
+            {
+                _profileSession.Segments.Add(profileLines);
+            }
+            else
+            {
+                _profileSession.Segments[profileSurface.LineId - 1] = profileLines;
+            }
+            
+            InvisibleZonesChanged?.Invoke(profileLines, _profileSession.SessionId, update, linesIds);
         }
 
         internal void SetProfilesProperties()
@@ -409,14 +419,14 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
                     if (i == allSurface.ProfileSurfacePoints.Count() - 1)
                     {
-                       profileLines.Add(EndOfLineHandler(profileInvisibleLine, allSurface, i));
+                        profileLines.Add(EndOfLineHandler(profileInvisibleLine, allSurface, i));
 
                         profileInvisibleLine = new ProfileLine
                         {
                             Visible = false
                         };
 
-                         profileInvisiblePoints = new List<ProfileSurfacePoint>();
+                        profileInvisiblePoints = new List<ProfileSurfacePoint>();
                     }
 
                     if (j == invisibleSurface.ProfileSurfacePoints.Count() - 1)
@@ -470,7 +480,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 LineId = allSurface.LineId
             };
         }
-        
+
         private static void StartOfLineHandler(ref ProfileLine startLine,
                                                 int startLineId, ProfileSurface allSurfaces,
                                                  int pointIndex)
