@@ -63,6 +63,8 @@
             this.visibleLineColorLabel = new System.Windows.Forms.Label();
             this.InvisibleLineColorLabel = new System.Windows.Forms.Label();
             this.profileDetailsListView = new System.Windows.Forms.ListView();
+            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.copyStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.graphToolBar = new System.Windows.Forms.ToolBar();
             this.leftGraphPaddingToolBarSpr = new System.Windows.Forms.ToolBarButton();
             this.displayProfileSignatureGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
@@ -83,8 +85,6 @@
             this.exportGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
             this.graphPanel = new System.Windows.Forms.Panel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.copyStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.profileChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.profilePropertiesTable)).BeginInit();
             this.propertiesPanel.SuspendLayout();
@@ -93,8 +93,8 @@
             this.propertiesSplitContainer.Panel2.SuspendLayout();
             this.propertiesSplitContainer.SuspendLayout();
             this.propertiesSettingsPanel.SuspendLayout();
-            this.graphPanel.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
+            this.graphPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // profileChart
@@ -546,7 +546,7 @@
             this.propertiesSettingsPanel.Controls.Add(this.invisibleLineColorButton);
             this.propertiesSettingsPanel.Controls.Add(this.visibleLineColorLabel);
             this.propertiesSettingsPanel.Controls.Add(this.InvisibleLineColorLabel);
-            this.propertiesSettingsPanel.Location = new System.Drawing.Point(0, 13);
+            this.propertiesSettingsPanel.Location = new System.Drawing.Point(0, 15);
             this.propertiesSettingsPanel.Name = "propertiesSettingsPanel";
             this.propertiesSettingsPanel.Padding = new System.Windows.Forms.Padding(2);
             this.propertiesSettingsPanel.Size = new System.Drawing.Size(354, 25);
@@ -635,13 +635,27 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.profileDetailsListView.ContextMenuStrip = this.contextMenuStrip;
             this.profileDetailsListView.FullRowSelect = true;
-            this.profileDetailsListView.Location = new System.Drawing.Point(0, 38);
+            this.profileDetailsListView.Location = new System.Drawing.Point(0, 40);
             this.profileDetailsListView.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.profileDetailsListView.Name = "profileDetailsListView";
             this.profileDetailsListView.Size = new System.Drawing.Size(354, 134);
             this.profileDetailsListView.TabIndex = 50;
             this.toolTip.SetToolTip(this.profileDetailsListView, "Чтобы скопировать выделенную строку нажмите правую кнопку мыши");
             this.profileDetailsListView.UseCompatibleStateImageBehavior = false;
+            // 
+            // contextMenuStrip
+            // 
+            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyStripMenuItem});
+            this.contextMenuStrip.Name = "contextMenuStrip";
+            this.contextMenuStrip.Size = new System.Drawing.Size(147, 26);
+            // 
+            // copyStripMenuItem
+            // 
+            this.copyStripMenuItem.Name = "copyStripMenuItem";
+            this.copyStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.copyStripMenuItem.Text = "Скопировать";
+            this.copyStripMenuItem.Click += new System.EventHandler(this.CopyStripMenuItem_Click);
             // 
             // graphToolBar
             // 
@@ -780,20 +794,6 @@
             this.graphPanel.Size = new System.Drawing.Size(498, 327);
             this.graphPanel.TabIndex = 51;
             // 
-            // contextMenuStrip
-            // 
-            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.copyStripMenuItem});
-            this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(147, 26);
-            // 
-            // copyStripMenuItem
-            // 
-            this.copyStripMenuItem.Name = "copyStripMenuItem";
-            this.copyStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.copyStripMenuItem.Text = "Скопировать";
-            this.copyStripMenuItem.Click += new System.EventHandler(this.CopyStripMenuItem_Click);
-            // 
             // SurfaceProfileChart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -816,8 +816,8 @@
             this.propertiesSplitContainer.ResumeLayout(false);
             this.propertiesSettingsPanel.ResumeLayout(false);
             this.propertiesSettingsPanel.PerformLayout();
-            this.graphPanel.ResumeLayout(false);
             this.contextMenuStrip.ResumeLayout(false);
+            this.graphPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
