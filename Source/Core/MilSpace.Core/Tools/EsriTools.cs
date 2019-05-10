@@ -173,15 +173,8 @@ namespace MilSpace.Core.Tools
                 throw new MilSpaceProfileLackOfParameterException("Line numbers", count);
             }
 
-
-
-            //double minAzimuth = Math.Min(azimuth1, azimuth2);
-            //double maxAzimuth = Math.Max(azimuth1, azimuth2);
-
             double sector;
-            
-
-            //Xheck if it is a circle
+            //Check if it is a circle
             if ((azimuth1 == 0 && azimuth2 == 360) || (azimuth2 == 0 && azimuth1 == 360) || (azimuth2 == azimuth1))
             {
                 if (count == 2)
