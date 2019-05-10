@@ -6,6 +6,7 @@ using MilSpace.Core.Tools;
 using MilSpace.Core.Tools.Helper;
 using MilSpace.DataAccess;
 using MilSpace.DataAccess.DataTransfer;
+using MilSpace.DataAccess.Exceptions;
 using MilSpace.DataAccess.Facade;
 using MilSpace.Profile.DTO;
 using MilSpace.Tools;
@@ -235,6 +236,7 @@ namespace MilSpace.Profile
         /// <returns>Profile Session data</returns>
         internal ProfileSession GenerateProfile()
         {
+            string errorMessage;
             try
             {
 
@@ -252,12 +254,26 @@ namespace MilSpace.Profile
                 return session;
 
             }
+            catch (MilSpaceCanotDeletePrifileCalcTable ex)
+            {
+                //TODO Localize error message
+                errorMessage = ex.Message;
+            }
+            catch (MilSpaceDataException ex)
+            {
+                //TODO Localize error message
+                errorMessage = ex.Message;
+                
+            }
             catch (Exception ex)
             {
                 //TODO log error
-                MessageBox.Show(ex.Message);
-                return null;
-            }
+                //TODO Localize error message
+                errorMessage = ex.Message;
+           }
+
+            MessageBox.Show(errorMessage);
+            return null;
         }
 
         internal bool RemoveProfilesFromUserSession()

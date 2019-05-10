@@ -15,6 +15,7 @@ using MilSpace.Tools.SurfaceProfile.Actions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MilSpace.DataAccess.Facade;
 
 namespace MilSpace.Tools
 {
@@ -79,7 +80,8 @@ namespace MilSpace.Tools
 
             try
             {
-                ITable profiletable = GdbAccess.Instance.GetProfileTable($"StackProfile{sdtnow}");
+                string tempTableName = $"StackProfile{sdtnow}";
+                ITable profiletable = GdbAccess.Instance.GetProfileTable(tempTableName);
                 IFeatureClass lines = GdbAccess.Instance.GetCalcProfileFeatureClass(profileSourceName);
 
                 IQueryFilter queryFilter = new QueryFilter()
@@ -104,7 +106,8 @@ namespace MilSpace.Tools
                     SessionId = sessionId,
                     SessionName = sessionName,
                     DefinitionType = profileSettingsTypeEnum,
-                    ObserverHeight = observHeight
+                    ObserverHeight = observHeight,
+                    SurfaceLayerName = profileSource
                 };
 
 
@@ -157,9 +160,12 @@ namespace MilSpace.Tools
                     });
                 }
 
-                //TODO: Clean memo using Marhsaling IRow
+                //Delete temp table form the GDB
+                GdbAccess.Instance.DeleteTemporarSource(tempTableName, profileSourceName);
 
-                session.ProfileSurfaces = surface.Select(r => new ProfileSurface
+               //TODO: Clean memo using Marhsaling IRow
+
+               session.ProfileSurfaces = surface.Select(r => new ProfileSurface
                 {
                     LineId = r.Key,
                     ProfileSurfacePoints = r.Value.ToArray()
@@ -175,6 +181,11 @@ namespace MilSpace.Tools
 
                 return session;
 
+            }
+            catch (MilSpaceCanotDeletePrifileCalcTable ex)
+            {
+                //TODO: Log error
+                throw ex;
             }
             catch (MilSpaceDataException ex)
             {

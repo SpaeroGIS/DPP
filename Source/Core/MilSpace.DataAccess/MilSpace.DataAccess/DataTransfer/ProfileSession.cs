@@ -21,6 +21,7 @@ namespace MilSpace.DataAccess.DataTransfer
         public ProfileSettingsTypeEnum DefinitionType;
         public int SessionId;
         public string SessionName;
+        public string SurfaceLayerName;
 
         [XmlIgnore]
         public List<GroupedLines> Segments;
