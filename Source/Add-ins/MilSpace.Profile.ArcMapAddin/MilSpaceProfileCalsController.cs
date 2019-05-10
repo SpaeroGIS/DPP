@@ -128,6 +128,7 @@ namespace MilSpace.Profile
 
                 graphsController.ProfileRedrawn += GraphRedrawn;
                 graphsController.ProfileRemoved += ProfileRemove;
+                graphsController.SelectedProfileChanged += SelectedProfileChanged;
 
                 return graphsController;
             }
@@ -264,6 +265,9 @@ namespace MilSpace.Profile
             var result = MilSpaceProfileFacade.DeleteUserSessions(View.SelectedProfileSessionIds.ProfileSessionId);
             if (result)
             {
+                MilSpaceProfileGraphsController.RemoveTab(View.SelectedProfileSessionIds.ProfileSessionId);
+                GraphicsLayerManager.RemoveGraphic(View.SelectedProfileSessionIds.ProfileSessionId);
+
                 return View.RemoveTreeViewItem();
             }
             return true;
@@ -405,8 +409,16 @@ namespace MilSpace.Profile
         internal void CallGraphsHandle(int profileSessionId)
         {
             var profileSession = GetProfileSessionById(profileSessionId);
+
+            if (_workingProfiles.FirstOrDefault(profile => profile.SessionId == profileSession.SessionId) != null)
+            {
+                _workingProfiles.Remove(_workingProfiles.FirstOrDefault(profile => profile.SessionId == profileSession.SessionId));
+            }
+            _workingProfiles.Add(profileSession);
+
             if (profileSession != null)
             {
+                profileSession.SetSegments(ArcMap.Document.FocusMap.SpatialReference);
                 CallGraphsHandle(profileSession);
             }
         }
@@ -471,7 +483,7 @@ namespace MilSpace.Profile
             return new PointClass { X = x, Y = y };
         }
 
-        private void GraphRedrawn(GroupedLines profileLines, int sessionId, bool update, List<int> linesIds)
+        private void GraphRedrawn(GroupedLines profileLines, int sessionId, bool update, List<int> linesIds = null)
         {
             if (update)
             {
@@ -493,6 +505,11 @@ namespace MilSpace.Profile
         private void ProfileRemove(int sessionId, int lineId)
         {
             GraphicsLayerManager.RemoveLineFromGraphic(sessionId, lineId);
+        }
+
+        private void SelectedProfileChanged(GroupedLines selectedLines, GroupedLines newSelectedLines, int profileId)
+        {
+            GraphicsLayerManager.ChangeSelectProfileOnGraph(selectedLines, newSelectedLines, profileId);
         }
 
         internal GraphicsLayerManager GraphicsLayerManager

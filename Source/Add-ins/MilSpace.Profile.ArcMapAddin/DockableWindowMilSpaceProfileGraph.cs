@@ -13,6 +13,7 @@ namespace MilSpace.Profile
     public partial class DockableWindowMilSpaceProfileGraph : UserControl
     {
         private MilSpaceProfileGraphsController controller;
+        private int selectedTabIndex = -1;
 
         private object Hook
         {
@@ -23,7 +24,7 @@ namespace MilSpace.Profile
         public DockableWindowMilSpaceProfileGraph Instance { get; }
 
         public DockableWindowMilSpaceProfileGraph(MilSpaceProfileGraphsController controller)
-        { 
+        {
             this.Instance = this;
             SetController(controller);
             controller.SetView(this);
@@ -49,7 +50,7 @@ namespace MilSpace.Profile
             return CheckTabExistance(sessionName, out tabPage);
         }
 
-        private bool CheckTabExistance(string sessionName, out TabPage foundTab )
+        private bool CheckTabExistance(string sessionName, out TabPage foundTab)
         {
             foundTab = null;
             foreach (TabPage tab in profilesTabControl.TabPages)
@@ -64,10 +65,16 @@ namespace MilSpace.Profile
             return false;
         }
 
-        internal void AddNewTab(SurfaceProfileChart surfaceProfileChart, string sessionName)
+        internal void AddNewTab(SurfaceProfileChart surfaceProfileChart, int sessionId)
         {
+            //if (profilesTabControl.TabPages.Count > 0)
+            //{
+            //    controller.InvokeSelectedProfileChanged(null, (int)profilesTabControl.SelectedTab.Tag);
+            //}
+
             TabPage tabPage = null;
-            if (CheckTabExistance(sessionName, out tabPage))
+
+            if (CheckTabExistance(sessionId.ToString(), out tabPage))
             {
                 profilesTabControl.SelectedTab = tabPage;
                 return;
@@ -84,7 +91,7 @@ namespace MilSpace.Profile
 
             tabPage = new TabPage(title);
             tabPage.Name = title;
-            tabPage.Tag = sessionName;
+            tabPage.Tag = sessionId;
 
             profilesTabControl.TabPages.Add(tabPage);
 
@@ -104,6 +111,25 @@ namespace MilSpace.Profile
         internal void RemoveCurrentTab()
         {
             profilesTabControl.TabPages.RemoveAt(profilesTabControl.SelectedIndex);
+        }
+
+        internal void RemoveTabBySessionId(int sessionId)
+        {
+            TabPage tabPage = null;
+
+            foreach (TabPage page in profilesTabControl.TabPages)
+            {
+                if ((int)page.Tag == sessionId)
+                {
+                    tabPage = page;
+                    break;
+                }
+            }
+
+            if (tabPage != null)
+            {
+                profilesTabControl.TabPages.Remove(tabPage);
+            }
         }
 
         #region AddIn Instance
@@ -172,9 +198,15 @@ namespace MilSpace.Profile
 
         private void ProfilesTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //if (selectedTabIndex != -1)
+            //{
+            //    controller.InvokeSelectedProfileChanged(null, (int)profilesTabControl.TabPages[selectedTabIndex].Tag);
+            //}
+
             if (profilesTabControl.TabPages.Count > 0)
             {
                 controller.SetChart((SurfaceProfileChart)profilesTabControl.SelectedTab.Controls["profileChart"]);
+                selectedTabIndex = profilesTabControl.SelectedIndex;
             }
         }
     }
