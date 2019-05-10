@@ -22,7 +22,7 @@ namespace MilSpace.Tools.GraphicsLayer
         };
 
         private Dictionary<MilSpaceGraphicsTypeEnum, List<GraphicElement>> allGraphics = new Dictionary<MilSpaceGraphicsTypeEnum, List<GraphicElement>>();
-        //private GroupedLines selectedLines = new GroupedLines();
+
         private enum LineType { Point, Line, Arrow, DefaultLine };
 
         public GraphicsLayerManager(IActiveView activeView)
@@ -50,13 +50,22 @@ namespace MilSpace.Tools.GraphicsLayer
         }
 
         private void UpdateGraphicLine(GroupedLines groupedLines, int profileId,
-                                       MilSpaceGraphicsTypeEnum graphicsType, bool selected = false)
+                                       MilSpaceGraphicsTypeEnum graphicsType, bool selectionRemove = false)
         {
             RemoveLineFromSessionGraphicsByLineId(profileId, groupedLines.LineId, graphicsType);
 
             int elementId = 0;
             int lineNumber = 0;
-            int width = (selected) ? 4 : 2;
+            int width;
+
+            if (selectionRemove)
+            {
+                width = 2;
+            }
+            else
+            {
+               width  = (groupedLines.IsSelected) ? 4 : 2;
+            }
 
 
             foreach (var line in groupedLines.Polylines)
@@ -158,17 +167,17 @@ namespace MilSpace.Tools.GraphicsLayer
             }
         }
 
-        public void ChangeSelectProfileOnGraph(GroupedLines selectedLines, GroupedLines newSelectedLines, int profileId)
+        public void ChangeSelectProfileOnGraph(GroupedLines oldSelectedLines, GroupedLines newSelectedLines, int profileId)
         {
-            if (selectedLines != null && selectedLines.Polylines != null)
+            if (oldSelectedLines != null && oldSelectedLines.Polylines != null)
             {
-                UpdateGraphicLine(selectedLines, profileId, MilSpaceGraphicsTypeEnum.Session, false);
-                //selectedLines = null;
+                UpdateGraphicLine(oldSelectedLines, profileId, MilSpaceGraphicsTypeEnum.Session, true);
             }
+
             if (newSelectedLines != null && newSelectedLines.Polylines != null)
             {
-                UpdateGraphicLine(newSelectedLines, profileId, MilSpaceGraphicsTypeEnum.Session, true);
-                //selectedLines = newSelectedLines;
+                newSelectedLines.IsSelected = true;
+                UpdateGraphicLine(newSelectedLines, profileId, MilSpaceGraphicsTypeEnum.Session, false);
             }
         }
 
@@ -252,10 +261,12 @@ namespace MilSpace.Tools.GraphicsLayer
             var curList = allGraphics[graphicsType];
             int elementId = 0;
             var lineNumber = 0;
+            int width = 2;
 
             if (profileColorLines != null)
             {
                 RemoveLineFromSessionGraphicsByLineId(profileId, profileColorLines.LineId, graphicsType);
+                width = (profileColorLines.IsSelected) ? 4 : 2;
             }
 
             foreach (var line in profileLines)
@@ -274,7 +285,8 @@ namespace MilSpace.Tools.GraphicsLayer
                     else if (profileColorLines.Lines.First() == profileColorLines.Lines[lineNumber]) { lineType = LineType.Point; }
                     else { lineType = LineType.Line; }
 
-                    AddPolyline(ge, graphicsType, color, lineType);
+
+                    AddPolyline(ge, graphicsType, color, lineType, false, false, width);
 
                     lineNumber++;
                 }

@@ -1023,17 +1023,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 return;
             }
 
-            int beforeSelectedId;
-
-            if (SelectedProfileIndex != -1)
-            {
-                beforeSelectedId = Convert.ToInt32(profileChart.Series[SelectedProfileIndex].Name);
-            }
-            else
-            {
-                beforeSelectedId = -1;
-            }
-            _controller.InvokeSelectedProfile(beforeSelectedId, Convert.ToInt32(serieName));
+            _controller.InvokeSelectedProfile(Convert.ToInt32(serieName));
 
             if (SelectedProfileIndex != -1 && profileChart.Series.Count > 2)
             {

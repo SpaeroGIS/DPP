@@ -26,7 +26,7 @@ namespace MilSpace.Profile
                                                                         bool update, List<int> linesIds = null);
 
         internal delegate void DeleteProfileDelegate(int sessionId, int lineId);
-        internal delegate void SelectedProfileChangedDelegate(GroupedLines selectedLines, GroupedLines newSelectedLines, int profileId);
+        internal delegate void SelectedProfileChangedDelegate(GroupedLines newSelectedLines, int profileId);
 
         internal event ProfileRedrawDelegate ProfileRedrawn;
         internal event DeleteProfileDelegate ProfileRemoved;
@@ -89,9 +89,9 @@ namespace MilSpace.Profile
             ProfileRemoved?.Invoke(sessionId, lineId);
         }
 
-        internal void InvokeSelectedProfileChanged(GroupedLines selectedLines, GroupedLines newSelectedLines, int profileId)
+        internal void InvokeSelectedProfileChanged(GroupedLines newSelectedLines, int profileId)
         {
-            SelectedProfileChanged?.Invoke(selectedLines, newSelectedLines, profileId);
+            SelectedProfileChanged?.Invoke(newSelectedLines, profileId);
         }
 
         internal void ShowWindow()
