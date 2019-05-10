@@ -16,5 +16,6 @@ namespace MilSpace.DataAccess
         public int LineId { get; set; }
         public RgbColor VisibleColor { get; set; }
         public RgbColor InvisibleColor { get; set; }
+        public bool IsSelected { get; set; }
     }
 }
