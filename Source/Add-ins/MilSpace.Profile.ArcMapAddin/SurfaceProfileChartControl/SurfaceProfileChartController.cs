@@ -24,7 +24,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                                                                         bool update, List<int> linesIds = null);
 
         internal delegate void DeleteProfileDelegate(int sessionId, int lineId);
-        internal delegate void SelectedProfileChangedDelegate(GroupedLines selectedLines, GroupedLines newSelectedLines, int profileId);
+        internal delegate void SelectedProfileChangedDelegate(GroupedLines newSelectedLines, int profileId);
 
         internal event ProfileGrapchClickedDelegate OnProfileGraphClicked;
         internal event ProfileChangeInvisiblesZonesDelegate InvisibleZonesChanged;
@@ -171,6 +171,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
             else
             {
+                profileLines.IsSelected = _profileSession.Segments[profileSurface.LineId - 1].IsSelected;
                 _profileSession.Segments[profileSurface.LineId - 1] = profileLines;
             }
             
@@ -226,10 +227,10 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                                                 _profileSession.SessionId, true);
         }
 
-        internal void InvokeSelectedProfile(int selectedLineId, int newSelectedLineId)
+        internal void InvokeSelectedProfile(int selectedLineId)
         {
-            SelectedProfileChanged?.Invoke(_profileSession.Segments.FirstOrDefault(segment => segment.LineId == selectedLineId),
-                                               _profileSession.Segments.First(segment => segment.LineId == newSelectedLineId), _profileSession.SessionId);
+            SelectedProfileChanged?.Invoke(_profileSession.Segments.First(segment => segment.LineId == selectedLineId), _profileSession.SessionId);
+            _profileSession.Segments.First(segment => segment.LineId == selectedLineId).IsSelected = true;
         }
 
         private List<ProfileSurfacePoint> FindExtremePoints()

@@ -67,10 +67,10 @@ namespace MilSpace.Profile
 
         internal void AddNewTab(SurfaceProfileChart surfaceProfileChart, int sessionId)
         {
-            //if (profilesTabControl.TabPages.Count > 0)
-            //{
-            //    controller.InvokeSelectedProfileChanged(null, (int)profilesTabControl.SelectedTab.Tag);
-            //}
+            if (profilesTabControl.TabPages.Count > 0)
+            {
+                controller.InvokeSelectedProfileChanged(null, (int)profilesTabControl.SelectedTab.Tag);
+            }
 
             TabPage tabPage = null;
 
@@ -198,10 +198,10 @@ namespace MilSpace.Profile
 
         private void ProfilesTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //if (selectedTabIndex != -1)
-            //{
-            //    controller.InvokeSelectedProfileChanged(null, (int)profilesTabControl.TabPages[selectedTabIndex].Tag);
-            //}
+            if (selectedTabIndex != -1)
+            {
+                controller.InvokeSelectedProfileChanged(null, (int)profilesTabControl.TabPages[selectedTabIndex].Tag);
+            }
 
             if (profilesTabControl.TabPages.Count > 0)
             {

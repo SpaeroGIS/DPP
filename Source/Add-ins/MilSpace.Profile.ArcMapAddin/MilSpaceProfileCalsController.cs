@@ -507,9 +507,17 @@ namespace MilSpace.Profile
             GraphicsLayerManager.RemoveLineFromGraphic(sessionId, lineId);
         }
 
-        private void SelectedProfileChanged(GroupedLines selectedLines, GroupedLines newSelectedLines, int profileId)
+        private void SelectedProfileChanged(GroupedLines newSelectedLines, int profileId)
         {
-            GraphicsLayerManager.ChangeSelectProfileOnGraph(selectedLines, newSelectedLines, profileId);
+            var allLines = _workingProfiles.FirstOrDefault(profile => profile.SessionId == profileId).Segments;
+            var oldSelectedLines = allLines.FirstOrDefault(line => line.IsSelected == true);
+
+            GraphicsLayerManager.ChangeSelectProfileOnGraph(oldSelectedLines, newSelectedLines, profileId);
+
+            if (oldSelectedLines != null)
+            {
+                oldSelectedLines.IsSelected = false;
+            }
         }
 
         internal GraphicsLayerManager GraphicsLayerManager
