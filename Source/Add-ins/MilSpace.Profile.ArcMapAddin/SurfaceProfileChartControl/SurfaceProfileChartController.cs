@@ -171,6 +171,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
             else
             {
+                profileLines.IsSelected = _profileSession.Segments[profileSurface.LineId - 1].IsSelected;
                 _profileSession.Segments[profileSurface.LineId - 1] = profileLines;
             }
             

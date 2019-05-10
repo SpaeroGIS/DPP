@@ -67,7 +67,6 @@ namespace MilSpace.Tools.GraphicsLayer
                width  = (groupedLines.IsSelected) ? 4 : 2;
             }
 
-
             foreach (var line in groupedLines.Polylines)
             {
                 var ge = new GraphicElement()
