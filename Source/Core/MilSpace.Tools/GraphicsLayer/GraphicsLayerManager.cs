@@ -23,6 +23,7 @@ namespace MilSpace.Tools.GraphicsLayer
 
         private Dictionary<MilSpaceGraphicsTypeEnum, List<GraphicElement>> allGraphics = new Dictionary<MilSpaceGraphicsTypeEnum, List<GraphicElement>>();
         //private GroupedLines selectedLines = new GroupedLines();
+        private enum LineType { Point, Line, Arrow, DefaultLine };
 
         public GraphicsLayerManager(IActiveView activeView)
         {
@@ -70,15 +71,14 @@ namespace MilSpace.Tools.GraphicsLayer
 
                 var color = (groupedLines.Lines[lineNumber].Visible) ? groupedLines.VisibleColor
                                                                      : groupedLines.InvisibleColor;
+                LineType lineType;
 
-                if (groupedLines.Lines.Last() == groupedLines.Lines[lineNumber])
-                {
-                    AddPolyline(ge, graphicsType, color, false, false, false, width);
-                }
-                else
-                {
-                    AddPolyline(ge, graphicsType, color, true, false, false, width);
-                }
+                if (groupedLines.Lines.Count() == 1) { lineType = LineType.DefaultLine; }
+                else if (groupedLines.Lines.Last() == groupedLines.Lines[lineNumber]) { lineType = LineType.Arrow; }
+                else if (groupedLines.Lines.First() == groupedLines.Lines[lineNumber]) { lineType = LineType.Point; }
+                else { lineType = LineType.Line; }
+
+                AddPolyline(ge, graphicsType, color, lineType, false, false, width);
 
                 lineNumber++;
             }
@@ -243,7 +243,7 @@ namespace MilSpace.Tools.GraphicsLayer
 
         public void AddCalculationPolyline(GraphicElement graphicElement, bool doRefresh = false)
         {
-            AddPolyline(graphicElement, MilSpaceGraphicsTypeEnum.Calculating, null, false);
+            AddPolyline(graphicElement, MilSpaceGraphicsTypeEnum.Calculating, null);
         }
 
         private void AddLinesToGraphics(IEnumerable<IPolyline> profileLines, int profileId,
@@ -267,15 +267,14 @@ namespace MilSpace.Tools.GraphicsLayer
                     var ge = new GraphicElement() { Source = line, ElementId = elementId, ProfileId = profileId, LineId = profileColorLines.LineId };
                     var color = (profileColorLines.Lines[lineNumber].Visible) ? profileColorLines.VisibleColor
                                                                               : profileColorLines.InvisibleColor;
+                    LineType lineType;
 
-                    if (profileColorLines.Lines.Last() == profileColorLines.Lines[lineNumber])
-                    {
-                        AddPolyline(ge, graphicsType, color, false);
-                    }
-                    else
-                    {
-                        AddPolyline(ge, graphicsType, color, true);
-                    }
+                    if (profileColorLines.Lines.Count() == 1) { lineType = LineType.DefaultLine; }
+                    else if (profileColorLines.Lines.Last() == profileColorLines.Lines[lineNumber]) { lineType = LineType.Arrow; }
+                    else if (profileColorLines.Lines.First() == profileColorLines.Lines[lineNumber]) { lineType = LineType.Point; }
+                    else { lineType = LineType.Line; }
+
+                    AddPolyline(ge, graphicsType, color, lineType);
 
                     lineNumber++;
                 }
@@ -344,7 +343,7 @@ namespace MilSpace.Tools.GraphicsLayer
         }
 
         private void AddPolyline(GraphicElement graphicElement, MilSpaceGraphicsTypeEnum graphicsType,
-                                    IRgbColor color = null, bool isLine = false, bool doRefresh = false,
+                                    IRgbColor color = null, LineType lineType = LineType.DefaultLine, bool doRefresh = false,
                                     bool persist = false, int width = 2)
         {
             IPolyline profileLine = graphicElement.Source;
@@ -366,14 +365,13 @@ namespace MilSpace.Tools.GraphicsLayer
                 color = grapchucsTypeColors[graphicsType]();
             }
 
-            if (!isLine)
+            if (lineType == LineType.Line)
             {
-                lineElement.Symbol = DefineProfileArrowLineSymbol(graphicsType, color, width);
-
+                lineElement.Symbol = DefineProfileLineSymbol(graphicsType, color, width);
             }
             else
             {
-                lineElement.Symbol = DefineProfileLineSymbol(graphicsType, color, width);
+                lineElement.Symbol = DefineProfileDecorationLineSymbol(graphicsType, color, width, lineType);
             }
 
             IElement elem = (IElement)lineElement;
@@ -396,35 +394,61 @@ namespace MilSpace.Tools.GraphicsLayer
             }
         }
 
-        private static ILineSymbol DefineProfileArrowLineSymbol(MilSpaceGraphicsTypeEnum graphicsType, IRgbColor color, int width = 2)
+        private static ILineSymbol DefineProfileDecorationLineSymbol(MilSpaceGraphicsTypeEnum graphicsType, IRgbColor color,
+                                                                        int width = 2, LineType lineType = LineType.Arrow)
         {
             //TODO: Get symbol from ESRITools
-            //  IRgbColor rgbColor = grapchucsTypeColors[graphicsType]();
-
-            //Define an arrow marker 
-            IArrowMarkerSymbol arrowMarkerSymbol = new ArrowMarkerSymbolClass();
-            arrowMarkerSymbol.Color = color;
-            arrowMarkerSymbol.Size = 5;
-            arrowMarkerSymbol.Length = 8;
-            arrowMarkerSymbol.Width = 5 + width;
 
             //Create cartographic line symbol  
             ICartographicLineSymbol cartographicLineSymbol = new CartographicLineSymbolClass();
             cartographicLineSymbol.Color = color;
             cartographicLineSymbol.Width = width;
-
-            //Define simple line decoration  
-            ISimpleLineDecorationElement simpleLineDecorationElement = new SimpleLineDecorationElementClass();
-            //Place the arrow at the end of the line (the "To" point in the geometry below)  
-            simpleLineDecorationElement.AddPosition(1);
-
-            //Add an offset to make sure the square end of the line is hidden  
-            arrowMarkerSymbol.XOffset = 0.8;
-            simpleLineDecorationElement.MarkerSymbol = arrowMarkerSymbol;
-
+            
             //Define line decoration  
             ILineDecoration lineDecoration = new LineDecorationClass();
-            lineDecoration.AddElement(simpleLineDecorationElement);
+
+            if (lineType == LineType.Arrow || lineType == LineType.DefaultLine)
+            {
+                //Define simple line decoration  
+                ISimpleLineDecorationElement simpleLineDecorationElement = new SimpleLineDecorationElementClass();
+
+                //Place the arrow at the end of the line(the "To" point in the geometry below)
+                simpleLineDecorationElement.AddPosition(1);
+
+                //Define an arrow marker 
+                IArrowMarkerSymbol arrowMarkerSymbol = new ArrowMarkerSymbolClass();
+                arrowMarkerSymbol.Color = color;
+                arrowMarkerSymbol.Size = 5;
+                arrowMarkerSymbol.Length = 8;
+                arrowMarkerSymbol.Width = 5 + width;
+
+                //Add an offset to make sure the square end of the line is hidden  
+                arrowMarkerSymbol.XOffset = 0.8;
+                simpleLineDecorationElement.MarkerSymbol = arrowMarkerSymbol;
+
+                lineDecoration.AddElement(simpleLineDecorationElement);
+            }
+
+            if (lineType == LineType.Point || lineType == LineType.DefaultLine)
+            {
+                //Define simple line decoration  
+                ISimpleLineDecorationElement simpleLineDecorationElement = new SimpleLineDecorationElementClass();
+
+                simpleLineDecorationElement.AddPosition(0);
+
+                SimpleMarkerSymbol circleMarkerSymbol = new SimpleMarkerSymbol()
+                {
+                    Color = color,
+                    Size = 5,
+                    Style = esriSimpleMarkerStyle.esriSMSCircle,
+                };
+
+                //Add an offset to make sure the square end of the line is hidden  
+                circleMarkerSymbol.XOffset = 0.8;
+                simpleLineDecorationElement.MarkerSymbol = circleMarkerSymbol;
+
+                lineDecoration.AddElement(simpleLineDecorationElement);
+            }
 
             //Set line properties  
             ILineProperties lineProperties = (ILineProperties)cartographicLineSymbol;

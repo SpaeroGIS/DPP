@@ -105,6 +105,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             {
                 profileChart.Series.Last().Points.AddXY(point.Distance, point.Z);
             }
+
+            profileChart.Series.Last().Points.First().MarkerStyle = MarkerStyle.Circle;
         }
 
         internal void AddInvisibleLine(ProfileSurface surface)
