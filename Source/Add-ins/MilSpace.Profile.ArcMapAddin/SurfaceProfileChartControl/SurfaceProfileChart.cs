@@ -14,7 +14,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
     public partial class SurfaceProfileChart : UserControl
     {
         private SurfaceProfileChartController _controller;
-        private int _profileId;
+        private string _profileName;
         private bool _isCommentDisplay = false;
         private double _defaultChartHeight;
         private int _maxObserverHeightIndex = 0;
@@ -83,7 +83,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 AddSerie(profileSurface);
             }
 
-            _profileId = profileSession.SessionId;
+            _profileName = profileSession.SessionName;
         }
 
         internal void AddSerie(ProfileSurface profileSurface)
@@ -105,6 +105,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             {
                 profileChart.Series.Last().Points.AddXY(point.Distance, point.Z);
             }
+
+            profileChart.Series.Last().Points.First().MarkerStyle = MarkerStyle.Circle;
         }
 
         internal void AddInvisibleLine(ProfileSurface surface)
@@ -751,6 +753,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 profileChart.Series[SelectedProfileIndex].Color = lineColorDialog.Color;
 
                 UpdateProfileWithNewColor();
+                _controller.InvokeGraphRedrawn(Convert.ToInt32(profileChart.Series[SelectedProfileIndex].Name), lineColorDialog.Color);
+
                 visibleLineColorButton.BackColor = lineColorDialog.Color;
             }
         }
@@ -1019,6 +1023,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 return;
             }
 
+            _controller.InvokeSelectedProfile(Convert.ToInt32(serieName));
+
             if (SelectedProfileIndex != -1 && profileChart.Series.Count > 2)
             {
                 profileChart.Series[SelectedProfileIndex].BorderWidth -= 2;
@@ -1026,7 +1032,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                                    new Font(profileChart.Series[SelectedProfileIndex].Font, FontStyle.Regular);
             }
 
-            profileNameLabel.Text = $"Профиль: {_profileId}";
+            profileNameLabel.Text = $"Профиль: {_profileName}";
             SelectedProfileIndex = profileChart.Series.IndexOf(serieName);
 
             observerHeightTextBox.Text = ProfilesProperties[SelectedProfileIndex].ObserverHeight.ToString();

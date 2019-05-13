@@ -2,14 +2,10 @@
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Tools;
-using MilSpace.Core.Tools.Helper;
 using MilSpace.DataAccess;
-using MilSpace.DataAccess.DataTransfer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MilSpace.Tools.GraphicsLayer
 {
@@ -27,6 +23,7 @@ namespace MilSpace.Tools.GraphicsLayer
 
         private Dictionary<MilSpaceGraphicsTypeEnum, List<GraphicElement>> allGraphics = new Dictionary<MilSpaceGraphicsTypeEnum, List<GraphicElement>>();
 
+        private enum LineType { Point, Line, Arrow, DefaultLine };
 
         public GraphicsLayerManager(IActiveView activeView)
         {
@@ -53,12 +50,22 @@ namespace MilSpace.Tools.GraphicsLayer
         }
 
         private void UpdateGraphicLine(GroupedLines groupedLines, int profileId,
-                                       MilSpaceGraphicsTypeEnum graphicsType)
+                                       MilSpaceGraphicsTypeEnum graphicsType, bool selectionRemove = false)
         {
             RemoveLineFromSessionGraphicsByLineId(profileId, groupedLines.LineId, graphicsType);
 
             int elementId = 0;
             int lineNumber = 0;
+            int width;
+
+            if (selectionRemove)
+            {
+                width = 2;
+            }
+            else
+            {
+               width  = (groupedLines.IsSelected) ? 4 : 2;
+            }
 
             foreach (var line in groupedLines.Polylines)
             {
@@ -72,15 +79,14 @@ namespace MilSpace.Tools.GraphicsLayer
 
                 var color = (groupedLines.Lines[lineNumber].Visible) ? groupedLines.VisibleColor
                                                                      : groupedLines.InvisibleColor;
+                LineType lineType;
 
-                if (groupedLines.Lines.Last() == groupedLines.Lines[lineNumber])
-                {
-                    AddPolyline(ge, graphicsType, color, false);
-                }
-                else
-                {
-                    AddPolyline(ge, graphicsType, color, true);
-                }
+                if (groupedLines.Lines.Count() == 1) { lineType = LineType.DefaultLine; }
+                else if (groupedLines.Lines.Last() == groupedLines.Lines[lineNumber]) { lineType = LineType.Arrow; }
+                else if (groupedLines.Lines.First() == groupedLines.Lines[lineNumber]) { lineType = LineType.Point; }
+                else { lineType = LineType.Line; }
+
+                AddPolyline(ge, graphicsType, color, lineType, false, false, width);
 
                 lineNumber++;
             }
@@ -94,6 +100,23 @@ namespace MilSpace.Tools.GraphicsLayer
             var curList = allGraphics[graphicsType];
 
             if (graphicLine.Count() > 0)
+            {
+                foreach (var graphic in graphicLine)
+                {
+                    DeleteGraphicsElement(graphic);
+                    curList.Remove(graphic);
+                }
+            }
+
+            activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
+        }
+
+        private void RemoveLineFromSessionGraphicsByProfileId(int profileId, MilSpaceGraphicsTypeEnum graphicsType)
+        {
+            var graphicLine = milSpaceSessionGraphics.Where(g => g.ProfileId == profileId).ToList();
+            var curList = allGraphics[graphicsType];
+
+            if (graphicLine.Count > 0)
             {
                 foreach (var graphic in graphicLine)
                 {
@@ -143,6 +166,20 @@ namespace MilSpace.Tools.GraphicsLayer
             }
         }
 
+        public void ChangeSelectProfileOnGraph(GroupedLines oldSelectedLines, GroupedLines newSelectedLines, int profileId)
+        {
+            if (oldSelectedLines != null && oldSelectedLines.Polylines != null)
+            {
+                UpdateGraphicLine(oldSelectedLines, profileId, MilSpaceGraphicsTypeEnum.Session, true);
+            }
+
+            if (newSelectedLines != null && newSelectedLines.Polylines != null)
+            {
+                newSelectedLines.IsSelected = true;
+                UpdateGraphicLine(newSelectedLines, profileId, MilSpaceGraphicsTypeEnum.Session, false);
+            }
+        }
+
 
         public void ShowLineOnWorkingGraphics(int profileId, GroupedLines groupedLines)
         {
@@ -165,6 +202,11 @@ namespace MilSpace.Tools.GraphicsLayer
             {
                 RemoveLineFromSessionGraphicsByLineId(profileId, id, MilSpaceGraphicsTypeEnum.Session);
             }
+        }
+
+        public void RemoveGraphic(int profileId)
+        {
+            RemoveLineFromSessionGraphicsByProfileId(profileId, MilSpaceGraphicsTypeEnum.Session);
         }
 
         public void RemoveLineFromGraphic(int profileId, int lineId)
@@ -209,7 +251,7 @@ namespace MilSpace.Tools.GraphicsLayer
 
         public void AddCalculationPolyline(GraphicElement graphicElement, bool doRefresh = false)
         {
-            AddPolyline(graphicElement, MilSpaceGraphicsTypeEnum.Calculating, null, false);
+            AddPolyline(graphicElement, MilSpaceGraphicsTypeEnum.Calculating, null);
         }
 
         private void AddLinesToGraphics(IEnumerable<IPolyline> profileLines, int profileId,
@@ -218,10 +260,12 @@ namespace MilSpace.Tools.GraphicsLayer
             var curList = allGraphics[graphicsType];
             int elementId = 0;
             var lineNumber = 0;
+            int width = 2;
 
             if (profileColorLines != null)
             {
                 RemoveLineFromSessionGraphicsByLineId(profileId, profileColorLines.LineId, graphicsType);
+                width = (profileColorLines.IsSelected) ? 4 : 2;
             }
 
             foreach (var line in profileLines)
@@ -233,15 +277,15 @@ namespace MilSpace.Tools.GraphicsLayer
                     var ge = new GraphicElement() { Source = line, ElementId = elementId, ProfileId = profileId, LineId = profileColorLines.LineId };
                     var color = (profileColorLines.Lines[lineNumber].Visible) ? profileColorLines.VisibleColor
                                                                               : profileColorLines.InvisibleColor;
+                    LineType lineType;
 
-                    if (profileColorLines.Lines.Last() == profileColorLines.Lines[lineNumber])
-                    {
-                        AddPolyline(ge, graphicsType, color, false);
-                    }
-                    else
-                    {
-                        AddPolyline(ge, graphicsType, color, true);
-                    }
+                    if (profileColorLines.Lines.Count() == 1) { lineType = LineType.DefaultLine; }
+                    else if (profileColorLines.Lines.Last() == profileColorLines.Lines[lineNumber]) { lineType = LineType.Arrow; }
+                    else if (profileColorLines.Lines.First() == profileColorLines.Lines[lineNumber]) { lineType = LineType.Point; }
+                    else { lineType = LineType.Line; }
+
+
+                    AddPolyline(ge, graphicsType, color, lineType, false, false, width);
 
                     lineNumber++;
                 }
@@ -310,8 +354,8 @@ namespace MilSpace.Tools.GraphicsLayer
         }
 
         private void AddPolyline(GraphicElement graphicElement, MilSpaceGraphicsTypeEnum graphicsType,
-                                    IRgbColor color = null, bool isLine = false, bool doRefresh = false,
-                                    bool persist = false)
+                                    IRgbColor color = null, LineType lineType = LineType.DefaultLine, bool doRefresh = false,
+                                    bool persist = false, int width = 2)
         {
             IPolyline profileLine = graphicElement.Source;
             ILineElement lineElement = new LineElementClass();
@@ -332,14 +376,13 @@ namespace MilSpace.Tools.GraphicsLayer
                 color = grapchucsTypeColors[graphicsType]();
             }
 
-            if (!isLine)
+            if (lineType == LineType.Line)
             {
-                lineElement.Symbol = DefineProfileArrowLineSymbol(graphicsType, color);
-
+                lineElement.Symbol = DefineProfileLineSymbol(graphicsType, color, width);
             }
             else
             {
-                lineElement.Symbol = DefineProfileLineSymbol(graphicsType, color);
+                lineElement.Symbol = DefineProfileDecorationLineSymbol(graphicsType, color, width, lineType);
             }
 
             IElement elem = (IElement)lineElement;
@@ -362,35 +405,61 @@ namespace MilSpace.Tools.GraphicsLayer
             }
         }
 
-        private static ILineSymbol DefineProfileArrowLineSymbol(MilSpaceGraphicsTypeEnum graphicsType, IRgbColor color)
+        private static ILineSymbol DefineProfileDecorationLineSymbol(MilSpaceGraphicsTypeEnum graphicsType, IRgbColor color,
+                                                                        int width = 2, LineType lineType = LineType.Arrow)
         {
             //TODO: Get symbol from ESRITools
-            //  IRgbColor rgbColor = grapchucsTypeColors[graphicsType]();
-
-            //Define an arrow marker 
-            IArrowMarkerSymbol arrowMarkerSymbol = new ArrowMarkerSymbolClass();
-            arrowMarkerSymbol.Color = color;
-            arrowMarkerSymbol.Size = 4;
-            arrowMarkerSymbol.Length = 8;
-            arrowMarkerSymbol.Width = 6;
 
             //Create cartographic line symbol  
             ICartographicLineSymbol cartographicLineSymbol = new CartographicLineSymbolClass();
             cartographicLineSymbol.Color = color;
-            cartographicLineSymbol.Width = 1;
-
-            //Define simple line decoration  
-            ISimpleLineDecorationElement simpleLineDecorationElement = new SimpleLineDecorationElementClass();
-            //Place the arrow at the end of the line (the "To" point in the geometry below)  
-            simpleLineDecorationElement.AddPosition(1);
-
-            //Add an offset to make sure the square end of the line is hidden  
-            arrowMarkerSymbol.XOffset = 0.8;
-            simpleLineDecorationElement.MarkerSymbol = arrowMarkerSymbol;
-
+            cartographicLineSymbol.Width = width;
+            
             //Define line decoration  
             ILineDecoration lineDecoration = new LineDecorationClass();
-            lineDecoration.AddElement(simpleLineDecorationElement);
+
+            if (lineType == LineType.Arrow || lineType == LineType.DefaultLine)
+            {
+                //Define simple line decoration  
+                ISimpleLineDecorationElement simpleLineDecorationElement = new SimpleLineDecorationElementClass();
+
+                //Place the arrow at the end of the line(the "To" point in the geometry below)
+                simpleLineDecorationElement.AddPosition(1);
+
+                //Define an arrow marker 
+                IArrowMarkerSymbol arrowMarkerSymbol = new ArrowMarkerSymbolClass();
+                arrowMarkerSymbol.Color = color;
+                arrowMarkerSymbol.Size = 5;
+                arrowMarkerSymbol.Length = 8;
+                arrowMarkerSymbol.Width = 5 + width;
+
+                //Add an offset to make sure the square end of the line is hidden  
+                arrowMarkerSymbol.XOffset = 0.8;
+                simpleLineDecorationElement.MarkerSymbol = arrowMarkerSymbol;
+
+                lineDecoration.AddElement(simpleLineDecorationElement);
+            }
+
+            if (lineType == LineType.Point || lineType == LineType.DefaultLine)
+            {
+                //Define simple line decoration  
+                ISimpleLineDecorationElement simpleLineDecorationElement = new SimpleLineDecorationElementClass();
+
+                simpleLineDecorationElement.AddPosition(0);
+
+                SimpleMarkerSymbol circleMarkerSymbol = new SimpleMarkerSymbol()
+                {
+                    Color = color,
+                    Size = 5,
+                    Style = esriSimpleMarkerStyle.esriSMSCircle,
+                };
+
+                //Add an offset to make sure the square end of the line is hidden  
+                circleMarkerSymbol.XOffset = 0.8;
+                simpleLineDecorationElement.MarkerSymbol = circleMarkerSymbol;
+
+                lineDecoration.AddElement(simpleLineDecorationElement);
+            }
 
             //Set line properties  
             ILineProperties lineProperties = (ILineProperties)cartographicLineSymbol;
@@ -399,12 +468,12 @@ namespace MilSpace.Tools.GraphicsLayer
             return cartographicLineSymbol;
         }
 
-        private static ILineSymbol DefineProfileLineSymbol(MilSpaceGraphicsTypeEnum graphicsType, IRgbColor color, bool isLine = false)
+        private static ILineSymbol DefineProfileLineSymbol(MilSpaceGraphicsTypeEnum graphicsType, IRgbColor color, int width = 2)
         {
             //Create cartographic line symbol  
             ICartographicLineSymbol cartographicLineSymbol = new CartographicLineSymbolClass();
             cartographicLineSymbol.Color = color;
-            cartographicLineSymbol.Width = 1;
+            cartographicLineSymbol.Width = width;
 
             return cartographicLineSymbol;
         }

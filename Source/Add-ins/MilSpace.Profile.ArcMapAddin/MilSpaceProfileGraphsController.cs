@@ -23,12 +23,14 @@ namespace MilSpace.Profile
 
 
         internal delegate void ProfileRedrawDelegate(GroupedLines profileLines, int sessionId,
-                                                                        bool update, List<int> linesIds);
+                                                                        bool update, List<int> linesIds = null);
 
         internal delegate void DeleteProfileDelegate(int sessionId, int lineId);
+        internal delegate void SelectedProfileChangedDelegate(GroupedLines newSelectedLines, int profileId);
 
         internal event ProfileRedrawDelegate ProfileRedrawn;
         internal event DeleteProfileDelegate ProfileRemoved;
+        internal event SelectedProfileChangedDelegate SelectedProfileChanged;
 
         internal DockableWindowMilSpaceProfileGraph View { get; private set; }
 
@@ -87,6 +89,11 @@ namespace MilSpace.Profile
             ProfileRemoved?.Invoke(sessionId, lineId);
         }
 
+        internal void InvokeSelectedProfileChanged(GroupedLines newSelectedLines, int profileId)
+        {
+            SelectedProfileChanged?.Invoke(newSelectedLines, profileId);
+        }
+
         internal void ShowWindow()
         {
             ArcMap.Application.CurrentTool = null;
@@ -95,8 +102,6 @@ namespace MilSpace.Profile
                 Docablewindow.Show(true);
             }
         }
-
-
         
         internal bool IsWindowVisible => Docablewindow.IsVisible();
 
@@ -107,11 +112,12 @@ namespace MilSpace.Profile
             _surfaceProfileChartController.OnProfileGraphClicked += OnProfileGraphClicked;
             _surfaceProfileChartController.InvisibleZonesChanged += InvokeInvisibleZonesChanged;
             _surfaceProfileChartController.ProfileRemoved += InvokeProfileRemoved;
+            _surfaceProfileChartController.SelectedProfileChanged += InvokeSelectedProfileChanged;
 
             _surfaceProfileChartController.SetSession(profileSession);
             SurfaceProfileChart surfaceProfileChart = _surfaceProfileChartController.CreateProfileChart(profileSession.ObserverHeight);
 
-            View.AddNewTab(surfaceProfileChart, profileSession.SessionName);
+            View.AddNewTab(surfaceProfileChart, profileSession.SessionId);
         }
 
         internal void SetChart(SurfaceProfileChart currentChart)
@@ -122,6 +128,11 @@ namespace MilSpace.Profile
         internal void RemoveTab()
         {
             View.RemoveCurrentTab();
+        }
+
+        internal void RemoveTab(int sessionId)
+        {
+            View.RemoveTabBySessionId(sessionId);
         }
 
         private IDockableWindow Docablewindow

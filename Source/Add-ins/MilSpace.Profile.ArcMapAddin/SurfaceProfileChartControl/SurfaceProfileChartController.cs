@@ -21,13 +21,15 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal delegate void ProfileGrapchClickedDelegate(GraphProfileClickedArgs e);
         internal delegate void ProfileChangeInvisiblesZonesDelegate(GroupedLines profileLines, int sessionId,
-                                                                        bool update, List<int> linesIds);
+                                                                        bool update, List<int> linesIds = null);
 
         internal delegate void DeleteProfileDelegate(int sessionId, int lineId);
+        internal delegate void SelectedProfileChangedDelegate(GroupedLines newSelectedLines, int profileId);
 
         internal event ProfileGrapchClickedDelegate OnProfileGraphClicked;
         internal event ProfileChangeInvisiblesZonesDelegate InvisibleZonesChanged;
         internal event DeleteProfileDelegate ProfileRemoved;
+        internal event SelectedProfileChangedDelegate SelectedProfileChanged;
 
         public SurfaceProfileChartController()
         {
@@ -169,6 +171,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
             else
             {
+                profileLines.IsSelected = _profileSession.Segments[profileSurface.LineId - 1].IsSelected;
                 _profileSession.Segments[profileSurface.LineId - 1] = profileLines;
             }
             
@@ -214,6 +217,20 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         internal void InvokeProfileRemoved(int profileId)
         {
             ProfileRemoved?.Invoke(_profileSession.SessionId, profileId);
+        }
+
+        internal void InvokeGraphRedrawn(int lineId, Color visibleColor)
+        {
+            _profileSession.Segments.First(segment => segment.LineId == lineId).VisibleColor = ColorToEsriRgb(visibleColor);
+
+            InvisibleZonesChanged?.Invoke(_profileSession.Segments.First(segment => segment.LineId == lineId),
+                                                _profileSession.SessionId, true);
+        }
+
+        internal void InvokeSelectedProfile(int selectedLineId)
+        {
+            SelectedProfileChanged?.Invoke(_profileSession.Segments.First(segment => segment.LineId == selectedLineId), _profileSession.SessionId);
+            _profileSession.Segments.First(segment => segment.LineId == selectedLineId).IsSelected = true;
         }
 
         private List<ProfileSurfacePoint> FindExtremePoints()

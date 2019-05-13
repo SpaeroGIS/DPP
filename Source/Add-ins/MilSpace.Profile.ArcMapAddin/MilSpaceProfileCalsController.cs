@@ -6,6 +6,7 @@ using MilSpace.Core.Tools;
 using MilSpace.Core.Tools.Helper;
 using MilSpace.DataAccess;
 using MilSpace.DataAccess.DataTransfer;
+using MilSpace.DataAccess.Exceptions;
 using MilSpace.DataAccess.Facade;
 using MilSpace.Profile.DTO;
 using MilSpace.Tools;
@@ -111,7 +112,7 @@ namespace MilSpace.Profile
             SetProfileSettings(ProfileSettingsTypeEnum.Fun);
         }
 
-      
+
         internal IMilSpaceProfileView View { get; private set; }
 
         internal ProfileSettingsTypeEnum[] ProfileSettingsType => profileSettingsType;
@@ -128,6 +129,7 @@ namespace MilSpace.Profile
 
                 graphsController.ProfileRedrawn += GraphRedrawn;
                 graphsController.ProfileRemoved += ProfileRemove;
+                graphsController.SelectedProfileChanged += SelectedProfileChanged;
 
                 return graphsController;
             }
@@ -234,6 +236,7 @@ namespace MilSpace.Profile
         /// <returns>Profile Session data</returns>
         internal ProfileSession GenerateProfile()
         {
+            string errorMessage;
             try
             {
 
@@ -243,7 +246,7 @@ namespace MilSpace.Profile
                 var newProfileName = GenerateProfileName(newProfileId);
 
                 var session = manager.GenerateProfile(View.DemLayerName, profileSetting.ProfileLines, View.SelectedProfileSettingsType, newProfileId, newProfileName, View.ObserveHeight);
-                
+
                 session.SetSegments(ArcMap.Document.FocusMap.SpatialReference);
 
                 SetPeofileId();
@@ -251,12 +254,26 @@ namespace MilSpace.Profile
                 return session;
 
             }
+            catch (MilSpaceCanotDeletePrifileCalcTable ex)
+            {
+                //TODO Localize error message
+                errorMessage = ex.Message;
+            }
+            catch (MilSpaceDataException ex)
+            {
+                //TODO Localize error message
+                errorMessage = ex.Message;
+                
+            }
             catch (Exception ex)
             {
                 //TODO log error
-                MessageBox.Show(ex.Message);
-                return null;
-            }
+                //TODO Localize error message
+                errorMessage = ex.Message;
+           }
+
+            MessageBox.Show(errorMessage);
+            return null;
         }
 
         internal bool RemoveProfilesFromUserSession()
@@ -264,6 +281,9 @@ namespace MilSpace.Profile
             var result = MilSpaceProfileFacade.DeleteUserSessions(View.SelectedProfileSessionIds.ProfileSessionId);
             if (result)
             {
+                MilSpaceProfileGraphsController.RemoveTab(View.SelectedProfileSessionIds.ProfileSessionId);
+                GraphicsLayerManager.RemoveGraphic(View.SelectedProfileSessionIds.ProfileSessionId);
+
                 return View.RemoveTreeViewItem();
             }
             return true;
@@ -283,7 +303,7 @@ namespace MilSpace.Profile
                 }
                 else if (profile.ProfileLines.Any(l => l.Id == lineId))
                 {
-                    GraphicsLayerManager.ShowLineOnWorkingGraphics(profileId, 
+                    GraphicsLayerManager.ShowLineOnWorkingGraphics(profileId,
                                                                     profile.Segments
                                                                            .First(segment => segment.LineId == lineId));
                 }
@@ -360,10 +380,7 @@ namespace MilSpace.Profile
             }
         }
 
-        //internal void ShowProfileOnMap(int profileId, int lineId)
-        //{
-        //    GraphicsLayerManager.FlashLineOnWorkingGraphics(profileId, lineId);
-        //}
+
 
         internal void ShowProfileOnMap()
         {
@@ -382,15 +399,16 @@ namespace MilSpace.Profile
             View.ActiveView.Extent = env;
             View.ActiveView.FocusMap.MapScale = mapScale;
             View.ActiveView.Refresh();
-            //GraphicsLayerManager.UpdateCalculatingGraphic(profileLines, profileId, (int)profile.DefinitionType);
         }
 
 
         internal void HighlightProfileOnMap(int profileId, int lineId)
         {
-           var profilesToFlas = _workingProfiles.FirstOrDefault(p => p.SessionId == profileId);
-            //if (profilesToFlas != null)
-            //GraphicsLayerManager.FlashLineOnWorkingGraphics(profileId, lineId);
+            var profilesToFlas = _workingProfiles.FirstOrDefault(p => p.SessionId == profileId);
+            if (profilesToFlas != null)
+            {
+                GraphicsLayerManager.FlashLineOnWorkingGraphics(profilesToFlas.ConvertLinesToEsriPolypile(View.ActiveView.FocusMap.SpatialReference, lineId));
+            }
         }
 
 
@@ -407,8 +425,16 @@ namespace MilSpace.Profile
         internal void CallGraphsHandle(int profileSessionId)
         {
             var profileSession = GetProfileSessionById(profileSessionId);
+
+            if (_workingProfiles.FirstOrDefault(profile => profile.SessionId == profileSession.SessionId) != null)
+            {
+                _workingProfiles.Remove(_workingProfiles.FirstOrDefault(profile => profile.SessionId == profileSession.SessionId));
+            }
+            _workingProfiles.Add(profileSession);
+
             if (profileSession != null)
             {
+                profileSession.SetSegments(ArcMap.Document.FocusMap.SpatialReference);
                 CallGraphsHandle(profileSession);
             }
         }
@@ -473,7 +499,7 @@ namespace MilSpace.Profile
             return new PointClass { X = x, Y = y };
         }
 
-        private void GraphRedrawn(GroupedLines profileLines, int sessionId, bool update, List<int> linesIds)
+        private void GraphRedrawn(GroupedLines profileLines, int sessionId, bool update, List<int> linesIds = null)
         {
             if (update)
             {
@@ -495,6 +521,19 @@ namespace MilSpace.Profile
         private void ProfileRemove(int sessionId, int lineId)
         {
             GraphicsLayerManager.RemoveLineFromGraphic(sessionId, lineId);
+        }
+
+        private void SelectedProfileChanged(GroupedLines newSelectedLines, int profileId)
+        {
+            var allLines = _workingProfiles.FirstOrDefault(profile => profile.SessionId == profileId).Segments;
+            var oldSelectedLines = allLines.FirstOrDefault(line => line.IsSelected == true);
+
+            GraphicsLayerManager.ChangeSelectProfileOnGraph(oldSelectedLines, newSelectedLines, profileId);
+
+            if (oldSelectedLines != null)
+            {
+                oldSelectedLines.IsSelected = false;
+            }
         }
 
         internal GraphicsLayerManager GraphicsLayerManager

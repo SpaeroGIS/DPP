@@ -203,7 +203,6 @@ namespace MilSpace.Profile
             {
                 var node = profilesTreeView.SelectedNode.Parent;
                 profilesTreeView.SelectedNode.Remove();
-                controller.HideUserSessionProfile(treeViewselectedIds.ProfileSessionId);
             }
             catch (Exception ex)
             {

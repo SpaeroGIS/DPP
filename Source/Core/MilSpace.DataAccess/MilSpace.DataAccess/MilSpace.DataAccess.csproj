@@ -118,6 +118,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MilSpaceStorage.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Exceptions\MilSpaceCanotDeletePrifileCalcTable.cs" />
     <Compile Include="Exceptions\MilSpaceProfileNotFoundException .cs" />
     <Compile Include="Exceptions\MilSpaceDataException.cs" />
     <Compile Include="DataTransfer\ConvertCentre.cs" />
