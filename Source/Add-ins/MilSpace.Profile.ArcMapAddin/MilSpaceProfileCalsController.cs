@@ -436,6 +436,10 @@ namespace MilSpace.Profile
             MilSpaceProfileGraphsController.ShowWindow();
         }
 
+        internal List<GroupedLines> GetIntesectionsWithLayers(GroupedLines selectedLine)
+        {
+            return GraphicsLayerManager.GetIntersections(selectedLine, ArcMap.Document.FocusMap.SpatialReference, View.GetLayers());
+        }
 
         private void InvokeOnProfileSettingsChanged()
         {
@@ -520,7 +524,12 @@ namespace MilSpace.Profile
             {
                 oldSelectedLines.IsSelected = false;
             }
+
+            //todo move to other method
+            GetIntesectionsWithLayers(newSelectedLines);
         }
+
+       
 
         internal GraphicsLayerManager GraphicsLayerManager
         {

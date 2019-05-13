@@ -12,7 +12,7 @@ namespace MilSpace.Core.Tools.Helper
 {
     public static class ProfileLinesConverter
     {
-        public static IEnumerable<IPolyline> ConvertLineToEsriPolyline(List<ProfileLine> profileLines, ISpatialReference spatialReference)
+        public static List<IPolyline> ConvertLineToEsriPolyline(List<ProfileLine> profileLines, ISpatialReference spatialReference)
         {
             return profileLines.Select(l =>
             {
@@ -24,7 +24,7 @@ namespace MilSpace.Core.Tools.Helper
 
                 return EsriTools.CreatePolylineFromPoints(pointFrom, pointTo);
             }
-             ).ToArray();
+             ).ToList();
         }
 
         public static IEnumerable<IPolyline> ConvertSolidGroupedLinesToEsriPolylines(List<GroupedLines> groupedLines,

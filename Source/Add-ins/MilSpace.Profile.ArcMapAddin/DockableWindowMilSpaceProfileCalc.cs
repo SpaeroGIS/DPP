@@ -132,6 +132,16 @@ namespace MilSpace.Profile
             return GetProfileFromList(_fanProfiles, profileName);
         }
 
+        public List<ILayer> GetLayers ()
+        {
+            return new List<ILayer>
+            {
+                ProfileLayers.PolygonLayers.FirstOrDefault(layer => layer.Name == cmbVegetationLayer.SelectedItem),
+                ProfileLayers.PolygonLayers.FirstOrDefault(layer => layer.Name == cmbBuildings.SelectedItem),
+                ProfileLayers.LineLayers.FirstOrDefault(layer => layer.Name == cmbHydrographyLayer.SelectedItem),
+                ProfileLayers.LineLayers.FirstOrDefault(layer => layer.Name == cmbRoadLayers.SelectedItem),
+            };
+        }
 
 
         public bool AllowToProfileCalc
@@ -187,8 +197,8 @@ namespace MilSpace.Profile
 
         private void OnVegetationDropped()
         {
-            cmbPolygonLayer.Items.Clear();
-            PopulateComboBox(cmbPolygonLayer, ProfileLayers.PolygonLayers);
+            cmbVegetationLayer.Items.Clear();
+            PopulateComboBox(cmbVegetationLayer, ProfileLayers.PolygonLayers);
         }
 
         private void OnObservationPointDropped()
@@ -879,14 +889,14 @@ namespace MilSpace.Profile
             cmbRoadLayers.Items.Clear();
             cmbHydrographyLayer.Items.Clear();
             cmbBuildings.Items.Clear();
-            cmbPolygonLayer.Items.Clear();
+            cmbVegetationLayer.Items.Clear();
             cmbPointLayers.Items.Clear();
 
             PopulateComboBox(cmbRasterLayers, ProfileLayers.RasterLayers);
             PopulateComboBox(cmbRoadLayers, ProfileLayers.LineLayers);
             PopulateComboBox(cmbHydrographyLayer, ProfileLayers.LineLayers);
             PopulateComboBox(cmbBuildings, ProfileLayers.PolygonLayers);
-            PopulateComboBox(cmbPolygonLayer, ProfileLayers.PolygonLayers);
+            PopulateComboBox(cmbVegetationLayer, ProfileLayers.PolygonLayers);
             PopulateComboBox(cmbPointLayers, ProfileLayers.PointLayers);
 
         }

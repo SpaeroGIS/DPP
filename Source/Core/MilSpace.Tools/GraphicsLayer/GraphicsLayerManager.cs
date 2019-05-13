@@ -1,5 +1,6 @@
 ﻿using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Display;
+using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess;
@@ -180,6 +181,24 @@ namespace MilSpace.Tools.GraphicsLayer
             }
         }
 
+        public List<GroupedLines> GetIntersections (GroupedLines selectedLine, ISpatialReference spatialReference, List<ILayer> layers)
+        {
+            var line = UnionPolylineLines(selectedLine, spatialReference);
+            var intersectionLines = new List<GroupedLines>();
+
+            if (layers[0] != null)
+            {
+                var vegetationLines = GetIntersection(line, layers[0]);
+                intersectionLines.Add(vegetationLines);
+            }
+            if (layers[2] != null)
+            {
+                var buildingLines = GetIntersection(line, layers[0]);
+                intersectionLines.Add(buildingLines);
+            }
+
+            return intersectionLines;
+        }
 
         public void ShowLineOnWorkingGraphics(int profileId, GroupedLines groupedLines)
         {
@@ -512,6 +531,34 @@ namespace MilSpace.Tools.GraphicsLayer
                     activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
                 }
             }
+        }
+
+        private IPolyline UnionPolylineLines(GroupedLines groupedLines, ISpatialReference spatialReference)
+        {
+            var pointFrom = groupedLines.Polylines[0].FromPoint;
+            var pointTo = groupedLines.Polylines.Last().ToPoint;
+
+            pointFrom.Project(spatialReference);
+            pointTo.Project(spatialReference);
+
+            return EsriTools.CreatePolylineFromPoints(pointFrom, pointTo);
+        }
+
+        private GroupedLines GetIntersection(IPolyline polyline, ILayer layer)
+        {
+            ITopologicalOperator pTopo = polyline as ITopologicalOperator;
+            var result = pTopo.Intersect((IGeometry)layer, esriGeometryDimension.esriGeometry1Dimension);
+            var polylines = new List<IPolyline> { (IPolyline)result };
+
+            return new GroupedLines
+            {
+               Polylines = polylines
+            };
+        }
+
+        private void SelectFeature()
+        {           
+                //todo  try to get intersection with layer from combobox(firstly try get it fom param, and then, from query (?))
         }
     }
 }
