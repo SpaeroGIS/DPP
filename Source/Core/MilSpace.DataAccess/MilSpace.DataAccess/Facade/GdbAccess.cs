@@ -1,17 +1,13 @@
-﻿using ESRI.ArcGIS.Geodatabase;
-using ESRI.ArcGIS.esriSystem;
-using ESRI.ArcGIS.DataSourcesGDB;
+﻿using ESRI.ArcGIS.DataSourcesGDB;
+using ESRI.ArcGIS.Framework;
+using ESRI.ArcGIS.Geodatabase;
+using ESRI.ArcGIS.Geometry;
 using MilSpace.Configurations;
+using MilSpace.DataAccess.Exceptions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
-using ESRI.ArcGIS.Geometry;
-using ESRI.ArcGIS.Framework;
-using MilSpace.DataAccess.Exceptions;
-using MilSpace.Core.Tools;
+using System.Linq;
 
 namespace MilSpace.DataAccess.Facade
 {
@@ -67,17 +63,7 @@ namespace MilSpace.DataAccess.Facade
                 l =>
                 {
                     var newLine = calc.CreateFeature();
-                    
-                    //ISubtypes subtypes = (ISubtypes)calc;
-                    //IRowSubtypes rowSubtypes = (IRowSubtypes)newLine;
-                    //if (subtypes.HasSubtype)                                // does the feature class have subtypes?        
-                    //{
-                    //    rowSubtypes.SubtypeCode = 1;                        //
-                    //}
-
-                    //IGeometry trackGeometry = EsriTools.CreatePolylineFromPoints(l.FromPoint, l.ToPoint);
                     newLine.Shape = l;
-
                     newLine.Store();
                 }
                 );
@@ -188,6 +174,78 @@ namespace MilSpace.DataAccess.Facade
             }
 
             return featureWorkspace.OpenTable(resultTable);
+        }
+
+        public bool DeleteTemporarSource(string resultTable, string lineFeatureClass)
+        {
+            IWorkspace2 wsp2 = (IWorkspace2)calcWorkspace;
+            IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)calcWorkspace;
+
+           
+
+            try
+            {
+                var datasets = calcWorkspace.get_Datasets(esriDatasetType.esriDTTable);
+                IDataset tabledataset = datasets.Next();
+                if (tabledataset != null)
+                {
+
+                    while (tabledataset != null)
+                    {
+                        if (!tabledataset.Name.Equals(resultTable))
+                        {
+                            tabledataset = datasets.Next();
+                            continue;
+                        }
+
+                        if (!tabledataset.CanDelete())
+                        {
+                            throw new MilSpaceCanotDeletePrifileCalcTable(resultTable, MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection);
+                        }
+
+                        tabledataset.Delete();
+                        break;
+                    }
+                }
+
+                //Delete temprorary Feature class (Profile lites)
+                datasets = calcWorkspace.get_Datasets(esriDatasetType.esriDTFeatureClass);
+
+                if (tabledataset != null)
+                {
+                    while (tabledataset != null)
+                    {
+                        if (!tabledataset.Name.Equals(lineFeatureClass))
+                        {
+                            tabledataset = datasets.Next();
+                            continue;
+                        }
+
+                        if (!tabledataset.CanDelete())
+                        {
+                            throw new MilSpaceCanotDeletePrifileCalcTable(lineFeatureClass, MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection);
+                        }
+
+                        tabledataset.Delete();
+                        break;
+                    }
+                }
+
+                return true;
+
+            }
+            catch (MilSpaceCanotDeletePrifileCalcTable ex)
+            {
+                //TODO: add logging
+                throw;
+            }
+            catch (Exception ex)
+            {
+                //TODO: add logging
+
+            }
+            return false;
+
         }
 
 

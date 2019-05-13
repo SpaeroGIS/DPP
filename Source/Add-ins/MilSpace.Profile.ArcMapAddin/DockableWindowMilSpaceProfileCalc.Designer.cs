@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Графика");
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.btnRefreshLayers = new System.Windows.Forms.Button();
@@ -58,7 +58,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.profileSettingsTab = new System.Windows.Forms.TabControl();
             this.sectionTab = new System.Windows.Forms.TabPage();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.panel16 = new System.Windows.Forms.Panel();
             this.label23 = new System.Windows.Forms.Label();
             this.txtSecondHeight = new System.Windows.Forms.TextBox();
@@ -92,7 +91,6 @@
             this.txtFirstPointX = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.fanTab = new System.Windows.Forms.TabPage();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.panel9 = new System.Windows.Forms.Panel();
             this.azimuth2 = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
@@ -746,7 +744,6 @@
             // 
             this.sectionTab.AllowDrop = true;
             this.sectionTab.AutoScroll = true;
-            this.sectionTab.Controls.Add(this.checkBox1);
             this.sectionTab.Controls.Add(this.panel16);
             this.sectionTab.Controls.Add(this.label22);
             this.sectionTab.Controls.Add(this.panel5);
@@ -763,18 +760,6 @@
             this.sectionTab.TabIndex = 0;
             this.sectionTab.Text = "Отрезком";
             this.sectionTab.UseVisualStyleBackColor = true;
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.checkBox1.Location = new System.Drawing.Point(3, 191);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.checkBox1.Size = new System.Drawing.Size(741, 17);
-            this.checkBox1.TabIndex = 31;
-            this.checkBox1.Text = "с учетом видимости";
-            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // panel16
             // 
@@ -1054,7 +1039,6 @@
             // 
             // fanTab
             // 
-            this.fanTab.Controls.Add(this.checkBox2);
             this.fanTab.Controls.Add(this.panel9);
             this.fanTab.Controls.Add(this.panel8);
             this.fanTab.Controls.Add(this.label12);
@@ -1069,18 +1053,6 @@
             this.fanTab.TabIndex = 1;
             this.fanTab.Text = "\"Веером\"";
             this.fanTab.UseVisualStyleBackColor = true;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.checkBox2.Location = new System.Drawing.Point(3, 153);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.checkBox2.Size = new System.Drawing.Size(741, 17);
-            this.checkBox2.TabIndex = 28;
-            this.checkBox2.Text = "с учетом видимости";
-            this.checkBox2.UseVisualStyleBackColor = true;
             // 
             // panel9
             // 
@@ -1724,25 +1696,25 @@
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.Location = new System.Drawing.Point(3, 65);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode1.Checked = true;
-            treeNode1.ImageKey = "vector-path-line.png";
-            treeNode1.Name = "sectionsNode";
-            treeNode1.SelectedImageIndex = 205;
-            treeNode1.Text = "Отрезки";
-            treeNode2.Checked = true;
-            treeNode2.ImageKey = "Editing-Line-icon3.png";
-            treeNode2.Name = "fanNode";
-            treeNode2.SelectedImageIndex = 208;
-            treeNode2.Text = "Веер";
-            treeNode3.Checked = true;
-            treeNode3.ImageKey = "vector-polygon.png";
-            treeNode3.Name = "primitivesNode";
-            treeNode3.SelectedImageIndex = 209;
-            treeNode3.Text = "Графика";
+            treeNode10.Checked = true;
+            treeNode10.ImageKey = "vector-path-line.png";
+            treeNode10.Name = "sectionsNode";
+            treeNode10.SelectedImageIndex = 205;
+            treeNode10.Text = "Отрезки";
+            treeNode11.Checked = true;
+            treeNode11.ImageKey = "Editing-Line-icon3.png";
+            treeNode11.Name = "fanNode";
+            treeNode11.SelectedImageIndex = 208;
+            treeNode11.Text = "Веер";
+            treeNode12.Checked = true;
+            treeNode12.ImageKey = "vector-polygon.png";
+            treeNode12.Name = "primitivesNode";
+            treeNode12.SelectedImageIndex = 209;
+            treeNode12.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
+            treeNode10,
+            treeNode11,
+            treeNode12});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(755, 398);
             this.profilesTreeView.TabIndex = 35;
@@ -1951,7 +1923,6 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabControl profileSettingsTab;
         private System.Windows.Forms.TabPage sectionTab;
-        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Panel panel16;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.TextBox txtSecondHeight;
@@ -1978,7 +1949,6 @@
         private System.Windows.Forms.ToolBarButton toolBarButton60;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TabPage fanTab;
-        private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.TextBox azimuth2;
         private System.Windows.Forms.Label label15;

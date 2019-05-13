@@ -21,6 +21,7 @@ namespace MilSpace.DataAccess.DataTransfer
         public ProfileSettingsTypeEnum DefinitionType;
         public int SessionId;
         public string SessionName;
+        public string SurfaceLayerName;
 
         [XmlIgnore]
         public List<GroupedLines> Segments;
@@ -33,25 +34,31 @@ namespace MilSpace.DataAccess.DataTransfer
             }
         }
 
-        public IEnumerable<IPolyline> ConvertLinesToEsriPolypile(ISpatialReference spatialReference)
+        public IEnumerable<IPolyline> ConvertLinesToEsriPolypile(ISpatialReference spatialReference, int lineId = -1)
         {
-            return ProfileLines.Select(l =>
-             {
-                 var pointFrom = new Point { X = l.PointFrom.X, Y = l.PointFrom.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
-                 var pointTo = new Point { X = l.PointTo.X, Y = l.PointTo.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
+            Func<ProfileLine, IPolyline> converter = (l) =>
+            {
+                var pointFrom = new Point { X = l.PointFrom.X, Y = l.PointFrom.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
+                var pointTo = new Point { X = l.PointTo.X, Y = l.PointTo.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
 
-                 pointFrom.Project(spatialReference);
-                 pointTo.Project(spatialReference);
+                pointFrom.Project(spatialReference);
+                pointTo.Project(spatialReference);
 
-                 var result = EsriTools.CreatePolylineFromPoints(pointFrom, pointTo);
-                 if (l.Line == null)
-                 {
-                     l.Line = result;
-                 }
+                var result = EsriTools.CreatePolylineFromPoints(pointFrom, pointTo);
+                if (l.Line == null)
+                {
+                    l.Line = result;
+                }
 
-                 return result;
-             }
-             ).ToArray();
+                return result;
+            };
+
+            if (lineId < 0 || lineId >= ProfileLines.Length)
+            {
+                return ProfileLines.Select(l => converter(l)).ToArray();
+            }
+
+            return new IPolyline[] { converter(ProfileLines[lineId]) };
         }
 
         public void SetSegments(ISpatialReference spatialReference)

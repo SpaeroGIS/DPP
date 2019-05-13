@@ -1,6 +1,5 @@
 ﻿using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.esriSystem;
-using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Exceptions;
 using System;
@@ -10,21 +9,18 @@ namespace MilSpace.Core.Tools
 {
     public static class EsriTools
     {
-
         private static ISpatialReference wgs84 = null;
 
         private static Dictionary<esriGeometryType, Func<IRgbColor, ISymbol>> symbolsToFlash = new Dictionary<esriGeometryType, Func<IRgbColor, ISymbol>>()
         {
             { esriGeometryType.esriGeometryPoint, (rgbColor) => {
-                  //Set point props to  the flash geometry
+                  //Set point props to the flash geometry
                 ISimpleMarkerSymbol simpleMarkerSymbol = new SimpleMarkerSymbol()
                 {
                     Style = esriSimpleMarkerStyle.esriSMSCross,
                     Size = 10,
                     Color = rgbColor
                 };
-
-
 
                 return (ISymbol)simpleMarkerSymbol; }
             },
@@ -177,15 +173,8 @@ namespace MilSpace.Core.Tools
                 throw new MilSpaceProfileLackOfParameterException("Line numbers", count);
             }
 
-
-
-            //double minAzimuth = Math.Min(azimuth1, azimuth2);
-            //double maxAzimuth = Math.Max(azimuth1, azimuth2);
-
             double sector;
-            
-
-            //Xheck if it is a circle
+            //Check if it is a circle
             if ((azimuth1 == 0 && azimuth2 == 360) || (azimuth2 == 0 && azimuth1 == 360) || (azimuth2 == azimuth1))
             {
                 if (count == 2)
