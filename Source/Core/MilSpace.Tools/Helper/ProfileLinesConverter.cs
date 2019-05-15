@@ -27,6 +27,28 @@ namespace MilSpace.Core.Tools.Helper
              ).ToList();
         }
 
+        public static List<ProfileLine> ConvertEsriPolylineToLine(List<IPolyline> polylines)
+        {
+            var id = 0;
+
+            return polylines.Select(line =>
+               {
+                   id++;
+
+                   var pointFrom = new ProfilePoint { SpatialReference = line.SpatialReference, X = line.FromPoint.X, Y = line.FromPoint.Y };
+                   var pointTo = new ProfilePoint { SpatialReference = line.SpatialReference, X = line.ToPoint.X, Y = line.ToPoint.Y };
+
+                   return new ProfileLine
+                   {
+                       Line = line,
+                       Id = id,
+                       PointFrom = pointFrom,
+                       PointTo = pointTo
+                   };
+               }
+                ).ToList();
+        }
+
         public static IEnumerable<IPolyline> ConvertSolidGroupedLinesToEsriPolylines(List<GroupedLines> groupedLines,
                                                                                         ISpatialReference spatialReference)
         {

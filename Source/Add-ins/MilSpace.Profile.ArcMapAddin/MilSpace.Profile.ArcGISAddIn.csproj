@@ -153,6 +153,8 @@
     </Compile>
     <Compile Include="DockableWindowMilSpaceProfileGraphCommand.cs" />
     <Compile Include="DrawPolylineFromClicks.cs" />
+    <Compile Include="IntersectionLines.cs" />
+    <Compile Include="LayersEnum.cs" />
     <Compile Include="MilSpaceProfileCalsController.cs" />
     <Compile Include="MilSpaceProfileGraphsController.cs" />
     <Compile Include="PickCoordinatesTool.cs" />

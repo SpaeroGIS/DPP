@@ -1,5 +1,4 @@
 ﻿using ESRI.ArcGIS.Desktop.AddIns;
-using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Exceptions;
 using MilSpace.Core.Tools;
@@ -450,9 +449,33 @@ namespace MilSpace.Profile
             MilSpaceProfileGraphsController.ShowWindow();
         }
 
-        internal List<GroupedLines> GetIntesectionsWithLayers(GroupedLines selectedLine)
+        internal List<IntersectionLines> GetIntesectionsWithLayers(GroupedLines selectedLine)
         {
-            return GraphicsLayerManager.GetIntersections(selectedLine, ArcMap.Document.FocusMap.SpatialReference, View.GetLayers());
+            var layers = View.GetLayers();
+            var intersectionLines = new List<IntersectionLines>();
+
+            for (int i = 0; i < layers.Count; i++)
+            {
+                if (layers[i] != String.Empty)
+                {
+                    var lines = GraphicsLayerManager.GetIntersections(selectedLine, layers[i], ArcMap.Document.FocusMap);
+
+                    if (lines != null)
+                    {
+                        var intersectionLine = new IntersectionLines
+                        {
+                            Lines = ProfileLinesConverter.ConvertEsriPolylineToLine(lines),
+                            Type = (LayersEnum)Enum.GetValues(typeof(LayersEnum)).GetValue(i)
+                        };
+
+                        intersectionLine.SetDefaultColor();
+                        intersectionLines.Add(intersectionLine);
+                    }
+                    
+                }
+            }
+
+            return intersectionLines;
         }
 
         private void InvokeOnProfileSettingsChanged()

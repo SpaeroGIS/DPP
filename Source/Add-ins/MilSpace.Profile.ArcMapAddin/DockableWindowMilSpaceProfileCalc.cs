@@ -132,14 +132,14 @@ namespace MilSpace.Profile
             return GetProfileFromList(_fanProfiles, profileName);
         }
 
-        public List<ILayer> GetLayers ()
+        public List<string> GetLayers ()
         {
-            return new List<ILayer>
+            return new List<string>
             {
-                ProfileLayers.PolygonLayers.FirstOrDefault(layer => layer.Name == cmbVegetationLayer.SelectedItem),
-                ProfileLayers.PolygonLayers.FirstOrDefault(layer => layer.Name == cmbBuildings.SelectedItem),
-                ProfileLayers.LineLayers.FirstOrDefault(layer => layer.Name == cmbHydrographyLayer.SelectedItem),
-                ProfileLayers.LineLayers.FirstOrDefault(layer => layer.Name == cmbRoadLayers.SelectedItem),
+                (cmbVegetationLayer.SelectedItem != null)  ?  cmbVegetationLayer.SelectedItem.ToString()  : String.Empty,
+                (cmbBuildings.SelectedItem != null)        ?  cmbBuildings.SelectedItem.ToString()        : String.Empty,
+                (cmbHydrographyLayer.SelectedItem != null) ?  cmbHydrographyLayer.SelectedItem.ToString() : String.Empty,
+                (cmbRoadLayers.SelectedItem != null)       ?  cmbRoadLayers.SelectedItem.ToString()       : String.Empty
             };
         }
 

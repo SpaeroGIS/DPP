@@ -65,7 +65,7 @@ namespace MilSpace.Tools.GraphicsLayer
             }
             else
             {
-               width  = (groupedLines.IsSelected) ? 4 : 2;
+                width = (groupedLines.IsSelected) ? 4 : 2;
             }
 
             foreach (var line in groupedLines.Polylines)
@@ -181,23 +181,16 @@ namespace MilSpace.Tools.GraphicsLayer
             }
         }
 
-        public List<GroupedLines> GetIntersections (GroupedLines selectedLine, ISpatialReference spatialReference, List<ILayer> layers)
+        public List<IPolyline> GetIntersections(GroupedLines selectedLine, string layer, IMap map)
         {
-            var line = UnionPolylineLines(selectedLine, spatialReference);
-            var intersectionLines = new List<GroupedLines>();
+            var line = UnionPolylineLines(selectedLine, map.SpatialReference);
 
-            if (layers[0] != null)
+            if (layer != null && line != null)
             {
-                var vegetationLines = GetIntersection(line, layers[0]);
-                intersectionLines.Add(vegetationLines);
-            }
-            if (layers[2] != null)
-            {
-                var buildingLines = GetIntersection(line, layers[0]);
-                intersectionLines.Add(buildingLines);
+                return GetIntersection(line, GetLayer(layer, map));
             }
 
-            return intersectionLines;
+            return null;
         }
 
         public void ShowLineOnWorkingGraphics(int profileId, GroupedLines groupedLines)
@@ -433,7 +426,7 @@ namespace MilSpace.Tools.GraphicsLayer
             ICartographicLineSymbol cartographicLineSymbol = new CartographicLineSymbolClass();
             cartographicLineSymbol.Color = color;
             cartographicLineSymbol.Width = width;
-            
+
             //Define line decoration  
             ILineDecoration lineDecoration = new LineDecorationClass();
 
@@ -535,6 +528,11 @@ namespace MilSpace.Tools.GraphicsLayer
 
         private IPolyline UnionPolylineLines(GroupedLines groupedLines, ISpatialReference spatialReference)
         {
+            if (groupedLines == null || groupedLines.Polylines == null)
+            {
+                return null;
+            }
+
             var pointFrom = groupedLines.Polylines[0].FromPoint;
             var pointTo = groupedLines.Polylines.Last().ToPoint;
 
@@ -544,21 +542,112 @@ namespace MilSpace.Tools.GraphicsLayer
             return EsriTools.CreatePolylineFromPoints(pointFrom, pointTo);
         }
 
-        private GroupedLines GetIntersection(IPolyline polyline, ILayer layer)
+        private ILayer GetLayer(string layerName, IMap map)
         {
-            ITopologicalOperator pTopo = polyline as ITopologicalOperator;
-            var result = pTopo.Intersect((IGeometry)layer, esriGeometryDimension.esriGeometry1Dimension);
-            var polylines = new List<IPolyline> { (IPolyline)result };
-
-            return new GroupedLines
+            var layers = map.Layers;
+            var layer = map.Layer[0] as ILayer;
+            while (layer.Name != layerName)
             {
-               Polylines = polylines
-            };
+                layer = layers.Next() as ILayer;
+            }
+
+            return layer;
         }
 
-        private void SelectFeature()
-        {           
-                //todo  try to get intersection with layer from combobox(firstly try get it fom param, and then, from query (?))
+        private List<IPolyline> GetIntersection(IPolyline polyline, ILayer layer)
+        {
+            var resultPolylines = new List<IPolyline>();
+
+            ISpatialFilter spatialFilter = new SpatialFilterClass
+            {
+                Geometry = polyline,
+                SpatialRel = esriSpatialRelEnum.esriSpatialRelIntersects,
+            };
+
+            var featureClass = (layer as IFeatureLayer).FeatureClass;
+            var highwayCursor = featureClass.Search(spatialFilter, false);
+
+            var feature = highwayCursor.NextFeature();
+
+            while (feature != null)
+            {
+                resultPolylines.AddRange(GetFeatureIntersection(feature, polyline));
+                feature = highwayCursor.NextFeature();
+            }
+
+            //test
+            int j = 0;
+            foreach (var line in resultPolylines)
+            {
+                var ge = new GraphicElement() { Source = line, ElementId = j, LineId = -1, ProfileId = Convert.ToInt32(line.FromPoint.X + line.ToPoint.X) };
+                AddPolyline(ge, MilSpaceGraphicsTypeEnum.Session, new RgbColor() { Red = 100, Green = 0, Blue = 150 }, LineType.Line, true);
+                j++;
+            }
+            //end test
+
+            return resultPolylines;
+        }
+
+        private List<IPolyline> GetFeatureIntersection(IFeature feature, IPolyline polyline)
+        {
+            var resultPolylines = new List<IPolyline>();
+
+            IGeometry geometry = feature.ShapeCopy;
+            geometry.Project(polyline.SpatialReference);
+
+            ITopologicalOperator pTopo = geometry as ITopologicalOperator;
+
+            var result = pTopo.Intersect(polyline, esriGeometryDimension.esriGeometry0Dimension);
+
+            if (!result.IsEmpty)
+            {
+                var multipoint = (Multipoint)result;
+
+                var firstLinePointOnLayer = (IPoint)pTopo.Intersect(polyline.FromPoint, esriGeometryDimension.esriGeometry0Dimension);
+                var lastLinePointOnLayer = (IPoint)pTopo.Intersect(polyline.ToPoint, esriGeometryDimension.esriGeometry0Dimension);
+
+                IPoint firstPoint = null;
+                IPoint lastPoint = null;
+
+                if (!firstLinePointOnLayer.IsEmpty)
+                {
+                    if (firstLinePointOnLayer.Y > multipoint.Point[0].Y) { firstPoint = firstLinePointOnLayer; }
+                    else                                                 { lastPoint = firstLinePointOnLayer;  }
+                }
+
+                if (!lastLinePointOnLayer.IsEmpty)
+                {
+                    if (lastLinePointOnLayer.Y > multipoint.Point[0].Y)  { firstPoint = lastLinePointOnLayer; }
+                    else                                                 { lastPoint = lastLinePointOnLayer;  }
+                }
+
+                if (firstPoint != null)
+                {
+                    var buff = new Multipoint();
+                    buff.AddPointCollection(multipoint);
+
+                    multipoint.RemovePoints(0, multipoint.PointCount);
+                    multipoint.AddPoint(firstPoint);
+                    multipoint.AddPointCollection(buff);
+                }
+
+                if (lastPoint != null) { multipoint.AddPoint(lastPoint); }
+
+                if (multipoint.PointCount == 1)
+                {
+                    resultPolylines.Add(EsriTools.CreatePolylineFromPoints(multipoint.Point[0], multipoint.Point[0]));
+                }
+                else if (multipoint.PointCount > 0)
+                {
+                    for (int i = 0; i < multipoint.PointCount - 1; i++)
+                    {
+                        resultPolylines.Add(EsriTools.CreatePolylineFromPoints(multipoint.Point[i], multipoint.Point[i + 1]));
+                        i++;
+                    }
+                }
+            }
+
+            return resultPolylines;
         }
     }
 }

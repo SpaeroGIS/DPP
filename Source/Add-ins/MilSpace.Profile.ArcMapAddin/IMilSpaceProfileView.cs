@@ -74,7 +74,7 @@ namespace MilSpace.Profile
         ProfileSession GetSectionProfile(string profileName);
 
         ProfileSession GetFanProfile(string profileName);
-        List<ILayer> GetLayers();
+        List<string> GetLayers();
 
         ProfileSettingsTypeEnum GetProfileTypeFromNode();
 
