@@ -153,7 +153,8 @@
     </Compile>
     <Compile Include="DockableWindowMilSpaceProfileGraphCommand.cs" />
     <Compile Include="DrawPolylineFromClicks.cs" />
-    <Compile Include="IntersectionLines.cs" />
+    <Compile Include="IntersectionLine.cs" />
+    <Compile Include="IntersectionsInLayer.cs" />
     <Compile Include="LayersEnum.cs" />
     <Compile Include="MilSpaceProfileCalsController.cs" />
     <Compile Include="MilSpaceProfileGraphsController.cs" />
@@ -169,6 +170,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SurfaceProfileChartControl\GraphProfileClickedArgs.cs" />
+    <Compile Include="Helpers\ProfileLinesConverter.cs" />
     <Compile Include="SurfaceProfileChartControl\ISurfaceProfileView.cs" />
     <Compile Include="SurfaceProfileChartControl\ProfileProperties.cs" />
     <Compile Include="SurfaceProfileChartControl\SurfaceProfileChart.cs">

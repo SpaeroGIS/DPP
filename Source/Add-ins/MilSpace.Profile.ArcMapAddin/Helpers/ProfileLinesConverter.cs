@@ -2,13 +2,10 @@
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess;
 using MilSpace.DataAccess.DataTransfer;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MilSpace.Core.Tools.Helper
+namespace MilSpace.Profile
 {
     public static class ProfileLinesConverter
     {
@@ -51,7 +48,7 @@ namespace MilSpace.Core.Tools.Helper
                 ).ToList();
         }
 
-        public static List<ProfileLine> ConvertEsriPolylineToLineWithDistances(List<IPolyline> polylines, IPoint fromPoint)
+        public static List<IntersectionLine> ConvertEsriPolylineToIntersectionLines(List<IPolyline> polylines, IPoint fromPoint, LayersEnum layer)
         {
             var id = 0;
 
@@ -62,16 +59,11 @@ namespace MilSpace.Core.Tools.Helper
                 var startDistance = EsriTools.CreatePolylineFromPoints(fromPoint, line.FromPoint).Length;
                 var endDistance = EsriTools.CreatePolylineFromPoints(fromPoint, line.ToPoint).Length;
 
-                var pointFrom = new ProfilePoint { SpatialReference = line.SpatialReference, X = startDistance, Y = line.FromPoint.Y };
-                var pointTo = new ProfilePoint { SpatialReference = line.SpatialReference, X = endDistance, Y = line.ToPoint.Y };
-
-                return new ProfileLine
+                return new IntersectionLine()
                 {
-                    Line = line,
-                    Id = id,
-                    PointFrom = pointFrom,
-                    PointTo = pointTo,
-                    Length = line.Length
+                    PointFromDistance = startDistance,
+                    PointToDistance = endDistance,
+                    LayerType = layer
                 };
             }
                 ).ToList();

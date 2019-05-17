@@ -2,8 +2,6 @@
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Tools;
-using ESRI.ArcGIS.Display;
-using MilSpace.Core.Tools.Helper;
 using MilSpace.DataAccess;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Profile.SurfaceProfileChartControl;
@@ -101,7 +99,7 @@ namespace MilSpace.Profile
             IntersectionLinesDrawing?.Invoke(selectedLines);
         }
 
-        internal void ShowIntersectionLines(List<IntersectionLines> intersectionsLines)
+        internal void ShowIntersectionLines(List<IntersectionsInLayer> intersectionsLines)
         {
             _surfaceProfileChartController.DrawIntersectionLines(intersectionsLines);
         }

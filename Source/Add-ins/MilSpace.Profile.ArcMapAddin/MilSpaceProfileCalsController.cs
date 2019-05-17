@@ -2,7 +2,6 @@
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Exceptions;
 using MilSpace.Core.Tools;
-using MilSpace.Core.Tools.Helper;
 using MilSpace.DataAccess;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Exceptions;
@@ -535,7 +534,7 @@ namespace MilSpace.Profile
         private void CalcIntesectionsWithLayers(GroupedLines selectedLine)
         {
             var layers = View.GetLayers();
-            var intersectionLines = new List<IntersectionLines>();
+            var intersectionLines = new List<IntersectionsInLayer>();
 
             for (int i = 0; i < layers.Count; i++)
             {
@@ -543,12 +542,13 @@ namespace MilSpace.Profile
                 {
                     var lines = GraphicsLayerManager.GetIntersections(selectedLine, layers[i], ArcMap.Document.FocusMap);
 
-                    if (lines != null)
+                    if (lines != null && lines.Count() > 0)
                     {
-                        var intersectionLine = new IntersectionLines
+                        var layerType = (LayersEnum)Enum.GetValues(typeof(LayersEnum)).GetValue(i);
+                        var intersectionLine = new IntersectionsInLayer
                         {
-                            Lines = ProfileLinesConverter.ConvertEsriPolylineToLineWithDistances(lines, selectedLine.Polylines[0].FromPoint),
-                            Type = (LayersEnum)Enum.GetValues(typeof(LayersEnum)).GetValue(i),
+                            Lines = ProfileLinesConverter.ConvertEsriPolylineToIntersectionLines(lines, selectedLine.Polylines[0].FromPoint, layerType),
+                            Type = layerType,
                             LineId = selectedLine.LineId,
                         };
 

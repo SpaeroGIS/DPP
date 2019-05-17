@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace MilSpace.Profile
 {
-    public class IntersectionLines
+    public class IntersectionsInLayer
     {
-        public List<ProfileLine> Lines { get; set; }
+        public List<IntersectionLine> Lines { get; set; }
         public LayersEnum Type { get; set; }
         public Color LineColor { get; set; }
         public int LineId { get; set; }
