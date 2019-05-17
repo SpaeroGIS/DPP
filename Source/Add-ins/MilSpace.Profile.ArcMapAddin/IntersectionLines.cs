@@ -14,6 +14,7 @@ namespace MilSpace.Profile
         public List<ProfileLine> Lines { get; set; }
         public LayersEnum Type { get; set; }
         public Color LineColor { get; set; }
+        public int LineId { get; set; }
 
         public void SetDefaultColor()
         {
@@ -40,6 +41,12 @@ namespace MilSpace.Profile
                 case LayersEnum.Roads:
 
                     LineColor = Color.Black;
+
+                    break;
+
+                case LayersEnum.NotIntersect:
+
+                    LineColor = Color.White;
 
                     break;
             }

@@ -35,6 +35,8 @@ namespace MilSpace.Core.Tools.Helper
                {
                    id++;
 
+                   line.Project(EsriTools.Wgs84Spatialreference);
+
                    var pointFrom = new ProfilePoint { SpatialReference = line.SpatialReference, X = line.FromPoint.X, Y = line.FromPoint.Y };
                    var pointTo = new ProfilePoint { SpatialReference = line.SpatialReference, X = line.ToPoint.X, Y = line.ToPoint.Y };
 
@@ -46,6 +48,32 @@ namespace MilSpace.Core.Tools.Helper
                        PointTo = pointTo
                    };
                }
+                ).ToList();
+        }
+
+        public static List<ProfileLine> ConvertEsriPolylineToLineWithDistances(List<IPolyline> polylines, IPoint fromPoint)
+        {
+            var id = 0;
+
+            return polylines.Select(line =>
+            {
+                id++;
+
+                var startDistance = EsriTools.CreatePolylineFromPoints(fromPoint, line.FromPoint).Length;
+                var endDistance = EsriTools.CreatePolylineFromPoints(fromPoint, line.ToPoint).Length;
+
+                var pointFrom = new ProfilePoint { SpatialReference = line.SpatialReference, X = startDistance, Y = line.FromPoint.Y };
+                var pointTo = new ProfilePoint { SpatialReference = line.SpatialReference, X = endDistance, Y = line.ToPoint.Y };
+
+                return new ProfileLine
+                {
+                    Line = line,
+                    Id = id,
+                    PointFrom = pointFrom,
+                    PointTo = pointTo,
+                    Length = line.Length
+                };
+            }
                 ).ToList();
         }
 

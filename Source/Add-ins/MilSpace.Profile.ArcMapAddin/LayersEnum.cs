@@ -11,6 +11,7 @@ namespace MilSpace.Profile
         Vegetation,
         Buildings,
         Hydrography,
-        Roads
+        Roads,
+        NotIntersect
     }
 }

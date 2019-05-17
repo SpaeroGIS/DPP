@@ -129,6 +129,7 @@ namespace MilSpace.Profile
                 graphsController.ProfileRedrawn += GraphRedrawn;
                 graphsController.ProfileRemoved += ProfileRemove;
                 graphsController.SelectedProfileChanged += SelectedProfileChanged;
+                graphsController.IntersectionLinesDrawing += CalcIntesectionsWithLayers;
 
                 return graphsController;
             }
@@ -262,14 +263,14 @@ namespace MilSpace.Profile
             {
                 //TODO Localize error message
                 errorMessage = ex.Message;
-                
+
             }
             catch (Exception ex)
             {
                 //TODO log error
                 //TODO Localize error message
                 errorMessage = ex.Message;
-           }
+            }
 
             MessageBox.Show(errorMessage);
             return null;
@@ -287,7 +288,6 @@ namespace MilSpace.Profile
             }
             return true;
         }
-
 
         internal void ShowUserSessionProfile(int profileId, int lineId = -1)
         {
@@ -379,8 +379,6 @@ namespace MilSpace.Profile
             }
         }
 
-
-
         internal void ShowProfileOnMap()
         {
             var mapScale = View.ActiveView.FocusMap.MapScale;
@@ -447,35 +445,6 @@ namespace MilSpace.Profile
         internal void ShowGraphsWindow()
         {
             MilSpaceProfileGraphsController.ShowWindow();
-        }
-
-        internal List<IntersectionLines> GetIntesectionsWithLayers(GroupedLines selectedLine)
-        {
-            var layers = View.GetLayers();
-            var intersectionLines = new List<IntersectionLines>();
-
-            for (int i = 0; i < layers.Count; i++)
-            {
-                if (layers[i] != String.Empty)
-                {
-                    var lines = GraphicsLayerManager.GetIntersections(selectedLine, layers[i], ArcMap.Document.FocusMap);
-
-                    if (lines != null)
-                    {
-                        var intersectionLine = new IntersectionLines
-                        {
-                            Lines = ProfileLinesConverter.ConvertEsriPolylineToLine(lines),
-                            Type = (LayersEnum)Enum.GetValues(typeof(LayersEnum)).GetValue(i)
-                        };
-
-                        intersectionLine.SetDefaultColor();
-                        intersectionLines.Add(intersectionLine);
-                    }
-                    
-                }
-            }
-
-            return intersectionLines;
         }
 
         private void InvokeOnProfileSettingsChanged()
@@ -561,12 +530,38 @@ namespace MilSpace.Profile
             {
                 oldSelectedLines.IsSelected = false;
             }
-
-            //todo move to other method
-            GetIntesectionsWithLayers(newSelectedLines);
         }
 
-       
+        private void CalcIntesectionsWithLayers(GroupedLines selectedLine)
+        {
+            var layers = View.GetLayers();
+            var intersectionLines = new List<IntersectionLines>();
+
+            for (int i = 0; i < layers.Count; i++)
+            {
+                if (layers[i] != String.Empty)
+                {
+                    var lines = GraphicsLayerManager.GetIntersections(selectedLine, layers[i], ArcMap.Document.FocusMap);
+
+                    if (lines != null)
+                    {
+                        var intersectionLine = new IntersectionLines
+                        {
+                            Lines = ProfileLinesConverter.ConvertEsriPolylineToLineWithDistances(lines, selectedLine.Polylines[0].FromPoint),
+                            Type = (LayersEnum)Enum.GetValues(typeof(LayersEnum)).GetValue(i),
+                            LineId = selectedLine.LineId,
+                        };
+
+                        intersectionLine.SetDefaultColor();
+                        intersectionLines.Add(intersectionLine);
+                    }
+
+                }
+            }
+
+            graphsController.ShowIntersectionLines(intersectionLines);
+        }
+
 
         internal GraphicsLayerManager GraphicsLayerManager
         {

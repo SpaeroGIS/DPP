@@ -591,6 +591,7 @@ namespace MilSpace.Tools.GraphicsLayer
         private List<IPolyline> GetFeatureIntersection(IFeature feature, IPolyline polyline)
         {
             var resultPolylines = new List<IPolyline>();
+            var multipoint = new Multipoint();
 
             IGeometry geometry = feature.ShapeCopy;
             geometry.Project(polyline.SpatialReference);
@@ -598,13 +599,12 @@ namespace MilSpace.Tools.GraphicsLayer
             ITopologicalOperator pTopo = geometry as ITopologicalOperator;
 
             var result = pTopo.Intersect(polyline, esriGeometryDimension.esriGeometry0Dimension);
+            var firstLinePointOnLayer = (IPoint)pTopo.Intersect(polyline.FromPoint, esriGeometryDimension.esriGeometry0Dimension);
+            var lastLinePointOnLayer = (IPoint)pTopo.Intersect(polyline.ToPoint, esriGeometryDimension.esriGeometry0Dimension);
 
             if (!result.IsEmpty)
             {
-                var multipoint = (Multipoint)result;
-
-                var firstLinePointOnLayer = (IPoint)pTopo.Intersect(polyline.FromPoint, esriGeometryDimension.esriGeometry0Dimension);
-                var lastLinePointOnLayer = (IPoint)pTopo.Intersect(polyline.ToPoint, esriGeometryDimension.esriGeometry0Dimension);
+                 multipoint = (Multipoint)result;
 
                 IPoint firstPoint = null;
                 IPoint lastPoint = null;
@@ -632,18 +632,24 @@ namespace MilSpace.Tools.GraphicsLayer
                 }
 
                 if (lastPoint != null) { multipoint.AddPoint(lastPoint); }
+            }
 
-                if (multipoint.PointCount == 1)
+            if (result.IsEmpty && !firstLinePointOnLayer.IsEmpty)
+            {
+                if (!firstLinePointOnLayer.IsEmpty) { multipoint.AddPoint((IPoint)firstLinePointOnLayer); }
+                if (!lastLinePointOnLayer.IsEmpty)  { multipoint.AddPoint((IPoint)lastLinePointOnLayer);  }
+            }
+
+            if (multipoint.PointCount == 1)
+            {
+                resultPolylines.Add(EsriTools.CreatePolylineFromPoints(multipoint.Point[0], multipoint.Point[0]));
+            }
+            else if (multipoint.PointCount > 0)
+            {
+                for (int i = 0; i < multipoint.PointCount - 1; i++)
                 {
-                    resultPolylines.Add(EsriTools.CreatePolylineFromPoints(multipoint.Point[0], multipoint.Point[0]));
-                }
-                else if (multipoint.PointCount > 0)
-                {
-                    for (int i = 0; i < multipoint.PointCount - 1; i++)
-                    {
-                        resultPolylines.Add(EsriTools.CreatePolylineFromPoints(multipoint.Point[i], multipoint.Point[i + 1]));
-                        i++;
-                    }
+                    resultPolylines.Add(EsriTools.CreatePolylineFromPoints(multipoint.Point[i], multipoint.Point[i + 1]));
+                    i++;
                 }
             }
 
