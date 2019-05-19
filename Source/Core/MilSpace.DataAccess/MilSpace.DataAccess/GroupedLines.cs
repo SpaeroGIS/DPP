@@ -12,7 +12,7 @@ namespace MilSpace.DataAccess
     public class GroupedLines
     {
         public List<ProfileLine> Lines { get; set; }
-        public IEnumerable<IPolyline> Polylines { get; set; }
+        public List<IPolyline> Polylines { get; set; }
         public int LineId { get; set; }
         public RgbColor VisibleColor { get; set; }
         public RgbColor InvisibleColor { get; set; }
