@@ -1,6 +1,8 @@
-﻿using ESRI.ArcGIS.Desktop.AddIns;
+﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Desktop.AddIns;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.Geometry;
+using MilSpace.Core;
 using MilSpace.Core.Exceptions;
 using MilSpace.Core.Tools;
 using MilSpace.Core.Tools.Helper;
@@ -27,6 +29,7 @@ namespace MilSpace.Profile
 
         private int profileId;
         GraphicsLayerManager graphicsLayerManager;
+        private Logger logger = Logger.GetLoggerEx("MilSpaceProfileCalsController");
 
         public delegate void ProfileSettingsChangedDelegate(ProfileSettingsEventArgs e);
 
@@ -210,6 +213,7 @@ namespace MilSpace.Profile
                 catch (MilSpaceProfileLackOfParameterException ex)
                 {
                     //TODO: Wtite log
+                    logger.ErrorEx(ex.Message);
                     MessageBox.Show(ex.Message, "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 }
@@ -239,13 +243,15 @@ namespace MilSpace.Profile
             string errorMessage;
             try
             {
-
+                
                 ProfileManager manager = new ProfileManager();
                 var profileSetting = profileSettings[View.SelectedProfileSettingsType];
                 var newProfileId = GenerateProfileId();
+                logger.InfoEx($"Profile {newProfileId}. Generation started");
                 var newProfileName = GenerateProfileName(newProfileId);
 
                 var session = manager.GenerateProfile(View.DemLayerName, profileSetting.ProfileLines, View.SelectedProfileSettingsType, newProfileId, newProfileName, View.ObserveHeight);
+                logger.InfoEx($"Profile {newProfileId}. Generated");
 
                 session.SetSegments(ArcMap.Document.FocusMap.SpatialReference);
 
