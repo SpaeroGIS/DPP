@@ -132,6 +132,16 @@ namespace MilSpace.Profile
             return GetProfileFromList(_fanProfiles, profileName);
         }
 
+        public List<string> GetLayers ()
+        {
+            return new List<string>
+            {
+                (cmbVegetationLayer.SelectedItem != null)  ?  cmbVegetationLayer.SelectedItem.ToString()  : String.Empty,
+                (cmbBuildings.SelectedItem != null)        ?  cmbBuildings.SelectedItem.ToString()        : String.Empty,
+                (cmbHydrographyLayer.SelectedItem != null) ?  cmbHydrographyLayer.SelectedItem.ToString() : String.Empty,
+                (cmbRoadLayers.SelectedItem != null)       ?  cmbRoadLayers.SelectedItem.ToString()       : String.Empty
+            };
+        }
 
 
         public bool AllowToProfileCalc
@@ -187,8 +197,8 @@ namespace MilSpace.Profile
 
         private void OnVegetationDropped()
         {
-            cmbPolygonLayer.Items.Clear();
-            PopulateComboBox(cmbPolygonLayer, ProfileLayers.PolygonLayers);
+            cmbVegetationLayer.Items.Clear();
+            PopulateComboBox(cmbVegetationLayer, ProfileLayers.PolygonLayers);
         }
 
         private void OnObservationPointDropped()
@@ -879,14 +889,14 @@ namespace MilSpace.Profile
             cmbRoadLayers.Items.Clear();
             cmbHydrographyLayer.Items.Clear();
             cmbBuildings.Items.Clear();
-            cmbPolygonLayer.Items.Clear();
+            cmbVegetationLayer.Items.Clear();
             cmbPointLayers.Items.Clear();
 
             PopulateComboBox(cmbRasterLayers, ProfileLayers.RasterLayers);
             PopulateComboBox(cmbRoadLayers, ProfileLayers.LineLayers);
             PopulateComboBox(cmbHydrographyLayer, ProfileLayers.LineLayers);
             PopulateComboBox(cmbBuildings, ProfileLayers.PolygonLayers);
-            PopulateComboBox(cmbPolygonLayer, ProfileLayers.PolygonLayers);
+            PopulateComboBox(cmbVegetationLayer, ProfileLayers.PolygonLayers);
             PopulateComboBox(cmbPointLayers, ProfileLayers.PointLayers);
 
         }
