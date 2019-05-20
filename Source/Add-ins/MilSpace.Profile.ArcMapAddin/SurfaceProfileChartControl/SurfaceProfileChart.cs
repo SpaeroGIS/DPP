@@ -19,6 +19,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         private double _defaultChartHeight;
         private int _maxObserverHeightIndex = 0;
         private CheckBox _checkBoxHeader;
+        private List<double> _segmentsDistances;
+         //private Dictionary<double, double> _segmentsDistances;
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -51,6 +53,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         {
             _controller.LoadSeries();
             _controller.SetProfilesProperties();
+            SetProfileView();
 
             var fullHeights = new Dictionary<int, double>();
 
@@ -107,6 +110,44 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
 
             profileChart.Series.Last().Points.First().MarkerStyle = MarkerStyle.Circle;
+        }
+
+        internal void AddIntersectionsLine(double startPoint, double lastPoint, Color color, string layerName)
+        {
+            string name = $"Intersections {layerName}";
+
+            var layerIntersectionLine = profileChart.Series.FindByName(name);
+             int i = 1;
+
+            while (profileChart.Series.FindByName(name) != null)
+            {
+                name =  $"Intersections {layerName}{i}";
+                i++;
+            }
+              Series intersectionLine = new Series()
+                {
+                    ChartType = SeriesChartType.StepLine,
+                    Color = color,
+                    Name = name,
+                    BorderWidth = 8,
+                    MarkerStyle = MarkerStyle.Square,
+                    MarkerSize = 8,
+                    YValuesPerPoint = 1,
+                    IsVisibleInLegend = false,
+                };
+
+                profileChart.Series.Add(intersectionLine);
+
+                AddIntersectionPoint(profileChart.Series[name].Color, startPoint, name);
+                AddIntersectionPoint(profileChart.Series[name].Color, lastPoint, name);
+        }
+
+        internal void SetIntersections(List<IntersectionLine> profileLines, Color color, double maxDistance)
+        {
+            foreach (var line in profileLines)
+            {
+                AddIntersectionsLine(line.PointFromDistance, line.PointToDistance, color, line.LayerType.ToString());
+            }
         }
 
         internal void AddInvisibleLine(ProfileSurface surface)
@@ -221,6 +262,37 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                                             $"{Math.Round(ProfilesProperties[SelectedProfileIndex].VisiblePercent, 2)}"));
         }
 
+        private void AddIntersectionPoint(Color color, double x, string serieName)
+        {
+            var yValue = new double[1] { profileChart.ChartAreas["Default"].AxisY.Minimum
+                                            + profileChart.Series[serieName].BorderWidth/4};
+
+            var point = new DataPoint()
+            {
+                Color = color,
+                XValue = x,
+                YValues = yValue,
+                MarkerStyle = MarkerStyle.Square,
+                MarkerBorderColor = color,
+                MarkerBorderWidth = 1
+            };
+
+            profileChart.Series[serieName].Points.Add(point);
+        }
+
+        private void ClearIntersectionLines()
+        {
+            var intersectionLines = new List<Series>();
+            intersectionLines = profileChart.Series.Where(serie => serie.Name.Contains("Intersections")).ToList();
+
+            if (intersectionLines == null) { return; }
+
+            foreach (var serie in intersectionLines)
+            {
+                profileChart.Series.Remove(serie);
+            }
+        }
+
         #endregion
 
         #region SetComponentsView
@@ -329,7 +401,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
             else
             {
-                double maxHeight = ProfilesProperties.Max(profileProperties => profileProperties.MaxHeight) 
+                double maxHeight = ProfilesProperties.Max(profileProperties => profileProperties.MaxHeight)
                                               + ProfilesProperties.Max(property => property.ObserverHeight);
 
                 double minHeight = ProfilesProperties.Min(profileProperties => profileProperties.MinHeight);
@@ -1010,20 +1082,20 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
             catch (System.Runtime.InteropServices.ExternalException)
             {
-               
+
             }
         }
 
         #endregion
 
-        private void SelectProfile(string serieName)
+        internal void SelectProfile(string serieName)
         {
             if (SelectedProfileIndex == profileChart.Series.IndexOf(serieName))
             {
                 return;
             }
 
-            _controller.InvokeSelectedProfile(Convert.ToInt32(serieName));
+            ClearIntersectionLines();
 
             if (SelectedProfileIndex != -1 && profileChart.Series.Count > 2)
             {
@@ -1048,6 +1120,9 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             invisibleLineColorButton.Visible = true;
             visibleLineColorButton.Visible = true;
+
+            _controller.InvokeSelectedProfile(Convert.ToInt32(serieName));
+            _controller.InvokeGetIntersectionLines(Convert.ToInt32(serieName));
         }
 
         private void ClearSelection()

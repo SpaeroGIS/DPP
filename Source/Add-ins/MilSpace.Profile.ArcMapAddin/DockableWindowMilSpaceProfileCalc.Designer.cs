@@ -40,7 +40,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.cmbBuildings = new System.Windows.Forms.ComboBox();
             this.label30 = new System.Windows.Forms.Label();
-            this.cmbPolygonLayer = new System.Windows.Forms.ComboBox();
+            this.cmbVegetationLayer = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.calcProfile = new System.Windows.Forms.Button();
             this.txtProfileName = new System.Windows.Forms.TextBox();
@@ -473,7 +473,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.53191F));
             this.tableLayoutPanel1.Controls.Add(this.cmbBuildings, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.label30, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.cmbPolygonLayer, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.cmbVegetationLayer, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label4, 0, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(7, 85);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -507,17 +507,17 @@
             this.label30.TabIndex = 41;
             this.label30.Text = "Слой сооружения";
             // 
-            // cmbPolygonLayer
+            // cmbVegetationLayer
             // 
-            this.cmbPolygonLayer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.cmbVegetationLayer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbPolygonLayer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbPolygonLayer.FormattingEnabled = true;
-            this.cmbPolygonLayer.Location = new System.Drawing.Point(3, 30);
-            this.cmbPolygonLayer.Name = "cmbPolygonLayer";
-            this.cmbPolygonLayer.Size = new System.Drawing.Size(366, 21);
-            this.cmbPolygonLayer.TabIndex = 40;
+            this.cmbVegetationLayer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbVegetationLayer.FormattingEnabled = true;
+            this.cmbVegetationLayer.Location = new System.Drawing.Point(3, 30);
+            this.cmbVegetationLayer.Name = "cmbVegetationLayer";
+            this.cmbVegetationLayer.Size = new System.Drawing.Size(366, 21);
+            this.cmbVegetationLayer.TabIndex = 40;
             // 
             // label4
             // 
@@ -2037,7 +2037,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.ComboBox cmbBuildings;
-        private System.Windows.Forms.ComboBox cmbPolygonLayer;
+        private System.Windows.Forms.ComboBox cmbVegetationLayer;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label label6;

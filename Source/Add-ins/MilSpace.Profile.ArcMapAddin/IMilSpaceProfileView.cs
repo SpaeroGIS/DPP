@@ -2,6 +2,7 @@
 using ESRI.ArcGIS.Geometry;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Profile.DTO;
+using System.Collections.Generic;
 
 namespace MilSpace.Profile
 {
@@ -73,6 +74,7 @@ namespace MilSpace.Profile
         ProfileSession GetSectionProfile(string profileName);
 
         ProfileSession GetFanProfile(string profileName);
+        List<string> GetLayers();
 
         ProfileSettingsTypeEnum GetProfileTypeFromNode();
 

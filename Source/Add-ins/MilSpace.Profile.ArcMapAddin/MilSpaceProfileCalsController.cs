@@ -1,9 +1,7 @@
 ﻿using ESRI.ArcGIS.Desktop.AddIns;
-using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Exceptions;
 using MilSpace.Core.Tools;
-using MilSpace.Core.Tools.Helper;
 using MilSpace.DataAccess;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Exceptions;
@@ -130,6 +128,7 @@ namespace MilSpace.Profile
                 graphsController.ProfileRedrawn += GraphRedrawn;
                 graphsController.ProfileRemoved += ProfileRemove;
                 graphsController.SelectedProfileChanged += SelectedProfileChanged;
+                graphsController.IntersectionLinesDrawing += CalcIntesectionsWithLayers;
 
                 return graphsController;
             }
@@ -263,14 +262,14 @@ namespace MilSpace.Profile
             {
                 //TODO Localize error message
                 errorMessage = ex.Message;
-                
+
             }
             catch (Exception ex)
             {
                 //TODO log error
                 //TODO Localize error message
                 errorMessage = ex.Message;
-           }
+            }
 
             MessageBox.Show(errorMessage);
             return null;
@@ -288,7 +287,6 @@ namespace MilSpace.Profile
             }
             return true;
         }
-
 
         internal void ShowUserSessionProfile(int profileId, int lineId = -1)
         {
@@ -380,8 +378,6 @@ namespace MilSpace.Profile
             }
         }
 
-
-
         internal void ShowProfileOnMap()
         {
             var mapScale = View.ActiveView.FocusMap.MapScale;
@@ -449,7 +445,6 @@ namespace MilSpace.Profile
         {
             MilSpaceProfileGraphsController.ShowWindow();
         }
-
 
         private void InvokeOnProfileSettingsChanged()
         {
@@ -535,6 +530,38 @@ namespace MilSpace.Profile
                 oldSelectedLines.IsSelected = false;
             }
         }
+
+        private void CalcIntesectionsWithLayers(GroupedLines selectedLine)
+        {
+            var layers = View.GetLayers();
+            var intersectionLines = new List<IntersectionsInLayer>();
+
+            for (int i = 0; i < layers.Count; i++)
+            {
+                if (layers[i] != String.Empty)
+                {
+                    var lines = GraphicsLayerManager.GetIntersections(selectedLine, layers[i], ArcMap.Document.FocusMap);
+
+                    if (lines != null && lines.Count() > 0)
+                    {
+                        var layerType = (LayersEnum)Enum.GetValues(typeof(LayersEnum)).GetValue(i);
+                        var intersectionLine = new IntersectionsInLayer
+                        {
+                            Lines = ProfileLinesConverter.ConvertEsriPolylineToIntersectionLines(lines, selectedLine.Polylines[0].FromPoint, layerType),
+                            Type = layerType,
+                            LineId = selectedLine.LineId,
+                        };
+
+                        intersectionLine.SetDefaultColor();
+                        intersectionLines.Add(intersectionLine);
+                    }
+
+                }
+            }
+
+            graphsController.ShowIntersectionLines(intersectionLines);
+        }
+
 
         internal GraphicsLayerManager GraphicsLayerManager
         {
