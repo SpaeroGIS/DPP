@@ -180,7 +180,7 @@ namespace MilSpace.Profile
         {
 
             cmbRoadLayers.Items.Clear();
-            PopulateComboBox(cmbRoadLayers, ProfileLayers.LineLayers);
+            PopulateComboBox(cmbRoadLayers, ProfileLayers.PolygonLayers);
         }
 
         private void OnBuildingsComboDropped()
@@ -192,7 +192,7 @@ namespace MilSpace.Profile
         private void OnHydrographyDropped()
         {
             cmbHydrographyLayer.Items.Clear();
-            PopulateComboBox(cmbHydrographyLayer, ProfileLayers.LineLayers);
+            PopulateComboBox(cmbHydrographyLayer, ProfileLayers.PolygonLayers);
         }
 
         private void OnVegetationDropped()
