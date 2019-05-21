@@ -99,9 +99,9 @@ namespace MilSpace.Profile
             IntersectionLinesDrawing?.Invoke(selectedLines);
         }
 
-        internal void ShowIntersectionLines(List<IntersectionsInLayer> intersectionsLines)
+        internal void SetIntersections(List<IntersectionsInLayer> intersectionsLines, int lineId)
         {
-            _surfaceProfileChartController.DrawIntersectionLines(intersectionsLines);
+            _surfaceProfileChartController.SetIntersectionLines(intersectionsLines, lineId);
         }
 
         internal void ShowWindow()

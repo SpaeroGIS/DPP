@@ -17,6 +17,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         private double _defaultObserverHeight;
 
         private List<ProfileSurfacePoint> _extremePoints = new List<ProfileSurfacePoint>();
+        private List<LineIntersections> _linesIntersections = new List<LineIntersections>();
 
         internal delegate void ProfileGrapchClickedDelegate(GraphProfileClickedArgs e);
         internal delegate void ProfileChangeInvisiblesZonesDelegate(GroupedLines profileLines, int sessionId,
@@ -243,23 +244,67 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             _profileSession.Segments.First(segment => segment.LineId == selectedLineId).IsSelected = true;
         }
 
-        internal void DrawIntersectionLines(List<IntersectionsInLayer> intersectionLines)
+        internal void SetIntersectionLines(List<IntersectionsInLayer> intersections, int lineId)
         {
-            if (intersectionLines.Count == 0)
+            var lineIntersection = _linesIntersections.FirstOrDefault(line => line.LineId == lineId);
+
+            if (lineIntersection != null)
+            {
+                _linesIntersections.Remove(lineIntersection);
+            }
+
+            _linesIntersections.Add(new LineIntersections()
+            {
+                Intersections = intersections,
+                LineId = lineId
+            });
+        }
+
+        internal List<Color> GetIntersectionsColors(int lineId)
+        {
+            if (_linesIntersections.Count == 0)
+            {
+                return null;
+            }
+
+            var intersectionLines = _linesIntersections.FirstOrDefault(line => line.LineId == lineId).Intersections;
+            if (intersectionLines != null)
+            {
+                var colors = new List<Color>();
+                foreach(var layer in intersectionLines)
+                {
+                    colors.Add(layer.LineColor);
+                }
+
+                return colors;
+            }
+
+            return null;
+        }
+
+        internal void DrawIntersectionLines(int lineId)
+        {
+            var intersectionLines = _linesIntersections.FirstOrDefault(line => line.LineId == lineId).Intersections;
+
+            if (intersectionLines == null || intersectionLines.Count == 0)
             {
                 return;
             }
 
-            var lastPoint = _profileSession.ProfileSurfaces.First(surface => surface.LineId == intersectionLines[0].LineId)
+            var lastPoint = _profileSession.ProfileSurfaces.First(surface => surface.LineId == lineId)
                                             .ProfileSurfacePoints.Last()
                                             .Distance;
 
             var preparedLines = PrepareIntersectionsToDrawing(intersectionLines, lastPoint);
+            var i = 0;
 
-            foreach (var intersectionLine in preparedLines)
-            {
-                _surfaceProfileChart.SetIntersections(intersectionLine.Lines, intersectionLine.LineColor, lastPoint);
-            }
+            //foreach (var intersectionLine in preparedLines)
+            //{
+            //    _surfaceProfileChart.SetIntersections(intersectionLine.Lines, intersectionLine.LineColor, lastPoint, i);
+            //    i++;
+            //}
+            _surfaceProfileChart.DrawIntersections(preparedLines, lastPoint);
+
         }
 
         private List<IntersectionsInLayer> PrepareIntersectionsToDrawing(List<IntersectionsInLayer> intersectionLines, double lastPoint)
@@ -294,7 +339,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                     continue;
                 }
 
-                if (intersectionLine.PointFromDistance < prevLine.PointToDistance)
+                if (intersectionLine.PointFromDistance < prevLine.PointToDistance
+                        && intersectionLine.PointFromDistance > prevLine.PointFromDistance)
                 {
                     var line = new IntersectionLine()
                     {
@@ -305,7 +351,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
                     preparedIntersectionLines.Add(line);
                 }
-                else
+                else if (intersectionLine.PointFromDistance > prevLine.PointToDistance
+                            || intersectionLine.PointFromDistance == prevLine.PointFromDistance)
                 {
                     var line = new IntersectionLine()
                     {
@@ -340,7 +387,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                     }
                 }
 
-                if (intersectionLine.PointToDistance < prevLine.PointToDistance)
+                if (intersectionLine.PointToDistance < prevLine.PointToDistance
+                        && intersectionLine.PointFromDistance > prevLine.PointFromDistance)
                 {
                     var line = new IntersectionLine()
                     {
@@ -359,7 +407,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 }
             }
 
-            return GroupLinesByLayers(preparedIntersectionLines, intersectionLines[0].LineId);
+            return GroupLinesByLayers(preparedIntersectionLines);
         }
 
         private List<IntersectionLine> GetOrderedIntersectionsLines(List<IntersectionsInLayer> lines)
@@ -381,7 +429,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             return orderedIntersectionLines;
         }
 
-        private List<IntersectionsInLayer> GroupLinesByLayers(List<IntersectionLine> lines, int lineId)
+        private List<IntersectionsInLayer> GroupLinesByLayers(List<IntersectionLine> lines)
         {
             var preparedLines = new List<IntersectionsInLayer>();
 
@@ -393,7 +441,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 {
                     var lineInLayer = new IntersectionsInLayer()
                     {
-                        LineId = lineId,
                         Lines = new List<IntersectionLine>(),
                         Type = line.LayerType
                     };

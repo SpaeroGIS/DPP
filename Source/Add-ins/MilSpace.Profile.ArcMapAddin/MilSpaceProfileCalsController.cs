@@ -549,7 +549,6 @@ namespace MilSpace.Profile
                         {
                             Lines = ProfileLinesConverter.ConvertEsriPolylineToIntersectionLines(lines, selectedLine.Polylines[0].FromPoint, layerType),
                             Type = layerType,
-                            LineId = selectedLine.LineId,
                         };
 
                         intersectionLine.SetDefaultColor();
@@ -559,7 +558,7 @@ namespace MilSpace.Profile
                 }
             }
 
-            graphsController.ShowIntersectionLines(intersectionLines);
+            graphsController.SetIntersections(intersectionLines, selectedLine.LineId);
         }
 
 

@@ -8,7 +8,6 @@ namespace MilSpace.Profile
         public List<IntersectionLine> Lines { get; set; }
         public LayersEnum Type { get; set; }
         public Color LineColor { get; set; }
-        public int LineId { get; set; }
 
         public void SetDefaultColor()
         {
