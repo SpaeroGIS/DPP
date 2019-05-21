@@ -558,13 +558,17 @@ namespace MilSpace.Tools.GraphicsLayer
         {
             var resultPolylines = new List<IPolyline>();
 
+            var layerWehereDef = (layer as IFeatureLayerDefinition).DefinitionExpression;
+
             ISpatialFilter spatialFilter = new SpatialFilterClass
             {
                 Geometry = polyline,
                 SpatialRel = esriSpatialRelEnum.esriSpatialRelIntersects,
+                WhereClause = layerWehereDef
             };
 
             var featureClass = (layer as IFeatureLayer).FeatureClass;
+
             var highwayCursor = featureClass.Search(spatialFilter, false);
 
             var feature = highwayCursor.NextFeature();
