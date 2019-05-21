@@ -269,23 +269,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 return intersectionLines;
             }
 
-            var preparedLines = new List<IntersectionsInLayer>();
-            var nonIntersectLine = new ProfileLine();
-            var orderedIntersectionLines = new List<IntersectionLine>();
+            var orderedIntersectionLines = GetOrderedIntersectionsLines(intersectionLines);
             var preparedIntersectionLines = new List<IntersectionLine>();
-            var n = 0;
-
-            var orderedLayers = intersectionLines.OrderBy(layer => layer.Lines.Min(line => line.PointFromDistance));
-
-            foreach (var intersectionLine in orderedLayers)
-            {
-                var orderedLines = intersectionLine.Lines.OrderBy(line => line.PointFromDistance);
-
-                foreach (var line in orderedLines)
-                {
-                    orderedIntersectionLines.Add(line);
-                }
-            }
 
             var prevLine = new IntersectionLine();
             prevLine = orderedIntersectionLines.First();
@@ -299,7 +284,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                         var line = new IntersectionLine()
                         {
                             PointFromDistance = 0,
-                            PointToDistance = intersectionLine.PointFromDistance - n,
+                            PointToDistance = intersectionLine.PointFromDistance,
                             LayerType = LayersEnum.NotIntersect
                         };
 
@@ -314,7 +299,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                     var line = new IntersectionLine()
                     {
                         PointFromDistance = prevLine.PointFromDistance,
-                        PointToDistance = intersectionLine.PointFromDistance - n,
+                        PointToDistance = intersectionLine.PointFromDistance,
                         LayerType = prevLine.LayerType
                     };
 
@@ -324,8 +309,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 {
                     var line = new IntersectionLine()
                     {
-                        PointFromDistance = prevLine.PointToDistance + n,
-                        PointToDistance = intersectionLine.PointFromDistance - n,
+                        PointFromDistance = prevLine.PointToDistance,
+                        PointToDistance = intersectionLine.PointFromDistance,
                         LayerType = LayersEnum.NotIntersect
                     };
 
@@ -340,7 +325,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                         {
                             var emptyLine = new IntersectionLine()
                             {
-                                PointFromDistance = intersectionLine.PointToDistance + n,
+                                PointFromDistance = intersectionLine.PointToDistance,
                                 PointToDistance = lastPoint,
                                 LayerType = LayersEnum.NotIntersect
                             };
@@ -359,7 +344,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 {
                     var line = new IntersectionLine()
                     {
-                        PointFromDistance = intersectionLine.PointToDistance + n,
+                        PointFromDistance = intersectionLine.PointToDistance,
                         PointToDistance = prevLine.PointToDistance,
                         LayerType = prevLine.LayerType
                     };
@@ -374,29 +359,55 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 }
             }
 
-            foreach(var preparedLine in preparedIntersectionLines)
+            return GroupLinesByLayers(preparedIntersectionLines, intersectionLines[0].LineId);
+        }
+
+        private List<IntersectionLine> GetOrderedIntersectionsLines(List<IntersectionsInLayer> lines)
+        {
+            var orderedIntersectionLines = new List<IntersectionLine>();
+
+            var orderedLayers = lines.OrderBy(layer => layer.Lines.Min(line => line.PointFromDistance));
+
+            foreach (var intersectionLine in orderedLayers)
             {
-                var lineLayer = preparedLines.FirstOrDefault(layer => layer.Type == preparedLine.LayerType);
+                var orderedLines = intersectionLine.Lines.OrderBy(line => line.PointFromDistance);
+
+                foreach (var line in orderedLines)
+                {
+                    orderedIntersectionLines.Add(line);
+                }
+            }
+
+            return orderedIntersectionLines;
+        }
+
+        private List<IntersectionsInLayer> GroupLinesByLayers(List<IntersectionLine> lines, int lineId)
+        {
+            var preparedLines = new List<IntersectionsInLayer>();
+
+            foreach (var line in lines)
+            {
+                var lineLayer = preparedLines.FirstOrDefault(layer => layer.Type == line.LayerType);
 
                 if (lineLayer == null)
                 {
                     var lineInLayer = new IntersectionsInLayer()
                     {
-                        LineId = intersectionLines[0].LineId,
+                        LineId = lineId,
                         Lines = new List<IntersectionLine>(),
-                        Type = preparedLine.LayerType
+                        Type = line.LayerType
                     };
 
                     lineInLayer.SetDefaultColor();
-                    lineInLayer.Lines.Add(preparedLine);
+                    lineInLayer.Lines.Add(line);
                     preparedLines.Add(lineInLayer);
                 }
                 else
                 {
-                    lineLayer.Lines.Add(preparedLine);
+                    lineLayer.Lines.Add(line);
                 }
             }
-            
+
             return preparedLines;
         }
 

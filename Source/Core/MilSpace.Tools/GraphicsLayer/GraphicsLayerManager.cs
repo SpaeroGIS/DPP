@@ -575,15 +575,6 @@ namespace MilSpace.Tools.GraphicsLayer
                 feature = highwayCursor.NextFeature();
             }
 
-            //test
-            int j = 0;
-            foreach (var line in resultPolylines)
-            {
-                var ge = new GraphicElement() { Source = line, ElementId = j, LineId = -1, ProfileId = Convert.ToInt32(line.FromPoint.X + line.ToPoint.X) };
-                AddPolyline(ge, MilSpaceGraphicsTypeEnum.Session, new RgbColor() { Red = 100, Green = 0, Blue = 150 }, LineType.Line, true);
-                j++;
-            }
-            //end test
 
             return resultPolylines;
         }
