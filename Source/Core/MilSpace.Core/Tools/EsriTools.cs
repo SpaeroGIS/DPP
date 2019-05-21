@@ -1,5 +1,7 @@
-﻿using ESRI.ArcGIS.Display;
+﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.esriSystem;
+using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Exceptions;
 using System;
@@ -267,6 +269,128 @@ namespace MilSpace.Core.Tools
             }
 
             return result;
+        }
+
+        public static List<IPolyline> GetIntersections(IPolyline selectedLine, string layer, IMap map)
+        {
+            if (layer != null && selectedLine != null)
+            {
+                return GetIntersection(selectedLine, GetLayer(layer, map));
+            }
+
+            return null;
+        }
+
+        private static List<IPolyline> GetIntersection(IPolyline polyline, ILayer layer)
+        {
+            var resultPolylines = new List<IPolyline>();
+
+            var layerWehereDef = (layer as IFeatureLayerDefinition).DefinitionExpression;
+
+            ISpatialFilter spatialFilter = new SpatialFilter
+            {
+                Geometry = polyline,
+                SpatialRel = esriSpatialRelEnum.esriSpatialRelIntersects,
+                WhereClause = layerWehereDef
+            };
+
+            var featureClass = (layer as IFeatureLayer).FeatureClass;
+
+            var highwayCursor = featureClass.Search(spatialFilter, false);
+
+            var feature = highwayCursor.NextFeature();
+
+            while (feature != null)
+            {
+                resultPolylines.AddRange(GetFeatureIntersection(feature, polyline));
+                feature = highwayCursor.NextFeature();
+            }
+
+            return resultPolylines;
+        }
+
+        private static List<IPolyline> GetFeatureIntersection(IFeature feature, IPolyline polyline)
+        {
+            var resultPolylines = new List<IPolyline>();
+            var multipoint = new Multipoint();
+
+            IGeometry geometry = feature.ShapeCopy;
+            geometry.Project(polyline.SpatialReference);
+
+            ITopologicalOperator pTopo = geometry as ITopologicalOperator;
+
+            var result = pTopo.Intersect(polyline, esriGeometryDimension.esriGeometry0Dimension);
+            var firstLinePointOnLayer = (IPoint)pTopo.Intersect(polyline.FromPoint, esriGeometryDimension.esriGeometry0Dimension);
+            var lastLinePointOnLayer = (IPoint)pTopo.Intersect(polyline.ToPoint, esriGeometryDimension.esriGeometry0Dimension);
+
+            if (!result.IsEmpty)
+            {
+                multipoint = (Multipoint)result;
+
+                IPoint firstPoint = null;
+                IPoint lastPoint = null;
+
+                if (!firstLinePointOnLayer.IsEmpty)
+                {
+                    if (firstLinePointOnLayer.Y > multipoint.Point[0].Y) { firstPoint = firstLinePointOnLayer; }
+                    else { lastPoint = firstLinePointOnLayer; }
+                }
+
+                if (!lastLinePointOnLayer.IsEmpty)
+                {
+                    if (lastLinePointOnLayer.Y > multipoint.Point[0].Y) { firstPoint = lastLinePointOnLayer; }
+                    else { lastPoint = lastLinePointOnLayer; }
+                }
+
+                if (firstPoint != null)
+                {
+                    var buff = new Multipoint();
+                    buff.AddPointCollection(multipoint);
+
+                    multipoint.RemovePoints(0, multipoint.PointCount);
+                    multipoint.AddPoint(firstPoint);
+                    multipoint.AddPointCollection(buff);
+                }
+
+                if (lastPoint != null) { multipoint.AddPoint(lastPoint); }
+            }
+
+            if (result.IsEmpty && !firstLinePointOnLayer.IsEmpty)
+            {
+                if (!firstLinePointOnLayer.IsEmpty) { multipoint.AddPoint((IPoint)firstLinePointOnLayer); }
+                if (!lastLinePointOnLayer.IsEmpty) { multipoint.AddPoint((IPoint)lastLinePointOnLayer); }
+            }
+
+            if (multipoint.PointCount == 1)
+            {
+                multipoint.Point[0].Project(polyline.SpatialReference);
+                resultPolylines.Add(CreatePolylineFromPoints(multipoint.Point[0], multipoint.Point[0]));
+            }
+            else if (multipoint.PointCount > 0)
+            {
+                for (int i = 0; i < multipoint.PointCount - 1; i++)
+                {
+                    multipoint.Point[i].Project(polyline.SpatialReference);
+                    multipoint.Point[i + 1].Project(polyline.SpatialReference);
+
+                    resultPolylines.Add(CreatePolylineFromPoints(multipoint.Point[i], multipoint.Point[i + 1]));
+                    i++;
+                }
+            }
+
+            return resultPolylines;
+        }
+
+        private static ILayer GetLayer(string layerName, IMap map)
+        {
+            var layers = map.Layers;
+            var layer = map.Layer[0] as ILayer;
+            while (layer.Name != layerName)
+            {
+                layer = layers.Next() as ILayer;
+            }
+
+            return layer;
         }
     }
 }
