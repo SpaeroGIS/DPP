@@ -4,6 +4,7 @@ using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace MilSpace.Core.Tools
 {
@@ -133,6 +134,7 @@ namespace MilSpace.Core.Tools
                 {
                     SpatialReferenceEnvironmentClass factory = new SpatialReferenceEnvironmentClass();
                     wgs84 = factory.CreateGeographicCoordinateSystem((int)esriSRGeoCSType.esriSRGeoCS_WGS1984);
+                    Marshal.ReleaseComObject(factory);
                 }
 
                 return wgs84;
@@ -160,12 +162,10 @@ namespace MilSpace.Core.Tools
 
         public static IEnumerable<IPolyline> CreatePolylinesFromPointAndAzimuths(IPoint centerPoint, double length, int count, double azimuth1, double azimuth2)
         {
-
             if (centerPoint == null)
             {
                 return null;
             }
-
 
             if (count < 2)
             {
@@ -174,6 +174,7 @@ namespace MilSpace.Core.Tools
             }
 
             double sector;
+            int devider = count;
             //Check if it is a circle
             if ((azimuth1 == 0 && azimuth2 == 360) || (azimuth2 == 0 && azimuth1 == 360) || (azimuth2 == azimuth1))
             {
@@ -183,7 +184,7 @@ namespace MilSpace.Core.Tools
                 }
                 else
                 {
-                    count -= 1;
+                    devider += 1;
                 }
             }
 
@@ -201,7 +202,7 @@ namespace MilSpace.Core.Tools
                 sector = 360;
             }
 
-            double step = sector / (count - 1);
+            double step = sector / (devider - 1);
 
             List<IPolyline> result = new List<IPolyline>();
             for (int i = 0; i < count; i++)

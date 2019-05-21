@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Графика");
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.btnRefreshLayers = new System.Windows.Forms.Button();
@@ -40,7 +40,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.cmbBuildings = new System.Windows.Forms.ComboBox();
             this.label30 = new System.Windows.Forms.Label();
-            this.cmbPolygonLayer = new System.Windows.Forms.ComboBox();
+            this.cmbVegetationLayer = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.calcProfile = new System.Windows.Forms.Button();
             this.txtProfileName = new System.Windows.Forms.TextBox();
@@ -165,8 +165,8 @@
             this.openGraphWindow = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.removeProfile = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
+            this.eraseProfile = new System.Windows.Forms.ToolStripButton();
+            this.saveProfileAsShared = new System.Windows.Forms.ToolStripButton();
             this.lblProfileList = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -473,7 +473,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.53191F));
             this.tableLayoutPanel1.Controls.Add(this.cmbBuildings, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.label30, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.cmbPolygonLayer, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.cmbVegetationLayer, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label4, 0, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(7, 85);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -507,17 +507,17 @@
             this.label30.TabIndex = 41;
             this.label30.Text = "Слой сооружения";
             // 
-            // cmbPolygonLayer
+            // cmbVegetationLayer
             // 
-            this.cmbPolygonLayer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.cmbVegetationLayer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbPolygonLayer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbPolygonLayer.FormattingEnabled = true;
-            this.cmbPolygonLayer.Location = new System.Drawing.Point(3, 30);
-            this.cmbPolygonLayer.Name = "cmbPolygonLayer";
-            this.cmbPolygonLayer.Size = new System.Drawing.Size(366, 21);
-            this.cmbPolygonLayer.TabIndex = 40;
+            this.cmbVegetationLayer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbVegetationLayer.FormattingEnabled = true;
+            this.cmbVegetationLayer.Location = new System.Drawing.Point(3, 30);
+            this.cmbVegetationLayer.Name = "cmbVegetationLayer";
+            this.cmbVegetationLayer.Size = new System.Drawing.Size(366, 21);
+            this.cmbVegetationLayer.TabIndex = 40;
             // 
             // label4
             // 
@@ -1668,6 +1668,7 @@
             this.Attribute,
             this.Value});
             this.lvProfileAttributes.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvProfileAttributes.HideSelection = false;
             this.lvProfileAttributes.Location = new System.Drawing.Point(3, 469);
             this.lvProfileAttributes.Name = "lvProfileAttributes";
             this.lvProfileAttributes.Size = new System.Drawing.Size(755, 286);
@@ -1696,25 +1697,25 @@
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.Location = new System.Drawing.Point(3, 65);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode10.Checked = true;
-            treeNode10.ImageKey = "vector-path-line.png";
-            treeNode10.Name = "sectionsNode";
-            treeNode10.SelectedImageIndex = 205;
-            treeNode10.Text = "Отрезки";
-            treeNode11.Checked = true;
-            treeNode11.ImageKey = "Editing-Line-icon3.png";
-            treeNode11.Name = "fanNode";
-            treeNode11.SelectedImageIndex = 208;
-            treeNode11.Text = "Веер";
-            treeNode12.Checked = true;
-            treeNode12.ImageKey = "vector-polygon.png";
-            treeNode12.Name = "primitivesNode";
-            treeNode12.SelectedImageIndex = 209;
-            treeNode12.Text = "Графика";
+            treeNode1.Checked = true;
+            treeNode1.ImageKey = "vector-path-line.png";
+            treeNode1.Name = "sectionsNode";
+            treeNode1.SelectedImageIndex = 205;
+            treeNode1.Text = "Отрезки";
+            treeNode2.Checked = true;
+            treeNode2.ImageKey = "Editing-Line-icon3.png";
+            treeNode2.Name = "fanNode";
+            treeNode2.SelectedImageIndex = 208;
+            treeNode2.Text = "Веер";
+            treeNode3.Checked = true;
+            treeNode3.ImageKey = "vector-polygon.png";
+            treeNode3.Name = "primitivesNode";
+            treeNode3.SelectedImageIndex = 209;
+            treeNode3.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode10,
-            treeNode11,
-            treeNode12});
+            treeNode1,
+            treeNode2,
+            treeNode3});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(755, 398);
             this.profilesTreeView.TabIndex = 35;
@@ -1743,8 +1744,8 @@
             this.openGraphWindow,
             this.toolStripSeparator4,
             this.removeProfile,
-            this.toolStripButton1,
-            this.toolStripButton8});
+            this.eraseProfile,
+            this.saveProfileAsShared});
             this.profilesToolStrip.Location = new System.Drawing.Point(0, 0);
             this.profilesToolStrip.Name = "profilesToolStrip";
             this.profilesToolStrip.Size = new System.Drawing.Size(755, 30);
@@ -1830,25 +1831,27 @@
             this.removeProfile.ToolTipText = "Убрать из списка";
             this.removeProfile.Click += new System.EventHandler(this.removeProfile_Click);
             // 
-            // toolStripButton1
+            // eraseProfile
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 27);
-            this.toolStripButton1.Text = "toolStripButton1";
-            this.toolStripButton1.ToolTipText = "Удалить из базы";
+            this.eraseProfile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.eraseProfile.Image = ((System.Drawing.Image)(resources.GetObject("eraseProfile.Image")));
+            this.eraseProfile.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.eraseProfile.Name = "eraseProfile";
+            this.eraseProfile.Size = new System.Drawing.Size(23, 27);
+            this.eraseProfile.Text = "toolStripButton1";
+            this.eraseProfile.ToolTipText = "Удалить из базы";
+            this.eraseProfile.Click += new System.EventHandler(this.eraseProfile_Click);
             // 
-            // toolStripButton8
+            // saveProfileAsShared
             // 
-            this.toolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton8.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton8.Image")));
-            this.toolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton8.Name = "toolStripButton8";
-            this.toolStripButton8.Size = new System.Drawing.Size(23, 27);
-            this.toolStripButton8.Text = "toolStripButton8";
-            this.toolStripButton8.ToolTipText = "Сохранить в базу";
+            this.saveProfileAsShared.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.saveProfileAsShared.Image = ((System.Drawing.Image)(resources.GetObject("saveProfileAsShared.Image")));
+            this.saveProfileAsShared.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.saveProfileAsShared.Name = "saveProfileAsShared";
+            this.saveProfileAsShared.Size = new System.Drawing.Size(23, 27);
+            this.saveProfileAsShared.Text = "saveProfileAsShared";
+            this.saveProfileAsShared.ToolTipText = "Сохранить в базу";
+            this.saveProfileAsShared.Click += new System.EventHandler(this.saveProfileAsShared_Click_1);
             // 
             // lblProfileList
             // 
@@ -2037,7 +2040,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.ComboBox cmbBuildings;
-        private System.Windows.Forms.ComboBox cmbPolygonLayer;
+        private System.Windows.Forms.ComboBox cmbVegetationLayer;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label label6;
@@ -2045,13 +2048,13 @@
         private System.Windows.Forms.ToolStripButton toolBtnShowOnMap;
         private System.Windows.Forms.ToolStrip profilesToolStrip;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton eraseProfile;
         private System.Windows.Forms.ToolStripButton toolStripButton4;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton addProfileToGraph;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripButton removeProfile;
-        private System.Windows.Forms.ToolStripButton toolStripButton8;
+        private System.Windows.Forms.ToolStripButton saveProfileAsShared;
         private System.Windows.Forms.ToolStripButton toolBtnFlash;
         internal System.Windows.Forms.TreeView profilesTreeView;
         private System.Windows.Forms.ColumnHeader Attribute;

@@ -16,6 +16,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using MilSpace.DataAccess.Facade;
+using ESRI.ArcGIS.ArcMapUI;
+using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.esriSystem;
+using System.Runtime.InteropServices;
 
 namespace MilSpace.Tools
 {
@@ -30,6 +34,7 @@ namespace MilSpace.Tools
 
         public ProfileManager()
         { }
+
 
         public ProfileSession GenerateProfile(
             string profileSource,
@@ -107,7 +112,10 @@ namespace MilSpace.Tools
                     SessionName = sessionName,
                     DefinitionType = profileSettingsTypeEnum,
                     ObserverHeight = observHeight,
-                    SurfaceLayerName = profileSource
+                    SurfaceLayerName = profileSource,
+                    CreatedBy = Environment.UserName,
+                    CreatedOn = DateTime.Now,
+                    Shared = false
                 };
 
 
@@ -128,7 +136,6 @@ namespace MilSpace.Tools
                     {
                         throw new MilSpaceProfileLineNotFound(lineId, profileLineFeatureClass);
                     }
-
 
                     List<ProfileSurfacePoint> points;
                     if (!surface.ContainsKey(lineId))
@@ -163,9 +170,11 @@ namespace MilSpace.Tools
                 //Delete temp table form the GDB
                 GdbAccess.Instance.DeleteTemporarSource(tempTableName, profileSourceName);
 
-               //TODO: Clean memo using Marhsaling IRow
+                Marshal.ReleaseComObject(featureCursor);
 
-               session.ProfileSurfaces = surface.Select(r => new ProfileSurface
+                //TODO: Clean memo using Marhsaling IRow
+
+                session.ProfileSurfaces = surface.Select(r => new ProfileSurface
                 {
                     LineId = r.Key,
                     ProfileSurfacePoints = r.Value.ToArray()

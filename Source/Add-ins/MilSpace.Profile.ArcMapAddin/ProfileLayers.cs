@@ -56,7 +56,7 @@ namespace MilSpace.Profile
 
 
 
-        private static IEnumerable<ILayer> GetFeatureLayers(ILayer layer)
+        internal static IEnumerable<ILayer> GetFeatureLayers(ILayer layer)
         {
             var result = new List<ILayer>();
 

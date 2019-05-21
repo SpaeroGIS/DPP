@@ -2,8 +2,6 @@
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Tools;
-using ESRI.ArcGIS.Display;
-using MilSpace.Core.Tools.Helper;
 using MilSpace.DataAccess;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Profile.SurfaceProfileChartControl;
@@ -27,10 +25,12 @@ namespace MilSpace.Profile
 
         internal delegate void DeleteProfileDelegate(int sessionId, int lineId);
         internal delegate void SelectedProfileChangedDelegate(GroupedLines newSelectedLines, int profileId);
+        internal delegate void GetIntersectionLines(GroupedLines selectedLines);
 
         internal event ProfileRedrawDelegate ProfileRedrawn;
         internal event DeleteProfileDelegate ProfileRemoved;
         internal event SelectedProfileChangedDelegate SelectedProfileChanged;
+        internal event GetIntersectionLines IntersectionLinesDrawing;
 
         internal DockableWindowMilSpaceProfileGraph View { get; private set; }
 
@@ -94,6 +94,16 @@ namespace MilSpace.Profile
             SelectedProfileChanged?.Invoke(newSelectedLines, profileId);
         }
 
+        internal void InvokeIntersectionLinesDrawing(GroupedLines selectedLines)
+        {
+            IntersectionLinesDrawing?.Invoke(selectedLines);
+        }
+
+        internal void ShowIntersectionLines(List<IntersectionsInLayer> intersectionsLines)
+        {
+            _surfaceProfileChartController.DrawIntersectionLines(intersectionsLines);
+        }
+
         internal void ShowWindow()
         {
             ArcMap.Application.CurrentTool = null;
@@ -113,6 +123,7 @@ namespace MilSpace.Profile
             _surfaceProfileChartController.InvisibleZonesChanged += InvokeInvisibleZonesChanged;
             _surfaceProfileChartController.ProfileRemoved += InvokeProfileRemoved;
             _surfaceProfileChartController.SelectedProfileChanged += InvokeSelectedProfileChanged;
+            _surfaceProfileChartController.IntersectionLinesDrawing += InvokeIntersectionLinesDrawing;
 
             _surfaceProfileChartController.SetSession(profileSession);
             SurfaceProfileChart surfaceProfileChart = _surfaceProfileChartController.CreateProfileChart(profileSession.ObserverHeight);

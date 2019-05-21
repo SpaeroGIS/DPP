@@ -1,9 +1,9 @@
-﻿using ESRI.ArcGIS.Desktop.AddIns;
-using ESRI.ArcGIS.Display;
+﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Desktop.AddIns;
 using ESRI.ArcGIS.Geometry;
+using MilSpace.Core;
 using MilSpace.Core.Exceptions;
 using MilSpace.Core.Tools;
-using MilSpace.Core.Tools.Helper;
 using MilSpace.DataAccess;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Exceptions;
@@ -27,6 +27,7 @@ namespace MilSpace.Profile
 
         private int profileId;
         GraphicsLayerManager graphicsLayerManager;
+        private Logger logger = Logger.GetLoggerEx("MilSpaceProfileCalsController");
 
         public delegate void ProfileSettingsChangedDelegate(ProfileSettingsEventArgs e);
 
@@ -130,6 +131,7 @@ namespace MilSpace.Profile
                 graphsController.ProfileRedrawn += GraphRedrawn;
                 graphsController.ProfileRemoved += ProfileRemove;
                 graphsController.SelectedProfileChanged += SelectedProfileChanged;
+                graphsController.IntersectionLinesDrawing += CalcIntesectionsWithLayers;
 
                 return graphsController;
             }
@@ -210,11 +212,13 @@ namespace MilSpace.Profile
                 catch (MilSpaceProfileLackOfParameterException ex)
                 {
                     //TODO: Wtite log
+                    logger.ErrorEx(ex.Message);
                     MessageBox.Show(ex.Message, "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 }
                 catch (Exception ex)
                 {
+                    logger.ErrorEx(ex.Message);
                     //TODO: Wtite log
                 }
 
@@ -243,9 +247,11 @@ namespace MilSpace.Profile
                 ProfileManager manager = new ProfileManager();
                 var profileSetting = profileSettings[View.SelectedProfileSettingsType];
                 var newProfileId = GenerateProfileId();
+                logger.InfoEx($"Profile {newProfileId}. Generation started");
                 var newProfileName = GenerateProfileName(newProfileId);
 
                 var session = manager.GenerateProfile(View.DemLayerName, profileSetting.ProfileLines, View.SelectedProfileSettingsType, newProfileId, newProfileName, View.ObserveHeight);
+                logger.InfoEx($"Profile {newProfileId}. Generated");
 
                 session.SetSegments(ArcMap.Document.FocusMap.SpatialReference);
 
@@ -263,24 +269,29 @@ namespace MilSpace.Profile
             {
                 //TODO Localize error message
                 errorMessage = ex.Message;
-                
+
             }
             catch (Exception ex)
             {
                 //TODO log error
                 //TODO Localize error message
                 errorMessage = ex.Message;
-           }
+            }
 
             MessageBox.Show(errorMessage);
             return null;
         }
 
-        internal bool RemoveProfilesFromUserSession()
+        internal bool RemoveProfilesFromUserSession(bool eraseFromDB = false)
         {
             var result = MilSpaceProfileFacade.DeleteUserSessions(View.SelectedProfileSessionIds.ProfileSessionId);
             if (result)
             {
+                if (eraseFromDB)
+                {
+                    result = result && MilSpaceProfileFacade.EraseProfileSessions(View.SelectedProfileSessionIds.ProfileSessionId);
+                }
+
                 MilSpaceProfileGraphsController.RemoveTab(View.SelectedProfileSessionIds.ProfileSessionId);
                 GraphicsLayerManager.RemoveGraphic(View.SelectedProfileSessionIds.ProfileSessionId);
 
@@ -288,7 +299,6 @@ namespace MilSpace.Profile
             }
             return true;
         }
-
 
         internal void ShowUserSessionProfile(int profileId, int lineId = -1)
         {
@@ -380,8 +390,6 @@ namespace MilSpace.Profile
             }
         }
 
-
-
         internal void ShowProfileOnMap()
         {
             var mapScale = View.ActiveView.FocusMap.MapScale;
@@ -450,6 +458,27 @@ namespace MilSpace.Profile
             MilSpaceProfileGraphsController.ShowWindow();
         }
 
+        internal bool? ShareProfileSession(ProfileSession profile)
+        {
+            if (profile.CreatedBy == Environment.UserName)
+            {
+                profile.Shared = true;
+                return MilSpaceProfileFacade.SaveProfileSession(profile);
+            }
+
+            logger.ErrorEx("You are not allowed to share this Profile.");
+            return null;
+        }
+
+        internal bool CanEraseProfileSession(int profileSession)
+        {
+            if (profileSession < 0)
+            {
+                return false;
+            }
+
+            return MilSpaceProfileFacade.CanEraseProfileSessions(profileSession); ;
+        }
 
         private void InvokeOnProfileSettingsChanged()
         {
@@ -478,6 +507,7 @@ namespace MilSpace.Profile
             profile.ConvertLinesToEsriPolypile(View.ActiveView.FocusMap.SpatialReference);
             return profile;
         }
+
 
         private string GenerateProfileName(int id)
         {
@@ -535,6 +565,38 @@ namespace MilSpace.Profile
                 oldSelectedLines.IsSelected = false;
             }
         }
+
+        private void CalcIntesectionsWithLayers(GroupedLines selectedLine)
+        {
+            var layers = View.GetLayers();
+            var intersectionLines = new List<IntersectionsInLayer>();
+
+            for (int i = 0; i < layers.Count; i++)
+            {
+                if (layers[i] != String.Empty)
+                {
+                    var lines = GraphicsLayerManager.GetIntersections(selectedLine, layers[i], ArcMap.Document.FocusMap);
+
+                    if (lines != null && lines.Count() > 0)
+                    {
+                        var layerType = (LayersEnum)Enum.GetValues(typeof(LayersEnum)).GetValue(i);
+                        var intersectionLine = new IntersectionsInLayer
+                        {
+                            Lines = ProfileLinesConverter.ConvertEsriPolylineToIntersectionLines(lines, selectedLine.Polylines[0].FromPoint, layerType),
+                            Type = layerType,
+                            LineId = selectedLine.LineId,
+                        };
+
+                        intersectionLine.SetDefaultColor();
+                        intersectionLines.Add(intersectionLine);
+                    }
+
+                }
+            }
+
+            graphsController.ShowIntersectionLines(intersectionLines);
+        }
+
 
         internal GraphicsLayerManager GraphicsLayerManager
         {

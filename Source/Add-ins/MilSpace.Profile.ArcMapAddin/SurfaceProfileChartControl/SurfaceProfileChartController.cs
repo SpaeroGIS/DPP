@@ -6,7 +6,6 @@ using MilSpace.DataAccess.DataTransfer;
 using ESRI.ArcGIS.Display;
 using System.Drawing;
 using MilSpace.DataAccess;
-using MilSpace.Core.Tools.Helper;
 
 namespace MilSpace.Profile.SurfaceProfileChartControl
 {
@@ -25,11 +24,13 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal delegate void DeleteProfileDelegate(int sessionId, int lineId);
         internal delegate void SelectedProfileChangedDelegate(GroupedLines newSelectedLines, int profileId);
+        internal delegate void GetIntersectionLinesDelegate(GroupedLines selectedLines);
 
         internal event ProfileGrapchClickedDelegate OnProfileGraphClicked;
         internal event ProfileChangeInvisiblesZonesDelegate InvisibleZonesChanged;
         internal event DeleteProfileDelegate ProfileRemoved;
         internal event SelectedProfileChangedDelegate SelectedProfileChanged;
+        internal event GetIntersectionLinesDelegate IntersectionLinesDrawing;
 
         public SurfaceProfileChartController()
         {
@@ -44,6 +45,11 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         {
             _graphsController = graphsController;
             _surfaceProfileChart = currentChart;
+
+            if (_profileSession.ProfileLines.Count() == 1)
+            {
+                _surfaceProfileChart.SelectProfile("1");
+            }
         }
 
         internal SurfaceProfileChart CreateProfileChart(double observerHeight)
@@ -55,7 +61,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             return _surfaceProfileChart;
         }
-
 
         internal void AddProfile()
         {
@@ -174,7 +179,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 profileLines.IsSelected = _profileSession.Segments[profileSurface.LineId - 1].IsSelected;
                 _profileSession.Segments[profileSurface.LineId - 1] = profileLines;
             }
-            
+
             InvisibleZonesChanged?.Invoke(profileLines, _profileSession.SessionId, update, linesIds);
         }
 
@@ -198,7 +203,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
                 profileProperty.PathLength = FindLength(profileSurfacePoints);
 
-                profileProperty.Azimuth = profileSessionProfileLine.Azimuth;//  FindAzimuth(RadiansToDegrees(profileSessionProfileLine.Angel));
+                profileProperty.Azimuth = profileSessionProfileLine.Azimuth;
 
                 profileProperty.ObserverHeight = _defaultObserverHeight;
 
@@ -227,10 +232,183 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                                                 _profileSession.SessionId, true);
         }
 
+        internal void InvokeGetIntersectionLines(int lineId)
+        {
+            IntersectionLinesDrawing?.Invoke(_profileSession.Segments.First(segment => segment.LineId == lineId));
+        }
+
         internal void InvokeSelectedProfile(int selectedLineId)
         {
             SelectedProfileChanged?.Invoke(_profileSession.Segments.First(segment => segment.LineId == selectedLineId), _profileSession.SessionId);
             _profileSession.Segments.First(segment => segment.LineId == selectedLineId).IsSelected = true;
+        }
+
+        internal void DrawIntersectionLines(List<IntersectionsInLayer> intersectionLines)
+        {
+            if (intersectionLines.Count == 0)
+            {
+                return;
+            }
+
+            var lastPoint = _profileSession.ProfileSurfaces.First(surface => surface.LineId == intersectionLines[0].LineId)
+                                            .ProfileSurfacePoints.Last()
+                                            .Distance;
+
+            var preparedLines = PrepareIntersectionsToDrawing(intersectionLines, lastPoint);
+
+            foreach (var intersectionLine in preparedLines)
+            {
+                _surfaceProfileChart.SetIntersections(intersectionLine.Lines, intersectionLine.LineColor, lastPoint);
+            }
+        }
+
+        private List<IntersectionsInLayer> PrepareIntersectionsToDrawing(List<IntersectionsInLayer> intersectionLines, double lastPoint)
+        {
+            if (intersectionLines.Count == 1 && intersectionLines[0].Lines.Count == 1)
+            {
+                return intersectionLines;
+            }
+
+            var orderedIntersectionLines = GetOrderedIntersectionsLines(intersectionLines);
+            var preparedIntersectionLines = new List<IntersectionLine>();
+
+            var prevLine = new IntersectionLine();
+            prevLine = orderedIntersectionLines.First();
+
+            foreach (var intersectionLine in orderedIntersectionLines)
+            {
+                if (intersectionLine == orderedIntersectionLines.First())
+                {
+                    if (intersectionLine.PointFromDistance != 0)
+                    {
+                        var line = new IntersectionLine()
+                        {
+                            PointFromDistance = 0,
+                            PointToDistance = intersectionLine.PointFromDistance,
+                            LayerType = LayersEnum.NotIntersect
+                        };
+
+                        preparedIntersectionLines.Add(line);
+                    }
+
+                    continue;
+                }
+
+                if (intersectionLine.PointFromDistance < prevLine.PointToDistance)
+                {
+                    var line = new IntersectionLine()
+                    {
+                        PointFromDistance = prevLine.PointFromDistance,
+                        PointToDistance = intersectionLine.PointFromDistance,
+                        LayerType = prevLine.LayerType
+                    };
+
+                    preparedIntersectionLines.Add(line);
+                }
+                else
+                {
+                    var line = new IntersectionLine()
+                    {
+                        PointFromDistance = prevLine.PointToDistance,
+                        PointToDistance = intersectionLine.PointFromDistance,
+                        LayerType = LayersEnum.NotIntersect
+                    };
+
+                    preparedIntersectionLines.Add(prevLine);
+                    preparedIntersectionLines.Add(line);
+
+                    if (intersectionLine == orderedIntersectionLines.Last())
+                    {
+                        preparedIntersectionLines.Add(intersectionLine);
+
+                        if (intersectionLine.PointToDistance != lastPoint)
+                        {
+                            var emptyLine = new IntersectionLine()
+                            {
+                                PointFromDistance = intersectionLine.PointToDistance,
+                                PointToDistance = lastPoint,
+                                LayerType = LayersEnum.NotIntersect
+                            };
+
+                            preparedIntersectionLines.Add(line);
+                        }
+                    }
+                    else
+                    {
+                        prevLine = new IntersectionLine();
+                        prevLine = intersectionLine;
+                    }
+                }
+
+                if (intersectionLine.PointToDistance < prevLine.PointToDistance)
+                {
+                    var line = new IntersectionLine()
+                    {
+                        PointFromDistance = intersectionLine.PointToDistance,
+                        PointToDistance = prevLine.PointToDistance,
+                        LayerType = prevLine.LayerType
+                    };
+
+                    preparedIntersectionLines.Add(line);
+                    preparedIntersectionLines.Add(intersectionLine);
+                }
+                else
+                {
+                    prevLine = new IntersectionLine();
+                    prevLine = intersectionLine;
+                }
+            }
+
+            return GroupLinesByLayers(preparedIntersectionLines, intersectionLines[0].LineId);
+        }
+
+        private List<IntersectionLine> GetOrderedIntersectionsLines(List<IntersectionsInLayer> lines)
+        {
+            var orderedIntersectionLines = new List<IntersectionLine>();
+
+            var orderedLayers = lines.OrderBy(layer => layer.Lines.Min(line => line.PointFromDistance));
+
+            foreach (var intersectionLine in orderedLayers)
+            {
+                var orderedLines = intersectionLine.Lines.OrderBy(line => line.PointFromDistance);
+
+                foreach (var line in orderedLines)
+                {
+                    orderedIntersectionLines.Add(line);
+                }
+            }
+
+            return orderedIntersectionLines;
+        }
+
+        private List<IntersectionsInLayer> GroupLinesByLayers(List<IntersectionLine> lines, int lineId)
+        {
+            var preparedLines = new List<IntersectionsInLayer>();
+
+            foreach (var line in lines)
+            {
+                var lineLayer = preparedLines.FirstOrDefault(layer => layer.Type == line.LayerType);
+
+                if (lineLayer == null)
+                {
+                    var lineInLayer = new IntersectionsInLayer()
+                    {
+                        LineId = lineId,
+                        Lines = new List<IntersectionLine>(),
+                        Type = line.LayerType
+                    };
+
+                    lineInLayer.SetDefaultColor();
+                    lineInLayer.Lines.Add(line);
+                    preparedLines.Add(lineInLayer);
+                }
+                else
+                {
+                    lineLayer.Lines.Add(line);
+                }
+            }
+
+            return preparedLines;
         }
 
         private List<ProfileSurfacePoint> FindExtremePoints()
