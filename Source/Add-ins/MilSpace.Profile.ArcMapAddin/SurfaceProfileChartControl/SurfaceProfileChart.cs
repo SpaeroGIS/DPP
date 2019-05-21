@@ -731,8 +731,9 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         private List<Series> GetProfiles()
         {
             var profiles = new List<Series>();
+            var profileSeries = profileChart.Series.Where(serie => Regex.IsMatch(serie.Name, @"^\d+$"));
 
-            for (int i = 0; i < profileChart.Series.Count / 2; i++)
+            for (int i = 0; i < profileSeries.Count(); i++)
             {
                 profiles.Add(profileChart.Series[i]);
             }
@@ -1128,6 +1129,73 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
         }
 
+        private void ShowIntersectionLinesCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (showIntersectionLinesCheckBox.Checked)
+            {
+                if (profileChart.Series.FirstOrDefault(serie => serie.Name.Contains("Intersections")) != null)
+                {
+                    ShowIntersectionLines();
+                }
+                else
+                {
+                    _controller.DrawIntersectionLines(Convert.ToInt32(profileChart.Series[SelectedProfileIndex].Name));
+                }
+            }
+            else
+            {
+                if (profileChart.Series.FirstOrDefault(serie => serie.Name.Contains("Intersections")) != null)
+                {
+                    HideIntersectionLines();
+                }
+            }
+        }
+
+        private void ProfilePropertiesTable_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+
+            if (e.RowIndex != -1 && e.ColumnIndex == profilePropertiesTable.Columns["IntersectionsCol"].Index)
+            {
+                int count = 0;
+
+                using (
+                       Brush gridBrush = new SolidBrush(profilePropertiesTable.GridColor),
+                       backColorBrush = new SolidBrush(e.CellStyle.BackColor))
+                {
+                    using (Pen gridLinePen = new Pen(gridBrush))
+                    {
+                        e.Graphics.FillRectangle(backColorBrush, e.CellBounds);
+
+                        e.Graphics.DrawLine(gridLinePen, e.CellBounds.Left,
+                            e.CellBounds.Bottom - 1, e.CellBounds.Right - 1,
+                            e.CellBounds.Bottom - 1);
+                        e.Graphics.DrawLine(gridLinePen, e.CellBounds.Right - 1,
+                            e.CellBounds.Top, e.CellBounds.Right - 1,
+                            e.CellBounds.Bottom);
+                    }
+                }
+                var colors = _controller.GetIntersectionsColors(Convert.ToInt32(profilePropertiesTable.Rows[e.RowIndex].Cells["ProfileNumberCol"].Value));
+                if (colors == null) { return; }
+                var padding = (profilePropertiesTable.Columns["IntersectionsCol"].Width - colors.Count * 10) / (colors.Count + 1);
+
+                foreach (var color in colors)
+                {
+                    var intersectionCirclesSpace = (10 + padding) * count;
+
+                    Rectangle newRect = new Rectangle(e.CellBounds.X + padding + intersectionCirclesSpace, e.CellBounds.Y + 3, 10, 10);
+
+
+                    Brush brush = new SolidBrush(color);
+                    e.Graphics.FillEllipse(brush, newRect);
+
+                    count++;
+                }
+
+                e.Handled = true;
+
+            }
+        }
+
         #endregion
 
         internal void SelectProfile(string serieName)
@@ -1167,7 +1235,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             if (showIntersectionLinesCheckBox.Checked)
             {
-                _controller.InvokeGetIntersectionLines(Convert.ToInt32(serieName));
+                _controller.DrawIntersectionLines(Convert.ToInt32(serieName));
             }
         }
 
@@ -1247,72 +1315,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 profileChart.SaveImage(saveFileDialog.FileName, ChartImageFormat.Png);
             }
         }
-
-        private void ShowIntersectionLinesCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (showIntersectionLinesCheckBox.Checked)
-            {
-                if (profileChart.Series.FirstOrDefault(serie => serie.Name.Contains("Intersections")) != null)
-                {
-                    ShowIntersectionLines();
-                }
-                else
-                {
-                    _controller.DrawIntersectionLines(Convert.ToInt32(profileChart.Series[SelectedProfileIndex].Name));
-                }
-            }
-            else
-            {
-                if (profileChart.Series.FirstOrDefault(serie => serie.Name.Contains("Intersections")) != null)
-                {
-                    HideIntersectionLines();
-                }
-            }
-        }
-
-        private void ProfilePropertiesTable_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
-        {
-           
-            if (e.RowIndex != -1 && e.ColumnIndex == profilePropertiesTable.Columns["IntersectionsCol"].Index)
-            {
-                int count = 0;
-
-                using (
-                       Brush gridBrush = new SolidBrush(profilePropertiesTable.GridColor),
-                       backColorBrush = new SolidBrush(e.CellStyle.BackColor))
-                {
-                    using (Pen gridLinePen = new Pen(gridBrush))
-                    {
-                        e.Graphics.FillRectangle(backColorBrush, e.CellBounds);
-
-                        e.Graphics.DrawLine(gridLinePen, e.CellBounds.Left,
-                            e.CellBounds.Bottom - 1, e.CellBounds.Right - 1,
-                            e.CellBounds.Bottom - 1);
-                        e.Graphics.DrawLine(gridLinePen, e.CellBounds.Right - 1,
-                            e.CellBounds.Top, e.CellBounds.Right - 1,
-                            e.CellBounds.Bottom);
-                    }
-                }
-                var colors = _controller.GetIntersectionsColors(Convert.ToInt32(profilePropertiesTable.Rows[e.RowIndex].Cells["ProfileNumberCol"].Value));/*_allCirclesColors.Where(allColors => allColors.Key == Convert.ToInt32(profilePropertiesTable.Rows[e.RowIndex].Cells["ProfileNumberCol"].Value));*/
-                if (colors == null) { return; }
-                foreach (var color in colors)
-                {
-                    var intersectionCirclesSpace = 13 * count;
-                    
-                    Rectangle newRect = new Rectangle(e.CellBounds.X + 3 + intersectionCirclesSpace, e.CellBounds.Y + 3, 10, 10);
-
-
-                    Brush brush = new SolidBrush(color);
-                    e.Graphics.FillEllipse(brush, newRect);
-
-                    count++;
-                }
-
-                e.Handled = true;
-
-            }
-        }
-
     }
 
 }

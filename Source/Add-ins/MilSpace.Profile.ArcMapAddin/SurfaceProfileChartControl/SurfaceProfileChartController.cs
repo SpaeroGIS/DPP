@@ -296,13 +296,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                                             .Distance;
 
             var preparedLines = PrepareIntersectionsToDrawing(intersectionLines, lastPoint);
-            var i = 0;
 
-            //foreach (var intersectionLine in preparedLines)
-            //{
-            //    _surfaceProfileChart.SetIntersections(intersectionLine.Lines, intersectionLine.LineColor, lastPoint, i);
-            //    i++;
-            //}
             _surfaceProfileChart.DrawIntersections(preparedLines, lastPoint);
 
         }
