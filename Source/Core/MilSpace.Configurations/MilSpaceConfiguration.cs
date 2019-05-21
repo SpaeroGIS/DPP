@@ -17,15 +17,12 @@ namespace MilSpace.Configurations
                     try
                     {
                         var searchPropsConfid = GetRootSectionGroup.SectionGroups[ConnectionsSection.SectionName] as ConnectionsSection;
-                    
-                    
-
-                    connectionProperty = new MilSpaceConnectionProperty()
-                    {
-                        TemporaryGDBConnection = searchPropsConfid.TemporaryGDBConnectionSection.ConnectionString,
-                        WorkingDBConnection = searchPropsConfid.WorkingDBConnectionSection.ConnectionString,
-                        WorkingGDBConnection = searchPropsConfid.WorkingGDBConnectionSection.ConnectionString,
-                    };
+                        connectionProperty = new MilSpaceConnectionProperty()
+                        {
+                            TemporaryGDBConnection = searchPropsConfid.TemporaryGDBConnectionSection.ConnectionString,
+                            WorkingDBConnection = searchPropsConfid.WorkingDBConnectionSection.ConnectionString,
+                            WorkingGDBConnection = searchPropsConfid.WorkingGDBConnectionSection.ConnectionString,
+                        };
                     }
                     catch (Exception ex)
                     {

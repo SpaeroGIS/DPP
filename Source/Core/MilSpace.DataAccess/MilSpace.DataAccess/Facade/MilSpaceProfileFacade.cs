@@ -37,6 +37,21 @@ namespace MilSpace.DataAccess.Facade
                 return accessor.DeleteUserSession(sessionId);
             }
         }
+
+        public static bool CanEraseProfileSessions(int sessionId)
+        {
+            using (var accessor = new SemanticDataAccess())
+            {
+                return accessor.CanEraseProfileSession(sessionId);
+            }
+        }
+        public static bool EraseProfileSessions(int sessionId)
+        {
+            using (var accessor = new SemanticDataAccess())
+            {
+                return accessor.EraseProfileSession(sessionId);
+            }
+        }
     }
 
 }

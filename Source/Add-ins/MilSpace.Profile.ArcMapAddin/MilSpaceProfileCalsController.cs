@@ -1,5 +1,7 @@
-﻿using ESRI.ArcGIS.Desktop.AddIns;
+﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Desktop.AddIns;
 using ESRI.ArcGIS.Geometry;
+using MilSpace.Core;
 using MilSpace.Core.Exceptions;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess;
@@ -25,6 +27,7 @@ namespace MilSpace.Profile
 
         private int profileId;
         GraphicsLayerManager graphicsLayerManager;
+        private Logger logger = Logger.GetLoggerEx("MilSpaceProfileCalsController");
 
         public delegate void ProfileSettingsChangedDelegate(ProfileSettingsEventArgs e);
 
@@ -209,11 +212,13 @@ namespace MilSpace.Profile
                 catch (MilSpaceProfileLackOfParameterException ex)
                 {
                     //TODO: Wtite log
+                    logger.ErrorEx(ex.Message);
                     MessageBox.Show(ex.Message, "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 }
                 catch (Exception ex)
                 {
+                    logger.ErrorEx(ex.Message);
                     //TODO: Wtite log
                 }
 
@@ -242,9 +247,11 @@ namespace MilSpace.Profile
                 ProfileManager manager = new ProfileManager();
                 var profileSetting = profileSettings[View.SelectedProfileSettingsType];
                 var newProfileId = GenerateProfileId();
+                logger.InfoEx($"Profile {newProfileId}. Generation started");
                 var newProfileName = GenerateProfileName(newProfileId);
 
                 var session = manager.GenerateProfile(View.DemLayerName, profileSetting.ProfileLines, View.SelectedProfileSettingsType, newProfileId, newProfileName, View.ObserveHeight);
+                logger.InfoEx($"Profile {newProfileId}. Generated");
 
                 session.SetSegments(ArcMap.Document.FocusMap.SpatialReference);
 
@@ -275,11 +282,16 @@ namespace MilSpace.Profile
             return null;
         }
 
-        internal bool RemoveProfilesFromUserSession()
+        internal bool RemoveProfilesFromUserSession(bool eraseFromDB = false)
         {
             var result = MilSpaceProfileFacade.DeleteUserSessions(View.SelectedProfileSessionIds.ProfileSessionId);
             if (result)
             {
+                if (eraseFromDB)
+                {
+                    result = result && MilSpaceProfileFacade.EraseProfileSessions(View.SelectedProfileSessionIds.ProfileSessionId);
+                }
+
                 MilSpaceProfileGraphsController.RemoveTab(View.SelectedProfileSessionIds.ProfileSessionId);
                 GraphicsLayerManager.RemoveGraphic(View.SelectedProfileSessionIds.ProfileSessionId);
 
@@ -446,6 +458,28 @@ namespace MilSpace.Profile
             MilSpaceProfileGraphsController.ShowWindow();
         }
 
+        internal bool? ShareProfileSession(ProfileSession profile)
+        {
+            if (profile.CreatedBy == Environment.UserName)
+            {
+                profile.Shared = true;
+                return MilSpaceProfileFacade.SaveProfileSession(profile);
+            }
+
+            logger.ErrorEx("You are not allowed to share this Profile.");
+            return null;
+        }
+
+        internal bool CanEraseProfileSession(int profileSession)
+        {
+            if (profileSession < 0)
+            {
+                return false;
+            }
+
+            return MilSpaceProfileFacade.CanEraseProfileSessions(profileSession); ;
+        }
+
         private void InvokeOnProfileSettingsChanged()
         {
             if (OnProfileSettingsChanged != null)
@@ -473,6 +507,7 @@ namespace MilSpace.Profile
             profile.ConvertLinesToEsriPolypile(View.ActiveView.FocusMap.SpatialReference);
             return profile;
         }
+
 
         private string GenerateProfileName(int id)
         {
