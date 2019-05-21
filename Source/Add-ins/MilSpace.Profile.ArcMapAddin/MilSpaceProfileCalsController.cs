@@ -218,6 +218,7 @@ namespace MilSpace.Profile
                 }
                 catch (Exception ex)
                 {
+                    logger.ErrorEx(ex.Message);
                     //TODO: Wtite log
                 }
 
@@ -242,7 +243,7 @@ namespace MilSpace.Profile
             string errorMessage;
             try
             {
-                
+
                 ProfileManager manager = new ProfileManager();
                 var profileSetting = profileSettings[View.SelectedProfileSettingsType];
                 var newProfileId = GenerateProfileId();
@@ -268,24 +269,29 @@ namespace MilSpace.Profile
             {
                 //TODO Localize error message
                 errorMessage = ex.Message;
-                
+
             }
             catch (Exception ex)
             {
                 //TODO log error
                 //TODO Localize error message
                 errorMessage = ex.Message;
-           }
+            }
 
             MessageBox.Show(errorMessage);
             return null;
         }
 
-        internal bool RemoveProfilesFromUserSession()
+        internal bool RemoveProfilesFromUserSession(bool eraseFromDB = false)
         {
             var result = MilSpaceProfileFacade.DeleteUserSessions(View.SelectedProfileSessionIds.ProfileSessionId);
             if (result)
             {
+                if (eraseFromDB)
+                {
+                    result = result && MilSpaceProfileFacade.EraseProfileSessions(View.SelectedProfileSessionIds.ProfileSessionId);
+                }
+
                 MilSpaceProfileGraphsController.RemoveTab(View.SelectedProfileSessionIds.ProfileSessionId);
                 GraphicsLayerManager.RemoveGraphic(View.SelectedProfileSessionIds.ProfileSessionId);
 
@@ -452,6 +458,28 @@ namespace MilSpace.Profile
             MilSpaceProfileGraphsController.ShowWindow();
         }
 
+        internal bool? ShareProfileSession(ProfileSession profile)
+        {
+            if (profile.CreatedBy == Environment.UserName)
+            {
+                profile.Shared = true;
+                return MilSpaceProfileFacade.SaveProfileSession(profile);
+            }
+
+            logger.ErrorEx("You are not allowed to share this Profile.");
+            return null;
+        }
+
+        internal bool CanEraseProfileSession(int profileSession)
+        {
+            if (profileSession < 0)
+            {
+                return false;
+            }
+
+            return MilSpaceProfileFacade.CanEraseProfileSessions(profileSession); ;
+        }
+
         private void InvokeOnProfileSettingsChanged()
         {
             if (OnProfileSettingsChanged != null)
@@ -479,6 +507,7 @@ namespace MilSpace.Profile
             profile.ConvertLinesToEsriPolypile(View.ActiveView.FocusMap.SpatialReference);
             return profile;
         }
+
 
         private string GenerateProfileName(int id)
         {

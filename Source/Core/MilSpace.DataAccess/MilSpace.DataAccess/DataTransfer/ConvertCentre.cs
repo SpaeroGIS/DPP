@@ -43,6 +43,10 @@ namespace MilSpace.DataAccess.DataTransfer
                 }
             }
 
+            session.CreatedBy = profileData.Creator;
+            session.CreatedOn = profileData.Created;
+            session.Shared = profileData.Shared;
+
             return session;
         }
 
@@ -54,7 +58,10 @@ namespace MilSpace.DataAccess.DataTransfer
                 {
                     idRow = session.SessionId,
                     ProfileName = session.SessionName,
-                    ProfileData = session.Serialized
+                    ProfileData = session.Serialized,
+                    Creator =  session.CreatedBy,
+                    Created = session.CreatedOn,
+                    Shared = session.Shared
                 };
 
                 return res;

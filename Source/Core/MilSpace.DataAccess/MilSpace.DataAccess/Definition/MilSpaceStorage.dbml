@@ -1,18 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="MilSpaceApp" Class="MilSpaceStorageContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=SPAERO01\SQLEXPRESS;Initial Catalog=MilSpaceApp;Integrated Security=True" SettingsObjectName="MilSpace.DataAccess.Properties.Settings" SettingsPropertyName="MilSpaceAppConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.MilSp_Profile" Member="MilSp_Profiles" AccessModifier="Internal">
-    <Type Name="MilSp_Profile" AccessModifier="Internal">
-      <Column Name="idRow" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="ProfileName" Type="System.String" DbType="NChar(20) NOT NULL" CanBeNull="false" />
-      <Column Name="ProfileData" Type="System.String" DbType="NText NOT NULL" CanBeNull="false" UpdateCheck="Never" />
-      <Association Name="MilSp_Profile_MilSp_Session" Member="MilSp_Sessions" ThisKey="idRow" OtherKey="ProfileId" Type="MilSp_Session" />
-    </Type>
-  </Table>
   <Table Name="dbo.MilSp_Session" Member="MilSp_Sessions" AccessModifier="Internal">
     <Type Name="MilSp_Session" AccessModifier="Internal">
       <Column Name="userName" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="ProfileId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Association Name="MilSp_Profile_MilSp_Session" Member="MilSp_Profile" ThisKey="ProfileId" OtherKey="idRow" Type="MilSp_Profile" IsForeignKey="true" />
+      <Association Name="MilSp_Profile_MilSp_Session1" Member="MilSp_Profile" ThisKey="ProfileId" OtherKey="idRow" Type="MilSp_Profile" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MilSp_Profile" Member="MilSp_Profiles" AccessModifier="Internal">
+    <Type Name="MilSp_Profile" AccessModifier="Internal">
+      <Column Name="idRow" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ProfileName" Type="System.String" DbType="NChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ProfileData" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Shared" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Creator" Type="System.String" DbType="NChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="MilSp_Profile_MilSp_Session1" Member="MilSp_Sessions" ThisKey="idRow" OtherKey="ProfileId" Type="MilSp_Session" />
     </Type>
   </Table>
 </Database>

@@ -35,7 +35,7 @@ namespace MilSpace.Profile
 
         MilSpaceProfileCalsController controller;
 
-        List<ProfileSession> _sectionProfiles = new List<ProfileSession>();
+        List<ProfileSession> _sessionProfiles = new List<ProfileSession>();
         List<ProfileSession> _fanProfiles = new List<ProfileSession>();
         List<ProfileSession> _graphicProfiles = new List<ProfileSession>();
 
@@ -104,7 +104,7 @@ namespace MilSpace.Profile
 
         public void AddSectionProfileToList(ProfileSession profile)
         {
-            _sectionProfiles.Add(profile);
+            _sessionProfiles.Add(profile);
         }
 
         public void AddFanProfileToList(ProfileSession profile)
@@ -114,17 +114,17 @@ namespace MilSpace.Profile
 
         public void RemoveSectionProfileFromList(string profileName)
         {
-            var profileToRemove = _sectionProfiles
+            var profileToRemove = _sessionProfiles
                 .FirstOrDefault(profile => profile.SessionName.Equals(profileName));
             if (profileToRemove != null)
             {
-                _sectionProfiles.Remove(profileToRemove);
+                _sessionProfiles.Remove(profileToRemove);
             }
         }
 
         public ProfileSession GetSectionProfile(string profileName)
         {
-            return GetProfileFromList(_sectionProfiles, profileName);
+            return GetProfileFromList(_sessionProfiles, profileName);
         }
 
         public ProfileSession GetFanProfile(string profileName)
@@ -132,7 +132,7 @@ namespace MilSpace.Profile
             return GetProfileFromList(_fanProfiles, profileName);
         }
 
-        public List<string> GetLayers ()
+        public List<string> GetLayers()
         {
             return new List<string>
             {
@@ -232,8 +232,13 @@ namespace MilSpace.Profile
             treeViewselectedIds.ProfileLineId = ids.Item2;
             treeViewselectedIds.ProfileSessionId = ids.Item1;
 
+            var pr = _sessionProfiles.FirstOrDefault(p => p.SessionId == ids.Item1);
+            saveProfileAsShared.Enabled = (pr != null && pr.CreatedBy == Environment.UserName && !pr.Shared);
+
             removeProfile.Enabled = addProfileToGraph.Enabled = toolBtnShowOnMap.Enabled = toolBtnFlash.Enabled = treeViewselectedIds.ProfileSessionId > 0;
             openGraphWindow.Enabled = !controller.MilSpaceProfileGraphsController.IsWindowVisible;
+
+            eraseProfile.Enabled = controller.CanEraseProfileSession(ids.Item1);
         }
 
         private void DisplaySelectedNodeAttributes(object sender, TreeViewEventArgs treeViewEventArgs)
@@ -1075,6 +1080,7 @@ namespace MilSpace.Profile
 
         private string MapUnitsText
         {
+            //TODO: Localiza
             get
             {
                 switch (ActiveView.FocusMap.DistanceUnits)
@@ -1093,5 +1099,45 @@ namespace MilSpace.Profile
             }
         }
 
+        private void saveProfileAsShared_Click_1(object sender, EventArgs e)
+        {
+            var node = profilesTreeView.SelectedNode;
+            var ids = GetProfileAndLineIds(node);
+
+            treeViewselectedIds.ProfileLineId = ids.Item2;
+            treeViewselectedIds.ProfileSessionId = ids.Item1;
+
+            var pr = _sessionProfiles.FirstOrDefault(p => p.SessionId == ids.Item1);
+
+            var res = controller.ShareProfileSession(pr);
+
+            if (!res.HasValue)
+            {
+                //TODO:Localise
+                MessageBox.Show($"You are not allowed to share this profile", "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (!res.Value)
+            {
+                //TODO:Localise
+                MessageBox.Show($"There was an error on saving this profile./n For more info look into thr log file", "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void eraseProfile_Click(object sender, EventArgs e)
+        {
+            //TODO: Localize text
+
+            string loalizedtext = $"Do you realy want to remove profile \'{profilesTreeView.SelectedNode.Text}\" from the Database?";
+            if (MessageBox.Show(loalizedtext, "MilSpace", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                if (!controller.RemoveProfilesFromUserSession(true))
+                {
+                    MessageBox.Show("There was an error. Look at the log file for more detail", "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+            }
+
+        }
     }
 }

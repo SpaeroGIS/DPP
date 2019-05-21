@@ -62,6 +62,62 @@ namespace MilSpace.DataAccess.Facade
             return result;
         }
 
+        public bool CanEraseProfileSession(int profileIdId)
+        {
+            bool result = false;
+
+            try
+            {
+                string userName = Environment.UserName;
+
+                var profile = context.MilSp_Profiles.FirstOrDefault(p => p.idRow == profileIdId);
+
+                if (profile != null)
+                {
+                    result = !profile.MilSp_Sessions.Any(s => s.userName != userName);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.WarnEx($"Unexpected exception:{ex.Message}");
+                result = false;
+            }
+
+            return result;
+        }
+
+        public bool EraseProfileSession(int profileIdId)
+        {
+            bool result = true;
+
+            try
+            {
+                string userName = Environment.UserName;
+                var userSessions = context.MilSp_Sessions.Where(s => s.ProfileId == profileIdId);
+                if (userSessions.Any())
+                {
+                    userSessions.ToList().ForEach(s => context.MilSp_Sessions.DeleteOnSubmit(s));
+                }
+
+                var profileSession = context.MilSp_Profiles.FirstOrDefault(p => p.idRow == profileIdId);
+                if (profileSession != null)
+                {
+                    context.MilSp_Profiles.DeleteOnSubmit(profileSession);
+                }
+
+                Submit();
+
+            }
+            catch (Exception ex)
+            {
+                log.WarnEx($"Unexpected exception:{ex.Message}");
+                result = false;
+            }
+
+
+            return result;
+        }
+
         public bool DeleteUserSession(int profileIdId)
         {
             bool result = true;
@@ -94,6 +150,7 @@ namespace MilSpace.DataAccess.Facade
                 if (profile != null)
                 {
                     profile.ProfileData = session.Serialized;
+                    profile.Shared = session.Shared;
                 }
                 else
                 {

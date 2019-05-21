@@ -23,6 +23,24 @@ namespace MilSpace.DataAccess.DataTransfer
         public string SessionName;
         public string SurfaceLayerName;
 
+        /// <summary>
+        /// Date and time  when the Profile session was created
+        /// </summary>
+        [XmlIgnore]
+        public DateTime CreatedOn;
+        
+        /// <summary>
+        /// Shows if the profile session is availabe for share
+        /// </summary>
+        [XmlIgnore]
+        public bool Shared;
+        
+        /// <summary>
+        /// Proifile session creator
+        /// </summary>
+        [XmlIgnore]
+        public string CreatedBy;
+
         [XmlIgnore]
         public List<GroupedLines> Segments;
 
