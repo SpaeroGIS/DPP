@@ -2,6 +2,7 @@
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
+using MilSpace.Core;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess;
 using System;
@@ -14,6 +15,9 @@ namespace MilSpace.Tools.GraphicsLayer
     {
         IGraphicsContainer graphics;
         IActiveView activeView;
+
+        static Logger logger = Logger.GetLoggerEx("GraphicsLayerManager");
+
         private List<GraphicElement> milSpaceCalculatingGraphics = new List<GraphicElement>();
         private List<GraphicElement> milSpaceSessionGraphics = new List<GraphicElement>();
         private static Dictionary<MilSpaceGraphicsTypeEnum, Func<IRgbColor>> grapchucsTypeColors = new Dictionary<MilSpaceGraphicsTypeEnum, Func<IRgbColor>>
@@ -37,6 +41,7 @@ namespace MilSpace.Tools.GraphicsLayer
 
         private void UpdateGraphic(IEnumerable<IPolyline> profileLines, int profileId, int profileTypeId, MilSpaceGraphicsTypeEnum graphicsType)
         {
+            logger.InfoEx($"Update Graphic for profile {profileId}");
             EmptyProfileGraphics(graphicsType);
 
             int elementId = profileTypeId;
@@ -132,6 +137,7 @@ namespace MilSpace.Tools.GraphicsLayer
 
         public void RemoveLinesFromSessionGraphics(IEnumerable<IPolyline> profileLines, int profileId, int profileTypeId)
         {
+            logger.InfoEx($"Remove Lines From Session Graphics {profileId}");
             int elementId = profileId;
             foreach (var line in profileLines)
             {
