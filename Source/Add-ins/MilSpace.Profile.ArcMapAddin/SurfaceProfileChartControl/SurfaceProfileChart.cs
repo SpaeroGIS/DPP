@@ -330,9 +330,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             {
                 _controller.InvokeGetIntersectionLines(i);
             }
-
-            SelectedProfileIndex = -1;
-         
         }
 
         #endregion
@@ -999,6 +996,14 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                     SaveGraph();
 
                     break;
+
+                case "updateIntersectionsLinesGraphToolBarBtn":
+
+                    GetIntersections();
+                    profilePropertiesTable.Invalidate();
+                    _controller.DrawIntersectionLines(Convert.ToInt32(profileChart.Series[SelectedProfileIndex].Name));
+
+                    break;
             }
         }
 
@@ -1133,6 +1138,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         {
             if (showIntersectionLinesCheckBox.Checked)
             {
+                graphToolBar.Buttons["updateIntersectionsLinesGraphToolBarBtn"].Enabled = true;
+
                 if (profileChart.Series.FirstOrDefault(serie => serie.Name.Contains("Intersections")) != null)
                 {
                     ShowIntersectionLines();
@@ -1144,6 +1151,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
             else
             {
+                graphToolBar.Buttons["updateIntersectionsLinesGraphToolBarBtn"].Enabled = false;
+
                 if (profileChart.Series.FirstOrDefault(serie => serie.Name.Contains("Intersections")) != null)
                 {
                     HideIntersectionLines();
