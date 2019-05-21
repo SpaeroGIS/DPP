@@ -898,8 +898,8 @@ namespace MilSpace.Profile
             cmbPointLayers.Items.Clear();
 
             PopulateComboBox(cmbRasterLayers, ProfileLayers.RasterLayers);
-            PopulateComboBox(cmbRoadLayers, ProfileLayers.LineLayers);
-            PopulateComboBox(cmbHydrographyLayer, ProfileLayers.LineLayers);
+            PopulateComboBox(cmbRoadLayers, ProfileLayers.PolygonLayers);
+            PopulateComboBox(cmbHydrographyLayer, ProfileLayers.PolygonLayers);
             PopulateComboBox(cmbBuildings, ProfileLayers.PolygonLayers);
             PopulateComboBox(cmbVegetationLayer, ProfileLayers.PolygonLayers);
             PopulateComboBox(cmbPointLayers, ProfileLayers.PointLayers);
