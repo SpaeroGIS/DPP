@@ -153,6 +153,7 @@
     <Compile Include="IntersectionLine.cs" />
     <Compile Include="IntersectionsInLayer.cs" />
     <Compile Include="LayersEnum.cs" />
+    <Compile Include="LineIntersections.cs" />
     <Compile Include="MilSpaceProfileCalsController.cs" />
     <Compile Include="MilSpaceProfileGraphsController.cs" />
     <Compile Include="PickCoordinatesTool.cs" />

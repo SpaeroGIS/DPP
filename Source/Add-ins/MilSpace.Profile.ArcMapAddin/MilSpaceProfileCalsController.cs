@@ -566,7 +566,7 @@ namespace MilSpace.Profile
             }
         }
 
-        private void CalcIntesectionsWithLayers(GroupedLines selectedLine)
+        private void CalcIntesectionsWithLayers(ProfileLine selectedLine)
         {
             var layers = View.GetLayers();
             var intersectionLines = new List<IntersectionsInLayer>();
@@ -575,16 +575,15 @@ namespace MilSpace.Profile
             {
                 if (layers[i] != String.Empty)
                 {
-                    var lines = GraphicsLayerManager.GetIntersections(selectedLine, layers[i], ArcMap.Document.FocusMap);
+                    var lines = EsriTools.GetIntersections(selectedLine.Line, layers[i], ArcMap.Document.FocusMap);
 
                     if (lines != null && lines.Count() > 0)
                     {
                         var layerType = (LayersEnum)Enum.GetValues(typeof(LayersEnum)).GetValue(i);
                         var intersectionLine = new IntersectionsInLayer
                         {
-                            Lines = ProfileLinesConverter.ConvertEsriPolylineToIntersectionLines(lines, selectedLine.Polylines[0].FromPoint, layerType),
+                            Lines = ProfileLinesConverter.ConvertEsriPolylineToIntersectionLines(lines, selectedLine.PointFrom, layerType),
                             Type = layerType,
-                            LineId = selectedLine.LineId,
                         };
 
                         intersectionLine.SetDefaultColor();
@@ -594,7 +593,7 @@ namespace MilSpace.Profile
                 }
             }
 
-            graphsController.ShowIntersectionLines(intersectionLines);
+            graphsController.SetIntersections(intersectionLines, selectedLine.Id);
         }
 
 
