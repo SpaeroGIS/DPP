@@ -570,6 +570,7 @@ namespace MilSpace.Profile
         {
             var layers = View.GetLayers();
             var intersectionLines = new List<IntersectionsInLayer>();
+            profileSession.Layers = new List<string>();
 
             foreach (var selectedLine in profileSession.ProfileLines)
             {
@@ -577,8 +578,15 @@ namespace MilSpace.Profile
                 {
                     if (layers[i] != String.Empty)
                     {
+                        var layer = EsriTools.GetLayer(layers[i], ArcMap.Document.FocusMap);
+                        var lines = EsriTools.GetIntersections(selectedLine.Line, layer);
 
-                        var lines = EsriTools.GetIntersections(selectedLine.Line, layers[i], ArcMap.Document.FocusMap);
+                        var layerFullName = $"Path/{layer.Name}";
+
+                        if (!profileSession.Layers.Exists(sessionLayer => sessionLayer == layerFullName))
+                        {
+                            profileSession.Layers.Add(layerFullName);
+                        }
 
                         if (lines != null && lines.Count() > 0)
                         {
@@ -607,9 +615,6 @@ namespace MilSpace.Profile
 
             foreach (var line in intersections.Lines)
             {
-                ProfilePoint fromPoint;
-                ProfilePoint toPoint;
-
                 var startPoint = surfaceForSearch.First(surfacePoint => surfacePoint.Distance >= line.PointFromDistance);
 
                 surfaceForSearch =
