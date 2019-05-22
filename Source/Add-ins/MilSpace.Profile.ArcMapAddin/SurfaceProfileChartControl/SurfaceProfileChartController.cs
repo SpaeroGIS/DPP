@@ -25,7 +25,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal delegate void DeleteProfileDelegate(int sessionId, int lineId);
         internal delegate void SelectedProfileChangedDelegate(GroupedLines newSelectedLines, int profileId);
-        internal delegate void GetIntersectionLinesDelegate(ProfileLine selectedLine);
+        internal delegate void GetIntersectionLinesDelegate(ProfileSession profileSession);
 
         internal event ProfileGrapchClickedDelegate OnProfileGraphClicked;
         internal event ProfileChangeInvisiblesZonesDelegate InvisibleZonesChanged;
@@ -233,9 +233,9 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                                                 _profileSession.SessionId, true);
         }
 
-        internal void InvokeGetIntersectionLines(int lineId)
+        internal void InvokeGetIntersectionLines()
         {
-            IntersectionLinesDrawing?.Invoke(_profileSession.ProfileLines.First(line => line.Id == lineId));
+            IntersectionLinesDrawing?.Invoke(_profileSession);
         }
 
         internal void InvokeSelectedProfile(int selectedLineId)

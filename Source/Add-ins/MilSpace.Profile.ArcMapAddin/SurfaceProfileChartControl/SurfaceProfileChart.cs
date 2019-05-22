@@ -326,10 +326,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         private void GetIntersections()
         {
-            for(int i = 1; i < GetProfiles().Count + 1; i++)
-            {
-                _controller.InvokeGetIntersectionLines(i);
-            }
+           _controller.InvokeGetIntersectionLines();
         }
 
         #endregion
