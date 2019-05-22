@@ -288,6 +288,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             if (intersectionLines == null || intersectionLines.Count == 0)
             {
+                _surfaceProfileChart.ClearIntersectionLines();
                 return;
             }
 
