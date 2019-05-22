@@ -267,6 +267,19 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
         }
 
+        internal void ClearIntersectionLines()
+        {
+            var intersectionLines = new List<Series>();
+            intersectionLines = profileChart.Series.Where(serie => serie.Name.Contains("Intersections")).ToList();
+
+            if (intersectionLines == null) { return; }
+
+            foreach (var serie in intersectionLines)
+            {
+                profileChart.Series.Remove(serie);
+            }
+        }
+
         private void AddIntersectionPoint(Color color, double x, string serieName)
         {
             var yValue = new double[1] { profileChart.ChartAreas["Default"].AxisY.Minimum
@@ -283,19 +296,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             };
 
             profileChart.Series[serieName].Points.Add(point);
-        }
-
-        private void ClearIntersectionLines()
-        {
-            var intersectionLines = new List<Series>();
-            intersectionLines = profileChart.Series.Where(serie => serie.Name.Contains("Intersections")).ToList();
-
-            if (intersectionLines == null) { return; }
-
-            foreach (var serie in intersectionLines)
-            {
-                profileChart.Series.Remove(serie);
-            }
         }
 
         private void ShowIntersectionLines()
