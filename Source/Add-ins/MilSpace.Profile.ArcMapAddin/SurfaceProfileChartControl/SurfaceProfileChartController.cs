@@ -260,28 +260,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             });
         }
 
-        internal List<Color> GetIntersectionsColors(int lineId)
-        {
-            if (_linesIntersections.Count == 0)
-            {
-                return null;
-            }
-
-            var intersectionLines = _linesIntersections.FirstOrDefault(line => line.LineId == lineId).Intersections;
-            if (intersectionLines != null)
-            {
-                var colors = new List<Color>();
-                foreach(var layer in intersectionLines)
-                {
-                    colors.Add(layer.LineColor);
-                }
-
-                return colors;
-            }
-
-            return null;
-        }
-
         internal void DrawIntersectionLines(int lineId)
         {
             var intersectionLines = _linesIntersections.FirstOrDefault(line => line.LineId == lineId).Intersections;
