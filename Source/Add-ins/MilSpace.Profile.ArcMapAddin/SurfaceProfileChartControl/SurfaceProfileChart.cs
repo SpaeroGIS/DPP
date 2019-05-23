@@ -73,6 +73,17 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
         }
 
+        internal void SetEmptyGraph()
+        {
+            foreach(ToolBarButton button in graphToolBar.Buttons)
+            {
+                button.Enabled = false;
+            }
+
+            graphToolBar.Buttons["deletePageGraphToolBarBtn"].Enabled = true;
+            propertiesPanel.Enabled = false;
+        }
+
         internal void InitializeProfile(ProfileSession profileSession)
         {
             profileChart.Series.Clear();
@@ -792,7 +803,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         private void SurfaceProfileChart_Load(object sender, EventArgs e)
         {
-            SetProfileView();
+           // SetProfileView();
         }
 
         private void CheckBoxHeader_CheckedChanged(object sender, EventArgs e)
@@ -979,6 +990,12 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                     {
                         axis.Interval *= 2;
                     }
+
+                    break;
+
+                case "addPageGraphToolBarBtn":
+
+                    _controller.AddEmptyGraph();
 
                     break;
 

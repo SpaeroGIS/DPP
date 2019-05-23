@@ -25,12 +25,14 @@ namespace MilSpace.Profile
 
         internal delegate void DeleteProfileDelegate(int sessionId, int lineId);
         internal delegate void SelectedProfileChangedDelegate(GroupedLines newSelectedLines, int profileId);
-        internal delegate void GetIntersectionLines(ProfileSession profileSession);
+        internal delegate void GetIntersectionLinesDelegate(ProfileSession profileSession);
+        internal delegate void CreateEmptyGraphDelegate();
 
         internal event ProfileRedrawDelegate ProfileRedrawn;
         internal event DeleteProfileDelegate ProfileRemoved;
         internal event SelectedProfileChangedDelegate SelectedProfileChanged;
-        internal event GetIntersectionLines IntersectionLinesDrawing;
+        internal event GetIntersectionLinesDelegate IntersectionLinesDrawing;
+        internal event CreateEmptyGraphDelegate CreateEmptyGraph;
 
         internal DockableWindowMilSpaceProfileGraph View { get; private set; }
 
@@ -144,6 +146,11 @@ namespace MilSpace.Profile
         internal void RemoveTab(int sessionId)
         {
             View.RemoveTabBySessionId(sessionId);
+        }
+
+        internal void AddEmptyGraph()
+        {
+            CreateEmptyGraph?.Invoke();
         }
 
         private IDockableWindow Docablewindow

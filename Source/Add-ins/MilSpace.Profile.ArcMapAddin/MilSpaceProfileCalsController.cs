@@ -148,6 +148,7 @@ namespace MilSpace.Profile
                 graphsController.ProfileRemoved += ProfileRemove;
                 graphsController.SelectedProfileChanged += SelectedProfileChanged;
                 graphsController.IntersectionLinesDrawing += CalcIntesectionsWithLayers;
+                graphsController.CreateEmptyGraph += GenerateEmptyGraph;
 
                 return graphsController;
             }
@@ -582,7 +583,18 @@ namespace MilSpace.Profile
 
         private void SelectedProfileChanged(GroupedLines newSelectedLines, int profileId)
         {
-            var allLines = _workingProfiles.FirstOrDefault(profile => profile.SessionId == profileId).Segments;
+            var allLines = new List<GroupedLines>();
+            var allLinesProfile = _workingProfiles.FirstOrDefault(profile => profile.SessionId == profileId);
+
+            if(allLinesProfile != null)
+            {
+                allLines = allLinesProfile.Segments;
+            }
+            else
+            {
+                return;
+            }
+
             var oldSelectedLines = allLines.FirstOrDefault(line => line.IsSelected == true);
 
             GraphicsLayerManager.ChangeSelectProfileOnGraph(oldSelectedLines, newSelectedLines, profileId);
@@ -680,6 +692,30 @@ namespace MilSpace.Profile
                 }
 
             }
+        }
+
+        private void GenerateEmptyGraph()
+        {
+            graphsController.AddSession(GetEmptyProfileSession());
+        }
+
+        private ProfileSession GetEmptyProfileSession()
+        {
+            var newProfileId = GenerateProfileId();
+
+            var session = new ProfileSession()
+            {
+                DefinitionType = ProfileSettingsTypeEnum.Composed,
+                SessionId = newProfileId,
+                SessionName = GenerateProfileName(newProfileId),
+                ObserverHeight = 0,
+                SurfaceLayerName = View.DemLayerName,
+                CreatedBy = Environment.UserName,
+                CreatedOn = DateTime.Now,
+                Shared = false
+            };
+
+            return session;
         }
 
         internal GraphicsLayerManager GraphicsLayerManager

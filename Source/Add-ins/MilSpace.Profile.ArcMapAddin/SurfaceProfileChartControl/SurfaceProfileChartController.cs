@@ -47,7 +47,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             _graphsController = graphsController;
             _surfaceProfileChart = currentChart;
 
-            if (_profileSession.ProfileLines.Count() == 1)
+            if (_profileSession.ProfileLines != null && _profileSession.ProfileLines.Count() == 1)
             {
                 _surfaceProfileChart.SelectProfile("1");
             }
@@ -58,7 +58,15 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             _defaultObserverHeight = observerHeight;
 
             _surfaceProfileChart = new SurfaceProfileChart(this);
-            _surfaceProfileChart.InitializeGraph();
+
+            if (_profileSession.DefinitionType != ProfileSettingsTypeEnum.Composed)
+            {
+                _surfaceProfileChart.InitializeGraph();
+            }
+            else
+            {
+                _surfaceProfileChart.SetEmptyGraph();
+            }
 
             return _surfaceProfileChart;
         }
@@ -242,6 +250,11 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         {
             SelectedProfileChanged?.Invoke(_profileSession.Segments.First(segment => segment.LineId == selectedLineId), _profileSession.SessionId);
             _profileSession.Segments.First(segment => segment.LineId == selectedLineId).IsSelected = true;
+        }
+
+        internal void AddEmptyGraph()
+        {
+            _graphsController.AddEmptyGraph();
         }
 
         internal void SetIntersectionLines(List<IntersectionsInLayer> intersections, int lineId)

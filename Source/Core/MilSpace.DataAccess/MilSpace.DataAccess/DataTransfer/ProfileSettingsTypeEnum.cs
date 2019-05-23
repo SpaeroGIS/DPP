@@ -6,6 +6,7 @@
         Points,
         Fun,
         SelectedFeatures,
-        Load
+        Load,
+        Composed
     }
 }
