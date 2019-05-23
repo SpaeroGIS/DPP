@@ -48,16 +48,22 @@ namespace MilSpace.Profile
                 ).ToList();
         }
 
-        public static List<IntersectionLine> ConvertEsriPolylineToIntersectionLines(List<IPolyline> polylines, IPoint fromPoint, LayersEnum layer)
+        public static List<IntersectionLine> ConvertEsriPolylineToIntersectionLines(List<IPolyline> polylines, ProfilePoint pointFrom, LayersEnum layer)
         {
             var id = 0;
+            var fromPoint = new Point { X = pointFrom.X, Y = pointFrom.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
 
             return polylines.Select(line =>
             {
                 id++;
+                fromPoint.Project(line.SpatialReference);
 
-                var startDistance = EsriTools.CreatePolylineFromPoints(fromPoint, line.FromPoint).Length;
-                var endDistance = EsriTools.CreatePolylineFromPoints(fromPoint, line.ToPoint).Length;
+
+                var fromLength = EsriTools.CreatePolylineFromPoints(fromPoint, line.FromPoint).Length;
+                var toLength = EsriTools.CreatePolylineFromPoints(fromPoint, line.ToPoint).Length;
+
+                double startDistance = (fromLength < toLength)? fromLength : toLength;
+                double endDistance =   (fromLength > toLength) ? fromLength : toLength;
 
                 return new IntersectionLine()
                 {

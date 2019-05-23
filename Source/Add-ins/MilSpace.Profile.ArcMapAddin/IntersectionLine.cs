@@ -1,4 +1,6 @@
-﻿namespace MilSpace.Profile
+﻿using MilSpace.DataAccess;
+
+namespace MilSpace.Profile
 {
     public class IntersectionLine
     {

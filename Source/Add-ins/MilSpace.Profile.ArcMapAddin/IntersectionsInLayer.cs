@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MilSpace.DataAccess;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace MilSpace.Profile
@@ -8,7 +9,6 @@ namespace MilSpace.Profile
         public List<IntersectionLine> Lines { get; set; }
         public LayersEnum Type { get; set; }
         public Color LineColor { get; set; }
-        public int LineId { get; set; }
 
         public void SetDefaultColor()
         {

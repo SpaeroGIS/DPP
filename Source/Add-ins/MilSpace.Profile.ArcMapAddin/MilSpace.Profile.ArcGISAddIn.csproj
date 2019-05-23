@@ -152,7 +152,7 @@
     <Compile Include="DrawPolylineFromClicks.cs" />
     <Compile Include="IntersectionLine.cs" />
     <Compile Include="IntersectionsInLayer.cs" />
-    <Compile Include="LayersEnum.cs" />
+    <Compile Include="LineIntersections.cs" />
     <Compile Include="MilSpaceProfileCalsController.cs" />
     <Compile Include="MilSpaceProfileGraphsController.cs" />
     <Compile Include="PickCoordinatesTool.cs" />
@@ -166,6 +166,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SelectedGraphicsArgs.cs" />
     <Compile Include="SurfaceProfileChartControl\GraphProfileClickedArgs.cs" />
     <Compile Include="Helpers\ProfileLinesConverter.cs" />
     <Compile Include="SurfaceProfileChartControl\ISurfaceProfileView.cs" />

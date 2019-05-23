@@ -63,6 +63,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             _controller.AddInvisibleZones(fullHeights, GetAllColors(true), GetAllColors(false));
             _controller.AddExtremePoints();
 
+            GetIntersections();
             FillPropertiesTable();
             AddCheckBoxHeader();
 
@@ -255,12 +256,27 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             AddIntersectionPoint(profileChart.Series[name].Color, startPoint, name);
             AddIntersectionPoint(profileChart.Series[name].Color, lastPoint, name);
         }
-
-        internal void SetIntersections(List<IntersectionLine> profileLines, Color color, double maxDistance)
+        internal void DrawIntersections(List<IntersectionsInLayer> intersectionLines, double maxDistance)
         {
-            foreach (var line in profileLines)
+            foreach (var layer in intersectionLines)
             {
-                AddIntersectionsLine(line.PointFromDistance, line.PointToDistance, color, line.LayerType.ToString());
+                foreach (var line in layer.Lines)
+                {
+                    AddIntersectionsLine(line.PointFromDistance, line.PointToDistance, layer.LineColor, line.LayerType.ToString());
+                }
+            }
+        }
+
+        internal void ClearIntersectionLines()
+        {
+            var intersectionLines = new List<Series>();
+            intersectionLines = profileChart.Series.Where(serie => serie.Name.Contains("Intersections")).ToList();
+
+            if (intersectionLines == null) { return; }
+
+            foreach (var serie in intersectionLines)
+            {
+                profileChart.Series.Remove(serie);
             }
         }
 
@@ -280,19 +296,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             };
 
             profileChart.Series[serieName].Points.Add(point);
-        }
-
-        private void ClearIntersectionLines()
-        {
-            var intersectionLines = new List<Series>();
-            intersectionLines = profileChart.Series.Where(serie => serie.Name.Contains("Intersections")).ToList();
-
-            if (intersectionLines == null) { return; }
-
-            foreach (var serie in intersectionLines)
-            {
-                profileChart.Series.Remove(serie);
-            }
         }
 
         private void ShowIntersectionLines()
@@ -319,6 +322,11 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             {
                 serie.Enabled = false;
             }
+        }
+
+        private void GetIntersections()
+        {
+           _controller.InvokeGetIntersectionLines();
         }
 
         #endregion
@@ -717,8 +725,9 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         private List<Series> GetProfiles()
         {
             var profiles = new List<Series>();
+            var profileSeries = profileChart.Series.Where(serie => Regex.IsMatch(serie.Name, @"^\d+$"));
 
-            for (int i = 0; i < profileChart.Series.Count / 2; i++)
+            for (int i = 0; i < profileSeries.Count(); i++)
             {
                 profiles.Add(profileChart.Series[i]);
             }
@@ -984,6 +993,13 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                     SaveGraph();
 
                     break;
+
+                case "updateIntersectionsLinesGraphToolBarBtn":
+
+                    GetIntersections();
+                    _controller.DrawIntersectionLines(Convert.ToInt32(profileChart.Series[SelectedProfileIndex].Name));
+
+                    break;
             }
         }
 
@@ -1150,11 +1166,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             visibleLineColorButton.Visible = true;
 
             _controller.InvokeSelectedProfile(Convert.ToInt32(serieName));
-
-            if (showIntersectionLinesCheckBox.Checked)
-            {
-                _controller.InvokeGetIntersectionLines(Convert.ToInt32(serieName));
-            }
+            _controller.DrawIntersectionLines(Convert.ToInt32(serieName));
         }
 
         private void ClearSelection()
@@ -1233,27 +1245,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 profileChart.SaveImage(saveFileDialog.FileName, ChartImageFormat.Png);
             }
         }
-
-        private void ShowIntersectionLinesCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (showIntersectionLinesCheckBox.Checked)
-            {
-                if (profileChart.Series.FirstOrDefault(serie => serie.Name.Contains("Intersections")) != null)
-                {
-                    ShowIntersectionLines();
-                }
-                else
-                {
-                    _controller.InvokeGetIntersectionLines(Convert.ToInt32(profileChart.Series[SelectedProfileIndex].Name));
-                }
-            }
-            else
-            {
-                if (profileChart.Series.FirstOrDefault(serie => serie.Name.Contains("Intersections")) != null)
-                {
-                   HideIntersectionLines();
-                }
-            }
-        }
     }
+
 }
+       
+    

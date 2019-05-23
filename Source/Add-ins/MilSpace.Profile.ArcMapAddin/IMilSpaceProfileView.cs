@@ -57,6 +57,8 @@ namespace MilSpace.Profile
 
         TreeViewSelectedProfileIds SelectedProfileSessionIds { get; }
 
+        IEnumerable<string> GetLayersForLineSelection { get; }
+
         bool RemoveTreeViewItem();
 
         /// <summary>
