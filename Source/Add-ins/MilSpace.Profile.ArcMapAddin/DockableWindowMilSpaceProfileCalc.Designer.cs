@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Графика");
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.btnRefreshLayers = new System.Windows.Forms.Button();
@@ -119,12 +119,10 @@
             this.txtBasePointX = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.primitiveTab = new System.Windows.Forms.TabPage();
-            this.toolBar4 = new System.Windows.Forms.ToolBar();
+            this.toolBarSelectedPrimitives = new System.Windows.Forms.ToolBar();
             this.toolBarButton23 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton28 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton25 = new System.Windows.Forms.ToolBarButton();
-            this.richTextBox4 = new System.Windows.Forms.RichTextBox();
-            this.richTextBox3 = new System.Windows.Forms.RichTextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.panel13 = new System.Windows.Forms.Panel();
             this.layersToSelectLine = new System.Windows.Forms.ComboBox();
@@ -168,6 +166,10 @@
             this.eraseProfile = new System.Windows.Forms.ToolStripButton();
             this.saveProfileAsShared = new System.Windows.Forms.ToolStripButton();
             this.lblProfileList = new System.Windows.Forms.Label();
+            this.lblSelectedPrimitives = new System.Windows.Forms.Label();
+            this.lblSelectedPrimitivesValue = new System.Windows.Forms.Label();
+            this.lblCommonLengthValue = new System.Windows.Forms.Label();
+            this.lblCommonLength = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -1325,9 +1327,11 @@
             // primitiveTab
             // 
             this.primitiveTab.AutoScroll = true;
-            this.primitiveTab.Controls.Add(this.toolBar4);
-            this.primitiveTab.Controls.Add(this.richTextBox4);
-            this.primitiveTab.Controls.Add(this.richTextBox3);
+            this.primitiveTab.Controls.Add(this.lblCommonLengthValue);
+            this.primitiveTab.Controls.Add(this.lblCommonLength);
+            this.primitiveTab.Controls.Add(this.lblSelectedPrimitivesValue);
+            this.primitiveTab.Controls.Add(this.lblSelectedPrimitives);
+            this.primitiveTab.Controls.Add(this.toolBarSelectedPrimitives);
             this.primitiveTab.Controls.Add(this.label17);
             this.primitiveTab.Controls.Add(this.panel13);
             this.primitiveTab.Controls.Add(this.label18);
@@ -1339,21 +1343,21 @@
             this.primitiveTab.Text = "Примитивом";
             this.primitiveTab.UseVisualStyleBackColor = true;
             // 
-            // toolBar4
+            // toolBarSelectedPrimitives
             // 
-            this.toolBar4.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
+            this.toolBarSelectedPrimitives.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
             this.toolBarButton23,
             this.toolBarButton28,
             this.toolBarButton25});
-            this.toolBar4.ButtonSize = new System.Drawing.Size(18, 18);
-            this.toolBar4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolBar4.DropDownArrows = true;
-            this.toolBar4.ImageList = this.imageList1;
-            this.toolBar4.Location = new System.Drawing.Point(0, 133);
-            this.toolBar4.Name = "toolBar4";
-            this.toolBar4.ShowToolTips = true;
-            this.toolBar4.Size = new System.Drawing.Size(747, 28);
-            this.toolBar4.TabIndex = 27;
+            this.toolBarSelectedPrimitives.ButtonSize = new System.Drawing.Size(18, 18);
+            this.toolBarSelectedPrimitives.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.toolBarSelectedPrimitives.DropDownArrows = true;
+            this.toolBarSelectedPrimitives.ImageList = this.imageList1;
+            this.toolBarSelectedPrimitives.Location = new System.Drawing.Point(0, 279);
+            this.toolBarSelectedPrimitives.Name = "toolBarSelectedPrimitives";
+            this.toolBarSelectedPrimitives.ShowToolTips = true;
+            this.toolBarSelectedPrimitives.Size = new System.Drawing.Size(747, 28);
+            this.toolBarSelectedPrimitives.TabIndex = 27;
             // 
             // toolBarButton23
             // 
@@ -1371,29 +1375,6 @@
             this.toolBarButton25.ImageKey = "Full Screen.png";
             this.toolBarButton25.Name = "toolBarButton25";
             this.toolBarButton25.ToolTipText = "скопировать в буфер";
-            // 
-            // richTextBox4
-            // 
-            this.richTextBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.richTextBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.richTextBox4.Location = new System.Drawing.Point(0, 177);
-            this.richTextBox4.Name = "richTextBox4";
-            this.richTextBox4.Size = new System.Drawing.Size(747, 130);
-            this.richTextBox4.TabIndex = 21;
-            this.richTextBox4.Text = resources.GetString("richTextBox4.Text");
-            // 
-            // richTextBox3
-            // 
-            this.richTextBox3.BackColor = System.Drawing.SystemColors.Control;
-            this.richTextBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.richTextBox3.Location = new System.Drawing.Point(0, 76);
-            this.richTextBox3.Name = "richTextBox3";
-            this.richTextBox3.Size = new System.Drawing.Size(747, 57);
-            this.richTextBox3.TabIndex = 19;
-            this.richTextBox3.Text = "Выбрано - 1\nДлина - 3 км\nАтрибуты - в строку, подряд: <название>:<значение>; <наз" +
-    "вание>:<значение> и т.д";
             // 
             // label17
             // 
@@ -1698,25 +1679,25 @@
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.Location = new System.Drawing.Point(3, 65);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode4.Checked = true;
-            treeNode4.ImageKey = "vector-path-line.png";
-            treeNode4.Name = "sectionsNode";
-            treeNode4.SelectedImageIndex = 205;
-            treeNode4.Text = "Отрезки";
-            treeNode5.Checked = true;
-            treeNode5.ImageKey = "Editing-Line-icon3.png";
-            treeNode5.Name = "fanNode";
-            treeNode5.SelectedImageIndex = 208;
-            treeNode5.Text = "Веер";
-            treeNode6.Checked = true;
-            treeNode6.ImageKey = "vector-polygon.png";
-            treeNode6.Name = "primitivesNode";
-            treeNode6.SelectedImageIndex = 209;
-            treeNode6.Text = "Графика";
+            treeNode10.Checked = true;
+            treeNode10.ImageKey = "vector-path-line.png";
+            treeNode10.Name = "sectionsNode";
+            treeNode10.SelectedImageIndex = 205;
+            treeNode10.Text = "Отрезки";
+            treeNode11.Checked = true;
+            treeNode11.ImageKey = "Editing-Line-icon3.png";
+            treeNode11.Name = "fanNode";
+            treeNode11.SelectedImageIndex = 208;
+            treeNode11.Text = "Веер";
+            treeNode12.Checked = true;
+            treeNode12.ImageKey = "vector-polygon.png";
+            treeNode12.Name = "primitivesNode";
+            treeNode12.SelectedImageIndex = 209;
+            treeNode12.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode5,
-            treeNode6});
+            treeNode10,
+            treeNode11,
+            treeNode12});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(755, 398);
             this.profilesTreeView.TabIndex = 35;
@@ -1867,6 +1848,52 @@
             this.lblProfileList.TabIndex = 1;
             this.lblProfileList.Text = "Список профилей";
             // 
+            // lblSelectedPrimitives
+            // 
+            this.lblSelectedPrimitives.AutoSize = true;
+            this.lblSelectedPrimitives.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblSelectedPrimitives.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblSelectedPrimitives.Location = new System.Drawing.Point(0, 76);
+            this.lblSelectedPrimitives.Name = "lblSelectedPrimitives";
+            this.lblSelectedPrimitives.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.lblSelectedPrimitives.Size = new System.Drawing.Size(110, 23);
+            this.lblSelectedPrimitives.TabIndex = 28;
+            this.lblSelectedPrimitives.Text = "Selected primitives";
+            // 
+            // lblSelectedPrimitivesValue
+            // 
+            this.lblSelectedPrimitivesValue.AutoSize = true;
+            this.lblSelectedPrimitivesValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblSelectedPrimitivesValue.Location = new System.Drawing.Point(193, 77);
+            this.lblSelectedPrimitivesValue.Name = "lblSelectedPrimitivesValue";
+            this.lblSelectedPrimitivesValue.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.lblSelectedPrimitivesValue.Size = new System.Drawing.Size(14, 21);
+            this.lblSelectedPrimitivesValue.TabIndex = 40;
+            this.lblSelectedPrimitivesValue.Text = "0";
+            // 
+            // lblCommonLengthValue
+            // 
+            this.lblCommonLengthValue.AutoSize = true;
+            this.lblCommonLengthValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblCommonLengthValue.Location = new System.Drawing.Point(193, 98);
+            this.lblCommonLengthValue.Name = "lblCommonLengthValue";
+            this.lblCommonLengthValue.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.lblCommonLengthValue.Size = new System.Drawing.Size(14, 21);
+            this.lblCommonLengthValue.TabIndex = 42;
+            this.lblCommonLengthValue.Text = "0";
+            // 
+            // lblCommonLength
+            // 
+            this.lblCommonLength.AutoSize = true;
+            this.lblCommonLength.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblCommonLength.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblCommonLength.Location = new System.Drawing.Point(0, 99);
+            this.lblCommonLength.Name = "lblCommonLength";
+            this.lblCommonLength.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.lblCommonLength.Size = new System.Drawing.Size(110, 23);
+            this.lblCommonLength.TabIndex = 41;
+            this.lblCommonLength.Text = "Selected primitives";
+            // 
             // DockableWindowMilSpaceProfileCalc
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1977,12 +2004,10 @@
         private System.Windows.Forms.ToolBarButton toolBarButton63;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TabPage primitiveTab;
-        private System.Windows.Forms.ToolBar toolBar4;
+        private System.Windows.Forms.ToolBar toolBarSelectedPrimitives;
         private System.Windows.Forms.ToolBarButton toolBarButton23;
         private System.Windows.Forms.ToolBarButton toolBarButton28;
         private System.Windows.Forms.ToolBarButton toolBarButton25;
-        private System.Windows.Forms.RichTextBox richTextBox4;
-        private System.Windows.Forms.RichTextBox richTextBox3;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Panel panel13;
         private System.Windows.Forms.ComboBox layersToSelectLine;
@@ -2066,5 +2091,9 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ToolStripButton openGraphWindow;
         private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.Label lblCommonLengthValue;
+        private System.Windows.Forms.Label lblCommonLength;
+        private System.Windows.Forms.Label lblSelectedPrimitivesValue;
+        private System.Windows.Forms.Label lblSelectedPrimitives;
     }
 }

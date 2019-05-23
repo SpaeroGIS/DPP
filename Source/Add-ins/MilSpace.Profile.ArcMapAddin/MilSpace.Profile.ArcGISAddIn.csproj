@@ -166,6 +166,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SelectedGraphicsArgs.cs" />
     <Compile Include="SurfaceProfileChartControl\GraphProfileClickedArgs.cs" />
     <Compile Include="Helpers\ProfileLinesConverter.cs" />
     <Compile Include="SurfaceProfileChartControl\ISurfaceProfileView.cs" />

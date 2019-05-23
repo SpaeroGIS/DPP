@@ -154,7 +154,6 @@ namespace MilSpace.Profile
             }
         }
 
-
         public DockableWindowMilSpaceProfileCalc Instance { get; }
 
         /// <summary>
@@ -189,6 +188,7 @@ namespace MilSpace.Profile
             PopulateComboBox(cmbPointLayers, ProfileLayers.PointLayers);
 
             layersToSelectLine.Items.AddRange(GetLayersForLineSelection.ToArray());
+            layersToSelectLine.SelectedItem = layersToSelectLine.Items[0];
         }
 
 
@@ -276,11 +276,17 @@ namespace MilSpace.Profile
             lvProfileAttributes.Resize += OnListViewResize;
 
             controller.OnProfileSettingsChanged += OnProfileSettingsChanged;
+            controller.OnMapSelectionChanged += Controller_OnMapSelectionChanged;
 
             azimuth1.LostFocus += AzimuthCheck;
             azimuth2.LostFocus += AzimuthCheck;
         }
 
+        private void Controller_OnMapSelectionChanged(SelectedGraphicsArgs selectedLines)
+        {
+            lblSelectedPrimitivesValue.Text = selectedLines.LinesCount.ToString();
+            lblCommonLengthValue.Text = selectedLines.FullLength.ToString("F2");
+        }
 
         public void SetController(MilSpaceProfileCalsController controller)
         {
@@ -884,6 +890,8 @@ namespace MilSpace.Profile
 
             ToolTip ToolTip1 = new System.Windows.Forms.ToolTip();
             ToolTip1.SetToolTip(this.btnRefreshLayers, "Refresh interesing layers");
+            lblSelectedPrimitives.Text = "Вибрані об'єкти:";
+            lblCommonLength.Text = "Довжина вибраних об'єктів:";
         }
 
 

@@ -383,6 +383,7 @@ namespace MilSpace.Tools.GraphicsLayer
                 {
                     res.Add(geometry as IPolyline);
                 }
+                element = selected.Next();
             }
             return res;
         }
