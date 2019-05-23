@@ -267,6 +267,19 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
         }
 
+        internal void ClearIntersectionLines()
+        {
+            var intersectionLines = new List<Series>();
+            intersectionLines = profileChart.Series.Where(serie => serie.Name.Contains("Intersections")).ToList();
+
+            if (intersectionLines == null) { return; }
+
+            foreach (var serie in intersectionLines)
+            {
+                profileChart.Series.Remove(serie);
+            }
+        }
+
         private void AddIntersectionPoint(Color color, double x, string serieName)
         {
             var yValue = new double[1] { profileChart.ChartAreas["Default"].AxisY.Minimum
@@ -283,19 +296,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             };
 
             profileChart.Series[serieName].Points.Add(point);
-        }
-
-        private void ClearIntersectionLines()
-        {
-            var intersectionLines = new List<Series>();
-            intersectionLines = profileChart.Series.Where(serie => serie.Name.Contains("Intersections")).ToList();
-
-            if (intersectionLines == null) { return; }
-
-            foreach (var serie in intersectionLines)
-            {
-                profileChart.Series.Remove(serie);
-            }
         }
 
         private void ShowIntersectionLines()
@@ -326,10 +326,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         private void GetIntersections()
         {
-            for(int i = 1; i < GetProfiles().Count + 1; i++)
-            {
-                _controller.InvokeGetIntersectionLines(i);
-            }
+           _controller.InvokeGetIntersectionLines();
         }
 
         #endregion
@@ -1000,7 +997,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 case "updateIntersectionsLinesGraphToolBarBtn":
 
                     GetIntersections();
-                    profilePropertiesTable.Invalidate();
                     _controller.DrawIntersectionLines(Convert.ToInt32(profileChart.Series[SelectedProfileIndex].Name));
 
                     break;
@@ -1134,77 +1130,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
         }
 
-        private void ShowIntersectionLinesCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (showIntersectionLinesCheckBox.Checked)
-            {
-                graphToolBar.Buttons["updateIntersectionsLinesGraphToolBarBtn"].Enabled = true;
-
-                if (profileChart.Series.FirstOrDefault(serie => serie.Name.Contains("Intersections")) != null)
-                {
-                    ShowIntersectionLines();
-                }
-                else
-                {
-                    _controller.DrawIntersectionLines(Convert.ToInt32(profileChart.Series[SelectedProfileIndex].Name));
-                }
-            }
-            else
-            {
-                graphToolBar.Buttons["updateIntersectionsLinesGraphToolBarBtn"].Enabled = false;
-
-                if (profileChart.Series.FirstOrDefault(serie => serie.Name.Contains("Intersections")) != null)
-                {
-                    HideIntersectionLines();
-                }
-            }
-        }
-
-        private void ProfilePropertiesTable_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
-        {
-
-            if (e.RowIndex != -1 && e.ColumnIndex == profilePropertiesTable.Columns["IntersectionsCol"].Index)
-            {
-                int count = 0;
-
-                using (
-                       Brush gridBrush = new SolidBrush(profilePropertiesTable.GridColor),
-                       backColorBrush = new SolidBrush(e.CellStyle.BackColor))
-                {
-                    using (Pen gridLinePen = new Pen(gridBrush))
-                    {
-                        e.Graphics.FillRectangle(backColorBrush, e.CellBounds);
-
-                        e.Graphics.DrawLine(gridLinePen, e.CellBounds.Left,
-                            e.CellBounds.Bottom - 1, e.CellBounds.Right - 1,
-                            e.CellBounds.Bottom - 1);
-                        e.Graphics.DrawLine(gridLinePen, e.CellBounds.Right - 1,
-                            e.CellBounds.Top, e.CellBounds.Right - 1,
-                            e.CellBounds.Bottom);
-                    }
-                }
-                var colors = _controller.GetIntersectionsColors(Convert.ToInt32(profilePropertiesTable.Rows[e.RowIndex].Cells["ProfileNumberCol"].Value));
-                if (colors == null) { return; }
-                var padding = (profilePropertiesTable.Columns["IntersectionsCol"].Width - colors.Count * 10) / (colors.Count + 1);
-
-                foreach (var color in colors)
-                {
-                    var intersectionCirclesSpace = (10 + padding) * count;
-
-                    Rectangle newRect = new Rectangle(e.CellBounds.X + padding + intersectionCirclesSpace, e.CellBounds.Y + 3, 10, 10);
-
-
-                    Brush brush = new SolidBrush(color);
-                    e.Graphics.FillEllipse(brush, newRect);
-
-                    count++;
-                }
-
-                e.Handled = true;
-
-            }
-        }
-
         #endregion
 
         internal void SelectProfile(string serieName)
@@ -1241,11 +1166,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             visibleLineColorButton.Visible = true;
 
             _controller.InvokeSelectedProfile(Convert.ToInt32(serieName));
-
-            if (showIntersectionLinesCheckBox.Checked)
-            {
-                _controller.DrawIntersectionLines(Convert.ToInt32(serieName));
-            }
+            _controller.DrawIntersectionLines(Convert.ToInt32(serieName));
         }
 
         private void ClearSelection()
