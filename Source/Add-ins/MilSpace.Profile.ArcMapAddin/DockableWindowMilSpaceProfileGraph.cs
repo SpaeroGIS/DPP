@@ -198,7 +198,7 @@ namespace MilSpace.Profile
 
         private void ProfilesTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (selectedTabIndex != -1)
+            if (selectedTabIndex != -1 && profilesTabControl.TabPages.Count > 0)
             {
                 controller.InvokeSelectedProfileChanged(null, (int)profilesTabControl.TabPages[selectedTabIndex].Tag);
             }
