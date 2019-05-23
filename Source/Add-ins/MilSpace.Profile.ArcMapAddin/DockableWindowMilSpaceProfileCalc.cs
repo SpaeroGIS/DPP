@@ -72,6 +72,8 @@ namespace MilSpace.Profile
 
         public ProfileSettingsPointButtonEnum ActiveButton => activeButtton;
 
+        public IEnumerable<string> GetLayersForLineSelection => controller.GetLayersForLineSelection();
+
         public string DemLayerName => cmbRasterLayers.SelectedItem == null ? string.Empty : cmbRasterLayers.SelectedItem.ToString();
 
         public int ProfileId
@@ -169,43 +171,26 @@ namespace MilSpace.Profile
             Helper.SetConfiguration();
         }
 
-        private void OnRasterComboDropped()
+        private void OnDocumentOpenFillDropdowns()
         {
             cmbRasterLayers.Items.Clear();
-            PopulateComboBox(cmbRasterLayers, ProfileLayers.RasterLayers);
-        }
-
-
-        private void OnRoadComboDropped()
-        {
-
             cmbRoadLayers.Items.Clear();
-            PopulateComboBox(cmbRoadLayers, ProfileLayers.PolygonLayers);
-        }
-
-        private void OnBuildingsComboDropped()
-        {
-            cmbBuildings.Items.Clear();
-            PopulateComboBox(cmbBuildings, ProfileLayers.PolygonLayers);
-        }
-
-        private void OnHydrographyDropped()
-        {
             cmbHydrographyLayer.Items.Clear();
-            PopulateComboBox(cmbHydrographyLayer, ProfileLayers.PolygonLayers);
-        }
-
-        private void OnVegetationDropped()
-        {
+            cmbBuildings.Items.Clear();
             cmbVegetationLayer.Items.Clear();
+            cmbPointLayers.Items.Clear();
+            layersToSelectLine.Items.Clear();
+
+            PopulateComboBox(cmbRasterLayers, ProfileLayers.RasterLayers);
+            PopulateComboBox(cmbRoadLayers, ProfileLayers.PolygonLayers);
+            PopulateComboBox(cmbHydrographyLayer, ProfileLayers.PolygonLayers);
+            PopulateComboBox(cmbBuildings, ProfileLayers.PolygonLayers);
             PopulateComboBox(cmbVegetationLayer, ProfileLayers.PolygonLayers);
+            PopulateComboBox(cmbPointLayers, ProfileLayers.PointLayers);
+
+            layersToSelectLine.Items.AddRange(GetLayersForLineSelection.ToArray());
         }
 
-        private void OnObservationPointDropped()
-        {
-            cmbPointLayers.Items.Clear();
-            PopulateComboBox(cmbPointLayers, ProfileLayers.PointLayers);
-        }
 
         public bool RemoveTreeViewItem()
         {
@@ -283,16 +268,9 @@ namespace MilSpace.Profile
         private void SubscribeForEvents()
         {
 
-            //((IActiveViewEvents_Event) (ArcMap.Document.FocusMap)).ItemAdded += OnRasterComboDropped;
-            ArcMap.Events.OpenDocument += OnRasterComboDropped;
-            ArcMap.Events.OpenDocument += OnHydrographyDropped;
-            ArcMap.Events.OpenDocument += OnBuildingsComboDropped;
-            ArcMap.Events.OpenDocument += OnObservationPointDropped;
-            ArcMap.Events.OpenDocument += OnRoadComboDropped;
-            ArcMap.Events.OpenDocument += OnVegetationDropped;
+            ArcMap.Events.OpenDocument += OnDocumentOpenFillDropdowns;
             ArcMap.Events.OpenDocument += controller.InitiateUserProfiles;
-
-
+            
             profilesTreeView.AfterSelect += ChangeTreeViewToolbarState;
             profilesTreeView.AfterSelect += DisplaySelectedNodeAttributes;
             lvProfileAttributes.Resize += OnListViewResize;
@@ -889,21 +867,7 @@ namespace MilSpace.Profile
 
         private void btnRefreshLayers_Click(object sender, EventArgs e)
         {
-
-            cmbRasterLayers.Items.Clear();
-            cmbRoadLayers.Items.Clear();
-            cmbHydrographyLayer.Items.Clear();
-            cmbBuildings.Items.Clear();
-            cmbVegetationLayer.Items.Clear();
-            cmbPointLayers.Items.Clear();
-
-            PopulateComboBox(cmbRasterLayers, ProfileLayers.RasterLayers);
-            PopulateComboBox(cmbRoadLayers, ProfileLayers.PolygonLayers);
-            PopulateComboBox(cmbHydrographyLayer, ProfileLayers.PolygonLayers);
-            PopulateComboBox(cmbBuildings, ProfileLayers.PolygonLayers);
-            PopulateComboBox(cmbVegetationLayer, ProfileLayers.PolygonLayers);
-            PopulateComboBox(cmbPointLayers, ProfileLayers.PointLayers);
-
+            OnDocumentOpenFillDropdowns();
         }
 
         private void toolBtnFlash_Click(object sender, EventArgs e)

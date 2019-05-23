@@ -24,6 +24,8 @@ namespace MilSpace.Profile
     /// </summary>
     public class MilSpaceProfileCalsController
     {
+        //TODO: Localize
+        private static string graphiclayerTitle = "Graphics Layer";
 
         private int profileId;
         GraphicsLayerManager graphicsLayerManager;
@@ -31,7 +33,11 @@ namespace MilSpace.Profile
 
         public delegate void ProfileSettingsChangedDelegate(ProfileSettingsEventArgs e);
 
+        public delegate void OnMapSelectionChangedDelegate(IEnumerable<IPolyline> selectedLines);
+
         public event ProfileSettingsChangedDelegate OnProfileSettingsChanged;
+
+        public event OnMapSelectionChangedDelegate OnMapSelectionChanged;
 
         private static ProfileSettingsTypeEnum[] profileSettingsType = Enum.GetValues(typeof(ProfileSettingsTypeEnum)).Cast<ProfileSettingsTypeEnum>().ToArray();
 
@@ -48,6 +54,8 @@ namespace MilSpace.Profile
             {ProfileSettingsPointButtonEnum.PointsFist, null},
             {ProfileSettingsPointButtonEnum.PointsSecond, null}
         };
+
+        private IEnumerable<IPolyline> selectedOnMapLines;
 
 
         private Dictionary<ProfileSettingsTypeEnum, ProfileSettings> profileSettings = new Dictionary<ProfileSettingsTypeEnum, ProfileSettings>()
@@ -70,6 +78,14 @@ namespace MilSpace.Profile
             View = view;
             SetPeofileId();
             SetProfileName();
+        }
+
+        internal void OnDocumentsLoad()
+        {
+
+            IActiveViewEvents_Event activeViewEvents = (IActiveViewEvents_Event)View.ActiveView.FocusMap;
+            IActiveViewEvents_SelectionChangedEventHandler handler = new IActiveViewEvents_SelectionChangedEventHandler(OnMapSelectionChangedLocal);
+            activeViewEvents.SelectionChanged += handler;
         }
 
         /// <summary>
@@ -159,7 +175,10 @@ namespace MilSpace.Profile
             {
                 return EsriTools.CreatePolylinesFromPointAndAzimuths(pointsToShow[ProfileSettingsPointButtonEnum.CenterFun], View.FunLength, View.FunLinesCount, View.FunAzimuth1, View.FunAzimuth2);
             }
-
+            if (View.SelectedProfileSettingsType == ProfileSettingsTypeEnum.SelectedFeatures)
+            {
+                return selectedOnMapLines;
+            }
             return null;
         }
 
@@ -222,6 +241,11 @@ namespace MilSpace.Profile
                     //TODO: Wtite log
                 }
 
+            }
+
+            if (View.SelectedProfileSettingsType == ProfileSettingsTypeEnum.SelectedFeatures)
+            {
+                OnMapSelectionChangedLocal();
             }
 
             profileSetting.ProfileLines = profileLines.ToArray();
@@ -428,6 +452,8 @@ namespace MilSpace.Profile
                    AddProfileToList(p);
                }
             );
+
+            OnDocumentsLoad();
         }
 
         internal void CallGraphsHandle(int profileSessionId)
@@ -596,7 +622,6 @@ namespace MilSpace.Profile
             graphsController.SetIntersections(intersectionLines, selectedLine.Id);
         }
 
-
         internal GraphicsLayerManager GraphicsLayerManager
         {
             get
@@ -607,6 +632,32 @@ namespace MilSpace.Profile
                 }
 
                 return graphicsLayerManager;
+            }
+        }
+
+        internal IEnumerable<string> GetLayersForLineSelection()
+        {
+            var res = new List<string>();
+            res.Add(graphiclayerTitle);
+            res.AddRange(ProfileLayers.LineLayers.Select(l => l.Name));
+
+            return res;
+        }
+
+        private void OnMapSelectionChangedLocal()
+        {
+            if (View.SelectedProfileSettingsType != ProfileSettingsTypeEnum.SelectedFeatures)
+            {
+                return;
+            }
+
+            if (OnMapSelectionChanged != null)
+            {
+                //Get Selection for the selected Layer
+
+                var lines = GraphicsLayerManager.GetSelectedGraphics();
+                selectedOnMapLines = lines;
+                OnMapSelectionChanged?.Invoke(selectedOnMapLines);
             }
         }
     }

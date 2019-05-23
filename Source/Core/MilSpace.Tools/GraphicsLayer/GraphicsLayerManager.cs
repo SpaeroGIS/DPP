@@ -359,6 +359,34 @@ namespace MilSpace.Tools.GraphicsLayer
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
         }
 
+        /// <summary>
+        /// Returns selected graphics
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<IPolyline> GetSelectedGraphics()
+        {
+            var graphContainerSelection = (IGraphicsContainerSelect)activeView.FocusMap;
+
+            if (graphContainerSelection.ElementSelectionCount == 0)
+                return null;
+
+            var selected = graphContainerSelection.SelectedElements;
+
+            selected.Reset();
+            var element = selected.Next();
+            var res = new List<IPolyline>();
+            while (element != null)
+            {
+                var geometry = element.Geometry;
+                //To use others geometry types - convert to Polyline
+                if (geometry.GeometryType == esriGeometryType.esriGeometryPolyline )
+                {
+                    res.Add(geometry as IPolyline);
+                }
+            }
+            return res;
+        }
+
         private void AddPolyline(GraphicElement graphicElement, MilSpaceGraphicsTypeEnum graphicsType,
                                     IRgbColor color = null, LineType lineType = LineType.DefaultLine, bool doRefresh = false,
                                     bool persist = false, int width = 2)
