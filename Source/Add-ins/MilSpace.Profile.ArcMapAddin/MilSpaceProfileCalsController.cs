@@ -574,6 +574,11 @@ namespace MilSpace.Profile
 
             foreach (var selectedLine in profileSession.ProfileLines)
             {
+                if (selectedLine.Line.SpatialReference == null)
+                {
+                    selectedLine.Line.Project(ArcMap.Document.FocusMap.SpatialReference);
+                }
+
                 for (int i = 0; i < layers.Count; i++)
                 {
                     if (layers[i] != String.Empty)
@@ -612,19 +617,21 @@ namespace MilSpace.Profile
         private void SetLayersForPoints(IntersectionsInLayer intersections, ProfileSurface surface)
         {
             var surfaceForSearch = new List<ProfileSurfacePoint>(surface.ProfileSurfacePoints);
+            var accuracy = 0.00001;
 
             foreach (var line in intersections.Lines)
             {
-                var startPoint = surfaceForSearch.First(surfacePoint => surfacePoint.Distance >= line.PointFromDistance);
+                var startPoint = surfaceForSearch.First(surfacePoint => surfacePoint.Distance >= line.PointFromDistance 
+                                                            || Math.Abs(surfacePoint.Distance - line.PointFromDistance) < accuracy);
 
                 surfaceForSearch =
-                                surfaceForSearch.SkipWhile(surfacePoint => surfacePoint.Distance <= startPoint.Distance).ToList();
+                                surfaceForSearch.SkipWhile(surfacePoint => surfacePoint.Distance < startPoint.Distance).ToList();
 
                 foreach(var point in surface.ProfileSurfacePoints)
                 {
                     if (point.Distance >= startPoint.Distance)
                     {
-                        if (point.Distance >= line.PointToDistance)
+                        if (point.Distance > line.PointToDistance + accuracy)
                         {
                             break;
                         }
@@ -637,6 +644,12 @@ namespace MilSpace.Profile
                         {
                             point.Layers = point.Layers | line.LayerType;
                         }
+
+                        if (point.Distance == line.PointToDistance)
+                        {
+                            break;
+                        }
+
                     }
                 }
 
