@@ -257,8 +257,9 @@ namespace MilSpace.Tools
                         Azimuth = ln.Azimuth()
                     });
                 }
-
             }
+
+            Marshal.ReleaseComObject(allrecords);
 
             return result;
         }

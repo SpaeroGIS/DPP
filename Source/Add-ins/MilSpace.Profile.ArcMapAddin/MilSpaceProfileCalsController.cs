@@ -24,6 +24,8 @@ namespace MilSpace.Profile
     /// </summary>
     public class MilSpaceProfileCalsController
     {
+        //TODO: Localize
+        private static string graphiclayerTitle = "Graphics Layer";
 
         private int profileId;
         GraphicsLayerManager graphicsLayerManager;
@@ -31,7 +33,11 @@ namespace MilSpace.Profile
 
         public delegate void ProfileSettingsChangedDelegate(ProfileSettingsEventArgs e);
 
+        public delegate void OnMapSelectionChangedDelegate(SelectedGraphicsArgs selectedLines);
+
         public event ProfileSettingsChangedDelegate OnProfileSettingsChanged;
+
+        public event OnMapSelectionChangedDelegate OnMapSelectionChanged;
 
         private static ProfileSettingsTypeEnum[] profileSettingsType = Enum.GetValues(typeof(ProfileSettingsTypeEnum)).Cast<ProfileSettingsTypeEnum>().ToArray();
 
@@ -48,6 +54,8 @@ namespace MilSpace.Profile
             {ProfileSettingsPointButtonEnum.PointsFist, null},
             {ProfileSettingsPointButtonEnum.PointsSecond, null}
         };
+
+        private IEnumerable<IPolyline> selectedOnMapLines;
 
 
         private Dictionary<ProfileSettingsTypeEnum, ProfileSettings> profileSettings = new Dictionary<ProfileSettingsTypeEnum, ProfileSettings>()
@@ -70,6 +78,14 @@ namespace MilSpace.Profile
             View = view;
             SetPeofileId();
             SetProfileName();
+        }
+
+        internal void OnDocumentsLoad()
+        {
+
+            IActiveViewEvents_Event activeViewEvents = (IActiveViewEvents_Event)View.ActiveView.FocusMap;
+            IActiveViewEvents_SelectionChangedEventHandler handler = new IActiveViewEvents_SelectionChangedEventHandler(OnMapSelectionChangedLocal);
+            activeViewEvents.SelectionChanged += handler;
         }
 
         /// <summary>
@@ -159,7 +175,10 @@ namespace MilSpace.Profile
             {
                 return EsriTools.CreatePolylinesFromPointAndAzimuths(pointsToShow[ProfileSettingsPointButtonEnum.CenterFun], View.FunLength, View.FunLinesCount, View.FunAzimuth1, View.FunAzimuth2);
             }
-
+            if (View.SelectedProfileSettingsType == ProfileSettingsTypeEnum.SelectedFeatures)
+            {
+                return selectedOnMapLines;
+            }
             return null;
         }
 
@@ -211,7 +230,6 @@ namespace MilSpace.Profile
                 }
                 catch (MilSpaceProfileLackOfParameterException ex)
                 {
-                    //TODO: Wtite log
                     logger.ErrorEx(ex.Message);
                     MessageBox.Show(ex.Message, "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
@@ -219,9 +237,16 @@ namespace MilSpace.Profile
                 catch (Exception ex)
                 {
                     logger.ErrorEx(ex.Message);
-                    //TODO: Wtite log
                 }
+            }
 
+            if (View.SelectedProfileSettingsType == ProfileSettingsTypeEnum.SelectedFeatures)
+            {
+                GetSelectedGraphics();
+                if (selectedOnMapLines != null)
+                {
+                    profileLines = selectedOnMapLines.ToList();
+                }
             }
 
             profileSetting.ProfileLines = profileLines.ToArray();
@@ -428,6 +453,8 @@ namespace MilSpace.Profile
                    AddProfileToList(p);
                }
             );
+
+            OnDocumentsLoad();
         }
 
         internal void CallGraphsHandle(int profileSessionId)
@@ -581,7 +608,7 @@ namespace MilSpace.Profile
 
                 for (int i = 0; i < layers.Count; i++)
                 {
-                    if (layers[i] != String.Empty)
+                    if (!string.IsNullOrEmpty(layers[i]))
                     {
                         var layer = EsriTools.GetLayer(layers[i], ArcMap.Document.FocusMap);
                         var lines = EsriTools.GetIntersections(selectedLine.Line, layer);
@@ -606,7 +633,6 @@ namespace MilSpace.Profile
                             intersectionLines.Add(intersectionLine);
                             SetLayersForPoints(intersectionLine, profileSession.ProfileSurfaces.First(surface => surface.LineId == selectedLine.Id));
                         }
-
                     }
                 }
 
@@ -656,7 +682,6 @@ namespace MilSpace.Profile
             }
         }
 
-
         internal GraphicsLayerManager GraphicsLayerManager
         {
             get
@@ -667,6 +692,39 @@ namespace MilSpace.Profile
                 }
 
                 return graphicsLayerManager;
+            }
+        }
+
+        internal IEnumerable<string> GetLayersForLineSelection()
+        {
+            var res = new List<string>();
+            res.Add(graphiclayerTitle);
+
+            // To add the line layers uncomment this
+            //res.AddRange(ProfileLayers.LineLayers.Select(l => l.Name));
+
+            return res;
+        }
+
+        private void OnMapSelectionChangedLocal()
+        {
+            if (View.SelectedProfileSettingsType != ProfileSettingsTypeEnum.SelectedFeatures)
+            {
+                return;
+            }
+            GetSelectedGraphics();
+            SetProfileSettings(ProfileSettingsTypeEnum.SelectedFeatures);
+        }
+
+        private void GetSelectedGraphics()
+        {
+            selectedOnMapLines = GraphicsLayerManager.GetSelectedGraphics();
+            var cnt = selectedOnMapLines == null ? 0 : selectedOnMapLines.Count();
+            var len = selectedOnMapLines == null ? 0 : selectedOnMapLines.Sum(l => l.Length);
+
+            if (OnMapSelectionChanged != null)
+            {
+                OnMapSelectionChanged?.Invoke(new SelectedGraphicsArgs(cnt, len));
             }
         }
     }

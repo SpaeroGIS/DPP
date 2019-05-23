@@ -318,6 +318,8 @@ namespace MilSpace.Core.Tools
                 feature = highwayCursor.NextFeature();
             }
 
+            Marshal.ReleaseComObject(highwayCursor);
+
             return resultPolylines;
         }
 

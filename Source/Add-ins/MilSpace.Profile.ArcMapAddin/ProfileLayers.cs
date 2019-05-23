@@ -30,7 +30,7 @@ namespace MilSpace.Profile
         private static IEnumerable<IRasterLayer> GetRasterLayers(ILayer layer)
         {
             var result = new List<IRasterLayer>();
-
+            
 
             if (layer is IRasterLayer fLayer)
             {
