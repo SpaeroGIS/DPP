@@ -566,34 +566,81 @@ namespace MilSpace.Profile
             }
         }
 
-        private void CalcIntesectionsWithLayers(ProfileLine selectedLine)
+        private void CalcIntesectionsWithLayers(ProfileSession profileSession)
         {
             var layers = View.GetLayers();
             var intersectionLines = new List<IntersectionsInLayer>();
+            profileSession.Layers = new List<string>();
 
-            for (int i = 0; i < layers.Count; i++)
+            foreach (var selectedLine in profileSession.ProfileLines)
             {
-                if (layers[i] != String.Empty)
+                for (int i = 0; i < layers.Count; i++)
                 {
-                    var lines = EsriTools.GetIntersections(selectedLine.Line, layers[i], ArcMap.Document.FocusMap);
-
-                    if (lines != null && lines.Count() > 0)
+                    if (layers[i] != String.Empty)
                     {
-                        var layerType = (LayersEnum)Enum.GetValues(typeof(LayersEnum)).GetValue(i);
-                        var intersectionLine = new IntersectionsInLayer
+                        var layer = EsriTools.GetLayer(layers[i], ArcMap.Document.FocusMap);
+                        var lines = EsriTools.GetIntersections(selectedLine.Line, layer);
+
+                        var layerFullName = $"Path/{layer.Name}";
+
+                        if (!profileSession.Layers.Exists(sessionLayer => sessionLayer == layerFullName))
                         {
-                            Lines = ProfileLinesConverter.ConvertEsriPolylineToIntersectionLines(lines, selectedLine.PointFrom, layerType),
-                            Type = layerType,
-                        };
+                            profileSession.Layers.Add(layerFullName);
+                        }
 
-                        intersectionLine.SetDefaultColor();
-                        intersectionLines.Add(intersectionLine);
+                        if (lines != null && lines.Count() > 0)
+                        {
+                            var layerType = (LayersEnum)Enum.GetValues(typeof(LayersEnum)).GetValue(i);
+                            var intersectionLine = new IntersectionsInLayer
+                            {
+                                Lines = ProfileLinesConverter.ConvertEsriPolylineToIntersectionLines(lines, selectedLine.PointFrom, layerType),
+                                Type = layerType,
+                            };
+
+                            intersectionLine.SetDefaultColor();
+                            intersectionLines.Add(intersectionLine);
+                            SetLayersForPoints(intersectionLine, profileSession.ProfileSurfaces.First(surface => surface.LineId == selectedLine.Id));
+                        }
+
                     }
-
                 }
-            }
 
-            graphsController.SetIntersections(intersectionLines, selectedLine.Id);
+                graphsController.SetIntersections(intersectionLines, selectedLine.Id);
+            }
+        }
+
+        private void SetLayersForPoints(IntersectionsInLayer intersections, ProfileSurface surface)
+        {
+            var surfaceForSearch = new List<ProfileSurfacePoint>(surface.ProfileSurfacePoints);
+
+            foreach (var line in intersections.Lines)
+            {
+                var startPoint = surfaceForSearch.First(surfacePoint => surfacePoint.Distance >= line.PointFromDistance);
+
+                surfaceForSearch =
+                                surfaceForSearch.SkipWhile(surfacePoint => surfacePoint.Distance <= startPoint.Distance).ToList();
+
+                foreach(var point in surface.ProfileSurfacePoints)
+                {
+                    if (point.Distance >= startPoint.Distance)
+                    {
+                        if (point.Distance >= line.PointToDistance)
+                        {
+                            break;
+                        }
+
+                        if (point.Layers == 0)
+                        {
+                            point.Layers = line.LayerType;
+                        }
+                        else
+                        {
+                            point.Layers = point.Layers | line.LayerType;
+                        }
+                    }
+                }
+
+            }
         }
 
 

@@ -271,11 +271,23 @@ namespace MilSpace.Core.Tools
             return result;
         }
 
-        public static List<IPolyline> GetIntersections(IPolyline selectedLine, string layer, IMap map)
+        public static ILayer GetLayer(string layerName, IMap map)
+        {
+            var layers = map.Layers;
+            var layer = map.Layer[0] as ILayer;
+            while (layer.Name != layerName)
+            {
+                layer = layers.Next() as ILayer;
+            }
+
+            return layer;
+        }
+
+        public static List<IPolyline> GetIntersections(IPolyline selectedLine, ILayer layer)
         {
             if (layer != null && selectedLine != null)
             {
-                return GetIntersection(selectedLine, GetLayer(layer, map));
+                return GetIntersection(selectedLine, layer);
             }
 
             return null;
@@ -379,18 +391,6 @@ namespace MilSpace.Core.Tools
             }
 
             return resultPolylines;
-        }
-
-        private static ILayer GetLayer(string layerName, IMap map)
-        {
-            var layers = map.Layers;
-            var layer = map.Layer[0] as ILayer;
-            while (layer.Name != layerName)
-            {
-                layer = layers.Next() as ILayer;
-            }
-
-            return layer;
         }
     }
 }

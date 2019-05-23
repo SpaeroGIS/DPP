@@ -44,6 +44,9 @@ namespace MilSpace.DataAccess.DataTransfer
         [XmlIgnore]
         public List<GroupedLines> Segments;
 
+        [XmlIgnore]
+        public List<string> Layers;
+
         public string Serialized
         {
             get
