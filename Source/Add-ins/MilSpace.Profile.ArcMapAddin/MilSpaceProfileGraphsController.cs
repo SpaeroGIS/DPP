@@ -25,7 +25,7 @@ namespace MilSpace.Profile
 
         internal delegate void DeleteProfileDelegate(int sessionId, int lineId);
         internal delegate void SelectedProfileChangedDelegate(GroupedLines newSelectedLines, int profileId);
-        internal delegate void GetIntersectionLinesDelegate(ProfileSession profileSession);
+        internal delegate void GetIntersectionLinesDelegate(ProfileSession profileSession, int lineId);
         internal delegate void CreateEmptyGraphDelegate();
 
         internal event ProfileRedrawDelegate ProfileRedrawn;
@@ -96,9 +96,9 @@ namespace MilSpace.Profile
             SelectedProfileChanged?.Invoke(newSelectedLines, profileId);
         }
 
-        internal void InvokeIntersectionLinesDrawing(ProfileSession profileSession)
+        internal void InvokeIntersectionLinesDrawing(ProfileSession profileSession, int lineId)
         {
-            IntersectionLinesDrawing?.Invoke(profileSession);
+            IntersectionLinesDrawing?.Invoke(profileSession, lineId);
         }
 
         internal void SetIntersections(List<IntersectionsInLayer> intersectionsLines, int lineId)
@@ -133,9 +133,15 @@ namespace MilSpace.Profile
             View.AddNewTab(surfaceProfileChart, profileSession.SessionId);
         }
 
+        internal void AddProfileToTab(ProfileLine profileLine, ProfileSurface profileSurface)
+        {
+            View.SetCurrentChart();
+            _surfaceProfileChartController.AddLineToGraph(profileLine, profileSurface);
+        }
+
         internal void SetChart(SurfaceProfileChart currentChart)
         {
-            _surfaceProfileChartController.SetCurrentChart(currentChart, this);
+            _surfaceProfileChartController = _surfaceProfileChartController.SetCurrentChart(currentChart, this);
         }
 
         internal void RemoveTab()

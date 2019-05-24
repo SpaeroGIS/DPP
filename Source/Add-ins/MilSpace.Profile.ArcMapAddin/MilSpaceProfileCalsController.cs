@@ -458,18 +458,34 @@ namespace MilSpace.Profile
             OnDocumentsLoad();
         }
 
+        internal void AddProfileToTab(int profileSessionId, int lineId)
+        {
+            var profileSession = GetProfileSessionById(profileSessionId);
+
+            if (profileSession != null)
+            {
+                var profileLine = profileSession.ProfileLines.FirstOrDefault(line => line.Id == lineId);
+
+                if (profileLine != null)
+                {
+                    var profileSurface = profileSession.ProfileSurfaces.First(surface => surface.LineId == lineId);
+                    graphsController.AddProfileToTab(profileLine, profileSurface);
+                }
+            }
+        }
+
         internal void CallGraphsHandle(int profileSessionId)
         {
             var profileSession = GetProfileSessionById(profileSessionId);
 
-            if (_workingProfiles.FirstOrDefault(profile => profile.SessionId == profileSession.SessionId) != null)
-            {
-                _workingProfiles.Remove(_workingProfiles.FirstOrDefault(profile => profile.SessionId == profileSession.SessionId));
-            }
-            _workingProfiles.Add(profileSession);
-
             if (profileSession != null)
             {
+                if (_workingProfiles.FirstOrDefault(profile => profile.SessionId == profileSession.SessionId) != null)
+                {
+                    _workingProfiles.Remove(_workingProfiles.FirstOrDefault(profile => profile.SessionId == profileSession.SessionId));
+                }
+                _workingProfiles.Add(profileSession);
+
                 profileSession.SetSegments(ArcMap.Document.FocusMap.SpatialReference);
                 CallGraphsHandle(profileSession);
             }
@@ -586,7 +602,7 @@ namespace MilSpace.Profile
             var allLines = new List<GroupedLines>();
             var allLinesProfile = _workingProfiles.FirstOrDefault(profile => profile.SessionId == profileId);
 
-            if(allLinesProfile != null)
+            if (allLinesProfile != null)
             {
                 allLines = allLinesProfile.Segments;
             }
@@ -605,51 +621,72 @@ namespace MilSpace.Profile
             }
         }
 
-        private void CalcIntesectionsWithLayers(ProfileSession profileSession)
+        private void CalcIntesectionsWithLayers(ProfileSession profileSession, int lineId)
         {
             var layers = View.GetLayers();
-            var intersectionLines = new List<IntersectionsInLayer>();
             profileSession.Layers = new List<string>();
 
-            foreach (var selectedLine in profileSession.ProfileLines)
+            if (lineId == 0)
             {
-                if (selectedLine.Line.SpatialReference == null)
+                foreach (var selectedLine in profileSession.ProfileLines)
                 {
-                    selectedLine.Line.Project(ArcMap.Document.FocusMap.SpatialReference);
+                    CalcIntersectionsForLine(selectedLine, layers, profileSession);
                 }
+            }
+            else
+            {
+                CalcIntersectionsForLine(profileSession.ProfileLines.FirstOrDefault(line => line.Id == lineId), layers, profileSession);
+            }
+           
+        }
 
-                for (int i = 0; i < layers.Count; i++)
+        private List<IntersectionsInLayer> CalcIntersectionsForLine(ProfileLine selectedLine, List<string> layers, ProfileSession profileSession)
+        {
+            var intersectionLines = new List<IntersectionsInLayer>();
+
+            if (selectedLine == null)
+            {
+                return intersectionLines;
+            }
+
+            if (selectedLine.Line.SpatialReference == null)
+            {
+                selectedLine.Line.Project(ArcMap.Document.FocusMap.SpatialReference);
+            }
+
+            for (int i = 0; i < layers.Count; i++)
+            {
+                if (!string.IsNullOrEmpty(layers[i]))
                 {
-                    if (!string.IsNullOrEmpty(layers[i]))
+                    var layer = EsriTools.GetLayer(layers[i], ArcMap.Document.FocusMap);
+                    var lines = EsriTools.GetIntersections(selectedLine.Line, layer);
+
+                    var layerFullName = $"Path/{layer.Name}";
+
+                    if (!profileSession.Layers.Exists(sessionLayer => sessionLayer == layerFullName))
                     {
-                        var layer = EsriTools.GetLayer(layers[i], ArcMap.Document.FocusMap);
-                        var lines = EsriTools.GetIntersections(selectedLine.Line, layer);
+                        profileSession.Layers.Add(layerFullName);
+                    }
 
-                        var layerFullName = $"Path/{layer.Name}";
-
-                        if (!profileSession.Layers.Exists(sessionLayer => sessionLayer == layerFullName))
+                    if (lines != null && lines.Count() > 0)
+                    {
+                        var layerType = (LayersEnum)Enum.GetValues(typeof(LayersEnum)).GetValue(i);
+                        var intersectionLine = new IntersectionsInLayer
                         {
-                            profileSession.Layers.Add(layerFullName);
-                        }
+                            Lines = ProfileLinesConverter.ConvertEsriPolylineToIntersectionLines(lines, selectedLine.PointFrom, layerType),
+                            Type = layerType,
+                        };
 
-                        if (lines != null && lines.Count() > 0)
-                        {
-                            var layerType = (LayersEnum)Enum.GetValues(typeof(LayersEnum)).GetValue(i);
-                            var intersectionLine = new IntersectionsInLayer
-                            {
-                                Lines = ProfileLinesConverter.ConvertEsriPolylineToIntersectionLines(lines, selectedLine.PointFrom, layerType),
-                                Type = layerType,
-                            };
-
-                            intersectionLine.SetDefaultColor();
-                            intersectionLines.Add(intersectionLine);
-                            SetLayersForPoints(intersectionLine, profileSession.ProfileSurfaces.First(surface => surface.LineId == selectedLine.Id));
-                        }
+                        intersectionLine.SetDefaultColor();
+                        intersectionLines.Add(intersectionLine);
+                        SetLayersForPoints(intersectionLine, profileSession.ProfileSurfaces.First(surface => surface.LineId == selectedLine.Id));
                     }
                 }
-
-                graphsController.SetIntersections(intersectionLines, selectedLine.Id);
             }
+
+            graphsController.SetIntersections(intersectionLines, selectedLine.Id);
+
+            return intersectionLines;
         }
 
         private void SetLayersForPoints(IntersectionsInLayer intersections, ProfileSurface surface)
@@ -659,13 +696,13 @@ namespace MilSpace.Profile
 
             foreach (var line in intersections.Lines)
             {
-                var startPoint = surfaceForSearch.First(surfacePoint => surfacePoint.Distance >= line.PointFromDistance 
+                var startPoint = surfaceForSearch.First(surfacePoint => surfacePoint.Distance >= line.PointFromDistance
                                                             || Math.Abs(surfacePoint.Distance - line.PointFromDistance) < accuracy);
 
                 surfaceForSearch =
                                 surfaceForSearch.SkipWhile(surfacePoint => surfacePoint.Distance < startPoint.Distance).ToList();
 
-                foreach(var point in surface.ProfileSurfacePoints)
+                foreach (var point in surface.ProfileSurfacePoints)
                 {
                     if (point.Distance >= startPoint.Distance)
                     {

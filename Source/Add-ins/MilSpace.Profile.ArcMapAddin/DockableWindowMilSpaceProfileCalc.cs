@@ -1111,5 +1111,13 @@ namespace MilSpace.Profile
             }
 
         }
+
+        private void addProfileToExistingGraph_Click(object sender, EventArgs e)
+        {
+            var node = profilesTreeView.SelectedNode;
+            var ids = GetProfileAndLineIds(node);
+
+            controller.AddProfileToTab(ids.Item1, ids.Item2);
+        }
     }
 }

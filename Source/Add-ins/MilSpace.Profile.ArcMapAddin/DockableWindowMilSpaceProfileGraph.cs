@@ -132,6 +132,11 @@ namespace MilSpace.Profile
             }
         }
 
+        internal void SetCurrentChart()
+        {
+            controller.SetChart((SurfaceProfileChart)profilesTabControl.SelectedTab.Controls["profileChart"]);
+        }
+
         #region AddIn Instance
 
         public void SetController(MilSpaceProfileGraphsController controller)
@@ -198,14 +203,14 @@ namespace MilSpace.Profile
 
         private void ProfilesTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (selectedTabIndex != -1 && profilesTabControl.TabPages.Count > 0)
+            if (selectedTabIndex != -1 && profilesTabControl.TabPages.Count > selectedTabIndex)
             {
                 controller.InvokeSelectedProfileChanged(null, (int)profilesTabControl.TabPages[selectedTabIndex].Tag);
             }
 
             if (profilesTabControl.TabPages.Count > 0)
             {
-                controller.SetChart((SurfaceProfileChart)profilesTabControl.SelectedTab.Controls["profileChart"]);
+                SetCurrentChart();
                 selectedTabIndex = profilesTabControl.SelectedIndex;
             }
         }
