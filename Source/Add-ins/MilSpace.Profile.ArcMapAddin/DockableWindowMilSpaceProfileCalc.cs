@@ -651,6 +651,7 @@ namespace MilSpace.Profile
         public int SectionHeightFirst => TryParseHeight(txtFirstHeight);
         public int SectionHeightSecond => TryParseHeight(txtSecondHeight);
         public int FanHeight => TryParseHeight(txtObserverHeight);
+        public int SelectionHeight => TryParseHeight(observerHeightSelection);
 
         private int TryParseHeight(TextBox heightTextBox)
         {
@@ -686,6 +687,10 @@ namespace MilSpace.Profile
                 else if (SelectedProfileSettingsType == ProfileSettingsTypeEnum.Points)
                 {
                     return SectionHeightFirst;
+                }
+                else if (SelectedProfileSettingsType == ProfileSettingsTypeEnum.SelectedFeatures)
+                {
+                    return SelectionHeight;
                 }
 
                 throw new NotImplementedException();
@@ -1109,6 +1114,11 @@ namespace MilSpace.Profile
                     MessageBox.Show("There was an error. Look at the log file for more detail", "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
+
+        }
+
+        private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
+        {
 
         }
     }
