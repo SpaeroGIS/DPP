@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Графика");
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.btnRefreshLayers = new System.Windows.Forms.Button();
@@ -119,11 +119,7 @@
             this.txtBasePointX = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.primitiveTab = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.lblCommonLengthValue = new System.Windows.Forms.Label();
-            this.lblSelectedPrimitivesValue = new System.Windows.Forms.Label();
-            this.lblSelectedPrimitives = new System.Windows.Forms.Label();
-            this.lblCommonLength = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label21 = new System.Windows.Forms.Label();
             this.observerHeightSelection = new System.Windows.Forms.TextBox();
@@ -134,6 +130,11 @@
             this.panel13 = new System.Windows.Forms.Panel();
             this.layersToSelectLine = new System.Windows.Forms.ComboBox();
             this.label18 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.lblCommonLengthValue = new System.Windows.Forms.Label();
+            this.lblSelectedPrimitivesValue = new System.Windows.Forms.Label();
+            this.lblSelectedPrimitives = new System.Windows.Forms.Label();
+            this.lblCommonLength = new System.Windows.Forms.Label();
             this.loadTab = new System.Windows.Forms.TabPage();
             this.toolBar5 = new System.Windows.Forms.ToolBar();
             this.toolBarButton29 = new System.Windows.Forms.ToolBarButton();
@@ -173,7 +174,6 @@
             this.eraseProfile = new System.Windows.Forms.ToolStripButton();
             this.saveProfileAsShared = new System.Windows.Forms.ToolStripButton();
             this.lblProfileList = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -190,9 +190,9 @@
             this.panel10.SuspendLayout();
             this.panel7.SuspendLayout();
             this.primitiveTab.SuspendLayout();
-            this.tableLayoutPanel3.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel13.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             this.loadTab.SuspendLayout();
             this.panel15.SuspendLayout();
             this.panel14.SuspendLayout();
@@ -1347,73 +1347,16 @@
             this.primitiveTab.Text = "Примитивом";
             this.primitiveTab.UseVisualStyleBackColor = true;
             // 
-            // tableLayoutPanel3
+            // label17
             // 
-            this.tableLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel3.ColumnCount = 2;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Controls.Add(this.lblCommonLengthValue, 1, 1);
-            this.tableLayoutPanel3.Controls.Add(this.lblSelectedPrimitivesValue, 1, 0);
-            this.tableLayoutPanel3.Controls.Add(this.lblSelectedPrimitives, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.lblCommonLength, 2, 0);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(6, 108);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 2;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(738, 56);
-            this.tableLayoutPanel3.TabIndex = 46;
-            this.tableLayoutPanel3.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel3_Paint);
-            // 
-            // lblCommonLengthValue
-            // 
-            this.lblCommonLengthValue.AutoSize = true;
-            this.lblCommonLengthValue.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblCommonLengthValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblCommonLengthValue.Location = new System.Drawing.Point(119, 26);
-            this.lblCommonLengthValue.Name = "lblCommonLengthValue";
-            this.lblCommonLengthValue.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.lblCommonLengthValue.Size = new System.Drawing.Size(616, 21);
-            this.lblCommonLengthValue.TabIndex = 62;
-            this.lblCommonLengthValue.Text = "0";
-            // 
-            // lblSelectedPrimitivesValue
-            // 
-            this.lblSelectedPrimitivesValue.AutoSize = true;
-            this.lblSelectedPrimitivesValue.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblSelectedPrimitivesValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblSelectedPrimitivesValue.Location = new System.Drawing.Point(119, 0);
-            this.lblSelectedPrimitivesValue.Name = "lblSelectedPrimitivesValue";
-            this.lblSelectedPrimitivesValue.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.lblSelectedPrimitivesValue.Size = new System.Drawing.Size(616, 21);
-            this.lblSelectedPrimitivesValue.TabIndex = 61;
-            this.lblSelectedPrimitivesValue.Text = "0";
-            // 
-            // lblSelectedPrimitives
-            // 
-            this.lblSelectedPrimitives.AutoSize = true;
-            this.lblSelectedPrimitives.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblSelectedPrimitives.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblSelectedPrimitives.Location = new System.Drawing.Point(3, 0);
-            this.lblSelectedPrimitives.Name = "lblSelectedPrimitives";
-            this.lblSelectedPrimitives.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.lblSelectedPrimitives.Size = new System.Drawing.Size(110, 26);
-            this.lblSelectedPrimitives.TabIndex = 60;
-            this.lblSelectedPrimitives.Text = "Selected primitives";
-            // 
-            // lblCommonLength
-            // 
-            this.lblCommonLength.AutoSize = true;
-            this.lblCommonLength.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblCommonLength.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblCommonLength.Location = new System.Drawing.Point(3, 26);
-            this.lblCommonLength.Name = "lblCommonLength";
-            this.lblCommonLength.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.lblCommonLength.Size = new System.Drawing.Size(110, 30);
-            this.lblCommonLength.TabIndex = 59;
-            this.lblCommonLength.Text = "Selected primitives";
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label17.Location = new System.Drawing.Point(5, 80);
+            this.label17.Name = "label17";
+            this.label17.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.label17.Size = new System.Drawing.Size(184, 25);
+            this.label17.TabIndex = 50;
+            this.label17.Text = "Информация о выбранном";
             // 
             // panel1
             // 
@@ -1515,6 +1458,74 @@
             this.label18.Size = new System.Drawing.Size(237, 25);
             this.label18.TabIndex = 16;
             this.label18.Text = "класс (слой) объектов для выбора";
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel3.ColumnCount = 2;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Controls.Add(this.lblCommonLengthValue, 1, 1);
+            this.tableLayoutPanel3.Controls.Add(this.lblSelectedPrimitivesValue, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.lblSelectedPrimitives, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.lblCommonLength, 2, 0);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(6, 108);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(738, 56);
+            this.tableLayoutPanel3.TabIndex = 46;
+            this.tableLayoutPanel3.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel3_Paint);
+            // 
+            // lblCommonLengthValue
+            // 
+            this.lblCommonLengthValue.AutoSize = true;
+            this.lblCommonLengthValue.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblCommonLengthValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblCommonLengthValue.Location = new System.Drawing.Point(119, 26);
+            this.lblCommonLengthValue.Name = "lblCommonLengthValue";
+            this.lblCommonLengthValue.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.lblCommonLengthValue.Size = new System.Drawing.Size(616, 21);
+            this.lblCommonLengthValue.TabIndex = 62;
+            this.lblCommonLengthValue.Text = "0";
+            // 
+            // lblSelectedPrimitivesValue
+            // 
+            this.lblSelectedPrimitivesValue.AutoSize = true;
+            this.lblSelectedPrimitivesValue.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblSelectedPrimitivesValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblSelectedPrimitivesValue.Location = new System.Drawing.Point(119, 0);
+            this.lblSelectedPrimitivesValue.Name = "lblSelectedPrimitivesValue";
+            this.lblSelectedPrimitivesValue.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.lblSelectedPrimitivesValue.Size = new System.Drawing.Size(616, 21);
+            this.lblSelectedPrimitivesValue.TabIndex = 61;
+            this.lblSelectedPrimitivesValue.Text = "0";
+            // 
+            // lblSelectedPrimitives
+            // 
+            this.lblSelectedPrimitives.AutoSize = true;
+            this.lblSelectedPrimitives.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblSelectedPrimitives.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblSelectedPrimitives.Location = new System.Drawing.Point(3, 0);
+            this.lblSelectedPrimitives.Name = "lblSelectedPrimitives";
+            this.lblSelectedPrimitives.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.lblSelectedPrimitives.Size = new System.Drawing.Size(110, 26);
+            this.lblSelectedPrimitives.TabIndex = 60;
+            this.lblSelectedPrimitives.Text = "Selected primitives";
+            // 
+            // lblCommonLength
+            // 
+            this.lblCommonLength.AutoSize = true;
+            this.lblCommonLength.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblCommonLength.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblCommonLength.Location = new System.Drawing.Point(3, 26);
+            this.lblCommonLength.Name = "lblCommonLength";
+            this.lblCommonLength.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.lblCommonLength.Size = new System.Drawing.Size(110, 30);
+            this.lblCommonLength.TabIndex = 59;
+            this.lblCommonLength.Text = "Selected primitives";
             // 
             // loadTab
             // 
@@ -1775,25 +1786,25 @@
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.Location = new System.Drawing.Point(3, 65);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode4.Checked = true;
-            treeNode4.ImageKey = "vector-path-line.png";
-            treeNode4.Name = "sectionsNode";
-            treeNode4.SelectedImageIndex = 205;
-            treeNode4.Text = "Отрезки";
-            treeNode5.Checked = true;
-            treeNode5.ImageKey = "Editing-Line-icon3.png";
-            treeNode5.Name = "fanNode";
-            treeNode5.SelectedImageIndex = 208;
-            treeNode5.Text = "Веер";
-            treeNode6.Checked = true;
-            treeNode6.ImageKey = "vector-polygon.png";
-            treeNode6.Name = "primitivesNode";
-            treeNode6.SelectedImageIndex = 209;
-            treeNode6.Text = "Графика";
+            treeNode1.Checked = true;
+            treeNode1.ImageKey = "vector-path-line.png";
+            treeNode1.Name = "Points";
+            treeNode1.SelectedImageIndex = 205;
+            treeNode1.Text = "Отрезки";
+            treeNode2.Checked = true;
+            treeNode2.ImageKey = "Editing-Line-icon3.png";
+            treeNode2.Name = "Fun";
+            treeNode2.SelectedImageIndex = 208;
+            treeNode2.Text = "Веер";
+            treeNode3.Checked = true;
+            treeNode3.ImageKey = "vector-polygon.png";
+            treeNode3.Name = "Primitives";
+            treeNode3.SelectedImageIndex = 209;
+            treeNode3.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode5,
-            treeNode6});
+            treeNode1,
+            treeNode2,
+            treeNode3});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(755, 398);
             this.profilesTreeView.TabIndex = 35;
@@ -1944,17 +1955,6 @@
             this.lblProfileList.TabIndex = 1;
             this.lblProfileList.Text = "Список профилей";
             // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label17.Location = new System.Drawing.Point(5, 80);
-            this.label17.Name = "label17";
-            this.label17.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.label17.Size = new System.Drawing.Size(184, 25);
-            this.label17.TabIndex = 50;
-            this.label17.Text = "Информация о выбранном";
-            // 
             // DockableWindowMilSpaceProfileCalc
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1994,11 +1994,11 @@
             this.panel7.PerformLayout();
             this.primitiveTab.ResumeLayout(false);
             this.primitiveTab.PerformLayout();
-            this.tableLayoutPanel3.ResumeLayout(false);
-            this.tableLayoutPanel3.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel13.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
             this.loadTab.ResumeLayout(false);
             this.loadTab.PerformLayout();
             this.panel15.ResumeLayout(false);

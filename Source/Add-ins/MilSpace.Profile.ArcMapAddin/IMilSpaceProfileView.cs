@@ -66,21 +66,18 @@ namespace MilSpace.Profile
         /// </summary>
         /// <param name="profile">MilSpace Profile </param>
         /// <returns>Returns true if the parent node is chacked. Used to add thr Profile to the Graphics layer </returns>
-        bool AddSectionProfileNodes(ProfileSession profile);
 
-        bool AddFanProfileNode(ProfileSession profile);
+        void AddProfileToList(ProfileSession profile);
 
-        void AddSectionProfileToList(ProfileSession profile);
-        void AddFanProfileToList(ProfileSession profile);
+        bool AddNodeToTreeView(ProfileSession profile);
 
-        ProfileSession GetSectionProfile(string profileName);
-
-        ProfileSession GetFanProfile(string profileName);
+        ProfileSession GetProfileFromList(string profileName, ProfileSettingsTypeEnum profileSettingsType);
+                
         List<string> GetLayers();
 
         ProfileSettingsTypeEnum GetProfileTypeFromNode();
 
-        string GetProfileNameFromNode();
+        int GetProfileNameFromNode();
 
     }
 }
