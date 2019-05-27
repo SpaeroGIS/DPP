@@ -62,7 +62,7 @@ namespace MilSpace.Profile
         {
             {ProfileSettingsTypeEnum.Points, null},
             {ProfileSettingsTypeEnum.Fun, null},
-            {ProfileSettingsTypeEnum.SelectedFeatures, null},
+            {ProfileSettingsTypeEnum.Primitives, null},
             {ProfileSettingsTypeEnum.Load, null}
         };
 
@@ -176,7 +176,7 @@ namespace MilSpace.Profile
             {
                 return EsriTools.CreatePolylinesFromPointAndAzimuths(pointsToShow[ProfileSettingsPointButtonEnum.CenterFun], View.FunLength, View.FunLinesCount, View.FunAzimuth1, View.FunAzimuth2);
             }
-            if (View.SelectedProfileSettingsType == ProfileSettingsTypeEnum.SelectedFeatures)
+            if (View.SelectedProfileSettingsType == ProfileSettingsTypeEnum.Primitives)
             {
                 return selectedOnMapLines;
             }
@@ -241,7 +241,7 @@ namespace MilSpace.Profile
                 }
             }
 
-            if (View.SelectedProfileSettingsType == ProfileSettingsTypeEnum.SelectedFeatures)
+            if (View.SelectedProfileSettingsType == ProfileSettingsTypeEnum.Primitives)
             {
                 GetSelectedGraphics();
                 if (selectedOnMapLines != null)
@@ -328,7 +328,7 @@ namespace MilSpace.Profile
 
         internal void ShowUserSessionProfile(int profileId, int lineId = -1)
         {
-            var profile = _workingProfiles.FirstOrDefault(p => p.SessionId == profileId);
+            var profile = GetProfileById(profileId); 
             if (profile != null)
             {
                 if (lineId < 0)
@@ -346,9 +346,15 @@ namespace MilSpace.Profile
             }
         }
 
+
+        internal ProfileSession GetProfileById(int profileSetId)
+        {
+            return _workingProfiles.FirstOrDefault(p => p.SessionId == profileSetId);
+        }
+
         internal void HideUserSessionProfile(int profileId, int lineId = -1)
         {
-            var profile = _workingProfiles.FirstOrDefault(p => p.SessionId == profileId);
+            var profile = GetProfileById(profileId);
             if (profile != null)
             {
                 if (lineId < 0)
@@ -368,22 +374,7 @@ namespace MilSpace.Profile
         {
             bool isAddToGraphics = false;
 
-            switch (profile.DefinitionType)
-            {
-                case ProfileSettingsTypeEnum.Points:
-                    {
-                        isAddToGraphics = View.AddSectionProfileNodes(profile);
-                        View.AddSectionProfileToList(profile);
-                        break;
-                    }
-
-                case ProfileSettingsTypeEnum.Fun:
-                    {
-                        isAddToGraphics = View.AddFanProfileNode(profile);
-                        View.AddFanProfileToList(profile);
-                        break;
-                    }
-            }
+            isAddToGraphics = View.AddNodeToTreeView(profile);
 
             //Add Profile to the working list
             _workingProfiles.Add(profile);
@@ -402,24 +393,21 @@ namespace MilSpace.Profile
         private ProfileSession GetProfileSessionFromSelectedNode()
         {
             var profileType = View.GetProfileTypeFromNode();
-            var profileName = View.GetProfileNameFromNode();
-            switch (profileType)
-            {
+            var profileId = View.GetProfileNameFromNode();
 
-                case ProfileSettingsTypeEnum.Points:
-                    return View.GetSectionProfile(profileName);
-                case ProfileSettingsTypeEnum.Fun:
-                    return View.GetFanProfile(profileName);
-
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            return _workingProfiles.FirstOrDefault(p => p.DefinitionType == profileType && p.SessionId == profileId);
         }
 
         internal void ShowProfileOnMap()
         {
             var mapScale = View.ActiveView.FocusMap.MapScale;
             var profile = GetProfileSessionFromSelectedNode();
+            if (profile == null)
+            {
+                logger.ErrorEx("Cannot find Selected Profiles set");
+                return;
+            }
+
             var profileLines = profile.ProfileLines.Select(line => line.Line).ToArray();
             IEnvelope env = new EnvelopeClass();
 
@@ -778,12 +766,12 @@ namespace MilSpace.Profile
 
         private void OnMapSelectionChangedLocal()
         {
-            if (View.SelectedProfileSettingsType != ProfileSettingsTypeEnum.SelectedFeatures)
+            if (View.SelectedProfileSettingsType != ProfileSettingsTypeEnum.Primitives)
             {
                 return;
             }
             GetSelectedGraphics();
-            SetProfileSettings(ProfileSettingsTypeEnum.SelectedFeatures);
+            SetProfileSettings(ProfileSettingsTypeEnum.Primitives);
         }
 
         private void GetSelectedGraphics()

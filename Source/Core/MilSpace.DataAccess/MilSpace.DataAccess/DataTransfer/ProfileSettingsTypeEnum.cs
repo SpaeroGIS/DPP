@@ -5,7 +5,7 @@
     {
         Points,
         Fun,
-        SelectedFeatures,
+        Primitives,
         Load,
         Composed
     }

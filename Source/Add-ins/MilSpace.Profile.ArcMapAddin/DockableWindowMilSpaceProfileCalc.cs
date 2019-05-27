@@ -29,15 +29,27 @@ namespace MilSpace.Profile
         const int NOT_FOUND = -1;
         private const string Degree = "°";
 
+        private static readonly Dictionary<ProfileSettingsTypeEnum, int[]> nodeDefinition = new Dictionary<ProfileSettingsTypeEnum, int[]>
+        {
+            {ProfileSettingsTypeEnum.Points , new int[] { 205, 205 } },
+            {ProfileSettingsTypeEnum.Fun , new int[] { 206, 208 } },
+            {ProfileSettingsTypeEnum.Primitives , new int[] {207, 209 } },
+        };
+
         private ProfileSettingsPointButtonEnum activeButtton = ProfileSettingsPointButtonEnum.None;
 
         private TreeViewSelectedProfileIds treeViewselectedIds; //= new TreeViewSelectedProfileIds();
 
         MilSpaceProfileCalsController controller;
 
-        List<ProfileSession> _sessionProfiles = new List<ProfileSession>();
         List<ProfileSession> _fanProfiles = new List<ProfileSession>();
         List<ProfileSession> _graphicProfiles = new List<ProfileSession>();
+
+        Dictionary<ProfileSettingsTypeEnum, List<ProfileSession>> profileLists = new Dictionary<ProfileSettingsTypeEnum, List<ProfileSession>>
+        {
+            {ProfileSettingsTypeEnum.Points, new List<ProfileSession>() }
+
+        };
 
         public DockableWindowMilSpaceProfileCalc(MilSpaceProfileCalsController controller)
         {
@@ -94,45 +106,17 @@ namespace MilSpace.Profile
 
         public TreeViewSelectedProfileIds SelectedProfileSessionIds => treeViewselectedIds;
 
-        public bool AddSectionProfileNodes(ProfileSession profile)
+
+        public void AddProfileToList(ProfileSession profile)
         {
-            return AddNodeToTreeView("sectionsNode", profile, 205, 205);
+            profileLists[profile.DefinitionType].Add(profile);
         }
 
-        public bool AddFanProfileNode(ProfileSession profile)
+        public ProfileSession GetProfileFromList(string profileName, ProfileSettingsTypeEnum profileType)
         {
-            return AddNodeToTreeView("fanNode", profile, 208, 208);
+            return GetProfileFromList(profileLists[profileType], profileName);
         }
 
-        public void AddSectionProfileToList(ProfileSession profile)
-        {
-            _sessionProfiles.Add(profile);
-        }
-
-        public void AddFanProfileToList(ProfileSession profile)
-        {
-            _fanProfiles.Add(profile);
-        }
-
-        public void RemoveSectionProfileFromList(string profileName)
-        {
-            var profileToRemove = _sessionProfiles
-                .FirstOrDefault(profile => profile.SessionName.Equals(profileName));
-            if (profileToRemove != null)
-            {
-                _sessionProfiles.Remove(profileToRemove);
-            }
-        }
-
-        public ProfileSession GetSectionProfile(string profileName)
-        {
-            return GetProfileFromList(_sessionProfiles, profileName);
-        }
-
-        public ProfileSession GetFanProfile(string profileName)
-        {
-            return GetProfileFromList(_fanProfiles, profileName);
-        }
 
         public List<string> GetLayers()
         {
@@ -217,7 +201,8 @@ namespace MilSpace.Profile
             treeViewselectedIds.ProfileLineId = ids.Item2;
             treeViewselectedIds.ProfileSessionId = ids.Item1;
 
-            var pr = _sessionProfiles.FirstOrDefault(p => p.SessionId == ids.Item1);
+            var pr = controller.GetProfileById(treeViewselectedIds.ProfileSessionId);
+
             saveProfileAsShared.Enabled = (pr != null && pr.CreatedBy == Environment.UserName && !pr.Shared);
 
             removeProfile.Enabled = addProfileToGraph.Enabled = toolBtnShowOnMap.Enabled = toolBtnFlash.Enabled = treeViewselectedIds.ProfileSessionId > 0;
@@ -270,7 +255,7 @@ namespace MilSpace.Profile
 
             ArcMap.Events.OpenDocument += OnDocumentOpenFillDropdowns;
             ArcMap.Events.OpenDocument += controller.InitiateUserProfiles;
-            
+
             profilesTreeView.AfterSelect += ChangeTreeViewToolbarState;
             profilesTreeView.AfterSelect += DisplaySelectedNodeAttributes;
             lvProfileAttributes.Resize += OnListViewResize;
@@ -651,6 +636,7 @@ namespace MilSpace.Profile
         public int SectionHeightFirst => TryParseHeight(txtFirstHeight);
         public int SectionHeightSecond => TryParseHeight(txtSecondHeight);
         public int FanHeight => TryParseHeight(txtObserverHeight);
+        public int SelectionHeight => TryParseHeight(observerHeightSelection);
 
         private int TryParseHeight(TextBox heightTextBox)
         {
@@ -686,6 +672,10 @@ namespace MilSpace.Profile
                 else if (SelectedProfileSettingsType == ProfileSettingsTypeEnum.Points)
                 {
                     return SectionHeightFirst;
+                }
+                else if (SelectedProfileSettingsType == ProfileSettingsTypeEnum.Primitives)
+                {
+                    return SelectionHeight;
                 }
 
                 throw new NotImplementedException();
@@ -755,24 +745,23 @@ namespace MilSpace.Profile
                 treeNode = treeNode.Parent;
             }
 
-            switch (treeNode.Name)
+            ProfileSettingsTypeEnum res;
+
+            if (Enum.TryParse<ProfileSettingsTypeEnum>(treeNode.Name, out res))
             {
-                case "sectionsNode":
-                    return ProfileSettingsTypeEnum.Points;
-                case "fanNode":
-                    return ProfileSettingsTypeEnum.Fun;
-                default:
-                    return ProfileSettingsTypeEnum.SelectedFeatures;
+                return res;
             }
+
+            throw new NotImplementedException(treeNode.Name);
         }
 
-        public string GetProfileNameFromNode()
+        public int GetProfileNameFromNode()
         {
             var treeNode = profilesTreeView.SelectedNode;
 
             while (treeNode.Level > 1)
                 treeNode = treeNode.Parent;
-            return treeNode.Text;
+            return (int)treeNode.Tag;
         }
 
         private void toolBtnShowOnMap_Click(object sender, EventArgs e)
@@ -929,9 +918,13 @@ namespace MilSpace.Profile
             return resultProfile;
         }
 
-        private bool AddNodeToTreeView(string parentNodeName, ProfileSession profile, int imageIndex, int selectedImageIndex)
+        public bool AddNodeToTreeView(ProfileSession profile)
         {
-            var parentNode = profilesTreeView.Nodes.Find(parentNodeName, false).FirstOrDefault();
+
+            int imageIndex = nodeDefinition[profile.DefinitionType][0];
+            int selectedImageIndex = nodeDefinition[profile.DefinitionType][1];
+
+            var parentNode = profilesTreeView.Nodes.Find(profile.DefinitionType.ToString(), false).FirstOrDefault();
             if (parentNode != null)
             {
                 var date = DateTime.Now;
@@ -1039,7 +1032,7 @@ namespace MilSpace.Profile
                 case ProfileSettingsTypeEnum.Fun:
                     return "Веер";
 
-                case ProfileSettingsTypeEnum.SelectedFeatures:
+                case ProfileSettingsTypeEnum.Primitives:
                     return "Графика";
 
                 case ProfileSettingsTypeEnum.Load:
@@ -1079,7 +1072,7 @@ namespace MilSpace.Profile
             treeViewselectedIds.ProfileLineId = ids.Item2;
             treeViewselectedIds.ProfileSessionId = ids.Item1;
 
-            var pr = _sessionProfiles.FirstOrDefault(p => p.SessionId == ids.Item1);
+            var pr = profileLists.Values.SelectMany(p => p).FirstOrDefault(p => p.SessionId == ids.Item1);
 
             var res = controller.ShareProfileSession(pr);
 
@@ -1109,6 +1102,11 @@ namespace MilSpace.Profile
                     MessageBox.Show("There was an error. Look at the log file for more detail", "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
+
+        }
+
+        private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
+        {
 
         }
 
