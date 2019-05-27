@@ -137,6 +137,7 @@
     <Compile Include="DTO\ProfileSettings.cs" />
     <Compile Include="DTO\ProfileSettingsPointButtonEnum.cs" />
     <Compile Include="DTO\TreeViewSelectedProfileIds.cs" />
+    <Compile Include="Helpers\TreeViewRootItemsEnum.cs" />
     <Compile Include="IMilSpaceProfileView.cs" />
     <Compile Include="Config.Designer.cs">
       <AutoGen>True</AutoGen>
