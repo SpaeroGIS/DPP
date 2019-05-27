@@ -42,17 +42,20 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             _profileSession = profileSession;
         }
 
-        internal SurfaceProfileChartController SetCurrentChart(SurfaceProfileChart currentChart, MilSpaceProfileGraphsController graphsController)
+        internal SurfaceProfileChartController GetCurrentController(SurfaceProfileChart currentChart, MilSpaceProfileGraphsController graphsController)
+        {
+            currentChart.SetCurrentChart(graphsController);
+            return currentChart.GetController();
+        }
+
+        internal void  SetCurrentChart(MilSpaceProfileGraphsController graphsController)
         {
             _graphsController = graphsController;
-            _surfaceProfileChart = currentChart;
 
             if (_profileSession.ProfileLines != null && _profileSession.ProfileLines.Count() == 1)
             {
-                _surfaceProfileChart.SelectProfile("1");
+                InvokeSelectedProfile(1);
             }
-
-            return _surfaceProfileChart.GetController();
         }
 
         internal SurfaceProfileChart CreateProfileChart(double observerHeight)
@@ -249,6 +252,11 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal void InvokeSelectedProfile(int selectedLineId)
         {
+            if (_profileSession.Segments == null)
+            {
+                return;
+            }
+            
             var oldSelectedLine = _profileSession.Segments.Find(segment => segment.IsSelected == true);
 
             if (selectedLineId == -1)
@@ -258,6 +266,12 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             else
             {
                 var newSelectedLine = _profileSession.Segments.First(segment => segment.LineId == selectedLineId);
+
+                if(oldSelectedLine == newSelectedLine)
+                {
+                    oldSelectedLine = null;
+                }
+
                 SelectedProfileChanged?.Invoke(oldSelectedLine, newSelectedLine, _profileSession.SessionId);
                 newSelectedLine.IsSelected = true;
             }

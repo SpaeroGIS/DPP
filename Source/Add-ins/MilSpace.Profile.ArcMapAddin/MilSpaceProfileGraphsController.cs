@@ -91,9 +91,10 @@ namespace MilSpace.Profile
             ProfileRemoved?.Invoke(sessionId, lineId);
         }
 
-        internal void ClearProfileSelection(SurfaceProfileChartController surfaceProfileChartController)
+        internal void ClearProfileSelection(SurfaceProfileChart chart)
         {
-            surfaceProfileChartController.InvokeSelectedProfile(-1);
+            SetChart(chart);
+            _surfaceProfileChartController.InvokeSelectedProfile(-1);
         }
 
         internal void InvokeSelectedProfileChanged(GroupedLines oldSelectedLines, GroupedLines newSelectedLines, int profileId)
@@ -146,7 +147,7 @@ namespace MilSpace.Profile
 
         internal void SetChart(SurfaceProfileChart currentChart)
         {
-            _surfaceProfileChartController = _surfaceProfileChartController.SetCurrentChart(currentChart, this);
+            _surfaceProfileChartController = _surfaceProfileChartController.GetCurrentController(currentChart, this);
         }
 
         internal void RemoveTab()

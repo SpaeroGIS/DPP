@@ -70,7 +70,7 @@ namespace MilSpace.Profile
             if (profilesTabControl.TabPages.Count > 0)
             {
                var chart = (SurfaceProfileChart)profilesTabControl.SelectedTab.Controls["profileChart"];
-                controller.ClearProfileSelection(chart.GetController());
+                controller.ClearProfileSelection(chart);
             }
 
             TabPage tabPage = null;
@@ -207,7 +207,7 @@ namespace MilSpace.Profile
             if (selectedTabIndex != -1 && profilesTabControl.TabPages.Count > selectedTabIndex)
             {
                 var chart = (SurfaceProfileChart)profilesTabControl.TabPages[selectedTabIndex].Controls["profileChart"];
-                controller.ClearProfileSelection(chart.GetController());
+                controller.ClearProfileSelection(chart);
             }
 
             if (profilesTabControl.TabPages.Count > 0)

@@ -1220,7 +1220,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             ClearIntersectionLines();
 
-            if (SelectedLineId != -1 && profileChart.Series.Count > 2)
+            if (SelectedLineId != -1 && GetProfiles().Count > 1)
             {
                 profileChart.Series[SelectedLineId.ToString()].BorderWidth -= 2;
                 profileChart.Series[SelectedLineId.ToString()].Font =
@@ -1252,6 +1252,11 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         internal SurfaceProfileChartController GetController()
         {
             return _controller;
+        }
+
+        internal void SetCurrentChart(MilSpaceProfileGraphsController graphsController)
+        {
+            _controller.SetCurrentChart(graphsController);
         }
 
         private void ClearSelection()
