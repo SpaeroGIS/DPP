@@ -464,11 +464,21 @@ namespace MilSpace.Profile
 
             if (profileSession != null)
             {
-                var profileLine = profileSession.ProfileLines.FirstOrDefault(line => line.Id == lineId);
+                ProfileLine profileLine = null;
+
+                if (profileSession.DefinitionType == ProfileSettingsTypeEnum.Points)
+                {
+                    profileLine = profileSession.ProfileLines.FirstOrDefault();
+                }
+                else
+                {
+                    profileLine = profileSession.ProfileLines.FirstOrDefault(line => line.Id == lineId);
+                }
 
                 if (profileLine != null)
                 {
-                    var profileSurface = profileSession.ProfileSurfaces.First(surface => surface.LineId == lineId);
+                    var profileSurface = profileSession.ProfileSurfaces.First(surface => surface.LineId == profileLine.Id);
+                    GraphicsLayerManager.RemoveLineFromGraphic(profileSessionId, profileLine.Id);
                     graphsController.AddProfileToTab(profileLine, profileSurface);
                 }
             }
@@ -597,21 +607,8 @@ namespace MilSpace.Profile
             GraphicsLayerManager.RemoveLineFromGraphic(sessionId, lineId);
         }
 
-        private void SelectedProfileChanged(GroupedLines newSelectedLines, int profileId)
+        private void SelectedProfileChanged(GroupedLines  oldSelectedLines, GroupedLines newSelectedLines, int profileId)
         {
-            var allLines = new List<GroupedLines>();
-            var allLinesProfile = _workingProfiles.FirstOrDefault(profile => profile.SessionId == profileId);
-
-            if (allLinesProfile != null)
-            {
-                allLines = allLinesProfile.Segments;
-            }
-            else
-            {
-                return;
-            }
-
-            var oldSelectedLines = allLines.FirstOrDefault(line => line.IsSelected == true);
 
             GraphicsLayerManager.ChangeSelectProfileOnGraph(oldSelectedLines, newSelectedLines, profileId);
 
@@ -692,7 +689,7 @@ namespace MilSpace.Profile
         private void SetLayersForPoints(IntersectionsInLayer intersections, ProfileSurface surface)
         {
             var surfaceForSearch = new List<ProfileSurfacePoint>(surface.ProfileSurfacePoints);
-            var accuracy = 0.00001;
+            var accuracy = 0.0000001;
 
             foreach (var line in intersections.Lines)
             {

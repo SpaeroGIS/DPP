@@ -824,7 +824,6 @@
             this.Controls.Add(this.propertiesPanel);
             this.Name = "SurfaceProfileChart";
             this.Size = new System.Drawing.Size(944, 327);
-            this.Load += new System.EventHandler(this.SurfaceProfileChart_Load);
             this.Resize += new System.EventHandler(this.SurfaceProfileChart_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.profileChart)).EndInit();
             this.contextMenuStrip.ResumeLayout(false);

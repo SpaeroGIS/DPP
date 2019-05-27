@@ -24,7 +24,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                                                                         bool update, List<int> linesIds = null);
 
         internal delegate void DeleteProfileDelegate(int sessionId, int lineId);
-        internal delegate void SelectedProfileChangedDelegate(GroupedLines newSelectedLines, int profileId);
+        internal delegate void SelectedProfileChangedDelegate(GroupedLines oldSelectedLines, GroupedLines newSelectedLines, int profileId);
         internal delegate void GetIntersectionLinesDelegate(ProfileSession profileSession, int lineId = 0);
 
         internal event ProfileGrapchClickedDelegate OnProfileGraphClicked;
@@ -249,8 +249,23 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal void InvokeSelectedProfile(int selectedLineId)
         {
-            SelectedProfileChanged?.Invoke(_profileSession.Segments.First(segment => segment.LineId == selectedLineId), _profileSession.SessionId);
-            _profileSession.Segments.First(segment => segment.LineId == selectedLineId).IsSelected = true;
+            var oldSelectedLine = _profileSession.Segments.Find(segment => segment.IsSelected == true);
+
+            if (selectedLineId == -1)
+            {
+                SelectedProfileChanged?.Invoke(oldSelectedLine, null, _profileSession.SessionId);
+            }
+            else
+            {
+                var newSelectedLine = _profileSession.Segments.First(segment => segment.LineId == selectedLineId);
+                SelectedProfileChanged?.Invoke(oldSelectedLine, newSelectedLine, _profileSession.SessionId);
+                newSelectedLine.IsSelected = true;
+            }
+
+            if (oldSelectedLine != null)
+            {
+                oldSelectedLine.IsSelected = false;
+            }
         }
 
         internal void AddEmptyGraph()
@@ -346,7 +361,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         private void AddProfile(ProfileLine profileLine, ProfileSurface profileSurface)
         {
-            var lineId = _profileSession.ProfileLines.Count() + 1;
+            var lineId = _profileSession.ProfileLines.Last().Id + 1;
 
             profileLine.Id = lineId;
             profileSurface.LineId = lineId;
@@ -363,7 +378,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             _profileSession.ProfileLines = profileLines.ToArray();
             _profileSession.ProfileSurfaces = profileSurfaces.ToArray();
 
-            _profileSession.SetSegments(profileLine.SpatialReference);
+            _profileSession.SetSegments(profileLine.SpatialReference, _profileSession.ProfileLines.Last());
 
             _surfaceProfileChart.InitializeProfile();
             _surfaceProfileChart.SetControlSize();
@@ -378,6 +393,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             var orderedIntersectionLines = GetOrderedIntersectionsLines(intersectionLines);
             var preparedIntersectionLines = new List<IntersectionLine>();
+            var accuracy = 0.0000001;
 
             var prevLine = new IntersectionLine();
             prevLine = orderedIntersectionLines.First();
@@ -413,24 +429,28 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
                     preparedIntersectionLines.Add(line);
                 }
-                else if (intersectionLine.PointFromDistance > prevLine.PointToDistance
-                            || intersectionLine.PointFromDistance == prevLine.PointFromDistance)
+                else if (intersectionLine.PointFromDistance >= prevLine.PointToDistance
+                            || Math.Abs(intersectionLine.PointFromDistance - prevLine.PointFromDistance) < accuracy)
                 {
-                    var line = new IntersectionLine()
-                    {
-                        PointFromDistance = prevLine.PointToDistance,
-                        PointToDistance = intersectionLine.PointFromDistance,
-                        LayerType = LayersEnum.NotIntersect
-                    };
-
                     preparedIntersectionLines.Add(prevLine);
-                    preparedIntersectionLines.Add(line);
+
+                    if (Math.Abs(intersectionLine.PointFromDistance - prevLine.PointToDistance) > accuracy)
+                    {
+                        var line = new IntersectionLine()
+                        {
+                            PointFromDistance = prevLine.PointToDistance,
+                            PointToDistance = intersectionLine.PointFromDistance,
+                            LayerType = LayersEnum.NotIntersect
+                        };
+
+                        preparedIntersectionLines.Add(line);
+                    }
 
                     if (intersectionLine == orderedIntersectionLines.Last())
                     {
                         preparedIntersectionLines.Add(intersectionLine);
 
-                        if (intersectionLine.PointToDistance != lastPoint)
+                        if (Math.Abs(intersectionLine.PointToDistance - lastPoint) > accuracy)
                         {
                             var emptyLine = new IntersectionLine()
                             {
@@ -439,7 +459,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                                 LayerType = LayersEnum.NotIntersect
                             };
 
-                            preparedIntersectionLines.Add(line);
+                            preparedIntersectionLines.Add(emptyLine);
                         }
                     }
                     else
