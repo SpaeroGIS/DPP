@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea10 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SurfaceProfileChart));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
             this.profileChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.lineColorDialog = new System.Windows.Forms.ColorDialog();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -85,8 +85,8 @@
             this.invisibleLineColorButton = new System.Windows.Forms.Button();
             this.visibleLineColorLabel = new System.Windows.Forms.Label();
             this.InvisibleLineColorLabel = new System.Windows.Forms.Label();
-            this.propertiesBottomPanel = new System.Windows.Forms.Panel();
             this.propertiesPanel = new System.Windows.Forms.Panel();
+            this.profileNamePanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.profileChart)).BeginInit();
             this.contextMenuStrip.SuspendLayout();
             this.graphPanel.SuspendLayout();
@@ -97,19 +97,20 @@
             ((System.ComponentModel.ISupportInitialize)(this.profilePropertiesTable)).BeginInit();
             this.propertiesSettingsPanel.SuspendLayout();
             this.propertiesPanel.SuspendLayout();
+            this.profileNamePanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // profileChart
             // 
-            chartArea1.AxisX.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
-            chartArea1.AxisX.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
-            chartArea1.AxisX.LabelAutoFitStyle = System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.None;
-            chartArea1.AxisX.Minimum = 0D;
-            chartArea1.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            chartArea1.AxisY.LabelAutoFitStyle = ((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.LabelsAngleStep30 | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.WordWrap)));
-            chartArea1.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            chartArea1.Name = "Default";
-            this.profileChart.ChartAreas.Add(chartArea1);
+            chartArea10.AxisX.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
+            chartArea10.AxisX.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
+            chartArea10.AxisX.LabelAutoFitStyle = System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.None;
+            chartArea10.AxisX.Minimum = 0D;
+            chartArea10.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            chartArea10.AxisY.LabelAutoFitStyle = ((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.LabelsAngleStep30 | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.WordWrap)));
+            chartArea10.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            chartArea10.Name = "Default";
+            this.profileChart.ChartAreas.Add(chartArea10);
             this.profileChart.Dock = System.Windows.Forms.DockStyle.Top;
             this.profileChart.Location = new System.Drawing.Point(0, 0);
             this.profileChart.Name = "profileChart";
@@ -517,7 +518,7 @@
             this.profileDetailsListView.Location = new System.Drawing.Point(0, 40);
             this.profileDetailsListView.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.profileDetailsListView.Name = "profileDetailsListView";
-            this.profileDetailsListView.Size = new System.Drawing.Size(354, 123);
+            this.profileDetailsListView.Size = new System.Drawing.Size(354, 133);
             this.profileDetailsListView.TabIndex = 50;
             this.toolTip.SetToolTip(this.profileDetailsListView, "Чтобы скопировать выделенную строку нажмите правую кнопку мыши");
             this.profileDetailsListView.UseCompatibleStateImageBehavior = false;
@@ -550,15 +551,14 @@
             // 
             // propertiesSplitContainer.Panel2
             // 
-            this.propertiesSplitContainer.Panel2.Controls.Add(this.profileNameLabel);
+            this.propertiesSplitContainer.Panel2.Controls.Add(this.profileNamePanel);
             this.propertiesSplitContainer.Panel2.Controls.Add(this.propertiesSettingsPanel);
             this.propertiesSplitContainer.Panel2.Controls.Add(this.profileDetailsListView);
-            this.propertiesSplitContainer.Panel2.Controls.Add(this.propertiesBottomPanel);
             this.propertiesSplitContainer.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.propertiesSplitContainer.Panel2MinSize = 150;
+            this.propertiesSplitContainer.Panel2MinSize = 0;
             this.propertiesSplitContainer.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.propertiesSplitContainer.Size = new System.Drawing.Size(354, 327);
-            this.propertiesSplitContainer.SplitterDistance = 136;
+            this.propertiesSplitContainer.Size = new System.Drawing.Size(354, 303);
+            this.propertiesSplitContainer.SplitterDistance = 126;
             this.propertiesSplitContainer.TabIndex = 53;
             this.propertiesSplitContainer.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.PropertiesSplitContainer_SplitterMoved);
             // 
@@ -569,14 +569,14 @@
             this.profilePropertiesTable.AllowUserToResizeRows = false;
             this.profilePropertiesTable.BackgroundColor = System.Drawing.SystemColors.Control;
             this.profilePropertiesTable.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.profilePropertiesTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle37.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle37.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle37.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle37.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle37.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle37.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle37.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.profilePropertiesTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle37;
             this.profilePropertiesTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.profilePropertiesTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.IsVisibleCol,
@@ -590,21 +590,21 @@
             this.DescentAngleCol,
             this.RiseAngleCol,
             this.VisiblePercentCol});
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.profilePropertiesTable.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle39.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle39.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle39.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle39.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle39.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle39.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle39.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.profilePropertiesTable.DefaultCellStyle = dataGridViewCellStyle39;
             this.profilePropertiesTable.Dock = System.Windows.Forms.DockStyle.Top;
             this.profilePropertiesTable.Location = new System.Drawing.Point(0, 0);
             this.profilePropertiesTable.MultiSelect = false;
             this.profilePropertiesTable.Name = "profilePropertiesTable";
             this.profilePropertiesTable.RowHeadersVisible = false;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-            this.profilePropertiesTable.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle40.BackColor = System.Drawing.Color.White;
+            this.profilePropertiesTable.RowsDefaultCellStyle = dataGridViewCellStyle40;
             this.profilePropertiesTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.profilePropertiesTable.Size = new System.Drawing.Size(354, 127);
             this.profilePropertiesTable.TabIndex = 1;
@@ -625,8 +625,8 @@
             // 
             // ProfileNumberCol
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.ProfileNumberCol.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle38.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.ProfileNumberCol.DefaultCellStyle = dataGridViewCellStyle38;
             this.ProfileNumberCol.HeaderText = "N";
             this.ProfileNumberCol.Name = "ProfileNumberCol";
             this.ProfileNumberCol.ReadOnly = true;
@@ -710,8 +710,10 @@
             // profileNameLabel
             // 
             this.profileNameLabel.AutoSize = true;
-            this.profileNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.profileNameLabel.Location = new System.Drawing.Point(0, 0);
+            this.profileNameLabel.BackColor = System.Drawing.Color.Transparent;
+            this.profileNameLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.profileNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.profileNameLabel.Location = new System.Drawing.Point(0, 1);
             this.profileNameLabel.Name = "profileNameLabel";
             this.profileNameLabel.Size = new System.Drawing.Size(0, 13);
             this.profileNameLabel.TabIndex = 60;
@@ -795,14 +797,6 @@
             this.InvisibleLineColorLabel.TabIndex = 45;
             this.InvisibleLineColorLabel.Text = "видно";
             // 
-            // propertiesBottomPanel
-            // 
-            this.propertiesBottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.propertiesBottomPanel.Location = new System.Drawing.Point(0, 164);
-            this.propertiesBottomPanel.Name = "propertiesBottomPanel";
-            this.propertiesBottomPanel.Size = new System.Drawing.Size(354, 23);
-            this.propertiesBottomPanel.TabIndex = 54;
-            // 
             // propertiesPanel
             // 
             this.propertiesPanel.BackColor = System.Drawing.SystemColors.Control;
@@ -810,9 +804,20 @@
             this.propertiesPanel.Dock = System.Windows.Forms.DockStyle.Right;
             this.propertiesPanel.Location = new System.Drawing.Point(570, 0);
             this.propertiesPanel.Name = "propertiesPanel";
-            this.propertiesPanel.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.propertiesPanel.Padding = new System.Windows.Forms.Padding(10, 0, 10, 24);
             this.propertiesPanel.Size = new System.Drawing.Size(374, 327);
             this.propertiesPanel.TabIndex = 49;
+            // 
+            // profileNamePanel
+            // 
+            this.profileNamePanel.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.profileNamePanel.Controls.Add(this.profileNameLabel);
+            this.profileNamePanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.profileNamePanel.Location = new System.Drawing.Point(0, 0);
+            this.profileNamePanel.Name = "profileNamePanel";
+            this.profileNamePanel.Padding = new System.Windows.Forms.Padding(0, 1, 0, 1);
+            this.profileNamePanel.Size = new System.Drawing.Size(354, 15);
+            this.profileNamePanel.TabIndex = 61;
             // 
             // SurfaceProfileChart
             // 
@@ -830,13 +835,14 @@
             this.graphPanel.ResumeLayout(false);
             this.propertiesSplitContainer.Panel1.ResumeLayout(false);
             this.propertiesSplitContainer.Panel2.ResumeLayout(false);
-            this.propertiesSplitContainer.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.propertiesSplitContainer)).EndInit();
             this.propertiesSplitContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.profilePropertiesTable)).EndInit();
             this.propertiesSettingsPanel.ResumeLayout(false);
             this.propertiesSettingsPanel.PerformLayout();
             this.propertiesPanel.ResumeLayout(false);
+            this.profileNamePanel.ResumeLayout(false);
+            this.profileNamePanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -901,7 +907,6 @@
         private System.Windows.Forms.Label InvisibleLineColorLabel;
         private System.Windows.Forms.ListView profileDetailsListView;
         private System.Windows.Forms.Panel propertiesPanel;
-        private System.Windows.Forms.Panel propertiesBottomPanel;
         private System.Windows.Forms.ToolBarButton graphToolBarSpr6;
         private System.Windows.Forms.ToolBarButton updateIntersectionsLinesGraphToolBarBtn;
         private System.Windows.Forms.ImageList imageList1;
@@ -917,5 +922,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn DescentAngleCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn RiseAngleCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn VisiblePercentCol;
+        private System.Windows.Forms.Panel profileNamePanel;
     }
 }

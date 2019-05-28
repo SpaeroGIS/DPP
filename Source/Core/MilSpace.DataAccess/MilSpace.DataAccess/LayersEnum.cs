@@ -7,8 +7,8 @@ namespace MilSpace.DataAccess
     {
         Vegetation = 1,
         Buildings = 2,
-        Hydrography = 4,
-        Roads = 8,
+        Roads = 4,
+        Hydrography = 8,
         NotIntersect = 16
     }
 }

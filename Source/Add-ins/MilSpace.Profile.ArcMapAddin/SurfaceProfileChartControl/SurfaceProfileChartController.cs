@@ -522,7 +522,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 }
             }
 
-            return orderedIntersectionLines;
+            return orderedIntersectionLines.OrderByDescending(line => line.LayerType).ToList();
         }
 
         private List<IntersectionsInLayer> GroupLinesByLayers(List<IntersectionLine> lines)
