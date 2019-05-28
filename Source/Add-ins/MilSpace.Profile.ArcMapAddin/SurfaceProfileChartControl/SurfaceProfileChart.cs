@@ -63,7 +63,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             _controller.AddInvisibleZones(fullHeights, GetAllColors(true), GetAllColors(false));
             _controller.AddExtremePoints();
 
-            GetIntersections();
             FillPropertiesTable();
             AddCheckBoxHeader();
 
@@ -86,7 +85,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                                                                         profileChart.Series.Last().BackSecondaryColor, false);
 
             _controller.AddExtremePoints(profileSurface);
-            GetIntersection(profileSurface.LineId);
             AddPropertyRow(ProfilesProperties.Last());
             UpdateIntersectionsLine();
         }
@@ -371,11 +369,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             {
                 serie.Enabled = false;
             }
-        }
-
-        private void GetIntersections()
-        {
-           _controller.InvokeGetIntersectionLines();
         }
 
         private void GetIntersection(int lineId)
@@ -1075,7 +1068,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
                 case "updateIntersectionsLinesGraphToolBarBtn":
 
-                    GetIntersections();
+                    GetIntersection(SelectedLineId);
                     _controller.DrawIntersectionLines(Convert.ToInt32(profileChart.Series[SelectedLineId.ToString()].Name));
 
                     break;

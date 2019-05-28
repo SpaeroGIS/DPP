@@ -605,33 +605,17 @@ namespace MilSpace.Profile
                 oldSelectedLines.IsSelected = false;
             }
         }
-
-        private void CalcIntesectionsWithLayers(ProfileSession profileSession, int lineId)
-        {
-            var layers = View.GetLayers();
-            profileSession.Layers = new List<string>();
-
-            if (lineId == 0)
-            {
-                foreach (var selectedLine in profileSession.ProfileLines)
-                {
-                    CalcIntersectionsForLine(selectedLine, layers, profileSession);
-                }
-            }
-            else
-            {
-                CalcIntersectionsForLine(profileSession.ProfileLines.FirstOrDefault(line => line.Id == lineId), layers, profileSession);
-            }
-           
-        }
-
-        private List<IntersectionsInLayer> CalcIntersectionsForLine(ProfileLine selectedLine, List<string> layers, ProfileSession profileSession)
+        
+        private void CalcIntesectionsWithLayers(ProfileLine selectedLine, ProfileSession profileSession)
         {
             var intersectionLines = new List<IntersectionsInLayer>();
+            var layers = View.GetLayers();
+
+            profileSession.Layers = new List<string>();
 
             if (selectedLine == null)
             {
-                return intersectionLines;
+                return;
             }
 
             if (selectedLine.Line.SpatialReference == null)
@@ -670,8 +654,6 @@ namespace MilSpace.Profile
             }
 
             graphsController.SetIntersections(intersectionLines, selectedLine.Id);
-
-            return intersectionLines;
         }
 
         private void SetLayersForPoints(IntersectionsInLayer intersections, ProfileSurface surface)

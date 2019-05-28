@@ -25,7 +25,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal delegate void DeleteProfileDelegate(int sessionId, int lineId);
         internal delegate void SelectedProfileChangedDelegate(GroupedLines oldSelectedLines, GroupedLines newSelectedLines, int profileId);
-        internal delegate void GetIntersectionLinesDelegate(ProfileSession profileSession, int lineId = 0);
+        internal delegate void GetIntersectionLinesDelegate(ProfileLine selectedLine, ProfileSession profileSession);
 
         internal event ProfileGrapchClickedDelegate OnProfileGraphClicked;
         internal event ProfileChangeInvisiblesZonesDelegate InvisibleZonesChanged;
@@ -229,6 +229,15 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal void InvokeProfileRemoved(int profileId)
         {
+            if (_linesIntersections != null)
+            {
+                var intrersections = _linesIntersections.FirstOrDefault(line => line.LineId == profileId);
+
+                if(intrersections != null)
+                {
+                    _linesIntersections.Remove(_linesIntersections.FirstOrDefault(line => line.LineId == profileId));
+                }
+            }
             ProfileRemoved?.Invoke(_profileSession.SessionId, profileId);
         }
 
@@ -240,14 +249,9 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                                                 _profileSession.SessionId, true);
         }
 
-        internal void InvokeGetIntersectionLines()
-        {
-            IntersectionLinesDrawing?.Invoke(_profileSession);
-        }
-
         internal void InvokeGetIntersectionLine(int lineId)
         {
-            IntersectionLinesDrawing?.Invoke(_profileSession, lineId);
+            IntersectionLinesDrawing?.Invoke(_profileSession.ProfileLines.First(line => line.Id == lineId), _profileSession);
         }
 
         internal void InvokeSelectedProfile(int selectedLineId)
@@ -317,9 +321,14 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal void DrawIntersectionLines(int lineId)
         {
-            var intersectionLines = _linesIntersections.FirstOrDefault(line => line.LineId == lineId).Intersections;
+            if (_linesIntersections.Count == 0)
+            {
+                return;
+            }
 
-            if (intersectionLines == null || intersectionLines.Count == 0)
+            var intersectionLines = _linesIntersections.FirstOrDefault(line => line.LineId == lineId);
+
+            if (intersectionLines == null || intersectionLines.Intersections.Count == 0)
             {
                 _surfaceProfileChart.ClearIntersectionLines();
                 return;
@@ -329,7 +338,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                                             .ProfileSurfacePoints.Last()
                                             .Distance;
 
-            var preparedLines = PrepareIntersectionsToDrawing(intersectionLines, lastPoint);
+            var preparedLines = PrepareIntersectionsToDrawing(intersectionLines.Intersections, lastPoint);
 
             _surfaceProfileChart.DrawIntersections(preparedLines, lastPoint);
 
