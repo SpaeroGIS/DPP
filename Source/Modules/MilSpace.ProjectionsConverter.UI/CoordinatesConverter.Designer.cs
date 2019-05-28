@@ -33,6 +33,8 @@
             this.XCoordinateLabel = new System.Windows.Forms.Label();
             this.YCoordinateLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.CurrentWKIDLabel = new System.Windows.Forms.Label();
+            this.CurrentWKIDTextBox = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.WgsXCoordinateLabel = new System.Windows.Forms.Label();
             this.WgsYCoordinateTextBox = new System.Windows.Forms.TextBox();
@@ -64,7 +66,6 @@
             // 
             // XCoordinateTextBox
             // 
-            this.XCoordinateTextBox.Enabled = false;
             this.XCoordinateTextBox.Location = new System.Drawing.Point(80, 26);
             this.XCoordinateTextBox.Name = "XCoordinateTextBox";
             this.XCoordinateTextBox.Size = new System.Drawing.Size(225, 20);
@@ -72,7 +73,6 @@
             // 
             // YCoordinateTextBox
             // 
-            this.YCoordinateTextBox.Enabled = false;
             this.YCoordinateTextBox.Location = new System.Drawing.Point(80, 52);
             this.YCoordinateTextBox.Name = "YCoordinateTextBox";
             this.YCoordinateTextBox.Size = new System.Drawing.Size(225, 20);
@@ -81,7 +81,7 @@
             // XCoordinateLabel
             // 
             this.XCoordinateLabel.AutoSize = true;
-            this.XCoordinateLabel.Location = new System.Drawing.Point(6, 26);
+            this.XCoordinateLabel.Location = new System.Drawing.Point(6, 29);
             this.XCoordinateLabel.Name = "XCoordinateLabel";
             this.XCoordinateLabel.Size = new System.Drawing.Size(68, 13);
             this.XCoordinateLabel.TabIndex = 2;
@@ -98,16 +98,34 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.CurrentWKIDLabel);
+            this.groupBox1.Controls.Add(this.CurrentWKIDTextBox);
             this.groupBox1.Controls.Add(this.XCoordinateLabel);
             this.groupBox1.Controls.Add(this.YCoordinateTextBox);
             this.groupBox1.Controls.Add(this.YCoordinateLabel);
             this.groupBox1.Controls.Add(this.XCoordinateTextBox);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(312, 89);
+            this.groupBox1.Size = new System.Drawing.Size(312, 119);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Current Map Coordinate System";
+            // 
+            // CurrentWKIDLabel
+            // 
+            this.CurrentWKIDLabel.AutoSize = true;
+            this.CurrentWKIDLabel.Location = new System.Drawing.Point(6, 82);
+            this.CurrentWKIDLabel.Name = "CurrentWKIDLabel";
+            this.CurrentWKIDLabel.Size = new System.Drawing.Size(179, 13);
+            this.CurrentWKIDLabel.TabIndex = 5;
+            this.CurrentWKIDLabel.Text = "WKID for Current Coordiante System";
+            // 
+            // CurrentWKIDTextBox
+            // 
+            this.CurrentWKIDTextBox.Location = new System.Drawing.Point(208, 79);
+            this.CurrentWKIDTextBox.Name = "CurrentWKIDTextBox";
+            this.CurrentWKIDTextBox.Size = new System.Drawing.Size(97, 20);
+            this.CurrentWKIDTextBox.TabIndex = 4;
             // 
             // groupBox2
             // 
@@ -115,7 +133,7 @@
             this.groupBox2.Controls.Add(this.WgsYCoordinateTextBox);
             this.groupBox2.Controls.Add(this.WgsYCoordinateLabel);
             this.groupBox2.Controls.Add(this.WgsXCoordinateTextBox);
-            this.groupBox2.Location = new System.Drawing.Point(12, 107);
+            this.groupBox2.Location = new System.Drawing.Point(12, 137);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(312, 89);
             this.groupBox2.TabIndex = 5;
@@ -133,7 +151,6 @@
             // 
             // WgsYCoordinateTextBox
             // 
-            this.WgsYCoordinateTextBox.Enabled = false;
             this.WgsYCoordinateTextBox.Location = new System.Drawing.Point(80, 52);
             this.WgsYCoordinateTextBox.Name = "WgsYCoordinateTextBox";
             this.WgsYCoordinateTextBox.Size = new System.Drawing.Size(225, 20);
@@ -150,7 +167,6 @@
             // 
             // WgsXCoordinateTextBox
             // 
-            this.WgsXCoordinateTextBox.Enabled = false;
             this.WgsXCoordinateTextBox.Location = new System.Drawing.Point(80, 26);
             this.WgsXCoordinateTextBox.Name = "WgsXCoordinateTextBox";
             this.WgsXCoordinateTextBox.Size = new System.Drawing.Size(225, 20);
@@ -160,7 +176,7 @@
             // 
             this.groupBox3.Controls.Add(this.MgrsNotationLabel);
             this.groupBox3.Controls.Add(this.MgrsNotationTextBox);
-            this.groupBox3.Location = new System.Drawing.Point(12, 392);
+            this.groupBox3.Location = new System.Drawing.Point(12, 422);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(312, 61);
             this.groupBox3.TabIndex = 6;
@@ -178,7 +194,6 @@
             // 
             // MgrsNotationTextBox
             // 
-            this.MgrsNotationTextBox.Enabled = false;
             this.MgrsNotationTextBox.Location = new System.Drawing.Point(94, 26);
             this.MgrsNotationTextBox.Name = "MgrsNotationTextBox";
             this.MgrsNotationTextBox.Size = new System.Drawing.Size(211, 20);
@@ -190,7 +205,7 @@
             this.groupBox4.Controls.Add(this.PulkovoYCoordinateTextBox);
             this.groupBox4.Controls.Add(this.PulkovoYCoordinateLabel);
             this.groupBox4.Controls.Add(this.PulkovoXCoordinateTextBox);
-            this.groupBox4.Location = new System.Drawing.Point(14, 202);
+            this.groupBox4.Location = new System.Drawing.Point(12, 232);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(312, 89);
             this.groupBox4.TabIndex = 7;
@@ -208,7 +223,6 @@
             // 
             // PulkovoYCoordinateTextBox
             // 
-            this.PulkovoYCoordinateTextBox.Enabled = false;
             this.PulkovoYCoordinateTextBox.Location = new System.Drawing.Point(80, 52);
             this.PulkovoYCoordinateTextBox.Name = "PulkovoYCoordinateTextBox";
             this.PulkovoYCoordinateTextBox.Size = new System.Drawing.Size(225, 20);
@@ -225,7 +239,6 @@
             // 
             // PulkovoXCoordinateTextBox
             // 
-            this.PulkovoXCoordinateTextBox.Enabled = false;
             this.PulkovoXCoordinateTextBox.Location = new System.Drawing.Point(80, 26);
             this.PulkovoXCoordinateTextBox.Name = "PulkovoXCoordinateTextBox";
             this.PulkovoXCoordinateTextBox.Size = new System.Drawing.Size(225, 20);
@@ -237,7 +250,7 @@
             this.groupBox5.Controls.Add(this.UkraineYCoordinateTextBox);
             this.groupBox5.Controls.Add(this.UkraineYCoordinateLabel);
             this.groupBox5.Controls.Add(this.UkraineXCoordinateTextBox);
-            this.groupBox5.Location = new System.Drawing.Point(12, 297);
+            this.groupBox5.Location = new System.Drawing.Point(12, 327);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(312, 89);
             this.groupBox5.TabIndex = 8;
@@ -255,7 +268,6 @@
             // 
             // UkraineYCoordinateTextBox
             // 
-            this.UkraineYCoordinateTextBox.Enabled = false;
             this.UkraineYCoordinateTextBox.Location = new System.Drawing.Point(80, 52);
             this.UkraineYCoordinateTextBox.Name = "UkraineYCoordinateTextBox";
             this.UkraineYCoordinateTextBox.Size = new System.Drawing.Size(225, 20);
@@ -272,7 +284,6 @@
             // 
             // UkraineXCoordinateTextBox
             // 
-            this.UkraineXCoordinateTextBox.Enabled = false;
             this.UkraineXCoordinateTextBox.Location = new System.Drawing.Point(80, 26);
             this.UkraineXCoordinateTextBox.Name = "UkraineXCoordinateTextBox";
             this.UkraineXCoordinateTextBox.Size = new System.Drawing.Size(225, 20);
@@ -280,7 +291,7 @@
             // 
             // CloseButton
             // 
-            this.CloseButton.Location = new System.Drawing.Point(251, 464);
+            this.CloseButton.Location = new System.Drawing.Point(244, 504);
             this.CloseButton.Name = "CloseButton";
             this.CloseButton.Size = new System.Drawing.Size(75, 23);
             this.CloseButton.TabIndex = 9;
@@ -290,7 +301,7 @@
             // 
             // CopyButton
             // 
-            this.CopyButton.Location = new System.Drawing.Point(123, 464);
+            this.CopyButton.Location = new System.Drawing.Point(123, 504);
             this.CopyButton.Name = "CopyButton";
             this.CopyButton.Size = new System.Drawing.Size(105, 23);
             this.CopyButton.TabIndex = 10;
@@ -300,7 +311,7 @@
             // 
             // SaveButton
             // 
-            this.SaveButton.Location = new System.Drawing.Point(12, 464);
+            this.SaveButton.Location = new System.Drawing.Point(12, 504);
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(105, 23);
             this.SaveButton.TabIndex = 11;
@@ -310,13 +321,14 @@
             // 
             // saveButtonFileDialog
             // 
+            this.saveButtonFileDialog.CheckFileExists = false;
             this.saveButtonFileDialog.FileName = "Coordinates.xml";
             // 
             // CoordinatesConverter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(336, 499);
+            this.ClientSize = new System.Drawing.Size(336, 539);
             this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.CopyButton);
             this.Controls.Add(this.CloseButton);
@@ -327,7 +339,8 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "CoordinatesConverter";
             this.Text = "Coordinates Converter";
-            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.CoordinatesConverter_MouseClick);
+            this.TopMost = true;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CoordinatesConverter_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -371,6 +384,8 @@
         private System.Windows.Forms.Button CopyButton;
         private System.Windows.Forms.Button SaveButton;
         private System.Windows.Forms.OpenFileDialog saveButtonFileDialog;
+        private System.Windows.Forms.TextBox CurrentWKIDTextBox;
+        private System.Windows.Forms.Label CurrentWKIDLabel;
     }
 }
 

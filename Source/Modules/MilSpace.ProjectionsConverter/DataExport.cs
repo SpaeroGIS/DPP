@@ -14,7 +14,7 @@ namespace MilSpace.ProjectionsConverter
             var xmlSerializer = new XmlSerializer(typeof(PointModel));
             using (var streamWriter = File.Open(path, FileMode.Create))
             {
-                using (XmlWriter writer = XmlWriter.Create(streamWriter))
+                using (XmlWriter writer = XmlWriter.Create(streamWriter, new XmlWriterSettings() { Async = true }))
                 {
                     xmlSerializer.Serialize(writer, point);
                     await writer.FlushAsync();
