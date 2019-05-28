@@ -25,7 +25,7 @@ namespace MilSpace.Profile
 
         internal delegate void DeleteProfileDelegate(int sessionId, int lineId);
         internal delegate void SelectedProfileChangedDelegate(GroupedLines oldSelectedLines, GroupedLines newSelectedLines, int profileId);
-        internal delegate void GetIntersectionLinesDelegate(ProfileSession profileSession, int lineId);
+        internal delegate void GetIntersectionLinesDelegate(ProfileLine selectedLine, ProfileSession profileSession);
         internal delegate void CreateEmptyGraphDelegate();
 
         internal event ProfileRedrawDelegate ProfileRedrawn;
@@ -102,9 +102,9 @@ namespace MilSpace.Profile
             SelectedProfileChanged?.Invoke(oldSelectedLines, newSelectedLines, profileId);
         }
 
-        internal void InvokeIntersectionLinesDrawing(ProfileSession profileSession, int lineId)
+        internal void InvokeIntersectionLinesDrawing(ProfileLine selectedLine, ProfileSession profileSession)
         {
-            IntersectionLinesDrawing?.Invoke(profileSession, lineId);
+            IntersectionLinesDrawing?.Invoke(selectedLine, profileSession);
         }
 
         internal void SetIntersections(List<IntersectionsInLayer> intersectionsLines, int lineId)
