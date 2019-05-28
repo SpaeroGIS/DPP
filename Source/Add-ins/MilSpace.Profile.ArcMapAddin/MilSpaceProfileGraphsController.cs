@@ -24,13 +24,15 @@ namespace MilSpace.Profile
                                                                         bool update, List<int> linesIds = null);
 
         internal delegate void DeleteProfileDelegate(int sessionId, int lineId);
-        internal delegate void SelectedProfileChangedDelegate(GroupedLines newSelectedLines, int profileId);
-        internal delegate void GetIntersectionLines(ProfileSession profileSession);
+        internal delegate void SelectedProfileChangedDelegate(GroupedLines oldSelectedLines, GroupedLines newSelectedLines, int profileId);
+        internal delegate void GetIntersectionLinesDelegate(ProfileSession profileSession, int lineId);
+        internal delegate void CreateEmptyGraphDelegate();
 
         internal event ProfileRedrawDelegate ProfileRedrawn;
         internal event DeleteProfileDelegate ProfileRemoved;
         internal event SelectedProfileChangedDelegate SelectedProfileChanged;
-        internal event GetIntersectionLines IntersectionLinesDrawing;
+        internal event GetIntersectionLinesDelegate IntersectionLinesDrawing;
+        internal event CreateEmptyGraphDelegate CreateEmptyGraph;
 
         internal DockableWindowMilSpaceProfileGraph View { get; private set; }
 
@@ -89,14 +91,20 @@ namespace MilSpace.Profile
             ProfileRemoved?.Invoke(sessionId, lineId);
         }
 
-        internal void InvokeSelectedProfileChanged(GroupedLines newSelectedLines, int profileId)
+        internal void ClearProfileSelection(SurfaceProfileChart chart)
         {
-            SelectedProfileChanged?.Invoke(newSelectedLines, profileId);
+            SetChart(chart);
+            _surfaceProfileChartController.InvokeSelectedProfile(-1);
         }
 
-        internal void InvokeIntersectionLinesDrawing(ProfileSession profileSession)
+        internal void InvokeSelectedProfileChanged(GroupedLines oldSelectedLines, GroupedLines newSelectedLines, int profileId)
         {
-            IntersectionLinesDrawing?.Invoke(profileSession);
+            SelectedProfileChanged?.Invoke(oldSelectedLines, newSelectedLines, profileId);
+        }
+
+        internal void InvokeIntersectionLinesDrawing(ProfileSession profileSession, int lineId)
+        {
+            IntersectionLinesDrawing?.Invoke(profileSession, lineId);
         }
 
         internal void SetIntersections(List<IntersectionsInLayer> intersectionsLines, int lineId)
@@ -131,9 +139,15 @@ namespace MilSpace.Profile
             View.AddNewTab(surfaceProfileChart, profileSession.SessionId);
         }
 
+        internal void AddProfileToTab(ProfileLine profileLine, ProfileSurface profileSurface)
+        {
+            View.SetCurrentChart();
+            _surfaceProfileChartController.AddLineToGraph(profileLine, profileSurface);
+        }
+
         internal void SetChart(SurfaceProfileChart currentChart)
         {
-            _surfaceProfileChartController.SetCurrentChart(currentChart, this);
+            _surfaceProfileChartController = _surfaceProfileChartController.GetCurrentController(currentChart, this);
         }
 
         internal void RemoveTab()
@@ -144,6 +158,11 @@ namespace MilSpace.Profile
         internal void RemoveTab(int sessionId)
         {
             View.RemoveTabBySessionId(sessionId);
+        }
+
+        internal void AddEmptyGraph()
+        {
+            CreateEmptyGraph?.Invoke();
         }
 
         private IDockableWindow Docablewindow
