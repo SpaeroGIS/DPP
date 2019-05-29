@@ -72,6 +72,8 @@
     <Compile Include="Interfaces\IBusinessLogic.cs" />
     <Compile Include="Interfaces\IDataExport.cs" />
     <Compile Include="Models\PointModel.cs" />
+    <Compile Include="Models\ProjectionsModel.cs" />
+    <Compile Include="Models\SingleProjectionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReferenceData\Constants.cs" />
   </ItemGroup>
