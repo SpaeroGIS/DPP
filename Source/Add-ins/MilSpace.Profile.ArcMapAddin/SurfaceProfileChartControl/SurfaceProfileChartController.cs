@@ -125,6 +125,11 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             return String.Empty;
         }
 
+        internal void AddProfileToExistedGraph()
+        {
+            _graphsController.InvokeAddProfile();
+        }
+
         internal void AddExtremePoints(ProfileSurface profileSurface = null)
         {
             if (profileSurface == null)
@@ -550,11 +555,9 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         {
             var orderedIntersectionLines = new List<IntersectionLine>();
 
-            var orderedLayers = lines.OrderBy(layer => layer.Lines.Min(line => line.PointFromDistance));
-
-            foreach (var intersectionLine in orderedLayers)
+            foreach (var intersectionLine in lines)
             {
-                var orderedLines = intersectionLine.Lines.OrderBy(line => line.PointFromDistance);
+                var orderedLines = intersectionLine.Lines;
 
                 foreach (var line in orderedLines)
                 {
@@ -562,7 +565,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 }
             }
 
-            return orderedIntersectionLines.OrderByDescending(line => line.LayerType).ToList();
+            return orderedIntersectionLines.OrderBy(line => line.PointFromDistance).ToList();
         }
 
         private List<IntersectionsInLayer> GroupLinesByLayers(List<IntersectionLine> lines)
@@ -591,7 +594,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 }
             }
 
-            return preparedLines;
+            return preparedLines.OrderByDescending(line => line.Type).ToList(); 
         }
 
         private List<ProfileSurfacePoint> FindExtremePoints(ProfileSurface profileSurface = null)

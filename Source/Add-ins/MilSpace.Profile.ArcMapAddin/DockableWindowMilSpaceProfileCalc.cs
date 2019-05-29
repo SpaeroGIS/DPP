@@ -755,6 +755,11 @@ namespace MilSpace.Profile
             throw new NotImplementedException(treeNode.Name);
         }
 
+        public TreeView GetTreeView()
+        {
+            return profilesTreeView;
+        }
+
         public int GetProfileNameFromNode()
         {
             var treeNode = profilesTreeView.SelectedNode;

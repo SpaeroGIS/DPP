@@ -1003,6 +1003,12 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
                     break;
 
+                case "addProfileGraphToolBarButton":
+
+                    _controller.AddProfileToExistedGraph();
+
+                    break;
+
                 case "showAllProfilesGraphToolBarBtn":
 
                     axis.ScaleView.Position = 0;
