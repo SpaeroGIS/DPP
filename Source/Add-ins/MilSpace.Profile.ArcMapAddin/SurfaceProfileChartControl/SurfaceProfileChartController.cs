@@ -40,6 +40,14 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         internal void SetSession(ProfileSession profileSession)
         {
             _profileSession = profileSession;
+
+            if (_profileSession.ProfileLines != null && _profileSession.ProfileLines.Count() > 0)
+            {
+                for(int i = 0; i < _profileSession.ProfileLines.Count(); i++)
+                {
+                    _profileSession.ProfileLines[i].SessionId = _profileSession.SessionId;
+                }
+            }
         }
 
         internal SurfaceProfileChartController GetCurrentController(SurfaceProfileChart currentChart, MilSpaceProfileGraphsController graphsController)
@@ -92,6 +100,29 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         internal void LoadSerie()
         {
             _surfaceProfileChart.AddSerie(_profileSession.ProfileSurfaces.Last());
+        }
+
+        internal string GetProfileName(ref int currentSessionId, int lineId)
+        {
+            if (_profileSession.ProfileLines == null || _profileSession.ProfileLines.Count() == 0)
+            {
+                return _profileSession.SessionName;
+            }
+
+            var sessionId = _profileSession.ProfileLines.First(line => lineId == line.Id).SessionId;
+
+            if (sessionId != currentSessionId)
+            {
+                currentSessionId = sessionId;
+                var sessionName = _graphsController.GetProfileNameById(sessionId);
+
+                if (!String.IsNullOrEmpty(sessionName))
+                {
+                    return sessionName;
+                }
+            }
+
+            return String.Empty;
         }
 
         internal void AddExtremePoints(ProfileSurface profileSurface = null)
