@@ -27,12 +27,14 @@ namespace MilSpace.Profile
         internal delegate void SelectedProfileChangedDelegate(GroupedLines oldSelectedLines, GroupedLines newSelectedLines, int profileId);
         internal delegate void GetIntersectionLinesDelegate(ProfileLine selectedLine, ProfileSession profileSession);
         internal delegate void CreateEmptyGraphDelegate();
+        internal delegate string GetProfileNameDelegate(int id);
 
         internal event ProfileRedrawDelegate ProfileRedrawn;
         internal event DeleteProfileDelegate ProfileRemoved;
         internal event SelectedProfileChangedDelegate SelectedProfileChanged;
         internal event GetIntersectionLinesDelegate IntersectionLinesDrawing;
         internal event CreateEmptyGraphDelegate CreateEmptyGraph;
+        internal event GetProfileNameDelegate GetProfileName;
 
         internal DockableWindowMilSpaceProfileGraph View { get; private set; }
 
@@ -110,6 +112,11 @@ namespace MilSpace.Profile
         internal void SetIntersections(List<IntersectionsInLayer> intersectionsLines, int lineId)
         {
             _surfaceProfileChartController.SetIntersectionLines(intersectionsLines, lineId);
+        }
+
+        internal string GetProfileNameById(int id)
+        {
+            return GetProfileName?.Invoke(id);
         }
 
         internal void ShowWindow()

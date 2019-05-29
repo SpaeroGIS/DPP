@@ -112,7 +112,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 AddSerie(profileSurface);
             }
 
-            _profileName = profileSession.SessionName;
+            profileNameLabel.Text = $"Профиль: {profileSession.SessionName}";
+            profileNameLabel.Tag = profileSession.SessionId;
         }
 
         internal void AddSerie(ProfileSurface profileSurface)
@@ -982,15 +983,22 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
                 case "deleteSelectedProfileGraphToolBarBtn":
 
-                    if (GetProfiles().Count > 1)
+                    DialogResult deleteProfileResult = 
+                                        MessageBox.Show("Do you realy want to remove profile?", "Remove profile",
+                                                                                        MessageBoxButtons.OKCancel);
+
+                    if (deleteProfileResult == DialogResult.OK)
                     {
-                        DeleteSelectedProfile();
-                    }
-                    else
-                    {
-                        _controller.InvokeProfileRemoved(Convert.ToInt32(profileChart.Series.First().Name));
-                        profileChart.Series.Clear();
-                        _controller.RemoveCurrentTab();
+                        if (GetProfiles().Count > 1)
+                        {
+                            DeleteSelectedProfile();
+                        }
+                        else
+                        {
+                            _controller.InvokeProfileRemoved(Convert.ToInt32(profileChart.Series.First().Name));
+                            profileChart.Series.Clear();
+                            _controller.RemoveCurrentTab();
+                        }
                     }
 
                     break;
@@ -1055,8 +1063,14 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                     break;
 
                 case "deletePageGraphToolBarBtn":
+                    DialogResult deleteTabResult =  
+                                    MessageBox.Show("Do you realy want to remove tab?", "Remove tab", MessageBoxButtons.OKCancel);
 
-                    _controller.RemoveCurrentTab();
+                    if (deleteTabResult == DialogResult.OK)
+                    {
+                        _controller.RemoveCurrentTab();
+                    }
+                    
 
                     break;
 
@@ -1220,8 +1234,17 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                                    new Font(profileChart.Series[SelectedLineId.ToString()].Font, FontStyle.Regular);
             }
 
-            profileNameLabel.Text = $"Профиль: {_profileName}";
+           
             SelectedLineId = Convert.ToInt32(serieName);
+
+            var id = (int)profileNameLabel.Tag;
+            var profileName = _controller.GetProfileName(ref id, SelectedLineId);
+
+            if (profileName != String.Empty)
+            {
+                profileNameLabel.Text = $"Профиль: {profileName}";
+                profileNameLabel.Tag = id;
+            }
 
             observerHeightTextBox.Text = ProfilesProperties.First(property => property.LineId == Convert.ToInt32(serieName))
                                                            .ObserverHeight.ToString();
@@ -1294,26 +1317,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             profilePropertiesTable.Rows.RemoveAt(index);
 
-            var fullHeights = new List<double>();
-
-            for (int i = 0; i < ProfilesProperties.Count; i++)
-            {
-                fullHeights.Add(GetObserverPointFullHeight(ProfilesProperties[i].LineId));
-            }
-
-            if (fullHeights.Max() > _defaultChartHeight)
-            {
-                profileChart.ChartAreas["Default"].AxisY.Maximum =
-                                        fullHeights.Max()
-                                        + (fullHeights.Max() - profileChart.ChartAreas["Default"].AxisY.Minimum) / 10;
-                SetAxisYMinValue();
-            }
-            else
-            {
-                profileChart.ChartAreas["Default"].AxisY.Maximum = _defaultChartHeight;
-            }
-
-            SetAxisInterval(profileChart.ChartAreas["Default"].AxisY);
+            SetAxisView();
         }
 
         private void SaveGraph()

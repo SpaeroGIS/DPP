@@ -149,6 +149,7 @@ namespace MilSpace.Profile
                 graphsController.SelectedProfileChanged += SelectedProfileChanged;
                 graphsController.IntersectionLinesDrawing += CalcIntesectionsWithLayers;
                 graphsController.CreateEmptyGraph += GenerateEmptyGraph;
+                graphsController.GetProfileName += GetProfileName;
 
                 return graphsController;
             }
@@ -467,6 +468,7 @@ namespace MilSpace.Profile
                 {
                     var profileSurface = profileSession.ProfileSurfaces.First(surface => surface.LineId == profileLine.Id);
                     GraphicsLayerManager.RemoveLineFromGraphic(profileSessionId, profileLine.Id);
+                    profileLine.SessionId = profileSessionId;
                     graphsController.AddProfileToTab(profileLine, profileSurface);
                 }
             }
@@ -520,6 +522,17 @@ namespace MilSpace.Profile
             }
 
             return MilSpaceProfileFacade.CanEraseProfileSessions(profileSession); ;
+        }
+
+        internal string GetProfileName(int id)
+        {
+            var session = GetProfileSessionById(id);
+            if (session != null)
+            {
+              return  session.SessionName;
+            }
+
+            return null;
         }
 
         private void InvokeOnProfileSettingsChanged()
