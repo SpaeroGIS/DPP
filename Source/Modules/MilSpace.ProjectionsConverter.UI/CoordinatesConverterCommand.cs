@@ -11,19 +11,20 @@ using ESRI.ArcGIS.Geometry;
 using ESRI.ArcGIS.Carto;
 using MilSpace.ProjectionsConverter.Models;
 using MilSpace.ProjectionsConverter.ReferenceData;
+using ESRI.ArcGIS.esriSystem;
 
 namespace MilSpace.ProjectionsConverter.UI
 {
-    public class CoordinatesConverterCommand : ITool, ICommand
+    public class CoordinatesConverterCommand : IDockableWindow, ICommand, ITool
     {
-        private CoordinatesConverter mainForm;
+        private DockableWindowCoordinatesConverter mainForm;
 
         public void OnCreate(object Hook)
         {
             if (mainForm == null && Hook is IApplication arcMap)
             {
                 var businessLogic = new BusinessLogic(arcMap, new DataExport());
-                mainForm = new CoordinatesConverter(arcMap, businessLogic, CreateProjecstionsModelFromSettings());                
+                mainForm = new DockableWindowCoordinatesConverter(arcMap, businessLogic, CreateProjecstionsModelFromSettings());                
             }            
         }
 
@@ -106,5 +107,26 @@ namespace MilSpace.ProjectionsConverter.UI
                                         new SingleProjectionModel((int)esriSRProjCSType.esriSRProjCS_Pulkovo1942GK_6N, 30.000, 44.330),
                                         new SingleProjectionModel(Constants.Ukraine2000ID[2], 30.000, 43.190));
         }
+
+        public void Show(bool Show)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsVisible()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Dock(esriDockFlags dockFlags)
+        {
+            throw new NotImplementedException();
+        }
+
+        string IDockableWindow.Caption { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public UID ID => throw new NotImplementedException();
+
+        public dynamic UserData => throw new NotImplementedException();
     }
 }
