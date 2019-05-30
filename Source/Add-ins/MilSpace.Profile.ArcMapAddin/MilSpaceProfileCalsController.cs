@@ -142,14 +142,15 @@ namespace MilSpace.Profile
                 {
                     var winImpl = AddIn.FromID<DockableWindowMilSpaceProfileGraph.AddinImpl>(ThisAddIn.IDs.DockableWindowMilSpaceProfileGraph);
                     graphsController = winImpl.MilSpaceProfileGraphsController;
-                }
 
-                graphsController.ProfileRedrawn += GraphRedrawn;
-                graphsController.ProfileRemoved += ProfileRemove;
-                graphsController.SelectedProfileChanged += SelectedProfileChanged;
-                graphsController.IntersectionLinesDrawing += CalcIntesectionsWithLayers;
-                graphsController.CreateEmptyGraph += GenerateEmptyGraph;
-                graphsController.GetProfileName += GetProfileName;
+                    graphsController.ProfileRedrawn += GraphRedrawn;
+                    graphsController.ProfileRemoved += ProfileRemove;
+                    graphsController.SelectedProfileChanged += SelectedProfileChanged;
+                    graphsController.IntersectionLinesDrawing += CalcIntesectionsWithLayers;
+                    graphsController.CreateEmptyGraph += GenerateEmptyGraph;
+                    graphsController.GetProfileName += GetProfileName;
+                    graphsController.AddProfile += AddProfileToExistedGraph;
+                }
 
                 return graphsController;
             }
@@ -527,6 +528,18 @@ namespace MilSpace.Profile
             }
 
             return null;
+        }
+
+        internal void AddProfileToExistedGraph()
+        {
+            var profilesTreeModalWindow = new ProfilesTreeModalWindow(View.GetTreeView());
+            DialogResult result = profilesTreeModalWindow.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                AddProfileToTab(profilesTreeModalWindow.SelectedSessionId, profilesTreeModalWindow.SelectedLineId);
+            }
+
         }
 
         private void InvokeOnProfileSettingsChanged()
