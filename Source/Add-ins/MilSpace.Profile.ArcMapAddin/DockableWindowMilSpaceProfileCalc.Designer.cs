@@ -175,6 +175,7 @@
             this.eraseProfile = new System.Windows.Forms.ToolStripButton();
             this.saveProfileAsShared = new System.Windows.Forms.ToolStripButton();
             this.lblProfileList = new System.Windows.Forms.Label();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -1836,7 +1837,8 @@
             this.toolStripSeparator4,
             this.removeProfile,
             this.eraseProfile,
-            this.saveProfileAsShared});
+            this.saveProfileAsShared,
+            this.toolStripButton1});
             this.profilesToolStrip.Location = new System.Drawing.Point(0, 0);
             this.profilesToolStrip.Name = "profilesToolStrip";
             this.profilesToolStrip.Size = new System.Drawing.Size(755, 30);
@@ -1965,6 +1967,15 @@
             this.lblProfileList.Size = new System.Drawing.Size(161, 32);
             this.lblProfileList.TabIndex = 1;
             this.lblProfileList.Text = "Список профилей";
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 27);
+            this.toolStripButton1.Text = "toolStripButton1";
             // 
             // DockableWindowMilSpaceProfileCalc
             // 
@@ -2176,5 +2187,6 @@
         private System.Windows.Forms.Label lblCommonLength;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.ToolStripButton addProfileToExistingGraph;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
     }
 }

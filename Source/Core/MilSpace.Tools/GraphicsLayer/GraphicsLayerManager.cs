@@ -168,8 +168,7 @@ namespace MilSpace.Tools.GraphicsLayer
 
             if (flashGeometry != null)
             {
-                EsriTools.FlashGeometry(activeView.ScreenDisplay, flashGeometry);
-                activeView.Refresh();
+                EsriTools.FlashGeometry(activeView.ScreenDisplay, flashingGeometry);
             }
         }
 
