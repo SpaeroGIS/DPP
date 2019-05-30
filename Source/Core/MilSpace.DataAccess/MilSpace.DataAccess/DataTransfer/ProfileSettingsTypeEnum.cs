@@ -6,6 +6,7 @@
         Points,
         Fun,
         Primitives,
-        Load
+        Load,
+        Composed
     }
 }

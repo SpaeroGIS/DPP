@@ -124,8 +124,8 @@ namespace MilSpace.Profile
             {
                 (cmbVegetationLayer.SelectedItem != null)  ?  cmbVegetationLayer.SelectedItem.ToString()  : String.Empty,
                 (cmbBuildings.SelectedItem != null)        ?  cmbBuildings.SelectedItem.ToString()        : String.Empty,
-                (cmbHydrographyLayer.SelectedItem != null) ?  cmbHydrographyLayer.SelectedItem.ToString() : String.Empty,
-                (cmbRoadLayers.SelectedItem != null)       ?  cmbRoadLayers.SelectedItem.ToString()       : String.Empty
+                (cmbRoadLayers.SelectedItem != null)       ?  cmbRoadLayers.SelectedItem.ToString()       : String.Empty,
+                (cmbHydrographyLayer.SelectedItem != null) ?  cmbHydrographyLayer.SelectedItem.ToString() : String.Empty
             };
         }
 
@@ -407,9 +407,9 @@ namespace MilSpace.Profile
 
                     break;
                 case 1:
+                    controller.FlashPoint(ProfileSettingsPointButtonEnum.PointsSecond);
                     break;
                 case 2:
-                    controller.FlashPoint(ProfileSettingsPointButtonEnum.PointsSecond);
                     break;
 
                 case 4:
@@ -1108,6 +1108,14 @@ namespace MilSpace.Profile
         private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void addProfileToExistingGraph_Click(object sender, EventArgs e)
+        {
+            var node = profilesTreeView.SelectedNode;
+            var ids = GetProfileAndLineIds(node);
+
+            controller.AddProfileToTab(ids.Item1, ids.Item2);
         }
     }
 }

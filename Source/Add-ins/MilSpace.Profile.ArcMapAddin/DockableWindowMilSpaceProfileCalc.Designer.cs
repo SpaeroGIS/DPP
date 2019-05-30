@@ -167,6 +167,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.addProfileToExistingGraph = new System.Windows.Forms.ToolStripButton();
             this.addProfileToGraph = new System.Windows.Forms.ToolStripButton();
             this.openGraphWindow = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -174,6 +175,7 @@
             this.eraseProfile = new System.Windows.Forms.ToolStripButton();
             this.saveProfileAsShared = new System.Windows.Forms.ToolStripButton();
             this.lblProfileList = new System.Windows.Forms.Label();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -1829,12 +1831,14 @@
             this.toolStripSeparator1,
             this.toolStripButton4,
             this.toolStripSeparator3,
+            this.addProfileToExistingGraph,
             this.addProfileToGraph,
             this.openGraphWindow,
             this.toolStripSeparator4,
             this.removeProfile,
             this.eraseProfile,
-            this.saveProfileAsShared});
+            this.saveProfileAsShared,
+            this.toolStripButton1});
             this.profilesToolStrip.Location = new System.Drawing.Point(0, 0);
             this.profilesToolStrip.Name = "profilesToolStrip";
             this.profilesToolStrip.Size = new System.Drawing.Size(755, 30);
@@ -1882,6 +1886,15 @@
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 30);
+            // 
+            // addProfileToExistingGraph
+            // 
+            this.addProfileToExistingGraph.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.addProfileToExistingGraph.Image = ((System.Drawing.Image)(resources.GetObject("addProfileToExistingGraph.Image")));
+            this.addProfileToExistingGraph.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.addProfileToExistingGraph.Name = "addProfileToExistingGraph";
+            this.addProfileToExistingGraph.Size = new System.Drawing.Size(23, 27);
+            this.addProfileToExistingGraph.Click += new System.EventHandler(this.addProfileToExistingGraph_Click);
             // 
             // addProfileToGraph
             // 
@@ -1954,6 +1967,15 @@
             this.lblProfileList.Size = new System.Drawing.Size(161, 32);
             this.lblProfileList.TabIndex = 1;
             this.lblProfileList.Text = "Список профилей";
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 27);
+            this.toolStripButton1.Text = "toolStripButton1";
             // 
             // DockableWindowMilSpaceProfileCalc
             // 
@@ -2164,5 +2186,7 @@
         private System.Windows.Forms.Label lblSelectedPrimitives;
         private System.Windows.Forms.Label lblCommonLength;
         private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.ToolStripButton addProfileToExistingGraph;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
     }
 }

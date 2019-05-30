@@ -6,6 +6,7 @@ using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace MilSpace.Core.Tools
@@ -13,6 +14,12 @@ namespace MilSpace.Core.Tools
     public static class EsriTools
     {
         private static ISpatialReference wgs84 = null;
+        private static IRgbColor whiteColor = new RgbColor()
+        {
+            Green = 192,
+            Blue = 192,
+            Red = 192
+        };
 
         private static Dictionary<esriGeometryType, Func<IRgbColor, ISymbol>> symbolsToFlash = new Dictionary<esriGeometryType, Func<IRgbColor, ISymbol>>()
         {
@@ -21,8 +28,11 @@ namespace MilSpace.Core.Tools
                 ISimpleMarkerSymbol simpleMarkerSymbol = new SimpleMarkerSymbol()
                 {
                     Style = esriSimpleMarkerStyle.esriSMSCross,
-                    Size = 10,
-                    Color = rgbColor
+                    Size = 8,
+                    Color = rgbColor,
+                    Outline = true,
+                    OutlineColor = whiteColor,
+                    OutlineSize = 2
                 };
 
                 return (ISymbol)simpleMarkerSymbol; }
@@ -42,7 +52,8 @@ namespace MilSpace.Core.Tools
                 //Create cartographic line symbol  
                 ICartographicLineSymbol cartographicLineSymbol = new CartographicLineSymbol();
                 cartographicLineSymbol.Color = rgbColor;
-                cartographicLineSymbol.Width = 1;
+                cartographicLineSymbol.Width = 4.0;
+
 
                 //Define simple line decoration  
                 ISimpleLineDecorationElement simpleLineDecorationElement = new SimpleLineDecorationElement();
@@ -63,15 +74,14 @@ namespace MilSpace.Core.Tools
             } }
         };
 
-        private static Dictionary<esriGeometryType, Func<IDisplay, IGeometry, bool>> actionToFlash = new Dictionary<esriGeometryType, Func<IDisplay, IGeometry, bool>>()
+        private static readonly Dictionary<esriGeometryType, Func<IDisplay, IGeometry, bool>> actionToFlash = new Dictionary<esriGeometryType, Func<IDisplay, IGeometry, bool>>()
         {
             { esriGeometryType.esriGeometryPoint, (display, geometry) => {
 
-                    for(int i =0; i < 4; i++ )
-                    {
+                    //for(int i =0; i < 4; i++ )
+                    //{
                         display.DrawPoint(geometry);
-                        System.Threading.Thread.Sleep(300);
-                    }
+                    //}
                     return true;
                 }
             },
@@ -80,7 +90,6 @@ namespace MilSpace.Core.Tools
                 for(int i=0; i < 4; i++ )
                     {
                         display.DrawPolyline(geometry);
-                        System.Threading.Thread.Sleep(100);
                     }
                     return true;
                 }
@@ -143,22 +152,54 @@ namespace MilSpace.Core.Tools
             }
         }
 
-        public static void FlashGeometry(IDisplay display, IGeometry geometry)
+        public static void PanToGeometry(IActiveView view, IGeometry geometry, bool setCenterAt = false)
         {
-            if (symbolsToFlash.ContainsKey(geometry.GeometryType))
+            IEnvelope env = new EnvelopeClass();
+            env = view.Extent;
+
+            IRelationalOperator2 operation = env as IRelationalOperator2;
+            if (setCenterAt || !operation.Contains(geometry))
             {
-                IRgbColor color = new RgbColor();
-                color.Red = 255;
-                var symbol = symbolsToFlash[geometry.GeometryType].Invoke(color);
-
-                display.StartDrawing(display.hDC, (short)ESRI.ArcGIS.Display.esriScreenCache.esriNoScreenCache);
-                display.SetSymbol(symbol);
-                actionToFlash[geometry.GeometryType].Invoke(display, geometry);
-                display.FinishDrawing();
-
+                ISegmentCollection poly = new PolygonClass();
+                IArea area = geometry.Envelope as IArea;
+                env.CenterAt(area.Centroid);
+                view.Extent = env;
+                view.Refresh();
+                view.ScreenDisplay.UpdateWindow();
             }
-            else
-            { throw new KeyNotFoundException("{0} cannot be found in the Symbol dictionary".InvariantFormat(geometry.GeometryType)); }
+        }
+
+        public static void FlashGeometry(IScreenDisplay display, IEnumerable<IGeometry> geometries)
+        {
+
+            IRgbColor color = new RgbColor();
+            color.Green = color.Blue = 0;
+            color.Red = 255;
+
+            short cacheId = display.AddCache();
+            display.StartDrawing(display.hDC, cacheId);
+
+            geometries.ToList().ForEach(geometry =>
+            {
+                if (symbolsToFlash.ContainsKey(geometry.GeometryType))
+                {
+                    var symbol = symbolsToFlash[geometry.GeometryType].Invoke(color);
+                    display.SetSymbol(symbol);
+                    actionToFlash[geometry.GeometryType].Invoke(display, geometry);
+                }
+                else
+                { throw new KeyNotFoundException("{0} cannot be found in the Symbol dictionary".InvariantFormat(geometry.GeometryType)); }
+            });
+
+            display.FinishDrawing();
+
+            tagRECT rect = new tagRECT();
+            display.DrawCache(display.hDC, cacheId, ref rect, ref rect);
+            System.Threading.Thread.Sleep(300);
+            display.Invalidate(rect: null, erase: true, cacheIndex: cacheId);
+            display.RemoveCache(cacheId);
+            
+           
         }
 
 
