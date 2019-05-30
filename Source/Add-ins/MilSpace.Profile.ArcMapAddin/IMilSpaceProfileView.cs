@@ -3,6 +3,7 @@ using ESRI.ArcGIS.Geometry;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Profile.DTO;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace MilSpace.Profile
 {
@@ -78,6 +79,6 @@ namespace MilSpace.Profile
         ProfileSettingsTypeEnum GetProfileTypeFromNode();
 
         int GetProfileNameFromNode();
-
+        TreeView GetTreeView();
     }
 }

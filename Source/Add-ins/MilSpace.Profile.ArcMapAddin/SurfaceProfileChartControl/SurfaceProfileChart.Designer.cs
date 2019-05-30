@@ -44,6 +44,7 @@
             this.displayProfileSignatureGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton1 = new System.Windows.Forms.ToolBarButton();
             this.deleteSelectedProfileGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
+            this.addProfileGraphToolBarButton = new System.Windows.Forms.ToolBarButton();
             this.panToSelectedProfileGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
             this.graphToolBarSpr1 = new System.Windows.Forms.ToolBarButton();
             this.panGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
@@ -147,6 +148,7 @@
             this.displayProfileSignatureGraphToolBarBtn,
             this.toolBarButton1,
             this.deleteSelectedProfileGraphToolBarBtn,
+            this.addProfileGraphToolBarButton,
             this.panToSelectedProfileGraphToolBarBtn,
             this.graphToolBarSpr1,
             this.panGraphToolBarBtn,
@@ -194,6 +196,11 @@
             this.deleteSelectedProfileGraphToolBarBtn.ImageKey = "Cancel.png";
             this.deleteSelectedProfileGraphToolBarBtn.Name = "deleteSelectedProfileGraphToolBarBtn";
             this.deleteSelectedProfileGraphToolBarBtn.ToolTipText = "Удалить выбраный профиль из отображения";
+            // 
+            // addProfileGraphToolBarButton
+            // 
+            this.addProfileGraphToolBarButton.ImageKey = "Plus.png";
+            this.addProfileGraphToolBarButton.Name = "addProfileGraphToolBarButton";
             // 
             // panToSelectedProfileGraphToolBarBtn
             // 
@@ -923,5 +930,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn RiseAngleCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn VisiblePercentCol;
         private System.Windows.Forms.Panel profileNamePanel;
+        private System.Windows.Forms.ToolBarButton addProfileGraphToolBarButton;
     }
 }

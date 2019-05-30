@@ -97,6 +97,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
 
             graphToolBar.Buttons["deletePageGraphToolBarBtn"].Enabled = true;
+            graphToolBar.Buttons["addProfileGraphToolBarButton"].Enabled = true;
             propertiesPanel.Enabled = !isEmpty;
         }
 
@@ -472,6 +473,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         private void SetAxisSizes()
         {
+            var serie = GetProfiles();
+
             if (ProfilesProperties.Count == 1)
             {
                 var height = ProfilesProperties[0].MaxHeight + ProfilesProperties.Max(property => property.ObserverHeight);
@@ -480,8 +483,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 profileChart.ChartAreas["Default"].AxisY.Minimum = ProfilesProperties[0].MinHeight
                     - height / 10;
 
-                profileChart.ChartAreas["Default"].AxisX.Maximum = profileChart.Series[0].Points.Last().XValue
-                  + profileChart.Series[0].Points.Last().XValue / 10;
+                profileChart.ChartAreas["Default"].AxisX.Maximum = serie[0].Points.Last().XValue
+                  + serie[0].Points.Last().XValue / 10;
             }
             else
             {
@@ -495,7 +498,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 profileChart.ChartAreas["Default"].AxisY.Minimum = minHeight - absHeight / 10;
 
 
-                double maxWidth = profileChart.Series.Max(serie => serie.Points.Last().XValue);
+                double maxWidth = serie.Max(profile => profile.Points.Last().XValue);
 
                 profileChart.ChartAreas["Default"].AxisX.Maximum = maxWidth + maxWidth / 30;
             }
@@ -911,7 +914,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         private void ObserverHeightTextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter && SelectedLineId != -1)
             {
                 if (ChangeObseverPointHeight())
                 {
@@ -983,23 +986,32 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
                 case "deleteSelectedProfileGraphToolBarBtn":
 
-                    DialogResult deleteProfileResult = 
+                    if (SelectedLineId != -1)
+                    {
+                        DialogResult deleteProfileResult =
                                         MessageBox.Show("Do you realy want to remove profile?", "Remove profile",
                                                                                         MessageBoxButtons.OKCancel);
 
-                    if (deleteProfileResult == DialogResult.OK)
-                    {
-                        if (GetProfiles().Count > 1)
+                        if (deleteProfileResult == DialogResult.OK)
                         {
-                            DeleteSelectedProfile();
-                        }
-                        else
-                        {
-                            _controller.InvokeProfileRemoved(Convert.ToInt32(profileChart.Series.First().Name));
-                            profileChart.Series.Clear();
-                            _controller.RemoveCurrentTab();
+                            if (GetProfiles().Count > 1)
+                            {
+                                DeleteSelectedProfile();
+                            }
+                            else
+                            {
+                                _controller.InvokeProfileRemoved(Convert.ToInt32(profileChart.Series.First().Name));
+                                profileChart.Series.Clear();
+                                _controller.RemoveCurrentTab();
+                            }
                         }
                     }
+
+                    break;
+
+                case "addProfileGraphToolBarButton":
+
+                    _controller.AddProfileToExistedGraph();
 
                     break;
 
@@ -1063,6 +1075,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                     break;
 
                 case "deletePageGraphToolBarBtn":
+
                     DialogResult deleteTabResult =  
                                     MessageBox.Show("Do you realy want to remove tab?", "Remove tab", MessageBoxButtons.OKCancel);
 
@@ -1070,8 +1083,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                     {
                         _controller.RemoveCurrentTab();
                     }
-                    
-
+                  
                     break;
 
                 case "saveGraphToolBarBtn":
@@ -1081,9 +1093,11 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                     break;
 
                 case "updateIntersectionsLinesGraphToolBarBtn":
-
-                    GetIntersection(SelectedLineId);
-                    _controller.DrawIntersectionLines(Convert.ToInt32(profileChart.Series[SelectedLineId.ToString()].Name));
+                    if (SelectedLineId != -1)
+                    {
+                        GetIntersection(SelectedLineId);
+                        _controller.DrawIntersectionLines(Convert.ToInt32(profileChart.Series[SelectedLineId.ToString()].Name));
+                    }
 
                     break;
             }
@@ -1282,7 +1296,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             observerHeightTextBox.Text = String.Empty;
 
-            profileDetailsListView.Clear();
+            profileDetailsListView.Items.Clear();
 
             profilePropertiesTable.ClearSelection();
 
@@ -1313,7 +1327,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             profileChart.Series.Remove(profileChart.Series[SelectedLineId.ToString()]);
             ProfilesProperties.Remove(ProfilesProperties.First(property => property.LineId == SelectedLineId));
 
-            SelectedLineId = -1;
+            ClearSelection();
 
             profilePropertiesTable.Rows.RemoveAt(index);
 
