@@ -45,7 +45,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.profilesTreeView.FullRowSelect = true;
             this.profilesTreeView.ImageKey = "0.png";
-            this.profilesTreeView.Location = new System.Drawing.Point(0, 0);
+            this.profilesTreeView.Location = new System.Drawing.Point(-1, 0);
             this.profilesTreeView.Name = "profilesTreeView";
             treeNode1.ImageKey = "vector-path-line.png";
             treeNode1.Name = "Points";
