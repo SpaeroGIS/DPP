@@ -1,9 +1,0 @@
-E:\SourceCode\DemonScarlett\DPP\Source\Modules\MilSpace.ProjectionsConverter\bin\Debug\MilSpace.ProjectionsConverter.dll
-E:\SourceCode\DemonScarlett\DPP\Source\Modules\MilSpace.ProjectionsConverter\bin\Debug\MilSpace.ProjectionsConverter.pdb
-E:\SourceCode\DemonScarlett\DPP\Source\Modules\MilSpace.ProjectionsConverter\bin\Debug\ESRI.ArcGIS.Geometry.dll
-E:\SourceCode\DemonScarlett\DPP\Source\Modules\MilSpace.ProjectionsConverter\bin\Debug\ESRI.ArcGIS.Geometry.xml
-E:\SourceCode\DemonScarlett\DPP\Source\Modules\MilSpace.ProjectionsConverter\obj\Debug\MilSpace.ProjectionsConverter.csprojAssemblyReference.cache
-E:\SourceCode\DemonScarlett\DPP\Source\Modules\MilSpace.ProjectionsConverter\obj\Debug\MilSpace.ProjectionsConverter.csproj.CoreCompileInputs.cache
-E:\SourceCode\DemonScarlett\DPP\Source\Modules\MilSpace.ProjectionsConverter\obj\Debug\MilSpace.ProjectionsConverter.csproj.CopyComplete
-E:\SourceCode\DemonScarlett\DPP\Source\Modules\MilSpace.ProjectionsConverter\obj\Debug\MilSpace.ProjectionsConverter.dll
-E:\SourceCode\DemonScarlett\DPP\Source\Modules\MilSpace.ProjectionsConverter\obj\Debug\MilSpace.ProjectionsConverter.pdb

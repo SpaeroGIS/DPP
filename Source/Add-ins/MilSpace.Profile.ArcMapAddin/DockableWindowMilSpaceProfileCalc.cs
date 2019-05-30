@@ -407,9 +407,9 @@ namespace MilSpace.Profile
 
                     break;
                 case 1:
+                    controller.FlashPoint(ProfileSettingsPointButtonEnum.PointsSecond);
                     break;
                 case 2:
-                    controller.FlashPoint(ProfileSettingsPointButtonEnum.PointsSecond);
                     break;
 
                 case 4:

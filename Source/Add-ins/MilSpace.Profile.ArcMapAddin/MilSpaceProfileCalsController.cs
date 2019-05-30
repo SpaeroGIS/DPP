@@ -158,13 +158,10 @@ namespace MilSpace.Profile
 
         internal void FlashPoint(ProfileSettingsPointButtonEnum pointType)
         {
-            IEnvelope env = new EnvelopeClass();
-            env = View.ActiveView.Extent;
-            env.CenterAt(pointsToShow[pointType]);
-            View.ActiveView.Extent = env;
-            View.ActiveView.Refresh();
-            EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, pointsToShow[pointType]);
-            View.ActiveView.Refresh();
+            EsriTools.PanToGeometry(View.ActiveView, pointsToShow[pointType]);
+
+            EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, new IGeometry[] { pointsToShow[pointType] });
+          //  View.ActiveView.Refresh();
         }
 
         internal IEnumerable<IPolyline> GetProfileLines()
@@ -410,7 +407,7 @@ namespace MilSpace.Profile
                 return;
             }
 
-            var profileLines = profile.ProfileLines.Select(line => line.Line).ToArray();
+            var profileLines = profile.ProfileLines.Select(line => line.Line as IGeometry);
             IEnvelope env = new EnvelopeClass();
 
             foreach (var line in profileLines)
@@ -418,11 +415,8 @@ namespace MilSpace.Profile
                 env.Union(line.Envelope);
             }
 
-            var envelopeCenter = GetEnvelopeCenterPoint(env);
-            env.CenterAt(envelopeCenter);
-            View.ActiveView.Extent = env;
-            View.ActiveView.FocusMap.MapScale = mapScale;
-            View.ActiveView.Refresh();
+            EsriTools.PanToGeometry(View.ActiveView, env);
+            EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, profileLines);
         }
 
 

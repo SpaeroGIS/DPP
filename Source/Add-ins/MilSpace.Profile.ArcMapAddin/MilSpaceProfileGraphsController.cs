@@ -69,18 +69,12 @@ namespace MilSpace.Profile
         private void OnProfileGraphClicked(GraphProfileClickedArgs e)
         {
             IPoint point = new Point() { X = e.ProfilePoint.X, Y = e.ProfilePoint.Y, SpatialReference = e.ProfilePoint.SpatialReference };
-
             IEnvelope env = new EnvelopeClass();
-
             var av = ArcMap.Document.ActivatedView;
             point.Project(av.FocusMap.SpatialReference);
 
-            env = av.Extent;
-            env.CenterAt(point);
-            av.Extent = env;
-            av.Refresh();
-            EsriTools.FlashGeometry(av.ScreenDisplay, point);
-            av.Refresh();
+            EsriTools.PanToGeometry(ArcMap.Document.ActivatedView, point);
+            EsriTools.FlashGeometry(av.ScreenDisplay, new IGeometry[] { point });
         }
 
         private void InvokeInvisibleZonesChanged(GroupedLines profileLines, int sessionId, bool update,
