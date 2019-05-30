@@ -50,6 +50,9 @@
     <Reference Include="ESRI.ArcGIS.Geometry, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
+    <Reference Include="ESRI.ArcGIS.System, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="ESRI.ArcGIS.SystemUI, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
@@ -66,17 +69,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CoordinatesConverter.cs">
+    <Compile Include="DockableWindowCoordinatesConverter.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CoordinatesConverter.Designer.cs">
-      <DependentUpon>CoordinatesConverter.cs</DependentUpon>
+    <Compile Include="DockableWindowCoordinatesConverter.Designer.cs">
+      <DependentUpon>DockableWindowCoordinatesConverter.cs</DependentUpon>
     </Compile>
     <Compile Include="CoordinatesConverterCommand.cs" />
+    <Compile Include="LocalizationContext.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="CoordinatesConverter.resx">
-      <DependentUpon>CoordinatesConverter.cs</DependentUpon>
+    <EmbeddedResource Include="DockableWindowCoordinatesConverter.resx">
+      <DependentUpon>DockableWindowCoordinatesConverter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -105,6 +109,10 @@
       <Project>{0c6e5b77-b513-4e5c-ac5d-868d4e942dea}</Project>
       <Name>MilSpace.ProjectionsConverter</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Resources\Localization.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
