@@ -1894,6 +1894,7 @@
             this.addProfileToExistingGraph.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.addProfileToExistingGraph.Name = "addProfileToExistingGraph";
             this.addProfileToExistingGraph.Size = new System.Drawing.Size(23, 27);
+            this.addProfileToExistingGraph.Visible = false;
             this.addProfileToExistingGraph.Click += new System.EventHandler(this.addProfileToExistingGraph_Click);
             // 
             // addProfileToGraph
