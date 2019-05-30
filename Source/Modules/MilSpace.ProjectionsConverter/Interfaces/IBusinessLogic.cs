@@ -8,7 +8,7 @@ namespace MilSpace.ProjectionsConverter.Interfaces
     {
         Task<IPoint> ProjectPointAsync(IPoint inputPoint, SingleProjectionModel singleProjectionModel);
         Task<IPoint> ProjectSelectedPointAsync(int targetCoordinateSystemType, int mousePositionX, int mousePositionY, double falseOriginX = 0, double falseOriginY = 0);
-        void CopyCoordinatesToClipboardAsync(PointModel pointModel);
+        void CopyCoordinatesToClipboard(PointModel pointModel);
         Task<IPoint> GetDisplayCenterAsync();
         Task<IPoint> GetSelectedPointAsync(int mousePositionX, int mousePositionY);
         Task MoveToNewCoordinateAsync(double x, double y);

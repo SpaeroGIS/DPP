@@ -50,7 +50,7 @@ namespace MilSpace.ProjectionsConverter
             });
         }
 
-        public void CopyCoordinatesToClipboardAsync(PointModel pointModel)
+        public void CopyCoordinatesToClipboard(PointModel pointModel)
         {
             Clipboard.Clear();
             Clipboard.SetData(nameof(PointModel), pointModel);
@@ -66,7 +66,8 @@ namespace MilSpace.ProjectionsConverter
                 var envelope = activeView.Extent as IEnvelope;
                 centerPoint.X = ((envelope.XMax - envelope.XMin) / 2) + envelope.XMin;
                 centerPoint.Y = ((envelope.YMax - envelope.YMin) / 2) + envelope.YMin;
-            });
+                centerPoint.SpatialReference = envelope.SpatialReference;
+            });            
             return centerPoint;
         }
 
