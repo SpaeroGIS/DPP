@@ -16,25 +16,25 @@ namespace MilSpace.Profile
             {
                 case LayersEnum.Vegetation:
 
-                    LineColor = Color.Green;
+                    LineColor = Color.FromArgb(76, 230, 0);
 
                     break;
 
                 case LayersEnum.Hydrography:
 
-                    LineColor = Color.Blue;
+                    LineColor = Color.FromArgb(0, 196, 255); 
 
                     break;
 
                 case LayersEnum.Buildings:
 
-                    LineColor = Color.Gray;
+                    LineColor = Color.FromArgb(255, 170, 0);
 
                     break;
 
                 case LayersEnum.Roads:
 
-                    LineColor = Color.Black;
+                    LineColor = Color.FromArgb(156, 156, 156);
 
                     break;
 
