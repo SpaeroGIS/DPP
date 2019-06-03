@@ -11,6 +11,7 @@ namespace MilSpace.Profile
         public ProfilesTreeModalWindow(TreeView calsProfilesTreeView)
         {
             InitializeComponent();
+            profilesTreeView.Width = Width;
             InitializeTreeView(calsProfilesTreeView);
         }
 
@@ -21,16 +22,8 @@ namespace MilSpace.Profile
                 var calsNode = calsTreeView.Nodes[node.Name];
 
                 CopyChildren(node, calsNode);
-                //foreach (TreeNode subNode in calsNode.Nodes)
-                //{
-                //    node.Nodes.Add((TreeNode)subNode.Clone());
-                //}
             }
         }
-
-        // newTn = new TreeNode(tn.Text, tn.ImageIndex, tn.SelectedImageIndex);
-        //CopyChildren(newTn, tn);
-        //treeview2.Nodes.Add(newTn);
 
         public void CopyChildren(TreeNode parent, TreeNode original)
         {
@@ -60,7 +53,6 @@ namespace MilSpace.Profile
 
         private Tuple<int, int> GetProfileAndLineIds(TreeNode node)
         {
-
             int id = -1;
             int lineId = -1;
 
