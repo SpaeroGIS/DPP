@@ -24,13 +24,19 @@ namespace MilSpace.Profile
                                                                         bool update, List<int> linesIds = null);
 
         internal delegate void DeleteProfileDelegate(int sessionId, int lineId);
-        internal delegate void SelectedProfileChangedDelegate(GroupedLines newSelectedLines, int profileId);
-        internal delegate void GetIntersectionLines(ProfileSession profileSession);
+        internal delegate void SelectedProfileChangedDelegate(GroupedLines oldSelectedLines, GroupedLines newSelectedLines, int profileId);
+        internal delegate void GetIntersectionLinesDelegate(ProfileLine selectedLine, ProfileSession profileSession);
+        internal delegate void CreateEmptyGraphDelegate();
+        internal delegate void AddProfileToExistedGraphDelegate();
+        internal delegate string GetProfileNameDelegate(int id);
 
         internal event ProfileRedrawDelegate ProfileRedrawn;
         internal event DeleteProfileDelegate ProfileRemoved;
         internal event SelectedProfileChangedDelegate SelectedProfileChanged;
-        internal event GetIntersectionLines IntersectionLinesDrawing;
+        internal event GetIntersectionLinesDelegate IntersectionLinesDrawing;
+        internal event CreateEmptyGraphDelegate CreateEmptyGraph;
+        internal event AddProfileToExistedGraphDelegate AddProfile;
+        internal event GetProfileNameDelegate GetProfileName;
 
         internal DockableWindowMilSpaceProfileGraph View { get; private set; }
 
@@ -63,18 +69,12 @@ namespace MilSpace.Profile
         private void OnProfileGraphClicked(GraphProfileClickedArgs e)
         {
             IPoint point = new Point() { X = e.ProfilePoint.X, Y = e.ProfilePoint.Y, SpatialReference = e.ProfilePoint.SpatialReference };
-
             IEnvelope env = new EnvelopeClass();
-
             var av = ArcMap.Document.ActivatedView;
             point.Project(av.FocusMap.SpatialReference);
 
-            env = av.Extent;
-            env.CenterAt(point);
-            av.Extent = env;
-            av.Refresh();
-            EsriTools.FlashGeometry(av.ScreenDisplay, point);
-            av.Refresh();
+            EsriTools.PanToGeometry(ArcMap.Document.ActivatedView, point);
+            EsriTools.FlashGeometry(av.ScreenDisplay, new IGeometry[] { point });
         }
 
         private void InvokeInvisibleZonesChanged(GroupedLines profileLines, int sessionId, bool update,
@@ -89,19 +89,35 @@ namespace MilSpace.Profile
             ProfileRemoved?.Invoke(sessionId, lineId);
         }
 
-        internal void InvokeSelectedProfileChanged(GroupedLines newSelectedLines, int profileId)
+        internal void ClearProfileSelection(SurfaceProfileChart chart)
         {
-            SelectedProfileChanged?.Invoke(newSelectedLines, profileId);
+            SetChart(chart);
+            _surfaceProfileChartController.InvokeSelectedProfile(-1);
         }
 
-        internal void InvokeIntersectionLinesDrawing(ProfileSession profileSession)
+        internal void InvokeSelectedProfileChanged(GroupedLines oldSelectedLines, GroupedLines newSelectedLines, int profileId)
         {
-            IntersectionLinesDrawing?.Invoke(profileSession);
+            SelectedProfileChanged?.Invoke(oldSelectedLines, newSelectedLines, profileId);
+        }
+
+        internal void InvokeIntersectionLinesDrawing(ProfileLine selectedLine, ProfileSession profileSession)
+        {
+            IntersectionLinesDrawing?.Invoke(selectedLine, profileSession);
+        }
+
+        internal void InvokeAddProfile()
+        {
+            AddProfile.Invoke();
         }
 
         internal void SetIntersections(List<IntersectionsInLayer> intersectionsLines, int lineId)
         {
             _surfaceProfileChartController.SetIntersectionLines(intersectionsLines, lineId);
+        }
+
+        internal string GetProfileNameById(int id)
+        {
+            return GetProfileName?.Invoke(id);
         }
 
         internal void ShowWindow()
@@ -131,9 +147,15 @@ namespace MilSpace.Profile
             View.AddNewTab(surfaceProfileChart, profileSession.SessionId);
         }
 
+        internal void AddProfileToTab(ProfileLine profileLine, ProfileSurface profileSurface)
+        {
+            View.SetCurrentChart();
+            _surfaceProfileChartController.AddLineToGraph(profileLine, profileSurface);
+        }
+
         internal void SetChart(SurfaceProfileChart currentChart)
         {
-            _surfaceProfileChartController.SetCurrentChart(currentChart, this);
+            _surfaceProfileChartController = _surfaceProfileChartController.GetCurrentController(currentChart, this);
         }
 
         internal void RemoveTab()
@@ -144,6 +166,11 @@ namespace MilSpace.Profile
         internal void RemoveTab(int sessionId)
         {
             View.RemoveTabBySessionId(sessionId);
+        }
+
+        internal void AddEmptyGraph()
+        {
+            CreateEmptyGraph?.Invoke();
         }
 
         private IDockableWindow Docablewindow

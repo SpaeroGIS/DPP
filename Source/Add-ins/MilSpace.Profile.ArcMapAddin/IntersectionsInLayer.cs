@@ -28,7 +28,7 @@ namespace MilSpace.Profile
 
                 case LayersEnum.Buildings:
 
-                    LineColor = Color.DimGray;
+                    LineColor = Color.Gray;
 
                     break;
 

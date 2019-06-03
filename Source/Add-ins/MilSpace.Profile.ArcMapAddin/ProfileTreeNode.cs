@@ -77,20 +77,10 @@ namespace MilSpace.Profile
             SetAttributeValue(Attributes, AttributeKeys.ProfileName, profileNameValue);
         }
 
-        //internal void SetProfileId(string profileIdValue)
-        //{
-        //    SetAttributeValue(Attributes, AttributeKeys.ProfileId, profileIdValue);
-        //}
-
         internal void SetProfileType(string profileTypeValue)
         {
             SetAttributeValue(Attributes, AttributeKeys.ProfileType, profileTypeValue);
         }
-
-        //internal void SetProfileDistance(string profileDistanceValue)
-        //{
-        //    SetAttributeValue(Attributes, AttributeKeys.ProfileDistance, profileDistanceValue);
-        //}
 
         internal void SetLineDistance(string lineDistanceValue)
         {
@@ -161,20 +151,12 @@ namespace MilSpace.Profile
             profileNameRow[AttributeColumnName] = profileName;
             table.Rows.Add(profileNameRow);
 
-            //var profileIdRow = table.NewRow();
-            //profileIdRow[KeyColumnName] = AttributeKeys.ProfileId;
-            //profileIdRow[AttributeColumnName] = profileId;
-            //table.Rows.Add(profileIdRow);
 
             var profileTypeRow = table.NewRow();
             profileTypeRow[KeyColumnName] = AttributeKeys.ProfileType;
             profileTypeRow[AttributeColumnName] = profileType;
             table.Rows.Add(profileTypeRow);
 
-            //var profileDistanceRow = table.NewRow();
-            //profileDistanceRow[KeyColumnName] = AttributeKeys.ProfileDistance;
-            //profileDistanceRow[AttributeColumnName] = profileDistance;
-            //table.Rows.Add(profileDistanceRow);
 
             var firstPointRow = table.NewRow();
             firstPointRow[KeyColumnName] = AttributeKeys.SectionFirstPoint;
@@ -225,11 +207,6 @@ namespace MilSpace.Profile
             azimuthSecondRow[KeyColumnName] = AttributeKeys.Azimuth2;
             azimuthSecondRow[AttributeColumnName] = azimuth2;
             table.Rows.Add(azimuthSecondRow);
-
-            //var mapNameRow = table.NewRow();
-            //mapNameRow[KeyColumnName] = AttributeKeys.MapName;
-            //mapNameRow[AttributeColumnName] = mapName;
-            //table.Rows.Add(mapNameRow);
 
             var creatorNameRow = table.NewRow();
             creatorNameRow[KeyColumnName] = AttributeKeys.CreatorName;

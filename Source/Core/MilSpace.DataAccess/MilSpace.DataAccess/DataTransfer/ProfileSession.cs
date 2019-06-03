@@ -82,27 +82,47 @@ namespace MilSpace.DataAccess.DataTransfer
             return new IPolyline[] { converter(ProfileLines[lineId]) };
         }
 
-        public void SetSegments(ISpatialReference spatialReference)
+        public void SetSegments(ISpatialReference spatialReference, ProfileLine profileLine = null)
         {
-            var polylines = ConvertLinesToEsriPolypile(spatialReference).ToArray();
-
-            Segments = ProfileLines.Select(line =>
+            if (profileLine == null)
             {
-                var lines = new List<ProfileLine> {line};
+                var polylines = ConvertLinesToEsriPolypile(spatialReference).ToArray();
+
+                Segments = ProfileLines.Select(line =>
+                {
+                    var lines = new List<ProfileLine> { line };
+                    lines[0].Visible = true;
+
+                    var polyline = new List<IPolyline> { polylines[line.Id - 1] };
+
+                    return new GroupedLines
+                    {
+                        Lines = lines,
+                        LineId = line.Id,
+                        Polylines = polyline,
+                        InvisibleColor = new RgbColor() { Red = 255, Green = 0, Blue = 0 },
+                        VisibleColor = new RgbColor() { Red = 0, Green = 255, Blue = 0 },
+                    };
+
+                }).ToList();
+            }
+            else
+            {
+                var lines = new List<ProfileLine> { profileLine };
                 lines[0].Visible = true;
 
-                var polyline = new List<IPolyline> { polylines[line.Id - 1] };
+                var polyline = new List<IPolyline> {profileLine.Line};
 
-                return new GroupedLines
+
+                Segments.Add(new GroupedLines
                 {
                     Lines = lines,
-                    LineId = line.Id,
+                    LineId = profileLine.Id,
                     Polylines = polyline,
                     InvisibleColor = new RgbColor() { Red = 255, Green = 0, Blue = 0 },
                     VisibleColor = new RgbColor() { Red = 0, Green = 255, Blue = 0 },
-                };
-
-            }).ToList();
+                });
+            }
         }
 
         private static string Serialize(ProfileSession session)
