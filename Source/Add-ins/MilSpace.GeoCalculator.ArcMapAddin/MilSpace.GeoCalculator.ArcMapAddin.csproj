@@ -10,12 +10,13 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ArcMapAddin</RootNamespace>
     <AssemblyName>ArcMapAddin</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -26,6 +27,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <RegisterForComInterop>false</RegisterForComInterop>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -46,11 +48,17 @@
     <Reference Include="ESRI.ArcGIS.Framework">
       <Private>False</Private>
     </Reference>
+    <Reference Include="ESRI.ArcGIS.Geometry, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
     <Reference Include="ESRI.ArcGIS.System">
       <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="ESRI.ArcGIS.SystemUI, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -65,6 +73,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Config.esriaddinx</DependentUpon>
     </Compile>
+    <Compile Include="LocalizationContext.cs" />
+    <Compile Include="MapInteropTool.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -77,7 +87,7 @@
     <AddInContent Include="Images\ArcMapAddin.png" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Button1.cs" />
+    <Compile Include="ButtonGeoCalculator.cs" />
     <AddInContent Include="Images\Button1.png" />
   </ItemGroup>
   <ItemGroup>
@@ -85,11 +95,11 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DockableWindow1.cs">
+    <Compile Include="DockableWindowGeoCalculator.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="DockableWindow1.Designer.cs">
-      <DependentUpon>DockableWindow1.cs</DependentUpon>
+    <Compile Include="DockableWindowGeoCalculator.Designer.cs">
+      <DependentUpon>DockableWindowGeoCalculator.cs</DependentUpon>
     </Compile>
     <AddInContent Include="Images\DockableWindow1.png" />
   </ItemGroup>
@@ -97,6 +107,20 @@
     <Reference Include="ESRI.ArcGIS.ArcMapUI">
       <Private>False</Private>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DockableWindowGeoCalculator.resx">
+      <DependentUpon>DockableWindowGeoCalculator.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Localization.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Solutions\MilSpace.GeoCalculator.BusinessLogic\MilSpace.GeoCalculator.BusinessLogic.csproj">
+      <Project>{B37F5B7A-6511-4212-9622-E1CBFB2A0B1D}</Project>
+      <Name>MilSpace.GeoCalculator.BusinessLogic</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>

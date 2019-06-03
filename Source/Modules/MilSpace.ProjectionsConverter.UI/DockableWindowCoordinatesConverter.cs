@@ -154,7 +154,14 @@ namespace MilSpace.ProjectionsConverter.UI
             _pointModel.UkraineXCoord = ukrainePoint.X;
             _pointModel.UkraineYCoord = ukrainePoint.Y;
 
-        }        
+        }
+
+        private static ProjectionsModel CreateProjecstionsModelFromSettings()
+        {
+            return new ProjectionsModel(new SingleProjectionModel((int)esriSRProjCSType.esriSRProjCS_WGS1984UTM_36N, 30.000, 0.000),
+                                        new SingleProjectionModel((int)esriSRProjCSType.esriSRProjCS_Pulkovo1942GK_6N, 30.000, 44.330),
+                                        new SingleProjectionModel(Constants.Ukraine2000ID[2], 30.000, 43.190));
+        }
         #endregion
 
         #region Windows.Forms events handlers
