@@ -452,7 +452,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             var orderedIntersectionLines = GetOrderedIntersectionsLines(intersectionLines);
             var preparedIntersectionLines = new List<IntersectionLine>();
-            var accuracy = 0.0000001;
+            var accuracy = 0.000001;
 
             var prevLine = new IntersectionLine();
             prevLine = orderedIntersectionLines.First();
