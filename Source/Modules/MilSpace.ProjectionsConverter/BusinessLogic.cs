@@ -24,6 +24,11 @@ namespace MilSpace.ProjectionsConverter
             _dataExport = dataExport;
         }
 
+        public Task<IPoint> ConvertFromWgsMeters(string gkInputValue, int falseOriginX = 0, int falseOriginY = 0, int scaleUnits = 1000)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IPoint> ConvertFromMgrs(string mgrsInputValue, int falseOriginX = 0, int falseOriginY = 0, int scaleUnits = 1000)
         {
             return await Task.Run(() =>
@@ -40,6 +45,32 @@ namespace MilSpace.ProjectionsConverter
             });
         }
 
+        public async Task<IPoint> ConvertFromUtm(string utmInputValue, int falseOriginX = 0, int falseOriginY = 0, int scaleUnits = 1000)
+        {
+            return await Task.Run(() =>
+            {
+                var resultPoint = new Point();
+                //Create Spatial Reference Factory
+                var spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
+                //Create Spatial Reference
+                ISpatialReference spatialReference = spatialReferenceFactory.CreateProjectedCoordinateSystem((int)esriSRGeoCSType.esriSRGeoCS_WGS1984);
+                spatialReference.SetFalseOriginAndUnits(falseOriginX, falseOriginY, scaleUnits);
+                resultPoint.SpatialReference = spatialReference;
+                (resultPoint as IConversionNotation).PutCoordsFromUTM(esriUTMConversionOptionsEnum.esriUTMAddSpaces, utmInputValue);
+                return resultPoint;
+            });
+        }
+
+        public async Task<IPoint> ConvertToWgsMeters(IPoint wgsInputPoint)
+        {
+            return await Task.Run(() => { 
+            var spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
+            ISpatialReference wgsMetersSpatialReference = spatialReferenceFactory.CreateGeographicCoordinateSystem((int)esriSRGeoCSType.esriSRGeoCS_WGS1984);
+                wgsInputPoint.Project(wgsMetersSpatialReference);
+                return wgsInputPoint;
+            });
+        }
+
         public async Task<string> ConvertToMgrs(IPoint wgsInputPoint)
         {
             return await Task.Run(() =>
@@ -47,6 +78,15 @@ namespace MilSpace.ProjectionsConverter
                 var conversionNotation = wgsInputPoint as IConversionNotation;
                 //5 for 1m resolution
                 return conversionNotation?.CreateMGRS(5, true, esriMGRSModeEnum.esriMGRSMode_Automatic);
+            });
+        }
+
+        public async Task<string> ConvertToUtm(IPoint wgsInputPoint)
+        {
+            return await Task.Run(() =>
+            {
+                var conversionNotation = wgsInputPoint as IConversionNotation;                
+                return conversionNotation?.GetUTMFromCoords(esriUTMConversionOptionsEnum.esriUTMAddSpaces);
             });
         }
 

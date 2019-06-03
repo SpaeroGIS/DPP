@@ -14,6 +14,10 @@ namespace MilSpace.ProjectionsConverter.Interfaces
         Task MoveToNewCoordinateAsync(double x, double y);
         Task<string> ConvertToMgrs(IPoint wgsInputPoint);
         Task<IPoint> ConvertFromMgrs(string mgrsInputValue, int falseOriginX = 0, int falseOriginY = 0, int scaleUnits = 1000);
+        Task<string> ConvertToUtm(IPoint wgsInputPoint);
+        Task<IPoint> ConvertFromUtm(string utmInputValue, int falseOriginX = 0, int falseOriginY = 0, int scaleUnits = 1000);
+        Task<IPoint> ConvertToWgsMeters(IPoint wgsInputPoint);
+        Task<IPoint> ConvertFromWgsMeters(string gkInputValue, int falseOriginX = 0, int falseOriginY = 0, int scaleUnits = 1000);
         Task SaveProjectionsToXmlFileAsync(PointModel pointModel, string path);      
     }
 }
