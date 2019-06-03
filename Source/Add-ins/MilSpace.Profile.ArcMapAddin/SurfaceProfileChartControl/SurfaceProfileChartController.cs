@@ -40,6 +40,14 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         internal void SetSession(ProfileSession profileSession)
         {
             _profileSession = profileSession;
+
+            if (_profileSession.ProfileLines != null && _profileSession.ProfileLines.Count() > 0)
+            {
+                for(int i = 0; i < _profileSession.ProfileLines.Count(); i++)
+                {
+                    _profileSession.ProfileLines[i].SessionId = _profileSession.SessionId;
+                }
+            }
         }
 
         internal SurfaceProfileChartController GetCurrentController(SurfaceProfileChart currentChart, MilSpaceProfileGraphsController graphsController)
@@ -92,6 +100,34 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         internal void LoadSerie()
         {
             _surfaceProfileChart.AddSerie(_profileSession.ProfileSurfaces.Last());
+        }
+
+        internal string GetProfileName(ref int currentSessionId, int lineId)
+        {
+            if (_profileSession.ProfileLines == null || _profileSession.ProfileLines.Count() == 0)
+            {
+                return _profileSession.SessionName;
+            }
+
+            var sessionId = _profileSession.ProfileLines.First(line => lineId == line.Id).SessionId;
+
+            if (sessionId != currentSessionId)
+            {
+                currentSessionId = sessionId;
+                var sessionName = _graphsController.GetProfileNameById(sessionId);
+
+                if (!String.IsNullOrEmpty(sessionName))
+                {
+                    return sessionName;
+                }
+            }
+
+            return String.Empty;
+        }
+
+        internal void AddProfileToExistedGraph()
+        {
+            _graphsController.InvokeAddProfile();
         }
 
         internal void AddExtremePoints(ProfileSurface profileSurface = null)
@@ -416,7 +452,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             var orderedIntersectionLines = GetOrderedIntersectionsLines(intersectionLines);
             var preparedIntersectionLines = new List<IntersectionLine>();
-            var accuracy = 0.0000001;
+            var accuracy = 0.000001;
 
             var prevLine = new IntersectionLine();
             prevLine = orderedIntersectionLines.First();
@@ -519,11 +555,9 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         {
             var orderedIntersectionLines = new List<IntersectionLine>();
 
-            var orderedLayers = lines.OrderBy(layer => layer.Lines.Min(line => line.PointFromDistance));
-
-            foreach (var intersectionLine in orderedLayers)
+            foreach (var intersectionLine in lines)
             {
-                var orderedLines = intersectionLine.Lines.OrderBy(line => line.PointFromDistance);
+                var orderedLines = intersectionLine.Lines;
 
                 foreach (var line in orderedLines)
                 {
@@ -531,7 +565,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 }
             }
 
-            return orderedIntersectionLines.OrderByDescending(line => line.LayerType).ToList();
+            return orderedIntersectionLines.OrderBy(line => line.PointFromDistance).ToList();
         }
 
         private List<IntersectionsInLayer> GroupLinesByLayers(List<IntersectionLine> lines)
@@ -560,7 +594,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 }
             }
 
-            return preparedLines;
+            return preparedLines.OrderByDescending(line => line.Type).ToList(); 
         }
 
         private List<ProfileSurfacePoint> FindExtremePoints(ProfileSurface profileSurface = null)

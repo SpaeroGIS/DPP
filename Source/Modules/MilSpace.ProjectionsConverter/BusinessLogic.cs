@@ -9,6 +9,7 @@ using ESRI.ArcGIS.Geodatabase;
 using System.Windows.Forms;
 using MilSpace.ProjectionsConverter.Models;
 using MilSpace.ProjectionsConverter.ReferenceData;
+using ESRI.ArcGIS.esriSystem;
 
 namespace MilSpace.ProjectionsConverter
 {
@@ -49,27 +50,10 @@ namespace MilSpace.ProjectionsConverter
             });
         }
 
-        public async Task CopyCoordinatesToClipboardAsync(IPoint inputPoint)
+        public void CopyCoordinatesToClipboard(PointModel pointModel)
         {
-            var pulkovoPoint = await ProjectPointAsync(inputPoint, (int)esriSRGeoCSType.esriSRGeoCS_Pulkovo1942);
-            var wgsPoint = await ProjectPointAsync(inputPoint, (int)esriSRGeoCSType.esriSRGeoCS_WGS1984);
-            var ukrainePoint = await ProjectPointAsync(inputPoint, Constants.Ukraine2000ID);
-            var mgrs = await ConvertToMgrs(wgsPoint);
-
             Clipboard.Clear();
-            Clipboard.SetData(nameof(PointModel),
-                new PointModel
-                {
-                    XCoord = inputPoint.X,
-                    YCoord = inputPoint.Y,
-                    PulkovoXCoord = pulkovoPoint.X,
-                    PulkovoYCoord = pulkovoPoint.Y,
-                    WgsXCoord = wgsPoint.X,
-                    WgsYCoord = wgsPoint.Y,
-                    UkraineXCoord = ukrainePoint.X,
-                    UkraineYCoord = ukrainePoint.Y,
-                    MgrsRepresentation = mgrs
-                });
+            Clipboard.SetData(nameof(PointModel), pointModel);
         }
 
         public async Task<IPoint> GetDisplayCenterAsync()
@@ -82,7 +66,8 @@ namespace MilSpace.ProjectionsConverter
                 var envelope = activeView.Extent as IEnvelope;
                 centerPoint.X = ((envelope.XMax - envelope.XMin) / 2) + envelope.XMin;
                 centerPoint.Y = ((envelope.YMax - envelope.YMin) / 2) + envelope.YMin;
-            });
+                centerPoint.SpatialReference = envelope.SpatialReference;
+            });            
             return centerPoint;
         }
 
@@ -94,6 +79,7 @@ namespace MilSpace.ProjectionsConverter
             await Task.Run(() => 
             {
                 resultPoint = (currentDocument.FocusMap as IActiveView).ScreenDisplay.DisplayTransformation.ToMapPoint(mousePositionX, mousePositionY);
+                
             });
             return resultPoint;
         }
@@ -112,15 +98,16 @@ namespace MilSpace.ProjectionsConverter
             });            
         }
 
-        public async Task<IPoint> ProjectPointAsync(IPoint inputPoint, int targetCoordinateSystemType, double falseOriginX = 0, double falseOriginY = 0, double scaleUnits = 1000)
+        public async Task<IPoint> ProjectPointAsync(IPoint inputPoint, SingleProjectionModel singleProjectionModel)
         {
+            if (inputPoint == null) return null;
             await Task.Run(() =>
             {
                 //Create Spatial Reference Factory
                 var spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
                 //Projected Coordinate System to project into
-                var projectedCoordinateSystem = spatialReferenceFactory.CreateProjectedCoordinateSystem(targetCoordinateSystemType);
-                projectedCoordinateSystem.SetFalseOriginAndUnits(falseOriginX, falseOriginY, scaleUnits);
+                var projectedCoordinateSystem = spatialReferenceFactory.CreateProjectedCoordinateSystem(singleProjectionModel.ESRIWellKnownID);
+                projectedCoordinateSystem.SetFalseOriginAndUnits(singleProjectionModel.FalseOriginX, singleProjectionModel.FalseOriginY, singleProjectionModel.Units);
 
                 inputPoint.Project(projectedCoordinateSystem);
             });
@@ -130,17 +117,22 @@ namespace MilSpace.ProjectionsConverter
         public async Task<IPoint> ProjectSelectedPointAsync(int targetCoordinateSystemType, int mousePositionX, int mousePositionY, double falseOriginX = 0, double falseOriginY = 0)
         {
             if (!(_arcMapApp.Document is IMxDocument currentDocument)) throw new Exception(NoMapExceptionMessage);
-            var resultPoint = new Point();
-            await Task.Run(() =>
+
+            var resultPoint = await Task.Run(() =>
             {
-                IPoint MouseMapPoint = (currentDocument.FocusMap as IActiveView).ScreenDisplay.DisplayTransformation.ToMapPoint(mousePositionX, mousePositionY);
+                var mouseMapPoint = (currentDocument.FocusMap as IActiveView).ScreenDisplay.DisplayTransformation.ToMapPoint(mousePositionX, mousePositionY);
+                if (mouseMapPoint == null) return null;
                 currentDocument.FocusMap.ClearSelection();
                 // Select using the shape (point) to
                 // select the feature(s) - false to select any intersecting, true to select just the first
-                currentDocument.FocusMap.SelectByShape(MouseMapPoint, (_arcMapApp as IMxApplication).SelectionEnvironment, false);
-
+                try
+                {
+                    currentDocument.FocusMap.SelectByShape(mouseMapPoint, (_arcMapApp as IMxApplication).SelectionEnvironment, false);
+                }
+                catch (NullReferenceException) { return null; }
                 var selectedFeatures = (IEnumFeature)currentDocument.FocusMap.FeatureSelection;
                 var selectedFeature = selectedFeatures.Next();
+                if (selectedFeature == null) return null;
                 var featuresCount = 1;
                 double bufferXCoord = 0.0;
                 double bufferYCoord = 0.0;
@@ -162,39 +154,26 @@ namespace MilSpace.ProjectionsConverter
                         case esriGeometryType.esriGeometryPolyline:
                             var polyline = geometry as IPolyline;
                             bufferXCoord += (polyline.FromPoint.X + polyline.ToPoint.X) / 2;
-                            bufferYCoord += (polyline.FromPoint.Y + polyline.ToPoint.Y) / 2;                            
+                            bufferYCoord += (polyline.FromPoint.Y + polyline.ToPoint.Y) / 2;
                             break;
                         default:
                             break;
                     }
                     selectedFeature = selectedFeatures.Next();
                     featuresCount++;
-                } while (selectedFeature != null);                
-                resultPoint.PutCoords(bufferXCoord / featuresCount, bufferYCoord / featuresCount);
+                } while (selectedFeature != null);
+                var bufferPoint = new Point();
+                bufferPoint.PutCoords(bufferXCoord / featuresCount, bufferYCoord / featuresCount);
+                return bufferPoint;
             });
 
-            return await ProjectPointAsync(resultPoint, targetCoordinateSystemType, falseOriginX, falseOriginY, currentDocument.FocusMap.MapScale);            
+            return await ProjectPointAsync(resultPoint, new SingleProjectionModel(targetCoordinateSystemType, falseOriginX, falseOriginY, currentDocument.FocusMap.MapScale));
         }
 
-        public async Task SaveProjectionsToXmlFileAsync(IPoint inputPoint, string path)
+        public async Task SaveProjectionsToXmlFileAsync(PointModel pointModel, string path)
         {
-            var pulkovoPoint = await ProjectPointAsync(inputPoint, (int)esriSRGeoCSType.esriSRGeoCS_Pulkovo1942);
-            var wgsPoint = await ProjectPointAsync(inputPoint, (int)esriSRGeoCSType.esriSRGeoCS_WGS1984);
-            var ukrainePoint = await ProjectPointAsync(inputPoint, Constants.Ukraine2000ID);
-            var mgrs = await ConvertToMgrs(wgsPoint);
+            if (string.IsNullOrWhiteSpace(path)) return;
 
-            var pointModel = new PointModel
-            {
-                XCoord = inputPoint.X,
-                YCoord = inputPoint.Y,
-                PulkovoXCoord = pulkovoPoint.X,
-                PulkovoYCoord = pulkovoPoint.Y,
-                WgsXCoord = wgsPoint.X,
-                WgsYCoord = wgsPoint.Y,
-                UkraineXCoord = ukrainePoint.X,
-                UkraineYCoord = ukrainePoint.Y,
-                MgrsRepresentation = mgrs
-            };
             await _dataExport.ExportProjectionsToXmlAsync(pointModel, path);
         }
     }

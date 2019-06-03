@@ -44,6 +44,7 @@
             this.displayProfileSignatureGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton1 = new System.Windows.Forms.ToolBarButton();
             this.deleteSelectedProfileGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
+            this.addProfileGraphToolBarButton = new System.Windows.Forms.ToolBarButton();
             this.panToSelectedProfileGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
             this.graphToolBarSpr1 = new System.Windows.Forms.ToolBarButton();
             this.panGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
@@ -87,6 +88,7 @@
             this.visibleLineColorLabel = new System.Windows.Forms.Label();
             this.InvisibleLineColorLabel = new System.Windows.Forms.Label();
             this.propertiesPanel = new System.Windows.Forms.Panel();
+            this.observerHeightIgnoreGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
             ((System.ComponentModel.ISupportInitialize)(this.profileChart)).BeginInit();
             this.contextMenuStrip.SuspendLayout();
             this.graphPanel.SuspendLayout();
@@ -147,11 +149,13 @@
             this.displayProfileSignatureGraphToolBarBtn,
             this.toolBarButton1,
             this.deleteSelectedProfileGraphToolBarBtn,
+            this.addProfileGraphToolBarButton,
             this.panToSelectedProfileGraphToolBarBtn,
             this.graphToolBarSpr1,
             this.panGraphToolBarBtn,
             this.graphToolBarSpr2,
             this.showAllProfilesGraphToolBarBtn,
+            this.observerHeightIgnoreGraphToolBarBtn,
             this.zoomInGraphToolBarBtn,
             this.zoomOutGraphToolBarBtn,
             this.graphToolBarSpr3,
@@ -194,6 +198,12 @@
             this.deleteSelectedProfileGraphToolBarBtn.ImageKey = "Cancel.png";
             this.deleteSelectedProfileGraphToolBarBtn.Name = "deleteSelectedProfileGraphToolBarBtn";
             this.deleteSelectedProfileGraphToolBarBtn.ToolTipText = "Удалить выбраный профиль из отображения";
+            // 
+            // addProfileGraphToolBarButton
+            // 
+            this.addProfileGraphToolBarButton.ImageKey = "Plus.png";
+            this.addProfileGraphToolBarButton.Name = "addProfileGraphToolBarButton";
+            this.addProfileGraphToolBarButton.ToolTipText = "Добавить профиль  на граф";
             // 
             // panToSelectedProfileGraphToolBarBtn
             // 
@@ -819,6 +829,12 @@
             this.propertiesPanel.Size = new System.Drawing.Size(374, 327);
             this.propertiesPanel.TabIndex = 49;
             // 
+            // observerHeightIgnoreGraphToolBarBtn
+            // 
+            this.observerHeightIgnoreGraphToolBarBtn.ImageKey = "Stats2.png";
+            this.observerHeightIgnoreGraphToolBarBtn.Name = "observerHeightIgnoreGraphToolBarBtn";
+            this.observerHeightIgnoreGraphToolBarBtn.ToolTipText = "Масштабировать график с учетом/без учета высоты пункта наблюдения";
+            // 
             // SurfaceProfileChart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -923,5 +939,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn RiseAngleCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn VisiblePercentCol;
         private System.Windows.Forms.Panel profileNamePanel;
+        private System.Windows.Forms.ToolBarButton addProfileGraphToolBarButton;
+        private System.Windows.Forms.ToolBarButton observerHeightIgnoreGraphToolBarBtn;
     }
 }

@@ -407,9 +407,9 @@ namespace MilSpace.Profile
 
                     break;
                 case 1:
+                    controller.FlashPoint(ProfileSettingsPointButtonEnum.PointsSecond);
                     break;
                 case 2:
-                    controller.FlashPoint(ProfileSettingsPointButtonEnum.PointsSecond);
                     break;
 
                 case 4:
@@ -753,6 +753,11 @@ namespace MilSpace.Profile
             }
 
             throw new NotImplementedException(treeNode.Name);
+        }
+
+        public TreeView GetTreeView()
+        {
+            return profilesTreeView;
         }
 
         public int GetProfileNameFromNode()

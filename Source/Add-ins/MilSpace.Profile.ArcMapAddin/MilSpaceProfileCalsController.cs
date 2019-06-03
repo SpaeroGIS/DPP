@@ -142,13 +142,15 @@ namespace MilSpace.Profile
                 {
                     var winImpl = AddIn.FromID<DockableWindowMilSpaceProfileGraph.AddinImpl>(ThisAddIn.IDs.DockableWindowMilSpaceProfileGraph);
                     graphsController = winImpl.MilSpaceProfileGraphsController;
-                }
 
-                graphsController.ProfileRedrawn += GraphRedrawn;
-                graphsController.ProfileRemoved += ProfileRemove;
-                graphsController.SelectedProfileChanged += SelectedProfileChanged;
-                graphsController.IntersectionLinesDrawing += CalcIntesectionsWithLayers;
-                graphsController.CreateEmptyGraph += GenerateEmptyGraph;
+                    graphsController.ProfileRedrawn += GraphRedrawn;
+                    graphsController.ProfileRemoved += ProfileRemove;
+                    graphsController.SelectedProfileChanged += SelectedProfileChanged;
+                    graphsController.IntersectionLinesDrawing += CalcIntesectionsWithLayers;
+                    graphsController.CreateEmptyGraph += GenerateEmptyGraph;
+                    graphsController.GetProfileName += GetProfileName;
+                    graphsController.AddProfile += AddProfileToExistedGraph;
+                }
 
                 return graphsController;
             }
@@ -156,13 +158,10 @@ namespace MilSpace.Profile
 
         internal void FlashPoint(ProfileSettingsPointButtonEnum pointType)
         {
-            IEnvelope env = new EnvelopeClass();
-            env = View.ActiveView.Extent;
-            env.CenterAt(pointsToShow[pointType]);
-            View.ActiveView.Extent = env;
-            View.ActiveView.Refresh();
-            EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, pointsToShow[pointType]);
-            View.ActiveView.Refresh();
+            EsriTools.PanToGeometry(View.ActiveView, pointsToShow[pointType]);
+
+            EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, new IGeometry[] { pointsToShow[pointType] });
+          //  View.ActiveView.Refresh();
         }
 
         internal IEnumerable<IPolyline> GetProfileLines()
@@ -408,7 +407,7 @@ namespace MilSpace.Profile
                 return;
             }
 
-            var profileLines = profile.ProfileLines.Select(line => line.Line).ToArray();
+            var profileLines = profile.ProfileLines.Select(line => line.Line as IGeometry);
             IEnvelope env = new EnvelopeClass();
 
             foreach (var line in profileLines)
@@ -416,11 +415,8 @@ namespace MilSpace.Profile
                 env.Union(line.Envelope);
             }
 
-            var envelopeCenter = GetEnvelopeCenterPoint(env);
-            env.CenterAt(envelopeCenter);
-            View.ActiveView.Extent = env;
-            View.ActiveView.FocusMap.MapScale = mapScale;
-            View.ActiveView.Refresh();
+            EsriTools.PanToGeometry(View.ActiveView, env);
+            EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, profileLines);
         }
 
 
@@ -467,6 +463,7 @@ namespace MilSpace.Profile
                 {
                     var profileSurface = profileSession.ProfileSurfaces.First(surface => surface.LineId == profileLine.Id);
                     GraphicsLayerManager.RemoveLineFromGraphic(profileSessionId, profileLine.Id);
+                    profileLine.SessionId = profileSessionId;
                     graphsController.AddProfileToTab(profileLine, profileSurface);
                 }
             }
@@ -520,6 +517,29 @@ namespace MilSpace.Profile
             }
 
             return MilSpaceProfileFacade.CanEraseProfileSessions(profileSession); ;
+        }
+
+        internal string GetProfileName(int id)
+        {
+            var session = GetProfileSessionById(id);
+            if (session != null)
+            {
+              return  session.SessionName;
+            }
+
+            return null;
+        }
+
+        internal void AddProfileToExistedGraph()
+        {
+            var profilesTreeModalWindow = new ProfilesTreeModalWindow(View.GetTreeView());
+            DialogResult result = profilesTreeModalWindow.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                AddProfileToTab(profilesTreeModalWindow.SelectedSessionId, profilesTreeModalWindow.SelectedLineId);
+            }
+
         }
 
         private void InvokeOnProfileSettingsChanged()

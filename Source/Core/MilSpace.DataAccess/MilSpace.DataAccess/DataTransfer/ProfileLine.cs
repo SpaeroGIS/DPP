@@ -18,5 +18,8 @@ namespace MilSpace.DataAccess.DataTransfer
 
         [XmlIgnore]
         public ISpatialReference SpatialReference;
+
+        [XmlIgnore]
+        public int SessionId;
     }
 }

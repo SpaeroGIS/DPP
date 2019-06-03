@@ -27,12 +27,16 @@ namespace MilSpace.Profile
         internal delegate void SelectedProfileChangedDelegate(GroupedLines oldSelectedLines, GroupedLines newSelectedLines, int profileId);
         internal delegate void GetIntersectionLinesDelegate(ProfileLine selectedLine, ProfileSession profileSession);
         internal delegate void CreateEmptyGraphDelegate();
+        internal delegate void AddProfileToExistedGraphDelegate();
+        internal delegate string GetProfileNameDelegate(int id);
 
         internal event ProfileRedrawDelegate ProfileRedrawn;
         internal event DeleteProfileDelegate ProfileRemoved;
         internal event SelectedProfileChangedDelegate SelectedProfileChanged;
         internal event GetIntersectionLinesDelegate IntersectionLinesDrawing;
         internal event CreateEmptyGraphDelegate CreateEmptyGraph;
+        internal event AddProfileToExistedGraphDelegate AddProfile;
+        internal event GetProfileNameDelegate GetProfileName;
 
         internal DockableWindowMilSpaceProfileGraph View { get; private set; }
 
@@ -65,18 +69,12 @@ namespace MilSpace.Profile
         private void OnProfileGraphClicked(GraphProfileClickedArgs e)
         {
             IPoint point = new Point() { X = e.ProfilePoint.X, Y = e.ProfilePoint.Y, SpatialReference = e.ProfilePoint.SpatialReference };
-
             IEnvelope env = new EnvelopeClass();
-
             var av = ArcMap.Document.ActivatedView;
             point.Project(av.FocusMap.SpatialReference);
 
-            env = av.Extent;
-            env.CenterAt(point);
-            av.Extent = env;
-            av.Refresh();
-            EsriTools.FlashGeometry(av.ScreenDisplay, point);
-            av.Refresh();
+            EsriTools.PanToGeometry(ArcMap.Document.ActivatedView, point);
+            EsriTools.FlashGeometry(av.ScreenDisplay, new IGeometry[] { point });
         }
 
         private void InvokeInvisibleZonesChanged(GroupedLines profileLines, int sessionId, bool update,
@@ -107,9 +105,19 @@ namespace MilSpace.Profile
             IntersectionLinesDrawing?.Invoke(selectedLine, profileSession);
         }
 
+        internal void InvokeAddProfile()
+        {
+            AddProfile.Invoke();
+        }
+
         internal void SetIntersections(List<IntersectionsInLayer> intersectionsLines, int lineId)
         {
             _surfaceProfileChartController.SetIntersectionLines(intersectionsLines, lineId);
+        }
+
+        internal string GetProfileNameById(int id)
+        {
+            return GetProfileName?.Invoke(id);
         }
 
         internal void ShowWindow()
