@@ -17,9 +17,23 @@ namespace MilSpace.GeoCalculator.BusinessLogic
                 using (XmlWriter writer = XmlWriter.Create(streamWriter, new XmlWriterSettings() { Async = true }))
                 {
                     xmlSerializer.Serialize(writer, point);
-                    await writer.FlushAsync();
+                    await writer.FlushAsync();                    
                 }
             }
         }
+
+        public string GetXmlRepresentationOfProjections(PointModel point)
+        {
+            var xmlSerializer = new XmlSerializer(typeof(PointModel));
+            using (var streamWriter = new MemoryStream())
+            {
+                using (XmlWriter writer = XmlWriter.Create(streamWriter, new XmlWriterSettings() { Async = true }))
+                {
+                    xmlSerializer.Serialize(writer, point);
+                    return writer.ToString();
+                }
+            }
+        }
+
     }
 }

@@ -18,5 +18,16 @@ namespace MilSpace.GeoCalculator.BusinessLogic.Extensions
         {
             return Math.Round(inputValue, Constants.NumberOfDigitsForDoubleRounding);
         }
+
+        public static string ToSeparatedMgrs(this string mgrsRepresentation)
+        {
+            var stringBuilder = new StringBuilder();
+            stringBuilder.Append(mgrsRepresentation.Substring(0, 5));
+            stringBuilder.Append(' ');
+            stringBuilder.Append(mgrsRepresentation.Substring(5, 5));
+            stringBuilder.Append(' ');
+            stringBuilder.Append(mgrsRepresentation.Substring(10, 5));            
+            return stringBuilder.ToString();
+        }
     }
 }

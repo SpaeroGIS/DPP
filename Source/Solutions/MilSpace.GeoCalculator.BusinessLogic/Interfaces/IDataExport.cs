@@ -10,5 +10,6 @@ namespace MilSpace.GeoCalculator.BusinessLogic.Interfaces
     public interface IDataExport
     {
         Task ExportProjectionsToXmlAsync(PointModel point, string path);
+        string GetXmlRepresentationOfProjections(PointModel point);
     }
 }

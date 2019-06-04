@@ -18,5 +18,6 @@ namespace MilSpace.GeoCalculator.BusinessLogic.Models
         public double UkraineXCoord { get; set; }
         public double UkraineYCoord { get; set; }
         public string MgrsRepresentation { get; set; }
+        public string UtmRepresentation { get; set; }
     }
 }
