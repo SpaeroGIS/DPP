@@ -136,8 +136,11 @@ namespace MilSpace.Core
 
         public static void SetConfiguration()
         {
-            var configFile = new FileInfo(Assembly.GetExecutingAssembly().Location);
-            MilSpaceConfiguration.ConfigurationFilePath = configFile.DirectoryName;
+            if (string.IsNullOrWhiteSpace(MilSpaceConfiguration.ConfigurationFilePath))
+            {
+                var configFile = new FileInfo(Assembly.GetExecutingAssembly().Location);
+                MilSpaceConfiguration.ConfigurationFilePath = configFile.DirectoryName;
+            }
         }
 
         public static double Azimuth (this ILine line)

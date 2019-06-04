@@ -1,17 +1,17 @@
 ﻿using ESRI.ArcGIS.Geometry;
 using ESRI.ArcGIS.Carto;
-using MilSpace.ProjectionsConverter.Interfaces;
+using MilSpace.GeoCalculator.BusinessLogic.Interfaces;
 using System;
 using System.Threading.Tasks;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Geodatabase;
 using System.Windows.Forms;
-using MilSpace.ProjectionsConverter.Models;
-using MilSpace.ProjectionsConverter.ReferenceData;
+using MilSpace.GeoCalculator.BusinessLogic.Models;
+using MilSpace.GeoCalculator.BusinessLogic.ReferenceData;
 using ESRI.ArcGIS.esriSystem;
 
-namespace MilSpace.ProjectionsConverter
+namespace MilSpace.GeoCalculator.BusinessLogic
 {
     public class BusinessLogic : IBusinessLogic
     {

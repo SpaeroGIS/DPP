@@ -18,6 +18,11 @@ namespace MilSpace.Configurations
 
         private static Configuration currentConfig = null;
 
+        public static void SetConfigurationFilePath(string configurationPath)
+        {
+
+        }
+
         public static string ConfigurationFilePath
         {
             get { return configurationFilePath; }
