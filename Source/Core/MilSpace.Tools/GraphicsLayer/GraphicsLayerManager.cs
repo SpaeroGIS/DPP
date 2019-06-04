@@ -512,6 +512,34 @@ namespace MilSpace.Tools.GraphicsLayer
             return cartographicLineSymbol;
         }
 
+        public void ClearMapFromOldGraphics()
+        {
+            var actualGraphics = new List<GraphicElement>(milSpaceSessionGraphics);
+            actualGraphics.AddRange(milSpaceCalculatingGraphics);
+
+            graphics.Reset();
+            IElement ge = graphics.Next();
+            while (ge != null)
+            {
+                var graphic = actualGraphics.FirstOrDefault(graph => graph.Element.Equals(ge));
+
+                if (graphic != null)
+                {
+                    actualGraphics.Remove(graphic);
+                }
+                else
+                {
+                    graphics.DeleteElement(ge);
+                }
+
+                ge = graphics.Next();
+            }
+
+            graphics.Reset();
+            activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
+        }
+
+
         private bool CheckElementOnGraphics(GraphicElement milSpaceElement)
         {
             if (milSpaceElement == null)
