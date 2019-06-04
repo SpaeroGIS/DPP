@@ -290,6 +290,7 @@ namespace MilSpace.Profile
 
             public AddinImpl()
             {
+                Helper.SetConfiguration();
             }
 
             protected override IntPtr OnCreateChild()
