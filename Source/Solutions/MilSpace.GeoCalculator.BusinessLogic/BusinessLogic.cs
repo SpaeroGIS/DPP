@@ -71,23 +71,17 @@ namespace MilSpace.GeoCalculator.BusinessLogic
             });
         }
 
-        public async Task<string> ConvertToMgrs(IPoint wgsInputPoint)
+        public string ConvertToMgrs(IPoint wgsInputPoint)
         {
-            return await Task.Run(() =>
-            {
-                var conversionNotation = wgsInputPoint as IConversionNotation;
-                //5 for 1m resolution
-                return conversionNotation?.CreateMGRS(5, true, esriMGRSModeEnum.esriMGRSMode_Automatic);
-            });
+            var conversionNotation = wgsInputPoint as IConversionNotation;
+            //5 for 1m resolution
+            return conversionNotation?.CreateMGRS(5, true, esriMGRSModeEnum.esriMGRSMode_Automatic);
         }
 
-        public async Task<string> ConvertToUtm(IPoint wgsInputPoint)
+        public string ConvertToUtm(IPoint wgsInputPoint)
         {
-            return await Task.Run(() =>
-            {
-                var conversionNotation = wgsInputPoint as IConversionNotation;                
-                return conversionNotation?.GetUTMFromCoords(esriUTMConversionOptionsEnum.esriUTMAddSpaces);
-            });
+            var conversionNotation = wgsInputPoint as IConversionNotation;                
+            return conversionNotation?.GetUTMFromCoords(esriUTMConversionOptionsEnum.esriUTMAddSpaces);            
         }
 
         public void CopyCoordinatesToClipboard(PointModel pointModel)
@@ -96,35 +90,31 @@ namespace MilSpace.GeoCalculator.BusinessLogic
             Clipboard.SetData(nameof(PointModel), _dataExport.GetXmlRepresentationOfProjections(pointModel));
         }
 
-        public async Task<IPoint> GetDisplayCenterAsync()
+        public IPoint GetDisplayCenter()
         {
             if (!(_arcMapApp.Document is IMxDocument currentDocument)) throw new Exception(NoMapExceptionMessage);
             var centerPoint = new Point();
-            await Task.Run(() =>
-            {
-                var activeView = currentDocument.ActiveView;
-                var envelope = activeView.Extent as IEnvelope;
-                centerPoint.X = ((envelope.XMax - envelope.XMin) / 2) + envelope.XMin;
-                centerPoint.Y = ((envelope.YMax - envelope.YMin) / 2) + envelope.YMin;
-                centerPoint.SpatialReference = envelope.SpatialReference;
-            });            
+
+            var activeView = currentDocument.ActiveView;
+            var envelope = activeView.Extent as IEnvelope;
+            centerPoint.X = ((envelope.XMax - envelope.XMin) / 2) + envelope.XMin;
+            centerPoint.Y = ((envelope.YMax - envelope.YMin) / 2) + envelope.YMin;
+            centerPoint.SpatialReference = envelope.SpatialReference;
+
             return centerPoint;
         }
 
-        public async Task<IPoint> GetSelectedPointAsync(int mousePositionX, int mousePositionY)
+        public IPoint GetSelectedPoint(int mousePositionX, int mousePositionY)
         {
             if (!(_arcMapApp.Document is IMxDocument currentDocument)) throw new Exception(NoMapExceptionMessage);
 
             IPoint resultPoint = new Point();
-            await Task.Run(() => 
-            {
-                resultPoint = (currentDocument.FocusMap as IActiveView).ScreenDisplay.DisplayTransformation.ToMapPoint(mousePositionX, mousePositionY);
-                
-            });
+
+            resultPoint = (currentDocument.FocusMap as IActiveView).ScreenDisplay.DisplayTransformation.ToMapPoint(mousePositionX, mousePositionY);
             return resultPoint;
         }
 
-        public async Task MoveToNewCoordinateAsync(double x, double y)
+        public async Task MoveToNewCoordinate(double x, double y)
         {
             if (!(_arcMapApp.Document is IMxDocument currentDocument)) throw new Exception(NoMapExceptionMessage);
             
@@ -138,19 +128,18 @@ namespace MilSpace.GeoCalculator.BusinessLogic
             });            
         }
 
-        public async Task<IPoint> ProjectPointAsync(IPoint inputPoint, SingleProjectionModel singleProjectionModel)
+        public IPoint ProjectPoint(IPoint inputPoint, SingleProjectionModel singleProjectionModel)
         {
             if (inputPoint == null) return null;
-            await Task.Run(() =>
-            {
-                //Create Spatial Reference Factory
-                var spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
-                //Projected Coordinate System to project into
-                var projectedCoordinateSystem = spatialReferenceFactory.CreateProjectedCoordinateSystem(singleProjectionModel.ESRIWellKnownID);
-                projectedCoordinateSystem.SetFalseOriginAndUnits(singleProjectionModel.FalseOriginX, singleProjectionModel.FalseOriginY, singleProjectionModel.Units);
 
-                inputPoint.Project(projectedCoordinateSystem);
-            });
+            //Create Spatial Reference Factory
+            var spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
+            //Projected Coordinate System to project into
+            var projectedCoordinateSystem = spatialReferenceFactory.CreateProjectedCoordinateSystem(singleProjectionModel.ESRIWellKnownID);
+            projectedCoordinateSystem.SetFalseOriginAndUnits(singleProjectionModel.FalseOriginX, singleProjectionModel.FalseOriginY, singleProjectionModel.Units);
+
+            inputPoint.Project(projectedCoordinateSystem);
+
             return inputPoint;
         }
 
@@ -207,7 +196,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic
                 return bufferPoint;
             });
 
-            return await ProjectPointAsync(resultPoint, new SingleProjectionModel(targetCoordinateSystemType, falseOriginX, falseOriginY, currentDocument.FocusMap.MapScale));
+            return ProjectPoint(resultPoint, new SingleProjectionModel(targetCoordinateSystemType, falseOriginX, falseOriginY, currentDocument.FocusMap.MapScale));
         }
 
         public async Task SaveProjectionsToXmlFileAsync(PointModel pointModel, string path)

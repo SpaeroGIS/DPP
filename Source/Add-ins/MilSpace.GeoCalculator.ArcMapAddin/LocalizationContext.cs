@@ -39,6 +39,10 @@ namespace ArcMapAddin
         public string SaveButton => FindLocalizedElement("SaveButton", "Save to XML");
         public string MoveToCenterButton => FindLocalizedElement("MoveToCenterButton", "Map Center");
 
+        public string WrongUtmFormatMessage { get; internal set; }
+        public string ErrorString { get; internal set; }
+        public string WrongMgrsFormatMessage { get; internal set; }
+
         private string FindLocalizedElement(string xmlNodeName, string defaultValue)
         {
             return _root?.SelectSingleNode(xmlNodeName)?.InnerText ?? defaultValue;

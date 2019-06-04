@@ -16,6 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ESRI.ArcGIS.ArcMapUI;
+using ESRI.ArcGIS.Display;
 
 namespace ArcMapAddin
 {
@@ -31,7 +32,10 @@ namespace ArcMapAddin
         private readonly IBusinessLogic _businessLogic;
         private readonly ProjectionsModel _projectionsModel;
         private PointModel _pointModel;
+        private LocalizationContext context = new LocalizationContext();
         private readonly IList<IPoint> ClickedPointsList = new List<IPoint>();
+
+        public ISpatialReference FocusMapSpatialReference => ArcMap.Document.FocusMap.SpatialReference;
 
         public DockableWindowGeoCalculator(object hook, IBusinessLogic businessLogic, ProjectionsModel projectionsModel)
         {
@@ -107,33 +111,87 @@ namespace ArcMapAddin
             else _businessLogic.CopyCoordinatesToClipboard(_pointModel);
         }
 
-        private async void MoveToCenterButton_Click(object sender, EventArgs e)
+        private void MoveToCenterButton_Click(object sender, EventArgs e)
         {
-            var centerPoint = await _businessLogic.GetDisplayCenterAsync().ConfigureAwait(false);
-            await ProjectPointAsync(centerPoint).ConfigureAwait(false);
+            var centerPoint = _businessLogic.GetDisplayCenter();
+            ProjectPointAsync(centerPoint);
         }
 
         private void PointsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //TODO: We need actual point here to project further.
-            //var selectedPoint = ClickedPointsList[PointsListBox.SelectedIndex];
-            //await ProjectPointAsync(selectedPoint).ConfigureAwait(false);
+            var selectedPoint = ClickedPointsList[PointsListBox.SelectedIndex];
+            ArcMapHelper.FlashGeometry(selectedPoint, 400);
+            ProjectPointAsync(selectedPoint);
+        }
+
+        private async void MgrsNotationTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                //Enter key pressed
+                if (e.KeyChar == (char)13 && !string.IsNullOrWhiteSpace(MgrsNotationTextBox.Text))
+                {
+                    var point = await _businessLogic.ConvertFromMgrs(MgrsNotationTextBox.Text.Trim()).ConfigureAwait(false);
+                    ProjectPointAsync(point);
+                }
+            }
+            catch
+            {
+                MessageBox.Show(context.WrongMgrsFormatMessage, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async void UTMNotationTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                //Enter key pressed
+                if (e.KeyChar == (char)13 && !string.IsNullOrWhiteSpace(UTMNotationTextBox.Text))
+                {
+                    var point = await _businessLogic.ConvertFromUtm(UTMNotationTextBox.Text.Trim()).ConfigureAwait(false);
+                    ProjectPointAsync(point);
+                }
+            }
+            catch
+            {
+                MessageBox.Show(context.WrongUtmFormatMessage, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void XCoordinateTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+        }
+
+        private void YCoordinateTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+        }
+
+        private void MgrsNotationTextBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(MgrsNotationTextBox.Text)) MgrsNotationTextBox.SelectAll();
+        }
+
+        private void UTMNotationTextBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(UTMNotationTextBox.Text)) UTMNotationTextBox.SelectAll();
         }
         #endregion
 
         #region ArcMap events handlers
-        internal async void ArcMap_OnMouseDown(int x, int y)
+        internal void ArcMap_OnMouseDown(int x, int y)
         {
-            var clickedPoint = await _businessLogic.GetSelectedPointAsync(x, y).ConfigureAwait(false);
-            ClickedPointsList.Add(clickedPoint);
+            var clickedPoint = _businessLogic.GetSelectedPoint(x, y);
+            AddPointToList(clickedPoint);
             PointsListBox.Items.Add($"{clickedPoint.X.ToRoundedString()}  {clickedPoint.Y.ToRoundedString()}");
             PointsListBox.Refresh();            
-            await ProjectPointAsync(clickedPoint).ConfigureAwait(false);            
+            ProjectPointAsync(clickedPoint);            
         }
 
-        internal async void ArcMap_OnMouseMove(int x, int y)
+        internal void ArcMap_OnMouseMove(int x, int y)
         {            
-            var currentPoint = await _businessLogic.GetSelectedPointAsync(x, y).ConfigureAwait(false);
+            var currentPoint = _businessLogic.GetSelectedPoint(x, y);
             XCoordinateTextBox.Text = currentPoint.X.ToString();
             YCoordinateTextBox.Text = currentPoint.Y.ToString();            
         }        
@@ -143,8 +201,7 @@ namespace ArcMapAddin
         private void LocalizeComponents()
         {
             try
-            {
-                var context = new LocalizationContext();
+            {               
                 this.Text = context.CoordinatesConverterWindowCaption;
                 this.LatitudeLongitudeGroup.Text = context.LatitudeLongitudeLabel;
                 this.CurrentMapLabel.Text = context.CurrentMapLabel;
@@ -159,7 +216,7 @@ namespace ArcMapAddin
             catch { MessageBox.Show("No Localization.xml found or there is an error during loading. Coordinates Converter window is not fully localized."); }
         }
 
-        private async Task ProjectPointAsync(IPoint inputPoint)
+        private void ProjectPointAsync(IPoint inputPoint)
         {
             _pointModel = new PointModel();
 
@@ -173,35 +230,47 @@ namespace ArcMapAddin
             _pointModel.YCoord = inputPoint.Y.ToRoundedDouble();
 
             //MGRS string MUST be calculated using WGS84 projected point, thus the next lines order matters!
-            var wgsPoint = await _businessLogic.ProjectPointAsync(inputPoint, _projectionsModel.WGS84Projection);
+            var wgsPoint = _businessLogic.ProjectPoint(inputPoint, _projectionsModel.WGS84Projection);
             WgsXCoordinateTextBox.Text = wgsPoint.X.ToRoundedString();
             WgsYCoordinateTextBox.Text = wgsPoint.Y.ToRoundedString();
 
             _pointModel.WgsXCoord = wgsPoint.X.ToRoundedDouble();
             _pointModel.WgsYCoord = wgsPoint.Y.ToRoundedDouble();
 
-            MgrsNotationTextBox.Text = (await _businessLogic.ConvertToMgrs(wgsPoint))?.ToSeparatedMgrs();
+            MgrsNotationTextBox.Text = (_businessLogic.ConvertToMgrs(wgsPoint))?.ToSeparatedMgrs();
 
-            UTMNotationTextBox.Text = await _businessLogic.ConvertToUtm(wgsPoint);
+            UTMNotationTextBox.Text = _businessLogic.ConvertToUtm(wgsPoint);
 
             _pointModel.MgrsRepresentation = MgrsNotationTextBox.Text;
 
             _pointModel.UtmRepresentation = UTMNotationTextBox.Text;
 
-            var pulkovoPoint = await _businessLogic.ProjectPointAsync(inputPoint, _projectionsModel.Pulkovo1942Projection);
+            var pulkovoPoint = _businessLogic.ProjectPoint(inputPoint, _projectionsModel.Pulkovo1942Projection);
             PulkovoXCoordinateTextBox.Text = pulkovoPoint.X.ToRoundedString();
             PulkovoYCoordinateTextBox.Text = pulkovoPoint.Y.ToRoundedString();
 
             _pointModel.PulkovoXCoord = pulkovoPoint.X.ToRoundedDouble();
             _pointModel.PulkovoYCoord = pulkovoPoint.Y.ToRoundedDouble();
 
-            var ukrainePoint = await _businessLogic.ProjectPointAsync(inputPoint, _projectionsModel.Ukraine2000Projection);
+            var ukrainePoint = _businessLogic.ProjectPoint(inputPoint, _projectionsModel.Ukraine2000Projection);
             UkraineXCoordinateTextBox.Text = ukrainePoint.X.ToRoundedString();
             UkraineYCoordinateTextBox.Text = ukrainePoint.Y.ToRoundedString();
 
             _pointModel.UkraineXCoord = ukrainePoint.X.ToRoundedDouble();
             _pointModel.UkraineYCoord = ukrainePoint.Y.ToRoundedDouble();
 
+            //Remove distorsions
+            inputPoint.Project(FocusMapSpatialReference);
+        }
+        private void AddPointToList(IPoint point)
+        {
+            if (point != null && !point.IsEmpty)
+            {
+                var color = (IColor)new RgbColorClass() { Blue = 255 };
+                var placedPoint = ArcMapHelper.AddGraphicToMap(point, color, true, esriSimpleMarkerStyle.esriSMSCircle, 7);
+
+                ClickedPointsList.Add(placedPoint);
+            }
         }
 
         private static ProjectionsModel CreateProjecstionsModelFromSettings()
