@@ -93,7 +93,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic
         public void CopyCoordinatesToClipboard(PointModel pointModel)
         {
             Clipboard.Clear();
-            Clipboard.SetData(nameof(PointModel), pointModel);
+            Clipboard.SetData(nameof(PointModel), _dataExport.GetXmlRepresentationOfProjections(pointModel));
         }
 
         public async Task<IPoint> GetDisplayCenterAsync()
