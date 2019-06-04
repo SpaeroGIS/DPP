@@ -12,30 +12,55 @@ using ESRI.ArcGIS.Carto;
 using MilSpace.ProjectionsConverter.Models;
 using MilSpace.ProjectionsConverter.ReferenceData;
 using ESRI.ArcGIS.esriSystem;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using ESRI.ArcGIS.Desktop.AddIns;
 
 namespace MilSpace.ProjectionsConverter.UI
 {
-    public class CoordinatesConverterCommand : IDockableWindow, ICommand, ITool
+    [Guid("3C0C2853-F255-4360-8414-73C2E7EC3638")]
+    [ClassInterface(ClassInterfaceType.None)]
+    [ProgId("MilSpace.CoordinatesConverterCommand")]
+    public class CoordinatesConverterCommand : ICommand
     {
-        private DockableWindowCoordinatesConverter mainForm;
+        private IDockableWindow m_dockableWindow;
+        private bool m_checked = false;
+        private bool m_enabled = false;
+        private const string DockableWindowGuid = "{140FA266-0614-4488-980E-199C3DEF3AD8}";
 
         public void OnCreate(object Hook)
         {
-            if (mainForm == null && Hook is IApplication arcMap)
+            if (m_dockableWindow == null)
             {
-                var businessLogic = new BusinessLogic(arcMap, new DataExport());
-                mainForm = new DockableWindowCoordinatesConverter(arcMap, businessLogic, CreateProjecstionsModelFromSettings());                
-            }            
+                Debugger.Launch();
+                Debugger.Break();
+                IDockableWindowManager dockWindowManager = Hook as IDockableWindowManager;
+                if (dockWindowManager != null)
+                {
+                    UID windowID = new UIDClass();
+                    windowID.Value = DockableWindowGuid;
+                    m_dockableWindow = dockWindowManager.GetDockableWindow(windowID);
+                }
+                m_enabled = m_dockableWindow != null;
+            }                      
         }
 
         public void OnClick()
         {
-            mainForm.Show();
+            if (m_dockableWindow == null)
+                return;
+
+            if (m_dockableWindow.IsVisible())
+                m_dockableWindow.Show(false);
+            else
+                m_dockableWindow.Show(true);
+
+            m_checked = m_dockableWindow.IsVisible();
         }
 
-        public bool Enabled => true;
+        public bool Enabled => m_enabled;
 
-        public bool Checked => false;
+        public bool Checked => m_checked;
 
         public string Name => "Coordinates Converter";
 
@@ -51,82 +76,6 @@ namespace MilSpace.ProjectionsConverter.UI
 
         public int Bitmap => 0;
 
-        public string Category => "MilSpaceCoordConverter";
-
-        public void OnMouseDown(int button, int shift, int x, int y)
-        {
-            if (button == 1 && shift == 0)
-                mainForm.ArcMap_MouseDown(x, y);
-        }
-
-        public void OnMouseMove(int button, int shift, int x, int y)
-        {
-            
-        }
-
-        public void OnMouseUp(int button, int shift, int x, int y)
-        {
-            
-        }
-
-        public void OnDblClick()
-        {
-            
-        }
-
-        public void OnKeyDown(int keyCode, int shift)
-        {
-            
-        }
-
-        public void OnKeyUp(int keyCode, int shift)
-        {
-            
-        }
-
-        public bool OnContextMenu(int x, int y)
-        {
-            return true;
-        }
-
-        public void Refresh(int hdc)
-        {
-            
-        }
-
-        public bool Deactivate()
-        {
-            return true;
-        }
-
-        public int Cursor => 1;
-
-        private ProjectionsModel CreateProjecstionsModelFromSettings()
-        {
-            return new ProjectionsModel(new SingleProjectionModel((int)esriSRProjCSType.esriSRProjCS_WGS1984UTM_36N, 30.000, 0.000),
-                                        new SingleProjectionModel((int)esriSRProjCSType.esriSRProjCS_Pulkovo1942GK_6N, 30.000, 44.330),
-                                        new SingleProjectionModel(Constants.Ukraine2000ID[2], 30.000, 43.190));
-        }
-
-        public void Show(bool Show)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool IsVisible()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Dock(esriDockFlags dockFlags)
-        {
-            throw new NotImplementedException();
-        }
-
-        string IDockableWindow.Caption { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public UID ID => throw new NotImplementedException();
-
-        public dynamic UserData => throw new NotImplementedException();
+        public string Category => "MilSpace";        
     }
 }

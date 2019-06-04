@@ -1,8 +1,8 @@
 ﻿using ESRI.ArcGIS.Geometry;
-using MilSpace.ProjectionsConverter.Models;
+using MilSpace.GeoCalculator.BusinessLogic.Models;
 using System.Threading.Tasks;
 
-namespace MilSpace.ProjectionsConverter.Interfaces
+namespace MilSpace.GeoCalculator.BusinessLogic.Interfaces
 {
     public interface IBusinessLogic
     {
