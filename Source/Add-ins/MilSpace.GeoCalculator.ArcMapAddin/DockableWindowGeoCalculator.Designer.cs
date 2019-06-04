@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.LatitudeLongitudeGroup = new System.Windows.Forms.GroupBox();
+            this.MoveToCenterButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
             this.CopyButton = new System.Windows.Forms.Button();
             this.UTMNotationLabel = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             this.UTMNotationTextBox = new System.Windows.Forms.TextBox();
             this.MgrsNotationLabel = new System.Windows.Forms.Label();
             this.UkraineCoordinatesLabel = new System.Windows.Forms.Label();
@@ -48,18 +48,18 @@
             this.XCoordinateTextBox = new System.Windows.Forms.TextBox();
             this.WgsYCoordinateTextBox = new System.Windows.Forms.TextBox();
             this.WgsXCoordinateTextBox = new System.Windows.Forms.TextBox();
-            this.MoveToCenterButton = new System.Windows.Forms.Button();
             this.saveButtonFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.PointsListBox = new System.Windows.Forms.ListBox();
             this.LatitudeLongitudeGroup.SuspendLayout();
             this.SuspendLayout();
             // 
             // LatitudeLongitudeGroup
             // 
+            this.LatitudeLongitudeGroup.Controls.Add(this.PointsListBox);
             this.LatitudeLongitudeGroup.Controls.Add(this.MoveToCenterButton);
             this.LatitudeLongitudeGroup.Controls.Add(this.SaveButton);
             this.LatitudeLongitudeGroup.Controls.Add(this.CopyButton);
             this.LatitudeLongitudeGroup.Controls.Add(this.UTMNotationLabel);
-            this.LatitudeLongitudeGroup.Controls.Add(this.textBox2);
             this.LatitudeLongitudeGroup.Controls.Add(this.UTMNotationTextBox);
             this.LatitudeLongitudeGroup.Controls.Add(this.MgrsNotationLabel);
             this.LatitudeLongitudeGroup.Controls.Add(this.UkraineCoordinatesLabel);
@@ -75,18 +75,31 @@
             this.LatitudeLongitudeGroup.Controls.Add(this.XCoordinateTextBox);
             this.LatitudeLongitudeGroup.Controls.Add(this.WgsYCoordinateTextBox);
             this.LatitudeLongitudeGroup.Controls.Add(this.WgsXCoordinateTextBox);
-            this.LatitudeLongitudeGroup.Location = new System.Drawing.Point(4, 4);
+            this.LatitudeLongitudeGroup.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LatitudeLongitudeGroup.Location = new System.Drawing.Point(0, 0);
             this.LatitudeLongitudeGroup.Name = "LatitudeLongitudeGroup";
-            this.LatitudeLongitudeGroup.Size = new System.Drawing.Size(293, 393);
+            this.LatitudeLongitudeGroup.Size = new System.Drawing.Size(300, 450);
             this.LatitudeLongitudeGroup.TabIndex = 0;
             this.LatitudeLongitudeGroup.TabStop = false;
             this.LatitudeLongitudeGroup.Text = "Latitude/Longitude";
             // 
+            // MoveToCenterButton
+            // 
+            this.MoveToCenterButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.MoveToCenterButton.Location = new System.Drawing.Point(187, 17);
+            this.MoveToCenterButton.Name = "MoveToCenterButton";
+            this.MoveToCenterButton.Size = new System.Drawing.Size(100, 23);
+            this.MoveToCenterButton.TabIndex = 37;
+            this.MoveToCenterButton.Text = "Center";
+            this.MoveToCenterButton.UseVisualStyleBackColor = true;
+            this.MoveToCenterButton.Click += new System.EventHandler(this.MoveToCenterButton_Click);
+            // 
             // SaveButton
             // 
-            this.SaveButton.Location = new System.Drawing.Point(71, 364);
+            this.SaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.SaveButton.Location = new System.Drawing.Point(81, 414);
             this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(105, 23);
+            this.SaveButton.Size = new System.Drawing.Size(100, 23);
             this.SaveButton.TabIndex = 36;
             this.SaveButton.Text = "Save to file";
             this.SaveButton.UseVisualStyleBackColor = true;
@@ -94,9 +107,10 @@
             // 
             // CopyButton
             // 
-            this.CopyButton.Location = new System.Drawing.Point(182, 364);
+            this.CopyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.CopyButton.Location = new System.Drawing.Point(187, 414);
             this.CopyButton.Name = "CopyButton";
-            this.CopyButton.Size = new System.Drawing.Size(105, 23);
+            this.CopyButton.Size = new System.Drawing.Size(100, 23);
             this.CopyButton.TabIndex = 35;
             this.CopyButton.Text = "Copy";
             this.CopyButton.UseVisualStyleBackColor = true;
@@ -111,18 +125,12 @@
             this.UTMNotationLabel.TabIndex = 34;
             this.UTMNotationLabel.Text = "UTM Representation";
             // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(81, 332);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 32;
-            // 
             // UTMNotationTextBox
             // 
+            this.UTMNotationTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.UTMNotationTextBox.Location = new System.Drawing.Point(81, 306);
             this.UTMNotationTextBox.Name = "UTMNotationTextBox";
-            this.UTMNotationTextBox.Size = new System.Drawing.Size(100, 20);
+            this.UTMNotationTextBox.Size = new System.Drawing.Size(206, 20);
             this.UTMNotationTextBox.TabIndex = 31;
             // 
             // MgrsNotationLabel
@@ -172,13 +180,15 @@
             // 
             // MgrsNotationTextBox
             // 
+            this.MgrsNotationTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.MgrsNotationTextBox.Location = new System.Drawing.Point(81, 254);
             this.MgrsNotationTextBox.Name = "MgrsNotationTextBox";
-            this.MgrsNotationTextBox.Size = new System.Drawing.Size(100, 20);
+            this.MgrsNotationTextBox.Size = new System.Drawing.Size(206, 20);
             this.MgrsNotationTextBox.TabIndex = 18;
             // 
             // UkraineYCoordinateTextBox
             // 
+            this.UkraineYCoordinateTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.UkraineYCoordinateTextBox.Location = new System.Drawing.Point(187, 202);
             this.UkraineYCoordinateTextBox.Name = "UkraineYCoordinateTextBox";
             this.UkraineYCoordinateTextBox.Size = new System.Drawing.Size(100, 20);
@@ -186,6 +196,7 @@
             // 
             // UkraineXCoordinateTextBox
             // 
+            this.UkraineXCoordinateTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.UkraineXCoordinateTextBox.Location = new System.Drawing.Point(81, 202);
             this.UkraineXCoordinateTextBox.Name = "UkraineXCoordinateTextBox";
             this.UkraineXCoordinateTextBox.Size = new System.Drawing.Size(100, 20);
@@ -193,6 +204,7 @@
             // 
             // PulkovoXCoordinateTextBox
             // 
+            this.PulkovoXCoordinateTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.PulkovoXCoordinateTextBox.Location = new System.Drawing.Point(81, 150);
             this.PulkovoXCoordinateTextBox.Name = "PulkovoXCoordinateTextBox";
             this.PulkovoXCoordinateTextBox.Size = new System.Drawing.Size(100, 20);
@@ -200,6 +212,7 @@
             // 
             // PulkovoYCoordinateTextBox
             // 
+            this.PulkovoYCoordinateTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.PulkovoYCoordinateTextBox.Location = new System.Drawing.Point(187, 150);
             this.PulkovoYCoordinateTextBox.Name = "PulkovoYCoordinateTextBox";
             this.PulkovoYCoordinateTextBox.Size = new System.Drawing.Size(100, 20);
@@ -207,6 +220,7 @@
             // 
             // YCoordinateTextBox
             // 
+            this.YCoordinateTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.YCoordinateTextBox.Location = new System.Drawing.Point(187, 46);
             this.YCoordinateTextBox.Name = "YCoordinateTextBox";
             this.YCoordinateTextBox.Size = new System.Drawing.Size(100, 20);
@@ -214,6 +228,7 @@
             // 
             // XCoordinateTextBox
             // 
+            this.XCoordinateTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.XCoordinateTextBox.Location = new System.Drawing.Point(81, 46);
             this.XCoordinateTextBox.Name = "XCoordinateTextBox";
             this.XCoordinateTextBox.Size = new System.Drawing.Size(100, 20);
@@ -221,6 +236,7 @@
             // 
             // WgsYCoordinateTextBox
             // 
+            this.WgsYCoordinateTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.WgsYCoordinateTextBox.Location = new System.Drawing.Point(187, 98);
             this.WgsYCoordinateTextBox.Name = "WgsYCoordinateTextBox";
             this.WgsYCoordinateTextBox.Size = new System.Drawing.Size(100, 20);
@@ -228,31 +244,34 @@
             // 
             // WgsXCoordinateTextBox
             // 
+            this.WgsXCoordinateTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.WgsXCoordinateTextBox.Location = new System.Drawing.Point(81, 98);
             this.WgsXCoordinateTextBox.Name = "WgsXCoordinateTextBox";
             this.WgsXCoordinateTextBox.Size = new System.Drawing.Size(100, 20);
             this.WgsXCoordinateTextBox.TabIndex = 2;
-            // 
-            // MoveToCenterButton
-            // 
-            this.MoveToCenterButton.Location = new System.Drawing.Point(212, 329);
-            this.MoveToCenterButton.Name = "MoveToCenterButton";
-            this.MoveToCenterButton.Size = new System.Drawing.Size(75, 23);
-            this.MoveToCenterButton.TabIndex = 37;
-            this.MoveToCenterButton.Text = "Center";
-            this.MoveToCenterButton.UseVisualStyleBackColor = true;
-            this.MoveToCenterButton.Click += new System.EventHandler(this.MoveToCenterButton_Click);
             // 
             // saveButtonFileDialog
             // 
             this.saveButtonFileDialog.CheckFileExists = false;
             this.saveButtonFileDialog.FileName = "Coordinates.xml";
             // 
+            // PointsListBox
+            // 
+            this.PointsListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.PointsListBox.FormattingEnabled = true;
+            this.PointsListBox.Location = new System.Drawing.Point(10, 340);
+            this.PointsListBox.Name = "PointsListBox";
+            this.PointsListBox.Size = new System.Drawing.Size(277, 56);
+            this.PointsListBox.TabIndex = 38;
+            this.PointsListBox.SelectedIndexChanged += new System.EventHandler(this.PointsListBox_SelectedIndexChanged);
+            // 
             // DockableWindowGeoCalculator
             // 
             this.Controls.Add(this.LatitudeLongitudeGroup);
             this.Name = "DockableWindowGeoCalculator";
-            this.Size = new System.Drawing.Size(300, 400);
+            this.Size = new System.Drawing.Size(300, 450);
             this.LatitudeLongitudeGroup.ResumeLayout(false);
             this.LatitudeLongitudeGroup.PerformLayout();
             this.ResumeLayout(false);
@@ -277,11 +296,11 @@
         private System.Windows.Forms.TextBox WgsYCoordinateTextBox;
         private System.Windows.Forms.TextBox WgsXCoordinateTextBox;
         private System.Windows.Forms.Label UTMNotationLabel;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox UTMNotationTextBox;
         private System.Windows.Forms.Button SaveButton;
         private System.Windows.Forms.Button CopyButton;
         private System.Windows.Forms.Button MoveToCenterButton;
         private System.Windows.Forms.OpenFileDialog saveButtonFileDialog;
+        private System.Windows.Forms.ListBox PointsListBox;
     }
 }
