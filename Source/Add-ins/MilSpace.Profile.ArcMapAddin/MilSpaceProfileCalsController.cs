@@ -542,6 +542,11 @@ namespace MilSpace.Profile
 
         }
 
+        internal void ClearMapFromOldGraphs()
+        {
+            GraphicsLayerManager.ClearMapFromOldGraphics();
+        }
+
         private void InvokeOnProfileSettingsChanged()
         {
             if (OnProfileSettingsChanged != null)
