@@ -1123,5 +1123,10 @@ namespace MilSpace.Profile
 
             controller.AddProfileToTab(ids.Item1, ids.Item2);
         }
+
+        private void clearExtraGraphic_Click(object sender, EventArgs e)
+        {
+            controller.ClearMapFromOldGraphs();
+        }
     }
 }
