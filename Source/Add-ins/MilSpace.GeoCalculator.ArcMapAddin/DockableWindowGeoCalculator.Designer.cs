@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.LatitudeLongitudeGroup = new System.Windows.Forms.GroupBox();
+            this.ProjectionsGroup = new System.Windows.Forms.GroupBox();
             this.PointsListBox = new System.Windows.Forms.ListBox();
             this.MoveToCenterButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
@@ -50,38 +50,38 @@
             this.WgsYCoordinateTextBox = new System.Windows.Forms.TextBox();
             this.WgsXCoordinateTextBox = new System.Windows.Forms.TextBox();
             this.saveButtonFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.LatitudeLongitudeGroup.SuspendLayout();
+            this.ProjectionsGroup.SuspendLayout();
             this.SuspendLayout();
             // 
-            // LatitudeLongitudeGroup
+            // ProjectionsGroup
             // 
-            this.LatitudeLongitudeGroup.Controls.Add(this.PointsListBox);
-            this.LatitudeLongitudeGroup.Controls.Add(this.MoveToCenterButton);
-            this.LatitudeLongitudeGroup.Controls.Add(this.SaveButton);
-            this.LatitudeLongitudeGroup.Controls.Add(this.CopyButton);
-            this.LatitudeLongitudeGroup.Controls.Add(this.UTMNotationLabel);
-            this.LatitudeLongitudeGroup.Controls.Add(this.UTMNotationTextBox);
-            this.LatitudeLongitudeGroup.Controls.Add(this.MgrsNotationLabel);
-            this.LatitudeLongitudeGroup.Controls.Add(this.UkraineCoordinatesLabel);
-            this.LatitudeLongitudeGroup.Controls.Add(this.PulkovoCoordinatesLabel);
-            this.LatitudeLongitudeGroup.Controls.Add(this.WgsCoordinatesLabel);
-            this.LatitudeLongitudeGroup.Controls.Add(this.CurrentMapLabel);
-            this.LatitudeLongitudeGroup.Controls.Add(this.MgrsNotationTextBox);
-            this.LatitudeLongitudeGroup.Controls.Add(this.UkraineYCoordinateTextBox);
-            this.LatitudeLongitudeGroup.Controls.Add(this.UkraineXCoordinateTextBox);
-            this.LatitudeLongitudeGroup.Controls.Add(this.PulkovoXCoordinateTextBox);
-            this.LatitudeLongitudeGroup.Controls.Add(this.PulkovoYCoordinateTextBox);
-            this.LatitudeLongitudeGroup.Controls.Add(this.YCoordinateTextBox);
-            this.LatitudeLongitudeGroup.Controls.Add(this.XCoordinateTextBox);
-            this.LatitudeLongitudeGroup.Controls.Add(this.WgsYCoordinateTextBox);
-            this.LatitudeLongitudeGroup.Controls.Add(this.WgsXCoordinateTextBox);
-            this.LatitudeLongitudeGroup.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LatitudeLongitudeGroup.Location = new System.Drawing.Point(0, 0);
-            this.LatitudeLongitudeGroup.Name = "LatitudeLongitudeGroup";
-            this.LatitudeLongitudeGroup.Size = new System.Drawing.Size(300, 450);
-            this.LatitudeLongitudeGroup.TabIndex = 0;
-            this.LatitudeLongitudeGroup.TabStop = false;
-            this.LatitudeLongitudeGroup.Text = "Latitude/Longitude";
+            this.ProjectionsGroup.Controls.Add(this.PointsListBox);
+            this.ProjectionsGroup.Controls.Add(this.MoveToCenterButton);
+            this.ProjectionsGroup.Controls.Add(this.SaveButton);
+            this.ProjectionsGroup.Controls.Add(this.CopyButton);
+            this.ProjectionsGroup.Controls.Add(this.UTMNotationLabel);
+            this.ProjectionsGroup.Controls.Add(this.UTMNotationTextBox);
+            this.ProjectionsGroup.Controls.Add(this.MgrsNotationLabel);
+            this.ProjectionsGroup.Controls.Add(this.UkraineCoordinatesLabel);
+            this.ProjectionsGroup.Controls.Add(this.PulkovoCoordinatesLabel);
+            this.ProjectionsGroup.Controls.Add(this.WgsCoordinatesLabel);
+            this.ProjectionsGroup.Controls.Add(this.CurrentMapLabel);
+            this.ProjectionsGroup.Controls.Add(this.MgrsNotationTextBox);
+            this.ProjectionsGroup.Controls.Add(this.UkraineYCoordinateTextBox);
+            this.ProjectionsGroup.Controls.Add(this.UkraineXCoordinateTextBox);
+            this.ProjectionsGroup.Controls.Add(this.PulkovoXCoordinateTextBox);
+            this.ProjectionsGroup.Controls.Add(this.PulkovoYCoordinateTextBox);
+            this.ProjectionsGroup.Controls.Add(this.YCoordinateTextBox);
+            this.ProjectionsGroup.Controls.Add(this.XCoordinateTextBox);
+            this.ProjectionsGroup.Controls.Add(this.WgsYCoordinateTextBox);
+            this.ProjectionsGroup.Controls.Add(this.WgsXCoordinateTextBox);
+            this.ProjectionsGroup.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ProjectionsGroup.Location = new System.Drawing.Point(0, 0);
+            this.ProjectionsGroup.Name = "ProjectionsGroup";
+            this.ProjectionsGroup.Size = new System.Drawing.Size(300, 450);
+            this.ProjectionsGroup.TabIndex = 0;
+            this.ProjectionsGroup.TabStop = false;
+            this.ProjectionsGroup.Text = "Projections";
             // 
             // PointsListBox
             // 
@@ -277,18 +277,18 @@
             // 
             // DockableWindowGeoCalculator
             // 
-            this.Controls.Add(this.LatitudeLongitudeGroup);
+            this.Controls.Add(this.ProjectionsGroup);
             this.Name = "DockableWindowGeoCalculator";
             this.Size = new System.Drawing.Size(300, 450);
-            this.LatitudeLongitudeGroup.ResumeLayout(false);
-            this.LatitudeLongitudeGroup.PerformLayout();
+            this.ProjectionsGroup.ResumeLayout(false);
+            this.ProjectionsGroup.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.GroupBox LatitudeLongitudeGroup;
+        private System.Windows.Forms.GroupBox ProjectionsGroup;
         private System.Windows.Forms.Label MgrsNotationLabel;
         private System.Windows.Forms.Label UkraineCoordinatesLabel;
         private System.Windows.Forms.Label PulkovoCoordinatesLabel;

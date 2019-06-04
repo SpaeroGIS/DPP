@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CoordinatesConverter xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 <WindowCaption>Калькулятор координат</WindowCaption>
-<LatitudeLongitudeLabel>Широта/Долгота</LatitudeLongitudeLabel>
+<ProjectionsGroup>Проэкции</ProjectionsGroup>
 <CurrentMapLabel>Текущие координаты</CurrentMapLabel>
 <Pulkovo1942Label>СК42</Pulkovo1942Label>
 <Wgs1984Label>WGS84</Wgs1984Label>

@@ -28,7 +28,7 @@ namespace ArcMapAddin
 
         //Labels
         public string CurrentMapLabel => FindLocalizedElement("CurrentMapLabel", "Current Map Coordinates");
-        public string LatitudeLongitudeLabel => FindLocalizedElement("LatitudeLongitudeLabel", "Latitude/Longitude");
+        public string ProjectionsGroup => FindLocalizedElement("ProjectionsGroup", "Projections");
         public string PulkovoLabel => FindLocalizedElement("Pulkovo1942Label", "Pulkovo1942");
         public string WgsLabel => FindLocalizedElement("Wgs1984Label", "WGS1984");
         public string UkraineLabel => FindLocalizedElement("Ukraine2000Label", "Ukraine2000");

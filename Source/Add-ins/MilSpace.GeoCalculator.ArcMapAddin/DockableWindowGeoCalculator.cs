@@ -203,7 +203,7 @@ namespace ArcMapAddin
             try
             {               
                 this.Text = context.CoordinatesConverterWindowCaption;
-                this.LatitudeLongitudeGroup.Text = context.LatitudeLongitudeLabel;
+                this.ProjectionsGroup.Text = context.ProjectionsGroup;
                 this.CurrentMapLabel.Text = context.CurrentMapLabel;
                 this.WgsCoordinatesLabel.Text = context.WgsLabel;
                 this.PulkovoCoordinatesLabel.Text = context.PulkovoLabel;
