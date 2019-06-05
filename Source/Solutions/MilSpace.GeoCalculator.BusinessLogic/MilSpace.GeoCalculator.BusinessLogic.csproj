@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="BusinessLogic.cs" />
     <Compile Include="DataExport.cs" />
+    <Compile Include="Extensions\CoordinateFormatExtension.cs" />
     <Compile Include="Interfaces\IBusinessLogic.cs" />
     <Compile Include="Interfaces\IDataExport.cs" />
     <Compile Include="Models\PointModel.cs" />
