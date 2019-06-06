@@ -20,6 +20,7 @@ using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.Desktop.AddIns;
 using ESRI.ArcGIS.esriSystem;
 using System.Linq;
+using System.Reflection;
 
 namespace ArcMapAddin
 {
@@ -133,16 +134,7 @@ namespace ArcMapAddin
         {
             var centerPoint = _businessLogic.GetDisplayCenter();
             ProjectPointAsync(centerPoint);
-        }
-
-        private void PointsListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (PointsListBox.SelectedIndex >= ClickedPointsList.Count) return;
-
-            var selectedPoint = ClickedPointsList[PointsListBox.SelectedIndex];
-            ArcMapHelper.FlashGeometry(selectedPoint, 400);
-            ProjectPointAsync(selectedPoint);
-        }
+        }        
 
         private async void MgrsNotationTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -197,6 +189,18 @@ namespace ArcMapAddin
         {
             if (!string.IsNullOrWhiteSpace(UTMNotationTextBox.Text)) UTMNotationTextBox.SelectAll();
         }
+
+        private void PointsGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var grid = (DataGridView)sender;
+
+            if (grid.Columns[e.ColumnIndex] is DataGridViewImageColumn)
+            {
+                var selectedPoint = ClickedPointsList[e.RowIndex];
+                ArcMapHelper.FlashGeometry(selectedPoint, 400);
+                ProjectPointAsync(selectedPoint);
+            }
+        }
         #endregion
 
         #region ArcMap events handlers
@@ -204,16 +208,22 @@ namespace ArcMapAddin
         {
             var clickedPoint = _businessLogic.GetSelectedPoint(x, y);
             AddPointToList(clickedPoint);
-            PointsListBox.Items.Add($"{clickedPoint.X.ToRoundedString()}  {clickedPoint.Y.ToRoundedString()}");
-            PointsListBox.Refresh();
+
+            var newRow = new DataGridViewRow();
+            newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = ClickedPointsList.Count() });
+            newRow.Cells.Add(new DataGridViewImageCell() { Value = Image.FromFile(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Images\LocatePoint.png")) });
+            newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = clickedPoint.X.ToRoundedString() });
+            newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = clickedPoint.Y.ToRoundedString() });
+            PointsGridView.Rows.Add(newRow);
+            
             ProjectPointAsync(clickedPoint);
         }
 
         internal void ArcMap_OnMouseMove(int x, int y)
         {
             var currentPoint = _businessLogic.GetSelectedPoint(x, y);
-            XCoordinateTextBox.Text = currentPoint.X.ToString();
-            YCoordinateTextBox.Text = currentPoint.Y.ToString();
+            XCoordinateTextBox.Text = currentPoint.X.ToRoundedString();
+            YCoordinateTextBox.Text = currentPoint.Y.ToRoundedString();
         }
         #endregion        
 
@@ -230,6 +240,7 @@ namespace ArcMapAddin
                 this.PulkovoCoordinatesLabel.Text = context.PulkovoLabel;
                 this.UkraineCoordinatesLabel.Text = context.UkraineLabel;
                 this.MgrsNotationLabel.Text = context.MgrsLabel;
+                this.UTMNotationLabel.Text = context.UtmLabel;
                 //this.SaveButton.Text = context.SaveButton;
                 //this.CopyButton.Text = context.CopyButton;
                 //this.MoveToCenterButton.Text = context.MoveToCenterButton;
@@ -302,7 +313,6 @@ namespace ArcMapAddin
                                         new SingleProjectionModel((int)esriSRProjCSType.esriSRProjCS_Pulkovo1942GK_6N, 30.000, 44.330),
                                         new SingleProjectionModel(Constants.Ukraine2000ID[2], 30.000, 43.190));
         }
-        #endregion
-
+        #endregion        
     }
 }

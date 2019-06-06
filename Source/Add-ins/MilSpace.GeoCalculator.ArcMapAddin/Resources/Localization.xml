@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CoordinatesConverter xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 <WindowCaption>Калькулятор координат</WindowCaption>
-<ProjectionsGroup>Проэкции</ProjectionsGroup>
+<ProjectionsGroup>Проекции</ProjectionsGroup>
 <CurrentMapLabel>Текущие координаты</CurrentMapLabel>
 <Pulkovo1942Label>СК42</Pulkovo1942Label>
 <Wgs1984Label>WGS84</Wgs1984Label>
 <Ukraine2000Label>УСК2000</Ukraine2000Label>
 <MgrsLabel>MGRS</MgrsLabel>
+<UtmLabel>UTM</UtmLabel>
 <SaveButton>Сохранить в XML</SaveButton>
 <CopyButton>Скопировать</CopyButton>
 <MoveToCenterButton>Центр карты</MoveToCenterButton>

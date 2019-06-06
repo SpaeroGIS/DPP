@@ -124,6 +124,7 @@
     <Content Include="Images\CenterButton.png" />
     <Content Include="Images\CopyButton.png" />
     <Content Include="Images\DockableWindow.png" />
+    <Content Include="Images\LocatePoint.png" />
     <Content Include="Images\SaveToXmlButton.png" />
     <Content Include="Images\ToolButton.png" />
     <Content Include="Images\ToolFull.png" />

@@ -32,6 +32,7 @@ namespace ArcMapAddin
         public string WgsLabel => FindLocalizedElement("Wgs1984Label", "WGS1984");
         public string UkraineLabel => FindLocalizedElement("Ukraine2000Label", "Ukraine2000");
         public string MgrsLabel => FindLocalizedElement("MgrsLabel", "MGRS Representation");
+        public string UtmLabel => FindLocalizedElement("UtmLabel", "UTM Representation");
 
         //Buttons
         public string CopyButton => FindLocalizedElement("CopyButton", "Copy");
