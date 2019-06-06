@@ -1,5 +1,6 @@
 ﻿using ESRI.ArcGIS.Geometry;
 using MilSpace.GeoCalculator.BusinessLogic.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MilSpace.GeoCalculator.BusinessLogic.Interfaces
@@ -8,7 +9,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic.Interfaces
     {
         IPoint ProjectPoint(IPoint inputPoint, SingleProjectionModel singleProjectionModel);
         Task<IPoint> ProjectSelectedPointAsync(int targetCoordinateSystemType, int mousePositionX, int mousePositionY, double falseOriginX = 0, double falseOriginY = 0);
-        void CopyCoordinatesToClipboard(PointModel pointModel);
+        void CopyCoordinatesToClipboard(List<PointModel> pointModels);
         IPoint GetDisplayCenter();
         IPoint GetSelectedPoint(int mousePositionX, int mousePositionY);
         Task MoveToNewCoordinate(double x, double y);
@@ -18,6 +19,6 @@ namespace MilSpace.GeoCalculator.BusinessLogic.Interfaces
         Task<IPoint> ConvertFromUtm(string utmInputValue, int falseOriginX = 0, int falseOriginY = 0, int scaleUnits = 1000);
         Task<IPoint> ConvertToWgsMeters(IPoint wgsInputPoint);
         Task<IPoint> ConvertFromWgsMeters(string gkInputValue, int falseOriginX = 0, int falseOriginY = 0, int scaleUnits = 1000);
-        Task SaveProjectionsToXmlFileAsync(PointModel pointModel, string path);      
+        Task SaveProjectionsToXmlFileAsync(List<PointModel> pointModels, string path);      
     }
 }

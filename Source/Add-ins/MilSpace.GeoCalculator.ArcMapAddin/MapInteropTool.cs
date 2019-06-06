@@ -17,7 +17,7 @@ namespace ArcMapAddin
 
         protected override void OnActivate()
         {
-            dockableWindowGeoCalculator = AddIn.FromID<DockableWindowGeoCalculator.AddinImpl>(ThisAddIn.IDs.DockableWindowGeoCalculator)?.UI;
+            dockableWindowGeoCalculator = AddIn.FromID<DockableWindowGeoCalculator.AddinImpl>(ThisAddIn.IDs.DockableWindowGeoCalculator)?.UI;            
             base.OnActivate();            
         }
 
@@ -35,7 +35,7 @@ namespace ArcMapAddin
         protected override void OnMouseMove(MouseEventArgs arg)
         {
             if (arg.Button == System.Windows.Forms.MouseButtons.None)
-                dockableWindowGeoCalculator.ArcMap_OnMouseMove(arg.X, arg.Y);
-        }
+                dockableWindowGeoCalculator.ArcMap_OnMouseMove(arg.X, arg.Y);            
+        }       
     }
 }

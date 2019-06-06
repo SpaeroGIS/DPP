@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace MilSpace.GeoCalculator.BusinessLogic.Models
 {
     [Serializable]
+    [XmlRoot("PointModelsList")]
     public class PointModel
     {
         public double XCoord { get; set; }

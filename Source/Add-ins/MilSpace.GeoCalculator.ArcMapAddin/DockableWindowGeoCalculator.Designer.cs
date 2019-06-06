@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowGeoCalculator));
             this.ProjectionsGroup = new System.Windows.Forms.GroupBox();
+            this.MapPointToolButton = new System.Windows.Forms.Button();
             this.PointsListBox = new System.Windows.Forms.ListBox();
             this.MoveToCenterButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
@@ -49,12 +51,13 @@
             this.XCoordinateTextBox = new System.Windows.Forms.TextBox();
             this.WgsYCoordinateTextBox = new System.Windows.Forms.TextBox();
             this.WgsXCoordinateTextBox = new System.Windows.Forms.TextBox();
-            this.saveButtonFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.ProjectionsGroup.SuspendLayout();
             this.SuspendLayout();
             // 
             // ProjectionsGroup
             // 
+            this.ProjectionsGroup.Controls.Add(this.MapPointToolButton);
             this.ProjectionsGroup.Controls.Add(this.PointsListBox);
             this.ProjectionsGroup.Controls.Add(this.MoveToCenterButton);
             this.ProjectionsGroup.Controls.Add(this.SaveButton);
@@ -83,6 +86,19 @@
             this.ProjectionsGroup.TabStop = false;
             this.ProjectionsGroup.Text = "Projections";
             // 
+            // MapPointToolButton
+            // 
+            this.MapPointToolButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.MapPointToolButton.AutoSize = true;
+            this.MapPointToolButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.MapPointToolButton.Image = ((System.Drawing.Image)(resources.GetObject("MapPointToolButton.Image")));
+            this.MapPointToolButton.Location = new System.Drawing.Point(256, 13);
+            this.MapPointToolButton.Name = "MapPointToolButton";
+            this.MapPointToolButton.Size = new System.Drawing.Size(31, 31);
+            this.MapPointToolButton.TabIndex = 39;
+            this.MapPointToolButton.UseVisualStyleBackColor = true;
+            this.MapPointToolButton.Click += new System.EventHandler(this.MapPointToolButton_Click);
+            // 
             // PointsListBox
             // 
             this.PointsListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -100,33 +116,39 @@
             // MoveToCenterButton
             // 
             this.MoveToCenterButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.MoveToCenterButton.Location = new System.Drawing.Point(187, 17);
+            this.MoveToCenterButton.AutoSize = true;
+            this.MoveToCenterButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.MoveToCenterButton.Image = ((System.Drawing.Image)(resources.GetObject("MoveToCenterButton.Image")));
+            this.MoveToCenterButton.Location = new System.Drawing.Point(219, 13);
             this.MoveToCenterButton.Name = "MoveToCenterButton";
-            this.MoveToCenterButton.Size = new System.Drawing.Size(100, 23);
+            this.MoveToCenterButton.Size = new System.Drawing.Size(31, 31);
             this.MoveToCenterButton.TabIndex = 37;
-            this.MoveToCenterButton.Text = "Center";
             this.MoveToCenterButton.UseVisualStyleBackColor = true;
             this.MoveToCenterButton.Click += new System.EventHandler(this.MoveToCenterButton_Click);
             // 
             // SaveButton
             // 
-            this.SaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.SaveButton.Location = new System.Drawing.Point(41, 414);
+            this.SaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.SaveButton.AutoSize = true;
+            this.SaveButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.SaveButton.Image = ((System.Drawing.Image)(resources.GetObject("SaveButton.Image")));
+            this.SaveButton.Location = new System.Drawing.Point(182, 13);
             this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(120, 23);
+            this.SaveButton.Size = new System.Drawing.Size(31, 31);
             this.SaveButton.TabIndex = 36;
-            this.SaveButton.Text = "Save to file";
             this.SaveButton.UseVisualStyleBackColor = true;
             this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
             // CopyButton
             // 
-            this.CopyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.CopyButton.Location = new System.Drawing.Point(167, 414);
+            this.CopyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.CopyButton.AutoSize = true;
+            this.CopyButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.CopyButton.Image = ((System.Drawing.Image)(resources.GetObject("CopyButton.Image")));
+            this.CopyButton.Location = new System.Drawing.Point(145, 13);
             this.CopyButton.Name = "CopyButton";
-            this.CopyButton.Size = new System.Drawing.Size(120, 23);
+            this.CopyButton.Size = new System.Drawing.Size(31, 31);
             this.CopyButton.TabIndex = 35;
-            this.CopyButton.Text = "Copy";
             this.CopyButton.UseVisualStyleBackColor = true;
             this.CopyButton.Click += new System.EventHandler(this.CopyButton_Click);
             // 
@@ -270,10 +292,9 @@
             this.WgsXCoordinateTextBox.Size = new System.Drawing.Size(100, 20);
             this.WgsXCoordinateTextBox.TabIndex = 2;
             // 
-            // saveButtonFileDialog
+            // saveFileDialog
             // 
-            this.saveButtonFileDialog.CheckFileExists = false;
-            this.saveButtonFileDialog.FileName = "Coordinates.xml";
+            this.saveFileDialog.FileName = "Coordinates.xml";
             // 
             // DockableWindowGeoCalculator
             // 
@@ -308,7 +329,8 @@
         private System.Windows.Forms.Button SaveButton;
         private System.Windows.Forms.Button CopyButton;
         private System.Windows.Forms.Button MoveToCenterButton;
-        private System.Windows.Forms.OpenFileDialog saveButtonFileDialog;
         private System.Windows.Forms.ListBox PointsListBox;
+        private System.Windows.Forms.Button MapPointToolButton;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
     }
 }

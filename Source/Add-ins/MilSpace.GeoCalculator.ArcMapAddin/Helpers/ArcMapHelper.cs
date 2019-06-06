@@ -82,9 +82,9 @@ namespace ArcMapAddin
             var envelope = av.Extent.Envelope;
 
             IRgbColor color = new RgbColorClass();
-            color.Green = 80;
-            color.Red = 22;
-            color.Blue = 68;
+            color.Green = 255;
+            color.Red = 0;
+            color.Blue = 0;
 
             if ((geometry == null) || (color == null) || (display == null) || (envelope == null) || (delay < 0))
             {

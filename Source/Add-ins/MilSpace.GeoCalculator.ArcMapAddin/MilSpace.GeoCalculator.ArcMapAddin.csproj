@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ArcMapAddin</RootNamespace>
-    <AssemblyName>ArcMapAddin</AssemblyName>
+    <AssemblyName>MilSpace.GeoCalculator.ArcMapAddin</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -121,7 +121,15 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Localization.xml" />
+    <Content Include="Images\CenterButton.png" />
+    <Content Include="Images\CopyButton.png" />
+    <Content Include="Images\DockableWindow.png" />
+    <Content Include="Images\SaveToXmlButton.png" />
+    <Content Include="Images\ToolButton.png" />
+    <Content Include="Images\ToolFull.png" />
+    <Content Include="Resources\Localization.xml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Solutions\MilSpace.GeoCalculator.BusinessLogic\MilSpace.GeoCalculator.BusinessLogic.csproj">

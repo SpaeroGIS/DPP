@@ -15,12 +15,11 @@ namespace ArcMapAddin
         {         
             var localizationDoc = new XmlDocument();
             var localizationFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Localization.xml");
-            if (!File.Exists(localizationFilePath))
-                throw new FileNotFoundException("Localization file not found.");
-
-            localizationDoc.Load(localizationFilePath);
-
-            _root = localizationDoc.SelectSingleNode("CoordinatesConverter");            
+            if (File.Exists(localizationFilePath))
+            {
+                localizationDoc.Load(localizationFilePath);
+                _root = localizationDoc.SelectSingleNode("CoordinatesConverter");
+            }
         }
 
         //Caption

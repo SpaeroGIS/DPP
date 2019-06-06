@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using MilSpace.GeoCalculator.BusinessLogic.Models;
 using MilSpace.GeoCalculator.BusinessLogic.ReferenceData;
 using ESRI.ArcGIS.esriSystem;
+using System.Collections.Generic;
 
 namespace MilSpace.GeoCalculator.BusinessLogic
 {
@@ -37,7 +38,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic
                 //Create Spatial Reference Factory
                 var spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
                 //Create Spatial Reference
-                ISpatialReference spatialReference = spatialReferenceFactory.CreateProjectedCoordinateSystem((int)esriSRGeoCSType.esriSRGeoCS_WGS1984);
+                ISpatialReference spatialReference = spatialReferenceFactory.CreateGeographicCoordinateSystem((int)esriSRGeoCSType.esriSRGeoCS_WGS1984);
                 spatialReference.SetFalseOriginAndUnits(falseOriginX, falseOriginY, scaleUnits);
                 resultPoint.SpatialReference = spatialReference;
                 (resultPoint as IConversionMGRS).PutCoordsFromMGRS(mgrsInputValue, esriMGRSModeEnum.esriMGRSMode_Automatic);
@@ -53,7 +54,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic
                 //Create Spatial Reference Factory
                 var spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
                 //Create Spatial Reference
-                ISpatialReference spatialReference = spatialReferenceFactory.CreateProjectedCoordinateSystem((int)esriSRGeoCSType.esriSRGeoCS_WGS1984);
+                ISpatialReference spatialReference = spatialReferenceFactory.CreateGeographicCoordinateSystem((int)esriSRGeoCSType.esriSRGeoCS_WGS1984);
                 spatialReference.SetFalseOriginAndUnits(falseOriginX, falseOriginY, scaleUnits);
                 resultPoint.SpatialReference = spatialReference;
                 (resultPoint as IConversionNotation).PutCoordsFromUTM(esriUTMConversionOptionsEnum.esriUTMAddSpaces, utmInputValue);
@@ -84,10 +85,10 @@ namespace MilSpace.GeoCalculator.BusinessLogic
             return conversionNotation?.GetUTMFromCoords(esriUTMConversionOptionsEnum.esriUTMAddSpaces);            
         }
 
-        public void CopyCoordinatesToClipboard(PointModel pointModel)
+        public void CopyCoordinatesToClipboard(List<PointModel> pointModels)
         {
             Clipboard.Clear();
-            Clipboard.SetData(nameof(PointModel), _dataExport.GetXmlRepresentationOfProjections(pointModel));
+            Clipboard.SetText(_dataExport.GetXmlRepresentationOfProjections(pointModels));
         }
 
         public IPoint GetDisplayCenter()
@@ -199,11 +200,11 @@ namespace MilSpace.GeoCalculator.BusinessLogic
             return ProjectPoint(resultPoint, new SingleProjectionModel(targetCoordinateSystemType, falseOriginX, falseOriginY, currentDocument.FocusMap.MapScale));
         }
 
-        public async Task SaveProjectionsToXmlFileAsync(PointModel pointModel, string path)
+        public async Task SaveProjectionsToXmlFileAsync(List<PointModel> pointModels, string path)
         {
             if (string.IsNullOrWhiteSpace(path)) return;
 
-            await _dataExport.ExportProjectionsToXmlAsync(pointModel, path);
+            await _dataExport.ExportProjectionsToXmlAsync(pointModels, path);
         }
     }
 }
