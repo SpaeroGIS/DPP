@@ -123,16 +123,21 @@ namespace MilSpace.Tools
 
                 int curLine = -1;
                 IPolyline line = null;
-                IPoint firstPoint = null;
+                IEnumerable<IPoint> verticesCache;
+                Dictionary<IPoint, ProfileSurfacePoint> mapProfilePointToVertex = new Dictionary<IPoint, ProfileSurfacePoint>();
+                Dictionary<IPoint, double> mapProfilePointToDistance = new Dictionary<IPoint, double>();
+                ProfileLine profileLine = null;
+                verticesCache = new IPoint[0];
+
+                int pointsCount = 0;
 
                 while ((profileRow = featureCursor.NextRow()) != null)
                 {
-
                     int lineId = Convert.ToInt32(profileRow.Value[idFld]);
 
-                    var profileLine = session.ProfileLines.FirstOrDefault(l => l.Id == lineId);
+                    pointsCount++;
 
-                    if (profileLine == null)
+                    if (!session.ProfileLines.Any(l => l.Id == lineId))
                     {
                         throw new MilSpaceProfileLineNotFound(lineId, profileLineFeatureClass);
                     }
@@ -147,25 +152,84 @@ namespace MilSpace.Tools
                     {
                         points = surface[lineId];
                     }
-
-                    if (curLine != lineId)
+                    
+                    if (curLine != lineId) // data for new line
                     {
                         curLine = lineId;
+                        profileLine = session.ProfileLines.FirstOrDefault(l => l.Id == lineId);
+
                         line = lines.GetFeature(profileLine.Id).Shape as IPolyline;
-                        firstPoint = line.FromPoint;
+
+                        verticesCache = line.Vertices();
+
+                        mapProfilePointToVertex.ToList().ForEach(v =>
+                           {
+                               if (!v.Value.IsEmpty)
+                               {
+                                   v.Value.isVertex = true;
+                               }
+                           });
+
+                        mapProfilePointToVertex = verticesCache.ToDictionary(k => k, t => new ProfileSurfacePoint());
+                        mapProfilePointToDistance = verticesCache.ToDictionary(k => k, t => -1.0);
                     }
 
-                    var profilePoint = EsriTools.GetPointFromAngelAndDistance(firstPoint, profileLine.Angel, (double)profileRow.Value[distanceFld]);
-                    profilePoint.Project(EsriTools.Wgs84Spatialreference);
+                    //Returns the point with Origin (Taken from firstPoint) Spatial reference
+                    //var profilePointSource = EsriTools.GetPointFromAngelAndDistance(firstPoint, profileLine.Angel, (double)profileRow.Value[distanceFld]);
+                    //var profilePoint = profilePointSource.CloneWithProjecting();
 
-                    points.Add(new ProfileSurfacePoint
+                    // Try to define if this point is close to a vertex
+
+                    double distance = (double)profileRow.Value[distanceFld];
+
+                    ProfileSurfacePoint newSurface = new ProfileSurfacePoint
                     {
-                        Distance = (double)profileRow.Value[distanceFld],
+                        Distance = distance,
                         Z = (double)profileRow.Value[zFld],
-                        X = profilePoint.X,
-                        Y = profilePoint.Y
-                    });
+                        //X = profilePoint.X,
+                        //Y = profilePoint.Y
+                    };
+
+
+
+                    IPoint point = new Point();
+                    line.QueryPoint(esriSegmentExtension.esriNoExtension, newSurface.Distance, false, point);
+                    IProximityOperator proximity = point as IProximityOperator;
+
+                    foreach (var vertx in verticesCache)
+                    {
+                        var profilePoint = mapProfilePointToVertex[vertx];
+                        if (mapProfilePointToDistance[vertx] == 0)// profilePoint.isVertex)
+                            continue;
+
+                        double localDistance = proximity.ReturnDistance(vertx);
+                        if (mapProfilePointToDistance[vertx] == -1 || mapProfilePointToDistance[vertx] > localDistance)
+                        {
+                            mapProfilePointToDistance[vertx] = localDistance;
+                            mapProfilePointToVertex[vertx] = newSurface;
+                            if (localDistance == 0)
+                            {
+                                newSurface.isVertex = true;
+                            }
+                        }
+                    }
+
+
+                    var projected = point.CloneWithProjecting();
+
+                    newSurface.X = projected.X;
+                    newSurface.Y = projected.Y;
+
+                    points.Add(newSurface);
                 }
+
+                mapProfilePointToVertex.ToList().ForEach(v =>
+                {
+                    if (!v.Value.IsEmpty)
+                    {
+                        v.Value.isVertex = true;
+                    }
+                });
 
                 //Delete temp table form the GDB
                 GdbAccess.Instance.DeleteTemporarSource(tempTableName, profileSourceName);
@@ -237,24 +301,23 @@ namespace MilSpace.Tools
                         SpatialReference = line.Shape.SpatialReference
                     };
 
-                    var transformedFrom =  from.CloneWithProjecting();
+
+                    var transformedFrom = from.CloneWithProjecting();
                     var transformedTo = to.CloneWithProjecting();
-                    IPolyline polyline = new PolylineClass
-                    {
-                        FromPoint = from,
-                        ToPoint = to
-                    };
+                    IPolyline polyline = line.ShapeCopy as IPolyline;
+                    polyline.Project(EsriTools.Wgs84Spatialreference);
+
+                    bool isSegments = (polyline as IPointCollection).PointCount == 2;
 
                     result.Add(new ProfileLine
                     {
                         PointFrom = new ProfilePoint { X = transformedFrom.X, Y = transformedFrom.Y },
                         PointTo = new ProfilePoint { X = transformedTo.X, Y = transformedTo.Y },
                         Id = line.OID,
-                        Length = ln.Length,
+                        Length = polyline.Length,
                         Line = polyline,
                         SpatialReference = EsriTools.Wgs84Spatialreference,
-                        Angel = ln.Angle,
-                        Azimuth = ln.Azimuth()
+                        Azimuth = isSegments?ln.Azimuth(): double.MinValue
                     });
                 }
             }
