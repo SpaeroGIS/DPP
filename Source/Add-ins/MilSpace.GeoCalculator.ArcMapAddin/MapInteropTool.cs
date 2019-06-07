@@ -1,6 +1,7 @@
 ﻿using ESRI.ArcGIS.Desktop.AddIns;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -17,7 +18,7 @@ namespace ArcMapAddin
 
         protected override void OnActivate()
         {
-            dockableWindowGeoCalculator = AddIn.FromID<DockableWindowGeoCalculator.AddinImpl>(ThisAddIn.IDs.DockableWindowGeoCalculator)?.UI;
+            dockableWindowGeoCalculator = AddIn.FromID<DockableWindowGeoCalculator.AddinImpl>(ThisAddIn.IDs.DockableWindowGeoCalculator)?.UI;            
             base.OnActivate();            
         }
 
@@ -35,7 +36,7 @@ namespace ArcMapAddin
         protected override void OnMouseMove(MouseEventArgs arg)
         {
             if (arg.Button == System.Windows.Forms.MouseButtons.None)
-                dockableWindowGeoCalculator.ArcMap_OnMouseMove(arg.X, arg.Y);
-        }
+                dockableWindowGeoCalculator.ArcMap_OnMouseMove(arg.X, arg.Y);            
+        }       
     }
 }

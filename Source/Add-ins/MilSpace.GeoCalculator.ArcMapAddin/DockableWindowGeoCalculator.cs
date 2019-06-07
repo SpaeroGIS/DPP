@@ -16,6 +16,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ESRI.ArcGIS.ArcMapUI;
+using ESRI.ArcGIS.Display;
+using ESRI.ArcGIS.Desktop.AddIns;
+using ESRI.ArcGIS.esriSystem;
+using System.Linq;
+using System.Reflection;
 
 namespace ArcMapAddin
 {
@@ -30,8 +35,11 @@ namespace ArcMapAddin
     {
         private readonly IBusinessLogic _businessLogic;
         private readonly ProjectionsModel _projectionsModel;
-        private PointModel _pointModel;
-        private readonly IList<IPoint> ClickedPointsList = new List<IPoint>();
+        private List<PointModel> _pointModels = new List<PointModel>();
+        private LocalizationContext context;
+        private readonly List<IPoint> ClickedPointsList = new List<IPoint>();
+
+        public ISpatialReference FocusMapSpatialReference => ArcMap.Document.FocusMap.SpatialReference;
 
         public DockableWindowGeoCalculator(object hook, IBusinessLogic businessLogic, ProjectionsModel projectionsModel)
         {
@@ -92,76 +100,157 @@ namespace ArcMapAddin
         #endregion
 
         #region UserControl events handlers
+        private void MapPointToolButton_Click(object sender, EventArgs e)
+        {
+            UID mapToolID = new UIDClass
+            {
+                Value = ThisAddIn.IDs.MapInteropTool
+            };
+            var documentBars = ArcMap.Application.Document.CommandBars;
+            var mapTool = documentBars.Find(mapToolID, false, false);
+
+            if (ArcMap.Application.CurrentTool?.ID?.Value != null && ArcMap.Application.CurrentTool.ID.Value.Equals(mapTool.ID.Value))
+                ArcMap.Application.CurrentTool = null;
+            else
+                ArcMap.Application.CurrentTool = mapTool;
+        }
+
         private async void SaveButton_Click(object sender, EventArgs e)
         {
-            if (_pointModel == null) MessageBox.Show("Please select a point on the map.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (_pointModels == null || !_pointModels.Any()) MessageBox.Show("Please select a point on the map.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-            var folderBrowserResult = saveButtonFileDialog.ShowDialog();
+            var folderBrowserResult = saveFileDialog.ShowDialog();
             if (folderBrowserResult == DialogResult.OK)
-                await _businessLogic.SaveProjectionsToXmlFileAsync(_pointModel, saveButtonFileDialog.FileName).ConfigureAwait(false);
+                await _businessLogic.SaveProjectionsToXmlFileAsync(_pointModels, saveFileDialog.FileName).ConfigureAwait(false);
         }
 
         private void CopyButton_Click(object sender, EventArgs e)
         {
-            if (_pointModel == null) MessageBox.Show("Please select a point on the map.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            else _businessLogic.CopyCoordinatesToClipboard(_pointModel);
+            if (_pointModels == null || !_pointModels.Any()) MessageBox.Show("Please select a point on the map.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else _businessLogic.CopyCoordinatesToClipboard(_pointModels);
         }
 
-        private async void MoveToCenterButton_Click(object sender, EventArgs e)
+        private void MoveToCenterButton_Click(object sender, EventArgs e)
         {
-            var centerPoint = await _businessLogic.GetDisplayCenterAsync().ConfigureAwait(false);
-            await ProjectPointAsync(centerPoint).ConfigureAwait(false);
+            var centerPoint = _businessLogic.GetDisplayCenter();
+            ProjectPointAsync(centerPoint);
+        }        
+
+        private async void MgrsNotationTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                //Enter key pressed
+                if (e.KeyChar == (char)13 && !string.IsNullOrWhiteSpace(MgrsNotationTextBox.Text))
+                {
+                    var point = await _businessLogic.ConvertFromMgrs(MgrsNotationTextBox.Text.Trim()).ConfigureAwait(false);
+                    ProjectPointAsync(point);
+                }
+            }
+            catch
+            {
+                MessageBox.Show(context.WrongMgrsFormatMessage, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void PointsListBox_SelectedIndexChanged(object sender, EventArgs e)
+        private async void UTMNotationTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            //TODO: We need actual point here to project further.
-            //var selectedPoint = ClickedPointsList[PointsListBox.SelectedIndex];
-            //await ProjectPointAsync(selectedPoint).ConfigureAwait(false);
+            try
+            {
+                //Enter key pressed
+                if (e.KeyChar == (char)13 && !string.IsNullOrWhiteSpace(UTMNotationTextBox.Text))
+                {
+                    var point = await _businessLogic.ConvertFromUtm(UTMNotationTextBox.Text.Trim()).ConfigureAwait(false);
+                    ProjectPointAsync(point);
+                }
+            }
+            catch
+            {
+                MessageBox.Show(context.WrongUtmFormatMessage, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void XCoordinateTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+        }
+
+        private void YCoordinateTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+        }
+
+        private void MgrsNotationTextBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(MgrsNotationTextBox.Text)) MgrsNotationTextBox.SelectAll();
+        }
+
+        private void UTMNotationTextBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(UTMNotationTextBox.Text)) UTMNotationTextBox.SelectAll();
+        }
+
+        private void PointsGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var grid = (DataGridView)sender;
+
+            if (grid.Columns[e.ColumnIndex] is DataGridViewImageColumn)
+            {
+                var selectedPoint = ClickedPointsList[e.RowIndex];
+                ArcMapHelper.FlashGeometry(selectedPoint, 400);
+                ProjectPointAsync(selectedPoint);
+            }
         }
         #endregion
 
         #region ArcMap events handlers
-        internal async void ArcMap_OnMouseDown(int x, int y)
+        internal void ArcMap_OnMouseDown(int x, int y)
         {
-            var clickedPoint = await _businessLogic.GetSelectedPointAsync(x, y).ConfigureAwait(false);
-            ClickedPointsList.Add(clickedPoint);
-            PointsListBox.Items.Add($"{clickedPoint.X.ToRoundedString()}  {clickedPoint.Y.ToRoundedString()}");
-            PointsListBox.Refresh();            
-            await ProjectPointAsync(clickedPoint).ConfigureAwait(false);            
+            var clickedPoint = _businessLogic.GetSelectedPoint(x, y);
+            AddPointToList(clickedPoint);
+
+            var newRow = new DataGridViewRow();
+            newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = ClickedPointsList.Count() });
+            newRow.Cells.Add(new DataGridViewImageCell() { Value = Image.FromFile(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Images\LocatePoint.png")) });
+            newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = clickedPoint.X.ToRoundedString() });
+            newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = clickedPoint.Y.ToRoundedString() });
+            PointsGridView.Rows.Add(newRow);
+            
+            ProjectPointAsync(clickedPoint);
         }
 
-        internal async void ArcMap_OnMouseMove(int x, int y)
-        {            
-            var currentPoint = await _businessLogic.GetSelectedPointAsync(x, y).ConfigureAwait(false);
-            XCoordinateTextBox.Text = currentPoint.X.ToString();
-            YCoordinateTextBox.Text = currentPoint.Y.ToString();            
-        }        
-        #endregion
+        internal void ArcMap_OnMouseMove(int x, int y)
+        {
+            var currentPoint = _businessLogic.GetSelectedPoint(x, y);
+            XCoordinateTextBox.Text = currentPoint.X.ToRoundedString();
+            YCoordinateTextBox.Text = currentPoint.Y.ToRoundedString();
+        }
+        #endregion        
 
         #region Private methods
         private void LocalizeComponents()
         {
             try
             {
-                var context = new LocalizationContext();
+                context = new LocalizationContext();
                 this.Text = context.CoordinatesConverterWindowCaption;
-                this.LatitudeLongitudeGroup.Text = context.LatitudeLongitudeLabel;
+                this.ProjectionsGroup.Text = context.ProjectionsGroup;
                 this.CurrentMapLabel.Text = context.CurrentMapLabel;
                 this.WgsCoordinatesLabel.Text = context.WgsLabel;
                 this.PulkovoCoordinatesLabel.Text = context.PulkovoLabel;
                 this.UkraineCoordinatesLabel.Text = context.UkraineLabel;
                 this.MgrsNotationLabel.Text = context.MgrsLabel;
-                this.SaveButton.Text = context.SaveButton;
-                this.CopyButton.Text = context.CopyButton;
-                this.MoveToCenterButton.Text = context.MoveToCenterButton;
+                this.UTMNotationLabel.Text = context.UtmLabel;
+                //this.SaveButton.Text = context.SaveButton;
+                //this.CopyButton.Text = context.CopyButton;
+                //this.MoveToCenterButton.Text = context.MoveToCenterButton;
             }
             catch { MessageBox.Show("No Localization.xml found or there is an error during loading. Coordinates Converter window is not fully localized."); }
         }
 
-        private async Task ProjectPointAsync(IPoint inputPoint)
+        private void ProjectPointAsync(IPoint inputPoint)
         {
-            _pointModel = new PointModel();
+            var pointModel = new PointModel();
 
             if (inputPoint == null) throw new ArgumentNullException(nameof(inputPoint));
             if (inputPoint.SpatialReference == null) throw new NullReferenceException($"Point with ID = {inputPoint.ID} has no spatial reference.");
@@ -169,39 +258,53 @@ namespace ArcMapAddin
             XCoordinateTextBox.Text = inputPoint.X.ToRoundedString();
             YCoordinateTextBox.Text = inputPoint.Y.ToRoundedString();
 
-            _pointModel.XCoord = inputPoint.X.ToRoundedDouble();
-            _pointModel.YCoord = inputPoint.Y.ToRoundedDouble();
+            pointModel.XCoord = inputPoint.X.ToRoundedDouble();
+            pointModel.YCoord = inputPoint.Y.ToRoundedDouble();
 
             //MGRS string MUST be calculated using WGS84 projected point, thus the next lines order matters!
-            var wgsPoint = await _businessLogic.ProjectPointAsync(inputPoint, _projectionsModel.WGS84Projection);
+            var wgsPoint = _businessLogic.ProjectPoint(inputPoint, _projectionsModel.WGS84Projection);
             WgsXCoordinateTextBox.Text = wgsPoint.X.ToRoundedString();
             WgsYCoordinateTextBox.Text = wgsPoint.Y.ToRoundedString();
 
-            _pointModel.WgsXCoord = wgsPoint.X.ToRoundedDouble();
-            _pointModel.WgsYCoord = wgsPoint.Y.ToRoundedDouble();
+            pointModel.WgsXCoord = wgsPoint.X.ToRoundedDouble();
+            pointModel.WgsYCoord = wgsPoint.Y.ToRoundedDouble();
 
-            MgrsNotationTextBox.Text = (await _businessLogic.ConvertToMgrs(wgsPoint))?.ToSeparatedMgrs();
+            MgrsNotationTextBox.Text = (_businessLogic.ConvertToMgrs(wgsPoint))?.ToSeparatedMgrs();
 
-            UTMNotationTextBox.Text = await _businessLogic.ConvertToUtm(wgsPoint);
+            UTMNotationTextBox.Text = _businessLogic.ConvertToUtm(wgsPoint);
 
-            _pointModel.MgrsRepresentation = MgrsNotationTextBox.Text;
+            pointModel.MgrsRepresentation = MgrsNotationTextBox.Text;
 
-            _pointModel.UtmRepresentation = UTMNotationTextBox.Text;
+            pointModel.UtmRepresentation = UTMNotationTextBox.Text;
 
-            var pulkovoPoint = await _businessLogic.ProjectPointAsync(inputPoint, _projectionsModel.Pulkovo1942Projection);
+            var pulkovoPoint = _businessLogic.ProjectPoint(inputPoint, _projectionsModel.Pulkovo1942Projection);
             PulkovoXCoordinateTextBox.Text = pulkovoPoint.X.ToRoundedString();
             PulkovoYCoordinateTextBox.Text = pulkovoPoint.Y.ToRoundedString();
 
-            _pointModel.PulkovoXCoord = pulkovoPoint.X.ToRoundedDouble();
-            _pointModel.PulkovoYCoord = pulkovoPoint.Y.ToRoundedDouble();
+            pointModel.PulkovoXCoord = pulkovoPoint.X.ToRoundedDouble();
+            pointModel.PulkovoYCoord = pulkovoPoint.Y.ToRoundedDouble();
 
-            var ukrainePoint = await _businessLogic.ProjectPointAsync(inputPoint, _projectionsModel.Ukraine2000Projection);
+            var ukrainePoint = _businessLogic.ProjectPoint(inputPoint, _projectionsModel.Ukraine2000Projection);
             UkraineXCoordinateTextBox.Text = ukrainePoint.X.ToRoundedString();
             UkraineYCoordinateTextBox.Text = ukrainePoint.Y.ToRoundedString();
 
-            _pointModel.UkraineXCoord = ukrainePoint.X.ToRoundedDouble();
-            _pointModel.UkraineYCoord = ukrainePoint.Y.ToRoundedDouble();
+            pointModel.UkraineXCoord = ukrainePoint.X.ToRoundedDouble();
+            pointModel.UkraineYCoord = ukrainePoint.Y.ToRoundedDouble();
 
+            //Remove distorsions
+            inputPoint.Project(FocusMapSpatialReference);
+
+            _pointModels.Add(pointModel);
+        }
+        private void AddPointToList(IPoint point)
+        {
+            if (point != null && !point.IsEmpty)
+            {
+                var color = (IColor)new RgbColorClass() { Green = 255 };
+                var placedPoint = ArcMapHelper.AddGraphicToMap(point, color, true, esriSimpleMarkerStyle.esriSMSCircle, 7);
+
+                ClickedPointsList.Add(placedPoint);
+            }
         }
 
         private static ProjectionsModel CreateProjecstionsModelFromSettings()
