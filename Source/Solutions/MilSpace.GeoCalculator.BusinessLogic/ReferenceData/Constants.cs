@@ -14,9 +14,9 @@ namespace MilSpace.GeoCalculator.BusinessLogic.ReferenceData
         public static readonly CoordinateSystemModel UkraineModel = new CoordinateSystemModel(Constants.Ukraine2000ID[2], 30.000, 43.190);
          
         //Geographics Models
-        public static readonly CoordinateSystemModel WgsGeoModel = new CoordinateSystemModel((int)esriSRGeoCSType.esriSRGeoCS_WGS1984, -180.000, - 90.000);
-        public static readonly CoordinateSystemModel PulkovoGeoModel = new CoordinateSystemModel((int)esriSRGeoCSType.esriSRGeoCS_Pulkovo1942, 19.580, 35.150);
-        public static readonly CoordinateSystemModel UkraineGeoModel = new CoordinateSystemModel(Constants.Ukraine2000ID[0], 22.150, 43.190);
+        public static readonly CoordinateSystemModel WgsGeoModel = new CoordinateSystemModel((int)esriSRGeoCSType.esriSRGeoCS_WGS1984, -180.000, - 90.000, 1000000);
+        public static readonly CoordinateSystemModel PulkovoGeoModel = new CoordinateSystemModel((int)esriSRGeoCSType.esriSRGeoCS_Pulkovo1942, 19.580, 35.150, 1000000);
+        public static readonly CoordinateSystemModel UkraineGeoModel = new CoordinateSystemModel(Constants.Ukraine2000ID[0], 22.150, 43.190, 1000000);
 
         //DataGridView constants
         public const string HighlightColumnName = "HighlightColumn";

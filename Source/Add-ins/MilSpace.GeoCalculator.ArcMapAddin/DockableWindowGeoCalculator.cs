@@ -49,6 +49,7 @@ namespace ArcMapAddin
             _projectionsModel = projectionsModel ?? throw new ArgumentNullException(nameof(projectionsModel));
 
             LocalizeComponents();
+            SetCurrentMapUnits();
         }
 
         /// <summary>
@@ -117,7 +118,7 @@ namespace ArcMapAddin
 
         private async void SaveButton_Click(object sender, EventArgs e)
         {
-            if (_pointModels == null || !_pointModels.Any()) MessageBox.Show("Please select a point on the map.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (_pointModels == null || !_pointModels.Any()) MessageBox.Show("Please select a point on the map.", context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             var folderBrowserResult = saveFileDialog.ShowDialog();
             if (folderBrowserResult == DialogResult.OK)
@@ -126,7 +127,7 @@ namespace ArcMapAddin
 
         private void CopyButton_Click(object sender, EventArgs e)
         {
-            if (_pointModels == null || !_pointModels.Any()) MessageBox.Show("Please select a point on the map.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (_pointModels == null || !_pointModels.Any()) MessageBox.Show("Please select a point on the map.", context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
             else _businessLogic.CopyCoordinatesToClipboard(_pointModels);
         }
 
@@ -136,13 +137,13 @@ namespace ArcMapAddin
             ProjectPointAsync(centerPoint);
         }      
 
-        private async void MgrsNotationTextBox_KeyDown(object sender, KeyEventArgs e)
+        private void MgrsNotationTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             try
             {
                 if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(MgrsNotationTextBox.Text))
                 {
-                    var point = await _businessLogic.ConvertFromMgrs(MgrsNotationTextBox.Text.Trim()).ConfigureAwait(false);
+                    var point = _businessLogic.ConvertFromMgrs(MgrsNotationTextBox.Text.Trim(), Constants.WgsGeoModel);
                     ProjectPointAsync(point, true);
                 }
             }
@@ -177,13 +178,13 @@ namespace ArcMapAddin
             }
         }
 
-        private async void UTMNotationTextBox_KeyDown(object sender, KeyEventArgs e)
+        private void UTMNotationTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             try
             {
                 if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(UTMNotationTextBox.Text))
                 {
-                    var point = await _businessLogic.ConvertFromUtm(UTMNotationTextBox.Text.Trim()).ConfigureAwait(false);
+                    var point = _businessLogic.ConvertFromUtm(UTMNotationTextBox.Text.Trim(), Constants.WgsGeoModel);
                     ProjectPointAsync(point, true);
                 }
             }
@@ -445,11 +446,26 @@ namespace ArcMapAddin
                 this.UkraineCoordinatesLabel.Text = context.UkraineLabel;
                 this.MgrsNotationLabel.Text = context.MgrsLabel;
                 this.UTMNotationLabel.Text = context.UtmLabel;
-                //this.SaveButton.Text = context.SaveButton;
-                //this.CopyButton.Text = context.CopyButton;
-                //this.MoveToCenterButton.Text = context.MoveToCenterButton;
+
+                //ToolTips
+                this.mapCenterButtonToolTip.SetToolTip(this.MoveToCenterButton, context.MoveToCenterButton);
+                this.toolButtonToolTip.SetToolTip(this.MapPointToolButton, context.ToolButton);
+                this.saveButtonToolTip.SetToolTip(this.SaveButton, context.SaveButton);
+                this.copyButtonToolTip.SetToolTip(this.CopyButton, context.CopyButton);                
             }
             catch { MessageBox.Show("No Localization.xml found or there is an error during loading. Coordinates Converter window is not fully localized."); }
+        }
+
+        private void SetCurrentMapUnits()
+        {
+            try
+            {
+                var pUnitConverter = new UnitConverter();
+                this.CurrentMapUnitsLabel1.Text =
+                    this.CurrentMapUnitsLabel2.Text =
+                    $"({pUnitConverter.EsriUnitsAsString(ArcMap.Document.FocusMap.MapUnits, esriCaseAppearance.esriCaseAppearanceLower, true)})";
+            }
+            catch { }
         }
 
         private void ProjectPointAsync(IPoint inputPoint, bool fromUserInput = false)
@@ -463,8 +479,7 @@ namespace ArcMapAddin
                 inputPoint.Project(FocusMapSpatialReference);
 
             XCoordinateTextBox.Text = inputPoint.X.ToRoundedString();
-            YCoordinateTextBox.Text = inputPoint.Y.ToRoundedString();
-
+            YCoordinateTextBox.Text = inputPoint.Y.ToRoundedString();            
             pointModel.XCoord = inputPoint.X.ToRoundedDouble();
             pointModel.YCoord = inputPoint.Y.ToRoundedDouble();
 
@@ -472,31 +487,44 @@ namespace ArcMapAddin
             var wgsPoint = _businessLogic.ProjectPoint(inputPoint, _projectionsModel.WGS84Projection);
             WgsXCoordinateTextBox.Text = wgsPoint.X.ToRoundedString();
             WgsYCoordinateTextBox.Text = wgsPoint.Y.ToRoundedString();
-
             pointModel.WgsXCoord = wgsPoint.X.ToRoundedDouble();
             pointModel.WgsYCoord = wgsPoint.Y.ToRoundedDouble();
 
-            MgrsNotationTextBox.Text = (_businessLogic.ConvertToMgrs(wgsPoint))?.ToSeparatedMgrs();
+            var wgsDD = _businessLogic.ConvertToDecimalDegrees(inputPoint, Constants.WgsGeoModel);
+            wgsDMSXTextBox.Text = wgsDD.X.ToRoundedString();
+            wgsDMSYTextBox.Text = wgsDD.Y.ToRoundedString();
+            pointModel.WgsXCoordDD = wgsDD.X.ToRoundedDouble();
+            pointModel.WgsYCoordDD = wgsDD.Y.ToRoundedDouble();
 
+            MgrsNotationTextBox.Text = (_businessLogic.ConvertToMgrs(wgsPoint))?.ToSeparatedMgrs();
             UTMNotationTextBox.Text = _businessLogic.ConvertToUtm(wgsPoint);
 
             pointModel.MgrsRepresentation = MgrsNotationTextBox.Text;
-
             pointModel.UtmRepresentation = UTMNotationTextBox.Text;
 
             var pulkovoPoint = _businessLogic.ProjectPoint(inputPoint, _projectionsModel.Pulkovo1942Projection);
             PulkovoXCoordinateTextBox.Text = pulkovoPoint.X.ToRoundedString();
             PulkovoYCoordinateTextBox.Text = pulkovoPoint.Y.ToRoundedString();
-
             pointModel.PulkovoXCoord = pulkovoPoint.X.ToRoundedDouble();
             pointModel.PulkovoYCoord = pulkovoPoint.Y.ToRoundedDouble();
+
+            var pulkovoDD = _businessLogic.ConvertToDecimalDegrees(inputPoint, Constants.PulkovoGeoModel);
+            pulkovoDMSXTextBox.Text = pulkovoDD.X.ToRoundedString();
+            pulkovoDMSYTextBox.Text = pulkovoDD.Y.ToRoundedString();
+            pointModel.PulkovoXCoordDD = pulkovoDD.X.ToRoundedDouble();
+            pointModel.PulkovoYCoordDD = pulkovoDD.Y.ToRoundedDouble();
 
             var ukrainePoint = _businessLogic.ProjectPoint(inputPoint, _projectionsModel.Ukraine2000Projection);
             UkraineXCoordinateTextBox.Text = ukrainePoint.X.ToRoundedString();
             UkraineYCoordinateTextBox.Text = ukrainePoint.Y.ToRoundedString();
-
             pointModel.UkraineXCoord = ukrainePoint.X.ToRoundedDouble();
             pointModel.UkraineYCoord = ukrainePoint.Y.ToRoundedDouble();
+
+            var ukraineDD = _businessLogic.ConvertToDecimalDegrees(inputPoint, Constants.UkraineGeoModel);
+            ukraineDMSXTextBox.Text = ukraineDD.X.ToRoundedString();
+            ukraineDMSYTextBox.Text = ukraineDD.Y.ToRoundedString();
+            pointModel.UkraineXCoordDD = ukraineDD.X.ToRoundedDouble();
+            pointModel.UkraineYCoordDD = ukraineDD.Y.ToRoundedDouble();
 
             //Remove distorsions
             inputPoint.Project(FocusMapSpatialReference);
@@ -519,6 +547,6 @@ namespace ArcMapAddin
             //Configuration settings should be here instead of Constants
             return new ProjectionsModel(Constants.WgsModel, Constants.PulkovoModel, Constants.UkraineModel);                                        
         }
-        #endregion        
+        #endregion
     }
 }

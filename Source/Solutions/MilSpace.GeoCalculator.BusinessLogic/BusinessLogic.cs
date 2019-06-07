@@ -25,46 +25,38 @@ namespace MilSpace.GeoCalculator.BusinessLogic
             _dataExport = dataExport;
         }
 
-        public async Task<IPoint> ConvertFromMgrs(string mgrsInputValue, int falseOriginX = 0, int falseOriginY = 0, int scaleUnits = 1000)
+        public IPoint ConvertFromMgrs(string mgrsInputValue, CoordinateSystemModel coordinateSystemModel)
         {
-            return await Task.Run(() =>
-            {
-                var resultPoint = new Point();
-                //Create Spatial Reference Factory
-                var spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
-                //Create Spatial Reference
-                ISpatialReference spatialReference = spatialReferenceFactory.CreateGeographicCoordinateSystem((int)esriSRGeoCSType.esriSRGeoCS_WGS1984);
-                spatialReference.SetFalseOriginAndUnits(falseOriginX, falseOriginY, scaleUnits);
-                resultPoint.SpatialReference = spatialReference;
-                (resultPoint as IConversionMGRS).PutCoordsFromMGRS(mgrsInputValue, esriMGRSModeEnum.esriMGRSMode_Automatic);
-                return resultPoint;
-            });
+            var resultPoint = new Point();
+            //Create Spatial Reference Factory
+            var spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
+            //Create Spatial Reference
+            ISpatialReference spatialReference = spatialReferenceFactory.CreateGeographicCoordinateSystem(coordinateSystemModel.ESRIWellKnownID);
+            spatialReference.SetFalseOriginAndUnits(coordinateSystemModel.FalseOriginX, coordinateSystemModel.FalseOriginY, coordinateSystemModel.Units);
+            resultPoint.SpatialReference = spatialReference;
+            (resultPoint as IConversionMGRS).PutCoordsFromMGRS(mgrsInputValue, esriMGRSModeEnum.esriMGRSMode_Automatic);
+            return resultPoint;
         }
 
-        public async Task<IPoint> ConvertFromUtm(string utmInputValue, int falseOriginX = 0, int falseOriginY = 0, int scaleUnits = 1000)
+        public IPoint ConvertFromUtm(string utmInputValue, CoordinateSystemModel coordinateSystemModel)
         {
-            return await Task.Run(() =>
-            {
-                var resultPoint = new Point();
-                //Create Spatial Reference Factory
-                var spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
-                //Create Spatial Reference
-                ISpatialReference spatialReference = spatialReferenceFactory.CreateGeographicCoordinateSystem((int)esriSRGeoCSType.esriSRGeoCS_WGS1984);
-                spatialReference.SetFalseOriginAndUnits(falseOriginX, falseOriginY, scaleUnits);
-                resultPoint.SpatialReference = spatialReference;
-                (resultPoint as IConversionNotation).PutCoordsFromUTM(esriUTMConversionOptionsEnum.esriUTMAddSpaces, utmInputValue);
-                return resultPoint;
-            });
+            var resultPoint = new Point();
+            //Create Spatial Reference Factory
+            var spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
+            //Create Spatial Reference
+            ISpatialReference spatialReference = spatialReferenceFactory.CreateGeographicCoordinateSystem(coordinateSystemModel.ESRIWellKnownID);
+            spatialReference.SetFalseOriginAndUnits(coordinateSystemModel.FalseOriginX, coordinateSystemModel.FalseOriginY, coordinateSystemModel.Units);
+            resultPoint.SpatialReference = spatialReference;
+            (resultPoint as IConversionNotation).PutCoordsFromUTM(esriUTMConversionOptionsEnum.esriUTMAddSpaces, utmInputValue);
+            return resultPoint;
         }
 
-        public async Task<IPoint> ConvertToWgsMeters(IPoint wgsInputPoint)
+        public IPoint ConvertToWgsMeters(IPoint wgsInputPoint)
         {
-            return await Task.Run(() => { 
             var spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
             ISpatialReference wgsMetersSpatialReference = spatialReferenceFactory.CreateGeographicCoordinateSystem((int)esriSRGeoCSType.esriSRGeoCS_WGS1984);
-                wgsInputPoint.Project(wgsMetersSpatialReference);
-                return wgsInputPoint;
-            });
+            wgsInputPoint.Project(wgsMetersSpatialReference);
+            return wgsInputPoint;
         }
 
         public string ConvertToMgrs(IPoint wgsInputPoint)
@@ -78,6 +70,17 @@ namespace MilSpace.GeoCalculator.BusinessLogic
         {
             var conversionNotation = wgsInputPoint as IConversionNotation;                
             return conversionNotation?.GetUTMFromCoords(esriUTMConversionOptionsEnum.esriUTMAddSpaces);            
+        }
+
+        public IPoint ConvertToDecimalDegrees(IPoint point, CoordinateSystemModel coordinateSystemModel)
+        {
+            var spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
+            //Create Spatial Reference
+            ISpatialReference spatialReference = spatialReferenceFactory.CreateGeographicCoordinateSystem(coordinateSystemModel.ESRIWellKnownID);
+            spatialReference.SetFalseOriginAndUnits(coordinateSystemModel.FalseOriginX, coordinateSystemModel.FalseOriginY, coordinateSystemModel.Units);
+            point.Project(spatialReference);
+
+            return point;
         }
 
         public void CopyCoordinatesToClipboard(List<PointModel> pointModels)

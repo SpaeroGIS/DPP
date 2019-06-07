@@ -15,10 +15,11 @@ namespace MilSpace.GeoCalculator.BusinessLogic.Interfaces
         IPoint GetSelectedPoint(int mousePositionX, int mousePositionY);
         Task MoveToNewCoordinate(double x, double y);
         string ConvertToMgrs(IPoint wgsInputPoint);
-        Task<IPoint> ConvertFromMgrs(string mgrsInputValue, int falseOriginX = 0, int falseOriginY = 0, int scaleUnits = 1000);
+        IPoint ConvertFromMgrs(string mgrsInputValue, CoordinateSystemModel coordinateSystemModel);
         string ConvertToUtm(IPoint wgsInputPoint);
-        Task<IPoint> ConvertFromUtm(string utmInputValue, int falseOriginX = 0, int falseOriginY = 0, int scaleUnits = 1000);
-        Task<IPoint> ConvertToWgsMeters(IPoint wgsInputPoint);        
+        IPoint ConvertFromUtm(string utmInputValue, CoordinateSystemModel coordinateSystemModel);
+        IPoint ConvertToWgsMeters(IPoint wgsInputPoint);
+        IPoint ConvertToDecimalDegrees(IPoint point, CoordinateSystemModel coordinateSystemModel);
         Task SaveProjectionsToXmlFileAsync(List<PointModel> pointModels, string path);        
     }
 }
