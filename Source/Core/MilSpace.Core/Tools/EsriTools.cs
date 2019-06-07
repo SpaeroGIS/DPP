@@ -171,7 +171,6 @@ namespace MilSpace.Core.Tools
 
         public static void FlashGeometry(IScreenDisplay display, IEnumerable<IGeometry> geometries)
         {
-
             IRgbColor color = new RgbColor();
             color.Green = color.Blue = 0;
             color.Red = 255;
@@ -288,7 +287,6 @@ namespace MilSpace.Core.Tools
             {
                 return null;
             }
-
 
             WKSPoint[] segmentWksPoints = new WKSPoint[2];
             segmentWksPoints[0].X = pointFrom.X;

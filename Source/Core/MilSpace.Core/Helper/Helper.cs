@@ -136,8 +136,22 @@ namespace MilSpace.Core
 
         public static void SetConfiguration()
         {
-            var configFile = new FileInfo(Assembly.GetExecutingAssembly().Location);
-            MilSpaceConfiguration.ConfigurationFilePath = configFile.DirectoryName;
+            if (string.IsNullOrWhiteSpace(MilSpaceConfiguration.ConfigurationFilePath))
+            {
+                var configFile = new FileInfo(Assembly.GetExecutingAssembly().Location);
+                MilSpaceConfiguration.ConfigurationFilePath = configFile.DirectoryName;
+            }
+        }
+
+        public static IEnumerable<IPoint> Vertices(this IPolyline polyline)
+        {
+            IPointCollection collection = polyline as IPointCollection;
+            IPoint[] vertices = new IPoint[collection.PointCount];
+            for (int i = 0; i < collection.PointCount; i++)
+            {
+                vertices[i] = collection.Point[i];
+            }
+            return vertices;
         }
 
         public static double Azimuth (this ILine line)
@@ -156,5 +170,6 @@ namespace MilSpace.Core
 
             return Math.Abs(degrees - 90);
         }
+
     }
 }

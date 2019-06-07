@@ -14,9 +14,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
     public partial class SurfaceProfileChart : UserControl
     {
         private SurfaceProfileChartController _controller;
-        private string _profileName;
+        private bool _isObserverHeightIgnore = false;
         private bool _isCommentDisplay = false;
-        private double _defaultChartHeight;
         private int _maxObserverHeightIndex = 0;
         private CheckBox _checkBoxHeader;
 
@@ -91,7 +90,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal void IsGraphEmptyHandler(bool isEmpty)
         {
-            foreach(ToolBarButton button in graphToolBar.Buttons)
+            foreach (ToolBarButton button in graphToolBar.Buttons)
             {
                 button.Enabled = !isEmpty;
             }
@@ -176,7 +175,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
                 AddExtremePoint(observerPoint, extremePoints[0], id);
             }
-           
+
         }
 
         internal void AddExtremePoint(ProfileSurfacePoint observerPoint, ProfileSurfacePoint observationPoint, int order)
@@ -477,7 +476,12 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             if (ProfilesProperties.Count == 1)
             {
-                var height = ProfilesProperties[0].MaxHeight + ProfilesProperties.Max(property => property.ObserverHeight);
+                var height = ProfilesProperties[0].MaxHeight;
+
+                if (!_isObserverHeightIgnore)
+                {
+                    height += ProfilesProperties[0].ObserverHeight;
+                }
 
                 profileChart.ChartAreas["Default"].AxisY.Maximum = height + height / 10;
                 profileChart.ChartAreas["Default"].AxisY.Minimum = ProfilesProperties[0].MinHeight
@@ -488,8 +492,12 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
             else
             {
-                double maxHeight = ProfilesProperties.Max(profileProperties => profileProperties.MaxHeight)
-                                              + ProfilesProperties.Max(property => property.ObserverHeight);
+                double maxHeight = ProfilesProperties.Max(profileProperties => profileProperties.MaxHeight);
+
+                if (!_isObserverHeightIgnore)
+                {
+                    maxHeight += ProfilesProperties.Max(property => property.ObserverHeight);
+                }
 
                 double minHeight = ProfilesProperties.Min(profileProperties => profileProperties.MinHeight);
                 double absHeight = maxHeight - minHeight;
@@ -504,8 +512,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
 
             SetAxisYMinValue();
-
-            _defaultChartHeight = profileChart.ChartAreas["Default"].AxisY.Maximum;
         }
 
         private void SetAxisYMinValue()
@@ -588,15 +594,15 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         private void UpdateIntersectionsLine()
         {
             var lines = profileChart.Series.Where(serie => serie.Name.Contains("Intersections")).ToList();
-           
+
             if (lines.Count > 0)
             {
-                var yValue =  profileChart.ChartAreas["Default"].AxisY.Minimum
-                                            + lines[0].BorderWidth/4;
+                var yValue = profileChart.ChartAreas["Default"].AxisY.Minimum
+                                            + lines[0].BorderWidth / 4;
 
                 foreach (var line in lines)
                 {
-                    foreach(var point in line.Points)
+                    foreach (var point in line.Points)
                     {
                         point.SetValueY(yValue);
                     }
@@ -618,48 +624,23 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             profileChart.Series[$"ExtremePointsLine{serieName}"].Points[0].SetValueY(GetObserverPointFullHeight(lineId));
 
-            double diff = GetObserverPointFullHeight(lineId) - profileChart.ChartAreas["Default"].AxisY.Maximum;
-
-            if (diff > 0)
+            if (!_isObserverHeightIgnore)
             {
-                double newHeight = profileChart.ChartAreas["Default"].AxisY.Maximum + diff;
-                profileChart.ChartAreas["Default"].AxisY.Maximum =
-                                        newHeight + (newHeight - profileChart.ChartAreas["Default"].AxisY.Minimum) / 10;
+                double diff = GetObserverPointFullHeight(lineId) - profileChart.ChartAreas["Default"].AxisY.Maximum;
+
+                if (diff > 0)
+                {
+                    double newHeight = profileChart.ChartAreas["Default"].AxisY.Maximum + diff;
+                    profileChart.ChartAreas["Default"].AxisY.Maximum =
+                                            newHeight + (newHeight - profileChart.ChartAreas["Default"].AxisY.Minimum) / 10;
+                }
+                else
+                {
+                    SetAxisSizes();
+                }
 
                 SetAxisInterval(profileChart.ChartAreas["Default"].AxisY);
-
-                _maxObserverHeightIndex = lineId;
             }
-            else
-            {
-                var fullHeights = new List<double>();
-                int newMaxIndex = _maxObserverHeightIndex;
-
-                for (int i = 0; i < ProfilesProperties.Count; i++)
-                {
-                    fullHeights.Add(GetObserverPointFullHeight(ProfilesProperties[i].LineId));
-
-                    if (ProfilesProperties[i].ObserverHeight == ProfilesProperties.Max(property => property.ObserverHeight))
-                    {
-                        newMaxIndex = i;
-                    }
-                }
-
-                if (lineId == _maxObserverHeightIndex)
-                {
-                    profileChart.ChartAreas["Default"].AxisY.Maximum =
-                                       fullHeights.Max() + (fullHeights.Max() - profileChart.ChartAreas["Default"].AxisY.Minimum) / 10;
-
-                    _maxObserverHeightIndex = newMaxIndex;
-                }
-
-                if (fullHeights.Max() < _defaultChartHeight)
-                {
-                    profileChart.ChartAreas["Default"].AxisY.Maximum = _defaultChartHeight;
-                }
-            }
-
-            SetAxisInterval(profileChart.ChartAreas["Default"].AxisY);
 
             if (profileChart.Series[$"{serieName}"].Points.Last().Color == profileChart.Series[$"{serieName}"].BackSecondaryColor)
             {
@@ -674,8 +655,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         private void UpdateProfiles()
         {
             var profiles = GetProfiles();
-            
-            foreach(Series serie in profiles)
+
+            foreach (Series serie in profiles)
             {
                 UpdateProfile(serie.Name);
             }
@@ -802,7 +783,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             var profiles = new List<Series>();
             var profileSeries = profileChart.Series.Where(serie => Regex.IsMatch(serie.Name, @"^\d+$"));
 
-            foreach(Series serie in profileSeries)
+            foreach (Series serie in profileSeries)
             {
                 profiles.Add(serie);
             }
@@ -1024,6 +1005,15 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
                     break;
 
+                case "observerHeightIgnoreGraphToolBarBtn":
+
+                    _isObserverHeightIgnore = !_isObserverHeightIgnore;
+                    SetAxisSizes();
+                    SetAxisInterval(profileChart.ChartAreas["Default"].AxisY);
+                    UpdateIntersectionsLine();
+
+                    break;
+
                 case "zoomInGraphToolBarBtn":
 
                     if (double.IsNaN(axis.ScaleView.Size))
@@ -1076,14 +1066,14 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
                 case "deletePageGraphToolBarBtn":
 
-                    DialogResult deleteTabResult =  
+                    DialogResult deleteTabResult =
                                     MessageBox.Show("Do you realy want to remove tab?", "Remove tab", MessageBoxButtons.OKCancel);
 
                     if (deleteTabResult == DialogResult.OK)
                     {
                         _controller.RemoveCurrentTab();
                     }
-                  
+
                     break;
 
                 case "saveGraphToolBarBtn":
@@ -1248,7 +1238,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                                    new Font(profileChart.Series[SelectedLineId.ToString()].Font, FontStyle.Regular);
             }
 
-           
+
             SelectedLineId = Convert.ToInt32(serieName);
 
             var id = (int)profileNameLabel.Tag;
@@ -1349,5 +1339,4 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
     }
 
 }
-       
-    
+

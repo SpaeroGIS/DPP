@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
 
 namespace MilSpace.DataAccess.DataTransfer
 {
@@ -14,7 +9,11 @@ namespace MilSpace.DataAccess.DataTransfer
         public double X;
         public double Y;
 
+        public bool isVertex;
         [XmlIgnore]
         public LayersEnum Layers;
+
+        [XmlIgnore]
+        public bool IsEmpty => Distance == 0 && Z == 0 && X == 0 && Y == 0;
     }
 }

@@ -290,6 +290,7 @@ namespace MilSpace.Profile
 
             public AddinImpl()
             {
+                Helper.SetConfiguration();
             }
 
             protected override IntPtr OnCreateChild()
@@ -1121,6 +1122,11 @@ namespace MilSpace.Profile
             var ids = GetProfileAndLineIds(node);
 
             controller.AddProfileToTab(ids.Item1, ids.Item2);
+        }
+
+        private void clearExtraGraphic_Click(object sender, EventArgs e)
+        {
+            controller.ClearMapFromOldGraphs();
         }
     }
 }
