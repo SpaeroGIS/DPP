@@ -35,10 +35,10 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Carto, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Display, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Framework, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -72,6 +72,7 @@
     <Compile Include="Interfaces\IBusinessLogic.cs" />
     <Compile Include="Interfaces\IDataExport.cs" />
     <Compile Include="Models\PointModel.cs" />
+    <Compile Include="Models\PointModelsList.cs" />
     <Compile Include="Models\ProjectionsModel.cs" />
     <Compile Include="Models\SingleProjectionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
