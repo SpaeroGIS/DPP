@@ -25,11 +25,6 @@ namespace MilSpace.GeoCalculator.BusinessLogic
             _dataExport = dataExport;
         }
 
-        public Task<IPoint> ConvertFromWgsMeters(string gkInputValue, int falseOriginX = 0, int falseOriginY = 0, int scaleUnits = 1000)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<IPoint> ConvertFromMgrs(string mgrsInputValue, int falseOriginX = 0, int falseOriginY = 0, int scaleUnits = 1000)
         {
             return await Task.Run(() =>
@@ -129,7 +124,22 @@ namespace MilSpace.GeoCalculator.BusinessLogic
             });            
         }
 
-        public IPoint ProjectPoint(IPoint inputPoint, SingleProjectionModel singleProjectionModel)
+        public IPoint CreatePoint(double X, double Y, CoordinateSystemModel geoModel)
+        {
+            var resultPoint = new PointClass();
+            resultPoint.PutCoords(X, Y);
+            //Create Spatial Reference Factory
+            var spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
+            //Projected Coordinate System to project into
+            var projectedCoordinateSystem = spatialReferenceFactory.CreateProjectedCoordinateSystem(geoModel.ESRIWellKnownID);
+            projectedCoordinateSystem.SetFalseOriginAndUnits(geoModel.FalseOriginX, geoModel.FalseOriginY, geoModel.Units);
+
+            resultPoint.SpatialReference = projectedCoordinateSystem;
+
+            return resultPoint;
+        }
+
+        public IPoint ProjectPoint(IPoint inputPoint, CoordinateSystemModel singleProjectionModel)
         {
             if (inputPoint == null) return null;
 
@@ -197,7 +207,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic
                 return bufferPoint;
             });
 
-            return ProjectPoint(resultPoint, new SingleProjectionModel(targetCoordinateSystemType, falseOriginX, falseOriginY, currentDocument.FocusMap.MapScale));
+            return ProjectPoint(resultPoint, new CoordinateSystemModel(targetCoordinateSystemType, falseOriginX, falseOriginY, currentDocument.FocusMap.MapScale));
         }
 
         public async Task SaveProjectionsToXmlFileAsync(List<PointModel> pointModels, string path)
@@ -205,6 +215,6 @@ namespace MilSpace.GeoCalculator.BusinessLogic
             if (string.IsNullOrWhiteSpace(path)) return;
 
             await _dataExport.ExportProjectionsToXmlAsync(pointModels, path);
-        }
+        }        
     }
 }

@@ -42,6 +42,7 @@ namespace ArcMapAddin
         public string WrongUtmFormatMessage { get; internal set; }
         public string ErrorString { get; internal set; }
         public string WrongMgrsFormatMessage { get; internal set; }
+        public string WrongFormatMessage { get; internal set; }
 
         private string FindLocalizedElement(string xmlNodeName, string defaultValue)
         {
