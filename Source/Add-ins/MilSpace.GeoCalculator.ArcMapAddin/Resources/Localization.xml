@@ -6,9 +6,14 @@
 <Pulkovo1942Label>СК42</Pulkovo1942Label>
 <Wgs1984Label>WGS84</Wgs1984Label>
 <Ukraine2000Label>УСК2000</Ukraine2000Label>
-<MgrsLabel>MGRS</MgrsLabel>
-<UtmLabel>UTM</UtmLabel>
+<MgrsLabel>MGRS Формат:</MgrsLabel>
+<UtmLabel>UTM Формат:</UtmLabel>
 <SaveButton>Сохранить в XML</SaveButton>
 <CopyButton>Скопировать</CopyButton>
 <MoveToCenterButton>Центр карты</MoveToCenterButton>
+<ToolButton>Выключить взаимодействие с картой</ToolButton>
+<WrongUtmFormatMessage>Неверный формат UTM</WrongUtmFormatMessage>
+<ErrorString>Ошибка</ErrorString>
+<WrongMgrsFormatMessage>Неверный формат MGRS</WrongMgrsFormatMessage>
+<WrongFormatMessage>Неверный формат</WrongFormatMessage>
 </CoordinatesConverter>

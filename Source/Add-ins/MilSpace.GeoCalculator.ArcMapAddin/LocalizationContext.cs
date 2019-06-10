@@ -38,10 +38,13 @@ namespace ArcMapAddin
         public string CopyButton => FindLocalizedElement("CopyButton", "Copy");
         public string SaveButton => FindLocalizedElement("SaveButton", "Save to XML");
         public string MoveToCenterButton => FindLocalizedElement("MoveToCenterButton", "Map Center");
+        public string ToolButton => FindLocalizedElement("ToolButton", "Turn Map Interaction Off");
 
-        public string WrongUtmFormatMessage { get; internal set; }
-        public string ErrorString { get; internal set; }
-        public string WrongMgrsFormatMessage { get; internal set; }
+        //Errors
+        public string WrongUtmFormatMessage => FindLocalizedElement("WrongUtmFormatMessage", "Wrong UTM String Format");
+        public string ErrorString => FindLocalizedElement("ErrorString", "Error");
+        public string WrongMgrsFormatMessage => FindLocalizedElement("WrongMgrsFormatMessage", "Wrong MGRS String Format");
+        public string WrongFormatMessage => FindLocalizedElement("WrongFormatMessage", "Wrong Format");
 
         private string FindLocalizedElement(string xmlNodeName, string defaultValue)
         {

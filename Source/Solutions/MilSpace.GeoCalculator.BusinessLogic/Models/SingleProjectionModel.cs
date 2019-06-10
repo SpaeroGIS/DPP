@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace MilSpace.GeoCalculator.BusinessLogic.Models
 {
-    public class SingleProjectionModel
+    public class CoordinateSystemModel
     {
-        private SingleProjectionModel() { }
+        private CoordinateSystemModel() { }
 
-        public SingleProjectionModel(int esriWellKnownID, double falseOriginX, double falseOriginY, double units = 1000)
+        public CoordinateSystemModel(int esriWellKnownID, double falseOriginX, double falseOriginY, double units = 1000)
         {
             ESRIWellKnownID = esriWellKnownID;
             FalseOriginX = falseOriginX;
