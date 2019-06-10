@@ -17,22 +17,24 @@ namespace ArcMapAddin
         /// Returns GUID
         /// </summary>
         /// <param name="geom">IGeometry</param>
-        public static IPoint AddGraphicToMap(
+        public static KeyValuePair<string, IPoint> AddGraphicToMap(
             IGeometry geom,
             IColor color,
             bool IsTempGraphic = false,
             esriSimpleMarkerStyle markerStyle = esriSimpleMarkerStyle.esriSMSCircle,
             int size = 5)
         {
+            var emptyResult = new KeyValuePair<string, IPoint>();
+
             if ((geom == null) || (ArcMap.Document == null) || (ArcMap.Document.FocusMap == null)
                 || (ArcMap.Document.FocusMap.SpatialReference == null))
-                return null;
+                return emptyResult;
 
             IElement element = null;
 
             geom.Project(ArcMap.Document.FocusMap.SpatialReference);
 
-            if (geom.GeometryType != esriGeometryType.esriGeometryPoint) return null;
+            if (geom.GeometryType != esriGeometryType.esriGeometryPoint) return emptyResult;
 
 
             var simpleMarkerSymbol = (ISimpleMarkerSymbol)new SimpleMarkerSymbol();
@@ -48,13 +50,13 @@ namespace ArcMapAddin
 
 
             if (element == null)
-                return null;
+                return emptyResult;
 
             element.Geometry = geom;
 
             var mxdoc = ArcMap.Application.Document as IMxDocument;
             if (mxdoc == null)
-                return null;
+                return emptyResult;
 
             var av = (IActiveView)mxdoc.FocusMap;
             var gc = (IGraphicsContainer)av;
@@ -67,7 +69,29 @@ namespace ArcMapAddin
 
             av.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
 
-            return element.Geometry as IPoint;
+            return new KeyValuePair<string, IPoint>(eprop.Name, element.Geometry as IPoint);
+        }
+
+        public static void RemoveGraphicsFromMap(string[] pointIds)
+        {
+            var activeView = (ArcMap.Application.Document as IMxDocument)?.FocusMap as IActiveView;
+
+            var graphicsContainer = activeView?.GraphicsContainer;
+            if (graphicsContainer == null)
+                return;
+
+            graphicsContainer.Reset();
+            var element = graphicsContainer.Next();
+            
+            while (element != null)
+            {
+                if (pointIds.Any(pointId => pointId.Equals((element as IElementProperties)?.Name)))
+                {
+                    graphicsContainer.DeleteElement(element);
+                }
+                element = graphicsContainer.Next();
+            }
+            activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
         }
 
         public static void FlashGeometry(ESRI.ArcGIS.Geometry.IGeometry geometry,
