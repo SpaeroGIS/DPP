@@ -9,7 +9,7 @@ using ESRI.ArcGIS.Desktop.AddIns;
 namespace ArcMapAddin
 {
     public class ButtonGeoCalculator : ESRI.ArcGIS.Desktop.AddIns.Button
-    {
+    {        
         public ButtonGeoCalculator()
         {
         }
@@ -22,7 +22,13 @@ namespace ArcMapAddin
             };
             IDockableWindow dockWindow = ArcMap.DockableWindowManager.GetDockableWindow(dockWinID);
             dockWindow.Show(true);
+
             ActivateMapTool();
+        }
+
+        protected override void OnUpdate()
+        {
+            Enabled = ArcMap.Application != null;
         }
 
         private void ActivateMapTool()
@@ -32,13 +38,9 @@ namespace ArcMapAddin
                 Value = ThisAddIn.IDs.MapInteropTool
             };
             var documentBars = ArcMap.Application.Document.CommandBars;
-            var cmdItem = documentBars.Find(mapToolID, false, false);
-            ArcMap.Application.CurrentTool = cmdItem;
-        }
+            var mapTool = documentBars.Find(mapToolID, false, false);
 
-        protected override void OnUpdate()
-        {
-            Enabled = ArcMap.Application != null;
+            ArcMap.Application.CurrentTool = mapTool;
         }
     }
 

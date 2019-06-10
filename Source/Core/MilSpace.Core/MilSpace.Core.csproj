@@ -143,6 +143,7 @@
       <DependentUpon>MilSpaceAppDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourceManager\MilSpaceResourceManager.cs" />
     <Compile Include="Tools\EsriTools.cs" />
   </ItemGroup>
   <ItemGroup>

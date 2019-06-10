@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CoordinatesConverter xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 <WindowCaption>Калькулятор координат</WindowCaption>
-<LatitudeLongitudeLabel>Широта/Долгота</LatitudeLongitudeLabel>
+<ProjectionsGroup>Проекции</ProjectionsGroup>
 <CurrentMapLabel>Текущие координаты</CurrentMapLabel>
 <Pulkovo1942Label>СК42</Pulkovo1942Label>
 <Wgs1984Label>WGS84</Wgs1984Label>
 <Ukraine2000Label>УСК2000</Ukraine2000Label>
-<MgrsLabel>MGRS</MgrsLabel>
+<MgrsLabel>MGRS Формат:</MgrsLabel>
+<UtmLabel>UTM Формат:</UtmLabel>
 <SaveButton>Сохранить в XML</SaveButton>
 <CopyButton>Скопировать</CopyButton>
 <MoveToCenterButton>Центр карты</MoveToCenterButton>
+<ToolButton>Выключить взаимодействие с картой</ToolButton>
+<WrongUtmFormatMessage>Неверный формат UTM</WrongUtmFormatMessage>
+<ErrorString>Ошибка</ErrorString>
+<WrongMgrsFormatMessage>Неверный формат MGRS</WrongMgrsFormatMessage>
+<WrongFormatMessage>Неверный формат</WrongFormatMessage>
 </CoordinatesConverter>

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using MilSpace.GeoCalculator.BusinessLogic.Models;
 using MilSpace.GeoCalculator.BusinessLogic.ReferenceData;
 using ESRI.ArcGIS.esriSystem;
+using System.Collections.Generic;
 
 namespace MilSpace.GeoCalculator.BusinessLogic
 {
@@ -24,107 +25,95 @@ namespace MilSpace.GeoCalculator.BusinessLogic
             _dataExport = dataExport;
         }
 
-        public Task<IPoint> ConvertFromWgsMeters(string gkInputValue, int falseOriginX = 0, int falseOriginY = 0, int scaleUnits = 1000)
+        public IPoint ConvertFromMgrs(string mgrsInputValue, CoordinateSystemModel coordinateSystemModel)
         {
-            throw new NotImplementedException();
+            var resultPoint = new Point();
+            //Create Spatial Reference Factory
+            var spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
+            //Create Spatial Reference
+            ISpatialReference spatialReference = spatialReferenceFactory.CreateGeographicCoordinateSystem(coordinateSystemModel.ESRIWellKnownID);
+            spatialReference.SetFalseOriginAndUnits(coordinateSystemModel.FalseOriginX, coordinateSystemModel.FalseOriginY, coordinateSystemModel.Units);
+            resultPoint.SpatialReference = spatialReference;
+            (resultPoint as IConversionMGRS).PutCoordsFromMGRS(mgrsInputValue, esriMGRSModeEnum.esriMGRSMode_Automatic);
+            return resultPoint;
         }
 
-        public async Task<IPoint> ConvertFromMgrs(string mgrsInputValue, int falseOriginX = 0, int falseOriginY = 0, int scaleUnits = 1000)
+        public IPoint ConvertFromUtm(string utmInputValue, CoordinateSystemModel coordinateSystemModel)
         {
-            return await Task.Run(() =>
-            {
-                var resultPoint = new Point();
-                //Create Spatial Reference Factory
-                var spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
-                //Create Spatial Reference
-                ISpatialReference spatialReference = spatialReferenceFactory.CreateProjectedCoordinateSystem((int)esriSRGeoCSType.esriSRGeoCS_WGS1984);
-                spatialReference.SetFalseOriginAndUnits(falseOriginX, falseOriginY, scaleUnits);
-                resultPoint.SpatialReference = spatialReference;
-                (resultPoint as IConversionMGRS).PutCoordsFromMGRS(mgrsInputValue, esriMGRSModeEnum.esriMGRSMode_Automatic);
-                return resultPoint;
-            });
+            var resultPoint = new Point();
+            //Create Spatial Reference Factory
+            var spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
+            //Create Spatial Reference
+            ISpatialReference spatialReference = spatialReferenceFactory.CreateGeographicCoordinateSystem(coordinateSystemModel.ESRIWellKnownID);
+            spatialReference.SetFalseOriginAndUnits(coordinateSystemModel.FalseOriginX, coordinateSystemModel.FalseOriginY, coordinateSystemModel.Units);
+            resultPoint.SpatialReference = spatialReference;
+            (resultPoint as IConversionNotation).PutCoordsFromUTM(esriUTMConversionOptionsEnum.esriUTMAddSpaces, utmInputValue);
+            return resultPoint;
         }
 
-        public async Task<IPoint> ConvertFromUtm(string utmInputValue, int falseOriginX = 0, int falseOriginY = 0, int scaleUnits = 1000)
+        public IPoint ConvertToWgsMeters(IPoint wgsInputPoint)
         {
-            return await Task.Run(() =>
-            {
-                var resultPoint = new Point();
-                //Create Spatial Reference Factory
-                var spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
-                //Create Spatial Reference
-                ISpatialReference spatialReference = spatialReferenceFactory.CreateProjectedCoordinateSystem((int)esriSRGeoCSType.esriSRGeoCS_WGS1984);
-                spatialReference.SetFalseOriginAndUnits(falseOriginX, falseOriginY, scaleUnits);
-                resultPoint.SpatialReference = spatialReference;
-                (resultPoint as IConversionNotation).PutCoordsFromUTM(esriUTMConversionOptionsEnum.esriUTMAddSpaces, utmInputValue);
-                return resultPoint;
-            });
-        }
-
-        public async Task<IPoint> ConvertToWgsMeters(IPoint wgsInputPoint)
-        {
-            return await Task.Run(() => { 
             var spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
             ISpatialReference wgsMetersSpatialReference = spatialReferenceFactory.CreateGeographicCoordinateSystem((int)esriSRGeoCSType.esriSRGeoCS_WGS1984);
-                wgsInputPoint.Project(wgsMetersSpatialReference);
-                return wgsInputPoint;
-            });
+            wgsInputPoint.Project(wgsMetersSpatialReference);
+            return wgsInputPoint;
         }
 
-        public async Task<string> ConvertToMgrs(IPoint wgsInputPoint)
+        public string ConvertToMgrs(IPoint wgsInputPoint)
         {
-            return await Task.Run(() =>
-            {
-                var conversionNotation = wgsInputPoint as IConversionNotation;
-                //5 for 1m resolution
-                return conversionNotation?.CreateMGRS(5, true, esriMGRSModeEnum.esriMGRSMode_Automatic);
-            });
+            var conversionNotation = wgsInputPoint as IConversionNotation;
+            //5 for 1m resolution
+            return conversionNotation?.CreateMGRS(5, true, esriMGRSModeEnum.esriMGRSMode_Automatic);
         }
 
-        public async Task<string> ConvertToUtm(IPoint wgsInputPoint)
+        public string ConvertToUtm(IPoint wgsInputPoint)
         {
-            return await Task.Run(() =>
-            {
-                var conversionNotation = wgsInputPoint as IConversionNotation;                
-                return conversionNotation?.GetUTMFromCoords(esriUTMConversionOptionsEnum.esriUTMAddSpaces);
-            });
+            var conversionNotation = wgsInputPoint as IConversionNotation;                
+            return conversionNotation?.GetUTMFromCoords(esriUTMConversionOptionsEnum.esriUTMAddSpaces);            
         }
 
-        public void CopyCoordinatesToClipboard(PointModel pointModel)
+        public IPoint ConvertToDecimalDegrees(IPoint point, CoordinateSystemModel coordinateSystemModel)
+        {
+            var spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
+            //Create Spatial Reference
+            ISpatialReference spatialReference = spatialReferenceFactory.CreateGeographicCoordinateSystem(coordinateSystemModel.ESRIWellKnownID);
+            spatialReference.SetFalseOriginAndUnits(coordinateSystemModel.FalseOriginX, coordinateSystemModel.FalseOriginY, coordinateSystemModel.Units);
+            point.Project(spatialReference);
+
+            return point;
+        }
+
+        public void CopyCoordinatesToClipboard(List<PointModel> pointModels)
         {
             Clipboard.Clear();
-            Clipboard.SetData(nameof(PointModel), _dataExport.GetXmlRepresentationOfProjections(pointModel));
+            Clipboard.SetText(_dataExport.GetXmlRepresentationOfProjections(pointModels));
         }
 
-        public async Task<IPoint> GetDisplayCenterAsync()
+        public IPoint GetDisplayCenter()
         {
             if (!(_arcMapApp.Document is IMxDocument currentDocument)) throw new Exception(NoMapExceptionMessage);
             var centerPoint = new Point();
-            await Task.Run(() =>
-            {
-                var activeView = currentDocument.ActiveView;
-                var envelope = activeView.Extent as IEnvelope;
-                centerPoint.X = ((envelope.XMax - envelope.XMin) / 2) + envelope.XMin;
-                centerPoint.Y = ((envelope.YMax - envelope.YMin) / 2) + envelope.YMin;
-                centerPoint.SpatialReference = envelope.SpatialReference;
-            });            
+
+            var activeView = currentDocument.ActiveView;
+            var envelope = activeView.Extent as IEnvelope;
+            centerPoint.X = ((envelope.XMax - envelope.XMin) / 2) + envelope.XMin;
+            centerPoint.Y = ((envelope.YMax - envelope.YMin) / 2) + envelope.YMin;
+            centerPoint.SpatialReference = envelope.SpatialReference;
+
             return centerPoint;
         }
 
-        public async Task<IPoint> GetSelectedPointAsync(int mousePositionX, int mousePositionY)
+        public IPoint GetSelectedPoint(int mousePositionX, int mousePositionY)
         {
             if (!(_arcMapApp.Document is IMxDocument currentDocument)) throw new Exception(NoMapExceptionMessage);
 
             IPoint resultPoint = new Point();
-            await Task.Run(() => 
-            {
-                resultPoint = (currentDocument.FocusMap as IActiveView).ScreenDisplay.DisplayTransformation.ToMapPoint(mousePositionX, mousePositionY);
-                
-            });
+
+            resultPoint = (currentDocument.FocusMap as IActiveView).ScreenDisplay.DisplayTransformation.ToMapPoint(mousePositionX, mousePositionY);
             return resultPoint;
         }
 
-        public async Task MoveToNewCoordinateAsync(double x, double y)
+        public async Task MoveToNewCoordinate(double x, double y)
         {
             if (!(_arcMapApp.Document is IMxDocument currentDocument)) throw new Exception(NoMapExceptionMessage);
             
@@ -138,19 +127,33 @@ namespace MilSpace.GeoCalculator.BusinessLogic
             });            
         }
 
-        public async Task<IPoint> ProjectPointAsync(IPoint inputPoint, SingleProjectionModel singleProjectionModel)
+        public IPoint CreatePoint(double X, double Y, CoordinateSystemModel geoModel)
+        {
+            var resultPoint = new PointClass();
+            resultPoint.PutCoords(X, Y);
+            //Create Spatial Reference Factory
+            var spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
+            //Projected Coordinate System to project into
+            var projectedCoordinateSystem = spatialReferenceFactory.CreateProjectedCoordinateSystem(geoModel.ESRIWellKnownID);
+            projectedCoordinateSystem.SetFalseOriginAndUnits(geoModel.FalseOriginX, geoModel.FalseOriginY, geoModel.Units);
+
+            resultPoint.SpatialReference = projectedCoordinateSystem;
+
+            return resultPoint;
+        }
+
+        public IPoint ProjectPoint(IPoint inputPoint, CoordinateSystemModel singleProjectionModel)
         {
             if (inputPoint == null) return null;
-            await Task.Run(() =>
-            {
-                //Create Spatial Reference Factory
-                var spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
-                //Projected Coordinate System to project into
-                var projectedCoordinateSystem = spatialReferenceFactory.CreateProjectedCoordinateSystem(singleProjectionModel.ESRIWellKnownID);
-                projectedCoordinateSystem.SetFalseOriginAndUnits(singleProjectionModel.FalseOriginX, singleProjectionModel.FalseOriginY, singleProjectionModel.Units);
 
-                inputPoint.Project(projectedCoordinateSystem);
-            });
+            //Create Spatial Reference Factory
+            var spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
+            //Projected Coordinate System to project into
+            var projectedCoordinateSystem = spatialReferenceFactory.CreateProjectedCoordinateSystem(singleProjectionModel.ESRIWellKnownID);
+            projectedCoordinateSystem.SetFalseOriginAndUnits(singleProjectionModel.FalseOriginX, singleProjectionModel.FalseOriginY, singleProjectionModel.Units);
+
+            inputPoint.Project(projectedCoordinateSystem);
+
             return inputPoint;
         }
 
@@ -207,14 +210,14 @@ namespace MilSpace.GeoCalculator.BusinessLogic
                 return bufferPoint;
             });
 
-            return await ProjectPointAsync(resultPoint, new SingleProjectionModel(targetCoordinateSystemType, falseOriginX, falseOriginY, currentDocument.FocusMap.MapScale));
+            return ProjectPoint(resultPoint, new CoordinateSystemModel(targetCoordinateSystemType, falseOriginX, falseOriginY, currentDocument.FocusMap.MapScale));
         }
 
-        public async Task SaveProjectionsToXmlFileAsync(PointModel pointModel, string path)
+        public async Task SaveProjectionsToXmlFileAsync(List<PointModel> pointModels, string path)
         {
             if (string.IsNullOrWhiteSpace(path)) return;
 
-            await _dataExport.ExportProjectionsToXmlAsync(pointModel, path);
-        }
+            await _dataExport.ExportProjectionsToXmlAsync(pointModels, path);
+        }        
     }
 }

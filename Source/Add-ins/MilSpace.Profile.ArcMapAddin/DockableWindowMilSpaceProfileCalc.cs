@@ -3,6 +3,7 @@ using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core;
+using MilSpace.Core.MilSpaceResourceManager;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Profile.DTO;
@@ -882,6 +883,11 @@ namespace MilSpace.Profile
         private void LocalizeStrings()
         {
             //TODO: Set all localization srting here
+
+
+            //MilSpaceResourceManager mngr = new MilSpaceResourceManager("MilSpace.Profile.Calc");
+
+            //var testLocal = mngr.GetTesxtLocalisation();
 
             ToolTip ToolTip1 = new System.Windows.Forms.ToolTip();
             ToolTip1.SetToolTip(this.btnRefreshLayers, "Refresh interesing layers");
