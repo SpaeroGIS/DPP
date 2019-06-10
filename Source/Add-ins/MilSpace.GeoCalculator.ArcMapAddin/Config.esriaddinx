@@ -20,7 +20,7 @@
       </Commands>
       <DockableWindows>
         <DockableWindow id="ArcMapAddin_DockableWindowGeoCalculator" class="DockableWindowGeoCalculator+AddinImpl" caption="My Dockable Window" image="Images\DockableWindow.png">
-          <InitialPlacement height="300" width="300" state="pinned" position="left" />
+          <InitialPlacement height="600" width="335" state="pinned" position="left" />
         </DockableWindow>
       </DockableWindows>
     </ArcMap>
