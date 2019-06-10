@@ -12,6 +12,7 @@
   </Targets>
   <AddIn language="CLR" library="MilSpace.Visibility.dll" namespace="MilSpace.Visibility">
     <ArcMap>
+      
       <Commands>
         <Button 
           id="DPP_ArcMapAddin_MilSpace_Visibility_ButtonMilSpaceMVis" 
@@ -19,9 +20,10 @@
           message="MilSpace 3-D solution. Module Visibility window" 
           caption="MilSpace Visibility" 
           tip="MilSpace Module Visibility window" 
-          category="Add-In Controls" 
+          category="MilSpace інструменти" 
           image="Images\ButtonMilSpaceMVis.png" />
       </Commands>
+      
       <DockableWindows>
         <DockableWindow 
           id="DPP_ArcMapAddin_MilSpace_Visibility_DockableWindowMilSpaceMVisibilitySt" 
@@ -31,6 +33,18 @@
           <InitialPlacement height="650" width="350" state="pinned" position="float" />
         </DockableWindow>
       </DockableWindows>
+
+      <Toolbars>
+        <Toolbar
+          id="MilspaceArcMapAddinToolbar"
+          caption="MilSpace спецінструменти"
+          showInitially="true">
+          <Items>
+            <Button refID="DPP_ArcMapAddin_MilSpace_Visibility_ButtonMilSpaceMVis" />
+          </Items>
+        </Toolbar>
+      </Toolbars>
+      
     </ArcMap>
   </AddIn>
 </ESRI.Configuration>
