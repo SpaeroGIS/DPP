@@ -69,7 +69,8 @@ namespace MilSpace.Configurations
                             configurationFilePath = Path.Combine(registryConfiguration, configurationFileName);
                             if (File.Exists(configurationFilePath))
                             {
-                                currentConfig = ConfigurationManager.OpenExeConfiguration(configurationFilePath); //ConfigurationUserLevel.PerUserRoamingAndLocal
+                                ConfigurationFileMap fl = new ConfigurationFileMap(configurationFilePath);
+                                currentConfig = ConfigurationManager.OpenMappedMachineConfiguration(fl);
                             }
                             else
                             {

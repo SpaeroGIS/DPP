@@ -59,7 +59,7 @@ namespace MilSpace.Core
                     try
                     {
                         FileInfo fi = new FileInfo(MilSpaceConfiguration.ConfigurationFileName);
-                        if (fi.Exists)
+                            if (fi.Exists)
                         {
                             XDocument xdoc = XDocument.Load(fi.FullName);
 
