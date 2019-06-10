@@ -87,10 +87,11 @@ namespace MilSpace.Tools.GraphicsLayer
                                                                      : groupedLines.InvisibleColor;
                 LineType lineType;
 
-                if (groupedLines.Lines.Count() == 1) { lineType = LineType.DefaultLine; }
-                else if (groupedLines.Lines.Last() == groupedLines.Lines[lineNumber]) { lineType = LineType.Arrow; }
+                if      (groupedLines.Lines.Count() == 1)                              { lineType = LineType.DefaultLine; }
                 else if (groupedLines.Lines.First() == groupedLines.Lines[lineNumber]) { lineType = LineType.Point; }
-                else { lineType = LineType.Line; }
+                else if (groupedLines.Lines.Last() == groupedLines.Lines[lineNumber])
+                     { lineType = (!groupedLines.IsPrimitive) ? LineType.Arrow : LineType.DefaultLine; }
+                else { lineType = (!groupedLines.IsPrimitive) ? LineType.Line : LineType.Point; }
 
                 AddPolyline(ge, graphicsType, color, lineType, false, false, width);
 
@@ -284,10 +285,11 @@ namespace MilSpace.Tools.GraphicsLayer
                                                                               : profileColorLines.InvisibleColor;
                     LineType lineType;
 
-                    if (profileColorLines.Lines.Count() == 1) { lineType = LineType.DefaultLine; }
-                    else if (profileColorLines.Lines.Last() == profileColorLines.Lines[lineNumber]) { lineType = LineType.Arrow; }
+                    if (profileColorLines.Lines.Count() == 1)                                        { lineType = LineType.DefaultLine; }
                     else if (profileColorLines.Lines.First() == profileColorLines.Lines[lineNumber]) { lineType = LineType.Point; }
-                    else { lineType = LineType.Line; }
+                    else if (profileColorLines.Lines.Last() == profileColorLines.Lines[lineNumber])
+                                { lineType = (!profileColorLines.IsPrimitive) ? LineType.Arrow: LineType.DefaultLine; }
+                    else        { lineType = (!profileColorLines.IsPrimitive) ? LineType.Line : LineType.Point; }
 
 
                     AddPolyline(ge, graphicsType, color, lineType, false, false, width);

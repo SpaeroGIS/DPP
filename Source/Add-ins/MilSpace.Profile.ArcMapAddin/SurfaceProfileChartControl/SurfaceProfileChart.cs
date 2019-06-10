@@ -130,10 +130,20 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 Tag = profileSurface
             });
 
-
             foreach (var point in profileSurface.ProfileSurfacePoints)
             {
                 profileChart.Series.Last().Points.AddXY(point.Distance, point.Z);
+
+                if (point.isVertex && point != profileSurface.ProfileSurfacePoints.First())
+                {
+                    profileChart.Series.Last().Points.Last().MarkerStyle = MarkerStyle.Circle;
+                    profileChart.Series.Last().Points.Last().MarkerColor = Color.Red;
+
+                    if (point != profileSurface.ProfileSurfacePoints.Last())
+                    {
+                        profileChart.Series.Last().Color = Color.Blue;
+                    }
+                }
             }
 
             profileChart.Series.Last().Points.First().MarkerStyle = MarkerStyle.Circle;
@@ -664,6 +674,11 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         private void UpdateProfile(string lineId)
         {
+            if (!_controller.IsLineStraight(Convert.ToInt32(lineId)))
+            {
+                return;
+            }
+
             foreach (var point in profileChart.Series[lineId].Points)
             {
                 point.Color = profileChart.Series[lineId].Color;
@@ -1262,8 +1277,13 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             ShowDetails();
             ShowColors();
 
-            invisibleLineColorButton.Visible = true;
-            visibleLineColorButton.Visible = true;
+            var isLineStraight = _controller.IsLineStraight(SelectedLineId);
+
+            invisibleLineColorButton.Visible = isLineStraight;
+            visibleLineColorButton.Visible = isLineStraight;
+
+            InvisibleLineColorLabel.Visible = isLineStraight;
+            visibleLineColorLabel.Visible = isLineStraight;
 
             _controller.InvokeSelectedProfile(SelectedLineId);
             _controller.DrawIntersectionLines(SelectedLineId);
