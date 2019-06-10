@@ -979,19 +979,22 @@ namespace MilSpace.Profile
                     newNode.SetAzimuth1(az1);
                     newNode.SetAzimuth2(az2);
                     newNode.SetBasePointHeight(height);
-
-
                 }
 
                 newNode.SetCreatorName(Environment.UserName);
                 newNode.SetDate($"{date.ToLongDateString()} {date.ToLongTimeString()}");
 
+                //TODO: Localize 
+                string lineDefinition = "Профіль";
+
+
                 foreach (var line in profile.ProfileLines)
                 {
                     var azimuth = line.Azimuth.ToString("F0");
                     var nodeName = profile.DefinitionType == ProfileSettingsTypeEnum.Points
-                        ? $"{azimuth}{Degree}"
-                        : $"{azimuth}{Degree} ({System.Array.IndexOf(profile.ProfileLines, line) + 1})";
+                        ? $"{azimuth}{Degree}" :
+                        (line.Azimuth == double.MinValue ? $"{lineDefinition} ({System.Array.IndexOf(profile.ProfileLines, line) + 1})" :
+                        $"{azimuth}{Degree} ({System.Array.IndexOf(profile.ProfileLines, line) + 1})");
                     var childNode = new ProfileTreeNode(nodeName, 205, 205);
                     newNode.Nodes.Add(childNode);
                     childNode.Tag = line.Id;

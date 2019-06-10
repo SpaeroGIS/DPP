@@ -433,7 +433,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             profileProperty.PathLength = FindLength(profileSurfacePoints);
 
-            profileProperty.Azimuth = profileSessionProfileLine.Azimuth;
+            profileProperty.Azimuth = profileSessionProfileLine.Azimuth;//== double.MinValue?;
 
             profileProperty.ObserverHeight = _defaultObserverHeight;
 
