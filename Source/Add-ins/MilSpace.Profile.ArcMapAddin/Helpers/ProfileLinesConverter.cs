@@ -48,7 +48,6 @@ namespace MilSpace.Profile
                        Id = id,
                        PointFrom = pointFrom,
                        PointTo = pointTo,
-                       Visible = true
                    };
                }
                 ).ToList();

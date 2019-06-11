@@ -342,11 +342,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                     oldSelectedLine = null;
                 }
 
-                if (newSelectedLine.IsPrimitive)
-                {
-                    newSelectedLine.VisibleColor = new RgbColor() { Red = 31, Green = 24, Blue = 255 };
-                }
-
                 SelectedProfileChanged?.Invoke(oldSelectedLine, newSelectedLine, _profileSession.SessionId);
                 newSelectedLine.IsSelected = true;
             }
