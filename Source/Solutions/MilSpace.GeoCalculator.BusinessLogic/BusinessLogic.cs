@@ -84,7 +84,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic
         public void CopyCoordinatesToClipboard(List<PointModel> pointModels)
         {
             Clipboard.Clear();
-            Clipboard.SetText(_dataExport.GetXmlRepresentationOfProjections(pointModels));
+            Clipboard.SetText(_dataExport.GetStringRepresentationOfProjections(pointModels));
         }
 
         public IPoint GetDisplayCenter()
@@ -216,6 +216,13 @@ namespace MilSpace.GeoCalculator.BusinessLogic
             if (string.IsNullOrWhiteSpace(path)) return;
 
             await _dataExport.ExportProjectionsToXmlAsync(pointModels, path);
-        }        
+        }
+
+        public async Task SaveLastProjectionToXmlFileAsync(PointModel pointModel, string path)
+        {
+            if (string.IsNullOrWhiteSpace(path)) return;
+
+            await _dataExport.ExportProjectionsToXmlAsync(pointModel, path);
+        }
     }
 }

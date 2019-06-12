@@ -20,6 +20,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic.Interfaces
         IPoint ConvertFromUtm(string utmInputValue, CoordinateSystemModel coordinateSystemModel);
         IPoint ConvertToWgsMeters(IPoint wgsInputPoint);
         IPoint ConvertToDecimalDegrees(IPoint point, CoordinateSystemModel coordinateSystemModel);
-        Task SaveProjectionsToXmlFileAsync(List<PointModel> pointModels, string path);        
+        Task SaveProjectionsToXmlFileAsync(List<PointModel> pointModels, string path);
+        Task SaveLastProjectionToXmlFileAsync(PointModel pointModel, string path);
     }
 }
