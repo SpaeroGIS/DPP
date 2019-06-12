@@ -3,6 +3,7 @@ using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core;
+using MilSpace.Core.MilSpaceResourceManager;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Profile.DTO;
@@ -337,7 +338,7 @@ namespace MilSpace.Profile
 
                 case 0:
 
-                    var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickCoordinates);
+                    var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickProfileCoordinates);
                     if (commandItem == null)
                     {
                         var message = $"Please add Pick Coordinates tool to any toolbar first.";
@@ -394,7 +395,7 @@ namespace MilSpace.Profile
             {
                 case 0:
 
-                    var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickCoordinates);
+                    var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickProfileCoordinates);
                     if (commandItem == null)
                     {
                         var message = $"Please add Pick Coordinates tool to any toolbar first.";
@@ -454,7 +455,7 @@ namespace MilSpace.Profile
 
                 case 1:
 
-                    var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickCoordinates);
+                    var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickProfileCoordinates);
                     if (commandItem == null)
                     {
                         var message = $"Please add Pick Coordinates tool to any toolbar first.";
@@ -887,6 +888,11 @@ namespace MilSpace.Profile
             ToolTip1.SetToolTip(this.btnRefreshLayers, "Refresh interesing layers");
             lblSelectedPrimitives.Text = "Вибрані об'єкти:";
             lblCommonLength.Text = "Довжина вибраних об'єктів:";
+
+            //ToolTip ToolTip1 = new System.Windows.Forms.ToolTip();
+            //ToolTip1.SetToolTip(this.btnRefreshLayers, LocalizationConstants.RefreshButtonToolTip);
+            //lblSelectedPrimitives.Text = LocalizationConstants.SelectedPrimitivesText;
+            //lblCommonLength.Text = LocalizationConstants.CommonLengthText;
         }
 
 
@@ -973,19 +979,22 @@ namespace MilSpace.Profile
                     newNode.SetAzimuth1(az1);
                     newNode.SetAzimuth2(az2);
                     newNode.SetBasePointHeight(height);
-
-
                 }
 
                 newNode.SetCreatorName(Environment.UserName);
                 newNode.SetDate($"{date.ToLongDateString()} {date.ToLongTimeString()}");
 
+                //TODO: Localize 
+                string lineDefinition = "Профіль";
+
+
                 foreach (var line in profile.ProfileLines)
                 {
                     var azimuth = line.Azimuth.ToString("F0");
                     var nodeName = profile.DefinitionType == ProfileSettingsTypeEnum.Points
-                        ? $"{azimuth}{Degree}"
-                        : $"{azimuth}{Degree} ({System.Array.IndexOf(profile.ProfileLines, line) + 1})";
+                        ? $"{azimuth}{Degree}" :
+                        (line.Azimuth == double.MinValue ? $"{lineDefinition} ({System.Array.IndexOf(profile.ProfileLines, line) + 1})" :
+                        $"{azimuth}{Degree} ({System.Array.IndexOf(profile.ProfileLines, line) + 1})");
                     var childNode = new ProfileTreeNode(nodeName, 205, 205);
                     newNode.Nodes.Add(childNode);
                     childNode.Tag = line.Id;

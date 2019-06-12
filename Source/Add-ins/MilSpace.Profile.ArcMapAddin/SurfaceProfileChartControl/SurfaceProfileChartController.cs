@@ -19,6 +19,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         private List<ProfileSurfacePoint> _extremePoints = new List<ProfileSurfacePoint>();
         private List<LineIntersections> _linesIntersections = new List<LineIntersections>();
 
+        private Dictionary<int, bool> _linesStraightnesses = new Dictionary<int, bool>();
+
         internal delegate void ProfileGrapchClickedDelegate(GraphProfileClickedArgs e);
         internal delegate void ProfileChangeInvisiblesZonesDelegate(GroupedLines profileLines, int sessionId,
                                                                         bool update, List<int> linesIds = null);
@@ -43,7 +45,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             if (_profileSession.ProfileLines != null && _profileSession.ProfileLines.Count() > 0)
             {
-                for(int i = 0; i < _profileSession.ProfileLines.Count(); i++)
+                for (int i = 0; i < _profileSession.ProfileLines.Count(); i++)
                 {
                     _profileSession.ProfileLines[i].SessionId = _profileSession.SessionId;
                 }
@@ -56,7 +58,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             return currentChart.GetController();
         }
 
-        internal void  SetCurrentChart(MilSpaceProfileGraphsController graphsController)
+        internal void SetCurrentChart(MilSpaceProfileGraphsController graphsController)
         {
             _graphsController = graphsController;
 
@@ -178,6 +180,11 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             var invisibleSurface = new ProfileSurface();
             var invisiblePoints = new List<ProfileSurfacePoint>();
 
+            if (!IsLineStraight(profileSurface.LineId))
+            {
+                return;
+            }
+
             var sightLineKoef = 0.0;
             var isInvisibleZone = false;
 
@@ -256,6 +263,29 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             SetProfileProperty(_profileSession.ProfileLines.Last());
         }
 
+        internal bool IsLineStraight(int lineId)
+        {
+            if (_linesStraightnesses.Keys.Contains(lineId))
+            {
+                return _linesStraightnesses[lineId];
+            }
+            else
+            {
+                var result = true;
+
+                if (_profileSession.ProfileSurfaces.First(surface => surface.LineId == lineId)
+                               .ProfileSurfacePoints.Where(point => point.isVertex == true)
+                               .Count() > 2)
+                {
+                    result = false;
+                }
+
+                _linesStraightnesses.Add(lineId, result);
+                return result;
+            }
+
+        }
+
         internal void InvokeOnProfileGraphClicked(double wgs94X, double wgs94Y)
         {
             var point = new GraphProfileClickedArgs(wgs94X, wgs94Y);
@@ -269,7 +299,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             {
                 var intrersections = _linesIntersections.FirstOrDefault(line => line.LineId == profileId);
 
-                if(intrersections != null)
+                if (intrersections != null)
                 {
                     _linesIntersections.Remove(_linesIntersections.FirstOrDefault(line => line.LineId == profileId));
                 }
@@ -296,7 +326,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             {
                 return;
             }
-            
+
             var oldSelectedLine = _profileSession.Segments.Find(segment => segment.IsSelected == true);
 
             if (selectedLineId == -1)
@@ -307,7 +337,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             {
                 var newSelectedLine = _profileSession.Segments.First(segment => segment.LineId == selectedLineId);
 
-                if(oldSelectedLine == newSelectedLine)
+                if (oldSelectedLine == newSelectedLine)
                 {
                     oldSelectedLine = null;
                 }
@@ -398,7 +428,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             profileProperty.PathLength = FindLength(profileSurfacePoints);
 
-            profileProperty.Azimuth = profileSessionProfileLine.Azimuth;
+            profileProperty.Azimuth = profileSessionProfileLine.Azimuth;//== double.MinValue?;
 
             profileProperty.ObserverHeight = _defaultObserverHeight;
 
@@ -594,7 +624,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 }
             }
 
-            return preparedLines.OrderByDescending(line => line.Type).ToList(); 
+            return preparedLines.OrderByDescending(line => line.Type).ToList();
         }
 
         private List<ProfileSurfacePoint> FindExtremePoints(ProfileSurface profileSurface = null)

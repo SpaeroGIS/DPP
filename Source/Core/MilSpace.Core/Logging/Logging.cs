@@ -58,8 +58,9 @@ namespace MilSpace.Core
                     XmlElement toConfig = null;
                     try
                     {
+
                         FileInfo fi = new FileInfo(MilSpaceConfiguration.ConfigurationFileName);
-                        if (fi.Exists)
+                            if (fi.Exists)
                         {
                             XDocument xdoc = XDocument.Load(fi.FullName);
 

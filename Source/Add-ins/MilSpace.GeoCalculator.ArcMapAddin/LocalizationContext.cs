@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Xml;
 
-namespace ArcMapAddin
+namespace MilSpace.GeoCalculator
 {
     internal class LocalizationContext
     {

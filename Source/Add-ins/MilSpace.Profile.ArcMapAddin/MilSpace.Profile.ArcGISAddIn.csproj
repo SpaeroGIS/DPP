@@ -55,10 +55,14 @@
     <WarningLevel>4</WarningLevel>
     <RegisterForComInterop>true</RegisterForComInterop>
   </PropertyGroup>
+  <PropertyGroup>
+    <LocalizationOutputDirectory>$(OutputDirectory)\Localization</LocalizationOutputDirectory>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ESRI.ArcGIS.AddIns.SDK, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\ESRI.ArcGIS.AddIns.SDK\v4.0_10.4.0.0__8fc3cc631e44ad86\ESRI.ArcGIS.AddIns.SDK.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.ADF.Local, Version=10.6.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -154,9 +158,21 @@
     <Compile Include="IntersectionLine.cs" />
     <Compile Include="IntersectionsInLayer.cs" />
     <Compile Include="LineIntersections.cs" />
+    <Compile Include="Localization\LocalizationConstantscs.cs" />
+    <Compile Include="Localization\MilSpace.Profile.Calc.uk-UA.Designer.cs">
+      <DependentUpon>MilSpace.Profile.Calc.uk-UA.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Localization\MilSpace.Profile.Calc.en-US.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MilSpace.Profile.Calc.en-US.resx</DependentUpon>
+    </Compile>
     <Compile Include="MilSpaceProfileCalsController.cs" />
     <Compile Include="MilSpaceProfileGraphsController.cs" />
-    <Compile Include="PickCoordinatesTool.cs" />
+    <Compile Include="PickProfileCoordinates.cs" />
     <Compile Include="ProfileLayers.cs" />
     <Compile Include="Exceptions\ProfileSessionNotCreated.cs" />
     <Compile Include="ProfileSettingsEventArgs.cs" />
@@ -199,7 +215,7 @@
     </AddInContent>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Button1.cs">
+    <Compile Include="MilSpace3DSolutionOpen.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <AddInContent Include="Images\Button1.png">
@@ -250,6 +266,15 @@
       <DependentUpon>DockableWindowMilSpaceProfileGraph.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Localization\MilSpace.Profile.Calc.uk-UA.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MilSpace.Profile.Calc.uk-UA.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\MilSpace.Profile.Calc.en-US.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MilSpace.Profile.Calc.en-US.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="ProfilesTreeModalWindow.resx">
       <DependentUpon>ProfilesTreeModalWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -297,7 +322,9 @@
     </AddInContent>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Refresh20x20.png" />
+    <AddInContent Include="Images\Directions.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AddInContent>
   </ItemGroup>
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>
@@ -306,11 +333,18 @@
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\ESRI\ESRI.ArcGIS.AddIns.targets" Condition="Exists('$(MSBuildExtensionsPath)\ESRI\ESRI.ArcGIS.AddIns.targets')" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  -->
+  <!--<Target Name="Optimize"
+      AfterTargets="Compile" BeforeTargets="Link">
+    <Message Text="Optimizing......" />
+  </Target>-->
+  <!-- <Target Name="Resources" AfterTargets="Build"> -->
+  <!-- <Message Text="Resource......" /> -->
+  <!-- <GenerateResource Sources="Localization\MilSpace.Profile.Calc.en-US.resx" OutputResources="$(OutputDirectory)\Localization\MilSpace.Profile.Calc.en-US.resources"> -->
+  <!-- <Output TaskParameter="OutputResources" ItemName="Localization" /> -->
+  <!-- </GenerateResource> -->
+  <!-- <MakeDir Directories="$(OutputDirectory)\Localizationnn" /> -->
+  <!-- <Message Text="Project File Name = $(MSBuildProjectFile)  = $(OutputDirectory)\Localization" /> -->
+  <!-- </Target> -->
   <Target Name="AfterBuild">
     <!-- Gives build warning when add-in targets file is not found. -->
     <Warning Text="Unable to create .esriAddin; missing ESRI ArcGIS Add-in SDK component(s)." Condition="!Exists('$(MSBuildExtensionsPath)\ESRI\ESRI.ArcGIS.AddIns.targets')" />

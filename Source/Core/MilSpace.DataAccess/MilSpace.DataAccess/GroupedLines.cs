@@ -17,5 +17,6 @@ namespace MilSpace.DataAccess
         public RgbColor VisibleColor { get; set; }
         public RgbColor InvisibleColor { get; set; }
         public bool IsSelected { get; set; }
+        public bool IsPrimitive { get; set; }
     }
 }

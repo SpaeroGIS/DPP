@@ -8,25 +8,25 @@ using System.Diagnostics;
 using System.Web.Configuration;
 using System.Reflection;
 using System.IO;
+using Microsoft.Win32;
 
 namespace MilSpace.Configurations
 {
     public abstract class MilSpaceRootConfiguration
     {
         private const string rootSectionNane = "milspace";
+        private const string registryPathToConfig = @"SOFTWARE\WOW6432Node\MilSpace\";
+        private const string configurationFileName = @"MilSpace.Configurations.config";
         private static string configurationFilePath;
 
         private static Configuration currentConfig = null;
 
-        public static void SetConfigurationFilePath(string configurationPath)
-        {
-
-        }
 
         public static string ConfigurationFilePath
         {
             get { return configurationFilePath; }
-            set {
+            set
+            {
 
                 if (!Directory.Exists(value))
                 {
@@ -43,7 +43,7 @@ namespace MilSpace.Configurations
                 configurationFilePath = assemblyName;
             }
         }
-            
+
 
         protected static Configuration GetCurrentConfiguration()
         {
@@ -58,9 +58,26 @@ namespace MilSpace.Configurations
                 {
                     if (Assembly.GetEntryAssembly() == null || Assembly.GetEntryAssembly().EntryPoint == null) // If the entry point in DLL (it was called from an external programm)
                     {
-                        configurationFilePath = configurationFilePath ?? Assembly.GetExecutingAssembly().Location;
+                        var registryConfiguration = GetConfigurationPathFromRegistry();
+                        if (string.IsNullOrWhiteSpace(registryConfiguration))
+                        {
+                            configurationFilePath = configurationFilePath ?? Assembly.GetExecutingAssembly().Location;
+                            currentConfig = ConfigurationManager.OpenExeConfiguration(configurationFilePath); //ConfigurationUserLevel.PerUserRoamingAndLocal
+                        }
+                        else
+                        {
+                            configurationFilePath = Path.Combine(registryConfiguration, configurationFileName);
+                            if (File.Exists(configurationFilePath))
+                            {
+                                ConfigurationFileMap fl = new ConfigurationFileMap(configurationFilePath);
+                                currentConfig = ConfigurationManager.OpenMappedMachineConfiguration(fl);
+                            }
+                            else
+                            {
+                                throw new FileNotFoundException($"The configuration file {configurationFilePath} doen't exist.");
+                            }
+                        }
 
-                        currentConfig = ConfigurationManager.OpenExeConfiguration(configurationFilePath); //ConfigurationUserLevel.PerUserRoamingAndLocal
                     }
                     else
                     {
@@ -140,6 +157,18 @@ namespace MilSpace.Configurations
                 fs.Close();
                 fs.Dispose();
             }
+        }
+
+        private static string GetConfigurationPathFromRegistry()
+        {
+            RegistryKey key = Registry.LocalMachine.OpenSubKey(registryPathToConfig);
+            if (key == null)
+            {
+                return null;
+            }
+
+            var val = key.GetValue("Configuration");
+            return val.ToString();
         }
     }
 

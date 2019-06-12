@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArcMapAddin
+namespace MilSpace.GeoCalculator
 {
     public static class ArcMapHelper
     {

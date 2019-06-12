@@ -278,7 +278,14 @@ namespace MilSpace.Profile
                 var session = manager.GenerateProfile(View.DemLayerName, profileSetting.ProfileLines, View.SelectedProfileSettingsType, newProfileId, newProfileName, View.ObserveHeight);
                 logger.InfoEx($"Profile {newProfileId}. Generated");
 
-                session.SetSegments(ArcMap.Document.FocusMap.SpatialReference);
+                if (session.DefinitionType == ProfileSettingsTypeEnum.Primitives)
+                {
+                    session.Segments = ProfileLinesConverter.GetSegmentsFromProfileLine(session.ProfileSurfaces, ArcMap.Document.FocusMap.SpatialReference);
+                }
+                else
+                {
+                    session.SetSegments(ArcMap.Document.FocusMap.SpatialReference);
+                }
 
                 SetPeofileId();
                 SetProfileName();
@@ -334,7 +341,17 @@ namespace MilSpace.Profile
                 {
                     //TODO: Remove the references to ESRI lines not to store them in memory. Change creating of the tree view items to use MilSpace points (WGS84);
                     //profile.ProfileLines.Select( p => p.Line)
-                    GraphicsLayerManager.AddLinesToWorkingGraphics(profile.ConvertLinesToEsriPolypile(ArcMap.Document.FocusMap.SpatialReference), profile.SessionId);
+                    var spatialReference = ArcMap.Document.FocusMap.SpatialReference;
+
+                    if (profile.DefinitionType == ProfileSettingsTypeEnum.Primitives)
+                    {
+                        GraphicsLayerManager.AddLinesToWorkingGraphics(profile.ConvertLinesToEsriPolypile(spatialReference), profile.SessionId,
+                                                                           profile.Segments.First());
+                    }
+                    else
+                    {
+                        GraphicsLayerManager.AddLinesToWorkingGraphics(profile.ConvertLinesToEsriPolypile(spatialReference), profile.SessionId);
+                    }
                 }
                 else if (profile.ProfileLines.Any(l => l.Id == lineId))
                 {
@@ -381,9 +398,23 @@ namespace MilSpace.Profile
             //Add graphics 
             if (isAddToGraphics)
             {
-                profile.SetSegments(ArcMap.Document.FocusMap.SpatialReference);
-                GraphicsLayerManager.AddLinesToWorkingGraphics(ProfileLinesConverter.ConvertSolidGroupedLinesToEsriPolylines(profile.Segments, ArcMap.Document.FocusMap.SpatialReference),
-                                                                    profile.SessionId);
+                var spatialReference = ArcMap.Document.FocusMap.SpatialReference;
+
+                if (profile.DefinitionType == ProfileSettingsTypeEnum.Primitives)
+                {
+                    profile.Segments = ProfileLinesConverter.GetSegmentsFromProfileLine(profile.ProfileSurfaces, spatialReference);
+                    GraphicsLayerManager.AddLinesToWorkingGraphics(ProfileLinesConverter.ConvertLineToPrimitivePolylines(profile.ProfileSurfaces,
+                                                                                                                           spatialReference),
+                                                                   profile.SessionId,
+                                                                   profile.Segments.First());
+                }
+                else
+                {
+                    profile.SetSegments(spatialReference);
+                    GraphicsLayerManager.AddLinesToWorkingGraphics(ProfileLinesConverter.ConvertSolidGroupedLinesToEsriPolylines(profile.Segments, spatialReference),
+                                                                   profile.SessionId);
+                }
+               
             }
 
             GraphicsLayerManager.EmptyProfileGraphics(MilSpaceGraphicsTypeEnum.Calculating);
@@ -416,7 +447,15 @@ namespace MilSpace.Profile
             }
 
             EsriTools.PanToGeometry(View.ActiveView, env);
-            EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, profileLines);
+
+            if (profile.DefinitionType == ProfileSettingsTypeEnum.Primitives)
+            {
+                EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, profile.Segments.First().Polylines);
+            }
+            else
+            {
+                EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, profileLines);
+            }
         }
 
 
@@ -425,7 +464,14 @@ namespace MilSpace.Profile
             var profilesToFlas = _workingProfiles.FirstOrDefault(p => p.SessionId == profileId);
             if (profilesToFlas != null)
             {
-                GraphicsLayerManager.FlashLineOnWorkingGraphics(profilesToFlas.ConvertLinesToEsriPolypile(View.ActiveView.FocusMap.SpatialReference, lineId));
+                if (profilesToFlas.DefinitionType == ProfileSettingsTypeEnum.Primitives)
+                {
+                    GraphicsLayerManager.FlashLineOnWorkingGraphics(profilesToFlas.Segments.First().Polylines);
+                }
+                else
+                {
+                    GraphicsLayerManager.FlashLineOnWorkingGraphics(profilesToFlas.ConvertLinesToEsriPolypile(View.ActiveView.FocusMap.SpatialReference, lineId));
+                }
             }
         }
 
@@ -481,7 +527,14 @@ namespace MilSpace.Profile
                 }
                 _workingProfiles.Add(profileSession);
 
-                profileSession.SetSegments(ArcMap.Document.FocusMap.SpatialReference);
+                if (profileSession.DefinitionType == ProfileSettingsTypeEnum.Primitives)
+                {
+                    profileSession.Segments = ProfileLinesConverter.GetSegmentsFromProfileLine(profileSession.ProfileSurfaces, ArcMap.Document.FocusMap.SpatialReference);
+                }
+                else
+                {
+                    profileSession.SetSegments(ArcMap.Document.FocusMap.SpatialReference);
+                }
                 CallGraphsHandle(profileSession);
             }
         }
