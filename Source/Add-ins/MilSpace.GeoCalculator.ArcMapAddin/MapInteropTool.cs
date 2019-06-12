@@ -1,13 +1,8 @@
 ﻿using ESRI.ArcGIS.Desktop.AddIns;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ArcMapAddin
+namespace MilSpace.GeoCalculator
 {
     [Guid("B22EEC3E-7BD1-4407-9934-88150C6B7FD1")]
     [ClassInterface(ClassInterfaceType.None)]

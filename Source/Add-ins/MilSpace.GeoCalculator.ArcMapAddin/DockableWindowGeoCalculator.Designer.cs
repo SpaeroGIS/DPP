@@ -1,4 +1,4 @@
-﻿namespace ArcMapAddin
+﻿namespace MilSpace.GeoCalculator
 {
     partial class DockableWindowGeoCalculator
     {

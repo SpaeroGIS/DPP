@@ -58,6 +58,7 @@ namespace MilSpace.Core
                     XmlElement toConfig = null;
                     try
                     {
+
                         FileInfo fi = new FileInfo(MilSpaceConfiguration.ConfigurationFileName);
                             if (fi.Exists)
                         {

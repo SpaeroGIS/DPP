@@ -338,7 +338,7 @@ namespace MilSpace.Profile
 
                 case 0:
 
-                    var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickCoordinates);
+                    var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickProfileCoordinates);
                     if (commandItem == null)
                     {
                         var message = $"Please add Pick Coordinates tool to any toolbar first.";
@@ -395,7 +395,7 @@ namespace MilSpace.Profile
             {
                 case 0:
 
-                    var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickCoordinates);
+                    var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickProfileCoordinates);
                     if (commandItem == null)
                     {
                         var message = $"Please add Pick Coordinates tool to any toolbar first.";
@@ -455,7 +455,7 @@ namespace MilSpace.Profile
 
                 case 1:
 
-                    var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickCoordinates);
+                    var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickProfileCoordinates);
                     if (commandItem == null)
                     {
                         var message = $"Please add Pick Coordinates tool to any toolbar first.";
@@ -884,15 +884,15 @@ namespace MilSpace.Profile
         {
             //TODO: Set all localization srting here
 
-
-            //MilSpaceResourceManager mngr = new MilSpaceResourceManager("MilSpace.Profile.Calc");
-
-            //var testLocal = mngr.GetTesxtLocalisation();
-
             ToolTip ToolTip1 = new System.Windows.Forms.ToolTip();
             ToolTip1.SetToolTip(this.btnRefreshLayers, "Refresh interesing layers");
             lblSelectedPrimitives.Text = "Вибрані об'єкти:";
             lblCommonLength.Text = "Довжина вибраних об'єктів:";
+
+            //ToolTip ToolTip1 = new System.Windows.Forms.ToolTip();
+            //ToolTip1.SetToolTip(this.btnRefreshLayers, LocalizationConstants.RefreshButtonToolTip);
+            //lblSelectedPrimitives.Text = LocalizationConstants.SelectedPrimitivesText;
+            //lblCommonLength.Text = LocalizationConstants.CommonLengthText;
         }
 
 
