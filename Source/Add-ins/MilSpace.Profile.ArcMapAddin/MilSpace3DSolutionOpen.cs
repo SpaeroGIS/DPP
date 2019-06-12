@@ -4,12 +4,13 @@ using System.Text;
 using System.IO;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
+using System.Diagnostics;
 
 namespace MilSpace.Profile
 {
-    public class Button1 : ESRI.ArcGIS.Desktop.AddIns.Button
+    public class MilSpace3DSolutionOpen : ESRI.ArcGIS.Desktop.AddIns.Button
     {
-        public Button1()
+        public MilSpace3DSolutionOpen()
         {
         }
 
@@ -19,7 +20,7 @@ namespace MilSpace.Profile
             UID dockWinID = new UIDClass();
             dockWinID.Value = ThisAddIn.IDs.DockableWindowMilSpaceProfileCalc;
             IDockableWindow dockWindow = ArcMap.DockableWindowManager.GetDockableWindow(dockWinID);
-            dockWindow.Show(true);
+            dockWindow.Show(true);  
 
         }
         protected override void OnUpdate()

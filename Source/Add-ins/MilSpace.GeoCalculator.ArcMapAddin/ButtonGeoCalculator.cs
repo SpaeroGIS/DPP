@@ -6,7 +6,7 @@ using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Desktop.AddIns;
 
-namespace ArcMapAddin
+namespace MilSpace.GeoCalculator
 {
     public class ButtonGeoCalculator : ESRI.ArcGIS.Desktop.AddIns.Button
     {        

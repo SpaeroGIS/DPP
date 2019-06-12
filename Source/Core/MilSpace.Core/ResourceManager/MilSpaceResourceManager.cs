@@ -16,16 +16,18 @@ namespace MilSpace.Core.MilSpaceResourceManager
 
         public MilSpaceResourceManager(string sourceName)
         {
-
             var pathToAssembly = new FileInfo(Assembly.GetCallingAssembly().FullName).DirectoryName;
-           innerObject = ResourceManager.CreateFileBasedResourceManager(sourceName, $"{pathToAssembly}\\Localization", null);
+           innerObject = ResourceManager.CreateFileBasedResourceManager(sourceName, $"{pathToAssembly}", null);
 
-           
+            System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo("uk-UA");
         }
 
-        public string GetTesxtLocalisation()
+        public string GetLocalization(string key)
         {
-            return innerObject.GetString("btnRefreshLayersToolTip", System.Globalization.CultureInfo.GetCultureInfo("uk-UA"));
+
+            var ttt = innerObject.GetString("btnRefreshLayersToolTip_", System.Threading.Thread.CurrentThread.CurrentUICulture);
+
+            return innerObject.GetString("btnRefreshLayersToolTip", System.Threading.Thread.CurrentThread.CurrentUICulture);
         }
     }
 }

@@ -262,7 +262,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                                         + $"{Math.Round(surface.ProfileSurfacePoints.Last().Y, 5)}"));
             profileDetailsListView.Items
                                     .Add(CreateNewItem($"Азимут:",
-                                         $"{Math.Round(property.Azimuth, 1)}"));
+                                    property.Azimuth == double.MinValue ? "" :
+                                    $"{Math.Round(property.Azimuth, 1)}"));
             profileDetailsListView.Items
                                     .Add(CreateNewItem($"Длина (м):",
                                             $"{Math.Round(property.PathLength, 0)}"));

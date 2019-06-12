@@ -1,28 +1,21 @@
-﻿using ESRI.ArcGIS.Framework;
+﻿using ESRI.ArcGIS.Display;
+using ESRI.ArcGIS.esriSystem;
+using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geometry;
-using ESRI.ArcGIS.SystemUI;
 using MilSpace.GeoCalculator.BusinessLogic;
+using MilSpace.GeoCalculator.BusinessLogic.Extensions;
 using MilSpace.GeoCalculator.BusinessLogic.Interfaces;
 using MilSpace.GeoCalculator.BusinessLogic.Models;
 using MilSpace.GeoCalculator.BusinessLogic.ReferenceData;
-using MilSpace.GeoCalculator.BusinessLogic.Extensions;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using ESRI.ArcGIS.ArcMapUI;
-using ESRI.ArcGIS.Display;
-using ESRI.ArcGIS.Desktop.AddIns;
-using ESRI.ArcGIS.esriSystem;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
-namespace ArcMapAddin
+namespace MilSpace.GeoCalculator
 {
     /// <summary>
     /// Designer class of the dockable window add-in. It contains user interfaces that
@@ -82,7 +75,7 @@ namespace ArcMapAddin
             {
                 if (this.Hook is IApplication arcMap)
                 {
-                    m_windowUI = new DockableWindowGeoCalculator(this.Hook, new BusinessLogic(arcMap, new DataExport()),
+                    m_windowUI = new DockableWindowGeoCalculator(this.Hook, new MilSpace.GeoCalculator.BusinessLogic.BusinessLogic(arcMap, new DataExport()),
                                                                         CreateProjecstionsModelFromSettings());
                     return m_windowUI.Handle;
                 }

@@ -12,9 +12,9 @@ using static MilSpace.Profile.DockableWindowMilSpaceProfileCalc;
 
 namespace MilSpace.Profile
 {
-    public class PickCoordinates : ESRI.ArcGIS.Desktop.AddIns.Tool
+    public class PickProfileCoordinates : ESRI.ArcGIS.Desktop.AddIns.Tool
     {
-        public PickCoordinates()
+        public PickProfileCoordinates()
         {
 
             Point = new PointClass();
@@ -31,7 +31,7 @@ namespace MilSpace.Profile
         protected override void OnMouseDown(MouseEventArgs arg)
         {
             UID toolId = new UIDClass();
-            toolId.Value = ThisAddIn.IDs.PickCoordinates;
+            toolId.Value = ThisAddIn.IDs.PickProfileCoordinates;
             var mxdDoc = ArcMap.Document;
             var screenDisplay = mxdDoc.ActiveView.ScreenDisplay;
             var point = screenDisplay.DisplayTransformation.ToMapPoint(arg.X, arg.Y);

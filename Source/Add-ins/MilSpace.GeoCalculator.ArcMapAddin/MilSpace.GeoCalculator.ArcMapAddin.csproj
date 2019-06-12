@@ -152,9 +152,9 @@
     <Content Include="Images\ToolButton.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\ToolFull.png">
+    <AddInContent Include="Images\ToolFull.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </AddInContent>
     <Content Include="Resources\Localization.xml">
       <SubType>Designer</SubType>
     </Content>
