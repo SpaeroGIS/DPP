@@ -82,50 +82,48 @@ namespace MilSpace.DataAccess.DataTransfer
             return new IPolyline[] { converter(ProfileLines[lineId]) };
         }
 
-        public void SetSegments(ISpatialReference spatialReference, ProfileLine profileLine = null)
+    public void SetSegments(ISpatialReference spatialReference, ProfileLine profileLine = null)
+    {
+        if (profileLine == null)
         {
-            if (profileLine == null)
+            Segments = ProfileLines.Select(line =>
             {
-                var polylines = ConvertLinesToEsriPolypile(spatialReference).ToArray();
-
-                Segments = ProfileLines.Select(line =>
-                {
-                    var lines = new List<ProfileLine> { line };
-                    lines[0].Visible = true;
-
-                    var polyline = new List<IPolyline> { polylines[line.Id - 1] };
-
-                    return new GroupedLines
-                    {
-                        Lines = lines,
-                        LineId = line.Id,
-                        Polylines = polyline,
-                        InvisibleColor = new RgbColor() { Red = 255, Green = 0, Blue = 0 },
-                        VisibleColor = new RgbColor() { Red = 0, Green = 255, Blue = 0 },
-                    };
-
-                }).ToList();
-            }
-            else
-            {
-                var lines = new List<ProfileLine> { profileLine };
+                var lines = new List<ProfileLine> { line };
                 lines[0].Visible = true;
 
-                var polyline = new List<IPolyline> {profileLine.Line};
+                var polyline = new List<IPolyline> { line.Line };
 
-
-                Segments.Add(new GroupedLines
+                return new GroupedLines
                 {
                     Lines = lines,
-                    LineId = profileLine.Id,
+                    LineId = line.Id,
                     Polylines = polyline,
                     InvisibleColor = new RgbColor() { Red = 255, Green = 0, Blue = 0 },
                     VisibleColor = new RgbColor() { Red = 0, Green = 255, Blue = 0 },
-                });
-            }
-        }
+                };
 
-        private static string Serialize(ProfileSession session)
+            }).ToList();
+        }
+        else
+        {
+            var lines = new List<ProfileLine> { profileLine };
+            lines[0].Visible = true;
+
+            var polyline = new List<IPolyline> { profileLine.Line };
+
+
+            Segments.Add(new GroupedLines
+            {
+                Lines = lines,
+                LineId = profileLine.Id,
+                Polylines = polyline,
+                InvisibleColor = new RgbColor() { Red = 255, Green = 0, Blue = 0 },
+                VisibleColor = new RgbColor() { Red = 0, Green = 255, Blue = 0 },
+            });
+        }
+    }
+
+    private static string Serialize(ProfileSession session)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(ProfileSession));
 

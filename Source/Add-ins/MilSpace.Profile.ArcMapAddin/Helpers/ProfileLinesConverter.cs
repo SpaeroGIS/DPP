@@ -27,8 +27,11 @@ namespace MilSpace.Profile
         public static List<ProfileLine> ConvertEsriPolylineToLine(List<IPolyline> polylines)
         {
             var id = 0;
+            var spatialReference = polylines[0].SpatialReference;
 
-            return polylines.Select(line =>
+            var esriPolylines = new List<IPolyline>(polylines);
+
+            return esriPolylines.Select(line =>
                {
                    id++;
 
@@ -37,12 +40,14 @@ namespace MilSpace.Profile
                    var pointFrom = new ProfilePoint { SpatialReference = line.SpatialReference, X = line.FromPoint.X, Y = line.FromPoint.Y };
                    var pointTo = new ProfilePoint { SpatialReference = line.SpatialReference, X = line.ToPoint.X, Y = line.ToPoint.Y };
 
+                   line.Project(spatialReference);
+
                    return new ProfileLine
                    {
                        Line = line,
                        Id = id,
                        PointFrom = pointFrom,
-                       PointTo = pointTo
+                       PointTo = pointTo,
                    };
                }
                 ).ToList();
@@ -62,8 +67,8 @@ namespace MilSpace.Profile
                 var fromLength = EsriTools.CreatePolylineFromPoints(fromPoint, line.FromPoint).Length;
                 var toLength = EsriTools.CreatePolylineFromPoints(fromPoint, line.ToPoint).Length;
 
-                double startDistance = (fromLength < toLength)? fromLength : toLength;
-                double endDistance =   (fromLength > toLength) ? fromLength : toLength;
+                double startDistance = (fromLength < toLength) ? fromLength : toLength;
+                double endDistance = (fromLength > toLength) ? fromLength : toLength;
 
                 return new IntersectionLine()
                 {
@@ -80,12 +85,58 @@ namespace MilSpace.Profile
         {
             var lines = new List<ProfileLine>();
 
-            foreach(var line in groupedLines)
+            foreach (var line in groupedLines)
             {
                 lines.AddRange(line.Lines);
             }
 
             return ConvertLineToEsriPolyline(lines, spatialReference);
+        }
+
+        public static List<GroupedLines> GetSegmentsFromProfileLine(ProfileSurface[] profileSurfaces, ISpatialReference spatialReference)
+        {
+            var polylines = ConvertLineToPrimitivePolylines(profileSurfaces, spatialReference);
+            var lines = new GroupedLines()
+            {
+                Polylines = polylines,
+                Lines = ConvertEsriPolylineToLine(polylines),
+                LineId = 1,
+                IsPrimitive = true
+            };
+
+            return new List<GroupedLines>() { lines };
+
+        }
+
+        public static List<IPolyline> ConvertLineToPrimitivePolylines(ProfileSurface[] profileSurfaces, ISpatialReference spatialReference)
+        {
+            var polylines = new List<IPolyline>();
+
+            foreach (var surface in profileSurfaces)
+            {
+                polylines.AddRange(SeparatePrimitives(surface.ProfileSurfacePoints.Where(point => point.isVertex).ToList(), spatialReference));
+            }
+
+            return polylines;
+        }
+
+        private static List<IPolyline> SeparatePrimitives(IEnumerable<ProfileSurfacePoint> vertices/*ProfileSurface[] profileSurfaces*/, ISpatialReference spatialReference)
+        {
+            var verticesArray = vertices.ToArray();
+            var polylines = new List<IPolyline>();
+
+            for (int i = 0; i < vertices.Count() - 1; i++)
+            {
+                var pointFrom = new Point { X = verticesArray[i].X, Y = verticesArray[i].Y, Z = verticesArray[i].Z, SpatialReference = EsriTools.Wgs84Spatialreference };
+                var pointTo = new Point { X = verticesArray[i + 1].X, Y = verticesArray[i + 1].Y, Z = verticesArray[i + 1].Z, SpatialReference = EsriTools.Wgs84Spatialreference };
+
+                pointFrom.Project(spatialReference);
+                pointTo.Project(spatialReference);
+
+                polylines.Add(EsriTools.CreatePolylineFromPoints(pointFrom, pointTo));
+            }
+
+            return polylines;
         }
     }
 }

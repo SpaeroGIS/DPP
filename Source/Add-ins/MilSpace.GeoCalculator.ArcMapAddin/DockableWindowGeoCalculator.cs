@@ -1,28 +1,21 @@
-﻿using ESRI.ArcGIS.Framework;
+﻿using ESRI.ArcGIS.Display;
+using ESRI.ArcGIS.esriSystem;
+using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geometry;
-using ESRI.ArcGIS.SystemUI;
 using MilSpace.GeoCalculator.BusinessLogic;
+using MilSpace.GeoCalculator.BusinessLogic.Extensions;
 using MilSpace.GeoCalculator.BusinessLogic.Interfaces;
 using MilSpace.GeoCalculator.BusinessLogic.Models;
 using MilSpace.GeoCalculator.BusinessLogic.ReferenceData;
-using MilSpace.GeoCalculator.BusinessLogic.Extensions;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using ESRI.ArcGIS.ArcMapUI;
-using ESRI.ArcGIS.Display;
-using ESRI.ArcGIS.Desktop.AddIns;
-using ESRI.ArcGIS.esriSystem;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
-namespace ArcMapAddin
+namespace MilSpace.GeoCalculator
 {
     /// <summary>
     /// Designer class of the dockable window add-in. It contains user interfaces that
@@ -35,6 +28,7 @@ namespace ArcMapAddin
     {
         private readonly IBusinessLogic _businessLogic;
         private readonly ProjectionsModel _projectionsModel;
+        private PointModel lastProjectedPoint;
         private List<PointModel> _pointModels = new List<PointModel>();
         private LocalizationContext context;
         private readonly Dictionary<string, IPoint> ClickedPointsDictionary = new Dictionary<string, IPoint>();
@@ -49,7 +43,6 @@ namespace ArcMapAddin
             _projectionsModel = projectionsModel ?? throw new ArgumentNullException(nameof(projectionsModel));
 
             LocalizeComponents();
-            SetCurrentMapUnits();
         }
 
         /// <summary>
@@ -82,7 +75,7 @@ namespace ArcMapAddin
             {
                 if (this.Hook is IApplication arcMap)
                 {
-                    m_windowUI = new DockableWindowGeoCalculator(this.Hook, new BusinessLogic(arcMap, new DataExport()),
+                    m_windowUI = new DockableWindowGeoCalculator(this.Hook, new MilSpace.GeoCalculator.BusinessLogic.BusinessLogic(arcMap, new DataExport()),
                                                                         CreateProjecstionsModelFromSettings());
                     return m_windowUI.Handle;
                 }
@@ -118,24 +111,26 @@ namespace ArcMapAddin
 
         private async void SaveButton_Click(object sender, EventArgs e)
         {
-            if (_pointModels == null || !_pointModels.Any()) MessageBox.Show("Please select a point on the map.", context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-            var folderBrowserResult = saveFileDialog.ShowDialog();
-            if (folderBrowserResult == DialogResult.OK)
-                await _businessLogic.SaveProjectionsToXmlFileAsync(_pointModels, saveFileDialog.FileName).ConfigureAwait(false);
+            if (lastProjectedPoint == null) MessageBox.Show(context.NoSelectedPointError, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else
+            {
+                var folderBrowserResult = saveFileDialog.ShowDialog();
+                if (folderBrowserResult == DialogResult.OK)
+                    await _businessLogic.SaveLastProjectionToXmlFileAsync(lastProjectedPoint, saveFileDialog.FileName).ConfigureAwait(false);
+            }
         }
 
         private void CopyButton_Click(object sender, EventArgs e)
         {
-            if (_pointModels == null || !_pointModels.Any()) MessageBox.Show("Please select a point on the map.", context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            else _businessLogic.CopyCoordinatesToClipboard(_pointModels);
+            if (lastProjectedPoint == null) MessageBox.Show(context.NoSelectedPointError, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else _businessLogic.CopyCoordinatesToClipboard(new List<PointModel> { lastProjectedPoint });
         }
 
         private void MoveToCenterButton_Click(object sender, EventArgs e)
         {
             var centerPoint = _businessLogic.GetDisplayCenter();
             ProjectPointAsync(centerPoint);
-        }      
+        }
 
         private void MgrsNotationTextBox_KeyDown(object sender, KeyEventArgs e)
         {
@@ -173,7 +168,7 @@ namespace ArcMapAddin
                         {
                             MgrsNotationTextBox.Select(nextPartStartIndex, MgrsNotationTextBox.Text.Length - nextPartStartIndex);
                         }
-                    }                        
+                    }
                 }
             }
         }
@@ -200,7 +195,7 @@ namespace ArcMapAddin
                     UTMNotationTextBox.Select(0, UTMNotationTextBox.Text.IndexOf(' '));
                 }
                 else
-                {                    
+                {
                     var nextPartStartIndex = UTMNotationTextBox.SelectionStart + UTMNotationTextBox.SelectionLength + 1;
                     if (nextPartStartIndex - 1 == UTMNotationTextBox.Text.Length)
                         UTMNotationTextBox.Select(0, UTMNotationTextBox.Text.IndexOf(' '));
@@ -214,24 +209,24 @@ namespace ArcMapAddin
                         {
                             UTMNotationTextBox.Select(nextPartStartIndex, UTMNotationTextBox.Text.Length - nextPartStartIndex);
                         }
-                    }                    
+                    }
                 }
             }
-        }        
+        }
 
         private void MgrsNotationTextBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(MgrsNotationTextBox.Text))
             {
-                MgrsNotationTextBox.SelectAll();               
+                MgrsNotationTextBox.SelectAll();
             }
         }
-       
+
         private void UTMNotationTextBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(UTMNotationTextBox.Text))
             {
-                UTMNotationTextBox.SelectAll();                
+                UTMNotationTextBox.SelectAll();
             }
         }
 
@@ -277,9 +272,9 @@ namespace ArcMapAddin
             {
                 if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(WgsXCoordinateTextBox.Text))
                 {
-                    var point = _businessLogic.CreatePoint(double.Parse(WgsXCoordinateTextBox.Text), 
-                                                           double.Parse(WgsYCoordinateTextBox.Text), 
-                                                           Constants.WgsModel);                   
+                    var point = _businessLogic.CreatePoint(double.Parse(WgsXCoordinateTextBox.Text),
+                                                           double.Parse(WgsYCoordinateTextBox.Text),
+                                                           Constants.WgsModel);
                     ProjectPointAsync(point, true);
                 }
             }
@@ -295,8 +290,8 @@ namespace ArcMapAddin
             {
                 if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(WgsYCoordinateTextBox.Text))
                 {
-                    var point = _businessLogic.CreatePoint(double.Parse(WgsXCoordinateTextBox.Text), 
-                                                           double.Parse(WgsYCoordinateTextBox.Text), 
+                    var point = _businessLogic.CreatePoint(double.Parse(WgsXCoordinateTextBox.Text),
+                                                           double.Parse(WgsYCoordinateTextBox.Text),
                                                            Constants.WgsModel);
                     ProjectPointAsync(point, true);
                 }
@@ -315,7 +310,7 @@ namespace ArcMapAddin
                 {
                     var point = _businessLogic.CreatePoint(double.Parse(PulkovoXCoordinateTextBox.Text),
                                                            double.Parse(PulkovoYCoordinateTextBox.Text),
-                                                           Constants.PulkovoModel);                    
+                                                           Constants.PulkovoModel);
                     ProjectPointAsync(point, true);
                 }
             }
@@ -349,10 +344,10 @@ namespace ArcMapAddin
             {
                 if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(UkraineXCoordinateTextBox.Text))
                 {
-                    var point = _businessLogic.CreatePoint(double.Parse(UkraineXCoordinateTextBox.Text), 
-                                                           double.Parse(UkraineYCoordinateTextBox.Text), 
+                    var point = _businessLogic.CreatePoint(double.Parse(UkraineXCoordinateTextBox.Text),
+                                                           double.Parse(UkraineYCoordinateTextBox.Text),
                                                            Constants.UkraineModel);
-                    
+
                     ProjectPointAsync(point, true);
                 }
             }
@@ -387,7 +382,7 @@ namespace ArcMapAddin
             var selectedPoint = ClickedPointsDictionary.ElementAt(e.RowIndex);
 
             if (column is DataGridViewImageColumn && column.Name == Constants.HighlightColumnName)
-            {                
+            {
                 ArcMapHelper.FlashGeometry(selectedPoint.Value, 400);
                 ProjectPointAsync(selectedPoint.Value);
             }
@@ -397,11 +392,47 @@ namespace ArcMapAddin
                 ArcMapHelper.RemoveGraphicsFromMap(new string[] { selectedPoint.Key });
                 ClickedPointsDictionary.Remove(selectedPoint.Key);
 
+                _pointModels.Remove(_pointModels.FirstOrDefault(point => selectedPoint.Key.Equals(point.Guid)));
+
                 //Refresh Numbers column cells values
                 for (int i = 0; i < grid.Rows.Count; i++)
                 {
                     grid[Constants.NumberColumnName, i].Value = i + 1;
                 }
+            }
+            grid.Refresh();
+        }
+
+        private async void SaveGridPointsButton_Click(object sender, EventArgs e)
+        {
+            if (_pointModels == null || !_pointModels.Any()) MessageBox.Show(context.NoSelectedPointError, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else
+            {
+                var folderBrowserResult = saveFileDialog.ShowDialog();
+                if (folderBrowserResult == DialogResult.OK)
+                    await _businessLogic.SaveProjectionsToXmlFileAsync(_pointModels, saveFileDialog.FileName).ConfigureAwait(false);
+            }
+        }
+
+        private void CopyGridPointButton_Click(object sender, EventArgs e)
+        {
+            if (_pointModels == null || !_pointModels.Any()) MessageBox.Show(context.NoSelectedPointError, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else _businessLogic.CopyCoordinatesToClipboard(_pointModels);
+        }
+
+        private void ClearGridButton_Click(object sender, EventArgs e)
+        {
+            var grid = this.PointsGridView;
+            if (grid.Rows.Count > 0)
+            {
+                grid.Rows.Clear();
+                foreach (var point in ClickedPointsDictionary)
+                {
+                    ArcMapHelper.RemoveGraphicsFromMap(new string[] { point.Key });
+                }
+
+                ClickedPointsDictionary?.Clear();
+                _pointModels?.Clear();
             }
             grid.Refresh();
         }
@@ -411,7 +442,7 @@ namespace ArcMapAddin
         internal void ArcMap_OnMouseDown(int x, int y)
         {
             var clickedPoint = _businessLogic.GetSelectedPoint(x, y);
-            AddPointToList(clickedPoint);
+            var pointGuid = AddPointToList(clickedPoint);
 
             var newRow = new DataGridViewRow();
             newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = ClickedPointsDictionary.Count() });
@@ -421,7 +452,7 @@ namespace ArcMapAddin
             newRow.Cells.Add(new DataGridViewImageCell() { Value = Image.FromFile(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Images\DeletePoint.png")) });
             PointsGridView.Rows.Add(newRow);
 
-            ProjectPointAsync(clickedPoint);
+            ProjectPointAsync(clickedPoint, false, pointGuid);
         }
 
         internal void ArcMap_OnMouseMove(int x, int y)
@@ -447,30 +478,34 @@ namespace ArcMapAddin
                 this.MgrsNotationLabel.Text = context.MgrsLabel;
                 this.UTMNotationLabel.Text = context.UtmLabel;
 
+                //TODO:Localize the next Labels and add config here
+                this.wgsProjectedLabel.Text = Constants.WgsProjected;
+                this.WgsGeoLabel.Text = Constants.WgsGeo;
+                this.PulkovoProjectedLabel.Text = Constants.PulkovoProjected;
+                this.PulkovoGeoLabel.Text = Constants.PulkovoGeo;
+                this.UkraineProjectedLabel.Text = Constants.Ukraine2000CSNames[2];
+                this.UkraineGeoLabel.Text = Constants.Ukraine2000CSNames[0];
+                this.mgrsToolTip.SetToolTip(this.MgrsNotationTextBox, context.AltRightToMove);
+                this.utmToolTip.SetToolTip(this.UTMNotationTextBox, context.AltRightToMove);
+                
                 //ToolTips
-                this.mapCenterButtonToolTip.SetToolTip(this.MoveToCenterButton, context.MoveToCenterButton);
-                this.toolButtonToolTip.SetToolTip(this.MapPointToolButton, context.ToolButton);
-                this.saveButtonToolTip.SetToolTip(this.SaveButton, context.SaveButton);
-                this.copyButtonToolTip.SetToolTip(this.CopyButton, context.CopyButton);                
+                this.MapPointToolButton.ToolTipText = context.ToolButton;
+                this.MoveToCenterButton.ToolTipText = context.MoveToCenterButton;
+                this.SaveButton.ToolTipText = context.SaveButton;
+                this.CopyButton.ToolTipText = context.CopyButton;
+                this.ClearGridButton.ToolTipText = context.ClearGridButton;
+                this.SaveGridPointsButton.ToolTipText = context.SaveButton;
+                this.CopyGridPointButton.ToolTipText = context.CopyButton;
             }
             catch { MessageBox.Show("No Localization.xml found or there is an error during loading. Coordinates Converter window is not fully localized."); }
         }
 
-        private void SetCurrentMapUnits()
+        private void ProjectPointAsync(IPoint inputPoint, bool fromUserInput = false, string pointGuid = null)
         {
-            try
+            lastProjectedPoint = new PointModel
             {
-                var pUnitConverter = new UnitConverter();
-                this.CurrentMapUnitsLabel1.Text =
-                    this.CurrentMapUnitsLabel2.Text =
-                    $"({pUnitConverter.EsriUnitsAsString(ArcMap.Document.FocusMap.MapUnits, esriCaseAppearance.esriCaseAppearanceLower, true)})";
-            }
-            catch { }
-        }
-
-        private void ProjectPointAsync(IPoint inputPoint, bool fromUserInput = false)
-        {
-            var pointModel = new PointModel();
+                Guid = pointGuid ?? Guid.NewGuid().ToString()
+            };
 
             if (inputPoint == null) throw new ArgumentNullException(nameof(inputPoint));
             if (inputPoint.SpatialReference == null) throw new NullReferenceException($"Point with ID = {inputPoint.ID} has no spatial reference.");
@@ -478,60 +513,61 @@ namespace ArcMapAddin
             if (fromUserInput)
                 inputPoint.Project(FocusMapSpatialReference);
 
-            XCoordinateTextBox.Text = inputPoint.X.ToRoundedString();
-            YCoordinateTextBox.Text = inputPoint.Y.ToRoundedString();            
-            pointModel.XCoord = inputPoint.X.ToRoundedDouble();
-            pointModel.YCoord = inputPoint.Y.ToRoundedDouble();
+            XCoordinateTextBox.Text = inputPoint.X.ToIntegerString();
+            YCoordinateTextBox.Text = inputPoint.Y.ToIntegerString();
+            lastProjectedPoint.XCoord = inputPoint.X.ToInteger();
+            lastProjectedPoint.YCoord = inputPoint.Y.ToInteger();
 
             //MGRS string MUST be calculated using WGS84 projected point, thus the next lines order matters!
             var wgsPoint = _businessLogic.ProjectPoint(inputPoint, _projectionsModel.WGS84Projection);
-            WgsXCoordinateTextBox.Text = wgsPoint.X.ToRoundedString();
-            WgsYCoordinateTextBox.Text = wgsPoint.Y.ToRoundedString();
-            pointModel.WgsXCoord = wgsPoint.X.ToRoundedDouble();
-            pointModel.WgsYCoord = wgsPoint.Y.ToRoundedDouble();
+            WgsXCoordinateTextBox.Text = wgsPoint.X.ToIntegerString();
+            WgsYCoordinateTextBox.Text = wgsPoint.Y.ToIntegerString();
+            lastProjectedPoint.WgsXCoord = wgsPoint.X.ToInteger();
+            lastProjectedPoint.WgsYCoord = wgsPoint.Y.ToInteger();
 
             var wgsDD = _businessLogic.ConvertToDecimalDegrees(inputPoint, Constants.WgsGeoModel);
             wgsDMSXTextBox.Text = wgsDD.X.ToRoundedString();
             wgsDMSYTextBox.Text = wgsDD.Y.ToRoundedString();
-            pointModel.WgsXCoordDD = wgsDD.X.ToRoundedDouble();
-            pointModel.WgsYCoordDD = wgsDD.Y.ToRoundedDouble();
+            lastProjectedPoint.WgsXCoordDD = wgsDD.X.ToRoundedDouble();
+            lastProjectedPoint.WgsYCoordDD = wgsDD.Y.ToRoundedDouble();
 
             MgrsNotationTextBox.Text = (_businessLogic.ConvertToMgrs(wgsPoint))?.ToSeparatedMgrs();
             UTMNotationTextBox.Text = _businessLogic.ConvertToUtm(wgsPoint);
 
-            pointModel.MgrsRepresentation = MgrsNotationTextBox.Text;
-            pointModel.UtmRepresentation = UTMNotationTextBox.Text;
+            lastProjectedPoint.MgrsRepresentation = MgrsNotationTextBox.Text;
+            lastProjectedPoint.UtmRepresentation = UTMNotationTextBox.Text;
 
             var pulkovoPoint = _businessLogic.ProjectPoint(inputPoint, _projectionsModel.Pulkovo1942Projection);
-            PulkovoXCoordinateTextBox.Text = pulkovoPoint.X.ToRoundedString();
-            PulkovoYCoordinateTextBox.Text = pulkovoPoint.Y.ToRoundedString();
-            pointModel.PulkovoXCoord = pulkovoPoint.X.ToRoundedDouble();
-            pointModel.PulkovoYCoord = pulkovoPoint.Y.ToRoundedDouble();
+            PulkovoXCoordinateTextBox.Text = pulkovoPoint.X.ToIntegerString();
+            PulkovoYCoordinateTextBox.Text = pulkovoPoint.Y.ToIntegerString();
+            lastProjectedPoint.PulkovoXCoord = pulkovoPoint.X.ToInteger();
+            lastProjectedPoint.PulkovoYCoord = pulkovoPoint.Y.ToInteger();
 
             var pulkovoDD = _businessLogic.ConvertToDecimalDegrees(inputPoint, Constants.PulkovoGeoModel);
             pulkovoDMSXTextBox.Text = pulkovoDD.X.ToRoundedString();
             pulkovoDMSYTextBox.Text = pulkovoDD.Y.ToRoundedString();
-            pointModel.PulkovoXCoordDD = pulkovoDD.X.ToRoundedDouble();
-            pointModel.PulkovoYCoordDD = pulkovoDD.Y.ToRoundedDouble();
+            lastProjectedPoint.PulkovoXCoordDD = pulkovoDD.X.ToRoundedDouble();
+            lastProjectedPoint.PulkovoYCoordDD = pulkovoDD.Y.ToRoundedDouble();
 
             var ukrainePoint = _businessLogic.ProjectPoint(inputPoint, _projectionsModel.Ukraine2000Projection);
-            UkraineXCoordinateTextBox.Text = ukrainePoint.X.ToRoundedString();
-            UkraineYCoordinateTextBox.Text = ukrainePoint.Y.ToRoundedString();
-            pointModel.UkraineXCoord = ukrainePoint.X.ToRoundedDouble();
-            pointModel.UkraineYCoord = ukrainePoint.Y.ToRoundedDouble();
+            UkraineXCoordinateTextBox.Text = ukrainePoint.X.ToIntegerString();
+            UkraineYCoordinateTextBox.Text = ukrainePoint.Y.ToIntegerString();
+            lastProjectedPoint.UkraineXCoord = ukrainePoint.X.ToInteger();
+            lastProjectedPoint.UkraineYCoord = ukrainePoint.Y.ToInteger();
 
             var ukraineDD = _businessLogic.ConvertToDecimalDegrees(inputPoint, Constants.UkraineGeoModel);
             ukraineDMSXTextBox.Text = ukraineDD.X.ToRoundedString();
             ukraineDMSYTextBox.Text = ukraineDD.Y.ToRoundedString();
-            pointModel.UkraineXCoordDD = ukraineDD.X.ToRoundedDouble();
-            pointModel.UkraineYCoordDD = ukraineDD.Y.ToRoundedDouble();
+            lastProjectedPoint.UkraineXCoordDD = ukraineDD.X.ToRoundedDouble();
+            lastProjectedPoint.UkraineYCoordDD = ukraineDD.Y.ToRoundedDouble();
 
             //Remove distorsions
             inputPoint.Project(FocusMapSpatialReference);
 
-            _pointModels.Add(pointModel);
+            if (!fromUserInput)
+                _pointModels.Add(lastProjectedPoint);
         }
-        private void AddPointToList(IPoint point)
+        private string AddPointToList(IPoint point)
         {
             if (point != null && !point.IsEmpty)
             {
@@ -539,14 +575,17 @@ namespace ArcMapAddin
                 var placedPoint = ArcMapHelper.AddGraphicToMap(point, color, true, esriSimpleMarkerStyle.esriSMSCircle, 7);
 
                 ClickedPointsDictionary.Add(placedPoint.Key, placedPoint.Value);
+                return placedPoint.Key;
             }
+
+            return null;
         }
 
         private static ProjectionsModel CreateProjecstionsModelFromSettings()
         {
             //Configuration settings should be here instead of Constants
-            return new ProjectionsModel(Constants.WgsModel, Constants.PulkovoModel, Constants.UkraineModel);                                        
+            return new ProjectionsModel(Constants.WgsModel, Constants.PulkovoModel, Constants.UkraineModel);
         }
-        #endregion
+        #endregion        
     }
 }

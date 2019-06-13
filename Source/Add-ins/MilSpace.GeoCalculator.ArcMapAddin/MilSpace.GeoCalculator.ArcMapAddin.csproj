@@ -87,6 +87,11 @@
     <Compile Include="LocalizationContext.cs" />
     <Compile Include="MapInteropTool.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AddInContent Include="Config.esriaddinx">
@@ -129,32 +134,47 @@
     <EmbeddedResource Include="DockableWindowGeoCalculator.resx">
       <DependentUpon>DockableWindowGeoCalculator.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\Button1Old.png" />
+    <Content Include="Images\Center.png" />
     <Content Include="Images\CenterButton.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\CenterFull.png" />
+    <Content Include="Images\Clipboard Copy.png" />
+    <Content Include="Images\Clipboard Paste.png" />
     <Content Include="Images\CopyButton.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\CopyButtonFull.png" />
     <Content Include="Images\DeletePoint.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\DockableWindow.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\Forbidden.png" />
     <Content Include="Images\LocatePoint.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\Save.png" />
+    <Content Include="Images\SaveFull.png" />
     <Content Include="Images\SaveToXmlButton.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\Tool.png" />
     <Content Include="Images\ToolButton.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\ToolFull.png">
+    <AddInContent Include="Images\ToolFull.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </AddInContent>
+    <Content Include="Images\Write.png" />
     <Content Include="Resources\Localization.xml">
       <SubType>Designer</SubType>
     </Content>

@@ -19,6 +19,16 @@ namespace MilSpace.GeoCalculator.BusinessLogic.Extensions
             return Math.Round(inputValue, Constants.NumberOfDigitsForDoubleRounding);
         }
 
+        public static string ToIntegerString(this double inputValue)
+        {
+            return Math.Truncate(inputValue).ToString();
+        }
+
+        public static double ToInteger(this double inputValue)
+        {
+            return Math.Truncate(inputValue);
+        }
+
         public static string ToSeparatedMgrs(this string mgrsRepresentation)
         {
             var stringBuilder = new StringBuilder();

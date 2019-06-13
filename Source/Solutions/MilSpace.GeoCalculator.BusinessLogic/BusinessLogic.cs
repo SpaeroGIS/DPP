@@ -1,16 +1,14 @@
-﻿using ESRI.ArcGIS.Geometry;
+﻿using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
-using MilSpace.GeoCalculator.BusinessLogic.Interfaces;
-using System;
-using System.Threading.Tasks;
 using ESRI.ArcGIS.Framework;
-using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Geodatabase;
-using System.Windows.Forms;
+using ESRI.ArcGIS.Geometry;
+using MilSpace.GeoCalculator.BusinessLogic.Interfaces;
 using MilSpace.GeoCalculator.BusinessLogic.Models;
-using MilSpace.GeoCalculator.BusinessLogic.ReferenceData;
-using ESRI.ArcGIS.esriSystem;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace MilSpace.GeoCalculator.BusinessLogic
 {
@@ -86,7 +84,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic
         public void CopyCoordinatesToClipboard(List<PointModel> pointModels)
         {
             Clipboard.Clear();
-            Clipboard.SetText(_dataExport.GetXmlRepresentationOfProjections(pointModels));
+            Clipboard.SetText(_dataExport.GetStringRepresentationOfProjections(pointModels));
         }
 
         public IPoint GetDisplayCenter()
@@ -218,6 +216,13 @@ namespace MilSpace.GeoCalculator.BusinessLogic
             if (string.IsNullOrWhiteSpace(path)) return;
 
             await _dataExport.ExportProjectionsToXmlAsync(pointModels, path);
-        }        
+        }
+
+        public async Task SaveLastProjectionToXmlFileAsync(PointModel pointModel, string path)
+        {
+            if (string.IsNullOrWhiteSpace(path)) return;
+
+            await _dataExport.ExportProjectionsToXmlAsync(pointModel, path);
+        }
     }
 }

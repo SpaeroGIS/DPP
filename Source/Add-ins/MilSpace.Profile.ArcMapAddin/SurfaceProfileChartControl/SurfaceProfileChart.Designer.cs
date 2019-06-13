@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SurfaceProfileChart));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.profileChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.lineColorDialog = new System.Windows.Forms.ColorDialog();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -50,6 +50,7 @@
             this.panGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
             this.graphToolBarSpr2 = new System.Windows.Forms.ToolBarButton();
             this.showAllProfilesGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
+            this.observerHeightIgnoreGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
             this.zoomInGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
             this.zoomOutGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
             this.graphToolBarSpr3 = new System.Windows.Forms.ToolBarButton();
@@ -88,7 +89,6 @@
             this.visibleLineColorLabel = new System.Windows.Forms.Label();
             this.InvisibleLineColorLabel = new System.Windows.Forms.Label();
             this.propertiesPanel = new System.Windows.Forms.Panel();
-            this.observerHeightIgnoreGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
             ((System.ComponentModel.ISupportInitialize)(this.profileChart)).BeginInit();
             this.contextMenuStrip.SuspendLayout();
             this.graphPanel.SuspendLayout();
@@ -104,15 +104,15 @@
             // 
             // profileChart
             // 
-            chartArea2.AxisX.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
-            chartArea2.AxisX.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
-            chartArea2.AxisX.LabelAutoFitStyle = System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.None;
-            chartArea2.AxisX.Minimum = 0D;
-            chartArea2.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            chartArea2.AxisY.LabelAutoFitStyle = ((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.LabelsAngleStep30 | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.WordWrap)));
-            chartArea2.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            chartArea2.Name = "Default";
-            this.profileChart.ChartAreas.Add(chartArea2);
+            chartArea1.AxisX.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
+            chartArea1.AxisX.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
+            chartArea1.AxisX.LabelAutoFitStyle = System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.None;
+            chartArea1.AxisX.Minimum = 0D;
+            chartArea1.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            chartArea1.AxisY.LabelAutoFitStyle = ((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.LabelsAngleStep30 | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.WordWrap)));
+            chartArea1.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            chartArea1.Name = "Default";
+            this.profileChart.ChartAreas.Add(chartArea1);
             this.profileChart.Dock = System.Windows.Forms.DockStyle.Top;
             this.profileChart.Location = new System.Drawing.Point(0, 0);
             this.profileChart.Name = "profileChart";
@@ -232,6 +232,12 @@
             this.showAllProfilesGraphToolBarBtn.ImageKey = "Full Screen.png";
             this.showAllProfilesGraphToolBarBtn.Name = "showAllProfilesGraphToolBarBtn";
             this.showAllProfilesGraphToolBarBtn.ToolTipText = "Показать все профили на графике полностью";
+            // 
+            // observerHeightIgnoreGraphToolBarBtn
+            // 
+            this.observerHeightIgnoreGraphToolBarBtn.ImageKey = "Stats2.png";
+            this.observerHeightIgnoreGraphToolBarBtn.Name = "observerHeightIgnoreGraphToolBarBtn";
+            this.observerHeightIgnoreGraphToolBarBtn.ToolTipText = "Масштабировать график с учетом/без учета высоты пункта наблюдения";
             // 
             // zoomInGraphToolBarBtn
             // 
@@ -579,14 +585,14 @@
             this.profilePropertiesTable.AllowUserToResizeRows = false;
             this.profilePropertiesTable.BackgroundColor = System.Drawing.SystemColors.Control;
             this.profilePropertiesTable.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.profilePropertiesTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.profilePropertiesTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.profilePropertiesTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.profilePropertiesTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.IsVisibleCol,
@@ -600,21 +606,21 @@
             this.DescentAngleCol,
             this.RiseAngleCol,
             this.VisiblePercentCol});
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.profilePropertiesTable.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.profilePropertiesTable.DefaultCellStyle = dataGridViewCellStyle3;
             this.profilePropertiesTable.Dock = System.Windows.Forms.DockStyle.Top;
             this.profilePropertiesTable.Location = new System.Drawing.Point(0, 0);
             this.profilePropertiesTable.MultiSelect = false;
             this.profilePropertiesTable.Name = "profilePropertiesTable";
             this.profilePropertiesTable.RowHeadersVisible = false;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
-            this.profilePropertiesTable.RowsDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
+            this.profilePropertiesTable.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.profilePropertiesTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.profilePropertiesTable.Size = new System.Drawing.Size(354, 127);
             this.profilePropertiesTable.TabIndex = 1;
@@ -635,8 +641,8 @@
             // 
             // ProfileNumberCol
             // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.ProfileNumberCol.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.ProfileNumberCol.DefaultCellStyle = dataGridViewCellStyle2;
             this.ProfileNumberCol.HeaderText = "N";
             this.ProfileNumberCol.Name = "ProfileNumberCol";
             this.ProfileNumberCol.ReadOnly = true;
@@ -828,12 +834,6 @@
             this.propertiesPanel.Padding = new System.Windows.Forms.Padding(10, 0, 10, 24);
             this.propertiesPanel.Size = new System.Drawing.Size(374, 327);
             this.propertiesPanel.TabIndex = 49;
-            // 
-            // observerHeightIgnoreGraphToolBarBtn
-            // 
-            this.observerHeightIgnoreGraphToolBarBtn.ImageKey = "Stats2.png";
-            this.observerHeightIgnoreGraphToolBarBtn.Name = "observerHeightIgnoreGraphToolBarBtn";
-            this.observerHeightIgnoreGraphToolBarBtn.ToolTipText = "Масштабировать график с учетом/без учета высоты пункта наблюдения";
             // 
             // SurfaceProfileChart
             // 
