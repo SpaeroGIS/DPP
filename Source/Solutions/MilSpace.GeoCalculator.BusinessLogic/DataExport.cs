@@ -1,5 +1,6 @@
 ﻿using MilSpace.GeoCalculator.BusinessLogic.Interfaces;
 using MilSpace.GeoCalculator.BusinessLogic.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,6 +13,28 @@ namespace MilSpace.GeoCalculator.BusinessLogic
 {
     public class DataExport : IDataExport
     {
+        public async Task ExportProjectionsToCsvAsync(List<PointModel> pointModels, string path)
+        {
+            using (var streamWriter = File.Open(path, FileMode.Create))
+            {
+                var csvString = SerializeToCSV(pointModels);
+                var bytes = new UTF8Encoding(true).GetBytes(csvString);
+                streamWriter.Write(bytes, 0, bytes.Length);
+                await streamWriter.FlushAsync();
+            }
+        }
+
+        public async Task ExportProjectionsToCsvAsync(PointModel pointModel, string path)
+        {
+            using (var streamWriter = File.Open(path, FileMode.Create))
+            {
+                var csvString = SerializeToCSV(new List<PointModel> { pointModel });
+                var bytes = new UTF8Encoding(true).GetBytes(csvString);
+                streamWriter.Write(bytes, 0, bytes.Length);
+                await streamWriter.FlushAsync();
+            }
+        }
+
         public async Task ExportProjectionsToXmlAsync(List<PointModel> pointModels, string path)
         {
             var pointModelsList = new PointModelsList() { PointList = pointModels };
@@ -21,7 +44,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic
                 using (XmlWriter writer = XmlWriter.Create(streamWriter, new XmlWriterSettings() { Async = true }))
                 {
                     xmlSerializer.Serialize(writer, pointModelsList);
-                    await writer.FlushAsync();                    
+                    await writer.FlushAsync();
                 }
             }
         }
@@ -53,6 +76,32 @@ namespace MilSpace.GeoCalculator.BusinessLogic
             }
 
             return stringBuilder.ToString();
+        }
+
+        private string SerializeToCSV(List<PointModel> items)
+        {
+            var output = "";
+            var delimiter = ';';
+            var properties = typeof(PointModel).GetProperties().Where(n =>
+             n.PropertyType == typeof(string)
+             || n.PropertyType == typeof(double));
+
+            using (var sw = new StringWriter())
+            {
+                var header = properties
+                .Select(n => n.Name)
+                .Aggregate((a, b) => a + delimiter + b);
+                sw.WriteLine(header);
+                foreach (var item in items)
+                {
+                    var row = properties
+                    .Select(n => n.GetValue(item, null))
+                    .Select(n => n == null ? "null" : n.ToString()).Aggregate((a, b) => a + delimiter + b);
+                    sw.WriteLine(row);
+                }
+                output = sw.ToString();
+            }
+            return output;
         }
     }
 }

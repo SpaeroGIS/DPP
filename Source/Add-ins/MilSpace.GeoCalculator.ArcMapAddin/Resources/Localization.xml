@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CoordinatesConverter xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 <WindowCaption>Калькулятор координат</WindowCaption>
-<ProjectionsGroup>Проекции</ProjectionsGroup>
-<CurrentMapLabel>Текущие координаты</CurrentMapLabel>
+<SaveAs>Сохранить как</SaveAs>
+<CurrentMapLabel>Карта</CurrentMapLabel>
 <Pulkovo1942Label>СК42</Pulkovo1942Label>
 <Wgs1984Label>WGS84</Wgs1984Label>
 <Ukraine2000Label>УСК2000</Ukraine2000Label>
-<MgrsLabel>MGRS Формат:</MgrsLabel>
-<UtmLabel>UTM Формат:</UtmLabel>
-<SaveButton>Сохранить в XML</SaveButton>
+<MgrsLabel>MGRS:</MgrsLabel>
+<UtmLabel>UTM:</UtmLabel>
+<SaveButton>Сохранить в файл</SaveButton>
 <CopyButton>Скопировать</CopyButton>
 <ClearGridButton>Очистить список отмеченных точек</ClearGridButton>
 <MoveToCenterButton>Центр карты</MoveToCenterButton>
@@ -19,4 +19,6 @@
 <WrongFormatMessage>Неверный формат</WrongFormatMessage>
 <NoSelectedPointMessage>Необходимо отметить точку на карте!</NoSelectedPointMessage>
 <AltRightToMove>Alt+Вправо для перемещения</AltRightToMove>
+<ShowPointOnMap>Показать на карте</ShowPointOnMap>
+<DeletePoint>Удалить</DeletePoint>
 </CoordinatesConverter>

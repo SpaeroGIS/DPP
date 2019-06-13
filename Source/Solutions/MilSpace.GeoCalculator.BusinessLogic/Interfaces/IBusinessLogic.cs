@@ -22,5 +22,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic.Interfaces
         IPoint ConvertToDecimalDegrees(IPoint point, CoordinateSystemModel coordinateSystemModel);
         Task SaveProjectionsToXmlFileAsync(List<PointModel> pointModels, string path);
         Task SaveLastProjectionToXmlFileAsync(PointModel pointModel, string path);
+        Task SaveLastProjectionToCsvFileAsync(PointModel pointModel, string path);
+        Task SaveProjectionsToCsvFileAsync(List<PointModel> pointModels, string path);
     }
 }

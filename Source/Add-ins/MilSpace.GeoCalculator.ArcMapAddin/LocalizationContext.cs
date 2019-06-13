@@ -13,8 +13,8 @@ namespace MilSpace.GeoCalculator
 
         public LocalizationContext()
         {         
-            var localizationDoc = new XmlDocument();
-            var localizationFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Localization.xml");
+            var localizationDoc = new XmlDocument();            
+            var localizationFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Resources\Localization.xml");
             if (File.Exists(localizationFilePath))
             {
                 localizationDoc.Load(localizationFilePath);
@@ -22,8 +22,9 @@ namespace MilSpace.GeoCalculator
             }
         }
 
-        //Caption
+        //Captions
         public string CoordinatesConverterWindowCaption => FindLocalizedElement("WindowCaption", "Coordinates Converter");
+        public string SaveAs => FindLocalizedElement("SaveAs", "Save As");
 
         //Labels
         public string CurrentMapLabel => FindLocalizedElement("CurrentMapLabel", "Current Map Coordinates");
@@ -40,6 +41,8 @@ namespace MilSpace.GeoCalculator
         public string MoveToCenterButton => FindLocalizedElement("MoveToCenterButton", "Map Center");
         public string ToolButton => FindLocalizedElement("ToolButton", "Turn Map Interaction Off");
         public string ClearGridButton => FindLocalizedElement("ClearGridButton", "Clear list");
+        public string ShowPointOnMapButton => FindLocalizedElement("ShowPointOnMap", "Show on the map");
+        public string DeletePointButton => FindLocalizedElement("DeletePoint", "Delete point");
 
         //TextBoxes
         public string AltRightToMove => FindLocalizedElement("AltRightToMove", "Alt+Right to move between parts");

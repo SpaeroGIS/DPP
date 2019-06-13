@@ -224,5 +224,19 @@ namespace MilSpace.GeoCalculator.BusinessLogic
 
             await _dataExport.ExportProjectionsToXmlAsync(pointModel, path);
         }
+
+        public async Task SaveLastProjectionToCsvFileAsync(PointModel pointModel, string path)
+        {
+            if (string.IsNullOrWhiteSpace(path)) return;
+
+            await _dataExport.ExportProjectionsToCsvAsync(pointModel, path);
+        }
+
+        public async Task SaveProjectionsToCsvFileAsync(List<PointModel> pointModels, string path)
+        {
+            if (string.IsNullOrWhiteSpace(path)) return;
+
+            await _dataExport.ExportProjectionsToCsvAsync(pointModels, path);
+        }
     }
 }
