@@ -39,12 +39,17 @@ namespace MilSpace.GeoCalculator
         public string SaveButton => FindLocalizedElement("SaveButton", "Save to XML");
         public string MoveToCenterButton => FindLocalizedElement("MoveToCenterButton", "Map Center");
         public string ToolButton => FindLocalizedElement("ToolButton", "Turn Map Interaction Off");
+        public string ClearGridButton => FindLocalizedElement("ClearGridButton", "Clear list");
+
+        //TextBoxes
+        public string AltRightToMove => FindLocalizedElement("AltRightToMove", "Alt+Right to move between parts");
 
         //Errors
         public string WrongUtmFormatMessage => FindLocalizedElement("WrongUtmFormatMessage", "Wrong UTM String Format");
         public string ErrorString => FindLocalizedElement("ErrorString", "Error");
         public string WrongMgrsFormatMessage => FindLocalizedElement("WrongMgrsFormatMessage", "Wrong MGRS String Format");
         public string WrongFormatMessage => FindLocalizedElement("WrongFormatMessage", "Wrong Format");
+        public string NoSelectedPointError => FindLocalizedElement("NoSelectedPointMessage", "Please point somewhere on the map.");
 
         private string FindLocalizedElement(string xmlNodeName, string defaultValue)
         {
