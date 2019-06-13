@@ -11,6 +11,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic.Models
     [XmlRoot("PointModelsList")]
     public class PointModel
     {
+        public string Guid { get; set; }
         public double XCoord { get; set; }
         public double YCoord { get; set; }
         public double WgsXCoord { get; set; }
@@ -27,5 +28,22 @@ namespace MilSpace.GeoCalculator.BusinessLogic.Models
         public double UkraineYCoordDD { get; set; }
         public string MgrsRepresentation { get; set; }
         public string UtmRepresentation { get; set; }
+
+        public string ToString(bool currentMapCoordinatesOnly = false)
+        {
+            if (currentMapCoordinatesOnly) return $"{XCoord} {YCoord}";
+
+            var stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine($"{XCoord} {YCoord}");
+            stringBuilder.AppendLine($"{WgsXCoord} {WgsYCoord}");
+            stringBuilder.AppendLine($"{WgsXCoordDD} {WgsYCoordDD}");
+            stringBuilder.AppendLine($"{PulkovoXCoord} {PulkovoYCoord}");
+            stringBuilder.AppendLine($"{PulkovoXCoordDD} {PulkovoYCoordDD}");
+            stringBuilder.AppendLine($"{UkraineXCoord} {UkraineYCoord}");
+            stringBuilder.AppendLine($"{UkraineXCoordDD} {UkraineYCoordDD}");
+            stringBuilder.AppendLine($"{MgrsRepresentation}");
+            stringBuilder.AppendLine($"{UtmRepresentation}");
+            return stringBuilder.ToString();
+        }
     }
 }

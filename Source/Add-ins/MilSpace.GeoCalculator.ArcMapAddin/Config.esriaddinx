@@ -17,11 +17,11 @@
                 message="MilSpace 3-D solution. Module GeoCalculator window"
                 caption="Geo Calculator" tip="MilSpace 3-D solution. Module Geo Calculator" category="MilSpaceTools" image="Images\Button1.png" />
         <Tool id="MilSpace.GeoCalculator_MapInteropTool" class="MapInteropTool" message="MilSpace 3-D solution. GeoCalculator Command for Map Interop Tool"
-              caption="Geo Calculator Tool" tip="Map Point Tool" category="MilSpaceTools" image="Images\ToolFull.png" />
+              caption="Geo Calculator Tool" tip="Map Point Tool" category="MilSpaceTools" image="Images\Tool.png" />
       </Commands>
       <DockableWindows>
         <DockableWindow id="MilSpace.GeoCalculator_DockableWindowGeoCalculator" class="DockableWindowGeoCalculator+AddinImpl" caption="My Dockable Window" image="Images\DockableWindow.png">
-          <InitialPlacement height="600" width="335" state="pinned" position="left" />
+          <InitialPlacement height="600" width="256" state="pinned" position="left" />
         </DockableWindow>
       </DockableWindows>
 

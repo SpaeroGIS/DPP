@@ -10,10 +10,13 @@
 <UtmLabel>UTM Формат:</UtmLabel>
 <SaveButton>Сохранить в XML</SaveButton>
 <CopyButton>Скопировать</CopyButton>
+<ClearGridButton>Очистить список отмеченных точек</ClearGridButton>
 <MoveToCenterButton>Центр карты</MoveToCenterButton>
 <ToolButton>Выключить взаимодействие с картой</ToolButton>
 <WrongUtmFormatMessage>Неверный формат UTM</WrongUtmFormatMessage>
 <ErrorString>Ошибка</ErrorString>
 <WrongMgrsFormatMessage>Неверный формат MGRS</WrongMgrsFormatMessage>
 <WrongFormatMessage>Неверный формат</WrongFormatMessage>
+<NoSelectedPointMessage>Необходимо отметить точку на карте!</NoSelectedPointMessage>
+<AltRightToMove>Alt+Вправо для перемещения</AltRightToMove>
 </CoordinatesConverter>
