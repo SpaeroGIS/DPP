@@ -7,7 +7,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic.Interfaces
 {
     public interface IBusinessLogic
     {
-        IPoint CreatePoint(double X, double Y, CoordinateSystemModel geoModel);
+        IPoint CreatePoint(double X, double Y, CoordinateSystemModel geoModel, bool createGeoCoordinateSystem = false);
         IPoint ProjectPoint(IPoint inputPoint, CoordinateSystemModel singleProjectionModel);
         Task<IPoint> ProjectSelectedPointAsync(int targetCoordinateSystemType, int mousePositionX, int mousePositionY, double falseOriginX = 0, double falseOriginY = 0);
         void CopyCoordinatesToClipboard(List<PointModel> pointModels);

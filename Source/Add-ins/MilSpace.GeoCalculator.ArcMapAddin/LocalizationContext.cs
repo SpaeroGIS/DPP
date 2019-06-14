@@ -43,6 +43,7 @@ namespace MilSpace.GeoCalculator
         public string ClearGridButton => FindLocalizedElement("ClearGridButton", "Clear list");
         public string ShowPointOnMapButton => FindLocalizedElement("ShowPointOnMap", "Show on the map");
         public string DeletePointButton => FindLocalizedElement("DeletePoint", "Delete point");
+        public string CopyCoordinateButton => FindLocalizedElement("CopyCoordinateButton", "Copy coordinate to clipboard");
 
         //TextBoxes
         public string AltRightToMove => FindLocalizedElement("AltRightToMove", "Alt+Right to move between parts");
@@ -52,7 +53,7 @@ namespace MilSpace.GeoCalculator
         public string ErrorString => FindLocalizedElement("ErrorString", "Error");
         public string WrongMgrsFormatMessage => FindLocalizedElement("WrongMgrsFormatMessage", "Wrong MGRS String Format");
         public string WrongFormatMessage => FindLocalizedElement("WrongFormatMessage", "Wrong Format");
-        public string NoSelectedPointError => FindLocalizedElement("NoSelectedPointMessage", "Please point somewhere on the map.");
+        public string NoSelectedPointError => FindLocalizedElement("NoSelectedPointMessage", "Please point somewhere on the map.");       
 
         private string FindLocalizedElement(string xmlNodeName, string defaultValue)
         {

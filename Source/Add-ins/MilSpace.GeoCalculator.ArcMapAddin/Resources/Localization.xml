@@ -21,4 +21,5 @@
 <AltRightToMove>Alt+Вправо для перемещения</AltRightToMove>
 <ShowPointOnMap>Показать на карте</ShowPointOnMap>
 <DeletePoint>Удалить</DeletePoint>
+<CopyCoordinateButton>Скопировать координаты в буфер обмена</CopyCoordinateButton>
 </CoordinatesConverter>

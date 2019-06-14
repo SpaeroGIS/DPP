@@ -241,103 +241,49 @@ namespace MilSpace.GeoCalculator
         {
             try
             {
-                if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(XCoordinateTextBox.Text))
+                if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(XCoordinateTextBox.Text) && !string.IsNullOrWhiteSpace(YCoordinateTextBox.Text))
                 {
                     var point = new PointClass();
                     point.PutCoords(double.Parse(XCoordinateTextBox.Text), double.Parse(YCoordinateTextBox.Text));
                     point.SpatialReference = FocusMapSpatialReference;
                     ProjectPointAsync(point, true);
-                }
+                }                
             }
             catch
             {
                 MessageBox.Show(context.WrongFormatMessage, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void YCoordinateTextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            try
-            {
-                if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(YCoordinateTextBox.Text))
-                {
-                    var point = new PointClass();
-                    point.PutCoords(double.Parse(XCoordinateTextBox.Text), double.Parse(YCoordinateTextBox.Text));
-                    point.SpatialReference = FocusMapSpatialReference;
-                    ProjectPointAsync(point, true);
-                }
-            }
-            catch
-            {
-                MessageBox.Show(context.WrongFormatMessage, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+        }       
 
         private void WgsXCoordinateTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             try
             {
-                if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(WgsXCoordinateTextBox.Text))
+                if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(WgsXCoordinateTextBox.Text) && !string.IsNullOrWhiteSpace(WgsYCoordinateTextBox.Text))
                 {
                     var point = _businessLogic.CreatePoint(double.Parse(WgsXCoordinateTextBox.Text),
                                                            double.Parse(WgsYCoordinateTextBox.Text),
                                                            Constants.WgsModel);
                     ProjectPointAsync(point, true);
-                }
+                }                
             }
             catch
             {
                 MessageBox.Show(context.WrongFormatMessage, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void WgsYCoordinateTextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            try
-            {
-                if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(WgsYCoordinateTextBox.Text))
-                {
-                    var point = _businessLogic.CreatePoint(double.Parse(WgsXCoordinateTextBox.Text),
-                                                           double.Parse(WgsYCoordinateTextBox.Text),
-                                                           Constants.WgsModel);
-                    ProjectPointAsync(point, true);
-                }
-            }
-            catch
-            {
-                MessageBox.Show(context.WrongFormatMessage, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+        }        
 
         private void PulkovoXCoordinateTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             try
             {
-                if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(PulkovoXCoordinateTextBox.Text))
+                if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(PulkovoXCoordinateTextBox.Text) && !string.IsNullOrWhiteSpace(PulkovoYCoordinateTextBox.Text))
                 {
                     var point = _businessLogic.CreatePoint(double.Parse(PulkovoXCoordinateTextBox.Text),
                                                            double.Parse(PulkovoYCoordinateTextBox.Text),
                                                            Constants.PulkovoModel);
                     ProjectPointAsync(point, true);
-                }
-            }
-            catch
-            {
-                MessageBox.Show(context.WrongFormatMessage, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void PulkovoYCoordinateTextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            try
-            {
-                if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(PulkovoYCoordinateTextBox.Text))
-                {
-                    var point = _businessLogic.CreatePoint(double.Parse(PulkovoXCoordinateTextBox.Text),
-                                                           double.Parse(PulkovoYCoordinateTextBox.Text),
-                                                           Constants.PulkovoModel);
-                    ProjectPointAsync(point, true);
-                }
+                }                
             }
             catch
             {
@@ -349,14 +295,14 @@ namespace MilSpace.GeoCalculator
         {
             try
             {
-                if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(UkraineXCoordinateTextBox.Text))
+                if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(UkraineXCoordinateTextBox.Text) && !string.IsNullOrWhiteSpace(UkraineYCoordinateTextBox.Text))
                 {
                     var point = _businessLogic.CreatePoint(double.Parse(UkraineXCoordinateTextBox.Text),
                                                            double.Parse(UkraineYCoordinateTextBox.Text),
                                                            Constants.UkraineModel);
 
                     ProjectPointAsync(point, true);
-                }
+                }                
             }
             catch
             {
@@ -364,22 +310,112 @@ namespace MilSpace.GeoCalculator
             }
         }
 
-        private void UkraineYCoordinateTextBox_KeyDown(object sender, KeyEventArgs e)
+        private void WgsDMSXTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             try
             {
-                if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(UkraineYCoordinateTextBox.Text))
+                if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(wgsDMSXTextBox.Text) && !string.IsNullOrWhiteSpace(wgsDMSYTextBox.Text))
                 {
-                    var point = _businessLogic.CreatePoint(double.Parse(UkraineXCoordinateTextBox.Text),
-                                                           double.Parse(UkraineYCoordinateTextBox.Text),
-                                                           Constants.UkraineModel);
+                    var point = _businessLogic.CreatePoint(double.Parse(wgsDMSXTextBox.Text),
+                                                           double.Parse(wgsDMSYTextBox.Text),
+                                                           Constants.WgsGeoModel, true);
                     ProjectPointAsync(point, true);
-                }
+                }                
             }
             catch
             {
                 MessageBox.Show(context.WrongFormatMessage, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void PulkovoDMSXTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(pulkovoDMSXTextBox.Text) && !string.IsNullOrWhiteSpace(pulkovoDMSYTextBox.Text))
+                {
+                    var point = _businessLogic.CreatePoint(double.Parse(pulkovoDMSXTextBox.Text),
+                                                           double.Parse(pulkovoDMSYTextBox.Text),
+                                                           Constants.PulkovoGeoModel, true);
+                    ProjectPointAsync(point, true);
+                }                
+            }
+            catch
+            {
+                MessageBox.Show(context.WrongFormatMessage, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void UkraineDMSXTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(ukraineDMSXTextBox.Text) && !string.IsNullOrWhiteSpace(ukraineDMSYTextBox.Text))
+                {
+                    var point = _businessLogic.CreatePoint(double.Parse(ukraineDMSXTextBox.Text),
+                                                           double.Parse(ukraineDMSYTextBox.Text),
+                                                           Constants.UkraineGeoModel, true);
+                    ProjectPointAsync(point, true);
+                }                
+            }
+            catch
+            {
+                MessageBox.Show(context.WrongFormatMessage, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void CurrentCoordsCopyButton_Click(object sender, EventArgs e)
+        {
+            Clipboard.Clear();
+            Clipboard.SetText($"{XCoordinateTextBox.Text} {YCoordinateTextBox.Text}");
+        }
+
+        private void WgsGeoCopyButton_Click(object sender, EventArgs e)
+        {
+            Clipboard.Clear();
+            Clipboard.SetText($"{wgsDMSXTextBox.Text} {wgsDMSYTextBox.Text}");
+        }    
+
+        private void WgsProjCopyButton_Click(object sender, EventArgs e)
+        {
+            Clipboard.Clear();
+            Clipboard.SetText($"{WgsXCoordinateTextBox.Text} {WgsYCoordinateTextBox.Text}");
+        }    
+
+        private void PulkovoGeoCopyButton_Click(object sender, EventArgs e)
+        {
+            Clipboard.Clear();
+            Clipboard.SetText($"{pulkovoDMSXTextBox.Text} {pulkovoDMSYTextBox.Text}");
+        }
+
+        private void PulkovoProjCopyButton_Click(object sender, EventArgs e)
+        {
+            Clipboard.Clear();
+            Clipboard.SetText($"{PulkovoXCoordinateTextBox.Text} {PulkovoYCoordinateTextBox.Text}");
+        }
+
+        private void UkraineGeoCopyButton_Click(object sender, EventArgs e)
+        {
+            Clipboard.Clear();
+            Clipboard.SetText($"{ukraineDMSXTextBox.Text} {ukraineDMSYTextBox.Text}");
+        }
+
+        private void UkraineProjCopyButton_Click(object sender, EventArgs e)
+        {
+            Clipboard.Clear();
+            Clipboard.SetText($"{UkraineXCoordinateTextBox.Text} {UkraineYCoordinateTextBox.Text}");
+        }
+
+        private void MgrsCopyButton_Click(object sender, EventArgs e)
+        {
+            Clipboard.Clear();
+            Clipboard.SetText(MgrsNotationTextBox.Text);
+        }
+
+        private void UtmCopyButton_Click(object sender, EventArgs e)
+        {
+            Clipboard.Clear();
+            Clipboard.SetText(UTMNotationTextBox.Text);
         }
 
         private void PointsGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -461,8 +497,18 @@ namespace MilSpace.GeoCalculator
             newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = ClickedPointsDictionary.Count() });
             newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = clickedPoint.X.ToIntegerString() });
             newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = clickedPoint.Y.ToIntegerString() });
-            newRow.Cells.Add(new DataGridViewImageCell() { Value = Image.FromFile(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Images\LocatePoint.png")), ToolTipText = context.ShowPointOnMapButton });            
-            newRow.Cells.Add(new DataGridViewImageCell() { Value = Image.FromFile(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Images\DeletePoint.png")), ToolTipText = context.DeletePointButton });
+            newRow.Cells.Add(new DataGridViewImageCell() { Value = new Bitmap(
+                                                                              Image.FromFile(
+                                                                                  System.IO.Path.Combine(
+                                                                                      System.IO.Path.GetDirectoryName(
+                                                                                          Assembly.GetExecutingAssembly().Location), @"Images\LocatePoint.png")), 16, 16),
+                                                           ToolTipText = context.ShowPointOnMapButton });            
+            newRow.Cells.Add(new DataGridViewImageCell() { Value = new Bitmap(
+                                                                              Image.FromFile(
+                                                                                  System.IO.Path.Combine(
+                                                                                      System.IO.Path.GetDirectoryName(
+                                                                                          Assembly.GetExecutingAssembly().Location), @"Images\DeletePoint.png")), 16, 16),
+                                                           ToolTipText = context.DeletePointButton });
             PointsGridView.Rows.Add(newRow);
 
             ProjectPointAsync(clickedPoint, false, pointGuid);
@@ -507,6 +553,15 @@ namespace MilSpace.GeoCalculator
                 this.CopyGridPointButton.ToolTipText = context.CopyButton;
                 this.PointsGridView.Columns[Constants.HighlightColumnName].ToolTipText = context.ShowPointOnMapButton;
                 this.PointsGridView.Columns[Constants.DeleteColumnName].ToolTipText = context.DeletePointButton;
+                this.CurrentCoordsCopyButton.ToolTipText = context.CopyCoordinateButton;
+                this.WgsGeoCopyButton.ToolTipText = context.CopyCoordinateButton;
+                this.WgsProjCopyButton.ToolTipText = context.CopyCoordinateButton;
+                this.PulkovoGeoCopyButton.ToolTipText = context.CopyCoordinateButton;
+                this.PulkovoProjCopyButton.ToolTipText = context.CopyCoordinateButton;
+                this.UkraineGeoCopyButton.ToolTipText = context.CopyCoordinateButton;
+                this.UkraineProjCopyButton.ToolTipText = context.CopyCoordinateButton;
+                this.MgrsCopyButton.ToolTipText = context.CopyCoordinateButton;
+                this.UtmCopyButton.ToolTipText = context.CopyCoordinateButton;
             }
             catch { MessageBox.Show("No Localization.xml found or there is an error during loading. Coordinates Converter window is not fully localized."); }
         }

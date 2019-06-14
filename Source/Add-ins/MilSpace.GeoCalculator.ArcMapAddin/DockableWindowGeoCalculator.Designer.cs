@@ -30,10 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowGeoCalculator));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.mgrsToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.utmToolTip = new System.Windows.Forms.ToolTip(this.components);
@@ -87,6 +87,24 @@
             this.YCoordColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.HighlightColumn = new System.Windows.Forms.DataGridViewImageColumn();
             this.DeleteColumn = new System.Windows.Forms.DataGridViewImageColumn();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.CurrentCoordsCopyButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.WgsProjCopyButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStrip3 = new System.Windows.Forms.ToolStrip();
+            this.WgsGeoCopyButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStrip4 = new System.Windows.Forms.ToolStrip();
+            this.PulkovoProjCopyButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStrip5 = new System.Windows.Forms.ToolStrip();
+            this.PulkovoGeoCopyButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStrip6 = new System.Windows.Forms.ToolStrip();
+            this.UkraineProjCopyButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStrip7 = new System.Windows.Forms.ToolStrip();
+            this.UkraineGeoCopyButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStrip8 = new System.Windows.Forms.ToolStrip();
+            this.UtmCopyButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStrip9 = new System.Windows.Forms.ToolStrip();
+            this.MgrsCopyButton = new System.Windows.Forms.ToolStripButton();
             this.TitlePanel.SuspendLayout();
             this.GeneralToolStrip.SuspendLayout();
             this.CurrentCoordinatesPanel.SuspendLayout();
@@ -96,6 +114,15 @@
             this.panel4.SuspendLayout();
             this.GridToolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PointsGridView)).BeginInit();
+            this.toolStrip1.SuspendLayout();
+            this.toolStrip2.SuspendLayout();
+            this.toolStrip3.SuspendLayout();
+            this.toolStrip4.SuspendLayout();
+            this.toolStrip5.SuspendLayout();
+            this.toolStrip6.SuspendLayout();
+            this.toolStrip7.SuspendLayout();
+            this.toolStrip8.SuspendLayout();
+            this.toolStrip9.SuspendLayout();
             this.SuspendLayout();
             // 
             // saveFileDialog
@@ -195,6 +222,7 @@
             // 
             // CurrentCoordinatesPanel
             // 
+            this.CurrentCoordinatesPanel.Controls.Add(this.toolStrip1);
             this.CurrentCoordinatesPanel.Controls.Add(this.CurrentMapLabel);
             this.CurrentCoordinatesPanel.Controls.Add(this.XCoordinateTextBox);
             this.CurrentCoordinatesPanel.Controls.Add(this.YCoordinateTextBox);
@@ -231,10 +259,12 @@
             this.YCoordinateTextBox.Name = "YCoordinateTextBox";
             this.YCoordinateTextBox.Size = new System.Drawing.Size(80, 21);
             this.YCoordinateTextBox.TabIndex = 7;
-            this.YCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.YCoordinateTextBox_KeyDown);
+            this.YCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.XCoordinateTextBox_KeyDown);
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.toolStrip3);
+            this.panel1.Controls.Add(this.toolStrip2);
             this.panel1.Controls.Add(this.wgsDMSYTextBox);
             this.panel1.Controls.Add(this.wgsDMSXTextBox);
             this.panel1.Controls.Add(this.WgsGeoLabel);
@@ -254,6 +284,7 @@
             this.wgsDMSYTextBox.Name = "wgsDMSYTextBox";
             this.wgsDMSYTextBox.Size = new System.Drawing.Size(80, 21);
             this.wgsDMSYTextBox.TabIndex = 26;
+            this.wgsDMSYTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WgsDMSXTextBox_KeyDown);
             // 
             // wgsDMSXTextBox
             // 
@@ -262,6 +293,7 @@
             this.wgsDMSXTextBox.Name = "wgsDMSXTextBox";
             this.wgsDMSXTextBox.Size = new System.Drawing.Size(80, 21);
             this.wgsDMSXTextBox.TabIndex = 25;
+            this.wgsDMSXTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WgsDMSXTextBox_KeyDown);
             // 
             // WgsGeoLabel
             // 
@@ -299,10 +331,12 @@
             this.WgsYCoordinateTextBox.Name = "WgsYCoordinateTextBox";
             this.WgsYCoordinateTextBox.Size = new System.Drawing.Size(80, 21);
             this.WgsYCoordinateTextBox.TabIndex = 3;
-            this.WgsYCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WgsYCoordinateTextBox_KeyDown);
+            this.WgsYCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WgsXCoordinateTextBox_KeyDown);
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.toolStrip5);
+            this.panel2.Controls.Add(this.toolStrip4);
             this.panel2.Controls.Add(this.pulkovoDMSYTextBox);
             this.panel2.Controls.Add(this.pulkovoDMSXTextBox);
             this.panel2.Controls.Add(this.PulkovoGeoLabel);
@@ -322,6 +356,7 @@
             this.pulkovoDMSYTextBox.Name = "pulkovoDMSYTextBox";
             this.pulkovoDMSYTextBox.Size = new System.Drawing.Size(80, 21);
             this.pulkovoDMSYTextBox.TabIndex = 26;
+            this.pulkovoDMSYTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PulkovoDMSXTextBox_KeyDown);
             // 
             // pulkovoDMSXTextBox
             // 
@@ -330,6 +365,7 @@
             this.pulkovoDMSXTextBox.Name = "pulkovoDMSXTextBox";
             this.pulkovoDMSXTextBox.Size = new System.Drawing.Size(80, 21);
             this.pulkovoDMSXTextBox.TabIndex = 25;
+            this.pulkovoDMSXTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PulkovoDMSXTextBox_KeyDown);
             // 
             // PulkovoGeoLabel
             // 
@@ -367,10 +403,12 @@
             this.PulkovoYCoordinateTextBox.Name = "PulkovoYCoordinateTextBox";
             this.PulkovoYCoordinateTextBox.Size = new System.Drawing.Size(80, 21);
             this.PulkovoYCoordinateTextBox.TabIndex = 8;
-            this.PulkovoYCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PulkovoYCoordinateTextBox_KeyDown);
+            this.PulkovoYCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PulkovoXCoordinateTextBox_KeyDown);
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.toolStrip7);
+            this.panel3.Controls.Add(this.toolStrip6);
             this.panel3.Controls.Add(this.ukraineDMSYTextBox);
             this.panel3.Controls.Add(this.ukraineDMSXTextBox);
             this.panel3.Controls.Add(this.UkraineGeoLabel);
@@ -390,6 +428,7 @@
             this.ukraineDMSYTextBox.Name = "ukraineDMSYTextBox";
             this.ukraineDMSYTextBox.Size = new System.Drawing.Size(80, 21);
             this.ukraineDMSYTextBox.TabIndex = 26;
+            this.ukraineDMSYTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UkraineDMSXTextBox_KeyDown);
             // 
             // ukraineDMSXTextBox
             // 
@@ -398,6 +437,7 @@
             this.ukraineDMSXTextBox.Name = "ukraineDMSXTextBox";
             this.ukraineDMSXTextBox.Size = new System.Drawing.Size(80, 21);
             this.ukraineDMSXTextBox.TabIndex = 25;
+            this.ukraineDMSXTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UkraineDMSXTextBox_KeyDown);
             // 
             // UkraineGeoLabel
             // 
@@ -435,10 +475,12 @@
             this.UkraineYCoordinateTextBox.Name = "UkraineYCoordinateTextBox";
             this.UkraineYCoordinateTextBox.Size = new System.Drawing.Size(80, 21);
             this.UkraineYCoordinateTextBox.TabIndex = 12;
-            this.UkraineYCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UkraineYCoordinateTextBox_KeyDown);
+            this.UkraineYCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UkraineXCoordinateTextBox_KeyDown);
             // 
             // panel4
             // 
+            this.panel4.Controls.Add(this.toolStrip9);
+            this.panel4.Controls.Add(this.toolStrip8);
             this.panel4.Controls.Add(this.MgrsNotationLabel);
             this.panel4.Controls.Add(this.MgrsNotationTextBox);
             this.panel4.Controls.Add(this.UTMNotationTextBox);
@@ -560,14 +602,14 @@
             this.YCoordColumn,
             this.HighlightColumn,
             this.DeleteColumn});
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.PointsGridView.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle40.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle40.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle40.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle40.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle40.SelectionBackColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle40.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle40.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.PointsGridView.DefaultCellStyle = dataGridViewCellStyle40;
             this.PointsGridView.GridColor = System.Drawing.SystemColors.Window;
             this.PointsGridView.Location = new System.Drawing.Point(0, 497);
             this.PointsGridView.Name = "PointsGridView";
@@ -580,9 +622,9 @@
             // NumberColumn
             // 
             this.NumberColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.NumberColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle37.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle37.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.NumberColumn.DefaultCellStyle = dataGridViewCellStyle37;
             this.NumberColumn.HeaderText = "";
             this.NumberColumn.Name = "NumberColumn";
             this.NumberColumn.ReadOnly = true;
@@ -591,11 +633,11 @@
             // XCoordColumn
             // 
             this.XCoordColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Transparent;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
-            this.XCoordColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle38.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle38.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle38.SelectionBackColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle38.SelectionForeColor = System.Drawing.Color.Black;
+            this.XCoordColumn.DefaultCellStyle = dataGridViewCellStyle38;
             this.XCoordColumn.HeaderText = "";
             this.XCoordColumn.Name = "XCoordColumn";
             this.XCoordColumn.ReadOnly = true;
@@ -605,11 +647,11 @@
             // YCoordColumn
             // 
             this.YCoordColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.Transparent;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
-            this.YCoordColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle39.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle39.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle39.SelectionBackColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle39.SelectionForeColor = System.Drawing.Color.Black;
+            this.YCoordColumn.DefaultCellStyle = dataGridViewCellStyle39;
             this.YCoordColumn.HeaderText = "";
             this.YCoordColumn.Name = "YCoordColumn";
             this.YCoordColumn.ReadOnly = true;
@@ -633,6 +675,213 @@
             this.DeleteColumn.ReadOnly = true;
             this.DeleteColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.DeleteColumn.Width = 5;
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CurrentCoordsCopyButton});
+            this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.toolStrip1.Location = new System.Drawing.Point(186, 25);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(24, 23);
+            this.toolStrip1.TabIndex = 57;
+            this.toolStrip1.Text = "toolStrip2";
+            // 
+            // CurrentCoordsCopyButton
+            // 
+            this.CurrentCoordsCopyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.CurrentCoordsCopyButton.Image = ((System.Drawing.Image)(resources.GetObject("CurrentCoordsCopyButton.Image")));
+            this.CurrentCoordsCopyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.CurrentCoordsCopyButton.Name = "CurrentCoordsCopyButton";
+            this.CurrentCoordsCopyButton.Size = new System.Drawing.Size(23, 20);
+            this.CurrentCoordsCopyButton.Click += new System.EventHandler(this.CurrentCoordsCopyButton_Click);
+            // 
+            // toolStrip2
+            // 
+            this.toolStrip2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.toolStrip2.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.WgsProjCopyButton});
+            this.toolStrip2.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.toolStrip2.Location = new System.Drawing.Point(186, 72);
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.Size = new System.Drawing.Size(24, 23);
+            this.toolStrip2.TabIndex = 58;
+            this.toolStrip2.Text = "toolStrip2";
+            // 
+            // WgsProjCopyButton
+            // 
+            this.WgsProjCopyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.WgsProjCopyButton.Image = ((System.Drawing.Image)(resources.GetObject("WgsProjCopyButton.Image")));
+            this.WgsProjCopyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.WgsProjCopyButton.Name = "WgsProjCopyButton";
+            this.WgsProjCopyButton.Size = new System.Drawing.Size(23, 20);
+            this.WgsProjCopyButton.Click += new System.EventHandler(this.WgsProjCopyButton_Click);
+            // 
+            // toolStrip3
+            // 
+            this.toolStrip3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.toolStrip3.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip3.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.WgsGeoCopyButton});
+            this.toolStrip3.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.toolStrip3.Location = new System.Drawing.Point(186, 26);
+            this.toolStrip3.Name = "toolStrip3";
+            this.toolStrip3.Size = new System.Drawing.Size(24, 23);
+            this.toolStrip3.TabIndex = 59;
+            this.toolStrip3.Text = "toolStrip2";
+            // 
+            // WgsGeoCopyButton
+            // 
+            this.WgsGeoCopyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.WgsGeoCopyButton.Image = ((System.Drawing.Image)(resources.GetObject("WgsGeoCopyButton.Image")));
+            this.WgsGeoCopyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.WgsGeoCopyButton.Name = "WgsGeoCopyButton";
+            this.WgsGeoCopyButton.Size = new System.Drawing.Size(23, 20);
+            this.WgsGeoCopyButton.Click += new System.EventHandler(this.WgsGeoCopyButton_Click);
+            // 
+            // toolStrip4
+            // 
+            this.toolStrip4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.toolStrip4.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip4.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip4.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.PulkovoProjCopyButton});
+            this.toolStrip4.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.toolStrip4.Location = new System.Drawing.Point(186, 72);
+            this.toolStrip4.Name = "toolStrip4";
+            this.toolStrip4.Size = new System.Drawing.Size(24, 23);
+            this.toolStrip4.TabIndex = 58;
+            this.toolStrip4.Text = "toolStrip2";
+            // 
+            // PulkovoProjCopyButton
+            // 
+            this.PulkovoProjCopyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.PulkovoProjCopyButton.Image = ((System.Drawing.Image)(resources.GetObject("PulkovoProjCopyButton.Image")));
+            this.PulkovoProjCopyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.PulkovoProjCopyButton.Name = "PulkovoProjCopyButton";
+            this.PulkovoProjCopyButton.Size = new System.Drawing.Size(23, 20);
+            this.PulkovoProjCopyButton.Click += new System.EventHandler(this.PulkovoProjCopyButton_Click);
+            // 
+            // toolStrip5
+            // 
+            this.toolStrip5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.toolStrip5.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip5.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip5.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.PulkovoGeoCopyButton});
+            this.toolStrip5.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.toolStrip5.Location = new System.Drawing.Point(186, 26);
+            this.toolStrip5.Name = "toolStrip5";
+            this.toolStrip5.Size = new System.Drawing.Size(24, 23);
+            this.toolStrip5.TabIndex = 59;
+            this.toolStrip5.Text = "toolStrip2";
+            // 
+            // PulkovoGeoCopyButton
+            // 
+            this.PulkovoGeoCopyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.PulkovoGeoCopyButton.Image = ((System.Drawing.Image)(resources.GetObject("PulkovoGeoCopyButton.Image")));
+            this.PulkovoGeoCopyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.PulkovoGeoCopyButton.Name = "PulkovoGeoCopyButton";
+            this.PulkovoGeoCopyButton.Size = new System.Drawing.Size(23, 20);
+            this.PulkovoGeoCopyButton.Click += new System.EventHandler(this.PulkovoGeoCopyButton_Click);
+            // 
+            // toolStrip6
+            // 
+            this.toolStrip6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.toolStrip6.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip6.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip6.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.UkraineProjCopyButton});
+            this.toolStrip6.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.toolStrip6.Location = new System.Drawing.Point(186, 71);
+            this.toolStrip6.Name = "toolStrip6";
+            this.toolStrip6.Size = new System.Drawing.Size(24, 23);
+            this.toolStrip6.TabIndex = 58;
+            this.toolStrip6.Text = "toolStrip2";
+            // 
+            // UkraineProjCopyButton
+            // 
+            this.UkraineProjCopyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.UkraineProjCopyButton.Image = ((System.Drawing.Image)(resources.GetObject("UkraineProjCopyButton.Image")));
+            this.UkraineProjCopyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.UkraineProjCopyButton.Name = "UkraineProjCopyButton";
+            this.UkraineProjCopyButton.Size = new System.Drawing.Size(23, 20);
+            this.UkraineProjCopyButton.Click += new System.EventHandler(this.UkraineProjCopyButton_Click);
+            // 
+            // toolStrip7
+            // 
+            this.toolStrip7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.toolStrip7.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip7.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip7.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.UkraineGeoCopyButton});
+            this.toolStrip7.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.toolStrip7.Location = new System.Drawing.Point(186, 25);
+            this.toolStrip7.Name = "toolStrip7";
+            this.toolStrip7.Size = new System.Drawing.Size(24, 23);
+            this.toolStrip7.TabIndex = 59;
+            this.toolStrip7.Text = "toolStrip2";
+            // 
+            // UkraineGeoCopyButton
+            // 
+            this.UkraineGeoCopyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.UkraineGeoCopyButton.Image = ((System.Drawing.Image)(resources.GetObject("UkraineGeoCopyButton.Image")));
+            this.UkraineGeoCopyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.UkraineGeoCopyButton.Name = "UkraineGeoCopyButton";
+            this.UkraineGeoCopyButton.Size = new System.Drawing.Size(23, 20);
+            this.UkraineGeoCopyButton.Click += new System.EventHandler(this.UkraineGeoCopyButton_Click);
+            // 
+            // toolStrip8
+            // 
+            this.toolStrip8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.toolStrip8.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip8.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip8.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.UtmCopyButton});
+            this.toolStrip8.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.toolStrip8.Location = new System.Drawing.Point(186, 35);
+            this.toolStrip8.Name = "toolStrip8";
+            this.toolStrip8.Size = new System.Drawing.Size(55, 23);
+            this.toolStrip8.TabIndex = 58;
+            this.toolStrip8.Text = "toolStrip2";
+            // 
+            // UtmCopyButton
+            // 
+            this.UtmCopyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.UtmCopyButton.Image = ((System.Drawing.Image)(resources.GetObject("UtmCopyButton.Image")));
+            this.UtmCopyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.UtmCopyButton.Name = "UtmCopyButton";
+            this.UtmCopyButton.Size = new System.Drawing.Size(23, 20);
+            this.UtmCopyButton.Click += new System.EventHandler(this.UtmCopyButton_Click);
+            // 
+            // toolStrip9
+            // 
+            this.toolStrip9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.toolStrip9.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip9.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip9.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MgrsCopyButton});
+            this.toolStrip9.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.toolStrip9.Location = new System.Drawing.Point(186, 7);
+            this.toolStrip9.Name = "toolStrip9";
+            this.toolStrip9.Size = new System.Drawing.Size(24, 23);
+            this.toolStrip9.TabIndex = 59;
+            this.toolStrip9.Text = "toolStrip2";
+            // 
+            // MgrsCopyButton
+            // 
+            this.MgrsCopyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.MgrsCopyButton.Image = ((System.Drawing.Image)(resources.GetObject("MgrsCopyButton.Image")));
+            this.MgrsCopyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.MgrsCopyButton.Name = "MgrsCopyButton";
+            this.MgrsCopyButton.Size = new System.Drawing.Size(23, 20);
+            this.MgrsCopyButton.Click += new System.EventHandler(this.MgrsCopyButton_Click);
             // 
             // DockableWindowGeoCalculator
             // 
@@ -664,6 +913,24 @@
             this.GridToolStrip.ResumeLayout(false);
             this.GridToolStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PointsGridView)).EndInit();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
+            this.toolStrip2.ResumeLayout(false);
+            this.toolStrip2.PerformLayout();
+            this.toolStrip3.ResumeLayout(false);
+            this.toolStrip3.PerformLayout();
+            this.toolStrip4.ResumeLayout(false);
+            this.toolStrip4.PerformLayout();
+            this.toolStrip5.ResumeLayout(false);
+            this.toolStrip5.PerformLayout();
+            this.toolStrip6.ResumeLayout(false);
+            this.toolStrip6.PerformLayout();
+            this.toolStrip7.ResumeLayout(false);
+            this.toolStrip7.PerformLayout();
+            this.toolStrip8.ResumeLayout(false);
+            this.toolStrip8.PerformLayout();
+            this.toolStrip9.ResumeLayout(false);
+            this.toolStrip9.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -723,5 +990,23 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn YCoordColumn;
         private System.Windows.Forms.DataGridViewImageColumn HighlightColumn;
         private System.Windows.Forms.DataGridViewImageColumn DeleteColumn;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton CurrentCoordsCopyButton;
+        private System.Windows.Forms.ToolStrip toolStrip3;
+        private System.Windows.Forms.ToolStripButton WgsGeoCopyButton;
+        private System.Windows.Forms.ToolStrip toolStrip2;
+        private System.Windows.Forms.ToolStripButton WgsProjCopyButton;
+        private System.Windows.Forms.ToolStrip toolStrip5;
+        private System.Windows.Forms.ToolStripButton PulkovoGeoCopyButton;
+        private System.Windows.Forms.ToolStrip toolStrip4;
+        private System.Windows.Forms.ToolStripButton PulkovoProjCopyButton;
+        private System.Windows.Forms.ToolStrip toolStrip7;
+        private System.Windows.Forms.ToolStripButton UkraineGeoCopyButton;
+        private System.Windows.Forms.ToolStrip toolStrip6;
+        private System.Windows.Forms.ToolStripButton UkraineProjCopyButton;
+        private System.Windows.Forms.ToolStrip toolStrip9;
+        private System.Windows.Forms.ToolStripButton MgrsCopyButton;
+        private System.Windows.Forms.ToolStrip toolStrip8;
+        private System.Windows.Forms.ToolStripButton UtmCopyButton;
     }
 }
