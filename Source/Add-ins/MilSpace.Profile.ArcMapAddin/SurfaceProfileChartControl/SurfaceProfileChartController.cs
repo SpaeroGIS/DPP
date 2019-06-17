@@ -6,6 +6,7 @@ using MilSpace.DataAccess.DataTransfer;
 using ESRI.ArcGIS.Display;
 using System.Drawing;
 using MilSpace.DataAccess;
+using System.Text;
 
 namespace MilSpace.Profile.SurfaceProfileChartControl
 {
@@ -104,7 +105,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             _surfaceProfileChart.AddSerie(_profileSession.ProfileSurfaces.Last());
         }
 
-        internal string GetProfileName(ref int currentSessionId, int lineId)
+        internal string GetProfileNameForLabel(ref int currentSessionId, int lineId)
         {
             if (_profileSession.ProfileLines == null || _profileSession.ProfileLines.Count() == 0)
             {
@@ -125,6 +126,18 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
 
             return String.Empty;
+        }
+
+        internal string GetProfileName(int lineId)
+        {
+            if (_profileSession.ProfileLines == null || _profileSession.ProfileLines.Count() == 0)
+            {
+                return _profileSession.SessionName;
+            }
+
+            var sessionId = _profileSession.ProfileLines.First(line => lineId == line.Id).SessionId;
+
+            return _graphsController.GetProfileNameById(sessionId);
         }
 
         internal void AddProfileToExistedGraph()
@@ -410,6 +423,59 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         }
 
+        internal string GetProfilePropertiesText(int lineId)
+        {
+            var profilePropertiesText = new StringBuilder();
+            var profileProperty = _surfaceProfileChart.ProfilesProperties.FirstOrDefault(property => property.LineId == lineId);
+
+            if (profileProperty == null)
+            {
+                return String.Empty;
+            }
+
+            var header = "Line number; Azimuth; Point of view; Profile length; Max height; Height difference; Min height; Max angle; Min angle; Visibility percent";
+            profilePropertiesText.AppendLine(header);
+
+            //var properties = $"{profileProperty.LineId};{profileProperty.Azimuth};{profileProperty.ObserverHeight};{profileProperty.PathLength};" +
+            //                 $"{profileProperty.MaxHeight};{profileProperty.MaxHeight - profileProperty.MinHeight};{profileProperty.MinHeight};" +
+            //                 $"{profileProperty.MaxAngle};{profileProperty.MinAngle};{profileProperty.VisiblePercent}";
+
+            var properties = _surfaceProfileChart.GetSelectedRowData();
+
+            profilePropertiesText.AppendLine(properties);
+
+            return profilePropertiesText.ToString();
+        }
+
+        internal string GetProfilePointsPropertiesText(int lineId)
+        {
+            var pointsPropertiesText = new StringBuilder();
+            var points = _profileSession.ProfileSurfaces.FirstOrDefault(surface => surface.LineId == lineId).ProfileSurfacePoints;
+
+            if (points == null)
+            {
+                return String.Empty;
+            }
+
+            var header = "Number; X; Y; Z; Distance; Vertex; Visible; Intersections";
+            var trueText = "Yes";
+            var falseText = "No";
+
+            pointsPropertiesText.AppendLine(header);
+
+            for(int i = 0; i < points.Count(); i++)
+            {
+                pointsPropertiesText.Append($"{i};{points[i].X};{points[i].Y};{points[i].Z};{points[i].Distance};");
+
+                var vertex = points[i].isVertex ? trueText : falseText;
+                var visible = _surfaceProfileChart.IsPointVisible(lineId, i)? trueText : falseText;
+
+                pointsPropertiesText.AppendLine($"{vertex};{visible};{points[i].Layers.ToString()}");
+            }
+
+            return pointsPropertiesText.ToString();
+        }
+
         private void SetProfileProperty(ProfileLine profileSessionProfileLine)
         {
             var profileProperty = new ProfileProperties();
@@ -428,7 +494,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             profileProperty.PathLength = FindLength(profileSurfacePoints);
 
-            profileProperty.Azimuth = profileSessionProfileLine.Azimuth;//== double.MinValue?;
+            profileProperty.Azimuth = profileSessionProfileLine.Azimuth;
 
             profileProperty.ObserverHeight = _defaultObserverHeight;
 
