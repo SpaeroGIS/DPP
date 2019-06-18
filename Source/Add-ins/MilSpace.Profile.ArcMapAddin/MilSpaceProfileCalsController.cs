@@ -82,6 +82,7 @@ namespace MilSpace.Profile
 
         internal void OnDocumentsLoad()
         {
+            logger.InfoEx("Document loaded.");
 
             IActiveViewEvents_Event activeViewEvents = (IActiveViewEvents_Event)View.ActiveView.FocusMap;
             IActiveViewEvents_SelectionChangedEventHandler handler = new IActiveViewEvents_SelectionChangedEventHandler(OnMapSelectionChangedLocal);
