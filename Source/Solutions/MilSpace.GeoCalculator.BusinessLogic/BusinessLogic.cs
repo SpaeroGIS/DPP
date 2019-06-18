@@ -219,7 +219,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic
                 return bufferPoint;
             });
 
-            return ProjectPoint(resultPoint, new CoordinateSystemModel(targetCoordinateSystemType, falseOriginX, falseOriginY, currentDocument.FocusMap.MapScale));
+            return ProjectPoint(resultPoint, new CoordinateSystemModel(targetCoordinateSystemType, falseOriginX, falseOriginY, "",currentDocument.FocusMap.MapScale));
         }
 
         public async Task SaveProjectionsToXmlFileAsync(List<PointModel> pointModels, string path)
