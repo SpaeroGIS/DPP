@@ -216,7 +216,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             foreach (var segment in surfaceSegments)
             {
-
+                var firstPointDistance = segment.ProfileSurfacePoints[0].Distance;
                 var sightLineKoef = 0.0;
                 var isInvisibleZone = false;
                 var observerFullHeight = observerHeight + segment.ProfileSurfacePoints[0].Z;
@@ -232,7 +232,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                         if (i < segment.ProfileSurfacePoints.Length - 1)
                         {
                             if (CalcAngleOfVisibility(observerFullHeight, segment.ProfileSurfacePoints[i],
-                                segment.ProfileSurfacePoints[i + 1]) < 0)
+                                segment.ProfileSurfacePoints[i + 1], firstPointDistance) < 0)
                             {
                                 var firstInvisiblePoint = segment.ProfileSurfacePoints[i + 1];
 
@@ -242,14 +242,14 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                                 }
 
                                 isInvisibleZone = true;
-                                sightLineKoef = (firstInvisiblePoint.Z - observerFullHeight) / (firstInvisiblePoint.Distance);
+                                sightLineKoef = (firstInvisiblePoint.Z - observerFullHeight) / (firstInvisiblePoint.Distance - firstPointDistance);
                                 i++;
                             }
                         }
                     }
                     else
                     {
-                        if (FindY(observerFullHeight, sightLineKoef, segment.ProfileSurfacePoints[i].Distance)
+                        if (FindY(observerFullHeight, sightLineKoef, segment.ProfileSurfacePoints[i].Distance - firstPointDistance)
                             < segment.ProfileSurfacePoints[i].Z)
                         {
                             isInvisibleZone = false;
@@ -876,9 +876,9 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         }
 
         private static double CalcAngleOfVisibility(double observerHeight, ProfileSurfacePoint leftPoint,
-            ProfileSurfacePoint rightPoint)
+            ProfileSurfacePoint rightPoint, double firstPointDistance)
         {
-            var sightLineKoef = (rightPoint.Z - observerHeight) / (rightPoint.Distance);
+            var sightLineKoef = (rightPoint.Z - observerHeight) / (rightPoint.Distance - firstPointDistance);
             var surfaceLineKoef = (rightPoint.Z - leftPoint.Z) / (rightPoint.Distance - leftPoint.Distance);
 
             var result = (surfaceLineKoef - sightLineKoef) / (1 + surfaceLineKoef * sightLineKoef);
