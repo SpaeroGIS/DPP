@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Point = ESRI.ArcGIS.Geometry.Point;
 
@@ -29,6 +30,7 @@ namespace MilSpace.Profile
         const int NINE = 57;
         const int NOT_FOUND = -1;
         private const string Degree = "°";
+        private static Logger logger = Logger.GetLoggerEx("SpaceProfileCalc GUI");
 
         private static readonly Dictionary<ProfileSettingsTypeEnum, int[]> nodeDefinition = new Dictionary<ProfileSettingsTypeEnum, int[]>
         {
@@ -186,6 +188,7 @@ namespace MilSpace.Profile
             }
             catch (Exception ex)
             {
+                logger.ErrorEx(ex.Message);
                 //TODO: log exception
                 return false;
             }
@@ -205,8 +208,13 @@ namespace MilSpace.Profile
             var pr = controller.GetProfileById(treeViewselectedIds.ProfileSessionId);
 
             saveProfileAsShared.Enabled = (pr != null && pr.CreatedBy == Environment.UserName && !pr.Shared);
-
+            
             removeProfile.Enabled = addProfileToGraph.Enabled = toolBtnShowOnMap.Enabled = toolBtnFlash.Enabled = treeViewselectedIds.ProfileSessionId > 0;
+
+            var profileType = GetProfileTypeFromNode();
+            setProfileSettingsToCalc.Enabled = (addProfileToGraph.Enabled && 
+                                                    (profileType == ProfileSettingsTypeEnum.Points || profileType == ProfileSettingsTypeEnum.Fun));
+
             openGraphWindow.Enabled = !controller.MilSpaceProfileGraphsController.IsWindowVisible;
 
             eraseProfile.Enabled = controller.CanEraseProfileSession(ids.Item1);
@@ -984,6 +992,8 @@ namespace MilSpace.Profile
                 newNode.SetCreatorName(Environment.UserName);
                 newNode.SetDate($"{date.ToLongDateString()} {date.ToLongTimeString()}");
 
+                logger.InfoEx($"Profile  {profile.SessionName} added to the tree");
+
                 //TODO: Localize 
                 string lineDefinition = "Профіль";
 
@@ -1005,6 +1015,8 @@ namespace MilSpace.Profile
                     childNode.SetToPoint($"X={line.Line.ToPoint.X:F5}; Y={line.Line.ToPoint.Y:F5}");
 
                     childNode.SetAzimuth1($"{azimuth}{Degree}");
+
+                    logger.InfoEx($"Line {nodeName} was added to the tree");
 
 
                 }
@@ -1136,6 +1148,70 @@ namespace MilSpace.Profile
         private void clearExtraGraphic_Click(object sender, EventArgs e)
         {
             controller.ClearMapFromOldGraphs();
+        }
+
+        private void setProfileSettingsToCalc_Click(object sender, EventArgs e)
+        {
+            var node = profilesTreeView.SelectedNode;
+           
+            if (!(node is ProfileTreeNode)) return;
+
+            ProfileTreeNode profileNode = (ProfileTreeNode)node;
+            var profileType = GetProfileTypeFromNode();
+            var rows = profileNode.Attributes.Rows;
+
+
+            if (profileType == ProfileSettingsTypeEnum.Points)
+            { 
+                profileSettingsTab.SelectTab(0);
+
+                var baseValue = rows.Find(AttributeKeys.BasePoint)[AttributeKeys.ValueColumnName].ToString();
+
+                var basePoint = GetPointFromRowValue(baseValue);
+                controller.SetFirsPointForLineProfile(basePoint.CloneWithProjecting(), basePoint);
+
+                var toValue = rows.Find(AttributeKeys.ToPoint)[AttributeKeys.ValueColumnName].ToString();
+
+                var toPoint = GetPointFromRowValue(toValue);
+                controller.SetSecondfPointForLineProfile(toPoint.CloneWithProjecting(), toPoint);
+
+                txtFirstHeight.Text = rows.Find(AttributeKeys.SectionFirstPointHeight)[AttributeKeys.ValueColumnName].ToString();
+                txtSecondHeight.Text = rows.Find(AttributeKeys.SectionSecondPointHeight)[AttributeKeys.ValueColumnName].ToString();
+                txtSecondHeight.Text = rows.Find(AttributeKeys.SectionSecondPointHeight)[AttributeKeys.ValueColumnName].ToString();
+
+            }
+            if (profileType == ProfileSettingsTypeEnum.Fun)
+            {
+                profileSettingsTab.SelectTab(1);
+
+                var baseValue = rows.Find(AttributeKeys.BasePoint)[AttributeKeys.ValueColumnName].ToString();
+
+                var basePoint = GetPointFromRowValue(baseValue);
+                controller.SetCenterPointForFunProfile(basePoint.CloneWithProjecting(), basePoint);
+
+                txtObserverHeight.Text = rows.Find(AttributeKeys.SectionFirstPointHeight)[AttributeKeys.ValueColumnName].ToString();
+
+                var length = rows.Find(AttributeKeys.LineDistance)[AttributeKeys.ValueColumnName].ToString();
+                profileLength.Text = length.Split(',')[0];
+
+                funLinesCount.Text = rows.Find(AttributeKeys.LinesCount)[AttributeKeys.ValueColumnName].ToString();
+                azimuth1.Text = rows.Find(AttributeKeys.Azimuth1)[AttributeKeys.ValueColumnName].ToString();
+                azimuth2.Text = rows.Find(AttributeKeys.Azimuth2)[AttributeKeys.ValueColumnName].ToString();
+            }
+
+            controller.SetProfileSettings(profileType);
+        }
+
+        private IPoint GetPointFromRowValue(string rowValue)
+        {
+            var points = rowValue.Split(';');
+
+            var pointX = Convert.ToDouble(Regex.Match(points[0], @"\d+,?\d+").Value);
+            var pointY = Convert.ToDouble(Regex.Match(points[1], @"\d+,?\d+").Value);
+
+            var av = ArcMap.Document.ActivatedView;
+           
+            return new Point() { X = pointX, Y = pointY, SpatialReference = av.FocusMap.SpatialReference };
         }
     }
 }

@@ -159,13 +159,17 @@
     <Compile Include="IntersectionsInLayer.cs" />
     <Compile Include="LineIntersections.cs" />
     <Compile Include="Localization\LocalizationConstantscs.cs" />
-    <Compile Include="Localization\MilSpace.Profile.Calc.uk-UA.Designer.cs">
+    <Compile Include="Resources\MilSpace.Profile.Calc.Designer.cs">
+      <DependentUpon>MilSpace.Profile.Calc.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\MilSpace.Profile.Calc.uk-UA.Designer.cs">
       <DependentUpon>MilSpace.Profile.Calc.uk-UA.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Localization\MilSpace.Profile.Calc.en-US.Designer.cs">
+    <Compile Include="Resources\MilSpace.Profile.Calc.en-US.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MilSpace.Profile.Calc.en-US.resx</DependentUpon>
@@ -266,14 +270,17 @@
       <DependentUpon>DockableWindowMilSpaceProfileGraph.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Localization\MilSpace.Profile.Calc.uk-UA.resx">
+    <EmbeddedResource Include="Resources\MilSpace.Profile.Calc.uk-UA.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>MilSpace.Profile.Calc.uk-UA.Designer.cs</LastGenOutput>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Localization\MilSpace.Profile.Calc.en-US.resx">
+    <EmbeddedResource Include="Resources\MilSpace.Profile.Calc.en-US.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>MilSpace.Profile.Calc.en-US.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\MilSpace.Profile.Calc.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MilSpace.Profile.Calc.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="ProfilesTreeModalWindow.resx">
       <DependentUpon>ProfilesTreeModalWindow.cs</DependentUpon>
@@ -325,6 +332,9 @@
     <AddInContent Include="Images\Directions.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AddInContent>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Refresh20x20.png" />
   </ItemGroup>
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>

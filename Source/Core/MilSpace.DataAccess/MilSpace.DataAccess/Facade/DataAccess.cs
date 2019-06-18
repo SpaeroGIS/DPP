@@ -206,7 +206,9 @@ namespace MilSpace.DataAccess.Facade
         {
             try
             {
-                return context.MilSp_Sessions.Where(s => s.userName == Environment.UserName).Select(s => s.MilSp_Profile.Get());
+                var result = context.MilSp_Sessions.Where(s => s.userName == Environment.UserName).Select(s => s.MilSp_Profile.Get());
+                log.InfoEx($"Get all profiles ({result.Count()}) for user {Environment.UserName}");
+                return result;
             }
             catch (Exception ex)
             {

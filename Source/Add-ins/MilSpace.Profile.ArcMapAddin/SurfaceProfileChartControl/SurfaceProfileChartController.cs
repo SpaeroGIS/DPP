@@ -6,6 +6,7 @@ using MilSpace.DataAccess.DataTransfer;
 using ESRI.ArcGIS.Display;
 using System.Drawing;
 using MilSpace.DataAccess;
+using System.Text;
 
 namespace MilSpace.Profile.SurfaceProfileChartControl
 {
@@ -20,6 +21,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         private List<LineIntersections> _linesIntersections = new List<LineIntersections>();
 
         private Dictionary<int, bool> _linesStraightnesses = new Dictionary<int, bool>();
+        private Dictionary<int, List<ProfileSurface>> _linesSegments = new Dictionary<int, List<ProfileSurface>>();
 
         internal delegate void ProfileGrapchClickedDelegate(GraphProfileClickedArgs e);
         internal delegate void ProfileChangeInvisiblesZonesDelegate(GroupedLines profileLines, int sessionId,
@@ -104,7 +106,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             _surfaceProfileChart.AddSerie(_profileSession.ProfileSurfaces.Last());
         }
 
-        internal string GetProfileName(ref int currentSessionId, int lineId)
+        internal string GetProfileNameForLabel(ref int currentSessionId, int lineId)
         {
             if (_profileSession.ProfileLines == null || _profileSession.ProfileLines.Count() == 0)
             {
@@ -125,6 +127,18 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
 
             return String.Empty;
+        }
+
+        internal string GetProfileName(int lineId)
+        {
+            if (_profileSession.ProfileLines == null || _profileSession.ProfileLines.Count() == 0)
+            {
+                return _profileSession.SessionName;
+            }
+
+            var sessionId = _profileSession.ProfileLines.First(line => lineId == line.Id).SessionId;
+
+            return _graphsController.GetProfileNameById(sessionId);
         }
 
         internal void AddProfileToExistedGraph()
@@ -165,10 +179,22 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             foreach (var profileSessionProfileLine in profileSurfaces)
             {
-                var profileSurfacePoints = profileSessionProfileLine.ProfileSurfacePoints;
+               // var surfaceSegments = GetLineSegments(profileSessionProfileLine.LineId);
 
-                AddInvisibleZone(observersHeights[profileSessionProfileLine.LineId], profileSessionProfileLine,
-                                    visibleColors[i], invisibleColors[i], false, linesIds);
+                //if (surfaceSegments != null)
+                //{
+                //    foreach(var surfaceSegment in surfaceSegments)
+                //    {
+                //        AddInvisibleZone(surfaceSegment.ProfileSurfacePoints[0].Z + _profileSession.ObserverHeight, surfaceSegment,
+                //                            visibleColors[i], invisibleColors[i], false, linesIds);
+                //    }
+                //}
+                //else
+                //{
+                    AddInvisibleZone(observersHeights[profileSessionProfileLine.LineId], profileSessionProfileLine,
+                                        visibleColors[i], invisibleColors[i], false, linesIds);
+                //}
+               
                 i++;
             }
         }
@@ -284,6 +310,16 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 return result;
             }
 
+        }
+
+        internal List<ProfileSurface> GetLineSegments(int lineId)
+        {
+            if (_linesSegments.Count != 0 && _linesSegments.Keys.FirstOrDefault(key => key == lineId) != 0)
+            {
+                return _linesSegments[lineId];
+            }
+
+            return null;
         }
 
         internal void InvokeOnProfileGraphClicked(double wgs94X, double wgs94Y)
@@ -410,6 +446,65 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         }
 
+        internal string GetProfilePropertiesText(int lineId)
+        {
+            var profilePropertiesText = new StringBuilder();
+            var profileProperty = _surfaceProfileChart.ProfilesProperties.FirstOrDefault(property => property.LineId == lineId);
+
+            if (profileProperty == null)
+            {
+                return String.Empty;
+            }
+
+            var header = "Line number; Azimuth; Point of view; Profile length; Max height; Height difference; Min height; Max angle; Min angle; Visibility percent";
+            profilePropertiesText.AppendLine(header);
+
+            var properties = $"{profileProperty.LineId};{profileProperty.Azimuth};{profileProperty.ObserverHeight};{profileProperty.PathLength};" +
+                             $"{profileProperty.MaxHeight};{profileProperty.MaxHeight - profileProperty.MinHeight};{profileProperty.MinHeight};" +
+                             $"{profileProperty.MaxAngle};{profileProperty.MinAngle};{profileProperty.VisiblePercent}";
+
+            profilePropertiesText.AppendLine(properties);
+
+            return profilePropertiesText.ToString();
+        }
+
+        internal string GetProfilePointsPropertiesText(int lineId)
+        {
+            var pointsPropertiesText = new StringBuilder();
+            var points = _profileSession.ProfileSurfaces.FirstOrDefault(surface => surface.LineId == lineId).ProfileSurfacePoints;
+
+            if (points == null)
+            {
+                return String.Empty;
+            }
+
+            var header = "Number; X; Y; Z; Distance; Vertex; Visible; Intersections";
+            var trueText = "Yes";
+            var falseText = "No";
+
+            pointsPropertiesText.AppendLine(header);
+
+            for(int i = 0; i < points.Count(); i++)
+            {
+                pointsPropertiesText.Append($"{i};{points[i].X};{points[i].Y};{points[i].Z};{points[i].Distance};");
+
+                var vertex = points[i].isVertex ? trueText : falseText;
+                var visible = _surfaceProfileChart.IsPointVisible(lineId, i)? trueText : falseText;
+
+                pointsPropertiesText.AppendLine($"{vertex};{visible};{points[i].Layers.ToString()}");
+            }
+
+            return pointsPropertiesText.ToString();
+        }
+
+        internal void SetSurfaceSegments(List<ProfileSurface> segments)
+        {
+            if (_linesSegments.Keys.FirstOrDefault(key => key == segments[0].LineId) == 0)
+            {
+                _linesSegments.Add(segments[0].LineId, segments);
+            }
+        }
+
         private void SetProfileProperty(ProfileLine profileSessionProfileLine)
         {
             var profileProperty = new ProfileProperties();
@@ -428,7 +523,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             profileProperty.PathLength = FindLength(profileSurfacePoints);
 
-            profileProperty.Azimuth = profileSessionProfileLine.Azimuth;//== double.MinValue?;
+            profileProperty.Azimuth = profileSessionProfileLine.Azimuth;
 
             profileProperty.ObserverHeight = _defaultObserverHeight;
 

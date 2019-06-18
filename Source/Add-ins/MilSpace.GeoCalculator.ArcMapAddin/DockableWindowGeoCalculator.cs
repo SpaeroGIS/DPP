@@ -678,6 +678,6 @@ namespace MilSpace.GeoCalculator
             return new ProjectionsModel(Constants.WgsModel, Constants.PulkovoModel, Constants.UkraineModel);
         }
 
-        #endregion        
+        #endregion
     }
 }
