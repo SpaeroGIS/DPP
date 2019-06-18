@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Графика");
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.btnRefreshLayers = new System.Windows.Forms.Button();
@@ -69,8 +69,6 @@
             this.toolBarButton5 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton3 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton4 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton6 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton7 = new System.Windows.Forms.ToolBarButton();
             this.txtSecondPointY = new System.Windows.Forms.TextBox();
             this.txtSecondPointX = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -85,8 +83,6 @@
             this.toolBarButton56 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton57 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton58 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton59 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton60 = new System.Windows.Forms.ToolBarButton();
             this.txtFirstPointY = new System.Windows.Forms.TextBox();
             this.txtFirstPointX = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -113,8 +109,6 @@
             this.toolBarButton18 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton19 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton20 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton21 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton63 = new System.Windows.Forms.ToolBarButton();
             this.txtBasePointY = new System.Windows.Forms.TextBox();
             this.txtBasePointX = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
@@ -124,7 +118,6 @@
             this.label21 = new System.Windows.Forms.Label();
             this.observerHeightSelection = new System.Windows.Forms.TextBox();
             this.toolBarSelectedPrimitives = new System.Windows.Forms.ToolBar();
-            this.toolBarButton23 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton28 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton25 = new System.Windows.Forms.ToolBarButton();
             this.panel13 = new System.Windows.Forms.Panel();
@@ -165,7 +158,7 @@
             this.toolBtnShowOnMap = new System.Windows.Forms.ToolStripButton();
             this.toolBtnFlash = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.setProfileSettingsToCalc = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.addProfileToExistingGraph = new System.Windows.Forms.ToolStripButton();
             this.addProfileToGraph = new System.Windows.Forms.ToolStripButton();
@@ -833,9 +826,7 @@
             this.toolBarButton2,
             this.toolBarButton5,
             this.toolBarButton3,
-            this.toolBarButton4,
-            this.toolBarButton6,
-            this.toolBarButton7});
+            this.toolBarButton4});
             this.secondPointToolbar.ButtonSize = new System.Drawing.Size(18, 18);
             this.secondPointToolbar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.secondPointToolbar.DropDownArrows = true;
@@ -871,16 +862,6 @@
             // 
             this.toolBarButton4.ImageKey = "Clipboard Paste.png";
             this.toolBarButton4.Name = "toolBarButton4";
-            // 
-            // toolBarButton6
-            // 
-            this.toolBarButton6.Name = "toolBarButton6";
-            this.toolBarButton6.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
-            // 
-            // toolBarButton7
-            // 
-            this.toolBarButton7.ImageKey = "Cancel.png";
-            this.toolBarButton7.Name = "toolBarButton7";
             // 
             // txtSecondPointY
             // 
@@ -972,9 +953,7 @@
             this.toolBarButton55,
             this.toolBarButton56,
             this.toolBarButton57,
-            this.toolBarButton58,
-            this.toolBarButton59,
-            this.toolBarButton60});
+            this.toolBarButton58});
             this.firstPointToolBar.ButtonSize = new System.Drawing.Size(18, 18);
             this.firstPointToolBar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.firstPointToolBar.DropDownArrows = true;
@@ -1011,16 +990,6 @@
             // 
             this.toolBarButton58.ImageKey = "Clipboard Paste.png";
             this.toolBarButton58.Name = "toolBarButton58";
-            // 
-            // toolBarButton59
-            // 
-            this.toolBarButton59.Name = "toolBarButton59";
-            this.toolBarButton59.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
-            // 
-            // toolBarButton60
-            // 
-            this.toolBarButton60.ImageKey = "Cancel.png";
-            this.toolBarButton60.Name = "toolBarButton60";
             // 
             // txtFirstPointY
             // 
@@ -1250,9 +1219,7 @@
             this.toolBarButton17,
             this.toolBarButton18,
             this.toolBarButton19,
-            this.toolBarButton20,
-            this.toolBarButton21,
-            this.toolBarButton63});
+            this.toolBarButton20});
             this.basePointToolbar.ButtonSize = new System.Drawing.Size(18, 18);
             this.basePointToolbar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.basePointToolbar.DropDownArrows = true;
@@ -1293,16 +1260,6 @@
             // 
             this.toolBarButton20.ImageKey = "Clipboard Paste.png";
             this.toolBarButton20.Name = "toolBarButton20";
-            // 
-            // toolBarButton21
-            // 
-            this.toolBarButton21.Name = "toolBarButton21";
-            this.toolBarButton21.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
-            // 
-            // toolBarButton63
-            // 
-            this.toolBarButton63.ImageKey = "Cancel.png";
-            this.toolBarButton63.Name = "toolBarButton63";
             // 
             // txtBasePointY
             // 
@@ -1347,7 +1304,7 @@
             this.primitiveTab.ImageKey = "vector-polygon.png";
             this.primitiveTab.Location = new System.Drawing.Point(4, 24);
             this.primitiveTab.Name = "primitiveTab";
-            this.primitiveTab.Size = new System.Drawing.Size(747, 307);
+            this.primitiveTab.Size = new System.Drawing.Size(428, 307);
             this.primitiveTab.TabIndex = 2;
             this.primitiveTab.Text = "Примитивом";
             this.primitiveTab.UseVisualStyleBackColor = true;
@@ -1373,7 +1330,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 51);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(8, 2, 0, 0);
-            this.panel1.Size = new System.Drawing.Size(747, 26);
+            this.panel1.Size = new System.Drawing.Size(428, 26);
             this.panel1.TabIndex = 45;
             // 
             // label21
@@ -1402,7 +1359,6 @@
             // toolBarSelectedPrimitives
             // 
             this.toolBarSelectedPrimitives.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
-            this.toolBarButton23,
             this.toolBarButton28,
             this.toolBarButton25});
             this.toolBarSelectedPrimitives.ButtonSize = new System.Drawing.Size(18, 18);
@@ -1412,14 +1368,8 @@
             this.toolBarSelectedPrimitives.Location = new System.Drawing.Point(0, 279);
             this.toolBarSelectedPrimitives.Name = "toolBarSelectedPrimitives";
             this.toolBarSelectedPrimitives.ShowToolTips = true;
-            this.toolBarSelectedPrimitives.Size = new System.Drawing.Size(747, 28);
+            this.toolBarSelectedPrimitives.Size = new System.Drawing.Size(428, 28);
             this.toolBarSelectedPrimitives.TabIndex = 27;
-            // 
-            // toolBarButton23
-            // 
-            this.toolBarButton23.ImageKey = "Cancel.png";
-            this.toolBarButton23.Name = "toolBarButton23";
-            this.toolBarButton23.ToolTipText = "показать на карте";
             // 
             // toolBarButton28
             // 
@@ -1439,7 +1389,7 @@
             this.panel13.Location = new System.Drawing.Point(0, 25);
             this.panel13.Name = "panel13";
             this.panel13.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.panel13.Size = new System.Drawing.Size(747, 26);
+            this.panel13.Size = new System.Drawing.Size(428, 26);
             this.panel13.TabIndex = 17;
             // 
             // layersToSelectLine
@@ -1449,7 +1399,7 @@
             this.layersToSelectLine.FormattingEnabled = true;
             this.layersToSelectLine.Location = new System.Drawing.Point(8, 0);
             this.layersToSelectLine.Name = "layersToSelectLine";
-            this.layersToSelectLine.Size = new System.Drawing.Size(739, 21);
+            this.layersToSelectLine.Size = new System.Drawing.Size(420, 21);
             this.layersToSelectLine.TabIndex = 0;
             // 
             // label18
@@ -1480,7 +1430,7 @@
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(738, 56);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(419, 56);
             this.tableLayoutPanel3.TabIndex = 46;
             this.tableLayoutPanel3.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel3_Paint);
             // 
@@ -1492,7 +1442,7 @@
             this.lblCommonLengthValue.Location = new System.Drawing.Point(119, 26);
             this.lblCommonLengthValue.Name = "lblCommonLengthValue";
             this.lblCommonLengthValue.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.lblCommonLengthValue.Size = new System.Drawing.Size(616, 21);
+            this.lblCommonLengthValue.Size = new System.Drawing.Size(297, 21);
             this.lblCommonLengthValue.TabIndex = 62;
             this.lblCommonLengthValue.Text = "0";
             // 
@@ -1504,7 +1454,7 @@
             this.lblSelectedPrimitivesValue.Location = new System.Drawing.Point(119, 0);
             this.lblSelectedPrimitivesValue.Name = "lblSelectedPrimitivesValue";
             this.lblSelectedPrimitivesValue.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.lblSelectedPrimitivesValue.Size = new System.Drawing.Size(616, 21);
+            this.lblSelectedPrimitivesValue.Size = new System.Drawing.Size(297, 21);
             this.lblSelectedPrimitivesValue.TabIndex = 61;
             this.lblSelectedPrimitivesValue.Text = "0";
             // 
@@ -1544,7 +1494,7 @@
             this.loadTab.ImageKey = "Download.png";
             this.loadTab.Location = new System.Drawing.Point(4, 24);
             this.loadTab.Name = "loadTab";
-            this.loadTab.Size = new System.Drawing.Size(747, 307);
+            this.loadTab.Size = new System.Drawing.Size(428, 307);
             this.loadTab.TabIndex = 3;
             this.loadTab.Text = "Загрузить";
             this.loadTab.UseVisualStyleBackColor = true;
@@ -1565,7 +1515,7 @@
             this.toolBar5.Location = new System.Drawing.Point(0, 159);
             this.toolBar5.Name = "toolBar5";
             this.toolBar5.ShowToolTips = true;
-            this.toolBar5.Size = new System.Drawing.Size(747, 28);
+            this.toolBar5.Size = new System.Drawing.Size(428, 28);
             this.toolBar5.TabIndex = 31;
             // 
             // toolBarButton29
@@ -1606,7 +1556,7 @@
             this.richTextBox8.Dock = System.Windows.Forms.DockStyle.Top;
             this.richTextBox8.Location = new System.Drawing.Point(0, 102);
             this.richTextBox8.Name = "richTextBox8";
-            this.richTextBox8.Size = new System.Drawing.Size(747, 57);
+            this.richTextBox8.Size = new System.Drawing.Size(428, 57);
             this.richTextBox8.TabIndex = 30;
             this.richTextBox8.Text = "Выбрано - 1\nДлина - 3 км\nАтрибуты - в строку, подряд: <название>:<значение>; <наз" +
     "вание>:<значение> и т.д";
@@ -1631,7 +1581,7 @@
             this.panel15.Location = new System.Drawing.Point(0, 25);
             this.panel15.Name = "panel15";
             this.panel15.Padding = new System.Windows.Forms.Padding(8, 0, 8, 0);
-            this.panel15.Size = new System.Drawing.Size(747, 52);
+            this.panel15.Size = new System.Drawing.Size(428, 52);
             this.panel15.TabIndex = 28;
             // 
             // panel14
@@ -1646,13 +1596,13 @@
             this.panel14.Margin = new System.Windows.Forms.Padding(3, 4, 3, 3);
             this.panel14.Name = "panel14";
             this.panel14.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.panel14.Size = new System.Drawing.Size(731, 24);
+            this.panel14.Size = new System.Drawing.Size(412, 24);
             this.panel14.TabIndex = 31;
             // 
             // button3
             // 
             this.button3.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button3.Location = new System.Drawing.Point(668, 0);
+            this.button3.Location = new System.Drawing.Point(349, 0);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(63, 24);
             this.button3.TabIndex = 20;
@@ -1713,7 +1663,7 @@
             this.comboBox8.FormattingEnabled = true;
             this.comboBox8.Location = new System.Drawing.Point(8, 31);
             this.comboBox8.Name = "comboBox8";
-            this.comboBox8.Size = new System.Drawing.Size(731, 21);
+            this.comboBox8.Size = new System.Drawing.Size(412, 21);
             this.comboBox8.TabIndex = 0;
             // 
             // richTextBox5
@@ -1723,7 +1673,7 @@
             this.richTextBox5.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.richTextBox5.Location = new System.Drawing.Point(0, 207);
             this.richTextBox5.Name = "richTextBox5";
-            this.richTextBox5.Size = new System.Drawing.Size(747, 100);
+            this.richTextBox5.Size = new System.Drawing.Size(428, 100);
             this.richTextBox5.TabIndex = 27;
             this.richTextBox5.Text = resources.GetString("richTextBox5.Text");
             // 
@@ -1791,25 +1741,25 @@
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.Location = new System.Drawing.Point(3, 65);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode1.Checked = true;
-            treeNode1.ImageKey = "vector-path-line.png";
-            treeNode1.Name = "Points";
-            treeNode1.SelectedImageIndex = 205;
-            treeNode1.Text = "Отрезки";
-            treeNode2.Checked = true;
-            treeNode2.ImageKey = "Editing-Line-icon3.png";
-            treeNode2.Name = "Fun";
-            treeNode2.SelectedImageIndex = 208;
-            treeNode2.Text = "Веер";
-            treeNode3.Checked = true;
-            treeNode3.ImageKey = "vector-polygon.png";
-            treeNode3.Name = "Primitives";
-            treeNode3.SelectedImageIndex = 209;
-            treeNode3.Text = "Графика";
+            treeNode10.Checked = true;
+            treeNode10.ImageKey = "vector-path-line.png";
+            treeNode10.Name = "Points";
+            treeNode10.SelectedImageIndex = 205;
+            treeNode10.Text = "Отрезки";
+            treeNode11.Checked = true;
+            treeNode11.ImageKey = "Editing-Line-icon3.png";
+            treeNode11.Name = "Fun";
+            treeNode11.SelectedImageIndex = 208;
+            treeNode11.Text = "Веер";
+            treeNode12.Checked = true;
+            treeNode12.ImageKey = "vector-polygon.png";
+            treeNode12.Name = "Primitives";
+            treeNode12.SelectedImageIndex = 209;
+            treeNode12.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
+            treeNode10,
+            treeNode11,
+            treeNode12});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(436, 398);
             this.profilesTreeView.TabIndex = 35;
@@ -1832,7 +1782,7 @@
             this.toolBtnShowOnMap,
             this.toolBtnFlash,
             this.toolStripSeparator1,
-            this.toolStripButton4,
+            this.setProfileSettingsToCalc,
             this.toolStripSeparator3,
             this.addProfileToExistingGraph,
             this.addProfileToGraph,
@@ -1876,15 +1826,15 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 30);
             // 
-            // toolStripButton4
+            // setProfileSettingsToCalc
             // 
-            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
-            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(23, 27);
-            this.toolStripButton4.Text = "toolStripButton4";
-            this.toolStripButton4.ToolTipText = "Редактировать профиль";
+            this.setProfileSettingsToCalc.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.setProfileSettingsToCalc.Image = ((System.Drawing.Image)(resources.GetObject("setProfileSettingsToCalc.Image")));
+            this.setProfileSettingsToCalc.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.setProfileSettingsToCalc.Name = "setProfileSettingsToCalc";
+            this.setProfileSettingsToCalc.Size = new System.Drawing.Size(23, 27);
+            this.setProfileSettingsToCalc.ToolTipText = "Редактировать профиль";
+            this.setProfileSettingsToCalc.Click += new System.EventHandler(this.setProfileSettingsToCalc_Click);
             // 
             // toolStripSeparator3
             // 
@@ -2062,8 +2012,6 @@
         private System.Windows.Forms.ToolBarButton toolBarButton5;
         private System.Windows.Forms.ToolBarButton toolBarButton3;
         private System.Windows.Forms.ToolBarButton toolBarButton4;
-        private System.Windows.Forms.ToolBarButton toolBarButton6;
-        private System.Windows.Forms.ToolBarButton toolBarButton7;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Panel panel17;
         private System.Windows.Forms.Label label28;
@@ -2074,8 +2022,6 @@
         private System.Windows.Forms.ToolBarButton toolBarButton56;
         private System.Windows.Forms.ToolBarButton btnCopyFirstPoint;
         private System.Windows.Forms.ToolBarButton toolBarButton58;
-        private System.Windows.Forms.ToolBarButton toolBarButton59;
-        private System.Windows.Forms.ToolBarButton toolBarButton60;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TabPage fanTab;
         private System.Windows.Forms.Panel panel9;
@@ -2098,12 +2044,9 @@
         private System.Windows.Forms.ToolBarButton toolBarButton18;
         private System.Windows.Forms.ToolBarButton toolBarButton19;
         private System.Windows.Forms.ToolBarButton toolBarButton20;
-        private System.Windows.Forms.ToolBarButton toolBarButton21;
-        private System.Windows.Forms.ToolBarButton toolBarButton63;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TabPage primitiveTab;
         private System.Windows.Forms.ToolBar toolBarSelectedPrimitives;
-        private System.Windows.Forms.ToolBarButton toolBarButton23;
         private System.Windows.Forms.ToolBarButton toolBarButton28;
         private System.Windows.Forms.ToolBarButton toolBarButton25;
         private System.Windows.Forms.Panel panel13;
@@ -2172,7 +2115,7 @@
         private System.Windows.Forms.ToolStrip profilesToolStrip;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton eraseProfile;
-        private System.Windows.Forms.ToolStripButton toolStripButton4;
+        private System.Windows.Forms.ToolStripButton setProfileSettingsToCalc;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton addProfileToGraph;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;

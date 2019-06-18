@@ -8,6 +8,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 using MilSpace.DataAccess.DataTransfer;
 using System.Text.RegularExpressions;
 using System.Text;
+using System.IO;
 
 namespace MilSpace.Profile.SurfaceProfileChartControl
 {
@@ -130,23 +131,42 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 Tag = profileSurface
             });
 
+            //var vertices = new List<int>();
+            //int i = 0;
+            var segments = new List<ProfileSurface>();
+            var points = new List<ProfileSurfacePoint>();
+
             foreach (var point in profileSurface.ProfileSurfacePoints)
             {
                 profileChart.Series.Last().Points.AddXY(point.Distance, point.Z);
+                points.Add(point);
 
-                if (point.isVertex && point != profileSurface.ProfileSurfacePoints.First())
+                if (point.isVertex && point != profileSurface.ProfileSurfacePoints.First() && point != profileSurface.ProfileSurfacePoints.Last())
                 {
                     profileChart.Series.Last().Points.Last().MarkerStyle = MarkerStyle.Circle;
                     profileChart.Series.Last().Points.Last().MarkerColor = Color.Red;
 
-                    if (point != profileSurface.ProfileSurfacePoints.Last())
+                    segments.Add(new ProfileSurface
                     {
-                        profileChart.Series.Last().Color = Color.Blue;
-                    }
+                        LineId = profileSurface.LineId,
+                        ProfileSurfacePoints = points.ToArray()
+                    }); 
+
+                    points = new List<ProfileSurfacePoint>();
+
+                    profileChart.Series.Last().Color = Color.Blue;
                 }
+
+                //i++;
+            }
+
+            if (segments.Count > 0)
+            {
+                _controller.SetSurfaceSegments(segments);
             }
 
             profileChart.Series.Last().Points.First().MarkerStyle = MarkerStyle.Circle;
+            profileChart.Series.Last().Points.Last().MarkerStyle = MarkerStyle.Circle;
         }
 
         internal void AddInvisibleLine(ProfileSurface surface)
@@ -781,6 +801,36 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         #region Helpers
 
+        internal bool IsPointVisible(int lineId, int pointNumber)
+        {
+            var serie = profileChart.Series[lineId.ToString()];
+            var index = (pointNumber == serie.Points.Count - 1) ? pointNumber : pointNumber + 1;
+
+            if (serie.Points[index].Color == serie.Color)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        internal string GetSelectedRowData()
+        {
+            var properies = new StringBuilder();
+
+            var row = profilePropertiesTable.Rows[GetSelectedProfileRowIndex()];
+
+            foreach (DataGridViewCell cell in row.Cells)
+            {
+                if (cell != row.Cells[0])
+                {
+                    properies.Append($"{cell.Value};");
+                }
+            }
+
+            return properies.ToString().Remove(properies.Length - 1);
+        }
+
         private ProfileSurface[] GetSurfacesFromChart()
         {
             var profiles = GetProfiles();
@@ -1258,7 +1308,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             SelectedLineId = Convert.ToInt32(serieName);
 
             var id = (int)profileNameLabel.Tag;
-            var profileName = _controller.GetProfileName(ref id, SelectedLineId);
+            var profileName = _controller.GetProfileNameForLabel(ref id, SelectedLineId);
 
             if (profileName != String.Empty)
             {
@@ -1347,14 +1397,67 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         private void SaveGraph()
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            var folderBrowserDialog = new FolderBrowserDialog();
 
-            saveFileDialog.Filter = "|*.png";
-            saveFileDialog.RestoreDirectory = true;
+            var id = (int)profileNameLabel.Tag;
+            var profileName = _controller.GetProfileName(SelectedLineId);
 
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            var fileName = $"{profileName}_";
+
+            folderBrowserDialog.Description = "Select the folder to save data";
+
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                profileChart.SaveImage(saveFileDialog.FileName, ChartImageFormat.Png);
+                fileName = $"{folderBrowserDialog.SelectedPath}\\{fileName}";
+
+                var imageFileName = $"{fileName}graph{SelectedLineId}.emf";
+                var propertiesFileName = $"{fileName}profile{SelectedLineId}.csv";
+                var pointsFileName = $"{fileName}points{SelectedLineId}.csv";
+
+
+                if (File.Exists(imageFileName) || File.Exists(propertiesFileName) || File.Exists(pointsFileName))
+                {
+                    DialogResult result = MessageBox.Show("Файл с таким именем уже существует \n Вы действительно хотите удалить старые данные?",
+                                                                "File already exist", MessageBoxButtons.OKCancel);
+
+                    if (result != DialogResult.OK)
+                    {
+                        return;
+                    }
+                }
+
+                if (GetProfiles().Count > 1)
+                {
+                    OnlySelectedLineShow();
+                    profileChart.SaveImage(imageFileName, ChartImageFormat.Emf);
+                    ChangeLinesVisibility(true);
+                }
+                else
+                {
+                    profileChart.SaveImage(imageFileName, ChartImageFormat.Emf);
+                }
+
+                File.WriteAllText(propertiesFileName, _controller.GetProfilePropertiesText(SelectedLineId));
+                File.WriteAllText(pointsFileName, _controller.GetProfilePointsPropertiesText(SelectedLineId));
+            }
+        }
+
+        private void OnlySelectedLineShow()
+        {
+            ChangeLinesVisibility(false);
+
+            profileChart.Series[SelectedLineId.ToString()].Enabled = true;
+            profileChart.Series[$"ExtremePointsLine{SelectedLineId}"].Enabled = true;
+        }
+
+        private void ChangeLinesVisibility(bool isVisible)
+        {
+            var profiles = GetProfiles();
+
+            foreach (var serie in profiles)
+            {
+                serie.Enabled = isVisible;
+                profileChart.Series[$"ExtremePointsLine{serie.Name}"].Enabled = isVisible;
             }
         }
     }
