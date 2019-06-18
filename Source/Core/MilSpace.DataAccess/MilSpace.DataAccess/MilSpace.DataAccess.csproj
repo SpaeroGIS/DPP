@@ -114,6 +114,11 @@
     <Compile Include="DataTransfer\ProfileSurface.cs" />
     <Compile Include="DataTransfer\ProfileSurfacePoint.cs" />
     <Compile Include="DataTransfer\ProfileLine.cs" />
+    <Compile Include="Definition\MilSpaceVisible.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MilSpaceVisible.dbml</DependentUpon>
+    </Compile>
     <Compile Include="Definition\MilSpaceStorage.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -139,6 +144,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Definition\MilSpaceVisible.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>MilSpaceVisible.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Definition\MilSpaceVisible.dbml.layout">
+      <DependentUpon>MilSpaceVisible.dbml</DependentUpon>
+    </None>
     <None Include="Definition\MilSpaceStorage.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>MilSpaceStorage.designer.cs</LastGenOutput>
