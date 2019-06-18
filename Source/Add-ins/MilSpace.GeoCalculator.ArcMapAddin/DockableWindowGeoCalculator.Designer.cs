@@ -30,10 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowGeoCalculator));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.mgrsToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.utmToolTip = new System.Windows.Forms.ToolTip(this.components);
@@ -137,7 +137,7 @@
             this.TitlePanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.TitlePanel.Location = new System.Drawing.Point(0, 0);
             this.TitlePanel.Name = "TitlePanel";
-            this.TitlePanel.Size = new System.Drawing.Size(230, 24);
+            this.TitlePanel.Size = new System.Drawing.Size(230, 35);
             this.TitlePanel.TabIndex = 49;
             // 
             // TitleLabel
@@ -145,7 +145,7 @@
             this.TitleLabel.AutoSize = true;
             this.TitleLabel.BackColor = System.Drawing.SystemColors.Control;
             this.TitleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.TitleLabel.Location = new System.Drawing.Point(3, 0);
+            this.TitleLabel.Location = new System.Drawing.Point(2, 4);
             this.TitleLabel.Name = "TitleLabel";
             this.TitleLabel.Size = new System.Drawing.Size(129, 20);
             this.TitleLabel.TabIndex = 0;
@@ -163,7 +163,7 @@
             this.CopyButton,
             this.SaveButton});
             this.GeneralToolStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.GeneralToolStrip.Location = new System.Drawing.Point(0, 24);
+            this.GeneralToolStrip.Location = new System.Drawing.Point(0, 35);
             this.GeneralToolStrip.Name = "GeneralToolStrip";
             this.GeneralToolStrip.Size = new System.Drawing.Size(230, 23);
             this.GeneralToolStrip.TabIndex = 50;
@@ -226,7 +226,7 @@
             this.CurrentCoordinatesPanel.Controls.Add(this.XCoordinateTextBox);
             this.CurrentCoordinatesPanel.Controls.Add(this.YCoordinateTextBox);
             this.CurrentCoordinatesPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.CurrentCoordinatesPanel.Location = new System.Drawing.Point(0, 47);
+            this.CurrentCoordinatesPanel.Location = new System.Drawing.Point(0, 58);
             this.CurrentCoordinatesPanel.Name = "CurrentCoordinatesPanel";
             this.CurrentCoordinatesPanel.Size = new System.Drawing.Size(230, 50);
             this.CurrentCoordinatesPanel.TabIndex = 51;
@@ -294,7 +294,7 @@
             this.panel1.Controls.Add(this.WgsXCoordinateTextBox);
             this.panel1.Controls.Add(this.WgsYCoordinateTextBox);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 97);
+            this.panel1.Location = new System.Drawing.Point(0, 108);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(230, 92);
             this.panel1.TabIndex = 52;
@@ -412,7 +412,7 @@
             this.panel2.Controls.Add(this.PulkovoXCoordinateTextBox);
             this.panel2.Controls.Add(this.PulkovoYCoordinateTextBox);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(0, 189);
+            this.panel2.Location = new System.Drawing.Point(0, 200);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(230, 92);
             this.panel2.TabIndex = 53;
@@ -530,7 +530,7 @@
             this.panel3.Controls.Add(this.UkraineXCoordinateTextBox);
             this.panel3.Controls.Add(this.UkraineYCoordinateTextBox);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel3.Location = new System.Drawing.Point(0, 281);
+            this.panel3.Location = new System.Drawing.Point(0, 292);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(230, 92);
             this.panel3.TabIndex = 54;
@@ -646,7 +646,7 @@
             this.panel4.Controls.Add(this.UTMNotationTextBox);
             this.panel4.Controls.Add(this.UTMNotationLabel);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel4.Location = new System.Drawing.Point(0, 373);
+            this.panel4.Location = new System.Drawing.Point(0, 384);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(230, 34);
             this.panel4.TabIndex = 55;
@@ -750,7 +750,7 @@
             this.CopyGridPointButton,
             this.SaveGridPointsButton});
             this.GridToolStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.GridToolStrip.Location = new System.Drawing.Point(0, 407);
+            this.GridToolStrip.Location = new System.Drawing.Point(0, 418);
             this.GridToolStrip.Name = "GridToolStrip";
             this.GridToolStrip.Size = new System.Drawing.Size(230, 23);
             this.GridToolStrip.TabIndex = 56;
@@ -811,14 +811,14 @@
             this.YCoordColumn,
             this.HighlightColumn,
             this.DeleteColumn});
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.PointsGridView.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.PointsGridView.DefaultCellStyle = dataGridViewCellStyle8;
             this.PointsGridView.GridColor = System.Drawing.SystemColors.Window;
             this.PointsGridView.Location = new System.Drawing.Point(0, 439);
             this.PointsGridView.Name = "PointsGridView";
@@ -831,9 +831,9 @@
             // NumberColumn
             // 
             this.NumberColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.NumberColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.NumberColumn.DefaultCellStyle = dataGridViewCellStyle5;
             this.NumberColumn.HeaderText = "";
             this.NumberColumn.Name = "NumberColumn";
             this.NumberColumn.ReadOnly = true;
@@ -842,11 +842,11 @@
             // XCoordColumn
             // 
             this.XCoordColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Transparent;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
-            this.XCoordColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
+            this.XCoordColumn.DefaultCellStyle = dataGridViewCellStyle6;
             this.XCoordColumn.HeaderText = "";
             this.XCoordColumn.Name = "XCoordColumn";
             this.XCoordColumn.ReadOnly = true;
@@ -856,11 +856,11 @@
             // YCoordColumn
             // 
             this.YCoordColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.Transparent;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
-            this.YCoordColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black;
+            this.YCoordColumn.DefaultCellStyle = dataGridViewCellStyle7;
             this.YCoordColumn.HeaderText = "";
             this.YCoordColumn.Name = "YCoordColumn";
             this.YCoordColumn.ReadOnly = true;
