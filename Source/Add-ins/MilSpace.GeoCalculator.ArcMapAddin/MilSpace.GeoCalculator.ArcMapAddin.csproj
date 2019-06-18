@@ -8,7 +8,7 @@
     <ProjectGuid>{C81D35D4-203F-433E-A104-DE0F73295355}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ArcMapAddin</RootNamespace>
+    <RootNamespace>MilSpace.GeoCalculator</RootNamespace>
     <AssemblyName>MilSpace.GeoCalculator.ArcMapAddin</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -83,6 +83,13 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Config.esriaddinx</DependentUpon>
     </Compile>
+    <Compile Include="Enums\RadioButtonsValues.cs" />
+    <Compile Include="ExportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExportForm.Designer.cs">
+      <DependentUpon>ExportForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\ArcMapHelper.cs" />
     <Compile Include="LocalizationContext.cs" />
     <Compile Include="MapInteropTool.cs" />
@@ -121,9 +128,6 @@
     <Compile Include="DockableWindowGeoCalculator.Designer.cs">
       <DependentUpon>DockableWindowGeoCalculator.cs</DependentUpon>
     </Compile>
-    <AddInContent Include="Images\DockableWindow1.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AddInContent>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ESRI.ArcGIS.ArcMapUI">
@@ -134,28 +138,19 @@
     <EmbeddedResource Include="DockableWindowGeoCalculator.resx">
       <DependentUpon>DockableWindowGeoCalculator.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ExportForm.resx">
+      <DependentUpon>ExportForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\Button1Old.png" />
     <Content Include="Images\Center.png" />
-    <Content Include="Images\CenterButton.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\CenterFull.png" />
     <Content Include="Images\Clipboard Copy.png" />
     <Content Include="Images\Clipboard Paste.png" />
-    <Content Include="Images\CopyButton.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\CopyButtonFull.png" />
     <Content Include="Images\DeletePoint.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\DockableWindow.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Forbidden.png" />
@@ -163,20 +158,16 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Save.png" />
-    <Content Include="Images\SaveFull.png" />
-    <Content Include="Images\SaveToXmlButton.png">
+    <AddInContent Include="Images\SaveIco.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Tool.png" />
-    <Content Include="Images\ToolButton.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <AddInContent Include="Images\ToolFull.png">
+    </AddInContent>
+    <AddInContent Include="Images\ToolButton.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AddInContent>
     <Content Include="Images\Write.png" />
     <Content Include="Resources\Localization.xml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>

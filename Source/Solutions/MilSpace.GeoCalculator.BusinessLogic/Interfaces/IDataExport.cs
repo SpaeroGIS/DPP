@@ -11,6 +11,8 @@ namespace MilSpace.GeoCalculator.BusinessLogic.Interfaces
     {
         Task ExportProjectionsToXmlAsync(List<PointModel> pointModels, string path);
         Task ExportProjectionsToXmlAsync(PointModel pointModel, string path);
+        Task ExportProjectionsToCsvAsync(List<PointModel> pointModels, string path);
+        Task ExportProjectionsToCsvAsync(PointModel pointModel, string path);
         string GetStringRepresentationOfProjections(List<PointModel> pointModels);        
     }
 }
