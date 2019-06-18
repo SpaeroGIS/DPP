@@ -131,23 +131,42 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 Tag = profileSurface
             });
 
+            //var vertices = new List<int>();
+            //int i = 0;
+            var segments = new List<ProfileSurface>();
+            var points = new List<ProfileSurfacePoint>();
+
             foreach (var point in profileSurface.ProfileSurfacePoints)
             {
                 profileChart.Series.Last().Points.AddXY(point.Distance, point.Z);
+                points.Add(point);
 
-                if (point.isVertex && point != profileSurface.ProfileSurfacePoints.First())
+                if (point.isVertex && point != profileSurface.ProfileSurfacePoints.First() && point != profileSurface.ProfileSurfacePoints.Last())
                 {
                     profileChart.Series.Last().Points.Last().MarkerStyle = MarkerStyle.Circle;
                     profileChart.Series.Last().Points.Last().MarkerColor = Color.Red;
 
-                    if (point != profileSurface.ProfileSurfacePoints.Last())
+                    segments.Add(new ProfileSurface
                     {
-                        profileChart.Series.Last().Color = Color.Blue;
-                    }
+                        LineId = profileSurface.LineId,
+                        ProfileSurfacePoints = points.ToArray()
+                    }); 
+
+                    points = new List<ProfileSurfacePoint>();
+
+                    profileChart.Series.Last().Color = Color.Blue;
                 }
+
+                //i++;
+            }
+
+            if (segments.Count > 0)
+            {
+                _controller.SetSurfaceSegments(segments);
             }
 
             profileChart.Series.Last().Points.First().MarkerStyle = MarkerStyle.Circle;
+            profileChart.Series.Last().Points.Last().MarkerStyle = MarkerStyle.Circle;
         }
 
         internal void AddInvisibleLine(ProfileSurface surface)
@@ -1391,19 +1410,35 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             {
                 fileName = $"{folderBrowserDialog.SelectedPath}\\{fileName}";
 
+                var imageFileName = $"{fileName}graph{SelectedLineId}.emf";
+                var propertiesFileName = $"{fileName}profile{SelectedLineId}.csv";
+                var pointsFileName = $"{fileName}points{SelectedLineId}.csv";
+
+
+                if (File.Exists(imageFileName) || File.Exists(propertiesFileName) || File.Exists(pointsFileName))
+                {
+                    DialogResult result = MessageBox.Show("Файл с таким именем уже существует \n Вы действительно хотите удалить старые данные?",
+                                                                "File already exist", MessageBoxButtons.OKCancel);
+
+                    if (result != DialogResult.OK)
+                    {
+                        return;
+                    }
+                }
+
                 if (GetProfiles().Count > 1)
                 {
                     OnlySelectedLineShow();
-                    profileChart.SaveImage($"{fileName}graph.emf", ChartImageFormat.Emf);
+                    profileChart.SaveImage(imageFileName, ChartImageFormat.Emf);
                     ChangeLinesVisibility(true);
                 }
                 else
                 {
-                    profileChart.SaveImage($"{fileName}graph.emf", ChartImageFormat.Emf);
+                    profileChart.SaveImage(imageFileName, ChartImageFormat.Emf);
                 }
 
-                File.WriteAllText($"{fileName}profile.csv", _controller.GetProfilePropertiesText(SelectedLineId));
-                File.WriteAllText($"{fileName}points.csv", _controller.GetProfilePointsPropertiesText(SelectedLineId));
+                File.WriteAllText(propertiesFileName, _controller.GetProfilePropertiesText(SelectedLineId));
+                File.WriteAllText(pointsFileName, _controller.GetProfilePointsPropertiesText(SelectedLineId));
             }
         }
 

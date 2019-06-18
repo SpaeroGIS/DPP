@@ -21,6 +21,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         private List<LineIntersections> _linesIntersections = new List<LineIntersections>();
 
         private Dictionary<int, bool> _linesStraightnesses = new Dictionary<int, bool>();
+        private Dictionary<int, List<ProfileSurface>> _linesSegments = new Dictionary<int, List<ProfileSurface>>();
 
         internal delegate void ProfileGrapchClickedDelegate(GraphProfileClickedArgs e);
         internal delegate void ProfileChangeInvisiblesZonesDelegate(GroupedLines profileLines, int sessionId,
@@ -178,10 +179,22 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             foreach (var profileSessionProfileLine in profileSurfaces)
             {
-                var profileSurfacePoints = profileSessionProfileLine.ProfileSurfacePoints;
+               // var surfaceSegments = GetLineSegments(profileSessionProfileLine.LineId);
 
-                AddInvisibleZone(observersHeights[profileSessionProfileLine.LineId], profileSessionProfileLine,
-                                    visibleColors[i], invisibleColors[i], false, linesIds);
+                //if (surfaceSegments != null)
+                //{
+                //    foreach(var surfaceSegment in surfaceSegments)
+                //    {
+                //        AddInvisibleZone(surfaceSegment.ProfileSurfacePoints[0].Z + _profileSession.ObserverHeight, surfaceSegment,
+                //                            visibleColors[i], invisibleColors[i], false, linesIds);
+                //    }
+                //}
+                //else
+                //{
+                    AddInvisibleZone(observersHeights[profileSessionProfileLine.LineId], profileSessionProfileLine,
+                                        visibleColors[i], invisibleColors[i], false, linesIds);
+                //}
+               
                 i++;
             }
         }
@@ -297,6 +310,16 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 return result;
             }
 
+        }
+
+        internal List<ProfileSurface> GetLineSegments(int lineId)
+        {
+            if (_linesSegments.Count != 0 && _linesSegments.Keys.FirstOrDefault(key => key == lineId) != 0)
+            {
+                return _linesSegments[lineId];
+            }
+
+            return null;
         }
 
         internal void InvokeOnProfileGraphClicked(double wgs94X, double wgs94Y)
@@ -436,11 +459,9 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             var header = "Line number; Azimuth; Point of view; Profile length; Max height; Height difference; Min height; Max angle; Min angle; Visibility percent";
             profilePropertiesText.AppendLine(header);
 
-            //var properties = $"{profileProperty.LineId};{profileProperty.Azimuth};{profileProperty.ObserverHeight};{profileProperty.PathLength};" +
-            //                 $"{profileProperty.MaxHeight};{profileProperty.MaxHeight - profileProperty.MinHeight};{profileProperty.MinHeight};" +
-            //                 $"{profileProperty.MaxAngle};{profileProperty.MinAngle};{profileProperty.VisiblePercent}";
-
-            var properties = _surfaceProfileChart.GetSelectedRowData();
+            var properties = $"{profileProperty.LineId};{profileProperty.Azimuth};{profileProperty.ObserverHeight};{profileProperty.PathLength};" +
+                             $"{profileProperty.MaxHeight};{profileProperty.MaxHeight - profileProperty.MinHeight};{profileProperty.MinHeight};" +
+                             $"{profileProperty.MaxAngle};{profileProperty.MinAngle};{profileProperty.VisiblePercent}";
 
             profilePropertiesText.AppendLine(properties);
 
@@ -474,6 +495,14 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
 
             return pointsPropertiesText.ToString();
+        }
+
+        internal void SetSurfaceSegments(List<ProfileSurface> segments)
+        {
+            if (_linesSegments.Keys.FirstOrDefault(key => key == segments[0].LineId) == 0)
+            {
+                _linesSegments.Add(segments[0].LineId, segments);
+            }
         }
 
         private void SetProfileProperty(ProfileLine profileSessionProfileLine)
