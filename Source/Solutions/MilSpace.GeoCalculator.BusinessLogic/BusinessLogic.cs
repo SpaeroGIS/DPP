@@ -125,17 +125,28 @@ namespace MilSpace.GeoCalculator.BusinessLogic
             });            
         }
 
-        public IPoint CreatePoint(double X, double Y, CoordinateSystemModel geoModel)
+        public IPoint CreatePoint(double X, double Y, CoordinateSystemModel geoModel, bool createGeoCoordinateSystem = false)
         {
             var resultPoint = new PointClass();
             resultPoint.PutCoords(X, Y);
             //Create Spatial Reference Factory
             var spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
-            //Projected Coordinate System to project into
-            var projectedCoordinateSystem = spatialReferenceFactory.CreateProjectedCoordinateSystem(geoModel.ESRIWellKnownID);
-            projectedCoordinateSystem.SetFalseOriginAndUnits(geoModel.FalseOriginX, geoModel.FalseOriginY, geoModel.Units);
 
-            resultPoint.SpatialReference = projectedCoordinateSystem;
+            ISpatialReference spatialReference;
+
+            if (createGeoCoordinateSystem)
+            {
+                //Geographical Coordinate System
+                spatialReference = spatialReferenceFactory.CreateGeographicCoordinateSystem(geoModel.ESRIWellKnownID);
+            }
+            else
+            {
+                //Projected Coordinate System to project into
+                spatialReference = spatialReferenceFactory.CreateProjectedCoordinateSystem(geoModel.ESRIWellKnownID);
+            }
+            spatialReference.SetFalseOriginAndUnits(geoModel.FalseOriginX, geoModel.FalseOriginY, geoModel.Units);
+
+            resultPoint.SpatialReference = spatialReference;
 
             return resultPoint;
         }
@@ -223,6 +234,20 @@ namespace MilSpace.GeoCalculator.BusinessLogic
             if (string.IsNullOrWhiteSpace(path)) return;
 
             await _dataExport.ExportProjectionsToXmlAsync(pointModel, path);
+        }
+
+        public async Task SaveLastProjectionToCsvFileAsync(PointModel pointModel, string path)
+        {
+            if (string.IsNullOrWhiteSpace(path)) return;
+
+            await _dataExport.ExportProjectionsToCsvAsync(pointModel, path);
+        }
+
+        public async Task SaveProjectionsToCsvFileAsync(List<PointModel> pointModels, string path)
+        {
+            if (string.IsNullOrWhiteSpace(path)) return;
+
+            await _dataExport.ExportProjectionsToCsvAsync(pointModels, path);
         }
     }
 }

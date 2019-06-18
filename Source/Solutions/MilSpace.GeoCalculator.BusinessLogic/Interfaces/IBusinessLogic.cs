@@ -7,7 +7,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic.Interfaces
 {
     public interface IBusinessLogic
     {
-        IPoint CreatePoint(double X, double Y, CoordinateSystemModel geoModel);
+        IPoint CreatePoint(double X, double Y, CoordinateSystemModel geoModel, bool createGeoCoordinateSystem = false);
         IPoint ProjectPoint(IPoint inputPoint, CoordinateSystemModel singleProjectionModel);
         Task<IPoint> ProjectSelectedPointAsync(int targetCoordinateSystemType, int mousePositionX, int mousePositionY, double falseOriginX = 0, double falseOriginY = 0);
         void CopyCoordinatesToClipboard(List<PointModel> pointModels);
@@ -22,5 +22,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic.Interfaces
         IPoint ConvertToDecimalDegrees(IPoint point, CoordinateSystemModel coordinateSystemModel);
         Task SaveProjectionsToXmlFileAsync(List<PointModel> pointModels, string path);
         Task SaveLastProjectionToXmlFileAsync(PointModel pointModel, string path);
+        Task SaveLastProjectionToCsvFileAsync(PointModel pointModel, string path);
+        Task SaveProjectionsToCsvFileAsync(List<PointModel> pointModels, string path);
     }
 }
