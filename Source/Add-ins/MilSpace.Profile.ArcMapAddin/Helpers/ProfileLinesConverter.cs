@@ -104,6 +104,8 @@ namespace MilSpace.Profile
                 IsPrimitive = true
             };
 
+            lines.Vertices = lines.Lines.Select(line => line.PointFrom).ToList();
+
             return new List<GroupedLines>() { lines };
 
         }
@@ -120,7 +122,7 @@ namespace MilSpace.Profile
             return polylines;
         }
 
-        private static List<IPolyline> SeparatePrimitives(IEnumerable<ProfileSurfacePoint> vertices/*ProfileSurface[] profileSurfaces*/, ISpatialReference spatialReference)
+        private static List<IPolyline> SeparatePrimitives(IEnumerable<ProfileSurfacePoint> vertices, ISpatialReference spatialReference)
         {
             var verticesArray = vertices.ToArray();
             var polylines = new List<IPolyline>();

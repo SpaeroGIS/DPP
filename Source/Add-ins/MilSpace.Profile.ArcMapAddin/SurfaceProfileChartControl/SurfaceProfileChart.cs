@@ -53,14 +53,14 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             _controller.SetProfilesProperties();
             SetProfileView();
 
-            var fullHeights = new Dictionary<int, double>();
+            var heights = new Dictionary<int, double>();
 
             for (int i = 0; i < ProfilesProperties.Count; i++)
             {
-                fullHeights.Add(ProfilesProperties[i].LineId, GetObserverPointFullHeight(ProfilesProperties[i].LineId));
+                heights.Add(ProfilesProperties[i].LineId, ProfilesProperties[i].ObserverHeight);
             }
 
-            _controller.AddInvisibleZones(fullHeights, GetAllColors(true), GetAllColors(false));
+            _controller.AddInvisibleZones(heights, GetAllColors(true), GetAllColors(false));
             _controller.AddExtremePoints();
 
             FillPropertiesTable();
@@ -132,7 +132,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             });
 
             //var vertices = new List<int>();
-            //int i = 0;
+            int i = 1;
             var segments = new List<ProfileSurface>();
             var points = new List<ProfileSurfacePoint>();
 
@@ -144,7 +144,10 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 if (point.isVertex && point != profileSurface.ProfileSurfacePoints.First() && point != profileSurface.ProfileSurfacePoints.Last())
                 {
                     profileChart.Series.Last().Points.Last().MarkerStyle = MarkerStyle.Circle;
-                    profileChart.Series.Last().Points.Last().MarkerColor = Color.Red;
+                    profileChart.Series.Last().Points.Last().MarkerColor = Color.DeepSkyBlue;
+                    profileChart.Series.Last().Points.Last().Name = $"Vertex{i}";
+
+                    i++;
 
                     segments.Add(new ProfileSurface
                     {
@@ -153,15 +156,18 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                     }); 
 
                     points = new List<ProfileSurfacePoint>();
-
-                    profileChart.Series.Last().Color = Color.Blue;
+                    points.Add(point);
                 }
-
-                //i++;
             }
 
             if (segments.Count > 0)
             {
+                segments.Add(new ProfileSurface
+                {
+                    LineId = profileSurface.LineId,
+                    ProfileSurfacePoints = points.ToArray()
+                });
+
                 _controller.SetSurfaceSegments(segments);
             }
 
@@ -695,14 +701,12 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         private void UpdateProfile(string lineId)
         {
-            if (!_controller.IsLineStraight(Convert.ToInt32(lineId)))
-            {
-                return;
-            }
-
             foreach (var point in profileChart.Series[lineId].Points)
             {
-                point.Color = profileChart.Series[lineId].Color;
+                if (!point.Name.Contains("Vertex"))
+                {
+                    point.Color = profileChart.Series[lineId].Color;
+                }
             }
         }
 
@@ -750,14 +754,14 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             UpdateProfiles();
 
-            var fullHeights = new Dictionary<int, double>();
+            var heights = new Dictionary<int, double>();
 
             for (int i = 0; i < ProfilesProperties.Count; i++)
             {
-                fullHeights.Add(ProfilesProperties[i].LineId, GetObserverPointFullHeight(ProfilesProperties[i].LineId));
+                heights.Add(ProfilesProperties[i].LineId, ProfilesProperties[i].ObserverHeight);
             }
 
-            _controller.AddInvisibleZones(fullHeights, GetAllColors(true), GetAllColors(false), GetSurfacesFromChart());
+            _controller.AddInvisibleZones(heights, GetAllColors(true), GetAllColors(false), GetSurfacesFromChart());
             UpdateExtremePoins(profileChart.Series);
             UpdateTableWithNewObserverHeigth(profilePropertiesTable.Rows);
             ShowDetails();
@@ -1328,13 +1332,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             ShowDetails();
             ShowColors();
 
-            var isLineStraight = _controller.IsLineStraight(SelectedLineId);
-
-            invisibleLineColorButton.Visible = isLineStraight;
-            visibleLineColorButton.Visible = isLineStraight;
-
-            InvisibleLineColorLabel.Visible = isLineStraight;
-            visibleLineColorLabel.Visible = isLineStraight;
+            invisibleLineColorButton.Visible = true;
+            visibleLineColorButton.Visible = true;
 
             _controller.InvokeSelectedProfile(SelectedLineId);
             _controller.DrawIntersectionLines(SelectedLineId);

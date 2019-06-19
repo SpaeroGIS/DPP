@@ -204,64 +204,102 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                                         List<int> linesIds = null)
         {
             var invisibleSurface = new ProfileSurface();
-            var invisiblePoints = new List<ProfileSurfacePoint>();
+            var invisibleSurfacePoints = new List<ProfileSurfacePoint>();
+            var groupedLinesSegments = new List<ProfileLine>();
 
-            if (!IsLineStraight(profileSurface.LineId))
+            var surfaceSegments = GetLineSegments(profileSurface.LineId);
+
+            if (surfaceSegments == null)
             {
-                return;
+                surfaceSegments = new List<ProfileSurface> { profileSurface };
             }
 
-            var sightLineKoef = 0.0;
-            var isInvisibleZone = false;
-
-            invisibleSurface.LineId = profileSurface.LineId;
-
-            for (var i = 0; i < profileSurface.ProfileSurfacePoints.Length; i++)
+            foreach (var segment in surfaceSegments)
             {
-                if (!isInvisibleZone)
+                var firstPointDistance = segment.ProfileSurfacePoints[0].Distance;
+                var sightLineKoef = 0.0;
+                var isInvisibleZone = false;
+                var observerFullHeight = observerHeight + segment.ProfileSurfacePoints[0].Z;
+                var invisibleSurfaceSegment = new ProfileSurface();
+                var invisiblePoints = new List<ProfileSurfacePoint>();
+
+                invisibleSurfaceSegment.LineId = profileSurface.LineId;
+
+                for (var i = 0; i < segment.ProfileSurfacePoints.Length; i++)
                 {
-                    if (i < profileSurface.ProfileSurfacePoints.Length - 1)
+                    if (!isInvisibleZone)
                     {
-                        if (CalcAngleOfVisibility(observerHeight, profileSurface.ProfileSurfacePoints[i],
-                            profileSurface.ProfileSurfacePoints[i + 1]) < 0)
+                        if (i < segment.ProfileSurfacePoints.Length - 1)
                         {
-                            var firstInvisiblePoint = profileSurface.ProfileSurfacePoints[i + 1];
+                            if (CalcAngleOfVisibility(observerFullHeight, segment.ProfileSurfacePoints[i],
+                                segment.ProfileSurfacePoints[i + 1], firstPointDistance) < 0)
+                            {
+                                var firstInvisiblePoint = segment.ProfileSurfacePoints[i + 1];
 
-                            invisiblePoints.Add(firstInvisiblePoint);
+                                if (!invisiblePoints.Exists(point => point == firstInvisiblePoint))
+                                {
+                                    invisiblePoints.Add(firstInvisiblePoint);
+                                }
 
-                            isInvisibleZone = true;
-                            sightLineKoef = (firstInvisiblePoint.Z - observerHeight) / (firstInvisiblePoint.Distance);
-                            i++;
+                                isInvisibleZone = true;
+                                sightLineKoef = (firstInvisiblePoint.Z - observerFullHeight) / (firstInvisiblePoint.Distance - firstPointDistance);
+                                i++;
+                            }
                         }
-                    }
-                }
-                else
-                {
-                    if (FindY(observerHeight, sightLineKoef, profileSurface.ProfileSurfacePoints[i].Distance)
-                        < profileSurface.ProfileSurfacePoints[i].Z)
-                    {
-                        isInvisibleZone = false;
-                        invisiblePoints.Add(profileSurface.ProfileSurfacePoints[i]);
-
-                        i++;
                     }
                     else
                     {
-                        invisiblePoints.Add(profileSurface.ProfileSurfacePoints[i]);
+                        if (FindY(observerFullHeight, sightLineKoef, segment.ProfileSurfacePoints[i].Distance - firstPointDistance)
+                            < segment.ProfileSurfacePoints[i].Z)
+                        {
+                            isInvisibleZone = false;
+                            invisiblePoints.Add(segment.ProfileSurfacePoints[i]);
+
+                            i++;
+                        }
+                        else
+                        {
+                            invisiblePoints.Add(segment.ProfileSurfacePoints[i]);
+                        }
                     }
                 }
+
+                invisibleSurfaceSegment.ProfileSurfacePoints = invisiblePoints.ToArray();
+                groupedLinesSegments.AddRange(GetLines(segment, invisibleSurfaceSegment, _profileSession.SessionId));
+
+                invisibleSurfacePoints.AddRange(invisiblePoints);
             }
 
-            invisibleSurface.ProfileSurfacePoints = invisiblePoints.ToArray();
+            invisibleSurface.ProfileSurfacePoints = invisibleSurfacePoints.ToArray();
+            invisibleSurface.LineId = profileSurface.LineId;
+
             _surfaceProfileChart.AddInvisibleLine(invisibleSurface);
             CalcProfilesVisiblePercents(invisibleSurface, profileSurface);
 
-            var profileLines = GetLines(profileSurface, invisibleSurface, _profileSession.SessionId);
-            profileLines.VisibleColor = ColorToEsriRgb(visibleColor);
-            profileLines.InvisibleColor = ColorToEsriRgb(invisibleColor);
+            var profileLines = new GroupedLines
+            {
+                LineId = profileSurface.LineId,
+                Lines = groupedLinesSegments,
+                VisibleColor = ColorToEsriRgb(visibleColor),
+                InvisibleColor = ColorToEsriRgb(invisibleColor)
+            };
+
             profileLines.Polylines = ProfileLinesConverter
                                         .ConvertLineToEsriPolyline(profileLines.Lines,
                                                                      ArcMap.Document.FocusMap.SpatialReference);
+            if (surfaceSegments.Count > 1)
+            {
+                var spatialReference = _profileSession.ProfileLines.First(line => line.Id == profileLines.LineId).SpatialReference;
+                profileLines.Vertices = surfaceSegments.Select(surface =>
+                {
+                    var point = surface.ProfileSurfacePoints.First();
+
+                    return new ProfilePoint { X = point.X, Y = point.Y, SpatialReference = spatialReference };
+                }
+                ).ToList();
+
+                profileLines.IsPrimitive = true;
+            }
 
             if (_profileSession.Segments.Count < profileSurface.LineId - 1)
             {
@@ -838,9 +876,9 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         }
 
         private static double CalcAngleOfVisibility(double observerHeight, ProfileSurfacePoint leftPoint,
-            ProfileSurfacePoint rightPoint)
+            ProfileSurfacePoint rightPoint, double firstPointDistance)
         {
-            var sightLineKoef = (rightPoint.Z - observerHeight) / (rightPoint.Distance);
+            var sightLineKoef = (rightPoint.Z - observerHeight) / (rightPoint.Distance - firstPointDistance);
             var surfaceLineKoef = (rightPoint.Z - leftPoint.Z) / (rightPoint.Distance - leftPoint.Distance);
 
             var result = (surfaceLineKoef - sightLineKoef) / (1 + surfaceLineKoef * sightLineKoef);
@@ -882,7 +920,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             };
         }
 
-        private static GroupedLines GetLines(ProfileSurface allSurface, ProfileSurface invisibleSurface, int sessionId)
+        private static List<ProfileLine> GetLines(ProfileSurface allSurface, ProfileSurface invisibleSurface, int sessionId)
         {
             var profileLines = new List<ProfileLine>();
 
@@ -989,11 +1027,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 }
             }
 
-            return new GroupedLines
-            {
-                Lines = profileLines,
-                LineId = allSurface.LineId
-            };
+            return profileLines;
         }
 
         private static void StartOfLineHandler(ref ProfileLine startLine,
