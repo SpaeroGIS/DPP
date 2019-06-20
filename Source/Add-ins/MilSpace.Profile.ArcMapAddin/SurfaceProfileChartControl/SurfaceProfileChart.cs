@@ -53,14 +53,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             _controller.SetProfilesProperties();
             SetProfileView();
 
-            var heights = new Dictionary<int, double>();
-
-            for (int i = 0; i < ProfilesProperties.Count; i++)
-            {
-                heights.Add(ProfilesProperties[i].LineId, ProfilesProperties[i].ObserverHeight);
-            }
-
-            _controller.AddInvisibleZones(heights, GetAllColors(true), GetAllColors(false));
+            _controller.AddInvisibleZones(GetAllColors(true), GetAllColors(false));
             _controller.AddExtremePoints();
 
             FillPropertiesTable();
@@ -79,9 +72,15 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             SetProfileView();
 
+            var heights = new Dictionary<int, double>();
+
+            for (int i = 0; i < ProfilesProperties.Count; i++)
+            {
+                heights.Add(ProfilesProperties[i].LineId, ProfilesProperties[i].ObserverHeight);
+            }
+
             ProfileSurface profileSurface = GetSurfacesFromChart().Last();
-            _controller.AddInvisibleZone(GetObserverPointFullHeight(Convert.ToInt32(GetProfiles().Last().Name)), profileSurface,
-                                                                        profileChart.Series.Last().Color,
+            _controller.AddInvisibleZone(heights[profileSurface.LineId], profileSurface, profileChart.Series.Last().Color,
                                                                         profileChart.Series.Last().BackSecondaryColor, false);
 
             _controller.AddExtremePoints(profileSurface);
@@ -131,7 +130,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 Tag = profileSurface
             });
 
-            //var vertices = new List<int>();
             int i = 1;
             var segments = new List<ProfileSurface>();
             var points = new List<ProfileSurfacePoint>();
@@ -216,14 +214,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal void AddExtremePoint(ProfileSurfacePoint observerPoint, ProfileSurfacePoint observationPoint, int order)
         {
-            profileChart.Series.Add(new Series
-            {
-                ChartType = SeriesChartType.Line,
-                Color = Color.DarkGray,
-                Name = $"ExtremePointsLine{order}",
-                YValuesPerPoint = 1,
-                IsVisibleInLegend = false
-            });
+            CreateExtremePointsSerie(order);
 
             profileChart.Series[$"ExtremePointsLine{order}"].BorderDashStyle = ChartDashStyle.Dash;
 
@@ -237,6 +228,39 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 profileChart.Series[$"ExtremePointsLine{order}"].Points[1].MarkerColor = Color.Red;
             }
             profileChart.Series[$"ExtremePointsLine{order}"].Points[1].MarkerStyle = MarkerStyle.Circle;
+        }
+
+        internal void AddVertexPoint(ProfileSurfacePoint point, bool isVisible, int lineId, double observerHeight)
+        {
+            var vertexPoint = new DataPoint(point.Distance, point.Z + observerHeight)
+            {
+                MarkerStyle = MarkerStyle.Circle,
+            };
+
+            if (!isVisible)
+            {
+                vertexPoint.MarkerColor = Color.Red;
+            }
+
+            CreateExtremePointsSerie(lineId);
+            profileChart.Series[$"ExtremePointsLine{lineId}"].Points.Add(vertexPoint);
+        }
+
+        private void CreateExtremePointsSerie(int lineId)
+        {
+            if (profileChart.Series.FindByName($"ExtremePointsLine{lineId}") != null)
+            {
+                return;
+            }
+
+            profileChart.Series.Add(new Series
+            {
+                ChartType = SeriesChartType.Line,
+                Color = Color.DarkGray,
+                Name = $"ExtremePointsLine{lineId}",
+                YValuesPerPoint = 1,
+                IsVisibleInLegend = false
+            });
         }
 
         private void FillPropertiesTable(List<ProfileProperties> properties = null)
@@ -647,7 +671,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
         }
 
-        private void UpdateExtremePoins(SeriesCollection series)
+        private void UpdateExtremePoints(SeriesCollection series)
         {
             for (int i = 0; i < GetProfiles().Count(); i++)
             {
@@ -657,6 +681,15 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         private void UpdateProfileExtremePoints(int lineId)
         {
+            var segments = _controller.GetLineSegments(lineId);
+            if (segments != null)
+            {
+                profileChart.Series[$"ExtremePointsLine{lineId}"].Points.Clear();
+                _controller.AddVertexPointsToLine(segments, ProfilesProperties.First(property => property.LineId == lineId).ObserverHeight);
+
+                return;
+            }
+
             var serieName = profileChart.Series[lineId.ToString()].Name;
 
             profileChart.Series[$"ExtremePointsLine{serieName}"].Points[0].SetValueY(GetObserverPointFullHeight(lineId));
@@ -754,15 +787,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             UpdateProfiles();
 
-            var heights = new Dictionary<int, double>();
-
-            for (int i = 0; i < ProfilesProperties.Count; i++)
-            {
-                heights.Add(ProfilesProperties[i].LineId, ProfilesProperties[i].ObserverHeight);
-            }
-
-            _controller.AddInvisibleZones(heights, GetAllColors(true), GetAllColors(false), GetSurfacesFromChart());
-            UpdateExtremePoins(profileChart.Series);
+            _controller.AddInvisibleZones(GetAllColors(true), GetAllColors(false), GetSurfacesFromChart());
+            UpdateExtremePoints(profileChart.Series);
             UpdateTableWithNewObserverHeigth(profilePropertiesTable.Rows);
             ShowDetails();
         }
