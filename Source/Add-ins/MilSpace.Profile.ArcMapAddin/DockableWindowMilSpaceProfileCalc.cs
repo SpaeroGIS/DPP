@@ -30,6 +30,7 @@ namespace MilSpace.Profile
         const int NINE = 57;
         const int NOT_FOUND = -1;
         private const string Degree = "°";
+        private static Logger logger = Logger.GetLoggerEx("SpaceProfileCalc GUI");
 
         private static readonly Dictionary<ProfileSettingsTypeEnum, int[]> nodeDefinition = new Dictionary<ProfileSettingsTypeEnum, int[]>
         {
@@ -187,6 +188,7 @@ namespace MilSpace.Profile
             }
             catch (Exception ex)
             {
+                logger.ErrorEx(ex.Message);
                 //TODO: log exception
                 return false;
             }
@@ -990,6 +992,8 @@ namespace MilSpace.Profile
                 newNode.SetCreatorName(Environment.UserName);
                 newNode.SetDate($"{date.ToLongDateString()} {date.ToLongTimeString()}");
 
+                logger.InfoEx($"Profile  {profile.SessionName} added to the tree");
+
                 //TODO: Localize 
                 string lineDefinition = "Профіль";
 
@@ -1011,6 +1015,8 @@ namespace MilSpace.Profile
                     childNode.SetToPoint($"X={line.Line.ToPoint.X:F5}; Y={line.Line.ToPoint.Y:F5}");
 
                     childNode.SetAzimuth1($"{azimuth}{Degree}");
+
+                    logger.InfoEx($"Line {nodeName} was added to the tree");
 
 
                 }
