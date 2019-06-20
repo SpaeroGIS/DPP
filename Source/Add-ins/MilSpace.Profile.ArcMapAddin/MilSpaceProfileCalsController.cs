@@ -403,7 +403,7 @@ namespace MilSpace.Profile
                 if (profile.DefinitionType == ProfileSettingsTypeEnum.Primitives)
                 {
                     profile.Segments = ProfileLinesConverter.GetSegmentsFromProfileLine(profile.ProfileSurfaces, spatialReference);
-                    GraphicsLayerManager.AddLinesToWorkingGraphics(ProfileLinesConverter.ConvertLineToPrimitivePolylines(profile.ProfileSurfaces,
+                    GraphicsLayerManager.AddLinesToWorkingGraphics(ProfileLinesConverter.ConvertLineToPrimitivePolylines(profile.ProfileSurfaces[0],
                                                                                                                            spatialReference),
                                                                    profile.SessionId,
                                                                    profile.Segments.First());
@@ -686,8 +686,12 @@ namespace MilSpace.Profile
         
         private void CalcIntesectionsWithLayers(ProfileLine selectedLine, ProfileSession profileSession)
         {
-            var intersectionLines = new List<IntersectionsInLayer>();
+            var allIntersectionLines = new List<IntersectionsInLayer>();
             var layers = View.GetLayers();
+            var spatialReference = ArcMap.Document.FocusMap.SpatialReference;
+
+            List<IPolyline> polylines;
+            List<ProfilePoint> pointsFrom;
 
             profileSession.Layers = new List<string>();
 
@@ -696,42 +700,76 @@ namespace MilSpace.Profile
                 return;
             }
 
-            if (selectedLine.Line.SpatialReference == null)
+            if (selectedLine.Line.SpatialReference != spatialReference)
             {
-                selectedLine.Line.Project(ArcMap.Document.FocusMap.SpatialReference);
+                selectedLine.Line.Project(spatialReference);
             }
 
-            for (int i = 0; i < layers.Count; i++)
+            var lineSurface = profileSession.ProfileSurfaces.First(surface => surface.LineId == selectedLine.Id);
+            var profileSegment = profileSession.Segments.First(segment => segment.LineId == selectedLine.Id);
+            var distance = 0.0;
+
+            if (profileSegment.IsPrimitive)
             {
-                if (!string.IsNullOrEmpty(layers[i]))
+                polylines = ProfileLinesConverter.ConvertLineToPrimitivePolylines(lineSurface, selectedLine.Line.SpatialReference);
+                pointsFrom = profileSegment.Vertices;
+            }
+            else
+            {
+                polylines = new List<IPolyline> { selectedLine.Line };
+                pointsFrom = new List<ProfilePoint> { selectedLine.PointFrom };
+            }
+
+            int j = 0;
+
+            for (int n = 0; n <  polylines.Count; n++)
+            {
+                var intersectionLines = new List<IntersectionsInLayer>();
+               
+                for (int i = 0; i < layers.Count; i++)
                 {
-                    var layer = EsriTools.GetLayer(layers[i], ArcMap.Document.FocusMap);
-                    var lines = EsriTools.GetIntersections(selectedLine.Line, layer);
-
-                    var layerFullName = $"Path/{layer.Name}";
-
-                    if (!profileSession.Layers.Exists(sessionLayer => sessionLayer == layerFullName))
+                    if (!string.IsNullOrEmpty(layers[i]))
                     {
-                        profileSession.Layers.Add(layerFullName);
-                    }
+                        var layer = EsriTools.GetLayer(layers[i], ArcMap.Document.FocusMap);
+                        var lines = EsriTools.GetIntersections(polylines[n], layer);
 
-                    if (lines != null && lines.Count() > 0)
-                    {
-                        var layerType = (LayersEnum)Enum.GetValues(typeof(LayersEnum)).GetValue(i);
-                        var intersectionLine = new IntersectionsInLayer
+                        var layerFullName = $"Path/{layer.Name}";
+
+                        if (!profileSession.Layers.Exists(sessionLayer => sessionLayer == layerFullName))
                         {
-                            Lines = ProfileLinesConverter.ConvertEsriPolylineToIntersectionLines(lines, selectedLine.PointFrom, layerType),
-                            Type = layerType,
-                        };
+                            profileSession.Layers.Add(layerFullName);
+                        }
 
-                        intersectionLine.SetDefaultColor();
-                        intersectionLines.Add(intersectionLine);
-                        SetLayersForPoints(intersectionLine, profileSession.ProfileSurfaces.First(surface => surface.LineId == selectedLine.Id));
+                        if (lines != null && lines.Count() > 0)
+                        {
+                            var layerType = (LayersEnum)Enum.GetValues(typeof(LayersEnum)).GetValue(i);
+                            var intersectionLine = new IntersectionsInLayer
+                            {
+                                Lines = ProfileLinesConverter.ConvertEsriPolylineToIntersectionLines(lines, pointsFrom[j], layerType, distance),
+                                Type = layerType,
+                            };
+
+                            intersectionLine.SetDefaultColor();
+                            intersectionLines.Add(intersectionLine);
+                            SetLayersForPoints(intersectionLine, lineSurface);
+                        }
+                    }
+                }
+
+                allIntersectionLines.AddRange(intersectionLines);
+
+                if (polylines.Count > 1)
+                {
+                    j++;
+
+                    if (n < polylines.Count - 1)
+                    {
+                        distance += EsriTools.CreatePolylineFromPoints(polylines[n].FromPoint, polylines[n + 1].FromPoint).Length;
                     }
                 }
             }
 
-            graphsController.SetIntersections(intersectionLines, selectedLine.Id);
+            graphsController.SetIntersections(allIntersectionLines, selectedLine.Id);
         }
 
         private void SetLayersForPoints(IntersectionsInLayer intersections, ProfileSurface surface)
