@@ -53,7 +53,9 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Display, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Editor, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -114,6 +116,11 @@
     <Compile Include="DataTransfer\ProfileSurface.cs" />
     <Compile Include="DataTransfer\ProfileSurfacePoint.cs" />
     <Compile Include="DataTransfer\ProfileLine.cs" />
+    <Compile Include="Definition\MilSpaceVisible.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MilSpaceVisible.dbml</DependentUpon>
+    </Compile>
     <Compile Include="Definition\MilSpaceStorage.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -139,6 +146,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Definition\MilSpaceVisible.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>MilSpaceVisible.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Definition\MilSpaceVisible.dbml.layout">
+      <DependentUpon>MilSpaceVisible.dbml</DependentUpon>
+    </None>
     <None Include="Definition\MilSpaceStorage.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>MilSpaceStorage.designer.cs</LastGenOutput>
