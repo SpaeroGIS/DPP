@@ -22,4 +22,5 @@
 <ShowPointOnMap>Показать на карте</ShowPointOnMap>
 <DeletePoint>Удалить</DeletePoint>
 <CopyCoordinateButton>Скопировать координаты в буфер обмена</CopyCoordinateButton>
+<PasteCoordinateButton>Вставить координаты из буфера обмена</PasteCoordinateButton>
 </CoordinatesConverter>
