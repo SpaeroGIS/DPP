@@ -160,7 +160,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
         }
 
-        internal void AddInvisibleZones(Dictionary<int, double> observersHeights, List<Color> visibleColors, List<Color> invisibleColors,
+        internal void AddInvisibleZones(List<Color> visibleColors, List<Color> invisibleColors,
                                             ProfileSurface[] profileSurfaces = null)
         {
             var i = 0;
@@ -179,22 +179,12 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             foreach (var profileSessionProfileLine in profileSurfaces)
             {
-               // var surfaceSegments = GetLineSegments(profileSessionProfileLine.LineId);
+                var observerHeight = _surfaceProfileChart.ProfilesProperties
+                                                         .First(property => property.LineId == profileSessionProfileLine.LineId)
+                                                         .ObserverHeight;
 
-                //if (surfaceSegments != null)
-                //{
-                //    foreach(var surfaceSegment in surfaceSegments)
-                //    {
-                //        AddInvisibleZone(surfaceSegment.ProfileSurfacePoints[0].Z + _profileSession.ObserverHeight, surfaceSegment,
-                //                            visibleColors[i], invisibleColors[i], false, linesIds);
-                //    }
-                //}
-                //else
-                //{
-                    AddInvisibleZone(observersHeights[profileSessionProfileLine.LineId], profileSessionProfileLine,
+               AddInvisibleZone(observerHeight, profileSessionProfileLine,
                                         visibleColors[i], invisibleColors[i], false, linesIds);
-                //}
-               
                 i++;
             }
         }
@@ -206,12 +196,13 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             var invisibleSurface = new ProfileSurface();
             var invisibleSurfacePoints = new List<ProfileSurfacePoint>();
             var groupedLinesSegments = new List<ProfileLine>();
-
+            var isPrimitive = true;
             var surfaceSegments = GetLineSegments(profileSurface.LineId);
 
             if (surfaceSegments == null)
             {
                 surfaceSegments = new List<ProfileSurface> { profileSurface };
+                isPrimitive = false;
             }
 
             foreach (var segment in surfaceSegments)
@@ -287,7 +278,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             profileLines.Polylines = ProfileLinesConverter
                                         .ConvertLineToEsriPolyline(profileLines.Lines,
                                                                      ArcMap.Document.FocusMap.SpatialReference);
-            if (surfaceSegments.Count > 1)
+            if (isPrimitive)
             {
                 var spatialReference = _profileSession.ProfileLines.First(line => line.Id == profileLines.LineId).SpatialReference;
                 profileLines.Vertices = surfaceSegments.Select(surface =>
@@ -543,6 +534,37 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
         }
 
+
+        internal void AddVertexPointsToLine(List<ProfileSurface> segments, double observerHeight)
+        {
+            _surfaceProfileChart.AddVertexPoint(segments[0].ProfileSurfacePoints.First(), true, segments[0].LineId, observerHeight);
+
+            for (int i = 0; i < segments.Count(); i++)
+            {
+                var isVisible = true;
+                var points = segments[i].ProfileSurfacePoints;
+
+                var minHeightPoint = (points[0].Z > points.Last().Z) ? points.Last().Z : points[0].Z;
+                minHeightPoint += observerHeight;
+
+                for (int j = 0; j < points.Count() - 1; j++)
+                {
+                    if (points[j].Z < minHeightPoint && points[j + 1].Z < minHeightPoint)
+                    {
+                        continue;
+                    }
+
+                    //if (IsLinesIntersected(points[0], points.Last(), points[j], points[j + 1], observerHeight))
+                    //{
+                    //    isVisible = false;
+                    //    break;
+                    //}
+                }
+
+                _surfaceProfileChart.AddVertexPoint(points.Last(), isVisible, segments[i].LineId, observerHeight);
+            }
+        }
+
         private void SetProfileProperty(ProfileLine profileSessionProfileLine)
         {
             var profileProperty = new ProfileProperties();
@@ -768,17 +790,41 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             {
                 foreach (var profileSessionProfileLine in _profileSession.ProfileLines)
                 {
-                    var profileSurfacePoints = _profileSession.ProfileSurfaces.FirstOrDefault(surface =>
-                       surface.LineId == profileSessionProfileLine.Id).ProfileSurfacePoints;
+                    var segments = GetLineSegments(profileSessionProfileLine.Id);
+                    if (segments == null)
+                    {
+                        var profileSurfacePoints = _profileSession.ProfileSurfaces.FirstOrDefault(surface =>
+                      surface.LineId == profileSessionProfileLine.Id).ProfileSurfacePoints;
 
-                    extremePoints.Add(profileSurfacePoints.Last());
+                        extremePoints.Add(profileSurfacePoints.Last());
+                    }
+                    else
+                    {
+                        var observerHeight = _surfaceProfileChart.ProfilesProperties
+                                                        .First(property => property.LineId == profileSessionProfileLine.Id)
+                                                        .ObserverHeight;
+
+                        AddVertexPointsToLine(segments, observerHeight);
+                    }
                 }
             }
             else
             {
                 var profileSurfacePoints = profileSurface.ProfileSurfacePoints;
 
-                extremePoints.Add(profileSurfacePoints.Last());
+                var segments = GetLineSegments(profileSurface.LineId);
+                if (segments == null)
+                {
+                    extremePoints.Add(profileSurfacePoints.Last());
+                }
+                else
+                {
+                    var observerHeight = _surfaceProfileChart.ProfilesProperties
+                                                        .First(property => property.LineId == profileSurface.LineId)
+                                                        .ObserverHeight;
+
+                    AddVertexPointsToLine(segments, observerHeight);
+                }
             }
 
             return extremePoints;
@@ -873,6 +919,23 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             angle = RadiansToDegrees(angle);
 
             return (rightPoint.Z < leftPoint.Z) ? angle * (-1) : angle;
+        }
+
+        private static bool IsLinesIntersected(ProfileSurfacePoint firstStartPoint, ProfileSurfacePoint firstEndPoint,
+                                                        ProfileSurfacePoint secondStartPoint, ProfileSurfacePoint secondEndPoint, double observerHeight)
+        {
+            double startPointsYDiff = secondStartPoint.Z - (firstStartPoint.Z + observerHeight);
+            double startPointsXDiff = firstStartPoint.Distance - secondStartPoint.Distance;
+            double endPointsYDiff = secondEndPoint.Z - (firstEndPoint.Z + observerHeight);
+            double endPointsXDiff = firstEndPoint.Distance - secondEndPoint.Distance;
+
+            double k1 = startPointsYDiff * firstStartPoint.Distance + startPointsXDiff * firstStartPoint.Z;
+           
+            double k2 = endPointsYDiff * firstEndPoint.Distance + endPointsXDiff * firstEndPoint.Z;
+
+            double delta = startPointsYDiff * endPointsXDiff - endPointsYDiff * startPointsXDiff;
+
+            return delta != 0;
         }
 
         private static double CalcAngleOfVisibility(double observerHeight, ProfileSurfacePoint leftPoint,
