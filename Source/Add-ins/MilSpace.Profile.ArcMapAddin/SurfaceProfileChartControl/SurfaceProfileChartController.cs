@@ -45,9 +45,9 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         {
             _profileSession = profileSession;
 
-            if (_profileSession.ProfileLines != null && _profileSession.ProfileLines.Count() > 0)
+            if(_profileSession.ProfileLines != null && _profileSession.ProfileLines.Count() > 0)
             {
-                for (int i = 0; i < _profileSession.ProfileLines.Count(); i++)
+                for(int i = 0; i < _profileSession.ProfileLines.Count(); i++)
                 {
                     _profileSession.ProfileLines[i].SessionId = _profileSession.SessionId;
                 }
@@ -64,7 +64,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         {
             _graphsController = graphsController;
 
-            if (_profileSession.ProfileLines != null && _profileSession.ProfileLines.Count() == 1)
+            if(_profileSession.ProfileLines != null && _profileSession.ProfileLines.Count() == 1)
             {
                 InvokeSelectedProfile(1);
             }
@@ -76,7 +76,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             _surfaceProfileChart = new SurfaceProfileChart(this);
 
-            if (_profileSession.DefinitionType != ProfileSettingsTypeEnum.Composed)
+            if(_profileSession.DefinitionType != ProfileSettingsTypeEnum.Composed)
             {
                 _surfaceProfileChart.InitializeGraph();
             }
@@ -95,7 +95,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal void LoadSeries()
         {
-            if (_profileSession.ProfileLines != null)
+            if(_profileSession.ProfileLines != null)
             {
                 _surfaceProfileChart.InitializeGraph(_profileSession);
             }
@@ -108,19 +108,19 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal string GetProfileNameForLabel(ref int currentSessionId, int lineId)
         {
-            if (_profileSession.ProfileLines == null || _profileSession.ProfileLines.Count() == 0)
+            if(_profileSession.ProfileLines == null || _profileSession.ProfileLines.Count() == 0)
             {
                 return _profileSession.SessionName;
             }
 
             var sessionId = _profileSession.ProfileLines.First(line => lineId == line.Id).SessionId;
 
-            if (sessionId != currentSessionId)
+            if(sessionId != currentSessionId)
             {
                 currentSessionId = sessionId;
                 var sessionName = _graphsController.GetProfileNameById(sessionId);
 
-                if (!String.IsNullOrEmpty(sessionName))
+                if(!String.IsNullOrEmpty(sessionName))
                 {
                     return sessionName;
                 }
@@ -131,7 +131,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal string GetProfileName(int lineId)
         {
-            if (_profileSession.ProfileLines == null || _profileSession.ProfileLines.Count() == 0)
+            if(_profileSession.ProfileLines == null || _profileSession.ProfileLines.Count() == 0)
             {
                 return _profileSession.SessionName;
             }
@@ -148,7 +148,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal void AddExtremePoints(ProfileSurface profileSurface = null)
         {
-            if (profileSurface == null)
+            if(profileSurface == null)
             {
                 _extremePoints = FindExtremePoints();
                 _surfaceProfileChart.SetExtremePoints(_extremePoints);
@@ -165,26 +165,26 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         {
             var i = 0;
 
-            if (profileSurfaces == null)
+            if(profileSurfaces == null)
             {
                 profileSurfaces = _profileSession.ProfileSurfaces;
             }
 
             List<int> linesIds = new List<int>();
 
-            foreach (var surface in profileSurfaces)
+            foreach(var surface in profileSurfaces)
             {
                 linesIds.Add(surface.LineId);
             }
 
-            foreach (var profileSessionProfileLine in profileSurfaces)
+            foreach(var profileSessionProfileLine in profileSurfaces)
             {
                 var observerHeight = _surfaceProfileChart.ProfilesProperties
                                                          .First(property => property.LineId == profileSessionProfileLine.LineId)
                                                          .ObserverHeight;
 
-               AddInvisibleZone(observerHeight, profileSessionProfileLine,
-                                        visibleColors[i], invisibleColors[i], false, linesIds);
+                AddInvisibleZone(observerHeight, profileSessionProfileLine,
+                                         visibleColors[i], invisibleColors[i], false, linesIds);
                 i++;
             }
         }
@@ -199,13 +199,13 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             var isPrimitive = true;
             var surfaceSegments = GetLineSegments(profileSurface.LineId);
 
-            if (surfaceSegments == null)
+            if(surfaceSegments == null)
             {
                 surfaceSegments = new List<ProfileSurface> { profileSurface };
                 isPrimitive = false;
             }
 
-            foreach (var segment in surfaceSegments)
+            foreach(var segment in surfaceSegments)
             {
                 var firstPointDistance = segment.ProfileSurfacePoints[0].Distance;
                 var sightLineKoef = 0.0;
@@ -216,18 +216,18 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
                 invisibleSurfaceSegment.LineId = profileSurface.LineId;
 
-                for (var i = 0; i < segment.ProfileSurfacePoints.Length; i++)
+                for(var i = 0; i < segment.ProfileSurfacePoints.Length; i++)
                 {
-                    if (!isInvisibleZone)
+                    if(!isInvisibleZone)
                     {
-                        if (i < segment.ProfileSurfacePoints.Length - 1)
+                        if(i < segment.ProfileSurfacePoints.Length - 1)
                         {
-                            if (CalcAngleOfVisibility(observerFullHeight, segment.ProfileSurfacePoints[i],
+                            if(CalcAngleOfVisibility(observerFullHeight, segment.ProfileSurfacePoints[i],
                                 segment.ProfileSurfacePoints[i + 1], firstPointDistance) < 0)
                             {
                                 var firstInvisiblePoint = segment.ProfileSurfacePoints[i + 1];
 
-                                if (!invisiblePoints.Exists(point => point == firstInvisiblePoint))
+                                if(!invisiblePoints.Exists(point => point == firstInvisiblePoint))
                                 {
                                     invisiblePoints.Add(firstInvisiblePoint);
                                 }
@@ -240,7 +240,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                     }
                     else
                     {
-                        if (FindY(observerFullHeight, sightLineKoef, segment.ProfileSurfacePoints[i].Distance - firstPointDistance)
+                        if(FindY(observerFullHeight, sightLineKoef, segment.ProfileSurfacePoints[i].Distance - firstPointDistance)
                             < segment.ProfileSurfacePoints[i].Z)
                         {
                             isInvisibleZone = false;
@@ -278,7 +278,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             profileLines.Polylines = ProfileLinesConverter
                                         .ConvertLineToEsriPolyline(profileLines.Lines,
                                                                      ArcMap.Document.FocusMap.SpatialReference);
-            if (isPrimitive)
+            if(isPrimitive)
             {
                 var spatialReference = _profileSession.ProfileLines.First(line => line.Id == profileLines.LineId).SpatialReference;
                 profileLines.Vertices = surfaceSegments.Select(surface =>
@@ -292,7 +292,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 profileLines.IsPrimitive = true;
             }
 
-            if (_profileSession.Segments.Count < profileSurface.LineId - 1)
+            if(_profileSession.Segments.Count < profileSurface.LineId - 1)
             {
                 _profileSession.Segments.Add(profileLines);
             }
@@ -307,7 +307,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal void SetProfilesProperties()
         {
-            foreach (var profileSessionProfileLine in _profileSession.ProfileLines)
+            foreach(var profileSessionProfileLine in _profileSession.ProfileLines)
             {
                 SetProfileProperty(profileSessionProfileLine);
             }
@@ -320,7 +320,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal bool IsLineStraight(int lineId)
         {
-            if (_linesStraightnesses.Keys.Contains(lineId))
+            if(_linesStraightnesses.Keys.Contains(lineId))
             {
                 return _linesStraightnesses[lineId];
             }
@@ -328,7 +328,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             {
                 var result = true;
 
-                if (_profileSession.ProfileSurfaces.First(surface => surface.LineId == lineId)
+                if(_profileSession.ProfileSurfaces.First(surface => surface.LineId == lineId)
                                .ProfileSurfacePoints.Where(point => point.isVertex == true)
                                .Count() > 2)
                 {
@@ -343,7 +343,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal List<ProfileSurface> GetLineSegments(int lineId)
         {
-            if (_linesSegments.Count != 0 && _linesSegments.Keys.FirstOrDefault(key => key == lineId) != 0)
+            if(_linesSegments.Count != 0 && _linesSegments.Keys.FirstOrDefault(key => key == lineId) != 0)
             {
                 return _linesSegments[lineId];
             }
@@ -360,11 +360,11 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal void InvokeProfileRemoved(int profileId)
         {
-            if (_linesIntersections != null)
+            if(_linesIntersections != null)
             {
                 var intrersections = _linesIntersections.FirstOrDefault(line => line.LineId == profileId);
 
-                if (intrersections != null)
+                if(intrersections != null)
                 {
                     _linesIntersections.Remove(_linesIntersections.FirstOrDefault(line => line.LineId == profileId));
                 }
@@ -387,14 +387,14 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal void InvokeSelectedProfile(int selectedLineId)
         {
-            if (_profileSession.Segments == null)
+            if(_profileSession.Segments == null)
             {
                 return;
             }
 
             var oldSelectedLine = _profileSession.Segments.Find(segment => segment.IsSelected == true);
 
-            if (selectedLineId == -1)
+            if(selectedLineId == -1)
             {
                 SelectedProfileChanged?.Invoke(oldSelectedLine, null, _profileSession.SessionId);
             }
@@ -402,7 +402,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             {
                 var newSelectedLine = _profileSession.Segments.First(segment => segment.LineId == selectedLineId);
 
-                if (oldSelectedLine == newSelectedLine)
+                if(oldSelectedLine == newSelectedLine)
                 {
                     oldSelectedLine = null;
                 }
@@ -411,7 +411,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 newSelectedLine.IsSelected = true;
             }
 
-            if (oldSelectedLine != null)
+            if(oldSelectedLine != null)
             {
                 oldSelectedLine.IsSelected = false;
             }
@@ -424,7 +424,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal void AddLineToGraph(ProfileLine profileLine, ProfileSurface profileSurface)
         {
-            if (_profileSession.ProfileLines == null)
+            if(_profileSession.ProfileLines == null)
             {
                 InitializeComposedGraph(profileLine, profileSurface);
             }
@@ -438,7 +438,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         {
             var lineIntersection = _linesIntersections.FirstOrDefault(line => line.LineId == lineId);
 
-            if (lineIntersection != null)
+            if(lineIntersection != null)
             {
                 _linesIntersections.Remove(lineIntersection);
             }
@@ -452,14 +452,14 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal void DrawIntersectionLines(int lineId)
         {
-            if (_linesIntersections.Count == 0)
+            if(_linesIntersections.Count == 0)
             {
                 return;
             }
 
             var intersectionLines = _linesIntersections.FirstOrDefault(line => line.LineId == lineId);
 
-            if (intersectionLines == null || intersectionLines.Intersections.Count == 0)
+            if(intersectionLines == null || intersectionLines.Intersections.Count == 0)
             {
                 _surfaceProfileChart.ClearIntersectionLines();
                 return;
@@ -480,7 +480,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             var profilePropertiesText = new StringBuilder();
             var profileProperty = _surfaceProfileChart.ProfilesProperties.FirstOrDefault(property => property.LineId == lineId);
 
-            if (profileProperty == null)
+            if(profileProperty == null)
             {
                 return String.Empty;
             }
@@ -502,7 +502,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             var pointsPropertiesText = new StringBuilder();
             var points = _profileSession.ProfileSurfaces.FirstOrDefault(surface => surface.LineId == lineId).ProfileSurfacePoints;
 
-            if (points == null)
+            if(points == null)
             {
                 return String.Empty;
             }
@@ -518,7 +518,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 pointsPropertiesText.Append($"{i};{points[i].X};{points[i].Y};{points[i].Z};{points[i].Distance};");
 
                 var vertex = points[i].isVertex ? trueText : falseText;
-                var visible = _surfaceProfileChart.IsPointVisible(lineId, i)? trueText : falseText;
+                var visible = _surfaceProfileChart.IsPointVisible(lineId, i) ? trueText : falseText;
 
                 pointsPropertiesText.AppendLine($"{vertex};{visible};{points[i].Layers.ToString()}");
             }
@@ -528,7 +528,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal void SetSurfaceSegments(List<ProfileSurface> segments)
         {
-            if (_linesSegments.Keys.FirstOrDefault(key => key == segments[0].LineId) == 0)
+            if(_linesSegments.Keys.FirstOrDefault(key => key == segments[0].LineId) == 0)
             {
                 _linesSegments.Add(segments[0].LineId, segments);
             }
@@ -539,7 +539,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         {
             _surfaceProfileChart.AddVertexPoint(segments[0].ProfileSurfacePoints.First(), true, segments[0].LineId, observerHeight);
 
-            for (int i = 0; i < segments.Count(); i++)
+            for(int i = 0; i < segments.Count(); i++)
             {
                 var isVisible = true;
                 var points = segments[i].ProfileSurfacePoints;
@@ -547,18 +547,21 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 var minHeightPoint = (points[0].Z > points.Last().Z) ? points.Last().Z : points[0].Z;
                 minHeightPoint += observerHeight;
 
-                for (int j = 0; j < points.Count() - 1; j++)
+                for(int j = 0; j < points.Count() - 1; j++)
                 {
-                    if (points[j].Z < minHeightPoint && points[j + 1].Z < minHeightPoint)
+                    if(points[j].Z < minHeightPoint && points[j + 1].Z < minHeightPoint)
                     {
                         continue;
                     }
 
-                    //if (IsLinesIntersected(points[0], points.Last(), points[j], points[j + 1], observerHeight))
-                    //{
-                    //    isVisible = false;
-                    //    break;
-                    //}
+                    var vertex = new ProfileSurfacePoint { Z = points[0].Z + observerHeight, Distance = points[0].Distance };
+                    var vertexNext = new ProfileSurfacePoint { Z = points.Last().Z + observerHeight, Distance = points.Last().Distance };
+
+                    if(IsLinesIntersected(vertex, vertexNext, points[j], points[j + 1]))
+                    {
+                        isVisible = false;
+                        break;
+                    }
                 }
 
                 _surfaceProfileChart.AddVertexPoint(points.Last(), isVisible, segments[i].LineId, observerHeight);
@@ -630,7 +633,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         private List<IntersectionsInLayer> PrepareIntersectionsToDrawing(List<IntersectionsInLayer> intersectionLines, double lastPoint)
         {
-            if (intersectionLines.Count == 1 && intersectionLines[0].Lines.Count == 1)
+            if(intersectionLines.Count == 1 && intersectionLines[0].Lines.Count == 1)
             {
                 return intersectionLines;
             }
@@ -642,11 +645,11 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             var prevLine = new IntersectionLine();
             prevLine = orderedIntersectionLines.First();
 
-            foreach (var intersectionLine in orderedIntersectionLines)
+            foreach(var intersectionLine in orderedIntersectionLines)
             {
-                if (intersectionLine == orderedIntersectionLines.First())
+                if(intersectionLine == orderedIntersectionLines.First())
                 {
-                    if (intersectionLine.PointFromDistance != 0)
+                    if(intersectionLine.PointFromDistance != 0)
                     {
                         var line = new IntersectionLine()
                         {
@@ -661,7 +664,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                     continue;
                 }
 
-                if (intersectionLine.PointFromDistance < prevLine.PointToDistance
+                if(intersectionLine.PointFromDistance < prevLine.PointToDistance
                         && intersectionLine.PointFromDistance > prevLine.PointFromDistance)
                 {
                     var line = new IntersectionLine()
@@ -673,12 +676,12 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
                     preparedIntersectionLines.Add(line);
                 }
-                else if (intersectionLine.PointFromDistance >= prevLine.PointToDistance
+                else if(intersectionLine.PointFromDistance >= prevLine.PointToDistance
                             || Math.Abs(intersectionLine.PointFromDistance - prevLine.PointFromDistance) < accuracy)
                 {
                     preparedIntersectionLines.Add(prevLine);
 
-                    if (Math.Abs(intersectionLine.PointFromDistance - prevLine.PointToDistance) > accuracy)
+                    if(Math.Abs(intersectionLine.PointFromDistance - prevLine.PointToDistance) > accuracy)
                     {
                         var line = new IntersectionLine()
                         {
@@ -690,11 +693,11 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                         preparedIntersectionLines.Add(line);
                     }
 
-                    if (intersectionLine == orderedIntersectionLines.Last())
+                    if(intersectionLine == orderedIntersectionLines.Last())
                     {
                         preparedIntersectionLines.Add(intersectionLine);
 
-                        if (Math.Abs(intersectionLine.PointToDistance - lastPoint) > accuracy)
+                        if(Math.Abs(intersectionLine.PointToDistance - lastPoint) > accuracy)
                         {
                             var emptyLine = new IntersectionLine()
                             {
@@ -713,7 +716,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                     }
                 }
 
-                if (intersectionLine.PointToDistance < prevLine.PointToDistance
+                if(intersectionLine.PointToDistance < prevLine.PointToDistance
                         && intersectionLine.PointFromDistance > prevLine.PointFromDistance)
                 {
                     var line = new IntersectionLine()
@@ -740,11 +743,11 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         {
             var orderedIntersectionLines = new List<IntersectionLine>();
 
-            foreach (var intersectionLine in lines)
+            foreach(var intersectionLine in lines)
             {
                 var orderedLines = intersectionLine.Lines;
 
-                foreach (var line in orderedLines)
+                foreach(var line in orderedLines)
                 {
                     orderedIntersectionLines.Add(line);
                 }
@@ -757,11 +760,11 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         {
             var preparedLines = new List<IntersectionsInLayer>();
 
-            foreach (var line in lines)
+            foreach(var line in lines)
             {
                 var lineLayer = preparedLines.FirstOrDefault(layer => layer.Type == line.LayerType);
 
-                if (lineLayer == null)
+                if(lineLayer == null)
                 {
                     var lineInLayer = new IntersectionsInLayer()
                     {
@@ -786,12 +789,12 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         {
             List<ProfileSurfacePoint> extremePoints = new List<ProfileSurfacePoint>();
 
-            if (profileSurface == null)
+            if(profileSurface == null)
             {
-                foreach (var profileSessionProfileLine in _profileSession.ProfileLines)
+                foreach(var profileSessionProfileLine in _profileSession.ProfileLines)
                 {
                     var segments = GetLineSegments(profileSessionProfileLine.Id);
-                    if (segments == null)
+                    if(segments == null)
                     {
                         var profileSurfacePoints = _profileSession.ProfileSurfaces.FirstOrDefault(surface =>
                       surface.LineId == profileSessionProfileLine.Id).ProfileSurfacePoints;
@@ -813,7 +816,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 var profileSurfacePoints = profileSurface.ProfileSurfacePoints;
 
                 var segments = GetLineSegments(profileSurface.LineId);
-                if (segments == null)
+                if(segments == null)
                 {
                     extremePoints.Add(profileSurfacePoints.Last());
                 }
@@ -834,7 +837,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         {
             double result = 0;
 
-            for (var i = 0; i < profileSurfacePoints.Length - 1; i++)
+            for(var i = 0; i < profileSurfacePoints.Length - 1; i++)
             {
                 result += CalcVectorLength(profileSurfacePoints[i], profileSurfacePoints[i + 1]);
             }
@@ -852,7 +855,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             double invisibleLegth = 0;
             int j = 0;
 
-            if (invisibleSurface.ProfileSurfacePoints.Count() == 0)
+            if(invisibleSurface.ProfileSurfacePoints.Count() == 0)
             {
                 _surfaceProfileChart.ProfilesProperties
                                     .First(property => property.LineId == invisibleSurface.LineId).VisiblePercent = 100;
@@ -860,16 +863,16 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 return;
             }
 
-            for (int i = 0; i < allSurface.ProfileSurfacePoints.Count() - 1; i++)
+            for(int i = 0; i < allSurface.ProfileSurfacePoints.Count() - 1; i++)
             {
-                if (allSurface.ProfileSurfacePoints[i] == invisibleSurface.ProfileSurfacePoints[j])
+                if(allSurface.ProfileSurfacePoints[i] == invisibleSurface.ProfileSurfacePoints[j])
                 {
                     invisibleLegth += CalcVectorLength(allSurface.ProfileSurfacePoints[i],
                    allSurface.ProfileSurfacePoints[i + 1]);
                     j++;
                 }
 
-                if (j >= invisibleSurface.ProfileSurfacePoints.Count())
+                if(j >= invisibleSurface.ProfileSurfacePoints.Count())
                 {
                     i = allSurface.ProfileSurfacePoints.Count() - 1;
                 }
@@ -888,9 +891,9 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             ProfileSurfacePoint deviationPoint = profileSurfacePoints[0];
 
-            for (var i = 0; i < profileSurfacePoints.Length - 2; i++)
+            for(var i = 0; i < profileSurfacePoints.Length - 2; i++)
             {
-                if (CalcAngleOfDeviation(profileSurfacePoints[i], profileSurfacePoints[i + 1]) !=
+                if(CalcAngleOfDeviation(profileSurfacePoints[i], profileSurfacePoints[i + 1]) !=
                     CalcAngleOfDeviation(profileSurfacePoints[i + 1], profileSurfacePoints[i + 2]))
                 {
                     angles.Add(CalcAngleOfDeviation(deviationPoint, profileSurfacePoints[i + 1]));
@@ -922,24 +925,58 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         }
 
         private static bool IsLinesIntersected(ProfileSurfacePoint firstStartPoint, ProfileSurfacePoint firstEndPoint,
-                                                        ProfileSurfacePoint secondStartPoint, ProfileSurfacePoint secondEndPoint, double observerHeight)
+                                                        ProfileSurfacePoint secondStartPoint, ProfileSurfacePoint secondEndPoint)
         {
-            double startPointsYDiff = secondStartPoint.Z - (firstStartPoint.Z + observerHeight);
-            double startPointsXDiff = firstStartPoint.Distance - secondStartPoint.Distance;
-            double endPointsYDiff = secondEndPoint.Z - (firstEndPoint.Z + observerHeight);
-            double endPointsXDiff = firstEndPoint.Distance - secondEndPoint.Distance;
+            const double epsilon = 1e-10;
 
-            double k1 = startPointsYDiff * firstStartPoint.Distance + startPointsXDiff * firstStartPoint.Z;
-           
-            double k2 = endPointsYDiff * firstEndPoint.Distance + endPointsXDiff * firstEndPoint.Z;
+            var firstLineVectorDiff = PointsDiff(firstEndPoint, firstStartPoint);
+            var secondLineVectorDiff = PointsDiff(secondEndPoint, secondStartPoint);
+            var startPointsDiff = PointsDiff(secondStartPoint, firstStartPoint);
 
-            double delta = startPointsYDiff * endPointsXDiff - endPointsYDiff * startPointsXDiff;
+            var diffCross = VectorCross(firstLineVectorDiff, secondLineVectorDiff);
+            var startPointsCrossToFirst = VectorCross(startPointsDiff, firstLineVectorDiff);
 
-            return delta != 0;
+            if(Math.Abs(diffCross) < epsilon && Math.Abs(startPointsCrossToFirst) < epsilon)
+            {
+                var firstLineProduct = PointsProduct(startPointsDiff, firstLineVectorDiff);
+                var secondLineProduct = PointsProduct(PointsDiff(firstStartPoint, secondStartPoint), secondLineVectorDiff);
+
+                if((firstLineProduct >= 0 && firstLineProduct <= VectorCross(firstLineVectorDiff, firstLineVectorDiff))
+                        || (secondLineProduct >= 0 && secondLineProduct <= VectorCross(secondLineVectorDiff, secondLineVectorDiff)))
+                {
+                    return true;
+                }
+
+                return false;
+            }
+            var t = VectorCross(startPointsDiff, secondLineVectorDiff) / diffCross;
+            var u = startPointsCrossToFirst / diffCross;
+
+            if(!(Math.Abs(diffCross) < epsilon) && (0 <= t && t <= 1) && (0 <= u && u <= 1))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private static ProfileSurfacePoint PointsDiff(ProfileSurfacePoint leftPoint, ProfileSurfacePoint rightPoint)
+        {
+            return new ProfileSurfacePoint { Distance = rightPoint.Distance - leftPoint.Distance, Z = rightPoint.Z - leftPoint.Z };
+        }
+
+        private static double PointsProduct(ProfileSurfacePoint leftPoint, ProfileSurfacePoint rightPoint)
+        {
+            return rightPoint.Distance * leftPoint.Distance + rightPoint.Z * leftPoint.Z;
+        }
+
+        private static double VectorCross(ProfileSurfacePoint leftPoint, ProfileSurfacePoint rightPoint)
+        {
+            return leftPoint.Distance * rightPoint.Z - leftPoint.Z * rightPoint.Distance;
         }
 
         private static double CalcAngleOfVisibility(double observerHeight, ProfileSurfacePoint leftPoint,
-            ProfileSurfacePoint rightPoint, double firstPointDistance)
+                                                     ProfileSurfacePoint rightPoint, double firstPointDistance)
         {
             var sightLineKoef = (rightPoint.Z - observerHeight) / (rightPoint.Distance - firstPointDistance);
             var surfaceLineKoef = (rightPoint.Z - leftPoint.Z) / (rightPoint.Distance - leftPoint.Distance);
@@ -955,12 +992,12 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         private static double FindAzimuth(double angle)
         {
-            if (angle > 90)
+            if(angle > 90)
             {
                 return 90 - angle;
             }
 
-            if (angle < -90)
+            if(angle < -90)
             {
                 return Math.Abs(angle) - 270;
             }
@@ -993,7 +1030,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             var isInvisiblePointsFinished = false;
 
-            if (invisibleSurface.ProfileSurfacePoints.Count() == 0)
+            if(invisibleSurface.ProfileSurfacePoints.Count() == 0)
             {
                 isInvisiblePointsFinished = true;
             }
@@ -1011,16 +1048,16 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             var profileVisiblePoints = new List<ProfileSurfacePoint>();
             var profileInvisiblePoints = new List<ProfileSurfacePoint>();
 
-            for (int i = 0; i < allSurface.ProfileSurfacePoints.Count(); i++)
+            for(int i = 0; i < allSurface.ProfileSurfacePoints.Count(); i++)
             {
-                if (!isInvisiblePointsFinished && allSurface.ProfileSurfacePoints[i] == invisibleSurface.ProfileSurfacePoints[j])
+                if(!isInvisiblePointsFinished && allSurface.ProfileSurfacePoints[i] == invisibleSurface.ProfileSurfacePoints[j])
                 {
-                    if (profileInvisiblePoints.Count == 0)
+                    if(profileInvisiblePoints.Count == 0)
                     {
                         StartOfLineHandler(ref profileInvisibleLine, lineId, allSurface, i);
                         lineId++;
 
-                        if (profileVisiblePoints.Count > 0)
+                        if(profileVisiblePoints.Count > 0)
                         {
                             profileLines.Add(EndOfLineHandler(profileVisibleLine, allSurface, i));
 
@@ -1033,7 +1070,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                         }
                     }
 
-                    if (i == allSurface.ProfileSurfacePoints.Count() - 1)
+                    if(i == allSurface.ProfileSurfacePoints.Count() - 1)
                     {
                         profileLines.Add(EndOfLineHandler(profileInvisibleLine, allSurface, i));
 
@@ -1045,7 +1082,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                         profileInvisiblePoints = new List<ProfileSurfacePoint>();
                     }
 
-                    if (j == invisibleSurface.ProfileSurfacePoints.Count() - 1)
+                    if(j == invisibleSurface.ProfileSurfacePoints.Count() - 1)
                     {
                         isInvisiblePointsFinished = true;
                     }
@@ -1055,13 +1092,13 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 }
                 else
                 {
-                    if (profileVisiblePoints.Count == 0)
+                    if(profileVisiblePoints.Count == 0)
                     {
                         StartOfLineHandler(ref profileVisibleLine, lineId, allSurface, i);
 
                         lineId++;
 
-                        if (profileInvisiblePoints.Count > 0)
+                        if(profileInvisiblePoints.Count > 0)
                         {
                             profileLines.Add(EndOfLineHandler(profileInvisibleLine, allSurface, i));
 
@@ -1074,7 +1111,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                         }
                     }
 
-                    if (i == allSurface.ProfileSurfacePoints.Count() - 1)
+                    if(i == allSurface.ProfileSurfacePoints.Count() - 1)
                     {
                         profileLines.Add(EndOfLineHandler(profileVisibleLine, allSurface, i));
 
@@ -1094,8 +1131,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         }
 
         private static void StartOfLineHandler(ref ProfileLine startLine,
-                                                int startLineId, ProfileSurface allSurfaces,
-                                                 int pointIndex)
+                                                int startLineId, ProfileSurface allSurfaces, int pointIndex)
         {
             startLine.PointFrom = new ProfilePoint
             {
