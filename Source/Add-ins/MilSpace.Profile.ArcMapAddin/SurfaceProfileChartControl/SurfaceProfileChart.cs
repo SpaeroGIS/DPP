@@ -686,13 +686,21 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             {
                 profileChart.Series[$"ExtremePointsLine{lineId}"].Points.Clear();
                 _controller.AddVertexPointsToLine(segments, ProfilesProperties.First(property => property.LineId == lineId).ObserverHeight);
-
-                return;
             }
+            else
+            {
+                var serieName = profileChart.Series[lineId.ToString()].Name;
+                profileChart.Series[$"ExtremePointsLine{serieName}"].Points[0].SetValueY(GetObserverPointFullHeight(lineId));
 
-            var serieName = profileChart.Series[lineId.ToString()].Name;
-
-            profileChart.Series[$"ExtremePointsLine{serieName}"].Points[0].SetValueY(GetObserverPointFullHeight(lineId));
+                if(profileChart.Series[$"{serieName}"].Points.Last().Color == profileChart.Series[$"{serieName}"].BackSecondaryColor)
+                {
+                    profileChart.Series[$"ExtremePointsLine{serieName}"].Points[1].MarkerColor = Color.Red;
+                }
+                else
+                {
+                    profileChart.Series[$"ExtremePointsLine{serieName}"].Points[1].MarkerColor = Color.DarkGray;
+                }
+            }
 
             if(!_isObserverHeightIgnore)
             {
@@ -710,15 +718,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 }
 
                 SetAxisInterval(profileChart.ChartAreas["Default"].AxisY);
-            }
-
-            if(profileChart.Series[$"{serieName}"].Points.Last().Color == profileChart.Series[$"{serieName}"].BackSecondaryColor)
-            {
-                profileChart.Series[$"ExtremePointsLine{serieName}"].Points[1].MarkerColor = Color.Red;
-            }
-            else
-            {
-                profileChart.Series[$"ExtremePointsLine{serieName}"].Points[1].MarkerColor = Color.DarkGray;
             }
         }
 
@@ -911,6 +910,13 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         private double GetObserverPointFullHeight(int lineId)
         {
+            var segments = _controller.GetLineSegments(lineId);
+
+            if(segments != null)
+            {
+                return ProfilesProperties.First(property => property.LineId == lineId).ObserverHeight + segments.Max(segment => segment.ProfileSurfacePoints.First().Z);
+            }
+
             return ProfilesProperties.First(property => property.LineId == lineId).ObserverHeight + profileChart.Series[lineId.ToString()].Points[0].YValues[0];
         }
 
