@@ -8,6 +8,7 @@ using System.IO;
 using MilSpace.Configurations;
 using System.Reflection;
 using ESRI.ArcGIS.Geometry;
+using Microsoft.Win32;
 
 namespace MilSpace.Core
 {
@@ -31,6 +32,7 @@ namespace MilSpace.Core
           { SimpleDataTypesEnum.Undefined , () =>{ return default(string);}}};
 
 
+        private static string milSpaceRegistriPath = @"SOFTWARE\WOW6432Node\MilSpace\";
 
         public static bool Convert(SimpleDataTypesEnum typeTo, string value, out object result)
         {
@@ -154,7 +156,7 @@ namespace MilSpace.Core
             return vertices;
         }
 
-        public static double Azimuth (this ILine line)
+        public static double Azimuth(this ILine line)
         {
             var degrees = (line.Angle * 180 / Math.PI);
 
@@ -171,5 +173,18 @@ namespace MilSpace.Core
             return Math.Abs(degrees - 90);
         }
 
+        public static string GetRegistryValue(string registrypath)
+        {
+            using (RegistryKey key = Registry.LocalMachine.OpenSubKey(milSpaceRegistriPath))
+            {
+                if (key == null)
+                {
+                    return null;
+                }
+
+                var val = key.GetValue(registrypath);
+                return val.ToString();
+            }
+        }
     }
 }

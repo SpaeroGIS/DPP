@@ -7,6 +7,7 @@ using MilSpace.Core.MilSpaceResourceManager;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Profile.DTO;
+using MilSpace.Profile.Localization;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -893,14 +894,9 @@ namespace MilSpace.Profile
             //TODO: Set all localization srting here
 
             ToolTip ToolTip1 = new System.Windows.Forms.ToolTip();
-            ToolTip1.SetToolTip(this.btnRefreshLayers, "Refresh interesing layers");
-            lblSelectedPrimitives.Text = "Вибрані об'єкти:";
-            lblCommonLength.Text = "Довжина вибраних об'єктів:";
-
-            //ToolTip ToolTip1 = new System.Windows.Forms.ToolTip();
-            //ToolTip1.SetToolTip(this.btnRefreshLayers, LocalizationConstants.RefreshButtonToolTip);
-            //lblSelectedPrimitives.Text = LocalizationConstants.SelectedPrimitivesText;
-            //lblCommonLength.Text = LocalizationConstants.CommonLengthText;
+            ToolTip1.SetToolTip(this.btnRefreshLayers, LocalizationConstants.RefreshButtonToolTip);
+            lblSelectedPrimitives.Text = LocalizationConstants.SelectedPrimitivesText;
+            lblCommonLength.Text = LocalizationConstants.CommonLengthText;
         }
 
 
