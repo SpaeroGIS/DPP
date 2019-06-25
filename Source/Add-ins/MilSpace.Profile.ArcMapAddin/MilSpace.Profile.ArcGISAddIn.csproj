@@ -164,16 +164,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Resources\MilSpace.Profile.Calc.uk-UA.Designer.cs">
-      <DependentUpon>MilSpace.Profile.Calc.uk-UA.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Resources\MilSpace.Profile.Calc.en-US.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MilSpace.Profile.Calc.en-US.resx</DependentUpon>
-    </Compile>
     <Compile Include="MilSpaceProfileCalsController.cs" />
     <Compile Include="MilSpaceProfileGraphsController.cs" />
     <Compile Include="PickProfileCoordinates.cs" />
@@ -270,14 +260,8 @@
       <DependentUpon>DockableWindowMilSpaceProfileGraph.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\MilSpace.Profile.Calc.uk-UA.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>MilSpace.Profile.Calc.uk-UA.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\MilSpace.Profile.Calc.en-US.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>MilSpace.Profile.Calc.en-US.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <Resource Include="Localization\MilSpace.Profile.Calc.en-US.resx" />
+    <Resource Include="Localization\MilSpace.Profile.Calc.uk-UA.resx" />
     <EmbeddedResource Include="Resources\MilSpace.Profile.Calc.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>MilSpace.Profile.Calc.Designer.cs</LastGenOutput>
@@ -347,14 +331,18 @@
       AfterTargets="Compile" BeforeTargets="Link">
     <Message Text="Optimizing......" />
   </Target>-->
-  <!-- <Target Name="Resources" AfterTargets="Build"> -->
-  <!-- <Message Text="Resource......" /> -->
-  <!-- <GenerateResource Sources="Localization\MilSpace.Profile.Calc.en-US.resx" OutputResources="$(OutputDirectory)\Localization\MilSpace.Profile.Calc.en-US.resources"> -->
-  <!-- <Output TaskParameter="OutputResources" ItemName="Localization" /> -->
-  <!-- </GenerateResource> -->
-  <!-- <MakeDir Directories="$(OutputDirectory)\Localizationnn" /> -->
-  <!-- <Message Text="Project File Name = $(MSBuildProjectFile)  = $(OutputDirectory)\Localization" /> -->
-  <!-- </Target> -->
+  <Target Name="Resources" BeforeTargets="Build">
+    <ItemGroup>
+      <SourceLocalization Include="Localization\*.resx" />
+      <!--<SourceEmbededLocalization Include="Localization\*.resources" />-->
+      <SourceEmbededLocalization Include="Localization\MilSpace.Profile.Calc.en-US.resources" />
+      <SourceEmbededLocalization Include="Localization\MilSpace.Profile.Calc.uk-UA.resources" />
+    </ItemGroup>
+    <MakeDir Directories="$(OutputPath)Localization" />
+    <GenerateResource Sources="@(SourceLocalization)" OutputResources="@(SourceLocalization->'$(OutputPath)Localization\%(Filename).resources')">
+      <Output TaskParameter="OutputResources" ItemName="Resources" />
+    </GenerateResource>
+  </Target>
   <Target Name="AfterBuild">
     <!-- Gives build warning when add-in targets file is not found. -->
     <Warning Text="Unable to create .esriAddin; missing ESRI ArcGIS Add-in SDK component(s)." Condition="!Exists('$(MSBuildExtensionsPath)\ESRI\ESRI.ArcGIS.AddIns.targets')" />
