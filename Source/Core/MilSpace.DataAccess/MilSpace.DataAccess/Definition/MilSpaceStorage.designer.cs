@@ -157,7 +157,7 @@ namespace MilSpace.DataAccess.Definition
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MilSp_Profile_MilSp_Session1", Storage="_MilSp_Profile", ThisKey="ProfileId", OtherKey="idRow", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MilSp_Profile_MilSp_Session", Storage="_MilSp_Profile", ThisKey="ProfileId", OtherKey="idRow", IsForeignKey=true)]
 		public MilSp_Profile MilSp_Profile
 		{
 			get
@@ -376,7 +376,7 @@ namespace MilSpace.DataAccess.Definition
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MilSp_Profile_MilSp_Session1", Storage="_MilSp_Sessions", ThisKey="idRow", OtherKey="ProfileId")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MilSp_Profile_MilSp_Session", Storage="_MilSp_Sessions", ThisKey="idRow", OtherKey="ProfileId")]
 		public EntitySet<MilSp_Session> MilSp_Sessions
 		{
 			get
