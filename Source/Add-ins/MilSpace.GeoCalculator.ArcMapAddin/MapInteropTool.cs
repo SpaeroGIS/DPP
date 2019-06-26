@@ -13,7 +13,8 @@ namespace MilSpace.GeoCalculator
 
         protected override void OnActivate()
         {
-            dockableWindowGeoCalculator = AddIn.FromID<DockableWindowGeoCalculator.AddinImpl>(ThisAddIn.IDs.DockableWindowGeoCalculator)?.UI;            
+            dockableWindowGeoCalculator = AddIn.FromID<DockableWindowGeoCalculator.AddinImpl>(ThisAddIn.IDs.DockableWindowGeoCalculator)?.UI;
+            Cursor = System.Windows.Forms.Cursors.Cross;
             base.OnActivate();            
         }
 
