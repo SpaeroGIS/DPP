@@ -150,7 +150,9 @@ namespace MilSpace.Profile
                     graphsController.IntersectionLinesDrawing += CalcIntesectionsWithLayers;
                     graphsController.CreateEmptyGraph += GenerateEmptyGraph;
                     graphsController.GetProfileName += GetProfileName;
+                    graphsController.GetIsProfileShared += GetIsProfileShared;
                     graphsController.AddProfile += AddProfileToExistedGraph;
+                    graphsController.GetProfileSessionById += GetProfileById;
                 }
 
                 return graphsController;
@@ -584,6 +586,27 @@ namespace MilSpace.Profile
             return null;
         }
 
+        internal bool GetIsProfileShared(int id)
+        {
+            try
+            {
+                var session = GetProfileSessionById(id);
+                if(session != null)
+                {
+                    return session.Shared;
+                }
+
+                throw new MilSpaceProfileNotFoundException(id); 
+            }
+            catch(MilSpaceProfileNotFoundException ex)
+            {
+                logger.ErrorEx(ex.Message);
+                MessageBox.Show(ex.Message, "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return false;
+        }
+
         internal void AddProfileToExistedGraph()
         {
             var profilesTreeModalWindow = new ProfilesTreeModalWindow(View.GetTreeView());
@@ -776,6 +799,8 @@ namespace MilSpace.Profile
         private void SetLayersForPoints(IntersectionsInLayer intersections, ProfileSurface surface)
         {
             var surfaceForSearch = new List<ProfileSurfacePoint>(surface.ProfileSurfacePoints);
+            intersections.Lines = intersections.Lines.OrderBy(line => line.PointFromDistance).ToList();
+
             var accuracy = 0.0000001;
 
             foreach (var line in intersections.Lines)
@@ -786,7 +811,7 @@ namespace MilSpace.Profile
                 surfaceForSearch =
                                 surfaceForSearch.SkipWhile(surfacePoint => surfacePoint.Distance < startPoint.Distance).ToList();
 
-                foreach (var point in surface.ProfileSurfacePoints)
+                foreach (var point in surfaceForSearch)
                 {
                     if (point.Distance >= startPoint.Distance)
                     {
