@@ -11,7 +11,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic.Extensions
     {
         public static List<PointModel> ToSortedPointModelsList(this IDictionary<string, PointModel> pointModelDictionary)
         {
-            return pointModelDictionary.Values.OrderBy(value => value.PointNumber).ToList();
+            return pointModelDictionary.Values.OrderBy(value => value.Number).ToList();
         }
     }
 }
