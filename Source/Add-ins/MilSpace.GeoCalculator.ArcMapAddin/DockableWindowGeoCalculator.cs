@@ -29,7 +29,7 @@ namespace MilSpace.GeoCalculator
     {
         private readonly IBusinessLogic _businessLogic;        
         private PointModel lastProjectedPoint;
-        private List<PointModel> pointModels = new List<PointModel>();
+        private Dictionary<string, PointModel> pointModels = new Dictionary<string, PointModel>();
         private LocalizationContext context;
         private readonly Dictionary<string, IPoint> ClickedPointsDictionary = new Dictionary<string, IPoint>();
 
@@ -117,23 +117,6 @@ namespace MilSpace.GeoCalculator
             }
         }
 
-        private async void SaveButton_Click(object sender, EventArgs e)
-        {
-            if (lastProjectedPoint == null) MessageBox.Show(context.NoSelectedPointError, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            else
-            {
-                var chosenRadio = ShowExportForm();
-                var folderBrowserResult = saveFileDialog.ShowDialog();
-                if (folderBrowserResult == DialogResult.OK)
-                {
-                    if (chosenRadio == RadioButtonsValues.XML)
-                        await _businessLogic.SaveLastProjectionToXmlFileAsync(lastProjectedPoint, saveFileDialog.FileName).ConfigureAwait(false);
-                    else if (chosenRadio == RadioButtonsValues.CSV)
-                        await _businessLogic.SaveLastProjectionToCsvFileAsync(lastProjectedPoint, saveFileDialog.FileName).ConfigureAwait(false);
-                }
-            }
-        }
-
         private void CopyButton_Click(object sender, EventArgs e)
         {
             if (lastProjectedPoint == null) MessageBox.Show(context.NoSelectedPointError, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -143,7 +126,7 @@ namespace MilSpace.GeoCalculator
         private void MoveToCenterButton_Click(object sender, EventArgs e)
         {
             var centerPoint = _businessLogic.GetDisplayCenter();
-            ProjectPointAsync(centerPoint);
+            ProjectPointAsync(centerPoint, true);
         }
         #endregion
         
@@ -665,7 +648,7 @@ namespace MilSpace.GeoCalculator
             if (column is DataGridViewImageColumn && column.Name == Constants.HighlightColumnName)
             {
                 ArcMapHelper.FlashGeometry(selectedPoint.Value, 350);
-                ProjectPointAsync(selectedPoint.Value);
+                ProjectPointAsync(selectedPoint.Value, true);                
             }
             else if (column is DataGridViewImageColumn && column.Name == Constants.DeleteColumnName)
             {
@@ -673,15 +656,22 @@ namespace MilSpace.GeoCalculator
                 ArcMapHelper.RemoveGraphicsFromMap(new string[] { selectedPoint.Key });
                 ClickedPointsDictionary.Remove(selectedPoint.Key);
 
-                pointModels.Remove(pointModels.FirstOrDefault(point => selectedPoint.Key.Equals(point.Guid)));
+                pointModels.Remove(selectedPoint.Key);
+
+                SynchronizePointNumbers(e.RowIndex + 1);
 
                 //Refresh Numbers column cells values
                 for (int i = 0; i < grid.Rows.Count; i++)
                 {
                     grid[Constants.NumberColumnName, i].Value = i + 1;
                 }
+                grid.Refresh();
             }
-            grid.Refresh();
+            else
+            {
+                grid.Rows[e.RowIndex].Selected = true;
+                ProjectPointAsync(selectedPoint.Value, true);
+            }            
         }
 
         private async void SaveGridPointsButton_Click(object sender, EventArgs e)
@@ -694,9 +684,9 @@ namespace MilSpace.GeoCalculator
                 if (folderBrowserResult == DialogResult.OK)
                 {
                     if (chosenRadio == RadioButtonsValues.XML)
-                        await _businessLogic.SaveProjectionsToXmlFileAsync(pointModels, saveFileDialog.FileName).ConfigureAwait(false);
+                        await _businessLogic.SaveProjectionsToXmlFileAsync(pointModels.ToSortedPointModelsList(), saveFileDialog.FileName).ConfigureAwait(false);
                     else if (chosenRadio == RadioButtonsValues.CSV)
-                        await _businessLogic.SaveProjectionsToCsvFileAsync(pointModels, saveFileDialog.FileName).ConfigureAwait(false);
+                        await _businessLogic.SaveProjectionsToCsvFileAsync(pointModels.ToSortedPointModelsList(), saveFileDialog.FileName).ConfigureAwait(false);
                 }
             }
         }
@@ -704,7 +694,10 @@ namespace MilSpace.GeoCalculator
         private void CopyGridPointButton_Click(object sender, EventArgs e)
         {
             if (pointModels == null || !pointModels.Any()) MessageBox.Show(context.NoSelectedPointError, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            else _businessLogic.CopyCoordinatesToClipboard(pointModels);
+            else
+            {                
+                _businessLogic.CopyCoordinatesToClipboard(pointModels.ToSortedPointModelsList());
+            }
         }
 
         private void ClearGridButton_Click(object sender, EventArgs e)
@@ -731,32 +724,30 @@ namespace MilSpace.GeoCalculator
         {
             var clickedPoint = _businessLogic.GetSelectedPoint(x, y);
             var pointGuid = AddPointToList(clickedPoint);
+            var pointNumber = ClickedPointsDictionary.Count();
 
             var newRow = new DataGridViewRow();
-            newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = ClickedPointsDictionary.Count() });
+            newRow.Cells.Add(new DataGridViewTextBoxCell() { Value =  pointNumber});
             newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = clickedPoint.X.ToIntegerString() });
             newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = clickedPoint.Y.ToIntegerString() });
             newRow.Cells.Add(new DataGridViewImageCell()
             {
-                Value = new Bitmap(
-                                                                              Image.FromFile(
-                                                                                  System.IO.Path.Combine(
-                                                                                      System.IO.Path.GetDirectoryName(
-                                                                                          Assembly.GetExecutingAssembly().Location), @"Images\LocatePoint.png")), 16, 16),
+                Value = new Bitmap(Image.FromFile(System.IO.Path.Combine(
+                                                                         System.IO.Path.GetDirectoryName(
+                                                                         Assembly.GetExecutingAssembly().Location), @"Images\LocatePoint.png")), 16, 16),
                 ToolTipText = context.ShowPointOnMapButton
             });
             newRow.Cells.Add(new DataGridViewImageCell()
             {
-                Value = new Bitmap(
-                                                                              Image.FromFile(
-                                                                                  System.IO.Path.Combine(
-                                                                                      System.IO.Path.GetDirectoryName(
-                                                                                          Assembly.GetExecutingAssembly().Location), @"Images\DeletePoint.png")), 16, 16),
+                Value = new Bitmap(Image.FromFile(System.IO.Path.Combine(
+                                                                         System.IO.Path.GetDirectoryName(
+                                                                         Assembly.GetExecutingAssembly().Location), @"Images\DeletePoint.png")), 16, 16),
                 ToolTipText = context.DeletePointButton
             });
             PointsGridView.Rows.Add(newRow);
-
-            ProjectPointAsync(clickedPoint, false, pointGuid);
+            PointsGridView.ClearSelection();
+            PointsGridView.Refresh();
+            ProjectPointAsync(clickedPoint, false, pointGuid, pointNumber);
         }
 
         internal void ArcMap_OnMouseMove(int x, int y)
@@ -817,12 +808,9 @@ namespace MilSpace.GeoCalculator
             catch { MessageBox.Show("No Localization.xml found or there is an error during loading. Coordinates Converter window is not fully localized."); }
         }
 
-        private void ProjectPointAsync(IPoint inputPoint, bool fromUserInput = false, string pointGuid = null)
+        private void ProjectPointAsync(IPoint inputPoint, bool fromUserInput = false, string pointGuid = null, int? pointNumber = null)
         {
-            lastProjectedPoint = new PointModel
-            {
-                Guid = pointGuid ?? Guid.NewGuid().ToString()
-            };
+            lastProjectedPoint = new PointModel { PointNumber = pointNumber };
 
             if (inputPoint == null) throw new ArgumentNullException(nameof(inputPoint));
             if (inputPoint.SpatialReference == null) throw new NullReferenceException($"Point with ID = {inputPoint.ID} has no spatial reference.");
@@ -852,8 +840,7 @@ namespace MilSpace.GeoCalculator
 
             MgrsNotationTextBox.Text = (_businessLogic.ConvertToMgrs(wgsPoint))?.ToSeparatedMgrs();            
 
-            lastProjectedPoint.MgrsRepresentation = MgrsNotationTextBox.Text;
-            lastProjectedPoint.UtmRepresentation = UTMNotationTextBox.Text;
+            lastProjectedPoint.MgrsRepresentation = MgrsNotationTextBox.Text;            
 
             var pulkovoPoint = _businessLogic.ProjectPoint(inputPoint, CurrentProjectionsModel.Pulkovo1942Projection);
             PulkovoXCoordinateTextBox.Text = pulkovoPoint.X.ToIntegerString();
@@ -882,8 +869,10 @@ namespace MilSpace.GeoCalculator
             //Remove distorsions
             inputPoint.Project(FocusMapSpatialReference);
 
-            if (!fromUserInput)
-                pointModels.Add(lastProjectedPoint);
+            var guid = pointGuid ?? Guid.NewGuid().ToString();
+
+            if (!fromUserInput && !string.IsNullOrWhiteSpace(guid))
+                pointModels.Add(guid, lastProjectedPoint);
         }
 
         private void ManageProjectedCoordinateSystems(double longitudeValue)
@@ -946,7 +935,20 @@ namespace MilSpace.GeoCalculator
                 saveFileDialog.AddExtension = true;
             }
             return exportForm.ChosenRadioButton;
-        }        
+        }
+
+        private void SynchronizePointNumbers(int rowIndex)
+        {
+            if (pointModels == null) return;
+
+            foreach (var pointModel in pointModels.Values)
+            {
+                if (pointModel.PointNumber > rowIndex)
+                {
+                    pointModel.PointNumber--;
+                }
+            }
+        }
         #endregion        
     }
 }

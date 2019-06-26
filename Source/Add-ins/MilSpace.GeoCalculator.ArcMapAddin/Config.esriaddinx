@@ -31,8 +31,7 @@
           caption="MilSpace спецінструменти"
           showInitially="true">
           <Items>
-            <Button refID="MilSpace.GeoCalculator_ButtonGeoCalculator" />
-            <Tool refID="MilSpace.GeoCalculator_MapInteropTool" />
+            <Button refID="MilSpace.GeoCalculator_ButtonGeoCalculator" />            
           </Items>
         </Toolbar>
       </Toolbars>
