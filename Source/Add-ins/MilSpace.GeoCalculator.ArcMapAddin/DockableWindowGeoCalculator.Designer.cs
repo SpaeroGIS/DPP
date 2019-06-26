@@ -918,6 +918,7 @@
             this.PointsGridView.Name = "PointsGridView";
             this.PointsGridView.ReadOnly = true;
             this.PointsGridView.RowHeadersVisible = false;
+            this.PointsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.PointsGridView.Size = new System.Drawing.Size(235, 186);
             this.PointsGridView.TabIndex = 57;
             this.PointsGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.PointsGridView_CellContentClick);
@@ -927,6 +928,7 @@
             this.NumberColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             this.NumberColumn.DefaultCellStyle = dataGridViewCellStyle1;
             this.NumberColumn.HeaderText = "";
             this.NumberColumn.Name = "NumberColumn";
@@ -938,8 +940,8 @@
             this.XCoordColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Transparent;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
             this.XCoordColumn.DefaultCellStyle = dataGridViewCellStyle2;
             this.XCoordColumn.HeaderText = "";
             this.XCoordColumn.Name = "XCoordColumn";
@@ -952,8 +954,8 @@
             this.YCoordColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.Transparent;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
             this.YCoordColumn.DefaultCellStyle = dataGridViewCellStyle3;
             this.YCoordColumn.HeaderText = "";
             this.YCoordColumn.Name = "YCoordColumn";
@@ -1080,11 +1082,6 @@
         private System.Windows.Forms.ToolStripButton SaveGridPointsButton;
         private System.Windows.Forms.Label WgsGeoLabel;
         private System.Windows.Forms.DataGridView PointsGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NumberColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn XCoordColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn YCoordColumn;
-        private System.Windows.Forms.DataGridViewImageColumn HighlightColumn;
-        private System.Windows.Forms.DataGridViewImageColumn DeleteColumn;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton CurrentCoordsCopyButton;
         private System.Windows.Forms.ToolStrip toolStrip3;
@@ -1113,5 +1110,10 @@
         private System.Windows.Forms.ToolStripButton UkraineGeoPasteButton;
         private System.Windows.Forms.ToolStripButton UkraineProjPasteButton;
         private System.Windows.Forms.ToolStripButton MgrsPasteButton;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NumberColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn XCoordColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn YCoordColumn;
+        private System.Windows.Forms.DataGridViewImageColumn HighlightColumn;
+        private System.Windows.Forms.DataGridViewImageColumn DeleteColumn;
     }
 }
