@@ -11,7 +11,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic.Models
     [XmlRoot("PointModelsList")]
     public class PointModel
     {
-        public string Guid { get; set; }
+        public int? PointNumber { get; set; }
         public double XCoord { get; set; }
         public double YCoord { get; set; }
         public double WgsXCoord { get; set; }
@@ -26,14 +26,14 @@ namespace MilSpace.GeoCalculator.BusinessLogic.Models
         public double UkraineXCoordDD { get; set; }
         public double UkraineYCoord { get; set; }
         public double UkraineYCoordDD { get; set; }
-        public string MgrsRepresentation { get; set; }
-        public string UtmRepresentation { get; set; }
+        public string MgrsRepresentation { get; set; }       
 
         public string ToString(bool currentMapCoordinatesOnly = false)
         {
             if (currentMapCoordinatesOnly) return $"{XCoord} {YCoord}";
 
             var stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine($"{(PointNumber == null ? 0 : PointNumber.Value)}");
             stringBuilder.AppendLine($"{XCoord} {YCoord}");
             stringBuilder.AppendLine($"{WgsXCoord} {WgsYCoord}");
             stringBuilder.AppendLine($"{WgsXCoordDD} {WgsYCoordDD}");
@@ -41,8 +41,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic.Models
             stringBuilder.AppendLine($"{PulkovoXCoordDD} {PulkovoYCoordDD}");
             stringBuilder.AppendLine($"{UkraineXCoord} {UkraineYCoord}");
             stringBuilder.AppendLine($"{UkraineXCoordDD} {UkraineYCoordDD}");
-            stringBuilder.AppendLine($"{MgrsRepresentation}");
-            stringBuilder.AppendLine($"{UtmRepresentation}");
+            stringBuilder.AppendLine($"{MgrsRepresentation}");            
             return stringBuilder.ToString();
         }
     }
