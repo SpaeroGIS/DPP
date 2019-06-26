@@ -18,7 +18,7 @@ namespace MilSpace.DataAccess.Facade
         {
             using (var accessor = new SemanticDataAccess())
             {
-                return accessor.GetAllSessionsFoUser().ToArray();
+                return accessor.GetAllSessionsForUser().ToArray();
             }
         }
 
