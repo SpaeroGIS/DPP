@@ -29,6 +29,8 @@ namespace MilSpace.Profile
         internal delegate void CreateEmptyGraphDelegate();
         internal delegate void AddProfileToExistedGraphDelegate();
         internal delegate string GetProfileNameDelegate(int id);
+        internal delegate bool GetIsProfileSharedDelegate(int id);
+        internal delegate ProfileSession GetProfileSessionByIdDelegate(int id);
 
         internal event ProfileRedrawDelegate ProfileRedrawn;
         internal event DeleteProfileDelegate ProfileRemoved;
@@ -37,6 +39,8 @@ namespace MilSpace.Profile
         internal event CreateEmptyGraphDelegate CreateEmptyGraph;
         internal event AddProfileToExistedGraphDelegate AddProfile;
         internal event GetProfileNameDelegate GetProfileName;
+        internal event GetIsProfileSharedDelegate GetIsProfileShared;
+        internal event GetProfileSessionByIdDelegate GetProfileSessionById;
 
         internal DockableWindowMilSpaceProfileGraph View { get; private set; }
 
@@ -118,6 +122,16 @@ namespace MilSpace.Profile
         internal string GetProfileNameById(int id)
         {
             return GetProfileName?.Invoke(id);
+        }
+
+        internal bool IsProfileShared(int id)
+        {
+            return GetIsProfileShared.Invoke(id);
+        }
+
+        internal ProfileSession GetSessionById(int id)
+        {
+            return GetProfileSessionById?.Invoke(id);
         }
 
         internal void ShowWindow()

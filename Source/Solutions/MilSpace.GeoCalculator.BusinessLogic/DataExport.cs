@@ -83,7 +83,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic
             var output = "";
             var delimiter = ';';
             var properties = typeof(PointModel).GetProperties().Where(n =>
-             n.PropertyType == typeof(string)
+             n.PropertyType == typeof(int?)
              || n.PropertyType == typeof(double));
 
             using (var sw = new StringWriter())

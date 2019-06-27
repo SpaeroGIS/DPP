@@ -7,6 +7,8 @@ using ESRI.ArcGIS.Display;
 using System.Drawing;
 using MilSpace.DataAccess;
 using System.Text;
+using System.Globalization;
+using System.Windows.Forms;
 
 namespace MilSpace.Profile.SurfaceProfileChartControl
 {
@@ -475,24 +477,53 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         }
 
-        internal string GetProfilePropertiesText(int lineId)
+        internal ProfileSession GetProfileSessionForLine(int lineId)
         {
-            var profilePropertiesText = new StringBuilder();
-            var profileProperty = _surfaceProfileChart.ProfilesProperties.FirstOrDefault(property => property.LineId == lineId);
+            var profileLine = _profileSession.ProfileLines.FirstOrDefault(line => line.Id == lineId);
 
-            if(profileProperty == null)
+            if(profileLine == null)
             {
-                return String.Empty;
+                return null;
             }
 
-            var header = "Line number; Azimuth; Point of view; Profile length; Max height; Height difference; Min height; Max angle; Min angle; Visibility percent";
+            if(profileLine.SessionId != _profileSession.SessionId)
+            {
+                return _graphsController.GetSessionById(profileLine.SessionId);
+            }
+            else
+            {
+                return _profileSession;
+            }
+        }
+
+        internal string GetProfilePropertiesText()
+        {
+            var profilePropertiesText = new StringBuilder();
+
+            var header = "Line number; Profile name; External; State; Start point; End point; Azimuth; Point of view; Profile length; Max height; Height difference; Min height; Max angle; Min angle; Visibility percent";
             profilePropertiesText.AppendLine(header);
 
-            var properties = $"{profileProperty.LineId};{profileProperty.Azimuth};{profileProperty.ObserverHeight};{profileProperty.PathLength};" +
-                             $"{profileProperty.MaxHeight};{profileProperty.MaxHeight - profileProperty.MinHeight};{profileProperty.MinHeight};" +
-                             $"{profileProperty.MaxAngle};{profileProperty.MinAngle};{profileProperty.VisiblePercent}";
+            foreach(var line in _profileSession.ProfileLines)
+            {
+                var profileProperty = _surfaceProfileChart.ProfilesProperties.FirstOrDefault(property => property.LineId == line.Id);
 
-            profilePropertiesText.AppendLine(properties);
+                if(profileProperty == null)
+                {
+                    continue;
+                }
+
+                var isExternal = (line.SessionId != _profileSession.SessionId);
+
+                var isExternalText = (isExternal) ? "Yes" : "No";
+                var stateText = (GetProfileSharedForLine(line.Id)) ? "Shared" : "Private";
+
+                var properties = $"{profileProperty.LineId};{GetProfileName(line.Id)};{isExternalText};{stateText};X = {ConvertDoubleToExportString(5, line.PointFrom.X)} Y = {ConvertDoubleToExportString(5, line.PointFrom.Y)} ;" +
+                                 $"X = {ConvertDoubleToExportString(5, line.PointTo.X)} Y = {ConvertDoubleToExportString(5, line.PointTo.Y)};{ConvertDoubleToExportString(1, profileProperty.Azimuth)};{ConvertDoubleToExportString(1, profileProperty.ObserverHeight)};" +
+                                 $"{ConvertDoubleToExportString(1, profileProperty.PathLength)};{ConvertDoubleToExportString(1, profileProperty.MaxHeight)};{ConvertDoubleToExportString(1, profileProperty.MaxHeight - profileProperty.MinHeight)};" +
+                                 $"{ConvertDoubleToExportString(1, profileProperty.MinHeight)};{ConvertDoubleToExportString(1, profileProperty.MaxAngle)};{ConvertDoubleToExportString(1, profileProperty.MinAngle)};{ConvertDoubleToExportString(1, profileProperty.VisiblePercent)}";
+
+                profilePropertiesText.AppendLine(properties);
+            }
 
             return profilePropertiesText.ToString();
         }
@@ -515,7 +546,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             for(int i = 0; i < points.Count(); i++)
             {
-                pointsPropertiesText.Append($"{i};{points[i].X};{points[i].Y};{points[i].Z};{points[i].Distance};");
+                pointsPropertiesText.Append($"{i};{ConvertDoubleToExportString(5, points[i].X)};{ConvertDoubleToExportString(5, points[i].Y)};" +
+                                        $"{ConvertDoubleToExportString(5, points[i].Z)};{ConvertDoubleToExportString(1, points[i].Distance)};");
 
                 var vertex = points[i].isVertex ? trueText : falseText;
                 var visible = _surfaceProfileChart.IsPointVisible(lineId, i) ? trueText : falseText;
@@ -533,7 +565,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 _linesSegments.Add(segments[0].LineId, segments);
             }
         }
-
 
         internal void AddVertexPointsToLine(List<ProfileSurface> segments, double observerHeight)
         {
@@ -831,6 +862,33 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
 
             return extremePoints;
+        }
+
+        private bool GetProfileSharedForLine(int lineId)
+        {
+            var profileLine = _profileSession.ProfileLines.FirstOrDefault(line => line.Id == lineId);
+
+            try
+            {
+                if(profileLine == null)
+                {
+                    throw new ArgumentException("Line not found");
+                }
+
+            }
+            catch(ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message, "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if(profileLine.SessionId != _profileSession.SessionId)
+            {
+                return _graphsController.IsProfileShared(profileLine.SessionId);
+            }
+
+            return _profileSession.Shared;
+
         }
 
         private static double FindLength(ProfileSurfacePoint[] profileSurfacePoints)
@@ -1151,6 +1209,11 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             };
 
             return endLine;
+        }
+
+        internal static string ConvertDoubleToExportString(int decimals, double number)
+        {
+            return Math.Round(number, decimals).ToString(CultureInfo.InvariantCulture);
         }
 
     }
