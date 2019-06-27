@@ -1,7 +1,9 @@
-﻿using MilSpace.GeoCalculator.BusinessLogic.Interfaces;
+﻿using MilSpace.GeoCalculator.BusinessLogic.Extensions;
+using MilSpace.GeoCalculator.BusinessLogic.Interfaces;
 using MilSpace.GeoCalculator.BusinessLogic.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -11,7 +13,7 @@ using System.Xml.Serialization;
 
 namespace MilSpace.GeoCalculator.BusinessLogic
 {
-    public class DataExport : IDataImportExport
+    public class DataImportExport : IDataImportExport
     {
         public async Task ExportProjectionsToCsvAsync(List<PointModel> pointModels, string path)
         {
@@ -73,8 +75,8 @@ namespace MilSpace.GeoCalculator.BusinessLogic
                     var values = line.Split(';');
 
                     if (int.TryParse(values[0], out int number) &&
-                        double.TryParse(values[1], out double longitude) &&
-                        double.TryParse(values[2], out double latitude))
+                        values[1].ToDoubleInvariantCulture(out double longitude) &&
+                        values[2].ToDoubleInvariantCulture(out double latitude))
                         result.Add(new PointModel { Number = number, Longitude = longitude, Latitude = latitude });
                 }
             }
@@ -87,13 +89,9 @@ namespace MilSpace.GeoCalculator.BusinessLogic
             return await Task.Run(() =>
             {
                 using (var streamReader = File.OpenRead(path))
-                {
-                    //using (XmlReader reader = XmlReader.Create(path, new XmlReaderSettings { Async = true }))
-                    //{
-                    //reader.ReadContentAsAsync(typeof(PointModelsList), NamespaceHandling.Default)
+                {                    
                     var pointModelList = xmlSerializer.Deserialize(streamReader);
-                    return (pointModelList as PointModelsList)?.PointList;
-                    //}
+                    return (pointModelList as PointModelsList)?.PointList;                   
                 }
             });
         }
@@ -112,7 +110,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic
             }
 
             return stringBuilder.ToString();
-        }
+        }        
 
         private string SerializeToCSV(List<PointModel> items)
         {
@@ -132,12 +130,12 @@ namespace MilSpace.GeoCalculator.BusinessLogic
                 {
                     var row = properties
                     .Select(n => n.GetValue(item, null))
-                    .Select(n => n == null ? "null" : n.ToString()).Aggregate((a, b) => a + delimiter + b);
+                    .Select(n => n == null ? "null" : String.Format(CultureInfo.InvariantCulture, "{0}", n)).Aggregate((a, b) => a + delimiter + b);
                     sw.WriteLine(row);
                 }
                 output = sw.ToString();
             }
             return output;
-        }
+        }        
     }
 }
