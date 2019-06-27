@@ -514,7 +514,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
                 var isExternal = (line.SessionId != _profileSession.SessionId);
 
-                var isExternalText = (isExternal) ? "Yes" : "No";
+                var isExternalText = (isExternal) ? "+" : "-";
                 var stateText = (GetProfileSharedForLine(line.Id)) ? "Shared" : "Private";
 
                 var properties = $"{profileProperty.LineId};{GetProfileName(line.Id)};{isExternalText};{stateText};X = {ConvertDoubleToExportString(5, line.PointFrom.X)} Y = {ConvertDoubleToExportString(5, line.PointFrom.Y)} ;" +
@@ -539,8 +539,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
 
             var header = "Number; X; Y; Z; Distance; Vertex; Visible; Intersections";
-            var trueText = "Yes";
-            var falseText = "No";
+            var trueText = "+";
+            var falseText = "-";
 
             pointsPropertiesText.AppendLine(header);
 
@@ -551,8 +551,49 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
                 var vertex = points[i].isVertex ? trueText : falseText;
                 var visible = _surfaceProfileChart.IsPointVisible(lineId, i) ? trueText : falseText;
+                var intersections = string.Empty;
 
-                pointsPropertiesText.AppendLine($"{vertex};{visible};{points[i].Layers.ToString()}");
+                foreach(LayersEnum layer in Enum.GetValues(points[i].Layers.GetType()))
+                {
+                    if (points[i].Layers.HasFlag(layer))
+                    {
+                        if (intersections != string.Empty)
+                        {
+                            intersections += ", ";
+                        }
+
+                        switch(layer)
+                        {
+                            case LayersEnum.Buildings:
+                                intersections += $"build";
+                                break;
+
+                            case LayersEnum.Hydrography:
+                                intersections += $"water";
+                                break;
+
+                            case LayersEnum.Vegetation:
+                                intersections += $"wood";
+                                break;
+
+                            case LayersEnum.Roads:
+                                intersections += $"transport";
+                                break;
+
+                            case LayersEnum.NotIntersect:
+                                intersections += $"-";
+                                break;
+                        }
+
+                    }
+                }
+
+                if (intersections == string.Empty)
+                {
+                    intersections = "-";
+                }
+
+                    pointsPropertiesText.AppendLine($"{vertex};{visible};{intersections}");
             }
 
             return pointsPropertiesText.ToString();
