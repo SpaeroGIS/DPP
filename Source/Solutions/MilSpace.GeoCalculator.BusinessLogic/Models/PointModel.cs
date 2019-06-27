@@ -11,37 +11,17 @@ namespace MilSpace.GeoCalculator.BusinessLogic.Models
     [XmlRoot("PointModelsList")]
     public class PointModel
     {
-        public int? PointNumber { get; set; }
-        public double XCoord { get; set; }
-        public double YCoord { get; set; }
-        public double WgsXCoord { get; set; }
-        public double WgsXCoordDD { get; set; }
-        public double WgsYCoord { get; set; }
-        public double WgsYCoordDD { get; set; }
-        public double PulkovoXCoord { get; set; }
-        public double PulkovoXCoordDD { get; set; }
-        public double PulkovoYCoord { get; set; }
-        public double PulkovoYCoordDD { get; set; }
-        public double UkraineXCoord { get; set; }
-        public double UkraineXCoordDD { get; set; }
-        public double UkraineYCoord { get; set; }
-        public double UkraineYCoordDD { get; set; }
-        public string MgrsRepresentation { get; set; }       
+        public int? Number { get; set; }
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }              
 
         public string ToString(bool currentMapCoordinatesOnly = false)
         {
-            if (currentMapCoordinatesOnly) return $"{XCoord} {YCoord}";
+            if (currentMapCoordinatesOnly) return $"{Longitude} {Latitude}";
 
             var stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine($"{(PointNumber == null ? 0 : PointNumber.Value)}");
-            stringBuilder.AppendLine($"{XCoord} {YCoord}");
-            stringBuilder.AppendLine($"{WgsXCoord} {WgsYCoord}");
-            stringBuilder.AppendLine($"{WgsXCoordDD} {WgsYCoordDD}");
-            stringBuilder.AppendLine($"{PulkovoXCoord} {PulkovoYCoord}");
-            stringBuilder.AppendLine($"{PulkovoXCoordDD} {PulkovoYCoordDD}");
-            stringBuilder.AppendLine($"{UkraineXCoord} {UkraineYCoord}");
-            stringBuilder.AppendLine($"{UkraineXCoordDD} {UkraineYCoordDD}");
-            stringBuilder.AppendLine($"{MgrsRepresentation}");            
+            stringBuilder.AppendLine($"{(Number == null ? 0 : Number.Value)}");
+            stringBuilder.AppendLine($"{Longitude.ToString().Replace(',', '.')} {Latitude.ToString().Replace(',', '.')}");                        
             return stringBuilder.ToString();
         }
     }
