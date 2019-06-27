@@ -284,7 +284,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             profilePropertiesTable.Rows.Add(
                         serie.Enabled,
                         properties.LineId,
-                        Math.Round(properties.Azimuth, 0),
+                        properties.Azimuth == double.MinValue ? "" : Math.Round(properties.Azimuth, 0).ToString(),
                         Math.Round(properties.ObserverHeight, 0),
                         Math.Round(properties.PathLength, 0),
                         Math.Round(properties.MinHeight, 0),
@@ -299,13 +299,15 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         {
             var surface = (ProfileSurface)profileChart.Series[SelectedLineId.ToString()].Tag;
             var property = ProfilesProperties.First(profileProperty => profileProperty.LineId == SelectedLineId);
+            var session = _controller.GetProfileSessionForLine(SelectedLineId);
 
-            profileDetailsListView.Items.Clear();
+            var sharedText = session.Shared ? "Общий" : "Без общего доступа";
 
-            profileDetailsListView.Items.Add(CreateNewItem($"Состояние: ", ""));
-            profileDetailsListView.Items.Add(CreateNewItem($"Номер: ", $"{SelectedLineId}"));
+             profileDetailsListView.Items.Clear();
+
+            profileDetailsListView.Items.Add(CreateNewItem($"Состояние: ", $"{sharedText}"));
             profileDetailsListView.Items
-                                    .Add(CreateNewItem($"Начало/конец: ",
+                                    .Add(CreateNewItem($"Начало - конец: ",
                                         $"{Math.Round(surface.ProfileSurfacePoints[0].X, 5)};"
                                         + $"{Math.Round(surface.ProfileSurfacePoints[0].Y, 5)}"
                                         + $" - {Math.Round(surface.ProfileSurfacePoints.Last().X, 5)};"
@@ -322,14 +324,14 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                                             $"{Math.Round(property.MinHeight, 0)}"
                                             + $"-{Math.Round(property.MaxHeight, 0)}"));
             profileDetailsListView.Items
-                                    .Add(CreateNewItem($"Max угол подъема:",
-                                        $"{Math.Round(property.MaxAngle, 1)}"));
-            profileDetailsListView.Items
-                                    .Add(CreateNewItem($"Max угол спуска: ",
-                                        $"{Math.Round(property.MinAngle, 1)}"));
+                                    .Add(CreateNewItem($"Углы:",
+                                        $"{Math.Round(property.MaxAngle, 1)}"
+                                        + $"-{Math.Round(property.MinAngle, 1)}"));
             profileDetailsListView.Items
                                     .Add(CreateNewItem($"Видимые зоны (%): ",
                                             $"{Math.Round(property.VisiblePercent, 2)}"));
+            profileDetailsListView.Items
+                                    .Add(CreateNewItem($"{session.CreatedBy}", $"{session.CreatedOn}"));
         }
 
         #endregion
@@ -799,8 +801,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             ProfileSurface[] profileSurfaces = GetSurfacesFromChart();
 
             UpdateProfile(SelectedLineId.ToString());
-            _controller.AddInvisibleZone(GetObserverPointFullHeight(SelectedLineId),
-                                             profileSurfaces.First(surface => surface.LineId == SelectedLineId),
+            _controller.AddInvisibleZone(height, profileSurfaces.First(surface => surface.LineId == SelectedLineId),
                                              profileChart.Series[SelectedLineId.ToString()].Color,
                                              profileChart.Series[SelectedLineId.ToString()].BackSecondaryColor);
             UpdateProfileExtremePoints(SelectedLineId);
@@ -1033,9 +1034,9 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 ProfileSurface[] profileSurfaces = GetSurfacesFromChart();
 
                 UpdateProfile(SelectedLineId.ToString());
-                _controller.AddInvisibleZone(GetObserverPointFullHeight(SelectedLineId), profileSurfaces.First(surface => surface.LineId == SelectedLineId),
-                                                profileChart.Series[SelectedLineId.ToString()].Color,
-                                                profileChart.Series[SelectedLineId.ToString()].BackSecondaryColor);
+                _controller.AddInvisibleZone(ProfilesProperties.First(property => property.LineId == SelectedLineId).ObserverHeight, profileSurfaces.First(surface => surface.LineId == SelectedLineId),
+                                                profileChart.Series[SelectedLineId.ToString()].Color, profileChart.Series[SelectedLineId.ToString()].BackSecondaryColor);
+
                 UpdateProfileExtremePoints(SelectedLineId);
             }
         }
@@ -1433,62 +1434,46 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             var id = (int)profileNameLabel.Tag;
             var profileName = _controller.GetProfileName(SelectedLineId);
 
-            var fileName = $"{profileName}_";
+            var fileName = $"{profileName}_{SelectedLineId}_";
 
             folderBrowserDialog.Description = "Select the folder to save data";
 
             if(folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                fileName = $"{folderBrowserDialog.SelectedPath}\\{fileName}";
+                var path = $"{folderBrowserDialog.SelectedPath}\\{profileName}_{SelectedLineId}";
+                fileName = $"{path}\\{fileName}";
 
-                var imageFileName = $"{fileName}graph{SelectedLineId}.emf";
-                var propertiesFileName = $"{fileName}profile{SelectedLineId}.csv";
-                var pointsFileName = $"{fileName}points{SelectedLineId}.csv";
+                var imageFileName = $"{fileName}graph.emf";
+                var propertiesFileName = $"{fileName}profile.csv";
+                var pointsFileName = $"{fileName}points.csv";
 
 
-                if(File.Exists(imageFileName) || File.Exists(propertiesFileName) || File.Exists(pointsFileName))
+                if(Directory.Exists(path))
                 {
-                    DialogResult result = MessageBox.Show("Файл с таким именем уже существует \n Вы действительно хотите удалить старые данные?",
-                                                                "File already exist", MessageBoxButtons.OKCancel);
+                    DialogResult result = MessageBox.Show($"Каталог с именем {profileName}_{SelectedLineId} уже существует \n Вы действительно хотите обновить данные?",
+                                                                "Directory already exist", MessageBoxButtons.OKCancel);
 
                     if(result != DialogResult.OK)
                     {
                         return;
                     }
                 }
+                else
+                {
+                    Directory.CreateDirectory(path);
+                }
 
                 if(GetProfiles().Count > 1)
                 {
-                    OnlySelectedLineShow();
                     profileChart.SaveImage(imageFileName, ChartImageFormat.Emf);
-                    ChangeLinesVisibility(true);
                 }
                 else
                 {
                     profileChart.SaveImage(imageFileName, ChartImageFormat.Emf);
                 }
 
-                File.WriteAllText(propertiesFileName, _controller.GetProfilePropertiesText(SelectedLineId));
-                File.WriteAllText(pointsFileName, _controller.GetProfilePointsPropertiesText(SelectedLineId));
-            }
-        }
-
-        private void OnlySelectedLineShow()
-        {
-            ChangeLinesVisibility(false);
-
-            profileChart.Series[SelectedLineId.ToString()].Enabled = true;
-            profileChart.Series[$"ExtremePointsLine{SelectedLineId}"].Enabled = true;
-        }
-
-        private void ChangeLinesVisibility(bool isVisible)
-        {
-            var profiles = GetProfiles();
-
-            foreach(var serie in profiles)
-            {
-                serie.Enabled = isVisible;
-                profileChart.Series[$"ExtremePointsLine{serie.Name}"].Enabled = isVisible;
+                File.WriteAllText(propertiesFileName, _controller.GetProfilePropertiesText(), Encoding.Default);
+                File.WriteAllText(pointsFileName, _controller.GetProfilePointsPropertiesText(SelectedLineId), Encoding.Default);
             }
         }
     }
