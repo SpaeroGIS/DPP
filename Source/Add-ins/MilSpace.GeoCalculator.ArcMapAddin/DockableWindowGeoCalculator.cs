@@ -1,4 +1,6 @@
-﻿using ESRI.ArcGIS.Display;
+﻿using ESRI.ArcGIS.ArcMapUI;
+using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geometry;
@@ -128,8 +130,32 @@ namespace MilSpace.GeoCalculator
             var centerPoint = _businessLogic.GetDisplayCenter();
             ProjectPointAsync(centerPoint, true);
         }
+
+        private void MoveToTheProjectedCoordButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                IPoint point = new PointClass();
+                point.PutCoords(double.Parse(XCoordinateTextBox.Text), double.Parse(YCoordinateTextBox.Text));
+                point.SpatialReference = FocusMapSpatialReference;
+                ProcessPointAsClicked(point, false);
+                var document = ArcMap.Document as IMxDocument;
+                var activeView = document?.ActiveView;
+                IEnvelope envelope = activeView?.Extent;
+                if (envelope != null)
+                {
+                    envelope.CenterAt(point);
+                    activeView.Extent = envelope;
+                    activeView.Refresh();
+                }
+            }
+            catch
+            {
+                MessageBox.Show(context.WrongFormatMessage, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         #endregion
-        
+
         #region Copy Buttons Click
         private void CurrentCoordsCopyButton_Click(object sender, EventArgs e)
         {
@@ -636,6 +662,14 @@ namespace MilSpace.GeoCalculator
                 }
             }
         }
+
+        private void CoordinatesTextBoxes_TextChanged(object sender, EventArgs e)
+        {
+            if (sender is TextBox currentTextBox)
+            {
+                currentTextBox.Text = currentTextBox.Text.Replace(" ", string.Empty);
+            }
+        }
         #endregion
 
         #region DataGridView Events
@@ -723,31 +757,7 @@ namespace MilSpace.GeoCalculator
         internal void ArcMap_OnMouseDown(int x, int y)
         {
             var clickedPoint = _businessLogic.GetSelectedPoint(x, y);
-            var pointGuid = AddPointToList(clickedPoint);
-            var pointNumber = ClickedPointsDictionary.Count();
-
-            var newRow = new DataGridViewRow();
-            newRow.Cells.Add(new DataGridViewTextBoxCell() { Value =  pointNumber});
-            newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = clickedPoint.X.ToIntegerString() });
-            newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = clickedPoint.Y.ToIntegerString() });
-            newRow.Cells.Add(new DataGridViewImageCell()
-            {
-                Value = new Bitmap(Image.FromFile(System.IO.Path.Combine(
-                                                                         System.IO.Path.GetDirectoryName(
-                                                                         Assembly.GetExecutingAssembly().Location), @"Images\LocatePoint.png")), 16, 16),
-                ToolTipText = context.ShowPointOnMapButton
-            });
-            newRow.Cells.Add(new DataGridViewImageCell()
-            {
-                Value = new Bitmap(Image.FromFile(System.IO.Path.Combine(
-                                                                         System.IO.Path.GetDirectoryName(
-                                                                         Assembly.GetExecutingAssembly().Location), @"Images\DeletePoint.png")), 16, 16),
-                ToolTipText = context.DeletePointButton
-            });
-            PointsGridView.Rows.Add(newRow);
-            PointsGridView.ClearSelection();
-            PointsGridView.Refresh();
-            ProjectPointAsync(clickedPoint, false, pointGuid, pointNumber);
+            ProcessPointAsClicked(clickedPoint, true);
         }
 
         internal void ArcMap_OnMouseMove(int x, int y)
@@ -782,6 +792,7 @@ namespace MilSpace.GeoCalculator
                 //Tool Tips
                 this.MapPointToolButton.ToolTipText = context.ToolButton;
                 this.MoveToCenterButton.ToolTipText = context.MoveToCenterButton;
+                this.MoveToTheProjectedCoordButton.ToolTipText = context.MoveToProjectedCoordButton;
                 this.CopyButton.ToolTipText = context.CopyButton;
                 this.ClearGridButton.ToolTipText = context.ClearGridButton;
                 this.SaveGridPointsButton.ToolTipText = context.SaveButton;
@@ -810,7 +821,7 @@ namespace MilSpace.GeoCalculator
 
         private void ProjectPointAsync(IPoint inputPoint, bool fromUserInput = false, string pointGuid = null, int? pointNumber = null)
         {
-            lastProjectedPoint = new PointModel { PointNumber = pointNumber };
+            lastProjectedPoint = new PointModel { Number = pointNumber };
 
             if (inputPoint == null) throw new ArgumentNullException(nameof(inputPoint));
             if (inputPoint.SpatialReference == null) throw new NullReferenceException($"Point with ID = {inputPoint.ID} has no spatial reference.");
@@ -819,52 +830,38 @@ namespace MilSpace.GeoCalculator
                 inputPoint.Project(FocusMapSpatialReference);
 
             XCoordinateTextBox.Text = inputPoint.X.ToIntegerString();
-            YCoordinateTextBox.Text = inputPoint.Y.ToIntegerString();
-            lastProjectedPoint.XCoord = inputPoint.X.ToInteger();
-            lastProjectedPoint.YCoord = inputPoint.Y.ToInteger();
+            YCoordinateTextBox.Text = inputPoint.Y.ToIntegerString();            
 
             var wgsDD = _businessLogic.ConvertToDecimalDegrees(inputPoint, Constants.WgsGeoModel);
             wgsDMSXTextBox.Text = wgsDD.X.ToRoundedString();
             wgsDMSYTextBox.Text = wgsDD.Y.ToRoundedString();
-            lastProjectedPoint.WgsXCoordDD = wgsDD.X.ToRoundedDouble();
-            lastProjectedPoint.WgsYCoordDD = wgsDD.Y.ToRoundedDouble();
+            lastProjectedPoint.Longitude = wgsDD.X.ToRoundedDouble();
+            lastProjectedPoint.Latitude = wgsDD.Y.ToRoundedDouble();
 
             ManageProjectedCoordinateSystems(wgsDD.X);
 
             //MGRS string MUST be calculated using WGS84 projected point, thus the next lines order matters!
             var wgsPoint = _businessLogic.ProjectPoint(inputPoint, CurrentProjectionsModel.WGS84Projection);
             WgsXCoordinateTextBox.Text = wgsPoint.X.ToIntegerString();
-            WgsYCoordinateTextBox.Text = wgsPoint.Y.ToIntegerString();
-            lastProjectedPoint.WgsXCoord = wgsPoint.X.ToInteger();
-            lastProjectedPoint.WgsYCoord = wgsPoint.Y.ToInteger();
+            WgsYCoordinateTextBox.Text = wgsPoint.Y.ToIntegerString();            
 
-            MgrsNotationTextBox.Text = (_businessLogic.ConvertToMgrs(wgsPoint))?.ToSeparatedMgrs();            
-
-            lastProjectedPoint.MgrsRepresentation = MgrsNotationTextBox.Text;            
+            MgrsNotationTextBox.Text = (_businessLogic.ConvertToMgrs(wgsPoint))?.ToSeparatedMgrs();
 
             var pulkovoPoint = _businessLogic.ProjectPoint(inputPoint, CurrentProjectionsModel.Pulkovo1942Projection);
             PulkovoXCoordinateTextBox.Text = pulkovoPoint.X.ToIntegerString();
-            PulkovoYCoordinateTextBox.Text = pulkovoPoint.Y.ToIntegerString();
-            lastProjectedPoint.PulkovoXCoord = pulkovoPoint.X.ToInteger();
-            lastProjectedPoint.PulkovoYCoord = pulkovoPoint.Y.ToInteger();
+            PulkovoYCoordinateTextBox.Text = pulkovoPoint.Y.ToIntegerString();           
 
             var pulkovoDD = _businessLogic.ConvertToDecimalDegrees(inputPoint, Constants.PulkovoGeoModel);
             pulkovoDMSXTextBox.Text = pulkovoDD.X.ToRoundedString();
-            pulkovoDMSYTextBox.Text = pulkovoDD.Y.ToRoundedString();
-            lastProjectedPoint.PulkovoXCoordDD = pulkovoDD.X.ToRoundedDouble();
-            lastProjectedPoint.PulkovoYCoordDD = pulkovoDD.Y.ToRoundedDouble();
+            pulkovoDMSYTextBox.Text = pulkovoDD.Y.ToRoundedString();            
 
             var ukrainePoint = _businessLogic.ProjectPoint(inputPoint, CurrentProjectionsModel.Ukraine2000Projection);
             UkraineXCoordinateTextBox.Text = ukrainePoint.X.ToIntegerString();
-            UkraineYCoordinateTextBox.Text = ukrainePoint.Y.ToIntegerString();
-            lastProjectedPoint.UkraineXCoord = ukrainePoint.X.ToInteger();
-            lastProjectedPoint.UkraineYCoord = ukrainePoint.Y.ToInteger();
+            UkraineYCoordinateTextBox.Text = ukrainePoint.Y.ToIntegerString();            
 
             var ukraineDD = _businessLogic.ConvertToDecimalDegrees(inputPoint, Constants.UkraineGeoModel);
             ukraineDMSXTextBox.Text = ukraineDD.X.ToRoundedString();
-            ukraineDMSYTextBox.Text = ukraineDD.Y.ToRoundedString();
-            lastProjectedPoint.UkraineXCoordDD = ukraineDD.X.ToRoundedDouble();
-            lastProjectedPoint.UkraineYCoordDD = ukraineDD.Y.ToRoundedDouble();
+            ukraineDMSYTextBox.Text = ukraineDD.Y.ToRoundedString();            
 
             //Remove distorsions
             inputPoint.Project(FocusMapSpatialReference);
@@ -943,10 +940,43 @@ namespace MilSpace.GeoCalculator
 
             foreach (var pointModel in pointModels.Values)
             {
-                if (pointModel.PointNumber > rowIndex)
+                if (pointModel.Number > rowIndex)
                 {
-                    pointModel.PointNumber--;
+                    pointModel.Number--;
                 }
+            }
+        }
+
+        private void ProcessPointAsClicked(IPoint point, bool projectPoint)
+        {
+            var pointGuid = AddPointToList(point);
+            var pointNumber = ClickedPointsDictionary.Count();
+
+            var newRow = new DataGridViewRow();
+            newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = pointNumber });
+            newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = point.X.ToIntegerString() });
+            newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = point.Y.ToIntegerString() });
+            newRow.Cells.Add(new DataGridViewImageCell()
+            {
+                Value = new Bitmap(Image.FromFile(System.IO.Path.Combine(
+                                                                         System.IO.Path.GetDirectoryName(
+                                                                         Assembly.GetExecutingAssembly().Location), @"Images\LocatePoint.png")), 16, 16),
+                ToolTipText = context.ShowPointOnMapButton
+            });
+            newRow.Cells.Add(new DataGridViewImageCell()
+            {
+                Value = new Bitmap(Image.FromFile(System.IO.Path.Combine(
+                                                                         System.IO.Path.GetDirectoryName(
+                                                                         Assembly.GetExecutingAssembly().Location), @"Images\DeletePoint.png")), 16, 16),
+                ToolTipText = context.DeletePointButton
+            });
+            PointsGridView.Rows.Add(newRow);
+            PointsGridView.ClearSelection();
+            PointsGridView.Refresh();
+
+            if (projectPoint)
+            {
+                ProjectPointAsync(point, false, pointGuid, pointNumber);
             }
         }
         #endregion        

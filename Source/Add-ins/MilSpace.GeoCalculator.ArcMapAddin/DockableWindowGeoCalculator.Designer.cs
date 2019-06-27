@@ -30,10 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowGeoCalculator));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.mgrsToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.utmToolTip = new System.Windows.Forms.ToolTip(this.components);
@@ -114,6 +114,7 @@
             this.YCoordColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.HighlightColumn = new System.Windows.Forms.DataGridViewImageColumn();
             this.DeleteColumn = new System.Windows.Forms.DataGridViewImageColumn();
+            this.MoveToTheProjectedCoordButton = new System.Windows.Forms.ToolStripButton();
             this.TitlePanel.SuspendLayout();
             this.GeneralToolStrip.SuspendLayout();
             this.CurrentCoordinatesPanel.SuspendLayout();
@@ -168,6 +169,7 @@
             this.toolStripLabel1,
             this.MapPointToolButton,
             this.toolStripSeparator1,
+            this.MoveToTheProjectedCoordButton,
             this.MoveToCenterButton,
             this.toolStripSeparator2,
             this.CopyButton});
@@ -288,6 +290,7 @@
             this.XCoordinateTextBox.Name = "XCoordinateTextBox";
             this.XCoordinateTextBox.Size = new System.Drawing.Size(80, 21);
             this.XCoordinateTextBox.TabIndex = 5;
+            this.XCoordinateTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
             this.XCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.XCoordinateTextBox_KeyDown);
             // 
             // YCoordinateTextBox
@@ -297,6 +300,7 @@
             this.YCoordinateTextBox.Name = "YCoordinateTextBox";
             this.YCoordinateTextBox.Size = new System.Drawing.Size(80, 21);
             this.YCoordinateTextBox.TabIndex = 7;
+            this.YCoordinateTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
             this.YCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.XCoordinateTextBox_KeyDown);
             // 
             // panel1
@@ -388,6 +392,7 @@
             this.wgsDMSYTextBox.Name = "wgsDMSYTextBox";
             this.wgsDMSYTextBox.Size = new System.Drawing.Size(80, 21);
             this.wgsDMSYTextBox.TabIndex = 26;
+            this.wgsDMSYTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
             this.wgsDMSYTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WgsDMSXTextBox_KeyDown);
             // 
             // wgsDMSXTextBox
@@ -397,6 +402,7 @@
             this.wgsDMSXTextBox.Name = "wgsDMSXTextBox";
             this.wgsDMSXTextBox.Size = new System.Drawing.Size(80, 21);
             this.wgsDMSXTextBox.TabIndex = 25;
+            this.wgsDMSXTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
             this.wgsDMSXTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WgsDMSXTextBox_KeyDown);
             // 
             // WgsGeoLabel
@@ -426,6 +432,7 @@
             this.WgsXCoordinateTextBox.Name = "WgsXCoordinateTextBox";
             this.WgsXCoordinateTextBox.Size = new System.Drawing.Size(80, 21);
             this.WgsXCoordinateTextBox.TabIndex = 2;
+            this.WgsXCoordinateTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
             this.WgsXCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WgsXCoordinateTextBox_KeyDown);
             // 
             // WgsYCoordinateTextBox
@@ -435,6 +442,7 @@
             this.WgsYCoordinateTextBox.Name = "WgsYCoordinateTextBox";
             this.WgsYCoordinateTextBox.Size = new System.Drawing.Size(80, 21);
             this.WgsYCoordinateTextBox.TabIndex = 3;
+            this.WgsYCoordinateTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
             this.WgsYCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WgsXCoordinateTextBox_KeyDown);
             // 
             // panel2
@@ -526,6 +534,7 @@
             this.pulkovoDMSYTextBox.Name = "pulkovoDMSYTextBox";
             this.pulkovoDMSYTextBox.Size = new System.Drawing.Size(80, 21);
             this.pulkovoDMSYTextBox.TabIndex = 26;
+            this.pulkovoDMSYTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
             this.pulkovoDMSYTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PulkovoDMSXTextBox_KeyDown);
             // 
             // pulkovoDMSXTextBox
@@ -535,6 +544,7 @@
             this.pulkovoDMSXTextBox.Name = "pulkovoDMSXTextBox";
             this.pulkovoDMSXTextBox.Size = new System.Drawing.Size(80, 21);
             this.pulkovoDMSXTextBox.TabIndex = 25;
+            this.pulkovoDMSXTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
             this.pulkovoDMSXTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PulkovoDMSXTextBox_KeyDown);
             // 
             // PulkovoGeoLabel
@@ -564,6 +574,7 @@
             this.PulkovoXCoordinateTextBox.Name = "PulkovoXCoordinateTextBox";
             this.PulkovoXCoordinateTextBox.Size = new System.Drawing.Size(80, 21);
             this.PulkovoXCoordinateTextBox.TabIndex = 10;
+            this.PulkovoXCoordinateTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
             this.PulkovoXCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PulkovoXCoordinateTextBox_KeyDown);
             // 
             // PulkovoYCoordinateTextBox
@@ -573,6 +584,7 @@
             this.PulkovoYCoordinateTextBox.Name = "PulkovoYCoordinateTextBox";
             this.PulkovoYCoordinateTextBox.Size = new System.Drawing.Size(80, 21);
             this.PulkovoYCoordinateTextBox.TabIndex = 8;
+            this.PulkovoYCoordinateTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
             this.PulkovoYCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PulkovoXCoordinateTextBox_KeyDown);
             // 
             // panel3
@@ -664,6 +676,7 @@
             this.ukraineDMSYTextBox.Name = "ukraineDMSYTextBox";
             this.ukraineDMSYTextBox.Size = new System.Drawing.Size(80, 21);
             this.ukraineDMSYTextBox.TabIndex = 26;
+            this.ukraineDMSYTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
             this.ukraineDMSYTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UkraineDMSXTextBox_KeyDown);
             // 
             // ukraineDMSXTextBox
@@ -673,6 +686,7 @@
             this.ukraineDMSXTextBox.Name = "ukraineDMSXTextBox";
             this.ukraineDMSXTextBox.Size = new System.Drawing.Size(80, 21);
             this.ukraineDMSXTextBox.TabIndex = 25;
+            this.ukraineDMSXTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
             this.ukraineDMSXTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UkraineDMSXTextBox_KeyDown);
             // 
             // UkraineGeoLabel
@@ -702,6 +716,7 @@
             this.UkraineXCoordinateTextBox.Name = "UkraineXCoordinateTextBox";
             this.UkraineXCoordinateTextBox.Size = new System.Drawing.Size(80, 21);
             this.UkraineXCoordinateTextBox.TabIndex = 11;
+            this.UkraineXCoordinateTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
             this.UkraineXCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UkraineXCoordinateTextBox_KeyDown);
             // 
             // UkraineYCoordinateTextBox
@@ -711,6 +726,7 @@
             this.UkraineYCoordinateTextBox.Name = "UkraineYCoordinateTextBox";
             this.UkraineYCoordinateTextBox.Size = new System.Drawing.Size(80, 21);
             this.UkraineYCoordinateTextBox.TabIndex = 12;
+            this.UkraineYCoordinateTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
             this.UkraineYCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UkraineXCoordinateTextBox_KeyDown);
             // 
             // panel4
@@ -905,14 +921,14 @@
             this.YCoordColumn,
             this.HighlightColumn,
             this.DeleteColumn});
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.PointsGridView.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.PointsGridView.DefaultCellStyle = dataGridViewCellStyle12;
             this.PointsGridView.GridColor = System.Drawing.SystemColors.Window;
             this.PointsGridView.Location = new System.Drawing.Point(0, 439);
             this.PointsGridView.Name = "PointsGridView";
@@ -926,10 +942,10 @@
             // NumberColumn
             // 
             this.NumberColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            this.NumberColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            this.NumberColumn.DefaultCellStyle = dataGridViewCellStyle9;
             this.NumberColumn.HeaderText = "";
             this.NumberColumn.Name = "NumberColumn";
             this.NumberColumn.ReadOnly = true;
@@ -938,11 +954,11 @@
             // XCoordColumn
             // 
             this.XCoordColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
-            this.XCoordColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.White;
+            this.XCoordColumn.DefaultCellStyle = dataGridViewCellStyle10;
             this.XCoordColumn.HeaderText = "";
             this.XCoordColumn.Name = "XCoordColumn";
             this.XCoordColumn.ReadOnly = true;
@@ -952,11 +968,11 @@
             // YCoordColumn
             // 
             this.YCoordColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
-            this.YCoordColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.White;
+            this.YCoordColumn.DefaultCellStyle = dataGridViewCellStyle11;
             this.YCoordColumn.HeaderText = "";
             this.YCoordColumn.Name = "YCoordColumn";
             this.YCoordColumn.ReadOnly = true;
@@ -980,6 +996,16 @@
             this.DeleteColumn.ReadOnly = true;
             this.DeleteColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.DeleteColumn.Width = 5;
+            // 
+            // MoveToTheProjectedCoordButton
+            // 
+            this.MoveToTheProjectedCoordButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.MoveToTheProjectedCoordButton.Image = ((System.Drawing.Image)(resources.GetObject("MoveToTheProjectedCoordButton.Image")));
+            this.MoveToTheProjectedCoordButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.MoveToTheProjectedCoordButton.Name = "MoveToTheProjectedCoordButton";
+            this.MoveToTheProjectedCoordButton.Size = new System.Drawing.Size(23, 20);
+            this.MoveToTheProjectedCoordButton.Text = "toolStripButton1";
+            this.MoveToTheProjectedCoordButton.Click += new System.EventHandler(this.MoveToTheProjectedCoordButton_Click);
             // 
             // DockableWindowGeoCalculator
             // 
@@ -1042,7 +1068,6 @@
         private System.Windows.Forms.Label TitleLabel;
         private System.Windows.Forms.ToolStrip GeneralToolStrip;
         private System.Windows.Forms.ToolStripButton MapPointToolButton;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton MoveToCenterButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton CopyButton;
@@ -1115,5 +1140,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn YCoordColumn;
         private System.Windows.Forms.DataGridViewImageColumn HighlightColumn;
         private System.Windows.Forms.DataGridViewImageColumn DeleteColumn;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton MoveToTheProjectedCoordButton;
     }
 }

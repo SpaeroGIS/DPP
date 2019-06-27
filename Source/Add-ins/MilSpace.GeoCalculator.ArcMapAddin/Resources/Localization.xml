@@ -12,6 +12,7 @@
 <CopyButton>Скопировать</CopyButton>
 <ClearGridButton>Очистить список отмеченных точек</ClearGridButton>
 <MoveToCenterButton>Центр карты</MoveToCenterButton>
+<MoveToProjectedCoordButton>Отцентровать карту по точке с текущими координатами</MoveToProjectedCoordButton>
 <ToolButton>Выключить взаимодействие с картой</ToolButton>
 <WrongUtmFormatMessage>Неверный формат UTM</WrongUtmFormatMessage>
 <ErrorString>Ошибка</ErrorString>

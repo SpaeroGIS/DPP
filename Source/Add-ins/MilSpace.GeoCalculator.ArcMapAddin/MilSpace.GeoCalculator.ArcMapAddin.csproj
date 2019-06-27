@@ -147,6 +147,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\Background.bmp" />
     <Content Include="Images\Center.png" />
     <Content Include="Images\Clipboard Copy.png" />
     <Content Include="Images\Clipboard Paste.png" />
@@ -157,6 +158,7 @@
     <Content Include="Images\LocatePoint.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\MoveToCoordinate.png" />
     <Content Include="Images\Save.png" />
     <AddInContent Include="Images\SaveIco.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
