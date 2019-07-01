@@ -35,5 +35,9 @@ namespace MilSpace.GeoCalculator.BusinessLogic.ReferenceData
         public const string HighlightColumnName = "HighlightColumn";
         public const string DeleteColumnName = "DeleteColumn";
         public const string NumberColumnName = "NumberColumn";
+
+        //File Extensions
+        public const string CSV = ".csv";
+        public const string XML = ".xml";
     }
 }
