@@ -16,11 +16,11 @@ namespace MilSpace.GeoCalculator.BusinessLogic
     {
         private const string NoMapExceptionMessage = "Can't get current Map Document.";
         private readonly IApplication _arcMapApp;
-        private readonly IDataExport _dataExport;
-        public BusinessLogic(IApplication arcMapApp, IDataExport dataExport)
+        private readonly IDataImportExport _dataImportExport;
+        public BusinessLogic(IApplication arcMapApp, IDataImportExport dataExport)
         {
             _arcMapApp = arcMapApp ?? throw new ArgumentNullException(nameof(arcMapApp));
-            _dataExport = dataExport;
+            _dataImportExport = dataExport;
         }
 
         public IPoint ConvertFromMgrs(string mgrsInputValue, CoordinateSystemModel coordinateSystemModel)
@@ -84,7 +84,15 @@ namespace MilSpace.GeoCalculator.BusinessLogic
         public void CopyCoordinatesToClipboard(List<PointModel> pointModels)
         {
             Clipboard.Clear();
-            Clipboard.SetText(_dataExport.GetStringRepresentationOfProjections(pointModels));
+            Clipboard.SetText(_dataImportExport.GetStringRepresentationOfProjections(pointModels));
+        }
+
+        public void CopyCoordinatesToClipboard(ExtendedPointModel pointModel)
+        {
+            if (pointModel == null) return;
+
+            Clipboard.Clear();
+            Clipboard.SetText(pointModel.ToString());
         }
 
         public IPoint GetDisplayCenter()
@@ -226,28 +234,42 @@ namespace MilSpace.GeoCalculator.BusinessLogic
         {
             if (string.IsNullOrWhiteSpace(path)) return;
 
-            await _dataExport.ExportProjectionsToXmlAsync(pointModels, path);
+            await _dataImportExport.ExportProjectionsToXmlAsync(pointModels, path);
         }
 
         public async Task SaveLastProjectionToXmlFileAsync(PointModel pointModel, string path)
         {
             if (string.IsNullOrWhiteSpace(path)) return;
 
-            await _dataExport.ExportProjectionsToXmlAsync(pointModel, path);
+            await _dataImportExport.ExportProjectionsToXmlAsync(pointModel, path);
         }
 
         public async Task SaveLastProjectionToCsvFileAsync(PointModel pointModel, string path)
         {
             if (string.IsNullOrWhiteSpace(path)) return;
 
-            await _dataExport.ExportProjectionsToCsvAsync(pointModel, path);
+            await _dataImportExport.ExportProjectionsToCsvAsync(pointModel, path);
         }
 
         public async Task SaveProjectionsToCsvFileAsync(List<PointModel> pointModels, string path)
         {
             if (string.IsNullOrWhiteSpace(path)) return;
 
-            await _dataExport.ExportProjectionsToCsvAsync(pointModels, path);
+            await _dataImportExport.ExportProjectionsToCsvAsync(pointModels, path);
         }
+
+        public async Task<List<PointModel>> ImportProjectionsFromXmlAsync(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path)) return null;
+
+            return await _dataImportExport.ImportProjectionsFromXmlAsync(path);
+        }
+
+        public async Task<List<PointModel>> ImportProjectionsFromCsvAsync(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path)) return null;
+            
+            return await _dataImportExport.ImportProjectionsFromCsvAsync(path);
+        }        
     }
 }

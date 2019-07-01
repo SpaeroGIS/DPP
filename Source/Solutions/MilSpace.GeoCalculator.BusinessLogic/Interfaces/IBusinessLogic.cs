@@ -11,6 +11,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic.Interfaces
         IPoint ProjectPoint(IPoint inputPoint, CoordinateSystemModel singleProjectionModel);
         Task<IPoint> ProjectSelectedPointAsync(int targetCoordinateSystemType, int mousePositionX, int mousePositionY, double falseOriginX = 0, double falseOriginY = 0);
         void CopyCoordinatesToClipboard(List<PointModel> pointModels);
+        void CopyCoordinatesToClipboard(ExtendedPointModel pointModel);
         IPoint GetDisplayCenter();
         IPoint GetSelectedPoint(int mousePositionX, int mousePositionY);
         Task MoveToNewCoordinate(double x, double y);
@@ -24,5 +25,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic.Interfaces
         Task SaveLastProjectionToXmlFileAsync(PointModel pointModel, string path);
         Task SaveLastProjectionToCsvFileAsync(PointModel pointModel, string path);
         Task SaveProjectionsToCsvFileAsync(List<PointModel> pointModels, string path);
+        Task<List<PointModel>> ImportProjectionsFromXmlAsync(string path);
+        Task<List<PointModel>> ImportProjectionsFromCsvAsync(string path);
     }
 }
