@@ -209,11 +209,11 @@ namespace MilSpace.Profile
             var pr = controller.GetProfileById(treeViewselectedIds.ProfileSessionId);
 
             saveProfileAsShared.Enabled = (pr != null && pr.CreatedBy == Environment.UserName && !pr.Shared);
-            
+
             removeProfile.Enabled = addProfileToGraph.Enabled = toolBtnShowOnMap.Enabled = toolBtnFlash.Enabled = treeViewselectedIds.ProfileSessionId > 0;
 
             var profileType = GetProfileTypeFromNode();
-            setProfileSettingsToCalc.Enabled = (addProfileToGraph.Enabled && 
+            setProfileSettingsToCalc.Enabled = (addProfileToGraph.Enabled &&
                                                     (profileType == ProfileSettingsTypeEnum.Points || profileType == ProfileSettingsTypeEnum.Fun));
 
             openGraphWindow.Enabled = !controller.MilSpaceProfileGraphsController.IsWindowVisible;
@@ -897,6 +897,28 @@ namespace MilSpace.Profile
             ToolTip1.SetToolTip(this.btnRefreshLayers, LocalizationConstants.RefreshButtonToolTip);
             lblSelectedPrimitives.Text = LocalizationConstants.SelectedPrimitivesText;
             lblCommonLength.Text = LocalizationConstants.CommonLengthText;
+
+            //Profile Tabs
+            profileTabPage.Text = LocalizationConstants.ProfileTabPageText;
+            profileTreeTabPage.Text = LocalizationConstants.PofileTreeTabPageText;
+
+            sectionTab.Text = LocalizationConstants.SectionTabText;
+            loadTab.Text = LocalizationConstants.LoadTabText;
+            primitiveTab.Text = LocalizationConstants.PrimitiveTabText;
+            funTab.Text = LocalizationConstants.FunTabText;
+
+
+            //Labels
+            lblLayersForCalc.Text = LocalizationConstants.LayersForCalcText;
+            lblVegetationLayer.Text = LocalizationConstants.VegetationLayerText;
+            lblBuildingsLayer.Text = LocalizationConstants.BuildingsLayerText;
+            lblRoadsLayer.Text = LocalizationConstants.RoadsLayerText;
+            lblHydrographyLayer.Text = LocalizationConstants.HydrographyLayerText;
+            lblPointOfViewLayer.Text = LocalizationConstants.PointOfViewLayerText;
+            lblSetPeofileProperties.Text = LocalizationConstants.SetProfilePropertiesText;
+            lblProfileName.Text = LocalizationConstants.ProfileNameText;
+
+            calcProfile.Text = LocalizationConstants.СalcProfileText;
         }
 
 
@@ -1149,7 +1171,7 @@ namespace MilSpace.Profile
         private void setProfileSettingsToCalc_Click(object sender, EventArgs e)
         {
             var node = profilesTreeView.SelectedNode;
-           
+
             if (!(node is ProfileTreeNode)) return;
 
             ProfileTreeNode profileNode = (ProfileTreeNode)node;
@@ -1158,7 +1180,7 @@ namespace MilSpace.Profile
 
 
             if (profileType == ProfileSettingsTypeEnum.Points)
-            { 
+            {
                 profileSettingsTab.SelectTab(0);
 
                 var baseValue = rows.Find(AttributeKeys.BasePoint)[AttributeKeys.ValueColumnName].ToString();
@@ -1206,7 +1228,7 @@ namespace MilSpace.Profile
             var pointY = Convert.ToDouble(Regex.Match(points[1], @"\d+,?\d+").Value);
 
             var av = ArcMap.Document.ActivatedView;
-           
+
             return new Point() { X = pointX, Y = pointY, SpatialReference = av.FocusMap.SpatialReference };
         }
     }
