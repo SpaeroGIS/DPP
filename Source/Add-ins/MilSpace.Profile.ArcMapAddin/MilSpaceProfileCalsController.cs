@@ -9,6 +9,7 @@ using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Exceptions;
 using MilSpace.DataAccess.Facade;
 using MilSpace.Profile.DTO;
+using MilSpace.Profile.ModalWindows;
 using MilSpace.Tools;
 using MilSpace.Tools.GraphicsLayer;
 using System;
