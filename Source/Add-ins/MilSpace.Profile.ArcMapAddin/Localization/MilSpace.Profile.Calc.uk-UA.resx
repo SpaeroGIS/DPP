@@ -120,10 +120,58 @@
   <data name="btnRefreshLayersToolTip" xml:space="preserve">
     <value>Оновити шари даних</value>
   </data>
+  <data name="btnСalcProfileText" xml:space="preserve">
+    <value>Розрахувати</value>
+  </data>
+  <data name="lblBuildingsLayerText" xml:space="preserve">
+    <value>Шар забудов</value>
+  </data>
   <data name="lblCommonLengthText" xml:space="preserve">
     <value>Довжина вибраних об'єктів:</value>
   </data>
+  <data name="lblDEMText" xml:space="preserve">
+    <value>Шар ЦМР/ ЦММ</value>
+  </data>
+  <data name="lblHydrographyLayerText" xml:space="preserve">
+    <value>Шар гідрогрфії</value>
+  </data>
+  <data name="lblLayersForCalcText" xml:space="preserve">
+    <value>Шари для розрахунків</value>
+  </data>
+  <data name="lblPointOfViewLayerText" xml:space="preserve">
+    <value>Шар точок спостереження</value>
+  </data>
+  <data name="lblProfileNameText" xml:space="preserve">
+    <value>Ім'я профілю</value>
+  </data>
+  <data name="lblRoadsLayerText" xml:space="preserve">
+    <value>Шар дорожньої мережі</value>
+  </data>
   <data name="lblSelectedPrimitivesText" xml:space="preserve">
     <value>Вибрані об'єкти:</value>
+  </data>
+  <data name="lblSetProfilePropertiesText" xml:space="preserve">
+    <value>Задати проіфіль</value>
+  </data>
+  <data name="lblVegetationLayerText" xml:space="preserve">
+    <value>Шар рослинності</value>
+  </data>
+  <data name="tabFunTabText" xml:space="preserve">
+    <value>"Віяло"</value>
+  </data>
+  <data name="tabLoadTabText" xml:space="preserve">
+    <value>Завантажити</value>
+  </data>
+  <data name="tabPofileTreeTabPageText" xml:space="preserve">
+    <value>Профілі в роботі</value>
+  </data>
+  <data name="tabPrimitiveTabText" xml:space="preserve">
+    <value>Графіка</value>
+  </data>
+  <data name="tabProfileTabPageText" xml:space="preserve">
+    <value>Параметри профілю</value>
+  </data>
+  <data name="tabSectionTabText" xml:space="preserve">
+    <value>Відрізки</value>
   </data>
 </root>

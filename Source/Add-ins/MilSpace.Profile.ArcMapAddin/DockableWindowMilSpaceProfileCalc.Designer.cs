@@ -30,32 +30,32 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Графика");
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.profileTabPage = new System.Windows.Forms.TabPage();
             this.btnRefreshLayers = new System.Windows.Forms.Button();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.cmbBuildings = new System.Windows.Forms.ComboBox();
-            this.label30 = new System.Windows.Forms.Label();
+            this.lblBuildingsLayer = new System.Windows.Forms.Label();
             this.cmbVegetationLayer = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblVegetationLayer = new System.Windows.Forms.Label();
             this.calcProfile = new System.Windows.Forms.Button();
             this.txtProfileName = new System.Windows.Forms.TextBox();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblProfileName = new System.Windows.Forms.Label();
+            this.lblSetPeofileProperties = new System.Windows.Forms.Label();
             this.cmbPointLayers = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.cmbHydrographyLayer = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.lblHydrographyLayer = new System.Windows.Forms.Label();
+            this.lblRoadsLayer = new System.Windows.Forms.Label();
             this.cmbRoadLayers = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
+            this.lblPointOfViewLayer = new System.Windows.Forms.Label();
             this.cmbRasterLayers = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblDEM = new System.Windows.Forms.Label();
+            this.lblLayersForCalc = new System.Windows.Forms.Label();
             this.profileSettingsTab = new System.Windows.Forms.TabControl();
             this.sectionTab = new System.Windows.Forms.TabPage();
             this.panel16 = new System.Windows.Forms.Panel();
@@ -86,7 +86,7 @@
             this.txtFirstPointY = new System.Windows.Forms.TextBox();
             this.txtFirstPointX = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.fanTab = new System.Windows.Forms.TabPage();
+            this.funTab = new System.Windows.Forms.TabPage();
             this.panel9 = new System.Windows.Forms.Panel();
             this.azimuth2 = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
@@ -148,7 +148,7 @@
             this.comboBox8 = new System.Windows.Forms.ComboBox();
             this.richTextBox5 = new System.Windows.Forms.RichTextBox();
             this.label20 = new System.Windows.Forms.Label();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.profileTreeTabPage = new System.Windows.Forms.TabPage();
             this.lvProfileAttributes = new System.Windows.Forms.ListView();
             this.Attribute = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Value = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -171,7 +171,7 @@
             this.clearExtraGraphic = new System.Windows.Forms.ToolStripButton();
             this.lblProfileList = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.profileTabPage.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.profileSettingsTab.SuspendLayout();
@@ -180,7 +180,7 @@
             this.panel5.SuspendLayout();
             this.panel17.SuspendLayout();
             this.panel4.SuspendLayout();
-            this.fanTab.SuspendLayout();
+            this.funTab.SuspendLayout();
             this.panel9.SuspendLayout();
             this.panel8.SuspendLayout();
             this.panel10.SuspendLayout();
@@ -192,15 +192,15 @@
             this.loadTab.SuspendLayout();
             this.panel15.SuspendLayout();
             this.panel14.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.profileTreeTabPage.SuspendLayout();
             this.panel6.SuspendLayout();
             this.profilesToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.profileTabPage);
+            this.tabControl1.Controls.Add(this.profileTreeTabPage);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tabControl1.ItemSize = new System.Drawing.Size(121, 22);
@@ -211,32 +211,32 @@
             this.tabControl1.Size = new System.Drawing.Size(450, 785);
             this.tabControl1.TabIndex = 1;
             // 
-            // tabPage1
+            // profileTabPage
             // 
-            this.tabPage1.AutoScroll = true;
-            this.tabPage1.BackColor = System.Drawing.SystemColors.Control;
-            this.tabPage1.Controls.Add(this.btnRefreshLayers);
-            this.tabPage1.Controls.Add(this.tableLayoutPanel1);
-            this.tabPage1.Controls.Add(this.calcProfile);
-            this.tabPage1.Controls.Add(this.txtProfileName);
-            this.tabPage1.Controls.Add(this.label25);
-            this.tabPage1.Controls.Add(this.label2);
-            this.tabPage1.Controls.Add(this.cmbPointLayers);
-            this.tabPage1.Controls.Add(this.tableLayoutPanel2);
-            this.tabPage1.Controls.Add(this.label7);
-            this.tabPage1.Controls.Add(this.cmbRasterLayers);
-            this.tabPage1.Controls.Add(this.label3);
-            this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.profileSettingsTab);
-            this.tabPage1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tabPage1.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.tabPage1.ImageKey = "Dots.png";
-            this.tabPage1.Location = new System.Drawing.Point(4, 26);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(442, 755);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Параметры профиля";
+            this.profileTabPage.AutoScroll = true;
+            this.profileTabPage.BackColor = System.Drawing.SystemColors.Control;
+            this.profileTabPage.Controls.Add(this.btnRefreshLayers);
+            this.profileTabPage.Controls.Add(this.tableLayoutPanel1);
+            this.profileTabPage.Controls.Add(this.calcProfile);
+            this.profileTabPage.Controls.Add(this.txtProfileName);
+            this.profileTabPage.Controls.Add(this.lblProfileName);
+            this.profileTabPage.Controls.Add(this.lblSetPeofileProperties);
+            this.profileTabPage.Controls.Add(this.cmbPointLayers);
+            this.profileTabPage.Controls.Add(this.tableLayoutPanel2);
+            this.profileTabPage.Controls.Add(this.lblPointOfViewLayer);
+            this.profileTabPage.Controls.Add(this.cmbRasterLayers);
+            this.profileTabPage.Controls.Add(this.lblDEM);
+            this.profileTabPage.Controls.Add(this.lblLayersForCalc);
+            this.profileTabPage.Controls.Add(this.profileSettingsTab);
+            this.profileTabPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.profileTabPage.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.profileTabPage.ImageKey = "Dots.png";
+            this.profileTabPage.Location = new System.Drawing.Point(4, 26);
+            this.profileTabPage.Name = "profileTabPage";
+            this.profileTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.profileTabPage.Size = new System.Drawing.Size(442, 755);
+            this.profileTabPage.TabIndex = 0;
+            this.profileTabPage.Text = "Параметры профиля";
             // 
             // btnRefreshLayers
             // 
@@ -476,9 +476,9 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.46809F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.53191F));
             this.tableLayoutPanel1.Controls.Add(this.cmbBuildings, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label30, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.lblBuildingsLayer, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.cmbVegetationLayer, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label4, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.lblVegetationLayer, 0, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(7, 85);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
@@ -500,16 +500,16 @@
             this.cmbBuildings.Size = new System.Drawing.Size(213, 21);
             this.cmbBuildings.TabIndex = 42;
             // 
-            // label30
+            // lblBuildingsLayer
             // 
-            this.label30.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(217, 6);
-            this.label30.Name = "label30";
-            this.label30.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.label30.Size = new System.Drawing.Size(96, 21);
-            this.label30.TabIndex = 41;
-            this.label30.Text = "Слой сооружения";
+            this.lblBuildingsLayer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblBuildingsLayer.AutoSize = true;
+            this.lblBuildingsLayer.Location = new System.Drawing.Point(217, 6);
+            this.lblBuildingsLayer.Name = "lblBuildingsLayer";
+            this.lblBuildingsLayer.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.lblBuildingsLayer.Size = new System.Drawing.Size(96, 21);
+            this.lblBuildingsLayer.TabIndex = 41;
+            this.lblBuildingsLayer.Text = "Слой сооружения";
             // 
             // cmbVegetationLayer
             // 
@@ -523,16 +523,16 @@
             this.cmbVegetationLayer.Size = new System.Drawing.Size(208, 21);
             this.cmbVegetationLayer.TabIndex = 40;
             // 
-            // label4
+            // lblVegetationLayer
             // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(3, 6);
-            this.label4.Name = "label4";
-            this.label4.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.label4.Size = new System.Drawing.Size(116, 21);
-            this.label4.TabIndex = 39;
-            this.label4.Text = "Слой растительность";
+            this.lblVegetationLayer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblVegetationLayer.AutoSize = true;
+            this.lblVegetationLayer.Location = new System.Drawing.Point(3, 6);
+            this.lblVegetationLayer.Name = "lblVegetationLayer";
+            this.lblVegetationLayer.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.lblVegetationLayer.Size = new System.Drawing.Size(116, 21);
+            this.lblVegetationLayer.TabIndex = 39;
+            this.lblVegetationLayer.Text = "Слой растительность";
             // 
             // calcProfile
             // 
@@ -558,32 +558,32 @@
             this.txtProfileName.Size = new System.Drawing.Size(173, 20);
             this.txtProfileName.TabIndex = 24;
             // 
-            // label25
+            // lblProfileName
             // 
-            this.label25.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.lblProfileName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.label25.AutoSize = true;
-            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label25.Location = new System.Drawing.Point(2, 315);
-            this.label25.Name = "label25";
-            this.label25.Padding = new System.Windows.Forms.Padding(0, 2, 0, 4);
-            this.label25.Size = new System.Drawing.Size(98, 23);
-            this.label25.TabIndex = 23;
-            this.label25.Text = "Имя профиля";
+            this.lblProfileName.AutoSize = true;
+            this.lblProfileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblProfileName.Location = new System.Drawing.Point(2, 315);
+            this.lblProfileName.Name = "lblProfileName";
+            this.lblProfileName.Padding = new System.Windows.Forms.Padding(0, 2, 0, 4);
+            this.lblProfileName.Size = new System.Drawing.Size(98, 23);
+            this.lblProfileName.TabIndex = 23;
+            this.lblProfileName.Text = "Имя профиля";
             // 
-            // label2
+            // lblSetPeofileProperties
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.lblSetPeofileProperties.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(2, 283);
-            this.label2.Margin = new System.Windows.Forms.Padding(3, 0, 3, 10);
-            this.label2.Name = "label2";
-            this.label2.Padding = new System.Windows.Forms.Padding(0, 6, 0, 6);
-            this.label2.Size = new System.Drawing.Size(155, 32);
-            this.label2.TabIndex = 22;
-            this.label2.Text = "Задать профиль";
+            this.lblSetPeofileProperties.AutoSize = true;
+            this.lblSetPeofileProperties.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblSetPeofileProperties.Location = new System.Drawing.Point(2, 283);
+            this.lblSetPeofileProperties.Margin = new System.Windows.Forms.Padding(3, 0, 3, 10);
+            this.lblSetPeofileProperties.Name = "lblSetPeofileProperties";
+            this.lblSetPeofileProperties.Padding = new System.Windows.Forms.Padding(0, 6, 0, 6);
+            this.lblSetPeofileProperties.Size = new System.Drawing.Size(155, 32);
+            this.lblSetPeofileProperties.TabIndex = 22;
+            this.lblSetPeofileProperties.Text = "Задать профиль";
             // 
             // cmbPointLayers
             // 
@@ -610,8 +610,8 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.33511F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.66489F));
             this.tableLayoutPanel2.Controls.Add(this.cmbHydrographyLayer, 1, 1);
-            this.tableLayoutPanel2.Controls.Add(this.label5, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.label6, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.lblHydrographyLayer, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.lblRoadsLayer, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.cmbRoadLayers, 0, 1);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(7, 145);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -637,28 +637,28 @@
             this.cmbHydrographyLayer.Size = new System.Drawing.Size(214, 21);
             this.cmbHydrographyLayer.TabIndex = 38;
             // 
-            // label5
+            // lblHydrographyLayer
             // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblHydrographyLayer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(216, 7);
-            this.label5.Name = "label5";
-            this.label5.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.label5.Size = new System.Drawing.Size(214, 21);
-            this.label5.TabIndex = 42;
-            this.label5.Text = "Слой гидрография";
+            this.lblHydrographyLayer.AutoSize = true;
+            this.lblHydrographyLayer.Location = new System.Drawing.Point(216, 7);
+            this.lblHydrographyLayer.Name = "lblHydrographyLayer";
+            this.lblHydrographyLayer.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.lblHydrographyLayer.Size = new System.Drawing.Size(214, 21);
+            this.lblHydrographyLayer.TabIndex = 42;
+            this.lblHydrographyLayer.Text = "Слой гидрография";
             // 
-            // label6
+            // lblRoadsLayer
             // 
-            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 7);
-            this.label6.Name = "label6";
-            this.label6.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.label6.Size = new System.Drawing.Size(111, 21);
-            this.label6.TabIndex = 39;
-            this.label6.Text = "Слой дорожной сети";
+            this.lblRoadsLayer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblRoadsLayer.AutoSize = true;
+            this.lblRoadsLayer.Location = new System.Drawing.Point(3, 7);
+            this.lblRoadsLayer.Name = "lblRoadsLayer";
+            this.lblRoadsLayer.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.lblRoadsLayer.Size = new System.Drawing.Size(111, 21);
+            this.lblRoadsLayer.TabIndex = 39;
+            this.lblRoadsLayer.Text = "Слой дорожной сети";
             // 
             // cmbRoadLayers
             // 
@@ -674,18 +674,18 @@
             this.cmbRoadLayers.Size = new System.Drawing.Size(207, 21);
             this.cmbRoadLayers.TabIndex = 41;
             // 
-            // label7
+            // lblPointOfViewLayer
             // 
-            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.lblPointOfViewLayer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 215);
-            this.label7.Name = "label7";
-            this.label7.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.label7.Size = new System.Drawing.Size(128, 21);
-            this.label7.TabIndex = 19;
-            this.label7.Text = "Слой точек наблюдения";
+            this.lblPointOfViewLayer.AutoSize = true;
+            this.lblPointOfViewLayer.Location = new System.Drawing.Point(6, 215);
+            this.lblPointOfViewLayer.Name = "lblPointOfViewLayer";
+            this.lblPointOfViewLayer.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.lblPointOfViewLayer.Size = new System.Drawing.Size(128, 21);
+            this.lblPointOfViewLayer.TabIndex = 19;
+            this.lblPointOfViewLayer.Text = "Слой точек наблюдения";
             // 
             // cmbRasterLayers
             // 
@@ -699,33 +699,33 @@
             this.cmbRasterLayers.TabIndex = 9;
             this.cmbRasterLayers.SelectedIndexChanged += new System.EventHandler(this.cmbRasterLayers_SelectedIndexChanged);
             // 
-            // label3
+            // lblDEM
             // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.lblDEM.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 37);
-            this.label3.Name = "label3";
-            this.label3.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.label3.Size = new System.Drawing.Size(93, 21);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "Слой ЦМР/ ЦММ";
+            this.lblDEM.AutoSize = true;
+            this.lblDEM.Location = new System.Drawing.Point(3, 37);
+            this.lblDEM.Name = "lblDEM";
+            this.lblDEM.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.lblDEM.Size = new System.Drawing.Size(93, 21);
+            this.lblDEM.TabIndex = 8;
+            this.lblDEM.Text = "Слой ЦМР/ ЦММ";
             // 
-            // label1
+            // lblLayersForCalc
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.lblLayersForCalc.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(3, 3);
-            this.label1.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
-            this.label1.Name = "label1";
-            this.label1.Padding = new System.Windows.Forms.Padding(0, 6, 0, 6);
-            this.label1.Size = new System.Drawing.Size(174, 32);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "Слои для расчетов";
+            this.lblLayersForCalc.AutoSize = true;
+            this.lblLayersForCalc.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblLayersForCalc.Location = new System.Drawing.Point(3, 3);
+            this.lblLayersForCalc.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
+            this.lblLayersForCalc.Name = "lblLayersForCalc";
+            this.lblLayersForCalc.Padding = new System.Windows.Forms.Padding(0, 6, 0, 6);
+            this.lblLayersForCalc.Size = new System.Drawing.Size(174, 32);
+            this.lblLayersForCalc.TabIndex = 7;
+            this.lblLayersForCalc.Text = "Слои для расчетов";
             // 
             // profileSettingsTab
             // 
@@ -733,7 +733,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.profileSettingsTab.Controls.Add(this.sectionTab);
-            this.profileSettingsTab.Controls.Add(this.fanTab);
+            this.profileSettingsTab.Controls.Add(this.funTab);
             this.profileSettingsTab.Controls.Add(this.primitiveTab);
             this.profileSettingsTab.Controls.Add(this.loadTab);
             this.profileSettingsTab.ItemSize = new System.Drawing.Size(63, 20);
@@ -1019,22 +1019,22 @@
             this.label8.TabIndex = 10;
             this.label8.Text = "первая точка (долгота широта)";
             // 
-            // fanTab
+            // funTab
             // 
-            this.fanTab.Controls.Add(this.panel9);
-            this.fanTab.Controls.Add(this.panel8);
-            this.fanTab.Controls.Add(this.label12);
-            this.fanTab.Controls.Add(this.panel10);
-            this.fanTab.Controls.Add(this.panel7);
-            this.fanTab.Controls.Add(this.label11);
-            this.fanTab.ImageKey = "Editing-Line-icon3.png";
-            this.fanTab.Location = new System.Drawing.Point(4, 24);
-            this.fanTab.Name = "fanTab";
-            this.fanTab.Padding = new System.Windows.Forms.Padding(3);
-            this.fanTab.Size = new System.Drawing.Size(428, 307);
-            this.fanTab.TabIndex = 1;
-            this.fanTab.Text = "\"Веером\"";
-            this.fanTab.UseVisualStyleBackColor = true;
+            this.funTab.Controls.Add(this.panel9);
+            this.funTab.Controls.Add(this.panel8);
+            this.funTab.Controls.Add(this.label12);
+            this.funTab.Controls.Add(this.panel10);
+            this.funTab.Controls.Add(this.panel7);
+            this.funTab.Controls.Add(this.label11);
+            this.funTab.ImageKey = "Editing-Line-icon3.png";
+            this.funTab.Location = new System.Drawing.Point(4, 24);
+            this.funTab.Name = "funTab";
+            this.funTab.Padding = new System.Windows.Forms.Padding(3);
+            this.funTab.Size = new System.Drawing.Size(428, 307);
+            this.funTab.TabIndex = 1;
+            this.funTab.Text = "\"Веером\"";
+            this.funTab.UseVisualStyleBackColor = true;
             // 
             // panel9
             // 
@@ -1689,20 +1689,20 @@
             this.label20.TabIndex = 24;
             this.label20.Text = "выбрать существующий профиль (из БД)";
             // 
-            // tabPage2
+            // profileTreeTabPage
             // 
-            this.tabPage2.Controls.Add(this.lvProfileAttributes);
-            this.tabPage2.Controls.Add(this.profilesTreeView);
-            this.tabPage2.Controls.Add(this.panel6);
-            this.tabPage2.Controls.Add(this.lblProfileList);
-            this.tabPage2.ImageKey = "Table.png";
-            this.tabPage2.Location = new System.Drawing.Point(4, 26);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(442, 755);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Список профилей";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.profileTreeTabPage.Controls.Add(this.lvProfileAttributes);
+            this.profileTreeTabPage.Controls.Add(this.profilesTreeView);
+            this.profileTreeTabPage.Controls.Add(this.panel6);
+            this.profileTreeTabPage.Controls.Add(this.lblProfileList);
+            this.profileTreeTabPage.ImageKey = "Table.png";
+            this.profileTreeTabPage.Location = new System.Drawing.Point(4, 26);
+            this.profileTreeTabPage.Name = "profileTreeTabPage";
+            this.profileTreeTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.profileTreeTabPage.Size = new System.Drawing.Size(442, 755);
+            this.profileTreeTabPage.TabIndex = 1;
+            this.profileTreeTabPage.Text = "Список профилей";
+            this.profileTreeTabPage.UseVisualStyleBackColor = true;
             // 
             // lvProfileAttributes
             // 
@@ -1741,25 +1741,25 @@
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.Location = new System.Drawing.Point(3, 65);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode1.Checked = true;
-            treeNode1.ImageKey = "vector-path-line.png";
-            treeNode1.Name = "Points";
-            treeNode1.SelectedImageIndex = 205;
-            treeNode1.Text = "Отрезки";
-            treeNode2.Checked = true;
-            treeNode2.ImageKey = "Editing-Line-icon3.png";
-            treeNode2.Name = "Fun";
-            treeNode2.SelectedImageIndex = 208;
-            treeNode2.Text = "Веер";
-            treeNode3.Checked = true;
-            treeNode3.ImageKey = "vector-polygon.png";
-            treeNode3.Name = "Primitives";
-            treeNode3.SelectedImageIndex = 209;
-            treeNode3.Text = "Графика";
+            treeNode13.Checked = true;
+            treeNode13.ImageKey = "vector-path-line.png";
+            treeNode13.Name = "Points";
+            treeNode13.SelectedImageIndex = 205;
+            treeNode13.Text = "Отрезки";
+            treeNode14.Checked = true;
+            treeNode14.ImageKey = "Editing-Line-icon3.png";
+            treeNode14.Name = "Fun";
+            treeNode14.SelectedImageIndex = 208;
+            treeNode14.Text = "Веер";
+            treeNode15.Checked = true;
+            treeNode15.ImageKey = "vector-polygon.png";
+            treeNode15.Name = "Primitives";
+            treeNode15.SelectedImageIndex = 209;
+            treeNode15.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
+            treeNode13,
+            treeNode14,
+            treeNode15});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(436, 398);
             this.profilesTreeView.TabIndex = 35;
@@ -1948,8 +1948,8 @@
             this.Name = "DockableWindowMilSpaceProfileCalc";
             this.Size = new System.Drawing.Size(450, 785);
             this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
+            this.profileTabPage.ResumeLayout(false);
+            this.profileTabPage.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
@@ -1965,8 +1965,8 @@
             this.panel17.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
-            this.fanTab.ResumeLayout(false);
-            this.fanTab.PerformLayout();
+            this.funTab.ResumeLayout(false);
+            this.funTab.PerformLayout();
             this.panel9.ResumeLayout(false);
             this.panel9.PerformLayout();
             this.panel8.ResumeLayout(false);
@@ -1987,8 +1987,8 @@
             this.panel15.ResumeLayout(false);
             this.panel14.ResumeLayout(false);
             this.panel14.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
+            this.profileTreeTabPage.ResumeLayout(false);
+            this.profileTreeTabPage.PerformLayout();
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.profilesToolStrip.ResumeLayout(false);
@@ -1999,7 +1999,7 @@
 
         #endregion
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage profileTabPage;
         private System.Windows.Forms.TabControl profileSettingsTab;
         private System.Windows.Forms.TabPage sectionTab;
         private System.Windows.Forms.Panel panel16;
@@ -2023,7 +2023,7 @@
         private System.Windows.Forms.ToolBarButton btnCopyFirstPoint;
         private System.Windows.Forms.ToolBarButton toolBarButton58;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TabPage fanTab;
+        private System.Windows.Forms.TabPage funTab;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.TextBox azimuth2;
         private System.Windows.Forms.Label label15;
@@ -2072,7 +2072,7 @@
         private System.Windows.Forms.ComboBox comboBox8;
         private System.Windows.Forms.RichTextBox richTextBox5;
         private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage profileTreeTabPage;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Label lblProfileList;
         //internal System.Windows.Forms.ToolBarButton pickCoords;
@@ -2095,21 +2095,21 @@
         internal System.Windows.Forms.ToolBarButton toolBarButton16;
         private System.Windows.Forms.TextBox funLinesCount;
         private System.Windows.Forms.ComboBox cmbRasterLayers;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblDEM;
+        private System.Windows.Forms.Label lblLayersForCalc;
         private System.Windows.Forms.ComboBox cmbPointLayers;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lblPointOfViewLayer;
         private System.Windows.Forms.TextBox txtProfileName;
-        private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblProfileName;
+        private System.Windows.Forms.Label lblSetPeofileProperties;
         private System.Windows.Forms.Button calcProfile;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label lblBuildingsLayer;
         private System.Windows.Forms.ComboBox cmbBuildings;
         private System.Windows.Forms.ComboBox cmbVegetationLayer;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblVegetationLayer;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblRoadsLayer;
         private System.Windows.Forms.ListView lvProfileAttributes;
         private System.Windows.Forms.ToolStripButton toolBtnShowOnMap;
         private System.Windows.Forms.ToolStrip profilesToolStrip;
@@ -2128,7 +2128,7 @@
         private System.Windows.Forms.Button btnRefreshLayers;
         private System.Windows.Forms.ComboBox cmbHydrographyLayer;
         private System.Windows.Forms.ComboBox cmbRoadLayers;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblHydrographyLayer;
         private System.Windows.Forms.ToolStripButton openGraphWindow;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
