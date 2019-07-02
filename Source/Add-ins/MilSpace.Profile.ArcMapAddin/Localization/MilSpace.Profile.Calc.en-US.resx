@@ -132,14 +132,59 @@
   <data name="lblDEMText" xml:space="preserve">
     <value>DEM layed</value>
   </data>
+  <data name="lblDimensionFirstText" xml:space="preserve">
+    <value>m</value>
+  </data>
+  <data name="lblDimensionSecondText" xml:space="preserve">
+    <value>m</value>
+  </data>
+  <data name="lblFunAzimuth1Text" xml:space="preserve">
+    <value>Azimuth 1</value>
+  </data>
+  <data name="lblFunAzimuth2Text" xml:space="preserve">
+    <value>Azimuth 2</value>
+  </data>
+  <data name="lblFunBasePointText" xml:space="preserve">
+    <value>Base point (Lat / Lon)</value>
+  </data>
+  <data name="lblFunCountText" xml:space="preserve">
+    <value>Count</value>
+  </data>
+  <data name="lblFunDistanceText" xml:space="preserve">
+    <value>Distance</value>
+  </data>
+  <data name="lblFunParametersText" xml:space="preserve">
+    <value>Parameters</value>
+  </data>
+  <data name="lblHeightOfViewFirstText" xml:space="preserve">
+    <value>Heigh of point of view </value>
+  </data>
+  <data name="lblHeightOfViewFunBaseText" xml:space="preserve">
+    <value>Heigh of point of view</value>
+  </data>
+  <data name="lblHeightOfViewGraphicsText" xml:space="preserve">
+    <value>Heigh of point of view</value>
+  </data>
+  <data name="lblHeightOfViewSecondText" xml:space="preserve">
+    <value>Heigh of point of view</value>
+  </data>
   <data name="lblHydrographyLayerText" xml:space="preserve">
     <value>Hydrography layer</value>
   </data>
   <data name="lblLayersForCalcText" xml:space="preserve">
     <value>Layers for calculation</value>
   </data>
+  <data name="lblLineFirstPointText" xml:space="preserve">
+    <value>First point (Lat / Lon)</value>
+  </data>
+  <data name="lblLineSecondPointText" xml:space="preserve">
+    <value>Second point (Lat / Lon)</value>
+  </data>
   <data name="lblPointOfViewLayerText" xml:space="preserve">
     <value>Points of view layer</value>
+  </data>
+  <data name="lblPrimitivesLayerToSelectText" xml:space="preserve">
+    <value>Layers to select objects</value>
   </data>
   <data name="lblProfileNameText" xml:space="preserve">
     <value>Profile name</value>

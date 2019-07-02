@@ -57,7 +57,7 @@ namespace MilSpace.DataAccess.DataTransfer
                 MilSp_Profile res = new MilSp_Profile
                 {
                     idRow = session.SessionId,
-                    ProfileName = session.SessionName,
+                    ProfileName = session.SessionName.Trim(),
                     ProfileData = session.Serialized,
                     Creator =  session.CreatedBy,
                     Created = session.CreatedOn,
