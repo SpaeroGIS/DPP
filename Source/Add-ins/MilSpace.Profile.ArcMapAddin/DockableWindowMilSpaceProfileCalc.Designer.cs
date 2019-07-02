@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Графика");
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.profileTabPage = new System.Windows.Forms.TabPage();
             this.btnRefreshLayers = new System.Windows.Forms.Button();
@@ -113,12 +113,11 @@
             this.txtBasePointX = new System.Windows.Forms.TextBox();
             this.lblFunBasePoint = new System.Windows.Forms.Label();
             this.primitiveTab = new System.Windows.Forms.TabPage();
-            this.label17 = new System.Windows.Forms.Label();
+            this.lblAboutSelected = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblHeightOfViewGraphics = new System.Windows.Forms.Label();
             this.observerHeightSelection = new System.Windows.Forms.TextBox();
             this.toolBarSelectedPrimitives = new System.Windows.Forms.ToolBar();
-            this.toolBarButton28 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton25 = new System.Windows.Forms.ToolBarButton();
             this.panel13 = new System.Windows.Forms.Panel();
             this.layersToSelectLine = new System.Windows.Forms.ComboBox();
@@ -1295,7 +1294,7 @@
             // primitiveTab
             // 
             this.primitiveTab.AutoScroll = true;
-            this.primitiveTab.Controls.Add(this.label17);
+            this.primitiveTab.Controls.Add(this.lblAboutSelected);
             this.primitiveTab.Controls.Add(this.panel1);
             this.primitiveTab.Controls.Add(this.toolBarSelectedPrimitives);
             this.primitiveTab.Controls.Add(this.panel13);
@@ -1309,16 +1308,16 @@
             this.primitiveTab.Text = "Примитивом";
             this.primitiveTab.UseVisualStyleBackColor = true;
             // 
-            // label17
+            // lblAboutSelected
             // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label17.Location = new System.Drawing.Point(5, 80);
-            this.label17.Name = "label17";
-            this.label17.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.label17.Size = new System.Drawing.Size(184, 25);
-            this.label17.TabIndex = 50;
-            this.label17.Text = "Информация о выбранном";
+            this.lblAboutSelected.AutoSize = true;
+            this.lblAboutSelected.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblAboutSelected.Location = new System.Drawing.Point(5, 80);
+            this.lblAboutSelected.Name = "lblAboutSelected";
+            this.lblAboutSelected.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.lblAboutSelected.Size = new System.Drawing.Size(184, 25);
+            this.lblAboutSelected.TabIndex = 50;
+            this.lblAboutSelected.Text = "Информация о выбранном";
             // 
             // panel1
             // 
@@ -1359,7 +1358,6 @@
             // toolBarSelectedPrimitives
             // 
             this.toolBarSelectedPrimitives.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
-            this.toolBarButton28,
             this.toolBarButton25});
             this.toolBarSelectedPrimitives.ButtonSize = new System.Drawing.Size(18, 18);
             this.toolBarSelectedPrimitives.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -1370,11 +1368,7 @@
             this.toolBarSelectedPrimitives.ShowToolTips = true;
             this.toolBarSelectedPrimitives.Size = new System.Drawing.Size(428, 28);
             this.toolBarSelectedPrimitives.TabIndex = 27;
-            // 
-            // toolBarButton28
-            // 
-            this.toolBarButton28.ImageKey = "Pointer.png";
-            this.toolBarButton28.Name = "toolBarButton28";
+            this.toolBarSelectedPrimitives.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.toolBarSelectedPrimitives_ButtonClick);
             // 
             // toolBarButton25
             // 
@@ -1741,25 +1735,25 @@
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.Location = new System.Drawing.Point(3, 65);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode1.Checked = true;
-            treeNode1.ImageKey = "vector-path-line.png";
-            treeNode1.Name = "Points";
-            treeNode1.SelectedImageIndex = 205;
-            treeNode1.Text = "Отрезки";
-            treeNode2.Checked = true;
-            treeNode2.ImageKey = "Editing-Line-icon3.png";
-            treeNode2.Name = "Fun";
-            treeNode2.SelectedImageIndex = 208;
-            treeNode2.Text = "Веер";
-            treeNode3.Checked = true;
-            treeNode3.ImageKey = "vector-polygon.png";
-            treeNode3.Name = "Primitives";
-            treeNode3.SelectedImageIndex = 209;
-            treeNode3.Text = "Графика";
+            treeNode13.Checked = true;
+            treeNode13.ImageKey = "vector-path-line.png";
+            treeNode13.Name = "Points";
+            treeNode13.SelectedImageIndex = 205;
+            treeNode13.Text = "Отрезки";
+            treeNode14.Checked = true;
+            treeNode14.ImageKey = "Editing-Line-icon3.png";
+            treeNode14.Name = "Fun";
+            treeNode14.SelectedImageIndex = 208;
+            treeNode14.Text = "Веер";
+            treeNode15.Checked = true;
+            treeNode15.ImageKey = "vector-polygon.png";
+            treeNode15.Name = "Primitives";
+            treeNode15.SelectedImageIndex = 209;
+            treeNode15.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
+            treeNode13,
+            treeNode14,
+            treeNode15});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(436, 398);
             this.profilesTreeView.TabIndex = 35;
@@ -2047,7 +2041,6 @@
         private System.Windows.Forms.Label lblFunBasePoint;
         private System.Windows.Forms.TabPage primitiveTab;
         private System.Windows.Forms.ToolBar toolBarSelectedPrimitives;
-        private System.Windows.Forms.ToolBarButton toolBarButton28;
         private System.Windows.Forms.ToolBarButton toolBarButton25;
         private System.Windows.Forms.Panel panel13;
         private System.Windows.Forms.ComboBox layersToSelectLine;
@@ -2139,7 +2132,7 @@
         private System.Windows.Forms.Label lblSelectedPrimitivesValue;
         private System.Windows.Forms.Label lblSelectedPrimitives;
         private System.Windows.Forms.Label lblCommonLength;
-        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label lblAboutSelected;
         private System.Windows.Forms.ToolStripButton addProfileToExistingGraph;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton clearExtraGraphic;
