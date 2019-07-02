@@ -123,6 +123,9 @@
   <data name="btnСalcProfileText" xml:space="preserve">
     <value>Розрахувати</value>
   </data>
+  <data name="lblAboutSelectedText" xml:space="preserve">
+    <value>Інформація про вибране</value>
+  </data>
   <data name="lblBuildingsLayerText" xml:space="preserve">
     <value>Шар забудов</value>
   </data>
@@ -218,5 +221,14 @@
   </data>
   <data name="tabSectionTabText" xml:space="preserve">
     <value>Відрізки</value>
+  </data>
+  <data name="txtGraphicsLayerValue" xml:space="preserve">
+    <value>Шар графічних об'єктів</value>
+  </data>
+  <data name="txtNewProfileNameValue" xml:space="preserve">
+    <value>Новий проіль</value>
+  </data>
+  <data name="txtPickCoordinatesToolMessage" xml:space="preserve">
+    <value>Будьласка, увімкніть інструмент для виділення точки.</value>
   </data>
 </root>

@@ -467,7 +467,7 @@ namespace MilSpace.Profile
                     var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickProfileCoordinates);
                     if (commandItem == null)
                     {
-                        var message = $"Please add Pick Coordinates tool to any toolbar first.";
+                        var message = LocalizationConstants.PickCoordinatesToolMessage;// $"Please add Pick Coordinates tool to any toolbar first.";
                         MessageBox.Show(message, "Profile Calc", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         break;
 
@@ -937,6 +937,7 @@ namespace MilSpace.Profile
 
             lblHeightOfViewGraphics.Text = LocalizationConstants.HeightOfViewGraphicsText;
             lblPrimitivesLayerToSelect.Text = LocalizationConstants.PrimitivesLayerToSelectText;
+            lblAboutSelected.Text = LocalizationConstants.AboutSelectedText;
         }
 
 
@@ -1251,6 +1252,11 @@ namespace MilSpace.Profile
             var av = ArcMap.Document.ActivatedView;
 
             return new Point() { X = pointX, Y = pointY, SpatialReference = av.FocusMap.SpatialReference };
+        }
+
+        private void toolBarSelectedPrimitives_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        {
+
         }
     }
 }
