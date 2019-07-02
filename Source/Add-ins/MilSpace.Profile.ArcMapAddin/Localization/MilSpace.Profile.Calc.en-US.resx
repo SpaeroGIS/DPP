@@ -120,10 +120,58 @@
   <data name="btnRefreshLayersToolTip" xml:space="preserve">
     <value>Refresh layers</value>
   </data>
+  <data name="btnСalcProfileText" xml:space="preserve">
+    <value>Calculate</value>
+  </data>
+  <data name="lblBuildingsLayerText" xml:space="preserve">
+    <value>Buildings layer</value>
+  </data>
   <data name="lblCommonLengthText" xml:space="preserve">
     <value>Length jf the selected objects:</value>
   </data>
+  <data name="lblDEMText" xml:space="preserve">
+    <value>DEM layed</value>
+  </data>
+  <data name="lblHydrographyLayerText" xml:space="preserve">
+    <value>Hydrography layer</value>
+  </data>
+  <data name="lblLayersForCalcText" xml:space="preserve">
+    <value>Layers for calculation</value>
+  </data>
+  <data name="lblPointOfViewLayerText" xml:space="preserve">
+    <value>Points of view layer</value>
+  </data>
+  <data name="lblProfileNameText" xml:space="preserve">
+    <value>Profile name</value>
+  </data>
+  <data name="lblRoadsLayerText" xml:space="preserve">
+    <value>Roads layer</value>
+  </data>
   <data name="lblSelectedPrimitivesText" xml:space="preserve">
     <value>Selected primitives:</value>
+  </data>
+  <data name="lblSetProfilePropertiesText" xml:space="preserve">
+    <value>Set Profile properties</value>
+  </data>
+  <data name="lblVegetationLayerText" xml:space="preserve">
+    <value>Vegetation layer</value>
+  </data>
+  <data name="tabFunTabText" xml:space="preserve">
+    <value>"Fun"</value>
+  </data>
+  <data name="tabLoadTabText" xml:space="preserve">
+    <value>Load</value>
+  </data>
+  <data name="tabPofileTreeTabPageText" xml:space="preserve">
+    <value>Session</value>
+  </data>
+  <data name="tabPrimitiveTabText" xml:space="preserve">
+    <value>Primitives</value>
+  </data>
+  <data name="tabProfileTabPageText" xml:space="preserve">
+    <value>Profile settints</value>
+  </data>
+  <data name="tabSectionTabText" xml:space="preserve">
+    <value>Lines</value>
   </data>
 </root>

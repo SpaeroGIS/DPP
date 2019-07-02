@@ -67,11 +67,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLogic.cs" />
-    <Compile Include="DataExport.cs" />
+    <Compile Include="DataImportExport.cs" />
     <Compile Include="Extensions\CollectionsExtension.cs" />
     <Compile Include="Extensions\CoordinateFormatExtension.cs" />
     <Compile Include="Interfaces\IBusinessLogic.cs" />
-    <Compile Include="Interfaces\IDataExport.cs" />
+    <Compile Include="Interfaces\IDataImportExport.cs" />
+    <Compile Include="Models\ExtendedPointModel.cs" />
     <Compile Include="Models\PointModel.cs" />
     <Compile Include="Models\PointModelsList.cs" />
     <Compile Include="Models\ProjectionsModel.cs" />
