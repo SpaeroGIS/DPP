@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Графика");
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.profileTabPage = new System.Windows.Forms.TabPage();
             this.btnRefreshLayers = new System.Windows.Forms.Button();
@@ -99,7 +99,7 @@
             this.lblFunDistance = new System.Windows.Forms.Label();
             this.lblFunParameters = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
-            this.label24 = new System.Windows.Forms.Label();
+            this.lblHeightOfViewFunBaseText = new System.Windows.Forms.Label();
             this.txtObserverHeight = new System.Windows.Forms.TextBox();
             this.panel7 = new System.Windows.Forms.Panel();
             this.basePointToolbar = new System.Windows.Forms.ToolBar();
@@ -165,8 +165,8 @@
             this.openGraphWindow = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.removeProfile = new System.Windows.Forms.ToolStripButton();
-            this.eraseProfile = new System.Windows.Forms.ToolStripButton();
             this.saveProfileAsShared = new System.Windows.Forms.ToolStripButton();
+            this.eraseProfile = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.clearExtraGraphic = new System.Windows.Forms.ToolStripButton();
             this.lblProfileList = new System.Windows.Forms.Label();
@@ -1167,7 +1167,7 @@
             // 
             // panel10
             // 
-            this.panel10.Controls.Add(this.label24);
+            this.panel10.Controls.Add(this.lblHeightOfViewFunBaseText);
             this.panel10.Controls.Add(this.txtObserverHeight);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel10.Location = new System.Drawing.Point(3, 54);
@@ -1176,17 +1176,17 @@
             this.panel10.Size = new System.Drawing.Size(422, 26);
             this.panel10.TabIndex = 20;
             // 
-            // label24
+            // lblHeightOfViewFunBaseText
             // 
-            this.label24.AutoSize = true;
-            this.label24.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.label24.Location = new System.Drawing.Point(57, 2);
-            this.label24.Name = "label24";
-            this.label24.Padding = new System.Windows.Forms.Padding(0, 2, 0, 4);
-            this.label24.Size = new System.Drawing.Size(233, 19);
-            this.label24.TabIndex = 22;
-            this.label24.Text = "высота базовой точки над поверхностью (м)";
+            this.lblHeightOfViewFunBaseText.AutoSize = true;
+            this.lblHeightOfViewFunBaseText.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblHeightOfViewFunBaseText.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.lblHeightOfViewFunBaseText.Location = new System.Drawing.Point(57, 2);
+            this.lblHeightOfViewFunBaseText.Name = "lblHeightOfViewFunBaseText";
+            this.lblHeightOfViewFunBaseText.Padding = new System.Windows.Forms.Padding(0, 2, 0, 4);
+            this.lblHeightOfViewFunBaseText.Size = new System.Drawing.Size(233, 19);
+            this.lblHeightOfViewFunBaseText.TabIndex = 22;
+            this.lblHeightOfViewFunBaseText.Text = "высота базовой точки над поверхностью (м)";
             // 
             // txtObserverHeight
             // 
@@ -1741,25 +1741,25 @@
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.Location = new System.Drawing.Point(3, 65);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode4.Checked = true;
-            treeNode4.ImageKey = "vector-path-line.png";
-            treeNode4.Name = "Points";
-            treeNode4.SelectedImageIndex = 205;
-            treeNode4.Text = "Отрезки";
-            treeNode5.Checked = true;
-            treeNode5.ImageKey = "Editing-Line-icon3.png";
-            treeNode5.Name = "Fun";
-            treeNode5.SelectedImageIndex = 208;
-            treeNode5.Text = "Веер";
-            treeNode6.Checked = true;
-            treeNode6.ImageKey = "vector-polygon.png";
-            treeNode6.Name = "Primitives";
-            treeNode6.SelectedImageIndex = 209;
-            treeNode6.Text = "Графика";
+            treeNode1.Checked = true;
+            treeNode1.ImageKey = "vector-path-line.png";
+            treeNode1.Name = "Points";
+            treeNode1.SelectedImageIndex = 205;
+            treeNode1.Text = "Отрезки";
+            treeNode2.Checked = true;
+            treeNode2.ImageKey = "Editing-Line-icon3.png";
+            treeNode2.Name = "Fun";
+            treeNode2.SelectedImageIndex = 208;
+            treeNode2.Text = "Веер";
+            treeNode3.Checked = true;
+            treeNode3.ImageKey = "vector-polygon.png";
+            treeNode3.Name = "Primitives";
+            treeNode3.SelectedImageIndex = 209;
+            treeNode3.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode5,
-            treeNode6});
+            treeNode1,
+            treeNode2,
+            treeNode3});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(436, 398);
             this.profilesTreeView.TabIndex = 35;
@@ -1789,8 +1789,8 @@
             this.openGraphWindow,
             this.toolStripSeparator4,
             this.removeProfile,
-            this.eraseProfile,
             this.saveProfileAsShared,
+            this.eraseProfile,
             this.toolStripSeparator2,
             this.clearExtraGraphic});
             this.profilesToolStrip.Location = new System.Drawing.Point(0, 0);
@@ -1888,17 +1888,6 @@
             this.removeProfile.ToolTipText = "Убрать из списка";
             this.removeProfile.Click += new System.EventHandler(this.removeProfile_Click);
             // 
-            // eraseProfile
-            // 
-            this.eraseProfile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.eraseProfile.Image = ((System.Drawing.Image)(resources.GetObject("eraseProfile.Image")));
-            this.eraseProfile.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.eraseProfile.Name = "eraseProfile";
-            this.eraseProfile.Size = new System.Drawing.Size(23, 27);
-            this.eraseProfile.Text = "toolStripButton1";
-            this.eraseProfile.ToolTipText = "Удалить из базы";
-            this.eraseProfile.Click += new System.EventHandler(this.eraseProfile_Click);
-            // 
             // saveProfileAsShared
             // 
             this.saveProfileAsShared.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -1909,6 +1898,17 @@
             this.saveProfileAsShared.Text = "saveProfileAsShared";
             this.saveProfileAsShared.ToolTipText = "Сохранить в базу";
             this.saveProfileAsShared.Click += new System.EventHandler(this.saveProfileAsShared_Click_1);
+            // 
+            // eraseProfile
+            // 
+            this.eraseProfile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.eraseProfile.Image = ((System.Drawing.Image)(resources.GetObject("eraseProfile.Image")));
+            this.eraseProfile.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.eraseProfile.Name = "eraseProfile";
+            this.eraseProfile.Size = new System.Drawing.Size(23, 27);
+            this.eraseProfile.Text = "toolStripButton1";
+            this.eraseProfile.ToolTipText = "Удалить из базы";
+            this.eraseProfile.Click += new System.EventHandler(this.eraseProfile_Click);
             // 
             // toolStripSeparator2
             // 
@@ -2035,7 +2035,7 @@
         private System.Windows.Forms.Label lblFunDistance;
         private System.Windows.Forms.Label lblFunParameters;
         private System.Windows.Forms.Panel panel10;
-        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label lblHeightOfViewFunBaseText;
         private System.Windows.Forms.TextBox txtObserverHeight;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.ToolBar basePointToolbar;
