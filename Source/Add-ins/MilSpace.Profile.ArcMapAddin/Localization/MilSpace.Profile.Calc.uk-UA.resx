@@ -132,14 +132,59 @@
   <data name="lblDEMText" xml:space="preserve">
     <value>Шар ЦМР/ ЦММ</value>
   </data>
+  <data name="lblDimensionFirstText" xml:space="preserve">
+    <value>м</value>
+  </data>
+  <data name="lblDimensionSecondText" xml:space="preserve">
+    <value>м</value>
+  </data>
+  <data name="lblFunAzimuth1Text" xml:space="preserve">
+    <value>Азимут 1</value>
+  </data>
+  <data name="lblFunAzimuth2Text" xml:space="preserve">
+    <value>Азимут 2</value>
+  </data>
+  <data name="lblFunBasePointText" xml:space="preserve">
+    <value>Базова точка (довгота / широта)</value>
+  </data>
+  <data name="lblFunCountText" xml:space="preserve">
+    <value>Кількість</value>
+  </data>
+  <data name="lblFunDistanceText" xml:space="preserve">
+    <value>Відстань</value>
+  </data>
+  <data name="lblFunParametersText" xml:space="preserve">
+    <value>Параметри</value>
+  </data>
+  <data name="lblHeightOfViewFirstText" xml:space="preserve">
+    <value>Висота точки спостереження</value>
+  </data>
+  <data name="lblHeightOfViewFunBaseText" xml:space="preserve">
+    <value>Висота точки спостереження</value>
+  </data>
+  <data name="lblHeightOfViewGraphicsText" xml:space="preserve">
+    <value>Висота точки спостереження</value>
+  </data>
+  <data name="lblHeightOfViewSecondText" xml:space="preserve">
+    <value>Висота точки спостереження</value>
+  </data>
   <data name="lblHydrographyLayerText" xml:space="preserve">
     <value>Шар гідрогрфії</value>
   </data>
   <data name="lblLayersForCalcText" xml:space="preserve">
     <value>Шари для розрахунків</value>
   </data>
+  <data name="lblLineFirstPointText" xml:space="preserve">
+    <value>Перша точка (довгота / широта)</value>
+  </data>
+  <data name="lblLineSecondPointText" xml:space="preserve">
+    <value>Друга точка (довгота / широта)</value>
+  </data>
   <data name="lblPointOfViewLayerText" xml:space="preserve">
     <value>Шар точок спостереження</value>
+  </data>
+  <data name="lblPrimitivesLayerToSelectText" xml:space="preserve">
+    <value>Шари для вибору об'єктів</value>
   </data>
   <data name="lblProfileNameText" xml:space="preserve">
     <value>Ім'я профілю</value>
