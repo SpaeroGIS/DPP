@@ -919,6 +919,22 @@ namespace MilSpace.Profile
             lblProfileName.Text = LocalizationConstants.ProfileNameText;
 
             calcProfile.Text = LocalizationConstants.СalcProfileText;
+            lblLineFirstPoint.Text = LocalizationConstants.LineFirstPointText;
+            lblLineSecondPoint.Text = LocalizationConstants.LinewSecondPointText;
+
+            lblHeightOfViewFirst.Text = LocalizationConstants.HeightOfViewFirstText;
+            lblHeightOfViewSecond.Text = LocalizationConstants.HeightOfViewSecondText;
+            lblDimensionSecond.Text = LocalizationConstants.DimensionSecondText;
+            lblDimensionFirst.Text = LocalizationConstants.DimensionFirstText;
+            lblFunParameters.Text = LocalizationConstants.FunParametersText;
+            lblFunDistance.Text = LocalizationConstants.FunDistanceText;
+            lblFunCount.Text = LocalizationConstants.FunCountText;
+
+            lblFunAzimuth1.Text = LocalizationConstants.FunAzimuth1Text;
+            lblFunAzimuth2.Text = LocalizationConstants.FunAzimuth2Text;
+
+            lblHeightOfViewGraphics.Text = LocalizationConstants.HeightOfViewGraphicsText;
+            lblPrimitivesLayerToSelect.Text = LocalizationConstants.PrimitivesLayerToSelectText;
         }
 
 

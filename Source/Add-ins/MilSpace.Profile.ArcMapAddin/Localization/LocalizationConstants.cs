@@ -34,6 +34,21 @@ namespace MilSpace.Profile.Localization
         private static string PrimitiveTabTextKey = "tabPrimitiveTabText";
         private static string FunTabTextKey = "tabFunTabText";
         private static string СalcProfileTextKey = "btnСalcProfileText";
+        private static string LineFirstPointTextKey = "lblLineFirstPointText";
+        private static string LinewSecondPointTextKey = "lblLineSecondPointText";
+        private static string HeightOfViewFirstTextKey = "lblHeightOfViewFirstText";
+        private static string HeightOfViewSecondTextKey = "lblHeightOfViewSecondText";
+        private static string DimensionFirstTextKey = "lblDimensionFirstText";
+        private static string DimensionSecondTextKey = "lblDimensionSecondText";
+        private static string FunBasePointTextKey = "lblFunBasePointText";
+        private static string HeightOfViewFunBaseTextKey = "lblHeightOfViewFunBaseText";
+        private static string FunParametersTextKey = "lblFunParametersText";
+        private static string FunCountTextKey = "lblFunCountText";
+        private static string FunDistanceTextKey = "lblFunDistanceText";
+        private static string FunAzimuth1TextKey = "lblFunAzimuth1Text";
+        private static string FunAzimuth2TextKey = "lblFunAzimuth2Text";
+        private static string HeightOfViewGraphicsTextKey = "lblHeightOfViewGraphicsText";
+        private static string PrimitivesLayerToSelectTextKey = "lblPrimitivesLayerToSelectText";
         
 
 
@@ -45,13 +60,11 @@ namespace MilSpace.Profile.Localization
             mngr = new MilSpaceResourceManager("MilSpace.Profile.Calc", CultureInfo.GetCultureInfo("uk-UA"));
         }
 
-
         public static string RefreshButtonToolTip => Instance.GetLocalization(RefreshButtonToolTipKey);
         public static string CommonLengthText => Instance.GetLocalization(CommonLengthTextKey);
         public static string SelectedPrimitivesText => Instance.GetLocalization(SelectedPrimitivesTextKey);
         public static string ProfileTabPageText => Instance.GetLocalization(ProfileTabPageTextKey);
         public static string PofileTreeTabPageText => Instance.GetLocalization(PofileTreeTabPageTextKey);
-
         public static string LayersForCalcText => Instance.GetLocalization(LayersForCalcTextKey);
         public static string DEMText => Instance.GetLocalization(DEMTextKey);
         public static string VegetationLayerText => Instance.GetLocalization(VegetationLayerTextKey);
@@ -66,7 +79,22 @@ namespace MilSpace.Profile.Localization
         public static string PrimitiveTabText => Instance.GetLocalization(PrimitiveTabTextKey);
         public static string FunTabText => Instance.GetLocalization(FunTabTextKey);
         public static string СalcProfileText => Instance.GetLocalization(СalcProfileTextKey);
-
+        public static string LineFirstPointText => Instance.GetLocalization(LineFirstPointTextKey);
+        public static string LinewSecondPointText => Instance.GetLocalization(LinewSecondPointTextKey);
+        public static string HeightOfViewFirstText => Instance.GetLocalization(HeightOfViewFirstTextKey);
+        public static string HeightOfViewSecondText => Instance.GetLocalization(HeightOfViewSecondTextKey);
+        public static string DimensionFirstText => Instance.GetLocalization(DimensionFirstTextKey);
+        public static string DimensionSecondText => Instance.GetLocalization(DimensionSecondTextKey);
+        public static string FunBasePointText => Instance.GetLocalization(FunBasePointTextKey);
+        public static string HeightOfViewFunBaseText => Instance.GetLocalization(HeightOfViewFunBaseTextKey);
+        public static string FunParametersText => Instance.GetLocalization(FunParametersTextKey);
+        public static string FunDistanceText => Instance.GetLocalization(FunDistanceTextKey);
+        public static string FunCountText => Instance.GetLocalization(FunCountTextKey);
+        public static string FunAzimuth1Text => Instance.GetLocalization(FunAzimuth1TextKey);
+        public static string FunAzimuth2Text => Instance.GetLocalization(FunAzimuth2TextKey);
+        public static string HeightOfViewGraphicsText => Instance.GetLocalization(HeightOfViewGraphicsTextKey);
+        public static string PrimitivesLayerToSelectText => Instance.GetLocalization(PrimitivesLayerToSelectTextKey);
+        
 
 
         private string GetLocalization(string key, string defaultValue = null)
