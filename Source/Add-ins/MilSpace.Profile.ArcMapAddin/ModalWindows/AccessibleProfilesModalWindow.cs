@@ -15,6 +15,7 @@ namespace MilSpace.Profile.ModalWindows
     public partial class AccessibleProfilesModalWindow : Form
     {
         private AccessibleProfilesController _controller;
+        internal ProfileSession[] SelectedProfilesSets;
 
         public AccessibleProfilesModalWindow(List<ProfileSession> userSession, ISpatialReference spatialReference)
         {
@@ -60,16 +61,27 @@ namespace MilSpace.Profile.ModalWindows
         private void InitializeListView(ProfileSession[] profilesSets)
         {
             lvProfilesSets.Items.Clear();
+
+            foreach(var set in profilesSets)
+            {
+                var newItem = new ListViewItem(set.SessionName);
+
+                newItem.SubItems.Add(set.CreatedBy);
+                newItem.SubItems.Add(set.CreatedOn.ToLongDateString());
+                //todo localize shared and type
+                newItem.SubItems.Add(set.DefinitionType.ToString());
+                newItem.SubItems.Add(set.Shared.ToString());
+
+                lvProfilesSets.Items.Add(newItem);
+            }
         }
 
-        private ListViewItem CreateNewItem(string mainText, string subText)
+        private string GetDefinitionName()
         {
-            var newItem = new ListViewItem(mainText);
-            newItem.SubItems.Add(subText);
-
-            return newItem;
+            return String.Empty;
         }
 
+       
         private void SavedProfilesModalWindow_Load(object sender, EventArgs e)
         {
 

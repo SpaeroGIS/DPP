@@ -123,11 +123,20 @@
   <data name="btnСalcProfileText" xml:space="preserve">
     <value>Calculate</value>
   </data>
+  <data name="cmbGraphTypeText" xml:space="preserve">
+    <value>All types</value>
+  </data>
+  <data name="gbFiltersTitle" xml:space="preserve">
+    <value>Filters</value>
+  </data>
   <data name="lblBuildingsLayerText" xml:space="preserve">
     <value>Buildings layer</value>
   </data>
   <data name="lblCommonLengthText" xml:space="preserve">
     <value>Length jf the selected objects:</value>
+  </data>
+  <data name="lblCreationDateText" xml:space="preserve">
+    <value>Creation date</value>
   </data>
   <data name="lblDEMText" xml:space="preserve">
     <value>DEM layed</value>
@@ -156,6 +165,9 @@
   <data name="lblVegetationLayerText" xml:space="preserve">
     <value>Vegetation layer</value>
   </data>
+  <data name="modalProfilesSetsName" xml:space="preserve">
+    <value>Add available sets</value>
+  </data>
   <data name="tabFunTabText" xml:space="preserve">
     <value>"Fun"</value>
   </data>
@@ -173,5 +185,11 @@
   </data>
   <data name="tabSectionTabText" xml:space="preserve">
     <value>Lines</value>
+  </data>
+  <data name="txtCreatorPlaceholder" xml:space="preserve">
+    <value>Creator</value>
+  </data>
+  <data name="txtNamePlaceholder" xml:space="preserve">
+    <value>Profile name</value>
   </data>
 </root>

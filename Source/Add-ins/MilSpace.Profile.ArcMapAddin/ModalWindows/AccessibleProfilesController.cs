@@ -25,11 +25,31 @@ namespace MilSpace.Profile.ModalWindows
 
         private void SetAccessibleProfilesSets(List<ProfileSession> userSession, ISpatialReference spatialReference)
         {
-            _accessibleProfilesSets = MilSpaceProfileFacade.GetUserProfileSessions().ToArray();
-            _accessibleProfilesSets.ToList().ForEach(session =>
+            var currentSessionProfiles = new List<ProfileSession>(userSession);
+
+            var allAccessibleProfilesSets = MilSpaceProfileFacade.GetUserProfileSessions().ToList();
+            var notInCurrentSessionProfilesSet = new List<ProfileSession>(allAccessibleProfilesSets.Count);
+
+            foreach(var set in allAccessibleProfilesSets)
+            {
+                var currentSessionSet = currentSessionProfiles.FirstOrDefault(session => session.SessionId == set.SessionId);
+
+                if (currentSessionSet != null)
+                {
+                    currentSessionProfiles.Remove(currentSessionSet);
+                }
+                else
+                {
+                    notInCurrentSessionProfilesSet.Add(set);
+                }
+            }
+
+            notInCurrentSessionProfilesSet.ForEach(session =>
             {
                 session.ConvertLinesToEsriPolypile(spatialReference);
             });
+
+            _accessibleProfilesSets = notInCurrentSessionProfilesSet.ToArray();
         }
 
 

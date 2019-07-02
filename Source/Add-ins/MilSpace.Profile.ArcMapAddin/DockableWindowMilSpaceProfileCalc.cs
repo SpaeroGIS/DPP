@@ -1231,5 +1231,10 @@ namespace MilSpace.Profile
 
             return new Point() { X = pointX, Y = pointY, SpatialReference = av.FocusMap.SpatialReference };
         }
+
+        private void addAvailableProfilesSets_Click(object sender, EventArgs e)
+        {
+            controller.AddAvailableSets();
+        }
     }
 }

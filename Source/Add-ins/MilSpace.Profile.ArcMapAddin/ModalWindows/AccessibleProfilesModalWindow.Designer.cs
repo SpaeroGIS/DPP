@@ -54,7 +54,7 @@
             this.lvProfilesSets.HideSelection = false;
             this.lvProfilesSets.Location = new System.Drawing.Point(10, 124);
             this.lvProfilesSets.Name = "lvProfilesSets";
-            this.lvProfilesSets.Size = new System.Drawing.Size(449, 207);
+            this.lvProfilesSets.Size = new System.Drawing.Size(449, 224);
             this.lvProfilesSets.TabIndex = 0;
             this.lvProfilesSets.UseCompatibleStateImageBehavior = false;
             // 
@@ -139,7 +139,7 @@
             this.lblDateText.Name = "lblDateText";
             this.lblDateText.Size = new System.Drawing.Size(73, 13);
             this.lblDateText.TabIndex = 2;
-            this.lblDateText.Text = "Creating date:";
+            this.lblDateText.Text = "Creation date:";
             // 
             // txtCreator
             // 
@@ -165,10 +165,10 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(10, 337);
+            this.panel1.Location = new System.Drawing.Point(10, 354);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(449, 20);
+            this.panel1.Size = new System.Drawing.Size(449, 25);
             this.panel1.TabIndex = 2;
             // 
             // btnCancel
@@ -176,7 +176,7 @@
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnCancel.Location = new System.Drawing.Point(389, 0);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(60, 20);
+            this.btnCancel.Size = new System.Drawing.Size(60, 25);
             this.btnCancel.TabIndex = 11;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -187,22 +187,22 @@
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Left;
             this.btnOk.Location = new System.Drawing.Point(0, 0);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(60, 20);
+            this.btnOk.Size = new System.Drawing.Size(60, 25);
             this.btnOk.TabIndex = 10;
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
             // 
-            // SavedProfilesModalWindow
+            // AccessibleProfilesModalWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(469, 367);
+            this.ClientSize = new System.Drawing.Size(469, 389);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.gbFilters);
             this.Controls.Add(this.lvProfilesSets);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Name = "SavedProfilesModalWindow";
+            this.Name = "AccessibleProfilesModalWindow";
             this.Padding = new System.Windows.Forms.Padding(10, 5, 10, 10);
             this.Text = "SavedProfilesModalWindow";
             this.Load += new System.EventHandler(this.SavedProfilesModalWindow_Load);
