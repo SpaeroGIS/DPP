@@ -117,14 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="btnCancelText" xml:space="preserve">
-    <value>Cancel</value>
+  <data name="btnCloseText" xml:space="preserve">
+    <value>Close</value>
   </data>
   <data name="btnFilterText" xml:space="preserve">
     <value>Filter</value>
   </data>
-  <data name="btnOkText" xml:space="preserve">
-    <value>OK</value>
+  <data name="btnAddToSessionText" xml:space="preserve">
+    <value>Add to session</value>
   </data>
   <data name="btnRefreshLayersToolTip" xml:space="preserve">
     <value>Refresh layers</value>

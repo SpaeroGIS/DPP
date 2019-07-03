@@ -201,7 +201,7 @@
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(60, 25);
             this.btnCancel.TabIndex = 11;
-            this.btnCancel.Text = "Cancel";
+            this.btnCancel.Text = "Close";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
@@ -211,9 +211,9 @@
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Left;
             this.btnOk.Location = new System.Drawing.Point(0, 0);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(60, 25);
+            this.btnOk.Size = new System.Drawing.Size(118, 25);
             this.btnOk.TabIndex = 10;
-            this.btnOk.Text = "OK";
+            this.btnOk.Text = "Add to session";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.BtnOk_Click);
             // 

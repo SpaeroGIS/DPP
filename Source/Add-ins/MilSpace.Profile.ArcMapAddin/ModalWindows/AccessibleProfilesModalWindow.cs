@@ -129,8 +129,8 @@ namespace MilSpace.Profile.ModalWindows
             lblTo.Text = LocalizationConstants.ToText;
 
             btnFilter.Text = LocalizationConstants.FilterText;
-            btnOk.Text = LocalizationConstants.OkText;
-            btnCancel.Text = LocalizationConstants.CancelText;
+            btnOk.Text = LocalizationConstants.AddToSessionText;
+            btnCancel.Text = LocalizationConstants.CloseText;
             btnReset.Text = LocalizationConstants.ResetText;
         }
 

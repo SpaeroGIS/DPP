@@ -62,8 +62,8 @@ namespace MilSpace.Profile.Localization
         private static string FunTypeTextKey = "funTypeText";
         private static string PrimitiveTypeTextKey = "primitiveTypeText";
         private static string FilterTextKey = "btnFilterText";
-        private static string OkTextKey = "btnOkText";
-        private static string CancelTextKey = "btnCancelText";
+        private static string AddToSessionTextKey = "btnAddToSessionText";
+        private static string CloseTextKey = "btnCloseText";
         private static string ProfilesSetsNameColHeaderKey = "lvProfilesSetsNameColHeader";
         private static string ProfilesSetsCreatorColHeaderKey = "lvProfilesSetsCreatorColHeader";
         private static string ProfilesSetsDateColHeaderKey = "lvProfilesSetsDateColHeader";
@@ -131,8 +131,8 @@ namespace MilSpace.Profile.Localization
         public static string FunTypeText => Instance.GetLocalization(FunTypeTextKey);
         public static string PrimitiveTypeText => Instance.GetLocalization(PrimitiveTypeTextKey);
         public static string FilterText => Instance.GetLocalization(FilterTextKey);
-        public static string OkText => Instance.GetLocalization(OkTextKey);
-        public static string CancelText => Instance.GetLocalization(CancelTextKey);
+        public static string AddToSessionText => Instance.GetLocalization(AddToSessionTextKey);
+        public static string CloseText => Instance.GetLocalization(CloseTextKey);
         public static string ProfilesSetsNameColHeader => Instance.GetLocalization(ProfilesSetsNameColHeaderKey);
         public static string ProfilesSetsCreatorColHeader => Instance.GetLocalization(ProfilesSetsCreatorColHeaderKey);
         public static string ProfilesSetsDateColHeader => Instance.GetLocalization(ProfilesSetsDateColHeaderKey);
