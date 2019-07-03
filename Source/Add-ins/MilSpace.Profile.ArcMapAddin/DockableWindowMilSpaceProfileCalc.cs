@@ -467,7 +467,7 @@ namespace MilSpace.Profile
                     var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickProfileCoordinates);
                     if (commandItem == null)
                     {
-                        var message = $"Please add Pick Coordinates tool to any toolbar first.";
+                        var message = LocalizationConstants.PickCoordinatesToolMessage;// $"Please add Pick Coordinates tool to any toolbar first.";
                         MessageBox.Show(message, "Profile Calc", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         break;
 
@@ -926,6 +926,8 @@ namespace MilSpace.Profile
             lblHeightOfViewSecond.Text = LocalizationConstants.HeightOfViewSecondText;
             lblDimensionSecond.Text = LocalizationConstants.DimensionSecondText;
             lblDimensionFirst.Text = LocalizationConstants.DimensionFirstText;
+            lblFunBasePoint.Text = LocalizationConstants.FunBasePointText;
+            lblHeightOfViewFunBaseText.Text = LocalizationConstants.HeightOfViewFunBaseText;
             lblFunParameters.Text = LocalizationConstants.FunParametersText;
             lblFunDistance.Text = LocalizationConstants.FunDistanceText;
             lblFunCount.Text = LocalizationConstants.FunCountText;
@@ -935,6 +937,7 @@ namespace MilSpace.Profile
 
             lblHeightOfViewGraphics.Text = LocalizationConstants.HeightOfViewGraphicsText;
             lblPrimitivesLayerToSelect.Text = LocalizationConstants.PrimitivesLayerToSelectText;
+            lblAboutSelected.Text = LocalizationConstants.AboutSelectedText;
         }
 
 
@@ -1133,7 +1136,7 @@ namespace MilSpace.Profile
             treeViewselectedIds.ProfileLineId = ids.Item2;
             treeViewselectedIds.ProfileSessionId = ids.Item1;
 
-            var pr = profileLists.Values.SelectMany(p => p).FirstOrDefault(p => p.SessionId == ids.Item1);
+            var pr = controller.GetProfileById(ids.Item1);
 
             var res = controller.ShareProfileSession(pr);
 
@@ -1149,6 +1152,9 @@ namespace MilSpace.Profile
                 //TODO:Localise
                 MessageBox.Show($"There was an error on saving this profile./n For more info look into thr log file", "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            ChangeTreeViewToolbarState(null, null);
+
         }
 
         private void eraseProfile_Click(object sender, EventArgs e)
@@ -1251,6 +1257,11 @@ namespace MilSpace.Profile
         private void addAvailableProfilesSets_Click(object sender, EventArgs e)
         {
             controller.AddAvailableSets();
+        }
+
+        private void toolBarSelectedPrimitives_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        {
+
         }
     }
 }

@@ -141,6 +141,9 @@
   <data name="gbFiltersTitle" xml:space="preserve">
     <value>Фільтри</value>
   </data>
+  <data name="lblAboutSelectedText" xml:space="preserve">
+    <value>Інформація про вибране</value>
+  </data>
   <data name="lblBuildingsLayerText" xml:space="preserve">
     <value>Шар забудов</value>
   </data>
@@ -220,7 +223,7 @@
     <value>Вибрані об'єкти:</value>
   </data>
   <data name="lblSetProfilePropertiesText" xml:space="preserve">
-    <value>Задати проіфіль</value>
+    <value>Задати профіль</value>
   </data>
   <data name="lblToText" xml:space="preserve">
     <value>до</value>
@@ -269,5 +272,14 @@
   </data>
   <data name="txtNamePlaceholder" xml:space="preserve">
     <value>Назва профілю</value>
+  </data>
+  <data name="txtGraphicsLayerValue" xml:space="preserve">
+    <value>Шар графічних об'єктів</value>
+  </data>
+  <data name="txtNewProfileNameValue" xml:space="preserve">
+    <value>Новий проіль</value>
+  </data>
+  <data name="txtPickCoordinatesToolMessage" xml:space="preserve">
+    <value>Будьласка, увімкніть інструмент для виділення точки.</value>
   </data>
 </root>

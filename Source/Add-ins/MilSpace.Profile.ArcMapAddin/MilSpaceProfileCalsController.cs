@@ -10,6 +10,7 @@ using MilSpace.DataAccess.Exceptions;
 using MilSpace.DataAccess.Facade;
 using MilSpace.Profile.DTO;
 using MilSpace.Profile.ModalWindows;
+using MilSpace.Profile.Localization;
 using MilSpace.Tools;
 using MilSpace.Tools.GraphicsLayer;
 using System;
@@ -26,7 +27,7 @@ namespace MilSpace.Profile
     public class MilSpaceProfileCalsController
     {
         //TODO: Localize
-        private static string graphiclayerTitle = "Graphics Layer";
+        private static readonly string graphiclayerTitle = LocalizationConstants.GraphicsLayerValue;
 
         private int profileId;
         GraphicsLayerManager graphicsLayerManager;
@@ -42,9 +43,9 @@ namespace MilSpace.Profile
 
         private static ProfileSettingsTypeEnum[] profileSettingsType = Enum.GetValues(typeof(ProfileSettingsTypeEnum)).Cast<ProfileSettingsTypeEnum>().ToArray();
 
+        private readonly string NewProfilePrefix = LocalizationConstants.NewProfileNameValue;
 
         List<ProfileSession> _workingProfiles = new List<ProfileSession>();
-        private const string NewProfilePrefix = "Новый профиль";
 
         private MilSpaceProfileGraphsController graphsController;
 

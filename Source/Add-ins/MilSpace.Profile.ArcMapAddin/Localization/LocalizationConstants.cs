@@ -1,10 +1,5 @@
 ﻿using MilSpace.Core.MilSpaceResourceManager;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MilSpace.Profile.Localization
 {
@@ -70,6 +65,13 @@ namespace MilSpace.Profile.Localization
         private static string ProfilesSetsTypeColHeaderKey = "lvProfilesSetsTypeColHeader";
         private static string ProfilesSetsSharedColHeaderKey = "lvProfilesSetsSharedColHeader";
         private static string ProfilesSetsTitleKey = "modalProfilesSetsTitle";
+        private static string AboutSelectedTextKey = "lblAboutSelectedText";
+
+        private static string NewProfileNameValueKey = "txtNewProfileNameValue";
+        private static string GraphicsLayerValueKey = "txtGraphicsLayerValue";
+        private static string PickCoordinatesToolMessageKey = "txtPickCoordinatesToolMessage";
+        
+
 
         private LocalizationConstants()
         {
@@ -132,6 +134,11 @@ namespace MilSpace.Profile.Localization
         public static string ProfilesSetsTypeColHeader => Instance.GetLocalization(ProfilesSetsTypeColHeaderKey);
         public static string ProfilesSetsSharedColHeader => Instance.GetLocalization(ProfilesSetsSharedColHeaderKey);
         public static string ProfilesSetsTitle => Instance.GetLocalization(ProfilesSetsTitleKey);
+        public static string AboutSelectedText => Instance.GetLocalization(AboutSelectedTextKey);
+        public static string NewProfileNameValue => Instance.GetLocalization(NewProfileNameValueKey);
+        public static string GraphicsLayerValue => Instance.GetLocalization(GraphicsLayerValueKey);
+        public static string PickCoordinatesToolMessage => Instance.GetLocalization(PickCoordinatesToolMessageKey);
+        
 
 
         private string GetLocalization(string key, string defaultValue = null)
