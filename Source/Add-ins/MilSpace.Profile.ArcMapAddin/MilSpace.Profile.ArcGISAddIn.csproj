@@ -158,7 +158,14 @@
     <Compile Include="IntersectionLine.cs" />
     <Compile Include="IntersectionsInLayer.cs" />
     <Compile Include="LineIntersections.cs" />
-    <Compile Include="Localization\LocalizationConstantscs.cs" />
+    <Compile Include="Localization\LocalizationConstants.cs" />
+    <Compile Include="ModalWindows\AccessibleProfilesController.cs" />
+    <Compile Include="ModalWindows\AccessibleProfilesModalWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModalWindows\AccessibleProfilesModalWindow.Designer.cs">
+      <DependentUpon>AccessibleProfilesModalWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Resources\MilSpace.Profile.Calc.Designer.cs">
       <DependentUpon>MilSpace.Profile.Calc.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -170,10 +177,10 @@
     <Compile Include="ProfileLayers.cs" />
     <Compile Include="Exceptions\ProfileSessionNotCreated.cs" />
     <Compile Include="ProfileSettingsEventArgs.cs" />
-    <Compile Include="ProfilesTreeModalWindow.cs">
+    <Compile Include="ModalWindows\ProfilesTreeModalWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ProfilesTreeModalWindow.Designer.cs">
+    <Compile Include="ModalWindows\ProfilesTreeModalWindow.Designer.cs">
       <DependentUpon>ProfilesTreeModalWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="ProfileTreeNode.cs" />
@@ -262,11 +269,14 @@
     </EmbeddedResource>
     <Resource Include="Localization\MilSpace.Profile.Calc.en-US.resx" />
     <Resource Include="Localization\MilSpace.Profile.Calc.uk-UA.resx" />
+    <EmbeddedResource Include="ModalWindows\AccessibleProfilesModalWindow.resx">
+      <DependentUpon>AccessibleProfilesModalWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\MilSpace.Profile.Calc.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>MilSpace.Profile.Calc.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProfilesTreeModalWindow.resx">
+    <EmbeddedResource Include="ModalWindows\ProfilesTreeModalWindow.resx">
       <DependentUpon>ProfilesTreeModalWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />

@@ -117,11 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="btnCloseText" xml:space="preserve">
+    <value>Закрити</value>
+  </data>
+  <data name="btnFilterText" xml:space="preserve">
+    <value>Фільтрувати</value>
+  </data>
+  <data name="btnAddToSessionText" xml:space="preserve">
+    <value>Додати до сесії</value>
+  </data>
   <data name="btnRefreshLayersToolTip" xml:space="preserve">
     <value>Оновити шари даних</value>
   </data>
   <data name="btnСalcProfileText" xml:space="preserve">
     <value>Розрахувати</value>
+  </data>
+  <data name="cmbGraphTypeText" xml:space="preserve">
+    <value>Усі типи</value>
+  </data>
+  <data name="funTypeText" xml:space="preserve">
+    <value>"Віяло"</value>
+  </data>
+  <data name="gbFiltersTitle" xml:space="preserve">
+    <value>Фільтри</value>
   </data>
   <data name="lblAboutSelectedText" xml:space="preserve">
     <value>Інформація про вибране</value>
@@ -132,6 +150,9 @@
   <data name="lblCommonLengthText" xml:space="preserve">
     <value>Довжина вибраних об'єктів:</value>
   </data>
+  <data name="lblCreationDateText" xml:space="preserve">
+    <value>Дата створення:</value>
+  </data>
   <data name="lblDEMText" xml:space="preserve">
     <value>Шар ЦМР/ ЦММ</value>
   </data>
@@ -140,6 +161,9 @@
   </data>
   <data name="lblDimensionSecondText" xml:space="preserve">
     <value>м</value>
+  </data>
+  <data name="lblFromText" xml:space="preserve">
+    <value>з</value>
   </data>
   <data name="lblFunAzimuth1Text" xml:space="preserve">
     <value>Азимут 1</value>
@@ -201,8 +225,29 @@
   <data name="lblSetProfilePropertiesText" xml:space="preserve">
     <value>Задати профіль</value>
   </data>
+  <data name="lblToText" xml:space="preserve">
+    <value>до</value>
+  </data>
   <data name="lblVegetationLayerText" xml:space="preserve">
     <value>Шар рослинності</value>
+  </data>
+  <data name="lvProfilesSetsCreatorColHeader" xml:space="preserve">
+    <value>Автор</value>
+  </data>
+  <data name="lvProfilesSetsNameColHeader" xml:space="preserve">
+    <value>Назва профілю</value>
+  </data>
+  <data name="lvProfilesSetsSharedColHeader" xml:space="preserve">
+    <value>Спільний</value>
+  </data>
+  <data name="lvProfilesSetsTypeColHeader" xml:space="preserve">
+    <value>Тип</value>
+  </data>
+  <data name="pointsTypeText" xml:space="preserve">
+    <value>Лінія</value>
+  </data>
+  <data name="primitiveTypeText" xml:space="preserve">
+    <value>Примітив</value>
   </data>
   <data name="tabFunTabText" xml:space="preserve">
     <value>"Віяло"</value>
@@ -222,6 +267,12 @@
   <data name="tabSectionTabText" xml:space="preserve">
     <value>Відрізки</value>
   </data>
+  <data name="txtCreatorPlaceholder" xml:space="preserve">
+    <value>Автор</value>
+  </data>
+  <data name="txtNamePlaceholder" xml:space="preserve">
+    <value>Назва профілю</value>
+  </data>
   <data name="txtGraphicsLayerValue" xml:space="preserve">
     <value>Шар графічних об'єктів</value>
   </data>
@@ -229,6 +280,12 @@
     <value>Новий проіль</value>
   </data>
   <data name="txtPickCoordinatesToolMessage" xml:space="preserve">
-    <value>Будьласка, увімкніть інструмент для виділення точки.</value>
+    <value>Будь ласка, увімкніть інструмент для виділення точки.</value>
+  </data>
+  <data name="btnReset" xml:space="preserve">
+    <value>Скинути</value>
+  </data>
+  <data name="btnAddAvailableProfilesSetsToolTip" xml:space="preserve">
+    <value>Додати доступні набори профілів</value>
   </data>
 </root>

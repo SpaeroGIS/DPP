@@ -9,6 +9,7 @@ using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Exceptions;
 using MilSpace.DataAccess.Facade;
 using MilSpace.Profile.DTO;
+using MilSpace.Profile.ModalWindows;
 using MilSpace.Profile.Localization;
 using MilSpace.Tools;
 using MilSpace.Tools.GraphicsLayer;
@@ -328,6 +329,7 @@ namespace MilSpace.Profile
                     result = result && MilSpaceProfileFacade.EraseProfileSessions(View.SelectedProfileSessionIds.ProfileSessionId);
                 }
 
+                _workingProfiles.Remove(_workingProfiles.First(session => session.SessionId == View.SelectedProfileSessionIds.ProfileSessionId));
                 MilSpaceProfileGraphsController.RemoveTab(View.SelectedProfileSessionIds.ProfileSessionId);
                 GraphicsLayerManager.RemoveGraphic(View.SelectedProfileSessionIds.ProfileSessionId);
 
@@ -515,6 +517,22 @@ namespace MilSpace.Profile
                     GraphicsLayerManager.RemoveLineFromGraphic(profileSessionId, profileLine.Id);
                     profileLine.SessionId = profileSessionId;
                     graphsController.AddProfileToTab(profileLine, profileSurface);
+                }
+            }
+        }
+
+        internal void AddAvailableSets()
+        {
+            var accessibleProfilesSetsModalWindow = new AccessibleProfilesModalWindow(_workingProfiles, ArcMap.Document.FocusMap.SpatialReference);
+            var dialogResult = accessibleProfilesSetsModalWindow.ShowDialog(); 
+
+            if (dialogResult == DialogResult.OK)
+            {
+                var profilesSets = accessibleProfilesSetsModalWindow.SelectedProfilesSets;
+
+                foreach(var set in profilesSets)
+                {
+                    AddProfileToList(set);
                 }
             }
         }

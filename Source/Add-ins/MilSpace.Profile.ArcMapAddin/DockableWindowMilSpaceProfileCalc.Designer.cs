@@ -162,6 +162,7 @@
             this.addProfileToExistingGraph = new System.Windows.Forms.ToolStripButton();
             this.addProfileToGraph = new System.Windows.Forms.ToolStripButton();
             this.openGraphWindow = new System.Windows.Forms.ToolStripButton();
+            this.addAvailableProfilesSets = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.removeProfile = new System.Windows.Forms.ToolStripButton();
             this.saveProfileAsShared = new System.Windows.Forms.ToolStripButton();
@@ -1781,6 +1782,7 @@
             this.addProfileToExistingGraph,
             this.addProfileToGraph,
             this.openGraphWindow,
+            this.addAvailableProfilesSets,
             this.toolStripSeparator4,
             this.removeProfile,
             this.saveProfileAsShared,
@@ -1865,6 +1867,15 @@
             this.openGraphWindow.Size = new System.Drawing.Size(23, 27);
             this.openGraphWindow.ToolTipText = "Open Grpah window";
             this.openGraphWindow.Click += new System.EventHandler(this.openGraphWindow_Click);
+            // 
+            // addAvailableProfilesSets
+            // 
+            this.addAvailableProfilesSets.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.addAvailableProfilesSets.Image = ((System.Drawing.Image)(resources.GetObject("addAvailableProfilesSets.Image")));
+            this.addAvailableProfilesSets.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.addAvailableProfilesSets.Name = "addAvailableProfilesSets";
+            this.addAvailableProfilesSets.Size = new System.Drawing.Size(23, 27);
+            this.addAvailableProfilesSets.Click += new System.EventHandler(this.addAvailableProfilesSets_Click);
             // 
             // toolStripSeparator4
             // 
@@ -2136,5 +2147,6 @@
         private System.Windows.Forms.ToolStripButton addProfileToExistingGraph;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton clearExtraGraphic;
+        private System.Windows.Forms.ToolStripButton addAvailableProfilesSets;
     }
 }

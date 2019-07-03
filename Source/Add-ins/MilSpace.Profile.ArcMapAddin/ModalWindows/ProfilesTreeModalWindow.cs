@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace MilSpace.Profile
+namespace MilSpace.Profile.ModalWindows
 {
     public partial class ProfilesTreeModalWindow : Form
     {
