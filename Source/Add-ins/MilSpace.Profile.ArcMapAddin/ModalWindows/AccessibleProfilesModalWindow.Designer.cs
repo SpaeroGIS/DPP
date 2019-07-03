@@ -32,7 +32,7 @@
             this.gbFilters = new System.Windows.Forms.GroupBox();
             this.btnFilter = new System.Windows.Forms.Button();
             this.cmbGraphType = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblTo = new System.Windows.Forms.Label();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.lblFrom = new System.Windows.Forms.Label();
             this.fromDate = new System.Windows.Forms.DateTimePicker();
@@ -51,6 +51,7 @@
             this.lvProfilesSets.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.lvProfilesSets.FullRowSelect = true;
             this.lvProfilesSets.HideSelection = false;
             this.lvProfilesSets.Location = new System.Drawing.Point(10, 124);
             this.lvProfilesSets.Name = "lvProfilesSets";
@@ -62,7 +63,7 @@
             // 
             this.gbFilters.Controls.Add(this.btnFilter);
             this.gbFilters.Controls.Add(this.cmbGraphType);
-            this.gbFilters.Controls.Add(this.label1);
+            this.gbFilters.Controls.Add(this.lblTo);
             this.gbFilters.Controls.Add(this.dateTimePicker1);
             this.gbFilters.Controls.Add(this.lblFrom);
             this.gbFilters.Controls.Add(this.fromDate);
@@ -81,7 +82,7 @@
             // btnFilter
             // 
             this.btnFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFilter.Location = new System.Drawing.Point(382, 86);
+            this.btnFilter.Location = new System.Drawing.Point(382, 83);
             this.btnFilter.Name = "btnFilter";
             this.btnFilter.Size = new System.Drawing.Size(60, 20);
             this.btnFilter.TabIndex = 9;
@@ -98,14 +99,14 @@
             this.cmbGraphType.TabIndex = 7;
             this.cmbGraphType.Text = "Type";
             // 
-            // label1
+            // lblTo
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(340, 55);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(16, 13);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "to";
+            this.lblTo.AutoSize = true;
+            this.lblTo.Location = new System.Drawing.Point(340, 55);
+            this.lblTo.Name = "lblTo";
+            this.lblTo.Size = new System.Drawing.Size(16, 13);
+            this.lblTo.TabIndex = 6;
+            this.lblTo.Text = "to";
             // 
             // dateTimePicker1
             // 
@@ -221,7 +222,7 @@
         private System.Windows.Forms.TextBox txtCreator;
         private System.Windows.Forms.Label lblDateText;
         private System.Windows.Forms.DateTimePicker fromDate;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblTo;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Label lblFrom;
         private System.Windows.Forms.ComboBox cmbGraphType;

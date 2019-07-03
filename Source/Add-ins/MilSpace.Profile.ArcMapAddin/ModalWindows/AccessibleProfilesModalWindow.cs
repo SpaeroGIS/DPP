@@ -1,5 +1,6 @@
 ﻿using ESRI.ArcGIS.Geometry;
 using MilSpace.DataAccess.DataTransfer;
+using MilSpace.Profile.Localization;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,6 +21,7 @@ namespace MilSpace.Profile.ModalWindows
         public AccessibleProfilesModalWindow(List<ProfileSession> userSession, ISpatialReference spatialReference)
         {
             InitializeComponent();
+            LocalizeControls();
 
             _controller = new AccessibleProfilesController(userSession, spatialReference);
 
@@ -35,11 +37,11 @@ namespace MilSpace.Profile.ModalWindows
 
         private void SetListView()
         {
-            lvProfilesSets.Columns.Add(new ColumnHeader { Name = "NameCol", Width = (int)(lvProfilesSets.Width * 0.3)});
-            lvProfilesSets.Columns.Add(new ColumnHeader { Name = "CreatorCol", Width = (int)(lvProfilesSets.Width * 0.3)});
-            lvProfilesSets.Columns.Add(new ColumnHeader { Name = "DateCol",  Width = (int)(lvProfilesSets.Width * 0.2)});
-            lvProfilesSets.Columns.Add(new ColumnHeader { Name = "TypeCol", Width = (int)(lvProfilesSets.Width * 0.1)});
-            lvProfilesSets.Columns.Add(new ColumnHeader { Name = "IsSharedCol", Width = (int)(lvProfilesSets.Width * 0.1)});
+            lvProfilesSets.Columns.Add(new ColumnHeader { Name = "NameCol", Width = (int)(lvProfilesSets.Width * 0.3), Text = LocalizationConstants.ProfilesSetsNameColHeader });
+            lvProfilesSets.Columns.Add(new ColumnHeader { Name = "CreatorCol", Width = (int)(lvProfilesSets.Width * 0.3), Text = LocalizationConstants.ProfilesSetsCreatorColHeader});
+            lvProfilesSets.Columns.Add(new ColumnHeader { Name = "DateCol",  Width = (int)(lvProfilesSets.Width * 0.2), Text = LocalizationConstants.ProfilesSetsDateColHeader});
+            lvProfilesSets.Columns.Add(new ColumnHeader { Name = "TypeCol", Width = (int)(lvProfilesSets.Width * 0.1), Text = LocalizationConstants.ProfilesSetsTypeColHeader});
+            lvProfilesSets.Columns.Add(new ColumnHeader { Name = "IsSharedCol", Width = (int)(lvProfilesSets.Width * 0.1), Text = LocalizationConstants.ProfilesSetsSharedColHeader});
 
             lvProfilesSets.View = View.Details;
 
@@ -81,7 +83,29 @@ namespace MilSpace.Profile.ModalWindows
             return String.Empty;
         }
 
-       
+        private void LocalizeControls()
+        {
+            gbFilters.Text = LocalizationConstants.FiltersTitle;
+
+            txtName.Text = LocalizationConstants.NamePlaceholder;
+            txtCreator.Text = LocalizationConstants.CreatorPlaceholder;
+
+            cmbGraphType.Items.Add(LocalizationConstants.GraphTypeText);
+            cmbGraphType.Items.Add(LocalizationConstants.PointsTypeText);
+            cmbGraphType.Items.Add(LocalizationConstants.FunTypeText);
+            cmbGraphType.Items.Add(LocalizationConstants.PrimitiveTypeText);
+            //to default values
+            cmbGraphType.Text = cmbGraphType.Items[0].ToString();
+
+            lblDateText.Text = LocalizationConstants.CreationDateText;
+            lblFrom.Text = LocalizationConstants.FromText;
+            lblTo.Text = LocalizationConstants.ToText;
+
+            btnFilter.Text = LocalizationConstants.FilterText;
+            btnOk.Text = LocalizationConstants.OkText;
+            btnCancel.Text = LocalizationConstants.CancelText;
+        }
+
         private void SavedProfilesModalWindow_Load(object sender, EventArgs e)
         {
 

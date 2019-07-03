@@ -49,10 +49,27 @@ namespace MilSpace.Profile.Localization
         private static string FunAzimuth2TextKey = "lblFunAzimuth2Text";
         private static string HeightOfViewGraphicsTextKey = "lblHeightOfViewGraphicsText";
         private static string PrimitivesLayerToSelectTextKey = "lblPrimitivesLayerToSelectText";
-        
 
-
-
+        //AddAvailableProfilesSetsModalWindow
+        private static string FiltersTitleKey = "gbFiltersTitle";
+        private static string NamePlaceholderKey = "txtNamePlaceholder";
+        private static string CreatorPlaceholderKey = "txtCreatorPlaceholder";
+        private static string GraphTypeTextKey = "cmbGraphTypeText";
+        private static string CreationDateTextKey = "lblCreationDateText";
+        private static string FromTextKey = "lblFromText";
+        private static string ToTextKey = "lblToText";
+        private static string PointsTypeTextKey = "pointsTypeText";
+        private static string FunTypeTextKey = "funTypeText";
+        private static string PrimitiveTypeTextKey = "primitiveTypeText";
+        private static string FilterTextKey = "btnFilterText";
+        private static string OkTextKey = "btnOkText";
+        private static string CancelTextKey = "btnCancelText";
+        private static string ProfilesSetsNameColHeaderKey = "lvProfilesSetsNameColHeader";
+        private static string ProfilesSetsCreatorColHeaderKey = "lvProfilesSetsCreatorColHeader";
+        private static string ProfilesSetsDateColHeaderKey = "lvProfilesSetsDateColHeader";
+        private static string ProfilesSetsTypeColHeaderKey = "lvProfilesSetsTypeColHeader";
+        private static string ProfilesSetsSharedColHeaderKey = "lvProfilesSetsSharedColHeader";
+        private static string ProfilesSetsTitleKey = "modalProfilesSetsTitle";
 
         private LocalizationConstants()
         {
@@ -94,7 +111,27 @@ namespace MilSpace.Profile.Localization
         public static string FunAzimuth2Text => Instance.GetLocalization(FunAzimuth2TextKey);
         public static string HeightOfViewGraphicsText => Instance.GetLocalization(HeightOfViewGraphicsTextKey);
         public static string PrimitivesLayerToSelectText => Instance.GetLocalization(PrimitivesLayerToSelectTextKey);
-        
+
+        //AddAvailableProfilesSetsModalWindow
+        public static string FiltersTitle => Instance.GetLocalization(FiltersTitleKey);
+        public static string NamePlaceholder => Instance.GetLocalization(NamePlaceholderKey);
+        public static string CreatorPlaceholder => Instance.GetLocalization(CreatorPlaceholderKey);
+        public static string GraphTypeText => Instance.GetLocalization(GraphTypeTextKey);
+        public static string CreationDateText => Instance.GetLocalization(CreationDateTextKey);
+        public static string FromText => Instance.GetLocalization(FromTextKey);
+        public static string ToText => Instance.GetLocalization(ToTextKey);
+        public static string PointsTypeText => Instance.GetLocalization(PointsTypeTextKey);
+        public static string FunTypeText => Instance.GetLocalization(FunTypeTextKey);
+        public static string PrimitiveTypeText => Instance.GetLocalization(PrimitiveTypeTextKey);
+        public static string FilterText => Instance.GetLocalization(FilterTextKey);
+        public static string OkText => Instance.GetLocalization(OkTextKey);
+        public static string CancelText => Instance.GetLocalization(CancelTextKey);
+        public static string ProfilesSetsNameColHeader => Instance.GetLocalization(ProfilesSetsNameColHeaderKey);
+        public static string ProfilesSetsCreatorColHeader => Instance.GetLocalization(ProfilesSetsCreatorColHeaderKey);
+        public static string ProfilesSetsDateColHeader => Instance.GetLocalization(ProfilesSetsDateColHeaderKey);
+        public static string ProfilesSetsTypeColHeader => Instance.GetLocalization(ProfilesSetsTypeColHeaderKey);
+        public static string ProfilesSetsSharedColHeader => Instance.GetLocalization(ProfilesSetsSharedColHeaderKey);
+        public static string ProfilesSetsTitle => Instance.GetLocalization(ProfilesSetsTitleKey);
 
 
         private string GetLocalization(string key, string defaultValue = null)

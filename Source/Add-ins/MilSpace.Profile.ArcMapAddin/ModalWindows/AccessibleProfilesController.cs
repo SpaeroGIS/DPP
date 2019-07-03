@@ -27,7 +27,7 @@ namespace MilSpace.Profile.ModalWindows
         {
             var currentSessionProfiles = new List<ProfileSession>(userSession);
 
-            var allAccessibleProfilesSets = MilSpaceProfileFacade.GetUserProfileSessions().ToList();
+            var allAccessibleProfilesSets = MilSpaceProfileFacade.GetAvaibleProfileSessions().ToList();
             var notInCurrentSessionProfilesSet = new List<ProfileSession>(allAccessibleProfilesSets.Count);
 
             foreach(var set in allAccessibleProfilesSets)

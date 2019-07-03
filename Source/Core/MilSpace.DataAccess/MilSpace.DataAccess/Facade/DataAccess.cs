@@ -222,7 +222,7 @@ namespace MilSpace.DataAccess.Facade
         {
             try
             {
-                var result = context.MilSp_Sessions.Where(s => s.userName == Environment.UserName || s.MilSp_Profile.Shared).Select(s => s.MilSp_Profile.Get());
+                var result = context.MilSp_Profiles.Where(s => s.Creator == Environment.UserName || s.Shared).Select(s => s.Get());
                 log.InfoEx($"Get all profiles ({result.Count()}) for user {Environment.UserName} or shared with him");
                 return result;
             }
