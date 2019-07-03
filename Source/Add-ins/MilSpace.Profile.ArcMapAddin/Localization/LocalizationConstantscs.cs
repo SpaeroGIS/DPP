@@ -1,10 +1,5 @@
 ﻿using MilSpace.Core.MilSpaceResourceManager;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MilSpace.Profile.Localization
 {
@@ -49,8 +44,12 @@ namespace MilSpace.Profile.Localization
         private static string FunAzimuth2TextKey = "lblFunAzimuth2Text";
         private static string HeightOfViewGraphicsTextKey = "lblHeightOfViewGraphicsText";
         private static string PrimitivesLayerToSelectTextKey = "lblPrimitivesLayerToSelectText";
-        
+        private static string AboutSelectedTextKey = "lblAboutSelectedText";
 
+        private static string NewProfileNameValueKey = "txtNewProfileNameValue";
+        private static string GraphicsLayerValueKey = "txtGraphicsLayerValue";
+        private static string PickCoordinatesToolMessageKey = "txtPickCoordinatesToolMessage";
+        
 
 
 
@@ -94,6 +93,10 @@ namespace MilSpace.Profile.Localization
         public static string FunAzimuth2Text => Instance.GetLocalization(FunAzimuth2TextKey);
         public static string HeightOfViewGraphicsText => Instance.GetLocalization(HeightOfViewGraphicsTextKey);
         public static string PrimitivesLayerToSelectText => Instance.GetLocalization(PrimitivesLayerToSelectTextKey);
+        public static string AboutSelectedText => Instance.GetLocalization(AboutSelectedTextKey);
+        public static string NewProfileNameValue => Instance.GetLocalization(NewProfileNameValueKey);
+        public static string GraphicsLayerValue => Instance.GetLocalization(GraphicsLayerValueKey);
+        public static string PickCoordinatesToolMessage => Instance.GetLocalization(PickCoordinatesToolMessageKey);
         
 
 

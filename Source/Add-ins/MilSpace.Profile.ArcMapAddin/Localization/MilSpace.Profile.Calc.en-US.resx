@@ -123,6 +123,9 @@
   <data name="btnСalcProfileText" xml:space="preserve">
     <value>Calculate</value>
   </data>
+  <data name="lblAboutSelectedText" xml:space="preserve">
+    <value>About selected</value>
+  </data>
   <data name="lblBuildingsLayerText" xml:space="preserve">
     <value>Buildings layer</value>
   </data>
@@ -218,5 +221,17 @@
   </data>
   <data name="tabSectionTabText" xml:space="preserve">
     <value>Lines</value>
+  </data>
+  <data name="txtGraphicsLayerValue" xml:space="preserve">
+    <value>Graphics Layer</value>
+  </data>
+  <data name="txtNewProfileNameValue" xml:space="preserve">
+    <value>New Profile</value>
+  </data>
+  <data name="txtPickCoordinatesToolMessage" xml:space="preserve">
+    <value>Please add Pick Coordinates tool to any toolbar first.</value>
+  </data>
+  <data name="txtProfileCalcHeader" xml:space="preserve">
+    <value />
   </data>
 </root>
