@@ -291,4 +291,10 @@
   <data name="txtProfileCalcHeader" xml:space="preserve">
     <value />
   </data>
+  <data name="btnReset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="btnAddAvailableProfilesSetsToolTip" xml:space="preserve">
+    <value>Add available profiles sets</value>
+  </data>
 </root>

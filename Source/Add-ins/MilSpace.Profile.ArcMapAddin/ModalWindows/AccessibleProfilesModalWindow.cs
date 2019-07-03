@@ -3,12 +3,8 @@ using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Profile.Localization;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace MilSpace.Profile.ModalWindows
@@ -16,17 +12,18 @@ namespace MilSpace.Profile.ModalWindows
     public partial class AccessibleProfilesModalWindow : Form
     {
         private AccessibleProfilesController _controller;
-        internal ProfileSession[] SelectedProfilesSets;
+
+        internal List<ProfileSession> SelectedProfilesSets;
 
         public AccessibleProfilesModalWindow(List<ProfileSession> userSession, ISpatialReference spatialReference)
         {
             InitializeComponent();
-            LocalizeControls();
+           // LocalizeControls();
 
             _controller = new AccessibleProfilesController(userSession, spatialReference);
 
             SetComponentsView();
-            SetProfilesSets(userSession);
+            SetTextDefaultValues();
             InitializeListView(_controller.GetAllAccessibleProfilesSets());
         }
 
@@ -44,38 +41,75 @@ namespace MilSpace.Profile.ModalWindows
             lvProfilesSets.Columns.Add(new ColumnHeader { Name = "IsSharedCol", Width = (int)(lvProfilesSets.Width * 0.1), Text = LocalizationConstants.ProfilesSetsSharedColHeader});
 
             lvProfilesSets.View = View.Details;
-
-            //lvProfilesSets.Columns.Add("NameCol", (int)(lvProfilesSets.Width * 0.32));
-            //lvProfilesSets.Columns.Add("CreatorCol", (lvProfilesSets.Width - lvProfilesSets.Columns[0].Width - 25));
-            //lvProfilesSets.Columns.Add("DateCol", (lvProfilesSets.Width - lvProfilesSets.Columns[0].Width - 25));
-            //lvProfilesSets.Columns.Add("TypeCol", (lvProfilesSets.Width - lvProfilesSets.Columns[0].Width - 25));
-            //lvProfilesSets.Columns.Add("IsSharedCol", (lvProfilesSets.Width - lvProfilesSets.Columns[0].Width - 25));
-
-
-            //lvProfilesSets.HeaderStyle = ColumnHeaderStyle.None;
         }
 
-        private void SetProfilesSets(List<ProfileSession> userSession)
+        private void FillComboBox()
         {
+            cmbGraphType.Items.Clear();
 
+            var types = _controller.GetGraphDisplayTypes();
+
+            cmbGraphType.Items.Add("All types"/*LocalizationConstants.GraphTypeText*/);
+
+            foreach(var type in types)
+            {
+                cmbGraphType.Items.Add(type.Value);
+            }
+        }
+
+        private void SetTextDefaultValues()
+        {
+            txtName.Text = "Name";//LocalizationConstants.NamePlaceholder;
+            txtCreator.Text = "Creator";//LocalizationConstants.CreatorPlaceholder;
+
+            txtCreator.ForeColor = Color.DimGray;
+            txtName.ForeColor = Color.DimGray;
+
+            FillComboBox();
+            cmbGraphType.Text = cmbGraphType.Items[0].ToString();
+        }
+
+        private void SetDataDefaultValues(ProfileSession[] profilesSets)
+        {
+            fromDate.Value = _controller.GetMinDateTime(profilesSets);
+            toDate.Value = _controller.GetMaxDateTime(profilesSets);
         }
 
         private void InitializeListView(ProfileSession[] profilesSets)
         {
             lvProfilesSets.Items.Clear();
+            var types = _controller.GetGraphDisplayTypes();
 
             foreach(var set in profilesSets)
             {
                 var newItem = new ListViewItem(set.SessionName);
 
+                newItem.Tag = set;
+
                 newItem.SubItems.Add(set.CreatedBy);
                 newItem.SubItems.Add(set.CreatedOn.ToLongDateString());
-                //todo localize shared and type
-                newItem.SubItems.Add(set.DefinitionType.ToString());
-                newItem.SubItems.Add(set.Shared.ToString());
+                newItem.SubItems.Add(types[set.DefinitionType]);
+                newItem.SubItems.Add(set.Shared ? "+" : "-");
 
                 lvProfilesSets.Items.Add(newItem);
             }
+
+            if (lvProfilesSets.Items.Count > 0)
+            {
+                SetDataDefaultValues(profilesSets);
+            }
+        }
+
+        private ProfileSession[] GetSetsFromListView()
+        {
+            var sets = new List<ProfileSession>();
+
+            foreach(ListViewItem item in lvProfilesSets.Items)
+            {
+                sets.Add((ProfileSession)item.Tag);
+            }
+
+            return sets.ToArray();
         }
 
         private string GetDefinitionName()
@@ -85,17 +119,10 @@ namespace MilSpace.Profile.ModalWindows
 
         private void LocalizeControls()
         {
+            //todo temporary, fix and remove 
+            //System.Threading.Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("uk-UA");
+
             gbFilters.Text = LocalizationConstants.FiltersTitle;
-
-            txtName.Text = LocalizationConstants.NamePlaceholder;
-            txtCreator.Text = LocalizationConstants.CreatorPlaceholder;
-
-            cmbGraphType.Items.Add(LocalizationConstants.GraphTypeText);
-            cmbGraphType.Items.Add(LocalizationConstants.PointsTypeText);
-            cmbGraphType.Items.Add(LocalizationConstants.FunTypeText);
-            cmbGraphType.Items.Add(LocalizationConstants.PrimitiveTypeText);
-            //to default values
-            cmbGraphType.Text = cmbGraphType.Items[0].ToString();
 
             lblDateText.Text = LocalizationConstants.CreationDateText;
             lblFrom.Text = LocalizationConstants.FromText;
@@ -104,21 +131,101 @@ namespace MilSpace.Profile.ModalWindows
             btnFilter.Text = LocalizationConstants.FilterText;
             btnOk.Text = LocalizationConstants.OkText;
             btnCancel.Text = LocalizationConstants.CancelText;
+            btnReset.Text = LocalizationConstants.ResetText;
         }
 
-        private void SavedProfilesModalWindow_Load(object sender, EventArgs e)
+        private void BtnFilter_Click(object sender, EventArgs e)
         {
+            var allSetsInListView = _controller.GetAllAccessibleProfilesSets();
+            var filteredFields = allSetsInListView;
 
+            if(txtName.Text != /*LocalizationConstants.NamePlaceholder*/"Name" && txtName.Text != string.Empty)
+            {
+                filteredFields = _controller.FilterByName(txtName.Text, filteredFields);
+            }
+
+            if(txtCreator.Text != /*LocalizationConstants.CreatorPlaceholder*/"Creator" && txtCreator.Text != string.Empty)
+            {
+                filteredFields = _controller.FilterByCreator(txtCreator.Text, filteredFields);
+            }
+
+            if(fromDate.Value != _controller.GetMinDateTime(allSetsInListView) || toDate.Value != _controller.GetMaxDateTime(allSetsInListView))
+            {
+                filteredFields = _controller.FilterByDate(fromDate.Value, toDate.Value, filteredFields);
+            }
+
+            if(cmbGraphType.SelectedItem.ToString() != /*LocalizationConstants.GraphTypeText*/"All types")
+            {
+                var types = _controller.GetGraphTypes();
+
+                filteredFields = _controller.FilterByType(types[cmbGraphType.SelectedItem.ToString()], filteredFields);
+            }
+
+            if (filteredFields != allSetsInListView)
+            {
+                InitializeListView(filteredFields);
+            }
         }
 
-        private void txtCreator_TextChanged(object sender, EventArgs e)
+        private void BtnReset_Click(object sender, EventArgs e)
         {
-
+            InitializeListView(_controller.GetAllAccessibleProfilesSets());
+            SetTextDefaultValues();
         }
 
-        private void filtersGroupBox_Enter(object sender, EventArgs e)
+        private void TxtName_Enter(object sender, EventArgs e)
         {
+            ChangePlaceholderHandler(txtName, "Name" /*LocalizationConstants.NamePlaceholder*/, true);
+        }
 
+        private void ChangePlaceholderHandler(TextBox textBox, string placeHolderText, bool isEnter)
+        {
+            if(isEnter)
+            {
+                if (textBox.Text == placeHolderText)
+                {
+                    textBox.Text = string.Empty;
+                    textBox.ForeColor = Color.Black;
+                }
+            }
+            else
+            {
+                if (String.IsNullOrWhiteSpace(textBox.Text))
+                {
+                    textBox.Text = placeHolderText;
+                    textBox.ForeColor = Color.DimGray;
+                }
+            }
+        }
+
+        private void TxtCreator_Enter(object sender, EventArgs e)
+        {
+            ChangePlaceholderHandler(txtCreator, "Creator"/*LocalizationConstants.CreatorPlaceholder*/, true);
+        }
+
+        private void TxtName_Leave(object sender, EventArgs e)
+        {
+            ChangePlaceholderHandler(txtName, "Name" /*LocalizationConstants.NamePlaceholder*/, false);
+        }
+
+        private void TxtCreator_Leave(object sender, EventArgs e)
+        {
+            ChangePlaceholderHandler(txtCreator, "Creator"/*LocalizationConstants.CreatorPlaceholder*/, false);
+        }
+
+        private void BtnCancel_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void BtnOk_Click(object sender, EventArgs e)
+        {
+            SelectedProfilesSets = new List<ProfileSession>(lvProfilesSets.Items.Count);
+
+            foreach(ListViewItem selectedItem in lvProfilesSets.SelectedItems)
+            {
+                SelectedProfilesSets.Add((ProfileSession)selectedItem.Tag);
+            }
         }
     }
 }

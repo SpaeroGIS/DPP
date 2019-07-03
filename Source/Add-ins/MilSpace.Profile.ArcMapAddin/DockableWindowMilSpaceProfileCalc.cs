@@ -895,6 +895,7 @@ namespace MilSpace.Profile
 
             ToolTip ToolTip1 = new System.Windows.Forms.ToolTip();
             ToolTip1.SetToolTip(this.btnRefreshLayers, LocalizationConstants.RefreshButtonToolTip);
+            addAvailableProfilesSets.ToolTipText = LocalizationConstants.AddAvailableProfilesSetsToolTip;
             lblSelectedPrimitives.Text = LocalizationConstants.SelectedPrimitivesText;
             lblCommonLength.Text = LocalizationConstants.CommonLengthText;
 

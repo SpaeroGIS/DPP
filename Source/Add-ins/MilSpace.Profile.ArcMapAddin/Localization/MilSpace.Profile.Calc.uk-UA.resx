@@ -280,6 +280,12 @@
     <value>Новий проіль</value>
   </data>
   <data name="txtPickCoordinatesToolMessage" xml:space="preserve">
-    <value>Будьласка, увімкніть інструмент для виділення точки.</value>
+    <value>Будь ласка, увімкніть інструмент для виділення точки.</value>
+  </data>
+  <data name="btnReset" xml:space="preserve">
+    <value>Скинути</value>
+  </data>
+  <data name="btnAddAvailableProfilesSetsToolTip" xml:space="preserve">
+    <value>Додати доступні набори профілів</value>
   </data>
 </root>

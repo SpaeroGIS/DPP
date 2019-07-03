@@ -44,6 +44,11 @@ namespace MilSpace.Profile.Localization
         private static string FunAzimuth2TextKey = "lblFunAzimuth2Text";
         private static string HeightOfViewGraphicsTextKey = "lblHeightOfViewGraphicsText";
         private static string PrimitivesLayerToSelectTextKey = "lblPrimitivesLayerToSelectText";
+        private static string NewProfileNameValueKey = "txtNewProfileNameValue";
+        private static string GraphicsLayerValueKey = "txtGraphicsLayerValue";
+        private static string PickCoordinatesToolMessageKey = "txtPickCoordinatesToolMessage";
+        private static string AddAvailableProfilesSetsToolTipKey = "btnAddAvailableProfilesSetsToolTip";
+
 
         //AddAvailableProfilesSetsModalWindow
         private static string FiltersTitleKey = "gbFiltersTitle";
@@ -66,12 +71,7 @@ namespace MilSpace.Profile.Localization
         private static string ProfilesSetsSharedColHeaderKey = "lvProfilesSetsSharedColHeader";
         private static string ProfilesSetsTitleKey = "modalProfilesSetsTitle";
         private static string AboutSelectedTextKey = "lblAboutSelectedText";
-
-        private static string NewProfileNameValueKey = "txtNewProfileNameValue";
-        private static string GraphicsLayerValueKey = "txtGraphicsLayerValue";
-        private static string PickCoordinatesToolMessageKey = "txtPickCoordinatesToolMessage";
-        
-
+        private static string ResetTextKey = "btnReset";
 
         private LocalizationConstants()
         {
@@ -113,6 +113,11 @@ namespace MilSpace.Profile.Localization
         public static string FunAzimuth2Text => Instance.GetLocalization(FunAzimuth2TextKey);
         public static string HeightOfViewGraphicsText => Instance.GetLocalization(HeightOfViewGraphicsTextKey);
         public static string PrimitivesLayerToSelectText => Instance.GetLocalization(PrimitivesLayerToSelectTextKey);
+        public static string AboutSelectedText => Instance.GetLocalization(AboutSelectedTextKey);
+        public static string NewProfileNameValue => Instance.GetLocalization(NewProfileNameValueKey);
+        public static string GraphicsLayerValue => Instance.GetLocalization(GraphicsLayerValueKey);
+        public static string PickCoordinatesToolMessage => Instance.GetLocalization(PickCoordinatesToolMessageKey);
+        public static string AddAvailableProfilesSetsToolTip => Instance.GetLocalization(AddAvailableProfilesSetsToolTipKey);
 
         //AddAvailableProfilesSetsModalWindow
         public static string FiltersTitle => Instance.GetLocalization(FiltersTitleKey);
@@ -134,11 +139,7 @@ namespace MilSpace.Profile.Localization
         public static string ProfilesSetsTypeColHeader => Instance.GetLocalization(ProfilesSetsTypeColHeaderKey);
         public static string ProfilesSetsSharedColHeader => Instance.GetLocalization(ProfilesSetsSharedColHeaderKey);
         public static string ProfilesSetsTitle => Instance.GetLocalization(ProfilesSetsTitleKey);
-        public static string AboutSelectedText => Instance.GetLocalization(AboutSelectedTextKey);
-        public static string NewProfileNameValue => Instance.GetLocalization(NewProfileNameValueKey);
-        public static string GraphicsLayerValue => Instance.GetLocalization(GraphicsLayerValueKey);
-        public static string PickCoordinatesToolMessage => Instance.GetLocalization(PickCoordinatesToolMessageKey);
-        
+        public static string ResetText => Instance.GetLocalization(ResetTextKey);
 
 
         private string GetLocalization(string key, string defaultValue = null)
