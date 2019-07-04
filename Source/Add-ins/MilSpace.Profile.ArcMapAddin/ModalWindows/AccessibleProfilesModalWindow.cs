@@ -59,7 +59,7 @@ namespace MilSpace.Profile.ModalWindows
 
         private void SetTextDefaultValues()
         {
-            txtName.Text = "Name";//LocalizationConstants.NamePlaceholder;
+            txtName.Text = LocalizationConstants.NamePlaceholder;
             txtCreator.Text = "Creator";//LocalizationConstants.CreatorPlaceholder;
 
             txtCreator.ForeColor = Color.DimGray;
@@ -139,7 +139,7 @@ namespace MilSpace.Profile.ModalWindows
             var allSetsInListView = _controller.GetAllAccessibleProfilesSets();
             var filteredFields = allSetsInListView;
 
-            if(txtName.Text != /*LocalizationConstants.NamePlaceholder*/"Name" && txtName.Text != string.Empty)
+            if(txtName.Text != LocalizationConstants.NamePlaceholder && string.IsNullOrWhiteSpace(txtName.Text))
             {
                 filteredFields = _controller.FilterByName(txtName.Text, filteredFields);
             }
