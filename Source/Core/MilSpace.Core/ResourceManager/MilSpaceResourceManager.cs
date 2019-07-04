@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Reflection;
+﻿using System.Globalization;
 using System.Resources;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MilSpace.Core.MilSpaceResourceManager
 {
@@ -16,23 +9,23 @@ namespace MilSpace.Core.MilSpaceResourceManager
         private static readonly string localizationregistryKey = "Localization";
         private static Logger logger = Logger.GetLoggerEx("MilSpaceResourceManager");
         private static string defailtValueNotLocalized = "<not localized>";
+        private static CultureInfo cultoreToLocalize;
 
         ResourceManager innerObject;
 
         public MilSpaceResourceManager(string sourceName, CultureInfo cultireInfo)
         {
-
             var pathToAssembly = Helper.GetRegistryValue(localizationregistryKey);
             innerObject = ResourceManager.CreateFileBasedResourceManager(sourceName, $"{pathToAssembly}", null);
 
-            System.Threading.Thread.CurrentThread.CurrentUICulture = cultireInfo;
+            cultoreToLocalize = cultireInfo;
         }
 
         public string GetLocalization(string key, string defailtcvalue = null)
         {
             try
             {
-                var result = innerObject.GetString(key, System.Threading.Thread.CurrentThread.CurrentUICulture);
+                var result = innerObject.GetString(key, cultoreToLocalize);
                 return result;
             }
             catch

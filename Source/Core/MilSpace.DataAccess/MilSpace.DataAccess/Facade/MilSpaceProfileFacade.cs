@@ -22,6 +22,14 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
+        public static IEnumerable<ProfileSession> GetAvaibleProfileSessions()
+        {
+            using(var accessor = new SemanticDataAccess())
+            {
+                return accessor.GetAvailableProfiles().ToArray();
+            }
+        }
+
         public static ProfileSession GetProfileSessionById(int sessionId)
         {
             using (var accessor = new SemanticDataAccess())

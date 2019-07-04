@@ -44,14 +44,34 @@ namespace MilSpace.Profile.Localization
         private static string FunAzimuth2TextKey = "lblFunAzimuth2Text";
         private static string HeightOfViewGraphicsTextKey = "lblHeightOfViewGraphicsText";
         private static string PrimitivesLayerToSelectTextKey = "lblPrimitivesLayerToSelectText";
-        private static string AboutSelectedTextKey = "lblAboutSelectedText";
-
         private static string NewProfileNameValueKey = "txtNewProfileNameValue";
         private static string GraphicsLayerValueKey = "txtGraphicsLayerValue";
         private static string PickCoordinatesToolMessageKey = "txtPickCoordinatesToolMessage";
-        
+        private static string AddAvailableProfilesSetsToolTipKey = "btnAddAvailableProfilesSetsToolTip";
 
 
+        //AddAvailableProfilesSetsModalWindow
+        private static string FiltersTitleKey = "gbFiltersTitle";
+        private static string NamePlaceholderKey = "txtNamePlaceholder";
+        private static string CreatorPlaceholderKey = "txtCreatorPlaceholder";
+        private static string GraphTypeTextKey = "cmbGraphTypeText";
+        private static string CreationDateTextKey = "lblCreationDateText";
+        private static string FromTextKey = "lblFromText";
+        private static string ToTextKey = "lblToText";
+        private static string PointsTypeTextKey = "pointsTypeText";
+        private static string FunTypeTextKey = "funTypeText";
+        private static string PrimitiveTypeTextKey = "primitiveTypeText";
+        private static string FilterTextKey = "btnFilterText";
+        private static string AddToSessionTextKey = "btnAddToSessionText";
+        private static string CloseTextKey = "btnCloseText";
+        private static string ProfilesSetsNameColHeaderKey = "lvProfilesSetsNameColHeader";
+        private static string ProfilesSetsCreatorColHeaderKey = "lvProfilesSetsCreatorColHeader";
+        private static string ProfilesSetsDateColHeaderKey = "lvProfilesSetsDateColHeader";
+        private static string ProfilesSetsTypeColHeaderKey = "lvProfilesSetsTypeColHeader";
+        private static string ProfilesSetsSharedColHeaderKey = "lvProfilesSetsSharedColHeader";
+        private static string ProfilesSetsTitleKey = "modalProfilesSetsTitle";
+        private static string AboutSelectedTextKey = "lblAboutSelectedText";
+        private static string ResetTextKey = "btnReset";
 
         private LocalizationConstants()
         {
@@ -97,7 +117,29 @@ namespace MilSpace.Profile.Localization
         public static string NewProfileNameValue => Instance.GetLocalization(NewProfileNameValueKey);
         public static string GraphicsLayerValue => Instance.GetLocalization(GraphicsLayerValueKey);
         public static string PickCoordinatesToolMessage => Instance.GetLocalization(PickCoordinatesToolMessageKey);
-        
+        public static string AddAvailableProfilesSetsToolTip => Instance.GetLocalization(AddAvailableProfilesSetsToolTipKey);
+
+        //AddAvailableProfilesSetsModalWindow
+        public static string FiltersTitle => Instance.GetLocalization(FiltersTitleKey);
+        public static string NamePlaceholder => Instance.GetLocalization(NamePlaceholderKey);
+        public static string CreatorPlaceholder => Instance.GetLocalization(CreatorPlaceholderKey);
+        public static string GraphTypeText => Instance.GetLocalization(GraphTypeTextKey);
+        public static string CreationDateText => Instance.GetLocalization(CreationDateTextKey);
+        public static string FromText => Instance.GetLocalization(FromTextKey);
+        public static string ToText => Instance.GetLocalization(ToTextKey);
+        public static string PointsTypeText => Instance.GetLocalization(PointsTypeTextKey);
+        public static string FunTypeText => Instance.GetLocalization(FunTypeTextKey);
+        public static string PrimitiveTypeText => Instance.GetLocalization(PrimitiveTypeTextKey);
+        public static string FilterText => Instance.GetLocalization(FilterTextKey);
+        public static string AddToSessionText => Instance.GetLocalization(AddToSessionTextKey);
+        public static string CloseText => Instance.GetLocalization(CloseTextKey);
+        public static string ProfilesSetsNameColHeader => Instance.GetLocalization(ProfilesSetsNameColHeaderKey);
+        public static string ProfilesSetsCreatorColHeader => Instance.GetLocalization(ProfilesSetsCreatorColHeaderKey);
+        public static string ProfilesSetsDateColHeader => Instance.GetLocalization(ProfilesSetsDateColHeaderKey);
+        public static string ProfilesSetsTypeColHeader => Instance.GetLocalization(ProfilesSetsTypeColHeaderKey);
+        public static string ProfilesSetsSharedColHeader => Instance.GetLocalization(ProfilesSetsSharedColHeaderKey);
+        public static string ProfilesSetsTitle => Instance.GetLocalization(ProfilesSetsTitleKey);
+        public static string ResetText => Instance.GetLocalization(ResetTextKey);
 
 
         private string GetLocalization(string key, string defaultValue = null)
