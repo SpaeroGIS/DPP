@@ -59,7 +59,7 @@ namespace MilSpace.Profile.ModalWindows
 
         private void SetTextDefaultValues()
         {
-            txtName.Text = "Name";//LocalizationConstants.NamePlaceholder;
+            txtName.Text = LocalizationConstants.NamePlaceholder;
             txtCreator.Text = "Creator";//LocalizationConstants.CreatorPlaceholder;
 
             txtCreator.ForeColor = Color.DimGray;
