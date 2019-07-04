@@ -895,6 +895,7 @@ namespace MilSpace.Profile
 
             ToolTip ToolTip1 = new System.Windows.Forms.ToolTip();
             ToolTip1.SetToolTip(this.btnRefreshLayers, LocalizationConstants.RefreshButtonToolTip);
+            addAvailableProfilesSets.ToolTipText = LocalizationConstants.AddAvailableProfilesSetsToolTip;
             lblSelectedPrimitives.Text = LocalizationConstants.SelectedPrimitivesText;
             lblCommonLength.Text = LocalizationConstants.CommonLengthText;
 
@@ -1252,6 +1253,11 @@ namespace MilSpace.Profile
             var av = ArcMap.Document.ActivatedView;
 
             return new Point() { X = pointX, Y = pointY, SpatialReference = av.FocusMap.SpatialReference };
+        }
+
+        private void addAvailableProfilesSets_Click(object sender, EventArgs e)
+        {
+            controller.AddAvailableSets();
         }
 
         private void toolBarSelectedPrimitives_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
