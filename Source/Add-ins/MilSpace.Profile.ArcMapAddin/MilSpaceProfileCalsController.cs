@@ -533,6 +533,7 @@ namespace MilSpace.Profile
                 foreach(var set in profilesSets)
                 {
                     AddProfileToList(set);
+                    MilSpaceProfileFacade.SaveUserSession(set.SessionId);
                 }
             }
         }

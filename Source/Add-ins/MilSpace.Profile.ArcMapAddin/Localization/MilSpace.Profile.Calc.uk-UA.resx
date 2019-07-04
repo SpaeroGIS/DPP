@@ -277,7 +277,7 @@
     <value>Шар графічних об'єктів</value>
   </data>
   <data name="txtNewProfileNameValue" xml:space="preserve">
-    <value>Новий проіль</value>
+    <value>Новий профіль</value>
   </data>
   <data name="txtPickCoordinatesToolMessage" xml:space="preserve">
     <value>Будь ласка, увімкніть інструмент для виділення точки.</value>
@@ -287,5 +287,8 @@
   </data>
   <data name="btnAddAvailableProfilesSetsToolTip" xml:space="preserve">
     <value>Додати доступні набори профілів</value>
+  </data>
+  <data name="lvProfilesSetsDateColHeader" xml:space="preserve">
+    <value>Дата</value>
   </data>
 </root>

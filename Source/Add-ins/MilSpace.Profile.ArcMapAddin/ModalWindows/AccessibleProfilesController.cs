@@ -33,13 +33,6 @@ namespace MilSpace.Profile.ModalWindows
 
         internal ProfileSession[] FilterByCreator(string creator ,ProfileSession[] sessions)
         {
-            foreach(var session in sessions)
-            {
-                if (session.CreatedBy.Contains(creator))
-                {
-
-                }
-            }
             return sessions.Where(session => session.CreatedBy.Contains(creator)).ToArray();
         }
 
@@ -77,9 +70,9 @@ namespace MilSpace.Profile.ModalWindows
         {
             if(_typesDisplayValues == null || _typesDisplayValues.Count == 0)
             {
-                _typesDisplayValues.Add(ProfileSettingsTypeEnum.Points, /*LocalizationConstants.PointsTypeText*/"Lines");
-                _typesDisplayValues.Add(ProfileSettingsTypeEnum.Fun, /*LocalizationConstants.FunTypeText*/"Fun");
-                _typesDisplayValues.Add(ProfileSettingsTypeEnum.Primitives, /*LocalizationConstants.PrimitiveTypeText*/"Primitive");
+                _typesDisplayValues.Add(ProfileSettingsTypeEnum.Points, LocalizationConstants.PointsTypeText);
+                _typesDisplayValues.Add(ProfileSettingsTypeEnum.Fun, LocalizationConstants.FunTypeText);
+                _typesDisplayValues.Add(ProfileSettingsTypeEnum.Primitives, LocalizationConstants.PrimitiveTypeText);
             }
 
             return _typesDisplayValues;
@@ -89,9 +82,9 @@ namespace MilSpace.Profile.ModalWindows
         {
             if(_typesValues == null || _typesValues.Count == 0)
             {
-                _typesValues.Add(/*LocalizationConstants.PointsTypeText*/"Lines", ProfileSettingsTypeEnum.Points);
-                _typesValues.Add(/*LocalizationConstants.FunTypeText*/"Fun", ProfileSettingsTypeEnum.Fun);
-                _typesValues.Add(/*LocalizationConstants.PrimitiveTypeText*/"Primitive", ProfileSettingsTypeEnum.Primitives);
+                _typesValues.Add(LocalizationConstants.PointsTypeText, ProfileSettingsTypeEnum.Points);
+                _typesValues.Add(LocalizationConstants.FunTypeText, ProfileSettingsTypeEnum.Fun);
+                _typesValues.Add(LocalizationConstants.PrimitiveTypeText, ProfileSettingsTypeEnum.Primitives);
             }
 
             return _typesValues;
