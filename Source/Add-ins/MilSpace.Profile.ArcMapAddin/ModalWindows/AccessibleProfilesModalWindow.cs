@@ -4,7 +4,6 @@ using MilSpace.Profile.Localization;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Globalization;
 using System.Windows.Forms;
 
 namespace MilSpace.Profile.ModalWindows
@@ -18,7 +17,7 @@ namespace MilSpace.Profile.ModalWindows
         public AccessibleProfilesModalWindow(List<ProfileSession> userSession, ISpatialReference spatialReference)
         {
             InitializeComponent();
-           // LocalizeControls();
+            LocalizeControls();
 
             _controller = new AccessibleProfilesController(userSession, spatialReference);
 
@@ -34,11 +33,21 @@ namespace MilSpace.Profile.ModalWindows
 
         private void SetListView()
         {
-            lvProfilesSets.Columns.Add(new ColumnHeader { Name = "NameCol", Width = (int)(lvProfilesSets.Width * 0.3), Text = LocalizationConstants.ProfilesSetsNameColHeader });
-            lvProfilesSets.Columns.Add(new ColumnHeader { Name = "CreatorCol", Width = (int)(lvProfilesSets.Width * 0.3), Text = LocalizationConstants.ProfilesSetsCreatorColHeader});
-            lvProfilesSets.Columns.Add(new ColumnHeader { Name = "DateCol",  Width = (int)(lvProfilesSets.Width * 0.2), Text = LocalizationConstants.ProfilesSetsDateColHeader});
-            lvProfilesSets.Columns.Add(new ColumnHeader { Name = "TypeCol", Width = (int)(lvProfilesSets.Width * 0.1), Text = LocalizationConstants.ProfilesSetsTypeColHeader});
-            lvProfilesSets.Columns.Add(new ColumnHeader { Name = "IsSharedCol", Width = (int)(lvProfilesSets.Width * 0.1), Text = LocalizationConstants.ProfilesSetsSharedColHeader});
+            lvProfilesSets.Columns.Add(new ColumnHeader { Name = "NameCol", Width = (int)(lvProfilesSets.Width * 0.32), Text = LocalizationConstants.ProfilesSetsNameColHeader });
+            lvProfilesSets.Columns.Add(new ColumnHeader { Name = "CreatorCol", Width = (int)(lvProfilesSets.Width * 0.25), Text = LocalizationConstants.ProfilesSetsCreatorColHeader});
+            lvProfilesSets.Columns.Add(new ColumnHeader { Name = "DateCol",  Width = (int)(lvProfilesSets.Width * 0.15), Text = LocalizationConstants.ProfilesSetsDateColHeader});
+            lvProfilesSets.Columns.Add(new ColumnHeader { Name = "TypeCol", Width = (int)(lvProfilesSets.Width * 0.12), Text = LocalizationConstants.ProfilesSetsTypeColHeader});
+
+            var occupiedSpace = 0;
+
+            foreach(ColumnHeader column in lvProfilesSets.Columns)
+            {
+                occupiedSpace += (column.Width + 1);
+            }
+
+            var colSize = lvProfilesSets.Width - occupiedSpace - SystemInformation.VerticalScrollBarWidth;
+
+            lvProfilesSets.Columns.Add(new ColumnHeader { Name = "IsSharedCol", Width = colSize, Text = LocalizationConstants.ProfilesSetsSharedColHeader});
 
             lvProfilesSets.View = View.Details;
         }
@@ -49,7 +58,7 @@ namespace MilSpace.Profile.ModalWindows
 
             var types = _controller.GetGraphDisplayTypes();
 
-            cmbGraphType.Items.Add("All types"/*LocalizationConstants.GraphTypeText*/);
+            cmbGraphType.Items.Add(LocalizationConstants.GraphTypeText);
 
             foreach(var type in types)
             {
@@ -60,7 +69,7 @@ namespace MilSpace.Profile.ModalWindows
         private void SetTextDefaultValues()
         {
             txtName.Text = LocalizationConstants.NamePlaceholder;
-            txtCreator.Text = "Creator";//LocalizationConstants.CreatorPlaceholder;
+            txtCreator.Text = LocalizationConstants.CreatorPlaceholder;
 
             txtCreator.ForeColor = Color.DimGray;
             txtName.ForeColor = Color.DimGray;
@@ -119,9 +128,6 @@ namespace MilSpace.Profile.ModalWindows
 
         private void LocalizeControls()
         {
-            //todo temporary, fix and remove 
-            //System.Threading.Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("uk-UA");
-
             gbFilters.Text = LocalizationConstants.FiltersTitle;
 
             lblDateText.Text = LocalizationConstants.CreationDateText;
@@ -139,12 +145,12 @@ namespace MilSpace.Profile.ModalWindows
             var allSetsInListView = _controller.GetAllAccessibleProfilesSets();
             var filteredFields = allSetsInListView;
 
-            if(txtName.Text != LocalizationConstants.NamePlaceholder && string.IsNullOrWhiteSpace(txtName.Text))
+            if(txtName.Text != LocalizationConstants.NamePlaceholder && !string.IsNullOrWhiteSpace(txtName.Text))
             {
                 filteredFields = _controller.FilterByName(txtName.Text, filteredFields);
             }
 
-            if(txtCreator.Text != /*LocalizationConstants.CreatorPlaceholder*/"Creator" && txtCreator.Text != string.Empty)
+            if(txtCreator.Text != LocalizationConstants.CreatorPlaceholder && !string.IsNullOrWhiteSpace(txtCreator.Text))
             {
                 filteredFields = _controller.FilterByCreator(txtCreator.Text, filteredFields);
             }
@@ -154,7 +160,7 @@ namespace MilSpace.Profile.ModalWindows
                 filteredFields = _controller.FilterByDate(fromDate.Value, toDate.Value, filteredFields);
             }
 
-            if(cmbGraphType.SelectedItem.ToString() != /*LocalizationConstants.GraphTypeText*/"All types")
+            if(cmbGraphType.SelectedItem.ToString() != LocalizationConstants.GraphTypeText)
             {
                 var types = _controller.GetGraphTypes();
 
@@ -175,7 +181,7 @@ namespace MilSpace.Profile.ModalWindows
 
         private void TxtName_Enter(object sender, EventArgs e)
         {
-            ChangePlaceholderHandler(txtName, "Name" /*LocalizationConstants.NamePlaceholder*/, true);
+            ChangePlaceholderHandler(txtName, LocalizationConstants.NamePlaceholder, true);
         }
 
         private void ChangePlaceholderHandler(TextBox textBox, string placeHolderText, bool isEnter)
@@ -200,17 +206,17 @@ namespace MilSpace.Profile.ModalWindows
 
         private void TxtCreator_Enter(object sender, EventArgs e)
         {
-            ChangePlaceholderHandler(txtCreator, "Creator"/*LocalizationConstants.CreatorPlaceholder*/, true);
+            ChangePlaceholderHandler(txtCreator, LocalizationConstants.CreatorPlaceholder, true);
         }
 
         private void TxtName_Leave(object sender, EventArgs e)
         {
-            ChangePlaceholderHandler(txtName, "Name" /*LocalizationConstants.NamePlaceholder*/, false);
+            ChangePlaceholderHandler(txtName, LocalizationConstants.NamePlaceholder, false);
         }
 
         private void TxtCreator_Leave(object sender, EventArgs e)
         {
-            ChangePlaceholderHandler(txtCreator, "Creator"/*LocalizationConstants.CreatorPlaceholder*/, false);
+            ChangePlaceholderHandler(txtCreator, LocalizationConstants.CreatorPlaceholder, false);
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)

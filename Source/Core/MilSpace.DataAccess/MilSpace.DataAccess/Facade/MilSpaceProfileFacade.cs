@@ -14,6 +14,14 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
+        public static bool SaveUserSession(int profileId)
+        {
+            using(var accessor = new SemanticDataAccess())
+            {
+                return accessor.SaveUserSession(profileId, true);
+            }
+        }
+
         public static IEnumerable<ProfileSession> GetUserProfileSessions()
         {
             using (var accessor = new SemanticDataAccess())

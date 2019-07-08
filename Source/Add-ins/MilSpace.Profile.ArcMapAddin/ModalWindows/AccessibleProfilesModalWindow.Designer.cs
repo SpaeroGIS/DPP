@@ -56,7 +56,7 @@
             this.lvProfilesSets.HideSelection = false;
             this.lvProfilesSets.Location = new System.Drawing.Point(10, 124);
             this.lvProfilesSets.Name = "lvProfilesSets";
-            this.lvProfilesSets.Size = new System.Drawing.Size(541, 224);
+            this.lvProfilesSets.Size = new System.Drawing.Size(583, 224);
             this.lvProfilesSets.TabIndex = 0;
             this.lvProfilesSets.UseCompatibleStateImageBehavior = false;
             // 
@@ -75,7 +75,7 @@
             this.gbFilters.Dock = System.Windows.Forms.DockStyle.Top;
             this.gbFilters.Location = new System.Drawing.Point(10, 5);
             this.gbFilters.Name = "gbFilters";
-            this.gbFilters.Size = new System.Drawing.Size(541, 113);
+            this.gbFilters.Size = new System.Drawing.Size(583, 113);
             this.gbFilters.TabIndex = 1;
             this.gbFilters.TabStop = false;
             this.gbFilters.Text = "Filters";
@@ -83,9 +83,9 @@
             // btnReset
             // 
             this.btnReset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnReset.Location = new System.Drawing.Point(474, 83);
+            this.btnReset.Location = new System.Drawing.Point(505, 83);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(60, 20);
+            this.btnReset.Size = new System.Drawing.Size(72, 20);
             this.btnReset.TabIndex = 10;
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
@@ -94,9 +94,9 @@
             // btnFilter
             // 
             this.btnFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFilter.Location = new System.Drawing.Point(408, 83);
+            this.btnFilter.Location = new System.Drawing.Point(419, 83);
             this.btnFilter.Name = "btnFilter";
-            this.btnFilter.Size = new System.Drawing.Size(60, 20);
+            this.btnFilter.Size = new System.Drawing.Size(80, 20);
             this.btnFilter.TabIndex = 9;
             this.btnFilter.Text = "Filter";
             this.btnFilter.UseVisualStyleBackColor = true;
@@ -116,7 +116,7 @@
             // 
             this.lblTo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTo.AutoSize = true;
-            this.lblTo.Location = new System.Drawing.Point(432, 55);
+            this.lblTo.Location = new System.Drawing.Point(474, 55);
             this.lblTo.Name = "lblTo";
             this.lblTo.Size = new System.Drawing.Size(16, 13);
             this.lblTo.TabIndex = 6;
@@ -126,7 +126,7 @@
             // 
             this.toDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.toDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.toDate.Location = new System.Drawing.Point(454, 52);
+            this.toDate.Location = new System.Drawing.Point(496, 52);
             this.toDate.Name = "toDate";
             this.toDate.Size = new System.Drawing.Size(80, 20);
             this.toDate.TabIndex = 5;
@@ -135,7 +135,7 @@
             // 
             this.lblFrom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblFrom.AutoSize = true;
-            this.lblFrom.Location = new System.Drawing.Point(309, 55);
+            this.lblFrom.Location = new System.Drawing.Point(351, 55);
             this.lblFrom.Name = "lblFrom";
             this.lblFrom.Size = new System.Drawing.Size(27, 13);
             this.lblFrom.TabIndex = 4;
@@ -145,7 +145,7 @@
             // 
             this.fromDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.fromDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.fromDate.Location = new System.Drawing.Point(342, 52);
+            this.fromDate.Location = new System.Drawing.Point(384, 52);
             this.fromDate.Name = "fromDate";
             this.fromDate.Size = new System.Drawing.Size(80, 20);
             this.fromDate.TabIndex = 3;
@@ -154,7 +154,7 @@
             // 
             this.lblDateText.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblDateText.AutoSize = true;
-            this.lblDateText.Location = new System.Drawing.Point(309, 22);
+            this.lblDateText.Location = new System.Drawing.Point(351, 22);
             this.lblDateText.Name = "lblDateText";
             this.lblDateText.Size = new System.Drawing.Size(73, 13);
             this.lblDateText.TabIndex = 2;
@@ -190,16 +190,16 @@
             this.panel1.Location = new System.Drawing.Point(10, 354);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(541, 25);
+            this.panel1.Size = new System.Drawing.Size(583, 25);
             this.panel1.TabIndex = 2;
             // 
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(481, 0);
+            this.btnCancel.Location = new System.Drawing.Point(515, 0);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(60, 25);
+            this.btnCancel.Size = new System.Drawing.Size(68, 25);
             this.btnCancel.TabIndex = 11;
             this.btnCancel.Text = "Close";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -222,7 +222,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(561, 389);
+            this.ClientSize = new System.Drawing.Size(603, 389);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.gbFilters);
             this.Controls.Add(this.lvProfilesSets);
