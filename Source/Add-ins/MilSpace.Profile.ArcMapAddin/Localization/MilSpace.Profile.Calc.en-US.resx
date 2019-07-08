@@ -1,0 +1,303 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="btnCloseText" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="btnFilterText" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="btnAddToSessionText" xml:space="preserve">
+    <value>Add to session</value>
+  </data>
+  <data name="btnRefreshLayersToolTip" xml:space="preserve">
+    <value>Refresh layers</value>
+  </data>
+  <data name="btnСalcProfileText" xml:space="preserve">
+    <value>Calculate</value>
+  </data>
+  <data name="cmbGraphTypeText" xml:space="preserve">
+    <value>All types</value>
+  </data>
+  <data name="funTypeText" xml:space="preserve">
+    <value>Fun</value>
+  </data>
+  <data name="gbFiltersTitle" xml:space="preserve">
+    <value>Filters</value>
+  </data>
+  <data name="lblAboutSelectedText" xml:space="preserve">
+    <value>About selected</value>
+  </data>
+  <data name="lblBuildingsLayerText" xml:space="preserve">
+    <value>Buildings layer</value>
+  </data>
+  <data name="lblCommonLengthText" xml:space="preserve">
+    <value>Length jf the selected objects:</value>
+  </data>
+  <data name="lblCreationDateText" xml:space="preserve">
+    <value>Creation date</value>
+  </data>
+  <data name="lblDEMText" xml:space="preserve">
+    <value>DEM layed</value>
+  </data>
+  <data name="lblDimensionFirstText" xml:space="preserve">
+    <value>m</value>
+  </data>
+  <data name="lblDimensionSecondText" xml:space="preserve">
+    <value>m</value>
+  </data>
+  <data name="lblFromText" xml:space="preserve">
+    <value>from</value>
+  </data>
+  <data name="lblFunAzimuth1Text" xml:space="preserve">
+    <value>Azimuth 1</value>
+  </data>
+  <data name="lblFunAzimuth2Text" xml:space="preserve">
+    <value>Azimuth 2</value>
+  </data>
+  <data name="lblFunBasePointText" xml:space="preserve">
+    <value>Base point (Lat / Lon)</value>
+  </data>
+  <data name="lblFunCountText" xml:space="preserve">
+    <value>Count</value>
+  </data>
+  <data name="lblFunDistanceText" xml:space="preserve">
+    <value>Distance</value>
+  </data>
+  <data name="lblFunParametersText" xml:space="preserve">
+    <value>Parameters</value>
+  </data>
+  <data name="lblHeightOfViewFirstText" xml:space="preserve">
+    <value>Heigh of point of view </value>
+  </data>
+  <data name="lblHeightOfViewFunBaseText" xml:space="preserve">
+    <value>Heigh of point of view</value>
+  </data>
+  <data name="lblHeightOfViewGraphicsText" xml:space="preserve">
+    <value>Heigh of point of view</value>
+  </data>
+  <data name="lblHeightOfViewSecondText" xml:space="preserve">
+    <value>Heigh of point of view</value>
+  </data>
+  <data name="lblHydrographyLayerText" xml:space="preserve">
+    <value>Hydrography layer</value>
+  </data>
+  <data name="lblLayersForCalcText" xml:space="preserve">
+    <value>Layers for calculation</value>
+  </data>
+  <data name="lblLineFirstPointText" xml:space="preserve">
+    <value>First point (Lat / Lon)</value>
+  </data>
+  <data name="lblLineSecondPointText" xml:space="preserve">
+    <value>Second point (Lat / Lon)</value>
+  </data>
+  <data name="lblPointOfViewLayerText" xml:space="preserve">
+    <value>Points of view layer</value>
+  </data>
+  <data name="lblPrimitivesLayerToSelectText" xml:space="preserve">
+    <value>Layers to select objects</value>
+  </data>
+  <data name="lblProfileNameText" xml:space="preserve">
+    <value>Profile name</value>
+  </data>
+  <data name="lblRoadsLayerText" xml:space="preserve">
+    <value>Roads layer</value>
+  </data>
+  <data name="lblSelectedPrimitivesText" xml:space="preserve">
+    <value>Selected primitives:</value>
+  </data>
+  <data name="lblSetProfilePropertiesText" xml:space="preserve">
+    <value>Set Profile properties</value>
+  </data>
+  <data name="lblToText" xml:space="preserve">
+    <value>to</value>
+  </data>
+  <data name="lblVegetationLayerText" xml:space="preserve">
+    <value>Vegetation layer</value>
+  </data>
+  <data name="lvProfilesSetsCreatorColHeader" xml:space="preserve">
+    <value>Creator</value>
+  </data>
+  <data name="lvProfilesSetsDateColHeader" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="lvProfilesSetsNameColHeader" xml:space="preserve">
+    <value>Profile name</value>
+  </data>
+  <data name="lvProfilesSetsSharedColHeader" xml:space="preserve">
+    <value>Shared</value>
+  </data>
+  <data name="lvProfilesSetsTypeColHeader" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="modalProfilesSetsTitle" xml:space="preserve">
+    <value>Add available sets</value>
+  </data>
+  <data name="pointsTypeText" xml:space="preserve">
+    <value>Line</value>
+  </data>
+  <data name="primitiveTypeText" xml:space="preserve">
+    <value>Primitive</value>
+  </data>
+  <data name="tabFunTabText" xml:space="preserve">
+    <value>"Fun"</value>
+  </data>
+  <data name="tabLoadTabText" xml:space="preserve">
+    <value>Load</value>
+  </data>
+  <data name="tabPofileTreeTabPageText" xml:space="preserve">
+    <value>Session</value>
+  </data>
+  <data name="tabPrimitiveTabText" xml:space="preserve">
+    <value>Primitives</value>
+  </data>
+  <data name="tabProfileTabPageText" xml:space="preserve">
+    <value>Profile settints</value>
+  </data>
+  <data name="tabSectionTabText" xml:space="preserve">
+    <value>Lines</value>
+  </data>
+  <data name="txtCreatorPlaceholder" xml:space="preserve">
+    <value>Creator</value>
+  </data>
+  <data name="txtNamePlaceholder" xml:space="preserve">
+    <value>Profile name</value>
+  </data>
+  <data name="txtGraphicsLayerValue" xml:space="preserve">
+    <value>Graphics Layer</value>
+  </data>
+  <data name="txtNewProfileNameValue" xml:space="preserve">
+    <value>New Profile</value>
+  </data>
+  <data name="txtPickCoordinatesToolMessage" xml:space="preserve">
+    <value>Please add Pick Coordinates tool to any toolbar first.</value>
+  </data>
+  <data name="txtProfileCalcHeader" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnReset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="btnAddAvailableProfilesSetsToolTip" xml:space="preserve">
+    <value>Add available profiles sets</value>
+  </data>
+  <data name="frmSavedProfilesModalWindowText" xml:space="preserve">
+    <value>Adds profiles to session</value>
+  </data>
+</root>

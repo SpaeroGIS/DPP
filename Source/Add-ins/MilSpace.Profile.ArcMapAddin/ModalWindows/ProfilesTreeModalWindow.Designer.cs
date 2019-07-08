@@ -1,4 +1,4 @@
-﻿namespace MilSpace.Profile
+﻿namespace MilSpace.Profile.ModalWindows
 {
     partial class ProfilesTreeModalWindow
     {
@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Графика");
             this.profilesTreeView = new System.Windows.Forms.TreeView();
             this.buttonsPanel = new System.Windows.Forms.Panel();
             this.cancelButton = new System.Windows.Forms.Button();
@@ -47,24 +47,24 @@
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.Location = new System.Drawing.Point(-1, 0);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode7.ImageKey = "vector-path-line.png";
-            treeNode7.Name = "Points";
-            treeNode7.SelectedImageIndex = 205;
-            treeNode7.Text = "Отрезки";
-            treeNode8.ImageKey = "Editing-Line-icon3.png";
-            treeNode8.Name = "Fun";
-            treeNode8.SelectedImageIndex = 208;
-            treeNode8.Text = "Веер";
-            treeNode9.ImageKey = "vector-polygon.png";
-            treeNode9.Name = "Primitives";
-            treeNode9.SelectedImageIndex = 209;
-            treeNode9.Text = "Графика";
+            treeNode1.ImageKey = "vector-path-line.png";
+            treeNode1.Name = "Points";
+            treeNode1.SelectedImageIndex = 205;
+            treeNode1.Text = "Отрезки";
+            treeNode2.ImageKey = "Editing-Line-icon3.png";
+            treeNode2.Name = "Fun";
+            treeNode2.SelectedImageIndex = 208;
+            treeNode2.Text = "Веер";
+            treeNode3.ImageKey = "vector-polygon.png";
+            treeNode3.Name = "Primitives";
+            treeNode3.SelectedImageIndex = 209;
+            treeNode3.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode7,
-            treeNode8,
-            treeNode9});
+            treeNode1,
+            treeNode2,
+            treeNode3});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
-            this.profilesTreeView.Size = new System.Drawing.Size(233, 246);
+            this.profilesTreeView.Size = new System.Drawing.Size(234, 246);
             this.profilesTreeView.TabIndex = 36;
             // 
             // buttonsPanel
@@ -75,14 +75,14 @@
             this.buttonsPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.buttonsPanel.Location = new System.Drawing.Point(0, 245);
             this.buttonsPanel.Name = "buttonsPanel";
-            this.buttonsPanel.Size = new System.Drawing.Size(233, 30);
+            this.buttonsPanel.Size = new System.Drawing.Size(234, 30);
             this.buttonsPanel.TabIndex = 37;
             // 
             // cancelButton
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(165, 5);
+            this.cancelButton.Location = new System.Drawing.Point(168, 5);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(60, 20);
             this.cancelButton.TabIndex = 1;
@@ -106,7 +106,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(233, 275);
+            this.ClientSize = new System.Drawing.Size(234, 275);
             this.Controls.Add(this.buttonsPanel);
             this.Controls.Add(this.profilesTreeView);
             this.MinimumSize = new System.Drawing.Size(240, 300);

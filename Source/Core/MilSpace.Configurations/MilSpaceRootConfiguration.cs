@@ -161,14 +161,17 @@ namespace MilSpace.Configurations
 
         private static string GetConfigurationPathFromRegistry()
         {
-            RegistryKey key = Registry.LocalMachine.OpenSubKey(registryPathToConfig);
-            if (key == null)
+            using (RegistryKey key = Registry.LocalMachine.OpenSubKey(registryPathToConfig))
             {
-                return null;
-            }
+                if (key == null)
+                {
+                    return null;
+                }
 
-            var val = key.GetValue("Configuration");
-            return val.ToString();
+                var val = key.GetValue("Configuration");
+                
+                return val.ToString();
+            }
         }
     }
 

@@ -117,13 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="btnRefreshLayersToolTip" xml:space="preserve">
-    <value>Оновити шари даних</value>
-  </data>
-  <data name="lblCommonLengthText" xml:space="preserve">
-    <value>Довжина вибраних об'єктів:</value>
-  </data>
-  <data name="lblSelectedPrimitivesText" xml:space="preserve">
-    <value>Вибрані об'єкти:</value>
-  </data>
 </root>

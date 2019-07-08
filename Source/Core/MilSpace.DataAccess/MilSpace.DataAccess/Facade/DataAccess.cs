@@ -202,7 +202,7 @@ namespace MilSpace.DataAccess.Facade
             return null;
         }
 
-        public IEnumerable<ProfileSession> GetAllSessionsFoUser()
+        public IEnumerable<ProfileSession> GetAllSessionsForUser()
         {
             try
             {
@@ -218,7 +218,21 @@ namespace MilSpace.DataAccess.Facade
             return null;
         }
 
+        public IEnumerable<ProfileSession> GetAvailableProfiles()
+        {
+            try
+            {
+                var result = context.MilSp_Profiles.Where(s => s.Creator == Environment.UserName || s.Shared).Select(s => s.Get());
+                log.InfoEx($"Get all profiles ({result.Count()}) for user {Environment.UserName} or shared with him");
+                return result;
+            }
+            catch (Exception ex)
+            {
+                log.WarnEx($"Unexpected exception:{ex.Message}");
+            }
 
+            return null;
+        }
 
     }
 }

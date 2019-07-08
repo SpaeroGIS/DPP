@@ -4,7 +4,7 @@
     <Type Name="MilSp_Session" AccessModifier="Internal">
       <Column Name="userName" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="ProfileId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Association Name="MilSp_Profile_MilSp_Session1" Member="MilSp_Profile" ThisKey="ProfileId" OtherKey="idRow" Type="MilSp_Profile" IsForeignKey="true" />
+      <Association Name="MilSp_Profile_MilSp_Session" Member="MilSp_Profile" ThisKey="ProfileId" OtherKey="idRow" Type="MilSp_Profile" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.MilSp_Profile" Member="MilSp_Profiles" AccessModifier="Internal">
@@ -15,7 +15,7 @@
       <Column Name="Shared" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="Creator" Type="System.String" DbType="NChar(20) NOT NULL" CanBeNull="false" />
       <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Association Name="MilSp_Profile_MilSp_Session1" Member="MilSp_Sessions" ThisKey="idRow" OtherKey="ProfileId" Type="MilSp_Session" />
+      <Association Name="MilSp_Profile_MilSp_Session" Member="MilSp_Sessions" ThisKey="idRow" OtherKey="ProfileId" Type="MilSp_Session" />
     </Type>
   </Table>
 </Database>

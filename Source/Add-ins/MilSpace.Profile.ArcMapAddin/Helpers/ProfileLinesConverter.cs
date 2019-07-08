@@ -53,7 +53,7 @@ namespace MilSpace.Profile
                 ).ToList();
         }
 
-        public static List<IntersectionLine> ConvertEsriPolylineToIntersectionLines(List<IPolyline> polylines, ProfilePoint pointFrom, LayersEnum layer)
+        public static List<IntersectionLine> ConvertEsriPolylineToIntersectionLines(List<IPolyline> polylines, ProfilePoint pointFrom, LayersEnum layer, double distance)
         {
             var id = 0;
             var fromPoint = new Point { X = pointFrom.X, Y = pointFrom.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
@@ -63,7 +63,6 @@ namespace MilSpace.Profile
                 id++;
                 fromPoint.Project(line.SpatialReference);
 
-
                 var fromLength = EsriTools.CreatePolylineFromPoints(fromPoint, line.FromPoint).Length;
                 var toLength = EsriTools.CreatePolylineFromPoints(fromPoint, line.ToPoint).Length;
 
@@ -72,8 +71,8 @@ namespace MilSpace.Profile
 
                 return new IntersectionLine()
                 {
-                    PointFromDistance = startDistance,
-                    PointToDistance = endDistance,
+                    PointFromDistance = startDistance + distance,
+                    PointToDistance = endDistance + distance,
                     LayerType = layer
                 };
             }
@@ -95,7 +94,12 @@ namespace MilSpace.Profile
 
         public static List<GroupedLines> GetSegmentsFromProfileLine(ProfileSurface[] profileSurfaces, ISpatialReference spatialReference)
         {
-            var polylines = ConvertLineToPrimitivePolylines(profileSurfaces, spatialReference);
+            var polylines = new List<IPolyline>();
+
+            foreach(var surface in profileSurfaces)
+            {
+                polylines.AddRange(ConvertLineToPrimitivePolylines(surface, spatialReference));
+            }
             var lines = new GroupedLines()
             {
                 Polylines = polylines,
@@ -104,23 +108,20 @@ namespace MilSpace.Profile
                 IsPrimitive = true
             };
 
+            lines.Vertices = lines.Lines.Select(line => line.PointFrom).ToList();
+
             return new List<GroupedLines>() { lines };
 
         }
 
-        public static List<IPolyline> ConvertLineToPrimitivePolylines(ProfileSurface[] profileSurfaces, ISpatialReference spatialReference)
+        public static List<IPolyline> ConvertLineToPrimitivePolylines(ProfileSurface profileSurface, ISpatialReference spatialReference)
         {
             var polylines = new List<IPolyline>();
-
-            foreach (var surface in profileSurfaces)
-            {
-                polylines.AddRange(SeparatePrimitives(surface.ProfileSurfacePoints.Where(point => point.isVertex).ToList(), spatialReference));
-            }
-
+            polylines.AddRange(SeparatePrimitives(profileSurface.ProfileSurfacePoints.Where(point => point.isVertex).ToList(), spatialReference));
             return polylines;
         }
 
-        private static List<IPolyline> SeparatePrimitives(IEnumerable<ProfileSurfacePoint> vertices/*ProfileSurface[] profileSurfaces*/, ISpatialReference spatialReference)
+        private static List<IPolyline> SeparatePrimitives(IEnumerable<ProfileSurfacePoint> vertices, ISpatialReference spatialReference)
         {
             var verticesArray = vertices.ToArray();
             var polylines = new List<IPolyline>();

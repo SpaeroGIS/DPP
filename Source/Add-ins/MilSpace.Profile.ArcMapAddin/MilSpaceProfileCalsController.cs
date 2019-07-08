@@ -9,6 +9,8 @@ using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Exceptions;
 using MilSpace.DataAccess.Facade;
 using MilSpace.Profile.DTO;
+using MilSpace.Profile.ModalWindows;
+using MilSpace.Profile.Localization;
 using MilSpace.Tools;
 using MilSpace.Tools.GraphicsLayer;
 using System;
@@ -25,7 +27,7 @@ namespace MilSpace.Profile
     public class MilSpaceProfileCalsController
     {
         //TODO: Localize
-        private static string graphiclayerTitle = "Graphics Layer";
+        private static readonly string graphiclayerTitle = LocalizationConstants.GraphicsLayerValue;
 
         private int profileId;
         GraphicsLayerManager graphicsLayerManager;
@@ -41,9 +43,9 @@ namespace MilSpace.Profile
 
         private static ProfileSettingsTypeEnum[] profileSettingsType = Enum.GetValues(typeof(ProfileSettingsTypeEnum)).Cast<ProfileSettingsTypeEnum>().ToArray();
 
+        private readonly string NewProfilePrefix = LocalizationConstants.NewProfileNameValue;
 
         List<ProfileSession> _workingProfiles = new List<ProfileSession>();
-        private const string NewProfilePrefix = "Новый профиль";
 
         private MilSpaceProfileGraphsController graphsController;
 
@@ -150,7 +152,9 @@ namespace MilSpace.Profile
                     graphsController.IntersectionLinesDrawing += CalcIntesectionsWithLayers;
                     graphsController.CreateEmptyGraph += GenerateEmptyGraph;
                     graphsController.GetProfileName += GetProfileName;
+                    graphsController.GetIsProfileShared += GetIsProfileShared;
                     graphsController.AddProfile += AddProfileToExistedGraph;
+                    graphsController.GetProfileSessionById += GetProfileById;
                 }
 
                 return graphsController;
@@ -325,6 +329,7 @@ namespace MilSpace.Profile
                     result = result && MilSpaceProfileFacade.EraseProfileSessions(View.SelectedProfileSessionIds.ProfileSessionId);
                 }
 
+                _workingProfiles.Remove(_workingProfiles.First(session => session.SessionId == View.SelectedProfileSessionIds.ProfileSessionId));
                 MilSpaceProfileGraphsController.RemoveTab(View.SelectedProfileSessionIds.ProfileSessionId);
                 GraphicsLayerManager.RemoveGraphic(View.SelectedProfileSessionIds.ProfileSessionId);
 
@@ -404,7 +409,7 @@ namespace MilSpace.Profile
                 if (profile.DefinitionType == ProfileSettingsTypeEnum.Primitives)
                 {
                     profile.Segments = ProfileLinesConverter.GetSegmentsFromProfileLine(profile.ProfileSurfaces, spatialReference);
-                    GraphicsLayerManager.AddLinesToWorkingGraphics(ProfileLinesConverter.ConvertLineToPrimitivePolylines(profile.ProfileSurfaces,
+                    GraphicsLayerManager.AddLinesToWorkingGraphics(ProfileLinesConverter.ConvertLineToPrimitivePolylines(profile.ProfileSurfaces[0],
                                                                                                                            spatialReference),
                                                                    profile.SessionId,
                                                                    profile.Segments.First());
@@ -516,6 +521,23 @@ namespace MilSpace.Profile
             }
         }
 
+        internal void AddAvailableSets()
+        {
+            var accessibleProfilesSetsModalWindow = new AccessibleProfilesModalWindow(_workingProfiles, ArcMap.Document.FocusMap.SpatialReference);
+            var dialogResult = accessibleProfilesSetsModalWindow.ShowDialog(); 
+
+            if (dialogResult == DialogResult.OK)
+            {
+                var profilesSets = accessibleProfilesSetsModalWindow.SelectedProfilesSets;
+
+                foreach(var set in profilesSets)
+                {
+                    AddProfileToList(set);
+                    MilSpaceProfileFacade.SaveUserSession(set.SessionId);
+                }
+            }
+        }
+
         internal void CallGraphsHandle(int profileSessionId)
         {
             var profileSession = GetProfileSessionById(profileSessionId);
@@ -582,6 +604,27 @@ namespace MilSpace.Profile
             }
 
             return null;
+        }
+
+        internal bool GetIsProfileShared(int id)
+        {
+            try
+            {
+                var session = GetProfileSessionById(id);
+                if(session != null)
+                {
+                    return session.Shared;
+                }
+
+                throw new MilSpaceProfileNotFoundException(id); 
+            }
+            catch(MilSpaceProfileNotFoundException ex)
+            {
+                logger.ErrorEx(ex.Message);
+                MessageBox.Show(ex.Message, "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return false;
         }
 
         internal void AddProfileToExistedGraph()
@@ -687,8 +730,12 @@ namespace MilSpace.Profile
         
         private void CalcIntesectionsWithLayers(ProfileLine selectedLine, ProfileSession profileSession)
         {
-            var intersectionLines = new List<IntersectionsInLayer>();
+            var allIntersectionLines = new List<IntersectionsInLayer>();
             var layers = View.GetLayers();
+            var spatialReference = ArcMap.Document.FocusMap.SpatialReference;
+
+            List<IPolyline> polylines;
+            List<ProfilePoint> pointsFrom;
 
             profileSession.Layers = new List<string>();
 
@@ -697,47 +744,83 @@ namespace MilSpace.Profile
                 return;
             }
 
-            if (selectedLine.Line.SpatialReference == null)
+            if (selectedLine.Line.SpatialReference != spatialReference)
             {
-                selectedLine.Line.Project(ArcMap.Document.FocusMap.SpatialReference);
+                selectedLine.Line.Project(spatialReference);
             }
 
-            for (int i = 0; i < layers.Count; i++)
+            var lineSurface = profileSession.ProfileSurfaces.First(surface => surface.LineId == selectedLine.Id);
+            var profileSegment = profileSession.Segments.First(segment => segment.LineId == selectedLine.Id);
+            var distance = 0.0;
+
+            if (profileSegment.IsPrimitive)
             {
-                if (!string.IsNullOrEmpty(layers[i]))
+                polylines = ProfileLinesConverter.ConvertLineToPrimitivePolylines(lineSurface, selectedLine.Line.SpatialReference);
+                pointsFrom = profileSegment.Vertices;
+            }
+            else
+            {
+                polylines = new List<IPolyline> { selectedLine.Line };
+                pointsFrom = new List<ProfilePoint> { selectedLine.PointFrom };
+            }
+
+            int j = 0;
+
+            for (int n = 0; n <  polylines.Count; n++)
+            {
+                var intersectionLines = new List<IntersectionsInLayer>();
+               
+                for (int i = 0; i < layers.Count; i++)
                 {
-                    var layer = EsriTools.GetLayer(layers[i], ArcMap.Document.FocusMap);
-                    var lines = EsriTools.GetIntersections(selectedLine.Line, layer);
-
-                    var layerFullName = $"Path/{layer.Name}";
-
-                    if (!profileSession.Layers.Exists(sessionLayer => sessionLayer == layerFullName))
+                    if (!string.IsNullOrEmpty(layers[i]))
                     {
-                        profileSession.Layers.Add(layerFullName);
-                    }
+                        var layer = EsriTools.GetLayer(layers[i], ArcMap.Document.FocusMap);
+                        var lines = EsriTools.GetIntersections(polylines[n], layer);
 
-                    if (lines != null && lines.Count() > 0)
-                    {
-                        var layerType = (LayersEnum)Enum.GetValues(typeof(LayersEnum)).GetValue(i);
-                        var intersectionLine = new IntersectionsInLayer
+                        var layerFullName = $"Path/{layer.Name}";
+
+                        if (!profileSession.Layers.Exists(sessionLayer => sessionLayer == layerFullName))
                         {
-                            Lines = ProfileLinesConverter.ConvertEsriPolylineToIntersectionLines(lines, selectedLine.PointFrom, layerType),
-                            Type = layerType,
-                        };
+                            profileSession.Layers.Add(layerFullName);
+                        }
 
-                        intersectionLine.SetDefaultColor();
-                        intersectionLines.Add(intersectionLine);
-                        SetLayersForPoints(intersectionLine, profileSession.ProfileSurfaces.First(surface => surface.LineId == selectedLine.Id));
+                        if (lines != null && lines.Count() > 0)
+                        {
+                            var layerType = (LayersEnum)Enum.GetValues(typeof(LayersEnum)).GetValue(i);
+                            var intersectionLine = new IntersectionsInLayer
+                            {
+                                Lines = ProfileLinesConverter.ConvertEsriPolylineToIntersectionLines(lines, pointsFrom[j], layerType, distance),
+                                Type = layerType,
+                            };
+
+                            intersectionLine.SetDefaultColor();
+                            intersectionLines.Add(intersectionLine);
+                            SetLayersForPoints(intersectionLine, lineSurface);
+                        }
+                    }
+                }
+
+                allIntersectionLines.AddRange(intersectionLines);
+
+                if (polylines.Count > 1)
+                {
+                    j++;
+
+                    if (n < polylines.Count - 1)
+                    {
+                        distance += EsriTools.CreatePolylineFromPoints(polylines[n].FromPoint, polylines[n + 1].FromPoint).Length;
                     }
                 }
             }
 
-            graphsController.SetIntersections(intersectionLines, selectedLine.Id);
+            graphsController.SetIntersections(allIntersectionLines, selectedLine.Id);
         }
 
         private void SetLayersForPoints(IntersectionsInLayer intersections, ProfileSurface surface)
         {
             var surfaceForSearch = new List<ProfileSurfacePoint>(surface.ProfileSurfacePoints);
+            intersections.Lines = intersections.Lines.OrderBy(line => line.PointFromDistance).ToList();
+
             var accuracy = 0.0000001;
 
             foreach (var line in intersections.Lines)
@@ -748,7 +831,7 @@ namespace MilSpace.Profile
                 surfaceForSearch =
                                 surfaceForSearch.SkipWhile(surfacePoint => surfacePoint.Distance < startPoint.Distance).ToList();
 
-                foreach (var point in surface.ProfileSurfacePoints)
+                foreach (var point in surfaceForSearch)
                 {
                     if (point.Distance >= startPoint.Distance)
                     {

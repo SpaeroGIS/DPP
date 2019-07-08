@@ -7,6 +7,7 @@ using MilSpace.Core.MilSpaceResourceManager;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Profile.DTO;
+using MilSpace.Profile.Localization;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -208,11 +209,11 @@ namespace MilSpace.Profile
             var pr = controller.GetProfileById(treeViewselectedIds.ProfileSessionId);
 
             saveProfileAsShared.Enabled = (pr != null && pr.CreatedBy == Environment.UserName && !pr.Shared);
-            
+
             removeProfile.Enabled = addProfileToGraph.Enabled = toolBtnShowOnMap.Enabled = toolBtnFlash.Enabled = treeViewselectedIds.ProfileSessionId > 0;
 
             var profileType = GetProfileTypeFromNode();
-            setProfileSettingsToCalc.Enabled = (addProfileToGraph.Enabled && 
+            setProfileSettingsToCalc.Enabled = (addProfileToGraph.Enabled &&
                                                     (profileType == ProfileSettingsTypeEnum.Points || profileType == ProfileSettingsTypeEnum.Fun));
 
             openGraphWindow.Enabled = !controller.MilSpaceProfileGraphsController.IsWindowVisible;
@@ -466,7 +467,7 @@ namespace MilSpace.Profile
                     var commandItem = ArcMap.Application.Document.CommandBars.Find(ThisAddIn.IDs.PickProfileCoordinates);
                     if (commandItem == null)
                     {
-                        var message = $"Please add Pick Coordinates tool to any toolbar first.";
+                        var message = LocalizationConstants.PickCoordinatesToolMessage;// $"Please add Pick Coordinates tool to any toolbar first.";
                         MessageBox.Show(message, "Profile Calc", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         break;
 
@@ -893,14 +894,51 @@ namespace MilSpace.Profile
             //TODO: Set all localization srting here
 
             ToolTip ToolTip1 = new System.Windows.Forms.ToolTip();
-            ToolTip1.SetToolTip(this.btnRefreshLayers, "Refresh interesing layers");
-            lblSelectedPrimitives.Text = "Вибрані об'єкти:";
-            lblCommonLength.Text = "Довжина вибраних об'єктів:";
+            ToolTip1.SetToolTip(this.btnRefreshLayers, LocalizationConstants.RefreshButtonToolTip);
+            addAvailableProfilesSets.ToolTipText = LocalizationConstants.AddAvailableProfilesSetsToolTip;
+            lblSelectedPrimitives.Text = LocalizationConstants.SelectedPrimitivesText;
+            lblCommonLength.Text = LocalizationConstants.CommonLengthText;
 
-            //ToolTip ToolTip1 = new System.Windows.Forms.ToolTip();
-            //ToolTip1.SetToolTip(this.btnRefreshLayers, LocalizationConstants.RefreshButtonToolTip);
-            //lblSelectedPrimitives.Text = LocalizationConstants.SelectedPrimitivesText;
-            //lblCommonLength.Text = LocalizationConstants.CommonLengthText;
+            //Profile Tabs
+            profileTabPage.Text = LocalizationConstants.ProfileTabPageText;
+            profileTreeTabPage.Text = LocalizationConstants.PofileTreeTabPageText;
+
+            sectionTab.Text = LocalizationConstants.SectionTabText;
+            loadTab.Text = LocalizationConstants.LoadTabText;
+            primitiveTab.Text = LocalizationConstants.PrimitiveTabText;
+            funTab.Text = LocalizationConstants.FunTabText;
+
+
+            //Labels
+            lblLayersForCalc.Text = LocalizationConstants.LayersForCalcText;
+            lblVegetationLayer.Text = LocalizationConstants.VegetationLayerText;
+            lblBuildingsLayer.Text = LocalizationConstants.BuildingsLayerText;
+            lblRoadsLayer.Text = LocalizationConstants.RoadsLayerText;
+            lblHydrographyLayer.Text = LocalizationConstants.HydrographyLayerText;
+            lblPointOfViewLayer.Text = LocalizationConstants.PointOfViewLayerText;
+            lblSetPeofileProperties.Text = LocalizationConstants.SetProfilePropertiesText;
+            lblProfileName.Text = LocalizationConstants.ProfileNameText;
+
+            calcProfile.Text = LocalizationConstants.СalcProfileText;
+            lblLineFirstPoint.Text = LocalizationConstants.LineFirstPointText;
+            lblLineSecondPoint.Text = LocalizationConstants.LinewSecondPointText;
+
+            lblHeightOfViewFirst.Text = LocalizationConstants.HeightOfViewFirstText;
+            lblHeightOfViewSecond.Text = LocalizationConstants.HeightOfViewSecondText;
+            lblDimensionSecond.Text = LocalizationConstants.DimensionSecondText;
+            lblDimensionFirst.Text = LocalizationConstants.DimensionFirstText;
+            lblFunBasePoint.Text = LocalizationConstants.FunBasePointText;
+            lblHeightOfViewFunBaseText.Text = LocalizationConstants.HeightOfViewFunBaseText;
+            lblFunParameters.Text = LocalizationConstants.FunParametersText;
+            lblFunDistance.Text = LocalizationConstants.FunDistanceText;
+            lblFunCount.Text = LocalizationConstants.FunCountText;
+
+            lblFunAzimuth1.Text = LocalizationConstants.FunAzimuth1Text;
+            lblFunAzimuth2.Text = LocalizationConstants.FunAzimuth2Text;
+
+            lblHeightOfViewGraphics.Text = LocalizationConstants.HeightOfViewGraphicsText;
+            lblPrimitivesLayerToSelect.Text = LocalizationConstants.PrimitivesLayerToSelectText;
+            lblAboutSelected.Text = LocalizationConstants.AboutSelectedText;
         }
 
 
@@ -989,7 +1027,7 @@ namespace MilSpace.Profile
                     newNode.SetBasePointHeight(height);
                 }
 
-                newNode.SetCreatorName(Environment.UserName);
+                newNode.SetCreatorName(profile.CreatedBy);//Environment.UserName
                 newNode.SetDate($"{date.ToLongDateString()} {date.ToLongTimeString()}");
 
                 logger.InfoEx($"Profile  {profile.SessionName} added to the tree");
@@ -1099,7 +1137,7 @@ namespace MilSpace.Profile
             treeViewselectedIds.ProfileLineId = ids.Item2;
             treeViewselectedIds.ProfileSessionId = ids.Item1;
 
-            var pr = profileLists.Values.SelectMany(p => p).FirstOrDefault(p => p.SessionId == ids.Item1);
+            var pr = controller.GetProfileById(ids.Item1);
 
             var res = controller.ShareProfileSession(pr);
 
@@ -1115,6 +1153,9 @@ namespace MilSpace.Profile
                 //TODO:Localise
                 MessageBox.Show($"There was an error on saving this profile./n For more info look into thr log file", "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            ChangeTreeViewToolbarState(null, null);
+
         }
 
         private void eraseProfile_Click(object sender, EventArgs e)
@@ -1153,7 +1194,7 @@ namespace MilSpace.Profile
         private void setProfileSettingsToCalc_Click(object sender, EventArgs e)
         {
             var node = profilesTreeView.SelectedNode;
-           
+
             if (!(node is ProfileTreeNode)) return;
 
             ProfileTreeNode profileNode = (ProfileTreeNode)node;
@@ -1162,7 +1203,7 @@ namespace MilSpace.Profile
 
 
             if (profileType == ProfileSettingsTypeEnum.Points)
-            { 
+            {
                 profileSettingsTab.SelectTab(0);
 
                 var baseValue = rows.Find(AttributeKeys.BasePoint)[AttributeKeys.ValueColumnName].ToString();
@@ -1210,8 +1251,18 @@ namespace MilSpace.Profile
             var pointY = Convert.ToDouble(Regex.Match(points[1], @"\d+,?\d+").Value);
 
             var av = ArcMap.Document.ActivatedView;
-           
+
             return new Point() { X = pointX, Y = pointY, SpatialReference = av.FocusMap.SpatialReference };
+        }
+
+        private void addAvailableProfilesSets_Click(object sender, EventArgs e)
+        {
+            controller.AddAvailableSets();
+        }
+
+        private void toolBarSelectedPrimitives_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        {
+
         }
     }
 }

@@ -158,21 +158,18 @@
     <Compile Include="IntersectionLine.cs" />
     <Compile Include="IntersectionsInLayer.cs" />
     <Compile Include="LineIntersections.cs" />
-    <Compile Include="Localization\LocalizationConstantscs.cs" />
+    <Compile Include="Localization\LocalizationConstants.cs" />
+    <Compile Include="ModalWindows\AccessibleProfilesController.cs" />
+    <Compile Include="ModalWindows\AccessibleProfilesModalWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModalWindows\AccessibleProfilesModalWindow.Designer.cs">
+      <DependentUpon>AccessibleProfilesModalWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Resources\MilSpace.Profile.Calc.Designer.cs">
       <DependentUpon>MilSpace.Profile.Calc.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Resources\MilSpace.Profile.Calc.uk-UA.Designer.cs">
-      <DependentUpon>MilSpace.Profile.Calc.uk-UA.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Resources\MilSpace.Profile.Calc.en-US.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MilSpace.Profile.Calc.en-US.resx</DependentUpon>
     </Compile>
     <Compile Include="MilSpaceProfileCalsController.cs" />
     <Compile Include="MilSpaceProfileGraphsController.cs" />
@@ -180,10 +177,10 @@
     <Compile Include="ProfileLayers.cs" />
     <Compile Include="Exceptions\ProfileSessionNotCreated.cs" />
     <Compile Include="ProfileSettingsEventArgs.cs" />
-    <Compile Include="ProfilesTreeModalWindow.cs">
+    <Compile Include="ModalWindows\ProfilesTreeModalWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ProfilesTreeModalWindow.Designer.cs">
+    <Compile Include="ModalWindows\ProfilesTreeModalWindow.Designer.cs">
       <DependentUpon>ProfilesTreeModalWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="ProfileTreeNode.cs" />
@@ -270,19 +267,22 @@
       <DependentUpon>DockableWindowMilSpaceProfileGraph.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\MilSpace.Profile.Calc.uk-UA.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>MilSpace.Profile.Calc.uk-UA.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\MilSpace.Profile.Calc.en-US.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>MilSpace.Profile.Calc.en-US.Designer.cs</LastGenOutput>
+    <Resource Include="Localization\MilSpace.Profile.Calc.en-US.resx" />
+    <Resource Include="Localization\MilSpace.Profile.Calc.uk-UA.resx" />
+    <Content Include="Localization\MilSpace.Profile.Calc.en-US.resources">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Localization\MilSpace.Profile.Calc.uk-UA.resources">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="ModalWindows\AccessibleProfilesModalWindow.resx">
+      <DependentUpon>AccessibleProfilesModalWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\MilSpace.Profile.Calc.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>MilSpace.Profile.Calc.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProfilesTreeModalWindow.resx">
+    <EmbeddedResource Include="ModalWindows\ProfilesTreeModalWindow.resx">
       <DependentUpon>ProfilesTreeModalWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
@@ -347,14 +347,19 @@
       AfterTargets="Compile" BeforeTargets="Link">
     <Message Text="Optimizing......" />
   </Target>-->
-  <!-- <Target Name="Resources" AfterTargets="Build"> -->
-  <!-- <Message Text="Resource......" /> -->
-  <!-- <GenerateResource Sources="Localization\MilSpace.Profile.Calc.en-US.resx" OutputResources="$(OutputDirectory)\Localization\MilSpace.Profile.Calc.en-US.resources"> -->
-  <!-- <Output TaskParameter="OutputResources" ItemName="Localization" /> -->
-  <!-- </GenerateResource> -->
-  <!-- <MakeDir Directories="$(OutputDirectory)\Localizationnn" /> -->
-  <!-- <Message Text="Project File Name = $(MSBuildProjectFile)  = $(OutputDirectory)\Localization" /> -->
-  <!-- </Target> -->
+  <Target Name="Resources" BeforeTargets="Build">
+    <ItemGroup>
+      <SourceLocalization Include="Localization\*.resx" />
+      <!--<SourceEmbededLocalization Include="Localization\*.resources" />-->
+      <SourceEmbededLocalization Include="Localization\MilSpace.Profile.Calc.en-US.resources" />
+      <SourceEmbededLocalization Include="Localization\MilSpace.Profile.Calc.uk-UA.resources" />
+    </ItemGroup>
+    <MakeDir Directories="$(OutputPath)Localization" />
+    <!--<GenerateResource Sources="@(SourceLocalization)" OutputResources="@(SourceLocalization->'$(OutputPath)Localization\%(Filename).resources')">-->
+    <GenerateResource Sources="@(SourceLocalization)" OutputResources="@(SourceLocalization->'Localization\%(Filename).resources')">
+      <Output TaskParameter="OutputResources" ItemName="Resources" />
+    </GenerateResource>
+  </Target>
   <Target Name="AfterBuild">
     <!-- Gives build warning when add-in targets file is not found. -->
     <Warning Text="Unable to create .esriAddin; missing ESRI ArcGIS Add-in SDK component(s)." Condition="!Exists('$(MSBuildExtensionsPath)\ESRI\ESRI.ArcGIS.AddIns.targets')" />
