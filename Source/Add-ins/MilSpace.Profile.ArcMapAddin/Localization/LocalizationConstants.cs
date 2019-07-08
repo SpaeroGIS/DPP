@@ -72,6 +72,7 @@ namespace MilSpace.Profile.Localization
         private static string ProfilesSetsTitleKey = "modalProfilesSetsTitle";
         private static string AboutSelectedTextKey = "lblAboutSelectedText";
         private static string ResetTextKey = "btnReset";
+        private static string SavedProfilesModalWindowTextKey = "frmSavedProfilesModalWindowText";
 
         private LocalizationConstants()
         {
@@ -140,7 +141,8 @@ namespace MilSpace.Profile.Localization
         public static string ProfilesSetsSharedColHeader => Instance.GetLocalization(ProfilesSetsSharedColHeaderKey);
         public static string ProfilesSetsTitle => Instance.GetLocalization(ProfilesSetsTitleKey);
         public static string ResetText => Instance.GetLocalization(ResetTextKey);
-
+        public static string SavedProfilesModalWindowText => Instance.GetLocalization(SavedProfilesModalWindowTextKey);
+        
 
         private string GetLocalization(string key, string defaultValue = null)
         {

@@ -138,6 +138,7 @@ namespace MilSpace.Profile.ModalWindows
             btnOk.Text = LocalizationConstants.AddToSessionText;
             btnCancel.Text = LocalizationConstants.CloseText;
             btnReset.Text = LocalizationConstants.ResetText;
+            Text = LocalizationConstants.SavedProfilesModalWindowText;
         }
 
         private void BtnFilter_Click(object sender, EventArgs e)
