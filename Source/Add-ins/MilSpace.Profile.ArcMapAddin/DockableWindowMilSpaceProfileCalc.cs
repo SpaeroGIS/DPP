@@ -1027,7 +1027,7 @@ namespace MilSpace.Profile
                     newNode.SetBasePointHeight(height);
                 }
 
-                newNode.SetCreatorName(Environment.UserName);
+                newNode.SetCreatorName(profile.CreatedBy);//Environment.UserName
                 newNode.SetDate($"{date.ToLongDateString()} {date.ToLongTimeString()}");
 
                 logger.InfoEx($"Profile  {profile.SessionName} added to the tree");
