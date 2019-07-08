@@ -297,4 +297,7 @@
   <data name="btnAddAvailableProfilesSetsToolTip" xml:space="preserve">
     <value>Add available profiles sets</value>
   </data>
+  <data name="frmSavedProfilesModalWindowText" xml:space="preserve">
+    <value>Adds profiles to session</value>
+  </data>
 </root>

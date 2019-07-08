@@ -291,4 +291,10 @@
   <data name="lvProfilesSetsDateColHeader" xml:space="preserve">
     <value>Дата</value>
   </data>
+  <data name="frmSavedProfilesModalWindowText" xml:space="preserve">
+    <value>Додати профілі до сесії</value>
+  </data>
+  <data name="txtProfileCalcHeader" xml:space="preserve">
+    <value />
+  </data>
 </root>
