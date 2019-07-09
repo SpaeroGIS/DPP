@@ -303,8 +303,20 @@
   <data name="hintAddProfileToGraphText" xml:space="preserve">
     <value>Відкрити графік профілю</value>
   </data>
+  <data name="hintClearExtraGraphicText" xml:space="preserve">
+    <value>Очистити графіку на карті</value>
+  </data>
+  <data name="hintEraseProfileText" xml:space="preserve">
+    <value>Видалити профіль</value>
+  </data>
   <data name="hintOpenGraphWindowText" xml:space="preserve">
     <value>Відкрити вікно графіків</value>
+  </data>
+  <data name="hintRemoveProfileText" xml:space="preserve">
+    <value>Зкинути профіль з сесії</value>
+  </data>
+  <data name="hintSaveProfileAsSharedText" xml:space="preserve">
+    <value>Надати сільний доступ до профілю</value>
   </data>
   <data name="hintToolBtnPanOnMapText" xml:space="preserve">
     <value>Переміститись  на карті</value>
@@ -317,5 +329,20 @@
   </data>
   <data name="lblProfileListText" xml:space="preserve">
     <value>Профілі в роботі</value>
+  </data>
+  <data name="msgDeleteProfaileText" xml:space="preserve">
+    <value>Ви дійсно бажаєти dblfkbnbпрофіль  "{0}"?</value>
+  </data>
+  <data name="msgErrorOnShareProfileText" xml:space="preserve">
+    <value>Виникла помилка /n Більш деталььна інформація знаходиться в журналі.</value>
+  </data>
+  <data name="msgNotAllowedToShareText" xml:space="preserve">
+    <value>Ви не можете дозволити спільний доступ для цього профілю.</value>
+  </data>
+  <data name="msgRemoveProfaileText" xml:space="preserve">
+    <value>Ви дійсно бажаєти зкинути профіль  "{0}" з сесії?</value>
+  </data>
+  <data name="txtTreeViewProfileText" xml:space="preserve">
+    <value>Профіль</value>
   </data>
 </root>

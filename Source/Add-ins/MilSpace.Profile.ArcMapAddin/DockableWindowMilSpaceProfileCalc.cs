@@ -948,8 +948,10 @@ namespace MilSpace.Profile
             addProfileToExistingGraph.ToolTipText = LocalizationConstants.ToolAddProfileToExistingGraphToolTip;
             addProfileToGraph.ToolTipText = LocalizationConstants.ToolAddProfileToGraphToolTip;
             openGraphWindow.ToolTipText = LocalizationConstants.ToolOpenGraphWindowToolTip;
-
-
+            removeProfile.ToolTipText = LocalizationConstants.ToolRemoveProfileToolTip;
+            saveProfileAsShared.ToolTipText = LocalizationConstants.ToolSaveProfileAsSharedToolTip;
+            eraseProfile.ToolTipText = LocalizationConstants.ToolEraseProfileToolTip;
+            clearExtraGraphic.ToolTipText = LocalizationConstants.ToolClearExtraGraphicToolTip;
         }
 
 
@@ -968,9 +970,8 @@ namespace MilSpace.Profile
 
         private void removeProfile_Click(object sender, EventArgs e)
         {
-            //TODO: Localize text
+            string loalizedtext = LocalizationConstants.RemoveProfaileMessage.InvariantFormat(profilesTreeView.SelectedNode.Text);
 
-            string loalizedtext = $"Do you realy want to remove \'{profilesTreeView.SelectedNode.Text}\"?";
             if (MessageBox.Show(loalizedtext, "MilSpace", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 if (!controller.RemoveProfilesFromUserSession())
@@ -1044,7 +1045,7 @@ namespace MilSpace.Profile
                 logger.InfoEx($"Profile  {profile.SessionName} added to the tree");
 
                 //TODO: Localize 
-                string lineDefinition = "Профіль";
+                string lineDefinition = LocalizationConstants.TreeViewProfileText;
 
 
                 foreach (var line in profile.ProfileLines)
@@ -1103,40 +1104,19 @@ namespace MilSpace.Profile
             switch (profileType)
             {
                 case ProfileSettingsTypeEnum.Points:
-                    return "Отрезок";
+                    return LocalizationConstants.SectionTabText;
 
                 case ProfileSettingsTypeEnum.Fun:
-                    return "Веер";
+                    return LocalizationConstants.FunTabText;
 
                 case ProfileSettingsTypeEnum.Primitives:
-                    return "Графика";
+                    return LocalizationConstants.PrimitiveTabText;
 
                 case ProfileSettingsTypeEnum.Load:
-                    return "Загрузка";
+                    return LocalizationConstants.LoadTabText;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(profileType), profileType, null);
-            }
-        }
-
-        private string MapUnitsText
-        {
-            //TODO: Localiza
-            get
-            {
-                switch (ActiveView.FocusMap.DistanceUnits)
-                {
-                    case esriUnits.esriMeters:
-                        return "метров";
-                    case esriUnits.esriKilometers:
-                        return "километров";
-                    case esriUnits.esriMiles:
-                        return "миль";
-                    case esriUnits.esriFeet:
-                        return "футов";
-                    default:
-                        return "метров";
-                }
             }
         }
 
@@ -1154,15 +1134,13 @@ namespace MilSpace.Profile
 
             if (!res.HasValue)
             {
-                //TODO:Localise
-                MessageBox.Show($"You are not allowed to share this profile", "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(LocalizationConstants.NotAllowedToShareMessage, "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             if (!res.Value)
             {
-                //TODO:Localise
-                MessageBox.Show($"There was an error on saving this profile./n For more info look into thr log file", "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(LocalizationConstants.ErrorOnShareProfileTextMessage, "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             ChangeTreeViewToolbarState(null, null);
@@ -1173,15 +1151,14 @@ namespace MilSpace.Profile
         {
             //TODO: Localize text
 
-            string loalizedtext = $"Do you realy want to remove profile \'{profilesTreeView.SelectedNode.Text}\" from the Database?";
+            string loalizedtext = LocalizationConstants.DeleteProfaileMessage.InvariantFormat(profilesTreeView.SelectedNode.Text);
             if (MessageBox.Show(loalizedtext, "MilSpace", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 if (!controller.RemoveProfilesFromUserSession(true))
                 {
-                    MessageBox.Show("There was an error. Look at the log file for more detail", "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show(LocalizationConstants.ErrorOnShareProfileTextMessage, "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
-
         }
 
         private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
