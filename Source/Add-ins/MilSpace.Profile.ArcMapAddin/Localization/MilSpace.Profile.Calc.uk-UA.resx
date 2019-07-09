@@ -297,4 +297,25 @@
   <data name="txtProfileCalcHeader" xml:space="preserve">
     <value />
   </data>
+  <data name="hintAddProfileToExistingGraphText" xml:space="preserve">
+    <value>Додати профіль на графік</value>
+  </data>
+  <data name="hintAddProfileToGraphText" xml:space="preserve">
+    <value>Відкрити графік профілю</value>
+  </data>
+  <data name="hintOpenGraphWindowText" xml:space="preserve">
+    <value>Відкрити выкно графіків</value>
+  </data>
+  <data name="hintToolBtnPanOnMapText" xml:space="preserve">
+    <value>Переміститись  на карті</value>
+  </data>
+  <data name="hintToolBtnShowOnMapText" xml:space="preserve">
+    <value>Показати на карті</value>
+  </data>
+  <data name="hintToolSetProfileSettingsToCalcText" xml:space="preserve">
+    <value>Скопіювати параметри профілю</value>
+  </data>
+  <data name="lblProfileListText" xml:space="preserve">
+    <value>Профілі в роботі</value>
+  </data>
 </root>

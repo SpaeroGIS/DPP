@@ -74,11 +74,30 @@ namespace MilSpace.Profile.Localization
         private static string ResetTextKey = "btnReset";
         private static string SavedProfilesModalWindowTextKey = "frmSavedProfilesModalWindowText";
 
+        private static string ProfileListTextKey = "lblProfileListText";
+
+        private static string ToolBtnPanOnMapTextKey = "hintToolBtnPanOnMapText";
+        private static string ToolBtnShowOnMapTextKey = "hintToolBtnShowOnMapText";
+        private static string ToolSetProfileSettingsToCalcTextKey = "hintToolSetProfileSettingsToCalcText";
+        private static string ToolAddProfileToExistingGraphTextKey = "hintAddProfileToExistingGraphText";
+        private static string ToolAddProfileToGraphTextKey = "hintAddProfileToGraphText";
+        private static string ToolOpenGraphWindowTextKey = "hintOpenGraphWindowText";
+        
+
+
         private LocalizationConstants()
         {
             //TODO: Define a method to change a culture info to localization
             mngr = new MilSpaceResourceManager("MilSpace.Profile.Calc", CultureInfo.GetCultureInfo("uk-UA"));
         }
+
+        public static string ToolOpenGraphWindowToolTip => instance.GetLocalization(ToolOpenGraphWindowTextKey);
+        public static string ToolAddProfileToGraphToolTip => instance.GetLocalization(ToolAddProfileToGraphTextKey);
+        public static string ToolAddProfileToExistingGraphToolTip => instance.GetLocalization(ToolAddProfileToExistingGraphTextKey);
+        public static string ToolSetProfileSettingsToCalcToolTip => instance.GetLocalization(ToolSetProfileSettingsToCalcTextKey);
+        public static string ToolPanOnMapToolTip => instance.GetLocalization(ToolBtnPanOnMapTextKey);
+        public static string ToolBtnShowOnMapToolTip => instance.GetLocalization(ToolBtnShowOnMapTextKey);
+        public static string ProfileListText => instance.GetLocalization(ProfileListTextKey);
 
         public static string RefreshButtonToolTip => Instance.GetLocalization(RefreshButtonToolTipKey);
         public static string CommonLengthText => Instance.GetLocalization(CommonLengthTextKey);

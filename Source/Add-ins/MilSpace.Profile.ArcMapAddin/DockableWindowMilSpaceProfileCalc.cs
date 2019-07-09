@@ -210,7 +210,7 @@ namespace MilSpace.Profile
 
             saveProfileAsShared.Enabled = (pr != null && pr.CreatedBy == Environment.UserName && !pr.Shared);
 
-            removeProfile.Enabled = addProfileToGraph.Enabled = toolBtnShowOnMap.Enabled = toolBtnFlash.Enabled = treeViewselectedIds.ProfileSessionId > 0;
+            removeProfile.Enabled = addProfileToGraph.Enabled = toolPanOnMap.Enabled = toolBtnFlash.Enabled = treeViewselectedIds.ProfileSessionId > 0;
 
             var profileType = GetProfileTypeFromNode();
             setProfileSettingsToCalc.Enabled = (addProfileToGraph.Enabled &&
@@ -292,7 +292,7 @@ namespace MilSpace.Profile
         /// Implementation class of the dockable window add-in. It is responsible for 
         /// creating and disposing the user interface class of the dockable window.
         /// </summary>
-        public class AddinImpl : ESRI.ArcGIS.Desktop.AddIns.DockableWindow
+        public class AddinImpl : IMilSpaceAddin,  ESRI.ArcGIS.Desktop.AddIns.DockableWindow
         {
             private DockableWindowMilSpaceProfileCalc m_windowUI;
             MilSpaceProfileCalsController controller;
@@ -939,6 +939,17 @@ namespace MilSpace.Profile
             lblHeightOfViewGraphics.Text = LocalizationConstants.HeightOfViewGraphicsText;
             lblPrimitivesLayerToSelect.Text = LocalizationConstants.PrimitivesLayerToSelectText;
             lblAboutSelected.Text = LocalizationConstants.AboutSelectedText;
+
+            lblProfileList.Text = LocalizationConstants.ProfileListText;
+
+            toolPanOnMap.ToolTipText = LocalizationConstants.ToolPanOnMapToolTip;
+            toolBtnFlash.ToolTipText = LocalizationConstants.ToolBtnShowOnMapToolTip;
+            setProfileSettingsToCalc.ToolTipText = LocalizationConstants.ToolSetProfileSettingsToCalcToolTip;
+            addProfileToExistingGraph.ToolTipText = LocalizationConstants.ToolAddProfileToExistingGraphToolTip;
+            addProfileToGraph.ToolTipText = LocalizationConstants.ToolAddProfileToGraphToolTip;
+            openGraphWindow.ToolTipText = LocalizationConstants.ToolOpenGraphWindowToolTip;
+
+
         }
 
 
