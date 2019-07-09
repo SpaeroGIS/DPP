@@ -300,4 +300,25 @@
   <data name="frmSavedProfilesModalWindowText" xml:space="preserve">
     <value>Adds profiles to session</value>
   </data>
+  <data name="hintAddProfileToExistingGraphText" xml:space="preserve">
+    <value>Add profile to existed graph</value>
+  </data>
+  <data name="hintAddProfileToGraphText" xml:space="preserve">
+    <value>Open profile graph</value>
+  </data>
+  <data name="hintOpenGraphWindowText" xml:space="preserve">
+    <value>Open profile window</value>
+  </data>
+  <data name="hintToolBtnPanOnMapText" xml:space="preserve">
+    <value>Pan on map</value>
+  </data>
+  <data name="hintToolBtnShowOnMapText" xml:space="preserve">
+    <value>Show on map</value>
+  </data>
+  <data name="hintToolSetProfileSettingsToCalcText" xml:space="preserve">
+    <value>Copy profile settings</value>
+  </data>
+  <data name="lblProfileListText" xml:space="preserve">
+    <value>Profiles List</value>
+  </data>
 </root>
