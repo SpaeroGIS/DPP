@@ -292,7 +292,7 @@ namespace MilSpace.Profile
         /// Implementation class of the dockable window add-in. It is responsible for 
         /// creating and disposing the user interface class of the dockable window.
         /// </summary>
-        public class AddinImpl : IMilSpaceAddin,  ESRI.ArcGIS.Desktop.AddIns.DockableWindow
+        public class AddinImpl : ESRI.ArcGIS.Desktop.AddIns.DockableWindow
         {
             private DockableWindowMilSpaceProfileCalc m_windowUI;
             MilSpaceProfileCalsController controller;

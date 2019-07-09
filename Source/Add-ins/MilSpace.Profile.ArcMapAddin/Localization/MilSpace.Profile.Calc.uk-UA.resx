@@ -304,7 +304,7 @@
     <value>Відкрити графік профілю</value>
   </data>
   <data name="hintOpenGraphWindowText" xml:space="preserve">
-    <value>Відкрити выкно графіків</value>
+    <value>Відкрити вікно графіків</value>
   </data>
   <data name="hintToolBtnPanOnMapText" xml:space="preserve">
     <value>Переміститись  на карті</value>
