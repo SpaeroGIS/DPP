@@ -306,8 +306,20 @@
   <data name="hintAddProfileToGraphText" xml:space="preserve">
     <value>Open profile graph</value>
   </data>
+  <data name="hintClearExtraGraphicText" xml:space="preserve">
+    <value>Clear graphics layer</value>
+  </data>
+  <data name="hintEraseProfileText" xml:space="preserve">
+    <value>Delete profile</value>
+  </data>
   <data name="hintOpenGraphWindowText" xml:space="preserve">
     <value>Open profile window</value>
+  </data>
+  <data name="hintRemoveProfileText" xml:space="preserve">
+    <value>Remove profile form session</value>
+  </data>
+  <data name="hintSaveProfileAsSharedText" xml:space="preserve">
+    <value>Share profile</value>
   </data>
   <data name="hintToolBtnPanOnMapText" xml:space="preserve">
     <value>Pan on map</value>
@@ -320,5 +332,20 @@
   </data>
   <data name="lblProfileListText" xml:space="preserve">
     <value>Profiles List</value>
+  </data>
+  <data name="msgDeleteProfaileText" xml:space="preserve">
+    <value>Do you realy want to delete "{0}"?</value>
+  </data>
+  <data name="msgErrorHappendText" xml:space="preserve">
+    <value>There was an error./n For more info look into the log file</value>
+  </data>
+  <data name="msgNotAllowedToShareText" xml:space="preserve">
+    <value>You are not allowed to share this profile.</value>
+  </data>
+  <data name="msgRemoveProfaileText" xml:space="preserve">
+    <value>Do you realy want to remove "{0}"?</value>
+  </data>
+  <data name="txtTreeViewProfileText" xml:space="preserve">
+    <value>Profile</value>
   </data>
 </root>
