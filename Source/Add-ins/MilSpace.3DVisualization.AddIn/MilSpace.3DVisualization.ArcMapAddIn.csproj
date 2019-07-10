@@ -8,7 +8,7 @@
     <ProjectGuid>{5ED9F537-4BA4-4A7D-A2E8-64BC3F679A5F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MilSpace._3DVisualization.AddIn</RootNamespace>
+    <RootNamespace>MilSpace._3DVisualization.ArcMapAddIn</RootNamespace>
     <AssemblyName>MilSpace.3DVisualization.AddIn</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -92,8 +92,7 @@
     <AddInContent Include="Images\MilSpace.3DVisualization.AddIn.png" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Button1.cs" />
-    <AddInContent Include="Images\Button1.png" />
+    <Compile Include="Button3DVisualization.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ESRI.ArcGIS.ArcMapUI">
@@ -111,6 +110,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="Images\Button3DVisualization.png" />
   </ItemGroup>
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>
