@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
-namespace MilSpace._3DVisualization.AddIn
+namespace MilSpace.Visualization3D
 {
     public class Button1 : ESRI.ArcGIS.Desktop.AddIns.Button
     {
