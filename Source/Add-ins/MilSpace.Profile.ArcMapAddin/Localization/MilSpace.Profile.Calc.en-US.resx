@@ -297,4 +297,199 @@
   <data name="btnAddAvailableProfilesSetsToolTip" xml:space="preserve">
     <value>Add available profiles sets</value>
   </data>
+  <data name="btnChangeAllObserversHeightsToolTip" xml:space="preserve">
+    <value>Change all points of view heights</value>
+  </data>
+  <data name="copyStripMenuItemText" xml:space="preserve">
+    <value>copy</value>
+  </data>
+  <data name="dgvProfilePropertiesAzimuthColToolTip" xml:space="preserve">
+    <value>Azimuth</value>
+  </data>
+  <data name="dgvProfilePropertiesDescendingAngleColToolTip" xml:space="preserve">
+    <value>Max descending anle (degrees)</value>
+  </data>
+  <data name="dgvProfilePropertiesHeightDifferenceColToolTip" xml:space="preserve">
+    <value>Height difference (m)</value>
+  </data>
+  <data name="dgvProfilePropertiesIsVisibleColToolTip" xml:space="preserve">
+    <value>Show/hide profile</value>
+  </data>
+  <data name="dgvProfilePropertiesMaxHeightColToolTip" xml:space="preserve">
+    <value>Max height (m)</value>
+  </data>
+  <data name="dgvProfilePropertiesMinHeightColToolTip" xml:space="preserve">
+    <value>Min height (m)</value>
+  </data>
+  <data name="dgvProfilePropertiesObserverHeightColToolTip" xml:space="preserve">
+    <value>Point of view height (m)</value>
+  </data>
+  <data name="dgvProfilePropertiesProfileLengthColToolTip" xml:space="preserve">
+    <value>Profile length (m)</value>
+  </data>
+  <data name="dgvProfilePropertiesProfileNumberColToolTip" xml:space="preserve">
+    <value>Profile numer</value>
+  </data>
+  <data name="dgvProfilePropertiesAscendingAngleColToolTip" xml:space="preserve">
+    <value>Max ascending angle (degrees)</value>
+  </data>
+  <data name="graphTbBtnAddPageToolTip" xml:space="preserve">
+    <value>Add new graph tab</value>
+  </data>
+  <data name="graphTbBtnAddProfileGraphToolTip" xml:space="preserve">
+    <value>Add profile to graph</value>
+  </data>
+  <data name="graphTbBtnDeletePageToolTip" xml:space="preserve">
+    <value>Delete current tab</value>
+  </data>
+  <data name="graphTbBtnDeleteSelectedProfileToolTip" xml:space="preserve">
+    <value>Delete selected profile from graph</value>
+  </data>
+  <data name="graphTbBtnDisplayProfileSignatureToolTip" xml:space="preserve">
+    <value>Display profile signatures on a chart</value>
+  </data>
+  <data name="graphTbBtnObserverHeightIgnoreToolTip" xml:space="preserve">
+    <value>Allow/ignore observer height for scaling</value>
+  </data>
+  <data name="graphTbBtnPanToProfilesSetToolTip" xml:space="preserve">
+    <value>Pan to profiles set</value>
+  </data>
+  <data name="graphTbBtnPanToSelectedProfileToolTip" xml:space="preserve">
+    <value>Pan to selected profile</value>
+  </data>
+  <data name="graphTbBtnSaveToolTip" xml:space="preserve">
+    <value>Save graph data</value>
+  </data>
+  <data name="graphTbBtnShowAllProfilesToolTip" xml:space="preserve">
+    <value>Show all profiles</value>
+  </data>
+  <data name="graphTbBtnUpdateIntersectionsLinesToolTip" xml:space="preserve">
+    <value>Calculate intersection lines</value>
+  </data>
+  <data name="graphTbBtnZoomInToolTip" xml:space="preserve">
+    <value>Zoom in</value>
+  </data>
+  <data name="graphTbBtnZoomOutToolTip" xml:space="preserve">
+    <value>Zoom out</value>
+  </data>
+  <data name="lblInvisibleLineColorText" xml:space="preserve">
+    <value>invisible</value>
+  </data>
+  <data name="lblObserverHeightText" xml:space="preserve">
+    <value>Point of view (m)</value>
+  </data>
+  <data name="lblVisibleLineColorText" xml:space="preserve">
+    <value>visible</value>
+  </data>
+  <data name="lvProfileDetailsToolTip" xml:space="preserve">
+    <value>To copy the selected lines, click the right mouse button</value>
+  </data>
+  <data name="dgvProfilePropertiesAscendingAngleColHeader" xml:space="preserve">
+    <value>AA</value>
+  </data>
+  <data name="dgvProfilePropertiesAzimuthColHeader" xml:space="preserve">
+    <value>AZ</value>
+  </data>
+  <data name="dgvProfilePropertiesDescendingAngleColHeader" xml:space="preserve">
+    <value>DA</value>
+  </data>
+  <data name="dgvProfilePropertiesHeightDifferenceColHeader" xml:space="preserve">
+    <value>DH</value>
+  </data>
+  <data name="dgvProfilePropertiesIsVisibleColHeader" xml:space="preserve">
+    <value>IV</value>
+  </data>
+  <data name="dgvProfilePropertiesMaxHeightColHeader" xml:space="preserve">
+    <value>MxH</value>
+  </data>
+  <data name="dgvProfilePropertiesMinHeightColHeader" xml:space="preserve">
+    <value>MnH</value>
+  </data>
+  <data name="dgvProfilePropertiesObserverHeightColHeader" xml:space="preserve">
+    <value>H</value>
+  </data>
+  <data name="dgvProfilePropertiesProfileLengthColHeader" xml:space="preserve">
+    <value>L</value>
+  </data>
+  <data name="dgvProfilePropertiesProfileNumberColHeader" xml:space="preserve">
+    <value>N</value>
+  </data>
+  <data name="dgvProfilePropertiesVisiblePercentColHeader" xml:space="preserve">
+    <value>VP</value>
+  </data>
+  <data name="dgvProfilePropertiesVisiblePercentColToolTip" xml:space="preserve">
+    <value>Percentage of visible areas</value>
+  </data>
+  <data name="lblSelectedProfileNameText" xml:space="preserve">
+    <value>Profile:</value>
+  </data>
+  <data name="lvProfileDetailsStateText" xml:space="preserve">
+    <value>State:</value>
+  </data>
+  <data name="profilesSetNotSharedText" xml:space="preserve">
+    <value>Private</value>
+  </data>
+  <data name="profilesSetSharedText" xml:space="preserve">
+    <value>Shared</value>
+  </data>
+  <data name="btnCancelText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="btnOkText" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="dataExportPointsPropertiesHeader" xml:space="preserve">
+    <value>Number; X; Y; Z; Distance; Vertex; Visible; Intersections</value>
+  </data>
+  <data name="dataExportProfilePropertiesHeader" xml:space="preserve">
+    <value>Line number; Profile name; External; State; Start point; End point; Azimuth; Point of view; Profile length; Max height; Height difference; Min height; Max angle; Min angle; Visibility percent</value>
+  </data>
+  <data name="fbdSelectFolderDescription" xml:space="preserve">
+    <value>Select the folder to save data</value>
+  </data>
+  <data name="lineNotFoundErrorMessage" xml:space="preserve">
+    <value>Line not found</value>
+  </data>
+  <data name="lvProfileDetailsAnglesText" xml:space="preserve">
+    <value>Angles:</value>
+  </data>
+  <data name="lvProfileDetailsAzimuthText" xml:space="preserve">
+    <value>Azimuth:</value>
+  </data>
+  <data name="lvProfileDetailsEndPointsText" xml:space="preserve">
+    <value>Start - end:</value>
+  </data>
+  <data name="lvProfileDetailsHeightText" xml:space="preserve">
+    <value>Height (m):</value>
+  </data>
+  <data name="lvProfileDetailsLengthText" xml:space="preserve">
+    <value>Length (m):</value>
+  </data>
+  <data name="lvProfileDetailsVisibilityText" xml:space="preserve">
+    <value>Visible areas (%):</value>
+  </data>
+  <data name="mbFolderAlreadyExistMessage" xml:space="preserve">
+    <value>Folder with name {1} already exist \n Do you realy want to update data?</value>
+  </data>
+  <data name="mbRemovingProfileMessage" xml:space="preserve">
+    <value>Do you realy want to remove profile?</value>
+  </data>
+  <data name="mbRemovingTabMessage" xml:space="preserve">
+    <value>Do you realy want to remove tab?</value>
+  </data>
+  <data name="messageBoxTitle" xml:space="preserve">
+    <value>MilSpace</value>
+  </data>
+  <data name="modalProfilesTreeModalTitle" xml:space="preserve">
+    <value>Profiles tree</value>
+  </data>
+  <data name="tvProfilesFunNodeText" xml:space="preserve">
+    <value>Fun</value>
+  </data>
+  <data name="tvProfilesPointsNodeText" xml:space="preserve">
+    <value>Lines</value>
+  </data>
+  <data name="tvProfilesPritiveNodeText" xml:space="preserve">
+    <value>Graphics</value>
+  </data>
 </root>

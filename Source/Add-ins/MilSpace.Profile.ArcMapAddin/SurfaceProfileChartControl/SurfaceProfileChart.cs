@@ -9,6 +9,7 @@ using MilSpace.DataAccess.DataTransfer;
 using System.Text.RegularExpressions;
 using System.Text;
 using System.IO;
+using MilSpace.Profile.Localization;
 
 namespace MilSpace.Profile.SurfaceProfileChartControl
 {
@@ -36,6 +37,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             ProfilesProperties = new List<ProfileProperties>();
 
             InitializeComponent();
+            LocalizeControls();
 
             SetTableView();
             SetDetailsView();
@@ -112,7 +114,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 AddSerie(profileSurface);
             }
 
-            profileNameLabel.Text = $"Профиль: {profileSession.SessionName}";
+            profileNameLabel.Text = $"{LocalizationConstants.SelectedProfileNameText} {profileSession.SessionName}";
             profileNameLabel.Tag = profileSession.SessionId;
         }
 
@@ -244,6 +246,65 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             profileChart.Series[$"ExtremePointsLine{lineId}"].Points.Add(vertexPoint);
         }
 
+        private void LocalizeControls()
+        {
+            observerHeightLabel.Text = LocalizationConstants.ObserverHeightText;
+            visibleLineColorLabel.Text = LocalizationConstants.VisibleLineColorText;
+            invisibleLineColorLabel.Text = LocalizationConstants.InvisibleLineColorText;
+
+            copyStripMenuItem.Text = LocalizationConstants.CopyStripMenuItemText;
+            toolTip.SetToolTip(profileDetailsListView, LocalizationConstants.ProfileDetailsToolTip);
+            toolTip.SetToolTip(changeAllObserversHeightsButton, LocalizationConstants.ChangeAllObserversHeightsToolTip);
+
+            graphToolBar.Buttons["displayProfileSignatureGraphToolBarBtn"].ToolTipText = LocalizationConstants.DisplayProfileSignatureToolTip;
+            graphToolBar.Buttons["deleteSelectedProfileGraphToolBarBtn"].ToolTipText = LocalizationConstants.DeleteSelectedProfileToolTip;
+            graphToolBar.Buttons["addProfileGraphToolBarButton"].ToolTipText = LocalizationConstants.AddProfileGraphToolTip;
+            graphToolBar.Buttons["panToSelectedProfileGraphToolBarBtn"].ToolTipText = LocalizationConstants.PanToSelectedProfileToolTip;
+            graphToolBar.Buttons["panGraphToolBarBtn"].ToolTipText = LocalizationConstants.PanToProfilesSetToolTip;
+            graphToolBar.Buttons["showAllProfilesGraphToolBarBtn"].ToolTipText = LocalizationConstants.ShowAllProfilesToolTip;
+            graphToolBar.Buttons["observerHeightIgnoreGraphToolBarBtn"].ToolTipText = LocalizationConstants.ObserverHeightIgnoreToolTip;
+            graphToolBar.Buttons["zoomInGraphToolBarBtn"].ToolTipText = LocalizationConstants.ZoomInToolTip;
+            graphToolBar.Buttons["zoomOutGraphToolBarBtn"].ToolTipText = LocalizationConstants.ZoomOutToolTip;
+            graphToolBar.Buttons["addPageGraphToolBarBtn"].ToolTipText = LocalizationConstants.AddPageToolTip;
+            graphToolBar.Buttons["deletePageGraphToolBarBtn"].ToolTipText = LocalizationConstants.DeletePageToolTip;
+            graphToolBar.Buttons["saveGraphToolBarBtn"].ToolTipText = LocalizationConstants.SaveToolTip;
+            graphToolBar.Buttons["updateIntersectionsLinesGraphToolBarBtn"].ToolTipText = LocalizationConstants.UpdateIntersectionsLinesToolTip;
+
+            //profilePropertiesTable
+            profilePropertiesTable.Columns["IsVisibleCol"].ToolTipText = LocalizationConstants.ProfilePropertiesIsVisibleColToolTip;
+            profilePropertiesTable.Columns["IsVisibleCol"].HeaderText = LocalizationConstants.ProfilePropertiesIsVisibleColHeader;  
+
+            profilePropertiesTable.Columns["ProfileNumberCol"].ToolTipText = LocalizationConstants.ProfilePropertiesProfileNumberColToolTip;
+            profilePropertiesTable.Columns["ProfileNumberCol"].HeaderText = LocalizationConstants.ProfilePropertiesProfileNumberColHeader;
+
+            profilePropertiesTable.Columns["AzimuthCol"].ToolTipText = LocalizationConstants.ProfilePropertiesAzimuthColToolTip;
+            profilePropertiesTable.Columns["AzimuthCol"].HeaderText = LocalizationConstants.ProfilePropertiesAzimuthColHeader;
+
+            profilePropertiesTable.Columns["ObserverHeightCol"].ToolTipText = LocalizationConstants.ProfilePropertiesObserverHeightColToolTip;
+            profilePropertiesTable.Columns["ObserverHeightCol"].HeaderText = LocalizationConstants.ProfilePropertiesObserverHeightColHeader;
+
+            profilePropertiesTable.Columns["ProfileLengthCol"].ToolTipText = LocalizationConstants.ProfilePropertiesProfileLengthColToolTip;
+            profilePropertiesTable.Columns["ProfileLengthCol"].HeaderText = LocalizationConstants.ProfilePropertiesProfileLengthColHeader;
+
+            profilePropertiesTable.Columns["MinHeightCol"].ToolTipText = LocalizationConstants.ProfilePropertiesMinHeightColToolTip;
+            profilePropertiesTable.Columns["MinHeightCol"].HeaderText = LocalizationConstants.ProfilePropertiesMinHeightColHeader;
+
+            profilePropertiesTable.Columns["MaxHeightCol"].ToolTipText = LocalizationConstants.ProfilePropertiesMaxHeightColToolTip;
+            profilePropertiesTable.Columns["MaxHeightCol"].HeaderText = LocalizationConstants.ProfilePropertiesMaxHeightColHeader;
+
+            profilePropertiesTable.Columns["HeightDifferenceCol"].ToolTipText = LocalizationConstants.ProfilePropertiesHeightDifferenceColToolTip;
+            profilePropertiesTable.Columns["HeightDifferenceCol"].HeaderText = LocalizationConstants.ProfilePropertiesHeightDifferenceColHeader;
+
+            profilePropertiesTable.Columns["DescendingAngleCol"].ToolTipText = LocalizationConstants.ProfilePropertiesDescendingAngleColToolTip;
+            profilePropertiesTable.Columns["DescendingAngleCol"].HeaderText = LocalizationConstants.ProfilePropertiesDescendingAngleColHeader;
+
+            profilePropertiesTable.Columns["AscendingAngleCol"].ToolTipText = LocalizationConstants.ProfilePropertiesAscendingAngleColToolTip;
+            profilePropertiesTable.Columns["AscendingAngleCol"].HeaderText = LocalizationConstants.ProfilePropertiesAscendingAngleColHeader;
+
+            profilePropertiesTable.Columns["VisiblePercentCol"].ToolTipText = LocalizationConstants.ProfilePropertiesVisiblePercentColToolTip;
+            profilePropertiesTable.Columns["VisiblePercentCol"].HeaderText = LocalizationConstants.ProfilePropertiesVisiblePercentColHeader;
+        }
+
         private void CreateExtremePointsSerie(int lineId)
         {
             if(profileChart.Series.FindByName($"ExtremePointsLine{lineId}") != null)
@@ -301,34 +362,34 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             var property = ProfilesProperties.First(profileProperty => profileProperty.LineId == SelectedLineId);
             var session = _controller.GetProfileSessionForLine(SelectedLineId);
 
-            var sharedText = session.Shared ? "Общий" : "Без общего доступа";
+            var sharedText = session.Shared ? LocalizationConstants.ProfilesSetSharedText : LocalizationConstants.ProfilesSetNotSharedText;
 
              profileDetailsListView.Items.Clear();
 
-            profileDetailsListView.Items.Add(CreateNewItem($"Состояние: ", $"{sharedText}"));
+            profileDetailsListView.Items.Add(CreateNewItem(LocalizationConstants.ProfileDetailsStateText, $"{sharedText}"));
             profileDetailsListView.Items
-                                    .Add(CreateNewItem($"Начало - конец: ",
+                                    .Add(CreateNewItem(LocalizationConstants.ProfileDetailsEndPointsText,
                                         $"{Math.Round(surface.ProfileSurfacePoints[0].X, 5)};"
                                         + $"{Math.Round(surface.ProfileSurfacePoints[0].Y, 5)}"
                                         + $" - {Math.Round(surface.ProfileSurfacePoints.Last().X, 5)};"
                                         + $"{Math.Round(surface.ProfileSurfacePoints.Last().Y, 5)}"));
             profileDetailsListView.Items
-                                    .Add(CreateNewItem($"Азимут:",
+                                    .Add(CreateNewItem(LocalizationConstants.ProfileDetailsAzimuthText,
                                     property.Azimuth == double.MinValue ? "" :
                                     $"{Math.Round(property.Azimuth, 1)}"));
             profileDetailsListView.Items
-                                    .Add(CreateNewItem($"Длина (м):",
+                                    .Add(CreateNewItem(LocalizationConstants.ProfileDetailsLengthText,
                                             $"{Math.Round(property.PathLength, 0)}"));
             profileDetailsListView.Items
-                                    .Add(CreateNewItem($"Высота (м):",
+                                    .Add(CreateNewItem(LocalizationConstants.ProfileDetailsHeightText,
                                             $"{Math.Round(property.MinHeight, 0)}"
                                             + $"-{Math.Round(property.MaxHeight, 0)}"));
             profileDetailsListView.Items
-                                    .Add(CreateNewItem($"Углы:",
+                                    .Add(CreateNewItem(LocalizationConstants.ProfileDetailsAnglesText,
                                         $"{Math.Round(property.MaxAngle, 1)}"
                                         + $"-{Math.Round(property.MinAngle, 1)}"));
             profileDetailsListView.Items
-                                    .Add(CreateNewItem($"Видимые зоны (%): ",
+                                    .Add(CreateNewItem(LocalizationConstants.ProfileDetailsVisibilityText,
                                             $"{Math.Round(property.VisiblePercent, 2)}"));
             profileDetailsListView.Items
                                     .Add(CreateNewItem($"{session.CreatedBy}", $"{session.CreatedOn}"));
@@ -1073,7 +1134,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                     if(SelectedLineId != -1)
                     {
                         DialogResult deleteProfileResult =
-                                        MessageBox.Show("Do you realy want to remove profile?", "Remove profile",
+                                        MessageBox.Show(LocalizationConstants.RemovingProfileMessage, LocalizationConstants.MessageBoxTitle,
                                                                                         MessageBoxButtons.OKCancel);
 
                         if(deleteProfileResult == DialogResult.OK)
@@ -1170,7 +1231,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 case "deletePageGraphToolBarBtn":
 
                     DialogResult deleteTabResult =
-                                    MessageBox.Show("Do you realy want to remove tab?", "Remove tab", MessageBoxButtons.OKCancel);
+                                    MessageBox.Show(LocalizationConstants.RemovingTabMessage, LocalizationConstants.MessageBoxTitle, MessageBoxButtons.OKCancel);
 
                     if(deleteTabResult == DialogResult.OK)
                     {
@@ -1450,8 +1511,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
                 if(Directory.Exists(path))
                 {
-                    DialogResult result = MessageBox.Show($"Каталог с именем {profileName}_{SelectedLineId} уже существует \n Вы действительно хотите обновить данные?",
-                                                                "Directory already exist", MessageBoxButtons.OKCancel);
+                    DialogResult result = MessageBox.Show(String.Format(LocalizationConstants.FolderAlreadyExistMessage, $"{profileName}_{SelectedLineId}"),
+                                                          LocalizationConstants.MessageBoxTitle, MessageBoxButtons.OKCancel);
 
                     if(result != DialogResult.OK)
                     {
