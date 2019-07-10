@@ -47,9 +47,9 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         {
             _profileSession = profileSession;
 
-            if(_profileSession.ProfileLines != null && _profileSession.ProfileLines.Count() > 0)
+            if(_profileSession.ProfileLines != null && _profileSession.ProfileLines.Length > 0)
             {
-                for(int i = 0; i < _profileSession.ProfileLines.Count(); i++)
+                for(int i = 0; i < _profileSession.ProfileLines.Length; i++)
                 {
                     _profileSession.ProfileLines[i].SessionId = _profileSession.SessionId;
                 }
@@ -220,8 +220,10 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
                 for(var i = 0; i < segment.ProfileSurfacePoints.Length; i++)
                 {
-                    if(!isInvisibleZone)
+                    var currPoint = segment.ProfileSurfacePoints[i];
+                    if (!isInvisibleZone)
                     {
+
                         if(i < segment.ProfileSurfacePoints.Length - 1)
                         {
                             if(CalcAngleOfVisibility(observerFullHeight, segment.ProfileSurfacePoints[i],
@@ -255,6 +257,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                             invisiblePoints.Add(segment.ProfileSurfacePoints[i]);
                         }
                     }
+
+                    currPoint.Visible = !isInvisibleZone;
                 }
 
                 invisibleSurfaceSegment.ProfileSurfacePoints = invisiblePoints.ToArray();

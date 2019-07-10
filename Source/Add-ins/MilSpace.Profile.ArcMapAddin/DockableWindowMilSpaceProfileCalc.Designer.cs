@@ -154,7 +154,7 @@
             this.profilesTreeView = new System.Windows.Forms.TreeView();
             this.panel6 = new System.Windows.Forms.Panel();
             this.profilesToolStrip = new System.Windows.Forms.ToolStrip();
-            this.toolBtnShowOnMap = new System.Windows.Forms.ToolStripButton();
+            this.toolPanOnMap = new System.Windows.Forms.ToolStripButton();
             this.toolBtnFlash = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.setProfileSettingsToCalc = new System.Windows.Forms.ToolStripButton();
@@ -1774,7 +1774,7 @@
             this.profilesToolStrip.Dock = System.Windows.Forms.DockStyle.Fill;
             this.profilesToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.profilesToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolBtnShowOnMap,
+            this.toolPanOnMap,
             this.toolBtnFlash,
             this.toolStripSeparator1,
             this.setProfileSettingsToCalc,
@@ -1795,16 +1795,16 @@
             this.profilesToolStrip.TabIndex = 37;
             this.profilesToolStrip.Text = "toolStrip1";
             // 
-            // toolBtnShowOnMap
+            // toolPanOnMap
             // 
-            this.toolBtnShowOnMap.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolBtnShowOnMap.Image = ((System.Drawing.Image)(resources.GetObject("toolBtnShowOnMap.Image")));
-            this.toolBtnShowOnMap.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolBtnShowOnMap.Name = "toolBtnShowOnMap";
-            this.toolBtnShowOnMap.Size = new System.Drawing.Size(23, 27);
-            this.toolBtnShowOnMap.Text = "toolStripButton1";
-            this.toolBtnShowOnMap.ToolTipText = "Показать на карте";
-            this.toolBtnShowOnMap.Click += new System.EventHandler(this.toolBtnShowOnMap_Click);
+            this.toolPanOnMap.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolPanOnMap.Image = ((System.Drawing.Image)(resources.GetObject("toolPanOnMap.Image")));
+            this.toolPanOnMap.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolPanOnMap.Name = "toolPanOnMap";
+            this.toolPanOnMap.Size = new System.Drawing.Size(23, 27);
+            this.toolPanOnMap.Text = "toolStripButton1";
+            this.toolPanOnMap.ToolTipText = "Показать на карте";
+            this.toolPanOnMap.Click += new System.EventHandler(this.toolBtnShowOnMap_Click);
             // 
             // toolBtnFlash
             // 
@@ -1813,7 +1813,7 @@
             this.toolBtnFlash.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolBtnFlash.Name = "toolBtnFlash";
             this.toolBtnFlash.Size = new System.Drawing.Size(23, 27);
-            this.toolBtnFlash.Text = "toolStripButton9";
+            this.toolBtnFlash.Text = "toolShowOnMap";
             this.toolBtnFlash.ToolTipText = "Подсветить на карте";
             this.toolBtnFlash.Click += new System.EventHandler(this.toolBtnFlash_Click);
             // 
@@ -2115,7 +2115,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label lblRoadsLayer;
         private System.Windows.Forms.ListView lvProfileAttributes;
-        private System.Windows.Forms.ToolStripButton toolBtnShowOnMap;
+        private System.Windows.Forms.ToolStripButton toolPanOnMap;
         private System.Windows.Forms.ToolStrip profilesToolStrip;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton eraseProfile;
