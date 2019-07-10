@@ -329,7 +329,7 @@ namespace MilSpace.Profile.Localization
                                                                                                                                  $"Мін. висота; Макс. кут підйому; Макс. кут спуску; Процент видимих зон");
         public static string DataExportPointsPropertiesHeader => Instance.GetLocalization(DataExportPointsPropertiesHeaderKey, "Номер; X; Y; Z; Відстань; Точка перегину; Видима; Перетини");
         public static string LineNotFoundErrorMessage => Instance.GetLocalization(LineNotFoundErrorMessageKey, "Лінію не знайдено");
-
+        public static string SavedProfilesModalWindowText => Instance.GetLocalization(SavedProfilesModalWindowTextKey);
 
         private string GetLocalization(string key, string defaultValue = null)
         {

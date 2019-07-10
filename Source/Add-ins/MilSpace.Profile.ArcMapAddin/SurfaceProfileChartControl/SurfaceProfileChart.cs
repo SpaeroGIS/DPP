@@ -560,8 +560,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             profilePropertiesTable.Columns["MinHeightCol"].Width = threePositionWidth;
             profilePropertiesTable.Columns["MaxHeightCol"].Width = threePositionWidth;
             profilePropertiesTable.Columns["HeightDifferenceCol"].Width = twoPositionWidth;
-            profilePropertiesTable.Columns["DescentAngleCol"].Width = twoPositionWidth;
-            profilePropertiesTable.Columns["RiseAngleCol"].Width = twoPositionWidth;
+            profilePropertiesTable.Columns["DescendingAngleCol"].Width = twoPositionWidth;
+            profilePropertiesTable.Columns["AscendingAngleCol"].Width = twoPositionWidth;
             profilePropertiesTable.Columns["VisiblePercentCol"].Width = threePositionWidth;
 
             var tableWidth = 0;
@@ -1259,7 +1259,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         private void ProfilePropertiesTable_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if(profilePropertiesTable.Columns[e.ColumnIndex].Name == "IsVisibleCol")
+            if(profilePropertiesTable.Columns[e.ColumnIndex].Name == "IsVisibleCol" && profilePropertiesTable.Rows.Count > 0)
             {
                 var id = profilePropertiesTable.Rows[e.RowIndex].Cells["ProfileNumberCol"].Value.ToString();
                 profileChart.Series[id].Enabled
