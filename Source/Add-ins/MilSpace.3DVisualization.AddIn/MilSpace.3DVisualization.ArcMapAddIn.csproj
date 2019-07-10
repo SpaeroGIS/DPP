@@ -8,7 +8,7 @@
     <ProjectGuid>{5ED9F537-4BA4-4A7D-A2E8-64BC3F679A5F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MilSpace._3DVisualization.ArcMapAddIn</RootNamespace>
+    <RootNamespace>MilSpace.Visualization3D</RootNamespace>
     <AssemblyName>MilSpace.3DVisualization.AddIn</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
