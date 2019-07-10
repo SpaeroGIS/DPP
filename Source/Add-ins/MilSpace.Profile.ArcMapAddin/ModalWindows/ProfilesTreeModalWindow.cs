@@ -12,6 +12,7 @@ namespace MilSpace.Profile.ModalWindows
         public ProfilesTreeModalWindow(TreeView calsProfilesTreeView)
         {
             InitializeComponent();
+            LocalizeControls();
             profilesTreeView.Width = Width;
             InitializeTreeView(calsProfilesTreeView);
         }
