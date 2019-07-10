@@ -1,11 +1,7 @@
-﻿using MilSpace.DataAccess.DataTransfer;
-using ESRI.ArcGIS.Display;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.Geometry;
+using MilSpace.DataAccess.DataTransfer;
+using System.Collections.Generic;
 
 namespace MilSpace.DataAccess
 {

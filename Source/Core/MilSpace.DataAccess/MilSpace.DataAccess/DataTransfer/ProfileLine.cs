@@ -13,6 +13,7 @@ namespace MilSpace.DataAccess.DataTransfer
         public double Azimuth;
         public double Length;
         public bool Visible;
+        public ProfilePoint[] PointCollection;
 
         [XmlIgnore]
         public IPolyline Line;
@@ -29,7 +30,6 @@ namespace MilSpace.DataAccess.DataTransfer
             get
             {
                 IPointCollection collection = Line as IPointCollection;
-
                 IPoint[] vertices = new IPoint[collection.PointCount];
 
                 for ( int i = 0; i < collection.PointCount; i++ )

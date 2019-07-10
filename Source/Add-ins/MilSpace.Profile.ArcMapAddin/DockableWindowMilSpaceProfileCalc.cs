@@ -6,6 +6,7 @@ using MilSpace.Core;
 using MilSpace.Core.MilSpaceResourceManager;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
+using MilSpace.DataAccess.Facade;
 using MilSpace.Profile.DTO;
 using MilSpace.Profile.Localization;
 using System;
@@ -706,6 +707,7 @@ namespace MilSpace.Profile
             {
                 controller.AddProfileToList(session);
                 controller.CallGraphsHandle(session);
+                controller.SaveProfileSet(session);
             }
             else
             {

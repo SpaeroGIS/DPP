@@ -331,7 +331,7 @@
     <value>Профілі в роботі</value>
   </data>
   <data name="msgDeleteProfaileText" xml:space="preserve">
-    <value>Ви дійсно бажаєти dblfkbnbпрофіль  "{0}"?</value>
+    <value>Ви дійсно бажаєти видалити профіль  "{0}"?</value>
   </data>
   <data name="msgErrorOnShareProfileText" xml:space="preserve">
     <value>Виникла помилка /n Більш деталььна інформація знаходиться в журналі.</value>
