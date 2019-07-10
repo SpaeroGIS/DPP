@@ -1,4 +1,6 @@
 ﻿using System.Globalization;
+using System.IO;
+using System.Reflection;
 using System.Resources;
 
 namespace MilSpace.Core.MilSpaceResourceManager
@@ -15,7 +17,7 @@ namespace MilSpace.Core.MilSpaceResourceManager
 
         public MilSpaceResourceManager(string sourceName, CultureInfo cultireInfo)
         {
-            var pathToAssembly = Helper.GetRegistryValue(localizationregistryKey);
+            var pathToAssembly = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Localization");
             innerObject = ResourceManager.CreateFileBasedResourceManager(sourceName, $"{pathToAssembly}", null);
 
             cultoreToLocalize = cultireInfo;

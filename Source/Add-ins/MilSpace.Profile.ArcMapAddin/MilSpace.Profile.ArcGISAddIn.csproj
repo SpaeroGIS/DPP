@@ -269,6 +269,12 @@
     </EmbeddedResource>
     <Resource Include="Localization\MilSpace.Profile.Calc.en-US.resx" />
     <Resource Include="Localization\MilSpace.Profile.Calc.uk-UA.resx" />
+    <Content Include="Localization\MilSpace.Profile.Calc.en-US.resources">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Localization\MilSpace.Profile.Calc.uk-UA.resources">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="ModalWindows\AccessibleProfilesModalWindow.resx">
       <DependentUpon>AccessibleProfilesModalWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -349,7 +355,8 @@
       <SourceEmbededLocalization Include="Localization\MilSpace.Profile.Calc.uk-UA.resources" />
     </ItemGroup>
     <MakeDir Directories="$(OutputPath)Localization" />
-    <GenerateResource Sources="@(SourceLocalization)" OutputResources="@(SourceLocalization->'$(OutputPath)Localization\%(Filename).resources')">
+    <!--<GenerateResource Sources="@(SourceLocalization)" OutputResources="@(SourceLocalization->'$(OutputPath)Localization\%(Filename).resources')">-->
+    <GenerateResource Sources="@(SourceLocalization)" OutputResources="@(SourceLocalization->'Localization\%(Filename).resources')">
       <Output TaskParameter="OutputResources" ItemName="Resources" />
     </GenerateResource>
   </Target>
