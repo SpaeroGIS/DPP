@@ -104,6 +104,7 @@ namespace MilSpace.Profile.Localization
 
         public static string ErrorOnShareProfileTextMessage => instance.GetLocalization(ErrorHappendTextMessageKey);
         public static string ErrorOnDelitingProfileTextMessage => instance.GetLocalization(ErrorHappendTextMessageKey);
+        public static string ErrorOnDataAccessTextMessage => instance.GetLocalization(ErrorHappendTextMessageKey);
         public static string NotAllowedToShareMessage => instance.GetLocalization(NotAllowedToShareMessageKey);
         public static string TreeViewProfileText => instance.GetLocalization(TreeViewProfileTextKey);
         public static string RemoveProfaileMessage => instance.GetLocalization(RemoveProfaileMessageKey);

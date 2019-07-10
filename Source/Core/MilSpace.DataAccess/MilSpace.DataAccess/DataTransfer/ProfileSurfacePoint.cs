@@ -8,6 +8,7 @@ namespace MilSpace.DataAccess.DataTransfer
         public double Z;
         public double X;
         public double Y;
+        public bool Visible;
 
         public bool isVertex;
         [XmlIgnore]
