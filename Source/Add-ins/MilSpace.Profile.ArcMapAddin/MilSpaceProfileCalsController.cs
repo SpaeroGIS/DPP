@@ -562,6 +562,23 @@ namespace MilSpace.Profile
             }
         }
 
+        /// <summary>
+        /// Insert or Update the profile set in DB
+        /// </summary>
+        /// <param name="profileSet"></param>
+        internal bool SaveProfileSet(ProfileSession profileSet)
+        {
+            //Write to DB
+            bool res = MilSpaceProfileFacade.SaveProfileSession(profileSet);
+            if (!res)
+            {
+                MessageBox.Show(LocalizationConstants.ErrorOnDataAccessTextMessage, "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return res;
+
+        }
+
         internal void CallGraphsHandle(ProfileSession profileSession)
         {
             MilSpaceProfileGraphsController.ShowWindow();
@@ -578,7 +595,7 @@ namespace MilSpace.Profile
             if (profile.CreatedBy == Environment.UserName)
             {
                 profile.Shared = true;
-                return MilSpaceProfileFacade.SaveProfileSession(profile);
+                return SaveProfileSet(profile);
             }
 
             logger.ErrorEx("You are not allowed to share this Profile.");
@@ -699,6 +716,14 @@ namespace MilSpace.Profile
             {
                 GraphicsLayerManager
                         .UpdateGraphicLine(profileLines, sessionId);
+
+                var profile = _workingProfiles.FirstOrDefault(p => p.SessionId == sessionId);
+                //Save Profile if it was recalculated
+                if (profile != null)
+                {
+                    SaveProfileSet(profile);
+                }
+
             }
             else
             {

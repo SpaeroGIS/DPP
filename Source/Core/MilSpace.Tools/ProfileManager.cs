@@ -152,7 +152,7 @@ namespace MilSpace.Tools
                     {
                         points = surface[lineId];
                     }
-                    
+
                     if (curLine != lineId) // data for new line
                     {
                         curLine = lineId;
@@ -245,13 +245,6 @@ namespace MilSpace.Tools
                 }
                 ).ToArray();
 
-                //Write to DB
-                if (!MilSpaceProfileFacade.SaveProfileSession(session))
-                {
-                    return null;
-                }
-
-
                 return session;
 
             }
@@ -307,9 +300,7 @@ namespace MilSpace.Tools
                     IPolyline polyline = line.ShapeCopy as IPolyline;
                     polyline.Project(EsriTools.Wgs84Spatialreference);
 
-                    bool isSegments = (polyline as IPointCollection).PointCount == 2;
-
-                    result.Add(new ProfileLine
+                    var profileLine = new ProfileLine
                     {
                         PointFrom = new ProfilePoint { X = transformedFrom.X, Y = transformedFrom.Y },
                         PointTo = new ProfilePoint { X = transformedTo.X, Y = transformedTo.Y },
@@ -317,8 +308,24 @@ namespace MilSpace.Tools
                         Length = polyline.Length,
                         Line = polyline,
                         SpatialReference = EsriTools.Wgs84Spatialreference,
-                        Azimuth = isSegments?ln.Azimuth(): double.MinValue
-                    });
+                        Azimuth = double.MinValue
+                    };
+
+                    var vertices = profileLine.Vertices;
+                    if (vertices.Count() == 2)
+                    {
+                        profileLine.Azimuth = ln.Azimuth();
+                    }
+                    else
+                    {
+                        profileLine.PointCollection = vertices.Select(p =>
+                        {
+                            var pnt = p.CloneWithProjecting();
+                            return new ProfilePoint { X = pnt.X, Y = pnt.Y };
+                        }).ToArray();
+                    }
+
+                    result.Add(profileLine);
                 }
             }
 

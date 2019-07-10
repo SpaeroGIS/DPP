@@ -72,6 +72,28 @@ namespace MilSpace.Profile.Localization
         private static string ProfilesSetsTitleKey = "modalProfilesSetsTitle";
         private static string AboutSelectedTextKey = "lblAboutSelectedText";
         private static string ResetTextKey = "btnReset";
+        private static string SavedProfilesModalWindowTextKey = "frmSavedProfilesModalWindowText";
+
+        private static string ProfileListTextKey = "lblProfileListText";
+
+        private static string ToolBtnPanOnMapTextKey = "hintToolBtnPanOnMapText";
+        private static string ToolBtnShowOnMapTextKey = "hintToolBtnShowOnMapText";
+        private static string ToolSetProfileSettingsToCalcTextKey = "hintToolSetProfileSettingsToCalcText";
+        private static string ToolAddProfileToExistingGraphTextKey = "hintAddProfileToExistingGraphText";
+        private static string ToolAddProfileToGraphTextKey = "hintAddProfileToGraphText";
+        private static string ToolOpenGraphWindowTextKey = "hintOpenGraphWindowText";
+        private static string ToolRemoveProfileTextKey = "hintRemoveProfileText";
+        private static string ToolSaveProfileAsSharedTextKey = "hintSaveProfileAsSharedText";
+        private static string ToolEraseProfileTextKey = "hintEraseProfileText";
+        private static string ToolClearExtraGraphicTextKey = "hintClearExtraGraphicText";
+
+        private static string RemoveProfaileMessageKey = "msgRemoveProfaileText";
+        private static string TreeViewProfileTextKey = "txtTreeViewProfileText";
+        private static string NotAllowedToShareMessageKey = "msgNotAllowedToShareText";
+        private static string ErrorHappendTextMessageKey = "msgErrorHappendText";
+        private static string DeleteProfaileMessageKey = "msgDeleteProfaileText";
+
+
 
 
         //ProfilesTreeModalWindow
@@ -155,6 +177,25 @@ namespace MilSpace.Profile.Localization
             //TODO: Define a method to change a culture info to localization
             mngr = new MilSpaceResourceManager("MilSpace.Profile.Calc", CultureInfo.GetCultureInfo("uk-UA"));
         }
+
+        public static string ErrorOnShareProfileTextMessage => instance.GetLocalization(ErrorHappendTextMessageKey);
+        public static string ErrorOnDelitingProfileTextMessage => instance.GetLocalization(ErrorHappendTextMessageKey);
+        public static string ErrorOnDataAccessTextMessage => instance.GetLocalization(ErrorHappendTextMessageKey);
+        public static string NotAllowedToShareMessage => instance.GetLocalization(NotAllowedToShareMessageKey);
+        public static string TreeViewProfileText => instance.GetLocalization(TreeViewProfileTextKey);
+        public static string RemoveProfaileMessage => instance.GetLocalization(RemoveProfaileMessageKey);
+        public static string DeleteProfaileMessage => instance.GetLocalization(DeleteProfaileMessageKey);
+        public static string ToolClearExtraGraphicToolTip => instance.GetLocalization(ToolClearExtraGraphicTextKey);
+        public static string ToolEraseProfileToolTip => instance.GetLocalization(ToolEraseProfileTextKey);
+        public static string ToolSaveProfileAsSharedToolTip => instance.GetLocalization(ToolSaveProfileAsSharedTextKey);
+        public static string ToolRemoveProfileToolTip => instance.GetLocalization(ToolRemoveProfileTextKey);
+        public static string ToolOpenGraphWindowToolTip => instance.GetLocalization(ToolOpenGraphWindowTextKey);
+        public static string ToolAddProfileToGraphToolTip => instance.GetLocalization(ToolAddProfileToGraphTextKey);
+        public static string ToolAddProfileToExistingGraphToolTip => instance.GetLocalization(ToolAddProfileToExistingGraphTextKey);
+        public static string ToolSetProfileSettingsToCalcToolTip => instance.GetLocalization(ToolSetProfileSettingsToCalcTextKey);
+        public static string ToolPanOnMapToolTip => instance.GetLocalization(ToolBtnPanOnMapTextKey);
+        public static string ToolBtnShowOnMapToolTip => instance.GetLocalization(ToolBtnShowOnMapTextKey);
+        public static string ProfileListText => instance.GetLocalization(ProfileListTextKey);
 
         public static string RefreshButtonToolTip => Instance.GetLocalization(RefreshButtonToolTipKey);
         public static string CommonLengthText => Instance.GetLocalization(CommonLengthTextKey);
