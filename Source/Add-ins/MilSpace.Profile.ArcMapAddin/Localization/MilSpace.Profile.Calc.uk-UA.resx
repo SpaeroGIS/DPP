@@ -291,6 +291,204 @@
   <data name="lvProfilesSetsDateColHeader" xml:space="preserve">
     <value>Дата</value>
   </data>
+  <data name="btnChangeAllObserversHeightsToolTip" xml:space="preserve">
+    <value>Змінити висоту всіх пунктів спостереження</value>
+  </data>
+  <data name="copyStripMenuItemText" xml:space="preserve">
+    <value>Скопіювати</value>
+  </data>
+  <data name="dgvProfilePropertiesAzimuthColToolTip" xml:space="preserve">
+    <value>Азимут</value>
+  </data>
+  <data name="dgvProfilePropertiesDescendingAngleColToolTip" xml:space="preserve">
+    <value>Максимальний кут спуску (градуси)</value>
+  </data>
+  <data name="dgvProfilePropertiesHeightDifferenceColToolTip" xml:space="preserve">
+    <value>Різниця висот (м)</value>
+  </data>
+  <data name="dgvProfilePropertiesIsVisibleColToolTip" xml:space="preserve">
+    <value>Показати/сховати профіль</value>
+  </data>
+  <data name="dgvProfilePropertiesMaxHeightColToolTip" xml:space="preserve">
+    <value>Максимальна висота (м)</value>
+  </data>
+  <data name="dgvProfilePropertiesMinHeightColToolTip" xml:space="preserve">
+    <value>Мінімальна висота (м)</value>
+  </data>
+  <data name="dgvProfilePropertiesObserverHeightColToolTip" xml:space="preserve">
+    <value>Висота пункту спостереження (м)</value>
+  </data>
+  <data name="dgvProfilePropertiesProfileLengthColToolTip" xml:space="preserve">
+    <value>Довжина профіля (м)</value>
+  </data>
+  <data name="dgvProfilePropertiesProfileNumberColToolTip" xml:space="preserve">
+    <value>Номер профіля</value>
+  </data>
+  <data name="dgvProfilePropertiesAscendingAngleColToolTip" xml:space="preserve">
+    <value>Максимальний кут підйому (градуси)</value>
+  </data>
+  <data name="graphTbBtnAddPageToolTip" xml:space="preserve">
+    <value>Додати нову вкладку для графіка </value>
+  </data>
+  <data name="graphTbBtnAddProfileGraphToolTip" xml:space="preserve">
+    <value>Додати профіль на графік</value>
+  </data>
+  <data name="graphTbBtnDeletePageToolTip" xml:space="preserve">
+    <value>Видалити вкладку</value>
+  </data>
+  <data name="graphTbBtnDeleteSelectedProfileToolTip" xml:space="preserve">
+    <value>Видалити вибраний профіль з графіка</value>
+  </data>
+  <data name="graphTbBtnDisplayProfileSignatureToolTip" xml:space="preserve">
+    <value>Відобразити підписи профілів на графіку</value>
+  </data>
+  <data name="graphTbBtnObserverHeightIgnoreToolTip" xml:space="preserve">
+    <value>Враховувати/ігнорувати висоту пункту спостереження при масштабуванні</value>
+  </data>
+  <data name="graphTbBtnPanToProfilesSetToolTip" xml:space="preserve">
+    <value>Позиціонування на набір профілів</value>
+  </data>
+  <data name="graphTbBtnPanToSelectedProfileToolTip" xml:space="preserve">
+    <value>Позиціонування на вибраний профіль</value>
+  </data>
+  <data name="graphTbBtnSaveToolTip" xml:space="preserve">
+    <value>Зберегти дані</value>
+  </data>
+  <data name="graphTbBtnShowAllProfilesToolTip" xml:space="preserve">
+    <value>Показати всі профілі</value>
+  </data>
+  <data name="graphTbBtnUpdateIntersectionsLinesToolTip" xml:space="preserve">
+    <value>Розрахувати лінії перетину з шарами</value>
+  </data>
+  <data name="graphTbBtnZoomInToolTip" xml:space="preserve">
+    <value>Збільшити масштаб</value>
+  </data>
+  <data name="graphTbBtnZoomOutToolTip" xml:space="preserve">
+    <value>Зменшити масштаб</value>
+  </data>
+  <data name="lblInvisibleLineColorText" xml:space="preserve">
+    <value>невидимі</value>
+  </data>
+  <data name="lblObserverHeightText" xml:space="preserve">
+    <value>Пункт спостереження (м)</value>
+  </data>
+  <data name="lblVisibleLineColorText" xml:space="preserve">
+    <value>видимі</value>
+  </data>
+  <data name="lvProfileDetailsToolTip" xml:space="preserve">
+    <value>Щоб скопіювати віділені рядки натисніть праву клавішу миші</value>
+  </data>
+  <data name="dgvProfilePropertiesAscendingAngleColHeader" xml:space="preserve">
+    <value>КП</value>
+  </data>
+  <data name="dgvProfilePropertiesAzimuthColHeader" xml:space="preserve">
+    <value>АЗ</value>
+  </data>
+  <data name="dgvProfilePropertiesDescendingAngleColHeader" xml:space="preserve">
+    <value>КС</value>
+  </data>
+  <data name="dgvProfilePropertiesHeightDifferenceColHeader" xml:space="preserve">
+    <value>РВ</value>
+  </data>
+  <data name="dgvProfilePropertiesIsVisibleColHeader" xml:space="preserve">
+    <value>ВД</value>
+  </data>
+  <data name="dgvProfilePropertiesMaxHeightColHeader" xml:space="preserve">
+    <value>МкВ</value>
+  </data>
+  <data name="dgvProfilePropertiesMinHeightColHeader" xml:space="preserve">
+    <value>МнВ</value>
+  </data>
+  <data name="dgvProfilePropertiesObserverHeightColHeader" xml:space="preserve">
+    <value>В</value>
+  </data>
+  <data name="dgvProfilePropertiesProfileLengthColHeader" xml:space="preserve">
+    <value>Д</value>
+  </data>
+  <data name="dgvProfilePropertiesProfileNumberColHeader" xml:space="preserve">
+    <value>Н</value>
+  </data>
+  <data name="dgvProfilePropertiesVisiblePercentColHeader" xml:space="preserve">
+    <value>ВП</value>
+  </data>
+  <data name="dgvProfilePropertiesVisiblePercentColToolTip" xml:space="preserve">
+    <value>Процент видимих зон</value>
+  </data>
+  <data name="lblSelectedProfileNameText" xml:space="preserve">
+    <value>Профіль:</value>
+  </data>
+  <data name="lvProfileDetailsStateText" xml:space="preserve">
+    <value>Стан:</value>
+  </data>
+  <data name="profilesSetNotSharedText" xml:space="preserve">
+    <value>Приватний</value>
+  </data>
+  <data name="profilesSetSharedText" xml:space="preserve">
+    <value>Спільний</value>
+  </data>
+  <data name="btnCancelText" xml:space="preserve">
+    <value>Відмінити</value>
+  </data>
+  <data name="btnOkText" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="dataExportPointsPropertiesHeader" xml:space="preserve">
+    <value>Номер; X; Y; Z; Відстань; Точка перегину; Видима; Перетини</value>
+  </data>
+  <data name="dataExportProfilePropertiesHeader" xml:space="preserve">
+    <value>Номер; Назва профілю; Зовнішній; Стан; Точка початку; Точка кінцю; Азимут; Пункт спостереження; Довжина; Макс. висота; Різниця висот; Мін. висота; Макс. кут підйому; Макс. кут спуску; Процент видимих зон</value>
+  </data>
+  <data name="fbdSelectFolderDescription" xml:space="preserve">
+    <value>Виберіть папку для збереження даних</value>
+  </data>
+  <data name="lineNotFoundErrorMessage" xml:space="preserve">
+    <value>Лінію не знайдено</value>
+  </data>
+  <data name="lvProfileDetailsAnglesText" xml:space="preserve">
+    <value>Кути:</value>
+  </data>
+  <data name="lvProfileDetailsAzimuthText" xml:space="preserve">
+    <value>Азимут:</value>
+  </data>
+  <data name="lvProfileDetailsEndPointsText" xml:space="preserve">
+    <value>Початок - кінець</value>
+  </data>
+  <data name="lvProfileDetailsHeightText" xml:space="preserve">
+    <value>Висота (м):</value>
+  </data>
+  <data name="lvProfileDetailsLengthText" xml:space="preserve">
+    <value>Довжина:</value>
+  </data>
+  <data name="lvProfileDetailsVisibilityText" xml:space="preserve">
+    <value>Видимі зони (%):</value>
+  </data>
+  <data name="mbFolderAlreadyExistMessage" xml:space="preserve">
+    <value>Каталог з іменем {1}  вже існує \n Ви дійсно хочете оновити дані?</value>
+  </data>
+  <data name="mbRemovingProfileMessage" xml:space="preserve">
+    <value>Ви дійсно хочете видалити профіль?</value>
+  </data>
+  <data name="mbRemovingTabMessage" xml:space="preserve">
+    <value>Ви дійсно хочете видалити вкладку?</value>
+  </data>
+  <data name="messageBoxTitle" xml:space="preserve">
+    <value>MilSpace</value>
+  </data>
+  <data name="modalProfilesSetsTitle" xml:space="preserve">
+    <value>Додати доступні набори профілів</value>
+  </data>
+  <data name="modalProfilesTreeModalTitle" xml:space="preserve">
+    <value>Дерево профілів</value>
+  </data>
+  <data name="tvProfilesFunNodeText" xml:space="preserve">
+    <value>"Віяло"</value>
+  </data>
+  <data name="tvProfilesPointsNodeText" xml:space="preserve">
+    <value>Відрізки</value>
+  </data>
+  <data name="tvProfilesPritiveNodeText" xml:space="preserve">
+    <value>Графіка</value>
+  </data>
   <data name="frmSavedProfilesModalWindowText" xml:space="preserve">
     <value>Додати профілі до сесії</value>
   </data>

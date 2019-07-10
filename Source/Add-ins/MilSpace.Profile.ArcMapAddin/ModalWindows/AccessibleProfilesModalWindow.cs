@@ -128,6 +128,8 @@ namespace MilSpace.Profile.ModalWindows
 
         private void LocalizeControls()
         {
+            this.Text = LocalizationConstants.ProfilesSetsTitle; 
+
             gbFilters.Text = LocalizationConstants.FiltersTitle;
 
             lblDateText.Text = LocalizationConstants.CreationDateText;

@@ -9,6 +9,7 @@ using MilSpace.DataAccess;
 using System.Text;
 using System.Globalization;
 using System.Windows.Forms;
+using MilSpace.Profile.Localization;
 
 namespace MilSpace.Profile.SurfaceProfileChartControl
 {
@@ -504,7 +505,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         {
             var profilePropertiesText = new StringBuilder();
 
-            var header = "Line number; Profile name; External; State; Start point; End point; Azimuth; Point of view; Profile length; Max height; Height difference; Min height; Max angle; Min angle; Visibility percent";
+            var header = LocalizationConstants.DataExportProfilePropertiesHeader;
             profilePropertiesText.AppendLine(header);
 
             foreach(var line in _profileSession.ProfileLines)
@@ -519,7 +520,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 var isExternal = (line.SessionId != _profileSession.SessionId);
 
                 var isExternalText = (isExternal) ? "+" : "-";
-                var stateText = (GetProfileSharedForLine(line.Id)) ? "Shared" : "Private";
+                var stateText = (GetProfileSharedForLine(line.Id)) ? LocalizationConstants.ProfilesSetSharedText : LocalizationConstants.ProfilesSetNotSharedText;
 
                 var properties = $"{profileProperty.LineId};{GetProfileName(line.Id)};{isExternalText};{stateText};X = {ConvertDoubleToExportString(5, line.PointFrom.X)} Y = {ConvertDoubleToExportString(5, line.PointFrom.Y)} ;" +
                                  $"X = {ConvertDoubleToExportString(5, line.PointTo.X)} Y = {ConvertDoubleToExportString(5, line.PointTo.Y)};{ConvertDoubleToExportString(1, profileProperty.Azimuth)};{ConvertDoubleToExportString(1, profileProperty.ObserverHeight)};" +
@@ -542,7 +543,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 return String.Empty;
             }
 
-            var header = "Number; X; Y; Z; Distance; Vertex; Visible; Intersections";
+            var header = LocalizationConstants.DataExportPointsPropertiesHeader;
             var trueText = "+";
             var falseText = "-";
 
@@ -917,13 +918,13 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             {
                 if(profileLine == null)
                 {
-                    throw new ArgumentException("Line not found");
+                    throw new ArgumentException(LocalizationConstants.LineNotFoundErrorMessage);
                 }
 
             }
             catch(ArgumentException ex)
             {
-                MessageBox.Show(ex.Message, "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, LocalizationConstants.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
