@@ -541,9 +541,45 @@
     <value>Ви дійсно бажаєти зкинути профіль  "{0}" з сесії?</value>
   </data>
   <data name="txtTreeViewProfileText" xml:space="preserve">
-    <value>Профіль</value>
+    <value>Профіль:</value>
   </data>
   <data name="tabGraphTitle" xml:space="preserve">
     <value>Графік</value>
+  </data>
+  <data name="txtAttrProfileAzimuth1Text" xml:space="preserve">
+    <value>Азимут 1:</value>
+  </data>
+  <data name="txtAttrProfileAzimuth2Text" xml:space="preserve">
+    <value>Азимут 2:</value>
+  </data>
+  <data name="txtAttrProfileAzimuthText" xml:space="preserve">
+    <value>Азимут:</value>
+  </data>
+  <data name="txtAttrProfileBasePointText" xml:space="preserve">
+    <value>Базова точка (довгота / широта):</value>
+  </data>
+  <data name="txtAttrProfileCountText" xml:space="preserve">
+    <value>Кількість ліній:</value>
+  </data>
+  <data name="txtAttrProfileDistanceText" xml:space="preserve">
+    <value>Відстань:</value>
+  </data>
+  <data name="txtAttrProfileEndPointText" xml:space="preserve">
+    <value>Кінець в точці:</value>
+  </data>
+  <data name="txtAttrProfileIdText" xml:space="preserve">
+    <value>Ідентифікатор:</value>
+  </data>
+  <data name="txtAttrProfileNameText" xml:space="preserve">
+    <value>Назва:</value>
+  </data>
+  <data name="txtAttrProfilePointOfViewText" xml:space="preserve">
+    <value>Точка спостереження:</value>
+  </data>
+  <data name="txtAttrProfileStartPointText" xml:space="preserve">
+    <value>Початок в точці:</value>
+  </data>
+  <data name="txtAttrProfileTypeText" xml:space="preserve">
+    <value>Тип:</value>
   </data>
 </root>
