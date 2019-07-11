@@ -170,7 +170,7 @@ namespace MilSpace.Profile.Localization
         private static string DataExportProfilePropertiesHeaderKey = "dataExportProfilePropertiesHeader";
         private static string DataExportPointsPropertiesHeaderKey = "dataExportPointsPropertiesHeader";
         private static string LineNotFoundErrorMessageKey = "lineNotFoundErrorMessage";
-
+        private static string GraphTitleKey = "tabGraphTitle";
 
         private LocalizationConstants()
         {
@@ -317,8 +317,8 @@ namespace MilSpace.Profile.Localization
         public static string ProfileDetailsHeightText => Instance.GetLocalization(ProfileDetailsHeightTextKey, "Висота (м):");
         public static string ProfileDetailsAnglesText => Instance.GetLocalization(ProfileDetailsAnglesTextKey, "Кути:");
         public static string ProfileDetailsVisibilityText => Instance.GetLocalization(ProfileDetailsVisibilityTextKey, "Видимі зони (%):");
-        public static string ProfilesSetSharedText => Instance.GetLocalization(ProfilesSetSharedText, "Спільний");
-        public static string ProfilesSetNotSharedText => Instance.GetLocalization(ProfilesSetNotSharedText, "Приватний");
+        public static string ProfilesSetSharedText => Instance.GetLocalization(ProfilesSetSharedTextKey, "Спільний");
+        public static string ProfilesSetNotSharedText => Instance.GetLocalization(ProfilesSetNotSharedTextKey, "Приватний");
         public static string RemovingProfileMessage => Instance.GetLocalization(RemovingProfileMessageKey, "Ви дійсно хочете видалити профіль?");
         public static string RemovingTabMessage => Instance.GetLocalization(RemovingTabMessageKey, "Ви дійсно хочете видалити вкладку?");
         public static string MessageBoxTitle => Instance.GetLocalization(MessageBoxTitleKey, "MilSpace");
@@ -329,7 +329,9 @@ namespace MilSpace.Profile.Localization
                                                                                                                                  $"Мін. висота; Макс. кут підйому; Макс. кут спуску; Процент видимих зон");
         public static string DataExportPointsPropertiesHeader => Instance.GetLocalization(DataExportPointsPropertiesHeaderKey, "Номер; X; Y; Z; Відстань; Точка перегину; Видима; Перетини");
         public static string LineNotFoundErrorMessage => Instance.GetLocalization(LineNotFoundErrorMessageKey, "Лінію не знайдено");
+        public static string GraphTitle => Instance.GetLocalization(GraphTitleKey, "Графік");
         public static string SavedProfilesModalWindowText => Instance.GetLocalization(SavedProfilesModalWindowTextKey);
+
 
         private string GetLocalization(string key, string defaultValue = null)
         {
