@@ -29,7 +29,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilSpace.GeoCalculator.ArcM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilSpace.GeoCalculator.BusinessLogic", "MilSpace.GeoCalculator.BusinessLogic\MilSpace.GeoCalculator.BusinessLogic.csproj", "{B37F5B7A-6511-4212-9622-E1CBFB2A0B1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilSpace.3DVisualization.ArcMapAddIn", "..\Add-ins\MilSpace.3DVisualization.ArcMapAddin\MilSpace.3DVisualization.ArcMapAddIn.csproj", "{5ED9F537-4BA4-4A7D-A2E8-64BC3F679A5F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilSpace.3DVisualization.ArcMapAddIn", "..\Add-ins\MilSpace.3DVisualization.ArcMapAddIn\MilSpace.3DVisualization.ArcMapAddIn.csproj", "{5ED9F537-4BA4-4A7D-A2E8-64BC3F679A5F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

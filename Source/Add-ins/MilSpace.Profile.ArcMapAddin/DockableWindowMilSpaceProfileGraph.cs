@@ -1,5 +1,4 @@
 using ESRI.ArcGIS.Carto;
-using MilSpace.Profile.Localization;
 using MilSpace.Profile.SurfaceProfileChartControl;
 using System;
 using System.Drawing;
@@ -82,12 +81,12 @@ namespace MilSpace.Profile
                 return;
             }
 
-            string title = $"{LocalizationConstants.GraphTitle} {profilesTabControl.TabPages.Count + 1}";
+            string title = $"Graph {profilesTabControl.TabPages.Count + 1}";
             int i = 1;
 
             while (profilesTabControl.TabPages.ContainsKey(title))
             {
-                title = $"{LocalizationConstants.GraphTitle} {i + 1}";
+                title = $"Graph {i + 1}";
                 i++;
             }
 

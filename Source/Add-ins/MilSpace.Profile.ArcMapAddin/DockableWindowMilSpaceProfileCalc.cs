@@ -954,6 +954,10 @@ namespace MilSpace.Profile
             saveProfileAsShared.ToolTipText = LocalizationConstants.ToolSaveProfileAsSharedToolTip;
             eraseProfile.ToolTipText = LocalizationConstants.ToolEraseProfileToolTip;
             clearExtraGraphic.ToolTipText = LocalizationConstants.ToolClearExtraGraphicToolTip;
+
+            profilesTreeView.Nodes["Points"].Text = LocalizationConstants.PointsNodeText;
+            profilesTreeView.Nodes["Fun"].Text = LocalizationConstants.FunNodeText;
+            profilesTreeView.Nodes["Primitives"].Text = LocalizationConstants.PrimitiveNodeText;
         }
 
 
