@@ -543,4 +543,7 @@
   <data name="txtTreeViewProfileText" xml:space="preserve">
     <value>Profile</value>
   </data>
+  <data name="tabGraphTitle" xml:space="preserve">
+    <value>Graph</value>
+  </data>
 </root>
