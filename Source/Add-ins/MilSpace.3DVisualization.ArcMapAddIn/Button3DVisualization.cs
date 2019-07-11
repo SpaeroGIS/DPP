@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using MilSpace._3DVisualization.AddIn;
 
 namespace MilSpace.Visualization3D
 {
