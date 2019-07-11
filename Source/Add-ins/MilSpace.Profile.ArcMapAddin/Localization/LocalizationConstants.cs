@@ -101,14 +101,14 @@ namespace MilSpace.Profile.Localization
         private static string FunNodeTextKey = "tvProfilesFunNodeText";
         private static string PrimitiveNodeTextKey = "tvProfilesPritiveNodeText";
 
-        private static string CancelTextKey = "btnCancelText"; 
+        private static string CancelTextKey = "btnCancelText";
         private static string OkTextKey = "btnOkText";
         private static string ProfilesTreeModalTitleKey = "modalProfilesTreeModalTitle";
 
 
         //GraphWindow
         private static string ObserverHeightTextKey = "lblObserverHeightText";
-        private static string VisibleLineColorTextKey =  "lblVisibleLineColorText";
+        private static string VisibleLineColorTextKey = "lblVisibleLineColorText";
         private static string InvisibleLineColorTextKey = "lblInvisibleLineColorText";
         private static string SelectedProfileNameTextKey = "lblSelectedProfileNameText";
         private static string CopyStripMenuItemTextKey = "copyStripMenuItemText";
@@ -126,30 +126,30 @@ namespace MilSpace.Profile.Localization
         private static string DeletePageToolTipKey = "graphTbBtnDeletePageToolTip";
         private static string SaveToolTipKey = "graphTbBtnSaveToolTip";
         private static string UpdateIntersectionsLinesToolTipKey = "graphTbBtnUpdateIntersectionsLinesToolTip";
-        private static string ProfileDetailsToolTipKey = "lvProfileDetailsToolTip"; 
-        private static string ChangeAllObserversHeightsToolTipKey = "btnChangeAllObserversHeightsToolTip"; 
-        private static string ProfilePropertiesIsVisibleColToolTipKey = "dgvProfilePropertiesIsVisibleColToolTip"; 
-        private static string ProfilePropertiesProfileNumberColToolTipKey = "dgvProfilePropertiesProfileNumberColToolTip"; 
-        private static string ProfilePropertiesAzimuthColToolTipKey = "dgvProfilePropertiesAzimuthColToolTip"; 
-        private static string ProfilePropertiesObserverHeightColToolTipKey = "dgvProfilePropertiesObserverHeightColToolTip"; 
-        private static string ProfilePropertiesProfileLengthColToolTipKey = "dgvProfilePropertiesProfileLengthColToolTip"; 
-        private static string ProfilePropertiesMinHeightColToolTipKey = "dgvProfilePropertiesMinHeightColToolTip"; 
-        private static string ProfilePropertiesMaxHeightColToolTipKey = "dgvProfilePropertiesMaxHeightColToolTip"; 
-        private static string ProfilePropertiesHeightDifferenceColToolTipKey = "dgvProfilePropertiesHeightDifferenceColToolTip"; 
-        private static string ProfilePropertiesDescendingAngleColToolTipKey = "dgvProfilePropertiesDescendingAngleColToolTip"; 
-        private static string ProfilePropertiesAscendingAngleColToolTipKey = "dgvProfilePropertiesAscendingAngleColToolTip"; 
-        private static string ProfilePropertiesVisiblePercentColToolTipKey = "dgvProfilePropertiesVisiblePercentColToolTip"; 
+        private static string ProfileDetailsToolTipKey = "lvProfileDetailsToolTip";
+        private static string ChangeAllObserversHeightsToolTipKey = "btnChangeAllObserversHeightsToolTip";
+        private static string ProfilePropertiesIsVisibleColToolTipKey = "dgvProfilePropertiesIsVisibleColToolTip";
+        private static string ProfilePropertiesProfileNumberColToolTipKey = "dgvProfilePropertiesProfileNumberColToolTip";
+        private static string ProfilePropertiesAzimuthColToolTipKey = "dgvProfilePropertiesAzimuthColToolTip";
+        private static string ProfilePropertiesObserverHeightColToolTipKey = "dgvProfilePropertiesObserverHeightColToolTip";
+        private static string ProfilePropertiesProfileLengthColToolTipKey = "dgvProfilePropertiesProfileLengthColToolTip";
+        private static string ProfilePropertiesMinHeightColToolTipKey = "dgvProfilePropertiesMinHeightColToolTip";
+        private static string ProfilePropertiesMaxHeightColToolTipKey = "dgvProfilePropertiesMaxHeightColToolTip";
+        private static string ProfilePropertiesHeightDifferenceColToolTipKey = "dgvProfilePropertiesHeightDifferenceColToolTip";
+        private static string ProfilePropertiesDescendingAngleColToolTipKey = "dgvProfilePropertiesDescendingAngleColToolTip";
+        private static string ProfilePropertiesAscendingAngleColToolTipKey = "dgvProfilePropertiesAscendingAngleColToolTip";
+        private static string ProfilePropertiesVisiblePercentColToolTipKey = "dgvProfilePropertiesVisiblePercentColToolTip";
 
-        private static string ProfilePropertiesIsVisibleColHeaderKey = "dgvProfilePropertiesIsVisibleColHeader"; 
-        private static string ProfilePropertiesProfileNumberColHeaderKey = "dgvProfilePropertiesProfileNumberColHeader"; 
-        private static string ProfilePropertiesAzimuthColHeaderKey = "dgvProfilePropertiesAzimuthColHeader"; 
-        private static string ProfilePropertiesObserverHeightColHeaderKey = "dgvProfilePropertiesObserverHeightColHeader"; 
-        private static string ProfilePropertiesProfileLengthColHeaderKey = "dgvProfilePropertiesProfileLengthColHeader"; 
-        private static string ProfilePropertiesMinHeightColHeaderKey = "dgvProfilePropertiesMinHeightColHeader"; 
-        private static string ProfilePropertiesMaxHeightColHeaderKey = "dgvProfilePropertiesMaxHeightColHeader"; 
-        private static string ProfilePropertiesHeightDifferenceColHeaderKey = "dgvProfilePropertiesHeightDifferenceColHeader"; 
-        private static string ProfilePropertiesDescendingAngleColHeaderKey = "dgvProfilePropertiesDescendingAngleColHeader"; 
-        private static string ProfilePropertiesAscendingAngleColHeaderKey = "dgvProfilePropertiesAscendingAngleColHeader"; 
+        private static string ProfilePropertiesIsVisibleColHeaderKey = "dgvProfilePropertiesIsVisibleColHeader";
+        private static string ProfilePropertiesProfileNumberColHeaderKey = "dgvProfilePropertiesProfileNumberColHeader";
+        private static string ProfilePropertiesAzimuthColHeaderKey = "dgvProfilePropertiesAzimuthColHeader";
+        private static string ProfilePropertiesObserverHeightColHeaderKey = "dgvProfilePropertiesObserverHeightColHeader";
+        private static string ProfilePropertiesProfileLengthColHeaderKey = "dgvProfilePropertiesProfileLengthColHeader";
+        private static string ProfilePropertiesMinHeightColHeaderKey = "dgvProfilePropertiesMinHeightColHeader";
+        private static string ProfilePropertiesMaxHeightColHeaderKey = "dgvProfilePropertiesMaxHeightColHeader";
+        private static string ProfilePropertiesHeightDifferenceColHeaderKey = "dgvProfilePropertiesHeightDifferenceColHeader";
+        private static string ProfilePropertiesDescendingAngleColHeaderKey = "dgvProfilePropertiesDescendingAngleColHeader";
+        private static string ProfilePropertiesAscendingAngleColHeaderKey = "dgvProfilePropertiesAscendingAngleColHeader";
         private static string ProfilePropertiesVisiblePercentColHeaderKey = "dgvProfilePropertiesVisiblePercentColHeader";
 
         private static string ProfileDetailsStateTextKey = "lvProfileDetailsStateText";
@@ -172,12 +172,41 @@ namespace MilSpace.Profile.Localization
         private static string LineNotFoundErrorMessageKey = "lineNotFoundErrorMessage";
         private static string GraphTitleKey = "tabGraphTitle";
 
+        private static string AttrProfileNameTextKey = "txtAttrProfileNameText";
+        private static string AttrProfileIdTextKey = "txtAttrProfileIdText";
+        private static string AttrProfileTypeTextKey = "txtAttrProfileTypeText";
+        private static string AttrProfileEndPointTextKey = "txtAttrProfileEndPointText";
+        private static string AttrProfileStartPointTextKey = "txtAttrProfileStartPointText";
+        private static string AttrProfilePointOfViewTextKey = "txtAttrProfilePointOfViewText";
+        private static string AttrProfileDistanceTextKey = "txtAttrProfileDistanceText";
+        private static string AttrProfileAzimuthTextKey = "txtAttrProfileAzimuthText";
+        private static string AttrProfileAzimuth1TextKey = "txtAttrProfileAzimuth1Text";
+        private static string AttrProfileAzimuth2TextKey = "txtAttrProfileAzimuth2Text";
+        private static string AttrProfileBasePointTextKey = "txtAttrProfileBasePointText";
+        private static string AttrProfileCountTextKey = "txtAttrProfileCountText";
+
+
+         
+
+
+
         private LocalizationConstants()
         {
             //TODO: Define a method to change a culture info to localization
             mngr = new MilSpaceResourceManager("MilSpace.Profile.Calc", CultureInfo.GetCultureInfo("uk-UA"));
         }
-
+        public static string AttrProfileCountText => instance.GetLocalization(AttrProfileCountTextKey, "Кількість ліній");
+        public static string AttrProfileBasePointText => instance.GetLocalization(AttrProfileBasePointTextKey, "Базова точка(довгота / широта)");
+        public static string AttrProfileAzimuthText => instance.GetLocalization(AttrProfileAzimuthTextKey, "Азимут");
+        public static string AttrProfileAzimuth2Text => instance.GetLocalization(AttrProfileAzimuth2TextKey, "Азимут 2");
+        public static string AttrProfileAzimuth1Text => instance.GetLocalization(AttrProfileAzimuth1TextKey, "Азимут 1");
+        public static string AttrProfileDistanceText => instance.GetLocalization(AttrProfileDistanceTextKey, "Відстань");
+        public static string AttrProfilePointOfViewText => instance.GetLocalization(AttrProfilePointOfViewTextKey, "Точка спостереження");
+        public static string AttrProfileStartPointText => instance.GetLocalization(AttrProfileStartPointTextKey, "Початок в точці");
+        public static string AttrProfileEndPointText => instance.GetLocalization(AttrProfileEndPointTextKey, "Кінець в точці");
+        public static string AttrProfileTypeText => instance.GetLocalization(AttrProfileTypeTextKey);
+        public static string AttrProfileIdText => instance.GetLocalization(AttrProfileIdTextKey);
+        public static string AttrProfileNameText => instance.GetLocalization(AttrProfileNameTextKey);
         public static string ErrorOnShareProfileTextMessage => instance.GetLocalization(ErrorHappendTextMessageKey);
         public static string ErrorOnDelitingProfileTextMessage => instance.GetLocalization(ErrorHappendTextMessageKey);
         public static string ErrorOnDataAccessTextMessage => instance.GetLocalization(ErrorHappendTextMessageKey);

@@ -546,4 +546,37 @@
   <data name="tabGraphTitle" xml:space="preserve">
     <value>Graph</value>
   </data>
+  <data name="txtAttrProfileAzimuth1Text" xml:space="preserve">
+    <value>Azimuth 1</value>
+  </data>
+  <data name="txtAttrProfileAzimuth2Text" xml:space="preserve">
+    <value>Azimuth 2</value>
+  </data>
+  <data name="txtAttrProfileBasePointText" xml:space="preserve">
+    <value>Base point (Lat / Lon)</value>
+  </data>
+  <data name="txtAttrProfileCountText" xml:space="preserve">
+    <value>Line count</value>
+  </data>
+  <data name="txtAttrProfileDistanceText" xml:space="preserve">
+    <value>Distance</value>
+  </data>
+  <data name="txtAttrProfileEndPointText" xml:space="preserve">
+    <value>End point</value>
+  </data>
+  <data name="txtAttrProfileIdText" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="txtAttrProfileNameText" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="txtAttrProfilePointOfViewText" xml:space="preserve">
+    <value>Point of view</value>
+  </data>
+  <data name="txtAttrProfileStartPointText" xml:space="preserve">
+    <value>Start point</value>
+  </data>
+  <data name="txtAttrProfileTypeText" xml:space="preserve">
+    <value>Type</value>
+  </data>
 </root>

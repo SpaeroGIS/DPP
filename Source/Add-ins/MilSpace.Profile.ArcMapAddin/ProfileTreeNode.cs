@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ESRI.ArcGIS.Geometry;
+using MilSpace.Profile.Localization;
 
 namespace MilSpace.Profile
 {
@@ -16,23 +17,23 @@ namespace MilSpace.Profile
         private const string ValueColumnName = "Value";
 
         #region AttributeNames
-        private const string profileName = "Имя профиля:";
-        private const string profileId = "Идентификатор профиля:";
-        private const string profileType = "Тип профиля:";
-        private const string profileDistance = "Дистанция профиля:";
-        private const string firstPoint = "Стартовая точка:";
-        private const string secondPoint = "Конечная точка";
-        private const string firstPointHeight = "Высота стартовой точки:";
-        private const string secondPointHeight = "Высота конечной точки:";
-        private const string lineDistance = "Длинна линии:";
-        private const string linesCount = "Количечство линий";
-        private const string basePoint = "Базовая точка:";
-        private const string toPoint = "Конечная точка:";
-        private const string azimuth1 = "Азимут 1:";
-        private const string azimuth2 = "Азимут 2:";
-        private const string mapName = "Имя карты:";
-        private const string creatorName = "Автор:";
-        private const string date = "Дата:";
+        private static readonly string profileName = LocalizationConstants.AttrProfileNameText;
+        private static readonly string profileId = LocalizationConstants.AttrProfileIdText;
+        private static readonly string profileType = LocalizationConstants.AttrProfileTypeText;
+        private static readonly string firstPoint = LocalizationConstants.AttrProfileStartPointText;
+        private static readonly string secondPoint = LocalizationConstants.AttrProfileEndPointText;
+        private static readonly string firstPointHeight = LocalizationConstants.AttrProfilePointOfViewText;
+        private static readonly string lineDistance = LocalizationConstants.AttrProfileDistanceText;
+        private static readonly string linesCount = LocalizationConstants.AttrProfileCountText;
+        private static readonly string basePoint = LocalizationConstants.AttrProfileBasePointText;
+        private static readonly string azimuth = LocalizationConstants.AttrProfileAzimuthText;
+        private static readonly string azimuth1 = LocalizationConstants.AttrProfileAzimuth1Text;
+        private static readonly string azimuth2 = LocalizationConstants.AttrProfileAzimuth2Text;
+        private static readonly string creatorName = "Автор:";
+        private static readonly string date = "Дата:";
+        private static readonly string toPoint = "всампиртоьлбд";
+        
+
         #endregion
 
 
@@ -173,10 +174,10 @@ namespace MilSpace.Profile
             secondPointRow[AttributeColumnName] = secondPoint;
             table.Rows.Add(secondPointRow);
 
-            var secondPointHeightRow = table.NewRow();
-            secondPointHeightRow[KeyColumnName] = AttributeKeys.SectionSecondPointHeight;
-            secondPointHeightRow[AttributeColumnName] = secondPointHeight;
-            table.Rows.Add(secondPointHeightRow);
+            //var secondPointHeightRow = table.NewRow();
+            //secondPointHeightRow[KeyColumnName] = AttributeKeys.SectionSecondPointHeight;
+            //secondPointHeightRow[AttributeColumnName] = secondPointHeight;
+            //table.Rows.Add(secondPointHeightRow);
 
             var lineDistanceRow = table.NewRow();
             lineDistanceRow[KeyColumnName] = AttributeKeys.LineDistance;

@@ -1023,7 +1023,7 @@ namespace MilSpace.Profile
                     newNode.SetBasePoint($"X= {firstX}; Y= {firstY};");
                     newNode.SetToPoint($"X= {secondX}; Y= {secondY};");
                     newNode.SetBasePointHeight(SectionHeightFirst.ToString());
-                    newNode.SetToPointHeight(SectionHeightSecond.ToString());
+                    //newNode.SetToPointHeight(SectionHeightSecond.ToString());
                 }
 
                 if (profile.DefinitionType == ProfileSettingsTypeEnum.Fun)
@@ -1205,10 +1205,8 @@ namespace MilSpace.Profile
                 var basePoint = GetPointFromRowValue(baseValue);
                 controller.SetFirsPointForLineProfile(basePoint.CloneWithProjecting(), basePoint);
 
-                var toValue = rows.Find(AttributeKeys.ToPoint)[AttributeKeys.ValueColumnName].ToString();
-
-                var toPoint = GetPointFromRowValue(toValue);
-                controller.SetSecondfPointForLineProfile(toPoint.CloneWithProjecting(), toPoint);
+                //var toPoint = GetPointFromRowValue(toValue);
+                //controller.SetSecondfPointForLineProfile(toPoint.CloneWithProjecting(), toPoint);
 
                 txtFirstHeight.Text = rows.Find(AttributeKeys.SectionFirstPointHeight)[AttributeKeys.ValueColumnName].ToString();
                 txtSecondHeight.Text = rows.Find(AttributeKeys.SectionSecondPointHeight)[AttributeKeys.ValueColumnName].ToString();

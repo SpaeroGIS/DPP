@@ -57,6 +57,7 @@
     <Reference Include="ESRI.ArcGIS.Editor, Version=10.6.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Framework">
       <Private>False</Private>
@@ -76,6 +77,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Open3DVisualization.cs" />
     <Compile Include="Config.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Config.esriaddinx</DependentUpon>
@@ -113,6 +115,9 @@
   </ItemGroup>
   <ItemGroup>
     <AddInContent Include="Images\Button3DVisualization.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="Images\Directions.png" />
   </ItemGroup>
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>
