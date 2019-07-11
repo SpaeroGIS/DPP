@@ -5,9 +5,9 @@ using System.IO;
 
 namespace MilSpace.Visualization3D
 {
-    public class Button3DVisualization : ESRI.ArcGIS.Desktop.AddIns.Button
+    public class Open3DVisualization : ESRI.ArcGIS.Desktop.AddIns.Button
     {
-        public Button3DVisualization()
+        public Open3DVisualization()
         {
         }
 
