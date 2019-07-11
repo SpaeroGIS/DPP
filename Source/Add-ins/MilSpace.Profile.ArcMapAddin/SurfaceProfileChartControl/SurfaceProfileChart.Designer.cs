@@ -58,7 +58,6 @@
             this.deletePageGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
             this.toolBarSeparator19 = new System.Windows.Forms.ToolBarButton();
             this.saveGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
-            this.exportGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton2 = new System.Windows.Forms.ToolBarButton();
             this.updateIntersectionsLinesGraphToolBarBtn = new System.Windows.Forms.ToolBarButton();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
@@ -76,8 +75,8 @@
             this.MinHeightCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MaxHeightCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.HeightDifferenceCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DescentAngleCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RiseAngleCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DescendingAngleCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AscendingAngleCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.VisiblePercentCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.profileNamePanel = new System.Windows.Forms.Panel();
             this.profileNameLabel = new System.Windows.Forms.Label();
@@ -86,8 +85,8 @@
             this.observerHeightLabel = new System.Windows.Forms.Label();
             this.visibleLineColorButton = new System.Windows.Forms.Button();
             this.invisibleLineColorButton = new System.Windows.Forms.Button();
+            this.invisibleLineColorLabel = new System.Windows.Forms.Label();
             this.visibleLineColorLabel = new System.Windows.Forms.Label();
-            this.InvisibleLineColorLabel = new System.Windows.Forms.Label();
             this.propertiesPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.profileChart)).BeginInit();
             this.contextMenuStrip.SuspendLayout();
@@ -163,7 +162,6 @@
             this.deletePageGraphToolBarBtn,
             this.toolBarSeparator19,
             this.saveGraphToolBarBtn,
-            this.exportGraphToolBarBtn,
             this.toolBarButton2,
             this.updateIntersectionsLinesGraphToolBarBtn});
             this.graphToolBar.ButtonSize = new System.Drawing.Size(18, 18);
@@ -243,13 +241,13 @@
             // 
             this.zoomInGraphToolBarBtn.ImageKey = "Zoom In.png";
             this.zoomInGraphToolBarBtn.Name = "zoomInGraphToolBarBtn";
-            this.zoomInGraphToolBarBtn.ToolTipText = "Уменьшить масштаб по расстоянию";
+            this.zoomInGraphToolBarBtn.ToolTipText = "Увеличить масштаб по расстоянию";
             // 
             // zoomOutGraphToolBarBtn
             // 
             this.zoomOutGraphToolBarBtn.ImageKey = "Zoom Out.png";
             this.zoomOutGraphToolBarBtn.Name = "zoomOutGraphToolBarBtn";
-            this.zoomOutGraphToolBarBtn.ToolTipText = "Увеличить масштаб по расстоянию";
+            this.zoomOutGraphToolBarBtn.ToolTipText = "Уменьшить масштаб по расстоянию";
             // 
             // graphToolBarSpr3
             // 
@@ -278,11 +276,6 @@
             this.saveGraphToolBarBtn.ImageKey = "Save.png";
             this.saveGraphToolBarBtn.Name = "saveGraphToolBarBtn";
             this.saveGraphToolBarBtn.ToolTipText = "Сохранить изображения графа и данные";
-            // 
-            // exportGraphToolBarBtn
-            // 
-            this.exportGraphToolBarBtn.ImageKey = "Download.png";
-            this.exportGraphToolBarBtn.Name = "exportGraphToolBarBtn";
             // 
             // toolBarButton2
             // 
@@ -603,8 +596,8 @@
             this.MinHeightCol,
             this.MaxHeightCol,
             this.HeightDifferenceCol,
-            this.DescentAngleCol,
-            this.RiseAngleCol,
+            this.DescendingAngleCol,
+            this.AscendingAngleCol,
             this.VisiblePercentCol});
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
@@ -699,21 +692,21 @@
             this.HeightDifferenceCol.ToolTipText = "Разница высот (м)";
             this.HeightDifferenceCol.Width = 21;
             // 
-            // DescentAngleCol
+            // DescendingAngleCol
             // 
-            this.DescentAngleCol.HeaderText = "DA";
-            this.DescentAngleCol.Name = "DescentAngleCol";
-            this.DescentAngleCol.ReadOnly = true;
-            this.DescentAngleCol.ToolTipText = "Максимальный угол спуска (градусы)";
-            this.DescentAngleCol.Width = 22;
+            this.DescendingAngleCol.HeaderText = "DA";
+            this.DescendingAngleCol.Name = "DescendingAngleCol";
+            this.DescendingAngleCol.ReadOnly = true;
+            this.DescendingAngleCol.ToolTipText = "Максимальный угол спуска (градусы)";
+            this.DescendingAngleCol.Width = 22;
             // 
-            // RiseAngleCol
+            // AscendingAngleCol
             // 
-            this.RiseAngleCol.HeaderText = "RA";
-            this.RiseAngleCol.Name = "RiseAngleCol";
-            this.RiseAngleCol.ReadOnly = true;
-            this.RiseAngleCol.ToolTipText = "Максимальный угол подъема (графусы)";
-            this.RiseAngleCol.Width = 20;
+            this.AscendingAngleCol.HeaderText = "RA";
+            this.AscendingAngleCol.Name = "AscendingAngleCol";
+            this.AscendingAngleCol.ReadOnly = true;
+            this.AscendingAngleCol.ToolTipText = "Максимальный угол подъема (градусы)";
+            this.AscendingAngleCol.Width = 20;
             // 
             // VisiblePercentCol
             // 
@@ -752,8 +745,8 @@
             this.propertiesSettingsPanel.Controls.Add(this.observerHeightLabel);
             this.propertiesSettingsPanel.Controls.Add(this.visibleLineColorButton);
             this.propertiesSettingsPanel.Controls.Add(this.invisibleLineColorButton);
+            this.propertiesSettingsPanel.Controls.Add(this.invisibleLineColorLabel);
             this.propertiesSettingsPanel.Controls.Add(this.visibleLineColorLabel);
-            this.propertiesSettingsPanel.Controls.Add(this.InvisibleLineColorLabel);
             this.propertiesSettingsPanel.Location = new System.Drawing.Point(0, 15);
             this.propertiesSettingsPanel.Name = "propertiesSettingsPanel";
             this.propertiesSettingsPanel.Padding = new System.Windows.Forms.Padding(2);
@@ -804,25 +797,25 @@
             this.invisibleLineColorButton.UseVisualStyleBackColor = false;
             this.invisibleLineColorButton.Click += new System.EventHandler(this.InvisibleLineColorButton_Click);
             // 
+            // invisibleLineColorLabel
+            // 
+            this.invisibleLineColorLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.invisibleLineColorLabel.AutoSize = true;
+            this.invisibleLineColorLabel.Location = new System.Drawing.Point(302, 6);
+            this.invisibleLineColorLabel.Name = "invisibleLineColorLabel";
+            this.invisibleLineColorLabel.Size = new System.Drawing.Size(52, 13);
+            this.invisibleLineColorLabel.TabIndex = 44;
+            this.invisibleLineColorLabel.Text = "не видно";
+            // 
             // visibleLineColorLabel
             // 
             this.visibleLineColorLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.visibleLineColorLabel.AutoSize = true;
-            this.visibleLineColorLabel.Location = new System.Drawing.Point(302, 6);
+            this.visibleLineColorLabel.Location = new System.Drawing.Point(226, 6);
             this.visibleLineColorLabel.Name = "visibleLineColorLabel";
-            this.visibleLineColorLabel.Size = new System.Drawing.Size(52, 13);
-            this.visibleLineColorLabel.TabIndex = 44;
-            this.visibleLineColorLabel.Text = "не видно";
-            // 
-            // InvisibleLineColorLabel
-            // 
-            this.InvisibleLineColorLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.InvisibleLineColorLabel.AutoSize = true;
-            this.InvisibleLineColorLabel.Location = new System.Drawing.Point(226, 6);
-            this.InvisibleLineColorLabel.Name = "InvisibleLineColorLabel";
-            this.InvisibleLineColorLabel.Size = new System.Drawing.Size(37, 13);
-            this.InvisibleLineColorLabel.TabIndex = 45;
-            this.InvisibleLineColorLabel.Text = "видно";
+            this.visibleLineColorLabel.Size = new System.Drawing.Size(37, 13);
+            this.visibleLineColorLabel.TabIndex = 45;
+            this.visibleLineColorLabel.Text = "видно";
             // 
             // propertiesPanel
             // 
@@ -906,7 +899,6 @@
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.ToolBarButton graphToolBarSpr5;
         private System.Windows.Forms.ToolBarButton panToSelectedProfileGraphToolBarBtn;
-        private System.Windows.Forms.ToolBarButton exportGraphToolBarBtn;
         private System.Windows.Forms.ToolBarButton toolBarButton1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem copyStripMenuItem;
@@ -919,14 +911,17 @@
         private System.Windows.Forms.Label observerHeightLabel;
         private System.Windows.Forms.Button visibleLineColorButton;
         private System.Windows.Forms.Button invisibleLineColorButton;
+        private System.Windows.Forms.Label invisibleLineColorLabel;
         private System.Windows.Forms.Label visibleLineColorLabel;
-        private System.Windows.Forms.Label InvisibleLineColorLabel;
         private System.Windows.Forms.ListView profileDetailsListView;
         private System.Windows.Forms.Panel propertiesPanel;
         private System.Windows.Forms.ToolBarButton graphToolBarSpr6;
         private System.Windows.Forms.ToolBarButton updateIntersectionsLinesGraphToolBarBtn;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ToolBarButton toolBarButton2;
+        private System.Windows.Forms.Panel profileNamePanel;
+        private System.Windows.Forms.ToolBarButton addProfileGraphToolBarButton;
+        private System.Windows.Forms.ToolBarButton observerHeightIgnoreGraphToolBarBtn;
         private System.Windows.Forms.DataGridViewCheckBoxColumn IsVisibleCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn ProfileNumberCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn AzimuthCol;
@@ -935,11 +930,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn MinHeightCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn MaxHeightCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn HeightDifferenceCol;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DescentAngleCol;
-        private System.Windows.Forms.DataGridViewTextBoxColumn RiseAngleCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DescendingAngleCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn AscendingAngleCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn VisiblePercentCol;
-        private System.Windows.Forms.Panel profileNamePanel;
-        private System.Windows.Forms.ToolBarButton addProfileGraphToolBarButton;
-        private System.Windows.Forms.ToolBarButton observerHeightIgnoreGraphToolBarBtn;
     }
 }

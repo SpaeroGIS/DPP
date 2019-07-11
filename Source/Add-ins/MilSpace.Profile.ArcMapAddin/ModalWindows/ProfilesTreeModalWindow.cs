@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MilSpace.Profile.Localization;
+using System;
 using System.Windows.Forms;
 
 namespace MilSpace.Profile.ModalWindows
@@ -11,6 +12,7 @@ namespace MilSpace.Profile.ModalWindows
         public ProfilesTreeModalWindow(TreeView calsProfilesTreeView)
         {
             InitializeComponent();
+            LocalizeControls();
             profilesTreeView.Width = Width;
             InitializeTreeView(calsProfilesTreeView);
         }
@@ -25,7 +27,19 @@ namespace MilSpace.Profile.ModalWindows
             }
         }
 
-        public void CopyChildren(TreeNode parent, TreeNode original)
+        private void LocalizeControls()
+        {
+            this.Text = LocalizationConstants.ProfilesTreeModalTitle;
+
+            profilesTreeView.Nodes["Points"].Text = LocalizationConstants.PointsNodeText;
+            profilesTreeView.Nodes["Fun"].Text = LocalizationConstants.FunNodeText;
+            profilesTreeView.Nodes["Primitives"].Text = LocalizationConstants.PrimitiveNodeText;
+
+            cancelButton.Text = LocalizationConstants.CancelText;
+            okButton.Text = LocalizationConstants.OkText;
+        }
+
+        private void CopyChildren(TreeNode parent, TreeNode original)
         {
             if (original.Nodes.Count == 0)
             {

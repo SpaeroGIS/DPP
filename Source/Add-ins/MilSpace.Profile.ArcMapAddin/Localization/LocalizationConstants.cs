@@ -96,6 +96,82 @@ namespace MilSpace.Profile.Localization
 
 
 
+        //ProfilesTreeModalWindow
+        private static string PointsNodeTextKey = "tvProfilesPointsNodeText";
+        private static string FunNodeTextKey = "tvProfilesFunNodeText";
+        private static string PrimitiveNodeTextKey = "tvProfilesPritiveNodeText";
+
+        private static string CancelTextKey = "btnCancelText"; 
+        private static string OkTextKey = "btnOkText";
+        private static string ProfilesTreeModalTitleKey = "modalProfilesTreeModalTitle";
+
+
+        //GraphWindow
+        private static string ObserverHeightTextKey = "lblObserverHeightText";
+        private static string VisibleLineColorTextKey =  "lblVisibleLineColorText";
+        private static string InvisibleLineColorTextKey = "lblInvisibleLineColorText";
+        private static string SelectedProfileNameTextKey = "lblSelectedProfileNameText";
+        private static string CopyStripMenuItemTextKey = "copyStripMenuItemText";
+
+        private static string DisplayProfileSignatureToolTipKey = "graphTbBtnDisplayProfileSignatureToolTip";
+        private static string DeleteSelectedProfileToolTipKey = "graphTbBtnDeleteSelectedProfileToolTip";
+        private static string AddProfileGraphToolTipKey = "graphTbBtnAddProfileGraphToolTip";
+        private static string PanToSelectedProfileToolTipKey = "graphTbBtnPanToSelectedProfileToolTip";
+        private static string PanToProfilesSetToolTipKey = "graphTbBtnPanToProfilesSetToolTip";
+        private static string ShowAllProfilesToolTipKey = "graphTbBtnShowAllProfilesToolTip";
+        private static string ObserverHeightIgnoreToolTipKey = "graphTbBtnObserverHeightIgnoreToolTip";
+        private static string ZoomInToolTipKey = "graphTbBtnZoomInToolTip";
+        private static string ZoomOutToolTipKey = "graphTbBtnZoomOutToolTip";
+        private static string AddPageToolTipKey = "graphTbBtnAddPageToolTip";
+        private static string DeletePageToolTipKey = "graphTbBtnDeletePageToolTip";
+        private static string SaveToolTipKey = "graphTbBtnSaveToolTip";
+        private static string UpdateIntersectionsLinesToolTipKey = "graphTbBtnUpdateIntersectionsLinesToolTip";
+        private static string ProfileDetailsToolTipKey = "lvProfileDetailsToolTip"; 
+        private static string ChangeAllObserversHeightsToolTipKey = "btnChangeAllObserversHeightsToolTip"; 
+        private static string ProfilePropertiesIsVisibleColToolTipKey = "dgvProfilePropertiesIsVisibleColToolTip"; 
+        private static string ProfilePropertiesProfileNumberColToolTipKey = "dgvProfilePropertiesProfileNumberColToolTip"; 
+        private static string ProfilePropertiesAzimuthColToolTipKey = "dgvProfilePropertiesAzimuthColToolTip"; 
+        private static string ProfilePropertiesObserverHeightColToolTipKey = "dgvProfilePropertiesObserverHeightColToolTip"; 
+        private static string ProfilePropertiesProfileLengthColToolTipKey = "dgvProfilePropertiesProfileLengthColToolTip"; 
+        private static string ProfilePropertiesMinHeightColToolTipKey = "dgvProfilePropertiesMinHeightColToolTip"; 
+        private static string ProfilePropertiesMaxHeightColToolTipKey = "dgvProfilePropertiesMaxHeightColToolTip"; 
+        private static string ProfilePropertiesHeightDifferenceColToolTipKey = "dgvProfilePropertiesHeightDifferenceColToolTip"; 
+        private static string ProfilePropertiesDescendingAngleColToolTipKey = "dgvProfilePropertiesDescendingAngleColToolTip"; 
+        private static string ProfilePropertiesAscendingAngleColToolTipKey = "dgvProfilePropertiesAscendingAngleColToolTip"; 
+        private static string ProfilePropertiesVisiblePercentColToolTipKey = "dgvProfilePropertiesVisiblePercentColToolTip"; 
+
+        private static string ProfilePropertiesIsVisibleColHeaderKey = "dgvProfilePropertiesIsVisibleColHeader"; 
+        private static string ProfilePropertiesProfileNumberColHeaderKey = "dgvProfilePropertiesProfileNumberColHeader"; 
+        private static string ProfilePropertiesAzimuthColHeaderKey = "dgvProfilePropertiesAzimuthColHeader"; 
+        private static string ProfilePropertiesObserverHeightColHeaderKey = "dgvProfilePropertiesObserverHeightColHeader"; 
+        private static string ProfilePropertiesProfileLengthColHeaderKey = "dgvProfilePropertiesProfileLengthColHeader"; 
+        private static string ProfilePropertiesMinHeightColHeaderKey = "dgvProfilePropertiesMinHeightColHeader"; 
+        private static string ProfilePropertiesMaxHeightColHeaderKey = "dgvProfilePropertiesMaxHeightColHeader"; 
+        private static string ProfilePropertiesHeightDifferenceColHeaderKey = "dgvProfilePropertiesHeightDifferenceColHeader"; 
+        private static string ProfilePropertiesDescendingAngleColHeaderKey = "dgvProfilePropertiesDescendingAngleColHeader"; 
+        private static string ProfilePropertiesAscendingAngleColHeaderKey = "dgvProfilePropertiesAscendingAngleColHeader"; 
+        private static string ProfilePropertiesVisiblePercentColHeaderKey = "dgvProfilePropertiesVisiblePercentColHeader";
+
+        private static string ProfileDetailsStateTextKey = "lvProfileDetailsStateText";
+        private static string ProfileDetailsEndPointsTextKey = "lvProfileDetailsEndPointsText";
+        private static string ProfileDetailsAzimuthTextKey = "lvProfileDetailsAzimuthText";
+        private static string ProfileDetailsLengthTextKey = "lvProfileDetailsLengthText";
+        private static string ProfileDetailsHeightTextKey = "lvProfileDetailsHeightText";
+        private static string ProfileDetailsAnglesTextKey = "lvProfileDetailsAnglesText";
+        private static string ProfileDetailsVisibilityTextKey = "lvProfileDetailsVisibilityText";
+
+        private static string ProfilesSetSharedTextKey = "profilesSetSharedText";
+        private static string ProfilesSetNotSharedTextKey = "profilesSetNotSharedText";
+        private static string RemovingProfileMessageKey = "mbRemovingProfileMessage";
+        private static string RemovingTabMessageKey = "mbRemovingTabMessage";
+        private static string MessageBoxTitleKey = "messageBoxTitle";
+        private static string SelectFolderDescriptionKey = "fbdSelectFolderDescription";
+        private static string FolderAlreadyExistMessageKey = "mbFolderAlreadyExistMessage";
+        private static string DataExportProfilePropertiesHeaderKey = "dataExportProfilePropertiesHeader";
+        private static string DataExportPointsPropertiesHeaderKey = "dataExportPointsPropertiesHeader";
+        private static string LineNotFoundErrorMessageKey = "lineNotFoundErrorMessage";
+        private static string GraphTitleKey = "tabGraphTitle";
+
         private LocalizationConstants()
         {
             //TODO: Define a method to change a culture info to localization
@@ -162,26 +238,98 @@ namespace MilSpace.Profile.Localization
         public static string AddAvailableProfilesSetsToolTip => Instance.GetLocalization(AddAvailableProfilesSetsToolTipKey);
 
         //AddAvailableProfilesSetsModalWindow
-        public static string FiltersTitle => Instance.GetLocalization(FiltersTitleKey);
-        public static string NamePlaceholder => Instance.GetLocalization(NamePlaceholderKey);
-        public static string CreatorPlaceholder => Instance.GetLocalization(CreatorPlaceholderKey);
-        public static string GraphTypeText => Instance.GetLocalization(GraphTypeTextKey);
-        public static string CreationDateText => Instance.GetLocalization(CreationDateTextKey);
-        public static string FromText => Instance.GetLocalization(FromTextKey);
-        public static string ToText => Instance.GetLocalization(ToTextKey);
-        public static string PointsTypeText => Instance.GetLocalization(PointsTypeTextKey);
-        public static string FunTypeText => Instance.GetLocalization(FunTypeTextKey);
-        public static string PrimitiveTypeText => Instance.GetLocalization(PrimitiveTypeTextKey);
-        public static string FilterText => Instance.GetLocalization(FilterTextKey);
-        public static string AddToSessionText => Instance.GetLocalization(AddToSessionTextKey);
-        public static string CloseText => Instance.GetLocalization(CloseTextKey);
-        public static string ProfilesSetsNameColHeader => Instance.GetLocalization(ProfilesSetsNameColHeaderKey);
-        public static string ProfilesSetsCreatorColHeader => Instance.GetLocalization(ProfilesSetsCreatorColHeaderKey);
-        public static string ProfilesSetsDateColHeader => Instance.GetLocalization(ProfilesSetsDateColHeaderKey);
-        public static string ProfilesSetsTypeColHeader => Instance.GetLocalization(ProfilesSetsTypeColHeaderKey);
-        public static string ProfilesSetsSharedColHeader => Instance.GetLocalization(ProfilesSetsSharedColHeaderKey);
-        public static string ProfilesSetsTitle => Instance.GetLocalization(ProfilesSetsTitleKey);
-        public static string ResetText => Instance.GetLocalization(ResetTextKey);
+        public static string FiltersTitle => Instance.GetLocalization(FiltersTitleKey, "Фільтри");
+        public static string NamePlaceholder => Instance.GetLocalization(NamePlaceholderKey, "Назва профілю");
+        public static string CreatorPlaceholder => Instance.GetLocalization(CreatorPlaceholderKey, "Автор");
+        public static string GraphTypeText => Instance.GetLocalization(GraphTypeTextKey, "Усі типи");
+        public static string CreationDateText => Instance.GetLocalization(CreationDateTextKey, "Дата створення:");
+        public static string FromText => Instance.GetLocalization(FromTextKey, "з");
+        public static string ToText => Instance.GetLocalization(ToTextKey, "до");
+        public static string PointsTypeText => Instance.GetLocalization(PointsTypeTextKey, "Лінія");
+        public static string FunTypeText => Instance.GetLocalization(FunTypeTextKey, "\"Віяло\"");
+        public static string PrimitiveTypeText => Instance.GetLocalization(PrimitiveTypeTextKey, "Примітив");
+        public static string FilterText => Instance.GetLocalization(FilterTextKey, "Фільтрувати");
+        public static string AddToSessionText => Instance.GetLocalization(AddToSessionTextKey, "Додати до сесії");
+        public static string CloseText => Instance.GetLocalization(CloseTextKey, "Закрити");
+        public static string ProfilesSetsNameColHeader => Instance.GetLocalization(ProfilesSetsNameColHeaderKey, "Назва профілю");
+        public static string ProfilesSetsCreatorColHeader => Instance.GetLocalization(ProfilesSetsCreatorColHeaderKey, "Автор");
+        public static string ProfilesSetsDateColHeader => Instance.GetLocalization(ProfilesSetsDateColHeaderKey, "Дата");
+        public static string ProfilesSetsTypeColHeader => Instance.GetLocalization(ProfilesSetsTypeColHeaderKey, "Тип");
+        public static string ProfilesSetsSharedColHeader => Instance.GetLocalization(ProfilesSetsSharedColHeaderKey, "Спільний");
+        public static string ProfilesSetsTitle => Instance.GetLocalization(ProfilesSetsTitleKey, "Додати доступні набори профілів");
+        public static string ResetText => Instance.GetLocalization(ResetTextKey, "Скинути");
+
+        //ProfilesTreeModalWindow
+        public static string PointsNodeText => Instance.GetLocalization(PointsNodeTextKey, "Відрізки");
+        public static string FunNodeText => Instance.GetLocalization(FunNodeTextKey, "\"Віяло\"");
+        public static string PrimitiveNodeText => Instance.GetLocalization(PrimitiveNodeTextKey, "Графіка");
+        public static string CancelText => Instance.GetLocalization(CancelTextKey, "Відмінити");
+        public static string OkText => Instance.GetLocalization(OkTextKey, "OK");
+        public static string ProfilesTreeModalTitle => Instance.GetLocalization(ProfilesTreeModalTitleKey, "Дерево профілів");
+
+        //GraphWindow
+        public static string ObserverHeightText => Instance.GetLocalization(ObserverHeightTextKey, "Пункт спостереження (м)");
+        public static string VisibleLineColorText => Instance.GetLocalization(VisibleLineColorTextKey, "видимі");
+        public static string InvisibleLineColorText => Instance.GetLocalization(InvisibleLineColorTextKey, "невидимі");
+        public static string SelectedProfileNameText => Instance.GetLocalization(SelectedProfileNameTextKey, "Профіль:");
+        public static string CopyStripMenuItemText => Instance.GetLocalization(CopyStripMenuItemTextKey, "Скопіювати");
+        public static string DisplayProfileSignatureToolTip => Instance.GetLocalization(DisplayProfileSignatureToolTipKey, "Відобразити підписи профілів на графіку");
+        public static string DeleteSelectedProfileToolTip => Instance.GetLocalization(DeleteSelectedProfileToolTipKey, "Видалити вибраний профіль з графіка");
+        public static string AddProfileGraphToolTip => Instance.GetLocalization(AddProfileGraphToolTipKey, "Додати профіль на графік");
+        public static string PanToSelectedProfileToolTip => Instance.GetLocalization(PanToSelectedProfileToolTipKey, "Позиціонування на вибраний профіль");
+        public static string PanToProfilesSetToolTip => Instance.GetLocalization(PanToProfilesSetToolTipKey, "Позиціонування на набір профілів");
+        public static string ShowAllProfilesToolTip => Instance.GetLocalization(ShowAllProfilesToolTipKey, "Показати всі профілі");
+        public static string ObserverHeightIgnoreToolTip => Instance.GetLocalization(ObserverHeightIgnoreToolTipKey, "Враховувати/ігнорувати висоту пункту спостереження при масштабуванні");
+        public static string ZoomInToolTip => Instance.GetLocalization(ZoomInToolTipKey, "Збільшити масштаб");
+        public static string ZoomOutToolTip => Instance.GetLocalization(ZoomOutToolTipKey, "Зменшити масштаб");
+        public static string AddPageToolTip => Instance.GetLocalization(AddPageToolTipKey, "Додати нову вкладку для графіка");
+        public static string DeletePageToolTip => Instance.GetLocalization(DeletePageToolTipKey, "Видалити вкладку");
+        public static string SaveToolTip = Instance.GetLocalization(SaveToolTipKey, "Зберегти дані");
+        public static string UpdateIntersectionsLinesToolTip => Instance.GetLocalization(UpdateIntersectionsLinesToolTipKey, "Розрахувати лінії перетину з шарами");
+        public static string ProfileDetailsToolTip => Instance.GetLocalization(ProfileDetailsToolTipKey, "Щоб скопіювати віділені рядки натисніть праву клавішу миші");
+        public static string ChangeAllObserversHeightsToolTip => Instance.GetLocalization(ChangeAllObserversHeightsToolTipKey, "Змінити висоту всіх пунктів спостереження");
+        public static string ProfilePropertiesIsVisibleColToolTip => Instance.GetLocalization(ProfilePropertiesIsVisibleColToolTipKey, "Показати/сховати профіль");
+        public static string ProfilePropertiesProfileNumberColToolTip => Instance.GetLocalization(ProfilePropertiesProfileNumberColToolTipKey, "Номер профіля");
+        public static string ProfilePropertiesAzimuthColToolTip => Instance.GetLocalization(ProfilePropertiesAzimuthColToolTipKey, "Азимут");
+        public static string ProfilePropertiesObserverHeightColToolTip => Instance.GetLocalization(ProfilePropertiesObserverHeightColToolTipKey, "Висота пункту спостереження (м)");
+        public static string ProfilePropertiesProfileLengthColToolTip => Instance.GetLocalization(ProfilePropertiesProfileLengthColToolTipKey, "Довжина профіля (м)");
+        public static string ProfilePropertiesMinHeightColToolTip => Instance.GetLocalization(ProfilePropertiesMinHeightColToolTipKey, "Мінімальна висота (м)");
+        public static string ProfilePropertiesMaxHeightColToolTip => Instance.GetLocalization(ProfilePropertiesMaxHeightColToolTipKey, "Максимальна висота (м)");
+        public static string ProfilePropertiesHeightDifferenceColToolTip => Instance.GetLocalization(ProfilePropertiesHeightDifferenceColToolTipKey, "Різниця висот (м)");
+        public static string ProfilePropertiesDescendingAngleColToolTip => Instance.GetLocalization(ProfilePropertiesDescendingAngleColToolTipKey, "Максимальний кут спуску (градуси)");
+        public static string ProfilePropertiesAscendingAngleColToolTip => Instance.GetLocalization(ProfilePropertiesAscendingAngleColToolTipKey, "Максимальний кут підйому (градуси)");
+        public static string ProfilePropertiesVisiblePercentColToolTip => Instance.GetLocalization(ProfilePropertiesVisiblePercentColToolTipKey, "Процент видимих зон");
+        public static string ProfilePropertiesIsVisibleColHeader => Instance.GetLocalization(ProfilePropertiesIsVisibleColHeaderKey, "ВД");
+        public static string ProfilePropertiesProfileNumberColHeader => Instance.GetLocalization(ProfilePropertiesProfileNumberColHeaderKey, "Н");
+        public static string ProfilePropertiesAzimuthColHeader => Instance.GetLocalization(ProfilePropertiesAzimuthColHeaderKey, "АЗ");
+        public static string ProfilePropertiesObserverHeightColHeader => Instance.GetLocalization(ProfilePropertiesObserverHeightColHeaderKey, "В");
+        public static string ProfilePropertiesProfileLengthColHeader => Instance.GetLocalization(ProfilePropertiesProfileLengthColHeaderKey, "Д");
+        public static string ProfilePropertiesMinHeightColHeader => Instance.GetLocalization(ProfilePropertiesMinHeightColHeaderKey, "МнВ");
+        public static string ProfilePropertiesMaxHeightColHeader => Instance.GetLocalization(ProfilePropertiesMaxHeightColHeaderKey, "МкВ");
+        public static string ProfilePropertiesHeightDifferenceColHeader => Instance.GetLocalization(ProfilePropertiesHeightDifferenceColHeaderKey, "РВ");
+        public static string ProfilePropertiesDescendingAngleColHeader => Instance.GetLocalization(ProfilePropertiesDescendingAngleColHeaderKey, "КС");
+        public static string ProfilePropertiesAscendingAngleColHeader => Instance.GetLocalization(ProfilePropertiesAscendingAngleColHeaderKey, "КП");
+        public static string ProfilePropertiesVisiblePercentColHeader => Instance.GetLocalization(ProfilePropertiesVisiblePercentColHeaderKey, "ВП");
+        public static string ProfileDetailsStateText => Instance.GetLocalization(ProfileDetailsStateTextKey, "Стан:");
+        public static string ProfileDetailsEndPointsText => Instance.GetLocalization(ProfileDetailsEndPointsTextKey, "Початок - кінець");
+        public static string ProfileDetailsAzimuthText => Instance.GetLocalization(ProfileDetailsAzimuthTextKey, "Азимут:");
+        public static string ProfileDetailsLengthText => Instance.GetLocalization(ProfileDetailsLengthTextKey, "Довжина:");
+        public static string ProfileDetailsHeightText => Instance.GetLocalization(ProfileDetailsHeightTextKey, "Висота (м):");
+        public static string ProfileDetailsAnglesText => Instance.GetLocalization(ProfileDetailsAnglesTextKey, "Кути:");
+        public static string ProfileDetailsVisibilityText => Instance.GetLocalization(ProfileDetailsVisibilityTextKey, "Видимі зони (%):");
+        public static string ProfilesSetSharedText => Instance.GetLocalization(ProfilesSetSharedTextKey, "Спільний");
+        public static string ProfilesSetNotSharedText => Instance.GetLocalization(ProfilesSetNotSharedTextKey, "Приватний");
+        public static string RemovingProfileMessage => Instance.GetLocalization(RemovingProfileMessageKey, "Ви дійсно хочете видалити профіль?");
+        public static string RemovingTabMessage => Instance.GetLocalization(RemovingTabMessageKey, "Ви дійсно хочете видалити вкладку?");
+        public static string MessageBoxTitle => Instance.GetLocalization(MessageBoxTitleKey, "MilSpace");
+        public static string SelectFolderDescription => Instance.GetLocalization(SelectFolderDescriptionKey, "Виберіть папку для збереження даних");
+        public static string FolderAlreadyExistMessage => Instance.GetLocalization(FolderAlreadyExistMessageKey, "Каталог з іменем {1} вже існує \n Ви дійсно хочете оновити дані?");
+        public static string DataExportProfilePropertiesHeader => Instance.GetLocalization(DataExportProfilePropertiesHeaderKey, $"Номер; Назва профілю; Зовнішній; Стан; Точка початку; Точка кінцю;" +
+                                                                                                                                 $"Азимут; Пункт спостереження; Довжина; Макс. висота; Різниця висот;" +
+                                                                                                                                 $"Мін. висота; Макс. кут підйому; Макс. кут спуску; Процент видимих зон");
+        public static string DataExportPointsPropertiesHeader => Instance.GetLocalization(DataExportPointsPropertiesHeaderKey, "Номер; X; Y; Z; Відстань; Точка перегину; Видима; Перетини");
+        public static string LineNotFoundErrorMessage => Instance.GetLocalization(LineNotFoundErrorMessageKey, "Лінію не знайдено");
+        public static string GraphTitle => Instance.GetLocalization(GraphTitleKey, "Графік");
         public static string SavedProfilesModalWindowText => Instance.GetLocalization(SavedProfilesModalWindowTextKey);
 
 
