@@ -72,9 +72,9 @@
             this.GenerateButton.AutoSize = true;
             this.GenerateButton.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.GenerateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.GenerateButton.Location = new System.Drawing.Point(0, 207);
+            this.GenerateButton.Location = new System.Drawing.Point(0, 180);
             this.GenerateButton.Name = "GenerateButton";
-            this.GenerateButton.Size = new System.Drawing.Size(357, 25);
+            this.GenerateButton.Size = new System.Drawing.Size(260, 25);
             this.GenerateButton.TabIndex = 1;
             this.GenerateButton.Text = "Generate";
             this.GenerateButton.UseVisualStyleBackColor = true;
@@ -96,7 +96,7 @@
             this.SurfaceComboBox.FormattingEnabled = true;
             this.SurfaceComboBox.Location = new System.Drawing.Point(0, 15);
             this.SurfaceComboBox.Name = "SurfaceComboBox";
-            this.SurfaceComboBox.Size = new System.Drawing.Size(381, 21);
+            this.SurfaceComboBox.Size = new System.Drawing.Size(284, 21);
             this.SurfaceComboBox.TabIndex = 41;
             // 
             // panel1
@@ -106,7 +106,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(381, 44);
+            this.panel1.Size = new System.Drawing.Size(284, 44);
             this.panel1.TabIndex = 54;
             // 
             // panel2
@@ -122,7 +122,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(260, 153);
+            this.panel2.Size = new System.Drawing.Size(192, 153);
             this.panel2.TabIndex = 55;
             // 
             // PlantsComboBox
@@ -131,7 +131,7 @@
             this.PlantsComboBox.FormattingEnabled = true;
             this.PlantsComboBox.Location = new System.Drawing.Point(0, 15);
             this.PlantsComboBox.Name = "PlantsComboBox";
-            this.PlantsComboBox.Size = new System.Drawing.Size(260, 21);
+            this.PlantsComboBox.Size = new System.Drawing.Size(192, 21);
             this.PlantsComboBox.TabIndex = 41;
             // 
             // PlantsLayerLabel
@@ -167,9 +167,9 @@
             this.panel3.Controls.Add(this.PlantsHightComboBox);
             this.panel3.Controls.Add(this.PlantsHightLablel);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(269, 3);
+            this.panel3.Location = new System.Drawing.Point(201, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(109, 153);
+            this.panel3.Size = new System.Drawing.Size(80, 153);
             this.panel3.TabIndex = 56;
             // 
             // panel6
@@ -181,7 +181,7 @@
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel6.Location = new System.Drawing.Point(0, 206);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(381, 232);
+            this.panel6.Size = new System.Drawing.Size(284, 205);
             this.panel6.TabIndex = 58;
             // 
             // toolStrip1
@@ -193,10 +193,10 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.AddButton,
             this.RemoveButton});
-            this.toolStrip1.Location = new System.Drawing.Point(357, 15);
+            this.toolStrip1.Location = new System.Drawing.Point(260, 15);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStrip1.Size = new System.Drawing.Size(24, 217);
+            this.toolStrip1.Size = new System.Drawing.Size(24, 190);
             this.toolStrip1.TabIndex = 60;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -222,7 +222,7 @@
             this.ProfilesListBox.FormattingEnabled = true;
             this.ProfilesListBox.Location = new System.Drawing.Point(0, 15);
             this.ProfilesListBox.Name = "ProfilesListBox";
-            this.ProfilesListBox.Size = new System.Drawing.Size(381, 217);
+            this.ProfilesListBox.Size = new System.Drawing.Size(284, 190);
             this.ProfilesListBox.TabIndex = 59;
             // 
             // ProfilesLabel
@@ -249,7 +249,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(381, 159);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(284, 159);
             this.tableLayoutPanel1.TabIndex = 64;
             // 
             // BuildingsLayerLabel
@@ -269,7 +269,7 @@
             this.BuildingsLayerComboBox.FormattingEnabled = true;
             this.BuildingsLayerComboBox.Location = new System.Drawing.Point(0, 51);
             this.BuildingsLayerComboBox.Name = "BuildingsLayerComboBox";
-            this.BuildingsLayerComboBox.Size = new System.Drawing.Size(260, 21);
+            this.BuildingsLayerComboBox.Size = new System.Drawing.Size(192, 21);
             this.BuildingsLayerComboBox.TabIndex = 43;
             // 
             // TransportLayerLabel
@@ -289,7 +289,7 @@
             this.TransportLayerComboBox.FormattingEnabled = true;
             this.TransportLayerComboBox.Location = new System.Drawing.Point(0, 87);
             this.TransportLayerComboBox.Name = "TransportLayerComboBox";
-            this.TransportLayerComboBox.Size = new System.Drawing.Size(260, 21);
+            this.TransportLayerComboBox.Size = new System.Drawing.Size(192, 21);
             this.TransportLayerComboBox.TabIndex = 45;
             // 
             // HydroLayerLabel
@@ -309,7 +309,7 @@
             this.HydroLayerComboBox.FormattingEnabled = true;
             this.HydroLayerComboBox.Location = new System.Drawing.Point(0, 123);
             this.HydroLayerComboBox.Name = "HydroLayerComboBox";
-            this.HydroLayerComboBox.Size = new System.Drawing.Size(260, 21);
+            this.HydroLayerComboBox.Size = new System.Drawing.Size(192, 21);
             this.HydroLayerComboBox.TabIndex = 47;
             // 
             // PlantsHightComboBox
@@ -318,7 +318,7 @@
             this.PlantsHightComboBox.FormattingEnabled = true;
             this.PlantsHightComboBox.Location = new System.Drawing.Point(0, 15);
             this.PlantsHightComboBox.Name = "PlantsHightComboBox";
-            this.PlantsHightComboBox.Size = new System.Drawing.Size(109, 21);
+            this.PlantsHightComboBox.Size = new System.Drawing.Size(80, 21);
             this.PlantsHightComboBox.TabIndex = 55;
             // 
             // BuildingsHightLabel
@@ -338,7 +338,7 @@
             this.BuildingsHightComboBox.FormattingEnabled = true;
             this.BuildingsHightComboBox.Location = new System.Drawing.Point(0, 51);
             this.BuildingsHightComboBox.Name = "BuildingsHightComboBox";
-            this.BuildingsHightComboBox.Size = new System.Drawing.Size(109, 21);
+            this.BuildingsHightComboBox.Size = new System.Drawing.Size(80, 21);
             this.BuildingsHightComboBox.TabIndex = 57;
             // 
             // TransportHightLabel
@@ -357,7 +357,7 @@
             this.TransportHightTextBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.TransportHightTextBox.Location = new System.Drawing.Point(0, 87);
             this.TransportHightTextBox.Name = "TransportHightTextBox";
-            this.TransportHightTextBox.Size = new System.Drawing.Size(109, 20);
+            this.TransportHightTextBox.Size = new System.Drawing.Size(80, 20);
             this.TransportHightTextBox.TabIndex = 59;
             // 
             // HydroHightLabel
@@ -376,7 +376,7 @@
             this.HydroHightTextBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.HydroHightTextBox.Location = new System.Drawing.Point(0, 122);
             this.HydroHightTextBox.Name = "HydroHightTextBox";
-            this.HydroHightTextBox.Size = new System.Drawing.Size(109, 20);
+            this.HydroHightTextBox.Size = new System.Drawing.Size(80, 20);
             this.HydroHightTextBox.TabIndex = 61;
             // 
             // splitter1
@@ -385,7 +385,7 @@
             this.splitter1.Dock = System.Windows.Forms.DockStyle.Top;
             this.splitter1.Location = new System.Drawing.Point(0, 203);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(381, 3);
+            this.splitter1.Size = new System.Drawing.Size(284, 3);
             this.splitter1.TabIndex = 65;
             this.splitter1.TabStop = false;
             // 
@@ -393,8 +393,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(381, 438);
+            this.ClientSize = new System.Drawing.Size(284, 411);
             this.Controls.Add(this.panel6);
             this.Controls.Add(this.splitter1);
             this.Controls.Add(this.tableLayoutPanel1);
