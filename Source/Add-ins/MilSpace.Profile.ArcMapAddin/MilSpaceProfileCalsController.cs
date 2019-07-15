@@ -205,6 +205,7 @@ namespace MilSpace.Profile
             if (profileSetting == null)
             {
                 profileSetting = new ProfileSettings();
+                profileSetting.Type = profileType;
             }
 
 
@@ -232,6 +233,9 @@ namespace MilSpace.Profile
                     {
                         profileLines.AddRange(lines);
                     }
+
+                    profileSetting.Azimuth1 = View.FunAzimuth1;
+                    profileSetting.Azimuth2 = View.FunAzimuth2;
                 }
                 catch (MilSpaceProfileLackOfParameterException ex)
                 {
@@ -257,6 +261,7 @@ namespace MilSpace.Profile
             profileSetting.ProfileLines = profileLines.ToArray();
 
             profileSettings[profileType] = profileSetting;
+            
 
             InvokeOnProfileSettingsChanged();
 
@@ -280,7 +285,7 @@ namespace MilSpace.Profile
                 logger.InfoEx($"Profile {newProfileId}. Generation started");
                 var newProfileName = GenerateProfileName(newProfileId);
 
-                var session = manager.GenerateProfile(View.DemLayerName, profileSetting.ProfileLines, View.SelectedProfileSettingsType, newProfileId, newProfileName, View.ObserveHeight);
+                var session = manager.GenerateProfile(profileSetting.DemLayerName, profileSetting.ProfileLines, View.SelectedProfileSettingsType, newProfileId, newProfileName, View.ObserveHeight, profileSetting.AzimuthToStore);
                 logger.InfoEx($"Profile {newProfileId}. Generated");
 
                 if (session.DefinitionType == ProfileSettingsTypeEnum.Primitives)

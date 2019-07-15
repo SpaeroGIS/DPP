@@ -1,5 +1,6 @@
 ﻿using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.Geometry;
+using MilSpace.Core;
 using MilSpace.Core.Tools;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,13 @@ namespace MilSpace.DataAccess.DataTransfer
 {
     public class ProfileSession
     {
+        static Logger logger = Logger.GetLoggerEx("ProfileSession");
+        
+        // The Azimuth value  has format "{0}:{1}" 
+        static readonly char[] athimuthSeparator = new char[] { ':' };
+        private double[] azimuth;
+
+
         public ProfileLine[] ProfileLines;
         public ProfileSurface[] ProfileSurfaces;
         public double ObserverHeight;
@@ -20,6 +28,7 @@ namespace MilSpace.DataAccess.DataTransfer
         /// </summary>
         public ProfileSettingsTypeEnum DefinitionType;
         public int SessionId;
+        public string Azimuth;
         public string SessionName;
         public string SurfaceLayerName;
 
@@ -28,18 +37,58 @@ namespace MilSpace.DataAccess.DataTransfer
         /// </summary>
         [XmlIgnore]
         public DateTime CreatedOn;
-        
+
         /// <summary>
         /// Shows if the profile session is availabe for share
         /// </summary>
         [XmlIgnore]
         public bool Shared;
-        
+
         /// <summary>
         /// Proifile session creator
         /// </summary>
         [XmlIgnore]
         public string CreatedBy;
+
+        [XmlIgnore]
+        public double Azimuth1
+        {
+            get
+            {
+
+                if (Azimuth == null)
+                {
+                    return double.MinValue;
+                }
+
+                if (azimuth == null)
+                {
+                    azimuth = ParseAzimuth(Azimuth);
+                }
+
+                return azimuth[0];
+            }
+        }
+
+        [XmlIgnore]
+        public double Azimuth2
+        {
+            get
+            {
+
+                if (Azimuth == null)
+                {
+                    return double.MinValue;
+                }
+
+                if (azimuth == null)
+                {
+                    azimuth = ParseAzimuth(Azimuth);
+                }
+
+                return azimuth[1];
+            }
+        }
 
         [XmlIgnore]
         public List<GroupedLines> Segments;
@@ -82,51 +131,85 @@ namespace MilSpace.DataAccess.DataTransfer
             return new IPolyline[] { converter(ProfileLines[lineId]) };
         }
 
-    public void SetSegments(ISpatialReference spatialReference, ProfileLine profileLine = null)
-    {
-        if (profileLine == null)
+        public void SetSegments(ISpatialReference spatialReference, ProfileLine profileLine = null)
         {
-            Segments = ProfileLines.Select(line =>
+            if (profileLine == null)
             {
-                var lines = new List<ProfileLine> { line };
+                Segments = ProfileLines.Select(line =>
+                {
+                    var lines = new List<ProfileLine> { line };
+                    lines[0].Visible = true;
+
+                    var polyline = new List<IPolyline> { line.Line };
+
+                    return new GroupedLines
+                    {
+                        Lines = lines,
+                        LineId = line.Id,
+                        Polylines = polyline,
+                        InvisibleColor = new RgbColor() { Red = 255, Green = 0, Blue = 0 },
+                        VisibleColor = new RgbColor() { Red = 0, Green = 255, Blue = 0 },
+                    };
+
+                }).ToList();
+            }
+            else
+            {
+                var lines = new List<ProfileLine> { profileLine };
                 lines[0].Visible = true;
 
-                var polyline = new List<IPolyline> { line.Line };
+                var polyline = new List<IPolyline> { profileLine.Line };
 
-                return new GroupedLines
+
+                Segments.Add(new GroupedLines
                 {
                     Lines = lines,
-                    LineId = line.Id,
+                    LineId = profileLine.Id,
                     Polylines = polyline,
                     InvisibleColor = new RgbColor() { Red = 255, Green = 0, Blue = 0 },
                     VisibleColor = new RgbColor() { Red = 0, Green = 255, Blue = 0 },
-                };
-
-            }).ToList();
+                });
+            }
         }
-        else
+
+        private static double[] ParseAzimuth(string valueToParse)
         {
-            var lines = new List<ProfileLine> { profileLine };
-            lines[0].Visible = true;
-
-            var polyline = new List<IPolyline> { profileLine.Line };
-
-
-            Segments.Add(new GroupedLines
+            if (string.IsNullOrWhiteSpace(valueToParse))
             {
-                Lines = lines,
-                LineId = profileLine.Id,
-                Polylines = polyline,
-                InvisibleColor = new RgbColor() { Red = 255, Green = 0, Blue = 0 },
-                VisibleColor = new RgbColor() { Red = 0, Green = 255, Blue = 0 },
-            });
-        }
-    }
+                return null;
+            }
 
-    private static string Serialize(ProfileSession session)
+            var athimutList = valueToParse.Split(athimuthSeparator, StringSplitOptions.RemoveEmptyEntries);
+            if (athimutList.Length < 2)
+            {
+                return null;
+            }
+
+            logger.InfoEx("Try to parse Athimuth {0}".InvariantFormat(valueToParse));
+            
+
+            double azm1;
+            double azm2;
+            if (!double.TryParse(athimutList[0], out azm1))
+            {
+                logger.WarnEx("Can not parse value {0}".InvariantFormat(athimutList[0]));
+                return new double[] { double.MinValue, double.MinValue }; 
+            }
+
+            if (!double.TryParse(athimutList[1], out azm2))
+            {
+                logger.WarnEx("Can not parse value {0}".InvariantFormat(athimutList[1]));
+                return new double[] { double.MinValue, double.MinValue }; 
+            }
+
+            return new double[] { azm1, azm2 };
+
+
+        }
+
+        private static string Serialize(ProfileSession session)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(ProfileSession));
-
 
             using (MemoryStream stream = new MemoryStream())
             {
@@ -135,8 +218,6 @@ namespace MilSpace.DataAccess.DataTransfer
                 {
 
                     var resu = Encoding.UTF8.GetString((stream as MemoryStream).ToArray());
-
-
                     //
                     ProfileSession sessionOut = null;
 

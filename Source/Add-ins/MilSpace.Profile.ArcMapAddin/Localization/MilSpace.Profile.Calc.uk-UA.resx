@@ -561,6 +561,12 @@
   <data name="txtAttrProfileCountText" xml:space="preserve">
     <value>Кількість ліній:</value>
   </data>
+  <data name="txtAttrProfileCreatorText" xml:space="preserve">
+    <value>Автор:</value>
+  </data>
+  <data name="txtAttrProfileDateText" xml:space="preserve">
+    <value>Дата:</value>
+  </data>
   <data name="txtAttrProfileDistanceText" xml:space="preserve">
     <value>Відстань:</value>
   </data>
