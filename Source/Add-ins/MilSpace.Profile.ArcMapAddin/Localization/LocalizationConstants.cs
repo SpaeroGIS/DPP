@@ -184,10 +184,8 @@ namespace MilSpace.Profile.Localization
         private static string AttrProfileAzimuth2TextKey = "txtAttrProfileAzimuth2Text";
         private static string AttrProfileBasePointTextKey = "txtAttrProfileBasePointText";
         private static string AttrProfileCountTextKey = "txtAttrProfileCountText";
-
-
-         
-
+        private static string AttrProfileCreatorTextKey = "txtAttrProfileCreatorText";
+        private static string AttrProfileDateTextKey = "txtAttrProfileDateText";
 
 
         private LocalizationConstants()
@@ -195,6 +193,8 @@ namespace MilSpace.Profile.Localization
             //TODO: Define a method to change a culture info to localization
             mngr = new MilSpaceResourceManager("MilSpace.Profile.Calc", CultureInfo.GetCultureInfo("uk-UA"));
         }
+        public static string AttrProfileDateText => instance.GetLocalization(AttrProfileDateTextKey, "Дата");
+        public static string AttrProfileCreatorText => instance.GetLocalization(AttrProfileCreatorTextKey, "Автор");
         public static string AttrProfileCountText => instance.GetLocalization(AttrProfileCountTextKey, "Кількість ліній");
         public static string AttrProfileBasePointText => instance.GetLocalization(AttrProfileBasePointTextKey, "Базова точка(довгота / широта)");
         public static string AttrProfileAzimuthText => instance.GetLocalization(AttrProfileAzimuthTextKey, "Азимут");
