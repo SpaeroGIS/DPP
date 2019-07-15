@@ -201,5 +201,11 @@ namespace MilSpace.Profile
                 return dockableWindow;
             }
         }
+
+        //test
+        internal int GetSelectedProfilesSetId()
+        {
+            return View.GetSelectedSessionId();
+        }
 }
 }

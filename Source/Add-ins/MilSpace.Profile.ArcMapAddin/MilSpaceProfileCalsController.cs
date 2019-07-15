@@ -954,5 +954,11 @@ namespace MilSpace.Profile
                 OnMapSelectionChanged?.Invoke(new SelectedGraphicsArgs(cnt, len));
             }
         }
+
+        //test
+        internal ProfileSession GetSelectedSession()
+        {
+           return GetProfileById(MilSpaceProfileGraphsController.GetSelectedProfilesSetId());
+        }
     }
 }

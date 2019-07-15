@@ -135,6 +135,85 @@ namespace MilSpace.DataAccess.Facade
 
         }
 
+        public string AddProfileLinesTo3D(IEnumerable<IPolyline> profileLines)
+        {
+
+            string featureClassName = GenerateTemp3DLineStorage();
+
+            IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)calcWorkspace;
+            workspaceEdit.StartEditing(true);
+            workspaceEdit.StartEditOperation();
+
+
+            IFeatureClass calc = GetCalcProfileFeatureClass(featureClassName);
+            var GCS_WGS = Helper.GetBasePointSpatialReference();
+
+
+            profileLines.ToList().ForEach(
+                l =>
+                {
+                    var newLine = calc.CreateFeature();
+                    newLine.Shape = l;
+                    newLine.Store();
+                }
+                );
+
+
+            workspaceEdit.StopEditOperation();
+            workspaceEdit.StopEditing(true);
+
+            return featureClassName;
+        }
+
+        public string GenerateTemp3DLineStorage()
+        {
+            IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)calcWorkspace;
+            workspaceEdit.StartEditing(true);
+            workspaceEdit.StartEditOperation();
+
+            string newFeatureClassName = $"3DLine_L{Helper.GetTemporaryNameSuffix()}";
+
+            IWorkspace2 wsp2 = (IWorkspace2)calcWorkspace;
+            IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)calcWorkspace;
+
+            if(!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, newFeatureClassName))
+            {
+
+                IFeatureClassDescription fcDescription = new FeatureClassDescriptionClass();
+                IObjectClassDescription ocDescription = (IObjectClassDescription)fcDescription;
+                IFields fields = ocDescription.RequiredFields;
+
+
+                // Find the shape field in the required fields and modify its GeometryDef to
+                // use point geometry and to set the spatial reference.
+
+                int shapeFieldIndex = fields.FindField(fcDescription.ShapeFieldName);
+
+                IField field = fields.get_Field(shapeFieldIndex);
+                IGeometryDef geometryDef = field.GeometryDef;
+                IGeometryDefEdit geometryDefEdit = (IGeometryDefEdit)geometryDef;
+                geometryDefEdit.GeometryType_2 = esriGeometryType.esriGeometryPolyline;
+                geometryDefEdit.SpatialReference_2 = ArcMapInstance.Document.FocusMap.SpatialReference; ;
+
+                IFieldsEdit fieldsEdit = (IFieldsEdit)fields;
+                IField nameField = new FieldClass();
+                IFieldEdit nameFieldEdit = (IFieldEdit)nameField;
+                nameFieldEdit.Name_2 = "ID";
+                nameFieldEdit.Type_2 = esriFieldType.esriFieldTypeInteger;
+                fieldsEdit.AddField(nameField);
+
+                IFeatureClass featureClass = featureWorkspace.CreateFeatureClass(newFeatureClassName, fields,
+                    ocDescription.InstanceCLSID, ocDescription.ClassExtensionCLSID, esriFeatureType.esriFTSimple, "shape", "");
+
+            }
+
+            workspaceEdit.StopEditOperation();
+            workspaceEdit.StopEditing(true);
+
+            return newFeatureClassName;
+
+        }
+
         public void EraseProfileLines()
         {
             IFeatureClass calc = GetCalcProfileFeatureClass("CalcProfile_L");
