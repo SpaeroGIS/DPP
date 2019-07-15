@@ -558,6 +558,12 @@
   <data name="txtAttrProfileCountText" xml:space="preserve">
     <value>Line count</value>
   </data>
+  <data name="txtAttrProfileCreatorText" xml:space="preserve">
+    <value>Author:</value>
+  </data>
+  <data name="txtAttrProfileDateText" xml:space="preserve">
+    <value>Date:</value>
+  </data>
   <data name="txtAttrProfileDistanceText" xml:space="preserve">
     <value>Distance</value>
   </data>

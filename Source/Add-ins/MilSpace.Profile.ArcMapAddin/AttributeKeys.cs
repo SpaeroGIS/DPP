@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MilSpace.Profile
+﻿namespace MilSpace.Profile
 {
     internal static class AttributeKeys
     {
@@ -23,9 +17,9 @@ namespace MilSpace.Profile
         internal const string Azimuth = "Azimuth";
         internal const string Azimuth1 = "Azimuth1";
         internal const string Azimuth2 = "Azimuth2";
-        internal const string MapName = "MapName";
         internal const string CreatorName = "CreatorName";
         internal const string Date = "Date";
+        internal const string FromPoint = "FromPoint";
         internal const string ToPoint = "ToPoint";
 
         internal const string AttributeColumnName = "Attribute";

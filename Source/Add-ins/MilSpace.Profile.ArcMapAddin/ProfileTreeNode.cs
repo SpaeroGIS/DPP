@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MilSpace.Profile.Localization;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using ESRI.ArcGIS.Geometry;
-using MilSpace.Profile.Localization;
 
 namespace MilSpace.Profile
 {
-    internal class ProfileTreeNode: TreeNode
+    internal class ProfileTreeNode : TreeNode
     {
         private const string KeyColumnName = "Key";
         private const string AttributeColumnName = "Attribute";
@@ -29,44 +23,41 @@ namespace MilSpace.Profile
         private static readonly string azimuth = LocalizationConstants.AttrProfileAzimuthText;
         private static readonly string azimuth1 = LocalizationConstants.AttrProfileAzimuth1Text;
         private static readonly string azimuth2 = LocalizationConstants.AttrProfileAzimuth2Text;
-        private static readonly string creatorName = "Автор:";
-        private static readonly string date = "Дата:";
-        private static readonly string toPoint = "всампиртоьлбд";
-        
+        private static readonly string creatorName = LocalizationConstants.AttrProfileCreatorText;
+        private static readonly string date = LocalizationConstants.AttrProfileDateText;
+        private static readonly string toPoint = LocalizationConstants.AttrProfileEndPointText;
+
 
         #endregion
 
 
-        internal string ProfileName { get; set; }
-        internal int ProfileId { get; set; }
-        internal double ProfileDistance { get; set; }
+        //internal string ProfileName { get; set; }
+        //internal int ProfileId { get; set; }
+        //internal double ProfileDistance { get; set; }
 
-        internal double LineDistance { get; set; }
+        //internal double LineDistance { get; set; }
 
-        internal int LinesCount { get; set; }
+        //internal int LinesCount { get; set; }
 
-        internal IPoint BasePoint { get; set; }
+        //internal IPoint BasePoint { get; set; }
 
-        internal IPoint ToPoint { get; set; }
+        //internal IPoint ToPoint { get; set; }
 
-        internal string ProfileType { get; set; }
+        //internal string ProfileType { get; set; }
 
+        //internal double AzimuthFirst { get; set; }
 
+        //internal double AzimuthSecond { get; set; }
 
-        internal double AzimuthFirst { get; set; }
+        //internal string MapName { get; set; }
 
-        internal double AzimuthSecond { get; set; }
+        //internal string CreatorName { get; set; }
 
-        internal string MapName { get; set; }
-
-        internal string CreatorName { get; set; }
-
-        internal DateTime Date { get; set; }
+        //internal DateTime Date { get; set; }
 
         internal DataTable Attributes { get; private set; }
 
         internal bool IsProfileNode { get; set; }
-
 
         public ProfileTreeNode(string text, int imageIndex, int selectedImageIndex) : base(text, imageIndex, selectedImageIndex)
         {
@@ -93,6 +84,11 @@ namespace MilSpace.Profile
             SetAttributeValue(Attributes, AttributeKeys.LinesCount, lineCountValue);
         }
 
+        internal void SetStartPoint(string startPointValue)
+        {
+            SetAttributeValue(Attributes, AttributeKeys.FromPoint, startPointValue);
+        }
+
         internal void SetBasePoint(string basePointValue)
         {
             SetAttributeValue(Attributes, AttributeKeys.BasePoint, basePointValue);
@@ -105,7 +101,7 @@ namespace MilSpace.Profile
 
         internal void SetBasePointHeight(string height)
         {
-            SetAttributeValue(Attributes,AttributeKeys.SectionFirstPointHeight, height);
+            SetAttributeValue(Attributes, AttributeKeys.SectionFirstPointHeight, height);
         }
 
         internal void SetToPointHeight(string height)
@@ -113,20 +109,23 @@ namespace MilSpace.Profile
             SetAttributeValue(Attributes, AttributeKeys.SectionSecondPointHeight, height);
         }
 
-        internal void SetAzimuth1(string azimuth1Value)
+        internal void SetAzimuth(string azimuth1Value)
         {
-            SetAttributeValue(Attributes, AttributeKeys.Azimuth1, azimuth1Value);
+
+            SetAttributeValue(Attributes, AttributeKeys.Azimuth, azimuth1Value);
         }
 
-        internal void SetAzimuth2(string azimuth2Value)
+        internal void SetAzimuth1(double azimuth1Value)
         {
-            SetAttributeValue(Attributes, AttributeKeys.Azimuth2, azimuth2Value);
+
+            SetAttributeValue(Attributes, AttributeKeys.Azimuth1, azimuth1Value == double.MinValue ? "" : azimuth1Value.ToString("F0"));
         }
 
-        //internal void SetMapName(string mapNameValue)
-        //{
-        //    SetAttributeValue(Attributes, AttributeKeys.MapName, mapNameValue);
-        //}
+        internal void SetAzimuth2(double azimuth2Value)
+        {
+            SetAttributeValue(Attributes, AttributeKeys.Azimuth2, azimuth2Value == double.MinValue ? "" : azimuth2Value.ToString("F0"));
+        }
+
 
         internal void SetCreatorName(string creatorNameValue)
         {
@@ -141,7 +140,7 @@ namespace MilSpace.Profile
         private DataTable GenerateDataTable()
         {
             var table = new DataTable();
-            
+
             table.Columns.Add(KeyColumnName, typeof(string));
             table.Columns.Add(AttributeColumnName, typeof(string));
             table.Columns.Add(ValueColumnName, typeof(string));
@@ -199,7 +198,17 @@ namespace MilSpace.Profile
             toPointRow[AttributeColumnName] = toPoint;
             table.Rows.Add(toPointRow);
 
+            toPointRow = table.NewRow();
+            toPointRow[KeyColumnName] = AttributeKeys.FromPoint;
+            toPointRow[AttributeColumnName] = firstPoint;
+            table.Rows.Add(toPointRow);
+
             var azimuthFirstRow = table.NewRow();
+            azimuthFirstRow[KeyColumnName] = AttributeKeys.Azimuth;
+            azimuthFirstRow[AttributeColumnName] = azimuth;
+            table.Rows.Add(azimuthFirstRow);
+
+            azimuthFirstRow = table.NewRow();
             azimuthFirstRow[KeyColumnName] = AttributeKeys.Azimuth1;
             azimuthFirstRow[AttributeColumnName] = azimuth1;
             table.Rows.Add(azimuthFirstRow);
