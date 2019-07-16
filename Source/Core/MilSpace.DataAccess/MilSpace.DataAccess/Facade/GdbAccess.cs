@@ -29,7 +29,7 @@ namespace MilSpace.DataAccess.Facade
         {
             get
             {
-                if (instance == null)
+                if(instance == null)
                 {
                     try
                     {
@@ -79,7 +79,7 @@ namespace MilSpace.DataAccess.Facade
         {
             set
             {
-                if (application == null)
+                if(application == null)
                 {
                     ArcMapInstance.Application = application = value;
                 }
@@ -97,13 +97,12 @@ namespace MilSpace.DataAccess.Facade
             IWorkspace2 wsp2 = (IWorkspace2)calcWorkspace;
             IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)calcWorkspace;
 
-            if (!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, newFeatureClassName))
+            if(!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, newFeatureClassName))
             {
 
                 IFeatureClassDescription fcDescription = new FeatureClassDescriptionClass();
                 IObjectClassDescription ocDescription = (IObjectClassDescription)fcDescription;
                 IFields fields = ocDescription.RequiredFields;
-
 
                 // Find the shape field in the required fields and modify its GeometryDef to
                 // use point geometry and to set the spatial reference.
@@ -137,8 +136,7 @@ namespace MilSpace.DataAccess.Facade
 
         public string AddProfileLinesTo3D(IEnumerable<IPolyline> profileLines)
         {
-
-            string featureClassName = GenerateTemp3DLineStorage();
+            string featureClassName = GenerateTemp3DLineStorage(); 
 
             IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)calcWorkspace;
             workspaceEdit.StartEditing(true);
@@ -147,7 +145,6 @@ namespace MilSpace.DataAccess.Facade
 
             IFeatureClass calc = GetCalcProfileFeatureClass(featureClassName);
             var GCS_WGS = Helper.GetBasePointSpatialReference();
-
 
             profileLines.ToList().ForEach(
                 l =>
@@ -171,7 +168,7 @@ namespace MilSpace.DataAccess.Facade
             workspaceEdit.StartEditing(true);
             workspaceEdit.StartEditOperation();
 
-            string newFeatureClassName = $"3DLine_L{Helper.GetTemporaryNameSuffix()}";
+            string newFeatureClassName = $"Line3D_L{Helper.GetTemporaryNameSuffix()}";
 
             IWorkspace2 wsp2 = (IWorkspace2)calcWorkspace;
             IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)calcWorkspace;
@@ -182,10 +179,6 @@ namespace MilSpace.DataAccess.Facade
                 IFeatureClassDescription fcDescription = new FeatureClassDescriptionClass();
                 IObjectClassDescription ocDescription = (IObjectClassDescription)fcDescription;
                 IFields fields = ocDescription.RequiredFields;
-
-
-                // Find the shape field in the required fields and modify its GeometryDef to
-                // use point geometry and to set the spatial reference.
 
                 int shapeFieldIndex = fields.FindField(fcDescription.ShapeFieldName);
 
@@ -204,14 +197,12 @@ namespace MilSpace.DataAccess.Facade
 
                 IFeatureClass featureClass = featureWorkspace.CreateFeatureClass(newFeatureClassName, fields,
                     ocDescription.InstanceCLSID, ocDescription.ClassExtensionCLSID, esriFeatureType.esriFTSimple, "shape", "");
-
             }
 
             workspaceEdit.StopEditOperation();
             workspaceEdit.StopEditing(true);
 
             return newFeatureClassName;
-
         }
 
         public void EraseProfileLines()
@@ -227,7 +218,7 @@ namespace MilSpace.DataAccess.Facade
             workspaceEdit.StartEditing(true);
             workspaceEdit.StartEditOperation();
 
-            while ((feature = featureCursor.NextFeature()) != null)
+            while((feature = featureCursor.NextFeature()) != null)
             {
                 feature.Delete();
             }
@@ -246,7 +237,7 @@ namespace MilSpace.DataAccess.Facade
             IWorkspace2 wsp2 = (IWorkspace2)calcWorkspace;
             IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)calcWorkspace;
 
-            if (!wsp2.get_NameExists(esriDatasetType.esriDTTable, resultTable))
+            if(!wsp2.get_NameExists(esriDatasetType.esriDTTable, resultTable))
             {
                 //TODO: Create the feature class
                 throw new FileNotFoundException(resultTable);
@@ -260,24 +251,24 @@ namespace MilSpace.DataAccess.Facade
             IWorkspace2 wsp2 = (IWorkspace2)calcWorkspace;
             IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)calcWorkspace;
 
-           
+
 
             try
             {
                 var datasets = calcWorkspace.get_Datasets(esriDatasetType.esriDTTable);
                 IDataset tabledataset = datasets.Next();
-                if (tabledataset != null)
+                if(tabledataset != null)
                 {
 
-                    while (tabledataset != null)
+                    while(tabledataset != null)
                     {
-                        if (!tabledataset.Name.Equals(resultTable))
+                        if(!tabledataset.Name.Equals(resultTable))
                         {
                             tabledataset = datasets.Next();
                             continue;
                         }
 
-                        if (!tabledataset.CanDelete())
+                        if(!tabledataset.CanDelete())
                         {
                             throw new MilSpaceCanotDeletePrifileCalcTable(resultTable, MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection);
                         }
@@ -290,17 +281,17 @@ namespace MilSpace.DataAccess.Facade
                 //Delete temprorary Feature class (Profile lites)
                 datasets = calcWorkspace.get_Datasets(esriDatasetType.esriDTFeatureClass);
 
-                if (tabledataset != null)
+                if(tabledataset != null)
                 {
-                    while (tabledataset != null)
+                    while(tabledataset != null)
                     {
-                        if (!tabledataset.Name.Equals(lineFeatureClass))
+                        if(!tabledataset.Name.Equals(lineFeatureClass))
                         {
                             tabledataset = datasets.Next();
                             continue;
                         }
 
-                        if (!tabledataset.CanDelete())
+                        if(!tabledataset.CanDelete())
                         {
                             throw new MilSpaceCanotDeletePrifileCalcTable(lineFeatureClass, MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection);
                         }
@@ -313,12 +304,12 @@ namespace MilSpace.DataAccess.Facade
                 return true;
 
             }
-            catch (MilSpaceCanotDeletePrifileCalcTable ex)
+            catch(MilSpaceCanotDeletePrifileCalcTable ex)
             {
                 //TODO: add logging
                 throw;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 //TODO: add logging
 
@@ -334,7 +325,7 @@ namespace MilSpace.DataAccess.Facade
             IWorkspace2 wsp2 = (IWorkspace2)calcWorkspace;
             IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)calcWorkspace;
 
-            if (!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, currentFeatureClass))
+            if(!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, currentFeatureClass))
             {
                 //TODO: Create the feature class
                 throw new MilSpaceDataException(currentFeatureClass, Core.DataAccess.DataOperationsEnum.Access);

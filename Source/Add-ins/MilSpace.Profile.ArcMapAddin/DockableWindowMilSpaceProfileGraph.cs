@@ -218,6 +218,7 @@ namespace MilSpace.Profile
         }
 
         //test
+       
         internal int GetSelectedSessionId()
         {
             try

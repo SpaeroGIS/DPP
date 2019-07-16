@@ -11,12 +11,34 @@ namespace MilSpace.Profile
 {
     public class Test3D
     {
-        MilSpaceProfileCalsController milSpaceProfileCalsController = new MilSpaceProfileCalsController();
+        static Test3D instance = null;
+        MilSpaceProfileCalsController calsController;
         ProfileSession profileSession = new ProfileSession();
 
-        public Test3D()
+        internal delegate MilSpaceProfileCalsController GetControllerDelegate();
+        internal event GetControllerDelegate GetController;
+
+        private Test3D()
+        { 
+
+        }
+
+        public static Test3D Instance
         {
-            profileSession = milSpaceProfileCalsController.GetSelectedSession();
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new Test3D();
+                }
+                return instance;
+            }
+        }
+
+        public void SetCurrentProfile()
+        {
+            calsController = GetController.Invoke();
+            profileSession = calsController.GetSelectedSession();
         }
 
         public void SetSelectedProfileTo3D()
@@ -32,7 +54,7 @@ namespace MilSpace.Profile
 
                 GdbAccess.Instance.AddProfileLinesTo3D(polylines);
             }
-            catch { }
+            catch(Exception ex) { }
         }
     }
 }
