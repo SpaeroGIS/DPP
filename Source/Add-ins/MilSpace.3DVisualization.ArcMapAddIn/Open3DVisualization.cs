@@ -24,7 +24,8 @@ namespace MilSpace.Visualization3D
             //todo: Temp remove ref?
 
             Test3D.Instance.SetCurrentProfile();
-            Test3D.Instance.SetSelectedProfileTo3D();
+            Test3D.Instance.SetSelectedProfileSetTo3D();
+            Test3D.Instance.SetObserverPointsTo3D();
             //Visualization3DHandler.OpenProfilesSetIn3D();
         }
         protected override void OnUpdate()

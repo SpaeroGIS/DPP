@@ -47,7 +47,6 @@ namespace MilSpace.DataAccess.Facade
         private static IWorkspace calcWorkspace = null;
         public string AddProfileLinesToCalculation(IEnumerable<IPolyline> profileLines)
         {
-
             string featureClassName = GenerateTempProfileLinesStorage();
 
             IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)calcWorkspace;
@@ -136,12 +135,11 @@ namespace MilSpace.DataAccess.Facade
 
         public string AddProfileLinesTo3D(IEnumerable<IPolyline> profileLines)
         {
-            string featureClassName = GenerateTemp3DLineStorage(); 
+            string featureClassName = GenerateTemp3DLineStorage();
 
             IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)calcWorkspace;
             workspaceEdit.StartEditing(true);
             workspaceEdit.StartEditOperation();
-
 
             IFeatureClass calc = GetCalcProfileFeatureClass(featureClassName);
             var GCS_WGS = Helper.GetBasePointSpatialReference();
@@ -155,6 +153,29 @@ namespace MilSpace.DataAccess.Facade
                 }
                 );
 
+            workspaceEdit.StopEditOperation();
+            workspaceEdit.StopEditing(true);
+
+            return featureClassName;
+        }
+
+        public string AddProfilePointsTo3D(IEnumerable<IPoint> points)
+        {
+            string featureClassName = GenerateTemp3DPointStorage();
+
+            IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)calcWorkspace;
+            workspaceEdit.StartEditing(true);
+            workspaceEdit.StartEditOperation();
+
+            IFeatureClass calc = GetCalcProfileFeatureClass(featureClassName);
+            var GCS_WGS = Helper.GetBasePointSpatialReference();
+
+            points.ToList().ForEach(point =>
+            {
+                var pointFeature = calc.CreateFeature();
+                pointFeature.Shape = point;
+                pointFeature.Store();
+            });
 
             workspaceEdit.StopEditOperation();
             workspaceEdit.StopEditing(true);
@@ -162,47 +183,25 @@ namespace MilSpace.DataAccess.Facade
             return featureClassName;
         }
 
-        public string GenerateTemp3DLineStorage()
+        public string AddPolygonTo3D(IPolygon polygon)
         {
+            string featureClassName = GenerateTemp3DPolygonStorage();
+
             IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)calcWorkspace;
             workspaceEdit.StartEditing(true);
             workspaceEdit.StartEditOperation();
 
-            string newFeatureClassName = $"Line3D_L{Helper.GetTemporaryNameSuffix()}";
+            IFeatureClass calc = GetCalcProfileFeatureClass(featureClassName);
+            var GCS_WGS = Helper.GetBasePointSpatialReference();
 
-            IWorkspace2 wsp2 = (IWorkspace2)calcWorkspace;
-            IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)calcWorkspace;
-
-            if(!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, newFeatureClassName))
-            {
-
-                IFeatureClassDescription fcDescription = new FeatureClassDescriptionClass();
-                IObjectClassDescription ocDescription = (IObjectClassDescription)fcDescription;
-                IFields fields = ocDescription.RequiredFields;
-
-                int shapeFieldIndex = fields.FindField(fcDescription.ShapeFieldName);
-
-                IField field = fields.get_Field(shapeFieldIndex);
-                IGeometryDef geometryDef = field.GeometryDef;
-                IGeometryDefEdit geometryDefEdit = (IGeometryDefEdit)geometryDef;
-                geometryDefEdit.GeometryType_2 = esriGeometryType.esriGeometryPolyline;
-                geometryDefEdit.SpatialReference_2 = ArcMapInstance.Document.FocusMap.SpatialReference; ;
-
-                IFieldsEdit fieldsEdit = (IFieldsEdit)fields;
-                IField nameField = new FieldClass();
-                IFieldEdit nameFieldEdit = (IFieldEdit)nameField;
-                nameFieldEdit.Name_2 = "ID";
-                nameFieldEdit.Type_2 = esriFieldType.esriFieldTypeInteger;
-                fieldsEdit.AddField(nameField);
-
-                IFeatureClass featureClass = featureWorkspace.CreateFeatureClass(newFeatureClassName, fields,
-                    ocDescription.InstanceCLSID, ocDescription.ClassExtensionCLSID, esriFeatureType.esriFTSimple, "shape", "");
-            }
+            var pointFeature = calc.CreateFeature();
+            pointFeature.Shape = polygon;
+            pointFeature.Store();
 
             workspaceEdit.StopEditOperation();
             workspaceEdit.StopEditing(true);
 
-            return newFeatureClassName;
+            return featureClassName;
         }
 
         public void EraseProfileLines()
@@ -250,8 +249,6 @@ namespace MilSpace.DataAccess.Facade
         {
             IWorkspace2 wsp2 = (IWorkspace2)calcWorkspace;
             IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)calcWorkspace;
-
-
 
             try
             {
@@ -332,6 +329,84 @@ namespace MilSpace.DataAccess.Facade
             }
 
             return featureWorkspace.OpenFeatureClass(currentFeatureClass);
+        }
+
+        private string GenerateTemp3DLineStorage()
+        {
+            string newFeatureClassName = $"Line3D_L{Helper.GetTemporaryNameSuffix()}";
+
+            IFeatureClassDescription fcDescription = new FeatureClassDescriptionClass();
+            IObjectClassDescription ocDescription = (IObjectClassDescription)fcDescription;
+            IFields fields = ocDescription.RequiredFields;
+
+            int shapeFieldIndex = fields.FindField(fcDescription.ShapeFieldName);
+
+            IField field = fields.get_Field(shapeFieldIndex);
+            IGeometryDef geometryDef = field.GeometryDef;
+            IGeometryDefEdit geometryDefEdit = (IGeometryDefEdit)geometryDef;
+            geometryDefEdit.GeometryType_2 = esriGeometryType.esriGeometryPolyline;
+            geometryDefEdit.SpatialReference_2 = ArcMapInstance.Document.FocusMap.SpatialReference;
+
+            IFieldsEdit fieldsEdit = (IFieldsEdit)fields;
+            IField nameField = new FieldClass();
+            IFieldEdit nameFieldEdit = (IFieldEdit)nameField;
+            nameFieldEdit.Name_2 = "ID";
+            nameFieldEdit.Type_2 = esriFieldType.esriFieldTypeInteger;
+            fieldsEdit.AddField(nameField);
+
+            GenerateTempStorage(newFeatureClassName, fields, esriGeometryType.esriGeometryPolyline);
+
+            return newFeatureClassName;
+        }
+
+        private string GenerateTemp3DPointStorage()
+        {
+            string newFeatureClassName = $"Point3D_L{Helper.GetTemporaryNameSuffix()}";
+            GenerateTempStorage(newFeatureClassName, null, esriGeometryType.esriGeometryPoint);
+            return newFeatureClassName;
+        }
+
+        private string GenerateTemp3DPolygonStorage()
+        {
+            string newFeatureClassName = $"Polygon3D_L{Helper.GetTemporaryNameSuffix()}";
+            GenerateTempStorage(newFeatureClassName, null, esriGeometryType.esriGeometryPolygon);
+            return newFeatureClassName;
+        }
+
+
+        private void GenerateTempStorage(string featureClassName, IFields fields, esriGeometryType type)
+        {
+            IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)calcWorkspace;
+            workspaceEdit.StartEditing(true);
+            workspaceEdit.StartEditOperation();
+
+            IWorkspace2 wsp2 = (IWorkspace2)calcWorkspace;
+            IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)calcWorkspace;
+
+            if(!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, featureClassName))
+            {
+                IFeatureClassDescription fcDescription = new FeatureClassDescriptionClass();
+                IObjectClassDescription ocDescription = (IObjectClassDescription)fcDescription;
+
+                if(fields == null)
+                {
+                    fields = ocDescription.RequiredFields;
+
+                    int shapeFieldIndex = fields.FindField(fcDescription.ShapeFieldName);
+
+                    IField field = fields.get_Field(shapeFieldIndex);
+                    IGeometryDef geometryDef = field.GeometryDef;
+                    IGeometryDefEdit geometryDefEdit = (IGeometryDefEdit)geometryDef;
+                    geometryDefEdit.GeometryType_2 = type;
+                    geometryDefEdit.SpatialReference_2 = ArcMapInstance.Document.FocusMap.SpatialReference;
+                }
+
+                IFeatureClass featureClass = featureWorkspace.CreateFeatureClass(featureClassName, fields,
+                    ocDescription.InstanceCLSID, ocDescription.ClassExtensionCLSID, esriFeatureType.esriFTSimple, "shape", "");
+            }
+
+            workspaceEdit.StopEditOperation();
+            workspaceEdit.StopEditing(true);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ESRI.ArcGIS.Geometry;
+using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
 using System;
@@ -41,7 +42,7 @@ namespace MilSpace.Profile
             profileSession = calsController.GetSelectedSession();
         }
 
-        public void SetSelectedProfileTo3D()
+        public void SetSelectedProfileSetTo3D()
         {
             try
             {
@@ -53,6 +54,26 @@ namespace MilSpace.Profile
                 }
 
                 GdbAccess.Instance.AddProfileLinesTo3D(polylines);
+            }
+            catch(Exception ex) { }
+        }
+
+        public void SetVisibilityPolygon()
+        {
+            try
+            {
+               
+            }
+            catch(Exception ex) { }
+        }
+
+        public void SetObserverPointsTo3D()
+        {
+            try
+            {
+                var point = profileSession.ProfileSurfaces[0].ProfileSurfacePoints[0];
+                IPoint geoPoint = new Point() { X = point.X, Y = point.Y, Z = point.Z, SpatialReference = profileSession.ProfileLines[0].SpatialReference };
+                GdbAccess.Instance.AddProfilePointsTo3D(new List<IPoint>() { EsriTools.GetObserverPoint( geoPoint, profileSession.ObserverHeight, ArcMap.Document.FocusMap.SpatialReference) });
             }
             catch(Exception ex) { }
         }
