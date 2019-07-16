@@ -40,6 +40,7 @@ namespace MilSpace.Visualization3D
                 this.HydroLayerLabel.Text = context.HydroLayerLabel;
                 this.PlantsLayerLabel.Text = context.PlantsLayerLabel;
                 this.TransportLayerLabel.Text = context.TransportLayerLabel;
+                this.ProfilesTabPage.Text = context.ProfilesLabel;
 
                 //Buttons
                 this.GenerateButton.Text = context.GenerateButton;
