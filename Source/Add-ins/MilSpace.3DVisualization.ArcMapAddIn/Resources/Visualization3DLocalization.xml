@@ -9,4 +9,8 @@
 <TransportLayerLabel>Шар транспорту</TransportLayerLabel>
 <HydroLayerLabel>Шар водних ресурсів</HydroLayerLabel>
 <ProfilesLabel>Профілі</ProfilesLabel>
+<Section>Відрізки</Section>
+<Fun>Віяло</Fun>
+<Primitive>Графіки</Primitive>
+<Profile>Профіль</Profile>
 </Visualization3D>

@@ -48,6 +48,7 @@
             this.Controls.Add(this.UserSessionsProfilesTreeView);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ProfilesTreeView";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ProfilesTreeView";
             this.ResumeLayout(false);
 

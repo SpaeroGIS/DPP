@@ -8,12 +8,12 @@ using System.Windows.Forms;
 
 namespace MilSpace.Visualization3D
 {
-    public partial class ProfilesVisualizationForm : Form
+    internal partial class ProfilesVisualizationForm : Form
     {
-        private IEnumerable<ProfileSession> userProfileSessions;
         private ProfilesTreeView profilesTreeView;
+        private LocalizationContext context;
 
-        public ProfilesVisualizationForm()
+        internal ProfilesVisualizationForm()
         {
             InitializeComponent();
             LocalizeComponent();            
@@ -23,7 +23,7 @@ namespace MilSpace.Visualization3D
         {
             try
             {
-                var context = new LocalizationContext();
+                context = new LocalizationContext();
 
                 //Captions
                 this.Text = context.WindowCaption;
@@ -55,11 +55,11 @@ namespace MilSpace.Visualization3D
 
         private void AddButton_Click(object sender, EventArgs e)
         {
-            if (profilesTreeView == null) profilesTreeView = new ProfilesTreeView();
+            if (profilesTreeView == null) profilesTreeView = new ProfilesTreeView(context);
 
             profilesTreeView.LoadProfiles();
 
-            profilesTreeView.Show();
+            profilesTreeView.ShowDialog(this);
         }
         #endregion
     }

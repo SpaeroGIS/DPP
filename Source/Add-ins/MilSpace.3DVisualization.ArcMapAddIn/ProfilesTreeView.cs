@@ -11,30 +11,57 @@ using System.Windows.Forms;
 
 namespace MilSpace.Visualization3D
 {
-    public partial class ProfilesTreeView : Form
+    internal partial class ProfilesTreeView : Form
     {
-        private IList<TreeViewNodeModel> treeViewNodeModels;
+        private TreeViewModel treeViewModel;
+        private LocalizationContext _context;
         
-        public ProfilesTreeView()
+        internal ProfilesTreeView(LocalizationContext context)
         {
             InitializeComponent();
+            _context = context;
         }
 
-        public IList<TreeViewNodeModel> TreeViewNodeModels => treeViewNodeModels;
+        internal TreeViewModel TreeViewModel => treeViewModel;
 
 
-        public IList<TreeViewNodeModel> LoadProfiles()
+        internal TreeViewModel LoadProfiles()
         {
-            var dataAccess = new DataAccess(new LocalizationContext());
-            treeViewNodeModels = dataAccess.ParseUserProfileSessions();
-            foreach (var node in treeViewNodeModels)
+            var dataAccess = new DataAccess(_context);
+            treeViewModel = dataAccess.ParseUserProfileSessions();
+
+            if (treeViewModel.Lines != null && treeViewModel.Lines.Any())
             {
-                var newNode = UserSessionsProfilesTreeView.Nodes.Add(node.Name);
+                var newNode = UserSessionsProfilesTreeView.Nodes.Add(_context.Section);
+                AddNodesToTreeView(newNode, treeViewModel.Lines);                
+            }
+
+            if (treeViewModel.Funs != null && treeViewModel.Funs.Any())
+            {
+                var newNode = UserSessionsProfilesTreeView.Nodes.Add($@"""{ _context.Fun}""");
+                AddNodesToTreeView(newNode, treeViewModel.Funs);
+            }
+
+            if (treeViewModel.Primitives != null && treeViewModel.Primitives.Any())
+            {
+                var newNode = UserSessionsProfilesTreeView.Nodes.Add(_context.Primitive);
+                AddNodesToTreeView(newNode, treeViewModel.Primitives);
+            }
+
+
+            return treeViewModel;
+        }
+
+        private void AddNodesToTreeView(TreeNode parentNode, IList<TreeViewNodeModel> nodesCollection)
+        {
+            foreach (var node in nodesCollection)
+            {
+                var bufferNode = parentNode.Nodes.Add(node.Name);
+
                 if (node.ChildNodes == null || !node.ChildNodes.Any()) continue;
 
-                newNode.Nodes.AddRange(node.ChildNodes.Select(item => new TreeNode(item.Name)).ToArray());                
+                AddNodesToTreeView(bufferNode, node.ChildNodes);
             }
-            return treeViewNodeModels;
         }
     }
 }

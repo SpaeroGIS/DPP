@@ -37,9 +37,11 @@ namespace MilSpace.Visualization3D
         public string HydroLayerLabel => FindLocalizedElement("HydroLayerLabel", "Hydro Layer");
         public string ProfilesLabel => FindLocalizedElement("ProfilesLabel", "Profiles");
 
-        public string Line { get; internal set; }
-        public string Fun { get; internal set; }
-        public string Primitive { get; internal set; }
+        //TreeView Strings
+        public string Section => FindLocalizedElement("Section", "Section");
+        public string Fun => FindLocalizedElement("Fun", "Fun");
+        public string Primitive => FindLocalizedElement("Primitive", "Primitive");
+        public object Profile => FindLocalizedElement("Profile", "Profile");
 
         //Errors        
 

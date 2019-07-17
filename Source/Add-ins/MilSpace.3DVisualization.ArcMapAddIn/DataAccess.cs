@@ -12,6 +12,7 @@ namespace MilSpace.Visualization3D
 {
     internal class DataAccess : IDataAccess
     {
+        private const string Degree = "°";
         private readonly LocalizationContext _context;
 
         private DataAccess() { }
@@ -21,32 +22,29 @@ namespace MilSpace.Visualization3D
             _context = context;
         }
 
-        public IList<TreeViewNodeModel> ParseUserProfileSessions()
+        internal TreeViewModel ParseUserProfileSessions()
         {
-            var result = new List<TreeViewNodeModel>();
+            var result = new TreeViewModel();
             var userProfileSessions = MilSpaceProfileFacade.GetUserProfileSessions();
 
             foreach (var profileSession in userProfileSessions)
             {
+                var model = new TreeViewNodeModel { Name = profileSession.SessionName };
+                AddChildCollection(model, profileSession);
+
                 if (profileSession.DefinitionType == ProfileSettingsTypeEnum.Points)
                 {
-                    var model = new TreeViewNodeModel { Name = _context.Line };
-                    AddChildCollection(model, profileSession);
-                    result.Add(model);
+                    result.Lines.Add(model);
                 }
 
                 if (profileSession.DefinitionType == ProfileSettingsTypeEnum.Fun)
                 {
-                    var model = new TreeViewNodeModel { Name = _context.Fun };
-                    AddChildCollection(model, profileSession);
-                    result.Add(model);
+                    result.Funs.Add(model);
                 }
 
                 if (profileSession.DefinitionType == ProfileSettingsTypeEnum.Primitives)
                 {
-                    var model = new TreeViewNodeModel { Name = _context.Primitive };
-                    AddChildCollection(model, profileSession);
-                    result.Add(model);
+                    result.Primitives.Add(model);
                 }
             }
             return result;
@@ -62,9 +60,9 @@ namespace MilSpace.Visualization3D
             {
                 var azimuth = line.Azimuth.ToString("F0");
                 var nodeName = profileSession.DefinitionType == ProfileSettingsTypeEnum.Points
-                    ? $"{azimuth}" :
-                    (line.Azimuth == double.MinValue ? $"lineDefinition ({System.Array.IndexOf(profileSession.ProfileLines, line) + 1})" :
-                    $"{azimuth} ({System.Array.IndexOf(profileSession.ProfileLines, line) + 1})");
+                    ? $"{azimuth}{Degree}" :
+                    (line.Azimuth == double.MinValue ? $"{_context.Profile}: ({Array.IndexOf(profileSession.ProfileLines, line) + 1})" :
+                    $"{azimuth}{Degree} ({System.Array.IndexOf(profileSession.ProfileLines, line) + 1})");
                 node.ChildNodes.Add(new TreeViewNodeModel { Name = nodeName, NodeProfileSession = profileSession });
             }
         }
