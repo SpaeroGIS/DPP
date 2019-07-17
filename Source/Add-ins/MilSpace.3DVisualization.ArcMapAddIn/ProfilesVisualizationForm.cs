@@ -1,7 +1,8 @@
-﻿//using MilSpace.DataAccess.DataTransfer;
-//using MilSpace.DataAccess.Facade;
+﻿using MilSpace.DataAccess.DataTransfer;
+using MilSpace.DataAccess.Facade;
 using MilSpace.Visualization3D.ReferenceData;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -9,17 +10,14 @@ namespace MilSpace.Visualization3D
 {
     public partial class ProfilesVisualizationForm : Form
     {
+        private IEnumerable<ProfileSession> userProfileSessions;
+        private ProfilesTreeView profilesTreeView;
+
         public ProfilesVisualizationForm()
         {
             InitializeComponent();
-            LocalizeComponent();
-            InitializeTreeView();
-        }
-
-        private void InitializeTreeView()
-        {
-            //var userProfileSessions = MilSpaceProfileFacade.GetUserProfileSessions();
-        }
+            LocalizeComponent();            
+        }        
 
         private void LocalizeComponent()
         {
@@ -48,60 +46,21 @@ namespace MilSpace.Visualization3D
             catch { MessageBox.Show("No Localization.xml found or there is an error during loading. Coordinates Converter window is not fully localized."); }
         }
 
-        //public bool AddNodeToTreeView(ProfileSession profile)
-        //{
-        //        if (profile.DefinitionType == ProfileSettingsTypeEnum.Points)
-        //        {
-        //            var firstX = profile.ProfileLines.First().Line.FromPoint.X;
-        //            var firstY = profile.ProfileLines.First().Line.FromPoint.Y;
-        //            var secondX = profile.ProfileLines.First().Line.ToPoint.X;
-        //            var secondY = profile.ProfileLines.First().Line.ToPoint.Y;                    
-        //        }
-
-        //        if (profile.DefinitionType == ProfileSettingsTypeEnum.Fun)
-        //        {
-        //            var basePointX = profile.ProfileLines.FirstOrDefault().Line.FromPoint.X;
-        //            var basePointY = profile.ProfileLines.FirstOrDefault().Line.FromPoint.Y;
-        //            var lineDistance = profile.ProfileLines.FirstOrDefault().Line.Length;
-        //            var linesCount = profile.ProfileLines.ToList().Count;                
-        //        }
-                
-        //        foreach (var line in profile.ProfileLines)
-        //        {
-        //            var azimuth = line.Azimuth.ToString("F0");
-        //            var nodeName = profile.DefinitionType == ProfileSettingsTypeEnum.Points
-        //                ? $"{azimuth}" :
-        //                (line.Azimuth == double.MinValue ? $"lineDefinition ({System.Array.IndexOf(profile.ProfileLines, line) + 1})" :
-        //                $"{azimuth} ({System.Array.IndexOf(profile.ProfileLines, line) + 1})"); 
-        //        }
-        //    return true;
-        //}
-
-        //private string ConvertProfileTypeToString(ProfileSettingsTypeEnum profileType)
-        //{
-        //    switch (profileType)
-        //    {
-        //        case ProfileSettingsTypeEnum.Points:
-        //            return LocalizationConstants.SectionTabText;
-
-        //        case ProfileSettingsTypeEnum.Fun:
-        //            return LocalizationConstants.FunTabText;
-
-        //        case ProfileSettingsTypeEnum.Primitives:
-        //            return LocalizationConstants.PrimitiveTabText;
-
-        //        case ProfileSettingsTypeEnum.Load:
-        //            return LocalizationConstants.LoadTabText;
-
-        //        default:
-        //            throw new ArgumentOutOfRangeException(nameof(profileType), profileType, null);
-        //    }
-        //}
-
+        #region Control Event Handlers
         private void ProfilesVisualizationForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true;
             this.Visible = false;
         }
+
+        private void AddButton_Click(object sender, EventArgs e)
+        {
+            if (profilesTreeView == null) profilesTreeView = new ProfilesTreeView();
+
+            profilesTreeView.LoadProfiles();
+
+            profilesTreeView.Show();
+        }
+        #endregion
     }
 }

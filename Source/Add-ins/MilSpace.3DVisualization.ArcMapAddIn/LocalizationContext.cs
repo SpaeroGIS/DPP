@@ -36,7 +36,11 @@ namespace MilSpace.Visualization3D
         public string TransportLayerLabel => FindLocalizedElement("TransportLayerLabel", "Transport Layer");
         public string HydroLayerLabel => FindLocalizedElement("HydroLayerLabel", "Hydro Layer");
         public string ProfilesLabel => FindLocalizedElement("ProfilesLabel", "Profiles");
-       
+
+        public string Line { get; internal set; }
+        public string Fun { get; internal set; }
+        public string Primitive { get; internal set; }
+
         //Errors        
 
         private string FindLocalizedElement(string xmlNodeName, string defaultValue)

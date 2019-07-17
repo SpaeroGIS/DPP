@@ -93,6 +93,13 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\TreeViewNodeModel.cs" />
+    <Compile Include="ProfilesTreeView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProfilesTreeView.Designer.cs">
+      <DependentUpon>ProfilesTreeView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Visualization3DHandler.cs" />
     <Compile Include="Open3DVisualization.cs" />
     <Compile Include="Config.Designer.cs">
@@ -149,6 +156,9 @@
     <AddInContent Include="Images\Button3DVisualization.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ProfilesTreeView.resx">
+      <DependentUpon>ProfilesTreeView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ProfilesVisualizationForm.resx">
       <DependentUpon>ProfilesVisualizationForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -157,14 +167,14 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <AddInContent Include="Images\Add.png" />
     <AddInContent Include="Images\Remove.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\ProfilesTreeViewFormIcon.ico" />
+    <Content Include="Images\Tree.ico" />
     <Content Include="Resources\Visualization3DLocalization.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
