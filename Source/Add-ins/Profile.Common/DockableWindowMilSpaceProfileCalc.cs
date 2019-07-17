@@ -3,10 +3,8 @@ using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core;
-using MilSpace.Core.MilSpaceResourceManager;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
-using MilSpace.DataAccess.Facade;
 using MilSpace.Profile.DTO;
 using MilSpace.Profile.Localization;
 using System;
@@ -74,6 +72,9 @@ namespace MilSpace.Profile
             SubscribeForEvents();
             controller.SetView(this);
             LocalizeStrings();
+            fanPickCoord = firstPointToolBar.Buttons[0];
+            linePickCoordFirst = secondPointToolbar.Buttons[0];
+            linePickCoordSecond = basePointToolbar.Buttons[0];
         }
 
         private void OnProfileSettingsChanged(ProfileSettingsEventArgs e)
