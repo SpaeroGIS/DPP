@@ -15,7 +15,7 @@
       <Commands>
         <Button id="SPPRD.GeoCalculator_ButtonGeoCalculator" class="ButtonGeoCalculator"
                 message="SPPRD 3-D solution. Module GeoCalculator window"
-                caption="Geo Calculator" tip="MilSpace 3-D solution. Module Geo Calculator" category="MilSpaceTools" image="Images\Button1.png" />
+                caption="Geo Calculator" tip="SPPRD 3-D solution. Module Geo Calculator" category="MilSpaceTools" image="Images\Button1.png" />
         <Tool id="SPPRD.GeoCalculator_MapInteropTool" class="MapInteropTool" message="SPPRD 3-D solution. GeoCalculator Command for Map Interop Tool"
               caption="Geo Calculator Tool" tip="Map Point Tool" category="SPPRDTools" image="Images\ToolButton.png" />
       </Commands>
