@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{57ED0351-AC25-4650-800B-D364D13799B1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MilSpace.GeoCalculator.BusinessLogic</RootNamespace>
+    <AssemblyName>SPPRD.GeoCalculator.BusinessLogic</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ESRI.ArcGIS.ArcMapUI, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Carto, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Display, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Framework, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Geodatabase, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Geometry, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.System, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.SystemUI, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\GeoCalculator.BusinessLogic\BusinessLogic.cs">
+      <Link>BusinessLogic.cs</Link>
+    </Compile>
+    <Compile Include="..\GeoCalculator.BusinessLogic\DataImportExport.cs">
+      <Link>DataImportExport.cs</Link>
+    </Compile>
+    <Compile Include="..\GeoCalculator.BusinessLogic\Extensions\CollectionsExtension.cs">
+      <Link>Extensions\CollectionsExtension.cs</Link>
+    </Compile>
+    <Compile Include="..\GeoCalculator.BusinessLogic\Extensions\CoordinateFormatExtension.cs">
+      <Link>Extensions\CoordinateFormatExtension.cs</Link>
+    </Compile>
+    <Compile Include="..\GeoCalculator.BusinessLogic\Interfaces\IBusinessLogic.cs">
+      <Link>Interfaces\IBusinessLogic.cs</Link>
+    </Compile>
+    <Compile Include="..\GeoCalculator.BusinessLogic\Interfaces\IDataImportExport.cs">
+      <Link>Interfaces\IDataImportExport.cs</Link>
+    </Compile>
+    <Compile Include="..\GeoCalculator.BusinessLogic\Models\ExtendedPointModel.cs">
+      <Link>Models\ExtendedPointModel.cs</Link>
+    </Compile>
+    <Compile Include="..\GeoCalculator.BusinessLogic\Models\PointModel.cs">
+      <Link>Models\PointModel.cs</Link>
+    </Compile>
+    <Compile Include="..\GeoCalculator.BusinessLogic\Models\PointModelsList.cs">
+      <Link>Models\PointModelsList.cs</Link>
+    </Compile>
+    <Compile Include="..\GeoCalculator.BusinessLogic\Models\ProjectionsModel.cs">
+      <Link>Models\ProjectionsModel.cs</Link>
+    </Compile>
+    <Compile Include="..\GeoCalculator.BusinessLogic\Models\SingleProjectionModel.cs">
+      <Link>Models\SingleProjectionModel.cs</Link>
+    </Compile>
+    <Compile Include="..\GeoCalculator.BusinessLogic\ReferenceData\Constants.cs">
+      <Link>ReferenceData\Constants.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
