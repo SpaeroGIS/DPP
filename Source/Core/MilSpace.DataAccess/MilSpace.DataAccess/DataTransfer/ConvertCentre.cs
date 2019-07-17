@@ -59,7 +59,7 @@ namespace MilSpace.DataAccess.DataTransfer
                     idRow = session.SessionId,
                     ProfileName = session.SessionName.Trim(),
                     ProfileData = session.Serialized,
-                    Creator =  session.CreatedBy,
+                    Creator =  session.CreatedBy.Trim(),
                     Created = session.CreatedOn,
                     Shared = session.Shared
                 };

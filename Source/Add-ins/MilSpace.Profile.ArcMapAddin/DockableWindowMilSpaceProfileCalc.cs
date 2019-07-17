@@ -237,7 +237,7 @@ namespace MilSpace.Profile
             ProfileTreeNode profileNode = (ProfileTreeNode)node;
             foreach (DataRow row in profileNode.Attributes.Rows)
             {
-                if (row[AttributeKeys.ValueColumnName].ToString() == string.Empty)
+                if (string.IsNullOrWhiteSpace(row[AttributeKeys.ValueColumnName].ToString()))
                 {
                     continue;
                 }
@@ -1019,38 +1019,37 @@ namespace MilSpace.Profile
                     var firstY = profile.ProfileLines.First().Line.FromPoint.Y.ToString("F5");
                     var secondX = profile.ProfileLines.First().Line.ToPoint.X.ToString("F5");
                     var secondY = profile.ProfileLines.First().Line.ToPoint.Y.ToString("F5");
+                    var lineDistance = profile.ProfileLines.First().Line.Length.ToString("F5");
 
                     newNode.SetBasePoint($"X= {firstX}; Y= {firstY};");
                     newNode.SetToPoint($"X= {secondX}; Y= {secondY};");
                     newNode.SetBasePointHeight(SectionHeightFirst.ToString());
-                    //newNode.SetToPointHeight(SectionHeightSecond.ToString());
+                    newNode.SetLineDistance(lineDistance);
+                    
                 }
-
-                if (profile.DefinitionType == ProfileSettingsTypeEnum.Fun)
+                else if (profile.DefinitionType == ProfileSettingsTypeEnum.Fun)
                 {
-                    var basePointX = profile.ProfileLines.FirstOrDefault().Line.FromPoint.X.ToString("F5");
-                    var basePointY = profile.ProfileLines.FirstOrDefault().Line.FromPoint.Y.ToString("F5");
-                    var lineDistance = profile.ProfileLines.FirstOrDefault().Line.Length.ToString("F5");
-                    var linesCount = profile.ProfileLines.ToList().Count.ToString();
-                    var height = FanHeight.ToString();
-                    var az1 = FunAzimuth1.ToString("F0");
-                    var az2 = FunAzimuth2.ToString("F0");
-
+                    var basePointX = profile.ProfileLines.First().Line.FromPoint.X.ToString("F5");
+                    var basePointY = profile.ProfileLines.First().Line.FromPoint.Y.ToString("F5");
+                    var linesCount = profile.ProfileLines.Length.ToString();
 
                     newNode.SetBasePoint($"X= {basePointX}; Y= {basePointY};");
-                    newNode.SetLineDistance(lineDistance);
                     newNode.SetLineCount(linesCount);
-                    newNode.SetAzimuth1(az1);
-                    newNode.SetAzimuth2(az2);
-                    newNode.SetBasePointHeight(height);
+                    newNode.SetAzimuth1(profile.Azimuth1);
+                    newNode.SetAzimuth2(profile.Azimuth2);
+                    newNode.SetBasePointHeight(profile.ObserverHeight.ToString());
+                }
+                else if (profile.DefinitionType == ProfileSettingsTypeEnum.Primitives)
+                {
+                    var linesCount = profile.ProfileLines.Length.ToString();
+                    newNode.SetLineCount(linesCount);
                 }
 
-                newNode.SetCreatorName(profile.CreatedBy);//Environment.UserName
+                newNode.SetCreatorName(profile.CreatedBy);
                 newNode.SetDate($"{date.ToLongDateString()} {date.ToLongTimeString()}");
 
                 logger.InfoEx($"Profile  {profile.SessionName} added to the tree");
 
-                //TODO: Localize 
                 string lineDefinition = LocalizationConstants.TreeViewProfileText;
 
 
@@ -1067,10 +1066,10 @@ namespace MilSpace.Profile
                     childNode.Checked = newNode.Checked;
                     childNode.IsProfileNode = false;
                     childNode.SetLineDistance(line.Length.ToString("F5"));
-                    childNode.SetBasePoint($"X={line.Line.FromPoint.X:F5}; Y={line.Line.FromPoint.Y:F5}");
+                    childNode.SetStartPoint($"X={line.Line.FromPoint.X:F5}; Y={line.Line.FromPoint.Y:F5}");
                     childNode.SetToPoint($"X={line.Line.ToPoint.X:F5}; Y={line.Line.ToPoint.Y:F5}");
 
-                    childNode.SetAzimuth1($"{azimuth}{Degree}");
+                    childNode.SetAzimuth($"{azimuth}{Degree}");
 
                     logger.InfoEx($"Line {nodeName} was added to the tree");
 
@@ -1155,8 +1154,6 @@ namespace MilSpace.Profile
 
         private void eraseProfile_Click(object sender, EventArgs e)
         {
-            //TODO: Localize text
-
             string loalizedtext = LocalizationConstants.DeleteProfaileMessage.InvariantFormat(profilesTreeView.SelectedNode.Text);
             if (MessageBox.Show(loalizedtext, "MilSpace", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
@@ -1165,11 +1162,6 @@ namespace MilSpace.Profile
                     MessageBox.Show(LocalizationConstants.ErrorOnShareProfileTextMessage, "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
-        }
-
-        private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
-        {
-
         }
 
         private void addProfileToExistingGraph_Click(object sender, EventArgs e)

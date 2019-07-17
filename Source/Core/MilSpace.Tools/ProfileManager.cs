@@ -40,7 +40,7 @@ namespace MilSpace.Tools
             string profileSource,
             IEnumerable<IPolyline> profileLines,
             ProfileSettingsTypeEnum profileSettingsTypeEnum,
-            int sessionId, string sessionName, double observHeight)
+            int sessionId, string sessionName, double observHeight, string azimuthes)
         {
             string profileSourceName = GdbAccess.Instance.AddProfileLinesToCalculation(profileLines);
 
@@ -115,7 +115,8 @@ namespace MilSpace.Tools
                     SurfaceLayerName = profileSource,
                     CreatedBy = Environment.UserName,
                     CreatedOn = DateTime.Now,
-                    Shared = false
+                    Shared = false,
+                    Azimuth = azimuthes
                 };
 
 
