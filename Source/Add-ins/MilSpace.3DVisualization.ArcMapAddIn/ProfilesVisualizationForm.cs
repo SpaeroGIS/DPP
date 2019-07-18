@@ -62,5 +62,21 @@ namespace MilSpace.Visualization3D
             profilesTreeView.ShowDialog(this);
         }
         #endregion
+
+        private void profilesToolBar_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        {
+            if (AddProfile.Equals(e.Button))
+            {
+                if (profilesTreeView == null) profilesTreeView = new ProfilesTreeView(context);
+
+                profilesTreeView.LoadProfiles();
+
+                profilesTreeView.ShowDialog(this);
+            }
+            else if (RemoveProfile.Equals(e.Button))
+            {
+
+            }
+        }
     }
 }
