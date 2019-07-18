@@ -27,15 +27,20 @@ namespace MilSpace.Visualization3D
          
         //Buttons
         public string GenerateButton => FindLocalizedElement("GenerateButton", "Generate");
+        public string GenerateProfileTabHeader => FindLocalizedElement("GenerateButton", "Generate");
+        public string Generate3DSceneTabHeader => FindLocalizedElement("Generat3DTabHeader", "Generat 3D Scene");
+        public string GenerateImageTabHeader => FindLocalizedElement("ImageTabHeader", "Generate Image");
 
         //Labels
         public string SurfaceLabel => FindLocalizedElement("SurfaceLabel", "Surface");
+        public string ArcSceneParamsLabel => FindLocalizedElement("ArcSceneParams", "ArcScene Params"); 
         public string PlantsLayerLabel => FindLocalizedElement("PlantsLayerLabel", "Plants Layer");
         public string HightLablel => FindLocalizedElement("HightLablel", "Hight");
         public string BuildingsLayerLabel => FindLocalizedElement("BuildingsLayerLabel", "Buildings Layer");
         public string TransportLayerLabel => FindLocalizedElement("TransportLayerLabel", "Transport Layer");
         public string HydroLayerLabel => FindLocalizedElement("HydroLayerLabel", "Hydro Layer");
         public string ProfilesLabel => FindLocalizedElement("ProfilesLabel", "Profiles");
+        public string SurfacessLabel => FindLocalizedElement("SurfacesLabel", "Surfaces");
 
         //TreeView Strings
         public string Section => FindLocalizedElement("Section", "Section");

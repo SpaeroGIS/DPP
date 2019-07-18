@@ -30,6 +30,8 @@ namespace MilSpace.Visualization3D
 
                 //Labels
                 this.SurfaceLabel.Text = context.SurfaceLabel;
+                this.lbl3DProfiles.Text = context.ArcSceneParamsLabel;
+                this.lblProfiles.Text = context.ProfilesLabel;
                 this.BuildingsHightLabel.Text = context.HightLablel;
                 this.HydroHightLabel.Text = context.HightLablel;
                 this.PlantsHightLablel.Text = context.HightLablel;
@@ -38,7 +40,11 @@ namespace MilSpace.Visualization3D
                 this.HydroLayerLabel.Text = context.HydroLayerLabel;
                 this.PlantsLayerLabel.Text = context.PlantsLayerLabel;
                 this.TransportLayerLabel.Text = context.TransportLayerLabel;
-                this.ProfilesTabPage.Text = context.ProfilesLabel;
+                this.ProfilesTabPage.Text = context.Generate3DSceneTabHeader;
+                this.GenerateImageTab.Text = context.GenerateImageTabHeader;
+
+                this.surfaceLabels.Text = context.SurfacessLabel;
+
 
                 //Buttons
                 this.GenerateButton.Text = context.GenerateButton;
@@ -62,8 +68,7 @@ namespace MilSpace.Visualization3D
             profilesTreeView.ShowDialog(this);
         }
         #endregion
-
-        private void profilesToolBar_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        private void ToolBars_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
             if (AddProfile.Equals(e.Button))
             {
