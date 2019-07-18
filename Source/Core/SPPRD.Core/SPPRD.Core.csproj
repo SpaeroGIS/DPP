@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{02023D3D-4F73-4E7E-A78F-EEAA5D66DEAC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MilSpace.Core</RootNamespace>
+    <AssemblyName>SPPRD.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ESRI.ArcGIS.ADF.Local, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.ArcMapUI, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Carto, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Desktop.AddIns">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Display, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Editor, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Geodatabase, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Geometry, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>C:\Program Files (x86)\ArcGIS\DeveloperKit10.4\DotNet\ESRI.ArcGIS.Geometry.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.System, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Framework">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Geoprocessor">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Geoprocessing">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Analyst3DTools">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.DataManagementTools">
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\..\Solutions\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Core\Actions\ActionFinishedDelegate.cs">
+      <Link>Actions\ActionFinishedDelegate.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\ActionParamNamesCore.cs">
+      <Link>Actions\ActionParamNamesCore.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\ActionProcessDelegate.cs">
+      <Link>\Actions\ActionProcessDelegate.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\ActionProcessor.cs">
+      <Link>\Actions\ActionProcessor.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\ActionResults\BoolResult.cs">
+      <Link>\Actions\BoolResult.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\ActionResults\IntCollectionResult.cs">
+      <Link>\Actions\IntCollectionResult.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\ActionResults\IntResult.cs">
+      <Link>\Actions\IntResult.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\ActionResults\StringActionResult.cs">
+      <Link>\Actions\StringActionResult.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\ActionResults\StringCollectionResult.cs">
+      <Link>\Actions\StringCollectionResult.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\ActionsCore.cs">
+      <Link>\Actions\ActionsCore.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\ActionStatesEnum.cs">
+      <Link>\Actions\ActionStatesEnum.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Actions\ActionSereilizer.cs">
+      <Link>\Actions\ActionSereilizer.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Actions\AreaDescription.cs">
+      <Link>\Actions\AreaDescription.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\LoadedActions.cs">
+      <Link>\Actions\LoadedActions.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Actions\Python\RunPythonAction.cs">
+      <Link>\Actions\RunPythonAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\BaseInstance\Action.cs">
+      <Link>\Actions\Action.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\BaseInstance\ActionDefinition.cs">
+      <Link>\Actions\ActionDefinition.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\BaseInstance\ActionDescription.cs">
+      <Link>\Actions\ActionDescription.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\BaseInstance\ActionParam.cs">
+      <Link>\Actions\ActionParam.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\BaseInstance\ActionResultBase.cs">
+      <Link>\Actions\ActionResultBase.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Exceptions\ActiondescriptionNotDefinedException.cs">
+      <Link>\Actions\ActiondescriptionNotDefinedException.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Exceptions\ActionNotFoundException.cs">
+      <Link>\Actions\ActionNotFoundException.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Exceptions\CannotAccessThreadException.cs">
+      <Link>\Actions\CannotAccessThreadException.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Exceptions\CannotOpenConnectionStringException.cs">
+      <Link>\Actions\CannotOpenConnectionStringException.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Exceptions\ExpectActionParameterException.cs">
+      <Link>\Actions\ExpectActionParameterException.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Exceptions\ExpectActionResultException.cs">
+      <Link>\Actions\ExpectActionResultException.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Exceptions\NoConnectionStringConfiguredException.cs">
+      <Link>\Actions\NoConnectionStringConfiguredException.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Exceptions\SpaeroDataException.cs">
+      <Link>\Actions\SpaeroDataException.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Exceptions\SpaeroException.cs">
+      <Link>\Actions\SpaeroException.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\ArcMap\ArcMapInstance.cs">
+      <Link>ArcMap\ArcMapInstance.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\ArcMap\Hooks.cs">
+      <Link>ArcMap\Hooks.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\DataAccess\DataOperationsEnum.cs">
+      <Link>DataAccess\DataOperationsEnum.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Exceptions\MilSpaceException.cs">
+      <Link>Exceptions\MilSpaceException.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Exceptions\MilSpaceProfileLackOfParameter.cs">
+      <Link>Exceptions\MilSpaceProfileLackOfParameter.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Helper\Helper.cs">
+      <Link>Helper\Helper.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Helper\SimpleDataTypesEnum.cs">
+      <Link>Helper\SimpleDataTypesEnum.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Interfaces\IAcationResult.cs">
+      <Link>\Actions\IAcationResult.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Interfaces\IAction.cs">
+      <Link>\Actions\IAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Interfaces\IActionProcessor.cs">
+      <Link>\Actions\IActionProcessor.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Interfaces\IActonParam.cs">
+      <Link>\Actions\IActonParam.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Interfaces\IDataEntity.cs">
+      <Link>\Actions\IDataEntity.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Localization\LocalizationManager.cs">
+      <Link>Localization\LocalizationManager.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Logging\Logging.cs">
+      <Link>Logging\Logging.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\Core\ResourceManager\MilSpaceResourceManager.cs">
+      <Link>ResourceManager\MilSpaceResourceManager.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Tools\EsriTools.cs">
+      <Link>Tools\EsriTools.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SPPRD.Configurations\SPPRD.Configurations.csproj">
+      <Project>{73334b96-54fd-4d83-b56d-967f8728d767}</Project>
+      <Name>SPPRD.Configurations</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
