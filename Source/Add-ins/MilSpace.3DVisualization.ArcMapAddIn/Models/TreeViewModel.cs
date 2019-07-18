@@ -12,13 +12,14 @@ namespace MilSpace.Visualization3D.Models
         public List<TreeViewNodeModel> Funs { get; set; } = new List<TreeViewNodeModel>();
         public List<TreeViewNodeModel> Primitives { get; set; } = new List<TreeViewNodeModel>();
 
-        internal TreeViewNodeModel GetTreeViewNodeModel(object guid)
+        internal TreeViewNodeModel GetTreeViewNodeModel(Guid guid)
         {
-            if (guid != null && Guid.TryParse(guid.ToString(), out Guid uid))
+            if (guid != null && guid != Guid.Empty)
             {
-                return Lines.Concat(Funs.Concat(Primitives)).FirstOrDefault(item => uid.Equals(item.Guid)); 
+                return Lines.FirstOrDefault(item => guid.Equals(item.Guid)) ?? 
+                       Funs.FirstOrDefault(item => guid.Equals(item.Guid)) ?? 
+                       Primitives.FirstOrDefault(item => guid.Equals(item.Guid));                
             }
-
             return null;
         }
     }
