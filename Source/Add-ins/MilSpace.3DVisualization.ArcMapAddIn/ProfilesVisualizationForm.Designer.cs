@@ -82,9 +82,9 @@
             this.GenerateButton.AutoSize = true;
             this.GenerateButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.GenerateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.GenerateButton.Location = new System.Drawing.Point(143, 4);
+            this.GenerateButton.Location = new System.Drawing.Point(170, 4);
             this.GenerateButton.Name = "GenerateButton";
-            this.GenerateButton.Size = new System.Drawing.Size(95, 32);
+            this.GenerateButton.Size = new System.Drawing.Size(68, 25);
             this.GenerateButton.TabIndex = 1;
             this.GenerateButton.Text = "Generate";
             this.GenerateButton.UseVisualStyleBackColor = true;
@@ -96,7 +96,7 @@
             this.SurfaceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.SurfaceLabel.Location = new System.Drawing.Point(0, 0);
             this.SurfaceLabel.Name = "SurfaceLabel";
-            this.SurfaceLabel.Size = new System.Drawing.Size(72, 22);
+            this.SurfaceLabel.Size = new System.Drawing.Size(49, 15);
             this.SurfaceLabel.TabIndex = 40;
             this.SurfaceLabel.Text = "Surface";
             // 
@@ -104,7 +104,7 @@
             // 
             this.SurfaceComboBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.SurfaceComboBox.FormattingEnabled = true;
-            this.SurfaceComboBox.Location = new System.Drawing.Point(0, 22);
+            this.SurfaceComboBox.Location = new System.Drawing.Point(0, 15);
             this.SurfaceComboBox.Name = "SurfaceComboBox";
             this.SurfaceComboBox.Size = new System.Drawing.Size(252, 21);
             this.SurfaceComboBox.TabIndex = 41;
@@ -135,14 +135,14 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(4, 4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(169, 172);
+            this.panel2.Size = new System.Drawing.Size(169, 144);
             this.panel2.TabIndex = 55;
             // 
             // HydroLayerComboBox
             // 
             this.HydroLayerComboBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.HydroLayerComboBox.FormattingEnabled = true;
-            this.HydroLayerComboBox.Location = new System.Drawing.Point(0, 151);
+            this.HydroLayerComboBox.Location = new System.Drawing.Point(0, 123);
             this.HydroLayerComboBox.Name = "HydroLayerComboBox";
             this.HydroLayerComboBox.Size = new System.Drawing.Size(169, 21);
             this.HydroLayerComboBox.TabIndex = 47;
@@ -152,9 +152,9 @@
             this.HydroLayerLabel.AutoSize = true;
             this.HydroLayerLabel.Dock = System.Windows.Forms.DockStyle.Top;
             this.HydroLayerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.HydroLayerLabel.Location = new System.Drawing.Point(0, 129);
+            this.HydroLayerLabel.Location = new System.Drawing.Point(0, 108);
             this.HydroLayerLabel.Name = "HydroLayerLabel";
-            this.HydroLayerLabel.Size = new System.Drawing.Size(108, 22);
+            this.HydroLayerLabel.Size = new System.Drawing.Size(72, 15);
             this.HydroLayerLabel.TabIndex = 46;
             this.HydroLayerLabel.Text = "Hydro Layer";
             // 
@@ -162,7 +162,7 @@
             // 
             this.TransportLayerComboBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.TransportLayerComboBox.FormattingEnabled = true;
-            this.TransportLayerComboBox.Location = new System.Drawing.Point(0, 108);
+            this.TransportLayerComboBox.Location = new System.Drawing.Point(0, 87);
             this.TransportLayerComboBox.Name = "TransportLayerComboBox";
             this.TransportLayerComboBox.Size = new System.Drawing.Size(169, 21);
             this.TransportLayerComboBox.TabIndex = 45;
@@ -172,9 +172,9 @@
             this.TransportLayerLabel.AutoSize = true;
             this.TransportLayerLabel.Dock = System.Windows.Forms.DockStyle.Top;
             this.TransportLayerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.TransportLayerLabel.Location = new System.Drawing.Point(0, 86);
+            this.TransportLayerLabel.Location = new System.Drawing.Point(0, 72);
             this.TransportLayerLabel.Name = "TransportLayerLabel";
-            this.TransportLayerLabel.Size = new System.Drawing.Size(138, 22);
+            this.TransportLayerLabel.Size = new System.Drawing.Size(92, 15);
             this.TransportLayerLabel.TabIndex = 44;
             this.TransportLayerLabel.Text = "Transport Layer";
             // 
@@ -182,7 +182,7 @@
             // 
             this.BuildingsLayerComboBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.BuildingsLayerComboBox.FormattingEnabled = true;
-            this.BuildingsLayerComboBox.Location = new System.Drawing.Point(0, 65);
+            this.BuildingsLayerComboBox.Location = new System.Drawing.Point(0, 51);
             this.BuildingsLayerComboBox.Name = "BuildingsLayerComboBox";
             this.BuildingsLayerComboBox.Size = new System.Drawing.Size(169, 21);
             this.BuildingsLayerComboBox.TabIndex = 43;
@@ -192,9 +192,9 @@
             this.BuildingsLayerLabel.AutoSize = true;
             this.BuildingsLayerLabel.Dock = System.Windows.Forms.DockStyle.Top;
             this.BuildingsLayerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.BuildingsLayerLabel.Location = new System.Drawing.Point(0, 43);
+            this.BuildingsLayerLabel.Location = new System.Drawing.Point(0, 36);
             this.BuildingsLayerLabel.Name = "BuildingsLayerLabel";
-            this.BuildingsLayerLabel.Size = new System.Drawing.Size(133, 22);
+            this.BuildingsLayerLabel.Size = new System.Drawing.Size(91, 15);
             this.BuildingsLayerLabel.TabIndex = 42;
             this.BuildingsLayerLabel.Text = "Buildings Layer";
             // 
@@ -202,7 +202,7 @@
             // 
             this.PlantsComboBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.PlantsComboBox.FormattingEnabled = true;
-            this.PlantsComboBox.Location = new System.Drawing.Point(0, 22);
+            this.PlantsComboBox.Location = new System.Drawing.Point(0, 15);
             this.PlantsComboBox.Name = "PlantsComboBox";
             this.PlantsComboBox.Size = new System.Drawing.Size(169, 21);
             this.PlantsComboBox.TabIndex = 41;
@@ -214,7 +214,7 @@
             this.PlantsLayerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.PlantsLayerLabel.Location = new System.Drawing.Point(0, 0);
             this.PlantsLayerLabel.Name = "PlantsLayerLabel";
-            this.PlantsLayerLabel.Size = new System.Drawing.Size(110, 22);
+            this.PlantsLayerLabel.Size = new System.Drawing.Size(74, 15);
             this.PlantsLayerLabel.TabIndex = 40;
             this.PlantsLayerLabel.Text = "Plants Layer";
             // 
@@ -225,7 +225,7 @@
             this.PlantsHightLablel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.PlantsHightLablel.Location = new System.Drawing.Point(0, 0);
             this.PlantsHightLablel.Name = "PlantsHightLablel";
-            this.PlantsHightLablel.Size = new System.Drawing.Size(52, 22);
+            this.PlantsHightLablel.Size = new System.Drawing.Size(36, 15);
             this.PlantsHightLablel.TabIndex = 52;
             this.PlantsHightLablel.Text = "Hight";
             // 
@@ -244,13 +244,13 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(180, 4);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(70, 172);
+            this.panel3.Size = new System.Drawing.Size(70, 144);
             this.panel3.TabIndex = 56;
             // 
             // HydroHightTextBox
             // 
             this.HydroHightTextBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.HydroHightTextBox.Location = new System.Drawing.Point(0, 150);
+            this.HydroHightTextBox.Location = new System.Drawing.Point(0, 122);
             this.HydroHightTextBox.Name = "HydroHightTextBox";
             this.HydroHightTextBox.Size = new System.Drawing.Size(70, 20);
             this.HydroHightTextBox.TabIndex = 61;
@@ -260,16 +260,16 @@
             this.HydroHightLabel.AutoSize = true;
             this.HydroHightLabel.Dock = System.Windows.Forms.DockStyle.Top;
             this.HydroHightLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.HydroHightLabel.Location = new System.Drawing.Point(0, 128);
+            this.HydroHightLabel.Location = new System.Drawing.Point(0, 107);
             this.HydroHightLabel.Name = "HydroHightLabel";
-            this.HydroHightLabel.Size = new System.Drawing.Size(52, 22);
+            this.HydroHightLabel.Size = new System.Drawing.Size(36, 15);
             this.HydroHightLabel.TabIndex = 60;
             this.HydroHightLabel.Text = "Hight";
             // 
             // TransportHightTextBox
             // 
             this.TransportHightTextBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.TransportHightTextBox.Location = new System.Drawing.Point(0, 108);
+            this.TransportHightTextBox.Location = new System.Drawing.Point(0, 87);
             this.TransportHightTextBox.Name = "TransportHightTextBox";
             this.TransportHightTextBox.Size = new System.Drawing.Size(70, 20);
             this.TransportHightTextBox.TabIndex = 59;
@@ -279,9 +279,9 @@
             this.TransportHightLabel.AutoSize = true;
             this.TransportHightLabel.Dock = System.Windows.Forms.DockStyle.Top;
             this.TransportHightLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.TransportHightLabel.Location = new System.Drawing.Point(0, 86);
+            this.TransportHightLabel.Location = new System.Drawing.Point(0, 72);
             this.TransportHightLabel.Name = "TransportHightLabel";
-            this.TransportHightLabel.Size = new System.Drawing.Size(52, 22);
+            this.TransportHightLabel.Size = new System.Drawing.Size(36, 15);
             this.TransportHightLabel.TabIndex = 58;
             this.TransportHightLabel.Text = "Hight";
             // 
@@ -289,7 +289,7 @@
             // 
             this.BuildingsHightComboBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.BuildingsHightComboBox.FormattingEnabled = true;
-            this.BuildingsHightComboBox.Location = new System.Drawing.Point(0, 65);
+            this.BuildingsHightComboBox.Location = new System.Drawing.Point(0, 51);
             this.BuildingsHightComboBox.Name = "BuildingsHightComboBox";
             this.BuildingsHightComboBox.Size = new System.Drawing.Size(70, 21);
             this.BuildingsHightComboBox.TabIndex = 57;
@@ -299,9 +299,9 @@
             this.BuildingsHightLabel.AutoSize = true;
             this.BuildingsHightLabel.Dock = System.Windows.Forms.DockStyle.Top;
             this.BuildingsHightLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.BuildingsHightLabel.Location = new System.Drawing.Point(0, 43);
+            this.BuildingsHightLabel.Location = new System.Drawing.Point(0, 36);
             this.BuildingsHightLabel.Name = "BuildingsHightLabel";
-            this.BuildingsHightLabel.Size = new System.Drawing.Size(52, 22);
+            this.BuildingsHightLabel.Size = new System.Drawing.Size(36, 15);
             this.BuildingsHightLabel.TabIndex = 56;
             this.BuildingsHightLabel.Text = "Hight";
             // 
@@ -309,7 +309,7 @@
             // 
             this.PlantsHightComboBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.PlantsHightComboBox.FormattingEnabled = true;
-            this.PlantsHightComboBox.Location = new System.Drawing.Point(0, 22);
+            this.PlantsHightComboBox.Location = new System.Drawing.Point(0, 15);
             this.PlantsHightComboBox.Name = "PlantsHightComboBox";
             this.PlantsHightComboBox.Size = new System.Drawing.Size(70, 21);
             this.PlantsHightComboBox.TabIndex = 55;
@@ -322,14 +322,14 @@
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel6.Location = new System.Drawing.Point(3, 3);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(238, 224);
+            this.panel6.Size = new System.Drawing.Size(238, 259);
             this.panel6.TabIndex = 58;
             // 
             // panel4
             // 
             this.panel4.Controls.Add(this.GenerateButton);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel4.Location = new System.Drawing.Point(0, 192);
+            this.panel4.Location = new System.Drawing.Point(0, 227);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(238, 32);
             this.panel4.TabIndex = 61;
@@ -372,10 +372,10 @@
             // 
             this.ProfilesListBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ProfilesListBox.FormattingEnabled = true;
-            this.ProfilesListBox.ItemHeight = 22;
+            this.ProfilesListBox.ItemHeight = 15;
             this.ProfilesListBox.Location = new System.Drawing.Point(0, 0);
             this.ProfilesListBox.Name = "ProfilesListBox";
-            this.ProfilesListBox.Size = new System.Drawing.Size(238, 224);
+            this.ProfilesListBox.Size = new System.Drawing.Size(238, 259);
             this.ProfilesListBox.TabIndex = 59;
             // 
             // tableLayoutPanel1
@@ -393,14 +393,14 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(254, 180);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(254, 152);
             this.tableLayoutPanel1.TabIndex = 64;
             // 
             // splitter1
             // 
             this.splitter1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitter1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.splitter1.Location = new System.Drawing.Point(0, 224);
+            this.splitter1.Location = new System.Drawing.Point(0, 196);
             this.splitter1.Name = "splitter1";
             this.splitter1.Size = new System.Drawing.Size(254, 3);
             this.splitter1.TabIndex = 65;
@@ -412,10 +412,10 @@
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tabControl1.Location = new System.Drawing.Point(0, 227);
+            this.tabControl1.Location = new System.Drawing.Point(0, 199);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(254, 267);
+            this.tabControl1.Size = new System.Drawing.Size(254, 295);
             this.tabControl1.TabIndex = 66;
             // 
             // ProfilesTabPage
@@ -423,10 +423,10 @@
             this.ProfilesTabPage.BackColor = System.Drawing.SystemColors.Control;
             this.ProfilesTabPage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ProfilesTabPage.Controls.Add(this.panel6);
-            this.ProfilesTabPage.Location = new System.Drawing.Point(4, 31);
+            this.ProfilesTabPage.Location = new System.Drawing.Point(4, 24);
             this.ProfilesTabPage.Name = "ProfilesTabPage";
             this.ProfilesTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.ProfilesTabPage.Size = new System.Drawing.Size(246, 232);
+            this.ProfilesTabPage.Size = new System.Drawing.Size(246, 267);
             this.ProfilesTabPage.TabIndex = 0;
             this.ProfilesTabPage.Text = "Profiles";
             // 
@@ -435,10 +435,10 @@
             this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
             this.tabPage2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tabPage2.Controls.Add(this.listView1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 31);
+            this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(246, 232);
+            this.tabPage2.Size = new System.Drawing.Size(246, 267);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             // 
@@ -448,7 +448,7 @@
             this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(3, 3);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(238, 224);
+            this.listView1.Size = new System.Drawing.Size(238, 259);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             // 

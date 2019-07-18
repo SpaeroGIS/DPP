@@ -11,6 +11,8 @@ namespace MilSpace.Visualization3D.Models
     {
         public string Name { get; set; }
 
+        public Guid Guid { get; set; }
+
         public ProfileSession NodeProfileSession { get; set; }
 
         public IList<TreeViewNodeModel> ChildNodes { get; set; }

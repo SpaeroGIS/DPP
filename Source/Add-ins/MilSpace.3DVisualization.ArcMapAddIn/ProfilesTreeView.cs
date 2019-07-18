@@ -13,6 +13,7 @@ namespace MilSpace.Visualization3D
 {
     internal partial class ProfilesTreeView : Form
     {
+        private IList<TreeViewNodeModel> selectedTreeViewNodes = new List<TreeViewNodeModel>();
         private TreeViewModel treeViewModel;
         private LocalizationContext _context;
         
@@ -22,7 +23,7 @@ namespace MilSpace.Visualization3D
             _context = context;
         }
 
-        internal TreeViewModel TreeViewModel => treeViewModel;
+        internal IList<TreeViewNodeModel> SelectedTreeViewNodes => selectedTreeViewNodes;
 
 
         internal TreeViewModel LoadProfiles()
@@ -47,8 +48,6 @@ namespace MilSpace.Visualization3D
                 var newNode = UserSessionsProfilesTreeView.Nodes.Add(_context.Primitive);
                 AddNodesToTreeView(newNode, treeViewModel.Primitives);
             }
-
-
             return treeViewModel;
         }
 
@@ -57,11 +56,34 @@ namespace MilSpace.Visualization3D
             foreach (var node in nodesCollection)
             {
                 var bufferNode = parentNode.Nodes.Add(node.Name);
+                bufferNode.Tag = node.Guid;
 
                 if (node.ChildNodes == null || !node.ChildNodes.Any()) continue;
 
                 AddNodesToTreeView(bufferNode, node.ChildNodes);
             }
         }
+
+        private void UserSessionsProfilesTreeView_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left && ModifierKeys == Keys.Control)
+            {
+                UserSessionsProfilesTreeView.HideSelection = false;                                
+            }
+            else
+            {
+                UserSessionsProfilesTreeView.HideSelection = true;
+                selectedTreeViewNodes.Clear();                
+            }
+
+            var selectedNode = UserSessionsProfilesTreeView.SelectedNode;
+
+            if (selectedNode != null) selectedTreeViewNodes.Add(treeViewModel.GetTreeViewNodeModel(selectedNode.Tag));
+        }
+
+        private void UserSessionsProfilesTreeView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) this.DialogResult = DialogResult.OK;
+        }        
     }
 }
