@@ -35,10 +35,13 @@
             // UserSessionsProfilesTreeView
             // 
             this.UserSessionsProfilesTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UserSessionsProfilesTreeView.HideSelection = false;
             this.UserSessionsProfilesTreeView.Location = new System.Drawing.Point(0, 0);
             this.UserSessionsProfilesTreeView.Name = "UserSessionsProfilesTreeView";
             this.UserSessionsProfilesTreeView.Size = new System.Drawing.Size(228, 281);
             this.UserSessionsProfilesTreeView.TabIndex = 0;
+            this.UserSessionsProfilesTreeView.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.UserSessionsProfilesTreeView_BeforeSelect);
+            this.UserSessionsProfilesTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UserSessionsProfilesTreeView_KeyDown);
             // 
             // ProfilesTreeView
             // 
