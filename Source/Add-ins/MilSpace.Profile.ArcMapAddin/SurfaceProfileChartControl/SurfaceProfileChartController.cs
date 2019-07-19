@@ -222,9 +222,9 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 for(var i = 0; i < segment.ProfileSurfacePoints.Length; i++)
                 {
                     var currPoint = segment.ProfileSurfacePoints[i];
+
                     if (!isInvisibleZone)
                     {
-
                         if(i < segment.ProfileSurfacePoints.Length - 1)
                         {
                             if(CalcAngleOfVisibility(observerFullHeight, segment.ProfileSurfacePoints[i],
@@ -238,6 +238,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                                 }
 
                                 isInvisibleZone = true;
+                                segment.ProfileSurfacePoints[i + 1].Visible = false;
                                 sightLineKoef = (firstInvisiblePoint.Z - observerFullHeight) / (firstInvisiblePoint.Distance - firstPointDistance);
                                 i++;
                             }
@@ -250,7 +251,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                         {
                             isInvisibleZone = false;
                             invisiblePoints.Add(segment.ProfileSurfacePoints[i]);
-
+                            segment.ProfileSurfacePoints[i + 1].Visible = true;
                             i++;
                         }
                         else

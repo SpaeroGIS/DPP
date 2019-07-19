@@ -133,7 +133,7 @@ namespace MilSpace.DataAccess.Facade
 
         }
 
-        public string AddProfileLinesTo3D(IEnumerable<IPolyline> profileLines)
+        public string AddProfileLinesTo3D(Dictionary<IPolyline, bool> profileLines)
         {
             string featureClassName = GenerateTemp3DLineStorage();
 
@@ -144,12 +144,23 @@ namespace MilSpace.DataAccess.Facade
             IFeatureClass calc = GetCalcProfileFeatureClass(featureClassName);
             var GCS_WGS = Helper.GetBasePointSpatialReference();
 
+            int i = 0;
+
             profileLines.ToList().ForEach(
                 l =>
                 {
                     var newLine = calc.CreateFeature();
-                    newLine.Shape = l;
+
+                    int idFieldIndex = calc.FindField("ID");
+                    newLine.set_Value(idFieldIndex, i);
+
+                    int isVisibleFieldIndex = calc.FindField("IS_VISIBLE");
+                    newLine.set_Value(isVisibleFieldIndex, l.Value? 1:0);
+
+                    newLine.Shape = l.Key;
                     newLine.Store();
+
+                    i++;
                 }
                 );
 
@@ -170,9 +181,15 @@ namespace MilSpace.DataAccess.Facade
             IFeatureClass calc = GetCalcProfileFeatureClass(featureClassName);
             var GCS_WGS = Helper.GetBasePointSpatialReference();
 
+            int i = 0;
+
             points.ToList().ForEach(point =>
             {
                 var pointFeature = calc.CreateFeature();
+
+                int idFieldIndex = calc.FindField("ID");
+                pointFeature.set_Value(idFieldIndex, i);
+
                 pointFeature.Shape = point;
                 pointFeature.Store();
             });
@@ -349,11 +366,18 @@ namespace MilSpace.DataAccess.Facade
             geometryDefEdit.SpatialReference_2 = ArcMapInstance.Document.FocusMap.SpatialReference;
 
             IFieldsEdit fieldsEdit = (IFieldsEdit)fields;
+
             IField nameField = new FieldClass();
             IFieldEdit nameFieldEdit = (IFieldEdit)nameField;
             nameFieldEdit.Name_2 = "ID";
             nameFieldEdit.Type_2 = esriFieldType.esriFieldTypeInteger;
             fieldsEdit.AddField(nameField);
+
+            IField isVisibleField = new FieldClass();
+            IFieldEdit isVisibleFieldEdit = (IFieldEdit)isVisibleField;
+            isVisibleFieldEdit.Name_2 = "IS_VISIBLE";
+            isVisibleFieldEdit.Type_2 = esriFieldType.esriFieldTypeSmallInteger;
+            fieldsEdit.AddField(isVisibleFieldEdit);
 
             GenerateTempStorage(newFeatureClassName, fields, esriGeometryType.esriGeometryPolyline);
 

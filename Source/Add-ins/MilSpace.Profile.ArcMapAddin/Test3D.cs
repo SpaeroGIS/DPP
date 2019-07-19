@@ -46,18 +46,29 @@ namespace MilSpace.Profile
         {
             try
             {
-                var polylines = new List<IPolyline>();
+                var polylines = new Dictionary<IPolyline, bool>();
 
                 foreach(var line in profileSession.ProfileLines)
                 {
+                    var segmentFromPoint = new ProfileSurfacePoint();
                     var surfacePoints = profileSession.ProfileSurfaces.First(profileSurface => profileSurface.LineId == line.Id).ProfileSurfacePoints;
-                    var fromPoint = new Point() { X = surfacePoints.First().X, Y = surfacePoints.First().Y, Z = surfacePoints.First().Z, SpatialReference = EsriTools.Wgs84Spatialreference };
-                    var toPoint = new Point() { X = surfacePoints.Last().X, Y = surfacePoints.Last().Y, Z = surfacePoints.Last().Z, SpatialReference = EsriTools.Wgs84Spatialreference };
+                    segmentFromPoint = surfacePoints.First();
 
-                    fromPoint.Project(line.Line.SpatialReference);
-                    toPoint.Project(line.Line.SpatialReference);
+                    for(int i = 1; i < surfacePoints.Length; i++)
+                    {
+                        if(segmentFromPoint.Visible != surfacePoints[i].Visible || surfacePoints[i].isVertex || i == surfacePoints.Length - 1)
+                        {
+                            var fromPoint = new Point() { X = segmentFromPoint.X, Y = segmentFromPoint.Y, Z = segmentFromPoint.Z, SpatialReference = EsriTools.Wgs84Spatialreference };
+                            var toPoint = new Point() { X = surfacePoints[i].X, Y = surfacePoints[i].Y, Z = surfacePoints[i].Z, SpatialReference = EsriTools.Wgs84Spatialreference };
 
-                    polylines.Add(EsriTools.Create3DPolylineFromPoints(fromPoint, toPoint));
+                            fromPoint.Project(line.Line.SpatialReference);
+                            toPoint.Project(line.Line.SpatialReference);
+
+                            polylines.Add(EsriTools.Create3DPolylineFromPoints(fromPoint, toPoint), segmentFromPoint.Visible);
+
+                            segmentFromPoint = surfacePoints[i];
+                        }
+                    }
                 }
 
                 GdbAccess.Instance.AddProfileLinesTo3D(polylines);
@@ -79,7 +90,7 @@ namespace MilSpace.Profile
             try
             {
                 var point = profileSession.ProfileSurfaces[0].ProfileSurfacePoints[0];
-                IPoint geoPoint = new Point() { X = point.X, Y = point.Y, Z = point.Z, SpatialReference = profileSession.ProfileLines[0].SpatialReference };
+                IPoint geoPoint = new Point() { X = point.X, Y = point.Y, Z = point.Z, SpatialReference = EsriTools.Wgs84Spatialreference };
                 GdbAccess.Instance.AddProfilePointsTo3D(new List<IPoint>() { EsriTools.GetObserverPoint( geoPoint, profileSession.ObserverHeight, ArcMap.Document.FocusMap.SpatialReference) });
             }
             catch(Exception ex) { }

@@ -333,7 +333,10 @@ namespace MilSpace.Core.Tools
         {
             ProjectToMapSpatialReference(firstPoint, spatialReference);
             var point = new Point() { X = firstPoint.X, Y = firstPoint.Y + observerHeight, Z = firstPoint.Z, SpatialReference = spatialReference } as IPoint;
-            ProjectToWgs84(point);
+            var geometry = point as IGeometry;
+            IZAware zAware = geometry as IZAware;
+
+            zAware.ZAware = true;
 
             return point;
         }
