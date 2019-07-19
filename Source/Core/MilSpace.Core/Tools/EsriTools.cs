@@ -201,7 +201,6 @@ namespace MilSpace.Core.Tools
            
         }
 
-
         public static IEnumerable<IPolyline> CreatePolylinesFromPointAndAzimuths(IPoint centerPoint, double length, int count, double azimuth1, double azimuth2)
         {
             if (centerPoint == null)
@@ -308,6 +307,15 @@ namespace MilSpace.Core.Tools
             }
 
             return result;
+        }
+
+        public static IPoint GetObserverPoint(IPoint firstPoint, double observerHeight, ISpatialReference spatialReference)
+        {
+            ProjectToMapSpatialReference(firstPoint, spatialReference);
+            var point =  new Point() { X = firstPoint.X, Y = firstPoint.Y + observerHeight, Z = firstPoint.Z, SpatialReference = spatialReference} as IPoint;
+            ProjectToWgs84(point);
+
+            return point;
         }
 
         public static ILayer GetLayer(string layerName, IMap map)

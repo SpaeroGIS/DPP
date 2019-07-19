@@ -51,7 +51,27 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ESRI.ArcGIS.ArcMapUI, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.ArcScene, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Carto, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.CatalogUI, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="ESRI.ArcGIS.Desktop.AddIns">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Display, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Editor, Version=10.6.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
@@ -60,6 +80,10 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Framework">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Geometry, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.System">
@@ -71,18 +95,43 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\TreeViewModel.cs" />
+    <Compile Include="Models\TreeViewNodeModel.cs" />
+    <Compile Include="ProfilesTreeView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProfilesTreeView.Designer.cs">
+      <DependentUpon>ProfilesTreeView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Visualization3DHandler.cs" />
     <Compile Include="Open3DVisualization.cs" />
     <Compile Include="Config.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Config.esriaddinx</DependentUpon>
     </Compile>
+    <Compile Include="DataAccess.cs" />
+    <Compile Include="Interfaces\IDataAccess.cs" />
+    <Compile Include="LocalizationContext.cs" />
+    <Compile Include="ProfilesVisualizationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProfilesVisualizationForm.Designer.cs">
+      <DependentUpon>ProfilesVisualizationForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ReferenceData\LocalizationConstants.cs" />
   </ItemGroup>
   <ItemGroup>
     <AddInContent Include="Config.esriaddinx">
@@ -95,11 +144,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Button3DVisualization.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="ESRI.ArcGIS.ArcMapUI">
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -117,7 +161,42 @@
     <AddInContent Include="Images\Button3DVisualization.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ProfilesTreeView.resx">
+      <DependentUpon>ProfilesTreeView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProfilesVisualizationForm.resx">
+      <DependentUpon>ProfilesVisualizationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <AddInContent Include="Images\Add.png" />
+    <AddInContent Include="Images\Remove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\ProfilesTreeViewFormIcon.ico" />
+    <Content Include="Images\Tree.ico" />
+    <Content Include="Resources\Visualization3DLocalization.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <AddInContent Include="Images\Directions.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\MilSpace.DataAccess\MilSpace.DataAccess\MilSpace.DataAccess.csproj">
+      <Project>{651C40FA-E0B6-45FF-9B3E-9341EB671754}</Project>
+      <Name>MilSpace.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MilSpace.Profile.ArcMapAddin\MilSpace.Profile.ArcGISAddIn.csproj">
+      <Project>{A3CA6E5C-FAC0-4B81-A812-562F1F59CBA5}</Project>
+      <Name>MilSpace.Profile.ArcGISAddIn</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>

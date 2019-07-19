@@ -174,12 +174,11 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Solutions\MilSpace.GeoCalculator.BusinessLogic\MilSpace.GeoCalculator.BusinessLogic.csproj">
-      <Project>{B37F5B7A-6511-4212-9622-E1CBFB2A0B1D}</Project>
+    <ProjectReference Include="..\..\Modules\MilSpace.GeoCalculator.BusinessLogic\MilSpace.GeoCalculator.BusinessLogic.csproj">
+      <Project>{b37f5b7a-6511-4212-9622-e1cbfb2a0b1d}</Project>
       <Name>MilSpace.GeoCalculator.BusinessLogic</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>
     <AddInTargetProduct>Desktop</AddInTargetProduct>

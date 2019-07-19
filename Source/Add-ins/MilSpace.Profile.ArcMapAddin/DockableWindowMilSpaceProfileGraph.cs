@@ -216,5 +216,19 @@ namespace MilSpace.Profile
                 selectedTabIndex = profilesTabControl.SelectedIndex;
             }
         }
+
+        //test
+       
+        internal int GetSelectedSessionId()
+        {
+            try
+            {
+                return (int)profilesTabControl.SelectedTab.Tag;
+            }
+            catch
+            {
+                return -1;
+            }
+        }
     }
 }
