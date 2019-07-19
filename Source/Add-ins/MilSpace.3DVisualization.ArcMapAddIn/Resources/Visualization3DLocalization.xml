@@ -9,4 +9,12 @@
 <TransportLayerLabel>Шар транспорту</TransportLayerLabel>
 <HydroLayerLabel>Шар водних ресурсів</HydroLayerLabel>
 <ProfilesLabel>Профілі</ProfilesLabel>
+<SurfacesLabel>Поверхні</SurfacesLabel>
+<Generat3DTabHeader>Проект</Generat3DTabHeader>
+<ImageTabHeader>Знімок</ImageTabHeader>
+<Section>Відрізки</Section>
+<Fun>Віяло</Fun>
+<Primitive>Графіки</Primitive>
+<Profile>Профіль</Profile>
+<ArcSceneParams>3D Візуалізація</ArcSceneParams>  
 </Visualization3D>

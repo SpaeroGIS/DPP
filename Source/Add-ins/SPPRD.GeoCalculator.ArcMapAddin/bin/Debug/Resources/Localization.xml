@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CoordinatesConverter xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<WindowCaption>Калькулятор координат</WindowCaption>
+<SaveAs>Зберегти як</SaveAs>
+<CurrentMapLabel>Карта</CurrentMapLabel>
+<Pulkovo1942Label>СК42</Pulkovo1942Label>
+<Wgs1984Label>WGS84</Wgs1984Label>
+<Ukraine2000Label>УСК2000</Ukraine2000Label>
+<MgrsLabel>MGRS:</MgrsLabel>
+<UtmLabel>UTM:</UtmLabel>
+<SaveButton>Зберегти в файл</SaveButton>
+<OpenFileButton>Відкрити файл</OpenFileButton>
+<CopyButton>Зкопіювати</CopyButton>
+<ClearGridButton>Зкинути список точок</ClearGridButton>
+<MoveToCenterButton>Центр карты</MoveToCenterButton>
+<MoveToProjectedCoordButton>Перемістити карту в точку с поточникми координатами</MoveToProjectedCoordButton>
+<ToolButton>Вимкнути взаємодію з картой</ToolButton>
+<WrongUtmFormatMessage>Невірний формат UTM</WrongUtmFormatMessage>
+<ErrorString>Помилка</ErrorString>
+<WarningString>Увага</WarningString>
+<WrongMgrsFormatMessage>Невірний  формат MGRS</WrongMgrsFormatMessage>
+<WrongFormatMessage>Невірний формат</WrongFormatMessage>
+<NoSelectedPointMessage>Потрібно вказати точку на карте!</NoSelectedPointMessage>
+<AltRightToMove>Alt+Вправо для руху</AltRightToMove>
+<ShowPointOnMap>Показать на карті</ShowPointOnMap>
+<DeletePoint>Видалити</DeletePoint>
+<CopyCoordinateButton>Взяти координати в буфер обміну</CopyCoordinateButton>
+<PasteCoordinateButton>Вставити координати из буфера обміну</PasteCoordinateButton>
+<GridCleanWarningMessage>Двлі список точок буде зкинуто. Продовжити?</GridCleanWarningMessage>
+</CoordinatesConverter>

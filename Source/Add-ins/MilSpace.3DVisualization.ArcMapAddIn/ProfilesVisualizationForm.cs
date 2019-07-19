@@ -1,37 +1,38 @@
-﻿//using MilSpace.DataAccess.DataTransfer;
-//using MilSpace.DataAccess.Facade;
+﻿using MilSpace.DataAccess.DataTransfer;
+using MilSpace.DataAccess.Facade;
 using MilSpace.Visualization3D.ReferenceData;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
 namespace MilSpace.Visualization3D
 {
-    public partial class ProfilesVisualizationForm : Form
+    internal partial class ProfilesVisualizationForm : Form
     {
-        public ProfilesVisualizationForm()
+        private ProfilesTreeView profilesTreeView;
+        private LocalizationContext context;
+        private List<Models.TreeViewNodeModel> profilesModels = new List<Models.TreeViewNodeModel>();
+
+        internal ProfilesVisualizationForm()
         {
             InitializeComponent();
-            LocalizeComponent();
-            InitializeTreeView();
-        }
-
-        private void InitializeTreeView()
-        {
-            //var userProfileSessions = MilSpaceProfileFacade.GetUserProfileSessions();
-        }
+            LocalizeComponent();            
+        }        
 
         private void LocalizeComponent()
         {
             try
             {
-                var context = new LocalizationContext();
+                context = new LocalizationContext();
 
                 //Captions
                 this.Text = context.WindowCaption;
 
                 //Labels
                 this.SurfaceLabel.Text = context.SurfaceLabel;
+                this.lbl3DProfiles.Text = context.ArcSceneParamsLabel;
+                this.lblProfiles.Text = context.ProfilesLabel;
                 this.BuildingsHightLabel.Text = context.HightLablel;
                 this.HydroHightLabel.Text = context.HightLablel;
                 this.PlantsHightLablel.Text = context.HightLablel;
@@ -40,7 +41,11 @@ namespace MilSpace.Visualization3D
                 this.HydroLayerLabel.Text = context.HydroLayerLabel;
                 this.PlantsLayerLabel.Text = context.PlantsLayerLabel;
                 this.TransportLayerLabel.Text = context.TransportLayerLabel;
-                this.ProfilesTabPage.Text = context.ProfilesLabel;
+                this.ProfilesTabPage.Text = context.Generate3DSceneTabHeader;
+                this.GenerateImageTab.Text = context.GenerateImageTabHeader;
+
+                this.surfaceLabels.Text = context.SurfacessLabel;
+
 
                 //Buttons
                 this.GenerateButton.Text = context.GenerateButton;
@@ -48,60 +53,47 @@ namespace MilSpace.Visualization3D
             catch { MessageBox.Show("No Localization.xml found or there is an error during loading. Coordinates Converter window is not fully localized."); }
         }
 
-        //public bool AddNodeToTreeView(ProfileSession profile)
-        //{
-        //        if (profile.DefinitionType == ProfileSettingsTypeEnum.Points)
-        //        {
-        //            var firstX = profile.ProfileLines.First().Line.FromPoint.X;
-        //            var firstY = profile.ProfileLines.First().Line.FromPoint.Y;
-        //            var secondX = profile.ProfileLines.First().Line.ToPoint.X;
-        //            var secondY = profile.ProfileLines.First().Line.ToPoint.Y;                    
-        //        }
-
-        //        if (profile.DefinitionType == ProfileSettingsTypeEnum.Fun)
-        //        {
-        //            var basePointX = profile.ProfileLines.FirstOrDefault().Line.FromPoint.X;
-        //            var basePointY = profile.ProfileLines.FirstOrDefault().Line.FromPoint.Y;
-        //            var lineDistance = profile.ProfileLines.FirstOrDefault().Line.Length;
-        //            var linesCount = profile.ProfileLines.ToList().Count;                
-        //        }
-                
-        //        foreach (var line in profile.ProfileLines)
-        //        {
-        //            var azimuth = line.Azimuth.ToString("F0");
-        //            var nodeName = profile.DefinitionType == ProfileSettingsTypeEnum.Points
-        //                ? $"{azimuth}" :
-        //                (line.Azimuth == double.MinValue ? $"lineDefinition ({System.Array.IndexOf(profile.ProfileLines, line) + 1})" :
-        //                $"{azimuth} ({System.Array.IndexOf(profile.ProfileLines, line) + 1})"); 
-        //        }
-        //    return true;
-        //}
-
-        //private string ConvertProfileTypeToString(ProfileSettingsTypeEnum profileType)
-        //{
-        //    switch (profileType)
-        //    {
-        //        case ProfileSettingsTypeEnum.Points:
-        //            return LocalizationConstants.SectionTabText;
-
-        //        case ProfileSettingsTypeEnum.Fun:
-        //            return LocalizationConstants.FunTabText;
-
-        //        case ProfileSettingsTypeEnum.Primitives:
-        //            return LocalizationConstants.PrimitiveTabText;
-
-        //        case ProfileSettingsTypeEnum.Load:
-        //            return LocalizationConstants.LoadTabText;
-
-        //        default:
-        //            throw new ArgumentOutOfRangeException(nameof(profileType), profileType, null);
-        //    }
-        //}
-
+        #region Control Event Handlers
         private void ProfilesVisualizationForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true;
             this.Visible = false;
         }
+
+        private void ToolBars_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        {
+            if (AddProfile.Equals(e.Button))
+            {
+                profilesTreeView = new ProfilesTreeView(context);
+                profilesTreeView.LoadProfiles();              
+
+                var dialogResult = profilesTreeView.ShowDialog(this);
+
+                if (dialogResult == DialogResult.OK)
+                {
+                    profilesModels.AddRange(profilesTreeView.SelectedTreeViewNodes.Where(item => !profilesModels.Contains(item)));
+
+                    ProfilesListBox.DataSource = profilesModels;
+                    ProfilesListBox.DisplayMember = "Name";
+                    ProfilesListBox.ValueMember = "NodeProfileSession";                    
+
+                    profilesTreeView.Dispose();
+                }
+            }
+            else if (RemoveProfile.Equals(e.Button))
+            {
+                foreach(var item in ProfilesListBox.SelectedItems)
+                {
+                    profilesModels.Remove(item as Models.TreeViewNodeModel);
+                }
+                //TODO: Remove SPIKE with DataBindings reassigning
+                ProfilesListBox.DataSource = null;
+                ProfilesListBox.DataSource = profilesModels;
+                ProfilesListBox.DisplayMember = "Name";
+                ProfilesListBox.ValueMember = "NodeProfileSession";
+            }            
+        }
+        #endregion
+
     }
 }
