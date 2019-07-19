@@ -202,7 +202,6 @@
       <DependentUpon>SurfaceProfileChart.cs</DependentUpon>
     </Compile>
     <Compile Include="SurfaceProfileChartControl\SurfaceProfileChartController.cs" />
-    <Compile Include="Test3D.cs" />
   </ItemGroup>
   <ItemGroup>
     <AddInContent Include="Config.esriaddinx">

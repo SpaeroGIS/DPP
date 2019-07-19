@@ -82,6 +82,9 @@
     <Reference Include="ESRI.ArcGIS.Framework">
       <Private>False</Private>
     </Reference>
+    <Reference Include="ESRI.ArcGIS.Geodatabase, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="ESRI.ArcGIS.Geometry, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
@@ -102,6 +105,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataPreparingHelper.cs" />
     <Compile Include="Models\TreeViewModel.cs" />
     <Compile Include="Models\TreeViewNodeModel.cs" />
     <Compile Include="ProfilesTreeView.cs">
@@ -189,13 +193,13 @@
     <AddInContent Include="Images\Directions.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\MilSpace.Core\MilSpace.Core.csproj">
+      <Project>{02023D3D-4F73-4E7E-A78F-EEAA5D66DEAC}</Project>
+      <Name>MilSpace.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Core\MilSpace.DataAccess\MilSpace.DataAccess\MilSpace.DataAccess.csproj">
       <Project>{651C40FA-E0B6-45FF-9B3E-9341EB671754}</Project>
       <Name>MilSpace.DataAccess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MilSpace.Profile.ArcMapAddin\MilSpace.Profile.ArcGISAddIn.csproj">
-      <Project>{A3CA6E5C-FAC0-4B81-A812-562F1F59CBA5}</Project>
-      <Name>MilSpace.Profile.ArcGISAddIn</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

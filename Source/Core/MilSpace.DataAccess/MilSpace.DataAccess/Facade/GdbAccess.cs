@@ -133,7 +133,7 @@ namespace MilSpace.DataAccess.Facade
 
         }
 
-        public string AddProfileLinesTo3D(Dictionary<IPolyline, bool> profileLines)
+        public IFeatureClass AddProfileLinesTo3D(Dictionary<IPolyline, bool> profileLines)
         {
             string featureClassName = GenerateTemp3DLineStorage();
 
@@ -167,10 +167,10 @@ namespace MilSpace.DataAccess.Facade
             workspaceEdit.StopEditOperation();
             workspaceEdit.StopEditing(true);
 
-            return featureClassName;
+            return calc;
         }
 
-        public string AddProfilePointsTo3D(IEnumerable<IPoint> points)
+        public IFeatureClass AddProfilePointsTo3D(IEnumerable<IPoint> points)
         {
             string featureClassName = GenerateTemp3DPointStorage();
 
@@ -197,10 +197,10 @@ namespace MilSpace.DataAccess.Facade
             workspaceEdit.StopEditOperation();
             workspaceEdit.StopEditing(true);
 
-            return featureClassName;
+            return calc;
         }
 
-        public string AddPolygonTo3D(IPolygon polygon)
+        public IFeatureClass AddPolygonTo3D(IEnumerable<IPolygon> polygons)
         {
             string featureClassName = GenerateTemp3DPolygonStorage();
 
@@ -211,14 +211,17 @@ namespace MilSpace.DataAccess.Facade
             IFeatureClass calc = GetCalcProfileFeatureClass(featureClassName);
             var GCS_WGS = Helper.GetBasePointSpatialReference();
 
-            var pointFeature = calc.CreateFeature();
-            pointFeature.Shape = polygon;
-            pointFeature.Store();
+            polygons.ToList().ForEach(polygon =>
+            {
+                var pointFeature = calc.CreateFeature();
+                pointFeature.Shape = polygon;
+                pointFeature.Store();
+            });
 
             workspaceEdit.StopEditOperation();
             workspaceEdit.StopEditing(true);
 
-            return featureClassName;
+            return calc;
         }
 
         public void EraseProfileLines()
