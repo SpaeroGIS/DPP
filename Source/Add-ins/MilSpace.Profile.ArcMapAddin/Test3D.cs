@@ -50,7 +50,14 @@ namespace MilSpace.Profile
 
                 foreach(var line in profileSession.ProfileLines)
                 {
-                    polylines.Add(line.Line);
+                    var surfacePoints = profileSession.ProfileSurfaces.First(profileSurface => profileSurface.LineId == line.Id).ProfileSurfacePoints;
+                    var fromPoint = new Point() { X = surfacePoints.First().X, Y = surfacePoints.First().Y, Z = surfacePoints.First().Z, SpatialReference = EsriTools.Wgs84Spatialreference };
+                    var toPoint = new Point() { X = surfacePoints.Last().X, Y = surfacePoints.Last().Y, Z = surfacePoints.Last().Z, SpatialReference = EsriTools.Wgs84Spatialreference };
+
+                    fromPoint.Project(line.Line.SpatialReference);
+                    toPoint.Project(line.Line.SpatialReference);
+
+                    polylines.Add(EsriTools.Create3DPolylineFromPoints(fromPoint, toPoint));
                 }
 
                 GdbAccess.Instance.AddProfileLinesTo3D(polylines);

@@ -102,7 +102,7 @@ namespace MilSpace.Core.Tools
             {
                 geometry.Project(Wgs84Spatialreference);
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 //ToDO: Loggig
             }
@@ -130,7 +130,7 @@ namespace MilSpace.Core.Tools
             {
                 geometry.Project(mapSpatialReference);
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 //ToDO: Loggig
             }
@@ -141,7 +141,7 @@ namespace MilSpace.Core.Tools
         {
             get
             {
-                if (wgs84 == null)
+                if(wgs84 == null)
                 {
                     SpatialReferenceEnvironmentClass factory = new SpatialReferenceEnvironmentClass();
                     wgs84 = factory.CreateGeographicCoordinateSystem((int)esriSRGeoCSType.esriSRGeoCS_WGS1984);
@@ -158,7 +158,7 @@ namespace MilSpace.Core.Tools
             env = view.Extent;
 
             IRelationalOperator2 operation = env as IRelationalOperator2;
-            if (setCenterAt || !operation.Contains(geometry))
+            if(setCenterAt || !operation.Contains(geometry))
             {
                 ISegmentCollection poly = new PolygonClass();
                 IArea area = geometry.Envelope as IArea;
@@ -180,7 +180,7 @@ namespace MilSpace.Core.Tools
 
             geometries.ToList().ForEach(geometry =>
             {
-                if (symbolsToFlash.ContainsKey(geometry.GeometryType))
+                if(symbolsToFlash.ContainsKey(geometry.GeometryType))
                 {
                     var symbol = symbolsToFlash[geometry.GeometryType].Invoke(color);
                     display.SetSymbol(symbol);
@@ -197,18 +197,18 @@ namespace MilSpace.Core.Tools
             System.Threading.Thread.Sleep(300);
             display.Invalidate(rect: null, erase: true, cacheIndex: cacheId);
             display.RemoveCache(cacheId);
-            
-           
+
+
         }
 
         public static IEnumerable<IPolyline> CreatePolylinesFromPointAndAzimuths(IPoint centerPoint, double length, int count, double azimuth1, double azimuth2)
         {
-            if (centerPoint == null)
+            if(centerPoint == null)
             {
                 return null;
             }
 
-            if (count < 2)
+            if(count < 2)
             {
                 //TODO: Localize error message
                 throw new MilSpaceProfileLackOfParameterException("Line numbers", count);
@@ -217,9 +217,9 @@ namespace MilSpace.Core.Tools
             double sector;
             int devider = count;
             //Check if it is a circle
-            if ((azimuth1 == 0 && azimuth2 == 360) || (azimuth2 == 0 && azimuth1 == 360) || (azimuth2 == azimuth1))
+            if((azimuth1 == 0 && azimuth2 == 360) || (azimuth2 == 0 && azimuth1 == 360) || (azimuth2 == azimuth1))
             {
-                if (count == 2)
+                if(count == 2)
                 {
                     azimuth2 = azimuth1 + 180;
                 }
@@ -229,7 +229,7 @@ namespace MilSpace.Core.Tools
                 }
             }
 
-            if (azimuth1 > azimuth2) //clockwise
+            if(azimuth1 > azimuth2) //clockwise
             {
                 sector = (360 - azimuth1) + azimuth2;
             }
@@ -238,7 +238,7 @@ namespace MilSpace.Core.Tools
                 sector = azimuth2 - azimuth1;
             }
 
-            if (sector == 0)
+            if(sector == 0)
             {
                 sector = 360;
             }
@@ -246,7 +246,7 @@ namespace MilSpace.Core.Tools
             double step = sector / (devider - 1);
 
             List<IPolyline> result = new List<IPolyline>();
-            for (int i = 0; i < count; i++)
+            for(int i = 0; i < count; i++)
             {
                 double radian = (90 - (azimuth1 + (i * step))) * (Math.PI / 180);
                 IPoint outPoint = GetPointFromAngelAndDistance(centerPoint, radian, length);
@@ -282,7 +282,7 @@ namespace MilSpace.Core.Tools
         /// <returns>Esri poliline</returns>
         public static IPolyline CreatePolylineFromPoints(IPoint pointFrom, IPoint pointTo)
         {
-            if (pointFrom == null || pointTo == null)
+            if(pointFrom == null || pointTo == null)
             {
                 return null;
             }
@@ -301,7 +301,7 @@ namespace MilSpace.Core.Tools
 
             var result = trackLine as IPolyline;
 
-            if (pointFrom.SpatialReference != null && pointTo.SpatialReference != null && pointFrom.SpatialReference == pointTo.SpatialReference)
+            if(pointFrom.SpatialReference != null && pointTo.SpatialReference != null && pointFrom.SpatialReference == pointTo.SpatialReference)
             {
                 result.SpatialReference = pointFrom.SpatialReference;
             }
@@ -309,10 +309,30 @@ namespace MilSpace.Core.Tools
             return result;
         }
 
+        public static IPolyline Create3DPolylineFromPoints(IPoint fromPoint, IPoint toPoint)
+
+        {
+            object missing = Type.Missing;
+
+            IGeometryCollection geometryCollection = new PolylineClass();
+            IPointCollection pointCollection = new PathClass();
+
+            pointCollection.AddPoint(ConstructPoint3D(fromPoint.X, fromPoint.Y, fromPoint.Z), ref missing, ref missing);
+            pointCollection.AddPoint(ConstructPoint3D(toPoint.X, toPoint.Y, toPoint.Z), ref missing, ref missing);
+            geometryCollection.AddGeometry(pointCollection as IGeometry, ref missing, ref missing);
+
+            var geometry = geometryCollection as IGeometry;
+            IZAware zAware = geometry as IZAware;
+
+            zAware.ZAware = true;
+
+            return geometryCollection as IPolyline;
+        }
+
         public static IPoint GetObserverPoint(IPoint firstPoint, double observerHeight, ISpatialReference spatialReference)
         {
             ProjectToMapSpatialReference(firstPoint, spatialReference);
-            var point =  new Point() { X = firstPoint.X, Y = firstPoint.Y + observerHeight, Z = firstPoint.Z, SpatialReference = spatialReference} as IPoint;
+            var point = new Point() { X = firstPoint.X, Y = firstPoint.Y + observerHeight, Z = firstPoint.Z, SpatialReference = spatialReference } as IPoint;
             ProjectToWgs84(point);
 
             return point;
@@ -322,7 +342,7 @@ namespace MilSpace.Core.Tools
         {
             var layers = map.Layers;
             var layer = map.Layer[0] as ILayer;
-            while (layer.Name != layerName)
+            while(layer.Name != layerName)
             {
                 layer = layers.Next() as ILayer;
             }
@@ -332,12 +352,22 @@ namespace MilSpace.Core.Tools
 
         public static List<IPolyline> GetIntersections(IPolyline selectedLine, ILayer layer)
         {
-            if (layer != null && selectedLine != null)
+            if(layer != null && selectedLine != null)
             {
                 return GetIntersection(selectedLine, layer);
             }
 
             return null;
+        }
+
+        private static IPoint ConstructPoint3D(double x, double y, double z)
+
+        {
+            IPoint point = new PointClass();
+            point.PutCoords(x, y);
+            point.Z = z;
+
+            return point;
         }
 
         private static List<IPolyline> GetIntersection(IPolyline polyline, ILayer layer)
@@ -359,7 +389,7 @@ namespace MilSpace.Core.Tools
 
             var feature = highwayCursor.NextFeature();
 
-            while (feature != null)
+            while(feature != null)
             {
                 resultPolylines.AddRange(GetFeatureIntersection(feature, polyline));
                 feature = highwayCursor.NextFeature();
@@ -384,26 +414,26 @@ namespace MilSpace.Core.Tools
             var firstLinePointOnLayer = (IPoint)pTopo.Intersect(polyline.FromPoint, esriGeometryDimension.esriGeometry0Dimension);
             var lastLinePointOnLayer = (IPoint)pTopo.Intersect(polyline.ToPoint, esriGeometryDimension.esriGeometry0Dimension);
 
-            if (!result.IsEmpty)
+            if(!result.IsEmpty)
             {
                 multipoint = (Multipoint)result;
 
                 IPoint firstPoint = null;
                 IPoint lastPoint = null;
 
-                if (!firstLinePointOnLayer.IsEmpty)
+                if(!firstLinePointOnLayer.IsEmpty)
                 {
-                    if (firstLinePointOnLayer.Y > multipoint.Point[0].Y) { firstPoint = firstLinePointOnLayer; }
+                    if(firstLinePointOnLayer.Y > multipoint.Point[0].Y) { firstPoint = firstLinePointOnLayer; }
                     else { lastPoint = firstLinePointOnLayer; }
                 }
 
-                if (!lastLinePointOnLayer.IsEmpty)
+                if(!lastLinePointOnLayer.IsEmpty)
                 {
-                    if (lastLinePointOnLayer.Y > multipoint.Point[0].Y) { firstPoint = lastLinePointOnLayer; }
+                    if(lastLinePointOnLayer.Y > multipoint.Point[0].Y) { firstPoint = lastLinePointOnLayer; }
                     else { lastPoint = lastLinePointOnLayer; }
                 }
 
-                if (firstPoint != null)
+                if(firstPoint != null)
                 {
                     var buff = new Multipoint();
                     buff.AddPointCollection(multipoint);
@@ -413,23 +443,23 @@ namespace MilSpace.Core.Tools
                     multipoint.AddPointCollection(buff);
                 }
 
-                if (lastPoint != null) { multipoint.AddPoint(lastPoint); }
+                if(lastPoint != null) { multipoint.AddPoint(lastPoint); }
             }
 
-            if (result.IsEmpty && !firstLinePointOnLayer.IsEmpty)
+            if(result.IsEmpty && !firstLinePointOnLayer.IsEmpty)
             {
-                if (!firstLinePointOnLayer.IsEmpty) { multipoint.AddPoint((IPoint)firstLinePointOnLayer); }
-                if (!lastLinePointOnLayer.IsEmpty) { multipoint.AddPoint((IPoint)lastLinePointOnLayer); }
+                if(!firstLinePointOnLayer.IsEmpty) { multipoint.AddPoint((IPoint)firstLinePointOnLayer); }
+                if(!lastLinePointOnLayer.IsEmpty) { multipoint.AddPoint((IPoint)lastLinePointOnLayer); }
             }
 
-            if (multipoint.PointCount == 1)
+            if(multipoint.PointCount == 1)
             {
                 multipoint.Point[0].Project(polyline.SpatialReference);
                 resultPolylines.Add(CreatePolylineFromPoints(multipoint.Point[0], multipoint.Point[0]));
             }
-            else if (multipoint.PointCount > 0)
+            else if(multipoint.PointCount > 0)
             {
-                for (int i = 0; i < multipoint.PointCount - 1; i++)
+                for(int i = 0; i < multipoint.PointCount - 1; i++)
                 {
                     multipoint.Point[i].Project(polyline.SpatialReference);
                     multipoint.Point[i + 1].Project(polyline.SpatialReference);
