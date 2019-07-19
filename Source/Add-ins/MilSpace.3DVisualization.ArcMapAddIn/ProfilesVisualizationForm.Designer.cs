@@ -477,6 +477,7 @@
             // 
             this.ProfilesListBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ProfilesListBox.FormattingEnabled = true;
+            this.ProfilesListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.ProfilesListBox.ItemHeight = 15;
             this.ProfilesListBox.Location = new System.Drawing.Point(0, 0);
             this.ProfilesListBox.Name = "ProfilesListBox";

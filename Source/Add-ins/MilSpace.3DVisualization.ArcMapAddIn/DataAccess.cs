@@ -29,7 +29,7 @@ namespace MilSpace.Visualization3D
 
             foreach (var profileSession in userProfileSessions)
             {
-                var model = new TreeViewNodeModel { Name = profileSession.SessionName };
+                var model = new TreeViewNodeModel { Name = profileSession.SessionName, Guid = Guid.NewGuid() };
                 AddChildCollection(model, profileSession);
 
                 if (profileSession.DefinitionType == ProfileSettingsTypeEnum.Points)

@@ -12,6 +12,7 @@ namespace MilSpace.Visualization3D
     {
         private ProfilesTreeView profilesTreeView;
         private LocalizationContext context;
+        private List<Models.TreeViewNodeModel> profilesModels = new List<Models.TreeViewNodeModel>();
 
         internal ProfilesVisualizationForm()
         {
@@ -59,29 +60,40 @@ namespace MilSpace.Visualization3D
             this.Visible = false;
         }
 
-        private void AddButton_Click(object sender, EventArgs e)
-        {
-            if (profilesTreeView == null) profilesTreeView = new ProfilesTreeView(context);
-
-            profilesTreeView.LoadProfiles();
-
-            profilesTreeView.ShowDialog(this);
-        }
-        #endregion
         private void ToolBars_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
             if (AddProfile.Equals(e.Button))
             {
-                if (profilesTreeView == null) profilesTreeView = new ProfilesTreeView(context);
+                profilesTreeView = new ProfilesTreeView(context);
+                profilesTreeView.LoadProfiles();              
 
-                profilesTreeView.LoadProfiles();
+                var dialogResult = profilesTreeView.ShowDialog(this);
 
-                profilesTreeView.ShowDialog(this);
+                if (dialogResult == DialogResult.OK)
+                {
+                    profilesModels.AddRange(profilesTreeView.SelectedTreeViewNodes.Where(item => !profilesModels.Contains(item)));
+
+                    ProfilesListBox.DataSource = profilesModels;
+                    ProfilesListBox.DisplayMember = "Name";
+                    ProfilesListBox.ValueMember = "NodeProfileSession";                    
+
+                    profilesTreeView.Dispose();
+                }
             }
             else if (RemoveProfile.Equals(e.Button))
             {
-
-            }
+                foreach(var item in ProfilesListBox.SelectedItems)
+                {
+                    profilesModels.Remove(item as Models.TreeViewNodeModel);
+                }
+                //TODO: Remove SPIKE with DataBindings reassigning
+                ProfilesListBox.DataSource = null;
+                ProfilesListBox.DataSource = profilesModels;
+                ProfilesListBox.DisplayMember = "Name";
+                ProfilesListBox.ValueMember = "NodeProfileSession";
+            }            
         }
+        #endregion
+
     }
 }
