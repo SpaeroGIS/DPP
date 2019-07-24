@@ -133,7 +133,7 @@ namespace MilSpace.DataAccess.Facade
 
         }
 
-        public string AddProfileLinesTo3D(IEnumerable<IPolyline> profileLines)
+        public IFeatureClass AddProfileLinesTo3D(Dictionary<IPolyline, bool> profileLines)
         {
             string featureClassName = GenerateTemp3DLineStorage();
 
@@ -144,22 +144,33 @@ namespace MilSpace.DataAccess.Facade
             IFeatureClass calc = GetCalcProfileFeatureClass(featureClassName);
             var GCS_WGS = Helper.GetBasePointSpatialReference();
 
+            int i = 0;
+
             profileLines.ToList().ForEach(
                 l =>
                 {
                     var newLine = calc.CreateFeature();
-                    newLine.Shape = l;
+
+                    int idFieldIndex = calc.FindField("ID");
+                    newLine.set_Value(idFieldIndex, i);
+
+                    int isVisibleFieldIndex = calc.FindField("IS_VISIBLE");
+                    newLine.set_Value(isVisibleFieldIndex, l.Value? 1:0);
+
+                    newLine.Shape = l.Key;
                     newLine.Store();
+
+                    i++;
                 }
                 );
 
             workspaceEdit.StopEditOperation();
             workspaceEdit.StopEditing(true);
 
-            return featureClassName;
+            return calc;
         }
 
-        public string AddProfilePointsTo3D(IEnumerable<IPoint> points)
+        public IFeatureClass AddProfilePointsTo3D(IEnumerable<IPoint> points)
         {
             string featureClassName = GenerateTemp3DPointStorage();
 
@@ -170,9 +181,15 @@ namespace MilSpace.DataAccess.Facade
             IFeatureClass calc = GetCalcProfileFeatureClass(featureClassName);
             var GCS_WGS = Helper.GetBasePointSpatialReference();
 
+            int i = 0;
+
             points.ToList().ForEach(point =>
             {
                 var pointFeature = calc.CreateFeature();
+
+                int idFieldIndex = calc.FindField("ID");
+                pointFeature.set_Value(idFieldIndex, i);
+
                 pointFeature.Shape = point;
                 pointFeature.Store();
             });
@@ -180,10 +197,10 @@ namespace MilSpace.DataAccess.Facade
             workspaceEdit.StopEditOperation();
             workspaceEdit.StopEditing(true);
 
-            return featureClassName;
+            return calc;
         }
 
-        public string AddPolygonTo3D(IPolygon polygon)
+        public IFeatureClass AddPolygonTo3D(IEnumerable<IPolygon> polygons)
         {
             string featureClassName = GenerateTemp3DPolygonStorage();
 
@@ -194,14 +211,17 @@ namespace MilSpace.DataAccess.Facade
             IFeatureClass calc = GetCalcProfileFeatureClass(featureClassName);
             var GCS_WGS = Helper.GetBasePointSpatialReference();
 
-            var pointFeature = calc.CreateFeature();
-            pointFeature.Shape = polygon;
-            pointFeature.Store();
+            polygons.ToList().ForEach(polygon =>
+            {
+                var pointFeature = calc.CreateFeature();
+                pointFeature.Shape = polygon;
+                pointFeature.Store();
+            });
 
             workspaceEdit.StopEditOperation();
             workspaceEdit.StopEditing(true);
 
-            return featureClassName;
+            return calc;
         }
 
         public void EraseProfileLines()
@@ -344,15 +364,23 @@ namespace MilSpace.DataAccess.Facade
             IField field = fields.get_Field(shapeFieldIndex);
             IGeometryDef geometryDef = field.GeometryDef;
             IGeometryDefEdit geometryDefEdit = (IGeometryDefEdit)geometryDef;
+            geometryDefEdit.HasZ_2 = true;
             geometryDefEdit.GeometryType_2 = esriGeometryType.esriGeometryPolyline;
             geometryDefEdit.SpatialReference_2 = ArcMapInstance.Document.FocusMap.SpatialReference;
 
             IFieldsEdit fieldsEdit = (IFieldsEdit)fields;
+
             IField nameField = new FieldClass();
             IFieldEdit nameFieldEdit = (IFieldEdit)nameField;
             nameFieldEdit.Name_2 = "ID";
             nameFieldEdit.Type_2 = esriFieldType.esriFieldTypeInteger;
             fieldsEdit.AddField(nameField);
+
+            IField isVisibleField = new FieldClass();
+            IFieldEdit isVisibleFieldEdit = (IFieldEdit)isVisibleField;
+            isVisibleFieldEdit.Name_2 = "IS_VISIBLE";
+            isVisibleFieldEdit.Type_2 = esriFieldType.esriFieldTypeSmallInteger;
+            fieldsEdit.AddField(isVisibleFieldEdit);
 
             GenerateTempStorage(newFeatureClassName, fields, esriGeometryType.esriGeometryPolyline);
 
@@ -362,7 +390,28 @@ namespace MilSpace.DataAccess.Facade
         private string GenerateTemp3DPointStorage()
         {
             string newFeatureClassName = $"Point3D_L{Helper.GetTemporaryNameSuffix()}";
-            GenerateTempStorage(newFeatureClassName, null, esriGeometryType.esriGeometryPoint);
+
+            IFeatureClassDescription fcDescription = new FeatureClassDescriptionClass();
+            IObjectClassDescription ocDescription = (IObjectClassDescription)fcDescription;
+            IFields fields = ocDescription.RequiredFields;
+
+            int shapeFieldIndex = fields.FindField(fcDescription.ShapeFieldName);
+
+            IField field = fields.get_Field(shapeFieldIndex);
+            IGeometryDef geometryDef = field.GeometryDef;
+            IGeometryDefEdit geometryDefEdit = (IGeometryDefEdit)geometryDef;
+            geometryDefEdit.HasZ_2 = true;
+            geometryDefEdit.GeometryType_2 = esriGeometryType.esriGeometryPoint;
+            geometryDefEdit.SpatialReference_2 = ArcMapInstance.Document.FocusMap.SpatialReference;
+
+            IFieldsEdit fieldsEdit = (IFieldsEdit)fields;
+            IField nameField = new FieldClass();
+            IFieldEdit nameFieldEdit = (IFieldEdit)nameField;
+            nameFieldEdit.Name_2 = "ID";
+            nameFieldEdit.Type_2 = esriFieldType.esriFieldTypeInteger;
+            fieldsEdit.AddField(nameField);
+
+            GenerateTempStorage(newFeatureClassName, fields, esriGeometryType.esriGeometryPoint);
             return newFeatureClassName;
         }
 
@@ -397,6 +446,7 @@ namespace MilSpace.DataAccess.Facade
                     IField field = fields.get_Field(shapeFieldIndex);
                     IGeometryDef geometryDef = field.GeometryDef;
                     IGeometryDefEdit geometryDefEdit = (IGeometryDefEdit)geometryDef;
+                    geometryDefEdit.HasZ_2 = true;
                     geometryDefEdit.GeometryType_2 = type;
                     geometryDefEdit.SpatialReference_2 = ArcMapInstance.Document.FocusMap.SpatialReference;
                 }

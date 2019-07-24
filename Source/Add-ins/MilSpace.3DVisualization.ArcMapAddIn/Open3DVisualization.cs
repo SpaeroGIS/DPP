@@ -4,7 +4,6 @@ using System.Text;
 using System.IO;
 using ESRI.ArcGIS.Carto;
 using MilSpace.DataAccess.Facade;
-using MilSpace.Profile;
 
 namespace MilSpace.Visualization3D
 {
@@ -20,13 +19,7 @@ namespace MilSpace.Visualization3D
             //  TODO: Sample code showing how to access button host
             //
             ArcMap.Application.CurrentTool = null;
-
-            //todo: Temp remove ref?
-
-            Test3D.Instance.SetCurrentProfile();
-            Test3D.Instance.SetSelectedProfileSetTo3D();
-            Test3D.Instance.SetObserverPointsTo3D();
-            //Visualization3DHandler.OpenProfilesSetIn3D();
+            Visualization3DHandler.OpenProfilesSetIn3D();
         }
         protected override void OnUpdate()
         {
