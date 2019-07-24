@@ -119,7 +119,10 @@ namespace MilSpace.Visualization3D
                 GdbAccess.Instance.AddProfileLinesTo3D(polylines);
                 GdbAccess.Instance.AddProfilePointsTo3D(observerPoints);
             }
-            catch(Exception ex) { }
+            catch(Exception ex) {
+                //TODO: Log Error
+
+            }
         }
         #endregion
     }

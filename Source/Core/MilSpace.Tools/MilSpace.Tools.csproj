@@ -118,7 +118,7 @@
       <Project>{02023d3d-4f73-4e7e-a78f-eeaa5d66deac}</Project>
       <Name>MilSpace.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MilSpace.DataAccess\MilSpace.DataAccess\MilSpace.DataAccess.csproj">
+    <ProjectReference Include="..\MilSpace.DataAccess\MilSpace.DataAccess.csproj">
       <Project>{651c40fa-e0b6-45ff-9b3e-9341eb671754}</Project>
       <Name>MilSpace.DataAccess</Name>
     </ProjectReference>
