@@ -19,7 +19,7 @@ namespace MilSpace.Visualization3D
             //  TODO: Sample code showing how to access button host
             //
             ArcMap.Application.CurrentTool = null;
-            Visualization3DHandler.OpenProfilesSetIn3D();
+           // Visualization3DHandler.OpenProfilesSetIn3D();
         }
         protected override void OnUpdate()
         {

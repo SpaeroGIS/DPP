@@ -97,27 +97,21 @@ namespace MilSpace.Visualization3D
 
         private void GenerateButton_Click(object sender, EventArgs e)
         {
-            var polylines = new Dictionary<IPolyline, bool>();
-            var observerPoints = new List<IPoint>();
+            var profilesSets = new List<ProfileSession>();
+
+             foreach(var profileSetModel in profilesModels)
+             {
+                 var profilesSet = profileSetModel.NodeProfileSession;
+                 profilesSet.ConvertLinesToEsriPolypile(ArcMap.Document.FocusMap.SpatialReference);
+
+                 profilesSets.Add(profilesSet);
+             }
 
             try
             {
-                foreach(var profileSetModel in profilesModels)
-                {
-                    var profilesSet = profileSetModel.NodeProfileSession;
-                    profilesSet.ConvertLinesToEsriPolypile(ArcMap.Document.FocusMap.SpatialReference);
-
-                    var setPolylines = DataPreparingHelper.GetPolylinesSegments(profilesSet);
-                    foreach(var polyline in setPolylines)
-                    {
-                        polylines.Add(polyline.Key, polyline.Value);
-                    }
-
-                    observerPoints.Add(DataPreparingHelper.GetObserverPoint(profilesSet.ObserverHeight, profilesSet.ProfileSurfaces[0].ProfileSurfacePoints[0]));
-                }
-
-                GdbAccess.Instance.AddProfileLinesTo3D(polylines);
-                GdbAccess.Instance.AddProfilePointsTo3D(observerPoints);
+                //todo: add dem layer  instead "DEMLayer"
+                var arcSceneArguments = Feature3DManager.Get3DFeatures("DEMLayer", profilesSets);
+                Visualization3DHandler.OpenProfilesSetIn3D(arcSceneArguments);
             }
             catch(Exception ex) { }
         }

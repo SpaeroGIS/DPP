@@ -200,7 +200,7 @@ namespace MilSpace.DataAccess.Facade
             return calc;
         }
 
-        public IFeatureClass AddPolygonTo3D(IEnumerable<IPolygon> polygons)
+        public IFeatureClass AddPolygonTo3D(Dictionary<IPolygon, bool> polygons)
         {
             string featureClassName = GenerateTemp3DPolygonStorage();
 
@@ -214,7 +214,11 @@ namespace MilSpace.DataAccess.Facade
             polygons.ToList().ForEach(polygon =>
             {
                 var pointFeature = calc.CreateFeature();
-                pointFeature.Shape = polygon;
+                pointFeature.Shape = polygon.Key;
+
+                int isVisibleFieldIndex = calc.FindField("IS_VISIBLE");
+                pointFeature.set_Value(isVisibleFieldIndex, polygon.Value ? 1 : 0);
+
                 pointFeature.Store();
             });
 
@@ -418,7 +422,29 @@ namespace MilSpace.DataAccess.Facade
         private string GenerateTemp3DPolygonStorage()
         {
             string newFeatureClassName = $"Polygon3D_L{Helper.GetTemporaryNameSuffix()}";
-            GenerateTempStorage(newFeatureClassName, null, esriGeometryType.esriGeometryPolygon);
+
+            IFeatureClassDescription fcDescription = new FeatureClassDescriptionClass();
+            IObjectClassDescription ocDescription = (IObjectClassDescription)fcDescription;
+            IFields fields = ocDescription.RequiredFields;
+
+            int shapeFieldIndex = fields.FindField(fcDescription.ShapeFieldName);
+
+            IField field = fields.get_Field(shapeFieldIndex);
+            IGeometryDef geometryDef = field.GeometryDef;
+            IGeometryDefEdit geometryDefEdit = (IGeometryDefEdit)geometryDef;
+            geometryDefEdit.HasZ_2 = true;
+            geometryDefEdit.GeometryType_2 = esriGeometryType.esriGeometryPolygon;
+            geometryDefEdit.SpatialReference_2 = ArcMapInstance.Document.FocusMap.SpatialReference;
+
+            IFieldsEdit fieldsEdit = (IFieldsEdit)fields;
+
+            IField isVisibleField = new FieldClass();
+            IFieldEdit isVisibleFieldEdit = (IFieldEdit)isVisibleField;
+            isVisibleFieldEdit.Name_2 = "IS_VISIBLE";
+            isVisibleFieldEdit.Type_2 = esriFieldType.esriFieldTypeSmallInteger;
+            fieldsEdit.AddField(isVisibleFieldEdit);
+
+            GenerateTempStorage(newFeatureClassName, fields, esriGeometryType.esriGeometryPolygon);
             return newFeatureClassName;
         }
 
