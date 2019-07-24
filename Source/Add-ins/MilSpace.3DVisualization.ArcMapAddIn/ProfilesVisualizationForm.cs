@@ -113,7 +113,10 @@ namespace MilSpace.Visualization3D
                 var arcSceneArguments = Feature3DManager.Get3DFeatures("DEMLayer", profilesSets);
                 Visualization3DHandler.OpenProfilesSetIn3D(arcSceneArguments);
             }
-            catch(Exception ex) { }
+            catch(Exception ex) {
+                //TODO: Log Error
+
+            }
         }
         #endregion
     }

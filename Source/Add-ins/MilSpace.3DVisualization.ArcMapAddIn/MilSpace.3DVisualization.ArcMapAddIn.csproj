@@ -83,7 +83,8 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Geodatabase, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Geometry, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -199,8 +200,8 @@
       <Project>{02023D3D-4F73-4E7E-A78F-EEAA5D66DEAC}</Project>
       <Name>MilSpace.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Core\MilSpace.DataAccess\MilSpace.DataAccess\MilSpace.DataAccess.csproj">
-      <Project>{651C40FA-E0B6-45FF-9B3E-9341EB671754}</Project>
+    <ProjectReference Include="..\..\Core\MilSpace.DataAccess\MilSpace.DataAccess.csproj">
+      <Project>{651c40fa-e0b6-45ff-9b3e-9341eb671754}</Project>
       <Name>MilSpace.DataAccess</Name>
     </ProjectReference>
   </ItemGroup>
