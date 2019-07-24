@@ -1,4 +1,5 @@
-﻿using MilSpace.DataAccess.DataTransfer;
+﻿using ESRI.ArcGIS.Geometry;
+using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
 using MilSpace.Visualization3D.ReferenceData;
 using System;
@@ -93,7 +94,36 @@ namespace MilSpace.Visualization3D
                 ProfilesListBox.ValueMember = "NodeProfileSession";
             }            
         }
-        #endregion
 
+        private void GenerateButton_Click(object sender, EventArgs e)
+        {
+            var polylines = new Dictionary<IPolyline, bool>();
+            var observerPoints = new List<IPoint>();
+
+            try
+            {
+                foreach(var profileSetModel in profilesModels)
+                {
+                    var profilesSet = profileSetModel.NodeProfileSession;
+                    profilesSet.ConvertLinesToEsriPolypile(ArcMap.Document.FocusMap.SpatialReference);
+
+                    var setPolylines = DataPreparingHelper.GetPolylinesSegments(profilesSet);
+                    foreach(var polyline in setPolylines)
+                    {
+                        polylines.Add(polyline.Key, polyline.Value);
+                    }
+
+                    observerPoints.Add(DataPreparingHelper.GetObserverPoint(profilesSet.ObserverHeight, profilesSet.ProfileSurfaces[0].ProfileSurfacePoints[0]));
+                }
+
+                GdbAccess.Instance.AddProfileLinesTo3D(polylines);
+                GdbAccess.Instance.AddProfilePointsTo3D(observerPoints);
+            }
+            catch(Exception ex) {
+                //TODO: Log Error
+
+            }
+        }
+        #endregion
     }
 }

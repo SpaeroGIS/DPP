@@ -451,6 +451,7 @@
             this.GenerateButton.TabIndex = 59;
             this.GenerateButton.Text = "Generate";
             this.GenerateButton.UseVisualStyleBackColor = true;
+            this.GenerateButton.Click += new System.EventHandler(this.GenerateButton_Click);
             // 
             // profilePanel
             // 
@@ -477,10 +478,10 @@
             // 
             this.ProfilesListBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ProfilesListBox.FormattingEnabled = true;
-            this.ProfilesListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.ProfilesListBox.ItemHeight = 15;
             this.ProfilesListBox.Location = new System.Drawing.Point(0, 0);
             this.ProfilesListBox.Name = "ProfilesListBox";
+            this.ProfilesListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.ProfilesListBox.Size = new System.Drawing.Size(308, 159);
             this.ProfilesListBox.TabIndex = 65;
             // 
@@ -561,7 +562,6 @@
             this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.panel3, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableLayoutPanel1.Enabled = false;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 69);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;

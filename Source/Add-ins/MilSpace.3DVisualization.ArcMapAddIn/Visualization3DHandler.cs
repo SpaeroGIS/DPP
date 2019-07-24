@@ -30,21 +30,18 @@ namespace MilSpace.Visualization3D
             IDocument doc = null;
             try
             {
-                //doc = new ESRI.ArcGIS.ArcScene.SxDocumentClass();
                 doc = new ESRI.ArcGIS.ArcScene.SxDocument();
             }
             catch
             {
                 return false;
-            } //Fail if you haven't installed the target application
+            }
 
             if(doc != null)
             {
-                //Advanced (AppROT event): Handle manual shutdown, comment out if not needed
                 m_appROTEvent = new AppROTClass();
                 m_appROTEvent.AppRemoved += new IAppROTEvents_AppRemovedEventHandler(m_appROTEvent_AppRemoved);
 
-                //Get a reference of the application and make it visible
                 m_application = doc.Parent;
                 m_application.Visible = true;
                 m_appHWnd = m_application.hWnd;
@@ -64,34 +61,14 @@ namespace MilSpace.Visualization3D
         static void m_appROTEvent_AppRemoved(AppRef pApp)
         {
             //Application manually shuts down. Stop listening
-            if(pApp.hWnd == m_appHWnd) //compare by hwnd
+            if(pApp.hWnd == m_appHWnd)
             {
                 m_appROTEvent.AppRemoved -= new IAppROTEvents_AppRemovedEventHandler(m_appROTEvent_AppRemoved);
                 m_appROTEvent = null;
                 m_application = null;
                 m_appHWnd = 0;
-
-                //Reset UI has to be in the form UI thread of this application, 
-                //not the AppROT thread;
-               /* if(this.InvokeRequired) //i.e. not on the right thread
-                {
-                    this.BeginInvoke(new IAppROTEvents_AppRemovedEventHandler(AppRemovedResetUI), pApp);
-                }
-                else
-                {
-                    AppRemovedResetUI(pApp); //call directly
-                }*/
             }
         }
-      /*  private void Form1_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            //Clean up
-            if(m_appROTEvent != null)
-            {
-                m_appROTEvent.AppRemoved -= new IAppROTEvents_AppRemovedEventHandler(m_appROTEvent_AppRemoved);
-                m_appROTEvent = null;
-            }
-        }*/
         #endregion
     }
 
