@@ -109,6 +109,7 @@
     <Compile Include="DataPreparingHelper.cs" />
     <Compile Include="Feature3DManager.cs" />
     <Compile Include="Models\ArcSceneArguments.cs" />
+    <Compile Include="Models\ProfileLayers.cs" />
     <Compile Include="Models\TreeViewModel.cs" />
     <Compile Include="Models\TreeViewNodeModel.cs" />
     <Compile Include="ProfilesTreeView.cs">

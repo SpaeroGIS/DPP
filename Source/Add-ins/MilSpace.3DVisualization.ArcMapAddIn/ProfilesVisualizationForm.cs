@@ -1,6 +1,8 @@
-﻿using ESRI.ArcGIS.Geometry;
+﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Geometry;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
+using MilSpace.Visualization3D.Models;
 using MilSpace.Visualization3D.ReferenceData;
 using System;
 using System.Collections.Generic;
@@ -18,8 +20,16 @@ namespace MilSpace.Visualization3D
         internal ProfilesVisualizationForm()
         {
             InitializeComponent();
-            LocalizeComponent();            
-        }        
+            LocalizeComponent();
+            SubscribeForArcMapEvents();
+            OnDocumentOpenFillDropdowns();
+        }
+
+        #region Private methods
+        private void SubscribeForArcMapEvents()
+        {
+            ArcMap.Events.OpenDocument += OnDocumentOpenFillDropdowns;
+        }
 
         private void LocalizeComponent()
         {
@@ -53,6 +63,27 @@ namespace MilSpace.Visualization3D
             }
             catch { MessageBox.Show("No Localization.xml found or there is an error during loading. Coordinates Converter window is not fully localized."); }
         }
+
+        private void OnDocumentOpenFillDropdowns()
+        {
+            this.SurfaceComboBox.Items.Clear();
+            this.TransportLayerComboBox.Items.Clear();
+            this.HydroLayerComboBox.Items.Clear();
+            this.BuildingsLayerComboBox.Items.Clear();
+            this.PlantsLayerComboBox.Items.Clear();
+
+            PopulateComboBox(SurfaceComboBox, ProfileLayers.RasterLayers);
+            PopulateComboBox(TransportLayerComboBox, ProfileLayers.RasterLayers);
+            PopulateComboBox(HydroLayerComboBox, ProfileLayers.PolygonLayers);
+            PopulateComboBox(BuildingsLayerComboBox, ProfileLayers.PolygonLayers);
+            PopulateComboBox(PlantsLayerComboBox, ProfileLayers.PolygonLayers);
+        }
+
+        private static void PopulateComboBox(ComboBox comboBox, IEnumerable<ILayer> layers)
+        {
+            comboBox.Items.AddRange(layers.Select(l => l.Name).ToArray());
+        }
+        #endregion
 
         #region Control Event Handlers
         private void ProfilesVisualizationForm_FormClosing(object sender, FormClosingEventArgs e)

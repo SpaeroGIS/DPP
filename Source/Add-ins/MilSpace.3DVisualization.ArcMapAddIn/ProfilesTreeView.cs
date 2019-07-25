@@ -118,5 +118,13 @@ namespace MilSpace.Visualization3D
                     ClearSelection(node.Nodes);
             }
         }
+
+        private void profilesToolBar_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        {
+            if (AddProfiles.Equals(e.Button))
+            {
+                this.DialogResult = DialogResult.OK;
+            }
+        }
     }
 }
