@@ -173,11 +173,11 @@
       <Project>{B8A76C95-CC2B-4643-BBF8-ED33BDA7F512}</Project>
       <Name>MilSpace.Visibility.ArcMapAddin</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\MilSpace.Configurations\MilSpace.Configurations.csproj">
+    <ProjectReference Include="..\MilSpace.Configurations\MilSpace.Configurations.csproj">
       <Project>{73334b96-54fd-4d83-b56d-967f8728d767}</Project>
       <Name>MilSpace.Configurations</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\MilSpace.Core\MilSpace.Core.csproj">
+    <ProjectReference Include="..\MilSpace.Core\MilSpace.Core.csproj">
       <Project>{02023d3d-4f73-4e7e-a78f-eeaa5d66deac}</Project>
       <Name>MilSpace.Core</Name>
     </ProjectReference>

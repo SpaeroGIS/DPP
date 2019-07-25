@@ -73,7 +73,7 @@ namespace MilSpace.Profile
         private ProfileSettingsTypeEnum ProfileType => View.SelectedProfileSettingsType;
 
 
-        internal MilSpaceProfileCalsController() { /*test*/ Test3D.Instance.GetController += GetThis; }
+        internal MilSpaceProfileCalsController() { }
 
         internal void SetView(IMilSpaceProfileView view)
         {
@@ -958,18 +958,6 @@ namespace MilSpace.Profile
             {
                 OnMapSelectionChanged?.Invoke(new SelectedGraphicsArgs(cnt, len));
             }
-        }
-
-        //test
-        internal MilSpaceProfileCalsController GetThis()
-        {
-            return this;
-        }
-
-        internal ProfileSession GetSelectedSession()
-        {
-            var session = GetProfileById(MilSpaceProfileGraphsController.GetSelectedProfilesSetId());
-            return session;
         }
     }
 }

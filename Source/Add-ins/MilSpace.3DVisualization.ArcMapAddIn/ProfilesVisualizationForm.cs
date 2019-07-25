@@ -1,4 +1,5 @@
-﻿using MilSpace.DataAccess.DataTransfer;
+﻿using ESRI.ArcGIS.Geometry;
+using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
 using MilSpace.Visualization3D.ReferenceData;
 using System;
@@ -93,7 +94,30 @@ namespace MilSpace.Visualization3D
                 ProfilesListBox.ValueMember = "NodeProfileSession";
             }            
         }
-        #endregion
 
+        private void GenerateButton_Click(object sender, EventArgs e)
+        {
+            var profilesSets = new List<ProfileSession>();
+
+             foreach(var profileSetModel in profilesModels)
+             {
+                 var profilesSet = profileSetModel.NodeProfileSession;
+                 profilesSet.ConvertLinesToEsriPolypile(ArcMap.Document.FocusMap.SpatialReference);
+
+                 profilesSets.Add(profilesSet);
+             }
+
+            try
+            {
+                //todo: add dem layer  instead "DEMLayer"
+                var arcSceneArguments = Feature3DManager.Get3DFeatures("DEMLayer", profilesSets);
+                Visualization3DHandler.OpenProfilesSetIn3D(arcSceneArguments);
+            }
+            catch(Exception ex) {
+                //TODO: Log Error
+
+            }
+        }
+        #endregion
     }
 }
