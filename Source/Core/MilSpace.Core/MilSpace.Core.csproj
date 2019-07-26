@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{02023D3D-4F73-4E7E-A78F-EEAA5D66DEAC}</ProjectGuid>
+    <ProjectGuid>{A9DEED9B-A54B-4C1D-ABA7-D2C7BB5FA6EC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MilSpace.Core</RootNamespace>
