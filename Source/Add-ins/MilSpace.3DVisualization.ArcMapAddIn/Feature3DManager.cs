@@ -1,4 +1,5 @@
 ﻿using ESRI.ArcGIS.Geometry;
+using MilSpace.DataAccess;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
 using MilSpace.Visualization3D.Models;
@@ -44,9 +45,10 @@ namespace MilSpace.Visualization3D
                 }
 
                 arcSceneArguments.Line3DLayer = GdbAccess.Instance.AddProfileLinesTo3D(polylines);
-                arcSceneArguments.Point3DLayer = GdbAccess.Instance.AddProfilePointsTo3D(observerPoints);
-                arcSceneArguments.Polygon3DLayer = GdbAccess.Instance.AddPolygonTo3D(visibilityPolygons);
-
+                //  arcSceneArguments.Point3DLayer = GdbAccess.Instance.AddProfilePointsTo3D(observerPoints);
+                //  arcSceneArguments.Polygon3DLayer = GdbAccess.Instance.AddPolygonTo3D(visibilityPolygons);
+                arcSceneArguments.SpatialReference = ArcMapInstance.Document.FocusMap.SpatialReference;
+              
                 return arcSceneArguments;
             }
             catch(Exception ex)
