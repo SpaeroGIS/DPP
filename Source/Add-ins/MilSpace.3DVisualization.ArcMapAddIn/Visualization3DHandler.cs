@@ -69,11 +69,11 @@ namespace MilSpace.Visualization3D
 
 
                 var line3DLayer = CreateLayer(layers.Line3DLayer, objFactory);
-                //var point3DLayer = CreateLayer(layers.Point3DLayer, objFactory);
-                //var polygon3DLayer = CreateLayer(layers.Polygon3DLayer, objFactory);
+                var point3DLayer = CreateLayer(layers.Point3DLayer, objFactory);
+                var polygon3DLayer = CreateLayer(layers.Polygon3DLayer, objFactory);
 
-                //var polygonLayerEffects = (ILayerEffects)polygon3DLayer;
-                //polygonLayerEffects.Transparency = 20;
+                var polygonLayerEffects = (ILayerEffects)polygon3DLayer;
+                polygonLayerEffects.Transparency = 50;
 
                 //Add the layer to document
                 IBasicDocument document = (IBasicDocument)m_application.Document;
@@ -81,8 +81,8 @@ namespace MilSpace.Visualization3D
                 //document.AddLayer((ILayer)elevationRasterLayer/*(ILayer)basemapGroupLayer*/);
                // document.AddLayer((ILayer)basemapGroupLayer);
                 document.AddLayer(line3DLayer);
-                //document.AddLayer(point3DLayer);
-                //document.AddLayer(polygon3DLayer);
+                document.AddLayer(point3DLayer);
+                document.AddLayer(polygon3DLayer);
 
                 document.UpdateContents();
             }
@@ -99,38 +99,18 @@ namespace MilSpace.Visualization3D
             }
         }
 
-        private static IFeatureLayer CreateLayer(IFeatureClass featureClass, IObjectFactory objFactory)
-        {
-            
-            var featureLayer = (IFeatureLayer)objFactory.Create("esriCarto.FeatureLayer");
-            featureLayer.FeatureClass = featureClass;
-            featureLayer.Name = featureLayer.FeatureClass.AliasName;
-
-            return featureLayer;
-        }
         private static IFeatureLayer CreateLayer(string featureClass, IObjectFactory objFactory)
         {
             string calcGdb = MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection;
 
-            Type factoryType = typeof(FileGDBWorkspaceFactoryClass);
+            Type factoryType = Type.GetTypeFromProgID("esriDataSourcesGDB.FileGDBWorkspaceFactory");
             string typeFactoryID = factoryType.GUID.ToString("B");
 
-            var smth = objFactory.Create(typeFactoryID);
             IWorkspaceFactory workspaceFactory = (IWorkspaceFactory)objFactory.Create(typeFactoryID);
             IFeatureWorkspace calcWorkspace = (IFeatureWorkspace)workspaceFactory.OpenFromFile(calcGdb, 0);
 
-
             var featureLayer = (IFeatureLayer)objFactory.Create("esriCarto.FeatureLayer");
-
             var featureClassC = calcWorkspace.OpenFeatureClass(featureClass);
-
-            IQueryFilter queryFilter = new QueryFilter()
-            {
-                WhereClause = "OBJECTID > 0"
-            };
-
-            var allrecords = featureClassC.Search(queryFilter, true);
-
 
             featureLayer.FeatureClass = featureClassC;
             featureLayer.Name = featureLayer.FeatureClass.AliasName;

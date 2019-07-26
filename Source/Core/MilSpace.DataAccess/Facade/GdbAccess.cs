@@ -170,7 +170,7 @@ namespace MilSpace.DataAccess.Facade
             return featureClassName;
         }
 
-        public IFeatureClass AddProfilePointsTo3D(IEnumerable<IPoint> points)
+        public string AddProfilePointsTo3D(IEnumerable<IPoint> points)
         {
             string featureClassName = GenerateTemp3DPointStorage();
 
@@ -197,10 +197,10 @@ namespace MilSpace.DataAccess.Facade
             workspaceEdit.StopEditOperation();
             workspaceEdit.StopEditing(true);
 
-            return calc;
+            return featureClassName;
         }
 
-        public IFeatureClass AddPolygonTo3D(Dictionary<IPolygon, bool> polygons)
+        public string AddPolygonTo3D(Dictionary<IPolygon, bool> polygons)
         {
             string featureClassName = GenerateTemp3DPolygonStorage();
 
@@ -225,7 +225,7 @@ namespace MilSpace.DataAccess.Facade
             workspaceEdit.StopEditOperation();
             workspaceEdit.StopEditing(true);
 
-            return calc;
+            return featureClassName;
         }
 
         public void EraseProfileLines()

@@ -12,8 +12,8 @@ namespace MilSpace.Visualization3D.Models
     {
         internal string DemLayer { get; set; }
         internal string Line3DLayer { get; set; }
-        internal IFeatureClass Point3DLayer { get; set; }
-        internal IFeatureClass Polygon3DLayer { get; set; }
+        internal string Point3DLayer { get; set; }
+        internal string Polygon3DLayer { get; set; }
         internal ISpatialReference SpatialReference { get; set; }
     }
 }
