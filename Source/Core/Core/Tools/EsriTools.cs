@@ -332,13 +332,36 @@ namespace MilSpace.Core.Tools
         public static IPoint GetObserverPoint(IPoint firstPoint, double observerHeight, ISpatialReference spatialReference)
         {
             ProjectToMapSpatialReference(firstPoint, spatialReference);
-            var point = new Point() { X = firstPoint.X, Y = firstPoint.Y + observerHeight, Z = firstPoint.Z, SpatialReference = spatialReference } as IPoint;
+            var point = new Point() { X = firstPoint.X, Y = firstPoint.Y, Z = firstPoint.Z + observerHeight, SpatialReference = spatialReference } as IPoint;
             var geometry = point as IGeometry;
             IZAware zAware = geometry as IZAware;
 
             zAware.ZAware = true;
 
             return point;
+        }
+
+        public static IPolygon GetVisilityPolygon(IPoint observerPoint, IPolyline segment)
+        {
+            IGeometryBridge2 geometryBridge2 = new GeometryEnvironmentClass();
+            IPointCollection4 pointCollection4 = new PolygonClass();
+
+            WKSPointZ[] aWKSPoints = new WKSPointZ[3];
+            aWKSPoints[0] = PointToWKSPoint(segment.FromPoint);
+            aWKSPoints[1] = PointToWKSPoint(observerPoint);
+            aWKSPoints[2] = PointToWKSPoint(segment.ToPoint);
+
+            geometryBridge2.SetWKSPointZs(pointCollection4, ref aWKSPoints);
+
+            var geometry = pointCollection4 as IGeometry;
+            IZAware zAware = geometry as IZAware;
+
+            zAware.ZAware = true;
+
+            var result = pointCollection4 as IPolygon;
+            result.SpatialReference = observerPoint.SpatialReference;
+
+            return result;
         }
 
         public static ILayer GetLayer(string layerName, IMap map)
@@ -373,6 +396,11 @@ namespace MilSpace.Core.Tools
             return point;
         }
 
+        private static WKSPointZ PointToWKSPoint(IPoint point)
+        {
+            return new WKSPointZ { X = point.X, Y = point.Y, Z = point.Z };
+        }
+
         private static List<IPolyline> GetIntersection(IPolyline polyline, ILayer layer)
         {
             var resultPolylines = new List<IPolyline>();
@@ -402,7 +430,7 @@ namespace MilSpace.Core.Tools
 
             return resultPolylines;
         }
-
+       
         private static List<IPolyline> GetFeatureIntersection(IFeature feature, IPolyline polyline)
         {
             var resultPolylines = new List<IPolyline>();
