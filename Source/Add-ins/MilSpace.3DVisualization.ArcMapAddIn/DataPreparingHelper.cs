@@ -50,5 +50,17 @@ namespace MilSpace.Visualization3D
             IPoint geoPoint = new Point() { X = firstPoint.X, Y = firstPoint.Y, Z = firstPoint.Z, SpatialReference = EsriTools.Wgs84Spatialreference };
             return EsriTools.GetObserverPoint(geoPoint, observerHeight, ArcMap.Document.FocusMap.SpatialReference);
         }
+
+        internal static Dictionary<IPolygon, bool> GetVisibilityPolygons(IPoint observerPoint, Dictionary<IPolyline, bool> segments)
+        {
+            var visibilityPolygons = new Dictionary<IPolygon, bool>();
+
+            foreach(var segment in segments)
+            {
+                visibilityPolygons.Add(EsriTools.GetVisilityPolygon(observerPoint, segment.Key), segment.Value);
+            }
+
+            return visibilityPolygons;
+        }
     }
 }

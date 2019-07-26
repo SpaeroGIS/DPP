@@ -1,4 +1,5 @@
 ﻿using ESRI.ArcGIS.Framework;
+using MilSpace.Visualization3D.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace MilSpace.Visualization3D
 
         }
 
-        public static void OpenProfilesSetIn3D(/*string dem*/)
+        internal static void OpenProfilesSetIn3D(ArcSceneArguments layers)
         {
             OpenArcScene();
         }

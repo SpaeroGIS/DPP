@@ -1,6 +1,8 @@
-﻿using ESRI.ArcGIS.Geometry;
+﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Geometry;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
+using MilSpace.Visualization3D.Models;
 using MilSpace.Visualization3D.ReferenceData;
 using System;
 using System.Collections.Generic;
@@ -18,8 +20,16 @@ namespace MilSpace.Visualization3D
         internal ProfilesVisualizationForm()
         {
             InitializeComponent();
-            LocalizeComponent();            
-        }        
+            LocalizeComponent();
+            SubscribeForArcMapEvents();
+            OnDocumentOpenFillDropdowns();
+        }
+
+        #region Private methods
+        private void SubscribeForArcMapEvents()
+        {
+            ArcMap.Events.OpenDocument += OnDocumentOpenFillDropdowns;
+        }
 
         private void LocalizeComponent()
         {
@@ -53,6 +63,27 @@ namespace MilSpace.Visualization3D
             }
             catch { MessageBox.Show("No Localization.xml found or there is an error during loading. Coordinates Converter window is not fully localized."); }
         }
+
+        private void OnDocumentOpenFillDropdowns()
+        {
+            this.SurfaceComboBox.Items.Clear();
+            this.TransportLayerComboBox.Items.Clear();
+            this.HydroLayerComboBox.Items.Clear();
+            this.BuildingsLayerComboBox.Items.Clear();
+            this.PlantsLayerComboBox.Items.Clear();
+
+            PopulateComboBox(SurfaceComboBox, ProfileLayers.RasterLayers);
+            PopulateComboBox(TransportLayerComboBox, ProfileLayers.RasterLayers);
+            PopulateComboBox(HydroLayerComboBox, ProfileLayers.PolygonLayers);
+            PopulateComboBox(BuildingsLayerComboBox, ProfileLayers.PolygonLayers);
+            PopulateComboBox(PlantsLayerComboBox, ProfileLayers.PolygonLayers);
+        }
+
+        private static void PopulateComboBox(ComboBox comboBox, IEnumerable<ILayer> layers)
+        {
+            comboBox.Items.AddRange(layers.Select(l => l.Name).ToArray());
+        }
+        #endregion
 
         #region Control Event Handlers
         private void ProfilesVisualizationForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -97,27 +128,21 @@ namespace MilSpace.Visualization3D
 
         private void GenerateButton_Click(object sender, EventArgs e)
         {
-            var polylines = new Dictionary<IPolyline, bool>();
-            var observerPoints = new List<IPoint>();
+            var profilesSets = new List<ProfileSession>();
+
+             foreach(var profileSetModel in profilesModels)
+             {
+                 var profilesSet = profileSetModel.NodeProfileSession;
+                 profilesSet.ConvertLinesToEsriPolypile(ArcMap.Document.FocusMap.SpatialReference);
+
+                 profilesSets.Add(profilesSet);
+             }
 
             try
             {
-                foreach(var profileSetModel in profilesModels)
-                {
-                    var profilesSet = profileSetModel.NodeProfileSession;
-                    profilesSet.ConvertLinesToEsriPolypile(ArcMap.Document.FocusMap.SpatialReference);
-
-                    var setPolylines = DataPreparingHelper.GetPolylinesSegments(profilesSet);
-                    foreach(var polyline in setPolylines)
-                    {
-                        polylines.Add(polyline.Key, polyline.Value);
-                    }
-
-                    observerPoints.Add(DataPreparingHelper.GetObserverPoint(profilesSet.ObserverHeight, profilesSet.ProfileSurfaces[0].ProfileSurfacePoints[0]));
-                }
-
-                GdbAccess.Instance.AddProfileLinesTo3D(polylines);
-                GdbAccess.Instance.AddProfilePointsTo3D(observerPoints);
+                //todo: add dem layer  instead "DEMLayer"
+                var arcSceneArguments = Feature3DManager.Get3DFeatures("DEMLayer", profilesSets);
+                Visualization3DHandler.OpenProfilesSetIn3D(arcSceneArguments);
             }
             catch(Exception ex) {
                 //TODO: Log Error

@@ -169,7 +169,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Add-ins\MilSpace.Visibility.ArcMapAddin\MilSpace.Visibility.ArcMapAddin.csproj">
+    <ProjectReference Include="..\..\Add-ins\MilSpace.Visibility.ArcMapAddin\MilSpace.Visibility.ArcMapAddin.csproj">
       <Project>{B8A76C95-CC2B-4643-BBF8-ED33BDA7F512}</Project>
       <Name>MilSpace.Visibility.ArcMapAddin</Name>
     </ProjectReference>
