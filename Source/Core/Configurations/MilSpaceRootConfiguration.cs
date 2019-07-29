@@ -1,25 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.Win32;
+using System;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Web;
 using System.Diagnostics;
-using System.Web.Configuration;
-using System.Reflection;
 using System.IO;
-using Microsoft.Win32;
+using System.Reflection;
+using System.Web;
+using System.Web.Configuration;
 
 namespace MilSpace.Configurations
 {
     public abstract class MilSpaceRootConfiguration
     {
-        private const string rootSectionNane = "milspace";
-        private const string registryPathToConfig = @"SOFTWARE\WOW6432Node\MilSpace\";
+        private static string rootSectionNane = "milspace";
+        private const string registryPathToConfigTemplate = @"SOFTWARE\WOW6432Node\{0}\";
+        private static string registryPathToConfig;
         private static readonly string configurationFileName = $"{typeof(MilSpaceRootConfiguration).Assembly.GetName().Name}.config";
         private static string configurationFilePath;
 
         private static Configuration currentConfig = null;
+
+        static MilSpaceRootConfiguration()
+        {
+            string sypplayingName = typeof(MilSpaceRootConfiguration).Assembly.GetName().Name;
+
+            int pointPosition = sypplayingName.IndexOf('.');
+            rootSectionNane = sypplayingName.Substring(0, pointPosition == 0 ? sypplayingName.Length : pointPosition ).ToLower();
+            registryPathToConfig = string.Format(registryPathToConfigTemplate, rootSectionNane);
+        }
 
 
         public static string ConfigurationFilePath
@@ -58,6 +65,7 @@ namespace MilSpace.Configurations
                 {
                     if (Assembly.GetEntryAssembly() == null || Assembly.GetEntryAssembly().EntryPoint == null) // If the entry point in DLL (it was called from an external programm)
                     {
+
                         var registryConfiguration = GetConfigurationPathFromRegistry();
                         if (string.IsNullOrWhiteSpace(registryConfiguration))
                         {
@@ -161,6 +169,8 @@ namespace MilSpace.Configurations
 
         private static string GetConfigurationPathFromRegistry()
         {
+            try
+            { 
             using (RegistryKey key = Registry.LocalMachine.OpenSubKey(registryPathToConfig))
             {
                 if (key == null)
@@ -169,8 +179,13 @@ namespace MilSpace.Configurations
                 }
 
                 var val = key.GetValue("Configuration");
-                
+
                 return val.ToString();
+            }
+            }
+            catch
+            {
+                return null;
             }
         }
     }
