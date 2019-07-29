@@ -133,7 +133,7 @@ namespace MilSpace.DataAccess.Facade
 
         }
 
-        public IFeatureClass AddProfileLinesTo3D(Dictionary<IPolyline, bool> profileLines)
+        public string AddProfileLinesTo3D(Dictionary<IPolyline, bool> profileLines)
         {
             string featureClassName = GenerateTemp3DLineStorage();
 
@@ -167,10 +167,10 @@ namespace MilSpace.DataAccess.Facade
             workspaceEdit.StopEditOperation();
             workspaceEdit.StopEditing(true);
 
-            return calc;
+            return featureClassName;
         }
 
-        public IFeatureClass AddProfilePointsTo3D(IEnumerable<IPoint> points)
+        public string AddProfilePointsTo3D(IEnumerable<IPoint> points)
         {
             string featureClassName = GenerateTemp3DPointStorage();
 
@@ -197,10 +197,10 @@ namespace MilSpace.DataAccess.Facade
             workspaceEdit.StopEditOperation();
             workspaceEdit.StopEditing(true);
 
-            return calc;
+            return featureClassName;
         }
 
-        public IFeatureClass AddPolygonTo3D(Dictionary<IPolygon, bool> polygons)
+        public string AddPolygonTo3D(Dictionary<IPolygon, bool> polygons)
         {
             string featureClassName = GenerateTemp3DPolygonStorage();
 
@@ -225,7 +225,7 @@ namespace MilSpace.DataAccess.Facade
             workspaceEdit.StopEditOperation();
             workspaceEdit.StopEditing(true);
 
-            return calc;
+            return featureClassName;
         }
 
         public void EraseProfileLines()
@@ -352,7 +352,16 @@ namespace MilSpace.DataAccess.Facade
                 throw new MilSpaceDataException(currentFeatureClass, Core.DataAccess.DataOperationsEnum.Access);
             }
 
-            return featureWorkspace.OpenFeatureClass(currentFeatureClass);
+            var f = featureWorkspace.OpenFeatureClass(currentFeatureClass);
+
+            IQueryFilter queryFilter = new QueryFilter()
+            {
+                WhereClause = "OBJECTID > 0"
+            };
+
+            var allrecords = f.Search(queryFilter, true);
+
+            return f;
         }
 
         private string GenerateTemp3DLineStorage()

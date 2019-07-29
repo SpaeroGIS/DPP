@@ -832,6 +832,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Profiles Visualization Form";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ProfilesVisualizationForm_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ProfilesVisualizationForm_FormClosed);
             this.basePanel.ResumeLayout(false);
             this.basePanel.PerformLayout();
             this.GenerateTab.ResumeLayout(false);

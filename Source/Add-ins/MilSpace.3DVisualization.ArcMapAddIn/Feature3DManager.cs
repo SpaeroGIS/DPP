@@ -1,12 +1,11 @@
-﻿using ESRI.ArcGIS.Geometry;
+﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Geometry;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
 using MilSpace.Visualization3D.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MilSpace.Visualization3D
 {
@@ -14,7 +13,7 @@ namespace MilSpace.Visualization3D
     {
         internal Feature3DManager() { }
 
-        internal static ArcSceneArguments Get3DFeatures(string DemLayer, List<ProfileSession> profileSessions)
+        internal static ArcSceneArguments Get3DFeatures(string demLayer, List<ProfileSession> profileSessions)
         {
             var arcSceneArguments = new ArcSceneArguments();
 
@@ -22,7 +21,17 @@ namespace MilSpace.Visualization3D
             var visibilityPolygons = new Dictionary<IPolygon, bool>();
             var observerPoints = new List<IPoint>();
 
-            arcSceneArguments.DemLayer = DemLayer;
+            var layers = ArcMap.Document.ActiveView.FocusMap.Layers;
+
+            var layer = layers.Next();
+
+            while(layer.Name != demLayer)
+            {
+               layer = layers.Next();
+            }
+
+            var rasterLayer =  layer as IRasterLayer;
+            arcSceneArguments.DemLayer = rasterLayer.FilePath;
 
             try
             {
@@ -46,7 +55,7 @@ namespace MilSpace.Visualization3D
                 arcSceneArguments.Line3DLayer = GdbAccess.Instance.AddProfileLinesTo3D(polylines);
                 arcSceneArguments.Point3DLayer = GdbAccess.Instance.AddProfilePointsTo3D(observerPoints);
                 arcSceneArguments.Polygon3DLayer = GdbAccess.Instance.AddPolygonTo3D(visibilityPolygons);
-
+              
                 return arcSceneArguments;
             }
             catch(Exception ex)
