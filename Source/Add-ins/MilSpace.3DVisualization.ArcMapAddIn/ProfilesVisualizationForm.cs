@@ -140,8 +140,8 @@ namespace MilSpace.Visualization3D
 
             try
             {
-                //todo: add dem layer  instead "DEMLayer"
-                var arcSceneArguments = Feature3DManager.Get3DFeatures("DEMLayer", profilesSets);
+                //todo: add dem layer  instead string
+                var arcSceneArguments = Feature3DManager.Get3DFeatures(@"E:\Data\3D\Relief\SP_Relief_R12144463_25m_ECU_CM12.img", profilesSets);
                 Visualization3DHandler.OpenProfilesSetIn3D(arcSceneArguments);
             }
             catch(Exception ex) {
@@ -149,6 +149,12 @@ namespace MilSpace.Visualization3D
 
             }
         }
+
+        private void ProfilesVisualizationForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Visualization3DHandler.ClosingHandler();
+        }
+
         #endregion
     }
 }
