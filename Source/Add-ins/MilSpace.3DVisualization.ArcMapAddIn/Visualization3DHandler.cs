@@ -35,38 +35,12 @@ namespace MilSpace.Visualization3D
             {
                 IObjectFactory objFactory = m_application as IObjectFactory;
 
-                //Type shpWkspFactType = typeof(WorkSpaceFactory);
-                //string typeClsID = shpWkspFactType.GUID.ToString("B");
+                Type rasterLayerType = typeof(RasterLayerClass);
+                string typeRasterLayerID = rasterLayerType.GUID.ToString("B");
 
-                //string shapeFile = System.IO.Path.GetFileNameWithoutExtension(txtShapeFilePath.Text);
-                //string fileFolder = System.IO.Path.GetDirectoryName(txtShapeFilePath.Text);
-                //IWorkspaceFactory workspaceFactory = (IWorkspaceFactory)objFactory.Create(typeClsID);
-                //IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)workspaceFactory.OpenFromFile(fileFolder, 0); //(@"C:\data\test", 0);
-
-                //Create the layer
-                //Type rasterLayerType = typeof(RasterLayerClass);
-                //string typeRasterLayerID = rasterLayerType.GUID.ToString("B");
-
-                //IRasterLayer elevationRasterLayer = (IRasterLayer)objFactory.Create(typeRasterLayerID);
-                //elevationRasterLayer.CreateFromFilePath(layers.DemLayer);
-                //elevationRasterLayer.SpatialReference = layers.SpatialReference;
-
-                //Type basemapLayerType = typeof(BasemapLayerClass);
-                //string typeBasemapLayerID = basemapLayerType.GUID.ToString("B");
-
-                //IBasemapLayer basemapLayer = (BasemapLayerClass)objFactory.Create(typeBasemapLayerID);
-                //IGroupLayer basemapGroupLayer = basemapLayer as IGroupLayer;
-                //basemapGroupLayer.Add(elevationRasterLayer);
-                //basemapGroupLayer.Name = "Basemap Content";
-
-                //Type rasterBasemapLayerFactoryType = typeof(RasterBasemapLayerFactory);
-                //string typeRasterBaseMapLayerFactoryID = rasterBasemapLayerFactoryType.GUID.ToString("B");
-
-                //IRasterBasemapLayerFactory rasterBMLFactory = (IRasterBasemapLayerFactory)objFactory.Create(typeRasterBaseMapLayerFactoryID);
-                //IRasterBasemapLayer rasterBML = rasterBMLFactory.Create(elevationRasterLayer);
-                //ILayer layer = (ILayer)rasterBML;
-                //layer.Name = layer.Name + " Accelerated";
-
+                IRasterLayer elevationRasterLayer = (IRasterLayer)objFactory.Create(typeRasterLayerID);
+                elevationRasterLayer.CreateFromFilePath(layers.DemLayer);
+                ILayer layer = (ILayer)elevationRasterLayer;
 
                 var line3DLayer = CreateLayer(layers.Line3DLayer, objFactory);
                 var point3DLayer = CreateLayer(layers.Point3DLayer, objFactory);
@@ -75,18 +49,16 @@ namespace MilSpace.Visualization3D
                 var polygonLayerEffects = (ILayerEffects)polygon3DLayer;
                 polygonLayerEffects.Transparency = 50;
 
-                //Add the layer to document
                 IBasicDocument document = (IBasicDocument)m_application.Document;
 
-                //document.AddLayer((ILayer)elevationRasterLayer/*(ILayer)basemapGroupLayer*/);
-               // document.AddLayer((ILayer)basemapGroupLayer);
+                document.AddLayer(layer);
                 document.AddLayer(line3DLayer);
                 document.AddLayer(point3DLayer);
                 document.AddLayer(polygon3DLayer);
 
                 document.UpdateContents();
             }
-            catch(Exception ex) { } //Or make sure it is a valid shp file first
+            catch(Exception ex) { }
 
         }
 
