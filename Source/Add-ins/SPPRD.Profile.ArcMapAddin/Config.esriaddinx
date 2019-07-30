@@ -2,7 +2,7 @@
   <Name>SPPRD.Profile</Name>
   <AddInID>{9FE5052E-668B-420B-B5C7-E9A43917DB69}</AddInID>
   <Description>SPPRD 3-D solution. Module Profile</Description>
-  <Version>5.20190601.1</Version>
+  <Version>1.20190629.2</Version>
   <Image>Images\SPPRD.Profile.png</Image>
   <Author>admin</Author>
   <Company>DPP</Company>

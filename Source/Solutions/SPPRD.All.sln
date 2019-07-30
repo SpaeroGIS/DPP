@@ -13,16 +13,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPPRD.Tools", "..\Core\SPPR
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GeoCalculator", "GeoCalculator", "{2DAB3FDD-F103-4EB9-B348-F7DA9D4CBD66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilSpace.3DVisualization.ArcMapAddIn", "..\Add-ins\MilSpace.3DVisualization.ArcMapAddIn\MilSpace.3DVisualization.ArcMapAddIn.csproj", "{5ED9F537-4BA4-4A7D-A2E8-64BC3F679A5F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPPRD.Profile.ArcGISAddIn", "..\Add-ins\SPPRD.Profile.ArcMapAddin\SPPRD.Profile.ArcGISAddIn.csproj", "{C27B23D3-77AE-4A32-8664-0DDCAD000D4A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPPRD.GeoCalculator.ArcMapAddin", "..\Add-ins\SPPRD.GeoCalculator.ArcMapAddin\SPPRD.GeoCalculator.ArcMapAddin.csproj", "{C81D35D4-203F-433E-A104-DE0F73295355}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPPRD.GeoCalculator.BusinessLogic", "..\Modules\SPPRD.GeoCalculator.BusinessLogic\SPPRD.GeoCalculator.BusinessLogic.csproj", "{57ED0351-AC25-4650-800B-D364D13799B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPPRD.3DVisualization.ArcMapAddIn", "..\Add-ins\SPPRD.3DVisualization.ArcMapAddIn\SPPRD.3DVisualization.ArcMapAddIn.csproj", "{F71A5518-E543-412F-8983-6E6264CA2783}"
+EndProject
 Global
-
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -80,18 +79,6 @@ Global
 		{CBD5675B-F382-497D-98CC-70539ED658B9}.Release|x64.Build.0 = Release|Any CPU
 		{CBD5675B-F382-497D-98CC-70539ED658B9}.Release|x86.ActiveCfg = Release|Any CPU
 		{CBD5675B-F382-497D-98CC-70539ED658B9}.Release|x86.Build.0 = Release|Any CPU
-		{5ED9F537-4BA4-4A7D-A2E8-64BC3F679A5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5ED9F537-4BA4-4A7D-A2E8-64BC3F679A5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5ED9F537-4BA4-4A7D-A2E8-64BC3F679A5F}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{5ED9F537-4BA4-4A7D-A2E8-64BC3F679A5F}.Debug|x64.Build.0 = Debug|Any CPU
-		{5ED9F537-4BA4-4A7D-A2E8-64BC3F679A5F}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{5ED9F537-4BA4-4A7D-A2E8-64BC3F679A5F}.Debug|x86.Build.0 = Debug|Any CPU
-		{5ED9F537-4BA4-4A7D-A2E8-64BC3F679A5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5ED9F537-4BA4-4A7D-A2E8-64BC3F679A5F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5ED9F537-4BA4-4A7D-A2E8-64BC3F679A5F}.Release|x64.ActiveCfg = Release|Any CPU
-		{5ED9F537-4BA4-4A7D-A2E8-64BC3F679A5F}.Release|x64.Build.0 = Release|Any CPU
-		{5ED9F537-4BA4-4A7D-A2E8-64BC3F679A5F}.Release|x86.ActiveCfg = Release|Any CPU
-		{5ED9F537-4BA4-4A7D-A2E8-64BC3F679A5F}.Release|x86.Build.0 = Release|Any CPU
 		{C27B23D3-77AE-4A32-8664-0DDCAD000D4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C27B23D3-77AE-4A32-8664-0DDCAD000D4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C27B23D3-77AE-4A32-8664-0DDCAD000D4A}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -128,6 +115,18 @@ Global
 		{57ED0351-AC25-4650-800B-D364D13799B1}.Release|x64.Build.0 = Release|Any CPU
 		{57ED0351-AC25-4650-800B-D364D13799B1}.Release|x86.ActiveCfg = Release|Any CPU
 		{57ED0351-AC25-4650-800B-D364D13799B1}.Release|x86.Build.0 = Release|Any CPU
+		{F71A5518-E543-412F-8983-6E6264CA2783}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F71A5518-E543-412F-8983-6E6264CA2783}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F71A5518-E543-412F-8983-6E6264CA2783}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F71A5518-E543-412F-8983-6E6264CA2783}.Debug|x64.Build.0 = Debug|Any CPU
+		{F71A5518-E543-412F-8983-6E6264CA2783}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F71A5518-E543-412F-8983-6E6264CA2783}.Debug|x86.Build.0 = Debug|Any CPU
+		{F71A5518-E543-412F-8983-6E6264CA2783}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F71A5518-E543-412F-8983-6E6264CA2783}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F71A5518-E543-412F-8983-6E6264CA2783}.Release|x64.ActiveCfg = Release|Any CPU
+		{F71A5518-E543-412F-8983-6E6264CA2783}.Release|x64.Build.0 = Release|Any CPU
+		{F71A5518-E543-412F-8983-6E6264CA2783}.Release|x86.ActiveCfg = Release|Any CPU
+		{F71A5518-E543-412F-8983-6E6264CA2783}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

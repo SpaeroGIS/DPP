@@ -3,6 +3,7 @@ using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Configurations;
+using MilSpace.Core;
 using MilSpace.DataAccess.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -17,12 +18,18 @@ namespace MilSpace.DataAccess.Facade
         private static IApplication application = null;
 
         private static readonly string calcFeatureClass = "CalcProfile_L";
+        private Logger logger = Logger.GetLoggerEx("GdbAccess");
 
         private GdbAccess()
         {
             string calcGdb = MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection;
             IWorkspaceFactory workspaceFactory = new FileGDBWorkspaceFactory();
+            logger.InfoEx($"Opening access to {calcGdb}.");
             calcWorkspace = workspaceFactory.OpenFromFile(calcGdb, 0);
+            if (calcWorkspace == null)
+            {
+                logger.ErrorEx($"Cannot access to {calcGdb}.");
+            }
         }
 
         public static GdbAccess Instance
@@ -133,7 +140,7 @@ namespace MilSpace.DataAccess.Facade
 
         }
 
-        public IFeatureClass AddProfileLinesTo3D(Dictionary<IPolyline, bool> profileLines)
+        public string AddProfileLinesTo3D(Dictionary<IPolyline, bool> profileLines)
         {
             string featureClassName = GenerateTemp3DLineStorage();
 
@@ -167,10 +174,10 @@ namespace MilSpace.DataAccess.Facade
             workspaceEdit.StopEditOperation();
             workspaceEdit.StopEditing(true);
 
-            return calc;
+            return featureClassName;
         }
 
-        public IFeatureClass AddProfilePointsTo3D(IEnumerable<IPoint> points)
+        public string AddProfilePointsTo3D(IEnumerable<IPoint> points)
         {
             string featureClassName = GenerateTemp3DPointStorage();
 
@@ -197,10 +204,10 @@ namespace MilSpace.DataAccess.Facade
             workspaceEdit.StopEditOperation();
             workspaceEdit.StopEditing(true);
 
-            return calc;
+            return featureClassName;
         }
 
-        public IFeatureClass AddPolygonTo3D(Dictionary<IPolygon, bool> polygons)
+        public string AddPolygonTo3D(Dictionary<IPolygon, bool> polygons)
         {
             string featureClassName = GenerateTemp3DPolygonStorage();
 
@@ -225,7 +232,7 @@ namespace MilSpace.DataAccess.Facade
             workspaceEdit.StopEditOperation();
             workspaceEdit.StopEditing(true);
 
-            return calc;
+            return featureClassName;
         }
 
         public void EraseProfileLines()
