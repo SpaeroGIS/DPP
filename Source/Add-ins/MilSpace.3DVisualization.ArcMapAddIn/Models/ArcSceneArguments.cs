@@ -1,12 +1,4 @@
-﻿using ESRI.ArcGIS.Geodatabase;
-using ESRI.ArcGIS.Geometry;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MilSpace.Visualization3D.Models
+﻿namespace MilSpace.Visualization3D.Models
 {
     public class ArcSceneArguments
     {
