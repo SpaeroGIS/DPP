@@ -309,16 +309,14 @@ namespace MilSpace.Core.Tools
             return result;
         }
 
-        public static IPolyline Create3DPolylineFromPoints(IPoint fromPoint, IPoint toPoint)
-
+        public static IPolyline Create3DPolylineFromPoints(IPointCollection points)
         {
             object missing = Type.Missing;
 
             IGeometryCollection geometryCollection = new PolylineClass();
             IPointCollection pointCollection = new PathClass();
 
-            pointCollection.AddPoint(ConstructPoint3D(fromPoint.X, fromPoint.Y, fromPoint.Z), ref missing, ref missing);
-            pointCollection.AddPoint(ConstructPoint3D(toPoint.X, toPoint.Y, toPoint.Z), ref missing, ref missing);
+            pointCollection.AddPointCollection(points);
             geometryCollection.AddGeometry(pointCollection as IGeometry, ref missing, ref missing);
 
             var geometry = geometryCollection as IGeometry;
@@ -341,16 +339,18 @@ namespace MilSpace.Core.Tools
             return point;
         }
 
-        public static IPolygon GetVisilityPolygon(IPoint observerPoint, IPolyline segment)
+        public static IPolygon GetVisilityPolygon(IPointCollection points)
         {
             IGeometryBridge2 geometryBridge2 = new GeometryEnvironmentClass();
             IPointCollection4 pointCollection4 = new PolygonClass();
 
-            WKSPointZ[] aWKSPoints = new WKSPointZ[3];
-            aWKSPoints[0] = PointToWKSPoint(segment.FromPoint);
-            aWKSPoints[1] = PointToWKSPoint(observerPoint);
-            aWKSPoints[2] = PointToWKSPoint(segment.ToPoint);
+            WKSPointZ[] aWKSPoints = new WKSPointZ[points.PointCount];
 
+            for(int i = 0; i < aWKSPoints.Length; i++)
+            {
+                aWKSPoints[i] = PointToWKSPoint(points.Point[i]);
+            }
+            
             geometryBridge2.SetWKSPointZs(pointCollection4, ref aWKSPoints);
 
             var geometry = pointCollection4 as IGeometry;
@@ -359,7 +359,7 @@ namespace MilSpace.Core.Tools
             zAware.ZAware = true;
 
             var result = pointCollection4 as IPolygon;
-            result.SpatialReference = observerPoint.SpatialReference;
+            result.SpatialReference = points.Point[0].SpatialReference;
 
             return result;
         }
@@ -387,7 +387,6 @@ namespace MilSpace.Core.Tools
         }
 
         private static IPoint ConstructPoint3D(double x, double y, double z)
-
         {
             IPoint point = new PointClass();
             point.PutCoords(x, y);

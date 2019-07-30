@@ -37,7 +37,9 @@ namespace MilSpace.Visualization3D
             {
                 foreach(var profilesSet in profileSessions)
                 {
-                    var setPolylines = DataPreparingHelper.GetPolylinesSegments(profilesSet);
+                    var segmentsGeoPoints = DataPreparingHelper.GetSegmentsGeoPoints(DataPreparingHelper.GetLinesSegments(profilesSet));
+                    var setPolylines = DataPreparingHelper.GetPolylinesSegments(segmentsGeoPoints);
+
                     foreach(var polyline in setPolylines)
                     {
                         polylines.Add(polyline.Key, polyline.Value);
@@ -45,7 +47,7 @@ namespace MilSpace.Visualization3D
 
                     observerPoints.Add(DataPreparingHelper.GetObserverPoint(profilesSet.ObserverHeight, profilesSet.ProfileSurfaces[0].ProfileSurfacePoints[0]));
 
-                    var setPolygons = (DataPreparingHelper.GetVisibilityPolygons(observerPoints.Last(), polylines));
+                    var setPolygons = (DataPreparingHelper.GetVisibilityPolygons(observerPoints.Last(), segmentsGeoPoints));
                     foreach(var polygon in setPolygons)
                     {
                         visibilityPolygons.Add(polygon.Key, polygon.Value);
