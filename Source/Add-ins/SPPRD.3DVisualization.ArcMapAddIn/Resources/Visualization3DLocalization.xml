@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Visualization3D xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<WindowCaption>3D візуалізація профілів</WindowCaption>
+<GenerateButton>Генерувати</GenerateButton>
+<SurfaceLabel>Поверхня</SurfaceLabel>
+<PlantsLayerLabel>Шар рослинності</PlantsLayerLabel>
+<HightLablel>Висота</HightLablel>
+<BuildingsLayerLabel>Шар будівель</BuildingsLayerLabel>
+<TransportLayerLabel>Шар транспорту</TransportLayerLabel>
+<HydroLayerLabel>Шар водних ресурсів</HydroLayerLabel>
+<ProfilesLabel>Профілі</ProfilesLabel>
+<SurfacesLabel>Поверхні</SurfacesLabel>
+<Generat3DTabHeader>Проект</Generat3DTabHeader>
+<ImageTabHeader>Знімок</ImageTabHeader>
+<Section>Відрізки</Section>
+<Fun>Віяло</Fun>
+<Primitive>Графіки</Primitive>
+<Profile>Профіль</Profile>
+<ArcSceneParams>3D Візуалізація</ArcSceneParams>  
+</Visualization3D>

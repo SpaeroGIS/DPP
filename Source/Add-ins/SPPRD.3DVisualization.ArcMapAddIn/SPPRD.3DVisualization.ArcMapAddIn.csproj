@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5ED9F537-4BA4-4A7D-A2E8-64BC3F679A5F}</ProjectGuid>
+    <ProjectGuid>{F71A5518-E543-412F-8983-6E6264CA2783}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MilSpace.Visualization3D</RootNamespace>
-    <AssemblyName>MilSpace.Visualization3D</AssemblyName>
+    <AssemblyName>SPPRD.Visualization3D</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -68,10 +68,12 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.DataSourcesGDB, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="ESRI.ArcGIS.DataSourcesRaster, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+    <Reference Include="ESRI.ArcGIS.DataSourcesRaster, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Desktop.AddIns">
       <Private>False</Private>
@@ -101,8 +103,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="ESRI.ArcGIS.SystemUI, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+    <Reference Include="ESRI.ArcGIS.SystemUI, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -115,32 +118,61 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataPreparingHelper.cs" />
-    <Compile Include="Feature3DManager.cs" />
-    <Compile Include="Models\ArcSceneArguments.cs" />
-    <Compile Include="Models\ProfileLayers.cs" />
-    <Compile Include="Models\TreeViewModel.cs" />
-    <Compile Include="Models\TreeViewNodeModel.cs" />
-    <Compile Include="ProfilesTreeView.cs">
+    <Compile Include="..\3DVisualization.ArcMapAddIn\Button3DVisualization.cs">
+      <Link>Button3DVisualization.cs</Link>
+    </Compile>
+    <Compile Include="..\3DVisualization.ArcMapAddIn\DataAccess.cs">
+      <Link>DataAccess.cs</Link>
+    </Compile>
+    <Compile Include="..\3DVisualization.ArcMapAddIn\DataPreparingHelper.cs">
+      <Link>DataPreparingHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\3DVisualization.ArcMapAddIn\Feature3DManager.cs">
+      <Link>Feature3DManager.cs</Link>
+    </Compile>
+    <Compile Include="..\3DVisualization.ArcMapAddIn\Interfaces\IDataAccess.cs">
+      <Link>Interfaces\IDataAccess.cs</Link>
+    </Compile>
+    <Compile Include="..\3DVisualization.ArcMapAddIn\LocalizationContext.cs">
+      <Link>LocalizationContext.cs</Link>
+    </Compile>
+    <Compile Include="..\3DVisualization.ArcMapAddIn\Models\ArcSceneArguments.cs">
+      <Link>Models\ArcSceneArguments.cs</Link>
+    </Compile>
+    <Compile Include="..\3DVisualization.ArcMapAddIn\Models\ProfileLayers.cs">
+      <Link>Models\ProfileLayers.cs</Link>
+    </Compile>
+    <Compile Include="..\3DVisualization.ArcMapAddIn\Models\TreeViewModel.cs">
+      <Link>Models\TreeViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\3DVisualization.ArcMapAddIn\Models\TreeViewNodeModel.cs">
+      <Link>Models\TreeViewNodeModel.cs</Link>
+    </Compile>
+    <Compile Include="..\3DVisualization.ArcMapAddIn\ProfilesTreeView.cs">
+      <Link>ProfilesTreeView.cs</Link>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ProfilesTreeView.Designer.cs">
+    <Compile Include="..\3DVisualization.ArcMapAddIn\ProfilesTreeView.designer.cs">
+      <Link>ProfilesTreeView.designer.cs</Link>
       <DependentUpon>ProfilesTreeView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Visualization3DHandler.cs" />
-    <Compile Include="Open3DVisualization.cs" />
+    <Compile Include="..\3DVisualization.ArcMapAddIn\ProfilesVisualizationForm.cs">
+      <Link>ProfilesVisualizationForm.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\3DVisualization.ArcMapAddIn\ProfilesVisualizationForm.designer.cs">
+      <Link>ProfilesVisualizationForm.designer.cs</Link>
+      <DependentUpon>ProfilesVisualizationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\3DVisualization.ArcMapAddIn\ReferenceData\LocalizationConstants.cs">
+      <Link>ReferenceData\LocalizationConstants.cs</Link>
+    </Compile>
+    <Compile Include="..\3DVisualization.ArcMapAddIn\Visualization3DHandler.cs">
+      <Link>Visualization3DHandler.cs</Link>
+    </Compile>
     <Compile Include="Config.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Config.esriaddinx</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess.cs" />
-    <Compile Include="Interfaces\IDataAccess.cs" />
-    <Compile Include="LocalizationContext.cs" />
-    <Compile Include="ProfilesVisualizationForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ProfilesVisualizationForm.Designer.cs">
-      <DependentUpon>ProfilesVisualizationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -148,19 +180,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ReferenceData\LocalizationConstants.cs" />
   </ItemGroup>
   <ItemGroup>
     <AddInContent Include="Config.esriaddinx">
       <Generator>ArcGISAddInHostGenerator</Generator>
       <LastGenOutput>Config.Designer.cs</LastGenOutput>
     </AddInContent>
-  </ItemGroup>
-  <ItemGroup>
-    <AddInContent Include="Images\MilSpace.3DVisualization.AddIn.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Button3DVisualization.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -175,13 +200,12 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <AddInContent Include="Images\Button3DVisualization.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="ProfilesTreeView.resx">
+    <EmbeddedResource Include="..\3DVisualization.ArcMapAddIn\ProfilesTreeView.resx">
+      <Link>ProfilesTreeView.resx</Link>
       <DependentUpon>ProfilesTreeView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProfilesVisualizationForm.resx">
+    <EmbeddedResource Include="..\3DVisualization.ArcMapAddIn\ProfilesVisualizationForm.resx">
+      <Link>ProfilesVisualizationForm.resx</Link>
       <DependentUpon>ProfilesVisualizationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -189,35 +213,47 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <AddInContent Include="Images\Add.png" />
-    <AddInContent Include="Images\Remove.png" />
+    <ProjectReference Include="..\..\Core\SPPRD.Configurations\SPPRD.Configurations.csproj">
+      <Project>{73334b96-54fd-4d83-b56d-967f8728d767}</Project>
+      <Name>SPPRD.Configurations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\SPPRD.Core\SPPRD.Core.csproj">
+      <Project>{02023d3d-4f73-4e7e-a78f-eeaa5d66deac}</Project>
+      <Name>SPPRD.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\SPPRD.DataAccess\SPPRD.DataAccess.csproj">
+      <Project>{651c40fa-e0b6-45ff-9b3e-9341eb671754}</Project>
+      <Name>SPPRD.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\SPPRD.Tools\SPPRD.Tools.csproj">
+      <Project>{cbd5675b-f382-497d-98cc-70539ed658b9}</Project>
+      <Name>SPPRD.Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <AddInContent Include="Images\ProfilesTreeViewFormIcon.ico" />
-    <AddInContent Include="Images\Tree.ico" />
-    <AddInContent Include="Resources\Visualization3DLocalization.xml">
+    <AddInContent Include="..\3DVisualization.ArcMapAddIn\Images\Add.png">
+      <Link>Images\Add.png</Link>
+    </AddInContent>
+    <AddInContent Include="..\3DVisualization.ArcMapAddIn\Images\Button3DVisualization.png">
+      <Link>Images\Button3DVisualization.png</Link>
+    </AddInContent>
+    <AddInContent Include="..\3DVisualization.ArcMapAddIn\Images\Directions.png">
+      <Link>Images\Directions.png</Link>
+    </AddInContent>
+    <AddInContent Include="..\3DVisualization.ArcMapAddIn\Images\ProfilesTreeViewFormIcon.ico">
+      <Link>Images\ProfilesTreeViewFormIcon.ico</Link>
+    </AddInContent>
+    <AddInContent Include="..\3DVisualization.ArcMapAddIn\Images\Remove.png">
+      <Link>Images\Remove.png</Link>
+    </AddInContent>
+    <AddInContent Include="..\3DVisualization.ArcMapAddIn\Images\Tree.ico">
+      <Link>Images\Tree.ico</Link>
+    </AddInContent>
+    <Content Include="Resources\Visualization3DLocalization.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AddInContent>
-  </ItemGroup>
-  <ItemGroup>
-    <AddInContent Include="Images\Directions.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Core\MilSpace.Configurations\MilSpace.Configurations.csproj">
-      <Project>{73334B96-54FD-4D83-B56D-967F8728D767}</Project>
-      <Name>MilSpace.Configurations</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Core\MilSpace.Core\MilSpace.Core.csproj">
-      <Project>{02023D3D-4F73-4E7E-A78F-EEAA5D66DEAC}</Project>
-      <Name>MilSpace.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Core\MilSpace.DataAccess\MilSpace.DataAccess.csproj">
-      <Project>{651c40fa-e0b6-45ff-9b3e-9341eb671754}</Project>
-      <Name>MilSpace.DataAccess</Name>
-    </ProjectReference>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>
