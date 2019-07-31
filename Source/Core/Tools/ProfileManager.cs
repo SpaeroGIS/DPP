@@ -30,6 +30,7 @@ namespace MilSpace.Tools
         private static readonly string LINE_ID_Field = "LINE_ID";
 
         private static readonly string WhereAllRecords = "OBJECTID > 0";
+        private Logger logger = Logger.GetLoggerEx("ProfileManager");
 
 
         public ProfileManager()
@@ -42,7 +43,11 @@ namespace MilSpace.Tools
             ProfileSettingsTypeEnum profileSettingsTypeEnum,
             int sessionId, string sessionName, double observHeight, string azimuthes)
         {
+            logger.InfoEx("Adding {1} lines to the temporary spatial source:{0}".InvariantFormat(profileSource, profileLines.Count()));
+
             string profileSourceName = GdbAccess.Instance.AddProfileLinesToCalculation(profileLines);
+
+            logger.InfoEx("Temporary spatial source:{0}".InvariantFormat(profileSourceName));
 
             var action = new ActionParam<string>()
             {
@@ -50,11 +55,15 @@ namespace MilSpace.Tools
                 Value = ActionsEnum.bsp.ToString()
             };
 
-
             string sdtnow = MilSpace.DataAccess.Helper.GetTemporaryNameSuffix();
+
             var resuTable = $"{MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection}\\StackProfile{sdtnow}";
+
+            logger.InfoEx("Temporary profile source:{0}".InvariantFormat(resuTable));
+
             var profileLineFeatureClass = GdbAccess.Instance.GetProfileLinesFeatureClass(profileSourceName);
 
+            logger.InfoEx("Temporary spatial source {0} was created".InvariantFormat(profileLineFeatureClass));
 
             var prm = new List<IActionParam>
             {
