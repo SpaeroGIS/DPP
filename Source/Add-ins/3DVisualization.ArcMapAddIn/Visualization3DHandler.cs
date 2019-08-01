@@ -1,10 +1,14 @@
 ﻿using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geodatabase;
+using ESRI.ArcGIS.Geometry;
 using MilSpace.Configurations;
 using MilSpace.Visualization3D.Models;
 using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace MilSpace.Visualization3D
 {
@@ -51,6 +55,13 @@ namespace MilSpace.Visualization3D
                 document.AddLayer(polygon3DLayer);
 
                 document.UpdateContents();
+
+                document.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeography,
+                                                   VisibilityColorsRender(line3DLayer, objFactory), document.ActiveView.Extent);
+
+                document.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeography,
+                                                   VisibilityColorsRender(polygon3DLayer, objFactory), document.ActiveView.Extent);
+                document.UpdateContents();
             }
             catch(Exception ex) { }
 
@@ -82,6 +93,65 @@ namespace MilSpace.Visualization3D
             featureLayer.Name = featureLayer.FeatureClass.AliasName;
 
             return featureLayer;
+        }
+
+        private static IGeoFeatureLayer VisibilityColorsRender(IFeatureLayer layer, IObjectFactory objFactory)
+        {
+            const string fieldName = "IS_VISIBLE";
+            string[] uniqueValues = new string[2];
+
+            int fieldIndex = layer.FeatureClass.Fields.FindField(fieldName);
+
+            uniqueValues[0] = "0";
+            uniqueValues[1] = "1";
+
+            Type renderType = typeof(UniqueValueRendererClass);
+            string typeRenderID = renderType.GUID.ToString("B");
+
+            IUniqueValueRenderer uVRenderer = (IUniqueValueRenderer)objFactory.Create(typeRenderID);
+            uVRenderer.FieldCount = 1;
+            uVRenderer.Field[0] = fieldName;
+
+            var invisibleSymbol = GetSymbol(layer.FeatureClass.ShapeType, new RgbColor() { Red = 255, Blue = 0, Green = 0 });
+            var visibleSymbol = GetSymbol(layer.FeatureClass.ShapeType, new RgbColor() { Red = 0, Blue = 0, Green = 255 });
+
+            uVRenderer.AddValue(uniqueValues[0], "Visibility", invisibleSymbol);
+            uVRenderer.AddValue(uniqueValues[1], "Visibility", visibleSymbol);
+
+            IGeoFeatureLayer geoFL = layer as IGeoFeatureLayer;
+            geoFL.Renderer = uVRenderer as IFeatureRenderer;
+
+            return geoFL;
+
+        }
+
+        private static ISymbol GetSymbol(esriGeometryType featureGeometryType, RgbColor color)
+        {
+            if(featureGeometryType == esriGeometryType.esriGeometryPolygon)
+            {
+                ISimpleFillSymbol simplePolygonSymbol = new SimpleFillSymbolClass();
+                simplePolygonSymbol.Color = color;
+
+                ISimpleLineSymbol outlineSymbol = new SimpleLineSymbolClass();
+                var outLine = color;
+                color.Transparency = 255;
+                outlineSymbol.Color = outLine;
+                outlineSymbol.Width = 1;
+                simplePolygonSymbol.Outline = outlineSymbol;
+
+                return simplePolygonSymbol as ISymbol;
+            }
+            else if(featureGeometryType == esriGeometryType.esriGeometryPolyline)
+            {
+                ISimpleLineSymbol simplePolylineSymbol = new SimpleLineSymbolClass();
+                simplePolylineSymbol.Color = color;
+                simplePolylineSymbol.Width = 4;
+                return simplePolylineSymbol as ISymbol;
+            }
+
+            ISimpleMarkerSymbol simpleMarkerSymbol = new SimpleMarkerSymbolClass();
+            simpleMarkerSymbol.Color = color;
+            return simpleMarkerSymbol as ISymbol;
         }
 
         private static bool OpenArcScene()
