@@ -1,6 +1,9 @@
-﻿using ESRI.ArcGIS.ArcMapUI;
+﻿using ESRI.ArcGIS.Analyst3D;
+using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.DataSourcesRaster;
 using ESRI.ArcGIS.Display;
+using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
@@ -49,7 +52,14 @@ namespace MilSpace.Visualization3D
 
                 IBasicDocument document = (IBasicDocument)m_application.Document;
 
+                SetSurface3DProperties(elevationRasterLayer, objFactory);
+                SetFeatures3DProperties(line3DLayer, objFactory);
+                SetFeatures3DProperties(point3DLayer, objFactory);
+                SetFeatures3DProperties(polygon3DLayer, objFactory);
+
+
                 document.AddLayer(layer);
+
                 document.AddLayer(line3DLayer);
                 document.AddLayer(point3DLayer);
                 document.AddLayer(polygon3DLayer);
@@ -61,6 +71,7 @@ namespace MilSpace.Visualization3D
 
                 document.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeography,
                                                    VisibilityColorsRender(polygon3DLayer, objFactory), document.ActiveView.Extent);
+
                 document.UpdateContents();
             }
             catch(Exception ex) { }
@@ -125,6 +136,31 @@ namespace MilSpace.Visualization3D
 
         }
 
+        private static void SetFeatures3DProperties(IFeatureLayer layer, IObjectFactory objFactory)
+        {
+            var properties3D = (I3DProperties)objFactory.Create("esrianalyst3d.Feature3DProperties");
+            properties3D.ZFactor = 7;
+            properties3D.OffsetExpressionString = "200";
+
+            ILayerExtensions layerExtensions = (ILayerExtensions)layer;
+            layerExtensions.AddExtension(properties3D);
+            properties3D.Apply3DProperties(layer);
+        }
+
+        private static void SetSurface3DProperties(IRasterLayer layer, IObjectFactory objFactory)
+        {
+            var properties3D = (I3DProperties)objFactory.Create("esrianalyst3d.Raster3DProperties");
+            properties3D.ZFactor = 7;
+
+            //var surface = (IRasterSurface)objFactory.Create("esrianalyst3d.RasterSurface");
+            //surface.PutRaster(layer.Raster, 0);
+            //properties3D.BaseSurface = surface as IFunctionalSurface;
+
+            ILayerExtensions layerExtensions = (ILayerExtensions)layer;
+            layerExtensions.AddExtension(properties3D);
+            properties3D.Apply3DProperties(layer);
+        }
+
         private static ISymbol GetSymbol(esriGeometryType featureGeometryType, RgbColor color)
         {
             if(featureGeometryType == esriGeometryType.esriGeometryPolygon)
@@ -146,6 +182,7 @@ namespace MilSpace.Visualization3D
                 ISimpleLineSymbol simplePolylineSymbol = new SimpleLineSymbolClass();
                 simplePolylineSymbol.Color = color;
                 simplePolylineSymbol.Width = 4;
+
                 return simplePolylineSymbol as ISymbol;
             }
 
