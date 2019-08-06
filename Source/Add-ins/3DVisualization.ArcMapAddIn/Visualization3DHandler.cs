@@ -1,10 +1,17 @@
-﻿using ESRI.ArcGIS.ArcMapUI;
+﻿using ESRI.ArcGIS.Analyst3D;
+using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.DataSourcesRaster;
+using ESRI.ArcGIS.Display;
+using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geodatabase;
+using ESRI.ArcGIS.Geometry;
 using MilSpace.Configurations;
 using MilSpace.Visualization3D.Models;
 using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace MilSpace.Visualization3D
 {
@@ -45,10 +52,25 @@ namespace MilSpace.Visualization3D
 
                 IBasicDocument document = (IBasicDocument)m_application.Document;
 
+                SetSurface3DProperties(elevationRasterLayer, objFactory);
+                SetFeatures3DProperties(line3DLayer, objFactory);
+                SetFeatures3DProperties(point3DLayer, objFactory);
+                SetFeatures3DProperties(polygon3DLayer, objFactory);
+
+
                 document.AddLayer(layer);
+
                 document.AddLayer(line3DLayer);
                 document.AddLayer(point3DLayer);
                 document.AddLayer(polygon3DLayer);
+
+                document.UpdateContents();
+
+                document.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeography,
+                                                   VisibilityColorsRender(line3DLayer, objFactory), document.ActiveView.Extent);
+
+                document.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeography,
+                                                   VisibilityColorsRender(polygon3DLayer, objFactory), document.ActiveView.Extent);
 
                 document.UpdateContents();
             }
@@ -82,6 +104,91 @@ namespace MilSpace.Visualization3D
             featureLayer.Name = featureLayer.FeatureClass.AliasName;
 
             return featureLayer;
+        }
+
+        private static IGeoFeatureLayer VisibilityColorsRender(IFeatureLayer layer, IObjectFactory objFactory)
+        {
+            const string fieldName = "IS_VISIBLE";
+            string[] uniqueValues = new string[2];
+
+            int fieldIndex = layer.FeatureClass.Fields.FindField(fieldName);
+
+            uniqueValues[0] = "0";
+            uniqueValues[1] = "1";
+
+            Type renderType = typeof(UniqueValueRendererClass);
+            string typeRenderID = renderType.GUID.ToString("B");
+
+            IUniqueValueRenderer uVRenderer = (IUniqueValueRenderer)objFactory.Create(typeRenderID);
+            uVRenderer.FieldCount = 1;
+            uVRenderer.Field[0] = fieldName;
+
+            var invisibleSymbol = GetSymbol(layer.FeatureClass.ShapeType, new RgbColor() { Red = 255, Blue = 0, Green = 0 });
+            var visibleSymbol = GetSymbol(layer.FeatureClass.ShapeType, new RgbColor() { Red = 0, Blue = 0, Green = 255 });
+
+            uVRenderer.AddValue(uniqueValues[0], "Visibility", invisibleSymbol);
+            uVRenderer.AddValue(uniqueValues[1], "Visibility", visibleSymbol);
+
+            IGeoFeatureLayer geoFL = layer as IGeoFeatureLayer;
+            geoFL.Renderer = uVRenderer as IFeatureRenderer;
+
+            return geoFL;
+
+        }
+
+        private static void SetFeatures3DProperties(IFeatureLayer layer, IObjectFactory objFactory)
+        {
+            var properties3D = (I3DProperties)objFactory.Create("esrianalyst3d.Feature3DProperties");
+            properties3D.ZFactor = 7;
+            properties3D.OffsetExpressionString = "200";
+
+            ILayerExtensions layerExtensions = (ILayerExtensions)layer;
+            layerExtensions.AddExtension(properties3D);
+            properties3D.Apply3DProperties(layer);
+        }
+
+        private static void SetSurface3DProperties(IRasterLayer layer, IObjectFactory objFactory)
+        {
+            var properties3D = (I3DProperties)objFactory.Create("esrianalyst3d.Raster3DProperties");
+            properties3D.ZFactor = 7;
+
+            //var surface = (IRasterSurface)objFactory.Create("esrianalyst3d.RasterSurface");
+            //surface.PutRaster(layer.Raster, 0);
+            //properties3D.BaseSurface = surface as IFunctionalSurface;
+
+            ILayerExtensions layerExtensions = (ILayerExtensions)layer;
+            layerExtensions.AddExtension(properties3D);
+            properties3D.Apply3DProperties(layer);
+        }
+
+        private static ISymbol GetSymbol(esriGeometryType featureGeometryType, RgbColor color)
+        {
+            if(featureGeometryType == esriGeometryType.esriGeometryPolygon)
+            {
+                ISimpleFillSymbol simplePolygonSymbol = new SimpleFillSymbolClass();
+                simplePolygonSymbol.Color = color;
+
+                ISimpleLineSymbol outlineSymbol = new SimpleLineSymbolClass();
+                var outLine = color;
+                color.Transparency = 255;
+                outlineSymbol.Color = outLine;
+                outlineSymbol.Width = 1;
+                simplePolygonSymbol.Outline = outlineSymbol;
+
+                return simplePolygonSymbol as ISymbol;
+            }
+            else if(featureGeometryType == esriGeometryType.esriGeometryPolyline)
+            {
+                ISimpleLineSymbol simplePolylineSymbol = new SimpleLineSymbolClass();
+                simplePolylineSymbol.Color = color;
+                simplePolylineSymbol.Width = 4;
+
+                return simplePolylineSymbol as ISymbol;
+            }
+
+            ISimpleMarkerSymbol simpleMarkerSymbol = new SimpleMarkerSymbolClass();
+            simpleMarkerSymbol.Color = color;
+            return simpleMarkerSymbol as ISymbol;
         }
 
         private static bool OpenArcScene()

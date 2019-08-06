@@ -1,5 +1,6 @@
 ﻿using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Geometry;
+using MilSpace.Core;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
 using MilSpace.Visualization3D.Models;
@@ -159,6 +160,11 @@ namespace MilSpace.Visualization3D
         private void ProfilesVisualizationForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Visualization3DHandler.ClosingHandler();
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            Helper.SetConfiguration();
         }
 
         #endregion

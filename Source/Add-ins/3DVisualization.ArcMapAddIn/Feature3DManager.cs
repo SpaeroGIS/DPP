@@ -57,7 +57,7 @@ namespace MilSpace.Visualization3D
                 arcSceneArguments.Line3DLayer = GdbAccess.Instance.AddProfileLinesTo3D(polylines);
                 arcSceneArguments.Point3DLayer = GdbAccess.Instance.AddProfilePointsTo3D(observerPoints);
                 arcSceneArguments.Polygon3DLayer = GdbAccess.Instance.AddPolygonTo3D(visibilityPolygons);
-              
+
                 return arcSceneArguments;
             }
             catch(Exception ex)

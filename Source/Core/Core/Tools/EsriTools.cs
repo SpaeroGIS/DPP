@@ -327,6 +327,26 @@ namespace MilSpace.Core.Tools
             return geometryCollection as IPolyline;
         }
 
+        public static IPolyline Create3DPolylineFromPoints(IPoint pointLeft, IPoint pointRight)
+        {
+            object missing = Type.Missing;
+
+            IGeometryCollection geometryCollection = new PolylineClass();
+            IPointCollection pointCollection = new PathClass();
+
+            pointCollection.AddPoint(pointLeft);
+            pointCollection.AddPoint(pointRight);
+
+            geometryCollection.AddGeometry(pointCollection as IGeometry, ref missing, ref missing);
+
+            var geometry = geometryCollection as IGeometry;
+            IZAware zAware = geometry as IZAware;
+
+            zAware.ZAware = true;
+
+            return geometryCollection as IPolyline;
+        }
+
         public static IPoint GetObserverPoint(IPoint firstPoint, double observerHeight, ISpatialReference spatialReference)
         {
             ProjectToMapSpatialReference(firstPoint, spatialReference);
@@ -360,6 +380,40 @@ namespace MilSpace.Core.Tools
 
             var result = pointCollection4 as IPolygon;
             result.SpatialReference = points.Point[0].SpatialReference;
+
+            return result;
+        }
+
+        public static IPolygon GetVisilityPolygon(List<IPolyline> polylines)
+        {
+            IGeometryCollection geometryCollection = new PolygonClass();
+            ISegmentCollection ringSegColl1 = new RingClass();
+
+            foreach(var polyline in polylines)
+            {
+                ILine line = new LineClass() { FromPoint = polyline.FromPoint, ToPoint = polyline.ToPoint, SpatialReference = polyline.SpatialReference };
+                var polylineSeg = (ISegment)line;
+                ringSegColl1.AddSegment(polylineSeg);
+            }
+
+            var ringGeometry = ringSegColl1 as IGeometry;
+            IZAware zAwareRing = ringGeometry as IZAware;
+
+            zAwareRing.ZAware = true;
+
+            IRing ring1 = ringSegColl1 as IRing;
+            ring1.Close();
+
+            IGeometryCollection polygon = new PolygonClass();
+            polygon.AddGeometry(ring1 as IGeometry);
+
+            var geometry = polygon as IGeometry;
+            IZAware zAware = geometry as IZAware;
+
+            zAware.ZAware = true;
+
+            var result = polygon as IPolygon;
+            result.SpatialReference = polylines[0].SpatialReference;
 
             return result;
         }
