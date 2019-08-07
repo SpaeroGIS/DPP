@@ -309,16 +309,34 @@ namespace MilSpace.Core.Tools
             return result;
         }
 
-        public static IPolyline Create3DPolylineFromPoints(IPoint fromPoint, IPoint toPoint)
-
+        public static IPolyline Create3DPolylineFromPoints(IPointCollection points)
         {
             object missing = Type.Missing;
 
             IGeometryCollection geometryCollection = new PolylineClass();
             IPointCollection pointCollection = new PathClass();
 
-            pointCollection.AddPoint(ConstructPoint3D(fromPoint.X, fromPoint.Y, fromPoint.Z), ref missing, ref missing);
-            pointCollection.AddPoint(ConstructPoint3D(toPoint.X, toPoint.Y, toPoint.Z), ref missing, ref missing);
+            pointCollection.AddPointCollection(points);
+            geometryCollection.AddGeometry(pointCollection as IGeometry, ref missing, ref missing);
+
+            var geometry = geometryCollection as IGeometry;
+            IZAware zAware = geometry as IZAware;
+
+            zAware.ZAware = true;
+
+            return geometryCollection as IPolyline;
+        }
+
+        public static IPolyline Create3DPolylineFromPoints(IPoint pointLeft, IPoint pointRight)
+        {
+            object missing = Type.Missing;
+
+            IGeometryCollection geometryCollection = new PolylineClass();
+            IPointCollection pointCollection = new PathClass();
+
+            pointCollection.AddPoint(pointLeft);
+            pointCollection.AddPoint(pointRight);
+
             geometryCollection.AddGeometry(pointCollection as IGeometry, ref missing, ref missing);
 
             var geometry = geometryCollection as IGeometry;
@@ -332,13 +350,72 @@ namespace MilSpace.Core.Tools
         public static IPoint GetObserverPoint(IPoint firstPoint, double observerHeight, ISpatialReference spatialReference)
         {
             ProjectToMapSpatialReference(firstPoint, spatialReference);
-            var point = new Point() { X = firstPoint.X, Y = firstPoint.Y + observerHeight, Z = firstPoint.Z, SpatialReference = spatialReference } as IPoint;
+            var point = new Point() { X = firstPoint.X, Y = firstPoint.Y, Z = firstPoint.Z + observerHeight, SpatialReference = spatialReference } as IPoint;
             var geometry = point as IGeometry;
             IZAware zAware = geometry as IZAware;
 
             zAware.ZAware = true;
 
             return point;
+        }
+
+        public static IPolygon GetVisilityPolygon(IPointCollection points)
+        {
+            IGeometryBridge2 geometryBridge2 = new GeometryEnvironmentClass();
+            IPointCollection4 pointCollection4 = new PolygonClass();
+
+            WKSPointZ[] aWKSPoints = new WKSPointZ[points.PointCount];
+
+            for(int i = 0; i < aWKSPoints.Length; i++)
+            {
+                aWKSPoints[i] = PointToWKSPoint(points.Point[i]);
+            }
+            
+            geometryBridge2.SetWKSPointZs(pointCollection4, ref aWKSPoints);
+
+            var geometry = pointCollection4 as IGeometry;
+            IZAware zAware = geometry as IZAware;
+
+            zAware.ZAware = true;
+
+            var result = pointCollection4 as IPolygon;
+            result.SpatialReference = points.Point[0].SpatialReference;
+
+            return result;
+        }
+
+        public static IPolygon GetVisilityPolygon(List<IPolyline> polylines)
+        {
+            IGeometryCollection geometryCollection = new PolygonClass();
+            ISegmentCollection ringSegColl1 = new RingClass();
+
+            foreach(var polyline in polylines)
+            {
+                ILine line = new LineClass() { FromPoint = polyline.FromPoint, ToPoint = polyline.ToPoint, SpatialReference = polyline.SpatialReference };
+                var polylineSeg = (ISegment)line;
+                ringSegColl1.AddSegment(polylineSeg);
+            }
+
+            var ringGeometry = ringSegColl1 as IGeometry;
+            IZAware zAwareRing = ringGeometry as IZAware;
+
+            zAwareRing.ZAware = true;
+
+            IRing ring1 = ringSegColl1 as IRing;
+            ring1.Close();
+
+            IGeometryCollection polygon = new PolygonClass();
+            polygon.AddGeometry(ring1 as IGeometry);
+
+            var geometry = polygon as IGeometry;
+            IZAware zAware = geometry as IZAware;
+
+            zAware.ZAware = true;
+
+            var result = polygon as IPolygon;
+            result.SpatialReference = polylines[0].SpatialReference;
+
+            return result;
         }
 
         public static ILayer GetLayer(string layerName, IMap map)
@@ -364,13 +441,17 @@ namespace MilSpace.Core.Tools
         }
 
         private static IPoint ConstructPoint3D(double x, double y, double z)
-
         {
             IPoint point = new PointClass();
             point.PutCoords(x, y);
             point.Z = z;
 
             return point;
+        }
+
+        private static WKSPointZ PointToWKSPoint(IPoint point)
+        {
+            return new WKSPointZ { X = point.X, Y = point.Y, Z = point.Z };
         }
 
         private static List<IPolyline> GetIntersection(IPolyline polyline, ILayer layer)
@@ -402,7 +483,7 @@ namespace MilSpace.Core.Tools
 
             return resultPolylines;
         }
-
+       
         private static List<IPolyline> GetFeatureIntersection(IFeature feature, IPolyline polyline)
         {
             var resultPolylines = new List<IPolyline>();

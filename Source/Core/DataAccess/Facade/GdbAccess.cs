@@ -3,6 +3,7 @@ using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Configurations;
+using MilSpace.Core;
 using MilSpace.DataAccess.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -17,12 +18,18 @@ namespace MilSpace.DataAccess.Facade
         private static IApplication application = null;
 
         private static readonly string calcFeatureClass = "CalcProfile_L";
+        private Logger logger = Logger.GetLoggerEx("GdbAccess");
 
         private GdbAccess()
         {
             string calcGdb = MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection;
             IWorkspaceFactory workspaceFactory = new FileGDBWorkspaceFactory();
+            logger.InfoEx($"Opening access to {calcGdb}.");
             calcWorkspace = workspaceFactory.OpenFromFile(calcGdb, 0);
+            if (calcWorkspace == null)
+            {
+                logger.ErrorEx($"Cannot access to {calcGdb}.");
+            }
         }
 
         public static GdbAccess Instance
@@ -133,7 +140,7 @@ namespace MilSpace.DataAccess.Facade
 
         }
 
-        public IFeatureClass AddProfileLinesTo3D(Dictionary<IPolyline, bool> profileLines)
+        public string AddProfileLinesTo3D(Dictionary<IPolyline, bool> profileLines)
         {
             string featureClassName = GenerateTemp3DLineStorage();
 
@@ -155,7 +162,7 @@ namespace MilSpace.DataAccess.Facade
                     newLine.set_Value(idFieldIndex, i);
 
                     int isVisibleFieldIndex = calc.FindField("IS_VISIBLE");
-                    newLine.set_Value(isVisibleFieldIndex, l.Value? 1:0);
+                    newLine.set_Value(isVisibleFieldIndex, l.Value ? 1 : 0);
 
                     newLine.Shape = l.Key;
                     newLine.Store();
@@ -167,10 +174,10 @@ namespace MilSpace.DataAccess.Facade
             workspaceEdit.StopEditOperation();
             workspaceEdit.StopEditing(true);
 
-            return calc;
+            return featureClassName;
         }
 
-        public IFeatureClass AddProfilePointsTo3D(IEnumerable<IPoint> points)
+        public string AddProfilePointsTo3D(IEnumerable<IPoint> points)
         {
             string featureClassName = GenerateTemp3DPointStorage();
 
@@ -197,10 +204,10 @@ namespace MilSpace.DataAccess.Facade
             workspaceEdit.StopEditOperation();
             workspaceEdit.StopEditing(true);
 
-            return calc;
+            return featureClassName;
         }
 
-        public IFeatureClass AddPolygonTo3D(IEnumerable<IPolygon> polygons)
+        public string AddPolygonTo3D(Dictionary<IPolygon, bool> polygons)
         {
             string featureClassName = GenerateTemp3DPolygonStorage();
 
@@ -214,14 +221,18 @@ namespace MilSpace.DataAccess.Facade
             polygons.ToList().ForEach(polygon =>
             {
                 var pointFeature = calc.CreateFeature();
-                pointFeature.Shape = polygon;
+                pointFeature.Shape = polygon.Key;
+
+                int isVisibleFieldIndex = calc.FindField("IS_VISIBLE");
+                pointFeature.set_Value(isVisibleFieldIndex, polygon.Value ? 1 : 0);
+
                 pointFeature.Store();
             });
 
             workspaceEdit.StopEditOperation();
             workspaceEdit.StopEditing(true);
 
-            return calc;
+            return featureClassName;
         }
 
         public void EraseProfileLines()
@@ -418,7 +429,29 @@ namespace MilSpace.DataAccess.Facade
         private string GenerateTemp3DPolygonStorage()
         {
             string newFeatureClassName = $"Polygon3D_L{Helper.GetTemporaryNameSuffix()}";
-            GenerateTempStorage(newFeatureClassName, null, esriGeometryType.esriGeometryPolygon);
+
+            IFeatureClassDescription fcDescription = new FeatureClassDescriptionClass();
+            IObjectClassDescription ocDescription = (IObjectClassDescription)fcDescription;
+            IFields fields = ocDescription.RequiredFields;
+
+            int shapeFieldIndex = fields.FindField(fcDescription.ShapeFieldName);
+
+            IField field = fields.get_Field(shapeFieldIndex);
+            IGeometryDef geometryDef = field.GeometryDef;
+            IGeometryDefEdit geometryDefEdit = (IGeometryDefEdit)geometryDef;
+            geometryDefEdit.HasZ_2 = true;
+            geometryDefEdit.GeometryType_2 = esriGeometryType.esriGeometryPolygon;
+            geometryDefEdit.SpatialReference_2 = ArcMapInstance.Document.FocusMap.SpatialReference;
+
+            IFieldsEdit fieldsEdit = (IFieldsEdit)fields;
+
+            IField isVisibleField = new FieldClass();
+            IFieldEdit isVisibleFieldEdit = (IFieldEdit)isVisibleField;
+            isVisibleFieldEdit.Name_2 = "IS_VISIBLE";
+            isVisibleFieldEdit.Type_2 = esriFieldType.esriFieldTypeSmallInteger;
+            fieldsEdit.AddField(isVisibleFieldEdit);
+
+            GenerateTempStorage(newFeatureClassName, fields, esriGeometryType.esriGeometryPolygon);
             return newFeatureClassName;
         }
 

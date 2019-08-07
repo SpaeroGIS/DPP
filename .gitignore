@@ -207,3 +207,11 @@
 /Source/Modules/SPPRD.GeoCalculator.BusinessLogic/bin
 /Source/Modules/SPPRD.GeoCalculator.BusinessLogic/obj
 /Source/Modules/MilSpace.GeoCalculator.BusinessLogic/bin/Debug
+/Source/Add-ins/MilSpace.3DVisualization.ArcMapAddIn/obj/Release
+/Source/Add-ins/SPPRD.Profile.ArcMapAddin/obj/Release
+/Source/Core/SPPRD.DataAccess/obj/Release
+/Source/Core/SPPRD.Core/obj/Release
+/Source/Modules/GeoCalculator.BusinessLogic/obj/Debug
+/Source/Core/SPPRD.Tools/obj/Release
+/Source/Add-ins/SPPRD.3DVisualization.ArcMapAddIn/bin/Debug
+/Source/Add-ins/SPPRD.3DVisualization.ArcMapAddIn/obj

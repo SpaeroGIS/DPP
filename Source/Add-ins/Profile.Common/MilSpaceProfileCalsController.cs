@@ -285,6 +285,19 @@ namespace MilSpace.Profile
                 logger.InfoEx($"Profile {newProfileId}. Generation started");
                 var newProfileName = GenerateProfileName(newProfileId);
 
+                if (manager == null)
+                {
+                    logger.ErrorEx("Cannot find profile manager");
+                    throw new NullReferenceException("Cannot find profile manager");
+                }
+
+                if (profileSetting == null)
+                {
+                    logger.ErrorEx("Cannot find profile manager");
+                    throw new NullReferenceException("Cannot find profile manager");
+                }
+
+                logger.InfoEx($"Profile {newProfileId}. Generation starting..");
                 var session = manager.GenerateProfile(profileSetting.DemLayerName, profileSetting.ProfileLines, View.SelectedProfileSettingsType, newProfileId, newProfileName, View.ObserveHeight, profileSetting.AzimuthToStore);
                 logger.InfoEx($"Profile {newProfileId}. Generated");
 

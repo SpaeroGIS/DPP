@@ -140,15 +140,27 @@ namespace MilSpace.Visualization3D
 
             try
             {
-                //todo: add dem layer  instead "DEMLayer"
-                var arcSceneArguments = Feature3DManager.Get3DFeatures("DEMLayer", profilesSets);
-                Visualization3DHandler.OpenProfilesSetIn3D(arcSceneArguments);
+                if(SurfaceComboBox.SelectedItem != null)
+                {
+                    var arcSceneArguments = Feature3DManager.Get3DFeatures(SurfaceComboBox.SelectedItem.ToString(), profilesSets);
+                    Visualization3DHandler.OpenProfilesSetIn3D(arcSceneArguments);
+                }
+                else
+                {
+                    //TODO: Exception message
+                }
             }
             catch(Exception ex) {
                 //TODO: Log Error
 
             }
         }
+
+        private void ProfilesVisualizationForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Visualization3DHandler.ClosingHandler();
+        }
+
         #endregion
     }
 }
