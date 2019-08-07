@@ -22,19 +22,21 @@ namespace MilSpace.Visualization3D
             foreach(var line in profileSession.ProfileLines)
             {
                 var surface = profileSession.ProfileSurfaces.First(profileSurface => profileSurface.LineId == line.Id);
+                var visibility = surface.ProfileSurfacePoints.First().Visible;
+                var segmentPoints = new List<ProfileSurfacePoint>();
 
-                var points = new List<ProfileSurfacePoint>(surface.ProfileSurfacePoints);
+                var points = surface.ProfileSurfacePoints;
 
-                while(points.Count > 0)
+                for(int i = 1; i < points.Length; i++)
                 {
-                    var surfaceSegment = new ProfileSurface();
-                    var visibility = points.First().Visible;
-                    surfaceSegment.ProfileSurfacePoints = points.TakeWhile(point =>
-                                                                            point.Visible == visibility
-                                                                            && (!point.isVertex || point == points.First() || point == points.Last()))                                                                           .ToArray();
-
-                    lines.Add(surfaceSegment, visibility);
-                    points.RemoveRange(0, surfaceSegment.ProfileSurfacePoints.Length);
+                    segmentPoints.Add(points[i]);
+                    if(visibility != surface.ProfileSurfacePoints[i].Visible || surface.ProfileSurfacePoints[i].isVertex || i == surface.ProfileSurfacePoints.Length - 1)
+                    {
+                        lines.Add(new ProfileSurface() { ProfileSurfacePoints = segmentPoints.ToArray() }, visibility);
+                        visibility = !visibility;
+                        segmentPoints = new List<ProfileSurfacePoint>();
+                        segmentPoints.Add(points[i]);
+                    }
                 }
             }
 
@@ -83,11 +85,27 @@ namespace MilSpace.Visualization3D
 
             foreach(var points in pointCollections)
             {
-                var polygonPoints = new PathClass();
-                polygonPoints.AddPoint(observerPoint);
-                polygonPoints.AddPointCollection(points.Key);
+                var polylines = new List<IPolyline>();
 
-                visibilityPolygons.Add(EsriTools.GetVisilityPolygon(polygonPoints), points.Value);
+                if(points.Value)
+                {
+                    polylines.Add(EsriTools.Create3DPolylineFromPoints(observerPoint, points.Key.Point[0]));
+                    for(int i = 0; i < points.Key.PointCount - 1; i++)
+                    {
+                        polylines.Add(EsriTools.Create3DPolylineFromPoints(points.Key.Point[i], points.Key.Point[i + 1]));
+                    }
+                    polylines.Add(EsriTools.Create3DPolylineFromPoints(observerPoint, points.Key.Point[points.Key.PointCount - 1]));
+
+                }
+                else
+                {
+                    for(int i = 0; i < points.Key.PointCount - 1; i++)
+                    {
+                        polylines.Add(EsriTools.Create3DPolylineFromPoints(points.Key.Point[i], points.Key.Point[i + 1]));
+                    }
+                }
+
+                visibilityPolygons.Add(EsriTools.GetVisilityPolygon(polylines), points.Value);
             }
 
             return visibilityPolygons;
