@@ -26,6 +26,7 @@ namespace MilSpace.Visualization3D
             SubscribeForArcMapEvents();
             OnDocumentOpenFillDropdowns();
             this.Hook = hook;
+            Helper.SetConfiguration();
         }
 
         /// <summary>
@@ -57,6 +58,8 @@ namespace MilSpace.Visualization3D
 
             protected override void Dispose(bool disposing)
             {
+                Visualization3DHandler.ClosingHandler();
+
                 if (m_windowUI != null)
                     m_windowUI.Dispose(disposing);
 
@@ -113,7 +116,7 @@ namespace MilSpace.Visualization3D
             this.PlantsLayerComboBox.Items.Clear();
 
             PopulateComboBox(SurfaceComboBox, ProfileLayers.RasterLayers);
-            PopulateComboBox(TransportLayerComboBox, ProfileLayers.RasterLayers);
+            PopulateComboBox(TransportLayerComboBox, ProfileLayers.PolygonLayers);
             PopulateComboBox(HydroLayerComboBox, ProfileLayers.PolygonLayers);
             PopulateComboBox(BuildingsLayerComboBox, ProfileLayers.PolygonLayers);
             PopulateComboBox(PlantsLayerComboBox, ProfileLayers.PolygonLayers);
@@ -125,12 +128,7 @@ namespace MilSpace.Visualization3D
         }
         #endregion
 
-        #region Control Event Handlers
-        private void ProfilesVisualizationForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            e.Cancel = true;
-            this.Visible = false;
-        }
+        #region Control Event Handlers       
 
         private void ToolBars_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
@@ -196,17 +194,6 @@ namespace MilSpace.Visualization3D
 
             }
         }
-
-        private void ProfilesVisualizationForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Visualization3DHandler.ClosingHandler();
-        }
-
-        protected override void OnLoad(EventArgs e)
-        {
-            Helper.SetConfiguration();
-        }
-
         #endregion
     }
 }

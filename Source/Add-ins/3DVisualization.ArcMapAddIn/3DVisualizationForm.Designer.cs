@@ -78,6 +78,8 @@
             this.SurfaceLabel = new System.Windows.Forms.Label();
             this.panel11 = new System.Windows.Forms.Panel();
             this.lbl3DProfiles = new System.Windows.Forms.Label();
+            this.panel12 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.basePanel.SuspendLayout();
             this.GenerateTab.SuspendLayout();
             this.ProfilesTabPage.SuspendLayout();
@@ -94,6 +96,8 @@
             this.panel3.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel11.SuspendLayout();
+            this.panel12.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // basePanel
@@ -105,7 +109,7 @@
             this.basePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.basePanel.Location = new System.Drawing.Point(0, 0);
             this.basePanel.Name = "basePanel";
-            this.basePanel.Size = new System.Drawing.Size(322, 715);
+            this.basePanel.Size = new System.Drawing.Size(322, 1000);
             this.basePanel.TabIndex = 0;
             // 
             // GenerateTab
@@ -117,19 +121,18 @@
             this.GenerateTab.Location = new System.Drawing.Point(0, 213);
             this.GenerateTab.Name = "GenerateTab";
             this.GenerateTab.SelectedIndex = 0;
-            this.GenerateTab.Size = new System.Drawing.Size(322, 502);
+            this.GenerateTab.Size = new System.Drawing.Size(322, 787);
             this.GenerateTab.TabIndex = 70;
             // 
             // ProfilesTabPage
             // 
             this.ProfilesTabPage.BackColor = System.Drawing.SystemColors.Control;
-            this.ProfilesTabPage.Controls.Add(this.panel4);
-            this.ProfilesTabPage.Controls.Add(this.GenerateButton);
-            this.ProfilesTabPage.Controls.Add(this.profilePanel);
+            this.ProfilesTabPage.Controls.Add(this.tableLayoutPanel2);
+            this.ProfilesTabPage.Controls.Add(this.panel12);
             this.ProfilesTabPage.Location = new System.Drawing.Point(4, 24);
             this.ProfilesTabPage.Name = "ProfilesTabPage";
             this.ProfilesTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.ProfilesTabPage.Size = new System.Drawing.Size(314, 474);
+            this.ProfilesTabPage.Size = new System.Drawing.Size(314, 759);
             this.ProfilesTabPage.TabIndex = 0;
             this.ProfilesTabPage.Text = "Profiles";
             // 
@@ -139,10 +142,10 @@
             this.panel4.Controls.Add(this.panel8);
             this.panel4.Controls.Add(this.panel9);
             this.panel4.Controls.Add(this.panel10);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel4.Location = new System.Drawing.Point(3, 222);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(3, 364);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(308, 219);
+            this.panel4.Size = new System.Drawing.Size(302, 356);
             this.panel4.TabIndex = 60;
             // 
             // panel8
@@ -152,17 +155,17 @@
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(0, 50);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(308, 169);
+            this.panel8.Size = new System.Drawing.Size(302, 306);
             this.panel8.TabIndex = 67;
             // 
             // listBox2
             // 
-            this.listBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.listBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listBox2.FormattingEnabled = true;
             this.listBox2.ItemHeight = 15;
             this.listBox2.Location = new System.Drawing.Point(0, 0);
             this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(308, 169);
+            this.listBox2.Size = new System.Drawing.Size(302, 306);
             this.listBox2.TabIndex = 65;
             // 
             // panel9
@@ -171,7 +174,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel9.Location = new System.Drawing.Point(0, 25);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(308, 25);
+            this.panel9.Size = new System.Drawing.Size(302, 25);
             this.panel9.TabIndex = 67;
             // 
             // surfaceToolBar
@@ -187,8 +190,9 @@
             this.surfaceToolBar.Margin = new System.Windows.Forms.Padding(0);
             this.surfaceToolBar.Name = "surfaceToolBar";
             this.surfaceToolBar.ShowToolTips = true;
-            this.surfaceToolBar.Size = new System.Drawing.Size(308, 28);
+            this.surfaceToolBar.Size = new System.Drawing.Size(302, 28);
             this.surfaceToolBar.TabIndex = 65;
+            this.surfaceToolBar.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.ToolBars_ButtonClick);
             // 
             // AddSurface
             // 
@@ -424,7 +428,7 @@
             this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel10.Location = new System.Drawing.Point(0, 0);
             this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(308, 25);
+            this.panel10.Size = new System.Drawing.Size(302, 25);
             this.panel10.TabIndex = 66;
             // 
             // surfaceLabels
@@ -441,15 +445,17 @@
             // 
             // GenerateButton
             // 
+            this.GenerateButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.GenerateButton.AutoSize = true;
             this.GenerateButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.GenerateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.GenerateButton.Location = new System.Drawing.Point(240, 447);
+            this.GenerateButton.Location = new System.Drawing.Point(237, 2);
             this.GenerateButton.Name = "GenerateButton";
             this.GenerateButton.Size = new System.Drawing.Size(68, 25);
             this.GenerateButton.TabIndex = 59;
             this.GenerateButton.Text = "Generate";
             this.GenerateButton.UseVisualStyleBackColor = true;
+            this.GenerateButton.Click += new System.EventHandler(this.GenerateButton_Click);
             // 
             // profilePanel
             // 
@@ -457,10 +463,10 @@
             this.profilePanel.Controls.Add(this.panel7);
             this.profilePanel.Controls.Add(this.panel6);
             this.profilePanel.Controls.Add(this.panel5);
-            this.profilePanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.profilePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.profilePanel.Location = new System.Drawing.Point(3, 3);
             this.profilePanel.Name = "profilePanel";
-            this.profilePanel.Size = new System.Drawing.Size(308, 219);
+            this.profilePanel.Size = new System.Drawing.Size(302, 355);
             this.profilePanel.TabIndex = 58;
             // 
             // panel7
@@ -469,18 +475,18 @@
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel7.Location = new System.Drawing.Point(0, 50);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(308, 169);
+            this.panel7.Size = new System.Drawing.Size(302, 305);
             this.panel7.TabIndex = 67;
             // 
             // ProfilesListBox
             // 
-            this.ProfilesListBox.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.ProfilesListBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ProfilesListBox.FormattingEnabled = true;
             this.ProfilesListBox.ItemHeight = 15;
             this.ProfilesListBox.Location = new System.Drawing.Point(0, 0);
             this.ProfilesListBox.Name = "ProfilesListBox";
             this.ProfilesListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.ProfilesListBox.Size = new System.Drawing.Size(308, 169);
+            this.ProfilesListBox.Size = new System.Drawing.Size(302, 305);
             this.ProfilesListBox.TabIndex = 65;
             // 
             // panel6
@@ -489,7 +495,7 @@
             this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel6.Location = new System.Drawing.Point(0, 25);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(308, 25);
+            this.panel6.Size = new System.Drawing.Size(302, 25);
             this.panel6.TabIndex = 67;
             // 
             // profilesToolBar
@@ -504,8 +510,9 @@
             this.profilesToolBar.Margin = new System.Windows.Forms.Padding(0);
             this.profilesToolBar.Name = "profilesToolBar";
             this.profilesToolBar.ShowToolTips = true;
-            this.profilesToolBar.Size = new System.Drawing.Size(308, 28);
+            this.profilesToolBar.Size = new System.Drawing.Size(302, 28);
             this.profilesToolBar.TabIndex = 66;
+            this.profilesToolBar.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.ToolBars_ButtonClick);
             // 
             // AddProfile
             // 
@@ -523,7 +530,7 @@
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(0, 0);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(308, 25);
+            this.panel5.Size = new System.Drawing.Size(302, 25);
             this.panel5.TabIndex = 66;
             // 
             // lblProfiles
@@ -817,17 +824,41 @@
             this.lbl3DProfiles.TabIndex = 66;
             this.lbl3DProfiles.Text = "Profiles";
             // 
+            // panel12
+            // 
+            this.panel12.Controls.Add(this.GenerateButton);
+            this.panel12.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel12.Location = new System.Drawing.Point(3, 726);
+            this.panel12.Name = "panel12";
+            this.panel12.Size = new System.Drawing.Size(308, 30);
+            this.panel12.TabIndex = 61;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.profilePanel, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.panel4, 0, 1);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(308, 723);
+            this.tableLayoutPanel2.TabIndex = 62;
+            // 
             // Visualization3DMainForm
             // 
             this.AutoSize = true;
             this.Controls.Add(this.basePanel);
             this.Name = "Visualization3DMainForm";
-            this.Size = new System.Drawing.Size(322, 715);
+            this.Size = new System.Drawing.Size(322, 1000);
             this.basePanel.ResumeLayout(false);
             this.basePanel.PerformLayout();
             this.GenerateTab.ResumeLayout(false);
             this.ProfilesTabPage.ResumeLayout(false);
-            this.ProfilesTabPage.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             this.panel8.ResumeLayout(false);
@@ -850,6 +881,10 @@
             this.panel1.PerformLayout();
             this.panel11.ResumeLayout(false);
             this.panel11.PerformLayout();
+            this.panel12.ResumeLayout(false);
+            this.panel12.PerformLayout();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -905,6 +940,8 @@
         private System.Windows.Forms.ToolBarButton RemoveSurface;
         private System.Windows.Forms.ToolBar profilesToolBar;
         internal System.Windows.Forms.ToolBarButton AddProfile;
-        private System.Windows.Forms.ToolBarButton RemoveProfile;        
+        private System.Windows.Forms.ToolBarButton RemoveProfile;
+        private System.Windows.Forms.Panel panel12;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
     }
 }
