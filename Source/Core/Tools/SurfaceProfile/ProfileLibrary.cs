@@ -34,6 +34,8 @@ namespace MilSpace.Tools.SurfaceProfile
             Geoprocessor gp = new Geoprocessor();
 
             StackProfile stackProfile = new StackProfile();
+
+
             stackProfile.in_line_features = lineFeatureClass;
             stackProfile.profile_targets = profileSource;
             stackProfile.out_table = outTable;
@@ -45,6 +47,15 @@ namespace MilSpace.Tools.SurfaceProfile
             return RunTool(gp, stackProfile, null);
         }
         //-------------------------------------------------------------------------
+
+//public static bool GenerateVisibilityData()
+//        {
+//            Geoprocessor gp = new Geoprocessor();
+
+//            Visibility stackProfile = new Visibility();
+//            stackProfile.A
+//        }
+
         private static bool RunTool(Geoprocessor gp, IGPProcess process, ITrackCancel TC)
         {
             gp.OverwriteOutput = true; // Set the overwrite output option to true

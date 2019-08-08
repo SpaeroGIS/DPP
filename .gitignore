@@ -215,3 +215,5 @@
 /Source/Core/SPPRD.Tools/obj/Release
 /Source/Add-ins/SPPRD.3DVisualization.ArcMapAddIn/bin/Debug
 /Source/Add-ins/SPPRD.3DVisualization.ArcMapAddIn/obj
+/Source/Add-ins/SPPRD.Visibility.ArcMapAddin/bin
+/Source/Add-ins/SPPRD.Visibility.ArcMapAddin/obj
