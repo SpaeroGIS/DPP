@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MilSpace.Visibility</RootNamespace>
-    <AssemblyName>MilSpace.Visibility</AssemblyName>
+    <AssemblyName>SPPRD.Visibility</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -42,7 +42,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <RegisterForComInterop>true</RegisterForComInterop>
+    <RegisterForComInterop>false</RegisterForComInterop>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -56,12 +56,14 @@
   <ItemGroup>
     <Reference Include="ESRI.ArcGIS.ADF.Local, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.System, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Desktop.AddIns">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Editor, Version=10.6.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -71,14 +73,12 @@
     <Reference Include="ESRI.ArcGIS.Framework">
       <Private>False</Private>
     </Reference>
-    <Reference Include="ESRI.ArcGIS.Analyst3DTools">
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ESRI.ArcGIS.SystemUI, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -94,7 +94,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Config.esriaddinx</DependentUpon>
     </Compile>
-    <Compile Include="DockableWindow1Command.cs" />
     <Compile Include="WindowMilSpaceMVisibilityMaster.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -152,6 +151,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="MilSpace.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\SPPRD.Configurations\SPPRD.Configurations.csproj">
+      <Project>{73334b96-54fd-4d83-b56d-967f8728d767}</Project>
+      <Name>SPPRD.Configurations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\SPPRD.Core\SPPRD.Core.csproj">
+      <Project>{02023d3d-4f73-4e7e-a78f-eeaa5d66deac}</Project>
+      <Name>SPPRD.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\SPPRD.DataAccess\SPPRD.DataAccess.csproj">
+      <Project>{651c40fa-e0b6-45ff-9b3e-9341eb671754}</Project>
+      <Name>SPPRD.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\SPPRD.Tools\SPPRD.Tools.csproj">
+      <Project>{cbd5675b-f382-497d-98cc-70539ed658b9}</Project>
+      <Name>SPPRD.Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>

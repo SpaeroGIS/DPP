@@ -15,10 +15,6 @@ using MilSpace.Tools.SurfaceProfile.Actions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MilSpace.DataAccess.Facade;
-using ESRI.ArcGIS.ArcMapUI;
-using ESRI.ArcGIS.Carto;
-using ESRI.ArcGIS.esriSystem;
 using System.Runtime.InteropServices;
 
 namespace MilSpace.Tools
