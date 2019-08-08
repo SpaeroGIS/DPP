@@ -219,6 +219,10 @@
       <Link>ProfilesVisualizationForm.resx</Link>
       <DependentUpon>ProfilesVisualizationForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="..\3DVisualization.ArcMapAddIn\3DVisualizationForm.resx">
+      <Link>3DVisualizationForm.resx</Link>
+      <DependentUpon>3DVisualizationForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

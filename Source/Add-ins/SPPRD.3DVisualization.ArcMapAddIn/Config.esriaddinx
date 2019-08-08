@@ -13,10 +13,16 @@
   <AddIn language="CLR" library="SPPRD.Visualization3D.dll" namespace="MilSpace.Visualization3D">
     <ArcMap>
       <Commands>
-        <Button id="SPPRD.Visualization3D_Button3" class="Button3DVisualization" 
+        <Button id="SPPRD.Visualization3D_Button3DVisualization" class="Button3DVisualization" 
                 message="Open 3D Visualization"  
                 caption="SPPRD.Visualization3D" tip="Open 3D Visualization." category="SPPRDTools" image="Images\Button3DVisualization.png" />
       </Commands>
+      <DockableWindows>
+        <DockableWindow id="SPPRD.Visualization3D_Visualization3DMainForm" class="Visualization3DMainForm+AddinImpl"
+                        caption="SPPRD Visualization3D" image="Images\Button3DVisualization.png">
+          <InitialPlacement height="715" width="322" state="pinned" position="left" />
+        </DockableWindow>
+      </DockableWindows>
       <Toolbars>
         <Toolbar
           id="SPPRDArcMapAddinToolbar"
