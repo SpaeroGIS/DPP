@@ -39,9 +39,13 @@ namespace MilSpace.Visualization3D
                 Type rasterLayerType = typeof(RasterLayerClass);
                 string typeRasterLayerID = rasterLayerType.GUID.ToString("B");
 
-                IRasterLayer elevationRasterLayer = (IRasterLayer)objFactory.Create(typeRasterLayerID);
+                var elevationRasterLayer = (IRasterLayer)objFactory.Create(typeRasterLayerID);
                 elevationRasterLayer.CreateFromFilePath(layers.DemLayer);
-                ILayer layer = (ILayer)elevationRasterLayer;
+                var layer = (ILayer)elevationRasterLayer;
+
+                var surface = (IRasterSurface)objFactory.Create("esrianalyst3d.RasterSurface");
+                surface.PutRaster(elevationRasterLayer.Raster, 0);
+                var functionalSurface = (IFunctionalSurface)surface;
 
                 var line3DLayer = CreateLayer(layers.Line3DLayer, objFactory);
                 var point3DLayer = CreateLayer(layers.Point3DLayer, objFactory);
@@ -50,10 +54,10 @@ namespace MilSpace.Visualization3D
                 var polygonLayerEffects = (ILayerEffects)polygon3DLayer;
                 polygonLayerEffects.Transparency = 50;
 
-                IBasicDocument document = (IBasicDocument)m_application.Document;
+                var document = (IBasicDocument)m_application.Document;
 
-                SetSurface3DProperties(elevationRasterLayer, objFactory);
-                SetFeatures3DProperties(line3DLayer, objFactory);
+                SetSurface3DProperties(layer, objFactory, functionalSurface);
+                SetLine3DProperties(line3DLayer, objFactory, functionalSurface);
                 SetFeatures3DProperties(point3DLayer, objFactory);
                 SetFeatures3DProperties(polygon3DLayer, objFactory);
 
@@ -136,6 +140,19 @@ namespace MilSpace.Visualization3D
 
         }
 
+        private static void SetLine3DProperties(IFeatureLayer layer, IObjectFactory objFactory, IFunctionalSurface surface)
+        {
+            var properties3D = (I3DProperties)objFactory.Create("esrianalyst3d.Feature3DProperties");
+            properties3D.BaseOption = esriBaseOption.esriBaseSurface;
+            properties3D.BaseSurface = surface;
+            properties3D.ZFactor = 7;
+            properties3D.OffsetExpressionString = "200";
+
+            ILayerExtensions layerExtensions = (ILayerExtensions)layer;
+            layerExtensions.AddExtension(properties3D);
+            properties3D.Apply3DProperties(layer);
+        }
+
         private static void SetFeatures3DProperties(IFeatureLayer layer, IObjectFactory objFactory)
         {
             var properties3D = (I3DProperties)objFactory.Create("esrianalyst3d.Feature3DProperties");
@@ -147,14 +164,12 @@ namespace MilSpace.Visualization3D
             properties3D.Apply3DProperties(layer);
         }
 
-        private static void SetSurface3DProperties(IRasterLayer layer, IObjectFactory objFactory)
+        private static void SetSurface3DProperties(ILayer layer, IObjectFactory objFactory, IFunctionalSurface surface)
         {
             var properties3D = (I3DProperties)objFactory.Create("esrianalyst3d.Raster3DProperties");
+            properties3D.BaseOption = esriBaseOption.esriBaseSurface;
+            properties3D.BaseSurface = surface;
             properties3D.ZFactor = 7;
-
-            //var surface = (IRasterSurface)objFactory.Create("esrianalyst3d.RasterSurface");
-            //surface.PutRaster(layer.Raster, 0);
-            //properties3D.BaseSurface = surface as IFunctionalSurface;
 
             ILayerExtensions layerExtensions = (ILayerExtensions)layer;
             layerExtensions.AddExtension(properties3D);
