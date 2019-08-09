@@ -68,6 +68,13 @@ namespace MilSpace.Visualization3D
                 document.AddLayer(point3DLayer);
                 document.AddLayer(polygon3DLayer);
 
+                foreach(var extraLayer in layers.AdditionalLayers)
+                {
+                    var featureLayer = CreateLayerCopy((IFeatureLayer)extraLayer, objFactory);
+
+                    document.AddLayer(featureLayer);
+                }
+
                 document.UpdateContents();
 
                 document.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeography,
@@ -91,6 +98,19 @@ namespace MilSpace.Visualization3D
             }
         }
 
+
+        public static string GetWorkspacePathForLayer(ILayer layer)
+        {
+            if(layer == null || !(layer is IDataset))
+            {
+                return null;
+            }
+
+            IDataset dataset = (IDataset)(layer);
+
+            return dataset.Workspace.PathName;
+        }
+
         private static IFeatureLayer CreateLayer(string featureClass, IObjectFactory objFactory)
         {
             string calcGdb = MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection;
@@ -110,6 +130,33 @@ namespace MilSpace.Visualization3D
             return featureLayer;
         }
 
+        private static IGeoFeatureLayer CreateLayerCopy(IFeatureLayer layer, IObjectFactory objFactory)
+        {
+            var workspacePath = GetWorkspacePathForLayer(layer);
+
+            Type factoryType = Type.GetTypeFromProgID("esriDataSourcesGDB.FileGDBWorkspaceFactory");
+            string typeFactoryID = factoryType.GUID.ToString("B");
+
+            IWorkspaceFactory workspaceFactory = (IWorkspaceFactory)objFactory.Create(typeFactoryID);
+            IFeatureWorkspace calcWorkspace = (IFeatureWorkspace)workspaceFactory.OpenFromFile(workspacePath, 0);
+
+            var featureLayer = (IFeatureLayer)objFactory.Create("esriCarto.FeatureLayer");
+            var featureClassC = calcWorkspace.OpenFeatureClass(layer.FeatureClass.AliasName);
+
+            featureLayer.FeatureClass = featureClassC;
+            featureLayer.Name = layer.Name;
+
+            var arcMapLayerDefinition = layer as IFeatureLayerDefinition2;
+            var layerDefinition = featureLayer as IFeatureLayerDefinition2;
+            layerDefinition.DefinitionExpression = arcMapLayerDefinition.DefinitionExpression;
+
+            IGeoFeatureLayer geoArcMapLayer = layer as IGeoFeatureLayer;
+            IGeoFeatureLayer geoFL = featureLayer as IGeoFeatureLayer;
+            geoFL.Renderer = geoArcMapLayer.Renderer;
+            
+            return geoFL;
+        }
+        
         private static IGeoFeatureLayer VisibilityColorsRender(IFeatureLayer layer, IObjectFactory objFactory)
         {
             const string fieldName = "IS_VISIBLE";
