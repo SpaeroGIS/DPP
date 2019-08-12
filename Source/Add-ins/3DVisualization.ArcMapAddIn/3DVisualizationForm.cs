@@ -178,16 +178,35 @@ namespace MilSpace.Visualization3D
 
             try
             {
-                if (SurfaceComboBox.SelectedItem != null)
+                if(SurfaceComboBox.SelectedItem != null)
                 {
                     var arcSceneArguments = Feature3DManager.Get3DFeatures(SurfaceComboBox.SelectedItem.ToString(), profilesSets);
+                
+                    var selectedLayers = new object[4];
+                    selectedLayers[0] = TransportLayerComboBox.SelectedItem;
+                    selectedLayers[1] = BuildingsLayerComboBox.SelectedItem;
+                    selectedLayers[2] = PlantsLayerComboBox.SelectedItem;
+                    selectedLayers[3] = HydroLayerComboBox.SelectedItem;
+
+                    var additionalLayers = new List<ILayer>();
+
+                    foreach(var selectedLayer in selectedLayers)
+                    {
+                        if(selectedLayer != null)
+                        {
+                            additionalLayers.Add(ProfileLayers.PolygonLayers.First(layer => layer.Name == selectedLayer.ToString()));
+                        }
+                    }
+
+                    arcSceneArguments.AdditionalLayers = additionalLayers;
+
                     Visualization3DHandler.OpenProfilesSetIn3D(arcSceneArguments);
-                }
+            }
                 else
                 {
-                    //TODO: Exception message
-                }
+                //TODO: Exception message
             }
+        }
             catch (Exception ex)
             {
                 //TODO: Log Error
