@@ -20,7 +20,7 @@
           message="SPPRD 3-D solution. Calc Visibility " 
           caption="SPPRD Visibility" 
           tip="SPPRD Module Visibility window" 
-          category="SPPRD інструменти" 
+          category="SPPRDTools"  
           image="Images\ButtonMilSpaceMVis.png" />
       </Commands>
       

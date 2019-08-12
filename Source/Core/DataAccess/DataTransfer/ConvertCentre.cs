@@ -59,7 +59,7 @@ namespace MilSpace.DataAccess.DataTransfer
                     idRow = session.SessionId,
                     ProfileName = session.SessionName.Trim(),
                     ProfileData = session.Serialized,
-                    Creator =  session.CreatedBy.Trim(),
+                    Creator = session.CreatedBy.Trim(),
                     Created = session.CreatedOn,
                     Shared = session.Shared
                 };
@@ -71,6 +71,34 @@ namespace MilSpace.DataAccess.DataTransfer
                 throw new MilSpaceDataException("ProfileSession", DataOperationsEnum.Convert, ex);
             }
 
+        }
+
+        internal static ObservationPoint Get(this VisiblilityObservPoint observationPoint)
+        {
+            return new ObservationPoint
+            {
+                Affiliation = observationPoint.saffiliation,
+                AngelCameraRotationH = observationPoint.AnglCameraRotationH,
+                AngelCameraRotationV = observationPoint.AnglCameraRotationV,
+                AngelFrameH = observationPoint.AnglFrameV,
+                AngelFrameV = observationPoint.AnglFrameV,
+                AngelMaxH = observationPoint.AnglMaxH,
+                AngelMinH = observationPoint.AnglMinH,
+                AzimuthB = observationPoint.AzimuthB,
+                AzimuthE = observationPoint.AzimuthE,
+                AzimuthMainAxis = observationPoint.AzimuthMainAxis,
+                Dto = observationPoint.dto,
+                Group = observationPoint.sGroup,
+                Id = observationPoint.idOP,
+                Objectid = observationPoint.objectid,
+                Operator = observationPoint.soper,
+                RelativeHeihgt = observationPoint.HRel,
+                Share = observationPoint.ishare,
+                Title = observationPoint.TitleOP,
+                Type = observationPoint.TypeOP,
+                X = observationPoint.XWGS,
+                Y = observationPoint.YWGS
+            };
         }
     }
 }

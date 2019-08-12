@@ -90,6 +90,9 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\profile.common\localization\LocalizationConstants.cs">
+      <Link>Localization\LocalizationConstants.cs</Link>
+    </Compile>
     <Compile Include="Config.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Config.esriaddinx</DependentUpon>
@@ -141,10 +144,23 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="..\profile.common\localization\MilSpace.Profile.Calc.en-US.resx">
+      <Link>Localization\MilSpace.Profile.Calc.en-US.resx</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\profile.common\localization\MilSpace.Profile.Calc.uk-UA.resx">
+      <Link>Localization\MilSpace.Profile.Calc.uk-UA.resx</Link>
+    </EmbeddedResource>
     <EmbeddedResource Include="DockableWindow1Command.bmp" />
     <EmbeddedResource Include="DockableWindowMilSpaceMVisibilitySt.resx">
       <DependentUpon>DockableWindowMilSpaceMVisibilitySt.cs</DependentUpon>
     </EmbeddedResource>
+    <Content Include="Localization\MilSpace.Profile.Calc.en-US.resources">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="Localization\MilSpace.Profile.Calc.resources" />
+    <Content Include="Localization\MilSpace.Profile.Calc.uk-UA.resources">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="WindowMilSpaceMVisibilityMaster.resx">
       <DependentUpon>WindowMilSpaceMVisibilityMaster.cs</DependentUpon>
     </EmbeddedResource>

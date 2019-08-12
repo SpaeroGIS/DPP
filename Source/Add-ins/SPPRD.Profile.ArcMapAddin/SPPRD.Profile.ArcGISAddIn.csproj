@@ -347,11 +347,11 @@
       <Link>SurfaceProfileChartControl\SurfaceProfileChart.resx</Link>
       <DependentUpon>SurfaceProfileChart.cs</DependentUpon>
     </EmbeddedResource>
-    <Content Include="Localization\MilSpace.Profile.Calc.en-US.resources">
+    <Content Include="Localization\SPPRD.Profile.Calc.en-US.resources">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="Localization\MilSpace.Profile.Calc.resources" />
-    <Content Include="Localization\MilSpace.Profile.Calc.uk-UA.resources">
+    <EmbeddedResource Include="Localization\SPPRD.Profile.Calc.resources" />
+    <Content Include="Localization\SPPRD.Profile.Calc.uk-UA.resources">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="Resources\MilSpace.Profile.Calc.resx">
@@ -432,6 +432,19 @@
   <Target Name="AfterBuild">
     <!-- Gives build warning when add-in targets file is not found. -->
     <Warning Text="Unable to create .esriAddin; missing ESRI ArcGIS Add-in SDK component(s)." Condition="!Exists('$(MSBuildExtensionsPath)\ESRI\ESRI.ArcGIS.AddIns.targets')" />
+  </Target>
+  <Target Name="Resources" BeforeTargets="Build">
+    <ItemGroup>
+      <SourceLocalization Include="Localization\*.resx" />
+      <!--<SourceEmbededLocalization Include="Localization\*.resources" />-->
+      <SourceEmbededLocalization Include="Localization\SPPRD.Visibility.Calc.en-US.resources" />
+      <SourceEmbededLocalization Include="Localization\SPPRD.Visibility.Calc.uk-UA.resources" />
+    </ItemGroup>
+    <MakeDir Directories="$(OutputPath)Localization" />
+    <!--<GenerateResource Sources="@(SourceLocalization)" OutputResources="@(SourceLocalization->'$(OutputPath)Localization\%(Filename).resources')">-->
+    <GenerateResource Sources="@(SourceLocalization)" OutputResources="@(SourceLocalization->'Localization\%(Filename).resources')">
+      <Output TaskParameter="OutputResources" ItemName="Resources" />
+    </GenerateResource>
   </Target>
   <ProjectExtensions>
     <!-- Default ESRI add-in properties -->
