@@ -90,6 +90,12 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Profile.Common\Localization\Profile.Calc.en-US.resx">
+      <Link>Localization\Profile.Calc.en-US.resx</Link>
+    </None>
+    <None Include="..\Profile.Common\Localization\Profile.Calc.uk-UA.resx">
+      <Link>Localization\Profile.Calc.uk-UA.resx</Link>
+    </None>
     <Compile Include="..\profile.common\localization\LocalizationConstants.cs">
       <Link>Localization\LocalizationConstants.cs</Link>
     </Compile>
@@ -115,7 +121,9 @@
     <AddInContent Include="Images\MilSpaceVisibility.png" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ButtonMilSpaceMVis.cs" />
+    <Content Include="ButtonMilSpaceMVis.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <AddInContent Include="Images\ButtonMilSpaceMVis.png" />
   </ItemGroup>
   <ItemGroup>
@@ -144,22 +152,15 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\profile.common\localization\MilSpace.Profile.Calc.en-US.resx">
-      <Link>Localization\MilSpace.Profile.Calc.en-US.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\profile.common\localization\MilSpace.Profile.Calc.uk-UA.resx">
-      <Link>Localization\MilSpace.Profile.Calc.uk-UA.resx</Link>
-    </EmbeddedResource>
     <EmbeddedResource Include="DockableWindow1Command.bmp" />
     <EmbeddedResource Include="DockableWindowMilSpaceMVisibilitySt.resx">
       <DependentUpon>DockableWindowMilSpaceMVisibilitySt.cs</DependentUpon>
     </EmbeddedResource>
-    <Content Include="Localization\MilSpace.Profile.Calc.en-US.resources">
+    <Content Include="Localization\SPPRD.Profile.Calc.en-US.resources">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="Localization\MilSpace.Profile.Calc.resources" />
-    <Content Include="Localization\MilSpace.Profile.Calc.uk-UA.resources">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Content Include="Localization\SPPRD.Profile.Calc.uk-UA.resources">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="WindowMilSpaceMVisibilityMaster.resx">
       <DependentUpon>WindowMilSpaceMVisibilityMaster.cs</DependentUpon>
@@ -204,6 +205,18 @@
   <Target Name="BeforeBuild">
   </Target>
   -->
+  <Target Name="Resources" BeforeTargets="Build">
+    <Message Text="Copying.." />
+    <Copy SourceFiles="@(None)" DestinationFiles="@(None->'Localization\SPPRD.%(Filename)%(Extension)')" Condition="%(None.Link) != ''" />
+    <Message Text="Copied" />
+    <ItemGroup>
+      <SourceLocalization Include="Localization\*.resx" />
+    </ItemGroup>
+    <MakeDir Directories="$(OutputPath)Localization" />
+    <GenerateResource Sources="@(SourceLocalization)" OutputResources="@(SourceLocalization->'Localization\%(Filename).resources')">
+      <Output TaskParameter="OutputResources" ItemName="Resources" />
+    </GenerateResource>
+  </Target>
   <Target Name="AfterBuild">
     <!-- Gives build warning when add-in targets file is not found. -->
     <Warning Text="Unable to create .esriAddin; missing ESRI ArcGIS Add-in SDK component(s)." Condition="!Exists('$(MSBuildExtensionsPath)\ESRI\ESRI.ArcGIS.AddIns.targets')" />

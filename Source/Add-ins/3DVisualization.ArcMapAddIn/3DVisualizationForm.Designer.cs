@@ -79,6 +79,7 @@
             this.SurfaceComboBox = new System.Windows.Forms.ComboBox();
             this.SurfaceLabel = new System.Windows.Forms.Label();
             this.panel11 = new System.Windows.Forms.Panel();
+            this.btnRefreshLayers = new System.Windows.Forms.Button();
             this.lbl3DProfiles = new System.Windows.Forms.Label();
             this.basePanel.SuspendLayout();
             this.GenerateTab.SuspendLayout();
@@ -830,12 +831,25 @@
             // 
             // panel11
             // 
+            this.panel11.Controls.Add(this.btnRefreshLayers);
             this.panel11.Controls.Add(this.lbl3DProfiles);
             this.panel11.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel11.Location = new System.Drawing.Point(0, 0);
             this.panel11.Name = "panel11";
             this.panel11.Size = new System.Drawing.Size(322, 25);
             this.panel11.TabIndex = 71;
+            // 
+            // btnRefreshLayers
+            // 
+            this.btnRefreshLayers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRefreshLayers.ImageKey = "Refresh20x20.png";
+            this.btnRefreshLayers.ImageList = this.imageList1;
+            this.btnRefreshLayers.Location = new System.Drawing.Point(294, -1);
+            this.btnRefreshLayers.Name = "btnRefreshLayers";
+            this.btnRefreshLayers.Size = new System.Drawing.Size(25, 25);
+            this.btnRefreshLayers.TabIndex = 44;
+            this.btnRefreshLayers.UseVisualStyleBackColor = true;
+            this.btnRefreshLayers.Click += new System.EventHandler(this.btnRefreshLayers_Click);
             // 
             // lbl3DProfiles
             // 
@@ -943,5 +957,6 @@
         private System.Windows.Forms.ToolBarButton RemoveProfile;
         private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.Button btnRefreshLayers;
     }
 }
