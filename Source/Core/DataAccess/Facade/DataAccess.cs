@@ -182,7 +182,6 @@ namespace MilSpace.DataAccess.Facade
             return result;
         }
 
-
         public ProfileSession GetProfileSessionById(int sessionId)
         {
             try
@@ -233,6 +232,23 @@ namespace MilSpace.DataAccess.Facade
 
             return null;
         }
+
+        #region Visibility
+        public IEnumerable<ObservationPoint> GetObservationPoints()
+        {
+            try
+            {
+                var result = context.VisiblilityObservPoints.Select(op => op.Get());
+                log.InfoEx($"Get all Observation point ({result.Count()}). user {Environment.UserName}");
+                return result;
+            }
+            catch (Exception ex)
+            {
+                log.WarnEx($"Unexpected exception:{ex.Message}");
+            }
+            return null;
+        }
+        #endregion
 
     }
 }

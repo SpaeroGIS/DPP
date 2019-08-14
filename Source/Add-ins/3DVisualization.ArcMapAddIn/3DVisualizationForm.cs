@@ -214,5 +214,10 @@ namespace MilSpace.Visualization3D
             }
         }
         #endregion
+
+        private void btnRefreshLayers_Click(object sender, EventArgs e)
+        {
+            OnDocumentOpenFillDropdowns();
+        }
     }
 }
