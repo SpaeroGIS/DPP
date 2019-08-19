@@ -4,7 +4,6 @@ using MilSpace.Visibility.DTO;
 using MilSpace.Visibility.ViewController;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -14,21 +13,21 @@ namespace MilSpace.Visibility
     /// Designer class of the dockable window add-in. It contains user interfaces that
     /// make up the dockable window.
     /// </summary>
-    public partial class DockableWindowMilSpaceMVisibilitySt : UserControl, IObservationPointsView
+    public partial class DockableWindowMilSpaceMVisibility : UserControl, IObservationPointsView
     {
         private ObservationPointsController controller;
-        public DockableWindowMilSpaceMVisibilitySt(object hook, ObservationPointsController controller)
+        public DockableWindowMilSpaceMVisibility(object hook, ObservationPointsController controller)
         {
             InitializeComponent();
             this.controller = controller;
             this.controller.SetView(this);
             this.Hook = hook;
         }
-
-
-        public DockableWindowMilSpaceMVisibilitySt(object hook)
+        public DockableWindowMilSpaceMVisibility(object hook)
         {
             InitializeComponent();
+            this.controller = new ObservationPointsController();
+            this.controller.SetView(this);
             this.Hook = hook;
         }
 
@@ -36,7 +35,6 @@ namespace MilSpace.Visibility
         {
             base.OnLoad(e);
             controller.UpdateObservationPointsList();
-            SubscribeForEvents();
         }
 
         private void SubscribeForEvents()
@@ -47,16 +45,6 @@ namespace MilSpace.Visibility
 
         }
 
-        /// <summary>
-        /// Host object of the dockable window
-        /// </summary>
-        private object Hook
-        {
-            get;
-            set;
-        }
-
-        #region
         public VeluableObservPointFieldsEnum GetFilter
         {
             get
@@ -85,6 +73,12 @@ namespace MilSpace.Visibility
             }
         }
 
+        public void SetController(ObservationPointsController controller)
+        {
+            this.controller = controller;
+            this.controller.UpdateObservationPointsList();
+        }
+
 
         public void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints, VeluableObservPointFieldsEnum filter)
         {
@@ -106,7 +100,14 @@ namespace MilSpace.Visibility
 
         }
 
-        #endregion
+        /// <summary>
+        /// Host object of the dockable window
+        /// </summary>
+        private object Hook
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Implementation class of the dockable window add-in. It is responsible for 
@@ -114,7 +115,7 @@ namespace MilSpace.Visibility
         /// </summary>
         public class AddinImpl : ESRI.ArcGIS.Desktop.AddIns.DockableWindow
         {
-            private DockableWindowMilSpaceMVisibilitySt m_windowUI;
+            private DockableWindowMilSpaceMVisibility m_windowUI;
 
             public AddinImpl()
             {
@@ -122,9 +123,7 @@ namespace MilSpace.Visibility
 
             protected override IntPtr OnCreateChild()
             {
-                var controller = new ObservationPointsController();
-
-                m_windowUI = new DockableWindowMilSpaceMVisibilitySt(this.Hook, controller);
+                m_windowUI = new DockableWindowMilSpaceMVisibility(this.Hook, new ObservationPointsController());
                 return m_windowUI.Handle;
             }
 
@@ -146,7 +145,14 @@ namespace MilSpace.Visibility
         private void toolBar7_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
 
-            
+
         }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+
     }
 }

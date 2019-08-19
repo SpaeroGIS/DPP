@@ -1,6 +1,6 @@
 ﻿namespace MilSpace.Visibility
 {
-    partial class DockableWindowMilSpaceMVisibilitySt
+    partial class DockableWindowMilSpaceMVisibility
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceMVisibilitySt));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceMVisibility));
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("VIS1_20181113134511_vnikolaev");
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("VIS1_20181113134511_vnikolaev");
             System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("VIS1 (общая видимость)", new System.Windows.Forms.TreeNode[] {
@@ -1799,6 +1799,7 @@
             this.comboBox1.Size = new System.Drawing.Size(273, 21);
             this.comboBox1.TabIndex = 1;
             this.comboBox1.Text = "ObStations_201810";
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -3249,10 +3250,10 @@
             this.label47.TabIndex = 2;
             this.label47.Text = "Список результатаов";
             // 
-            // DockableWindowMilSpaceMVisibilitySt
+            // DockableWindowMilSpaceMVisibility
             // 
             this.Controls.Add(this.tabControl1);
-            this.Name = "DockableWindowMilSpaceMVisibilitySt";
+            this.Name = "DockableWindowMilSpaceMVisibility";
             this.Size = new System.Drawing.Size(350, 650);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

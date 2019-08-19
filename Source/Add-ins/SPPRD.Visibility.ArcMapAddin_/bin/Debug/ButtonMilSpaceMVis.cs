@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using ESRI.ArcGIS.esriSystem;
+﻿using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 
 namespace MilSpace.Visibility

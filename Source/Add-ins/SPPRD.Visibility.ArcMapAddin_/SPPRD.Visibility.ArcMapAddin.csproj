@@ -58,18 +58,12 @@
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
-    <Reference Include="ESRI.ArcGIS.Geodatabase, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-      <HintPath>C:\Program Files (x86)\ArcGIS\DeveloperKit10.4\DotNet\ESRI.ArcGIS.Geodatabase.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="ESRI.ArcGIS.System, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Desktop.AddIns">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Editor, Version=10.6.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -79,18 +73,11 @@
     <Reference Include="ESRI.ArcGIS.Framework">
       <Private>False</Private>
     </Reference>
-    <Reference Include="ESRI.ArcGIS.Analyst3DTools">
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ESRI.ArcGIS.SystemUI, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>False</EmbedInteropTypes>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Esri.ArcGISRuntime">
-      <HintPath>..\..\Solutions\packages\Esri.ArcGISRuntime.10.2.7.1234\sdk\net45\Esri.ArcGISRuntime.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -103,15 +90,19 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Profile.Common\Localization\Profile.Calc.en-US.resx">
+      <Link>Localization\Profile.Calc.en-US.resx</Link>
+    </None>
+    <None Include="..\Profile.Common\Localization\Profile.Calc.uk-UA.resx">
+      <Link>Localization\Profile.Calc.uk-UA.resx</Link>
+    </None>
+    <Compile Include="..\profile.common\localization\LocalizationConstants.cs">
+      <Link>Localization\LocalizationConstants.cs</Link>
+    </Compile>
     <Compile Include="Config.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Config.esriaddinx</DependentUpon>
     </Compile>
-    <Compile Include="DockableWindow1Command.cs" />
-    <Compile Include="DTO\ObservPointGui.cs" />
-    <Compile Include="ViewController\IObservationPointsView.cs" />
-    <Compile Include="ViewController\IOservPointsView.cs" />
-    <Compile Include="ViewController\ObservationPointsController.cs" />
     <Compile Include="WindowMilSpaceMVisibilityMaster.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,7 +121,9 @@
     <AddInContent Include="Images\MilSpaceVisibility.png" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ButtonMilSpaceMVis.cs" />
+    <Content Include="ButtonMilSpaceMVis.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <AddInContent Include="Images\ButtonMilSpaceMVis.png" />
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +156,12 @@
     <EmbeddedResource Include="DockableWindowMilSpaceMVisibilitySt.resx">
       <DependentUpon>DockableWindowMilSpaceMVisibilitySt.cs</DependentUpon>
     </EmbeddedResource>
+    <Content Include="Localization\SPPRD.Profile.Calc.en-US.resources">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Localization\SPPRD.Profile.Calc.uk-UA.resources">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="WindowMilSpaceMVisibilityMaster.resx">
       <DependentUpon>WindowMilSpaceMVisibilityMaster.cs</DependentUpon>
     </EmbeddedResource>
@@ -194,7 +193,7 @@
     <AddInTargetVersion>10.6</AddInTargetVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>MilSpace.snk</AssemblyOriginatorKeyFile>
@@ -206,6 +205,18 @@
   <Target Name="BeforeBuild">
   </Target>
   -->
+  <Target Name="Resources" BeforeTargets="Build">
+    <Message Text="Copying.." />
+    <Copy SourceFiles="@(None)" DestinationFiles="@(None->'Localization\SPPRD.%(Filename)%(Extension)')" Condition="%(None.Link) != ''" />
+    <Message Text="Copied" />
+    <ItemGroup>
+      <SourceLocalization Include="Localization\*.resx" />
+    </ItemGroup>
+    <MakeDir Directories="$(OutputPath)Localization" />
+    <GenerateResource Sources="@(SourceLocalization)" OutputResources="@(SourceLocalization->'Localization\%(Filename).resources')">
+      <Output TaskParameter="OutputResources" ItemName="Resources" />
+    </GenerateResource>
+  </Target>
   <Target Name="AfterBuild">
     <!-- Gives build warning when add-in targets file is not found. -->
     <Warning Text="Unable to create .esriAddin; missing ESRI ArcGIS Add-in SDK component(s)." Condition="!Exists('$(MSBuildExtensionsPath)\ESRI\ESRI.ArcGIS.AddIns.targets')" />
@@ -216,11 +227,4 @@
       <Host>ArcMap</Host>
     </ESRIAddInProperties>
   </ProjectExtensions>
-  <Import Project="..\..\Solutions\packages\Esri.ArcGISRuntime.10.2.7.1234\build\net45\Esri.ArcGISRuntime.targets" Condition="Exists('..\..\Solutions\packages\Esri.ArcGISRuntime.10.2.7.1234\build\net45\Esri.ArcGISRuntime.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\..\Solutions\packages\Esri.ArcGISRuntime.10.2.7.1234\build\net45\Esri.ArcGISRuntime.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\Solutions\packages\Esri.ArcGISRuntime.10.2.7.1234\build\net45\Esri.ArcGISRuntime.targets'))" />
-  </Target>
 </Project>
