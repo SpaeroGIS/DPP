@@ -170,12 +170,12 @@
             this.toolBarButton28 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton48 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton50 = new System.Windows.Forms.ToolBarButton();
-            this.lstObservationPoinst = new System.Windows.Forms.ListBox();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.chckFilterDate = new System.Windows.Forms.CheckBox();
-            this.chckFilterAffiliation = new System.Windows.Forms.CheckBox();
-            this.chckFilterType = new System.Windows.Forms.CheckBox();
-            this.chckFilterId = new System.Windows.Forms.CheckBox();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -611,7 +611,7 @@
             // 
             this.tabPage1.Controls.Add(this.panel7);
             this.tabPage1.Controls.Add(this.panel6);
-            this.tabPage1.Controls.Add(this.lstObservationPoinst);
+            this.tabPage1.Controls.Add(this.listBox1);
             this.tabPage1.Controls.Add(this.panel5);
             this.tabPage1.Controls.Add(this.panel4);
             this.tabPage1.Controls.Add(this.panel3);
@@ -1619,21 +1619,28 @@
             this.toolBarButton50.Name = "toolBarButton50";
             this.toolBarButton50.ToolTipText = "Удалить";
             // 
-            // lstObservationPoinst
+            // listBox1
             // 
-            this.lstObservationPoinst.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lstObservationPoinst.FormattingEnabled = true;
-            this.lstObservationPoinst.Location = new System.Drawing.Point(3, 99);
-            this.lstObservationPoinst.Name = "lstObservationPoinst";
-            this.lstObservationPoinst.Size = new System.Drawing.Size(336, 108);
-            this.lstObservationPoinst.TabIndex = 5;
+            this.listBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Items.AddRange(new object[] {
+            "STFX20181113134511; стационарный; свой; 201811131",
+            "STFX20181113134511; стационарный; чужой; 201811131",
+            "STMV20181113134511; мобильный; свой; 201811131",
+            "STFX20181113134511; стационарный; свой; 201811131",
+            "STFX20181113134511; стационарный; свой; 201811131",
+            "STMV20181113134511; мобильный; свой; 201811131"});
+            this.listBox1.Location = new System.Drawing.Point(3, 99);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(336, 108);
+            this.listBox1.TabIndex = 5;
             // 
             // panel5
             // 
-            this.panel5.Controls.Add(this.chckFilterDate);
-            this.panel5.Controls.Add(this.chckFilterAffiliation);
-            this.panel5.Controls.Add(this.chckFilterType);
-            this.panel5.Controls.Add(this.chckFilterId);
+            this.panel5.Controls.Add(this.checkBox4);
+            this.panel5.Controls.Add(this.checkBox3);
+            this.panel5.Controls.Add(this.checkBox2);
+            this.panel5.Controls.Add(this.checkBox1);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(3, 75);
             this.panel5.Name = "panel5";
@@ -1641,61 +1648,61 @@
             this.panel5.Size = new System.Drawing.Size(336, 24);
             this.panel5.TabIndex = 4;
             // 
-            // chckFilterDate
+            // checkBox4
             // 
-            this.chckFilterDate.AutoSize = true;
-            this.chckFilterDate.Checked = true;
-            this.chckFilterDate.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chckFilterDate.Dock = System.Windows.Forms.DockStyle.Left;
-            this.chckFilterDate.Location = new System.Drawing.Point(218, 0);
-            this.chckFilterDate.Name = "chckFilterDate";
-            this.chckFilterDate.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.chckFilterDate.Size = new System.Drawing.Size(53, 24);
-            this.chckFilterDate.TabIndex = 3;
-            this.chckFilterDate.Text = "дата";
-            this.chckFilterDate.UseVisualStyleBackColor = true;
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Checked = true;
+            this.checkBox4.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox4.Dock = System.Windows.Forms.DockStyle.Left;
+            this.checkBox4.Location = new System.Drawing.Point(218, 0);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
+            this.checkBox4.Size = new System.Drawing.Size(53, 24);
+            this.checkBox4.TabIndex = 3;
+            this.checkBox4.Text = "дата";
+            this.checkBox4.UseVisualStyleBackColor = true;
             // 
-            // chckFilterAffiliation
+            // checkBox3
             // 
-            this.chckFilterAffiliation.AutoSize = true;
-            this.chckFilterAffiliation.Checked = true;
-            this.chckFilterAffiliation.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chckFilterAffiliation.Dock = System.Windows.Forms.DockStyle.Left;
-            this.chckFilterAffiliation.Location = new System.Drawing.Point(98, 0);
-            this.chckFilterAffiliation.Name = "chckFilterAffiliation";
-            this.chckFilterAffiliation.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.chckFilterAffiliation.Size = new System.Drawing.Size(120, 24);
-            this.chckFilterAffiliation.TabIndex = 2;
-            this.chckFilterAffiliation.Text = "принаждлехность";
-            this.chckFilterAffiliation.UseVisualStyleBackColor = true;
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Checked = true;
+            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox3.Dock = System.Windows.Forms.DockStyle.Left;
+            this.checkBox3.Location = new System.Drawing.Point(98, 0);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
+            this.checkBox3.Size = new System.Drawing.Size(120, 24);
+            this.checkBox3.TabIndex = 2;
+            this.checkBox3.Text = "принаждлехность";
+            this.checkBox3.UseVisualStyleBackColor = true;
             // 
-            // chckFilterType
+            // checkBox2
             // 
-            this.chckFilterType.AutoSize = true;
-            this.chckFilterType.Checked = true;
-            this.chckFilterType.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chckFilterType.Dock = System.Windows.Forms.DockStyle.Left;
-            this.chckFilterType.Location = new System.Drawing.Point(51, 0);
-            this.chckFilterType.Name = "chckFilterType";
-            this.chckFilterType.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.chckFilterType.Size = new System.Drawing.Size(47, 24);
-            this.chckFilterType.TabIndex = 1;
-            this.chckFilterType.Text = "тип";
-            this.chckFilterType.UseVisualStyleBackColor = true;
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Checked = true;
+            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.checkBox2.Location = new System.Drawing.Point(51, 0);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
+            this.checkBox2.Size = new System.Drawing.Size(47, 24);
+            this.checkBox2.TabIndex = 1;
+            this.checkBox2.Text = "тип";
+            this.checkBox2.UseVisualStyleBackColor = true;
             // 
-            // chckFilterId
+            // checkBox1
             // 
-            this.chckFilterId.AutoSize = true;
-            this.chckFilterId.Checked = true;
-            this.chckFilterId.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chckFilterId.Dock = System.Windows.Forms.DockStyle.Left;
-            this.chckFilterId.Location = new System.Drawing.Point(4, 0);
-            this.chckFilterId.Name = "chckFilterId";
-            this.chckFilterId.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.chckFilterId.Size = new System.Drawing.Size(47, 24);
-            this.chckFilterId.TabIndex = 0;
-            this.chckFilterId.Text = "ИД";
-            this.chckFilterId.UseVisualStyleBackColor = true;
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.checkBox1.Location = new System.Drawing.Point(4, 0);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
+            this.checkBox1.Size = new System.Drawing.Size(47, 24);
+            this.checkBox1.TabIndex = 0;
+            this.checkBox1.Text = "ИД";
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // panel4
             // 
@@ -1799,6 +1806,7 @@
             this.comboBox1.Size = new System.Drawing.Size(273, 21);
             this.comboBox1.TabIndex = 1;
             this.comboBox1.Text = "ObStations_201810";
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -3479,12 +3487,12 @@
         private System.Windows.Forms.ToolBarButton toolBarButton28;
         private System.Windows.Forms.ToolBarButton toolBarButton48;
         private System.Windows.Forms.ToolBarButton toolBarButton50;
-        private System.Windows.Forms.ListBox lstObservationPoinst;
+        private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.CheckBox chckFilterDate;
-        private System.Windows.Forms.CheckBox chckFilterAffiliation;
-        private System.Windows.Forms.CheckBox chckFilterType;
-        private System.Windows.Forms.CheckBox chckFilterId;
+        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.Label label3;

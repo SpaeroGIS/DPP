@@ -163,8 +163,8 @@
     <Compile Include="..\DataAccess\Facade\MilSpaceProfileFacade.cs">
       <Link>Facade\MilSpaceProfileFacade.cs</Link>
     </Compile>
-    <Compile Include="..\DataAccess\Facade\VisibilityDataAccess.cs">
-      <Link>Facade\VisibilityDataAccess.cs</Link>
+    <Compile Include="..\DataAccess\Facade\VisibilityFacade.cs">
+      <Link>Facade\VisibilityFacade.cs</Link>
     </Compile>
     <Compile Include="..\DataAccess\GroupedLines.cs">
       <Link>GroupedLines.cs</Link>

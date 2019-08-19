@@ -1,8 +1,8 @@
 ﻿<ESRI.Configuration xmlns="http://schemas.esri.com/Desktop/AddIns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Name>SPPRD.Visibility</Name>
-  <AddInID>{FB57E9FC-FDCA-492A-980D-F73624C1BB77}</AddInID>
-  <Description>MilSpace 3-D solution. Module Visibility</Description>
-  <Version>1.1</Version>
+  <AddInID>{703CE5E0-0F73-4829-AC7E-9D5F9A62CD17}</AddInID>
+  <Description>SPPRD 3-D solution. Module Visibility</Description>
+  <Version>1.3</Version>
   <Image>Images\MilSpaceVisibility.png</Image>
   <Author>administrator</Author>
   <Company>DPP</Company>
@@ -12,22 +12,20 @@
   </Targets>
   <AddIn language="CLR" library="SPPRD.Visibility.dll" namespace="MilSpace.Visibility">
     <ArcMap>
-      
       <Commands>
         <Button 
-          id="DPP_ArcMapAddin_MilSpace_Visibility_ButtonMilSpaceMVis" 
+          id="SPPRD.ButtonMilSpaceMVis" 
           class="ButtonMilSpaceMVis" 
-          message="SPPRD 3-D solution. Module Visibility window" 
+          message="SPPRD 3-D solution. Calc Visibility " 
           caption="SPPRD Visibility" 
           tip="SPPRD Module Visibility window" 
-          category="SPPRDTools" 
+          category="SPPRDTools"  
           image="Images\ButtonMilSpaceMVis.png" />
       </Commands>
-      
       <DockableWindows>
         <DockableWindow 
-          id="DPP_ArcMapAddin_MilSpace_Visibility_DockableWindowMilSpaceMVisibilitySt" 
-          class="DockableWindowMilSpaceMVisibilitySt+AddinImpl" 
+          id="SPPRD.Visibility_DockableWindowMilSpaceMVisibility" 
+          class="DockableWindowMilSpaceMVisibility+AddinImpl1" 
           caption="SPPRD Module Visibility" 
           image="Images\DockableWindowMilSpaceMVisibilitySt.png">
           <InitialPlacement height="650" width="350" state="pinned" position="float" />
@@ -35,12 +33,11 @@
       </DockableWindows>
 
       <Toolbars>
-        <Toolbar
-          id="MilspaceArcMapAddinToolbar"
+        <Toolbar id="SPPRDArcMapAddinToolbar" 
           caption="SPPRD спецінструменти"
           showInitially="true">
           <Items>
-            <Button refID="DPP_ArcMapAddin_MilSpace_Visibility_ButtonMilSpaceMVis" />
+            <Button refID="SPPRD.ButtonMilSpaceMVis" />
           </Items>
         </Toolbar>
       </Toolbars>
