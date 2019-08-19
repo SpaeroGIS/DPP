@@ -177,9 +177,9 @@
             this.chckFilterType = new System.Windows.Forms.CheckBox();
             this.chckFilterId = new System.Windows.Forms.CheckBox();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.cmbAffiliation = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.cmbObservPointType = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
@@ -1699,9 +1699,9 @@
             // 
             // panel4
             // 
-            this.panel4.Controls.Add(this.comboBox3);
+            this.panel4.Controls.Add(this.cmbAffiliation);
             this.panel4.Controls.Add(this.label3);
-            this.panel4.Controls.Add(this.comboBox2);
+            this.panel4.Controls.Add(this.cmbObservPointType);
             this.panel4.Controls.Add(this.label2);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(3, 51);
@@ -1710,19 +1710,19 @@
             this.panel4.Size = new System.Drawing.Size(336, 24);
             this.panel4.TabIndex = 2;
             // 
-            // comboBox3
+            // cmbAffiliation
             // 
-            this.comboBox3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Items.AddRange(new object[] {
+            this.cmbAffiliation.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbAffiliation.FormattingEnabled = true;
+            this.cmbAffiliation.Items.AddRange(new object[] {
             "свои",
             "чужие ",
             "нейтральные",
             "неизвкчтно"});
-            this.comboBox3.Location = new System.Drawing.Point(222, 0);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(94, 21);
-            this.comboBox3.TabIndex = 4;
+            this.cmbAffiliation.Location = new System.Drawing.Point(222, 0);
+            this.cmbAffiliation.Name = "cmbAffiliation";
+            this.cmbAffiliation.Size = new System.Drawing.Size(94, 21);
+            this.cmbAffiliation.TabIndex = 4;
             // 
             // label3
             // 
@@ -1735,17 +1735,17 @@
             this.label3.TabIndex = 3;
             this.label3.Text = "принадлежность";
             // 
-            // comboBox2
+            // cmbObservPointType
             // 
-            this.comboBox2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
+            this.cmbObservPointType.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbObservPointType.FormattingEnabled = true;
+            this.cmbObservPointType.Items.AddRange(new object[] {
             "стационарный",
             "мобильный"});
-            this.comboBox2.Location = new System.Drawing.Point(32, 0);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(94, 21);
-            this.comboBox2.TabIndex = 2;
+            this.cmbObservPointType.Location = new System.Drawing.Point(32, 0);
+            this.cmbObservPointType.Name = "cmbObservPointType";
+            this.cmbObservPointType.Size = new System.Drawing.Size(94, 21);
+            this.cmbObservPointType.TabIndex = 2;
             // 
             // label2
             // 
@@ -3486,9 +3486,9 @@
         private System.Windows.Forms.CheckBox chckFilterType;
         private System.Windows.Forms.CheckBox chckFilterId;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox cmbAffiliation;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox cmbObservPointType;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label4;

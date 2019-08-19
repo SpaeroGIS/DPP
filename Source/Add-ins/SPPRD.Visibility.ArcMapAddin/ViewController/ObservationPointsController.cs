@@ -34,5 +34,16 @@ namespace MilSpace.Visibility.ViewController
         {
             return VisibilityFacade.GetAllObservationPoints();
         }
+
+
+        public IEnumerable<string> GetObservationPointTypes()
+        {
+            return Enum.GetNames(typeof(ObservationPointTypesEnum));
+        }
+
+        public IEnumerable<string> GetObservationPointMobilityTypes()
+        {
+            return Enum.GetNames(typeof(ObservationPointMobilityTypesEnum));
+        }
     }
 }

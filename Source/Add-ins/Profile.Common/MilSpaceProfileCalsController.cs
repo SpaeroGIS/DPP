@@ -478,7 +478,10 @@ namespace MilSpace.Profile
             }
             else
             {
+                logger.InfoEx("Flushing geomerty");
                 EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, profileLines);
+                logger.InfoEx("Geomerty flushed");
+
             }
         }
 

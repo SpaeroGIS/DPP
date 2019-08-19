@@ -23,6 +23,7 @@ namespace MilSpace.Visibility
             this.controller = controller;
             this.controller.SetView(this);
             this.Hook = hook;
+          
         }
 
 
@@ -37,6 +38,7 @@ namespace MilSpace.Visibility
             base.OnLoad(e);
             controller.UpdateObservationPointsList();
             SubscribeForEvents();
+            InitilizeData();
         }
 
         private void SubscribeForEvents()
@@ -85,6 +87,22 @@ namespace MilSpace.Visibility
             }
         }
 
+       public IEnumerable<string> GetTypes
+        {
+            get
+            {
+
+                return controller.GetObservationPointMobilityTypes();
+            }
+        }
+       public  IEnumerable<string> GetAffiliation
+        {
+            get
+            {
+
+                return controller.GetObservationPointTypes();
+            }
+        }
 
         public void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints, VeluableObservPointFieldsEnum filter)
         {
@@ -106,6 +124,15 @@ namespace MilSpace.Visibility
 
         }
 
+
+        private void InitilizeData()
+        {
+            cmbObservPointType.Items.Clear();
+            cmbObservPointType.Items.AddRange(GetTypes.ToArray());
+
+            cmbAffiliation.Items.Clear();
+            cmbAffiliation.Items.AddRange(GetAffiliation.ToArray());
+        }
         #endregion
 
         /// <summary>
@@ -146,7 +173,7 @@ namespace MilSpace.Visibility
         private void toolBar7_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
 
-            
+
         }
     }
 }
