@@ -1,9 +1,11 @@
-﻿using ESRI.ArcGIS.Editor;
+﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Editor;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Visibility.DTO;
 using MilSpace.Visibility.ViewController;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
@@ -106,17 +108,18 @@ namespace MilSpace.Visibility
 
         public void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints, VeluableObservPointFieldsEnum filter)
         {
+
             lstObservationPoinst.Items.Clear();
 
             if (observationPoints.Any())
             {
                 var ItemsToShow = observationPoints.Select(i => new ObservPointGui
-
                 {
                     Text = i.GetItemValue(filter),
                     Id = i.Id
-                });
+                }).ToList();
 
+                BindingList<ObservPointGui> observPointGuis = new BindingList<ObservPointGui>();
                 lstObservationPoinst.DataSource = ItemsToShow;
                 lstObservationPoinst.DisplayMember = "Text";
                 lstObservationPoinst.Update();
@@ -128,12 +131,44 @@ namespace MilSpace.Visibility
         private void InitilizeData()
         {
             cmbObservPointType.Items.Clear();
-            cmbObservPointType.Items.AddRange(GetTypes.ToArray());
+            cmbObservTypesEdit.Items.Clear();
+            var filters = new List<string>();
+            filters.Add(string.Empty);
+            filters.AddRange(GetTypes.ToArray());
 
+            cmbObservPointType.Items.AddRange(filters.ToArray());
+            cmbObservTypesEdit.Items.AddRange(GetTypes.ToArray());
+
+            filters = new List<string>();
+            filters.Add(string.Empty);
+
+            filters.AddRange(GetAffiliation.ToArray());
             cmbAffiliation.Items.Clear();
-            cmbAffiliation.Items.AddRange(GetAffiliation.ToArray());
+            cmbAffiliationEdit.Items.Clear();
+
+            cmbAffiliation.Items.AddRange(filters.ToArray());
+            cmbAffiliationEdit.Items.AddRange(GetAffiliation.ToArray());
+
+            EnableObservPointsControls();
+
         }
+
+        private void EnableObservPointsControls()
+        {
+            cmbAffiliationEdit.Enabled = cmbObservTypesEdit.Enabled = azimuthMin.Enabled = azimuthMax.Enabled=
+                xCoord.Enabled = yCoord.Enabled = angleMin.Enabled = angleMax.Enabled = angleOFView.Enabled =
+                heightCurrent.Enabled = heightMin.Enabled = heightMax.Enabled = observPointName.Enabled = observPointDate.Enabled =
+                observPointCreator.Enabled = controller.IsObservPointsExists(ActiveView);
+        }
+
+        private void OnSelectObserbPoint()
+        {
+
+        }
+
         #endregion
+
+        public IActiveView ActiveView => ArcMap.Document.ActiveView;
 
         /// <summary>
         /// Implementation class of the dockable window add-in. It is responsible for 

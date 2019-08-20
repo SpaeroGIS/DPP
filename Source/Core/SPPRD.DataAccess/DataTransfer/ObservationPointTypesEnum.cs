@@ -13,4 +13,10 @@ namespace MilSpace.DataAccess.DataTransfer
         Enemy,
         Neutrality,
     }
+
+    public enum ObservationPointMobilityTypesEnum
+    {
+        Stationary,
+        Mobile
+    }
 }

@@ -115,6 +115,8 @@
     <Compile Include="..\Configurations\MilSpaceRootConfiguration.cs">
       <Link>MilSpaceRootConfiguration.cs</Link>
     </Compile>
+    <Compile Include="FeatrueClasses\FeatureClasses.cs" />
+    <Compile Include="FeatrueClasses\ObservationPoints.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
