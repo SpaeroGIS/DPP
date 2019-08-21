@@ -1,4 +1,4 @@
-﻿using ESRI.ArcGIS.ArcMapUI;
+using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.Editor;
@@ -10,6 +10,7 @@ using MilSpace.Visibility.DTO;
 using MilSpace.Visibility.ViewController;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
@@ -30,7 +31,7 @@ namespace MilSpace.Visibility
             this.controller = controller;
             this.controller.SetView(this);
             this.Hook = hook;
-        }       
+        }
 
         public DockableWindowMilSpaceMVisibilitySt(object hook)
         {
@@ -43,6 +44,7 @@ namespace MilSpace.Visibility
             base.OnLoad(e);
             controller.UpdateObservationPointsList();
             SubscribeForEvents();
+            InitilizeData();
         }
 
         private void SubscribeForEvents()
@@ -91,20 +93,37 @@ namespace MilSpace.Visibility
             }
         }
 
+       public IEnumerable<string> GetTypes
+        {
+            get
+            {
+
+                return controller.GetObservationPointMobilityTypes();
+            }
+        }
+       public  IEnumerable<string> GetAffiliation
+        {
+            get
+            {
+
+                return controller.GetObservationPointTypes();
+            }
+        }
 
         public void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints, VeluableObservPointFieldsEnum filter)
         {
+
             lstObservationPoinst.Items.Clear();
 
             if (observationPoints.Any())
             {
                 var ItemsToShow = observationPoints.Select(i => new ObservPointGui
-
                 {
                     Text = i.GetItemValue(filter),
                     Id = i.Id
-                });
+                }).ToList();
 
+                BindingList<ObservPointGui> observPointGuis = new BindingList<ObservPointGui>();
                 lstObservationPoinst.DataSource = ItemsToShow;
                 lstObservationPoinst.DisplayMember = "Text";
                 lstObservationPoinst.Update();
@@ -112,7 +131,48 @@ namespace MilSpace.Visibility
 
         }
 
+
+        private void InitilizeData()
+        {
+            cmbObservPointType.Items.Clear();
+            cmbObservTypesEdit.Items.Clear();
+            var filters = new List<string>();
+            filters.Add(string.Empty);
+            filters.AddRange(GetTypes.ToArray());
+
+            cmbObservPointType.Items.AddRange(filters.ToArray());
+            cmbObservTypesEdit.Items.AddRange(GetTypes.ToArray());
+
+            filters = new List<string>();
+            filters.Add(string.Empty);
+
+            filters.AddRange(GetAffiliation.ToArray());
+            cmbAffiliation.Items.Clear();
+            cmbAffiliationEdit.Items.Clear();
+
+            cmbAffiliation.Items.AddRange(filters.ToArray());
+            cmbAffiliationEdit.Items.AddRange(GetAffiliation.ToArray());
+
+            EnableObservPointsControls();
+
+        }
+
+        private void EnableObservPointsControls()
+        {
+            cmbAffiliationEdit.Enabled = cmbObservTypesEdit.Enabled = azimuthMin.Enabled = azimuthMax.Enabled=
+                xCoord.Enabled = yCoord.Enabled = angleMin.Enabled = angleMax.Enabled = angleOFView.Enabled =
+                heightCurrent.Enabled = heightMin.Enabled = heightMax.Enabled = observPointName.Enabled = observPointDate.Enabled =
+                observPointCreator.Enabled = controller.IsObservPointsExists(ActiveView);
+        }
+
+        private void OnSelectObserbPoint()
+        {
+
+        }
+
         #endregion
+
+        public IActiveView ActiveView => ArcMap.Document.ActiveView;
 
         /// <summary>
         /// Implementation class of the dockable window add-in. It is responsible for 
@@ -173,6 +233,7 @@ namespace MilSpace.Visibility
                 ArcMap.Application.CurrentTool = mapTool;
                 toolBarButton51.Pushed = true;
             }
+
         }
 
         internal void ArcMap_OnMouseDown(int x, int y)

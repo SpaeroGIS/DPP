@@ -47,9 +47,7 @@ namespace MilSpace.Profile
 
             if (winImpl.MilSpaceProfileCalsController.View.ActiveButton == ProfileSettingsPointButtonEnum.PointsFist)
             {
-
                 winImpl.MilSpaceProfileCalsController.SetFirsPointForLineProfile(point, pointToSave);
-
             }
 
             if (winImpl.MilSpaceProfileCalsController.View.ActiveButton == ProfileSettingsPointButtonEnum.PointsSecond)

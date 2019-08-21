@@ -59,5 +59,9 @@ namespace MilSpace.Configurations.Base
         /// </summary>
         internal const string PythonExecutable = "runWith";
 
+        internal const string FeatureClasses = "featureClasses";
+        internal const string ObservationPoint = "observationPoint";
+        internal const string NameAttribute = "name";
+
     }
 }
