@@ -23,7 +23,7 @@ namespace MilSpace.DataAccess.Definition
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="MilSpaceApp")]
-	public partial class DataClasses1DataContext : System.Data.Linq.DataContext
+	public partial class MilSpaceVisibility : System.Data.Linq.DataContext
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -53,31 +53,31 @@ namespace MilSpace.DataAccess.Definition
     partial void DeleteMilSp_Visible_ResultIOP1(MilSp_Visible_ResultIOP1 instance);
     #endregion
 		
-		public DataClasses1DataContext() : 
+		public MilSpaceVisibility() : 
 				base(global::MilSpace.DataAccess.Properties.Settings.Default.MilSpaceAppConnectionString1, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public DataClasses1DataContext(string connection) : 
+		public MilSpaceVisibility(string connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public DataClasses1DataContext(System.Data.IDbConnection connection) : 
+		public MilSpaceVisibility(System.Data.IDbConnection connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public DataClasses1DataContext(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public MilSpaceVisibility(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public DataClasses1DataContext(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public MilSpaceVisibility(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();

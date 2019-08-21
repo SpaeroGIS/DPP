@@ -329,12 +329,12 @@
       <Link>DockableWindowMilSpaceProfileGraph.resx</Link>
       <DependentUpon>DockableWindowMilSpaceProfileGraph.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\Profile.Common\Localization\MilSpace.Profile.Calc.en-US.resx">
-      <Link>Localization\MilSpace.Profile.Calc.en-US.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Profile.Common\Localization\MilSpace.Profile.Calc.uk-UA.resx">
-      <Link>Localization\MilSpace.Profile.Calc.uk-UA.resx</Link>
-    </EmbeddedResource>
+    <None Include="..\Profile.Common\Localization\Profile.Calc.en-US.resx">
+      <Link>Localization\Profile.Calc.en-US.resx</Link>
+    </None>
+    <None Include="..\Profile.Common\Localization\Profile.Calc.uk-UA.resx">
+      <Link>Localization\Profile.Calc.uk-UA.resx</Link>
+    </None>
     <EmbeddedResource Include="..\Profile.Common\ModalWindows\AccessibleProfilesModalWindow.resx">
       <Link>ModalWindows\AccessibleProfilesModalWindow.resx</Link>
       <DependentUpon>AccessibleProfilesModalWindow.cs</DependentUpon>
@@ -347,12 +347,11 @@
       <Link>SurfaceProfileChartControl\SurfaceProfileChart.resx</Link>
       <DependentUpon>SurfaceProfileChart.cs</DependentUpon>
     </EmbeddedResource>
-    <Content Include="Localization\MilSpace.Profile.Calc.en-US.resources">
+    <Content Include="Localization\SPPRD.Profile.Calc.en-US.resources">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="Localization\MilSpace.Profile.Calc.resources" />
-    <Content Include="Localization\MilSpace.Profile.Calc.uk-UA.resources">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Content Include="Localization\SPPRD.Profile.Calc.uk-UA.resources">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="Resources\MilSpace.Profile.Calc.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -417,14 +416,13 @@
     <Message Text="Optimizing......" />
   </Target>-->
   <Target Name="Resources" BeforeTargets="Build">
+    <Message Text="Copying.." />
+    <Copy SourceFiles="@(None)" DestinationFiles="@(None->'Localization\SPPRD.%(Filename)%(Extension)')" Condition="%(None.Link) != ''" />
+    <Message Text="Copied" />
     <ItemGroup>
       <SourceLocalization Include="Localization\*.resx" />
-      <!--<SourceEmbededLocalization Include="Localization\*.resources" />-->
-      <SourceEmbededLocalization Include="Localization\MilSpace.Profile.Calc.en-US.resources" />
-      <SourceEmbededLocalization Include="Localization\MilSpace.Profile.Calc.uk-UA.resources" />
     </ItemGroup>
     <MakeDir Directories="$(OutputPath)Localization" />
-    <!--<GenerateResource Sources="@(SourceLocalization)" OutputResources="@(SourceLocalization->'$(OutputPath)Localization\%(Filename).resources')">-->
     <GenerateResource Sources="@(SourceLocalization)" OutputResources="@(SourceLocalization->'Localization\%(Filename).resources')">
       <Output TaskParameter="OutputResources" ItemName="Resources" />
     </GenerateResource>

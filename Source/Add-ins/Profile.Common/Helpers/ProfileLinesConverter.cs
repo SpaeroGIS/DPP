@@ -27,7 +27,10 @@ namespace MilSpace.Profile
         public static List<ProfileLine> ConvertEsriPolylineToLine(List<IPolyline> polylines)
         {
             var id = 0;
-            var spatialReference = polylines[0].SpatialReference;
+
+            var spatialReference = EsriTools.Wgs84Spatialreference;
+            if (polylines.Count > 0)
+                spatialReference = polylines[0].SpatialReference;
 
             var esriPolylines = new List<IPolyline>(polylines);
 
