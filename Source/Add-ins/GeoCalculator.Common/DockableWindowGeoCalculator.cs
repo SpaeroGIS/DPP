@@ -878,8 +878,20 @@ namespace MilSpace.GeoCalculator
 
             ManageProjectedCoordinateSystems(wgsDD.X);
 
+            var pulkovoDD = _businessLogic.ProjectPointEx(wgsDD, Constants.PulkovoGeoModel);
+            pulkovoDMSXTextBox.Text = pulkovoDD.X.ToRoundedString();
+            pulkovoDMSYTextBox.Text = pulkovoDD.Y.ToRoundedString();
+            lastProjectedPoint.PulkovoXCoordDD = pulkovoDD.X.ToRoundedDouble();
+            lastProjectedPoint.PulkovoYCoordDD = pulkovoDD.Y.ToRoundedDouble();
+
+            var ukraineDD = _businessLogic.ProjectPointEx(wgsDD, Constants.UkraineGeoModel);
+            ukraineDMSXTextBox.Text = ukraineDD.X.ToRoundedString();
+            ukraineDMSYTextBox.Text = ukraineDD.Y.ToRoundedString();
+            lastProjectedPoint.UkraineXCoordDD = ukraineDD.X.ToRoundedDouble();
+            lastProjectedPoint.UkraineYCoordDD = ukraineDD.Y.ToRoundedDouble();
+            
             //MGRS string MUST be calculated using WGS84 projected point, thus the next lines order matters!
-            var wgsPoint = _businessLogic.ProjectPoint(inputPoint, CurrentProjectionsModel.WGS84Projection);
+            var wgsPoint = _businessLogic.ProjectPoint(wgsDD, CurrentProjectionsModel.WGS84Projection);
             WgsXCoordinateTextBox.Text = wgsPoint.X.ToIntegerString();
             WgsYCoordinateTextBox.Text = wgsPoint.Y.ToIntegerString();
             lastProjectedPoint.WgsXCoord = wgsPoint.X.ToInteger();
@@ -888,32 +900,17 @@ namespace MilSpace.GeoCalculator
             MgrsNotationTextBox.Text = (_businessLogic.ConvertToMgrs(wgsPoint))?.ToSeparatedMgrs();
             lastProjectedPoint.MgrsRepresentation = MgrsNotationTextBox.Text;
 
-            var pulkovoPoint = _businessLogic.ProjectPoint(inputPoint, CurrentProjectionsModel.Pulkovo1942Projection);
+            var pulkovoPoint = _businessLogic.ProjectPoint(pulkovoDD, CurrentProjectionsModel.Pulkovo1942Projection);
             PulkovoXCoordinateTextBox.Text = pulkovoPoint.X.ToIntegerString();
             PulkovoYCoordinateTextBox.Text = pulkovoPoint.Y.ToIntegerString();
             lastProjectedPoint.PulkovoXCoord = pulkovoPoint.X.ToInteger();
-            lastProjectedPoint.PulkovoYCoord = pulkovoPoint.Y.ToInteger();
+            lastProjectedPoint.PulkovoYCoord = pulkovoPoint.Y.ToInteger();            
 
-            var pulkovoDD = _businessLogic.ConvertToDecimalDegrees(inputPoint, Constants.PulkovoGeoModel);
-            pulkovoDMSXTextBox.Text = pulkovoDD.X.ToRoundedString();
-            pulkovoDMSYTextBox.Text = pulkovoDD.Y.ToRoundedString();
-            lastProjectedPoint.PulkovoXCoordDD = pulkovoDD.X.ToRoundedDouble();
-            lastProjectedPoint.PulkovoYCoordDD = pulkovoDD.Y.ToRoundedDouble();
-
-            var ukrainePoint = _businessLogic.ProjectPoint(inputPoint, CurrentProjectionsModel.Ukraine2000Projection);
+            var ukrainePoint = _businessLogic.ProjectPoint(ukraineDD, CurrentProjectionsModel.Ukraine2000Projection);
             UkraineXCoordinateTextBox.Text = ukrainePoint.X.ToIntegerString();
             UkraineYCoordinateTextBox.Text = ukrainePoint.Y.ToIntegerString();
             lastProjectedPoint.UkraineXCoord = ukrainePoint.X.ToInteger();
             lastProjectedPoint.UkraineYCoord = ukrainePoint.Y.ToInteger();
-
-            var ukraineDD = _businessLogic.ConvertToDecimalDegrees(inputPoint, Constants.UkraineGeoModel);
-            ukraineDMSXTextBox.Text = ukraineDD.X.ToRoundedString();
-            ukraineDMSYTextBox.Text = ukraineDD.Y.ToRoundedString();
-            lastProjectedPoint.UkraineXCoordDD = ukraineDD.X.ToRoundedDouble();
-            lastProjectedPoint.UkraineYCoordDD = ukraineDD.Y.ToRoundedDouble();
-
-            //Remove distorsions
-            inputPoint.Project(FocusMapSpatialReference);
 
             var guid = pointGuid ?? Guid.NewGuid().ToString();
 

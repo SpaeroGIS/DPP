@@ -7,6 +7,7 @@ using MilSpace.GeoCalculator.BusinessLogic.Interfaces;
 using MilSpace.GeoCalculator.BusinessLogic.Models;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -72,13 +73,15 @@ namespace MilSpace.GeoCalculator.BusinessLogic
 
         public IPoint ConvertToDecimalDegrees(IPoint point, CoordinateSystemModel coordinateSystemModel)
         {
+            var bufferPoint = new PointClass { X = point.X, Y = point.Y, SpatialReference = point.SpatialReference };
+
             var spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
             //Create Spatial Reference
             ISpatialReference spatialReference = spatialReferenceFactory.CreateGeographicCoordinateSystem(coordinateSystemModel.ESRIWellKnownID);
             spatialReference.SetFalseOriginAndUnits(coordinateSystemModel.FalseOriginX, coordinateSystemModel.FalseOriginY, coordinateSystemModel.Units);
-            point.Project(spatialReference);
+            bufferPoint.Project(spatialReference);
 
-            return point;
+            return bufferPoint;
         }
 
         public void CopyCoordinatesToClipboard(List<PointModel> pointModels)
@@ -163,15 +166,41 @@ namespace MilSpace.GeoCalculator.BusinessLogic
         {
             if (inputPoint == null) return null;
 
+            var bufferPoint = new PointClass { X = inputPoint.X, Y = inputPoint.Y, SpatialReference = inputPoint.SpatialReference };
+
             //Create Spatial Reference Factory
             var spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
             //Projected Coordinate System to project into
             var projectedCoordinateSystem = spatialReferenceFactory.CreateProjectedCoordinateSystem(singleProjectionModel.ESRIWellKnownID);
             projectedCoordinateSystem.SetFalseOriginAndUnits(singleProjectionModel.FalseOriginX, singleProjectionModel.FalseOriginY, singleProjectionModel.Units);
 
-            inputPoint.Project(projectedCoordinateSystem);
+            bufferPoint.Project(projectedCoordinateSystem);
 
-            return inputPoint;
+            return bufferPoint;
+        }
+
+        public IPoint ProjectPointEx(IPoint inputPoint, CoordinateSystemModel coordinateSystemModel)
+        {
+            if (inputPoint == null) return null;
+
+            var bufferPoint = new PointClass { X = inputPoint.X, Y = inputPoint.Y, SpatialReference = inputPoint.SpatialReference };
+
+            //Create Spatial Reference Factory
+            var spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
+            var targetSpatialReference = spatialReferenceFactory.CreateGeographicCoordinateSystem(coordinateSystemModel.ESRIWellKnownID);
+
+            var geoTransformation = GetTransformation(spatialReferenceFactory, bufferPoint.SpatialReference, targetSpatialReference);           
+
+            if(geoTransformation == null)
+                return ConvertToDecimalDegrees(bufferPoint, coordinateSystemModel);
+                        
+            var geometry = bufferPoint as IGeometry5;
+            
+            geometry.ProjectEx(targetSpatialReference, geoTransformation.Item2, geoTransformation.Item1, false, 0.0, 0.0);
+
+            Marshal.ReleaseComObject(geoTransformation.Item1);
+
+            return geometry as IPoint;
         }
 
         public async Task<IPoint> ProjectSelectedPointAsync(int targetCoordinateSystemType, int mousePositionX, int mousePositionY, double falseOriginX = 0, double falseOriginY = 0)
@@ -270,6 +299,54 @@ namespace MilSpace.GeoCalculator.BusinessLogic
             if (string.IsNullOrWhiteSpace(path)) return null;
             
             return await _dataImportExport.ImportProjectionsFromCsvAsync(path);
+        }
+
+        private Tuple<IGeoTransformation, esriTransformDirection> GetTransformation(SpatialReferenceEnvironmentClass spatialReferenceFactory, ISpatialReference fromSpatialReference, ISpatialReference toSpatialReference)
+        {
+            int? fromFactoryCode = GetGCSFactoryCode(fromSpatialReference);
+            int? toFactoryCode = GetGCSFactoryCode(toSpatialReference);
+
+            if (!fromFactoryCode.HasValue || !toFactoryCode.HasValue) return null;            
+            
+            var geographicTransformationsSet = spatialReferenceFactory.CreatePredefinedGeographicTransformations();
+
+            geographicTransformationsSet.Reset();
+
+            var geoTransformation = geographicTransformationsSet.Next() as IGeoTransformation;
+
+            try
+            {
+                while (geoTransformation != null)
+                {
+                    geoTransformation.GetSpatialReferences(out ISpatialReference bufferForFromGeoCoordSystemSR, out ISpatialReference bufferForToGeoCoordSystemSR);
+
+                    if (bufferForFromGeoCoordSystemSR.FactoryCode == fromFactoryCode && bufferForToGeoCoordSystemSR.FactoryCode == toFactoryCode)
+                    {
+                        return new Tuple<IGeoTransformation, esriTransformDirection>(geoTransformation, esriTransformDirection.esriTransformForward);
+                    }
+
+                    if (bufferForFromGeoCoordSystemSR.FactoryCode == toFactoryCode && bufferForToGeoCoordSystemSR.FactoryCode == fromFactoryCode)
+                    {
+                        return new Tuple<IGeoTransformation, esriTransformDirection>(geoTransformation, esriTransformDirection.esriTransformReverse);
+                    }
+                    geoTransformation = geographicTransformationsSet.Next() as IGeoTransformation;
+                }
+            }
+            finally
+            {
+                Marshal.ReleaseComObject(geographicTransformationsSet);
+            }
+            return null;
         }        
+
+        private int? GetGCSFactoryCode(ISpatialReference spatialReference)
+        {
+            if (spatialReference is IProjectedCoordinateSystem projectedCoordinateSystem)
+                return projectedCoordinateSystem.GeographicCoordinateSystem.FactoryCode;
+            else if (spatialReference is IGeographicCoordinateSystem geographicCoordinateSystem)
+                return geographicCoordinateSystem.FactoryCode;
+            else
+                return null;
+        }
     }
 }
