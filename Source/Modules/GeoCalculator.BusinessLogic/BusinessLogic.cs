@@ -180,7 +180,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic
             return bufferPoint;
         }
 
-        public IPoint ProjectWgsToPulkovoWithGeoTransformation(IPoint inputPoint, CoordinateSystemModel coordinateSystemModel)
+        public IPoint ProjectWgsToPulkovoWithGeoTransformation(IPoint inputPoint, CoordinateSystemModel coordinateSystemModel, esriTransformDirection transformationDirection)
         {
             if (inputPoint == null) return null;
 
@@ -201,12 +201,12 @@ namespace MilSpace.GeoCalculator.BusinessLogic
                                                            Constants.PulkovoToWGS.ScaleDifference);
 
             var geometry = bufferPoint as IGeometry5;
-            geometry.ProjectEx(targetSpatialReference, esriTransformDirection.esriTransformForward, coordinateFrameGeoTransformation, false, 0.0, 0.0);
+            geometry.ProjectEx(targetSpatialReference, transformationDirection, coordinateFrameGeoTransformation, false, 0.0, 0.0);
 
             return geometry as IPoint;
         }
 
-        public IPoint ProjectWgsToUrkaine2000WithGeoTransformation(IPoint inputPoint, CoordinateSystemModel coordinateSystemModel)
+        public IPoint ProjectWgsToUrkaine2000WithGeoTransformation(IPoint inputPoint, CoordinateSystemModel coordinateSystemModel, esriTransformDirection transformationDirection)
         {
             if (inputPoint == null) return null;
 
@@ -233,7 +233,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic
             compositeGeoTransformation.Add(esriTransformDirection.esriTransformForward, coordinateFrameGeoTransformation);
 
             var geometry = bufferPoint as IGeometry5;
-            geometry.ProjectEx(targetSpatialReference, esriTransformDirection.esriTransformForward, compositeGeoTransformation, false, 0.0, 0.0);
+            geometry.ProjectEx(targetSpatialReference, transformationDirection, compositeGeoTransformation, false, 0.0, 0.0);
 
             return geometry as IPoint;
         }
