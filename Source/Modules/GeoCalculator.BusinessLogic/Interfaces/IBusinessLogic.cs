@@ -9,7 +9,8 @@ namespace MilSpace.GeoCalculator.BusinessLogic.Interfaces
     {
         IPoint CreatePoint(double X, double Y, CoordinateSystemModel geoModel, bool createGeoCoordinateSystem = false);
         IPoint ProjectPoint(IPoint inputPoint, CoordinateSystemModel singleProjectionModel);
-        IPoint ProjectPointEx(IPoint inputPoint, CoordinateSystemModel coordinateSystemModel);
+        IPoint ProjectWgsToPulkovoWithGeoTransformation(IPoint inputPoint, CoordinateSystemModel coordinateSystemModel);
+        IPoint ProjectWgsToUrkaine2000WithGeoTransformation(IPoint inputPoint, CoordinateSystemModel coordinateSystemModel);
         Task<IPoint> ProjectSelectedPointAsync(int targetCoordinateSystemType, int mousePositionX, int mousePositionY, double falseOriginX = 0, double falseOriginY = 0);
         void CopyCoordinatesToClipboard(List<PointModel> pointModels);
         void CopyCoordinatesToClipboard(ExtendedPointModel pointModel);

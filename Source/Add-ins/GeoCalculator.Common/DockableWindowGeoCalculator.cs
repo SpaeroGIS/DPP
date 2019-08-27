@@ -878,13 +878,13 @@ namespace MilSpace.GeoCalculator
 
             ManageProjectedCoordinateSystems(wgsDD.X);
 
-            var pulkovoDD = _businessLogic.ProjectPointEx(wgsDD, Constants.PulkovoGeoModel);
+            var pulkovoDD = _businessLogic.ProjectWgsToPulkovoWithGeoTransformation(wgsDD, Constants.PulkovoGeoModel);
             pulkovoDMSXTextBox.Text = pulkovoDD.X.ToRoundedString();
             pulkovoDMSYTextBox.Text = pulkovoDD.Y.ToRoundedString();
             lastProjectedPoint.PulkovoXCoordDD = pulkovoDD.X.ToRoundedDouble();
             lastProjectedPoint.PulkovoYCoordDD = pulkovoDD.Y.ToRoundedDouble();
 
-            var ukraineDD = _businessLogic.ProjectPointEx(wgsDD, Constants.UkraineGeoModel);
+            var ukraineDD = _businessLogic.ProjectWgsToUrkaine2000WithGeoTransformation(wgsDD, Constants.UkraineGeoModel);
             ukraineDMSXTextBox.Text = ukraineDD.X.ToRoundedString();
             ukraineDMSYTextBox.Text = ukraineDD.Y.ToRoundedString();
             lastProjectedPoint.UkraineXCoordDD = ukraineDD.X.ToRoundedDouble();

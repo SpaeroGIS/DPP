@@ -5,6 +5,7 @@ using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.GeoCalculator.BusinessLogic.Interfaces;
 using MilSpace.GeoCalculator.BusinessLogic.Models;
+using MilSpace.GeoCalculator.BusinessLogic.ReferenceData;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -67,8 +68,8 @@ namespace MilSpace.GeoCalculator.BusinessLogic
 
         public string ConvertToUtm(IPoint wgsInputPoint)
         {
-            var conversionNotation = wgsInputPoint as IConversionNotation;                
-            return conversionNotation?.GetUTMFromCoords(esriUTMConversionOptionsEnum.esriUTMAddSpaces);            
+            var conversionNotation = wgsInputPoint as IConversionNotation;
+            return conversionNotation?.GetUTMFromCoords(esriUTMConversionOptionsEnum.esriUTMAddSpaces);
         }
 
         public IPoint ConvertToDecimalDegrees(IPoint point, CoordinateSystemModel coordinateSystemModel)
@@ -125,15 +126,15 @@ namespace MilSpace.GeoCalculator.BusinessLogic
         public async Task MoveToNewCoordinate(double x, double y)
         {
             if (!(_arcMapApp.Document is IMxDocument currentDocument)) throw new Exception(NoMapExceptionMessage);
-            
+
             await Task.Run(() =>
             {
                 var activeView = currentDocument.ActiveView;
                 var point = new Point();
                 point.PutCoords(x, y);
                 activeView.Extent.CenterAt(point);
-                activeView.Refresh();                
-            });            
+                activeView.Refresh();
+            });
         }
 
         public IPoint CreatePoint(double X, double Y, CoordinateSystemModel geoModel, bool createGeoCoordinateSystem = false)
@@ -179,7 +180,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic
             return bufferPoint;
         }
 
-        public IPoint ProjectPointEx(IPoint inputPoint, CoordinateSystemModel coordinateSystemModel)
+        public IPoint ProjectWgsToPulkovoWithGeoTransformation(IPoint inputPoint, CoordinateSystemModel coordinateSystemModel)
         {
             if (inputPoint == null) return null;
 
@@ -189,16 +190,50 @@ namespace MilSpace.GeoCalculator.BusinessLogic
             var spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
             var targetSpatialReference = spatialReferenceFactory.CreateGeographicCoordinateSystem(coordinateSystemModel.ESRIWellKnownID);
 
-            var geoTransformation = GetTransformation(spatialReferenceFactory, bufferPoint.SpatialReference, targetSpatialReference);           
+            var coordinateFrameGeoTransformation = new CoordinateFrameTransformationClass();
+            coordinateFrameGeoTransformation.PutSpatialReferences(bufferPoint.SpatialReference, targetSpatialReference);
+            coordinateFrameGeoTransformation.PutParameters(Constants.PulkovoToWGS.XAxisTranslation, 
+                                                           Constants.PulkovoToWGS.YAxisTranslation, 
+                                                           Constants.PulkovoToWGS.ZAxisTranslation, 
+                                                           Constants.PulkovoToWGS.XAxisRotation,
+                                                           Constants.PulkovoToWGS.YAxisRotation,
+                                                           Constants.PulkovoToWGS.ZAxisRotation,
+                                                           Constants.PulkovoToWGS.ScaleDifference);
 
-            if(geoTransformation == null)
-                return ConvertToDecimalDegrees(bufferPoint, coordinateSystemModel);
-                        
             var geometry = bufferPoint as IGeometry5;
-            
-            geometry.ProjectEx(targetSpatialReference, geoTransformation.Item2, geoTransformation.Item1, false, 0.0, 0.0);
+            geometry.ProjectEx(targetSpatialReference, esriTransformDirection.esriTransformForward, coordinateFrameGeoTransformation, false, 0.0, 0.0);
 
-            Marshal.ReleaseComObject(geoTransformation.Item1);
+            return geometry as IPoint;
+        }
+
+        public IPoint ProjectWgsToUrkaine2000WithGeoTransformation(IPoint inputPoint, CoordinateSystemModel coordinateSystemModel)
+        {
+            if (inputPoint == null) return null;
+
+            var bufferPoint = new PointClass { X = inputPoint.X, Y = inputPoint.Y, SpatialReference = inputPoint.SpatialReference };
+
+            //Create Spatial Reference Factory
+            var spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
+            var targetSpatialReference = spatialReferenceFactory.CreateGeographicCoordinateSystem(coordinateSystemModel.ESRIWellKnownID);
+
+            var compositeGeoTransformation = new CompositeGeoTransformationClass();
+            var predefinedGeoTransformation = spatialReferenceFactory.CreateGeoTransformation(Constants.ItrfToWgsGeoTransformationID) as IGeoTransformation;
+            compositeGeoTransformation.Add(esriTransformDirection.esriTransformReverse, predefinedGeoTransformation);
+
+            var coordinateFrameGeoTransformation = new CoordinateFrameTransformationClass();
+            var itrfSpatialReference = spatialReferenceFactory.CreateSpatialReference((int)esriSRGeoCS3Type.esriSRGeoCS_IERSTerrestrialReferenceFrame2000);
+            coordinateFrameGeoTransformation.PutSpatialReferences(itrfSpatialReference, targetSpatialReference);
+            coordinateFrameGeoTransformation.PutParameters(Constants.UkraineToItrf.XAxisTranslation,
+                                                           Constants.UkraineToItrf.YAxisTranslation,
+                                                           Constants.UkraineToItrf.ZAxisTranslation,
+                                                           Constants.UkraineToItrf.XAxisRotation,
+                                                           Constants.UkraineToItrf.YAxisRotation,
+                                                           Constants.UkraineToItrf.ZAxisRotation,
+                                                           Constants.UkraineToItrf.ScaleDifference);            
+            compositeGeoTransformation.Add(esriTransformDirection.esriTransformForward, coordinateFrameGeoTransformation);
+
+            var geometry = bufferPoint as IGeometry5;
+            geometry.ProjectEx(targetSpatialReference, esriTransformDirection.esriTransformForward, compositeGeoTransformation, false, 0.0, 0.0);
 
             return geometry as IPoint;
         }
@@ -256,7 +291,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic
                 return bufferPoint;
             });
 
-            return ProjectPoint(resultPoint, new CoordinateSystemModel(targetCoordinateSystemType, falseOriginX, falseOriginY, "",currentDocument.FocusMap.MapScale));
+            return ProjectPoint(resultPoint, new CoordinateSystemModel(targetCoordinateSystemType, falseOriginX, falseOriginY, "", currentDocument.FocusMap.MapScale));
         }
 
         public async Task SaveProjectionsToXmlFileAsync(List<PointModel> pointModels, string path)
@@ -297,17 +332,17 @@ namespace MilSpace.GeoCalculator.BusinessLogic
         public async Task<List<PointModel>> ImportProjectionsFromCsvAsync(string path)
         {
             if (string.IsNullOrWhiteSpace(path)) return null;
-            
+
             return await _dataImportExport.ImportProjectionsFromCsvAsync(path);
         }
 
-        private Tuple<IGeoTransformation, esriTransformDirection> GetTransformation(SpatialReferenceEnvironmentClass spatialReferenceFactory, ISpatialReference fromSpatialReference, ISpatialReference toSpatialReference)
+        private Tuple<IGeoTransformation, esriTransformDirection> GetPredefinedTransformation(SpatialReferenceEnvironmentClass spatialReferenceFactory, ISpatialReference fromSpatialReference, ISpatialReference toSpatialReference)
         {
             int? fromFactoryCode = GetGCSFactoryCode(fromSpatialReference);
             int? toFactoryCode = GetGCSFactoryCode(toSpatialReference);
 
-            if (!fromFactoryCode.HasValue || !toFactoryCode.HasValue) return null;            
-            
+            if (!fromFactoryCode.HasValue || !toFactoryCode.HasValue) return null;
+
             var geographicTransformationsSet = spatialReferenceFactory.CreatePredefinedGeographicTransformations();
 
             geographicTransformationsSet.Reset();
@@ -337,7 +372,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic
                 Marshal.ReleaseComObject(geographicTransformationsSet);
             }
             return null;
-        }        
+        }
 
         private int? GetGCSFactoryCode(ISpatialReference spatialReference)
         {
