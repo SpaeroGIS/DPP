@@ -191,7 +191,7 @@ namespace MilSpace.Profile.Localization
         private LocalizationConstants()
         {
             //TODO: Define a method to change a culture info to localization
-            mngr = new MilSpaceResourceManager("MilSpace.Profile.Calc", CultureInfo.GetCultureInfo("uk-UA"));
+            mngr = new MilSpaceResourceManager("SPPRD.Profile.Calc", CultureInfo.GetCultureInfo("uk-UA"));
         }
         public static string AttrProfileDateText => instance.GetLocalization(AttrProfileDateTextKey, "Дата");
         public static string AttrProfileCreatorText => instance.GetLocalization(AttrProfileCreatorTextKey, "Автор");

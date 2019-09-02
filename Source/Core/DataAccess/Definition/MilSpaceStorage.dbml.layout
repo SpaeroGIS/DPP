@@ -2,24 +2,30 @@
 <ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="MilSpaceStorage">
   <DataContextMoniker Name="/MilSpaceStorageContext" />
   <nestedChildShapes>
-    <classShape Id="e67135f7-208c-4515-b400-76f4e4953b7a" absoluteBounds="2.75, 2.75, 2, 1.1939925130208327">
+    <classShape Id="e67135f7-208c-4515-b400-76f4e4953b7a" absoluteBounds="2.625, 0.625, 2, 1.1939925130208327">
       <DataClassMoniker Name="/MilSpaceStorageContext/MilSp_Session" />
       <nestedChildShapes>
-        <elementListCompartment Id="d4e3d1a7-56d3-4058-95d6-98d58d904641" absoluteBounds="2.765, 3.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="d4e3d1a7-56d3-4058-95d6-98d58d904641" absoluteBounds="2.64, 1.085, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="ea25abe1-e6a2-4e4f-afd5-da38ed3c1fa5" absoluteBounds="6.875, 1.375, 2, 1.9631982421875">
+    <classShape Id="ea25abe1-e6a2-4e4f-afd5-da38ed3c1fa5" absoluteBounds="5.5, 0.5, 2, 1.9631982421875">
       <DataClassMoniker Name="/MilSpaceStorageContext/MilSp_Profile" />
       <nestedChildShapes>
-        <elementListCompartment Id="edbd3673-5fcb-44db-b4d4-98e6442cc03d" absoluteBounds="6.89, 1.835, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="edbd3673-5fcb-44db-b4d4-98e6442cc03d" absoluteBounds="5.515, 0.96, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(6.875 : 3.04409912109375); (4.75 : 3.04409912109375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.5 : 1.22199625651042); (4.625 : 1.22199625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/MilSpaceStorageContext/MilSp_Profile/MilSp_Profile_MilSp_Session" />
       <nodes>
         <classShapeMoniker Id="ea25abe1-e6a2-4e4f-afd5-da38ed3c1fa5" />
         <classShapeMoniker Id="e67135f7-208c-4515-b400-76f4e4953b7a" />
       </nodes>
     </associationConnector>
+    <classShape Id="4ad12e95-676e-4abb-9755-7c9a2417eaca" absoluteBounds="2, 3, 2, 4.8477197265625">
+      <DataClassMoniker Name="/MilSpaceStorageContext/VisiblilityObservPoint" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ef571cc9-4724-4573-98bc-8c6dc104896b" absoluteBounds="2.0149999999999997, 3.46, 1.9700000000000002, 4.2877197265625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

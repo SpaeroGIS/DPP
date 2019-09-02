@@ -1,11 +1,8 @@
-﻿using MilSpace.DataAccess.Definition;
+﻿using MilSpace.Core.DataAccess;
+using MilSpace.DataAccess.Definition;
 using MilSpace.DataAccess.Exceptions;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using MilSpace.Core.DataAccess;
 using System.Xml.Serialization;
 
 namespace MilSpace.DataAccess.DataTransfer
@@ -59,7 +56,7 @@ namespace MilSpace.DataAccess.DataTransfer
                     idRow = session.SessionId,
                     ProfileName = session.SessionName.Trim(),
                     ProfileData = session.Serialized,
-                    Creator =  session.CreatedBy.Trim(),
+                    Creator = session.CreatedBy.Trim(),
                     Created = session.CreatedOn,
                     Shared = session.Shared
                 };
@@ -71,6 +68,93 @@ namespace MilSpace.DataAccess.DataTransfer
                 throw new MilSpaceDataException("ProfileSession", DataOperationsEnum.Convert, ex);
             }
 
+        }
+
+        internal static ObservationPoint Get(this VisiblilityObservPoint dbObservationPoint)
+        {
+
+            ObservationPoint observationPoint = new ObservationPoint
+            {
+                Affiliation = dbObservationPoint.saffiliation,
+                AngelCameraRotationH = dbObservationPoint.AnglCameraRotationH,
+                AngelCameraRotationV = dbObservationPoint.AnglCameraRotationV,
+                AngelFrameH = dbObservationPoint.AngFrameH,
+                AngelFrameV = dbObservationPoint.AnglFrameV,
+                AngelMaxH = dbObservationPoint.AnglMaxH,
+                AngelMinH = dbObservationPoint.AnglMinH,
+                AzimuthB = dbObservationPoint.AzimuthB,
+                AzimuthE = dbObservationPoint.AzimuthE,
+                AzimuthMainAxis = dbObservationPoint.AzimuthMainAxis,
+                Dto = dbObservationPoint.dto,
+                Group = dbObservationPoint.sGroup,
+                Id = dbObservationPoint.idOP,
+                Objectid = dbObservationPoint.objectid,
+                Operator = dbObservationPoint.soper,
+                RelativeHeihgt = dbObservationPoint.HRel,
+                Share = dbObservationPoint.ishare,
+                Title = dbObservationPoint.TitleOP,
+                Type = dbObservationPoint.TypeOP,
+                X = dbObservationPoint.XWGS,
+                Y = dbObservationPoint.YWGS
+            };
+
+            return observationPoint;
+
+        }
+
+        internal static void  Update(this VisiblilityObservPoint dbObservationPoint, ObservationPoint observationPoint)
+        {
+
+            dbObservationPoint.saffiliation = observationPoint.Affiliation;
+            dbObservationPoint.AnglCameraRotationH = observationPoint.AngelCameraRotationH;
+            dbObservationPoint.AnglCameraRotationV = observationPoint.AngelCameraRotationV;
+            dbObservationPoint.AngFrameH = observationPoint.AngelFrameH;
+            dbObservationPoint.AnglFrameV = observationPoint.AngelFrameV;
+            dbObservationPoint.AnglMaxH = observationPoint.AngelMaxH;
+            dbObservationPoint.AnglMinH = observationPoint.AngelMinH;
+            dbObservationPoint.AzimuthB = observationPoint.AzimuthB;
+            dbObservationPoint.AzimuthE = observationPoint.AzimuthE;
+            dbObservationPoint.AzimuthMainAxis = observationPoint.AzimuthMainAxis;
+            dbObservationPoint.dto = DateTime.Now;
+            dbObservationPoint.sGroup = observationPoint.Group;
+            dbObservationPoint.idOP = observationPoint.Id;
+            dbObservationPoint.objectid = observationPoint.Objectid;
+            dbObservationPoint.soper = observationPoint.Operator;
+            dbObservationPoint.HRel = observationPoint.RelativeHeihgt;
+            dbObservationPoint.ishare = observationPoint.Share;
+            dbObservationPoint.TitleOP = observationPoint.Title;
+            dbObservationPoint.TypeOP = observationPoint.Type;
+            dbObservationPoint.XWGS = observationPoint.X;
+            dbObservationPoint.YWGS = observationPoint.Y;
+
+        }
+
+        internal static VisiblilityObservPoint Get(this ObservationPoint observationPoint)
+        {
+            return new VisiblilityObservPoint
+            {
+                saffiliation = observationPoint.Affiliation,
+                AnglCameraRotationH = observationPoint.AngelCameraRotationH,
+                AnglCameraRotationV = observationPoint.AngelCameraRotationV,
+                AngFrameH = observationPoint.AngelFrameH,
+                AnglFrameV = observationPoint.AngelFrameV,
+                AnglMaxH = observationPoint.AngelMaxH,
+                AnglMinH = observationPoint.AngelMinH,
+                AzimuthB = observationPoint.AzimuthB,
+                AzimuthE = observationPoint.AzimuthE,
+                AzimuthMainAxis = observationPoint.AzimuthMainAxis,
+                dto = observationPoint.Dto,
+                sGroup = observationPoint.Group,
+                idOP = observationPoint.Id,
+                objectid = observationPoint.Objectid,
+                soper = observationPoint.Operator,
+                HRel = observationPoint.RelativeHeihgt,
+                ishare = observationPoint.Share,
+                TitleOP = observationPoint.Title,
+                TypeOP = observationPoint.Type,
+                XWGS = observationPoint.X,
+                YWGS = observationPoint.Y
+            };
         }
     }
 }

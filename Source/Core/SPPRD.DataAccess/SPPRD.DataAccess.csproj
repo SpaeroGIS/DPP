@@ -126,6 +126,10 @@
     <Compile Include="..\DataAccess\DataTransfer\ProfileLine.cs">
       <Link>DataTransfer\ProfileLine.cs</Link>
     </Compile>
+    <Compile Include="..\DataAccess\Definition\MilSpaceVisible.cs">
+      <Link>Definition\MilSpaceVisible.cs</Link>
+      <DependentUpon>MilSpaceVisible.dbml</DependentUpon>
+    </Compile>
     <Compile Include="..\DataAccess\Definition\MilSpaceVisible.designer.cs">
       <Link>Definition\MilSpaceVisible.designer.cs</Link>
       <AutoGen>True</AutoGen>
@@ -159,6 +163,9 @@
     <Compile Include="..\DataAccess\Facade\MilSpaceProfileFacade.cs">
       <Link>Facade\MilSpaceProfileFacade.cs</Link>
     </Compile>
+    <Compile Include="..\DataAccess\Facade\VisibilityFacade.cs">
+      <Link>Facade\VisibilityFacade.cs</Link>
+    </Compile>
     <Compile Include="..\DataAccess\GroupedLines.cs">
       <Link>GroupedLines.cs</Link>
     </Compile>
@@ -171,6 +178,8 @@
     <Compile Include="..\DataAccess\LayersEnum.cs">
       <Link>LayersEnum.cs</Link>
     </Compile>
+    <Compile Include="DataTransfer\ObservationPoint.cs" />
+    <Compile Include="DataTransfer\ObservationPointTypesEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\DataAccess\Properties\Settings.Designer.cs">
       <Link>Properties\Settings.Designer.cs</Link>

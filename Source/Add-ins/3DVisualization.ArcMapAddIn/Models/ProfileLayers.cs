@@ -122,7 +122,7 @@ namespace MilSpace.Visualization3D.Models
             }
         }
 
-        internal static IEnumerable<ILayer> RasterLayers => Layers.Where(layer => layer is IRasterLayer);
+        internal static IEnumerable<ILayer> RasterLayers => GetAllLayers().Where(layer => layer is IRasterLayer);
 
         internal static IEnumerable<ILayer> PointLayers => GetFeatureLayers(pointTypes);
 

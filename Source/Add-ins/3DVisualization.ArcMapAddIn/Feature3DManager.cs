@@ -27,10 +27,10 @@ namespace MilSpace.Visualization3D
 
             while(layer.Name != demLayer)
             {
-               layer = layers.Next();
+                layer = layers.Next();
             }
 
-            var rasterLayer =  layer as IRasterLayer;
+            var rasterLayer = layer as IRasterLayer;
             arcSceneArguments.DemLayer = rasterLayer.FilePath;
 
             try

@@ -18,4 +18,29 @@
       <Association Name="MilSp_Profile_MilSp_Session" Member="MilSp_Sessions" ThisKey="idRow" OtherKey="ProfileId" Type="MilSp_Session" />
     </Type>
   </Table>
+  <Table Name="dbo.MilSp_Visible_ObservPoints" Member="VisiblilityObservPoints" AccessModifier="Internal">
+    <Type Name="VisiblilityObservPoint" AccessModifier="Internal">
+      <Column Name="objectid" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idOP" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="TitleOP" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="TypeOP" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="sGroup" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="saffiliation" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="ishare" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="XWGS" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="YWGS" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="HRel" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AzimuthB" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AzimuthE" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AnglMinH" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AnglMaxH" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AzimuthMainAxis" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AngFrameH" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AnglFrameV" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AnglCameraRotationH" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AnglCameraRotationV" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="dto" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="soper" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
 </Database>
