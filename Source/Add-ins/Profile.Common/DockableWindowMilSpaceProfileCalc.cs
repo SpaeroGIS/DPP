@@ -357,16 +357,14 @@ namespace MilSpace.Profile
                         var message = LocalizationConstants.PickCoordinatesToolMessage;
                         MessageBox.Show(message, "Profile Calc", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         break;
-
                     }
                     activeButtton = ProfileSettingsPointButtonEnum.PointsFist;
-
                     break;
                 case 1:
-
+                    controller.FlashPoint(ProfileSettingsPointButtonEnum.PointsFist);
                     break;
                 case 2:
-                    controller.FlashPoint(ProfileSettingsPointButtonEnum.PointsFist);
+                    
                     break;
 
                 case 4:
@@ -978,6 +976,7 @@ namespace MilSpace.Profile
         {
             var node = profilesTreeView.SelectedNode;
             var ids = GetProfileAndLineIds(node);
+            logger.DebugEx("CallGraphsHandle");
             //TODO set observer height
             controller.CallGraphsHandle(ids.Item1);
         }
