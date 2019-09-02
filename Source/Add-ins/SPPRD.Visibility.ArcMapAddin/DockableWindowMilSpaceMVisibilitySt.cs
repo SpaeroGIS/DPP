@@ -1,5 +1,10 @@
-﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.ArcMapUI;
+using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.Editor;
+using ESRI.ArcGIS.esriSystem;
+using ESRI.ArcGIS.Framework;
+using ESRI.ArcGIS.Geometry;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Visibility.DTO;
 using MilSpace.Visibility.ViewController;
@@ -19,15 +24,14 @@ namespace MilSpace.Visibility
     public partial class DockableWindowMilSpaceMVisibilitySt : UserControl, IObservationPointsView
     {
         private ObservationPointsController controller;
+        
         public DockableWindowMilSpaceMVisibilitySt(object hook, ObservationPointsController controller)
         {
             InitializeComponent();
             this.controller = controller;
             this.controller.SetView(this);
             this.Hook = hook;
-          
         }
-
 
         public DockableWindowMilSpaceMVisibilitySt(object hook)
         {
@@ -182,6 +186,11 @@ namespace MilSpace.Visibility
             {
             }
 
+            internal DockableWindowMilSpaceMVisibilitySt UI
+            {
+                get { return m_windowUI; }
+            }
+
             protected override IntPtr OnCreateChild()
             {
                 var controller = new ObservationPointsController();
@@ -207,8 +216,49 @@ namespace MilSpace.Visibility
 
         private void toolBar7_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
+            UID mapToolID = new UIDClass
+            {
+                Value = ThisAddIn.IDs.MapInteropTool
+            };
+            var documentBars = ArcMap.Application.Document.CommandBars;
+            var mapTool = documentBars.Find(mapToolID, false, false);
 
+            if (ArcMap.Application.CurrentTool?.ID?.Value != null && ArcMap.Application.CurrentTool.ID.Value.Equals(mapTool.ID.Value))
+            {
+                ArcMap.Application.CurrentTool = null;
+                toolBarButton51.Pushed = false;
+            }
+            else
+            {
+                ArcMap.Application.CurrentTool = mapTool;
+                toolBarButton51.Pushed = true;
+            }
 
         }
+
+        internal void ArcMap_OnMouseDown(int x, int y)
+        {
+            if (!(this.Hook is IApplication arcMap) || !(arcMap.Document is IMxDocument currentDocument)) return;            
+
+            IPoint resultPoint = new Point();
+
+            resultPoint = (currentDocument.FocusMap as IActiveView).ScreenDisplay.DisplayTransformation.ToMapPoint(x, y);
+
+            AddPointToMap(resultPoint);
+        }
+
+        internal void ArcMap_OnMouseMove(int x, int y)
+        {
+            //Place Mouce Move logic here if needed
+        }
+
+        private void AddPointToMap(IPoint point)
+        {
+            if (point != null && !point.IsEmpty)
+            {
+                var color = (IColor)new RgbColorClass() { Green = 255 };
+                var placedPoint = ArcMapHelper.AddGraphicToMap(point, color, true, esriSimpleMarkerStyle.esriSMSDiamond, 7);                
+            }
+        }        
     }
 }

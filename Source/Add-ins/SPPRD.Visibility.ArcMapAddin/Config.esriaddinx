@@ -22,6 +22,8 @@
           tip="SPPRD Module Visibility window" 
           category="SPPRDTools" 
           image="Images\ButtonMilSpaceMVis.png" />
+        <Tool id="DPP_ArcMapAddin_MilSpace_Visibility_MapInteropTool" class="MapInteropTool" message="SPPRD Visibility. Map Interop Tool"
+              caption="Tool" tip="Map Point Tool" category="SPPRDTools" image="Images\ButtonMilSpaceMVis.png" />
       </Commands>
       
       <DockableWindows>
