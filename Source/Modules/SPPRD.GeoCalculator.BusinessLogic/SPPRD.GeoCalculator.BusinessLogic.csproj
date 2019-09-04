@@ -111,6 +111,7 @@
     <Compile Include="..\GeoCalculator.BusinessLogic\ReferenceData\Constants.cs">
       <Link>ReferenceData\Constants.cs</Link>
     </Compile>
+    <Compile Include="Models\CustomGeoTransformationParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

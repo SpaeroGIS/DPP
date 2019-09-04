@@ -7,7 +7,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic.ReferenceData
     public static class Constants
     {
         public static readonly int[] Ukraine2000ID = new int[] { 5561, 5562, 5563, 5564, 5565 };
-
+        public static readonly int ItrfToWgsGeoTransformationID = 108280;
         public static readonly int NumberOfDigitsForDoubleRounding = 5;
 
         //TODO: May be refactored in order to have more complex logic searching zone automatically
@@ -31,6 +31,27 @@ namespace MilSpace.GeoCalculator.BusinessLogic.ReferenceData
         public static readonly CoordinateSystemModel PulkovoGeoModel = new CoordinateSystemModel((int)esriSRGeoCSType.esriSRGeoCS_Pulkovo1942, 19.580, 35.150, "Pulkovo 1942", 1000000);
         public static readonly CoordinateSystemModel UkraineGeoModel = new CoordinateSystemModel(Constants.Ukraine2000ID[0], 22.150, 43.190, "Ukraine 2000", 1000000);
 
+        //Custom Geographic Transformations
+        public static readonly CustomGeoTransformationParameters PulkovoToWGS = new CustomGeoTransformationParameters()
+        {   XAxisTranslation = 24.0,
+            YAxisTranslation = -123.0,
+            ZAxisTranslation = -94.0,
+            XAxisRotation = -0.02,
+            YAxisRotation = 0.25,
+            ZAxisRotation = 0.13,
+            ScaleDifference = 0.0000011
+        };
+        public static readonly CustomGeoTransformationParameters UkraineToItrf = new CustomGeoTransformationParameters()
+        {
+            XAxisTranslation = 24.322,
+            YAxisTranslation = -121.372,
+            ZAxisTranslation = -75.847,
+            XAxisRotation = 0.0,
+            YAxisRotation = 0.0,
+            ZAxisRotation = 0.0,
+            ScaleDifference = 0.0
+        };
+        
         //DataGridView constants
         public const string HighlightColumnName = "HighlightColumn";
         public const string DeleteColumnName = "DeleteColumn";

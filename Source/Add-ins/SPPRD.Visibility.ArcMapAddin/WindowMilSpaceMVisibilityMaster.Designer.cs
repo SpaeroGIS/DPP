@@ -31,12 +31,12 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WindowMilSpaceMVisibilityMaster));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.PreviousStepButton = new System.Windows.Forms.Button();
+            this.NextStepButton = new System.Windows.Forms.Button();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.StepsTabControl = new System.Windows.Forms.TabControl();
+            this.stepOne = new System.Windows.Forms.TabPage();
             this.panel6 = new System.Windows.Forms.Panel();
             this.richTextBox4 = new System.Windows.Forms.RichTextBox();
             this.panel5 = new System.Windows.Forms.Panel();
@@ -45,7 +45,7 @@
             this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.stepTwo = new System.Windows.Forms.TabPage();
             this.panel7 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.richTextBox7 = new System.Windows.Forms.RichTextBox();
@@ -96,7 +96,7 @@
             this.richTextBox5 = new System.Windows.Forms.RichTextBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label46 = new System.Windows.Forms.Label();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.stepThree = new System.Windows.Forms.TabPage();
             this.panel25 = new System.Windows.Forms.Panel();
             this.checkBox7 = new System.Windows.Forms.CheckBox();
             this.comboBox10 = new System.Windows.Forms.ComboBox();
@@ -124,16 +124,16 @@
             this.label11 = new System.Windows.Forms.Label();
             this.panel20 = new System.Windows.Forms.Panel();
             this.label10 = new System.Windows.Forms.Label();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.stepFour = new System.Windows.Forms.TabPage();
             this.richTextBox6 = new System.Windows.Forms.RichTextBox();
             this.panel1.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.StepsTabControl.SuspendLayout();
+            this.stepOne.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.stepTwo.SuspendLayout();
             this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -152,20 +152,20 @@
             this.panel15.SuspendLayout();
             this.panel14.SuspendLayout();
             this.panel47.SuspendLayout();
-            this.tabPage3.SuspendLayout();
+            this.stepThree.SuspendLayout();
             this.panel25.SuspendLayout();
             this.panel24.SuspendLayout();
             this.panel23.SuspendLayout();
             this.panel22.SuspendLayout();
             this.panel21.SuspendLayout();
             this.panel20.SuspendLayout();
-            this.tabPage4.SuspendLayout();
+            this.stepFour.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.button2);
-            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.PreviousStepButton);
+            this.panel1.Controls.Add(this.NextStepButton);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 345);
             this.panel1.Name = "panel1";
@@ -173,27 +173,28 @@
             this.panel1.Size = new System.Drawing.Size(744, 27);
             this.panel1.TabIndex = 1;
             // 
-            // button2
+            // PreviousStepButton
             // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button2.Location = new System.Drawing.Point(516, 0);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(110, 27);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "< Предыдущая";
-            this.button2.UseVisualStyleBackColor = true;
+            this.PreviousStepButton.Dock = System.Windows.Forms.DockStyle.Right;
+            this.PreviousStepButton.Location = new System.Drawing.Point(516, 0);
+            this.PreviousStepButton.Name = "PreviousStepButton";
+            this.PreviousStepButton.Size = new System.Drawing.Size(110, 27);
+            this.PreviousStepButton.TabIndex = 1;
+            this.PreviousStepButton.Text = "< Предыдущая";
+            this.PreviousStepButton.UseVisualStyleBackColor = true;
+            this.PreviousStepButton.Click += new System.EventHandler(this.PreviousStepButton_Click);
             // 
-            // button1
+            // NextStepButton
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button1.Location = new System.Drawing.Point(626, 0);
-            this.button1.Name = "button1";
-            this.button1.Padding = new System.Windows.Forms.Padding(0, 0, 8, 0);
-            this.button1.Size = new System.Drawing.Size(110, 27);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Следующая >";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.NextStepButton.Dock = System.Windows.Forms.DockStyle.Right;
+            this.NextStepButton.Location = new System.Drawing.Point(626, 0);
+            this.NextStepButton.Name = "NextStepButton";
+            this.NextStepButton.Padding = new System.Windows.Forms.Padding(0, 0, 8, 0);
+            this.NextStepButton.Size = new System.Drawing.Size(110, 27);
+            this.NextStepButton.TabIndex = 0;
+            this.NextStepButton.Text = "Следующая >";
+            this.NextStepButton.UseVisualStyleBackColor = true;
+            this.NextStepButton.Click += new System.EventHandler(this.NextStepButton_Click);
             // 
             // imageList1
             // 
@@ -405,36 +406,36 @@
             this.imageList1.Images.SetKeyName(203, "Zoom In.png");
             this.imageList1.Images.SetKeyName(204, "Zoom Out.png");
             // 
-            // tabControl1
+            // StepsTabControl
             // 
-            this.tabControl1.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Controls.Add(this.tabPage4);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.ImageList = this.imageList1;
-            this.tabControl1.ItemSize = new System.Drawing.Size(100, 24);
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(744, 345);
-            this.tabControl1.TabIndex = 2;
+            this.StepsTabControl.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
+            this.StepsTabControl.Controls.Add(this.stepOne);
+            this.StepsTabControl.Controls.Add(this.stepTwo);
+            this.StepsTabControl.Controls.Add(this.stepThree);
+            this.StepsTabControl.Controls.Add(this.stepFour);
+            this.StepsTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.StepsTabControl.ImageList = this.imageList1;
+            this.StepsTabControl.ItemSize = new System.Drawing.Size(100, 24);
+            this.StepsTabControl.Location = new System.Drawing.Point(0, 0);
+            this.StepsTabControl.Name = "StepsTabControl";
+            this.StepsTabControl.SelectedIndex = 0;
+            this.StepsTabControl.Size = new System.Drawing.Size(744, 345);
+            this.StepsTabControl.TabIndex = 2;
             // 
-            // tabPage1
+            // stepOne
             // 
-            this.tabPage1.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tabPage1.Controls.Add(this.panel6);
-            this.tabPage1.Controls.Add(this.panel5);
-            this.tabPage1.Controls.Add(this.panel4);
-            this.tabPage1.Controls.Add(this.panel3);
-            this.tabPage1.ImageIndex = 1;
-            this.tabPage1.Location = new System.Drawing.Point(4, 28);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(736, 313);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Шаг 1";
+            this.stepOne.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.stepOne.Controls.Add(this.panel6);
+            this.stepOne.Controls.Add(this.panel5);
+            this.stepOne.Controls.Add(this.panel4);
+            this.stepOne.Controls.Add(this.panel3);
+            this.stepOne.ImageIndex = 1;
+            this.stepOne.Location = new System.Drawing.Point(4, 28);
+            this.stepOne.Name = "stepOne";
+            this.stepOne.Padding = new System.Windows.Forms.Padding(3);
+            this.stepOne.Size = new System.Drawing.Size(736, 313);
+            this.stepOne.TabIndex = 0;
+            this.stepOne.Text = "Шаг 1";
             // 
             // panel6
             // 
@@ -525,18 +526,18 @@
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
             // 
-            // tabPage2
+            // stepTwo
             // 
-            this.tabPage2.Controls.Add(this.panel7);
-            this.tabPage2.Controls.Add(this.panel47);
-            this.tabPage2.ImageIndex = 2;
-            this.tabPage2.Location = new System.Drawing.Point(4, 28);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(736, 313);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Шаг 2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.stepTwo.Controls.Add(this.panel7);
+            this.stepTwo.Controls.Add(this.panel47);
+            this.stepTwo.ImageIndex = 2;
+            this.stepTwo.Location = new System.Drawing.Point(4, 28);
+            this.stepTwo.Name = "stepTwo";
+            this.stepTwo.Padding = new System.Windows.Forms.Padding(3);
+            this.stepTwo.Size = new System.Drawing.Size(736, 313);
+            this.stepTwo.TabIndex = 1;
+            this.stepTwo.Text = "Шаг 2";
+            this.stepTwo.UseVisualStyleBackColor = true;
             // 
             // panel7
             // 
@@ -1124,21 +1125,21 @@
             this.label46.TabIndex = 4;
             this.label46.Text = "поверхность расчета";
             // 
-            // tabPage3
+            // stepThree
             // 
-            this.tabPage3.Controls.Add(this.panel25);
-            this.tabPage3.Controls.Add(this.panel24);
-            this.tabPage3.Controls.Add(this.panel23);
-            this.tabPage3.Controls.Add(this.panel22);
-            this.tabPage3.Controls.Add(this.panel21);
-            this.tabPage3.Controls.Add(this.panel20);
-            this.tabPage3.ImageIndex = 3;
-            this.tabPage3.Location = new System.Drawing.Point(4, 28);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(736, 313);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Шаг 3";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.stepThree.Controls.Add(this.panel25);
+            this.stepThree.Controls.Add(this.panel24);
+            this.stepThree.Controls.Add(this.panel23);
+            this.stepThree.Controls.Add(this.panel22);
+            this.stepThree.Controls.Add(this.panel21);
+            this.stepThree.Controls.Add(this.panel20);
+            this.stepThree.ImageIndex = 3;
+            this.stepThree.Location = new System.Drawing.Point(4, 28);
+            this.stepThree.Name = "stepThree";
+            this.stepThree.Size = new System.Drawing.Size(736, 313);
+            this.stepThree.TabIndex = 2;
+            this.stepThree.Text = "Шаг 3";
+            this.stepThree.UseVisualStyleBackColor = true;
             // 
             // panel25
             // 
@@ -1454,16 +1455,16 @@
             this.label10.TabIndex = 2;
             this.label10.Text = "Дополнительные параметры";
             // 
-            // tabPage4
+            // stepFour
             // 
-            this.tabPage4.Controls.Add(this.richTextBox6);
-            this.tabPage4.ImageIndex = 4;
-            this.tabPage4.Location = new System.Drawing.Point(4, 28);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(736, 313);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "Шаг 4";
-            this.tabPage4.UseVisualStyleBackColor = true;
+            this.stepFour.Controls.Add(this.richTextBox6);
+            this.stepFour.ImageIndex = 4;
+            this.stepFour.Location = new System.Drawing.Point(4, 28);
+            this.stepFour.Name = "stepFour";
+            this.stepFour.Size = new System.Drawing.Size(736, 313);
+            this.stepFour.TabIndex = 3;
+            this.stepFour.Text = "Шаг 4";
+            this.stepFour.UseVisualStyleBackColor = true;
             // 
             // richTextBox6
             // 
@@ -1481,18 +1482,18 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(744, 372);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.StepsTabControl);
             this.Controls.Add(this.panel1);
             this.Name = "WindowMilSpaceMVisibilityMaster";
             this.Text = "MilSpace. Module visibility. Master";
             this.panel1.ResumeLayout(false);
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
+            this.StepsTabControl.ResumeLayout(false);
+            this.stepOne.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
+            this.stepTwo.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -1524,7 +1525,7 @@
             this.panel14.PerformLayout();
             this.panel47.ResumeLayout(false);
             this.panel47.PerformLayout();
-            this.tabPage3.ResumeLayout(false);
+            this.stepThree.ResumeLayout(false);
             this.panel25.ResumeLayout(false);
             this.panel25.PerformLayout();
             this.panel24.ResumeLayout(false);
@@ -1537,7 +1538,7 @@
             this.panel21.PerformLayout();
             this.panel20.ResumeLayout(false);
             this.panel20.PerformLayout();
-            this.tabPage4.ResumeLayout(false);
+            this.stepFour.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1545,12 +1546,12 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button PreviousStepButton;
+        private System.Windows.Forms.Button NextStepButton;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ColorDialog colorDialog1;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabControl StepsTabControl;
+        private System.Windows.Forms.TabPage stepOne;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.RichTextBox richTextBox4;
         private System.Windows.Forms.Panel panel5;
@@ -1559,7 +1560,7 @@
         private System.Windows.Forms.RichTextBox richTextBox2;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.RichTextBox richTextBox1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage stepTwo;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.RichTextBox richTextBox7;
@@ -1610,7 +1611,7 @@
         private System.Windows.Forms.RichTextBox richTextBox5;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label46;
-        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage stepThree;
         private System.Windows.Forms.Panel panel25;
         private System.Windows.Forms.CheckBox checkBox7;
         private System.Windows.Forms.ComboBox comboBox10;
@@ -1638,7 +1639,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Panel panel20;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.TabPage stepFour;
         private System.Windows.Forms.RichTextBox richTextBox6;
     }
 }

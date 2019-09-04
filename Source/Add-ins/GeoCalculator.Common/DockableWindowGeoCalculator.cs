@@ -12,6 +12,7 @@ using MilSpace.GeoCalculator.Enums;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
@@ -25,7 +26,7 @@ namespace MilSpace.GeoCalculator
         private Dictionary<string, PointModel> pointModels = new Dictionary<string, PointModel>();
         private LocalizationContext context;
         private readonly Dictionary<string, IPoint> ClickedPointsDictionary = new Dictionary<string, IPoint>();
-
+        
         //Current Projection Models
         private ProjectionsModel CurrentProjectionsModel = Constants.ProjectionsModels[0];        
 
@@ -311,6 +312,8 @@ namespace MilSpace.GeoCalculator
                     return;
                 }
 
+                if (pulkovoDMSXTextBox.Text == stringParts.First() && pulkovoDMSYTextBox.Text == stringParts.Last()) return;
+
                 if (!stringParts.First().ToDoubleInvariantCulture(out double xCoordinate) ||
                     !stringParts.Last().ToDoubleInvariantCulture(out double yCoordinate))
                     MessageBox.Show(context.WrongFormatMessage, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -340,6 +343,8 @@ namespace MilSpace.GeoCalculator
                     MessageBox.Show(context.WrongFormatMessage, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+
+                if (PulkovoXCoordinateTextBox.Text == stringParts.First() && PulkovoYCoordinateTextBox.Text == stringParts.Last()) return;
 
                 if (!stringParts.First().ToDoubleInvariantCulture(out double xCoordinate) ||
                     !stringParts.Last().ToDoubleInvariantCulture(out double yCoordinate))
@@ -371,6 +376,8 @@ namespace MilSpace.GeoCalculator
                     return;
                 }
 
+                if (ukraineDMSXTextBox.Text == stringParts.First() && ukraineDMSYTextBox.Text == stringParts.Last()) return;
+
                 if (!stringParts.First().ToDoubleInvariantCulture(out double xCoordinate) ||
                     !stringParts.Last().ToDoubleInvariantCulture(out double yCoordinate))
                     MessageBox.Show(context.WrongFormatMessage, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -400,6 +407,8 @@ namespace MilSpace.GeoCalculator
                     MessageBox.Show(context.WrongFormatMessage, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+
+                if (UkraineXCoordinateTextBox.Text == stringParts.First() && UkraineYCoordinateTextBox.Text == stringParts.Last()) return;
 
                 if (!stringParts.First().ToDoubleInvariantCulture(out double xCoordinate) ||
                     !stringParts.Last().ToDoubleInvariantCulture(out double yCoordinate))
@@ -459,7 +468,8 @@ namespace MilSpace.GeoCalculator
                 if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(XCoordinateTextBox.Text) && !string.IsNullOrWhiteSpace(YCoordinateTextBox.Text))
                 {
                     var point = new PointClass();
-                    point.PutCoords(double.Parse(XCoordinateTextBox.Text), double.Parse(YCoordinateTextBox.Text));
+                    point.PutCoords(double.Parse(XCoordinateTextBox.Text, System.Globalization.NumberStyles.Any, CultureInfo.InvariantCulture),
+                                    double.Parse(YCoordinateTextBox.Text, System.Globalization.NumberStyles.Any, CultureInfo.InvariantCulture));
                     point.SpatialReference = FocusMapSpatialReference;
                     ProjectPointAsync(point, true);
                 }
@@ -476,8 +486,8 @@ namespace MilSpace.GeoCalculator
             {
                 if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(WgsXCoordinateTextBox.Text) && !string.IsNullOrWhiteSpace(WgsYCoordinateTextBox.Text))
                 {
-                    var point = _businessLogic.CreatePoint(double.Parse(WgsXCoordinateTextBox.Text),
-                                                           double.Parse(WgsYCoordinateTextBox.Text),
+                    var point = _businessLogic.CreatePoint(double.Parse(WgsXCoordinateTextBox.Text, System.Globalization.NumberStyles.Any, CultureInfo.InvariantCulture),
+                                                           double.Parse(WgsYCoordinateTextBox.Text, System.Globalization.NumberStyles.Any, CultureInfo.InvariantCulture),
                                                            CurrentProjectionsModel.WGS84Projection);
                     ProjectPointAsync(point, true);
                 }
@@ -492,10 +502,12 @@ namespace MilSpace.GeoCalculator
         {
             try
             {
+                if (!PulkovoXCoordinateTextBox.Modified && !PulkovoYCoordinateTextBox.Modified) return;
+
                 if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(PulkovoXCoordinateTextBox.Text) && !string.IsNullOrWhiteSpace(PulkovoYCoordinateTextBox.Text))
                 {
-                    var point = _businessLogic.CreatePoint(double.Parse(PulkovoXCoordinateTextBox.Text),
-                                                           double.Parse(PulkovoYCoordinateTextBox.Text),
+                    var point = _businessLogic.CreatePoint(double.Parse(PulkovoXCoordinateTextBox.Text, System.Globalization.NumberStyles.Any, CultureInfo.InvariantCulture),
+                                                           double.Parse(PulkovoYCoordinateTextBox.Text, System.Globalization.NumberStyles.Any, CultureInfo.InvariantCulture),
                                                            CurrentProjectionsModel.Pulkovo1942Projection);
                     ProjectPointAsync(point, true);
                 }
@@ -510,10 +522,12 @@ namespace MilSpace.GeoCalculator
         {
             try
             {
+                if (!UkraineXCoordinateTextBox.Modified && !UkraineYCoordinateTextBox.Modified) return;
+
                 if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(UkraineXCoordinateTextBox.Text) && !string.IsNullOrWhiteSpace(UkraineYCoordinateTextBox.Text))
                 {
-                    var point = _businessLogic.CreatePoint(double.Parse(UkraineXCoordinateTextBox.Text),
-                                                           double.Parse(UkraineYCoordinateTextBox.Text),
+                    var point = _businessLogic.CreatePoint(double.Parse(UkraineXCoordinateTextBox.Text, System.Globalization.NumberStyles.Any, CultureInfo.InvariantCulture),
+                                                           double.Parse(UkraineYCoordinateTextBox.Text, System.Globalization.NumberStyles.Any, CultureInfo.InvariantCulture),
                                                            CurrentProjectionsModel.Ukraine2000Projection);
 
                     ProjectPointAsync(point, true);
@@ -531,8 +545,8 @@ namespace MilSpace.GeoCalculator
             {
                 if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(wgsDMSXTextBox.Text) && !string.IsNullOrWhiteSpace(wgsDMSYTextBox.Text))
                 {
-                    var point = _businessLogic.CreatePoint(double.Parse(wgsDMSXTextBox.Text),
-                                                           double.Parse(wgsDMSYTextBox.Text),
+                    var point = _businessLogic.CreatePoint(double.Parse(wgsDMSXTextBox.Text, System.Globalization.NumberStyles.Any, CultureInfo.InvariantCulture),
+                                                           double.Parse(wgsDMSYTextBox.Text, System.Globalization.NumberStyles.Any, CultureInfo.InvariantCulture),
                                                            Constants.WgsGeoModel, true);
                     ProjectPointAsync(point, true);
                 }
@@ -547,10 +561,12 @@ namespace MilSpace.GeoCalculator
         {
             try
             {
+                if (!pulkovoDMSXTextBox.Modified && !pulkovoDMSYTextBox.Modified) return;
+
                 if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(pulkovoDMSXTextBox.Text) && !string.IsNullOrWhiteSpace(pulkovoDMSYTextBox.Text))
                 {
-                    var point = _businessLogic.CreatePoint(double.Parse(pulkovoDMSXTextBox.Text),
-                                                           double.Parse(pulkovoDMSYTextBox.Text),
+                    var point = _businessLogic.CreatePoint(double.Parse(pulkovoDMSXTextBox.Text, System.Globalization.NumberStyles.Any, CultureInfo.InvariantCulture),
+                                                           double.Parse(pulkovoDMSYTextBox.Text, System.Globalization.NumberStyles.Any, CultureInfo.InvariantCulture),
                                                            Constants.PulkovoGeoModel, true);
                     ProjectPointAsync(point, true);
                 }
@@ -565,10 +581,12 @@ namespace MilSpace.GeoCalculator
         {
             try
             {
+                if (!ukraineDMSXTextBox.Modified && !ukraineDMSYTextBox.Modified) return;
+
                 if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(ukraineDMSXTextBox.Text) && !string.IsNullOrWhiteSpace(ukraineDMSYTextBox.Text))
                 {
-                    var point = _businessLogic.CreatePoint(double.Parse(ukraineDMSXTextBox.Text),
-                                                           double.Parse(ukraineDMSYTextBox.Text),
+                    var point = _businessLogic.CreatePoint(double.Parse(ukraineDMSXTextBox.Text, System.Globalization.NumberStyles.Any, CultureInfo.InvariantCulture),
+                                                           double.Parse(ukraineDMSYTextBox.Text, System.Globalization.NumberStyles.Any, CultureInfo.InvariantCulture),
                                                            Constants.UkraineGeoModel, true);
                     ProjectPointAsync(point, true);
                 }
@@ -583,6 +601,8 @@ namespace MilSpace.GeoCalculator
         {
             try
             {
+                if (!MgrsNotationTextBox.Modified) return;
+
                 if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(MgrsNotationTextBox.Text))
                 {
                     var point = _businessLogic.ConvertFromMgrs(MgrsNotationTextBox.Text.Trim(), Constants.WgsGeoModel);
@@ -624,6 +644,8 @@ namespace MilSpace.GeoCalculator
         {
             try
             {
+                if (!UTMNotationTextBox.Modified) return;
+
                 if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(UTMNotationTextBox.Text))
                 {
                     var point = _businessLogic.ConvertFromUtm(UTMNotationTextBox.Text.Trim(), Constants.WgsGeoModel);
@@ -862,15 +884,139 @@ namespace MilSpace.GeoCalculator
             if (inputPoint == null) throw new ArgumentNullException(nameof(inputPoint));
             if (inputPoint.SpatialReference == null) throw new NullReferenceException($"Point with ID = {inputPoint.ID} has no spatial reference.");
 
-            if (fromUserInput)
-                inputPoint.Project(FocusMapSpatialReference);
+            ManageCurrentMapCoordinates(inputPoint, fromUserInput, lastProjectedPoint);
 
-            XCoordinateTextBox.Text = inputPoint.X.ToIntegerString();
-            YCoordinateTextBox.Text = inputPoint.Y.ToIntegerString();
-            lastProjectedPoint.XCoord = inputPoint.X.ToInteger();
-            lastProjectedPoint.YCoord = inputPoint.Y.ToInteger();
+            var wgsDD = ManageWgsDecimalDegrees(inputPoint, lastProjectedPoint);
 
-            var wgsDD = _businessLogic.ConvertToDecimalDegrees(inputPoint, Constants.WgsGeoModel);
+            var pulkovoDD = ManagePulkovoDecimalDegrees(inputPoint, wgsDD, lastProjectedPoint);
+
+            var ukraineDD = ManageUkraineDecimalDegrees(inputPoint, wgsDD, lastProjectedPoint);
+
+            ManageWgsCoordinates(wgsDD, lastProjectedPoint);
+
+            ManagePulkovoCoordinates(inputPoint, pulkovoDD, lastProjectedPoint);   
+
+            ManageUkraineCoordinates(inputPoint, ukraineDD, lastProjectedPoint); 
+
+            var guid = pointGuid ?? Guid.NewGuid().ToString();
+
+            if (!fromUserInput && !string.IsNullOrWhiteSpace(guid))
+                pointModels.Add(guid, new PointModel { Number = pointNumber, Longitude = lastProjectedPoint.WgsXCoordDD, Latitude = lastProjectedPoint.WgsYCoordDD });
+        }
+
+        private void ManageUkraineCoordinates(IPoint inputPoint, IPoint ukraineDD, ExtendedPointModel lastProjectedPoint)
+        {
+            IPoint ukrainePoint;
+            if (UkraineXCoordinateTextBox.Modified || UkraineYCoordinateTextBox.Modified)
+            {
+                ukrainePoint = inputPoint;
+                UkraineXCoordinateTextBox.Modified = false;
+                UkraineYCoordinateTextBox.Modified = false;
+            }
+            else
+            {
+                ukrainePoint = _businessLogic.ProjectPoint(ukraineDD, CurrentProjectionsModel.Ukraine2000Projection);
+            }            
+            UkraineXCoordinateTextBox.Text = ukrainePoint.X.ToIntegerString();
+            UkraineYCoordinateTextBox.Text = ukrainePoint.Y.ToIntegerString();
+            lastProjectedPoint.UkraineXCoord = ukrainePoint.X.ToInteger();
+            lastProjectedPoint.UkraineYCoord = ukrainePoint.Y.ToInteger();
+        }
+
+        private void ManagePulkovoCoordinates(IPoint inputPoint, IPoint pulkovoDD, ExtendedPointModel lastProjectedPoint)
+        {
+            IPoint pulkovoPoint;
+            if (PulkovoXCoordinateTextBox.Modified || PulkovoYCoordinateTextBox.Modified)
+            {
+                pulkovoPoint = inputPoint;
+                PulkovoXCoordinateTextBox.Modified = false;
+                PulkovoYCoordinateTextBox.Modified = false;
+            }
+            else
+            {
+                pulkovoPoint = _businessLogic.ProjectPoint(pulkovoDD, CurrentProjectionsModel.Pulkovo1942Projection);
+            }            
+            PulkovoXCoordinateTextBox.Text = pulkovoPoint.X.ToIntegerString();
+            PulkovoYCoordinateTextBox.Text = pulkovoPoint.Y.ToIntegerString();
+            lastProjectedPoint.PulkovoXCoord = pulkovoPoint.X.ToInteger();
+            lastProjectedPoint.PulkovoYCoord = pulkovoPoint.Y.ToInteger();
+        }
+
+        private void ManageWgsCoordinates(IPoint wgsDD, ExtendedPointModel lastProjectedPoint)
+        {
+            var wgsPoint = _businessLogic.ProjectPoint(wgsDD, CurrentProjectionsModel.WGS84Projection);
+            WgsXCoordinateTextBox.Text = wgsPoint.X.ToIntegerString();
+            WgsYCoordinateTextBox.Text = wgsPoint.Y.ToIntegerString();
+            lastProjectedPoint.WgsXCoord = wgsPoint.X.ToInteger();
+            lastProjectedPoint.WgsYCoord = wgsPoint.Y.ToInteger();
+
+            MgrsNotationTextBox.Text = (_businessLogic.ConvertToMgrs(wgsPoint))?.ToSeparatedMgrs();
+            lastProjectedPoint.MgrsRepresentation = MgrsNotationTextBox.Text;
+        }
+
+        private IPoint ManageUkraineDecimalDegrees(IPoint inputPoint, IPoint wgsDD, ExtendedPointModel lastProjectedPoint)
+        {
+            IPoint ukraineDD;
+
+            if (ukraineDMSXTextBox.Modified || ukraineDMSYTextBox.Modified)
+            {
+                ukraineDD = inputPoint;
+                ukraineDMSXTextBox.Modified = false;
+                ukraineDMSYTextBox.Modified = false;
+            }
+            else
+            {
+                ukraineDD = _businessLogic.ProjectWgsToUrkaine2000WithGeoTransformation(wgsDD, Constants.UkraineGeoModel, esriTransformDirection.esriTransformForward);
+            }
+            
+            ukraineDMSXTextBox.Text = ukraineDD.X.ToRoundedString();
+            ukraineDMSYTextBox.Text = ukraineDD.Y.ToRoundedString();
+            lastProjectedPoint.UkraineXCoordDD = ukraineDD.X.ToRoundedDouble();
+            lastProjectedPoint.UkraineYCoordDD = ukraineDD.Y.ToRoundedDouble();
+
+            return ukraineDD;
+        }
+
+        private IPoint ManagePulkovoDecimalDegrees(IPoint inputPoint, IPoint wgsDD, ExtendedPointModel lastProjectedPoint)
+        {
+            IPoint pulkovoDD;
+
+            if (pulkovoDMSXTextBox.Modified || pulkovoDMSYTextBox.Modified)
+            {
+                pulkovoDD = inputPoint;
+                pulkovoDMSXTextBox.Modified = false;
+                pulkovoDMSYTextBox.Modified = false;
+            }
+            else
+            {
+                pulkovoDD = _businessLogic.ProjectWgsToPulkovoWithGeoTransformation(wgsDD, Constants.PulkovoGeoModel, esriTransformDirection.esriTransformForward);
+            }
+            
+            pulkovoDMSXTextBox.Text = pulkovoDD.X.ToRoundedString();
+            pulkovoDMSYTextBox.Text = pulkovoDD.Y.ToRoundedString();
+            lastProjectedPoint.PulkovoXCoordDD = pulkovoDD.X.ToRoundedDouble();
+            lastProjectedPoint.PulkovoYCoordDD = pulkovoDD.Y.ToRoundedDouble();
+
+            return pulkovoDD;
+        }
+
+        private IPoint ManageWgsDecimalDegrees(IPoint inputPoint, ExtendedPointModel lastProjectedPoint)
+        {
+            IPoint wgsDD;
+
+            if (ukraineDMSXTextBox.Modified || ukraineDMSYTextBox.Modified)
+            {
+                wgsDD = _businessLogic.ProjectWgsToUrkaine2000WithGeoTransformation(inputPoint, Constants.WgsGeoModel, esriTransformDirection.esriTransformReverse);                
+            }
+            else if (pulkovoDMSXTextBox.Modified || pulkovoDMSYTextBox.Modified)
+            {
+                wgsDD = _businessLogic.ProjectWgsToPulkovoWithGeoTransformation(inputPoint, Constants.WgsGeoModel, esriTransformDirection.esriTransformReverse);                
+            }
+            else
+            {
+                wgsDD = _businessLogic.ConvertToDecimalDegrees(inputPoint, Constants.WgsGeoModel);
+            }
+
             wgsDMSXTextBox.Text = wgsDD.X.ToRoundedString();
             wgsDMSYTextBox.Text = wgsDD.Y.ToRoundedString();
             lastProjectedPoint.WgsXCoordDD = wgsDD.X.ToRoundedDouble();
@@ -878,47 +1024,19 @@ namespace MilSpace.GeoCalculator
 
             ManageProjectedCoordinateSystems(wgsDD.X);
 
-            //MGRS string MUST be calculated using WGS84 projected point, thus the next lines order matters!
-            var wgsPoint = _businessLogic.ProjectPoint(inputPoint, CurrentProjectionsModel.WGS84Projection);
-            WgsXCoordinateTextBox.Text = wgsPoint.X.ToIntegerString();
-            WgsYCoordinateTextBox.Text = wgsPoint.Y.ToIntegerString();
-            lastProjectedPoint.WgsXCoord = wgsPoint.X.ToInteger();
-            lastProjectedPoint.WgsYCoord = wgsPoint.Y.ToInteger();
-            
-            MgrsNotationTextBox.Text = (_businessLogic.ConvertToMgrs(wgsPoint))?.ToSeparatedMgrs();
-            lastProjectedPoint.MgrsRepresentation = MgrsNotationTextBox.Text;
+            return wgsDD;
+        }
 
-            var pulkovoPoint = _businessLogic.ProjectPoint(inputPoint, CurrentProjectionsModel.Pulkovo1942Projection);
-            PulkovoXCoordinateTextBox.Text = pulkovoPoint.X.ToIntegerString();
-            PulkovoYCoordinateTextBox.Text = pulkovoPoint.Y.ToIntegerString();
-            lastProjectedPoint.PulkovoXCoord = pulkovoPoint.X.ToInteger();
-            lastProjectedPoint.PulkovoYCoord = pulkovoPoint.Y.ToInteger();
+        private void ManageCurrentMapCoordinates(IPoint inputPoint, bool fromUserInput, ExtendedPointModel lastProjectedPoint)
+        {
+            var currentMapPoint = new PointClass { X = inputPoint.X, Y = inputPoint.Y, SpatialReference = inputPoint.SpatialReference };
 
-            var pulkovoDD = _businessLogic.ConvertToDecimalDegrees(inputPoint, Constants.PulkovoGeoModel);
-            pulkovoDMSXTextBox.Text = pulkovoDD.X.ToRoundedString();
-            pulkovoDMSYTextBox.Text = pulkovoDD.Y.ToRoundedString();
-            lastProjectedPoint.PulkovoXCoordDD = pulkovoDD.X.ToRoundedDouble();
-            lastProjectedPoint.PulkovoYCoordDD = pulkovoDD.Y.ToRoundedDouble();
+            if (fromUserInput) currentMapPoint.Project(FocusMapSpatialReference);
 
-            var ukrainePoint = _businessLogic.ProjectPoint(inputPoint, CurrentProjectionsModel.Ukraine2000Projection);
-            UkraineXCoordinateTextBox.Text = ukrainePoint.X.ToIntegerString();
-            UkraineYCoordinateTextBox.Text = ukrainePoint.Y.ToIntegerString();
-            lastProjectedPoint.UkraineXCoord = ukrainePoint.X.ToInteger();
-            lastProjectedPoint.UkraineYCoord = ukrainePoint.Y.ToInteger();
-
-            var ukraineDD = _businessLogic.ConvertToDecimalDegrees(inputPoint, Constants.UkraineGeoModel);
-            ukraineDMSXTextBox.Text = ukraineDD.X.ToRoundedString();
-            ukraineDMSYTextBox.Text = ukraineDD.Y.ToRoundedString();
-            lastProjectedPoint.UkraineXCoordDD = ukraineDD.X.ToRoundedDouble();
-            lastProjectedPoint.UkraineYCoordDD = ukraineDD.Y.ToRoundedDouble();
-
-            //Remove distorsions
-            inputPoint.Project(FocusMapSpatialReference);
-
-            var guid = pointGuid ?? Guid.NewGuid().ToString();
-
-            if (!fromUserInput && !string.IsNullOrWhiteSpace(guid))
-                pointModels.Add(guid, new PointModel { Number = pointNumber, Longitude = lastProjectedPoint.WgsXCoordDD, Latitude = lastProjectedPoint.WgsYCoordDD });
+            XCoordinateTextBox.Text = currentMapPoint.X.ToIntegerString();
+            YCoordinateTextBox.Text = currentMapPoint.Y.ToIntegerString();
+            lastProjectedPoint.XCoord = currentMapPoint.X.ToInteger();
+            lastProjectedPoint.YCoord = currentMapPoint.Y.ToInteger();
         }
 
         private void ManageProjectedCoordinateSystems(double longitudeValue)
