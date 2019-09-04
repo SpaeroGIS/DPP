@@ -42,6 +42,7 @@ namespace MilSpace.Tools.GraphicsLayer
         private void UpdateGraphic(IEnumerable<IPolyline> profileLines, int profileId, int profileTypeId, MilSpaceGraphicsTypeEnum graphicsType)
         {
             logger.InfoEx($"Update Graphic for profile {profileId}");
+
             EmptyProfileGraphics(graphicsType);
 
             int elementId = profileTypeId;
@@ -59,6 +60,8 @@ namespace MilSpace.Tools.GraphicsLayer
                                        MilSpaceGraphicsTypeEnum graphicsType, bool selectionRemove = false)
         {
             RemoveLineFromSessionGraphicsByLineId(profileId, groupedLines.LineId, graphicsType);
+
+            logger.InfoEx($"UpdateGraphicLine {profileId}");
 
             int elementId = 0;
             int lineNumber = 0;
@@ -284,6 +287,11 @@ namespace MilSpace.Tools.GraphicsLayer
 
                 if (profileColorLines != null)
                 {
+                    logger.InfoEx($"From Point - Graphics {line.FromPoint.X}: {line.FromPoint.Y}");
+                    logger.InfoEx($"To Point - Graphics {line.ToPoint.X}: {line.ToPoint.Y}");
+                    line.Project(activeView.FocusMap.SpatialReference);
+                    logger.InfoEx($"Projected From Point - Graphics {line.FromPoint.X}: {line.FromPoint.Y}");
+                    logger.InfoEx($"Projected To Point - Graphics {line.ToPoint.X}: {line.ToPoint.Y}");
                     var ge = new GraphicElement() { Source = line, ElementId = elementId, ProfileId = profileId, LineId = profileColorLines.LineId };
                     var color = (profileColorLines.Lines[lineNumber].Visible) ? profileColorLines.VisibleColor
                                                                               : profileColorLines.InvisibleColor;
@@ -400,6 +408,9 @@ namespace MilSpace.Tools.GraphicsLayer
                                     IRgbColor color = null, LineType lineType = LineType.DefaultLine, bool doRefresh = false,
                                     bool persist = false, int width = 2)
         {
+
+            logger.InfoEx($"AddPolyline {graphicElement.ProfileId} Element {graphicElement.ElementId}");
+
             IPolyline profileLine = graphicElement.Source;
             ILineElement lineElement = new LineElementClass();
 
@@ -409,8 +420,12 @@ namespace MilSpace.Tools.GraphicsLayer
                                            && ge.ElementId == graphicElement.ElementId
                                            && ge.LineId == graphicElement.LineId);
 
+
+            
+
             if (!persist && exists)
             {
+                logger.InfoEx($"! Persists & Exists");
                 return;
             }
 
@@ -434,17 +449,47 @@ namespace MilSpace.Tools.GraphicsLayer
 
             DeleteGraphicsElement(graphicElement);
 
-            graphics.AddElement(elem, 0);
 
+        //    ////////////////
+        //    //Create a new text element.  
+        //ITextElement textElement = new TextElementClass();  
+        ////Create a text symbol.  
+        //ITextSymbol textSymbol = new TextSymbolClass();  
+        //textSymbol.Size = 25;  
+  
+        ////Set the text element properties.  
+        //textElement.Symbol = textSymbol;  
+        //textElement.Text = DateTime.Now.ToShortDateString();  
+  
+        ////Query interface (QI) for IElement.  
+        //IElement element = (IElement)textElement;  
+        ////Create a point.  
+        //IPoint point = new PointClass();  
+        //point = profileLine.FromPoint;  
+        ////Set the element's geometry.  
+        //element.Geometry = point;  
+  
+        ////Add the element to the graphics container.  
+        //activeView.GraphicsContainer.AddElement(element, 0);  
+        //    ///
+
+
+            logger.InfoEx($"Adding element to Graphic container..");
+            graphics.AddElement(elem, 0);
+            logger.InfoEx($"Element addied to Graphic container.");
 
             if (!exists)
             {
+                logger.InfoEx($"Adding element to cache..");
                 curList.Add(graphicElement);
+                logger.InfoEx($"Element added to cache.");
             }
 
             if (doRefresh)
             {
+                logger.InfoEx($"Refreshing view..");
                 activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
+                logger.InfoEx($"Refreshed");
             }
         }
 
@@ -561,6 +606,11 @@ namespace MilSpace.Tools.GraphicsLayer
             bool result = false;
             while (ge != null)
             {
+
+                //if (ge is ILineElement line)
+                //{
+                //    var smbl = line.Symbol;
+                //}
                 if (ge.Equals(milSpaceElement.Element))
                 {
                     result = true;

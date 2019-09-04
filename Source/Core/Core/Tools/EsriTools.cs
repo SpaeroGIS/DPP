@@ -13,6 +13,7 @@ namespace MilSpace.Core.Tools
 {
     public static class EsriTools
     {
+        private static Logger logger = Logger.GetLoggerEx("EsriTools");
         private static ISpatialReference wgs84 = null;
         private static IRgbColor whiteColor = new RgbColor()
         {
@@ -154,11 +155,13 @@ namespace MilSpace.Core.Tools
 
         public static void PanToGeometry(IActiveView view, IGeometry geometry, bool setCenterAt = false)
         {
-            IEnvelope env = new EnvelopeClass();
-            env = view.Extent;
+            IEnvelope env = view.Extent;
+  
+            IRelationalOperator operation = env as IRelationalOperator;
+            logger.InfoEx($"Projeting to {view.FocusMap.SpatialReference.Name}");
+            geometry.Project(view.FocusMap.SpatialReference);
 
-            IRelationalOperator2 operation = env as IRelationalOperator2;
-            if(setCenterAt || !operation.Contains(geometry))
+            if (setCenterAt || !operation.Contains(geometry))
             {
                 ISegmentCollection poly = new PolygonClass();
                 IArea area = geometry.Envelope as IArea;
@@ -176,8 +179,9 @@ namespace MilSpace.Core.Tools
             color.Red = 255;
 
             short cacheId = display.AddCache();
+            logger.InfoEx("Statring drawing..");
             display.StartDrawing(display.hDC, cacheId);
-
+            
             geometries.ToList().ForEach(geometry =>
             {
                 if(symbolsToFlash.ContainsKey(geometry.GeometryType))
@@ -189,7 +193,7 @@ namespace MilSpace.Core.Tools
                 else
                 { throw new KeyNotFoundException("{0} cannot be found in the Symbol dictionary".InvariantFormat(geometry.GeometryType)); }
             });
-
+            logger.InfoEx("Finishibng drawing..");
             display.FinishDrawing();
 
             tagRECT rect = new tagRECT();
@@ -197,7 +201,7 @@ namespace MilSpace.Core.Tools
             System.Threading.Thread.Sleep(300);
             display.Invalidate(rect: null, erase: true, cacheIndex: cacheId);
             display.RemoveCache(cacheId);
-
+            logger.InfoEx("Geometries flashed.");
 
         }
 

@@ -100,7 +100,7 @@ namespace MilSpace.Profile
         {
             pointsToShow[ProfileSettingsPointButtonEnum.PointsFist] = pointToShow;
             View.LinePropertiesFirstPoint = pointToView;
-
+            logger.WarnEx("SetFirsPointForLineProfile");
             SetProfileSettings(ProfileSettingsTypeEnum.Points);
         }
 
@@ -114,7 +114,7 @@ namespace MilSpace.Profile
         {
             View.LinePropertiesSecondPoint = pointToView;
             pointsToShow[ProfileSettingsPointButtonEnum.PointsSecond] = pointToShow;
-
+            logger.WarnEx("SetSecondfPointForLineProfile");
             SetProfileSettings(ProfileSettingsTypeEnum.Points);
 
         }
@@ -264,7 +264,7 @@ namespace MilSpace.Profile
             
 
             InvokeOnProfileSettingsChanged();
-
+            logger.WarnEx("");
             GraphicsLayerManager.UpdateCalculatingGraphic(profileSetting.ProfileLines, profileIdValue, (int)profileType);
         }
 
@@ -379,6 +379,12 @@ namespace MilSpace.Profile
                 }
                 else if (profile.ProfileLines.Any(l => l.Id == lineId))
                 {
+                    var sgmnt = profile.Segments.First(segment => segment.LineId == lineId);
+
+                    sgmnt.Lines.ForEach(l => { logger.InfoEx($"WGS From Point {l.PointFrom.X}:{l.PointFrom.Y}"); logger.InfoEx($"WGS To Point {l.PointTo.X}:{l.PointTo.Y}"); }
+                    );
+
+     
                     GraphicsLayerManager.ShowLineOnWorkingGraphics(profileId,
                                                                     profile.Segments
                                                                            .First(segment => segment.LineId == lineId));
@@ -468,6 +474,7 @@ namespace MilSpace.Profile
             foreach (var line in profileLines)
             {
                 env.Union(line.Envelope);
+
             }
 
             EsriTools.PanToGeometry(View.ActiveView, env);
@@ -478,7 +485,10 @@ namespace MilSpace.Profile
             }
             else
             {
+                logger.InfoEx("Flushing geomerty");
                 EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, profileLines);
+                logger.InfoEx("Geomerty flushed");
+
             }
         }
 
@@ -576,6 +586,7 @@ namespace MilSpace.Profile
                 {
                     profileSession.SetSegments(ArcMap.Document.FocusMap.SpatialReference);
                 }
+                logger.DebugEx("CallGraphsHandle Root");
                 CallGraphsHandle(profileSession);
             }
         }

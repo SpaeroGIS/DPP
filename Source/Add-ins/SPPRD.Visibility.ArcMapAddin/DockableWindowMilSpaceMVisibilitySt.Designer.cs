@@ -77,47 +77,47 @@
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.panel24 = new System.Windows.Forms.Panel();
-            this.textBox15 = new System.Windows.Forms.TextBox();
+            this.observPointCreator = new System.Windows.Forms.TextBox();
             this.label24 = new System.Windows.Forms.Label();
-            this.textBox19 = new System.Windows.Forms.TextBox();
+            this.observPointDate = new System.Windows.Forms.TextBox();
             this.label27 = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
-            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.observPointName = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.panel11 = new System.Windows.Forms.Panel();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.heightMax = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.heightMin = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.panel17 = new System.Windows.Forms.Panel();
-            this.textBox11 = new System.Windows.Forms.TextBox();
+            this.heightCurrent = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.panel16 = new System.Windows.Forms.Panel();
-            this.textBox10 = new System.Windows.Forms.TextBox();
+            this.angleOFView = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.panel15 = new System.Windows.Forms.Panel();
-            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.angleMax = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
-            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.angleMin = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.panel14 = new System.Windows.Forms.Panel();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.azimuthMax = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.azimuthMin = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
             this.toolBar3 = new System.Windows.Forms.ToolBar();
             this.toolBarButton2 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton3 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton4 = new System.Windows.Forms.ToolBarButton();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.yCoord = new System.Windows.Forms.TextBox();
+            this.xCoord = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.panel13 = new System.Windows.Forms.Panel();
-            this.comboBox6 = new System.Windows.Forms.ComboBox();
+            this.cmbAffiliationEdit = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.comboBox7 = new System.Windows.Forms.ComboBox();
+            this.cmbObservTypesEdit = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
             this.panel12 = new System.Windows.Forms.Panel();
             this.toolBar2 = new System.Windows.Forms.ToolBar();
@@ -177,14 +177,14 @@
             this.chckFilterType = new System.Windows.Forms.CheckBox();
             this.chckFilterId = new System.Windows.Forms.CheckBox();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.cmbAffiliation = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.cmbObservPointType = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cmbObservPointsLayers = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panel30 = new System.Windows.Forms.Panel();
@@ -672,9 +672,9 @@
             // 
             // panel24
             // 
-            this.panel24.Controls.Add(this.textBox15);
+            this.panel24.Controls.Add(this.observPointCreator);
             this.panel24.Controls.Add(this.label24);
-            this.panel24.Controls.Add(this.textBox19);
+            this.panel24.Controls.Add(this.observPointDate);
             this.panel24.Controls.Add(this.label27);
             this.panel24.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel24.Location = new System.Drawing.Point(3, 195);
@@ -683,14 +683,14 @@
             this.panel24.Size = new System.Drawing.Size(322, 24);
             this.panel24.TabIndex = 29;
             // 
-            // textBox15
+            // observPointCreator
             // 
-            this.textBox15.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox15.Location = new System.Drawing.Point(170, 0);
-            this.textBox15.Name = "textBox15";
-            this.textBox15.Size = new System.Drawing.Size(127, 20);
-            this.textBox15.TabIndex = 7;
-            this.textBox15.Text = "vnikolaev";
+            this.observPointCreator.Dock = System.Windows.Forms.DockStyle.Left;
+            this.observPointCreator.Location = new System.Drawing.Point(170, 0);
+            this.observPointCreator.Name = "observPointCreator";
+            this.observPointCreator.Size = new System.Drawing.Size(127, 20);
+            this.observPointCreator.TabIndex = 7;
+            this.observPointCreator.Text = "vnikolaev";
             // 
             // label24
             // 
@@ -703,14 +703,14 @@
             this.label24.TabIndex = 6;
             this.label24.Text = "оператор";
             // 
-            // textBox19
+            // observPointDate
             // 
-            this.textBox19.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox19.Location = new System.Drawing.Point(38, 0);
-            this.textBox19.Name = "textBox19";
-            this.textBox19.Size = new System.Drawing.Size(74, 20);
-            this.textBox19.TabIndex = 5;
-            this.textBox19.Text = "2018-11-30";
+            this.observPointDate.Dock = System.Windows.Forms.DockStyle.Left;
+            this.observPointDate.Location = new System.Drawing.Point(38, 0);
+            this.observPointDate.Name = "observPointDate";
+            this.observPointDate.Size = new System.Drawing.Size(74, 20);
+            this.observPointDate.TabIndex = 5;
+            this.observPointDate.Text = "2018-11-30";
             // 
             // label27
             // 
@@ -725,7 +725,7 @@
             // 
             // panel8
             // 
-            this.panel8.Controls.Add(this.textBox9);
+            this.panel8.Controls.Add(this.observPointName);
             this.panel8.Controls.Add(this.label20);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel8.Location = new System.Drawing.Point(3, 171);
@@ -734,14 +734,14 @@
             this.panel8.Size = new System.Drawing.Size(322, 24);
             this.panel8.TabIndex = 28;
             // 
-            // textBox9
+            // observPointName
             // 
-            this.textBox9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox9.Location = new System.Drawing.Point(63, 0);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(259, 20);
-            this.textBox9.TabIndex = 5;
-            this.textBox9.Text = "\"Человеческое\" название ПН";
+            this.observPointName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.observPointName.Location = new System.Drawing.Point(63, 0);
+            this.observPointName.Name = "observPointName";
+            this.observPointName.Size = new System.Drawing.Size(259, 20);
+            this.observPointName.TabIndex = 5;
+            this.observPointName.Text = "\"Человеческое\" название ПН";
             // 
             // label20
             // 
@@ -769,9 +769,9 @@
             // 
             // panel11
             // 
-            this.panel11.Controls.Add(this.textBox4);
+            this.panel11.Controls.Add(this.heightMax);
             this.panel11.Controls.Add(this.label12);
-            this.panel11.Controls.Add(this.textBox3);
+            this.panel11.Controls.Add(this.heightMin);
             this.panel11.Controls.Add(this.label9);
             this.panel11.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel11.Location = new System.Drawing.Point(3, 147);
@@ -780,14 +780,14 @@
             this.panel11.Size = new System.Drawing.Size(322, 24);
             this.panel11.TabIndex = 26;
             // 
-            // textBox4
+            // heightMax
             // 
-            this.textBox4.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox4.Location = new System.Drawing.Point(264, 0);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(36, 20);
-            this.textBox4.TabIndex = 7;
-            this.textBox4.Text = "2035";
+            this.heightMax.Dock = System.Windows.Forms.DockStyle.Left;
+            this.heightMax.Location = new System.Drawing.Point(264, 0);
+            this.heightMax.Name = "heightMax";
+            this.heightMax.Size = new System.Drawing.Size(36, 20);
+            this.heightMax.TabIndex = 7;
+            this.heightMax.Text = "2035";
             // 
             // label12
             // 
@@ -800,14 +800,14 @@
             this.label12.TabIndex = 6;
             this.label12.Text = "макс";
             // 
-            // textBox3
+            // heightMin
             // 
-            this.textBox3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox3.Location = new System.Drawing.Point(191, 0);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(36, 20);
-            this.textBox3.TabIndex = 5;
-            this.textBox3.Text = "2035";
+            this.heightMin.Dock = System.Windows.Forms.DockStyle.Left;
+            this.heightMin.Location = new System.Drawing.Point(191, 0);
+            this.heightMin.Name = "heightMin";
+            this.heightMin.Size = new System.Drawing.Size(36, 20);
+            this.heightMin.TabIndex = 5;
+            this.heightMin.Text = "2035";
             // 
             // label9
             // 
@@ -822,7 +822,7 @@
             // 
             // panel17
             // 
-            this.panel17.Controls.Add(this.textBox11);
+            this.panel17.Controls.Add(this.heightCurrent);
             this.panel17.Controls.Add(this.label19);
             this.panel17.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel17.Location = new System.Drawing.Point(3, 123);
@@ -831,14 +831,14 @@
             this.panel17.Size = new System.Drawing.Size(322, 24);
             this.panel17.TabIndex = 25;
             // 
-            // textBox11
+            // heightCurrent
             // 
-            this.textBox11.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox11.Location = new System.Drawing.Point(208, 0);
-            this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(36, 20);
-            this.textBox11.TabIndex = 5;
-            this.textBox11.Text = "2035";
+            this.heightCurrent.Dock = System.Windows.Forms.DockStyle.Left;
+            this.heightCurrent.Location = new System.Drawing.Point(208, 0);
+            this.heightCurrent.Name = "heightCurrent";
+            this.heightCurrent.Size = new System.Drawing.Size(36, 20);
+            this.heightCurrent.TabIndex = 5;
+            this.heightCurrent.Text = "2035";
             // 
             // label19
             // 
@@ -853,7 +853,7 @@
             // 
             // panel16
             // 
-            this.panel16.Controls.Add(this.textBox10);
+            this.panel16.Controls.Add(this.angleOFView);
             this.panel16.Controls.Add(this.label18);
             this.panel16.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel16.Location = new System.Drawing.Point(3, 99);
@@ -862,14 +862,14 @@
             this.panel16.Size = new System.Drawing.Size(322, 24);
             this.panel16.TabIndex = 24;
             // 
-            // textBox10
+            // angleOFView
             // 
-            this.textBox10.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox10.Location = new System.Drawing.Point(128, 0);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(36, 20);
-            this.textBox10.TabIndex = 5;
-            this.textBox10.Text = "0";
+            this.angleOFView.Dock = System.Windows.Forms.DockStyle.Left;
+            this.angleOFView.Location = new System.Drawing.Point(128, 0);
+            this.angleOFView.Name = "angleOFView";
+            this.angleOFView.Size = new System.Drawing.Size(36, 20);
+            this.angleOFView.TabIndex = 5;
+            this.angleOFView.Text = "0";
             // 
             // label18
             // 
@@ -884,9 +884,9 @@
             // 
             // panel15
             // 
-            this.panel15.Controls.Add(this.textBox7);
+            this.panel15.Controls.Add(this.angleMax);
             this.panel15.Controls.Add(this.label15);
-            this.panel15.Controls.Add(this.textBox8);
+            this.panel15.Controls.Add(this.angleMin);
             this.panel15.Controls.Add(this.label16);
             this.panel15.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel15.Location = new System.Drawing.Point(3, 75);
@@ -895,14 +895,14 @@
             this.panel15.Size = new System.Drawing.Size(322, 24);
             this.panel15.TabIndex = 23;
             // 
-            // textBox7
+            // angleMax
             // 
-            this.textBox7.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox7.Location = new System.Drawing.Point(196, 0);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(36, 20);
-            this.textBox7.TabIndex = 7;
-            this.textBox7.Text = "360";
+            this.angleMax.Dock = System.Windows.Forms.DockStyle.Left;
+            this.angleMax.Location = new System.Drawing.Point(196, 0);
+            this.angleMax.Name = "angleMax";
+            this.angleMax.Size = new System.Drawing.Size(36, 20);
+            this.angleMax.TabIndex = 7;
+            this.angleMax.Text = "360";
             // 
             // label15
             // 
@@ -915,14 +915,14 @@
             this.label15.TabIndex = 6;
             this.label15.Text = "макс";
             // 
-            // textBox8
+            // angleMin
             // 
-            this.textBox8.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox8.Location = new System.Drawing.Point(123, 0);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(36, 20);
-            this.textBox8.TabIndex = 5;
-            this.textBox8.Text = "0";
+            this.angleMin.Dock = System.Windows.Forms.DockStyle.Left;
+            this.angleMin.Location = new System.Drawing.Point(123, 0);
+            this.angleMin.Name = "angleMin";
+            this.angleMin.Size = new System.Drawing.Size(36, 20);
+            this.angleMin.TabIndex = 5;
+            this.angleMin.Text = "0";
             // 
             // label16
             // 
@@ -937,9 +937,9 @@
             // 
             // panel14
             // 
-            this.panel14.Controls.Add(this.textBox5);
+            this.panel14.Controls.Add(this.azimuthMax);
             this.panel14.Controls.Add(this.label13);
-            this.panel14.Controls.Add(this.textBox6);
+            this.panel14.Controls.Add(this.azimuthMin);
             this.panel14.Controls.Add(this.label14);
             this.panel14.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel14.Location = new System.Drawing.Point(3, 51);
@@ -948,14 +948,14 @@
             this.panel14.Size = new System.Drawing.Size(322, 24);
             this.panel14.TabIndex = 22;
             // 
-            // textBox5
+            // azimuthMax
             // 
-            this.textBox5.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox5.Location = new System.Drawing.Point(176, 0);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(36, 20);
-            this.textBox5.TabIndex = 7;
-            this.textBox5.Text = "360";
+            this.azimuthMax.Dock = System.Windows.Forms.DockStyle.Left;
+            this.azimuthMax.Location = new System.Drawing.Point(176, 0);
+            this.azimuthMax.Name = "azimuthMax";
+            this.azimuthMax.Size = new System.Drawing.Size(36, 20);
+            this.azimuthMax.TabIndex = 7;
+            this.azimuthMax.Text = "360";
             // 
             // label13
             // 
@@ -968,14 +968,14 @@
             this.label13.TabIndex = 6;
             this.label13.Text = "макс";
             // 
-            // textBox6
+            // azimuthMin
             // 
-            this.textBox6.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox6.Location = new System.Drawing.Point(103, 0);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(36, 20);
-            this.textBox6.TabIndex = 5;
-            this.textBox6.Text = "0";
+            this.azimuthMin.Dock = System.Windows.Forms.DockStyle.Left;
+            this.azimuthMin.Location = new System.Drawing.Point(103, 0);
+            this.azimuthMin.Name = "azimuthMin";
+            this.azimuthMin.Size = new System.Drawing.Size(36, 20);
+            this.azimuthMin.TabIndex = 5;
+            this.azimuthMin.Text = "0";
             // 
             // label14
             // 
@@ -991,8 +991,8 @@
             // panel10
             // 
             this.panel10.Controls.Add(this.toolBar3);
-            this.panel10.Controls.Add(this.textBox2);
-            this.panel10.Controls.Add(this.textBox1);
+            this.panel10.Controls.Add(this.yCoord);
+            this.panel10.Controls.Add(this.xCoord);
             this.panel10.Controls.Add(this.label8);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel10.Location = new System.Drawing.Point(3, 27);
@@ -1033,24 +1033,24 @@
             this.toolBarButton4.ImageKey = "Clipboard Paste.png";
             this.toolBarButton4.Name = "toolBarButton4";
             // 
-            // textBox2
+            // yCoord
             // 
-            this.textBox2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox2.Location = new System.Drawing.Point(167, 0);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(55, 20);
-            this.textBox2.TabIndex = 4;
-            this.textBox2.Text = "50.12345";
+            this.yCoord.Dock = System.Windows.Forms.DockStyle.Left;
+            this.yCoord.Location = new System.Drawing.Point(167, 0);
+            this.yCoord.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
+            this.yCoord.Name = "yCoord";
+            this.yCoord.Size = new System.Drawing.Size(55, 20);
+            this.yCoord.TabIndex = 4;
+            this.yCoord.Text = "50.12345";
             // 
-            // textBox1
+            // xCoord
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox1.Location = new System.Drawing.Point(112, 0);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(55, 20);
-            this.textBox1.TabIndex = 3;
-            this.textBox1.Text = "36.54321";
+            this.xCoord.Dock = System.Windows.Forms.DockStyle.Left;
+            this.xCoord.Location = new System.Drawing.Point(112, 0);
+            this.xCoord.Name = "xCoord";
+            this.xCoord.Size = new System.Drawing.Size(55, 20);
+            this.xCoord.TabIndex = 3;
+            this.xCoord.Text = "36.54321";
             // 
             // label8
             // 
@@ -1065,9 +1065,9 @@
             // 
             // panel13
             // 
-            this.panel13.Controls.Add(this.comboBox6);
+            this.panel13.Controls.Add(this.cmbAffiliationEdit);
             this.panel13.Controls.Add(this.label10);
-            this.panel13.Controls.Add(this.comboBox7);
+            this.panel13.Controls.Add(this.cmbObservTypesEdit);
             this.panel13.Controls.Add(this.label11);
             this.panel13.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel13.Location = new System.Drawing.Point(3, 3);
@@ -1076,19 +1076,20 @@
             this.panel13.Size = new System.Drawing.Size(322, 24);
             this.panel13.TabIndex = 14;
             // 
-            // comboBox6
+            // cmbAffiliationEdit
             // 
-            this.comboBox6.Dock = System.Windows.Forms.DockStyle.Left;
-            this.comboBox6.FormattingEnabled = true;
-            this.comboBox6.Items.AddRange(new object[] {
+            this.cmbAffiliationEdit.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbAffiliationEdit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbAffiliationEdit.FormattingEnabled = true;
+            this.cmbAffiliationEdit.Items.AddRange(new object[] {
             "свои",
             "чужие ",
             "нейтральные",
             "неизвкчтно"});
-            this.comboBox6.Location = new System.Drawing.Point(220, 0);
-            this.comboBox6.Name = "comboBox6";
-            this.comboBox6.Size = new System.Drawing.Size(77, 21);
-            this.comboBox6.TabIndex = 4;
+            this.cmbAffiliationEdit.Location = new System.Drawing.Point(220, 0);
+            this.cmbAffiliationEdit.Name = "cmbAffiliationEdit";
+            this.cmbAffiliationEdit.Size = new System.Drawing.Size(77, 21);
+            this.cmbAffiliationEdit.TabIndex = 4;
             // 
             // label10
             // 
@@ -1101,14 +1102,15 @@
             this.label10.TabIndex = 3;
             this.label10.Text = "принадлежность";
             // 
-            // comboBox7
+            // cmbObservTypesEdit
             // 
-            this.comboBox7.Dock = System.Windows.Forms.DockStyle.Left;
-            this.comboBox7.FormattingEnabled = true;
-            this.comboBox7.Location = new System.Drawing.Point(32, 0);
-            this.comboBox7.Name = "comboBox7";
-            this.comboBox7.Size = new System.Drawing.Size(94, 21);
-            this.comboBox7.TabIndex = 2;
+            this.cmbObservTypesEdit.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbObservTypesEdit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbObservTypesEdit.FormattingEnabled = true;
+            this.cmbObservTypesEdit.Location = new System.Drawing.Point(32, 0);
+            this.cmbObservTypesEdit.Name = "cmbObservTypesEdit";
+            this.cmbObservTypesEdit.Size = new System.Drawing.Size(94, 21);
+            this.cmbObservTypesEdit.TabIndex = 2;
             // 
             // label11
             // 
@@ -1699,9 +1701,9 @@
             // 
             // panel4
             // 
-            this.panel4.Controls.Add(this.comboBox3);
+            this.panel4.Controls.Add(this.cmbAffiliation);
             this.panel4.Controls.Add(this.label3);
-            this.panel4.Controls.Add(this.comboBox2);
+            this.panel4.Controls.Add(this.cmbObservPointType);
             this.panel4.Controls.Add(this.label2);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(3, 51);
@@ -1710,19 +1712,15 @@
             this.panel4.Size = new System.Drawing.Size(336, 24);
             this.panel4.TabIndex = 2;
             // 
-            // comboBox3
+            // cmbAffiliation
             // 
-            this.comboBox3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Items.AddRange(new object[] {
-            "свои",
-            "чужие ",
-            "нейтральные",
-            "неизвкчтно"});
-            this.comboBox3.Location = new System.Drawing.Point(222, 0);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(94, 21);
-            this.comboBox3.TabIndex = 4;
+            this.cmbAffiliation.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbAffiliation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbAffiliation.FormattingEnabled = true;
+            this.cmbAffiliation.Location = new System.Drawing.Point(222, 0);
+            this.cmbAffiliation.Name = "cmbAffiliation";
+            this.cmbAffiliation.Size = new System.Drawing.Size(94, 21);
+            this.cmbAffiliation.TabIndex = 4;
             // 
             // label3
             // 
@@ -1735,17 +1733,15 @@
             this.label3.TabIndex = 3;
             this.label3.Text = "принадлежность";
             // 
-            // comboBox2
+            // cmbObservPointType
             // 
-            this.comboBox2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
-            "стационарный",
-            "мобильный"});
-            this.comboBox2.Location = new System.Drawing.Point(32, 0);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(94, 21);
-            this.comboBox2.TabIndex = 2;
+            this.cmbObservPointType.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbObservPointType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbObservPointType.FormattingEnabled = true;
+            this.cmbObservPointType.Location = new System.Drawing.Point(32, 0);
+            this.cmbObservPointType.Name = "cmbObservPointType";
+            this.cmbObservPointType.Size = new System.Drawing.Size(94, 21);
+            this.cmbObservPointType.TabIndex = 2;
             // 
             // label2
             // 
@@ -1781,7 +1777,7 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.comboBox1);
+            this.panel2.Controls.Add(this.cmbObservPointsLayers);
             this.panel2.Controls.Add(this.label1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(3, 3);
@@ -1790,15 +1786,15 @@
             this.panel2.Size = new System.Drawing.Size(336, 24);
             this.panel2.TabIndex = 0;
             // 
-            // comboBox1
+            // cmbObservPointsLayers
             // 
-            this.comboBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(59, 0);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(273, 21);
-            this.comboBox1.TabIndex = 1;
-            this.comboBox1.Text = "ObStations_201810";
+            this.cmbObservPointsLayers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cmbObservPointsLayers.FormattingEnabled = true;
+            this.cmbObservPointsLayers.Location = new System.Drawing.Point(59, 0);
+            this.cmbObservPointsLayers.Name = "cmbObservPointsLayers";
+            this.cmbObservPointsLayers.Size = new System.Drawing.Size(273, 21);
+            this.cmbObservPointsLayers.TabIndex = 1;
+            this.cmbObservPointsLayers.Text = "ObStations_201810";
             // 
             // label1
             // 
@@ -3386,47 +3382,47 @@
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.Panel panel24;
-        private System.Windows.Forms.TextBox textBox15;
+        private System.Windows.Forms.TextBox observPointCreator;
         private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.TextBox textBox19;
+        private System.Windows.Forms.TextBox observPointDate;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Panel panel8;
-        private System.Windows.Forms.TextBox textBox9;
+        private System.Windows.Forms.TextBox observPointName;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Panel panel11;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox heightMax;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox heightMin;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Panel panel17;
-        private System.Windows.Forms.TextBox textBox11;
+        private System.Windows.Forms.TextBox heightCurrent;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Panel panel16;
-        private System.Windows.Forms.TextBox textBox10;
+        private System.Windows.Forms.TextBox angleOFView;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Panel panel15;
-        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.TextBox angleMax;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.TextBox angleMin;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Panel panel14;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox azimuthMax;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox azimuthMin;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.ToolBar toolBar3;
         private System.Windows.Forms.ToolBarButton toolBarButton2;
         private System.Windows.Forms.ToolBarButton toolBarButton3;
         private System.Windows.Forms.ToolBarButton toolBarButton4;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox yCoord;
+        private System.Windows.Forms.TextBox xCoord;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Panel panel13;
-        private System.Windows.Forms.ComboBox comboBox6;
+        private System.Windows.Forms.ComboBox cmbAffiliationEdit;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.ComboBox comboBox7;
+        private System.Windows.Forms.ComboBox cmbObservTypesEdit;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.ToolBar toolBar2;
@@ -3486,14 +3482,14 @@
         private System.Windows.Forms.CheckBox chckFilterType;
         private System.Windows.Forms.CheckBox chckFilterId;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox cmbAffiliation;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox cmbObservPointType;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cmbObservPointsLayers;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Panel panel30;

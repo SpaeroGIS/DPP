@@ -196,7 +196,7 @@
     <value>Висота точки спостереження</value>
   </data>
   <data name="lblHydrographyLayerText" xml:space="preserve">
-    <value>Шар гідрогрфії</value>
+    <value>Шар гідрогарфії</value>
   </data>
   <data name="lblLayersForCalcText" xml:space="preserve">
     <value>Шари для розрахунків</value>

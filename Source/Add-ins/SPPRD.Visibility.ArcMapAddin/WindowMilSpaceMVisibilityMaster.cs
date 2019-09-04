@@ -17,9 +17,14 @@ namespace MilSpace.Visibility
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void NextStepButton_Click(object sender, EventArgs e)
         {
+            if(StepsTabControl.SelectedIndex < StepsTabControl.TabCount - 1) StepsTabControl.SelectedIndex++; 
+        }
 
+        private void PreviousStepButton_Click(object sender, EventArgs e)
+        {
+            if (StepsTabControl.SelectedIndex != 0) StepsTabControl.SelectedIndex--;
         }
     }
 }
