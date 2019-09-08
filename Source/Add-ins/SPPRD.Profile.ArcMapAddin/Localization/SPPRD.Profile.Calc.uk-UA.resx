@@ -142,7 +142,7 @@
     <value>Фільтри</value>
   </data>
   <data name="lblAboutSelectedText" xml:space="preserve">
-    <value>Інформація про вибране</value>
+    <value>Інформація про обране</value>
   </data>
   <data name="lblBuildingsLayerText" xml:space="preserve">
     <value>Шар забудов</value>
@@ -280,7 +280,7 @@
     <value>Новий профіль</value>
   </data>
   <data name="txtPickCoordinatesToolMessage" xml:space="preserve">
-    <value>Будь ласка, увімкніть інструмент для виділення точки.</value>
+    <value>Будь ласка, увімкніть інструмент для виділення точки</value>
   </data>
   <data name="btnReset" xml:space="preserve">
     <value>Скинути</value>
@@ -337,10 +337,10 @@
     <value>Видалити вкладку</value>
   </data>
   <data name="graphTbBtnDeleteSelectedProfileToolTip" xml:space="preserve">
-    <value>Видалити вибраний профіль з графіка</value>
+    <value>Видалити обраний профіль з графіка</value>
   </data>
   <data name="graphTbBtnDisplayProfileSignatureToolTip" xml:space="preserve">
-    <value>Відобразити підписи профілів на графіку</value>
+    <value>Відобразити підписи номерів профілів на графіку</value>
   </data>
   <data name="graphTbBtnObserverHeightIgnoreToolTip" xml:space="preserve">
     <value>Враховувати/ігнорувати висоту пункту спостереження при масштабуванні</value>
@@ -349,7 +349,7 @@
     <value>Позиціонування на набір профілів</value>
   </data>
   <data name="graphTbBtnPanToSelectedProfileToolTip" xml:space="preserve">
-    <value>Позиціонування на вибраний профіль</value>
+    <value>Позиціонування на обраний профіль</value>
   </data>
   <data name="graphTbBtnSaveToolTip" xml:space="preserve">
     <value>Зберегти дані</value>
@@ -376,7 +376,7 @@
     <value>видимі</value>
   </data>
   <data name="lvProfileDetailsToolTip" xml:space="preserve">
-    <value>Щоб скопіювати віділені рядки натисніть праву клавішу миші</value>
+    <value>Щоб скопіювати рядки натисніть праву клавішу миші</value>
   </data>
   <data name="dgvProfilePropertiesAscendingAngleColHeader" xml:space="preserve">
     <value>КП</value>
@@ -409,10 +409,10 @@
     <value>Н</value>
   </data>
   <data name="dgvProfilePropertiesVisiblePercentColHeader" xml:space="preserve">
-    <value>ВП</value>
+    <value>ВВ</value>
   </data>
   <data name="dgvProfilePropertiesVisiblePercentColToolTip" xml:space="preserve">
-    <value>Процент видимих зон</value>
+    <value>Відсоток видимих зон</value>
   </data>
   <data name="lblSelectedProfileNameText" xml:space="preserve">
     <value>Профіль:</value>
@@ -463,7 +463,7 @@
     <value>Видимі зони (%):</value>
   </data>
   <data name="mbFolderAlreadyExistMessage" xml:space="preserve">
-    <value>Каталог з іменем {1}  вже існує \n Ви дійсно хочете оновити дані?</value>
+    <value>Каталог  "{1}"  вже існує \n Ви дійсно хочете оновити дані?</value>
   </data>
   <data name="mbRemovingProfileMessage" xml:space="preserve">
     <value>Ви дійсно хочете видалити профіль?</value>
@@ -472,7 +472,7 @@
     <value>Ви дійсно хочете видалити вкладку?</value>
   </data>
   <data name="messageBoxTitle" xml:space="preserve">
-    <value>MilSpace</value>
+    <value>СППРД</value>
   </data>
   <data name="modalProfilesSetsTitle" xml:space="preserve">
     <value>Додати доступні набори профілів</value>
@@ -514,7 +514,7 @@
     <value>Зкинути профіль з сесії</value>
   </data>
   <data name="hintSaveProfileAsSharedText" xml:space="preserve">
-    <value>Надати сільний доступ до профілю</value>
+    <value>Надати спільний доступ до профілю</value>
   </data>
   <data name="hintToolBtnPanOnMapText" xml:space="preserve">
     <value>Переміститись  на карті</value>
@@ -532,7 +532,7 @@
     <value>Ви дійсно бажаєти видалити профіль  "{0}"?</value>
   </data>
   <data name="msgErrorOnShareProfileText" xml:space="preserve">
-    <value>Виникла помилка /n Більш деталььна інформація знаходиться в журналі.</value>
+    <value>Виникла помилка /n Більш детальна інформація знаходиться у журналі</value>
   </data>
   <data name="msgNotAllowedToShareText" xml:space="preserve">
     <value>Ви не можете дозволити спільний доступ для цього профілю.</value>
@@ -587,5 +587,17 @@
   </data>
   <data name="txtAttrProfileTypeText" xml:space="preserve">
     <value>Тип:</value>
+  </data>
+  <data name="btnCopyCoordToolTip" xml:space="preserve">
+    <value>Копіювати координату</value>
+  </data>
+  <data name="btnPasteCoordToolTip" xml:space="preserve">
+    <value>Вставити координату</value>
+  </data>
+  <data name="btnShowCoordToolTip" xml:space="preserve">
+    <value>Показати координати на карті</value>
+  </data>
+  <data name="btnTakeCoordToolTip" xml:space="preserve">
+    <value>Взяти координати з карти</value>
   </data>
 </root>

@@ -149,6 +149,16 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             _graphsController.InvokeAddProfile();
         }
 
+        internal void PanToSelectedProfile(int sessionId, int lineId)
+        {
+            _graphsController.InvokePanToSelectedProfile(sessionId, _profileSession.ProfileLines.First(line => line.Id == lineId));
+        }
+
+        internal void PanToSelectedProfilesSet(int sessionId)
+        {
+            _graphsController.InvokePanToSelectedProfilesSet(sessionId);
+        }
+
         internal void AddExtremePoints(ProfileSurface profileSurface = null)
         {
             if(profileSurface == null)
@@ -519,7 +529,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
                 var isExternal = (line.SessionId != _profileSession.SessionId);
 
-                var isExternalText = (isExternal) ? "+" : "-";
+                var isExternalText = (isExternal) ? "yes" : "no";
                 var stateText = (GetProfileSharedForLine(line.Id)) ? LocalizationConstants.ProfilesSetSharedText : LocalizationConstants.ProfilesSetNotSharedText;
 
                 var properties = $"{profileProperty.LineId};{GetProfileName(line.Id)};{isExternalText};{stateText};X = {ConvertDoubleToExportString(5, line.PointFrom.X)} Y = {ConvertDoubleToExportString(5, line.PointFrom.Y)} ;" +
@@ -544,8 +554,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
 
             var header = LocalizationConstants.DataExportPointsPropertiesHeader;
-            var trueText = "+";
-            var falseText = "-";
+            var trueText = "yes";
+            var falseText = "no";
 
             pointsPropertiesText.AppendLine(header);
 
@@ -586,7 +596,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                                 break;
 
                             case LayersEnum.NotIntersect:
-                                intersections += $"-";
+                                intersections += $"no";
                                 break;
                         }
 
@@ -595,7 +605,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
                 if (intersections == string.Empty)
                 {
-                    intersections = "-";
+                    intersections = "no";
                 }
 
                     pointsPropertiesText.AppendLine($"{vertex};{visible};{intersections}");

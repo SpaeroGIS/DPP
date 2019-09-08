@@ -588,4 +588,16 @@
   <data name="txtAttrProfileTypeText" xml:space="preserve">
     <value>Тип:</value>
   </data>
+  <data name="btnCopyCoordToolTip" xml:space="preserve">
+    <value>Копіювати координату</value>
+  </data>
+  <data name="btnPasteCoordToolTip" xml:space="preserve">
+    <value>Вставити координату</value>
+  </data>
+  <data name="btnShowCoordToolTip" xml:space="preserve">
+    <value>Показати координати на карті</value>
+  </data>
+  <data name="btnTakeCoordToolTip" xml:space="preserve">
+    <value>Взяти координати з карти</value>
+  </data>
 </root>
