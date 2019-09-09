@@ -155,6 +155,8 @@ namespace MilSpace.Profile
                     graphsController.GetIsProfileShared += GetIsProfileShared;
                     graphsController.AddProfile += AddProfileToExistedGraph;
                     graphsController.GetProfileSessionById += GetProfileById;
+                    graphsController.PanToSelectedProfile += PanToSelectedProfile;
+                    graphsController.PanToSelectedProfilesSet += PanToSelectedProfilesSet;
                 }
 
                 return graphsController;
@@ -458,36 +460,55 @@ namespace MilSpace.Profile
             return _workingProfiles.FirstOrDefault(p => p.DefinitionType == profileType && p.SessionId == profileId);
         }
 
-        internal void ShowProfileOnMap()
+        internal void ShowProfileOnMap(int profileId = -1, ProfileLine line = null)
         {
             var mapScale = View.ActiveView.FocusMap.MapScale;
-            var profile = GetProfileSessionFromSelectedNode();
+            ProfileSession profile;
+
+            if(profileId == -1)
+            {
+                profile = GetProfileSessionFromSelectedNode();
+            }
+            else
+            {
+               profile = GetProfileSessionById(profileId);
+            }
+
             if (profile == null)
             {
                 logger.ErrorEx("Cannot find Selected Profiles set");
                 return;
             }
 
-            var profileLines = profile.ProfileLines.Select(line => line.Line as IGeometry);
+            IEnumerable<IGeometry> profileLines;
+
+            if(line == null)
+            {
+               profileLines = profile.ProfileLines.Select(profileLine => profileLine.Line as IGeometry);
+            }
+            else
+            {
+                profileLines = new List<IGeometry> { line.Line };
+            }
+
             IEnvelope env = new EnvelopeClass();
 
-            foreach (var line in profileLines)
+            foreach (var profileLine in profileLines)
             {
-                env.Union(line.Envelope);
-
+                env.Union(profileLine.Envelope);
             }
 
             EsriTools.PanToGeometry(View.ActiveView, env);
 
             if (profile.DefinitionType == ProfileSettingsTypeEnum.Primitives)
             {
-                EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, profile.Segments.First().Polylines);
+               EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, profile.Segments.First().Polylines);
             }
             else
             {
-                logger.InfoEx("Flushing geomerty");
+                logger.InfoEx("Flashing geomerty");
                 EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, profileLines);
-                logger.InfoEx("Geomerty flushed");
+                logger.InfoEx("Geomerty flashed");
 
             }
         }
@@ -715,6 +736,12 @@ namespace MilSpace.Profile
         {
             var profile = MilSpaceProfileFacade.GetProfileSessionById(profileId);
             profile.ConvertLinesToEsriPolypile(View.ActiveView.FocusMap.SpatialReference);
+
+            if (profile.DefinitionType == ProfileSettingsTypeEnum.Primitives)
+            {
+                profile.SetSegments(View.ActiveView.FocusMap.SpatialReference);
+            }
+
             return profile;
         }
 
@@ -917,6 +944,16 @@ namespace MilSpace.Profile
         private void GenerateEmptyGraph()
         {
             graphsController.AddSession(GetEmptyProfileSession());
+        }
+
+        private void PanToSelectedProfilesSet(int sessionId)
+        {
+            ShowProfileOnMap(sessionId);
+        }
+
+        private void PanToSelectedProfile(int sessionId, ProfileLine line)
+        {
+            ShowProfileOnMap(sessionId, line);
         }
 
         private ProfileSession GetEmptyProfileSession()
