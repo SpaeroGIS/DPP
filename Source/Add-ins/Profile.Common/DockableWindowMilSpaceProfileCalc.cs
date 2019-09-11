@@ -290,6 +290,8 @@ namespace MilSpace.Profile
             this.controller = controller;
         }
 
+       
+
         /// <summary>
         /// Implementation class of the dockable window add-in. It is responsible for 
         /// creating and disposing the user interface class of the dockable window.
@@ -310,9 +312,17 @@ namespace MilSpace.Profile
                 controller = new MilSpaceProfileCalsController();
 
                 m_windowUI = new DockableWindowMilSpaceProfileCalc(this.Hook, controller);
-
-
+                AtivateDocableWindow();
                 return m_windowUI.Handle;
+            }
+
+            internal static IDockableWindow AtivateDocableWindow()
+            {
+                UID dockWinID = new UIDClass();
+                dockWinID.Value = ThisAddIn.IDs.DockableWindowMilSpaceProfileCalc;
+                IDockableWindow dockWindow = ArcMap.DockableWindowManager.GetDockableWindow(dockWinID);
+                dockWindow.Caption = LocalizationConstants.ProfileCalcDocableWinCationText;
+                return dockWindow;
             }
 
             protected override void Dispose(bool disposing)

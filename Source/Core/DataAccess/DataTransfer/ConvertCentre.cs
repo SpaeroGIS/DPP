@@ -82,8 +82,8 @@ namespace MilSpace.DataAccess.DataTransfer
                 AngelFrameV = dbObservationPoint.AnglFrameV,
                 AngelMaxH = dbObservationPoint.AnglMaxH,
                 AngelMinH = dbObservationPoint.AnglMinH,
-                AzimuthB = dbObservationPoint.AzimuthB,
-                AzimuthE = dbObservationPoint.AzimuthE,
+                AzimuthStart = dbObservationPoint.AzimuthB,
+                AzimuthEnd = dbObservationPoint.AzimuthE,
                 AzimuthMainAxis = dbObservationPoint.AzimuthMainAxis,
                 Dto = dbObservationPoint.dto,
                 Group = dbObservationPoint.sGroup,
@@ -112,8 +112,8 @@ namespace MilSpace.DataAccess.DataTransfer
             dbObservationPoint.AnglFrameV = observationPoint.AngelFrameV;
             dbObservationPoint.AnglMaxH = observationPoint.AngelMaxH;
             dbObservationPoint.AnglMinH = observationPoint.AngelMinH;
-            dbObservationPoint.AzimuthB = observationPoint.AzimuthB;
-            dbObservationPoint.AzimuthE = observationPoint.AzimuthE;
+            dbObservationPoint.AzimuthB = observationPoint.AzimuthStart;
+            dbObservationPoint.AzimuthE = observationPoint.AzimuthEnd;
             dbObservationPoint.AzimuthMainAxis = observationPoint.AzimuthMainAxis;
             dbObservationPoint.dto = DateTime.Now;
             dbObservationPoint.sGroup = observationPoint.Group;
@@ -140,8 +140,8 @@ namespace MilSpace.DataAccess.DataTransfer
                 AnglFrameV = observationPoint.AngelFrameV,
                 AnglMaxH = observationPoint.AngelMaxH,
                 AnglMinH = observationPoint.AngelMinH,
-                AzimuthB = observationPoint.AzimuthB,
-                AzimuthE = observationPoint.AzimuthE,
+                AzimuthB = observationPoint.AzimuthStart,
+                AzimuthE = observationPoint.AzimuthEnd,
                 AzimuthMainAxis = observationPoint.AzimuthMainAxis,
                 dto = observationPoint.Dto,
                 sGroup = observationPoint.Group,

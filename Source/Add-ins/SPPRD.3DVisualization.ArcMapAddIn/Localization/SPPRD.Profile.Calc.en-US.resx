@@ -585,6 +585,9 @@
   <data name="txtAttrProfileTypeText" xml:space="preserve">
     <value>Type</value>
   </data>
+  <data name="lblProfileDocableWinCaption" xml:space="preserve">
+    <value>Observation. Profile calc</value>
+  </data>
   <data name="btnCopyCoordToolTip" xml:space="preserve">
     <value>Copy coordinate</value>
   </data>
