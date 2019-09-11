@@ -1,14 +1,10 @@
-﻿using MilSpace.Configurations;
-using MilSpace.DataAccess.DataTransfer;
-using MilSpace.DataAccess.Definition;
-using MilSpace.DataAccess.Exceptions;
-using System;
+﻿using MilSpace.DataAccess.DataTransfer;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace MilSpace.DataAccess.Facade
 {
-    public static class VisibilityFacade
+    public static class VisibilityZonesFacade
     {
         public static IEnumerable<ObservationPoint> GetAllObservationPoints()
         {
@@ -19,5 +15,13 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
+        public static bool SaveObservationPoint(ObservationPoint observPoint)
+        {
+            using (var accessor = new SemanticDataAccess())
+            {
+                var res = accessor.SaveObservationPoint(observPoint);
+                return res;                
+            }
+        }
     }
 }

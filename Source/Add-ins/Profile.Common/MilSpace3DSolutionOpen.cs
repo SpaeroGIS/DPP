@@ -12,9 +12,8 @@ namespace MilSpace.Profile
         protected override void OnClick()
         {
             ArcMap.Application.CurrentTool = null;
-            UID dockWinID = new UIDClass();
-            dockWinID.Value = ThisAddIn.IDs.DockableWindowMilSpaceProfileCalc;
-            IDockableWindow dockWindow = ArcMap.DockableWindowManager.GetDockableWindow(dockWinID);
+
+            IDockableWindow dockWindow = DockableWindowMilSpaceProfileCalc.AddinImpl.AtivateDocableWindow();
             dockWindow.Show(true);  
 
         }

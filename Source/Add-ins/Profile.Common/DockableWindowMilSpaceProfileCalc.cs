@@ -290,6 +290,8 @@ namespace MilSpace.Profile
             this.controller = controller;
         }
 
+       
+
         /// <summary>
         /// Implementation class of the dockable window add-in. It is responsible for 
         /// creating and disposing the user interface class of the dockable window.
@@ -310,9 +312,17 @@ namespace MilSpace.Profile
                 controller = new MilSpaceProfileCalsController();
 
                 m_windowUI = new DockableWindowMilSpaceProfileCalc(this.Hook, controller);
-
-
+                AtivateDocableWindow();
                 return m_windowUI.Handle;
+            }
+
+            internal static IDockableWindow AtivateDocableWindow()
+            {
+                UID dockWinID = new UIDClass();
+                dockWinID.Value = ThisAddIn.IDs.DockableWindowMilSpaceProfileCalc;
+                IDockableWindow dockWindow = ArcMap.DockableWindowManager.GetDockableWindow(dockWinID);
+                dockWindow.Caption = LocalizationConstants.ProfileCalcDocableWinCationText;
+                return dockWindow;
             }
 
             protected override void Dispose(bool disposing)
@@ -906,8 +916,24 @@ namespace MilSpace.Profile
         {
             //TODO: Set all localization srting here
 
-            ToolTip ToolTip1 = new System.Windows.Forms.ToolTip();
-            ToolTip1.SetToolTip(this.btnRefreshLayers, LocalizationConstants.RefreshButtonToolTip);
+            ToolTip toolTip = new ToolTip();
+            toolTip.SetToolTip(this.btnRefreshLayers, LocalizationConstants.RefreshButtonToolTip);
+
+            firstPointToolBar.Buttons["toolBarButton8"].ToolTipText = LocalizationConstants.TakeCoordToolTip;
+            firstPointToolBar.Buttons["toolBarButton55"].ToolTipText = LocalizationConstants.ShowCoordToolTip;
+            firstPointToolBar.Buttons["toolBarButton57"].ToolTipText = LocalizationConstants.CopyCoordToolTip;
+            firstPointToolBar.Buttons["toolBarButton58"].ToolTipText = LocalizationConstants.PasteCoordToolTip;
+
+            secondPointToolbar.Buttons["toolBarButton61"].ToolTipText = LocalizationConstants.TakeCoordToolTip;
+            secondPointToolbar.Buttons["toolBarButton2"].ToolTipText = LocalizationConstants.ShowCoordToolTip;
+            secondPointToolbar.Buttons["toolBarButton3"].ToolTipText = LocalizationConstants.CopyCoordToolTip;
+            secondPointToolbar.Buttons["toolBarButton4"].ToolTipText = LocalizationConstants.PasteCoordToolTip;
+
+            basePointToolbar.Buttons["toolBarButton16"].ToolTipText = LocalizationConstants.TakeCoordToolTip;
+            basePointToolbar.Buttons["toolBarButton17"].ToolTipText = LocalizationConstants.ShowCoordToolTip;
+            basePointToolbar.Buttons["toolBarButton19"].ToolTipText = LocalizationConstants.CopyCoordToolTip;
+            basePointToolbar.Buttons["toolBarButton20"].ToolTipText = LocalizationConstants.PasteCoordToolTip;
+
             addAvailableProfilesSets.ToolTipText = LocalizationConstants.AddAvailableProfilesSetsToolTip;
             lblSelectedPrimitives.Text = LocalizationConstants.SelectedPrimitivesText;
             lblCommonLength.Text = LocalizationConstants.CommonLengthText;
@@ -1036,6 +1062,7 @@ namespace MilSpace.Profile
                     newNode.SetBasePoint($"X= {firstX}; Y= {firstY};");
                     newNode.SetToPoint($"X= {secondX}; Y= {secondY};");
                     newNode.SetBasePointHeight(SectionHeightFirst.ToString());
+                    newNode.SetToPointHeight(SectionHeightSecond.ToString());
                     newNode.SetLineDistance(lineDistance);
 
                 }
@@ -1043,6 +1070,7 @@ namespace MilSpace.Profile
                 {
                     var basePointX = profile.ProfileLines.First().Line.FromPoint.X.ToString("F5");
                     var basePointY = profile.ProfileLines.First().Line.FromPoint.Y.ToString("F5");
+                    var lineDistance = profile.ProfileLines.First().Line.Length.ToString("F5");
                     var linesCount = profile.ProfileLines.Length.ToString();
 
                     newNode.SetBasePoint($"X= {basePointX}; Y= {basePointY};");
@@ -1050,6 +1078,7 @@ namespace MilSpace.Profile
                     newNode.SetAzimuth1(profile.Azimuth1);
                     newNode.SetAzimuth2(profile.Azimuth2);
                     newNode.SetBasePointHeight(profile.ObserverHeight.ToString());
+                    newNode.SetLineDistance(lineDistance);
                 }
                 else if (profile.DefinitionType == ProfileSettingsTypeEnum.Primitives)
                 {
@@ -1193,14 +1222,14 @@ namespace MilSpace.Profile
         {
             var node = profilesTreeView.SelectedNode;
 
-            if (!(node is ProfileTreeNode)) return;
+            if(!(node is ProfileTreeNode)) return;
 
             ProfileTreeNode profileNode = (ProfileTreeNode)node;
             var profileType = GetProfileTypeFromNode();
             var rows = profileNode.Attributes.Rows;
 
 
-            if (profileType == ProfileSettingsTypeEnum.Points)
+            if(profileType == ProfileSettingsTypeEnum.Points)
             {
                 profileSettingsTab.SelectTab(0);
 
@@ -1209,15 +1238,15 @@ namespace MilSpace.Profile
                 var basePoint = GetPointFromRowValue(baseValue);
                 controller.SetFirsPointForLineProfile(basePoint.CloneWithProjecting(), basePoint);
 
-                //var toPoint = GetPointFromRowValue(toValue);
-                //controller.SetSecondfPointForLineProfile(toPoint.CloneWithProjecting(), toPoint);
+                var toValue = rows.Find(AttributeKeys.ToPoint)[AttributeKeys.ValueColumnName].ToString();
+
+                var toPoint = GetPointFromRowValue(toValue);
+                controller.SetSecondfPointForLineProfile(toPoint.CloneWithProjecting(), toPoint);
 
                 txtFirstHeight.Text = rows.Find(AttributeKeys.SectionFirstPointHeight)[AttributeKeys.ValueColumnName].ToString();
                 txtSecondHeight.Text = rows.Find(AttributeKeys.SectionSecondPointHeight)[AttributeKeys.ValueColumnName].ToString();
-                txtSecondHeight.Text = rows.Find(AttributeKeys.SectionSecondPointHeight)[AttributeKeys.ValueColumnName].ToString();
-
             }
-            if (profileType == ProfileSettingsTypeEnum.Fun)
+            if(profileType == ProfileSettingsTypeEnum.Fun)
             {
                 profileSettingsTab.SelectTab(1);
 
