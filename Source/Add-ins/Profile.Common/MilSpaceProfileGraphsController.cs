@@ -31,6 +31,8 @@ namespace MilSpace.Profile
         internal delegate string GetProfileNameDelegate(int id);
         internal delegate bool GetIsProfileSharedDelegate(int id);
         internal delegate ProfileSession GetProfileSessionByIdDelegate(int id);
+        internal delegate void PanToSelectedProfileDelegate(int sessionId, ProfileLine line);
+        internal delegate void PanToSelectedProfilesSetDelegate(int sessionId);
 
         internal event ProfileRedrawDelegate ProfileRedrawn;
         internal event DeleteProfileDelegate ProfileRemoved;
@@ -41,6 +43,8 @@ namespace MilSpace.Profile
         internal event GetProfileNameDelegate GetProfileName;
         internal event GetIsProfileSharedDelegate GetIsProfileShared;
         internal event GetProfileSessionByIdDelegate GetProfileSessionById;
+        internal event PanToSelectedProfileDelegate PanToSelectedProfile;
+        internal event PanToSelectedProfilesSetDelegate PanToSelectedProfilesSet;
 
         internal DockableWindowMilSpaceProfileGraph View { get; private set; }
 
@@ -112,6 +116,16 @@ namespace MilSpace.Profile
         internal void InvokeAddProfile()
         {
             AddProfile.Invoke();
+        }
+
+        internal void InvokePanToSelectedProfile(int sessionId, ProfileLine line)
+        {
+            PanToSelectedProfile.Invoke(sessionId, line);
+        }
+
+        internal void InvokePanToSelectedProfilesSet(int sessionId)
+        {
+            PanToSelectedProfilesSet.Invoke(sessionId);
         }
 
         internal void SetIntersections(List<IntersectionsInLayer> intersectionsLines, int lineId)

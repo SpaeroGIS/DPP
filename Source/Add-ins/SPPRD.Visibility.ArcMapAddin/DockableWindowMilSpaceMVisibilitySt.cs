@@ -259,6 +259,6 @@ namespace MilSpace.Visibility
                 var color = (IColor)new RgbColorClass() { Green = 255 };
                 var placedPoint = ArcMapHelper.AddGraphicToMap(point, color, true, esriSimpleMarkerStyle.esriSMSDiamond, 7);                
             }
-        }        
+        }
     }
 }

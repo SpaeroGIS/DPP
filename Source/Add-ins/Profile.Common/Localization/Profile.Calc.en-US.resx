@@ -588,4 +588,16 @@
   <data name="lblProfileDocableWinCaption" xml:space="preserve">
     <value>Observation. Profile calc</value>
   </data>
+  <data name="btnCopyCoordToolTip" xml:space="preserve">
+    <value>Copy coordinate</value>
+  </data>
+  <data name="btnPasteCoordToolTip" xml:space="preserve">
+    <value>Paste coordinate</value>
+  </data>
+  <data name="btnShowCoordToolTip" xml:space="preserve">
+    <value>Show coordinates on the map</value>
+  </data>
+  <data name="btnTakeCoordToolTip" xml:space="preserve">
+    <value>Take coordinates from the map</value>
+  </data>
 </root>

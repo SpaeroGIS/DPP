@@ -50,6 +50,10 @@ namespace MilSpace.Profile.Localization
         private static string GraphicsLayerValueKey = "txtGraphicsLayerValue";
         private static string PickCoordinatesToolMessageKey = "txtPickCoordinatesToolMessage";
         private static string AddAvailableProfilesSetsToolTipKey = "btnAddAvailableProfilesSetsToolTip";
+        private static string TakeCoordToolTipKey = "btnTakeCoordToolTip";
+        private static string ShowCoordToolTipKey = "btnShowCoordToolTip";
+        private static string CopyCoordToolTipKey = "btnCopyCoordToolTip";
+        private static string PasteCoordToolTipKey = "btnPasteCoordToolTip";
 
 
         //AddAvailableProfilesSetsModalWindow
@@ -269,6 +273,10 @@ namespace MilSpace.Profile.Localization
         public static string GraphicsLayerValue => Instance.GetLocalization(GraphicsLayerValueKey);
         public static string PickCoordinatesToolMessage => Instance.GetLocalization(PickCoordinatesToolMessageKey);
         public static string AddAvailableProfilesSetsToolTip => Instance.GetLocalization(AddAvailableProfilesSetsToolTipKey);
+        public static string TakeCoordToolTip => Instance.GetLocalization(TakeCoordToolTipKey, "Взяти координати з карти");
+        public static string ShowCoordToolTip => Instance.GetLocalization(ShowCoordToolTipKey, "Показати координати на карті");
+        public static string CopyCoordToolTip => Instance.GetLocalization(CopyCoordToolTipKey, "Копіювати координату");
+        public static string PasteCoordToolTip => Instance.GetLocalization(PasteCoordToolTipKey, "Вставити координату");
 
         //AddAvailableProfilesSetsModalWindow
         public static string FiltersTitle => Instance.GetLocalization(FiltersTitleKey, "Фільтри");

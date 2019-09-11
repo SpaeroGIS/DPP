@@ -188,6 +188,11 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         internal void SetExtremePoints(List<ProfileSurfacePoint> extremePoints, int id = 0)
         {
+            if(extremePoints.Count == 0)
+            {
+                return;
+            }
+
             if(id == 0)
             {
                 for(var i = 0; i < extremePoints.Count; i++)
@@ -1175,6 +1180,18 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                     SetAxisSizes();
                     SetAxisInterval(profileChart.ChartAreas["Default"].AxisY);
                     UpdateIntersectionsLine();
+
+                    break;
+
+                case "panToSelectedProfileGraphToolBarBtn":
+
+                    _controller.PanToSelectedProfile((int)profileNameLabel.Tag, SelectedLineId);
+
+                    break;
+
+                case "panGraphToolBarBtn":
+
+                    _controller.PanToSelectedProfilesSet((int)profileNameLabel.Tag);
 
                     break;
 
