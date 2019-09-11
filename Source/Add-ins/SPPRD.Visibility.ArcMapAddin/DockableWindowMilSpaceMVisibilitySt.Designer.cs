@@ -107,7 +107,7 @@
             this.azimuthMin = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
-            this.toolBar3 = new System.Windows.Forms.ToolBar();
+            this.tlbCoordinates = new System.Windows.Forms.ToolBar();
             this.toolBarButton2 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton3 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton4 = new System.Windows.Forms.ToolBarButton();
@@ -165,9 +165,10 @@
             this.panel9 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.toolBar7 = new System.Windows.Forms.ToolBar();
+            this.tlbObservPoints = new System.Windows.Forms.ToolBar();
             this.toolBarButton51 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton28 = new System.Windows.Forms.ToolBarButton();
+            this.addPointToolBarBtn = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton48 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton50 = new System.Windows.Forms.ToolBarButton();
             this.lstObservationPoinst = new System.Windows.Forms.ListBox();
@@ -990,7 +991,7 @@
             // 
             // panel10
             // 
-            this.panel10.Controls.Add(this.toolBar3);
+            this.panel10.Controls.Add(this.tlbCoordinates);
             this.panel10.Controls.Add(this.yCoord);
             this.panel10.Controls.Add(this.xCoord);
             this.panel10.Controls.Add(this.label8);
@@ -1001,22 +1002,23 @@
             this.panel10.Size = new System.Drawing.Size(322, 24);
             this.panel10.TabIndex = 21;
             // 
-            // toolBar3
+            // tlbCoordinates
             // 
-            this.toolBar3.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
+            this.tlbCoordinates.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
             this.toolBarButton2,
             this.toolBarButton3,
             this.toolBarButton4});
-            this.toolBar3.ButtonSize = new System.Drawing.Size(16, 16);
-            this.toolBar3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolBar3.DropDownArrows = true;
-            this.toolBar3.ImageList = this.imageList1;
-            this.toolBar3.Location = new System.Drawing.Point(222, 0);
-            this.toolBar3.Margin = new System.Windows.Forms.Padding(1, 3, 3, 3);
-            this.toolBar3.Name = "toolBar3";
-            this.toolBar3.ShowToolTips = true;
-            this.toolBar3.Size = new System.Drawing.Size(96, 28);
-            this.toolBar3.TabIndex = 29;
+            this.tlbCoordinates.ButtonSize = new System.Drawing.Size(16, 16);
+            this.tlbCoordinates.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlbCoordinates.DropDownArrows = true;
+            this.tlbCoordinates.ImageList = this.imageList1;
+            this.tlbCoordinates.Location = new System.Drawing.Point(222, 0);
+            this.tlbCoordinates.Margin = new System.Windows.Forms.Padding(1, 3, 3, 3);
+            this.tlbCoordinates.Name = "tlbCoordinates";
+            this.tlbCoordinates.ShowToolTips = true;
+            this.tlbCoordinates.Size = new System.Drawing.Size(96, 28);
+            this.tlbCoordinates.TabIndex = 29;
+            this.tlbCoordinates.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.TlbCoordinates_ButtonClick);
             // 
             // toolBarButton2
             // 
@@ -1569,33 +1571,34 @@
             // 
             // panel6
             // 
-            this.panel6.Controls.Add(this.toolBar7);
+            this.panel6.Controls.Add(this.tlbObservPoints);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel6.Location = new System.Drawing.Point(3, 207);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(336, 24);
             this.panel6.TabIndex = 6;
             // 
-            // toolBar7
+            // tlbObservPoints
             // 
-            this.toolBar7.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
+            this.tlbObservPoints.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
             this.toolBarButton51,
             this.toolBarButton52,
             this.toolBarButton28,
+            this.addPointToolBarBtn,
             this.toolBarButton3,
             this.toolBarButton27,
             this.toolBarButton48,
             this.toolBarButton50});
-            this.toolBar7.ButtonSize = new System.Drawing.Size(18, 18);
-            this.toolBar7.Dock = System.Windows.Forms.DockStyle.Left;
-            this.toolBar7.DropDownArrows = true;
-            this.toolBar7.ImageList = this.imageList1;
-            this.toolBar7.Location = new System.Drawing.Point(0, 0);
-            this.toolBar7.Name = "toolBar7";
-            this.toolBar7.ShowToolTips = true;
-            this.toolBar7.Size = new System.Drawing.Size(18, 24);
-            this.toolBar7.TabIndex = 40;
-            this.toolBar7.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.toolBar7_ButtonClick);
+            this.tlbObservPoints.ButtonSize = new System.Drawing.Size(18, 18);
+            this.tlbObservPoints.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tlbObservPoints.DropDownArrows = true;
+            this.tlbObservPoints.ImageList = this.imageList1;
+            this.tlbObservPoints.Location = new System.Drawing.Point(0, -4);
+            this.tlbObservPoints.Name = "tlbObservPoints";
+            this.tlbObservPoints.ShowToolTips = true;
+            this.tlbObservPoints.Size = new System.Drawing.Size(336, 28);
+            this.tlbObservPoints.TabIndex = 40;
+            this.tlbObservPoints.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.TlbObserPoints_ButtonClick);
             // 
             // toolBarButton51
             // 
@@ -1608,6 +1611,11 @@
             this.toolBarButton28.ImageIndex = 200;
             this.toolBarButton28.Name = "toolBarButton28";
             this.toolBarButton28.ToolTipText = "Редактировать";
+            // 
+            // addPointToolBarBtn
+            // 
+            this.addPointToolBarBtn.ImageKey = "Directions.png";
+            this.addPointToolBarBtn.Name = "addPointToolBarBtn";
             // 
             // toolBarButton48
             // 
@@ -3412,8 +3420,8 @@
         private System.Windows.Forms.TextBox azimuthMin;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Panel panel10;
-        private System.Windows.Forms.ToolBar toolBar3;
-        private System.Windows.Forms.ToolBarButton toolBarButton2;
+        private System.Windows.Forms.ToolBar tlbCoordinates;
+        private System.Windows.Forms.ToolBarButton takeCoordToolBarBtn;
         private System.Windows.Forms.ToolBarButton toolBarButton3;
         private System.Windows.Forms.ToolBarButton toolBarButton4;
         private System.Windows.Forms.TextBox yCoord;
@@ -3470,7 +3478,7 @@
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.ToolBar toolBar7;
+        private System.Windows.Forms.ToolBar tlbObservPoints;
         private System.Windows.Forms.ToolBarButton toolBarButton51;
         private System.Windows.Forms.ToolBarButton toolBarButton28;
         private System.Windows.Forms.ToolBarButton toolBarButton48;
@@ -3620,5 +3628,7 @@
         private System.Windows.Forms.Panel panel48;
         private System.Windows.Forms.Label label47;
         private System.Windows.Forms.ToolBarButton toolBarButton5;
+        private System.Windows.Forms.ToolBarButton addPointToolBarBtn;
+        private System.Windows.Forms.ToolBarButton toolBarButton2;
     }
 }

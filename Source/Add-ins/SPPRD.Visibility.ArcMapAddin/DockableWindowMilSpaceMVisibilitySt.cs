@@ -214,7 +214,7 @@ namespace MilSpace.Visibility
             (new WindowMilSpaceMVisibilityMaster()).ShowDialog();
         }
 
-        private void toolBar7_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        private void TlbObserPoints_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
             UID mapToolID = new UIDClass
             {
@@ -234,6 +234,17 @@ namespace MilSpace.Visibility
                 toolBarButton51.Pushed = true;
             }
 
+            switch(tlbObservPoints.Buttons.IndexOf(e.Button))
+            {
+
+                case 3:
+
+                    CreateNewPoint();
+
+                    break;
+
+            }
+
         }
 
         internal void ArcMap_OnMouseDown(int x, int y)
@@ -245,6 +256,9 @@ namespace MilSpace.Visibility
             resultPoint = (currentDocument.FocusMap as IActiveView).ScreenDisplay.DisplayTransformation.ToMapPoint(x, y);
 
             AddPointToMap(resultPoint);
+
+            xCoord.Text = resultPoint.X.ToString();
+            yCoord.Text = resultPoint.Y.ToString();
         }
 
         internal void ArcMap_OnMouseMove(int x, int y)
@@ -258,6 +272,59 @@ namespace MilSpace.Visibility
             {
                 var color = (IColor)new RgbColorClass() { Green = 255 };
                 var placedPoint = ArcMapHelper.AddGraphicToMap(point, color, true, esriSimpleMarkerStyle.esriSMSDiamond, 7);                
+            }
+        }
+
+        private void SetDefaultValues()
+        {
+            //IMapDescriptor description = new MapDescriptor();
+            //var layer = ArcMap.Document.FocusMap.BasicGraphicsLayer;
+            //Polygon extent = layer.getExtent();
+            //var g = (IGeometry)extent;
+            //var env = g.Envelope;
+            //var centerPoint = env.get_Center();
+            //xCoord.Text = centerPoint.X.ToString();
+            //yCoord.Text = centerPoint.Y.ToString();
+        }
+
+        private void CreateNewPoint()
+        {
+            var pointArgs = new ObservPointArgs();
+            //var point = new Point { X = Convert.ToDouble(xCoord.Text), Y = Convert.ToDouble(yCoord.Text), Z = Convert.ToDouble(xCoord.Text), }
+            //controller.AddPoint();
+        }
+
+        private void TlbCoordinates_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        {
+            switch(tlbCoordinates.Buttons.IndexOf(e.Button))
+            {
+
+                case 0:
+
+                    EnableObservPointsControls();
+                    SetDefaultValues();
+
+                    UID mapToolID = new UIDClass
+                    {
+                        Value = ThisAddIn.IDs.MapInteropTool
+                    };
+                    var documentBars = ArcMap.Application.Document.CommandBars;
+                    var mapTool = documentBars.Find(mapToolID, false, false);
+
+                    if(ArcMap.Application.CurrentTool?.ID?.Value != null && ArcMap.Application.CurrentTool.ID.Value.Equals(mapTool.ID.Value))
+                    {
+                        ArcMap.Application.CurrentTool = null;
+                    }
+                    else
+                    {
+                        ArcMap.Application.CurrentTool = mapTool;
+                    }
+
+                    break;
+
+                case 1:
+
+                    break;
             }
         }
     }

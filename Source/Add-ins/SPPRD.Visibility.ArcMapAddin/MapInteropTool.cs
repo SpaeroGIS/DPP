@@ -9,7 +9,7 @@ namespace MilSpace.Visibility
         protected override void OnActivate()
         {
             dockableWindowMilSpaceMVisibilitySt = AddIn.FromID<DockableWindowMilSpaceMVisibilitySt.AddinImpl>(ThisAddIn.IDs.DockableWindowMilSpaceMVisibilitySt)?.UI;
-            Cursor = System.Windows.Forms.Cursors.Arrow;
+            Cursor = System.Windows.Forms.Cursors.Cross;
             base.OnActivate();            
         }
 

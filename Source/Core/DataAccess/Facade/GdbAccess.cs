@@ -4,6 +4,7 @@ using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Configurations;
 using MilSpace.Core;
+using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -233,6 +234,36 @@ namespace MilSpace.DataAccess.Facade
             workspaceEdit.StopEditing(true);
 
             return featureClassName;
+        }
+
+        public void AddObservPoint(IPoint point, string featureClassName, ObservPointArgs pointArgs)
+        {
+            IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)calcWorkspace;
+            workspaceEdit.StartEditing(true);
+            workspaceEdit.StartEditOperation();
+
+            IFeatureClass calc = GetCalcProfileFeatureClass(featureClassName);
+            var GCS_WGS = Helper.GetBasePointSpatialReference();
+
+            var pointFeature = calc.CreateFeature();
+            pointFeature.Shape = point;
+
+           // int titleFieldId = calc.FindField("Title");
+            pointFeature.set_Value(calc.FindField("TitleOP"), pointArgs.Title);
+            pointFeature.set_Value(calc.FindField("TypeOP"), pointArgs.Type.ToString());
+            pointFeature.set_Value(calc.FindField("saffiliation"), pointArgs.Affiliation.ToString());
+            pointFeature.set_Value(calc.FindField("XWGS"), pointArgs.X);  
+            pointFeature.set_Value(calc.FindField("YWGS"), pointArgs.Y);
+            pointFeature.set_Value(calc.FindField("HRel"), pointArgs.RelativeHeight);
+            pointFeature.set_Value(calc.FindField("AzimuthB"), pointArgs.AzimuthB);
+            pointFeature.set_Value(calc.FindField("AzimuthE"), pointArgs.AzimuthE);
+            pointFeature.set_Value(calc.FindField("AzimuthMainAxis"), pointArgs.AzimuthMainAxis);
+            pointFeature.set_Value(calc.FindField("AnglMinH"), pointArgs.AngelMinH);
+            pointFeature.set_Value(calc.FindField("AnglMaxH"), pointArgs.AngelMaxH);
+            pointFeature.set_Value(calc.FindField("dto"), pointArgs.Dto);
+            pointFeature.set_Value(calc.FindField("soper"), pointArgs.Operator);
+
+            pointFeature.Store();
         }
 
         public void EraseProfileLines()

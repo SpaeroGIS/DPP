@@ -1,4 +1,5 @@
 ﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Geometry;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
 using System;
@@ -32,7 +33,7 @@ namespace MilSpace.Visibility.ViewController
             view.FillObservationPointList(VisibilityFacade.GetAllObservationPoints(), view.GetFilter);
         }
 
-        internal IEnumerable<ObservationPoint> GetAllBoservationPoints()
+        internal IEnumerable<ObservationPoint> GetAllObservationPoints()
         {
             return VisibilityFacade.GetAllObservationPoints();
         }
@@ -64,6 +65,12 @@ namespace MilSpace.Visibility.ViewController
             }
 
             return false;
+        }
+
+        public void AddPoint(IPoint point, ObservPointArgs pointArgs)
+        {
+            GdbAccess.Instance.AddObservPoint(point, observPointFeature, pointArgs);
+            UpdateObservationPointsList();
         }
     }
 }
