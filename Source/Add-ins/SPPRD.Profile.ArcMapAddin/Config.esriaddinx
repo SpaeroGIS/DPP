@@ -2,7 +2,7 @@
   <Name>SPPRD.Profile</Name>
   <AddInID>{9FE5052E-668B-420B-B5C7-E9A43917DB69}</AddInID>
   <Description>SPPRD 3-D solution. Module Profile</Description>
-  <Version>20192008.2</Version>
+  <Version>20192008.5</Version>
   <Image>Images\SPPRD.Profile.png</Image>
   <Author>admin</Author>
   <Company>DPP</Company>
@@ -25,7 +25,7 @@
       <DockableWindows>
         <DockableWindow id="SPPRD.Profile_DockableWindowMilSpaceProfileCalc" 
                         class="DockableWindowMilSpaceProfileCalc+AddinImpl" 
-                        caption="SPPRD Profile Calc" 
+                        caption="Спостереження Profile Calc" 
                         image="Images\DockableWindowMilSpaceProfileCalc.png">
           <InitialPlacement height="350" width="780" state="unpinned" position="float" />
         </DockableWindow>

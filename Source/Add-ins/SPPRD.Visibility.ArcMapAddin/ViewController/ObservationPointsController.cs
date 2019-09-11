@@ -29,12 +29,12 @@ namespace MilSpace.Visibility.ViewController
 
         internal void UpdateObservationPointsList()
         {
-            view.FillObservationPointList(VisibilityFacade.GetAllObservationPoints(), view.GetFilter);
+            view.FillObservationPointList(VisibilityZonesFacade.GetAllObservationPoints(), view.GetFilter);
         }
 
         internal IEnumerable<ObservationPoint> GetAllBoservationPoints()
         {
-            return VisibilityFacade.GetAllObservationPoints();
+            return VisibilityZonesFacade.GetAllObservationPoints();
         }
 
 

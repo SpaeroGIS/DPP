@@ -217,6 +217,39 @@ namespace MilSpace.DataAccess.Facade
             return null;
         }
 
+
+        public IEnumerable<ProfileSession> GetAvailableProfiles()
+        {
+            try
+            {
+                var result = context.MilSp_Profiles.Where(s => s.Creator == Environment.UserName || s.Shared).Select(s => s.Get());
+                log.InfoEx($"Get all profiles ({result.Count()}) for user {Environment.UserName} or shared with him");
+                return result;
+            }
+            catch (Exception ex)
+            {
+                log.WarnEx($"Unexpected exception:{ex.Message}");
+            }
+
+            return null;
+        }
+
+        #region Visibility
+        public IEnumerable<ObservationPoint> GetObservationPoints()
+        {
+            try
+            {
+                var result = context.VisiblilityObservPoints.Select(op => op.Get());
+                log.InfoEx($"Get all Observation point ({result.Count()}). user {Environment.UserName}");
+                return result;
+            }
+            catch (Exception ex)
+            {
+                log.WarnEx($"Unexpected exception:{ex.Message}");
+            }
+            return null;
+        }
+
         public bool SaveObservationPoint(ObservationPoint observPoint)
         {
             bool result = true;
@@ -251,37 +284,6 @@ namespace MilSpace.DataAccess.Facade
 
         }
 
-        public IEnumerable<ProfileSession> GetAvailableProfiles()
-        {
-            try
-            {
-                var result = context.MilSp_Profiles.Where(s => s.Creator == Environment.UserName || s.Shared).Select(s => s.Get());
-                log.InfoEx($"Get all profiles ({result.Count()}) for user {Environment.UserName} or shared with him");
-                return result;
-            }
-            catch (Exception ex)
-            {
-                log.WarnEx($"Unexpected exception:{ex.Message}");
-            }
-
-            return null;
-        }
-
-        #region Visibility
-        public IEnumerable<ObservationPoint> GetObservationPoints()
-        {
-            try
-            {
-                var result = context.VisiblilityObservPoints.Select(op => op.Get());
-                log.InfoEx($"Get all Observation point ({result.Count()}). user {Environment.UserName}");
-                return result;
-            }
-            catch (Exception ex)
-            {
-                log.WarnEx($"Unexpected exception:{ex.Message}");
-            }
-            return null;
-        }
         #endregion
 
     }

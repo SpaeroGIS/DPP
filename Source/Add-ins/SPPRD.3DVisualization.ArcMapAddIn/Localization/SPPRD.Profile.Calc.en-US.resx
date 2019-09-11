@@ -585,4 +585,7 @@
   <data name="txtAttrProfileTypeText" xml:space="preserve">
     <value>Type</value>
   </data>
+  <data name="lblProfileDocableWinCaption" xml:space="preserve">
+    <value>Observation. Profile calc</value>
+  </data>
 </root>

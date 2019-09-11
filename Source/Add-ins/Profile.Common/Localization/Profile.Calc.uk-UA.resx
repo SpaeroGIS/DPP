@@ -588,4 +588,7 @@
   <data name="txtAttrProfileTypeText" xml:space="preserve">
     <value>Тип:</value>
   </data>
+  <data name="lblProfileDocableWinCaption" xml:space="preserve">
+    <value>Спостереження. Розгахунок профіля</value>
+  </data>
 </root>

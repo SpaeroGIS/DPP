@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MilSpace.Configurations;
+using MilSpace.DataAccess.DataTransfer;
 
 namespace MilSpace.Tools.SurfaceProfile
 {
@@ -48,13 +49,34 @@ namespace MilSpace.Tools.SurfaceProfile
         }
         //-------------------------------------------------------------------------
 
-//public static bool GenerateVisibilityData()
-//        {
-//            Geoprocessor gp = new Geoprocessor();
+public static bool GenerateVisibilityData(
+                string rasterSource, 
+                string observerObjectsFeatureClass,
+                VisibilityAnalysisTypesEnum analyzeType,
+                int horizontalStartAngle,
+                int horizontalEndAngle,
+                double verticalUpperAngle,
+                double verticalLowerAngle
+                )
+        {
+            Geoprocessor gp = new Geoprocessor();
 
-//            Visibility stackProfile = new Visibility();
-//            stackProfile.A
-//        }
+            Visibility visibility = new Visibility();
+
+            visibility.analysis_type = analyzeType.ToString().ToUpper();
+            visibility.in_raster = rasterSource;
+            visibility.in_observer_features = observerObjectsFeatureClass;
+
+            visibility.horizontal_start_angle = horizontalStartAngle.ToString();
+            visibility.horizontal_end_angle = horizontalEndAngle.ToString();
+            visibility.vertical_lower_angle = verticalLowerAngle.ToString();
+            visibility.vertical_upper_angle = verticalUpperAngle.ToString();
+
+             GeoProcessorResult gpResult = new GeoProcessorResult();
+
+            gp.SetEnvironmentValue(environmentName, temporaryWorkspace); ;
+            return RunTool(gp, visibility, null);
+        }
 
         private static bool RunTool(Geoprocessor gp, IGPProcess process, ITrackCancel TC)
         {

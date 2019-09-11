@@ -196,7 +196,7 @@
     <value>Висота точки спостереження</value>
   </data>
   <data name="lblHydrographyLayerText" xml:space="preserve">
-    <value>Шар гідрогрфії</value>
+    <value>Шар гідрогарфії</value>
   </data>
   <data name="lblLayersForCalcText" xml:space="preserve">
     <value>Шари для розрахунків</value>
@@ -587,5 +587,8 @@
   </data>
   <data name="txtAttrProfileTypeText" xml:space="preserve">
     <value>Тип:</value>
+  </data>
+  <data name="lblProfileDocableWinCaption" xml:space="preserve">
+    <value>Спостереження. Розгахунок профіля</value>
   </data>
 </root>

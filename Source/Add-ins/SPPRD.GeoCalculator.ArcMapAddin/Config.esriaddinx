@@ -2,7 +2,7 @@
   <Name>SPPRD.GeoCalculator</Name>
   <AddInID>{023363B7-C741-4B68-B796-C1185549A6E2}</AddInID>
   <Description>Coordinates Converter.</Description>
-  <Version>1.0</Version>
+  <Version>20192008.5</Version>
   <Image>Images\ArcMapAddin.png</Image>
   <Author>DPP</Author>
   <Company></Company>

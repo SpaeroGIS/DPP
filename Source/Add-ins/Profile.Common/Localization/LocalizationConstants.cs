@@ -8,6 +8,8 @@ namespace MilSpace.Profile.Localization
         private static LocalizationConstants instance;
         private static MilSpaceResourceManager mngr;
 
+
+        private static string ProfileCalcDocableWinCationKey = "lblProfileDocableWinCaption";
         private static string RefreshButtonToolTipKey = "btnRefreshLayersToolTip";
         private static string CommonLengthTextKey = "lblCommonLengthText";
         private static string SelectedPrimitivesTextKey = "lblSelectedPrimitivesText";
@@ -193,6 +195,8 @@ namespace MilSpace.Profile.Localization
             //TODO: Define a method to change a culture info to localization
             mngr = new MilSpaceResourceManager("SPPRD.Profile.Calc", CultureInfo.GetCultureInfo("uk-UA"));
         }
+
+        public static string ProfileCalcDocableWinCationText => instance.GetLocalization(ProfileCalcDocableWinCationKey, "Спостереження. Розрахунок профіля");
         public static string AttrProfileDateText => instance.GetLocalization(AttrProfileDateTextKey, "Дата");
         public static string AttrProfileCreatorText => instance.GetLocalization(AttrProfileCreatorTextKey, "Автор");
         public static string AttrProfileCountText => instance.GetLocalization(AttrProfileCountTextKey, "Кількість ліній");
