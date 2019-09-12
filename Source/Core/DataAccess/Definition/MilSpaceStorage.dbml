@@ -41,6 +41,8 @@
       <Column Name="AnglCameraRotationV" Type="System.Double" DbType="Float" CanBeNull="true" />
       <Column Name="dto" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="soper" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="AvailableHeightUpper" Type="System.Double" DbType="Float" CanBeNull="false" />
+      <Column Name="AvailableHeightLover" Member="AvailableHeightLower" Type="System.Double" DbType="Float" CanBeNull="false" />
     </Type>
   </Table>
 </Database>
