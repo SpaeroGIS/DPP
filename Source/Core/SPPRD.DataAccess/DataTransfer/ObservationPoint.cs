@@ -30,15 +30,18 @@ namespace MilSpace.DataAccess.DataTransfer
 
         public int? Share;
 
-        public double? X;
+        public double X;
 
-        public double? Y;
+        public double Y;
 
         /// <summary>
         /// Height above surface, default - 0
         /// Cannot be less then 0.
         /// </summary>
-        public double? RelativeHeihgt;
+        public double RelativeHeight;
+
+        public double HeightMin;
+        public double HeightMax;
 
         /// <summary>
         /// This value defines the start angle of the horizontal scan range. The value should be specified in degrees from 0 to 360, 
@@ -49,7 +52,7 @@ namespace MilSpace.DataAccess.DataTransfer
         ///Shold be used as the parameter horizontal_start_angle in the Visibility calculation
         ///Deafult value - 0. Can not be more less then 0 and more 360 
         /// </summary>
-        public double? AzimuthStart;
+        public double AzimuthStart;
 
         /// <summary>
         /// This value defines the end angle of the horizontal scan range. The value should be specified in degrees from 0 to 360, 
@@ -60,7 +63,7 @@ namespace MilSpace.DataAccess.DataTransfer
         ///Shold be used as the parameter horizontal_end_angle in the Visibility calculation
         ///Deafult value - 360. Can not be more less then 0 and more 360 
         /// </summary>
-        public double? AzimuthEnd;
+        public double AzimuthEnd;
 
         /// <summary>
         /// This value defines the upper vertical angle limit of the scan above a horizontal plane.
@@ -70,7 +73,7 @@ namespace MilSpace.DataAccess.DataTransfer
         /// Shold be used as the parameter vertical_upper_angle in the Visibility calculation
         /// Default value - 0
         /// </summary>
-        public double? AngelMinH;
+        public double AngelMinH;
 
         /// <summary>
         /// This value defines the lower vertical angle limit of the scan below a horizontal plane. 
@@ -80,10 +83,10 @@ namespace MilSpace.DataAccess.DataTransfer
         /// Shold be used as the parameter vertical_lower_angle in the Visibility calculation. 
         /// Default value - 90
         /// </summary>
-        public double? AngelMaxH;
+        public double AngelMaxH;
 
         /// <summary>
-        /// The main direct of the observatio point/station. 
+        /// The main direct of the observation point/station. 
         /// Can be used for rectification of the horisontal angels in Visibility calculation
         /// </summary>
         public double? AzimuthMainAxis;

@@ -90,7 +90,7 @@ namespace MilSpace.DataAccess.DataTransfer
                 Id = dbObservationPoint.idOP,
                 Objectid = dbObservationPoint.objectid,
                 Operator = dbObservationPoint.soper,
-                RelativeHeihgt = dbObservationPoint.HRel,
+                RelativeHeight = dbObservationPoint.HRel,
                 Share = dbObservationPoint.ishare,
                 Title = dbObservationPoint.TitleOP,
                 Type = dbObservationPoint.TypeOP,
@@ -120,7 +120,7 @@ namespace MilSpace.DataAccess.DataTransfer
             dbObservationPoint.idOP = observationPoint.Id;
             dbObservationPoint.objectid = observationPoint.Objectid;
             dbObservationPoint.soper = observationPoint.Operator;
-            dbObservationPoint.HRel = observationPoint.RelativeHeihgt;
+            dbObservationPoint.HRel = observationPoint.RelativeHeight;
             dbObservationPoint.ishare = observationPoint.Share;
             dbObservationPoint.TitleOP = observationPoint.Title;
             dbObservationPoint.TypeOP = observationPoint.Type;
@@ -148,7 +148,7 @@ namespace MilSpace.DataAccess.DataTransfer
                 idOP = observationPoint.Id,
                 objectid = observationPoint.Objectid,
                 soper = observationPoint.Operator,
-                HRel = observationPoint.RelativeHeihgt,
+                HRel = observationPoint.RelativeHeight,
                 ishare = observationPoint.Share,
                 TitleOP = observationPoint.Title,
                 TypeOP = observationPoint.Type,

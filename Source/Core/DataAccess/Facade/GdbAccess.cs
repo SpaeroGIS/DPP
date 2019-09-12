@@ -236,7 +236,7 @@ namespace MilSpace.DataAccess.Facade
             return featureClassName;
         }
 
-        public void AddObservPoint(IPoint point, string featureClassName, ObservPointArgs pointArgs)
+        public void AddObservPoint(IPoint point, string featureClassName, ObservationPoint pointArgs)
         {
             IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)calcWorkspace;
             workspaceEdit.StartEditing(true);
@@ -255,8 +255,8 @@ namespace MilSpace.DataAccess.Facade
             pointFeature.set_Value(calc.FindField("XWGS"), pointArgs.X);  
             pointFeature.set_Value(calc.FindField("YWGS"), pointArgs.Y);
             pointFeature.set_Value(calc.FindField("HRel"), pointArgs.RelativeHeight);
-            pointFeature.set_Value(calc.FindField("AzimuthB"), pointArgs.AzimuthB);
-            pointFeature.set_Value(calc.FindField("AzimuthE"), pointArgs.AzimuthE);
+            pointFeature.set_Value(calc.FindField("AzimuthB"), pointArgs.AzimuthStart);
+            pointFeature.set_Value(calc.FindField("AzimuthE"), pointArgs.AzimuthEnd);
             pointFeature.set_Value(calc.FindField("AzimuthMainAxis"), pointArgs.AzimuthMainAxis);
             pointFeature.set_Value(calc.FindField("AnglMinH"), pointArgs.AngelMinH);
             pointFeature.set_Value(calc.FindField("AnglMaxH"), pointArgs.AngelMaxH);

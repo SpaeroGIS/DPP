@@ -1,5 +1,6 @@
 ﻿using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Geometry;
+using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
 using System;
@@ -28,6 +29,8 @@ namespace MilSpace.Visibility.ViewController
             throw new NotImplementedException();
         }
 
+        
+
         internal void UpdateObservationPointsList()
         {
             view.FillObservationPointList(VisibilityZonesFacade.GetAllObservationPoints(), view.GetFilter);
@@ -37,7 +40,6 @@ namespace MilSpace.Visibility.ViewController
         {
             return VisibilityZonesFacade.GetAllObservationPoints();
         }
-
 
         public IEnumerable<string> GetObservationPointTypes()
         {
@@ -54,9 +56,9 @@ namespace MilSpace.Visibility.ViewController
             var layers = view.FocusMap.Layers;
             var layer = layers.Next();
 
-            while (layer != null)
+            while(layer != null)
             {
-                if (layer is IFeatureLayer fl && fl.FeatureClass.AliasName.Equals(observPointFeature, StringComparison.InvariantCultureIgnoreCase))
+                if(layer is IFeatureLayer fl && fl.FeatureClass.AliasName.Equals(observPointFeature, StringComparison.InvariantCultureIgnoreCase))
                 {
                     return true;
                 }
@@ -67,10 +69,20 @@ namespace MilSpace.Visibility.ViewController
             return false;
         }
 
-        public void AddPoint(IPoint point, ObservPointArgs pointArgs)
+        public void AddPoint(IPoint point, ObservationPoint pointArgs)
         {
             GdbAccess.Instance.AddObservPoint(point, observPointFeature, pointArgs);
             UpdateObservationPointsList();
+        }
+
+        public IPoint GetEnvelopeCenterPoint(IEnvelope envelope)
+        {
+            var x = (envelope.XMin + envelope.XMax) / 2;
+            var y = (envelope.YMin + envelope.YMax) / 2;
+
+            var point = new PointClass { X = x, Y = y, SpatialReference = envelope.SpatialReference };
+            point.Project(EsriTools.Wgs84Spatialreference);
+            return point;
         }
     }
 }
