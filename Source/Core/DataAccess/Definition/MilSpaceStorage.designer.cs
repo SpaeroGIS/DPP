@@ -481,6 +481,10 @@ namespace MilSpace.DataAccess.Definition
 		
 		private string _soper;
 		
+		private double _AvailableHeightUpper;
+		
+		private double _AvailableHeightLower;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -527,6 +531,10 @@ namespace MilSpace.DataAccess.Definition
     partial void OndtoChanged();
     partial void OnsoperChanging(string value);
     partial void OnsoperChanged();
+    partial void OnAvailableHeightUpperChanging(double value);
+    partial void OnAvailableHeightUpperChanged();
+    partial void OnAvailableHeightLowerChanging(double value);
+    partial void OnAvailableHeightLowerChanged();
     #endregion
 		
 		public VisiblilityObservPoint()
@@ -950,6 +958,46 @@ namespace MilSpace.DataAccess.Definition
 					this._soper = value;
 					this.SendPropertyChanged("soper");
 					this.OnsoperChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AvailableHeightUpper", DbType="Float")]
+		public double AvailableHeightUpper
+		{
+			get
+			{
+				return this._AvailableHeightUpper;
+			}
+			set
+			{
+				if ((this._AvailableHeightUpper != value))
+				{
+					this.OnAvailableHeightUpperChanging(value);
+					this.SendPropertyChanging();
+					this._AvailableHeightUpper = value;
+					this.SendPropertyChanged("AvailableHeightUpper");
+					this.OnAvailableHeightUpperChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="AvailableHeightLover", Storage="_AvailableHeightLower", DbType="Float")]
+		public double AvailableHeightLower
+		{
+			get
+			{
+				return this._AvailableHeightLower;
+			}
+			set
+			{
+				if ((this._AvailableHeightLower != value))
+				{
+					this.OnAvailableHeightLowerChanging(value);
+					this.SendPropertyChanging();
+					this._AvailableHeightLower = value;
+					this.SendPropertyChanged("AvailableHeightLower");
+					this.OnAvailableHeightLowerChanged();
 				}
 			}
 		}
