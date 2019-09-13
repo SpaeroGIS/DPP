@@ -10,8 +10,10 @@ namespace MilSpace.DataAccess.Facade
         {
             using (var accessor = new SemanticDataAccess())
             {
-                var res = accessor.GetObservationPoints().ToArray();
-                return res;
+                var res = accessor.GetObservationPoints();
+
+
+                return res.ToArray();
             }
         }
 
