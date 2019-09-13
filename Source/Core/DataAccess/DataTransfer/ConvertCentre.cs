@@ -88,7 +88,7 @@ namespace MilSpace.DataAccess.DataTransfer
                 Dto = dbObservationPoint.dto,
                 Group = dbObservationPoint.sGroup,
                 Id = dbObservationPoint.idOP,
-                Objectid = dbObservationPoint.objectid,
+                Objectid = dbObservationPoint.OBJECTID,
                 Operator = dbObservationPoint.soper,
                 RelativeHeihgt = dbObservationPoint.HRel,
                 Share = dbObservationPoint.ishare,
@@ -102,9 +102,8 @@ namespace MilSpace.DataAccess.DataTransfer
 
         }
 
-        internal static void  Update(this VisiblilityObservPoint dbObservationPoint, ObservationPoint observationPoint)
+        internal static void Update(this VisiblilityObservPoint dbObservationPoint, ObservationPoint observationPoint)
         {
-
             dbObservationPoint.saffiliation = observationPoint.Affiliation;
             dbObservationPoint.AnglCameraRotationH = observationPoint.AngelCameraRotationH;
             dbObservationPoint.AnglCameraRotationV = observationPoint.AngelCameraRotationV;
@@ -118,7 +117,7 @@ namespace MilSpace.DataAccess.DataTransfer
             dbObservationPoint.dto = DateTime.Now;
             dbObservationPoint.sGroup = observationPoint.Group;
             dbObservationPoint.idOP = observationPoint.Id;
-            dbObservationPoint.objectid = observationPoint.Objectid;
+            dbObservationPoint.OBJECTID = observationPoint.Objectid;
             dbObservationPoint.soper = observationPoint.Operator;
             dbObservationPoint.HRel = observationPoint.RelativeHeihgt;
             dbObservationPoint.ishare = observationPoint.Share;
@@ -126,7 +125,6 @@ namespace MilSpace.DataAccess.DataTransfer
             dbObservationPoint.TypeOP = observationPoint.Type;
             dbObservationPoint.XWGS = observationPoint.X;
             dbObservationPoint.YWGS = observationPoint.Y;
-
         }
 
         internal static VisiblilityObservPoint Get(this ObservationPoint observationPoint)
@@ -146,7 +144,7 @@ namespace MilSpace.DataAccess.DataTransfer
                 dto = observationPoint.Dto,
                 sGroup = observationPoint.Group,
                 idOP = observationPoint.Id,
-                objectid = observationPoint.Objectid,
+                OBJECTID = observationPoint.Objectid,
                 soper = observationPoint.Operator,
                 HRel = observationPoint.RelativeHeihgt,
                 ishare = observationPoint.Share,

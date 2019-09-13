@@ -21,10 +21,16 @@
         <classShapeMoniker Id="e67135f7-208c-4515-b400-76f4e4953b7a" />
       </nodes>
     </associationConnector>
-    <classShape Id="4ad12e95-676e-4abb-9755-7c9a2417eaca" absoluteBounds="2, 3, 2, 5.2323225911458326">
+    <classShape Id="431d157a-e3e9-454a-8261-65d18940be9c" absoluteBounds="6.375, 3, 2, 5.2323225911458326">
+      <DataClassMoniker Name="/MilSpaceStorageContext/VisiblilityObservPoint11" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b382c700-08bb-4b21-a7d9-57c424c891fb" absoluteBounds="6.39, 3.46, 1.9700000000000002, 4.672322591145833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="209f6c0e-f6a7-43d9-88fc-882cc262a072" absoluteBounds="2.875, 2.25, 2, 5.2323225911458326">
       <DataClassMoniker Name="/MilSpaceStorageContext/VisiblilityObservPoint" />
       <nestedChildShapes>
-        <elementListCompartment Id="ef571cc9-4724-4573-98bc-8c6dc104896b" absoluteBounds="2.0149999999999997, 3.46, 1.9700000000000002, 4.672322591145833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="c5d7bb6c-bd80-4ed1-be0c-620891ec0df2" absoluteBounds="2.8899999999999997, 2.71, 1.9700000000000002, 4.672322591145833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>
