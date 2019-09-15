@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace MilSpace.Visibility
@@ -53,7 +54,7 @@ namespace MilSpace.Visibility
             editEvent.OnCreateFeature += controller.OnCreateFeature;
 
             ArcMap.Events.OpenDocument += delegate () {
-                IActiveViewEvents_Event activeViewEvent = (IActiveViewEvents_Event)ArcMap.Document.ActiveView;
+                IActiveViewEvents_Event activeViewEvent = (IActiveViewEvents_Event)ActiveView;
 
                 activeViewEvent.SelectionChanged += OnContentsChanged;
                 activeViewEvent.ItemAdded += OnItemAdded;
@@ -153,14 +154,17 @@ namespace MilSpace.Visibility
             filters.AddRange(GetAffiliation.ToArray());
             cmbAffiliation.Items.Clear();
             cmbAffiliationEdit.Items.Clear();
+            cmbObservPointsLayers.Items.Clear();
 
             cmbAffiliation.Items.AddRange(filters.ToArray());
             cmbAffiliationEdit.Items.AddRange(GetAffiliation.ToArray());
+            cmbObservPointsLayers.Items.AddRange(controller.GetObservationPointsLayers(ActiveView).ToArray());
         }
 
 
         private void SetDefaultValues()
         {
+            cmbObservPointsLayers.SelectedItem = controller.GetObservFeatureName();
             cmbObservTypesEdit.SelectedItem = ObservationPointMobilityTypesEnum.Stationary.ToString();
             cmbAffiliationEdit.SelectedItem = ObservationPointTypesEnum.Enemy.ToString();
 
@@ -168,12 +172,19 @@ namespace MilSpace.Visibility
             xCoord.Text = centerPoint.X.ToString();
             yCoord.Text = centerPoint.Y.ToString();
 
-            azimuthB.Text = "0";
-            azimuthE.Text = "360";
-            heightCurrent.Text = "0";
-            heightMin.Text = "0";
-            heightMax.Text = "0";
-            observPointName.Text = "New point";
+            azimuthB.Text = ObservPointDefaultValues.AzimuthBText;
+            azimuthE.Text = ObservPointDefaultValues.AzimuthEText;
+            heightCurrent.Text = ObservPointDefaultValues.RelativeHeightText;
+            heightMin.Text = ObservPointDefaultValues.HeightMinText;
+            heightMax.Text = ObservPointDefaultValues.HeightMaxText;
+            observPointName.Text = ObservPointDefaultValues.ObservPointNameText;
+            angleOFViewMin.Text = ObservPointDefaultValues.AngleOFViewMinText;
+            angleOFViewMax.Text = ObservPointDefaultValues.AngleOFViewMaxText;
+            angleFrameH.Text = ObservPointDefaultValues.AngleFrameHText;
+            angleFrameV.Text = ObservPointDefaultValues.AngleFrameVText;
+            cameraRotationH.Text = ObservPointDefaultValues.CameraRotationHText;
+            cameraRotationV.Text = ObservPointDefaultValues.CameraRotationVText;
+            azimuthMainAxis.Text = ObservPointDefaultValues.AzimuthMainAxisText;
 
             observPointDate.Text = DateTime.Now.ToShortDateString();
             observPointCreator.Text = Environment.UserName;
@@ -187,10 +198,11 @@ namespace MilSpace.Visibility
 
         private void EnableObservPointsControls()
         {
-            cmbAffiliationEdit.Enabled = cmbObservTypesEdit.Enabled = azimuthB.Enabled = azimuthE.Enabled=
-                xCoord.Enabled = yCoord.Enabled = angleMin.Enabled = angleMax.Enabled = angleOFView.Enabled =
-                heightCurrent.Enabled = heightMin.Enabled = heightMax.Enabled = observPointName.Enabled = observPointDate.Enabled =
-                observPointCreator.Enabled = controller.IsObservPointsExists(ActiveView);
+            cmbAffiliationEdit.Enabled = cmbObservTypesEdit.Enabled = azimuthB.Enabled = azimuthE.Enabled 
+                = xCoord.Enabled = yCoord.Enabled = heightCurrent.Enabled = heightMin.Enabled = azimuthMainAxis.Enabled 
+                = heightMax.Enabled = observPointName.Enabled = controller.IsObservPointsExists(ActiveView);
+            angleFrameH.Enabled = angleFrameV.Enabled = angleOFViewMin.Enabled = angleOFViewMax.Enabled 
+                = observPointDate.Enabled = observPointCreator.Enabled = false;
         }
 
         private void OnSelectObserbPoint()
@@ -255,30 +267,30 @@ namespace MilSpace.Visibility
 
         private void TlbObserPoints_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
-            UID mapToolID = new UIDClass
-            {
-                Value = ThisAddIn.IDs.MapInteropTool
-            };
-            var documentBars = ArcMap.Application.Document.CommandBars;
-            var mapTool = documentBars.Find(mapToolID, false, false);
+            //UID mapToolID = new UIDClass
+            //{
+            //    Value = ThisAddIn.IDs.MapInteropTool
+            //};
+            //var documentBars = ArcMap.Application.Document.CommandBars;
+            //var mapTool = documentBars.Find(mapToolID, false, false);
 
-            if (ArcMap.Application.CurrentTool?.ID?.Value != null && ArcMap.Application.CurrentTool.ID.Value.Equals(mapTool.ID.Value))
-            {
-                ArcMap.Application.CurrentTool = null;
-                toolBarButton51.Pushed = false;
-            }
-            else
-            {
-                ArcMap.Application.CurrentTool = mapTool;
-                toolBarButton51.Pushed = true;
-            }
+            //if (ArcMap.Application.CurrentTool?.ID?.Value != null && ArcMap.Application.CurrentTool.ID.Value.Equals(mapTool.ID.Value))
+            //{
+            //    ArcMap.Application.CurrentTool = null;
+            //    toolBarButton51.Pushed = false;
+            //}
+            //else
+            //{
+            //    ArcMap.Application.CurrentTool = mapTool;
+            //    toolBarButton51.Pushed = true;
+            //}
 
             switch(tlbObservPoints.Buttons.IndexOf(e.Button))
             {
 
                 case 3:
 
-                    CreateNewPoint();
+                    CreateNewPoint(GetObservationPoint());
 
                     break;
 
@@ -314,11 +326,9 @@ namespace MilSpace.Visibility
             }
         }
 
-        private void CreateNewPoint()
+        private void CreateNewPoint(ObservationPoint point)
         {
-            var pointArgs = new ObservationPoint();
-            //var point = new Point { X = Convert.ToDouble(xCoord.Text), Y = Convert.ToDouble(yCoord.Text), Z = Convert.ToDouble(xCoord.Text), }
-            //controller.AddPoint();
+            controller.AddPoint(point, cmbObservPointsLayers.SelectedItem.ToString(), ActiveView);
         }
 
         private void TlbCoordinates_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
@@ -327,12 +337,7 @@ namespace MilSpace.Visibility
             {
 
                 case 0:
-
-                    //if(!(this.Hook is IApplication arcMap) || !(arcMap.Document is IMxDocument currentDocument)) return;
-                    ////((IActiveViewEvents_Event)currentDocument.FocusMap).ItemAdded += iaHandler;
-                    //IActiveViewEvents_Event activeViewEvent = (IActiveViewEvents_Event)currentDocument.ActiveView;
-                    //activeViewEvent.ItemAdded += OnItemAdded;
-
+                    
                     UID mapToolID = new UIDClass
                     {
                         Value = ThisAddIn.IDs.MapInteropTool
@@ -356,5 +361,155 @@ namespace MilSpace.Visibility
                     break;
             }
         }
+
+        private void label18_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label15_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void angleMax_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void angleOFView_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel16_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panel15_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panel17_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void azimuthB_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void azimuthE_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void angleFrameH_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cameraRotationV_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel14_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panel57_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label58_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label57_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmbObservTypesEdit_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void xCoord_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private ObservationPoint GetObservationPoint()
+        {
+            return new ObservationPoint()
+                        {
+                            X = Convert.ToDouble(xCoord.Text),
+                            Y = Convert.ToDouble(yCoord.Text),
+                            Affiliation = cmbAffiliationEdit.SelectedItem.ToString(),
+                            AngelCameraRotationH = Convert.ToDouble(cameraRotationH.Text),
+                            AngelCameraRotationV = Convert.ToDouble(cameraRotationV.Text),
+                            RelativeHeight = Convert.ToDouble(heightCurrent.Text),
+                            AvailableHeightLover = Convert.ToDouble(heightMin.Text),
+                            AvailableHeightUpper = Convert.ToDouble(heightMax.Text),
+                            AzimuthStart = Convert.ToDouble(azimuthB.Text),
+                            AzimuthEnd = Convert.ToDouble(azimuthE.Text),
+                            AzimuthMainAxis = Convert.ToDouble(azimuthMainAxis.Text),
+                            Dto = Convert.ToDateTime(observPointDate.Text),
+                            Operator = observPointCreator.Text,
+                            Title = observPointName.Text,
+                            Type = cmbObservTypesEdit.Text
+                        };
+        }
+
+        #region Validation
+
+        private void XCoord_Leave(object sender, EventArgs e)
+        {
+            if(!Regex.IsMatch(xCoord.Text, @"^([-]?[\d]{1,2}\.\d+)$"))
+            {
+                MessageBox.Show("Invalid data.\nEnter the coordinates in the WGS84 format.");
+                var centerPoint = controller.GetEnvelopeCenterPoint(ArcMap.Document.ActiveView.Extent);
+                xCoord.Text = centerPoint.X.ToString();
+            }
+        }
+
+        private void YCoord_Leave(object sender, EventArgs e)
+        {
+            if(!Regex.IsMatch(yCoord.Text, @"^([-]?[\d]{1,2}\.\d+)$"))
+            {
+                MessageBox.Show("Invalid data.\n Enter the coordinates in the WGS84 format.");
+                var centerPoint = controller.GetEnvelopeCenterPoint(ArcMap.Document.ActiveView.Extent);
+                yCoord.Text = centerPoint.Y.ToString();
+            }
+        }
+        
+        private void AzimuthB_Leave(object sender, EventArgs e)
+        {
+            var azimuth = Convert.ToInt32(azimuthB.Text);
+            if(azimuth < 0 || azimuth > 360)
+            {
+                azimuthB.Text = ObservPointDefaultValues.AzimuthBText;
+            }
+        }
+
+        #endregion
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
@@ -29,7 +30,10 @@ namespace MilSpace.Visibility.ViewController
             throw new NotImplementedException();
         }
 
-        
+        internal string GetObservFeatureName()
+        {
+            return observPointFeature;
+        }
 
         internal void UpdateObservationPointsList()
         {
@@ -51,6 +55,24 @@ namespace MilSpace.Visibility.ViewController
             return Enum.GetNames(typeof(ObservationPointMobilityTypesEnum));
         }
 
+        public IEnumerable<string> GetObservationPointsLayers(IActiveView view)
+        {
+            var obserPointsLayersNames = new List<string>();
+            //var layers = view.FocusMap.Layers;
+            //var layer = layers.Next();
+
+            //while(layer != null)
+            //{
+            //    if(layer is IFeatureLayer fl && fl.FeatureClass.AliasName.Equals(observPointFeature, StringComparison.InvariantCultureIgnoreCase))
+            //    {
+            //    }
+
+            //    layer = layers.Next();
+            //}
+            obserPointsLayersNames.Add(observPointFeature);
+            return obserPointsLayersNames;
+        }
+
         public bool IsObservPointsExists(IActiveView view)
         {
             var layers = view.FocusMap.Layers;
@@ -69,9 +91,25 @@ namespace MilSpace.Visibility.ViewController
             return false;
         }
 
-        public void AddPoint(IPoint point, ObservationPoint pointArgs)
+        public void AddPoint(ObservationPoint point, string featureName, IActiveView activeView)
         {
-            GdbAccess.Instance.AddObservPoint(point, observPointFeature, pointArgs);
+            var pointGeometry = new PointClass { X = (double)point.X, Y = (double)point.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
+            //if (point.RelativeHeight != 0)
+            //{
+            //    pointGeometry.Z = (double)point.RelativeHeight;
+            //    pointGeometry.ZAware = true;
+            //}
+            //else
+            //{
+            //    pointGeometry.ZAware = false;
+            //}
+
+            pointGeometry.Z = (double)point.RelativeHeight;
+            pointGeometry.ZAware = true;
+
+            var featureClass = GetFeatureClass(featureName, activeView);
+
+            GdbAccess.Instance.AddObservPoint(pointGeometry, point, featureClass);
             UpdateObservationPointsList();
         }
 
@@ -83,6 +121,24 @@ namespace MilSpace.Visibility.ViewController
             var point = new PointClass { X = x, Y = y, SpatialReference = envelope.SpatialReference };
             point.Project(EsriTools.Wgs84Spatialreference);
             return point;
+        }
+
+        private IFeatureClass GetFeatureClass(string featureClassName, IActiveView activeView)
+        {
+            var layers = activeView.FocusMap.Layers;
+            var layer = layers.Next();
+
+            while(layer != null)
+            {
+                if(layer is IFeatureLayer fl && fl.FeatureClass.AliasName.Equals(featureClassName, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return fl.FeatureClass;
+                }
+
+                layer = layers.Next();
+            }
+
+            return null;
         }
     }
 }

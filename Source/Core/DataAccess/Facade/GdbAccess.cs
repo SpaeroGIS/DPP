@@ -236,32 +236,33 @@ namespace MilSpace.DataAccess.Facade
             return featureClassName;
         }
 
-        public void AddObservPoint(IPoint point, string featureClassName, ObservationPoint pointArgs)
+        public void AddObservPoint(IPoint point, ObservationPoint pointArgs, IFeatureClass featureClass)
         {
             IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)calcWorkspace;
             workspaceEdit.StartEditing(true);
             workspaceEdit.StartEditOperation();
-
-            IFeatureClass calc = GetCalcProfileFeatureClass(featureClassName);
-            var GCS_WGS = Helper.GetBasePointSpatialReference();
-
-            var pointFeature = calc.CreateFeature();
+            
+            
+            var pointFeature = featureClass.CreateFeature();
             pointFeature.Shape = point;
 
-           // int titleFieldId = calc.FindField("Title");
-            pointFeature.set_Value(calc.FindField("TitleOP"), pointArgs.Title);
-            pointFeature.set_Value(calc.FindField("TypeOP"), pointArgs.Type.ToString());
-            pointFeature.set_Value(calc.FindField("saffiliation"), pointArgs.Affiliation.ToString());
-            pointFeature.set_Value(calc.FindField("XWGS"), pointArgs.X);  
-            pointFeature.set_Value(calc.FindField("YWGS"), pointArgs.Y);
-            pointFeature.set_Value(calc.FindField("HRel"), pointArgs.RelativeHeight);
-            pointFeature.set_Value(calc.FindField("AzimuthB"), pointArgs.AzimuthStart);
-            pointFeature.set_Value(calc.FindField("AzimuthE"), pointArgs.AzimuthEnd);
-            pointFeature.set_Value(calc.FindField("AzimuthMainAxis"), pointArgs.AzimuthMainAxis);
-            pointFeature.set_Value(calc.FindField("AnglMinH"), pointArgs.AngelMinH);
-            pointFeature.set_Value(calc.FindField("AnglMaxH"), pointArgs.AngelMaxH);
-            pointFeature.set_Value(calc.FindField("dto"), pointArgs.Dto);
-            pointFeature.set_Value(calc.FindField("soper"), pointArgs.Operator);
+            pointFeature.set_Value(featureClass.FindField("TitleOP"), pointArgs.Title);
+            pointFeature.set_Value(featureClass.FindField("TypeOP"), pointArgs.Type.ToString());
+            pointFeature.set_Value(featureClass.FindField("saffiliation"), pointArgs.Affiliation.ToString());
+            pointFeature.set_Value(featureClass.FindField("XWGS"), pointArgs.X);  
+            pointFeature.set_Value(featureClass.FindField("YWGS"), pointArgs.Y);
+            pointFeature.set_Value(featureClass.FindField("HRel"), pointArgs.RelativeHeight);
+            pointFeature.set_Value(featureClass.FindField("AvailableHeightLover"), pointArgs.AvailableHeightLover);
+            pointFeature.set_Value(featureClass.FindField("AvailableHeightUpper"), pointArgs.AvailableHeightUpper);
+            pointFeature.set_Value(featureClass.FindField("AzimuthB"), pointArgs.AzimuthStart);
+            pointFeature.set_Value(featureClass.FindField("AzimuthE"), pointArgs.AzimuthEnd);
+            pointFeature.set_Value(featureClass.FindField("AzimuthMainAxis"), pointArgs.AzimuthMainAxis);
+            pointFeature.set_Value(featureClass.FindField("AnglCameraRotationH"), pointArgs.AngelCameraRotationH);
+            pointFeature.set_Value(featureClass.FindField("AnglCameraRotationV"), pointArgs.AngelCameraRotationV);
+            //pointFeature.set_Value(featureClass.FindField("AnglMinH"), pointArgs.AngelMinH);
+            //pointFeature.set_Value(featureClass.FindField("AnglMaxH"), pointArgs.AngelMaxH);
+            pointFeature.set_Value(featureClass.FindField("dto"), pointArgs.Dto);
+            pointFeature.set_Value(featureClass.FindField("soper"), pointArgs.Operator);
 
             pointFeature.Store();
         }
