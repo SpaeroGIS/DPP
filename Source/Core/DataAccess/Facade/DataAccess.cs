@@ -255,7 +255,7 @@ namespace MilSpace.DataAccess.Facade
             bool result = true;
             try
             {
-                var bdObservPoint = context.VisiblilityObservPoints.FirstOrDefault(p => p.objectid == observPoint.Objectid);
+                var bdObservPoint = context.VisiblilityObservPoints.FirstOrDefault(p => p.OBJECTID == observPoint.Objectid);
                 if (bdObservPoint != null)
                 {
                     bdObservPoint.Update(observPoint);
