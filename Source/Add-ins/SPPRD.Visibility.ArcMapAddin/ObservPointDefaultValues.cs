@@ -15,7 +15,7 @@ namespace MilSpace.Visibility
          internal const string HeightMaxText = "0";
          internal const string ObservPointNameText = "New point";
          internal const string AngleOFViewMinText = "0";
-         internal const string AngleOFViewMaxText = "90";
+         internal const string AngleOFViewMaxText = "-90";
          internal const string AngleFrameHText = "0";
          internal const string AngleFrameVText = "0";
          internal const string CameraRotationHText = "0";

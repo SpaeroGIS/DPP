@@ -30,46 +30,46 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceMVisibilitySt));
-            System.Windows.Forms.TreeNode treeNode23 = new System.Windows.Forms.TreeNode("VIS1_20181113134511_vnikolaev");
-            System.Windows.Forms.TreeNode treeNode24 = new System.Windows.Forms.TreeNode("VIS1_20181113134511_vnikolaev");
-            System.Windows.Forms.TreeNode treeNode25 = new System.Windows.Forms.TreeNode("VIS1 (общая видимость)", new System.Windows.Forms.TreeNode[] {
-            treeNode23,
-            treeNode24});
-            System.Windows.Forms.TreeNode treeNode26 = new System.Windows.Forms.TreeNode("ПН/ТН (параметры)", 80, 80);
-            System.Windows.Forms.TreeNode treeNode27 = new System.Windows.Forms.TreeNode("Объекты наблюдения (параметры)", 137, 137);
-            System.Windows.Forms.TreeNode treeNode28 = new System.Windows.Forms.TreeNode("SO_VIS2_ OBOFOB20181113134511_20181129090909", 73, 73);
-            System.Windows.Forms.TreeNode treeNode29 = new System.Windows.Forms.TreeNode("SO_VIS2_ OBOFOB20181113134511_20181129090909", 73, 73);
-            System.Windows.Forms.TreeNode treeNode30 = new System.Windows.Forms.TreeNode("SUMSO_VIS2_20181113134511_vnikolaev", 75, 75);
-            System.Windows.Forms.TreeNode treeNode31 = new System.Windows.Forms.TreeNode("таблица покрытия", 170, 170);
-            System.Windows.Forms.TreeNode treeNode32 = new System.Windows.Forms.TreeNode("VIS2_20181113134511_vnikolaev", new System.Windows.Forms.TreeNode[] {
-            treeNode26,
-            treeNode27,
-            treeNode28,
-            treeNode29,
-            treeNode30,
-            treeNode31});
-            System.Windows.Forms.TreeNode treeNode33 = new System.Windows.Forms.TreeNode("fan201811081111nikol, 1");
-            System.Windows.Forms.TreeNode treeNode34 = new System.Windows.Forms.TreeNode("fan201811081111nikol, 2");
-            System.Windows.Forms.TreeNode treeNode35 = new System.Windows.Forms.TreeNode("fan201811081111nikol, 3");
-            System.Windows.Forms.TreeNode treeNode36 = new System.Windows.Forms.TreeNode("fan201811081111nikol, 4");
-            System.Windows.Forms.TreeNode treeNode37 = new System.Windows.Forms.TreeNode("VIS2_20181113134511_vnikolaev", new System.Windows.Forms.TreeNode[] {
-            treeNode33,
-            treeNode34,
-            treeNode35,
-            treeNode36});
-            System.Windows.Forms.TreeNode treeNode38 = new System.Windows.Forms.TreeNode("VIS2. Видимость в ОН", new System.Windows.Forms.TreeNode[] {
-            treeNode32,
-            treeNode37});
-            System.Windows.Forms.TreeNode treeNode39 = new System.Windows.Forms.TreeNode("VIS3_20181113134511_vnikolaev");
-            System.Windows.Forms.TreeNode treeNode40 = new System.Windows.Forms.TreeNode("VIS3_20181113134511_vnikolaev");
-            System.Windows.Forms.TreeNode treeNode41 = new System.Windows.Forms.TreeNode("VIS3. Подбор параметров", new System.Windows.Forms.TreeNode[] {
-            treeNode39,
-            treeNode40});
-            System.Windows.Forms.TreeNode treeNode42 = new System.Windows.Forms.TreeNode("VIS4_20181113134511_vnikolaev");
-            System.Windows.Forms.TreeNode treeNode43 = new System.Windows.Forms.TreeNode("VIS4_20181113134511_vnikolaev", 2, 2);
-            System.Windows.Forms.TreeNode treeNode44 = new System.Windows.Forms.TreeNode("VIS4. Анализ съемки", 4, 4, new System.Windows.Forms.TreeNode[] {
-            treeNode42,
-            treeNode43});
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("VIS1_20181113134511_vnikolaev");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("VIS1_20181113134511_vnikolaev");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("VIS1 (общая видимость)", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2});
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("ПН/ТН (параметры)", 80, 80);
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Объекты наблюдения (параметры)", 137, 137);
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("SO_VIS2_ OBOFOB20181113134511_20181129090909", 73, 73);
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("SO_VIS2_ OBOFOB20181113134511_20181129090909", 73, 73);
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("SUMSO_VIS2_20181113134511_vnikolaev", 75, 75);
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("таблица покрытия", 170, 170);
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("VIS2_20181113134511_vnikolaev", new System.Windows.Forms.TreeNode[] {
+            treeNode4,
+            treeNode5,
+            treeNode6,
+            treeNode7,
+            treeNode8,
+            treeNode9});
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("fan201811081111nikol, 1");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("fan201811081111nikol, 2");
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("fan201811081111nikol, 3");
+            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("fan201811081111nikol, 4");
+            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("VIS2_20181113134511_vnikolaev", new System.Windows.Forms.TreeNode[] {
+            treeNode11,
+            treeNode12,
+            treeNode13,
+            treeNode14});
+            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("VIS2. Видимость в ОН", new System.Windows.Forms.TreeNode[] {
+            treeNode10,
+            treeNode15});
+            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("VIS3_20181113134511_vnikolaev");
+            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("VIS3_20181113134511_vnikolaev");
+            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("VIS3. Подбор параметров", new System.Windows.Forms.TreeNode[] {
+            treeNode17,
+            treeNode18});
+            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("VIS4_20181113134511_vnikolaev");
+            System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("VIS4_20181113134511_vnikolaev", 2, 2);
+            System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("VIS4. Анализ съемки", 4, 4, new System.Windows.Forms.TreeNode[] {
+            treeNode20,
+            treeNode21});
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -196,7 +196,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.cmbObservPointsLayers = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblLayer = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panel30 = new System.Windows.Forms.Panel();
             this.panel37 = new System.Windows.Forms.Panel();
@@ -759,6 +759,7 @@
             this.observPointName.Size = new System.Drawing.Size(259, 20);
             this.observPointName.TabIndex = 5;
             this.observPointName.Text = "\"Человеческое\" название ПН";
+            this.observPointName.Leave += new System.EventHandler(this.FieldsValidation);
             // 
             // label20
             // 
@@ -805,6 +806,7 @@
             this.heightMax.Size = new System.Drawing.Size(36, 20);
             this.heightMax.TabIndex = 7;
             this.heightMax.Text = "2035";
+            this.heightMax.Leave += new System.EventHandler(this.FieldsValidation);
             // 
             // label12
             // 
@@ -825,6 +827,7 @@
             this.heightMin.Size = new System.Drawing.Size(36, 20);
             this.heightMin.TabIndex = 5;
             this.heightMin.Text = "2035";
+            this.heightMin.Leave += new System.EventHandler(this.FieldsValidation);
             // 
             // label9
             // 
@@ -847,7 +850,6 @@
             this.panel17.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
             this.panel17.Size = new System.Drawing.Size(322, 24);
             this.panel17.TabIndex = 25;
-            this.panel17.Paint += new System.Windows.Forms.PaintEventHandler(this.panel17_Paint);
             // 
             // heightCurrent
             // 
@@ -857,6 +859,7 @@
             this.heightCurrent.Size = new System.Drawing.Size(36, 20);
             this.heightCurrent.TabIndex = 5;
             this.heightCurrent.Text = "2035";
+            this.heightCurrent.Leave += new System.EventHandler(this.FieldsValidation);
             // 
             // label19
             // 
@@ -890,7 +893,7 @@
             this.cameraRotationV.Size = new System.Drawing.Size(36, 20);
             this.cameraRotationV.TabIndex = 7;
             this.cameraRotationV.Text = "360";
-            this.cameraRotationV.TextChanged += new System.EventHandler(this.cameraRotationV_TextChanged);
+            this.cameraRotationV.Leave += new System.EventHandler(this.FieldsValidation);
             // 
             // label55
             // 
@@ -911,6 +914,7 @@
             this.cameraRotationH.Size = new System.Drawing.Size(36, 20);
             this.cameraRotationH.TabIndex = 5;
             this.cameraRotationH.Text = "0";
+            this.cameraRotationH.Leave += new System.EventHandler(this.FieldsValidation);
             // 
             // label56
             // 
@@ -935,7 +939,6 @@
             this.panel16.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
             this.panel16.Size = new System.Drawing.Size(322, 24);
             this.panel16.TabIndex = 23;
-            this.panel16.Paint += new System.Windows.Forms.PaintEventHandler(this.panel16_Paint);
             // 
             // angleOFViewMax
             // 
@@ -945,6 +948,7 @@
             this.angleOFViewMax.Size = new System.Drawing.Size(36, 20);
             this.angleOFViewMax.TabIndex = 9;
             this.angleOFViewMax.Text = "360";
+            this.angleOFViewMax.Leave += new System.EventHandler(this.FieldsValidation);
             // 
             // label52
             // 
@@ -965,7 +969,7 @@
             this.angleOFViewMin.Size = new System.Drawing.Size(36, 20);
             this.angleOFViewMin.TabIndex = 5;
             this.angleOFViewMin.Text = "0";
-            this.angleOFViewMin.TextChanged += new System.EventHandler(this.angleOFView_TextChanged);
+            this.angleOFViewMin.Leave += new System.EventHandler(this.FieldsValidation);
             // 
             // label18
             // 
@@ -977,7 +981,6 @@
             this.label18.Size = new System.Drawing.Size(120, 17);
             this.label18.TabIndex = 4;
             this.label18.Text = "угол зрения, дгр, мин.";
-            this.label18.Click += new System.EventHandler(this.label18_Click);
             // 
             // panel15
             // 
@@ -991,18 +994,16 @@
             this.panel15.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
             this.panel15.Size = new System.Drawing.Size(322, 24);
             this.panel15.TabIndex = 24;
-            this.panel15.Paint += new System.Windows.Forms.PaintEventHandler(this.panel15_Paint);
             // 
             // angleFrameV
             // 
             this.angleFrameV.Dock = System.Windows.Forms.DockStyle.Left;
-            this.angleFrameV.Enabled = false;
             this.angleFrameV.Location = new System.Drawing.Point(214, 0);
             this.angleFrameV.Name = "angleFrameV";
             this.angleFrameV.Size = new System.Drawing.Size(36, 20);
             this.angleFrameV.TabIndex = 7;
             this.angleFrameV.Text = "360";
-            this.angleFrameV.TextChanged += new System.EventHandler(this.angleMax_TextChanged);
+            this.angleFrameV.Leave += new System.EventHandler(this.FieldsValidation);
             // 
             // label15
             // 
@@ -1014,18 +1015,16 @@
             this.label15.Size = new System.Drawing.Size(37, 17);
             this.label15.TabIndex = 6;
             this.label15.Text = "верт.";
-            this.label15.Click += new System.EventHandler(this.label15_Click);
             // 
             // angleFrameH
             // 
             this.angleFrameH.Dock = System.Windows.Forms.DockStyle.Left;
-            this.angleFrameH.Enabled = false;
             this.angleFrameH.Location = new System.Drawing.Point(141, 0);
             this.angleFrameH.Name = "angleFrameH";
             this.angleFrameH.Size = new System.Drawing.Size(36, 20);
             this.angleFrameH.TabIndex = 5;
             this.angleFrameH.Text = "0";
-            this.angleFrameH.TextChanged += new System.EventHandler(this.angleFrameH_TextChanged);
+            this.angleFrameH.Leave += new System.EventHandler(this.FieldsValidation);
             // 
             // label16
             // 
@@ -1048,17 +1047,16 @@
             this.panel57.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
             this.panel57.Size = new System.Drawing.Size(322, 24);
             this.panel57.TabIndex = 23;
-            this.panel57.Paint += new System.Windows.Forms.PaintEventHandler(this.panel57_Paint);
             // 
             // azimuthMainAxis
             // 
             this.azimuthMainAxis.Dock = System.Windows.Forms.DockStyle.Left;
-            this.azimuthMainAxis.Enabled = false;
             this.azimuthMainAxis.Location = new System.Drawing.Point(119, 0);
             this.azimuthMainAxis.Name = "azimuthMainAxis";
             this.azimuthMainAxis.Size = new System.Drawing.Size(36, 20);
             this.azimuthMainAxis.TabIndex = 5;
             this.azimuthMainAxis.Text = "0";
+            this.azimuthMainAxis.Leave += new System.EventHandler(this.FieldsValidation);
             // 
             // label58
             // 
@@ -1070,7 +1068,6 @@
             this.label58.Size = new System.Drawing.Size(111, 17);
             this.label58.TabIndex = 4;
             this.label58.Text = "азимут осн. оси, дгр";
-            this.label58.Click += new System.EventHandler(this.label58_Click);
             // 
             // panel14
             // 
@@ -1084,18 +1081,16 @@
             this.panel14.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
             this.panel14.Size = new System.Drawing.Size(322, 24);
             this.panel14.TabIndex = 22;
-            this.panel14.Paint += new System.Windows.Forms.PaintEventHandler(this.panel14_Paint);
             // 
             // azimuthE
             // 
             this.azimuthE.Dock = System.Windows.Forms.DockStyle.Left;
-            this.azimuthE.Enabled = false;
             this.azimuthE.Location = new System.Drawing.Point(176, 0);
             this.azimuthE.Name = "azimuthE";
             this.azimuthE.Size = new System.Drawing.Size(36, 20);
             this.azimuthE.TabIndex = 7;
             this.azimuthE.Text = "360";
-            this.azimuthE.TextChanged += new System.EventHandler(this.azimuthE_TextChanged);
+            this.azimuthE.Leave += new System.EventHandler(this.FieldsValidation);
             // 
             // label13
             // 
@@ -1107,19 +1102,16 @@
             this.label13.Size = new System.Drawing.Size(37, 17);
             this.label13.TabIndex = 6;
             this.label13.Text = "макс";
-            this.label13.Click += new System.EventHandler(this.label13_Click);
             // 
             // azimuthB
             // 
             this.azimuthB.Dock = System.Windows.Forms.DockStyle.Left;
-            this.azimuthB.Enabled = false;
             this.azimuthB.Location = new System.Drawing.Point(103, 0);
             this.azimuthB.Name = "azimuthB";
             this.azimuthB.Size = new System.Drawing.Size(36, 20);
             this.azimuthB.TabIndex = 5;
             this.azimuthB.Text = "0";
-            this.azimuthB.TextChanged += new System.EventHandler(this.azimuthB_TextChanged);
-            this.azimuthB.Leave += new System.EventHandler(this.AzimuthB_Leave);
+            this.azimuthB.Leave += new System.EventHandler(this.FieldsValidation);
             // 
             // label14
             // 
@@ -1187,7 +1179,7 @@
             this.yCoord.Size = new System.Drawing.Size(55, 20);
             this.yCoord.TabIndex = 4;
             this.yCoord.Text = "50.12345";
-            this.yCoord.Leave += new System.EventHandler(this.YCoord_Leave);
+            this.yCoord.Leave += new System.EventHandler(this.FieldsValidation);
             // 
             // xCoord
             // 
@@ -1197,8 +1189,7 @@
             this.xCoord.Size = new System.Drawing.Size(55, 20);
             this.xCoord.TabIndex = 3;
             this.xCoord.Text = "36.54321";
-            this.xCoord.TextChanged += new System.EventHandler(this.xCoord_TextChanged);
-            this.xCoord.Leave += new System.EventHandler(this.XCoord_Leave);
+            this.xCoord.Leave += new System.EventHandler(this.FieldsValidation);
             // 
             // label8
             // 
@@ -1259,7 +1250,6 @@
             this.cmbObservTypesEdit.Name = "cmbObservTypesEdit";
             this.cmbObservTypesEdit.Size = new System.Drawing.Size(94, 21);
             this.cmbObservTypesEdit.TabIndex = 2;
-            this.cmbObservTypesEdit.SelectedIndexChanged += new System.EventHandler(this.cmbObservTypesEdit_SelectedIndexChanged);
             // 
             // label11
             // 
@@ -1933,7 +1923,7 @@
             // panel2
             // 
             this.panel2.Controls.Add(this.cmbObservPointsLayers);
-            this.panel2.Controls.Add(this.label1);
+            this.panel2.Controls.Add(this.lblLayer);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
@@ -1950,16 +1940,16 @@
             this.cmbObservPointsLayers.Size = new System.Drawing.Size(273, 21);
             this.cmbObservPointsLayers.TabIndex = 1;
             // 
-            // label1
+            // lblLayer
             // 
-            this.label1.AutoSize = true;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label1.Location = new System.Drawing.Point(4, 0);
-            this.label1.Name = "label1";
-            this.label1.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label1.Size = new System.Drawing.Size(55, 17);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Слой ПН";
+            this.lblLayer.AutoSize = true;
+            this.lblLayer.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblLayer.Location = new System.Drawing.Point(4, 0);
+            this.lblLayer.Name = "lblLayer";
+            this.lblLayer.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
+            this.lblLayer.Size = new System.Drawing.Size(55, 17);
+            this.lblLayer.TabIndex = 0;
+            this.lblLayer.Text = "Слой ПН";
             // 
             // tabPage2
             // 
@@ -3268,99 +3258,99 @@
             this.treeView1.ImageList = this.imageList1;
             this.treeView1.Location = new System.Drawing.Point(0, 24);
             this.treeView1.Name = "treeView1";
-            treeNode23.ImageKey = "1.png";
-            treeNode23.Name = "Узел4";
-            treeNode23.SelectedImageIndex = 1;
-            treeNode23.Text = "VIS1_20181113134511_vnikolaev";
-            treeNode24.ImageKey = "2.png";
-            treeNode24.Name = "Узел6";
-            treeNode24.SelectedImageIndex = 2;
-            treeNode24.Text = "VIS1_20181113134511_vnikolaev";
-            treeNode25.ImageKey = "1.png";
-            treeNode25.Name = "Узел1";
-            treeNode25.SelectedImageIndex = 1;
-            treeNode25.Text = "VIS1 (общая видимость)";
-            treeNode26.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            treeNode26.ForeColor = System.Drawing.Color.DimGray;
-            treeNode26.ImageIndex = 80;
-            treeNode26.Name = "Узел4";
-            treeNode26.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            treeNode26.SelectedImageIndex = 80;
-            treeNode26.Text = "ПН/ТН (параметры)";
-            treeNode27.ForeColor = System.Drawing.Color.DimGray;
-            treeNode27.ImageIndex = 137;
-            treeNode27.Name = "Узел5";
-            treeNode27.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            treeNode27.SelectedImageIndex = 137;
-            treeNode27.Text = "Объекты наблюдения (параметры)";
-            treeNode28.ImageIndex = 73;
-            treeNode28.Name = "Узел12";
-            treeNode28.SelectedImageIndex = 73;
-            treeNode28.Text = "SO_VIS2_ OBOFOB20181113134511_20181129090909";
-            treeNode29.ImageIndex = 73;
-            treeNode29.Name = "Узел13";
-            treeNode29.SelectedImageIndex = 73;
-            treeNode29.Text = "SO_VIS2_ OBOFOB20181113134511_20181129090909";
-            treeNode30.ImageIndex = 75;
-            treeNode30.Name = "Узел14";
-            treeNode30.SelectedImageIndex = 75;
-            treeNode30.Text = "SUMSO_VIS2_20181113134511_vnikolaev";
-            treeNode31.ImageIndex = 170;
-            treeNode31.Name = "Узел15";
-            treeNode31.SelectedImageIndex = 170;
-            treeNode31.Text = "таблица покрытия";
-            treeNode32.ImageKey = "1.png";
-            treeNode32.Name = "Узел7";
-            treeNode32.SelectedImageIndex = 1;
-            treeNode32.Text = "VIS2_20181113134511_vnikolaev";
-            treeNode33.ImageKey = "3.png";
-            treeNode33.Name = "Узел16";
-            treeNode33.Text = "fan201811081111nikol, 1";
-            treeNode34.ImageKey = "3.png";
-            treeNode34.Name = "Узел17";
-            treeNode34.Text = "fan201811081111nikol, 2";
-            treeNode35.ImageKey = "3.png";
-            treeNode35.Name = "Узел18";
-            treeNode35.Text = "fan201811081111nikol, 3";
-            treeNode36.ImageKey = "4.png";
-            treeNode36.Name = "Узел19";
-            treeNode36.Text = "fan201811081111nikol, 4";
-            treeNode37.ImageKey = "2.png";
-            treeNode37.Name = "Узел8";
-            treeNode37.SelectedImageIndex = 2;
-            treeNode37.Text = "VIS2_20181113134511_vnikolaev";
-            treeNode38.ImageKey = "2.png";
-            treeNode38.Name = "Узел2";
-            treeNode38.SelectedImageIndex = 2;
-            treeNode38.Text = "VIS2. Видимость в ОН";
-            treeNode39.ImageKey = "1.png";
-            treeNode39.Name = "Узел9";
-            treeNode39.SelectedImageIndex = 1;
-            treeNode39.Text = "VIS3_20181113134511_vnikolaev";
-            treeNode40.ImageKey = "2.png";
-            treeNode40.Name = "Узел10";
-            treeNode40.SelectedImageIndex = 2;
-            treeNode40.Text = "VIS3_20181113134511_vnikolaev";
-            treeNode41.ImageKey = "3.png";
-            treeNode41.Name = "Узел3";
-            treeNode41.SelectedImageIndex = 3;
-            treeNode41.Text = "VIS3. Подбор параметров";
-            treeNode42.ImageIndex = 1;
-            treeNode42.Name = "Узел1";
-            treeNode42.Text = "VIS4_20181113134511_vnikolaev";
-            treeNode43.ImageIndex = 2;
-            treeNode43.Name = "Узел2";
-            treeNode43.SelectedImageIndex = 2;
-            treeNode43.Text = "VIS4_20181113134511_vnikolaev";
-            treeNode44.ImageIndex = 4;
-            treeNode44.Name = "Узел0";
-            treeNode44.SelectedImageIndex = 4;
-            treeNode44.Text = "VIS4. Анализ съемки";
+            treeNode1.ImageKey = "1.png";
+            treeNode1.Name = "Узел4";
+            treeNode1.SelectedImageIndex = 1;
+            treeNode1.Text = "VIS1_20181113134511_vnikolaev";
+            treeNode2.ImageKey = "2.png";
+            treeNode2.Name = "Узел6";
+            treeNode2.SelectedImageIndex = 2;
+            treeNode2.Text = "VIS1_20181113134511_vnikolaev";
+            treeNode3.ImageKey = "1.png";
+            treeNode3.Name = "Узел1";
+            treeNode3.SelectedImageIndex = 1;
+            treeNode3.Text = "VIS1 (общая видимость)";
+            treeNode4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            treeNode4.ForeColor = System.Drawing.Color.DimGray;
+            treeNode4.ImageIndex = 80;
+            treeNode4.Name = "Узел4";
+            treeNode4.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            treeNode4.SelectedImageIndex = 80;
+            treeNode4.Text = "ПН/ТН (параметры)";
+            treeNode5.ForeColor = System.Drawing.Color.DimGray;
+            treeNode5.ImageIndex = 137;
+            treeNode5.Name = "Узел5";
+            treeNode5.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            treeNode5.SelectedImageIndex = 137;
+            treeNode5.Text = "Объекты наблюдения (параметры)";
+            treeNode6.ImageIndex = 73;
+            treeNode6.Name = "Узел12";
+            treeNode6.SelectedImageIndex = 73;
+            treeNode6.Text = "SO_VIS2_ OBOFOB20181113134511_20181129090909";
+            treeNode7.ImageIndex = 73;
+            treeNode7.Name = "Узел13";
+            treeNode7.SelectedImageIndex = 73;
+            treeNode7.Text = "SO_VIS2_ OBOFOB20181113134511_20181129090909";
+            treeNode8.ImageIndex = 75;
+            treeNode8.Name = "Узел14";
+            treeNode8.SelectedImageIndex = 75;
+            treeNode8.Text = "SUMSO_VIS2_20181113134511_vnikolaev";
+            treeNode9.ImageIndex = 170;
+            treeNode9.Name = "Узел15";
+            treeNode9.SelectedImageIndex = 170;
+            treeNode9.Text = "таблица покрытия";
+            treeNode10.ImageKey = "1.png";
+            treeNode10.Name = "Узел7";
+            treeNode10.SelectedImageIndex = 1;
+            treeNode10.Text = "VIS2_20181113134511_vnikolaev";
+            treeNode11.ImageKey = "3.png";
+            treeNode11.Name = "Узел16";
+            treeNode11.Text = "fan201811081111nikol, 1";
+            treeNode12.ImageKey = "3.png";
+            treeNode12.Name = "Узел17";
+            treeNode12.Text = "fan201811081111nikol, 2";
+            treeNode13.ImageKey = "3.png";
+            treeNode13.Name = "Узел18";
+            treeNode13.Text = "fan201811081111nikol, 3";
+            treeNode14.ImageKey = "4.png";
+            treeNode14.Name = "Узел19";
+            treeNode14.Text = "fan201811081111nikol, 4";
+            treeNode15.ImageKey = "2.png";
+            treeNode15.Name = "Узел8";
+            treeNode15.SelectedImageIndex = 2;
+            treeNode15.Text = "VIS2_20181113134511_vnikolaev";
+            treeNode16.ImageKey = "2.png";
+            treeNode16.Name = "Узел2";
+            treeNode16.SelectedImageIndex = 2;
+            treeNode16.Text = "VIS2. Видимость в ОН";
+            treeNode17.ImageKey = "1.png";
+            treeNode17.Name = "Узел9";
+            treeNode17.SelectedImageIndex = 1;
+            treeNode17.Text = "VIS3_20181113134511_vnikolaev";
+            treeNode18.ImageKey = "2.png";
+            treeNode18.Name = "Узел10";
+            treeNode18.SelectedImageIndex = 2;
+            treeNode18.Text = "VIS3_20181113134511_vnikolaev";
+            treeNode19.ImageKey = "3.png";
+            treeNode19.Name = "Узел3";
+            treeNode19.SelectedImageIndex = 3;
+            treeNode19.Text = "VIS3. Подбор параметров";
+            treeNode20.ImageIndex = 1;
+            treeNode20.Name = "Узел1";
+            treeNode20.Text = "VIS4_20181113134511_vnikolaev";
+            treeNode21.ImageIndex = 2;
+            treeNode21.Name = "Узел2";
+            treeNode21.SelectedImageIndex = 2;
+            treeNode21.Text = "VIS4_20181113134511_vnikolaev";
+            treeNode22.ImageIndex = 4;
+            treeNode22.Name = "Узел0";
+            treeNode22.SelectedImageIndex = 4;
+            treeNode22.Text = "VIS4. Анализ съемки";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode25,
-            treeNode38,
-            treeNode41,
-            treeNode44});
+            treeNode3,
+            treeNode16,
+            treeNode19,
+            treeNode22});
             this.treeView1.SelectedImageKey = "Ok.png";
             this.treeView1.Size = new System.Drawing.Size(342, 244);
             this.treeView1.TabIndex = 73;
@@ -3648,7 +3638,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ComboBox cmbObservPointsLayers;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblLayer;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Panel panel30;
         private System.Windows.Forms.Panel panel37;

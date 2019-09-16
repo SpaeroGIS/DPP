@@ -58,18 +58,18 @@ namespace MilSpace.Visibility.ViewController
         public IEnumerable<string> GetObservationPointsLayers(IActiveView view)
         {
             var obserPointsLayersNames = new List<string>();
-            //var layers = view.FocusMap.Layers;
-            //var layer = layers.Next();
+            var layers = view.FocusMap.Layers;
+            var layer = layers.Next();
 
-            //while(layer != null)
-            //{
-            //    if(layer is IFeatureLayer fl && fl.FeatureClass.AliasName.Equals(observPointFeature, StringComparison.InvariantCultureIgnoreCase))
-            //    {
-            //    }
+            while(layer != null)
+            {
+                if(layer is IFeatureLayer fl && fl.FeatureClass.AliasName.Equals(observPointFeature, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    obserPointsLayersNames.Add(layer.Name);
+                }
 
-            //    layer = layers.Next();
-            //}
-            obserPointsLayersNames.Add(observPointFeature);
+                layer = layers.Next();
+            }
             return obserPointsLayersNames;
         }
 
@@ -80,7 +80,7 @@ namespace MilSpace.Visibility.ViewController
 
             while(layer != null)
             {
-                if(layer is IFeatureLayer fl && fl.FeatureClass.AliasName.Equals(observPointFeature, StringComparison.InvariantCultureIgnoreCase))
+                if(layer is IFeatureLayer fl && fl.FeatureClass != null && fl.FeatureClass.AliasName.Equals(observPointFeature, StringComparison.InvariantCultureIgnoreCase))
                 {
                     return true;
                 }
@@ -94,16 +94,7 @@ namespace MilSpace.Visibility.ViewController
         public void AddPoint(ObservationPoint point, string featureName, IActiveView activeView)
         {
             var pointGeometry = new PointClass { X = (double)point.X, Y = (double)point.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
-            //if (point.RelativeHeight != 0)
-            //{
-            //    pointGeometry.Z = (double)point.RelativeHeight;
-            //    pointGeometry.ZAware = true;
-            //}
-            //else
-            //{
-            //    pointGeometry.ZAware = false;
-            //}
-
+            
             pointGeometry.Z = (double)point.RelativeHeight;
             pointGeometry.ZAware = true;
 
