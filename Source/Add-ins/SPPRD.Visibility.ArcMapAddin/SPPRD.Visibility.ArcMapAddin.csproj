@@ -59,11 +59,11 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Carto, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Display">
       <Private>False</Private>
-    </Reference>    
+    </Reference>
     <Reference Include="ESRI.ArcGIS.Geodatabase, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>False</EmbedInteropTypes>
@@ -121,6 +121,7 @@
     <Compile Include="DTO\ObservPointGui.cs" />
     <Compile Include="Helpers\ArcMapHelper.cs" />
     <Compile Include="MapInteropTool.cs" />
+    <Compile Include="ObservPointDefaultValues.cs" />
     <Compile Include="ViewController\IObservationPointsView.cs" />
     <Compile Include="ViewController\IOservPointsView.cs" />
     <Compile Include="ViewController\ObservationPointsController.cs" />

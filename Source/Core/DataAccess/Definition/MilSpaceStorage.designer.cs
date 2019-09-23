@@ -44,9 +44,10 @@ namespace MilSpace.DataAccess.Definition
     partial void DeleteVisiblilityObservPoint(VisiblilityObservPoint instance);
     #endregion
 		
-		public MilSpaceStorageContext() : 
-				base(global::MilSpace.DataAccess.Properties.Settings.Default.DNOEGDBConnectionString, mappingSource)
-		{
+		public MilSpaceStorageContext() :
+                //base(global::MilSpace.DataAccess.Properties.Settings.Default.DNOEGDBConnectionString, mappingSource)
+                base(global::MilSpace.DataAccess.Properties.Settings.Default.MilSpaceAppConnectionString, mappingSource)
+        {
 			OnCreated();
 		}
 		

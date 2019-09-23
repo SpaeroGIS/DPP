@@ -4,6 +4,7 @@ using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Configurations;
 using MilSpace.Core;
+using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -233,6 +234,37 @@ namespace MilSpace.DataAccess.Facade
             workspaceEdit.StopEditing(true);
 
             return featureClassName;
+        }
+
+        public void AddObservPoint(IPoint point, ObservationPoint pointArgs, IFeatureClass featureClass)
+        {
+            IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)calcWorkspace;
+            workspaceEdit.StartEditing(true);
+            workspaceEdit.StartEditOperation();
+            
+            
+            var pointFeature = featureClass.CreateFeature();
+            pointFeature.Shape = point;
+
+            pointFeature.set_Value(featureClass.FindField("TitleOP"), pointArgs.Title);
+            pointFeature.set_Value(featureClass.FindField("TypeOP"), pointArgs.Type.ToString());
+            pointFeature.set_Value(featureClass.FindField("saffiliation"), pointArgs.Affiliation.ToString());
+            pointFeature.set_Value(featureClass.FindField("XWGS"), pointArgs.X);  
+            pointFeature.set_Value(featureClass.FindField("YWGS"), pointArgs.Y);
+            pointFeature.set_Value(featureClass.FindField("HRel"), pointArgs.RelativeHeight);
+            pointFeature.set_Value(featureClass.FindField("AvailableHeightLover"), pointArgs.AvailableHeightLover);
+            pointFeature.set_Value(featureClass.FindField("AvailableHeightUpper"), pointArgs.AvailableHeightUpper);
+            pointFeature.set_Value(featureClass.FindField("AzimuthB"), pointArgs.AzimuthStart);
+            pointFeature.set_Value(featureClass.FindField("AzimuthE"), pointArgs.AzimuthEnd);
+            pointFeature.set_Value(featureClass.FindField("AzimuthMainAxis"), pointArgs.AzimuthMainAxis);
+            pointFeature.set_Value(featureClass.FindField("AnglCameraRotationH"), pointArgs.AngelCameraRotationH);
+            pointFeature.set_Value(featureClass.FindField("AnglCameraRotationV"), pointArgs.AngelCameraRotationV);
+            //pointFeature.set_Value(featureClass.FindField("AnglMinH"), pointArgs.AngelMinH);
+            //pointFeature.set_Value(featureClass.FindField("AnglMaxH"), pointArgs.AngelMaxH);
+            pointFeature.set_Value(featureClass.FindField("dto"), pointArgs.Dto);
+            pointFeature.set_Value(featureClass.FindField("soper"), pointArgs.Operator);
+
+            pointFeature.Store();
         }
 
         public void EraseProfileLines()
