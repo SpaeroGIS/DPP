@@ -67,7 +67,7 @@ namespace MilSpace.Tools
                 new ActionParam<string>() { ParamName = ActionParameters.FeatureClass, Value = profileLineFeatureClass },
                 new ActionParam<string>() { ParamName = ActionParameters.ProfileSource, Value = profileSource },
                 new ActionParam<string>() { ParamName = ActionParameters.DataWorkSpace, Value = resuTable},
-                new ActionParam<string>() { ParamName = ActionParameters.OutGraphName, Value = ""}
+                new ActionParam<string>() { ParamName = ActionParameters.OutputSourceName, Value = ""}
             };
 
 
@@ -271,6 +271,7 @@ namespace MilSpace.Tools
             }
 
         }
+
 
         private static IEnumerable<ProfileLine> GetProfileLines(IFeatureClass profileLines)
         {

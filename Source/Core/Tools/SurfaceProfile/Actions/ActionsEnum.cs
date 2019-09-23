@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MilSpace.Tools.SurfaceProfile.Actions
+﻿namespace MilSpace.Tools.SurfaceProfile.Actions
 {
     public enum ActionsEnum
     {
@@ -16,6 +10,11 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
         /// <summary>
         /// Build Stack Profile
         /// </summary>
-        bsp = 1
+        bsp = 1,
+
+        /// <summary>
+        /// Build Visibility Area
+        /// </summary>
+        vblt = 3
     }
 }
