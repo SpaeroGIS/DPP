@@ -1,10 +1,12 @@
 ﻿using ESRI.ArcGIS.DataSourcesGDB;
+using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Configurations;
 using MilSpace.Core;
 using MilSpace.DataAccess.DataTransfer;
+using MilSpace.Core.Tools;
 using MilSpace.DataAccess.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -18,7 +20,11 @@ namespace MilSpace.DataAccess.Facade
         private static GdbAccess instance = null;
         private static IApplication application = null;
 
-        private static readonly string calcFeatureClass = "CalcProfile_L";
+        private static readonly string profileCalcFeatureClass = "CalcProfile_L";
+
+        //Visibility dataset template 
+        private static readonly string visibilityCalcFeatureClass = "VDSR";
+        private static readonly string visibilityCalcFeatureDataset = $"{visibilityCalcFeatureClass}DS";
         private Logger logger = Logger.GetLoggerEx("GdbAccess");
 
         private GdbAccess()
@@ -37,7 +43,7 @@ namespace MilSpace.DataAccess.Facade
         {
             get
             {
-                if(instance == null)
+                if (instance == null)
                 {
                     try
                     {
@@ -82,14 +88,217 @@ namespace MilSpace.DataAccess.Facade
             return featureClassName;
         }
 
+        //public string AddObservationPointsToCalculation(IWorkspace sourceWorkspace1, IFeatureClass sourceFeatureClass,
+        //    IEnumerable<IFeature> observationPoints)
+        //{
+        //    //Target dataset name
+        //    string temporarySuffix = MilSpace.DataAccess.Helper.GetTemporaryNameSuffix();
+        //    string datasetName = $"{visibilityCalcFeatureDataset}{temporarySuffix}";
+        //    string stringtargetFeatureClassName = $"{visibilityCalcFeatureClass}{temporarySuffix}";
+
+        //    // Create the objects and references necessary for field validation.
+        //    IFieldChecker fieldChecker = new FieldCheckerClass();
+        //    IFields sourceFields = sourceFeatureClass.Fields;
+        //    IFields targetFields = null;
+        //    IEnumFieldError enumFieldError = null;
+
+        //    // Set the required properties for the IFieldChecker interface.
+
+
+        //    try
+        //    {
+        //        //Source Dataset name
+        //        //IFeatureClassName sourceFeatureClassName = new FeatureClassNameClass();
+        //        //sourceFeatureClassName.FeatureDatasetName = ((IDataset)sourceFeatureClass).FullName as IDatasetName;
+
+        //        // Create a name object for the source (shapefile) workspace and open it.
+        //        IWorkspaceName sourceWorkspaceName = new WorkspaceNameClass
+        //        {
+        //            WorkspaceFactoryProgID = "esriDataSourcesFile.ShapefileWorkspaceFactory",
+        //            PathName = @"E:\Data\MilSpace3D\MilSpaceCalc_40a.gdb"
+        //        };
+        //        IName sourceWorkspaceIName = (IName)sourceWorkspaceName;
+        //        IWorkspace sourceWorkspace = (IWorkspace)sourceWorkspaceIName.Open();
+
+        //        // Create a name object for the source dataset.
+        //        IFeatureClassName sourceFeatureClassName = new FeatureClassNameClass();
+        //        IDatasetName sourceDatasetName = (IDatasetName)sourceFeatureClassName;
+        //        sourceDatasetName.Name = "MilSp_Visible_ObservPoints";
+        //        sourceDatasetName.WorkspaceName = sourceWorkspaceName;
+
+
+
+        //        //IWorkspaceName targetWorkspaceName = new WorkspaceNameClass
+        //        //{
+        //        //    WorkspaceFactoryProgID = "esriDataSourcesGDB.FileGDBWorkspaceFactory",
+        //        //    PathName = @"E:\Data\MilSpace3D\MilSpaceCalc_40a.gdb"
+        //        //};
+
+
+
+        //        // Create a name object for the target dataset.
+        //        IFeatureClassName targetFeatureClassName = new FeatureClassNameClass();
+        //        IDatasetName targetDatasetName = (IDatasetName)targetFeatureClassName;
+        //        targetDatasetName.Name = stringtargetFeatureClassName;
+        //        targetDatasetName.WorkspaceName = (((IDataset)targetDataset).FullName as IDatasetName).WorkspaceName;
+
+
+        //        IWorkspaceName targetWorkspaceName = new WorkspaceNameClass
+        //        {
+        //            WorkspaceFactoryProgID = "esriDataSourcesGDB.FileGDBWorkspaceFactory",
+        //            PathName = @"E:\Data\MilSpace3D\MilSpaceCalc_40a.gdb"
+        //        };
+
+        //        IName targetWorkspaceIName = (IName)targetWorkspaceName;
+        //        IWorkspace targetWorkspace = (IWorkspace)targetWorkspaceIName.Open();
+        //        // Create a name object for the target dataset.
+        //        //IFeatureClassName targetFeatureClassName = new FeatureClassNameClass();
+        //        //IDatasetName targetDatasetName = (IDatasetName)targetFeatureClassName;
+        //        targetDatasetName.Name = "Cities";
+        //        targetDatasetName.WorkspaceName = targetWorkspaceName;
+
+
+        //        // Validate the fields and check for errors.
+        //        fieldChecker.InputWorkspace = sourceWorkspace;
+        //        fieldChecker.ValidateWorkspace = targetWorkspace;
+
+        //        fieldChecker.Validate(sourceFields, out enumFieldError, out targetFields);
+        //        if (enumFieldError != null)
+        //        {
+        //            // Handle the errors in a way appropriate to your application.
+        //            logger.ErrorEx("Errors were encountered during field validation.");
+        //            throw new InvalidDataException("Errors were encountered during field validation.");
+        //        }
+
+        //        // Find the shape field.
+        //        String shapeFieldName = sourceFeatureClass.ShapeFieldName;
+        //        int shapeFieldIndex = sourceFeatureClass.FindField(shapeFieldName);
+        //        IField shapeField = sourceFields.get_Field(shapeFieldIndex);
+
+        //        // Get the geometry definition from the shape field and clone it.
+        //        IGeometryDef geometryDef = shapeField.GeometryDef;
+        //        IClone geometryDefClone = (IClone)geometryDef;
+        //        IClone targetGeometryDefClone = geometryDefClone.Clone();
+        //        IGeometryDef targetGeometryDef = (IGeometryDef)targetGeometryDefClone;
+
+        //        //Define filter for importing
+        //        IQueryFilter queryFilter = new QueryFilterClass();
+        //        queryFilter.WhereClause = "ObjectId > 0";
+
+        //        // Create the converter and run the conversion.
+        //        IFeatureDataConverter featureDataConverter = new FeatureDataConverterClass();
+        //        IEnumInvalidObject enumInvalidObject = featureDataConverter.ConvertFeatureClass
+        //            (sourceFeatureClassName, null, null, targetFeatureClassName,
+        //            targetGeometryDef, targetFields, "", 1000, 0);
+
+        //        // Check for errors.
+        //        IInvalidObjectInfo invalidObjectInfo = null;
+        //        enumInvalidObject.Reset();
+        //        while ((invalidObjectInfo = enumInvalidObject.Next()) != null)
+        //        {
+        //            // Handle the errors in a way appropriate to the application.
+        //            Console.WriteLine("Errors occurred for the following feature: {0}",
+        //                invalidObjectInfo.InvalidObjectID);
+        //        }
+
+
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        logger.ErrorEx(ex.Message);
+        //        return null;
+        //    }
+
+        //    return datasetName;
+        //}
+
         public IApplication Application
         {
             set
             {
-                if(application == null)
+                if (application == null)
                 {
                     ArcMapInstance.Application = application = value;
                 }
+            }
+        }
+
+
+        public void ConvertTable(IWorkspace sourceWorkspace, IDataset sourceDataset)
+        {
+            IWorkspace targetWorkspace = calcWorkspace;
+
+            //Target dataset name
+            string temporarySuffix = MilSpace.DataAccess.Helper.GetTemporaryNameSuffix();
+            string datasetName = $"{visibilityCalcFeatureDataset}{temporarySuffix}";
+            string nameOfTargetDataset = $"{visibilityCalcFeatureClass}{temporarySuffix}";
+
+            try
+            {
+                //create source workspace name
+                ITable pSourceTab = (ITable)sourceDataset;
+                IFeatureClass sourceFeatureClass = (IFeatureClass)sourceDataset;
+
+                IDataset sourceWorkspaceDataset = (IDataset)sourceWorkspace;
+                IWorkspaceName sourceWorkspaceName = (IWorkspaceName)sourceWorkspaceDataset.FullName;
+
+                IFeatureClassName sourceDatasetName = (IFeatureClassName)sourceDataset.FullName;
+
+                //create target workspace name
+                IDataset targetWorkspaceDataset = (IDataset)targetWorkspace;
+                IWorkspaceName targetWorkspaceName = (IWorkspaceName)targetWorkspaceDataset.FullName;
+                //create target dataset name
+                IFeatureClassName targetFeatureClassName = new FeatureClassNameClass();
+
+
+                IFeatureWorkspace featureworkspace = (IFeatureWorkspace)calcWorkspace;
+                IFeatureDataset targetDataset = featureworkspace.CreateFeatureDataset(datasetName, EsriTools.Wgs84Spatialreference);
+
+                IDatasetName targetDatasetName = (IDatasetName)targetFeatureClassName;
+                targetDatasetName.WorkspaceName = targetWorkspaceName;
+                targetDatasetName.Name = nameOfTargetDataset;
+                ////Open input Featureclass to get field definitions.
+                //ESRI.ArcGIS.esriSystem.IName sourceName = (ESRI.ArcGIS.esriSystem.IName)sourceDatasetName;
+                //ITable sourceTable = (ITable)sourceName.Open();
+
+                // we want to convert all of the features
+                IQueryFilter queryFilter = new QueryFilterClass();
+                queryFilter.WhereClause = "";
+                //Validate the field names because you are converting between different workspace types.
+                IFieldChecker fieldChecker = new FieldCheckerClass();
+                IFields targetFields;
+                IFields sourceFields = pSourceTab.Fields;
+                IEnumFieldError enumFieldError;
+                // Most importantly set the input and validate workspaces!
+                fieldChecker.InputWorkspace = sourceWorkspace;
+                fieldChecker.ValidateWorkspace = targetWorkspace;
+                fieldChecker.Validate(sourceFields, out enumFieldError, out targetFields);
+
+                // Get the geometry definition from the shape field and clone it.
+                string shapeFieldName = sourceFeatureClass.ShapeFieldName;
+                int shapeFieldIndex = sourceFeatureClass.FindField(shapeFieldName);
+                IField shapeField = sourceFields.get_Field(shapeFieldIndex);
+
+                IGeometryDef geometryDef = shapeField.GeometryDef;
+                IClone geometryDefClone = (IClone)geometryDef;
+                IClone targetGeometryDefClone = geometryDefClone.Clone();
+                IGeometryDef targetGeometryDef = (IGeometryDef)targetGeometryDefClone;
+
+
+                if (enumFieldError == null)
+                {
+                    IFeatureDataConverter fctofc = new FeatureDataConverterClass();
+
+                    IEnumInvalidObject enumErrors =
+                        fctofc.ConvertFeatureClass(sourceDatasetName, queryFilter, (IFeatureDatasetName)targetDataset.FullName, targetFeatureClassName, targetGeometryDef,
+                        pSourceTab.Fields, "", 1000, 0);
+                }
+            }
+            catch (Exception exp)
+            {
+                logger.ErrorEx(exp.ToString());
+                return;
             }
         }
 
@@ -99,12 +308,12 @@ namespace MilSpace.DataAccess.Facade
             workspaceEdit.StartEditing(true);
             workspaceEdit.StartEditOperation();
 
-            string newFeatureClassName = $"{calcFeatureClass}{MilSpace.DataAccess.Helper.GetTemporaryNameSuffix()}";
+            string newFeatureClassName = $"{profileCalcFeatureClass}{MilSpace.DataAccess.Helper.GetTemporaryNameSuffix()}";
 
             IWorkspace2 wsp2 = (IWorkspace2)calcWorkspace;
             IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)calcWorkspace;
 
-            if(!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, newFeatureClassName))
+            if (!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, newFeatureClassName))
             {
 
                 IFeatureClassDescription fcDescription = new FeatureClassDescriptionClass();
@@ -280,7 +489,7 @@ namespace MilSpace.DataAccess.Facade
             workspaceEdit.StartEditing(true);
             workspaceEdit.StartEditOperation();
 
-            while((feature = featureCursor.NextFeature()) != null)
+            while ((feature = featureCursor.NextFeature()) != null)
             {
                 feature.Delete();
             }
@@ -299,7 +508,7 @@ namespace MilSpace.DataAccess.Facade
             IWorkspace2 wsp2 = (IWorkspace2)calcWorkspace;
             IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)calcWorkspace;
 
-            if(!wsp2.get_NameExists(esriDatasetType.esriDTTable, resultTable))
+            if (!wsp2.get_NameExists(esriDatasetType.esriDTTable, resultTable))
             {
                 //TODO: Create the feature class
                 throw new FileNotFoundException(resultTable);
@@ -317,18 +526,18 @@ namespace MilSpace.DataAccess.Facade
             {
                 var datasets = calcWorkspace.get_Datasets(esriDatasetType.esriDTTable);
                 IDataset tabledataset = datasets.Next();
-                if(tabledataset != null)
+                if (tabledataset != null)
                 {
 
-                    while(tabledataset != null)
+                    while (tabledataset != null)
                     {
-                        if(!tabledataset.Name.Equals(resultTable))
+                        if (!tabledataset.Name.Equals(resultTable))
                         {
                             tabledataset = datasets.Next();
                             continue;
                         }
 
-                        if(!tabledataset.CanDelete())
+                        if (!tabledataset.CanDelete())
                         {
                             throw new MilSpaceCanotDeletePrifileCalcTable(resultTable, MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection);
                         }
@@ -341,17 +550,17 @@ namespace MilSpace.DataAccess.Facade
                 //Delete temprorary Feature class (Profile lites)
                 datasets = calcWorkspace.get_Datasets(esriDatasetType.esriDTFeatureClass);
 
-                if(tabledataset != null)
+                if (tabledataset != null)
                 {
-                    while(tabledataset != null)
+                    while (tabledataset != null)
                     {
-                        if(!tabledataset.Name.Equals(lineFeatureClass))
+                        if (!tabledataset.Name.Equals(lineFeatureClass))
                         {
                             tabledataset = datasets.Next();
                             continue;
                         }
 
-                        if(!tabledataset.CanDelete())
+                        if (!tabledataset.CanDelete())
                         {
                             throw new MilSpaceCanotDeletePrifileCalcTable(lineFeatureClass, MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection);
                         }
@@ -364,12 +573,12 @@ namespace MilSpace.DataAccess.Facade
                 return true;
 
             }
-            catch(MilSpaceCanotDeletePrifileCalcTable ex)
+            catch (MilSpaceCanotDeletePrifileCalcTable ex)
             {
                 //TODO: add logging
                 throw;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 //TODO: add logging
 
@@ -385,7 +594,7 @@ namespace MilSpace.DataAccess.Facade
             IWorkspace2 wsp2 = (IWorkspace2)calcWorkspace;
             IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)calcWorkspace;
 
-            if(!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, currentFeatureClass))
+            if (!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, currentFeatureClass))
             {
                 //TODO: Create the feature class
                 throw new MilSpaceDataException(currentFeatureClass, Core.DataAccess.DataOperationsEnum.Access);
@@ -497,12 +706,12 @@ namespace MilSpace.DataAccess.Facade
             IWorkspace2 wsp2 = (IWorkspace2)calcWorkspace;
             IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)calcWorkspace;
 
-            if(!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, featureClassName))
+            if (!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, featureClassName))
             {
                 IFeatureClassDescription fcDescription = new FeatureClassDescriptionClass();
                 IObjectClassDescription ocDescription = (IObjectClassDescription)fcDescription;
 
-                if(fields == null)
+                if (fields == null)
                 {
                     fields = ocDescription.RequiredFields;
 
