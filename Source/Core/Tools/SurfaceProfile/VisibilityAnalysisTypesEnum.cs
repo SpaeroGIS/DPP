@@ -2,7 +2,7 @@
 {
     public enum VisibilityAnalysisTypesEnum 
     {
-        Frwquency,
+        Frequency,
         Observers
     }
 }

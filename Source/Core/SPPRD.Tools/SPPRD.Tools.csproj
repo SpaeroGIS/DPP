@@ -100,6 +100,9 @@
     <Compile Include="..\Tools\Exceptions\MilSpaceProfileLineNotFound.cs">
       <Link>Exceptions\MilSpaceProfileLineNotFound.cs</Link>
     </Compile>
+    <Compile Include="..\Tools\Exceptions\MilSpaceVisibilityCalcFailed.cs">
+      <Link>Exceptions\MilSpaceVisibilityCalcFailed.cs</Link>
+    </Compile>
     <Compile Include="..\Tools\GraphicsLayer\GraphicElement.cs">
       <Link>GraphicsLayer\GraphicElement.cs</Link>
     </Compile>
@@ -121,11 +124,22 @@
     <Compile Include="..\Tools\SurfaceProfile\Actions\BuildStackProfileAction.cs">
       <Link>SurfaceProfile\Actions\BuildStackProfileAction.cs</Link>
     </Compile>
+    <Compile Include="..\Tools\SurfaceProfile\Actions\BuildStackVisibilityAction.cs">
+      <Link>SurfaceProfile\Actions\BuildStackVisibilityAction.cs</Link>
+    </Compile>
     <Compile Include="..\Tools\SurfaceProfile\ProfileLibrary.cs">
       <Link>SurfaceProfile\ProfileLibrary.cs</Link>
     </Compile>
+    <Compile Include="..\Tools\SurfaceProfile\VisibilityAnalysisTypesEnum.cs">
+      <Link>SurfaceProfile\VisibilityAnalysisTypesEnum.cs</Link>
+    </Compile>
+    <Compile Include="..\Tools\SurfaceProfile\VisibilityFieldsEnum.cs">
+      <Link>SurfaceProfile\VisibilityFieldsEnum.cs</Link>
+    </Compile>
+    <Compile Include="..\Tools\VisibilityManager.cs">
+      <Link>VisibilityManager.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SurfaceProfile\VisibilityAnalysisTypesEnum.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SPPRD.Configurations\SPPRD.Configurations.csproj">
