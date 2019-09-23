@@ -38,7 +38,10 @@ namespace MilSpace.DataAccess.DataTransfer
         /// Height above surface, default - 0
         /// Cannot be less then 0.
         /// </summary>
-        public double? RelativeHeihgt;
+        public double? RelativeHeight;
+
+        public double AvailableHeightLover;
+        public double AvailableHeightUpper;
 
         /// <summary>
         /// This value defines the start angle of the horizontal scan range. The value should be specified in degrees from 0 to 360, 
@@ -83,7 +86,7 @@ namespace MilSpace.DataAccess.DataTransfer
         public double? AngelMaxH;
 
         /// <summary>
-        /// The main direct of the observatio point/station. 
+        /// The main direct of the observation point/station. 
         /// Can be used for rectification of the horisontal angels in Visibility calculation
         /// </summary>
         public double? AzimuthMainAxis;
