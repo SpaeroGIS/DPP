@@ -73,7 +73,7 @@ namespace MilSpace.DataAccess.DataTransfer
         /// Shold be used as the parameter vertical_upper_angle in the Visibility calculation
         /// Default value - 0
         /// </summary>
-        public double? AngelMinH;
+        public double? AngelMaxH;
 
         /// <summary>
         /// This value defines the lower vertical angle limit of the scan below a horizontal plane. 
@@ -83,7 +83,7 @@ namespace MilSpace.DataAccess.DataTransfer
         /// Shold be used as the parameter vertical_lower_angle in the Visibility calculation. 
         /// Default value - 90
         /// </summary>
-        public double? AngelMaxH;
+        public double? AngelMinH;
 
         /// <summary>
         /// The main direct of the observation point/station. 

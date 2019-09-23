@@ -468,8 +468,8 @@ namespace MilSpace.DataAccess.Facade
             pointFeature.set_Value(featureClass.FindField("AzimuthMainAxis"), pointArgs.AzimuthMainAxis);
             pointFeature.set_Value(featureClass.FindField("AnglCameraRotationH"), pointArgs.AngelCameraRotationH);
             pointFeature.set_Value(featureClass.FindField("AnglCameraRotationV"), pointArgs.AngelCameraRotationV);
-            //pointFeature.set_Value(featureClass.FindField("AnglMinH"), pointArgs.AngelMinH);
-            //pointFeature.set_Value(featureClass.FindField("AnglMaxH"), pointArgs.AngelMaxH);
+            pointFeature.set_Value(featureClass.FindField("AnglMinH"), pointArgs.AngelMinH);
+            pointFeature.set_Value(featureClass.FindField("AnglMaxH"), pointArgs.AngelMaxH);
             pointFeature.set_Value(featureClass.FindField("dto"), pointArgs.Dto);
             pointFeature.set_Value(featureClass.FindField("soper"), pointArgs.Operator);
 

@@ -153,7 +153,6 @@ namespace MilSpace.Visibility
             filters.AddRange(GetAffiliation.ToArray());
             cmbAffiliation.Items.Clear();
             cmbAffiliationEdit.Items.Clear();
-            cmbObservPointsLayers.Items.Clear();
 
             cmbAffiliation.Items.AddRange(filters.ToArray());
             cmbAffiliationEdit.Items.AddRange(GetAffiliation.ToArray());
@@ -165,6 +164,7 @@ namespace MilSpace.Visibility
         {
             if(cmbObservPointsLayers.Visible)
             {
+                cmbObservPointsLayers.Items.Clear();
                 cmbObservPointsLayers.Items.AddRange(controller.GetObservationPointsLayers(ActiveView).ToArray());
                 cmbObservPointsLayers.SelectedItem = controller.GetObservFeatureName();
             }
@@ -202,7 +202,6 @@ namespace MilSpace.Visibility
 
         private void FieldsValidation(object sender, EventArgs e)
         {
-
             try
             {
                 var textBox = (TextBox)sender;
@@ -242,6 +241,19 @@ namespace MilSpace.Visibility
 
                             ShowPoint(x, y);
                         }
+
+                        break;
+
+                    case "angleOFViewMin":
+
+                        ValidateRange(angleOFViewMin, ObservPointDefaultValues.AngleOFViewMinText, -90, 0);
+
+                        break;
+
+
+                    case "angleOFViewMax":
+
+                        ValidateRange(angleOFViewMax, ObservPointDefaultValues.AngleOFViewMaxText, 0, 90);
 
                         break;
 
@@ -349,18 +361,23 @@ namespace MilSpace.Visibility
 
         private void ValidateAzimuth(TextBox azimuthTextBox, string defaultValue)
         {
-            double azimuth;
+            ValidateRange(azimuthTextBox, defaultValue, 0, 360);
+        }
 
-            if(Double.TryParse(azimuthTextBox.Text, out azimuth))
+        private void ValidateRange(TextBox textBox, string defaultValue, double lowValue, double upperValue)
+        {
+            double value;
+
+            if(Double.TryParse(textBox.Text, out value))
             {
-                if(azimuth >= 0 && azimuth <= 360)
+                if(value >= lowValue && value <= upperValue)
                 {
                     return;
                 }
             }
 
-            azimuthTextBox.Text = defaultValue;
-            MessageBox.Show("Invalid data.\nInsert the value in the range from 0 to 360");
+            textBox.Text = defaultValue;
+            MessageBox.Show($"Invalid data.\nInsert the value in the range from {lowValue} to {upperValue}");
         }
 
         private double ValidateHeight(TextBox heightTextBox, string defaultValue)
@@ -391,10 +408,11 @@ namespace MilSpace.Visibility
         private void EnableObservPointsControls()
         {
             lblLayer.Visible = cmbObservPointsLayers.Visible = cmbAffiliationEdit.Enabled = cmbObservTypesEdit.Enabled = azimuthB.Enabled
-                = azimuthE.Enabled = xCoord.Enabled = yCoord.Enabled = heightCurrent.Enabled = heightMin.Enabled = azimuthMainAxis.Enabled
+                = azimuthE.Enabled = xCoord.Enabled = yCoord.Enabled =  angleOFViewMin.Enabled = angleOFViewMax.Enabled 
+                = heightCurrent.Enabled = heightMin.Enabled = azimuthMainAxis.Enabled
                 = heightMax.Enabled = observPointName.Enabled = controller.IsObservPointsExists(ActiveView);
-            angleFrameH.Enabled = angleFrameV.Enabled = angleOFViewMin.Enabled = angleOFViewMax.Enabled
-                = observPointDate.Enabled = observPointCreator.Enabled = false;
+
+            angleFrameH.Enabled = angleFrameV.Enabled = observPointDate.Enabled = observPointCreator.Enabled = false;
         }
 
         private void OnSelectObserbPoint()
@@ -592,6 +610,8 @@ namespace MilSpace.Visibility
                 X = Convert.ToDouble(xCoord.Text),
                 Y = Convert.ToDouble(yCoord.Text),
                 Affiliation = cmbAffiliationEdit.SelectedItem.ToString(),
+                AngelMaxH = Convert.ToDouble(angleOFViewMax.Text),
+                AngelMinH = Convert.ToDouble(angleOFViewMin.Text),
                 AngelCameraRotationH = Convert.ToDouble(cameraRotationH.Text),
                 AngelCameraRotationV = Convert.ToDouble(cameraRotationV.Text),
                 RelativeHeight = Convert.ToDouble(heightCurrent.Text),
