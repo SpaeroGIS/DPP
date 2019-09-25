@@ -7,10 +7,9 @@ namespace MilSpace.DataAccess.DataTransfer
     public enum VeluableObservPointFieldsEnum : byte
     {
         All = 0,
-        Id = 1,
-        Type = 2,
-        Affiliation = 4,
-        Date = 8
+        Type = 1,
+        Affiliation = 2,
+        Date = 4
     }
 
     public class ObservationPoint
@@ -132,10 +131,6 @@ namespace MilSpace.DataAccess.DataTransfer
 
             values.Add(Title);
 
-            if ((filter & VeluableObservPointFieldsEnum.Id) == VeluableObservPointFieldsEnum.Id)
-            {
-                values.Add(Id);
-            }
             if ((filter & VeluableObservPointFieldsEnum.Affiliation) == VeluableObservPointFieldsEnum.Affiliation)
             {
                 values.Add(Affiliation);

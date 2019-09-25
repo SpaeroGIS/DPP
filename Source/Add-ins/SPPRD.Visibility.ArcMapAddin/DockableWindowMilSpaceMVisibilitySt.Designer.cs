@@ -181,12 +181,11 @@
             this.addPointToolBarBtn = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton48 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton50 = new System.Windows.Forms.ToolBarButton();
-            this.lstObservationPoinst = new System.Windows.Forms.ListBox();
+            this.dgvObservationPoints = new System.Windows.Forms.DataGridView();
             this.panel5 = new System.Windows.Forms.Panel();
             this.chckFilterDate = new System.Windows.Forms.CheckBox();
             this.chckFilterAffiliation = new System.Windows.Forms.CheckBox();
             this.chckFilterType = new System.Windows.Forms.CheckBox();
-            this.chckFilterId = new System.Windows.Forms.CheckBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.cmbAffiliation = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -353,6 +352,7 @@
             this.panel18.SuspendLayout();
             this.panel9.SuspendLayout();
             this.panel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvObservationPoints)).BeginInit();
             this.panel5.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -624,7 +624,7 @@
             // 
             this.tabPage1.Controls.Add(this.panel7);
             this.tabPage1.Controls.Add(this.panel6);
-            this.tabPage1.Controls.Add(this.lstObservationPoinst);
+            this.tabPage1.Controls.Add(this.dgvObservationPoints);
             this.tabPage1.Controls.Add(this.panel5);
             this.tabPage1.Controls.Add(this.panel4);
             this.tabPage1.Controls.Add(this.panel3);
@@ -643,9 +643,9 @@
             this.panel7.Controls.Add(this.tabControl2);
             this.panel7.Controls.Add(this.panel9);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(3, 231);
+            this.panel7.Location = new System.Drawing.Point(3, 276);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(336, 389);
+            this.panel7.Size = new System.Drawing.Size(336, 344);
             this.panel7.TabIndex = 7;
             // 
             // tabControl2
@@ -658,7 +658,7 @@
             this.tabControl2.Location = new System.Drawing.Point(0, 24);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(336, 365);
+            this.tabControl2.Size = new System.Drawing.Size(336, 320);
             this.tabControl2.TabIndex = 10;
             // 
             // tabPage5
@@ -680,7 +680,7 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 4);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(328, 338);
+            this.tabPage5.Size = new System.Drawing.Size(328, 293);
             this.tabPage5.TabIndex = 0;
             this.tabPage5.Text = "Параметры ПН";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -778,7 +778,7 @@
             this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.richTextBox1.Location = new System.Drawing.Point(3, 263);
+            this.richTextBox1.Location = new System.Drawing.Point(3, 218);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(322, 48);
             this.richTextBox1.TabIndex = 27;
@@ -1266,7 +1266,7 @@
             // 
             this.panel12.Controls.Add(this.toolBar2);
             this.panel12.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel12.Location = new System.Drawing.Point(3, 311);
+            this.panel12.Location = new System.Drawing.Point(3, 266);
             this.panel12.Name = "panel12";
             this.panel12.Size = new System.Drawing.Size(322, 24);
             this.panel12.TabIndex = 13;
@@ -1327,7 +1327,7 @@
             this.tabPage6.Location = new System.Drawing.Point(4, 4);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(328, 338);
+            this.tabPage6.Size = new System.Drawing.Size(328, 293);
             this.tabPage6.TabIndex = 1;
             this.tabPage6.Text = "Точки \"снимков\"";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -1710,13 +1710,14 @@
             // 
             this.panel6.Controls.Add(this.tlbObservPoints);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel6.Location = new System.Drawing.Point(3, 207);
+            this.panel6.Location = new System.Drawing.Point(3, 252);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(336, 24);
             this.panel6.TabIndex = 6;
             // 
             // tlbObservPoints
             // 
+            this.tlbObservPoints.AutoSize = false;
             this.tlbObservPoints.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
             this.toolBarButton51,
             this.toolBarButton52,
@@ -1730,10 +1731,10 @@
             this.tlbObservPoints.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tlbObservPoints.DropDownArrows = true;
             this.tlbObservPoints.ImageList = this.imageList1;
-            this.tlbObservPoints.Location = new System.Drawing.Point(0, -4);
+            this.tlbObservPoints.Location = new System.Drawing.Point(0, 0);
             this.tlbObservPoints.Name = "tlbObservPoints";
             this.tlbObservPoints.ShowToolTips = true;
-            this.tlbObservPoints.Size = new System.Drawing.Size(336, 28);
+            this.tlbObservPoints.Size = new System.Drawing.Size(336, 24);
             this.tlbObservPoints.TabIndex = 40;
             this.tlbObservPoints.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.TlbObserPoints_ButtonClick);
             // 
@@ -1766,21 +1767,26 @@
             this.toolBarButton50.Name = "toolBarButton50";
             this.toolBarButton50.ToolTipText = "Удалить";
             // 
-            // lstObservationPoinst
+            // dgvObservationPoints
             // 
-            this.lstObservationPoinst.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lstObservationPoinst.FormattingEnabled = true;
-            this.lstObservationPoinst.Location = new System.Drawing.Point(3, 99);
-            this.lstObservationPoinst.Name = "lstObservationPoinst";
-            this.lstObservationPoinst.Size = new System.Drawing.Size(336, 108);
-            this.lstObservationPoinst.TabIndex = 5;
+            this.dgvObservationPoints.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
+            this.dgvObservationPoints.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvObservationPoints.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvObservationPoints.ColumnHeadersVisible = false;
+            this.dgvObservationPoints.Dock = System.Windows.Forms.DockStyle.Top;
+            this.dgvObservationPoints.Location = new System.Drawing.Point(3, 99);
+            this.dgvObservationPoints.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
+            this.dgvObservationPoints.Name = "dgvObservationPoints";
+            this.dgvObservationPoints.ReadOnly = true;
+            this.dgvObservationPoints.RowHeadersVisible = false;
+            this.dgvObservationPoints.Size = new System.Drawing.Size(336, 153);
+            this.dgvObservationPoints.TabIndex = 5;
             // 
             // panel5
             // 
             this.panel5.Controls.Add(this.chckFilterDate);
             this.panel5.Controls.Add(this.chckFilterAffiliation);
             this.panel5.Controls.Add(this.chckFilterType);
-            this.panel5.Controls.Add(this.chckFilterId);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(3, 75);
             this.panel5.Name = "panel5";
@@ -1794,13 +1800,14 @@
             this.chckFilterDate.Checked = true;
             this.chckFilterDate.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chckFilterDate.Dock = System.Windows.Forms.DockStyle.Left;
-            this.chckFilterDate.Location = new System.Drawing.Point(218, 0);
+            this.chckFilterDate.Location = new System.Drawing.Point(171, 0);
             this.chckFilterDate.Name = "chckFilterDate";
             this.chckFilterDate.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
             this.chckFilterDate.Size = new System.Drawing.Size(53, 24);
             this.chckFilterDate.TabIndex = 3;
             this.chckFilterDate.Text = "дата";
             this.chckFilterDate.UseVisualStyleBackColor = true;
+            this.chckFilterDate.CheckedChanged += new System.EventHandler(this.Filter_CheckedChanged);
             // 
             // chckFilterAffiliation
             // 
@@ -1808,13 +1815,14 @@
             this.chckFilterAffiliation.Checked = true;
             this.chckFilterAffiliation.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chckFilterAffiliation.Dock = System.Windows.Forms.DockStyle.Left;
-            this.chckFilterAffiliation.Location = new System.Drawing.Point(98, 0);
+            this.chckFilterAffiliation.Location = new System.Drawing.Point(51, 0);
             this.chckFilterAffiliation.Name = "chckFilterAffiliation";
             this.chckFilterAffiliation.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
             this.chckFilterAffiliation.Size = new System.Drawing.Size(120, 24);
             this.chckFilterAffiliation.TabIndex = 2;
             this.chckFilterAffiliation.Text = "принаждлехность";
             this.chckFilterAffiliation.UseVisualStyleBackColor = true;
+            this.chckFilterAffiliation.CheckedChanged += new System.EventHandler(this.Filter_CheckedChanged);
             // 
             // chckFilterType
             // 
@@ -1822,27 +1830,14 @@
             this.chckFilterType.Checked = true;
             this.chckFilterType.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chckFilterType.Dock = System.Windows.Forms.DockStyle.Left;
-            this.chckFilterType.Location = new System.Drawing.Point(51, 0);
+            this.chckFilterType.Location = new System.Drawing.Point(4, 0);
             this.chckFilterType.Name = "chckFilterType";
             this.chckFilterType.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
             this.chckFilterType.Size = new System.Drawing.Size(47, 24);
             this.chckFilterType.TabIndex = 1;
             this.chckFilterType.Text = "тип";
             this.chckFilterType.UseVisualStyleBackColor = true;
-            // 
-            // chckFilterId
-            // 
-            this.chckFilterId.AutoSize = true;
-            this.chckFilterId.Checked = true;
-            this.chckFilterId.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chckFilterId.Dock = System.Windows.Forms.DockStyle.Left;
-            this.chckFilterId.Location = new System.Drawing.Point(4, 0);
-            this.chckFilterId.Name = "chckFilterId";
-            this.chckFilterId.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.chckFilterId.Size = new System.Drawing.Size(47, 24);
-            this.chckFilterId.TabIndex = 0;
-            this.chckFilterId.Text = "ИД";
-            this.chckFilterId.UseVisualStyleBackColor = true;
+            this.chckFilterType.CheckedChanged += new System.EventHandler(this.Filter_CheckedChanged);
             // 
             // panel4
             // 
@@ -3441,7 +3436,7 @@
             this.panel9.ResumeLayout(false);
             this.panel9.PerformLayout();
             this.panel6.ResumeLayout(false);
-            this.panel6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvObservationPoints)).EndInit();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
             this.panel4.ResumeLayout(false);
@@ -3623,12 +3618,10 @@
         private System.Windows.Forms.ToolBarButton toolBarButton28;
         private System.Windows.Forms.ToolBarButton toolBarButton48;
         private System.Windows.Forms.ToolBarButton toolBarButton50;
-        private System.Windows.Forms.ListBox lstObservationPoinst;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.CheckBox chckFilterDate;
         private System.Windows.Forms.CheckBox chckFilterAffiliation;
         private System.Windows.Forms.CheckBox chckFilterType;
-        private System.Windows.Forms.CheckBox chckFilterId;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.ComboBox cmbAffiliation;
         private System.Windows.Forms.Label label3;
@@ -3780,5 +3773,6 @@
         private System.Windows.Forms.Panel panel57;
         private System.Windows.Forms.TextBox azimuthMainAxis;
         private System.Windows.Forms.Label label58;
+        private System.Windows.Forms.DataGridView dgvObservationPoints;
     }
 }

@@ -91,10 +91,6 @@ namespace MilSpace.Visibility
                     result = result | VeluableObservPointFieldsEnum.Date;
                 }
 
-                if(chckFilterId.Checked)
-                {
-                    result = result | VeluableObservPointFieldsEnum.Id;
-                }
                 if(chckFilterType.Checked)
                 {
                     result = result | VeluableObservPointFieldsEnum.Type;
@@ -125,15 +121,35 @@ namespace MilSpace.Visibility
             {
                 var ItemsToShow = observationPoints.Select(i => new ObservPointGui
                 {
-                    Text = i.GetItemValue(filter),
+                    Title = i.Title,
+                    Type = i.Type,
+                    Affiliation = i.Affiliation,
+                    Date = i.Dto,
                     Id = i.Id
                 }).ToList();
 
-                BindingList<ObservPointGui> observPointGuis = new BindingList<ObservPointGui>();
-                lstObservationPoinst.DataSource = ItemsToShow;
-                lstObservationPoinst.DisplayMember = "Text";
-                lstObservationPoinst.Update();
+                dgvObservationPoints.Rows.Clear();
+
+                BindingList<ObservPointGui> observPointGuis = new BindingList<ObservPointGui>(ItemsToShow);
+                dgvObservationPoints.DataSource = observPointGuis;
+
+                SetDataGridView();
+                FilterColumns(filter);
+                dgvObservationPoints.Update();
             }
+        }
+
+        private void SetDataGridView()
+        {
+            dgvObservationPoints.Columns["Title"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvObservationPoints.Columns["Id"].Visible = false;
+        }
+
+        private void FilterColumns(VeluableObservPointFieldsEnum filter)
+        {
+            dgvObservationPoints.Columns["Affiliation"].Visible = chckFilterAffiliation.Checked;
+            dgvObservationPoints.Columns["Type"].Visible = chckFilterType.Checked;
+            dgvObservationPoints.Columns["Date"].Visible = chckFilterDate.Checked;
         }
 
         private void InitilizeData()
@@ -513,7 +529,7 @@ namespace MilSpace.Visibility
         private void ShowPoint(double x, double y)
         {
             IPoint resultPoint = new Point { X = x, Y = y, SpatialReference = EsriTools.Wgs84Spatialreference };
-            resultPoint.ID = lstObservationPoinst.Items.Count + 1;
+            resultPoint.ID = dgvObservationPoints.Rows.Count + 1;
 
             if(!string.IsNullOrEmpty(_unsavedPointId))
             {
@@ -531,7 +547,7 @@ namespace MilSpace.Visibility
             IPoint resultPoint = new Point();
 
             resultPoint = (currentDocument.FocusMap as IActiveView).ScreenDisplay.DisplayTransformation.ToMapPoint(x, y);
-            resultPoint.ID = lstObservationPoinst.Items.Count + 1;
+            resultPoint.ID = dgvObservationPoints.Rows.Count + 1;
 
             if(!string.IsNullOrEmpty(_unsavedPointId))
             {
@@ -625,6 +641,11 @@ namespace MilSpace.Visibility
                 Title = observPointName.Text,
                 Type = cmbObservTypesEdit.Text
             };
+        }
+
+        private void Filter_CheckedChanged(object sender, EventArgs e)
+        {
+            FilterColumns(GetFilter);
         }
     }
 }
