@@ -185,24 +185,33 @@ namespace MilSpace.Visibility
 
         private void FilterData()
         {
+            if (dgvObservationPoints.Rows.Count == 0)
+            {
+                return;
+            }
+
             dgvObservationPoints.CurrentCell = null;
 
             foreach(DataGridViewRow row in dgvObservationPoints.Rows)
             {
-                if(cmbAffiliation.SelectedItem != null && cmbAffiliation.SelectedItem.ToString() !=  _allValuesFilterText)
+                if(cmbAffiliation.SelectedItem != null && cmbAffiliation.SelectedItem.ToString() != _allValuesFilterText)
                 {
                     row.Visible = (row.Cells["Affiliation"].Value.ToString() == cmbAffiliation.SelectedItem.ToString());
-                    continue;
+                    if(!row.Visible) continue;
                 }
 
-                if(cmbObservPointType.SelectedItem != null && cmbObservPointType.SelectedItem.ToString() !=  _allValuesFilterText)
+                if(cmbObservPointType.SelectedItem != null && cmbObservPointType.SelectedItem.ToString() != _allValuesFilterText)
                 {
                     row.Visible = (row.Cells["Type"].Value.ToString() == cmbObservPointType.SelectedItem.ToString());
                     continue;
                 }
 
                 row.Visible = true;
+
             }
+
+            dgvObservationPoints.Rows[dgvObservationPoints.FirstDisplayedScrollingRowIndex].Selected = true;
+
         }
 
         private void InitilizeData()
