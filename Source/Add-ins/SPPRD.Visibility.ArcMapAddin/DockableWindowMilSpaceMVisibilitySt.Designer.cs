@@ -1777,6 +1777,8 @@
             // 
             this.dgvObservationPoints.AllowUserToAddRows = false;
             this.dgvObservationPoints.AllowUserToDeleteRows = false;
+            this.dgvObservationPoints.AllowUserToResizeColumns = false;
+            this.dgvObservationPoints.AllowUserToResizeRows = false;
             this.dgvObservationPoints.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
             this.dgvObservationPoints.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvObservationPoints.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -1788,6 +1790,7 @@
             this.dgvObservationPoints.Name = "dgvObservationPoints";
             this.dgvObservationPoints.ReadOnly = true;
             this.dgvObservationPoints.RowHeadersVisible = false;
+            this.dgvObservationPoints.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvObservationPoints.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvObservationPoints.Size = new System.Drawing.Size(336, 116);
             this.dgvObservationPoints.TabIndex = 5;
