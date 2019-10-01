@@ -7,6 +7,7 @@ using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
+using MilSpace.Tools;
 using MilSpace.Visibility.DTO;
 using MilSpace.Visibility.ViewController;
 using System;
@@ -82,20 +83,20 @@ namespace MilSpace.Visibility
             {
                 var result = VeluableObservPointFieldsEnum.All;
 
-                if(chckFilterAffiliation.Checked)
+                if (chckFilterAffiliation.Checked)
                 {
                     result = result | VeluableObservPointFieldsEnum.Affiliation;
                 }
-                if(chckFilterDate.Checked)
+                if (chckFilterDate.Checked)
                 {
                     result = result | VeluableObservPointFieldsEnum.Date;
                 }
 
-                if(chckFilterId.Checked)
+                if (chckFilterId.Checked)
                 {
                     result = result | VeluableObservPointFieldsEnum.Id;
                 }
-                if(chckFilterType.Checked)
+                if (chckFilterType.Checked)
                 {
                     result = result | VeluableObservPointFieldsEnum.Type;
                 }
@@ -121,7 +122,7 @@ namespace MilSpace.Visibility
 
         public void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints, VeluableObservPointFieldsEnum filter)
         {
-            if(observationPoints.Any())
+            if (observationPoints.Any())
             {
                 var ItemsToShow = observationPoints.Select(i => new ObservPointGui
                 {
@@ -162,7 +163,7 @@ namespace MilSpace.Visibility
 
         private void PopulatePointsLayersComboBox()
         {
-            if(cmbObservPointsLayers.Visible)
+            if (cmbObservPointsLayers.Visible)
             {
                 cmbObservPointsLayers.Items.Clear();
                 cmbObservPointsLayers.Items.AddRange(controller.GetObservationPointsLayers(ActiveView).ToArray());
@@ -206,11 +207,11 @@ namespace MilSpace.Visibility
             {
                 var textBox = (TextBox)sender;
 
-                switch(textBox.Name)
+                switch (textBox.Name)
                 {
                     case "xCoord":
 
-                        if(!Regex.IsMatch(xCoord.Text, @"^([-]?[\d]{1,2}\,\d+)$"))
+                        if (!Regex.IsMatch(xCoord.Text, @"^([-]?[\d]{1,2}\,\d+)$"))
                         {
                             MessageBox.Show("Invalid data.\nInsert the coordinates in the WGS84 format.");
                             var centerPoint = controller.GetEnvelopeCenterPoint(ArcMap.Document.ActiveView.Extent);
@@ -228,7 +229,7 @@ namespace MilSpace.Visibility
 
                     case "yCoord":
 
-                        if(!Regex.IsMatch(yCoord.Text, @"^([-]?[\d]{1,2}\,\d+)$"))
+                        if (!Regex.IsMatch(yCoord.Text, @"^([-]?[\d]{1,2}\,\d+)$"))
                         {
                             MessageBox.Show("Invalid data.\nInsert the coordinates in the WGS84 format.");
                             var centerPoint = controller.GetEnvelopeCenterPoint(ArcMap.Document.ActiveView.Extent);
@@ -291,17 +292,17 @@ namespace MilSpace.Visibility
 
                         var currentHeight = ValidateHeight(textBox, ObservPointDefaultValues.RelativeHeightText);
 
-                        if(currentHeight != -1)
+                        if (currentHeight != -1)
                         {
                             var minHeight = Convert.ToDouble(heightMin.Text);
                             var maxHeight = Convert.ToDouble(heightMax.Text);
 
-                            if(currentHeight > maxHeight)
+                            if (currentHeight > maxHeight)
                             {
                                 heightMax.Text = currentHeight.ToString();
                             }
 
-                            if(currentHeight < minHeight)
+                            if (currentHeight < minHeight)
                             {
                                 heightMin.Text = currentHeight.ToString();
                             }
@@ -314,17 +315,17 @@ namespace MilSpace.Visibility
 
                         var minHeightChanged = ValidateHeight(textBox, ObservPointDefaultValues.RelativeHeightText);
 
-                        if(minHeightChanged != -1)
+                        if (minHeightChanged != -1)
                         {
                             var curHeight = Convert.ToDouble(heightCurrent.Text);
                             var maxHeight = Convert.ToDouble(heightMax.Text);
 
-                            if(minHeightChanged > curHeight)
+                            if (minHeightChanged > curHeight)
                             {
                                 heightCurrent.Text = minHeightChanged.ToString();
                             }
 
-                            if(minHeightChanged > maxHeight)
+                            if (minHeightChanged > maxHeight)
                             {
                                 heightMax.Text = minHeightChanged.ToString();
                             }
@@ -336,17 +337,17 @@ namespace MilSpace.Visibility
 
                         var maxHeightChanged = ValidateHeight(textBox, ObservPointDefaultValues.RelativeHeightText);
 
-                        if(maxHeightChanged != -1)
+                        if (maxHeightChanged != -1)
                         {
                             var curHeight = Convert.ToDouble(heightCurrent.Text);
                             var minHeight = Convert.ToDouble(heightMin.Text);
 
-                            if(maxHeightChanged < curHeight)
+                            if (maxHeightChanged < curHeight)
                             {
                                 heightCurrent.Text = maxHeightChanged.ToString();
                             }
 
-                            if(maxHeightChanged < minHeight)
+                            if (maxHeightChanged < minHeight)
                             {
                                 heightMax.Text = maxHeightChanged.ToString();
                             }
@@ -356,7 +357,7 @@ namespace MilSpace.Visibility
                 }
             }
 
-            catch(Exception ex) { return; }
+            catch (Exception ex) { return; }
         }
 
         private void ValidateAzimuth(TextBox azimuthTextBox, string defaultValue)
@@ -368,9 +369,9 @@ namespace MilSpace.Visibility
         {
             double value;
 
-            if(Double.TryParse(textBox.Text, out value))
+            if (Double.TryParse(textBox.Text, out value))
             {
-                if(value >= lowValue && value <= upperValue)
+                if (value >= lowValue && value <= upperValue)
                 {
                     return;
                 }
@@ -384,9 +385,9 @@ namespace MilSpace.Visibility
         {
             double height;
 
-            if(Double.TryParse(heightTextBox.Text, out height))
+            if (Double.TryParse(heightTextBox.Text, out height))
             {
-                if(height >= 0)
+                if (height >= 0)
                 {
                     return height;
                 }
@@ -408,7 +409,7 @@ namespace MilSpace.Visibility
         private void EnableObservPointsControls()
         {
             lblLayer.Visible = cmbObservPointsLayers.Visible = cmbAffiliationEdit.Enabled = cmbObservTypesEdit.Enabled = azimuthB.Enabled
-                = azimuthE.Enabled = xCoord.Enabled = yCoord.Enabled =  angleOFViewMin.Enabled = angleOFViewMax.Enabled 
+                = azimuthE.Enabled = xCoord.Enabled = yCoord.Enabled = angleOFViewMin.Enabled = angleOFViewMax.Enabled
                 = heightCurrent.Enabled = heightMin.Enabled = azimuthMainAxis.Enabled
                 = heightMax.Enabled = observPointName.Enabled = controller.IsObservPointsExists(ActiveView);
 
@@ -464,7 +465,7 @@ namespace MilSpace.Visibility
 
             protected override void Dispose(bool disposing)
             {
-                if(m_windowUI != null)
+                if (m_windowUI != null)
                     m_windowUI.Dispose(disposing);
 
                 base.Dispose(disposing);
@@ -497,7 +498,7 @@ namespace MilSpace.Visibility
             //    toolBarButton51.Pushed = true;
             //}
 
-            switch(tlbObservPoints.Buttons.IndexOf(e.Button))
+            switch (tlbObservPoints.Buttons.IndexOf(e.Button))
             {
 
                 case 3:
@@ -515,7 +516,7 @@ namespace MilSpace.Visibility
             IPoint resultPoint = new Point { X = x, Y = y, SpatialReference = EsriTools.Wgs84Spatialreference };
             resultPoint.ID = lstObservationPoinst.Items.Count + 1;
 
-            if(!string.IsNullOrEmpty(_unsavedPointId))
+            if (!string.IsNullOrEmpty(_unsavedPointId))
             {
                 RemovePointFromMap(_unsavedPointId);
             }
@@ -526,14 +527,14 @@ namespace MilSpace.Visibility
 
         internal void ArcMap_OnMouseDown(int x, int y)
         {
-            if(!(this.Hook is IApplication arcMap) || !(arcMap.Document is IMxDocument currentDocument)) return;
+            if (!(this.Hook is IApplication arcMap) || !(arcMap.Document is IMxDocument currentDocument)) return;
 
             IPoint resultPoint = new Point();
 
             resultPoint = (currentDocument.FocusMap as IActiveView).ScreenDisplay.DisplayTransformation.ToMapPoint(x, y);
             resultPoint.ID = lstObservationPoinst.Items.Count + 1;
 
-            if(!string.IsNullOrEmpty(_unsavedPointId))
+            if (!string.IsNullOrEmpty(_unsavedPointId))
             {
                 RemovePointFromMap(_unsavedPointId);
             }
@@ -553,7 +554,7 @@ namespace MilSpace.Visibility
 
         private string AddPointToMap(IPoint point)
         {
-            if(point != null && !point.IsEmpty)
+            if (point != null && !point.IsEmpty)
             {
                 var color = (IColor)new RgbColorClass() { Green = 255 };
                 var placedPoint = ArcMapHelper.AddGraphicToMap(point, color, true, esriSimpleMarkerStyle.esriSMSDiamond, 7);
@@ -575,7 +576,7 @@ namespace MilSpace.Visibility
 
         private void TlbCoordinates_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
-            switch(tlbCoordinates.Buttons.IndexOf(e.Button))
+            switch (tlbCoordinates.Buttons.IndexOf(e.Button))
             {
                 case 0:
 
@@ -586,7 +587,7 @@ namespace MilSpace.Visibility
                     var documentBars = ArcMap.Application.Document.CommandBars;
                     var mapTool = documentBars.Find(mapToolID, false, false);
 
-                    if(ArcMap.Application.CurrentTool?.ID?.Value != null && ArcMap.Application.CurrentTool.ID.Value.Equals(mapTool.ID.Value))
+                    if (ArcMap.Application.CurrentTool?.ID?.Value != null && ArcMap.Application.CurrentTool.ID.Value.Equals(mapTool.ID.Value))
                     {
                         ArcMap.Application.CurrentTool = null;
                     }
@@ -599,10 +600,17 @@ namespace MilSpace.Visibility
 
                 case 1:
 
+                    var featureClass = controller.GetObservatioStationFeatureClass(ActiveView);
+
+                    var mngr = new VisibilityManager();
+                    mngr.Generate(featureClass, @"E:\Data\3D\Relief\20190715\cmrzoi0715", new int[] { 3615, 3616, 3617, 3618, 3619, 3620});
+
+                    //GdbAccess.Instance.ExportObservationPoints(featureClass as IDataset);
+
                     break;
             }
         }
-        
+
         private ObservationPoint GetObservationPoint()
         {
             return new ObservationPoint()
