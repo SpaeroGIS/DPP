@@ -125,6 +125,7 @@ namespace MilSpace.Tools.SurfaceProfile
                     result[count] = gp.GetMessage(count);
                     log.WarnEx(result[count]);
                 }
+                return result;
             }
             return null;
         }

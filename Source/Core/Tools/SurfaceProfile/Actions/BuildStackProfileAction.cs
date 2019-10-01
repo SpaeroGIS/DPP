@@ -2,6 +2,7 @@
 using MilSpace.Core.Actions.ActionResults;
 using MilSpace.Core.Actions.Base;
 using MilSpace.Core.Actions.Interfaces;
+using MilSpace.Tools.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +12,13 @@ using A = MilSpace.Core.Actions.Base;
 
 namespace MilSpace.Tools.SurfaceProfile.Actions
 {
-    class BuildStackProfileAction : A.Action<BoolResult>
+    class BuildStackProfileAction : A.Action<StringCollectionResult>
     {
         private string featureClass;
         private string profileSource;
         private string outGraphName;
         private string tableName;
-        private BoolResult result;
-        Logger logger = Logger.GetLoggerEx("BuildStackProfileAction");
+        private StringCollectionResult result;
 
         public BuildStackProfileAction() : base()
         {
@@ -52,24 +52,27 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
         }
 
 
-        public override BoolResult GetResult()
+        public override StringCollectionResult GetResult()
         {
             return result;
         }
 
         public override void Process()
         {
-            result = new BoolResult();
-            result.Result = false;
-
+            result = new StringCollectionResult();
             try
             {
                 IEnumerable<string> mesasges = null;
-                result.Result = ProfileLibrary.GenerateProfileData(featureClass, profileSource, tableName, mesasges);
+                if (!ProfileLibrary.GenerateProfileData(featureClass, profileSource, tableName, mesasges))
+                {
+                    result.Exception = new MilSpaceVisibilityCalcFailedException();
+                }
                 if (mesasges != null && mesasges.Any())
                 {
                     mesasges.ToList().ForEach(m => logger.InfoEx(m));
                 }
+
+                result.Result = mesasges;
             }
             catch (Exception ex)
             {

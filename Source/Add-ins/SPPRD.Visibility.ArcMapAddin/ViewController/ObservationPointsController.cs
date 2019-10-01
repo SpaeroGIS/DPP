@@ -78,9 +78,9 @@ namespace MilSpace.Visibility.ViewController
             var layers = view.FocusMap.Layers;
             var layer = layers.Next();
 
-            while(layer != null)
+            while (layer != null)
             {
-                if(layer is IFeatureLayer fl && fl.FeatureClass.AliasName.Equals(_observPointFeature, StringComparison.InvariantCultureIgnoreCase))
+                if (layer is IFeatureLayer fl && fl.FeatureClass.AliasName.Equals(_observPointFeature, StringComparison.InvariantCultureIgnoreCase))
                 {
                     obserPointsLayersNames.Add(layer.Name);
                 }
@@ -90,14 +90,19 @@ namespace MilSpace.Visibility.ViewController
             return obserPointsLayersNames;
         }
 
+        public IFeatureClass GetObservatioStationFeatureClass(IActiveView esriView)
+        {
+            return GetFeatureClass(view.ObservationPointsFeatureClass, esriView);
+        }
+
         public bool IsObservPointsExists(IActiveView view)
         {
             var layers = view.FocusMap.Layers;
             var layer = layers.Next();
 
-            while(layer != null)
+            while (layer != null)
             {
-                if(layer is IFeatureLayer fl && fl.FeatureClass != null && fl.FeatureClass.AliasName.Equals(_observPointFeature, StringComparison.InvariantCultureIgnoreCase))
+                if (layer is IFeatureLayer fl && fl.FeatureClass != null && fl.FeatureClass.AliasName.Equals(_observPointFeature, StringComparison.InvariantCultureIgnoreCase))
                 {
                     return true;
                 }
@@ -140,7 +145,7 @@ namespace MilSpace.Visibility.ViewController
         {
             var point = CreatePointWithDefaultValues(activeView.Extent.Envelope);
             var pointGeometry = new PointClass { X = (double)point.X, Y = (double)point.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
-            
+
             pointGeometry.Z = (double)point.RelativeHeight;
             pointGeometry.ZAware = true;
 
@@ -165,12 +170,17 @@ namespace MilSpace.Visibility.ViewController
 
         private IFeatureClass GetFeatureClass(string featureClassName, IActiveView activeView)
         {
+            if (string.IsNullOrWhiteSpace(featureClassName))
+            {
+                return null;
+            }
+
             var layers = activeView.FocusMap.Layers;
             var layer = layers.Next();
 
-            while(layer != null)
+            while (layer != null)
             {
-                if(layer is IFeatureLayer fl && fl.FeatureClass.AliasName.Equals(featureClassName, StringComparison.InvariantCultureIgnoreCase))
+                if (layer is IFeatureLayer fl && fl.FeatureClass.AliasName.Equals(featureClassName, StringComparison.InvariantCultureIgnoreCase))
                 {
                     return fl.FeatureClass;
                 }

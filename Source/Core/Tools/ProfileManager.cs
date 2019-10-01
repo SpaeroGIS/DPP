@@ -72,17 +72,16 @@ namespace MilSpace.Tools
 
 
             var procc = new ActionProcessor(prm);
-            var res = procc.Process<BoolResult>();
+            var res = procc.Process<StringCollectionResult>();
 
-            if (!res.Result)
+
+            if (res.Exception != null)
             {
-                if (res.Exception != null)
-                {
-                    throw res.Exception;
-                }
-                //TODO: Log error
-                throw new Exception(res.ErrorMessage);
+
+                logger.ErrorEx("There was an error on calculation!");
+                throw res.Exception;
             }
+
 
 
             //Take the table and import the data
