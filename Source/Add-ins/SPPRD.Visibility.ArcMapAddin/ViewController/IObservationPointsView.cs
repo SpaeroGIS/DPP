@@ -11,6 +11,9 @@ namespace MilSpace.Visibility.ViewController
     {
 
         void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints, VeluableObservPointFieldsEnum filter);
+        void ChangeRecord(int id, ObservationPoint observationPoint);
+        void AddRecord(ObservationPoint observationPoint);
+
 
         VeluableObservPointFieldsEnum GetFilter { get; }
 

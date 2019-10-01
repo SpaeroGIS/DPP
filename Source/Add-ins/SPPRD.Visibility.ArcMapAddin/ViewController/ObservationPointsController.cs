@@ -15,7 +15,8 @@ namespace MilSpace.Visibility.ViewController
     public class ObservationPointsController
     {
         IObservationPointsView view;
-        private static readonly string observPointFeature = "MilSp_Visible_ObservPoints";
+        private static readonly string _observPointFeature = "MilSp_Visible_ObservPoints";
+        private List<ObservationPoint> _observationPoints = new List<ObservationPoint>();
 
         public ObservationPointsController()
         { }
@@ -32,12 +33,28 @@ namespace MilSpace.Visibility.ViewController
 
         internal string GetObservFeatureName()
         {
-            return observPointFeature;
+            return _observPointFeature;
         }
 
         internal void UpdateObservationPointsList()
         {
-            view.FillObservationPointList(VisibilityZonesFacade.GetAllObservationPoints(), view.GetFilter);
+            _observationPoints = VisibilityZonesFacade.GetAllObservationPoints().ToList();
+            view.FillObservationPointList(_observationPoints, view.GetFilter);
+        }
+
+        internal ObservationPoint GetObservPointById(int id)
+        {
+            return _observationPoints.FirstOrDefault(point => point.Objectid == id);
+        }
+
+        internal void UpdateObservPoint(ObservationPoint newPoint, string featureName, IActiveView activeView, int objId)
+        {
+            var featureClass = GetFeatureClass(featureName, activeView);
+
+            GdbAccess.Instance.UpdateObservPoint(featureClass, newPoint, objId);
+
+            _observationPoints = VisibilityZonesFacade.GetAllObservationPoints().ToList();
+            view.ChangeRecord(objId, newPoint);
         }
 
         internal IEnumerable<ObservationPoint> GetAllObservationPoints()
@@ -63,7 +80,7 @@ namespace MilSpace.Visibility.ViewController
 
             while(layer != null)
             {
-                if(layer is IFeatureLayer fl && fl.FeatureClass.AliasName.Equals(observPointFeature, StringComparison.InvariantCultureIgnoreCase))
+                if(layer is IFeatureLayer fl && fl.FeatureClass.AliasName.Equals(_observPointFeature, StringComparison.InvariantCultureIgnoreCase))
                 {
                     obserPointsLayersNames.Add(layer.Name);
                 }
@@ -85,7 +102,7 @@ namespace MilSpace.Visibility.ViewController
 
             while(layer != null)
             {
-                if(layer is IFeatureLayer fl && fl.FeatureClass != null && fl.FeatureClass.AliasName.Equals(observPointFeature, StringComparison.InvariantCultureIgnoreCase))
+                if(layer is IFeatureLayer fl && fl.FeatureClass != null && fl.FeatureClass.AliasName.Equals(_observPointFeature, StringComparison.InvariantCultureIgnoreCase))
                 {
                     return true;
                 }
@@ -96,8 +113,37 @@ namespace MilSpace.Visibility.ViewController
             return false;
         }
 
-        public void AddPoint(ObservationPoint point, string featureName, IActiveView activeView)
+        public ObservationPoint CreatePointWithDefaultValues(IEnvelope envelope)
         {
+            var centerPoint = GetEnvelopeCenterPoint(envelope);
+
+            return new ObservationPoint
+            {
+                X = centerPoint.X,
+                Y = centerPoint.Y,
+                Type = ObservationPointMobilityTypesEnum.Stationary.ToString(),
+                Affiliation = ObservationPointTypesEnum.Enemy.ToString(),
+                AzimuthStart = Convert.ToDouble(ObservPointDefaultValues.AzimuthBText),
+                AzimuthEnd = Convert.ToDouble(ObservPointDefaultValues.AzimuthEText),
+                RelativeHeight = Convert.ToDouble(ObservPointDefaultValues.RelativeHeightText),
+                AvailableHeightLover = Convert.ToDouble(ObservPointDefaultValues.HeightMinText),
+                AvailableHeightUpper = Convert.ToDouble(ObservPointDefaultValues.HeightMaxText),
+                Title = ObservPointDefaultValues.ObservPointNameText,
+                AngelMinH = Convert.ToDouble(ObservPointDefaultValues.AngleOFViewMinText),
+                AngelMaxH = Convert.ToDouble(ObservPointDefaultValues.AngleOFViewMaxText),
+                AngelFrameH = Convert.ToDouble(ObservPointDefaultValues.AngleFrameHText),
+                AngelFrameV = Convert.ToDouble(ObservPointDefaultValues.AngleFrameVText),
+                AngelCameraRotationH = Convert.ToDouble(ObservPointDefaultValues.CameraRotationHText),
+                AngelCameraRotationV = Convert.ToDouble(ObservPointDefaultValues.CameraRotationVText),
+                AzimuthMainAxis = Convert.ToDouble(ObservPointDefaultValues.AzimuthMainAxisText),
+                Dto = DateTime.Now.Date,
+                Operator = Environment.UserName
+            };
+        }
+
+        public void AddPoint(string featureName, IActiveView activeView)
+        {
+            var point = CreatePointWithDefaultValues(activeView.Extent.Envelope);
             var pointGeometry = new PointClass { X = (double)point.X, Y = (double)point.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
             
             pointGeometry.Z = (double)point.RelativeHeight;
@@ -106,7 +152,10 @@ namespace MilSpace.Visibility.ViewController
             var featureClass = GetFeatureClass(featureName, activeView);
 
             GdbAccess.Instance.AddObservPoint(pointGeometry, point, featureClass);
-            UpdateObservationPointsList();
+
+            var updPoints = VisibilityZonesFacade.GetAllObservationPoints().ToList();
+            _observationPoints.Add(updPoints.First(observPoint => !_observationPoints.Exists(oldPoints => oldPoints.Objectid == observPoint.Objectid)));
+            view.AddRecord(_observationPoints.Last());
         }
 
         public IPoint GetEnvelopeCenterPoint(IEnvelope envelope)
