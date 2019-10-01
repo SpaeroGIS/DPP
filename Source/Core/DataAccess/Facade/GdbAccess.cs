@@ -225,7 +225,7 @@ namespace MilSpace.DataAccess.Facade
         }
 
 
-        public void ConvertTable(IWorkspace sourceWorkspace, IDataset sourceDataset)
+        public string ExportObservationPoints(IDataset sourceDataset, int[] filter)
         {
             IWorkspace targetWorkspace = calcWorkspace;
 
@@ -240,7 +240,7 @@ namespace MilSpace.DataAccess.Facade
                 ITable pSourceTab = (ITable)sourceDataset;
                 IFeatureClass sourceFeatureClass = (IFeatureClass)sourceDataset;
 
-                IDataset sourceWorkspaceDataset = (IDataset)sourceWorkspace;
+                IDataset sourceWorkspaceDataset = (IDataset)sourceDataset.Workspace;
                 IWorkspaceName sourceWorkspaceName = (IWorkspaceName)sourceWorkspaceDataset.FullName;
 
                 IFeatureClassName sourceDatasetName = (IFeatureClassName)sourceDataset.FullName;
@@ -252,8 +252,8 @@ namespace MilSpace.DataAccess.Facade
                 IFeatureClassName targetFeatureClassName = new FeatureClassNameClass();
 
 
-                IFeatureWorkspace featureworkspace = (IFeatureWorkspace)calcWorkspace;
-                IFeatureDataset targetDataset = featureworkspace.CreateFeatureDataset(datasetName, EsriTools.Wgs84Spatialreference);
+                //IFeatureWorkspace featureworkspace = (IFeatureWorkspace)calcWorkspace;
+                //IFeatureDataset targetDataset = featureworkspace.CreateFeatureDataset(datasetName, EsriTools.Wgs84Spatialreference);
 
                 IDatasetName targetDatasetName = (IDatasetName)targetFeatureClassName;
                 targetDatasetName.WorkspaceName = targetWorkspaceName;
@@ -264,14 +264,15 @@ namespace MilSpace.DataAccess.Facade
 
                 // we want to convert all of the features
                 IQueryFilter queryFilter = new QueryFilterClass();
-                queryFilter.WhereClause = "";
+                var whereClause = string.Join(" OR ", filter.Select(id => $"OBJECTID={id}").ToArray());
+                queryFilter.WhereClause = whereClause;
                 //Validate the field names because you are converting between different workspace types.
                 IFieldChecker fieldChecker = new FieldCheckerClass();
                 IFields targetFields;
                 IFields sourceFields = pSourceTab.Fields;
                 IEnumFieldError enumFieldError;
                 // Most importantly set the input and validate workspaces!
-                fieldChecker.InputWorkspace = sourceWorkspace;
+                fieldChecker.InputWorkspace = sourceDataset.Workspace;
                 fieldChecker.ValidateWorkspace = targetWorkspace;
                 fieldChecker.Validate(sourceFields, out enumFieldError, out targetFields);
 
@@ -285,20 +286,22 @@ namespace MilSpace.DataAccess.Facade
                 IClone targetGeometryDefClone = geometryDefClone.Clone();
                 IGeometryDef targetGeometryDef = (IGeometryDef)targetGeometryDefClone;
 
-
                 if (enumFieldError == null)
                 {
                     IFeatureDataConverter fctofc = new FeatureDataConverterClass();
 
+                    //(IFeatureDatasetName)targetDataset.FullName
                     IEnumInvalidObject enumErrors =
-                        fctofc.ConvertFeatureClass(sourceDatasetName, queryFilter, (IFeatureDatasetName)targetDataset.FullName, targetFeatureClassName, targetGeometryDef,
+                        fctofc.ConvertFeatureClass(sourceDatasetName, queryFilter, null, targetFeatureClassName, targetGeometryDef,
                         pSourceTab.Fields, "", 1000, 0);
                 }
+
+                return ((IDatasetName)targetFeatureClassName).Name;
             }
             catch (Exception exp)
             {
                 logger.ErrorEx(exp.ToString());
-                return;
+                return null;
             }
         }
 

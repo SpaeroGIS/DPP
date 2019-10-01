@@ -73,6 +73,11 @@ namespace MilSpace.Visibility.ViewController
             return obserPointsLayersNames;
         }
 
+        public IFeatureClass GetObservatioStationFeatureClass(IActiveView view)
+        {
+            return GetFeatureClass(observPointFeature, view);
+        }
+
         public bool IsObservPointsExists(IActiveView view)
         {
             var layers = view.FocusMap.Layers;
