@@ -103,6 +103,8 @@ namespace MilSpace.Visibility
             }
         }
 
+        public string ObservationPointsFeatureClass => cmbObservPointsLayers.Text;
+
         public IEnumerable<string> GetTypes
         {
             get
