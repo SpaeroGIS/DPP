@@ -643,9 +643,9 @@
             this.panel7.Controls.Add(this.tabControl2);
             this.panel7.Controls.Add(this.panel9);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(3, 276);
+            this.panel7.Location = new System.Drawing.Point(3, 239);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(336, 344);
+            this.panel7.Size = new System.Drawing.Size(336, 381);
             this.panel7.TabIndex = 7;
             // 
             // tabControl2
@@ -658,7 +658,7 @@
             this.tabControl2.Location = new System.Drawing.Point(0, 24);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(336, 320);
+            this.tabControl2.Size = new System.Drawing.Size(336, 357);
             this.tabControl2.TabIndex = 10;
             // 
             // tabPage5
@@ -680,7 +680,7 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 4);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(328, 293);
+            this.tabPage5.Size = new System.Drawing.Size(328, 330);
             this.tabPage5.TabIndex = 0;
             this.tabPage5.Text = "Параметры ПН";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -707,6 +707,7 @@
             this.observPointCreator.Size = new System.Drawing.Size(127, 20);
             this.observPointCreator.TabIndex = 7;
             this.observPointCreator.Text = "vnikolaev";
+            this.observPointCreator.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label24
             // 
@@ -728,6 +729,7 @@
             this.observPointDate.Size = new System.Drawing.Size(74, 20);
             this.observPointDate.TabIndex = 5;
             this.observPointDate.Text = "2018-11-30";
+            this.observPointDate.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label27
             // 
@@ -759,7 +761,7 @@
             this.observPointName.Size = new System.Drawing.Size(259, 20);
             this.observPointName.TabIndex = 5;
             this.observPointName.Text = "\"Человеческое\" название ПН";
-            this.observPointName.Leave += new System.EventHandler(this.FieldsValidation);
+            this.observPointName.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label20
             // 
@@ -778,7 +780,7 @@
             this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.richTextBox1.Location = new System.Drawing.Point(3, 218);
+            this.richTextBox1.Location = new System.Drawing.Point(3, 255);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(322, 48);
             this.richTextBox1.TabIndex = 27;
@@ -806,7 +808,7 @@
             this.heightMax.Size = new System.Drawing.Size(36, 20);
             this.heightMax.TabIndex = 7;
             this.heightMax.Text = "2035";
-            this.heightMax.Leave += new System.EventHandler(this.FieldsValidation);
+            this.heightMax.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label12
             // 
@@ -827,7 +829,7 @@
             this.heightMin.Size = new System.Drawing.Size(36, 20);
             this.heightMin.TabIndex = 5;
             this.heightMin.Text = "2035";
-            this.heightMin.Leave += new System.EventHandler(this.FieldsValidation);
+            this.heightMin.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label9
             // 
@@ -859,7 +861,7 @@
             this.heightCurrent.Size = new System.Drawing.Size(36, 20);
             this.heightCurrent.TabIndex = 5;
             this.heightCurrent.Text = "2035";
-            this.heightCurrent.Leave += new System.EventHandler(this.FieldsValidation);
+            this.heightCurrent.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label19
             // 
@@ -893,7 +895,7 @@
             this.cameraRotationV.Size = new System.Drawing.Size(36, 20);
             this.cameraRotationV.TabIndex = 7;
             this.cameraRotationV.Text = "360";
-            this.cameraRotationV.Leave += new System.EventHandler(this.FieldsValidation);
+            this.cameraRotationV.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label55
             // 
@@ -914,7 +916,7 @@
             this.cameraRotationH.Size = new System.Drawing.Size(36, 20);
             this.cameraRotationH.TabIndex = 5;
             this.cameraRotationH.Text = "0";
-            this.cameraRotationH.Leave += new System.EventHandler(this.FieldsValidation);
+            this.cameraRotationH.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label56
             // 
@@ -948,7 +950,7 @@
             this.angleOFViewMax.Size = new System.Drawing.Size(36, 20);
             this.angleOFViewMax.TabIndex = 9;
             this.angleOFViewMax.Text = "360";
-            this.angleOFViewMax.Leave += new System.EventHandler(this.FieldsValidation);
+            this.angleOFViewMax.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label52
             // 
@@ -969,7 +971,7 @@
             this.angleOFViewMin.Size = new System.Drawing.Size(36, 20);
             this.angleOFViewMin.TabIndex = 5;
             this.angleOFViewMin.Text = "0";
-            this.angleOFViewMin.Leave += new System.EventHandler(this.FieldsValidation);
+            this.angleOFViewMin.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label18
             // 
@@ -1003,7 +1005,7 @@
             this.angleFrameV.Size = new System.Drawing.Size(36, 20);
             this.angleFrameV.TabIndex = 7;
             this.angleFrameV.Text = "360";
-            this.angleFrameV.Leave += new System.EventHandler(this.FieldsValidation);
+            this.angleFrameV.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label15
             // 
@@ -1024,7 +1026,7 @@
             this.angleFrameH.Size = new System.Drawing.Size(36, 20);
             this.angleFrameH.TabIndex = 5;
             this.angleFrameH.Text = "0";
-            this.angleFrameH.Leave += new System.EventHandler(this.FieldsValidation);
+            this.angleFrameH.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label16
             // 
@@ -1056,7 +1058,7 @@
             this.azimuthMainAxis.Size = new System.Drawing.Size(36, 20);
             this.azimuthMainAxis.TabIndex = 5;
             this.azimuthMainAxis.Text = "0";
-            this.azimuthMainAxis.Leave += new System.EventHandler(this.FieldsValidation);
+            this.azimuthMainAxis.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label58
             // 
@@ -1090,7 +1092,7 @@
             this.azimuthE.Size = new System.Drawing.Size(36, 20);
             this.azimuthE.TabIndex = 7;
             this.azimuthE.Text = "360";
-            this.azimuthE.Leave += new System.EventHandler(this.FieldsValidation);
+            this.azimuthE.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label13
             // 
@@ -1111,7 +1113,7 @@
             this.azimuthB.Size = new System.Drawing.Size(36, 20);
             this.azimuthB.TabIndex = 5;
             this.azimuthB.Text = "0";
-            this.azimuthB.Leave += new System.EventHandler(this.FieldsValidation);
+            this.azimuthB.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label14
             // 
@@ -1179,7 +1181,7 @@
             this.yCoord.Size = new System.Drawing.Size(55, 20);
             this.yCoord.TabIndex = 4;
             this.yCoord.Text = "50.12345";
-            this.yCoord.Leave += new System.EventHandler(this.FieldsValidation);
+            this.yCoord.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // xCoord
             // 
@@ -1189,7 +1191,7 @@
             this.xCoord.Size = new System.Drawing.Size(55, 20);
             this.xCoord.TabIndex = 3;
             this.xCoord.Text = "36.54321";
-            this.xCoord.Leave += new System.EventHandler(this.FieldsValidation);
+            this.xCoord.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label8
             // 
@@ -1229,6 +1231,8 @@
             this.cmbAffiliationEdit.Name = "cmbAffiliationEdit";
             this.cmbAffiliationEdit.Size = new System.Drawing.Size(77, 21);
             this.cmbAffiliationEdit.TabIndex = 4;
+            this.cmbAffiliationEdit.SelectedIndexChanged += new System.EventHandler(this.EditComboBox_SelectedIndexChanged);
+            this.cmbAffiliationEdit.DropDownClosed += new System.EventHandler(this.EditComboBox_DropDownClosed);
             // 
             // label10
             // 
@@ -1250,6 +1254,8 @@
             this.cmbObservTypesEdit.Name = "cmbObservTypesEdit";
             this.cmbObservTypesEdit.Size = new System.Drawing.Size(94, 21);
             this.cmbObservTypesEdit.TabIndex = 2;
+            this.cmbObservTypesEdit.SelectedIndexChanged += new System.EventHandler(this.EditComboBox_SelectedIndexChanged);
+            this.cmbObservTypesEdit.DropDownClosed += new System.EventHandler(this.EditComboBox_DropDownClosed);
             // 
             // label11
             // 
@@ -1266,7 +1272,7 @@
             // 
             this.panel12.Controls.Add(this.toolBar2);
             this.panel12.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel12.Location = new System.Drawing.Point(3, 266);
+            this.panel12.Location = new System.Drawing.Point(3, 303);
             this.panel12.Name = "panel12";
             this.panel12.Size = new System.Drawing.Size(322, 24);
             this.panel12.TabIndex = 13;
@@ -1327,7 +1333,7 @@
             this.tabPage6.Location = new System.Drawing.Point(4, 4);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(328, 293);
+            this.tabPage6.Size = new System.Drawing.Size(328, 330);
             this.tabPage6.TabIndex = 1;
             this.tabPage6.Text = "Точки \"снимков\"";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -1710,7 +1716,7 @@
             // 
             this.panel6.Controls.Add(this.tlbObservPoints);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel6.Location = new System.Drawing.Point(3, 252);
+            this.panel6.Location = new System.Drawing.Point(3, 215);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(336, 24);
             this.panel6.TabIndex = 6;
@@ -1769,6 +1775,8 @@
             // 
             // dgvObservationPoints
             // 
+            this.dgvObservationPoints.AllowUserToAddRows = false;
+            this.dgvObservationPoints.AllowUserToDeleteRows = false;
             this.dgvObservationPoints.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
             this.dgvObservationPoints.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvObservationPoints.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -1776,11 +1784,14 @@
             this.dgvObservationPoints.Dock = System.Windows.Forms.DockStyle.Top;
             this.dgvObservationPoints.Location = new System.Drawing.Point(3, 99);
             this.dgvObservationPoints.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
+            this.dgvObservationPoints.MultiSelect = false;
             this.dgvObservationPoints.Name = "dgvObservationPoints";
             this.dgvObservationPoints.ReadOnly = true;
             this.dgvObservationPoints.RowHeadersVisible = false;
-            this.dgvObservationPoints.Size = new System.Drawing.Size(336, 153);
+            this.dgvObservationPoints.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvObservationPoints.Size = new System.Drawing.Size(336, 116);
             this.dgvObservationPoints.TabIndex = 5;
+            this.dgvObservationPoints.SelectionChanged += new System.EventHandler(this.DgvObservationPoints_SelectionChanged);
             // 
             // panel5
             // 
@@ -1861,6 +1872,7 @@
             this.cmbAffiliation.Name = "cmbAffiliation";
             this.cmbAffiliation.Size = new System.Drawing.Size(94, 21);
             this.cmbAffiliation.TabIndex = 4;
+            this.cmbAffiliation.SelectedIndexChanged += new System.EventHandler(this.FilterComboBox_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -1882,6 +1894,7 @@
             this.cmbObservPointType.Name = "cmbObservPointType";
             this.cmbObservPointType.Size = new System.Drawing.Size(94, 21);
             this.cmbObservPointType.TabIndex = 2;
+            this.cmbObservPointType.SelectedIndexChanged += new System.EventHandler(this.FilterComboBox_SelectedIndexChanged);
             // 
             // label2
             // 
