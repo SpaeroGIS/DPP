@@ -33,42 +33,31 @@ namespace MilSpace.Tools
         { }
 
 
-        public void Generate(IEnumerable<IFeature> obbervationPoints, string sourceDem)
+        public void Generate(IFeatureClass obervationPoints, string sourceDem, IEnumerable<int> pointsToExport)
         {
 
 
-            logger.InfoEx("Starting generation visiblility using DEM {0} from observation points {2}.".InvariantFormat(sourceDem, obbervationPoints));
-
-            //logger.InfoEx("Temporary spatial source:{0}".InvariantFormat(profileSourceName));
-
-            //var action = new ActionParam<string>()
-            //{
-            //    ParamName = ActionParamNamesCore.Action,
-            //    Value = ActionsEnum.bsp.ToString()
-            //};
-
-            //string sdtnow = MilSpace.DataAccess.Helper.GetTemporaryNameSuffix();
-
-            //var resuTable = $"{MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection}\\StackProfile{sdtnow}";
-
-            //logger.InfoEx("Temporary profile source:{0}".InvariantFormat(resuTable));
-
-            //var profileLineFeatureClass = GdbAccess.Instance.GetProfileLinesFeatureClass(profileSourceName);
-
-            //logger.InfoEx("Temporary spatial source {0} was created".InvariantFormat(profileLineFeatureClass));
-
-            //var prm = new List<IActionParam>
-            //{
-            //    action,
-            //    new ActionParam<string>() { ParamName = ActionParameters.FeatureClass, Value = profileLineFeatureClass },
-            //    new ActionParam<string>() { ParamName = ActionParameters.ProfileSource, Value = profileSource },
-            //    new ActionParam<string>() { ParamName = ActionParameters.DataWorkSpace, Value = resuTable},
-            //    new ActionParam<string>() { ParamName = ActionParameters.OutputSourceName, Value = ""}
-            //};
+            logger.InfoEx("Starting generation visiblility using DEM {0} from observation points {1}.".InvariantFormat(sourceDem, obervationPoints));
 
 
-            //var procc = new ActionProcessor(prm);
-            //var res = procc.Process<BoolResult>();
+            var action = new ActionParam<string>()
+            {
+                ParamName = ActionParamNamesCore.Action,
+                Value = ActionsEnum.vblt.ToString()
+            };
+
+
+            var prm = new List<IActionParam>
+           {
+                action,
+               new ActionParam<IFeatureClass>() { ParamName = ActionParameters.FeatureClass, Value = obervationPoints},
+               new ActionParam<int[]>() { ParamName = ActionParameters.FilteringIds, Value = pointsToExport.ToArray()},
+               new ActionParam<string>() { ParamName = ActionParameters.ProfileSource, Value = sourceDem}
+            };
+
+
+            var procc = new ActionProcessor(prm);
+            var res = procc.Process<StringCollectionResult>();
 
             //if (!res.Result)
             //{

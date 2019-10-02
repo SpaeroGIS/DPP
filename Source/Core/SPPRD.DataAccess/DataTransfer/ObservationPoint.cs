@@ -7,10 +7,9 @@ namespace MilSpace.DataAccess.DataTransfer
     public enum VeluableObservPointFieldsEnum : byte
     {
         All = 0,
-        Id = 1,
-        Type = 2,
-        Affiliation = 4,
-        Date = 8
+        Type = 1,
+        Affiliation = 2,
+        Date = 4
     }
 
     public class ObservationPoint
@@ -73,7 +72,7 @@ namespace MilSpace.DataAccess.DataTransfer
         /// Shold be used as the parameter vertical_upper_angle in the Visibility calculation
         /// Default value - 0
         /// </summary>
-        public double? AngelMinH;
+        public double? AngelMaxH;
 
         /// <summary>
         /// This value defines the lower vertical angle limit of the scan below a horizontal plane. 
@@ -83,7 +82,7 @@ namespace MilSpace.DataAccess.DataTransfer
         /// Shold be used as the parameter vertical_lower_angle in the Visibility calculation. 
         /// Default value - 90
         /// </summary>
-        public double? AngelMaxH;
+        public double? AngelMinH;
 
         /// <summary>
         /// The main direct of the observation point/station. 
@@ -132,10 +131,6 @@ namespace MilSpace.DataAccess.DataTransfer
 
             values.Add(Title);
 
-            if ((filter & VeluableObservPointFieldsEnum.Id) == VeluableObservPointFieldsEnum.Id)
-            {
-                values.Add(Id);
-            }
             if ((filter & VeluableObservPointFieldsEnum.Affiliation) == VeluableObservPointFieldsEnum.Affiliation)
             {
                 values.Add(Affiliation);

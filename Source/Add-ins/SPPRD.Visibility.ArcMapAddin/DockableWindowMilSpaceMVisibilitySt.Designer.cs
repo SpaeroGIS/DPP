@@ -181,12 +181,11 @@
             this.addPointToolBarBtn = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton48 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton50 = new System.Windows.Forms.ToolBarButton();
-            this.lstObservationPoinst = new System.Windows.Forms.ListBox();
+            this.dgvObservationPoints = new System.Windows.Forms.DataGridView();
             this.panel5 = new System.Windows.Forms.Panel();
             this.chckFilterDate = new System.Windows.Forms.CheckBox();
             this.chckFilterAffiliation = new System.Windows.Forms.CheckBox();
             this.chckFilterType = new System.Windows.Forms.CheckBox();
-            this.chckFilterId = new System.Windows.Forms.CheckBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.cmbAffiliation = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -353,6 +352,7 @@
             this.panel18.SuspendLayout();
             this.panel9.SuspendLayout();
             this.panel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvObservationPoints)).BeginInit();
             this.panel5.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -624,7 +624,7 @@
             // 
             this.tabPage1.Controls.Add(this.panel7);
             this.tabPage1.Controls.Add(this.panel6);
-            this.tabPage1.Controls.Add(this.lstObservationPoinst);
+            this.tabPage1.Controls.Add(this.dgvObservationPoints);
             this.tabPage1.Controls.Add(this.panel5);
             this.tabPage1.Controls.Add(this.panel4);
             this.tabPage1.Controls.Add(this.panel3);
@@ -643,9 +643,9 @@
             this.panel7.Controls.Add(this.tabControl2);
             this.panel7.Controls.Add(this.panel9);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(3, 231);
+            this.panel7.Location = new System.Drawing.Point(3, 239);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(336, 389);
+            this.panel7.Size = new System.Drawing.Size(336, 381);
             this.panel7.TabIndex = 7;
             // 
             // tabControl2
@@ -658,7 +658,7 @@
             this.tabControl2.Location = new System.Drawing.Point(0, 24);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(336, 365);
+            this.tabControl2.Size = new System.Drawing.Size(336, 357);
             this.tabControl2.TabIndex = 10;
             // 
             // tabPage5
@@ -680,7 +680,7 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 4);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(328, 338);
+            this.tabPage5.Size = new System.Drawing.Size(328, 330);
             this.tabPage5.TabIndex = 0;
             this.tabPage5.Text = "Параметры ПН";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -707,6 +707,7 @@
             this.observPointCreator.Size = new System.Drawing.Size(127, 20);
             this.observPointCreator.TabIndex = 7;
             this.observPointCreator.Text = "vnikolaev";
+            this.observPointCreator.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label24
             // 
@@ -728,6 +729,7 @@
             this.observPointDate.Size = new System.Drawing.Size(74, 20);
             this.observPointDate.TabIndex = 5;
             this.observPointDate.Text = "2018-11-30";
+            this.observPointDate.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label27
             // 
@@ -759,7 +761,7 @@
             this.observPointName.Size = new System.Drawing.Size(259, 20);
             this.observPointName.TabIndex = 5;
             this.observPointName.Text = "\"Человеческое\" название ПН";
-            this.observPointName.Leave += new System.EventHandler(this.FieldsValidation);
+            this.observPointName.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label20
             // 
@@ -778,7 +780,7 @@
             this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.richTextBox1.Location = new System.Drawing.Point(3, 263);
+            this.richTextBox1.Location = new System.Drawing.Point(3, 255);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(322, 48);
             this.richTextBox1.TabIndex = 27;
@@ -806,7 +808,7 @@
             this.heightMax.Size = new System.Drawing.Size(36, 20);
             this.heightMax.TabIndex = 7;
             this.heightMax.Text = "2035";
-            this.heightMax.Leave += new System.EventHandler(this.FieldsValidation);
+            this.heightMax.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label12
             // 
@@ -827,7 +829,7 @@
             this.heightMin.Size = new System.Drawing.Size(36, 20);
             this.heightMin.TabIndex = 5;
             this.heightMin.Text = "2035";
-            this.heightMin.Leave += new System.EventHandler(this.FieldsValidation);
+            this.heightMin.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label9
             // 
@@ -859,7 +861,7 @@
             this.heightCurrent.Size = new System.Drawing.Size(36, 20);
             this.heightCurrent.TabIndex = 5;
             this.heightCurrent.Text = "2035";
-            this.heightCurrent.Leave += new System.EventHandler(this.FieldsValidation);
+            this.heightCurrent.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label19
             // 
@@ -893,7 +895,7 @@
             this.cameraRotationV.Size = new System.Drawing.Size(36, 20);
             this.cameraRotationV.TabIndex = 7;
             this.cameraRotationV.Text = "360";
-            this.cameraRotationV.Leave += new System.EventHandler(this.FieldsValidation);
+            this.cameraRotationV.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label55
             // 
@@ -914,7 +916,7 @@
             this.cameraRotationH.Size = new System.Drawing.Size(36, 20);
             this.cameraRotationH.TabIndex = 5;
             this.cameraRotationH.Text = "0";
-            this.cameraRotationH.Leave += new System.EventHandler(this.FieldsValidation);
+            this.cameraRotationH.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label56
             // 
@@ -948,7 +950,7 @@
             this.angleOFViewMax.Size = new System.Drawing.Size(36, 20);
             this.angleOFViewMax.TabIndex = 9;
             this.angleOFViewMax.Text = "360";
-            this.angleOFViewMax.Leave += new System.EventHandler(this.FieldsValidation);
+            this.angleOFViewMax.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label52
             // 
@@ -969,7 +971,7 @@
             this.angleOFViewMin.Size = new System.Drawing.Size(36, 20);
             this.angleOFViewMin.TabIndex = 5;
             this.angleOFViewMin.Text = "0";
-            this.angleOFViewMin.Leave += new System.EventHandler(this.FieldsValidation);
+            this.angleOFViewMin.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label18
             // 
@@ -1003,7 +1005,7 @@
             this.angleFrameV.Size = new System.Drawing.Size(36, 20);
             this.angleFrameV.TabIndex = 7;
             this.angleFrameV.Text = "360";
-            this.angleFrameV.Leave += new System.EventHandler(this.FieldsValidation);
+            this.angleFrameV.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label15
             // 
@@ -1024,7 +1026,7 @@
             this.angleFrameH.Size = new System.Drawing.Size(36, 20);
             this.angleFrameH.TabIndex = 5;
             this.angleFrameH.Text = "0";
-            this.angleFrameH.Leave += new System.EventHandler(this.FieldsValidation);
+            this.angleFrameH.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label16
             // 
@@ -1056,7 +1058,7 @@
             this.azimuthMainAxis.Size = new System.Drawing.Size(36, 20);
             this.azimuthMainAxis.TabIndex = 5;
             this.azimuthMainAxis.Text = "0";
-            this.azimuthMainAxis.Leave += new System.EventHandler(this.FieldsValidation);
+            this.azimuthMainAxis.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label58
             // 
@@ -1090,7 +1092,7 @@
             this.azimuthE.Size = new System.Drawing.Size(36, 20);
             this.azimuthE.TabIndex = 7;
             this.azimuthE.Text = "360";
-            this.azimuthE.Leave += new System.EventHandler(this.FieldsValidation);
+            this.azimuthE.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label13
             // 
@@ -1111,7 +1113,7 @@
             this.azimuthB.Size = new System.Drawing.Size(36, 20);
             this.azimuthB.TabIndex = 5;
             this.azimuthB.Text = "0";
-            this.azimuthB.Leave += new System.EventHandler(this.FieldsValidation);
+            this.azimuthB.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label14
             // 
@@ -1179,7 +1181,7 @@
             this.yCoord.Size = new System.Drawing.Size(55, 20);
             this.yCoord.TabIndex = 4;
             this.yCoord.Text = "50.12345";
-            this.yCoord.Leave += new System.EventHandler(this.FieldsValidation);
+            this.yCoord.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // xCoord
             // 
@@ -1189,7 +1191,7 @@
             this.xCoord.Size = new System.Drawing.Size(55, 20);
             this.xCoord.TabIndex = 3;
             this.xCoord.Text = "36.54321";
-            this.xCoord.Leave += new System.EventHandler(this.FieldsValidation);
+            this.xCoord.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label8
             // 
@@ -1229,6 +1231,8 @@
             this.cmbAffiliationEdit.Name = "cmbAffiliationEdit";
             this.cmbAffiliationEdit.Size = new System.Drawing.Size(77, 21);
             this.cmbAffiliationEdit.TabIndex = 4;
+            this.cmbAffiliationEdit.SelectedIndexChanged += new System.EventHandler(this.EditComboBox_SelectedIndexChanged);
+            this.cmbAffiliationEdit.DropDownClosed += new System.EventHandler(this.EditComboBox_DropDownClosed);
             // 
             // label10
             // 
@@ -1250,6 +1254,8 @@
             this.cmbObservTypesEdit.Name = "cmbObservTypesEdit";
             this.cmbObservTypesEdit.Size = new System.Drawing.Size(94, 21);
             this.cmbObservTypesEdit.TabIndex = 2;
+            this.cmbObservTypesEdit.SelectedIndexChanged += new System.EventHandler(this.EditComboBox_SelectedIndexChanged);
+            this.cmbObservTypesEdit.DropDownClosed += new System.EventHandler(this.EditComboBox_DropDownClosed);
             // 
             // label11
             // 
@@ -1266,7 +1272,7 @@
             // 
             this.panel12.Controls.Add(this.toolBar2);
             this.panel12.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel12.Location = new System.Drawing.Point(3, 311);
+            this.panel12.Location = new System.Drawing.Point(3, 303);
             this.panel12.Name = "panel12";
             this.panel12.Size = new System.Drawing.Size(322, 24);
             this.panel12.TabIndex = 13;
@@ -1327,7 +1333,7 @@
             this.tabPage6.Location = new System.Drawing.Point(4, 4);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(328, 338);
+            this.tabPage6.Size = new System.Drawing.Size(328, 330);
             this.tabPage6.TabIndex = 1;
             this.tabPage6.Text = "Точки \"снимков\"";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -1710,13 +1716,14 @@
             // 
             this.panel6.Controls.Add(this.tlbObservPoints);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel6.Location = new System.Drawing.Point(3, 207);
+            this.panel6.Location = new System.Drawing.Point(3, 215);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(336, 24);
             this.panel6.TabIndex = 6;
             // 
             // tlbObservPoints
             // 
+            this.tlbObservPoints.AutoSize = false;
             this.tlbObservPoints.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
             this.toolBarButton51,
             this.toolBarButton52,
@@ -1730,10 +1737,10 @@
             this.tlbObservPoints.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tlbObservPoints.DropDownArrows = true;
             this.tlbObservPoints.ImageList = this.imageList1;
-            this.tlbObservPoints.Location = new System.Drawing.Point(0, -4);
+            this.tlbObservPoints.Location = new System.Drawing.Point(0, 0);
             this.tlbObservPoints.Name = "tlbObservPoints";
             this.tlbObservPoints.ShowToolTips = true;
-            this.tlbObservPoints.Size = new System.Drawing.Size(336, 28);
+            this.tlbObservPoints.Size = new System.Drawing.Size(336, 24);
             this.tlbObservPoints.TabIndex = 40;
             this.tlbObservPoints.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.TlbObserPoints_ButtonClick);
             // 
@@ -1766,21 +1773,34 @@
             this.toolBarButton50.Name = "toolBarButton50";
             this.toolBarButton50.ToolTipText = "Удалить";
             // 
-            // lstObservationPoinst
+            // dgvObservationPoints
             // 
-            this.lstObservationPoinst.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lstObservationPoinst.FormattingEnabled = true;
-            this.lstObservationPoinst.Location = new System.Drawing.Point(3, 99);
-            this.lstObservationPoinst.Name = "lstObservationPoinst";
-            this.lstObservationPoinst.Size = new System.Drawing.Size(336, 108);
-            this.lstObservationPoinst.TabIndex = 5;
+            this.dgvObservationPoints.AllowUserToAddRows = false;
+            this.dgvObservationPoints.AllowUserToDeleteRows = false;
+            this.dgvObservationPoints.AllowUserToResizeColumns = false;
+            this.dgvObservationPoints.AllowUserToResizeRows = false;
+            this.dgvObservationPoints.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
+            this.dgvObservationPoints.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvObservationPoints.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvObservationPoints.ColumnHeadersVisible = false;
+            this.dgvObservationPoints.Dock = System.Windows.Forms.DockStyle.Top;
+            this.dgvObservationPoints.Location = new System.Drawing.Point(3, 99);
+            this.dgvObservationPoints.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
+            this.dgvObservationPoints.MultiSelect = false;
+            this.dgvObservationPoints.Name = "dgvObservationPoints";
+            this.dgvObservationPoints.ReadOnly = true;
+            this.dgvObservationPoints.RowHeadersVisible = false;
+            this.dgvObservationPoints.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dgvObservationPoints.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvObservationPoints.Size = new System.Drawing.Size(336, 116);
+            this.dgvObservationPoints.TabIndex = 5;
+            this.dgvObservationPoints.SelectionChanged += new System.EventHandler(this.DgvObservationPoints_SelectionChanged);
             // 
             // panel5
             // 
             this.panel5.Controls.Add(this.chckFilterDate);
             this.panel5.Controls.Add(this.chckFilterAffiliation);
             this.panel5.Controls.Add(this.chckFilterType);
-            this.panel5.Controls.Add(this.chckFilterId);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(3, 75);
             this.panel5.Name = "panel5";
@@ -1794,13 +1814,14 @@
             this.chckFilterDate.Checked = true;
             this.chckFilterDate.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chckFilterDate.Dock = System.Windows.Forms.DockStyle.Left;
-            this.chckFilterDate.Location = new System.Drawing.Point(218, 0);
+            this.chckFilterDate.Location = new System.Drawing.Point(171, 0);
             this.chckFilterDate.Name = "chckFilterDate";
             this.chckFilterDate.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
             this.chckFilterDate.Size = new System.Drawing.Size(53, 24);
             this.chckFilterDate.TabIndex = 3;
             this.chckFilterDate.Text = "дата";
             this.chckFilterDate.UseVisualStyleBackColor = true;
+            this.chckFilterDate.CheckedChanged += new System.EventHandler(this.Filter_CheckedChanged);
             // 
             // chckFilterAffiliation
             // 
@@ -1808,13 +1829,14 @@
             this.chckFilterAffiliation.Checked = true;
             this.chckFilterAffiliation.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chckFilterAffiliation.Dock = System.Windows.Forms.DockStyle.Left;
-            this.chckFilterAffiliation.Location = new System.Drawing.Point(98, 0);
+            this.chckFilterAffiliation.Location = new System.Drawing.Point(51, 0);
             this.chckFilterAffiliation.Name = "chckFilterAffiliation";
             this.chckFilterAffiliation.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
             this.chckFilterAffiliation.Size = new System.Drawing.Size(120, 24);
             this.chckFilterAffiliation.TabIndex = 2;
             this.chckFilterAffiliation.Text = "принаждлехность";
             this.chckFilterAffiliation.UseVisualStyleBackColor = true;
+            this.chckFilterAffiliation.CheckedChanged += new System.EventHandler(this.Filter_CheckedChanged);
             // 
             // chckFilterType
             // 
@@ -1822,27 +1844,14 @@
             this.chckFilterType.Checked = true;
             this.chckFilterType.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chckFilterType.Dock = System.Windows.Forms.DockStyle.Left;
-            this.chckFilterType.Location = new System.Drawing.Point(51, 0);
+            this.chckFilterType.Location = new System.Drawing.Point(4, 0);
             this.chckFilterType.Name = "chckFilterType";
             this.chckFilterType.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
             this.chckFilterType.Size = new System.Drawing.Size(47, 24);
             this.chckFilterType.TabIndex = 1;
             this.chckFilterType.Text = "тип";
             this.chckFilterType.UseVisualStyleBackColor = true;
-            // 
-            // chckFilterId
-            // 
-            this.chckFilterId.AutoSize = true;
-            this.chckFilterId.Checked = true;
-            this.chckFilterId.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chckFilterId.Dock = System.Windows.Forms.DockStyle.Left;
-            this.chckFilterId.Location = new System.Drawing.Point(4, 0);
-            this.chckFilterId.Name = "chckFilterId";
-            this.chckFilterId.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.chckFilterId.Size = new System.Drawing.Size(47, 24);
-            this.chckFilterId.TabIndex = 0;
-            this.chckFilterId.Text = "ИД";
-            this.chckFilterId.UseVisualStyleBackColor = true;
+            this.chckFilterType.CheckedChanged += new System.EventHandler(this.Filter_CheckedChanged);
             // 
             // panel4
             // 
@@ -1866,6 +1875,7 @@
             this.cmbAffiliation.Name = "cmbAffiliation";
             this.cmbAffiliation.Size = new System.Drawing.Size(94, 21);
             this.cmbAffiliation.TabIndex = 4;
+            this.cmbAffiliation.SelectedIndexChanged += new System.EventHandler(this.FilterComboBox_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -1887,6 +1897,7 @@
             this.cmbObservPointType.Name = "cmbObservPointType";
             this.cmbObservPointType.Size = new System.Drawing.Size(94, 21);
             this.cmbObservPointType.TabIndex = 2;
+            this.cmbObservPointType.SelectedIndexChanged += new System.EventHandler(this.FilterComboBox_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -3441,7 +3452,7 @@
             this.panel9.ResumeLayout(false);
             this.panel9.PerformLayout();
             this.panel6.ResumeLayout(false);
-            this.panel6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvObservationPoints)).EndInit();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
             this.panel4.ResumeLayout(false);
@@ -3623,12 +3634,10 @@
         private System.Windows.Forms.ToolBarButton toolBarButton28;
         private System.Windows.Forms.ToolBarButton toolBarButton48;
         private System.Windows.Forms.ToolBarButton toolBarButton50;
-        private System.Windows.Forms.ListBox lstObservationPoinst;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.CheckBox chckFilterDate;
         private System.Windows.Forms.CheckBox chckFilterAffiliation;
         private System.Windows.Forms.CheckBox chckFilterType;
-        private System.Windows.Forms.CheckBox chckFilterId;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.ComboBox cmbAffiliation;
         private System.Windows.Forms.Label label3;
@@ -3780,5 +3789,6 @@
         private System.Windows.Forms.Panel panel57;
         private System.Windows.Forms.TextBox azimuthMainAxis;
         private System.Windows.Forms.Label label58;
+        private System.Windows.Forms.DataGridView dgvObservationPoints;
     }
 }
