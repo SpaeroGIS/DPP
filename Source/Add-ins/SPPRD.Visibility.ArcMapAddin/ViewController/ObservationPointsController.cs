@@ -57,9 +57,88 @@ namespace MilSpace.Visibility.ViewController
             view.ChangeRecord(objId, newPoint);
         }
 
+        internal void RemoveObservPoint(string featureName, IActiveView activeView, int id)
+        {
+            var featureClass = GetFeatureClass(featureName, activeView);
+            GdbAccess.Instance.RemoveObservPoint(featureClass, id);
+            _observationPoints.Remove(GetObservPointById(id));
+        }
+
+        internal void ShowObservPoint(IActiveView activeView, int id)
+        {
+            var point = GetObservPointById(id);
+            var pointGeometry = new PointClass { X = (double)point.X, Y = (double)point.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
+
+            pointGeometry.Project(activeView.FocusMap.SpatialReference);
+
+            if (!IsPointOnExtent(activeView.Extent, pointGeometry))
+            {
+                EsriTools.PanToGeometry(activeView, pointGeometry, true);
+            }
+
+            EsriTools.FlashGeometry(activeView.ScreenDisplay, new IGeometry[] { pointGeometry });
+        }
+
+
         internal IEnumerable<ObservationPoint> GetAllObservationPoints()
         {
             return VisibilityZonesFacade.GetAllObservationPoints();
+        }
+
+
+        internal ObservationPoint CreatePointWithDefaultValues(IEnvelope envelope)
+        {
+            var centerPoint = GetEnvelopeCenterPoint(envelope);
+
+            return new ObservationPoint
+            {
+                X = centerPoint.X,
+                Y = centerPoint.Y,
+                Type = ObservationPointMobilityTypesEnum.Stationary.ToString(),
+                Affiliation = ObservationPointTypesEnum.Enemy.ToString(),
+                AzimuthStart = Convert.ToDouble(ObservPointDefaultValues.AzimuthBText),
+                AzimuthEnd = Convert.ToDouble(ObservPointDefaultValues.AzimuthEText),
+                RelativeHeight = Convert.ToDouble(ObservPointDefaultValues.RelativeHeightText),
+                AvailableHeightLover = Convert.ToDouble(ObservPointDefaultValues.HeightMinText),
+                AvailableHeightUpper = Convert.ToDouble(ObservPointDefaultValues.HeightMaxText),
+                Title = ObservPointDefaultValues.ObservPointNameText,
+                AngelMinH = Convert.ToDouble(ObservPointDefaultValues.AngleOFViewMinText),
+                AngelMaxH = Convert.ToDouble(ObservPointDefaultValues.AngleOFViewMaxText),
+                AngelFrameH = Convert.ToDouble(ObservPointDefaultValues.AngleFrameHText),
+                AngelFrameV = Convert.ToDouble(ObservPointDefaultValues.AngleFrameVText),
+                AngelCameraRotationH = Convert.ToDouble(ObservPointDefaultValues.CameraRotationHText),
+                AngelCameraRotationV = Convert.ToDouble(ObservPointDefaultValues.CameraRotationVText),
+                AzimuthMainAxis = Convert.ToDouble(ObservPointDefaultValues.AzimuthMainAxisText),
+                Dto = DateTime.Now.Date,
+                Operator = Environment.UserName
+            };
+        }
+
+        internal void AddPoint(string featureName, IActiveView activeView)
+        {
+            var point = CreatePointWithDefaultValues(activeView.Extent.Envelope);
+            var pointGeometry = new PointClass { X = (double)point.X, Y = (double)point.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
+
+            pointGeometry.Z = (double)point.RelativeHeight;
+            pointGeometry.ZAware = true;
+
+            var featureClass = GetFeatureClass(featureName, activeView);
+
+            GdbAccess.Instance.AddObservPoint(pointGeometry, point, featureClass);
+
+            var updPoints = VisibilityZonesFacade.GetAllObservationPoints().ToList();
+            _observationPoints.Add(updPoints.First(observPoint => !_observationPoints.Exists(oldPoints => oldPoints.Objectid == observPoint.Objectid)));
+            view.AddRecord(_observationPoints.Last());
+        }
+
+        internal IPoint GetEnvelopeCenterPoint(IEnvelope envelope)
+        {
+            var x = (envelope.XMin + envelope.XMax) / 2;
+            var y = (envelope.YMin + envelope.YMax) / 2;
+
+            var point = new PointClass { X = x, Y = y, SpatialReference = envelope.SpatialReference };
+            point.Project(EsriTools.Wgs84Spatialreference);
+            return point;
         }
 
         public IEnumerable<string> GetObservationPointTypes()
@@ -113,61 +192,6 @@ namespace MilSpace.Visibility.ViewController
             return false;
         }
 
-        public ObservationPoint CreatePointWithDefaultValues(IEnvelope envelope)
-        {
-            var centerPoint = GetEnvelopeCenterPoint(envelope);
-
-            return new ObservationPoint
-            {
-                X = centerPoint.X,
-                Y = centerPoint.Y,
-                Type = ObservationPointMobilityTypesEnum.Stationary.ToString(),
-                Affiliation = ObservationPointTypesEnum.Enemy.ToString(),
-                AzimuthStart = Convert.ToDouble(ObservPointDefaultValues.AzimuthBText),
-                AzimuthEnd = Convert.ToDouble(ObservPointDefaultValues.AzimuthEText),
-                RelativeHeight = Convert.ToDouble(ObservPointDefaultValues.RelativeHeightText),
-                AvailableHeightLover = Convert.ToDouble(ObservPointDefaultValues.HeightMinText),
-                AvailableHeightUpper = Convert.ToDouble(ObservPointDefaultValues.HeightMaxText),
-                Title = ObservPointDefaultValues.ObservPointNameText,
-                AngelMinH = Convert.ToDouble(ObservPointDefaultValues.AngleOFViewMinText),
-                AngelMaxH = Convert.ToDouble(ObservPointDefaultValues.AngleOFViewMaxText),
-                AngelFrameH = Convert.ToDouble(ObservPointDefaultValues.AngleFrameHText),
-                AngelFrameV = Convert.ToDouble(ObservPointDefaultValues.AngleFrameVText),
-                AngelCameraRotationH = Convert.ToDouble(ObservPointDefaultValues.CameraRotationHText),
-                AngelCameraRotationV = Convert.ToDouble(ObservPointDefaultValues.CameraRotationVText),
-                AzimuthMainAxis = Convert.ToDouble(ObservPointDefaultValues.AzimuthMainAxisText),
-                Dto = DateTime.Now.Date,
-                Operator = Environment.UserName
-            };
-        }
-
-        public void AddPoint(string featureName, IActiveView activeView)
-        {
-            var point = CreatePointWithDefaultValues(activeView.Extent.Envelope);
-            var pointGeometry = new PointClass { X = (double)point.X, Y = (double)point.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
-
-            pointGeometry.Z = (double)point.RelativeHeight;
-            pointGeometry.ZAware = true;
-
-            var featureClass = GetFeatureClass(featureName, activeView);
-
-            GdbAccess.Instance.AddObservPoint(pointGeometry, point, featureClass);
-
-            var updPoints = VisibilityZonesFacade.GetAllObservationPoints().ToList();
-            _observationPoints.Add(updPoints.First(observPoint => !_observationPoints.Exists(oldPoints => oldPoints.Objectid == observPoint.Objectid)));
-            view.AddRecord(_observationPoints.Last());
-        }
-
-        public IPoint GetEnvelopeCenterPoint(IEnvelope envelope)
-        {
-            var x = (envelope.XMin + envelope.XMax) / 2;
-            var y = (envelope.YMin + envelope.YMax) / 2;
-
-            var point = new PointClass { X = x, Y = y, SpatialReference = envelope.SpatialReference };
-            point.Project(EsriTools.Wgs84Spatialreference);
-            return point;
-        }
-
         private IFeatureClass GetFeatureClass(string featureClassName, IActiveView activeView)
         {
             if (string.IsNullOrWhiteSpace(featureClassName))
@@ -189,6 +213,16 @@ namespace MilSpace.Visibility.ViewController
             }
 
             return null;
+        }
+
+        private bool IsPointOnExtent(IEnvelope envelope, IPoint point)
+        {
+            if(point.X >= envelope.XMin && point.X <= envelope.XMax && point.Y >= envelope.YMin && point.Y <= envelope.YMax)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
