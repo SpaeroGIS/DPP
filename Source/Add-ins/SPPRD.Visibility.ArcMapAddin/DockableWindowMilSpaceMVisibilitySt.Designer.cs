@@ -118,9 +118,10 @@
             this.label14 = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
             this.tlbCoordinates = new System.Windows.Forms.ToolBar();
-            this.toolBarButton2 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton3 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton4 = new System.Windows.Forms.ToolBarButton();
+            this.tlbbGetCoord = new System.Windows.Forms.ToolBarButton();
+            this.tlbbCopyCoord = new System.Windows.Forms.ToolBarButton();
+            this.tlbbPasteCoord = new System.Windows.Forms.ToolBarButton();
+            this.tlbbShowCoord = new System.Windows.Forms.ToolBarButton();
             this.yCoord = new System.Windows.Forms.TextBox();
             this.xCoord = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -131,9 +132,8 @@
             this.label11 = new System.Windows.Forms.Label();
             this.panel12 = new System.Windows.Forms.Panel();
             this.toolBar2 = new System.Windows.Forms.ToolBar();
-            this.toolBarButton52 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton8 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton27 = new System.Windows.Forms.ToolBarButton();
+            this.tlbbRemovePoint = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton17 = new System.Windows.Forms.ToolBarButton();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.panel21 = new System.Windows.Forms.Panel();
@@ -176,11 +176,8 @@
             this.label7 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
             this.tlbObservPoints = new System.Windows.Forms.ToolBar();
-            this.toolBarButton51 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton28 = new System.Windows.Forms.ToolBarButton();
-            this.addPointToolBarBtn = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton48 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton50 = new System.Windows.Forms.ToolBarButton();
+            this.tlbbAddNewPoint = new System.Windows.Forms.ToolBarButton();
+            this.tlbbShowPoint = new System.Windows.Forms.ToolBarButton();
             this.dgvObservationPoints = new System.Windows.Forms.DataGridView();
             this.panel5 = new System.Windows.Forms.Panel();
             this.chckFilterDate = new System.Windows.Forms.CheckBox();
@@ -1142,9 +1139,10 @@
             // tlbCoordinates
             // 
             this.tlbCoordinates.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
-            this.toolBarButton2,
-            this.toolBarButton3,
-            this.toolBarButton4});
+            this.tlbbGetCoord,
+            this.tlbbCopyCoord,
+            this.tlbbPasteCoord,
+            this.tlbbShowCoord});
             this.tlbCoordinates.ButtonSize = new System.Drawing.Size(16, 16);
             this.tlbCoordinates.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlbCoordinates.DropDownArrows = true;
@@ -1157,20 +1155,29 @@
             this.tlbCoordinates.TabIndex = 29;
             this.tlbCoordinates.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.TlbCoordinates_ButtonClick);
             // 
-            // toolBarButton2
+            // tlbbGetCoord
             // 
-            this.toolBarButton2.ImageIndex = 68;
-            this.toolBarButton2.Name = "toolBarButton2";
+            this.tlbbGetCoord.ImageIndex = 138;
+            this.tlbbGetCoord.Name = "tlbbGetCoord";
+            this.tlbbGetCoord.ToolTipText = "Получить координаты с карты";
             // 
-            // toolBarButton3
+            // tlbbCopyCoord
             // 
-            this.toolBarButton3.ImageKey = "Clipboard Copy.png";
-            this.toolBarButton3.Name = "toolBarButton3";
+            this.tlbbCopyCoord.ImageIndex = 52;
+            this.tlbbCopyCoord.Name = "tlbbCopyCoord";
+            this.tlbbCopyCoord.ToolTipText = "Скопировать";
             // 
-            // toolBarButton4
+            // tlbbPasteCoord
             // 
-            this.toolBarButton4.ImageKey = "Clipboard Paste.png";
-            this.toolBarButton4.Name = "toolBarButton4";
+            this.tlbbPasteCoord.ImageKey = "Clipboard Paste.png";
+            this.tlbbPasteCoord.Name = "tlbbPasteCoord";
+            this.tlbbPasteCoord.ToolTipText = "Вставить";
+            // 
+            // tlbbShowCoord
+            // 
+            this.tlbbShowCoord.ImageIndex = 68;
+            this.tlbbShowCoord.Name = "tlbbShowCoord";
+            this.tlbbShowCoord.ToolTipText = "Показать на карте";
             // 
             // yCoord
             // 
@@ -1232,7 +1239,6 @@
             this.cmbAffiliationEdit.Size = new System.Drawing.Size(77, 21);
             this.cmbAffiliationEdit.TabIndex = 4;
             this.cmbAffiliationEdit.SelectedIndexChanged += new System.EventHandler(this.EditComboBox_SelectedIndexChanged);
-            this.cmbAffiliationEdit.DropDownClosed += new System.EventHandler(this.EditComboBox_DropDownClosed);
             // 
             // label10
             // 
@@ -1255,7 +1261,6 @@
             this.cmbObservTypesEdit.Size = new System.Drawing.Size(94, 21);
             this.cmbObservTypesEdit.TabIndex = 2;
             this.cmbObservTypesEdit.SelectedIndexChanged += new System.EventHandler(this.EditComboBox_SelectedIndexChanged);
-            this.cmbObservTypesEdit.DropDownClosed += new System.EventHandler(this.EditComboBox_DropDownClosed);
             // 
             // label11
             // 
@@ -1280,9 +1285,8 @@
             // toolBar2
             // 
             this.toolBar2.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
-            this.toolBarButton52,
             this.toolBarButton8,
-            this.toolBarButton27,
+            this.tlbbRemovePoint,
             this.toolBarButton17});
             this.toolBar2.ButtonSize = new System.Drawing.Size(18, 18);
             this.toolBar2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1295,23 +1299,17 @@
             this.toolBar2.Size = new System.Drawing.Size(322, 28);
             this.toolBar2.TabIndex = 41;
             // 
-            // toolBarButton52
-            // 
-            this.toolBarButton52.ImageKey = "Refresh.png";
-            this.toolBarButton52.Name = "toolBarButton52";
-            this.toolBarButton52.ToolTipText = "Обновить";
-            // 
             // toolBarButton8
             // 
             this.toolBarButton8.ImageKey = "Directions.png";
             this.toolBarButton8.Name = "toolBarButton8";
             this.toolBarButton8.ToolTipText = "Показать на карте";
             // 
-            // toolBarButton27
+            // tlbbRemovePoint
             // 
-            this.toolBarButton27.ImageKey = "Light.png";
-            this.toolBarButton27.Name = "toolBarButton27";
-            this.toolBarButton27.ToolTipText = "Показать параметры на карте";
+            this.tlbbRemovePoint.ImageKey = "Cancel.png";
+            this.tlbbRemovePoint.Name = "tlbbRemovePoint";
+            this.tlbbRemovePoint.ToolTipText = "Удалить пункт";
             // 
             // toolBarButton17
             // 
@@ -1725,14 +1723,9 @@
             // 
             this.tlbObservPoints.AutoSize = false;
             this.tlbObservPoints.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
-            this.toolBarButton51,
-            this.toolBarButton52,
-            this.toolBarButton28,
-            this.addPointToolBarBtn,
-            this.toolBarButton3,
-            this.toolBarButton27,
-            this.toolBarButton48,
-            this.toolBarButton50});
+            this.tlbbAddNewPoint,
+            this.tlbbRemovePoint,
+            this.tlbbShowPoint});
             this.tlbObservPoints.ButtonSize = new System.Drawing.Size(18, 18);
             this.tlbObservPoints.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tlbObservPoints.DropDownArrows = true;
@@ -1744,34 +1737,17 @@
             this.tlbObservPoints.TabIndex = 40;
             this.tlbObservPoints.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.TlbObserPoints_ButtonClick);
             // 
-            // toolBarButton51
+            // tlbbAddNewPoint
             // 
-            this.toolBarButton51.ImageKey = "Pointer.png";
-            this.toolBarButton51.Name = "toolBarButton51";
-            this.toolBarButton51.ToolTipText = "Указать на карте";
+            this.tlbbAddNewPoint.ImageKey = "Plus.png";
+            this.tlbbAddNewPoint.Name = "tlbbAddNewPoint";
+            this.tlbbAddNewPoint.ToolTipText = "Добавить новый пункт";
             // 
-            // toolBarButton28
+            // tlbbShowPoint
             // 
-            this.toolBarButton28.ImageIndex = 200;
-            this.toolBarButton28.Name = "toolBarButton28";
-            this.toolBarButton28.ToolTipText = "Редактировать";
-            // 
-            // addPointToolBarBtn
-            // 
-            this.addPointToolBarBtn.ImageKey = "Directions.png";
-            this.addPointToolBarBtn.Name = "addPointToolBarBtn";
-            // 
-            // toolBarButton48
-            // 
-            this.toolBarButton48.ImageKey = "Plus.png";
-            this.toolBarButton48.Name = "toolBarButton48";
-            this.toolBarButton48.ToolTipText = "Добавить";
-            // 
-            // toolBarButton50
-            // 
-            this.toolBarButton50.ImageKey = "Cancel.png";
-            this.toolBarButton50.Name = "toolBarButton50";
-            this.toolBarButton50.ToolTipText = "Удалить";
+            this.tlbbShowPoint.ImageKey = "Directions.png";
+            this.tlbbShowPoint.Name = "tlbbShowPoint";
+            this.tlbbShowPoint.ToolTipText = "Показать пункт на карте";
             // 
             // dgvObservationPoints
             // 
@@ -1794,6 +1770,7 @@
             this.dgvObservationPoints.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvObservationPoints.Size = new System.Drawing.Size(336, 116);
             this.dgvObservationPoints.TabIndex = 5;
+            this.dgvObservationPoints.TabStop = false;
             this.dgvObservationPoints.SelectionChanged += new System.EventHandler(this.DgvObservationPoints_SelectionChanged);
             // 
             // panel5
@@ -3540,54 +3517,11 @@
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.Panel panel24;
-        private System.Windows.Forms.TextBox observPointCreator;
-        private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.TextBox observPointDate;
-        private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.Panel panel8;
-        private System.Windows.Forms.TextBox observPointName;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.RichTextBox richTextBox1;
-        private System.Windows.Forms.Panel panel11;
-        private System.Windows.Forms.TextBox heightMax;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox heightMin;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Panel panel17;
-        private System.Windows.Forms.TextBox heightCurrent;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Panel panel16;
-        private System.Windows.Forms.TextBox angleOFViewMin;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Panel panel15;
-        private System.Windows.Forms.TextBox angleFrameV;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.TextBox angleFrameH;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Panel panel14;
-        private System.Windows.Forms.TextBox azimuthE;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox azimuthB;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Panel panel10;
-        private System.Windows.Forms.ToolBar tlbCoordinates;
         private System.Windows.Forms.ToolBarButton takeCoordToolBarBtn;
-        private System.Windows.Forms.ToolBarButton toolBarButton3;
-        private System.Windows.Forms.ToolBarButton toolBarButton4;
-        private System.Windows.Forms.TextBox yCoord;
-        private System.Windows.Forms.TextBox xCoord;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Panel panel13;
-        private System.Windows.Forms.ComboBox cmbAffiliationEdit;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.ComboBox cmbObservTypesEdit;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.ToolBar toolBar2;
-        private System.Windows.Forms.ToolBarButton toolBarButton52;
         private System.Windows.Forms.ToolBarButton toolBarButton8;
-        private System.Windows.Forms.ToolBarButton toolBarButton27;
+        private System.Windows.Forms.ToolBarButton tlbbRemovePoint;
         private System.Windows.Forms.ToolBarButton toolBarButton17;
         private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.Panel panel21;
@@ -3630,10 +3564,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.ToolBar tlbObservPoints;
-        private System.Windows.Forms.ToolBarButton toolBarButton51;
-        private System.Windows.Forms.ToolBarButton toolBarButton28;
-        private System.Windows.Forms.ToolBarButton toolBarButton48;
-        private System.Windows.Forms.ToolBarButton toolBarButton50;
+        private System.Windows.Forms.ToolBarButton tlbbAddNewPoint;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.CheckBox chckFilterDate;
         private System.Windows.Forms.CheckBox chckFilterAffiliation;
@@ -3777,18 +3708,61 @@
         private System.Windows.Forms.Panel panel48;
         private System.Windows.Forms.Label label47;
         private System.Windows.Forms.ToolBarButton toolBarButton5;
-        private System.Windows.Forms.ToolBarButton addPointToolBarBtn;
-        private System.Windows.Forms.ToolBarButton toolBarButton2;
-        private System.Windows.Forms.TextBox angleOFViewMax;
-        private System.Windows.Forms.Label label52;
+        private System.Windows.Forms.ToolBarButton tlbbShowPoint;
+        private System.Windows.Forms.DataGridView dgvObservationPoints;
+        private System.Windows.Forms.Panel panel24;
+        private System.Windows.Forms.TextBox observPointCreator;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.TextBox observPointDate;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.TextBox observPointName;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.Panel panel11;
+        private System.Windows.Forms.TextBox heightMax;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox heightMin;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Panel panel17;
+        private System.Windows.Forms.TextBox heightCurrent;
+        private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Panel panel56;
         private System.Windows.Forms.TextBox cameraRotationV;
         private System.Windows.Forms.Label label55;
         private System.Windows.Forms.TextBox cameraRotationH;
         private System.Windows.Forms.Label label56;
+        private System.Windows.Forms.Panel panel16;
+        private System.Windows.Forms.TextBox angleOFViewMax;
+        private System.Windows.Forms.Label label52;
+        private System.Windows.Forms.TextBox angleOFViewMin;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Panel panel15;
+        private System.Windows.Forms.TextBox angleFrameV;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox angleFrameH;
+        private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Panel panel57;
         private System.Windows.Forms.TextBox azimuthMainAxis;
         private System.Windows.Forms.Label label58;
-        private System.Windows.Forms.DataGridView dgvObservationPoints;
+        private System.Windows.Forms.Panel panel14;
+        private System.Windows.Forms.TextBox azimuthE;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox azimuthB;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Panel panel10;
+        private System.Windows.Forms.ToolBar tlbCoordinates;
+        private System.Windows.Forms.ToolBarButton tlbbGetCoord;
+        private System.Windows.Forms.ToolBarButton tlbbCopyCoord;
+        private System.Windows.Forms.ToolBarButton tlbbPasteCoord;
+        private System.Windows.Forms.ToolBarButton tlbbShowCoord;
+        private System.Windows.Forms.TextBox yCoord;
+        private System.Windows.Forms.TextBox xCoord;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Panel panel13;
+        private System.Windows.Forms.ComboBox cmbAffiliationEdit;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ComboBox cmbObservTypesEdit;
+        private System.Windows.Forms.Label label11;
     }
 }

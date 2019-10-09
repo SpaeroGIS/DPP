@@ -466,6 +466,12 @@ namespace MilSpace.DataAccess.Facade
             SetObservPointValues(featureClass, pointFeature, observPoint);
         }
 
+        public void RemoveObservPoint(IFeatureClass featureClass, int objectId)
+        {
+            IFeature pointFeature = featureClass.GetFeature(objectId);
+            pointFeature.Delete();
+        }
+
         public void EraseProfileLines()
         {
             IFeatureClass calc = GetCalcProfileFeatureClass("CalcProfile_L");
