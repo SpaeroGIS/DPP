@@ -17,6 +17,11 @@ namespace MilSpace.Visibility.ViewController
         IObservationPointsView view;
         private static readonly string _observPointFeature = "MilSp_Visible_ObservPoints";
         private List<ObservationPoint> _observationPoints = new List<ObservationPoint>();
+        /// <summary>
+        /// The dictionary to localise the types
+        /// </summary>
+        private static Dictionary<ObservationPointMobilityTypesEnum, string> mobilityTypes = Enum.GetValues(typeof(ObservationPointMobilityTypesEnum)).Cast<ObservationPointMobilityTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
+        private static Dictionary<ObservationPointTypesEnum, string> affiliationTypes = Enum.GetValues(typeof(ObservationPointTypesEnum)).Cast<ObservationPointTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
 
         public ObservationPointsController()
         { }
@@ -143,12 +148,12 @@ namespace MilSpace.Visibility.ViewController
 
         public IEnumerable<string> GetObservationPointTypes()
         {
-            return Enum.GetNames(typeof(ObservationPointTypesEnum));
+            return affiliationTypes.Where(t => t.Key != ObservationPointTypesEnum.All).Select(t => t.Value);
         }
 
         public IEnumerable<string> GetObservationPointMobilityTypes()
         {
-            return Enum.GetNames(typeof(ObservationPointMobilityTypesEnum));
+            return mobilityTypes.Where(t => t.Key != ObservationPointMobilityTypesEnum.All).Select(t => t.Value);
         }
 
         public IEnumerable<string> GetObservationPointsLayers(IActiveView view)
@@ -217,7 +222,7 @@ namespace MilSpace.Visibility.ViewController
 
         private bool IsPointOnExtent(IEnvelope envelope, IPoint point)
         {
-            if(point.X >= envelope.XMin && point.X <= envelope.XMax && point.Y >= envelope.YMin && point.Y <= envelope.YMax)
+            if (point.X >= envelope.XMin && point.X <= envelope.XMax && point.Y >= envelope.YMin && point.Y <= envelope.YMax)
             {
                 return true;
             }
