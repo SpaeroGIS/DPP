@@ -106,7 +106,9 @@ namespace MilSpace.Visibility
             }
         }
 
-        public string ObservationPointsFeatureClass => cmbObservPointsLayers.Text;
+        public string ObservationStationFeatureClass => cmbObservPointsLayers.Text;
+
+        public string ObservationPointsFeatureClass => cmbObservStationLayers.Text;
 
         public IEnumerable<string> GetTypes
         {
@@ -858,5 +860,6 @@ namespace MilSpace.Visibility
         {
             _isFieldsChanged = true;
         }
+
     }
 }

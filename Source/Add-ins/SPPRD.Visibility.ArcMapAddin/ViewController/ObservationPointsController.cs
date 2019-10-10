@@ -219,6 +219,10 @@ namespace MilSpace.Visibility.ViewController
             return false;
         }
 
+        public string GetObservationPointsLayerName => view.ObservationPointsFeatureClass;
+
+        public string GetObservationStationLayerName => view.ObservationStationFeatureClass;
+
         private IFeatureClass GetFeatureClass(string featureClassName, IActiveView activeView)
         {
             if (string.IsNullOrWhiteSpace(featureClassName))

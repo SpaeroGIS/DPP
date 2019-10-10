@@ -236,7 +236,7 @@
             this.panel27 = new System.Windows.Forms.Panel();
             this.label30 = new System.Windows.Forms.Label();
             this.panel28 = new System.Windows.Forms.Panel();
-            this.comboBox8 = new System.Windows.Forms.ComboBox();
+            this.cmbObservStationLayers = new System.Windows.Forms.ComboBox();
             this.label31 = new System.Windows.Forms.Label();
             this.toolBar5 = new System.Windows.Forms.ToolBar();
             this.toolBarButton18 = new System.Windows.Forms.ToolBarButton();
@@ -2410,7 +2410,7 @@
             // 
             // panel28
             // 
-            this.panel28.Controls.Add(this.comboBox8);
+            this.panel28.Controls.Add(this.cmbObservStationLayers);
             this.panel28.Controls.Add(this.label31);
             this.panel28.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel28.Location = new System.Drawing.Point(3, 3);
@@ -2419,15 +2419,15 @@
             this.panel28.Size = new System.Drawing.Size(336, 24);
             this.panel28.TabIndex = 41;
             // 
-            // comboBox8
+            // cmbObservStationLayers
             // 
-            this.comboBox8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBox8.FormattingEnabled = true;
-            this.comboBox8.Location = new System.Drawing.Point(59, 0);
-            this.comboBox8.Name = "comboBox8";
-            this.comboBox8.Size = new System.Drawing.Size(273, 21);
-            this.comboBox8.TabIndex = 1;
-            this.comboBox8.Text = "ObPlaces_201810";
+            this.cmbObservStationLayers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cmbObservStationLayers.FormattingEnabled = true;
+            this.cmbObservStationLayers.Location = new System.Drawing.Point(59, 0);
+            this.cmbObservStationLayers.Name = "cmbObservStationLayers";
+            this.cmbObservStationLayers.Size = new System.Drawing.Size(273, 21);
+            this.cmbObservStationLayers.TabIndex = 1;
+            this.cmbObservStationLayers.Text = "ObPlaces_201810";
             // 
             // label31
             // 
@@ -3639,7 +3639,7 @@
         private System.Windows.Forms.Panel panel27;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Panel panel28;
-        private System.Windows.Forms.ComboBox comboBox8;
+        private System.Windows.Forms.ComboBox cmbObservStationLayers;
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.ToolBar toolBar5;
         private System.Windows.Forms.ToolBarButton toolBarButton18;
