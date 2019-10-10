@@ -178,6 +178,16 @@ namespace MilSpace.Visibility.ViewController
             return mobilityTypes.Where(t => t.Key != ObservationPointMobilityTypesEnum.All).Select(t => t.Value);
         }
 
+        public string GetAllAffiliationType()
+        {
+            return affiliationTypes.First(t => t.Key == ObservationPointTypesEnum.All).Value;
+        }
+
+        public string GetAllMobilityType()
+        {
+            return mobilityTypes.First(t => t.Key == ObservationPointMobilityTypesEnum.All).Value;
+        }
+
         public IEnumerable<string> GetObservationPointsLayers(IActiveView view)
         {
             var obserPointsLayersNames = new List<string>();

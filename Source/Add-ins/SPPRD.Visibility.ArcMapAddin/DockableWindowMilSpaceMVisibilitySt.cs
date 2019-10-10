@@ -27,7 +27,6 @@ namespace MilSpace.Visibility
     {
         private ObservationPointsController controller;
         private BindingList<ObservPointGui> _observPointGuis = new BindingList<ObservPointGui>();
-        private const string _allValuesFilterText = "All";
         private bool _isDropDownItemChangedManualy = false;
         private bool _isFieldsChanged = false;
 
@@ -226,13 +225,13 @@ namespace MilSpace.Visibility
 
         private void CheckRowForFilter(DataGridViewRow row)
         {
-            if(cmbAffiliation.SelectedItem != null && cmbAffiliation.SelectedItem.ToString() != _allValuesFilterText)
+            if(cmbAffiliation.SelectedItem != null && cmbAffiliation.SelectedItem.ToString() != controller.GetAllAffiliationType())
             {
                 row.Visible = (row.Cells["Affiliation"].Value.ToString() == cmbAffiliation.SelectedItem.ToString());
                 if(!row.Visible) return;
             }
 
-            if(cmbObservPointType.SelectedItem != null && cmbObservPointType.SelectedItem.ToString() != _allValuesFilterText)
+            if(cmbObservPointType.SelectedItem != null && cmbObservPointType.SelectedItem.ToString() != controller.GetAllMobilityType())
             {
                 row.Visible = (row.Cells["Type"].Value.ToString() == cmbObservPointType.SelectedItem.ToString());
                 return;
@@ -246,22 +245,20 @@ namespace MilSpace.Visibility
             cmbObservPointType.Items.Clear();
             cmbObservTypesEdit.Items.Clear();
             var filters = new List<string>();
-            filters.Add(string.Empty);
             filters.AddRange(GetTypes.ToArray());
 
             cmbObservPointType.Items.AddRange(filters.ToArray());
-            cmbObservPointType.Items.Add( _allValuesFilterText);
+            cmbObservPointType.Items.Add(controller.GetAllMobilityType());
             cmbObservTypesEdit.Items.AddRange(GetTypes.ToArray());
 
             filters = new List<string>();
-            filters.Add(string.Empty);
 
             filters.AddRange(GetAffiliation.ToArray());
             cmbAffiliation.Items.Clear();
             cmbAffiliationEdit.Items.Clear();
 
             cmbAffiliation.Items.AddRange(filters.ToArray());
-            cmbAffiliation.Items.Add( _allValuesFilterText);
+            cmbAffiliation.Items.Add(controller.GetAllAffiliationType());
             cmbAffiliationEdit.Items.AddRange(GetAffiliation.ToArray());
 
             SetDefaultValues();
@@ -283,8 +280,8 @@ namespace MilSpace.Visibility
 
             cmbObservTypesEdit.SelectedItem = ObservationPointMobilityTypesEnum.Stationary.ToString();
             cmbAffiliationEdit.SelectedItem = ObservationPointTypesEnum.Enemy.ToString();
-            cmbObservPointType.SelectedItem =  _allValuesFilterText;
-            cmbAffiliation.SelectedItem =  _allValuesFilterText;
+            cmbObservPointType.SelectedItem =  controller.GetAllMobilityType();
+            cmbAffiliation.SelectedItem =  controller.GetAllAffiliationType();
 
             _isDropDownItemChangedManualy = true;
 
