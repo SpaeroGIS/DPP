@@ -8,6 +8,7 @@ namespace MilSpace.DataAccess.DataTransfer
 {
     public enum ObservationPointTypesEnum 
     {
+        All = 0,
         Undefined,
         Our,
         Enemy,
@@ -16,6 +17,7 @@ namespace MilSpace.DataAccess.DataTransfer
 
     public enum ObservationPointMobilityTypesEnum
     {
+        All = 0,
         Stationary,
         Mobile
     }
