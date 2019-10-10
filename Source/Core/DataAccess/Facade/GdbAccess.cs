@@ -455,15 +455,14 @@ namespace MilSpace.DataAccess.Facade
             workspaceEdit.StartEditOperation();
             
             var pointFeature = featureClass.CreateFeature();
-            pointFeature.Shape = point;
 
-            SetObservPointValues(featureClass, pointFeature, pointArgs);
+            SetObservPointValues(featureClass, pointFeature, point, pointArgs);
         }
 
-        public void UpdateObservPoint(IFeatureClass featureClass, ObservationPoint observPoint, int objectId)
+        public void UpdateObservPoint(IPoint point, IFeatureClass featureClass, ObservationPoint observPoint, int objectId)
         {
             IFeature pointFeature = featureClass.GetFeature(objectId);
-            SetObservPointValues(featureClass, pointFeature, observPoint);
+            SetObservPointValues(featureClass, pointFeature, point, observPoint);
         }
 
         public void RemoveObservPoint(IFeatureClass featureClass, int objectId)
@@ -729,8 +728,13 @@ namespace MilSpace.DataAccess.Facade
             workspaceEdit.StopEditing(true);
         }
 
-        private void SetObservPointValues(IFeatureClass featureClass, IFeature pointFeature, ObservationPoint pointArgs)
+        private void SetObservPointValues(IFeatureClass featureClass, IFeature pointFeature, IPoint point, ObservationPoint pointArgs)
         {
+            if (point != null)
+            {
+                pointFeature.Shape = point;
+            }
+
             pointFeature.set_Value(featureClass.FindField("TitleOP"), pointArgs.Title);
             pointFeature.set_Value(featureClass.FindField("TypeOP"), pointArgs.Type.ToString());
             pointFeature.set_Value(featureClass.FindField("saffiliation"), pointArgs.Affiliation.ToString());
