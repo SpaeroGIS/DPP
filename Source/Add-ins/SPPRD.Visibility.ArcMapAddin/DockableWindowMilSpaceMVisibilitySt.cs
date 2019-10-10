@@ -26,10 +26,10 @@ namespace MilSpace.Visibility
     public partial class DockableWindowMilSpaceMVisibilitySt : UserControl, IObservationPointsView
     {
         private ObservationPointsController controller;
-        private string _unsavedPointId = string.Empty;
         private BindingList<ObservPointGui> _observPointGuis = new BindingList<ObservPointGui>();
         private const string _allValuesFilterText = "All";
         private bool _isDropDownItemChangedManualy = false;
+        private bool _isFieldsChanged = false;
 
         public DockableWindowMilSpaceMVisibilitySt(object hook, ObservationPointsController controller)
         {
@@ -80,6 +80,7 @@ namespace MilSpace.Visibility
 
         #region
         private int _selectedPointId => Convert.ToInt32(dgvObservationPoints.SelectedRows[0].Cells["Id"].Value);
+        private bool _isFieldsEnabled => xCoord.Enabled && yCoord.Enabled;
 
         public VeluableObservPointFieldsEnum GetFilter
         {
@@ -105,7 +106,9 @@ namespace MilSpace.Visibility
             }
         }
 
-        public string ObservationPointsFeatureClass => cmbObservPointsLayers.Text;
+        public string ObservationStationFeatureClass => cmbObservPointsLayers.Text;
+
+        public string ObservationPointsFeatureClass => cmbObservStationLayers.Text;
 
         public IEnumerable<string> GetTypes
         {
@@ -159,6 +162,7 @@ namespace MilSpace.Visibility
 
             dgvObservationPoints.Refresh();
             UpdateFilter(dgvObservationPoints.Rows[rowIndex]);
+            _isFieldsChanged = false;
         }
 
         public void AddRecord(ObservationPoint observationPoint)
@@ -211,7 +215,7 @@ namespace MilSpace.Visibility
             if(dgvObservationPoints.FirstDisplayedScrollingRowIndex != -1)
             {
                 dgvObservationPoints.Rows[dgvObservationPoints.FirstDisplayedScrollingRowIndex].Selected = true;
-                if (!xCoord.Enabled) EnableObservPointsControls();
+                if (!_isFieldsEnabled) EnableObservPointsControls();
             }
             else
             {
@@ -311,6 +315,11 @@ namespace MilSpace.Visibility
 
         private void OnFieldChanged(object sender, EventArgs e)
         {
+            if(!_isFieldsChanged || !_isFieldsEnabled)
+            {
+                return;
+            }
+
             var selectedPoint = controller.GetObservPointById(_selectedPointId);
 
             if (FieldsValidation(sender, selectedPoint))
@@ -340,8 +349,6 @@ namespace MilSpace.Visibility
                         {
                             var x = Convert.ToDouble(xCoord.Text);
                             var y = Convert.ToDouble(yCoord.Text);
-
-                            ShowPoint(x, y);
                         }
 
                         return true;
@@ -359,8 +366,6 @@ namespace MilSpace.Visibility
                         {
                             var x = Convert.ToDouble(xCoord.Text);
                             var y = Convert.ToDouble(yCoord.Text);
-
-                            ShowPoint(x, y);
                         }
 
                         return true;
@@ -602,7 +607,6 @@ namespace MilSpace.Visibility
                 case "tlbbAddNewPoint":
 
                     CreateNewPoint(GetObservationPoint());
-                    _unsavedPointId = string.Empty;
 
                     break;
 
@@ -639,21 +643,7 @@ namespace MilSpace.Visibility
                 }
             }
         }
-
-        private void ShowPoint(double x, double y)
-        {
-            IPoint resultPoint = new Point { X = x, Y = y, SpatialReference = EsriTools.Wgs84Spatialreference };
-            resultPoint.ID = dgvObservationPoints.Rows.Count + 1;
-
-            if(!string.IsNullOrEmpty(_unsavedPointId))
-            {
-                RemovePointFromMap(_unsavedPointId);
-            }
-
-            _unsavedPointId = AddPointToMap(resultPoint);
-            EsriTools.PanToGeometry(ActiveView, resultPoint);
-        }
-
+        
         internal void ArcMap_OnMouseDown(int x, int y)
         {
             if(!(this.Hook is IApplication arcMap) || !(arcMap.Document is IMxDocument currentDocument)) return;
@@ -662,13 +652,6 @@ namespace MilSpace.Visibility
 
             resultPoint = (currentDocument.FocusMap as IActiveView).ScreenDisplay.DisplayTransformation.ToMapPoint(x, y);
             resultPoint.ID = dgvObservationPoints.Rows.Count + 1;
-
-            if(!string.IsNullOrEmpty(_unsavedPointId))
-            {
-                RemovePointFromMap(_unsavedPointId);
-            }
-
-            _unsavedPointId = AddPointToMap(resultPoint);
 
             resultPoint.Project(EsriTools.Wgs84Spatialreference);
 
@@ -680,23 +663,6 @@ namespace MilSpace.Visibility
         internal void ArcMap_OnMouseMove(int x, int y)
         {
             //Place Mouce Move logic here if needed
-        }
-
-        private string AddPointToMap(IPoint point)
-        {
-            if(point != null && !point.IsEmpty)
-            {
-                var color = (IColor)new RgbColorClass() { Green = 255 };
-                var placedPoint = ArcMapHelper.AddGraphicToMap(point, color, true, esriSimpleMarkerStyle.esriSMSDiamond, 7);
-                return placedPoint.Key;
-            }
-
-            return string.Empty;
-        }
-
-        private void RemovePointFromMap(string pointId)
-        {
-            ArcMapHelper.RemoveGraphicsFromMap(new string[1] { pointId });
         }
 
         private void SavePoint()
@@ -801,13 +767,15 @@ namespace MilSpace.Visibility
 
         private void DgvObservationPoints_SelectionChanged(object sender, EventArgs e)
         {
+            _isFieldsChanged = false;
+
             if(dgvObservationPoints.SelectedRows.Count == 0)
             {
                 EnableObservPointsControls(true);
                 return;
             }
 
-            if(!xCoord.Enabled) EnableObservPointsControls();
+            if(!_isFieldsEnabled) EnableObservPointsControls();
             var selectedPoint = controller.GetObservPointById(_selectedPointId);
             
             if(selectedPoint == null)
@@ -833,7 +801,7 @@ namespace MilSpace.Visibility
                 if(dgvObservationPoints.FirstDisplayedScrollingRowIndex != -1)
                 {
                     dgvObservationPoints.Rows[dgvObservationPoints.FirstDisplayedScrollingRowIndex].Selected = true;
-                    if(!xCoord.Enabled) EnableObservPointsControls();
+                    if(!_isFieldsEnabled) EnableObservPointsControls();
                 }
                 else
                 {
@@ -887,5 +855,11 @@ namespace MilSpace.Visibility
 
             SavePoint();
         }
+
+        private void Fields_TextChanged(object sender, EventArgs e)
+        {
+            _isFieldsChanged = true;
+        }
+
     }
 }

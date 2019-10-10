@@ -9,6 +9,7 @@ namespace MilSpace.Visibility.ViewController
         void ChangeRecord(int id, ObservationPoint observationPoint);
         void AddRecord(ObservationPoint observationPoint);
         string ObservationPointsFeatureClass { get; }
+        string ObservationStationFeatureClass { get; }
         VeluableObservPointFieldsEnum GetFilter { get; }
         IEnumerable<string> GetTypes { get; }
         IEnumerable<string> GetAffiliation { get; }

@@ -54,12 +54,33 @@ namespace MilSpace.Visibility.ViewController
 
         internal void UpdateObservPoint(ObservationPoint newPoint, string featureName, IActiveView activeView, int objId)
         {
+            var isCoordChanges = false;
+            var oldPoint = GetObservPointById(objId);
             var featureClass = GetFeatureClass(featureName, activeView);
+            PointClass pointGeometry;
 
-            GdbAccess.Instance.UpdateObservPoint(featureClass, newPoint, objId);
+            if(oldPoint.X != newPoint.X && oldPoint.Y != newPoint.Y)
+            {
+                pointGeometry = new PointClass{ X = (double)newPoint.X, Y = (double)newPoint.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
+
+                pointGeometry.Z = (double)newPoint.RelativeHeight;
+                pointGeometry.ZAware = true;
+
+                isCoordChanges = true;
+            }
+            else
+            {
+                pointGeometry = null;
+            }
+            GdbAccess.Instance.UpdateObservPoint(pointGeometry, featureClass, newPoint, objId);
 
             _observationPoints = VisibilityZonesFacade.GetAllObservationPoints().ToList();
             view.ChangeRecord(objId, newPoint);
+
+            if (isCoordChanges)
+            {
+                activeView.PartialRefresh(esriViewDrawPhase.esriViewGeography, GetFeatureLayer(featureName, activeView), null);
+            }
         }
 
         internal void RemoveObservPoint(string featureName, IActiveView activeView, int id)
@@ -67,6 +88,7 @@ namespace MilSpace.Visibility.ViewController
             var featureClass = GetFeatureClass(featureName, activeView);
             GdbAccess.Instance.RemoveObservPoint(featureClass, id);
             _observationPoints.Remove(GetObservPointById(id));
+            activeView.PartialRefresh(esriViewDrawPhase.esriViewGeography, GetFeatureLayer(featureName, activeView), null);
         }
 
         internal void ShowObservPoint(IActiveView activeView, int id)
@@ -197,6 +219,10 @@ namespace MilSpace.Visibility.ViewController
             return false;
         }
 
+        public string GetObservationPointsLayerName => view.ObservationPointsFeatureClass;
+
+        public string GetObservationStationLayerName => view.ObservationStationFeatureClass;
+
         private IFeatureClass GetFeatureClass(string featureClassName, IActiveView activeView)
         {
             if (string.IsNullOrWhiteSpace(featureClassName))
@@ -212,6 +238,29 @@ namespace MilSpace.Visibility.ViewController
                 if (layer is IFeatureLayer fl && fl.FeatureClass.AliasName.Equals(featureClassName, StringComparison.InvariantCultureIgnoreCase))
                 {
                     return fl.FeatureClass;
+                }
+
+                layer = layers.Next();
+            }
+
+            return null;
+        }
+
+        private IFeatureLayer GetFeatureLayer(string featureClassName, IActiveView activeView)
+        {
+            if(string.IsNullOrWhiteSpace(featureClassName))
+            {
+                return null;
+            }
+
+            var layers = activeView.FocusMap.Layers;
+            var layer = layers.Next();
+
+            while(layer != null)
+            {
+                if(layer is IFeatureLayer fl && fl.FeatureClass.AliasName.Equals(featureClassName, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return fl;
                 }
 
                 layer = layers.Next();
