@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="MilSpaceApp" Class="MilSpaceVisibility" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=localhost\SQLEXPRESS;Initial Catalog=MilSpaceApp;Integrated Security=True" SettingsObjectName="MilSpace.DataAccess.Properties.Settings" SettingsPropertyName="MilSpaceAppConnectionString1" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DNOEGDB" Class="MilSpaceVisibilityContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.\sqlexpress;Initial Catalog=DNOEGDB;Integrated Security=True" SettingsObjectName="MilSpace.DataAccess.Properties.Settings" SettingsPropertyName="DNOEGDBConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.MilSp_Visible_ResultIOP" Member="MilSp_Visible_ResultIOPs">
     <Type Name="MilSp_Visible_ResultIOP">
       <Column Name="objectid" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -88,6 +88,19 @@
   <Table Name="dbo.MilSp_Visible_ResultIOP" Member="MilSp_Visible_ResultIOP1s">
     <Type Name="MilSp_Visible_ResultIOP1">
       <Column Name="objectid" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MILSP_VISIBILITY_SESSION" Member="MilSp_VisibilitySessions">
+    <Type Name="MilSp_VisibilitySession">
+      <Column Name="IdRow" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.String" DbType="NChar(25) NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="NChar(25) NOT NULL" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Started" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Finished" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CalculatedResults" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ReferencedGDB" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

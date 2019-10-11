@@ -168,6 +168,39 @@ namespace MilSpace.Visibility.ViewController
             return point;
         }
 
+        internal bool TestSave()
+        {
+            var visibilitySession = new VisibilitySession
+            {
+                Id = "1",
+                Name = "TestSession",
+                UserName = Environment.UserName,
+                Created = DateTime.Now,
+                CalculatedResults = 23
+            };
+
+            return VisibilityZonesFacade.SaveVisibilitySession(visibilitySession);
+        }
+
+        internal bool TestUpdate()
+        {
+            var visibilitySession = new VisibilitySession
+            {
+                Id = "1",
+                Name = "TestSessionEdit",
+                UserName = Environment.UserName,
+                Created = DateTime.Now,
+                CalculatedResults = 23
+            };
+
+            return VisibilityZonesFacade.UpdateVisibilitySession(visibilitySession);
+        }
+
+         internal bool TestDelete()
+        {
+            return VisibilityZonesFacade.DeleteVisibilitySession("1");
+        }
+
         public IEnumerable<string> GetObservationPointTypes()
         {
             return affiliationTypes.Where(t => t.Key != ObservationPointTypesEnum.All).Select(t => t.Value);
@@ -232,6 +265,11 @@ namespace MilSpace.Visibility.ViewController
         public string GetObservationPointsLayerName => view.ObservationPointsFeatureClass;
 
         public string GetObservationStationLayerName => view.ObservationStationFeatureClass;
+
+        private IEnumerable<VisibilitySession>  GetAllVisibilitySessions()
+        {
+            return VisibilityZonesFacade.GetAllVisibilitySessions();
+        }
 
         private IFeatureClass GetFeatureClass(string featureClassName, IActiveView activeView)
         {

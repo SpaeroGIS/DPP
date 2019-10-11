@@ -44,5 +44,25 @@ namespace MilSpace.DataAccess.Properties {
                 return ((string)(this["MilSpaceAppConnectionString1"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.\\SQLEXPRESS;Initial Catalog=DNOEGDB;Integrated Security=True")]
+        public string DNOEGDBConnectionString {
+            get {
+                return ((string)(this["DNOEGDBConnectionString"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.\\sqlexpress;Initial Catalog=DNOEGDB;Integrated Security=True")]
+        public string DNOEGDBConnectionString1 {
+            get {
+                return ((string)(this["DNOEGDBConnectionString1"]));
+            }
+        }
     }
 }

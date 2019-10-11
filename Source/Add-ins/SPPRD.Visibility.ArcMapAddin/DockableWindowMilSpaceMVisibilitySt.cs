@@ -858,5 +858,37 @@ namespace MilSpace.Visibility
             _isFieldsChanged = true;
         }
 
+        private void tlbTest_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        {
+            switch(tlbTest.Buttons.IndexOf(e.Button))
+            {
+                case 0:
+
+                    if (!controller.TestSave())
+                    {
+                        MessageBox.Show("Session already exist");
+                    }
+
+                    break;
+
+                case 1:
+
+                    if (!controller.TestUpdate())
+                    {
+                        MessageBox.Show("Session not found");
+                    }
+
+                    break;
+
+                case 2:
+                    
+                    if(!controller.TestDelete())
+                    {
+                        MessageBox.Show("Session not found");
+                    }
+
+                    break;
+            }
+        }
     }
 }

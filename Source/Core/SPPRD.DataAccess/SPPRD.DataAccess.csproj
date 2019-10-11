@@ -180,6 +180,7 @@
     </Compile>
     <Compile Include="DataTransfer\ObservationPoint.cs" />
     <Compile Include="DataTransfer\ObservationPointTypesEnum.cs" />
+    <Compile Include="DataTransfer\VisibilitySession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\DataAccess\Properties\Settings.Designer.cs">
       <Link>Properties\Settings.Designer.cs</Link>
@@ -209,6 +210,7 @@
       <Link>Definition\MilSpaceStorage.dbml.layout</Link>
       <DependentUpon>MilSpaceStorage.dbml</DependentUpon>
     </None>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="..\DataAccess\Properties\Settings.settings">
       <Link>Properties\Settings.settings</Link>

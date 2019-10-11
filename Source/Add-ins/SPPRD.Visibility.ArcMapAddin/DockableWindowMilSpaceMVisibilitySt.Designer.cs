@@ -257,6 +257,10 @@
             this.panel44 = new System.Windows.Forms.Panel();
             this.textBox24 = new System.Windows.Forms.TextBox();
             this.label43 = new System.Windows.Forms.Label();
+            this.tlbTest = new System.Windows.Forms.ToolBar();
+            this.tlbbAdd = new System.Windows.Forms.ToolBarButton();
+            this.tlddUpd = new System.Windows.Forms.ToolBarButton();
+            this.tlbbDel = new System.Windows.Forms.ToolBarButton();
             this.panel43 = new System.Windows.Forms.Panel();
             this.textBox23 = new System.Windows.Forms.TextBox();
             this.label42 = new System.Windows.Forms.Label();
@@ -270,9 +274,6 @@
             this.label40 = new System.Windows.Forms.Label();
             this.panel41 = new System.Windows.Forms.Panel();
             this.toolBar9 = new System.Windows.Forms.ToolBar();
-            this.toolBarButton36 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton45 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton5 = new System.Windows.Forms.ToolBarButton();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Идентификатор = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Тип = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -2508,6 +2509,7 @@
             this.tabPage3.Controls.Add(this.panel46);
             this.tabPage3.Controls.Add(this.panel45);
             this.tabPage3.Controls.Add(this.panel44);
+            this.tabPage3.Controls.Add(this.tlbTest);
             this.tabPage3.Controls.Add(this.panel43);
             this.tabPage3.Controls.Add(this.panel40);
             this.tabPage3.Controls.Add(this.panel47);
@@ -2530,7 +2532,7 @@
             this.richTextBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBox3.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.richTextBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.richTextBox3.Location = new System.Drawing.Point(0, 575);
+            this.richTextBox3.Location = new System.Drawing.Point(0, 547);
             this.richTextBox3.Name = "richTextBox3";
             this.richTextBox3.Size = new System.Drawing.Size(342, 48);
             this.richTextBox3.TabIndex = 71;
@@ -2629,6 +2631,40 @@
             this.label43.Size = new System.Drawing.Size(118, 17);
             this.label43.TabIndex = 4;
             this.label43.Text = "время формирования";
+            // 
+            // tlbTest
+            // 
+            this.tlbTest.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
+            this.tlbbAdd,
+            this.tlddUpd,
+            this.tlbbDel});
+            this.tlbTest.ButtonSize = new System.Drawing.Size(18, 18);
+            this.tlbTest.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tlbTest.DropDownArrows = true;
+            this.tlbTest.ImageList = this.imageList1;
+            this.tlbTest.Location = new System.Drawing.Point(0, 595);
+            this.tlbTest.Name = "tlbTest";
+            this.tlbTest.ShowToolTips = true;
+            this.tlbTest.Size = new System.Drawing.Size(342, 28);
+            this.tlbTest.TabIndex = 41;
+            this.tlbTest.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.tlbTest_ButtonClick);
+            // 
+            // tlbbAdd
+            // 
+            this.tlbbAdd.ImageKey = "Plus.png";
+            this.tlbbAdd.Name = "toolBarButton5";
+            // 
+            // tlddUpd
+            // 
+            this.tlddUpd.ImageKey = "Refresh.png";
+            this.tlddUpd.Name = "toolBarButton36";
+            this.tlddUpd.ToolTipText = "Обновить";
+            // 
+            // tlbbDel
+            // 
+            this.tlbbDel.ImageKey = "Cancel.png";
+            this.tlbbDel.Name = "toolBarButton45";
+            this.tlbbDel.ToolTipText = "Удалить";
             // 
             // panel43
             // 
@@ -2757,9 +2793,9 @@
             // toolBar9
             // 
             this.toolBar9.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
-            this.toolBarButton36,
-            this.toolBarButton45,
-            this.toolBarButton5});
+            this.tlddUpd,
+            this.tlbbDel,
+            this.tlbbAdd});
             this.toolBar9.ButtonSize = new System.Drawing.Size(18, 18);
             this.toolBar9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolBar9.DropDownArrows = true;
@@ -2770,23 +2806,6 @@
             this.toolBar9.Size = new System.Drawing.Size(342, 28);
             this.toolBar9.TabIndex = 40;
             this.toolBar9.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.toolBar9_ButtonClick);
-            // 
-            // toolBarButton36
-            // 
-            this.toolBarButton36.ImageKey = "Refresh.png";
-            this.toolBarButton36.Name = "toolBarButton36";
-            this.toolBarButton36.ToolTipText = "Обновить";
-            // 
-            // toolBarButton45
-            // 
-            this.toolBarButton45.ImageKey = "Cancel.png";
-            this.toolBarButton45.Name = "toolBarButton45";
-            this.toolBarButton45.ToolTipText = "Удалить";
-            // 
-            // toolBarButton5
-            // 
-            this.toolBarButton5.ImageKey = "Plus.png";
-            this.toolBarButton5.Name = "toolBarButton5";
             // 
             // dataGridView1
             // 
@@ -3481,6 +3500,7 @@
             this.panel28.ResumeLayout(false);
             this.panel28.PerformLayout();
             this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.panel46.ResumeLayout(false);
             this.panel46.PerformLayout();
             this.panel45.ResumeLayout(false);
@@ -3673,8 +3693,8 @@
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.Panel panel41;
         private System.Windows.Forms.ToolBar toolBar9;
-        private System.Windows.Forms.ToolBarButton toolBarButton36;
-        private System.Windows.Forms.ToolBarButton toolBarButton45;
+        private System.Windows.Forms.ToolBarButton tlddUpd;
+        private System.Windows.Forms.ToolBarButton tlbbDel;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Идентификатор;
         private System.Windows.Forms.DataGridViewTextBoxColumn Тип;
@@ -3724,7 +3744,7 @@
         private System.Windows.Forms.RichTextBox richTextBox4;
         private System.Windows.Forms.Panel panel48;
         private System.Windows.Forms.Label label47;
-        private System.Windows.Forms.ToolBarButton toolBarButton5;
+        private System.Windows.Forms.ToolBarButton tlbbAdd;
         private System.Windows.Forms.ToolBarButton tlbbShowPoint;
         private System.Windows.Forms.DataGridView dgvObservationPoints;
         private System.Windows.Forms.Panel panel24;
@@ -3781,5 +3801,9 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ComboBox cmbObservTypesEdit;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ToolBar tlbTest;
+        private System.Windows.Forms.ToolBarButton toolBarButton2;
+        private System.Windows.Forms.ToolBarButton toolBarButton3;
+        private System.Windows.Forms.ToolBarButton toolBarButton4;
     }
 }
