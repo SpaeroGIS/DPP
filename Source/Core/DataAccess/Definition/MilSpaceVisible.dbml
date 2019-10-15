@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="MilSpaceApp" Class="MilSpaceVisibility" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=localhost\SQLEXPRESS;Initial Catalog=MilSpaceApp;Integrated Security=True" SettingsObjectName="MilSpace.DataAccess.Properties.Settings" SettingsPropertyName="MilSpaceAppConnectionString1" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DNOEGDB" Class="MilSpaceVisibilityContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.\sqlexpress;Initial Catalog=DNOEGDB;Integrated Security=True" SettingsObjectName="MilSpace.DataAccess.Properties.Settings" SettingsPropertyName="DNOEGDBConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.MilSp_Visible_ResultIOP" Member="MilSp_Visible_ResultIOPs">
     <Type Name="MilSp_Visible_ResultIOP">
       <Column Name="objectid" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -88,6 +88,73 @@
   <Table Name="dbo.MilSp_Visible_ResultIOP" Member="MilSp_Visible_ResultIOP1s">
     <Type Name="MilSp_Visible_ResultIOP1">
       <Column Name="objectid" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MILSP_VISIBLE_OBSERVPOINTS" Member="VisiblilityObservPoint__s">
+    <Type Name="VisiblilityObservPoint__">
+      <Column Name="OBJECTID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="soper" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="idOP" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="TitleOP" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="TypeOP" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="sGroup" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="saffiliation" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="ishare" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="XWGS" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="YWGS" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="HRel" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AzimuthB" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AzimuthE" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AnglMinH" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AnglMaxH" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AzimuthMainAxis" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AngFrameH" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AnglFrameV" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AnglCameraRotationH" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AnglCameraRotationV" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AvailableHeightUpper" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="AvailableHeightLover" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="dto" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MILSP_VISIBILITY_SESSION" Member="MilSp_VisibilitySessions" AccessModifier="Internal">
+    <Type Name="MilSp_VisibilitySession" AccessModifier="Internal">
+      <Column Name="IdRow" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.String" DbType="NChar(25) NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="NChar(25) NOT NULL" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Started" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Finished" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CalculatedResults" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ReferencedGDB" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MILSP_VISIBLE_OBSERVPOINTS" Member="VisiblilityObservPoints" AccessModifier="Internal">
+    <Type Name="VisiblilityObservPoint" AccessModifier="Internal">
+      <Column Name="OBJECTID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="soper" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="idOP" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="TitleOP" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="TypeOP" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="sGroup" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="saffiliation" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="ishare" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="XWGS" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="YWGS" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="HRel" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AzimuthB" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AzimuthE" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AnglMinH" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AnglMaxH" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AzimuthMainAxis" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AngFrameH" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AnglFrameV" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AnglCameraRotationH" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AnglCameraRotationV" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AvailableHeightUpper" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="AvailableHeightLover" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="dto" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

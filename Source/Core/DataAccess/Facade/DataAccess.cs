@@ -234,57 +234,6 @@ namespace MilSpace.DataAccess.Facade
             return null;
         }
 
-        #region Visibility
-        public IEnumerable<ObservationPoint> GetObservationPoints()
-        {
-            try
-            {
-                var result = context.VisiblilityObservPoints.Select(op => op.Get());
-                log.InfoEx($"Get all Observation point ({result.Count()}). user {Environment.UserName}");
-                return result;
-            }
-            catch (Exception ex)
-            {
-                log.WarnEx($"Unexpected exception:{ex.Message}");
-            }
-            return null;
-        }
-
-        public bool SaveObservationPoint(ObservationPoint observPoint)
-        {
-            bool result = true;
-            try
-            {
-                var bdObservPoint = context.VisiblilityObservPoints.FirstOrDefault(p => p.OBJECTID == observPoint.Objectid);
-                if (bdObservPoint != null)
-                {
-                    bdObservPoint.Update(observPoint);
-                    if (Submit())
-                    {
-                        log.InfoEx($"Observation Point Row with ObjectId '{observPoint.Objectid}' was saved");
-                    }
-                }
-            }
-            catch (MilSpaceDataException ex)
-            {
-                log.WarnEx(ex.Message);
-                if (ex.InnerException != null)
-                {
-                    log.WarnEx(ex.InnerException.Message);
-                }
-
-                result = false;
-            }
-            catch (Exception ex)
-            {
-                log.WarnEx($"Unexpected exception:{ex.Message}");
-                result = false;
-            }
-            return result;
-
-        }
-
-        #endregion
 
     }
 }
