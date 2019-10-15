@@ -8,7 +8,7 @@ namespace MilSpace.DataAccess.Facade
     {
         public static IEnumerable<ObservationPoint> GetAllObservationPoints()
         {
-            using (var accessor = new SemanticDataAccess())
+            using (var accessor = new VisibilityDataAccess())
             {
                 var res = accessor.GetObservationPoints();
                 return res.ToArray();
@@ -17,7 +17,7 @@ namespace MilSpace.DataAccess.Facade
 
         public static bool SaveObservationPoint(ObservationPoint observPoint)
         {
-            using (var accessor = new SemanticDataAccess())
+            using (var accessor = new VisibilityDataAccess())
             {
                 var res = accessor.SaveObservationPoint(observPoint);
                 return res;                
