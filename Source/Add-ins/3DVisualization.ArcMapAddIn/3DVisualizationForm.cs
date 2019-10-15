@@ -4,6 +4,7 @@ using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Visualization3D.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -18,11 +19,13 @@ namespace MilSpace.Visualization3D
         private ProfilesTreeView profilesTreeView;
         private LocalizationContext context;
         private List<Models.TreeViewNodeModel> profilesModels = new List<Models.TreeViewNodeModel>();
+        private BindingList<VisibilitySessionModel> visibilitySessionsModel = new BindingList<VisibilitySessionModel>();
 
         public Visualization3DMainForm(object hook)
         {
             InitializeComponent();
             LocalizeComponent();
+            SetSessionsListView();
             SubscribeForArcMapEvents();
             OnDocumentOpenFillDropdowns();
             this.Hook = hook;
@@ -72,6 +75,12 @@ namespace MilSpace.Visualization3D
         private void SubscribeForArcMapEvents()
         {
             ArcMap.Events.OpenDocument += OnDocumentOpenFillDropdowns;
+        }
+
+        private void SetSessionsListView()
+        {
+            SessionsListBox.DataSource = visibilitySessionsModel;
+            SessionsListBox.DisplayMember = "Gui";
         }
 
         private void LocalizeComponent()
@@ -218,6 +227,35 @@ namespace MilSpace.Visualization3D
         private void btnRefreshLayers_Click(object sender, EventArgs e)
         {
             OnDocumentOpenFillDropdowns();
+        }
+
+        private void SurfaceToolBar_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        {
+            if(AddSurface.Equals(e.Button))
+            {
+                var visibilitySessionsWindow = new VisibilitySessionsModalWindow(context);
+
+                if(visibilitySessionsWindow.ShowDialog(this) == DialogResult.OK)
+                {
+                    var newSessions = visibilitySessionsWindow.SelectedVisibilitySessions.Where(session => !visibilitySessionsModel.Any(model => model.VisibilitySession.Id == session.Id));
+
+                    foreach(var session in newSessions)
+                    {
+                        visibilitySessionsModel.Add(new VisibilitySessionModel
+                        {
+                            VisibilitySession = session,
+                            Gui = $"{session.Name} {session.Created}"
+                        });
+                    }
+                }
+            }
+            else if(RemoveSurface.Equals(e.Button))
+            {
+                while(SessionsListBox.SelectedItems.Count > 0)
+                {
+                    visibilitySessionsModel.Remove((VisibilitySessionModel)SessionsListBox.SelectedItems[0]);
+                }
+            }
         }
     }
 }

@@ -46,7 +46,7 @@
             this.lblProfiles = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel8 = new System.Windows.Forms.Panel();
-            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.SessionsListBox = new System.Windows.Forms.ListBox();
             this.panel9 = new System.Windows.Forms.Panel();
             this.surfaceToolBar = new System.Windows.Forms.ToolBar();
             this.AddSurface = new System.Windows.Forms.ToolBarButton();
@@ -474,22 +474,22 @@
             // panel8
             // 
             this.panel8.AutoSize = true;
-            this.panel8.Controls.Add(this.listBox2);
+            this.panel8.Controls.Add(this.SessionsListBox);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(0, 50);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(302, 306);
             this.panel8.TabIndex = 67;
             // 
-            // listBox2
+            // SessionsListBox
             // 
-            this.listBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.ItemHeight = 15;
-            this.listBox2.Location = new System.Drawing.Point(0, 0);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(302, 306);
-            this.listBox2.TabIndex = 65;
+            this.SessionsListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SessionsListBox.FormattingEnabled = true;
+            this.SessionsListBox.ItemHeight = 15;
+            this.SessionsListBox.Location = new System.Drawing.Point(0, 0);
+            this.SessionsListBox.Name = "SessionsListBox";
+            this.SessionsListBox.Size = new System.Drawing.Size(302, 306);
+            this.SessionsListBox.TabIndex = 65;
             // 
             // panel9
             // 
@@ -515,7 +515,7 @@
             this.surfaceToolBar.ShowToolTips = true;
             this.surfaceToolBar.Size = new System.Drawing.Size(302, 28);
             this.surfaceToolBar.TabIndex = 65;
-            this.surfaceToolBar.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.ToolBars_ButtonClick);
+            this.surfaceToolBar.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.SurfaceToolBar_ButtonClick);
             // 
             // AddSurface
             // 
@@ -910,7 +910,7 @@
         private System.Windows.Forms.TabPage ProfilesTabPage;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Panel panel8;
-        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.ListBox SessionsListBox;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.Panel panel10;
