@@ -22,8 +22,8 @@ namespace MilSpace.DataAccess.Definition
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="MilSpaceApp")]
-	public partial class MilSpaceVisibility : System.Data.Linq.DataContext
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="DNOEGDB")]
+	public partial class MilSpaceVisibilityContext : System.Data.Linq.DataContext
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -51,33 +51,36 @@ namespace MilSpace.DataAccess.Definition
     partial void InsertMilSp_Visible_ResultIOP1(MilSp_Visible_ResultIOP1 instance);
     partial void UpdateMilSp_Visible_ResultIOP1(MilSp_Visible_ResultIOP1 instance);
     partial void DeleteMilSp_Visible_ResultIOP1(MilSp_Visible_ResultIOP1 instance);
+    partial void InsertMilSp_VisibilitySession(MilSp_VisibilitySession instance);
+    partial void UpdateMilSp_VisibilitySession(MilSp_VisibilitySession instance);
+    partial void DeleteMilSp_VisibilitySession(MilSp_VisibilitySession instance);
     #endregion
 		
-		public MilSpaceVisibility() : 
-				base(global::MilSpace.DataAccess.Properties.Settings.Default.MilSpaceAppConnectionString1, mappingSource)
+		public MilSpaceVisibilityContext() : 
+				base(global::MilSpace.DataAccess.Properties.Settings.Default.DNOEGDBConnectionString1, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public MilSpaceVisibility(string connection) : 
+		public MilSpaceVisibilityContext(string connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public MilSpaceVisibility(System.Data.IDbConnection connection) : 
+		public MilSpaceVisibilityContext(System.Data.IDbConnection connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public MilSpaceVisibility(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public MilSpaceVisibilityContext(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public MilSpaceVisibility(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public MilSpaceVisibilityContext(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
@@ -160,6 +163,14 @@ namespace MilSpace.DataAccess.Definition
 			get
 			{
 				return this.GetTable<MilSp_Visible_ResultIOP1>();
+			}
+		}
+		
+		public System.Data.Linq.Table<MilSp_VisibilitySession> MilSp_VisibilitySessions
+		{
+			get
+			{
+				return this.GetTable<MilSp_VisibilitySession>();
 			}
 		}
 	}
@@ -1542,6 +1553,260 @@ namespace MilSpace.DataAccess.Definition
 					this._objectid = value;
 					this.SendPropertyChanged("objectid");
 					this.OnobjectidChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MILSP_VISIBILITY_SESSION")]
+	public partial class MilSp_VisibilitySession : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdRow;
+		
+		private string _Id;
+		
+		private string _Name;
+		
+		private string _UserName;
+		
+		private System.DateTime _Created;
+		
+		private System.Nullable<System.DateTime> _Started;
+		
+		private System.Nullable<System.DateTime> _Finished;
+		
+		private int _CalculatedResults;
+		
+		private string _ReferencedGDB;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdRowChanging(int value);
+    partial void OnIdRowChanged();
+    partial void OnIdChanging(string value);
+    partial void OnIdChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnUserNameChanging(string value);
+    partial void OnUserNameChanged();
+    partial void OnCreatedChanging(System.DateTime value);
+    partial void OnCreatedChanged();
+    partial void OnStartedChanging(System.Nullable<System.DateTime> value);
+    partial void OnStartedChanged();
+    partial void OnFinishedChanging(System.Nullable<System.DateTime> value);
+    partial void OnFinishedChanged();
+    partial void OnCalculatedResultsChanging(int value);
+    partial void OnCalculatedResultsChanged();
+    partial void OnReferencedGDBChanging(string value);
+    partial void OnReferencedGDBChanged();
+    #endregion
+		
+		public MilSp_VisibilitySession()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdRow", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int IdRow
+		{
+			get
+			{
+				return this._IdRow;
+			}
+			set
+			{
+				if ((this._IdRow != value))
+				{
+					this.OnIdRowChanging(value);
+					this.SendPropertyChanging();
+					this._IdRow = value;
+					this.SendPropertyChanged("IdRow");
+					this.OnIdRowChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="NChar(25) NOT NULL", CanBeNull=false)]
+		public string Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NChar(50) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserName", DbType="NChar(25) NOT NULL", CanBeNull=false)]
+		public string UserName
+		{
+			get
+			{
+				return this._UserName;
+			}
+			set
+			{
+				if ((this._UserName != value))
+				{
+					this.OnUserNameChanging(value);
+					this.SendPropertyChanging();
+					this._UserName = value;
+					this.SendPropertyChanged("UserName");
+					this.OnUserNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Created", DbType="DateTime NOT NULL")]
+		public System.DateTime Created
+		{
+			get
+			{
+				return this._Created;
+			}
+			set
+			{
+				if ((this._Created != value))
+				{
+					this.OnCreatedChanging(value);
+					this.SendPropertyChanging();
+					this._Created = value;
+					this.SendPropertyChanged("Created");
+					this.OnCreatedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Started", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Started
+		{
+			get
+			{
+				return this._Started;
+			}
+			set
+			{
+				if ((this._Started != value))
+				{
+					this.OnStartedChanging(value);
+					this.SendPropertyChanging();
+					this._Started = value;
+					this.SendPropertyChanged("Started");
+					this.OnStartedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Finished", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Finished
+		{
+			get
+			{
+				return this._Finished;
+			}
+			set
+			{
+				if ((this._Finished != value))
+				{
+					this.OnFinishedChanging(value);
+					this.SendPropertyChanging();
+					this._Finished = value;
+					this.SendPropertyChanged("Finished");
+					this.OnFinishedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CalculatedResults", DbType="Int NOT NULL")]
+		public int CalculatedResults
+		{
+			get
+			{
+				return this._CalculatedResults;
+			}
+			set
+			{
+				if ((this._CalculatedResults != value))
+				{
+					this.OnCalculatedResultsChanging(value);
+					this.SendPropertyChanging();
+					this._CalculatedResults = value;
+					this.SendPropertyChanged("CalculatedResults");
+					this.OnCalculatedResultsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReferencedGDB", DbType="NVarChar(MAX)")]
+		public string ReferencedGDB
+		{
+			get
+			{
+				return this._ReferencedGDB;
+			}
+			set
+			{
+				if ((this._ReferencedGDB != value))
+				{
+					this.OnReferencedGDBChanging(value);
+					this.SendPropertyChanging();
+					this._ReferencedGDB = value;
+					this.SendPropertyChanged("ReferencedGDB");
+					this.OnReferencedGDBChanged();
 				}
 			}
 		}

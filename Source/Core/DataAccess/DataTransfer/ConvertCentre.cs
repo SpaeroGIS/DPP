@@ -72,34 +72,100 @@ namespace MilSpace.DataAccess.DataTransfer
 
         internal static ObservationPoint Get(this VisiblilityObservPoint dbObservationPoint)
         {
-
-            ObservationPoint observationPoint = new ObservationPoint
+            try
             {
-                Affiliation = dbObservationPoint.saffiliation,
-                AngelCameraRotationH = dbObservationPoint.AnglCameraRotationH,
-                AngelCameraRotationV = dbObservationPoint.AnglCameraRotationV,
-                AngelFrameH = dbObservationPoint.AngFrameH,
-                AngelFrameV = dbObservationPoint.AnglFrameV,
-                AngelMaxH = dbObservationPoint.AnglMaxH,
-                AngelMinH = dbObservationPoint.AnglMinH,
-                AzimuthStart = dbObservationPoint.AzimuthB,
-                AzimuthEnd = dbObservationPoint.AzimuthE,
-                AzimuthMainAxis = dbObservationPoint.AzimuthMainAxis,
-                Dto = dbObservationPoint.dto,
-                Group = dbObservationPoint.sGroup,
-                Id = dbObservationPoint.idOP,
-                Objectid = dbObservationPoint.OBJECTID,
-                Operator = dbObservationPoint.soper,
-                RelativeHeight = dbObservationPoint.HRel,
-                Share = dbObservationPoint.ishare,
-                Title = dbObservationPoint.TitleOP,
-                Type = dbObservationPoint.TypeOP,
-                X = dbObservationPoint.XWGS,
-                Y = dbObservationPoint.YWGS
-            };
+                ObservationPoint observationPoint = new ObservationPoint
+                {
+                    Affiliation = dbObservationPoint.saffiliation,
+                    AngelCameraRotationH = dbObservationPoint.AnglCameraRotationH,
+                    AngelCameraRotationV = dbObservationPoint.AnglCameraRotationV,
+                    AngelFrameH = dbObservationPoint.AngFrameH,
+                    AngelFrameV = dbObservationPoint.AnglFrameV,
+                    AngelMaxH = dbObservationPoint.AnglMaxH,
+                    AngelMinH = dbObservationPoint.AnglMinH,
+                    AzimuthStart = dbObservationPoint.AzimuthB,
+                    AzimuthEnd = dbObservationPoint.AzimuthE,
+                    AzimuthMainAxis = dbObservationPoint.AzimuthMainAxis,
+                    Dto = dbObservationPoint.dto,
+                    Group = dbObservationPoint.sGroup,
+                    Id = dbObservationPoint.idOP,
+                    Objectid = dbObservationPoint.OBJECTID,
+                    Operator = dbObservationPoint.soper,
+                    RelativeHeight = dbObservationPoint.HRel,
+                    Share = dbObservationPoint.ishare,
+                    Title = dbObservationPoint.TitleOP,
+                    Type = dbObservationPoint.TypeOP,
+                    X = dbObservationPoint.XWGS,
+                    Y = dbObservationPoint.YWGS
+                };
 
-            return observationPoint;
+                return observationPoint;
+            }
+            catch(Exception ex)
+            {
+                throw new MilSpaceDataException("ProfileSession", DataOperationsEnum.Convert, ex);
+            }
+        }
 
+        internal static MilSp_VisibilitySession Get(this VisibilitySession visibilitySessionModel)
+        {
+            try
+            {
+                var visibilitySession = new MilSp_VisibilitySession
+                {
+                    IdRow = visibilitySessionModel.IdRow,
+                    Id = visibilitySessionModel.Id,
+                    Name = visibilitySessionModel.Name,
+                    UserName = visibilitySessionModel.UserName,
+                    Created = visibilitySessionModel.Created,
+                    Started = visibilitySessionModel.Started,
+                    Finished = visibilitySessionModel.Finished,
+                    CalculatedResults = visibilitySessionModel.CalculatedResults,
+                    ReferencedGDB = visibilitySessionModel.ReferencedGDB
+                };
+
+                return visibilitySession;
+            }
+            catch(Exception ex)
+            {
+                throw new MilSpaceDataException("VisibilitySession", DataOperationsEnum.Convert, ex);
+            }
+        }
+
+        internal static VisibilitySession Get(this MilSp_VisibilitySession visibilitySessionEntity)
+        {
+            try
+            {
+                var visibilitySession = new VisibilitySession
+                {
+                    IdRow = visibilitySessionEntity.IdRow,
+                    Id = visibilitySessionEntity.Id,
+                    Name = visibilitySessionEntity.Name,
+                    UserName = visibilitySessionEntity.UserName,
+                    Created = visibilitySessionEntity.Created,
+                    Started = visibilitySessionEntity.Started,
+                    Finished = visibilitySessionEntity.Finished,
+                    CalculatedResults = visibilitySessionEntity.CalculatedResults,
+                    ReferencedGDB = visibilitySessionEntity.ReferencedGDB
+                };
+
+                return visibilitySession;
+            }
+            catch(Exception ex)
+            {
+                throw new MilSpaceDataException("VisibilitySession", DataOperationsEnum.Convert, ex);
+            }
+        }
+
+        internal static void Update(this MilSp_VisibilitySession visibilitySessionEntity, VisibilitySession visibilitySession)
+        {
+            visibilitySessionEntity.Name = visibilitySession.Name;
+            visibilitySessionEntity.UserName = visibilitySession.UserName;
+            visibilitySessionEntity.Created = visibilitySession.Created;
+            visibilitySessionEntity.Started = visibilitySession.Started;
+            visibilitySessionEntity.Finished = visibilitySession.Finished;
+            visibilitySessionEntity.CalculatedResults = visibilitySession.CalculatedResults;
+            visibilitySessionEntity.ReferencedGDB = visibilitySession.ReferencedGDB;
         }
 
         internal static void Update(this VisiblilityObservPoint dbObservationPoint, ObservationPoint observationPoint)
