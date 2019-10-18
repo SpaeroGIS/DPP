@@ -4,9 +4,11 @@ using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
+using MilSpace.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -156,6 +158,39 @@ namespace MilSpace.Visibility.ViewController
             var updPoints = VisibilityZonesFacade.GetAllObservationPoints().ToList();
             _observationPoints.Add(updPoints.First(observPoint => !_observationPoints.Exists(oldPoints => oldPoints.Objectid == observPoint.Objectid)));
             view.AddRecord(_observationPoints.Last());
+        }
+
+        internal void CalculateVisibility(IActiveView activeView, string scrDEM, IEnumerable<int> pointsTOCalculate = null)
+        {
+            var observPoints = GetObservatioStationFeatureClass(activeView);
+
+            if (pointsTOCalculate == null) // Get points forn the current extent
+            {
+
+                var curExtent = activeView.Extent;
+                ISpatialFilter spatialFilter = new SpatialFilterClass();
+                spatialFilter.Geometry = activeView.Extent;
+                spatialFilter.GeometryField = observPoints.ShapeFieldName;
+                spatialFilter.SpatialRel = esriSpatialRelEnum.esriSpatialRelIntersects;
+
+
+                // Execute the query and iterate through the cursor's results.
+                IFeatureCursor cursor = observPoints.Search(spatialFilter, false);
+                IFeature observPoint = null;
+                var results = new List<int>();
+                while ((observPoint = cursor.NextFeature()) != null)
+                {
+                    results.Add(Convert.ToInt32(observPoint.get_Value(0)));
+                }
+
+                // Discard the cursors as they are no longer needed.
+                Marshal.ReleaseComObject(cursor);
+
+                //pointsTOCalculate
+                pointsTOCalculate = results;
+            }
+
+            VisibilityManager.Generate(observPoints, scrDEM, pointsTOCalculate);
         }
 
         internal IPoint GetEnvelopeCenterPoint(IEnvelope envelope)
