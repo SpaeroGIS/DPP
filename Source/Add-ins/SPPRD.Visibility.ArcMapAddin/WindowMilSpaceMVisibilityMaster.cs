@@ -20,7 +20,7 @@ namespace MilSpace.Visibility
 
 
 
-        public WindowMilSpaceMVisibilityMaster(ObservationPointsController controller)
+        public WindowMilSpaceMVisibilityMaster()
         {
             InitializeComponent();
             this.controller = new ObservationPointsController();
@@ -166,6 +166,8 @@ namespace MilSpace.Visibility
         public IEnumerable<string> GetTypes => throw new NotImplementedException();
 
         public IEnumerable<string> GetAffiliation => throw new NotImplementedException();
+
+        public string ObservationStationFeatureClass => throw new NotImplementedException();
 
         public void AddRecord(ObservationPoint observationPoint)
         {
