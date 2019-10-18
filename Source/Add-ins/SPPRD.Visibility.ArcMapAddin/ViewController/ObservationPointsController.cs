@@ -168,6 +168,39 @@ namespace MilSpace.Visibility.ViewController
             return point;
         }
 
+        internal bool TestSave()
+        {
+            var visibilitySession = new VisibilitySession
+            {
+                Id = "1",
+                Name = "TestSession",
+                UserName = Environment.UserName,
+                Created = DateTime.Now,
+                CalculatedResults = 23
+            };
+
+            return VisibilityZonesFacade.SaveVisibilitySession(visibilitySession);
+        }
+
+        internal bool TestUpdate()
+        {
+            var visibilitySession = new VisibilitySession
+            {
+                Id = "1",
+                Name = "TestSessionEdit",
+                UserName = Environment.UserName,
+                Created = DateTime.Now,
+                CalculatedResults = 23
+            };
+
+            return VisibilityZonesFacade.UpdateVisibilitySession(visibilitySession);
+        }
+
+         internal bool TestDelete()
+        {
+            return VisibilityZonesFacade.DeleteVisibilitySession("1");
+        }
+
         public IEnumerable<string> GetObservationPointTypes()
         {
             return affiliationTypes.Where(t => t.Key != ObservationPointTypesEnum.All).Select(t => t.Value);
@@ -176,6 +209,16 @@ namespace MilSpace.Visibility.ViewController
         public IEnumerable<string> GetObservationPointMobilityTypes()
         {
             return mobilityTypes.Where(t => t.Key != ObservationPointMobilityTypesEnum.All).Select(t => t.Value);
+        }
+
+        public string GetAllAffiliationType()
+        {
+            return affiliationTypes.First(t => t.Key == ObservationPointTypesEnum.All).Value;
+        }
+
+        public string GetAllMobilityType()
+        {
+            return mobilityTypes.First(t => t.Key == ObservationPointMobilityTypesEnum.All).Value;
         }
 
         public IEnumerable<string> GetObservationPointsLayers(IActiveView view)
@@ -217,6 +260,15 @@ namespace MilSpace.Visibility.ViewController
             }
 
             return false;
+        }
+
+        public string GetObservationPointsLayerName => view.ObservationPointsFeatureClass;
+
+        public string GetObservationStationLayerName => view.ObservationStationFeatureClass;
+
+        private IEnumerable<VisibilitySession>  GetAllVisibilitySessions()
+        {
+            return VisibilityZonesFacade.GetAllVisibilitySessions();
         }
 
         private IFeatureClass GetFeatureClass(string featureClassName, IActiveView activeView)
