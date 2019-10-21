@@ -1,4 +1,6 @@
-﻿namespace MilSpace.Visibility
+﻿using System;
+
+namespace MilSpace.Visibility
 {
     partial class WindowMilSpaceMVisibilityMaster
     {
@@ -48,27 +50,27 @@
             this.stepTwo = new System.Windows.Forms.TabPage();
             this.panel7 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.dvgCheckList = new System.Windows.Forms.DataGridView();
             this.richTextBox7 = new System.Windows.Forms.RichTextBox();
             this.panel8 = new System.Windows.Forms.Panel();
             this.toolBar7 = new System.Windows.Forms.ToolBar();
             this.toolBarButton51 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton3 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton27 = new System.Windows.Forms.ToolBarButton();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.panel9 = new System.Windows.Forms.Panel();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkDate = new System.Windows.Forms.CheckBox();
+            this.checkAffiliation = new System.Windows.Forms.CheckBox();
+            this.checkType = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.panel10 = new System.Windows.Forms.Panel();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.cmbAffiliation = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.cmbType = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panel11 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.panel12 = new System.Windows.Forms.Panel();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.ObservPointLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel13 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
@@ -88,7 +90,7 @@
             this.panel16 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
             this.panel15 = new System.Windows.Forms.Panel();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
+            this.label19 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.panel14 = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
@@ -139,6 +141,7 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dvgCheckList)).BeginInit();
             this.panel8.SuspendLayout();
             this.panel9.SuspendLayout();
             this.panel10.SuspendLayout();
@@ -446,6 +449,7 @@
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(730, 78);
             this.panel6.TabIndex = 3;
+           
             // 
             // richTextBox4
             // 
@@ -459,6 +463,7 @@
             this.richTextBox4.TabIndex = 1;
             this.richTextBox4.Text = "4.\tАнализ результатов наблюдения с известными параметрами (например - аэрофотосъе" +
     "мки) с точки зрения расположения кадров на местности и обеспечения видимости.";
+            
             // 
             // panel5
             // 
@@ -505,6 +510,7 @@
             this.richTextBox2.TabIndex = 0;
             this.richTextBox2.Text = "2.\tОпределение видимости в заданных ОН, для выбранных пунктов наблюдения, с учето" +
     "м индивидуальных параметров пунктов наблюдения. ";
+            this.richTextBox2.Click += new System.EventHandler(this.CustomPanel_Click);
             // 
             // panel3
             // 
@@ -556,9 +562,9 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.dvgCheckList);
             this.splitContainer1.Panel1.Controls.Add(this.richTextBox7);
             this.splitContainer1.Panel1.Controls.Add(this.panel8);
-            this.splitContainer1.Panel1.Controls.Add(this.checkedListBox1);
             this.splitContainer1.Panel1.Controls.Add(this.panel9);
             this.splitContainer1.Panel1.Controls.Add(this.panel10);
             this.splitContainer1.Panel1.Controls.Add(this.panel11);
@@ -578,6 +584,23 @@
             this.splitContainer1.SplitterDistance = 354;
             this.splitContainer1.SplitterWidth = 10;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // dvgCheckList
+            // 
+            this.dvgCheckList.AllowUserToAddRows = false;
+            this.dvgCheckList.AllowUserToDeleteRows = false;
+            this.dvgCheckList.AllowUserToResizeColumns = false;
+            this.dvgCheckList.AllowUserToResizeRows = false;
+            this.dvgCheckList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
+            this.dvgCheckList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dvgCheckList.Location = new System.Drawing.Point(0, 120);
+            this.dvgCheckList.MultiSelect = false;
+            this.dvgCheckList.Name = "dvgCheckList";
+            this.dvgCheckList.ReadOnly = true;
+            this.dvgCheckList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dvgCheckList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dvgCheckList.Size = new System.Drawing.Size(354, 84);
+            this.dvgCheckList.TabIndex = 23;
             // 
             // richTextBox7
             // 
@@ -634,28 +657,11 @@
             this.toolBarButton27.Name = "toolBarButton27";
             this.toolBarButton27.ToolTipText = "Показать параметры на карте";
             // 
-            // checkedListBox1
-            // 
-            this.checkedListBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.checkedListBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Items.AddRange(new object[] {
-            "STFX20181113134511; стационарный; свой; 201811131",
-            "STFX20181113134511; стационарный; чужой; 201811131",
-            "STMV20181113134511; мобильный; свой; 201811131",
-            "STFX20181113134511; стационарный; свой; 201811131",
-            "STFX20181113134511; стационарный; свой; 201811131",
-            "STMV20181113134511; мобильный; свой; 201811131"});
-            this.checkedListBox1.Location = new System.Drawing.Point(0, 120);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(354, 90);
-            this.checkedListBox1.TabIndex = 20;
-            // 
             // panel9
             // 
-            this.panel9.Controls.Add(this.checkBox4);
-            this.panel9.Controls.Add(this.checkBox3);
-            this.panel9.Controls.Add(this.checkBox2);
+            this.panel9.Controls.Add(this.checkDate);
+            this.panel9.Controls.Add(this.checkAffiliation);
+            this.panel9.Controls.Add(this.checkType);
             this.panel9.Controls.Add(this.checkBox1);
             this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel9.Location = new System.Drawing.Point(0, 96);
@@ -664,47 +670,50 @@
             this.panel9.Size = new System.Drawing.Size(354, 24);
             this.panel9.TabIndex = 17;
             // 
-            // checkBox4
+            // checkDate
             // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Checked = true;
-            this.checkBox4.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox4.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkBox4.Location = new System.Drawing.Point(221, 0);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.checkBox4.Size = new System.Drawing.Size(53, 24);
-            this.checkBox4.TabIndex = 3;
-            this.checkBox4.Text = "дата";
-            this.checkBox4.UseVisualStyleBackColor = true;
+            this.checkDate.AutoSize = true;
+            this.checkDate.Checked = true;
+            this.checkDate.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkDate.Dock = System.Windows.Forms.DockStyle.Left;
+            this.checkDate.Location = new System.Drawing.Point(221, 0);
+            this.checkDate.Name = "checkDate";
+            this.checkDate.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
+            this.checkDate.Size = new System.Drawing.Size(53, 24);
+            this.checkDate.TabIndex = 3;
+            this.checkDate.Text = "дата";
+            this.checkDate.UseVisualStyleBackColor = true;
+            this.checkDate.CheckedChanged += new System.EventHandler(this.Filter_CheckedChanged);
             // 
-            // checkBox3
+            // checkAffiliation
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Checked = true;
-            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkBox3.Location = new System.Drawing.Point(98, 0);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.checkBox3.Size = new System.Drawing.Size(123, 24);
-            this.checkBox3.TabIndex = 2;
-            this.checkBox3.Text = "принаждлежность";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkAffiliation.AutoSize = true;
+            this.checkAffiliation.Checked = true;
+            this.checkAffiliation.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkAffiliation.Dock = System.Windows.Forms.DockStyle.Left;
+            this.checkAffiliation.Location = new System.Drawing.Point(98, 0);
+            this.checkAffiliation.Name = "checkAffiliation";
+            this.checkAffiliation.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
+            this.checkAffiliation.Size = new System.Drawing.Size(123, 24);
+            this.checkAffiliation.TabIndex = 2;
+            this.checkAffiliation.Text = "принаждлежность";
+            this.checkAffiliation.UseVisualStyleBackColor = true;
+            this.checkAffiliation.CheckedChanged += new System.EventHandler(this.Filter_CheckedChanged);
             // 
-            // checkBox2
+            // checkType
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Checked = true;
-            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkBox2.Location = new System.Drawing.Point(51, 0);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.checkBox2.Size = new System.Drawing.Size(47, 24);
-            this.checkBox2.TabIndex = 1;
-            this.checkBox2.Text = "тип";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkType.AutoSize = true;
+            this.checkType.Checked = true;
+            this.checkType.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkType.Dock = System.Windows.Forms.DockStyle.Left;
+            this.checkType.Location = new System.Drawing.Point(51, 0);
+            this.checkType.Name = "checkType";
+            this.checkType.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
+            this.checkType.Size = new System.Drawing.Size(47, 24);
+            this.checkType.TabIndex = 1;
+            this.checkType.Text = "тип";
+            this.checkType.UseVisualStyleBackColor = true;
+            this.checkType.CheckedChanged += new System.EventHandler(this.Filter_CheckedChanged);
             // 
             // checkBox1
             // 
@@ -722,9 +731,9 @@
             // 
             // panel10
             // 
-            this.panel10.Controls.Add(this.comboBox3);
+            this.panel10.Controls.Add(this.cmbAffiliation);
             this.panel10.Controls.Add(this.label3);
-            this.panel10.Controls.Add(this.comboBox2);
+            this.panel10.Controls.Add(this.cmbType);
             this.panel10.Controls.Add(this.label2);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel10.Location = new System.Drawing.Point(0, 72);
@@ -733,19 +742,20 @@
             this.panel10.Size = new System.Drawing.Size(354, 24);
             this.panel10.TabIndex = 16;
             // 
-            // comboBox3
+            // cmbAffiliation
             // 
-            this.comboBox3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Items.AddRange(new object[] {
+            this.cmbAffiliation.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbAffiliation.FormattingEnabled = true;
+            this.cmbAffiliation.Items.AddRange(new object[] {
             "свои",
             "чужие ",
             "нейтральные",
             "неизвкчтно"});
-            this.comboBox3.Location = new System.Drawing.Point(222, 0);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(99, 21);
-            this.comboBox3.TabIndex = 4;
+            this.cmbAffiliation.Location = new System.Drawing.Point(222, 0);
+            this.cmbAffiliation.Name = "cmbAffiliation";
+            this.cmbAffiliation.Size = new System.Drawing.Size(99, 21);
+            this.cmbAffiliation.TabIndex = 4;
+            this.cmbAffiliation.SelectedIndexChanged += new System.EventHandler(this.cmbAffiliation_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -758,17 +768,18 @@
             this.label3.TabIndex = 3;
             this.label3.Text = "принадлежность";
             // 
-            // comboBox2
+            // cmbType
             // 
-            this.comboBox2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
-            "стационарный",
-            "мобильный"});
-            this.comboBox2.Location = new System.Drawing.Point(32, 0);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(94, 21);
-            this.comboBox2.TabIndex = 2;
+            this.cmbType.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbType.FormattingEnabled = true;
+            this.cmbType.Items.AddRange(new object[] {
+            "All",
+            "Mobile"});
+            this.cmbType.Location = new System.Drawing.Point(32, 0);
+            this.cmbType.Name = "cmbType";
+            this.cmbType.Size = new System.Drawing.Size(94, 21);
+            this.cmbType.TabIndex = 2;
+            this.cmbType.SelectedIndexChanged += new System.EventHandler(this.cmbType_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -804,7 +815,7 @@
             // 
             // panel12
             // 
-            this.panel12.Controls.Add(this.comboBox4);
+            this.panel12.Controls.Add(this.ObservPointLabel);
             this.panel12.Controls.Add(this.label1);
             this.panel12.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel12.Location = new System.Drawing.Point(0, 24);
@@ -813,15 +824,15 @@
             this.panel12.Size = new System.Drawing.Size(354, 24);
             this.panel12.TabIndex = 14;
             // 
-            // comboBox4
+            // ObservPointLabel
             // 
-            this.comboBox4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(79, 0);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(271, 21);
-            this.comboBox4.TabIndex = 1;
-            this.comboBox4.Text = "ObStations_201810";
+            this.ObservPointLabel.AutoSize = true;
+            this.ObservPointLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ObservPointLabel.Location = new System.Drawing.Point(85, 4);
+            this.ObservPointLabel.Name = "ObservPointLabel";
+            this.ObservPointLabel.Size = new System.Drawing.Size(118, 13);
+            this.ObservPointLabel.TabIndex = 1;
+            this.ObservPointLabel.Text = "ObStations_201810";
             // 
             // label1
             // 
@@ -904,14 +915,6 @@
             this.checkedListBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.checkedListBox2.Dock = System.Windows.Forms.DockStyle.Top;
             this.checkedListBox2.FormattingEnabled = true;
-            this.checkedListBox2.Items.AddRange(new object[] {
-            "OBOFOB20181113134511; чужой; 201811131",
-            "OBOFOB20181113134511; чужой; 201811131",
-            "OBOFOB20181113134511; чужой; 201811131",
-            "OBOFOB20181113134511; чужой; 201811131",
-            "OBOFOB20181113134511; чужой; 201811131",
-            "OBOFOB20181113134511; чужой; 201811131",
-            "OBOFOB20181113134511; чужой; 201811131"});
             this.checkedListBox2.Location = new System.Drawing.Point(0, 120);
             this.checkedListBox2.Name = "checkedListBox2";
             this.checkedListBox2.Size = new System.Drawing.Size(366, 135);
@@ -1030,7 +1033,7 @@
             // 
             // panel15
             // 
-            this.panel15.Controls.Add(this.comboBox5);
+            this.panel15.Controls.Add(this.label19);
             this.panel15.Controls.Add(this.label7);
             this.panel15.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel15.Location = new System.Drawing.Point(0, 24);
@@ -1039,15 +1042,15 @@
             this.panel15.Size = new System.Drawing.Size(366, 24);
             this.panel15.TabIndex = 15;
             // 
-            // comboBox5
+            // label19
             // 
-            this.comboBox5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Location = new System.Drawing.Point(59, 0);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(303, 21);
-            this.comboBox5.TabIndex = 1;
-            this.comboBox5.Text = "ObStations_201810";
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label19.Location = new System.Drawing.Point(65, 4);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(118, 13);
+            this.label19.TabIndex = 1;
+            this.label19.Text = "ObStations_201810";
             // 
             // label7
             // 
@@ -1499,6 +1502,7 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dvgCheckList)).EndInit();
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
             this.panel9.ResumeLayout(false);
@@ -1543,6 +1547,7 @@
 
         }
 
+
         #endregion
 
         private System.Windows.Forms.Panel panel1;
@@ -1569,21 +1574,19 @@
         private System.Windows.Forms.ToolBarButton toolBarButton51;
         private System.Windows.Forms.ToolBarButton toolBarButton3;
         private System.Windows.Forms.ToolBarButton toolBarButton27;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.Panel panel9;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkDate;
+        private System.Windows.Forms.CheckBox checkAffiliation;
+        private System.Windows.Forms.CheckBox checkType;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Panel panel10;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox cmbAffiliation;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox cmbType;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Panel panel12;
-        private System.Windows.Forms.ComboBox comboBox4;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel13;
         private System.Windows.Forms.Label label5;
@@ -1603,7 +1606,6 @@
         private System.Windows.Forms.Panel panel16;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Panel panel15;
-        private System.Windows.Forms.ComboBox comboBox5;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Panel panel14;
         private System.Windows.Forms.Label label6;
@@ -1641,5 +1643,8 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TabPage stepFour;
         private System.Windows.Forms.RichTextBox richTextBox6;
+        private System.Windows.Forms.DataGridView dvgCheckList;
+        private System.Windows.Forms.Label ObservPointLabel;
+        private System.Windows.Forms.Label label19;
     }
 }
