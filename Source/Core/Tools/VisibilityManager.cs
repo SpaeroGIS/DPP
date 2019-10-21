@@ -26,19 +26,17 @@ namespace MilSpace.Tools
         private static readonly string LINE_ID_Field = "LINE_ID";
 
         private static readonly string WhereAllRecords = "OBJECTID > 0";
-        private Logger logger = Logger.GetLoggerEx("VisibilityManagerManager");
+        private static Logger logger = Logger.GetLoggerEx("VisibilityManagerManager");
 
 
         public VisibilityManager()
         { }
 
 
-        public void Generate(IFeatureClass obervationPoints, string sourceDem, IEnumerable<int> pointsToExport)
+        public static void Generate(IFeatureClass obervationPoints, string sourceDem, IEnumerable<int> pointsToExport)
         {
 
-
             logger.InfoEx("Starting generation visiblility using DEM {0} from observation points {1}.".InvariantFormat(sourceDem, obervationPoints));
-
 
             var action = new ActionParam<string>()
             {
