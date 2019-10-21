@@ -119,7 +119,7 @@
   </Table>
   <Table Name="dbo.MILSP_VISIBILITY_SESSION" Member="MilSp_VisibilitySessions" AccessModifier="Internal">
     <Type Name="MilSp_VisibilitySession" AccessModifier="Internal">
-      <Column Name="IdRow" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="IdRow" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Id" Type="System.String" DbType="NChar(25) NOT NULL" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="NChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="UserName" Type="System.String" DbType="NChar(25) NOT NULL" CanBeNull="false" />
