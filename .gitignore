@@ -223,3 +223,5 @@
 /Source/Add-ins/SPPRD.Visibility.ArcMapAddin_/obj
 /Source/Add-ins/Register.bat
 /Source/Add-ins/SPPRD.Visibility.ArcMapAddin/Properties/licenses.licx
+/Source/Add-ins/SPPRD.GeoCalculator.ArcMapAddin/bin/Debug
+*.bat

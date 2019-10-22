@@ -258,9 +258,6 @@
             this.textBox24 = new System.Windows.Forms.TextBox();
             this.label43 = new System.Windows.Forms.Label();
             this.tlbTest = new System.Windows.Forms.ToolBar();
-            this.tlbbAdd = new System.Windows.Forms.ToolBarButton();
-            this.tlddUpd = new System.Windows.Forms.ToolBarButton();
-            this.tlbbDel = new System.Windows.Forms.ToolBarButton();
             this.panel43 = new System.Windows.Forms.Panel();
             this.textBox23 = new System.Windows.Forms.TextBox();
             this.label42 = new System.Windows.Forms.Label();
@@ -274,6 +271,9 @@
             this.label40 = new System.Windows.Forms.Label();
             this.panel41 = new System.Windows.Forms.Panel();
             this.toolBar9 = new System.Windows.Forms.ToolBar();
+            this.removeTask = new System.Windows.Forms.ToolBarButton();
+            this.addTask = new System.Windows.Forms.ToolBarButton();
+            this.wizardTask = new System.Windows.Forms.ToolBarButton();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Идентификатор = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Тип = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -1940,6 +1940,7 @@
             // cmbObservPointsLayers
             // 
             this.cmbObservPointsLayers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cmbObservPointsLayers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbObservPointsLayers.FormattingEnabled = true;
             this.cmbObservPointsLayers.Location = new System.Drawing.Point(59, 0);
             this.cmbObservPointsLayers.Name = "cmbObservPointsLayers";
@@ -2423,12 +2424,12 @@
             // cmbObservStationLayers
             // 
             this.cmbObservStationLayers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cmbObservStationLayers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbObservStationLayers.FormattingEnabled = true;
             this.cmbObservStationLayers.Location = new System.Drawing.Point(59, 0);
             this.cmbObservStationLayers.Name = "cmbObservStationLayers";
             this.cmbObservStationLayers.Size = new System.Drawing.Size(273, 21);
             this.cmbObservStationLayers.TabIndex = 1;
-            this.cmbObservStationLayers.Text = "ObPlaces_201810";
             // 
             // label31
             // 
@@ -2532,7 +2533,7 @@
             this.richTextBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBox3.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.richTextBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.richTextBox3.Location = new System.Drawing.Point(0, 547);
+            this.richTextBox3.Location = new System.Drawing.Point(0, 551);
             this.richTextBox3.Name = "richTextBox3";
             this.richTextBox3.Size = new System.Drawing.Size(342, 48);
             this.richTextBox3.TabIndex = 71;
@@ -2634,37 +2635,16 @@
             // 
             // tlbTest
             // 
-            this.tlbTest.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
-            this.tlbbAdd,
-            this.tlddUpd,
-            this.tlbbDel});
             this.tlbTest.ButtonSize = new System.Drawing.Size(18, 18);
             this.tlbTest.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tlbTest.DropDownArrows = true;
             this.tlbTest.ImageList = this.imageList1;
-            this.tlbTest.Location = new System.Drawing.Point(0, 595);
+            this.tlbTest.Location = new System.Drawing.Point(0, 599);
             this.tlbTest.Name = "tlbTest";
             this.tlbTest.ShowToolTips = true;
-            this.tlbTest.Size = new System.Drawing.Size(342, 28);
+            this.tlbTest.Size = new System.Drawing.Size(342, 24);
             this.tlbTest.TabIndex = 41;
             this.tlbTest.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.tlbTest_ButtonClick);
-            // 
-            // tlbbAdd
-            // 
-            this.tlbbAdd.ImageKey = "Plus.png";
-            this.tlbbAdd.Name = "toolBarButton5";
-            // 
-            // tlddUpd
-            // 
-            this.tlddUpd.ImageKey = "Refresh.png";
-            this.tlddUpd.Name = "toolBarButton36";
-            this.tlddUpd.ToolTipText = "Обновить";
-            // 
-            // tlbbDel
-            // 
-            this.tlbbDel.ImageKey = "Cancel.png";
-            this.tlbbDel.Name = "toolBarButton45";
-            this.tlbbDel.ToolTipText = "Удалить";
             // 
             // panel43
             // 
@@ -2793,9 +2773,9 @@
             // toolBar9
             // 
             this.toolBar9.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
-            this.tlddUpd,
-            this.tlbbDel,
-            this.tlbbAdd});
+            this.removeTask,
+            this.addTask,
+            this.wizardTask});
             this.toolBar9.ButtonSize = new System.Drawing.Size(18, 18);
             this.toolBar9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolBar9.DropDownArrows = true;
@@ -2806,6 +2786,21 @@
             this.toolBar9.Size = new System.Drawing.Size(342, 28);
             this.toolBar9.TabIndex = 40;
             this.toolBar9.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.toolBar9_ButtonClick);
+            // 
+            // removeTask
+            // 
+            this.removeTask.ImageKey = "Cancel.png";
+            this.removeTask.Name = "removeTask";
+            // 
+            // addTask
+            // 
+            this.addTask.ImageKey = "Plus.png";
+            this.addTask.Name = "addTask";
+            // 
+            // wizardTask
+            // 
+            this.wizardTask.ImageKey = "Wizard.png";
+            this.wizardTask.Name = "wizardTask";
             // 
             // dataGridView1
             // 
@@ -3805,5 +3800,8 @@
         private System.Windows.Forms.ToolBarButton toolBarButton2;
         private System.Windows.Forms.ToolBarButton toolBarButton3;
         private System.Windows.Forms.ToolBarButton toolBarButton4;
+        private System.Windows.Forms.ToolBarButton removeTask;
+        private System.Windows.Forms.ToolBarButton addTask;
+        private System.Windows.Forms.ToolBarButton wizardTask;
     }
 }
