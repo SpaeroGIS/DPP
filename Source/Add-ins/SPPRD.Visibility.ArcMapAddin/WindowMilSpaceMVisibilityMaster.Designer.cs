@@ -44,7 +44,7 @@ namespace MilSpace.Visibility
             this.panel5 = new System.Windows.Forms.Panel();
             this.richTextBox3 = new System.Windows.Forms.RichTextBox();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
+            this.uButton2 = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.stepTwo = new System.Windows.Forms.TabPage();
@@ -449,7 +449,6 @@ namespace MilSpace.Visibility
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(730, 78);
             this.panel6.TabIndex = 3;
-           
             // 
             // richTextBox4
             // 
@@ -463,7 +462,6 @@ namespace MilSpace.Visibility
             this.richTextBox4.TabIndex = 1;
             this.richTextBox4.Text = "4.\tАнализ результатов наблюдения с известными параметрами (например - аэрофотосъе" +
     "мки) с точки зрения расположения кадров на местности и обеспечения видимости.";
-            
             // 
             // panel5
             // 
@@ -491,26 +489,23 @@ namespace MilSpace.Visibility
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.panel4.Controls.Add(this.richTextBox2);
+            this.panel4.Controls.Add(this.uButton2);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(3, 81);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(730, 78);
             this.panel4.TabIndex = 1;
             // 
-            // richTextBox2
+            // uButton2
             // 
-            this.richTextBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.richTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.richTextBox2.Location = new System.Drawing.Point(0, 0);
-            this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(730, 78);
-            this.richTextBox2.TabIndex = 0;
-            this.richTextBox2.Text = "2.\tОпределение видимости в заданных ОН, для выбранных пунктов наблюдения, с учето" +
-    "м индивидуальных параметров пунктов наблюдения. ";
-            this.richTextBox2.Click += new System.EventHandler(this.CustomPanel_Click);
+            this.uButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.uButton2.Location = new System.Drawing.Point(-3, 0);
+            this.uButton2.Name = "uButton2";
+            this.uButton2.Size = new System.Drawing.Size(736, 78);
+            this.uButton2.TabIndex = 0;
+            this.uButton2.Text = "2.\t Определение видимости в заданных ОН, для выбранных пунктов наблюдения, с учет" +
+    "ом индивидуальных параметров пунктов наблюдения. ";
+            this.uButton2.Click += new System.EventHandler(this.ultraButton1_Click);
             // 
             // panel3
             // 
@@ -1116,6 +1111,7 @@ namespace MilSpace.Visibility
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(313, 21);
             this.comboBox1.TabIndex = 5;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label46
             // 
@@ -1562,9 +1558,7 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.RichTextBox richTextBox3;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.RichTextBox richTextBox2;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.TabPage stepTwo;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.SplitContainer splitContainer1;
@@ -1646,5 +1640,7 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.DataGridView dvgCheckList;
         private System.Windows.Forms.Label ObservPointLabel;
         private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Button uButton2;
+        private System.Windows.Forms.RichTextBox richTextBox1;
     }
 }

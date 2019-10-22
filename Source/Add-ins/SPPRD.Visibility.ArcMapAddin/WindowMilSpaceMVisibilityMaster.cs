@@ -16,6 +16,8 @@ namespace MilSpace.Visibility
         private const string _allValuesFilterText = "All";
         private ObservationPointsController controller;
         private BindingList<ObservPointGui> _observPointGuis;
+       
+
         public IActiveView ActiveView => ArcMap.Document.ActiveView;
 
 
@@ -23,19 +25,27 @@ namespace MilSpace.Visibility
         public WindowMilSpaceMVisibilityMaster()
         {
             InitializeComponent();
-            this.controller = new ObservationPointsController();
-            this.controller.SetView(this);
-            this.controller.UpdateObservationPointsList();
+           
+        }
+        public void SecondTypePicked()
+        {
+           controller = new ObservationPointsController();
+           controller.SetView(this);
+           controller.UpdateObservationPointsList();
 
-            FillPointsLayersComboBox();
+            //FillPointsLayersComboBox();
+          //  PopulateComboBox(comboBox1, ProfileLayers.RasterLayers);
             FillObservPointLabel();
         }
-
         public void FillObservPointLabel()
         {
-           var temp = controller.GetObservationPointsLayers(ActiveView);
+           var temp = controller.GetObservationPointsLayers(ActiveView).ToArray();
             
-            ObservPointLabel.Text = temp.FirstOrDefault<string>();
+            ObservPointLabel.Text = temp.FirstOrDefault();
+        }
+        public void PopulateComboBox(ComboBox comboBox, IEnumerable<ILayer> layers)
+        {
+            comboBox.Items.AddRange(layers.Select(l => l.Name).ToArray());
         }
 
         public void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints, VeluableObservPointFieldsEnum filter)
@@ -213,10 +223,17 @@ namespace MilSpace.Visibility
         //    return result;
         //}
 
-        private void CustomPanel_Click(object sender, EventArgs e)
+        
+
+        private void ultraButton1_Click(object sender, EventArgs e)
         {
-            panel4.BorderStyle = BorderStyle.Fixed3D;
+            SecondTypePicked();
             StepsTabControl.SelectedIndex++;
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
