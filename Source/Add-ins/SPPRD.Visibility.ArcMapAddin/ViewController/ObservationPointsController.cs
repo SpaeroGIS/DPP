@@ -1,9 +1,11 @@
-﻿using ESRI.ArcGIS.Carto;
+﻿using ESRI.ArcGIS.ArcMapUI;
+using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
+using MilSpace.Core.Tools;
 using MilSpace.Tools;
 using System;
 using System.Collections.Generic;
@@ -25,9 +27,12 @@ namespace MilSpace.Visibility.ViewController
         /// </summary>
         private static Dictionary<ObservationPointMobilityTypesEnum, string> mobilityTypes = Enum.GetValues(typeof(ObservationPointMobilityTypesEnum)).Cast<ObservationPointMobilityTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
         private static Dictionary<ObservationPointTypesEnum, string> affiliationTypes = Enum.GetValues(typeof(ObservationPointTypesEnum)).Cast<ObservationPointTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
+        private IMxDocument mapDocument;
 
-        public ObservationPointsController()
-        { }
+        public ObservationPointsController(IMxDocument mapDocument)
+        {
+            this.mapDocument = mapDocument;
+        }
 
         internal void SetView(IObservationPointsView view)
         {
@@ -113,7 +118,6 @@ namespace MilSpace.Visibility.ViewController
 
             EsriTools.FlashGeometry(activeView.ScreenDisplay, new IGeometry[] { pointGeometry });
         }
-
 
         internal IEnumerable<ObservationPoint> GetAllObservationPoints()
         {
@@ -278,39 +282,34 @@ namespace MilSpace.Visibility.ViewController
 
         public IEnumerable<string> GetObservationPointsLayers(IActiveView view)
         {
-            var obserPointsLayersNames = new List<string>();
-            var layers = view.FocusMap.Layers;
-            var layer = layers.Next();
+            MapLayersManager manager = new MapLayersManager(mapDocument.ActiveView);
 
-            //TODO: Use getting layers from a Helper to obtain all feature classes which can be inside a CompositeLayer also filter by Point type
-            while (layer != null)
+            var obserPointsLayersNames = new List<string>();
+            manager.PointLayers.ToList().ForEach(layer =>
             {
                 if (layer is IFeatureLayer fl && fl.FeatureClass.AliasName.Equals(GetObservPointFeatureName(), StringComparison.InvariantCultureIgnoreCase))
                 {
                     obserPointsLayersNames.Add(layer.Name);
                 }
+            });
 
-                layer = layers.Next();
-            }
             return obserPointsLayersNames;
         }
 
-        public IEnumerable<string> GetObservationStationsLayers(IActiveView view)
+        public IEnumerable<string> GetObservationStationsLayers()
         {
+            MapLayersManager manager = new MapLayersManager(mapDocument.ActiveView);
             var observstsLayersNames = new List<string>();
-            var layers = view.FocusMap.Layers;
-            var layer = layers.Next();
 
             //TODO: Use getting layers from a Helper to obtain all feature classes which can be inside a CompositeLayer also filter by Point type
-            while (layer != null)
+            manager.PolygonLayers.ToList().ForEach(layer =>
             {
                 if (layer is IFeatureLayer fl && fl.FeatureClass.AliasName.EndsWith(GetObservObjectFeatureName(), StringComparison.InvariantCultureIgnoreCase))
                 {
                     observstsLayersNames.Add(layer.Name);
                 }
+            });
 
-                layer = layers.Next();
-            }
             return observstsLayersNames;
         }
 

@@ -277,7 +277,7 @@ namespace MilSpace.Visibility
         private void PopulateStationsLayersComboBox()
         {
             cmbObservStationLayers.Items.Clear();
-            cmbObservStationLayers.Items.AddRange(controller.GetObservationStationsLayers(ActiveView).ToArray());
+            cmbObservStationLayers.Items.AddRange(controller.GetObservationStationsLayers().ToArray());
             if (cmbObservStationLayers.Items.Count > 0)
             {
                 cmbObservStationLayers.SelectedItem = cmbObservStationLayers.Items[0];
@@ -587,7 +587,7 @@ namespace MilSpace.Visibility
 
             protected override IntPtr OnCreateChild()
             {
-                var controller = new ObservationPointsController();
+                var controller = new ObservationPointsController(ArcMap.Document);
 
                 m_windowUI = new DockableWindowMilSpaceMVisibilitySt(this.Hook, controller);
                 return m_windowUI.Handle;
