@@ -178,6 +178,7 @@
     <Compile Include="..\DataAccess\LayersEnum.cs">
       <Link>LayersEnum.cs</Link>
     </Compile>
+    <Compile Include="DataTransfer\ObservationObjects.cs" />
     <Compile Include="DataTransfer\ObservationPoint.cs" />
     <Compile Include="DataTransfer\ObservationPointTypesEnum.cs" />
     <Compile Include="DataTransfer\VisibilitySession.cs" />

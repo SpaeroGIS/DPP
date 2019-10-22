@@ -59,16 +59,6 @@
       <Column Name="sTitle" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.MilSp_Visible_ObjectsObservation_R" Member="MilSp_Visible_ObjectsObservation_Rs">
-    <Type Name="MilSp_Visible_ObjectsObservation_R">
-      <Column Name="idobjects" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-    </Type>
-  </Table>
-  <Table Name="dbo.MilSp_Visible_ObservPoints_P" Member="MilSp_Visible_ObservPoints_Ps">
-    <Type Name="MilSp_Visible_ObservPoints_P">
-      <Column Name="objectid" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-    </Type>
-  </Table>
   <Table Name="dbo.MilSp_Visible_ResultOO" Member="MilSp_Visible_ResultOOs">
     <Type Name="MilSp_Visible_ResultOO">
       <Column Name="objectid" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -155,6 +145,17 @@
       <Column Name="AvailableHeightUpper" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
       <Column Name="AvailableHeightLover" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
       <Column Name="dto" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MILSP_VISIBLE_OBJECTSOBSERVATION_R" Member="VisiblilityObservationObjects" AccessModifier="Internal">
+    <Type Name="VisiblilityObservationObjects" AccessModifier="Internal">
+      <Column Name="OBJECTID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DTO" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+      <Column Name="idOO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sGroupOO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sTitleOO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ifShare" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="soper" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

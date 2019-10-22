@@ -101,7 +101,7 @@ namespace MilSpace.DataAccess.DataTransfer
 
                 return observationPoint;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new MilSpaceDataException("ProfileSession", DataOperationsEnum.Convert, ex);
             }
@@ -126,7 +126,7 @@ namespace MilSpace.DataAccess.DataTransfer
 
                 return visibilitySession;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new MilSpaceDataException("VisibilitySession", DataOperationsEnum.Convert, ex);
             }
@@ -151,7 +151,7 @@ namespace MilSpace.DataAccess.DataTransfer
 
                 return visibilitySession;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new MilSpaceDataException("VisibilitySession", DataOperationsEnum.Convert, ex);
             }
@@ -218,6 +218,34 @@ namespace MilSpace.DataAccess.DataTransfer
                 TypeOP = observationPoint.Type,
                 XWGS = observationPoint.X,
                 YWGS = observationPoint.Y
+            };
+        }
+
+        internal static ObservationObject Get(this VisiblilityObservationObjects observObject)
+        {
+            return new ObservationObject
+            {
+                Creator = observObject.soper,
+                DTO = observObject.DTO.HasValue ? observObject.DTO.Value : DateTime.Now,
+                Group = observObject.sGroupOO,
+                Id = observObject.idOO,
+                ObjectId = observObject.OBJECTID,
+                Shared = observObject.ifShare.HasValue ? observObject.ifShare.Value != 0 : false,
+                Title = observObject.sTitleOO
+            };
+        }
+
+        internal static VisiblilityObservationObjects Get(this ObservationObject observObject)
+        {
+            return new VisiblilityObservationObjects
+            {
+                soper = observObject.Creator,
+                DTO = observObject.DTO,
+                sGroupOO = observObject.Group,
+                idOO = observObject.Id,
+                OBJECTID = observObject.ObjectId,
+                ifShare = observObject.Shared ? 1 : 0,
+                sTitleOO = observObject.Title
             };
         }
     }
