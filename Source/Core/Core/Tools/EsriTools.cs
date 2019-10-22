@@ -434,6 +434,39 @@ namespace MilSpace.Core.Tools
             return layer;
         }
 
+        public static IEnumerable<int> GetSelectionByExtent(IFeatureClass featureClass, IActiveView activeView)
+        {
+            if (featureClass == null)
+            {
+                throw new NullReferenceException("Feature class cannot be null");
+            }
+            if (activeView == null)
+            {
+                throw new NullReferenceException("Active View cannot be null");
+            }
+
+            var curExtent = activeView.Extent;
+            ISpatialFilter spatialFilter = new SpatialFilterClass();
+            spatialFilter.Geometry = activeView.Extent;
+            spatialFilter.GeometryField = featureClass.ShapeFieldName;
+            spatialFilter.SpatialRel = esriSpatialRelEnum.esriSpatialRelIntersects;
+
+
+            // Execute the query and iterate through the cursor's results.
+            IFeatureCursor cursor = featureClass.Search(spatialFilter, false);
+            IFeature observPoint = null;
+            var results = new List<int>();
+            while ((observPoint = cursor.NextFeature()) != null)
+            {
+                results.Add(Convert.ToInt32(observPoint.get_Value(0)));
+            }
+
+            // Discard the cursors as they are no longer needed.
+            Marshal.ReleaseComObject(cursor);
+
+            return results;
+        }
+
         public static List<IPolyline> GetIntersections(IPolyline selectedLine, ILayer layer)
         {
             if(layer != null && selectedLine != null)

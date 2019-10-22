@@ -156,6 +156,7 @@
       <Column Name="sTitleOO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="ifShare" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="soper" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="saffiliation" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

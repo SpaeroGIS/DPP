@@ -270,7 +270,17 @@ namespace MilSpace.Visibility
             {
                 cmbObservPointsLayers.Items.Clear();
                 cmbObservPointsLayers.Items.AddRange(controller.GetObservationPointsLayers(ActiveView).ToArray());
-                cmbObservPointsLayers.SelectedItem = controller.GetObservFeatureName();
+                cmbObservPointsLayers.SelectedItem = controller.GetObservPointFeatureName();
+            }
+        }
+
+        private void PopulateStationsLayersComboBox()
+        {
+            cmbObservStationLayers.Items.Clear();
+            cmbObservStationLayers.Items.AddRange(controller.GetObservationStationsLayers(ActiveView).ToArray());
+            if (cmbObservStationLayers.Items.Count > 0)
+            {
+                cmbObservStationLayers.SelectedItem = cmbObservStationLayers.Items[0];
             }
         }
 
@@ -543,12 +553,14 @@ namespace MilSpace.Visibility
         {
             EnableObservPointsControls();
             PopulatePointsLayersComboBox();
+            PopulateStationsLayersComboBox();
         }
 
         private void OnContentsChanged()
         {
             EnableObservPointsControls();
             PopulatePointsLayersComboBox();
+            PopulateStationsLayersComboBox();
             SetCoordDefaultValues();
         }
 

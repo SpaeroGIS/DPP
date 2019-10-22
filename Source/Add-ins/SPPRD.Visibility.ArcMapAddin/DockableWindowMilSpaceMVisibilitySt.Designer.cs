@@ -30,46 +30,46 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceMVisibilitySt));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("VIS1_20181113134511_vnikolaev");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("VIS1_20181113134511_vnikolaev");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("VIS1 (общая видимость)", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2});
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("ПН/ТН (параметры)", 80, 80);
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Объекты наблюдения (параметры)", 137, 137);
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("SO_VIS2_ OBOFOB20181113134511_20181129090909", 73, 73);
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("SO_VIS2_ OBOFOB20181113134511_20181129090909", 73, 73);
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("SUMSO_VIS2_20181113134511_vnikolaev", 75, 75);
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("таблица покрытия", 170, 170);
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("VIS2_20181113134511_vnikolaev", new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode5,
-            treeNode6,
-            treeNode7,
-            treeNode8,
-            treeNode9});
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("fan201811081111nikol, 1");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("fan201811081111nikol, 2");
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("fan201811081111nikol, 3");
-            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("fan201811081111nikol, 4");
-            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("VIS2_20181113134511_vnikolaev", new System.Windows.Forms.TreeNode[] {
-            treeNode11,
-            treeNode12,
-            treeNode13,
-            treeNode14});
-            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("VIS2. Видимость в ОН", new System.Windows.Forms.TreeNode[] {
-            treeNode10,
-            treeNode15});
-            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("VIS3_20181113134511_vnikolaev");
-            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("VIS3_20181113134511_vnikolaev");
-            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("VIS3. Подбор параметров", new System.Windows.Forms.TreeNode[] {
-            treeNode17,
-            treeNode18});
-            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("VIS4_20181113134511_vnikolaev");
-            System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("VIS4_20181113134511_vnikolaev", 2, 2);
-            System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("VIS4. Анализ съемки", 4, 4, new System.Windows.Forms.TreeNode[] {
-            treeNode20,
-            treeNode21});
+            System.Windows.Forms.TreeNode treeNode23 = new System.Windows.Forms.TreeNode("VIS1_20181113134511_vnikolaev");
+            System.Windows.Forms.TreeNode treeNode24 = new System.Windows.Forms.TreeNode("VIS1_20181113134511_vnikolaev");
+            System.Windows.Forms.TreeNode treeNode25 = new System.Windows.Forms.TreeNode("VIS1 (общая видимость)", new System.Windows.Forms.TreeNode[] {
+            treeNode23,
+            treeNode24});
+            System.Windows.Forms.TreeNode treeNode26 = new System.Windows.Forms.TreeNode("ПН/ТН (параметры)", 80, 80);
+            System.Windows.Forms.TreeNode treeNode27 = new System.Windows.Forms.TreeNode("Объекты наблюдения (параметры)", 137, 137);
+            System.Windows.Forms.TreeNode treeNode28 = new System.Windows.Forms.TreeNode("SO_VIS2_ OBOFOB20181113134511_20181129090909", 73, 73);
+            System.Windows.Forms.TreeNode treeNode29 = new System.Windows.Forms.TreeNode("SO_VIS2_ OBOFOB20181113134511_20181129090909", 73, 73);
+            System.Windows.Forms.TreeNode treeNode30 = new System.Windows.Forms.TreeNode("SUMSO_VIS2_20181113134511_vnikolaev", 75, 75);
+            System.Windows.Forms.TreeNode treeNode31 = new System.Windows.Forms.TreeNode("таблица покрытия", 170, 170);
+            System.Windows.Forms.TreeNode treeNode32 = new System.Windows.Forms.TreeNode("VIS2_20181113134511_vnikolaev", new System.Windows.Forms.TreeNode[] {
+            treeNode26,
+            treeNode27,
+            treeNode28,
+            treeNode29,
+            treeNode30,
+            treeNode31});
+            System.Windows.Forms.TreeNode treeNode33 = new System.Windows.Forms.TreeNode("fan201811081111nikol, 1");
+            System.Windows.Forms.TreeNode treeNode34 = new System.Windows.Forms.TreeNode("fan201811081111nikol, 2");
+            System.Windows.Forms.TreeNode treeNode35 = new System.Windows.Forms.TreeNode("fan201811081111nikol, 3");
+            System.Windows.Forms.TreeNode treeNode36 = new System.Windows.Forms.TreeNode("fan201811081111nikol, 4");
+            System.Windows.Forms.TreeNode treeNode37 = new System.Windows.Forms.TreeNode("VIS2_20181113134511_vnikolaev", new System.Windows.Forms.TreeNode[] {
+            treeNode33,
+            treeNode34,
+            treeNode35,
+            treeNode36});
+            System.Windows.Forms.TreeNode treeNode38 = new System.Windows.Forms.TreeNode("VIS2. Видимость в ОН", new System.Windows.Forms.TreeNode[] {
+            treeNode32,
+            treeNode37});
+            System.Windows.Forms.TreeNode treeNode39 = new System.Windows.Forms.TreeNode("VIS3_20181113134511_vnikolaev");
+            System.Windows.Forms.TreeNode treeNode40 = new System.Windows.Forms.TreeNode("VIS3_20181113134511_vnikolaev");
+            System.Windows.Forms.TreeNode treeNode41 = new System.Windows.Forms.TreeNode("VIS3. Подбор параметров", new System.Windows.Forms.TreeNode[] {
+            treeNode39,
+            treeNode40});
+            System.Windows.Forms.TreeNode treeNode42 = new System.Windows.Forms.TreeNode("VIS4_20181113134511_vnikolaev");
+            System.Windows.Forms.TreeNode treeNode43 = new System.Windows.Forms.TreeNode("VIS4_20181113134511_vnikolaev", 2, 2);
+            System.Windows.Forms.TreeNode treeNode44 = new System.Windows.Forms.TreeNode("VIS4. Анализ съемки", 4, 4, new System.Windows.Forms.TreeNode[] {
+            treeNode42,
+            treeNode43});
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -271,6 +271,9 @@
             this.label40 = new System.Windows.Forms.Label();
             this.panel41 = new System.Windows.Forms.Panel();
             this.toolBar9 = new System.Windows.Forms.ToolBar();
+            this.removeTask = new System.Windows.Forms.ToolBarButton();
+            this.addTask = new System.Windows.Forms.ToolBarButton();
+            this.wizardTask = new System.Windows.Forms.ToolBarButton();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Идентификатор = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Тип = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -320,9 +323,6 @@
             this.richTextBox4 = new System.Windows.Forms.RichTextBox();
             this.panel48 = new System.Windows.Forms.Panel();
             this.label47 = new System.Windows.Forms.Label();
-            this.removeTask = new System.Windows.Forms.ToolBarButton();
-            this.addTask = new System.Windows.Forms.ToolBarButton();
-            this.wizardTask = new System.Windows.Forms.ToolBarButton();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel7.SuspendLayout();
@@ -1940,6 +1940,7 @@
             // cmbObservPointsLayers
             // 
             this.cmbObservPointsLayers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cmbObservPointsLayers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbObservPointsLayers.FormattingEnabled = true;
             this.cmbObservPointsLayers.Location = new System.Drawing.Point(59, 0);
             this.cmbObservPointsLayers.Name = "cmbObservPointsLayers";
@@ -2423,12 +2424,12 @@
             // cmbObservStationLayers
             // 
             this.cmbObservStationLayers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cmbObservStationLayers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbObservStationLayers.FormattingEnabled = true;
             this.cmbObservStationLayers.Location = new System.Drawing.Point(59, 0);
             this.cmbObservStationLayers.Name = "cmbObservStationLayers";
             this.cmbObservStationLayers.Size = new System.Drawing.Size(273, 21);
             this.cmbObservStationLayers.TabIndex = 1;
-            this.cmbObservStationLayers.Text = "ObPlaces_201810";
             // 
             // label31
             // 
@@ -2532,7 +2533,7 @@
             this.richTextBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBox3.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.richTextBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.richTextBox3.Location = new System.Drawing.Point(0, 547);
+            this.richTextBox3.Location = new System.Drawing.Point(0, 551);
             this.richTextBox3.Name = "richTextBox3";
             this.richTextBox3.Size = new System.Drawing.Size(342, 48);
             this.richTextBox3.TabIndex = 71;
@@ -2638,10 +2639,10 @@
             this.tlbTest.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tlbTest.DropDownArrows = true;
             this.tlbTest.ImageList = this.imageList1;
-            this.tlbTest.Location = new System.Drawing.Point(0, 595);
+            this.tlbTest.Location = new System.Drawing.Point(0, 599);
             this.tlbTest.Name = "tlbTest";
             this.tlbTest.ShowToolTips = true;
-            this.tlbTest.Size = new System.Drawing.Size(342, 28);
+            this.tlbTest.Size = new System.Drawing.Size(342, 24);
             this.tlbTest.TabIndex = 41;
             this.tlbTest.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.tlbTest_ButtonClick);
             // 
@@ -2785,6 +2786,21 @@
             this.toolBar9.Size = new System.Drawing.Size(342, 28);
             this.toolBar9.TabIndex = 40;
             this.toolBar9.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.toolBar9_ButtonClick);
+            // 
+            // removeTask
+            // 
+            this.removeTask.ImageKey = "Cancel.png";
+            this.removeTask.Name = "removeTask";
+            // 
+            // addTask
+            // 
+            this.addTask.ImageKey = "Plus.png";
+            this.addTask.Name = "addTask";
+            // 
+            // wizardTask
+            // 
+            this.wizardTask.ImageKey = "Wizard.png";
+            this.wizardTask.Name = "wizardTask";
             // 
             // dataGridView1
             // 
@@ -3261,99 +3277,99 @@
             this.treeView1.ImageList = this.imageList1;
             this.treeView1.Location = new System.Drawing.Point(0, 24);
             this.treeView1.Name = "treeView1";
-            treeNode1.ImageKey = "1.png";
-            treeNode1.Name = "Узел4";
-            treeNode1.SelectedImageIndex = 1;
-            treeNode1.Text = "VIS1_20181113134511_vnikolaev";
-            treeNode2.ImageKey = "2.png";
-            treeNode2.Name = "Узел6";
-            treeNode2.SelectedImageIndex = 2;
-            treeNode2.Text = "VIS1_20181113134511_vnikolaev";
-            treeNode3.ImageKey = "1.png";
-            treeNode3.Name = "Узел1";
-            treeNode3.SelectedImageIndex = 1;
-            treeNode3.Text = "VIS1 (общая видимость)";
-            treeNode4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            treeNode4.ForeColor = System.Drawing.Color.DimGray;
-            treeNode4.ImageIndex = 80;
-            treeNode4.Name = "Узел4";
-            treeNode4.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            treeNode4.SelectedImageIndex = 80;
-            treeNode4.Text = "ПН/ТН (параметры)";
-            treeNode5.ForeColor = System.Drawing.Color.DimGray;
-            treeNode5.ImageIndex = 137;
-            treeNode5.Name = "Узел5";
-            treeNode5.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            treeNode5.SelectedImageIndex = 137;
-            treeNode5.Text = "Объекты наблюдения (параметры)";
-            treeNode6.ImageIndex = 73;
-            treeNode6.Name = "Узел12";
-            treeNode6.SelectedImageIndex = 73;
-            treeNode6.Text = "SO_VIS2_ OBOFOB20181113134511_20181129090909";
-            treeNode7.ImageIndex = 73;
-            treeNode7.Name = "Узел13";
-            treeNode7.SelectedImageIndex = 73;
-            treeNode7.Text = "SO_VIS2_ OBOFOB20181113134511_20181129090909";
-            treeNode8.ImageIndex = 75;
-            treeNode8.Name = "Узел14";
-            treeNode8.SelectedImageIndex = 75;
-            treeNode8.Text = "SUMSO_VIS2_20181113134511_vnikolaev";
-            treeNode9.ImageIndex = 170;
-            treeNode9.Name = "Узел15";
-            treeNode9.SelectedImageIndex = 170;
-            treeNode9.Text = "таблица покрытия";
-            treeNode10.ImageKey = "1.png";
-            treeNode10.Name = "Узел7";
-            treeNode10.SelectedImageIndex = 1;
-            treeNode10.Text = "VIS2_20181113134511_vnikolaev";
-            treeNode11.ImageKey = "3.png";
-            treeNode11.Name = "Узел16";
-            treeNode11.Text = "fan201811081111nikol, 1";
-            treeNode12.ImageKey = "3.png";
-            treeNode12.Name = "Узел17";
-            treeNode12.Text = "fan201811081111nikol, 2";
-            treeNode13.ImageKey = "3.png";
-            treeNode13.Name = "Узел18";
-            treeNode13.Text = "fan201811081111nikol, 3";
-            treeNode14.ImageKey = "4.png";
-            treeNode14.Name = "Узел19";
-            treeNode14.Text = "fan201811081111nikol, 4";
-            treeNode15.ImageKey = "2.png";
-            treeNode15.Name = "Узел8";
-            treeNode15.SelectedImageIndex = 2;
-            treeNode15.Text = "VIS2_20181113134511_vnikolaev";
-            treeNode16.ImageKey = "2.png";
-            treeNode16.Name = "Узел2";
-            treeNode16.SelectedImageIndex = 2;
-            treeNode16.Text = "VIS2. Видимость в ОН";
-            treeNode17.ImageKey = "1.png";
-            treeNode17.Name = "Узел9";
-            treeNode17.SelectedImageIndex = 1;
-            treeNode17.Text = "VIS3_20181113134511_vnikolaev";
-            treeNode18.ImageKey = "2.png";
-            treeNode18.Name = "Узел10";
-            treeNode18.SelectedImageIndex = 2;
-            treeNode18.Text = "VIS3_20181113134511_vnikolaev";
-            treeNode19.ImageKey = "3.png";
-            treeNode19.Name = "Узел3";
-            treeNode19.SelectedImageIndex = 3;
-            treeNode19.Text = "VIS3. Подбор параметров";
-            treeNode20.ImageIndex = 1;
-            treeNode20.Name = "Узел1";
-            treeNode20.Text = "VIS4_20181113134511_vnikolaev";
-            treeNode21.ImageIndex = 2;
-            treeNode21.Name = "Узел2";
-            treeNode21.SelectedImageIndex = 2;
-            treeNode21.Text = "VIS4_20181113134511_vnikolaev";
-            treeNode22.ImageIndex = 4;
-            treeNode22.Name = "Узел0";
-            treeNode22.SelectedImageIndex = 4;
-            treeNode22.Text = "VIS4. Анализ съемки";
+            treeNode23.ImageKey = "1.png";
+            treeNode23.Name = "Узел4";
+            treeNode23.SelectedImageIndex = 1;
+            treeNode23.Text = "VIS1_20181113134511_vnikolaev";
+            treeNode24.ImageKey = "2.png";
+            treeNode24.Name = "Узел6";
+            treeNode24.SelectedImageIndex = 2;
+            treeNode24.Text = "VIS1_20181113134511_vnikolaev";
+            treeNode25.ImageKey = "1.png";
+            treeNode25.Name = "Узел1";
+            treeNode25.SelectedImageIndex = 1;
+            treeNode25.Text = "VIS1 (общая видимость)";
+            treeNode26.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            treeNode26.ForeColor = System.Drawing.Color.DimGray;
+            treeNode26.ImageIndex = 80;
+            treeNode26.Name = "Узел4";
+            treeNode26.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            treeNode26.SelectedImageIndex = 80;
+            treeNode26.Text = "ПН/ТН (параметры)";
+            treeNode27.ForeColor = System.Drawing.Color.DimGray;
+            treeNode27.ImageIndex = 137;
+            treeNode27.Name = "Узел5";
+            treeNode27.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            treeNode27.SelectedImageIndex = 137;
+            treeNode27.Text = "Объекты наблюдения (параметры)";
+            treeNode28.ImageIndex = 73;
+            treeNode28.Name = "Узел12";
+            treeNode28.SelectedImageIndex = 73;
+            treeNode28.Text = "SO_VIS2_ OBOFOB20181113134511_20181129090909";
+            treeNode29.ImageIndex = 73;
+            treeNode29.Name = "Узел13";
+            treeNode29.SelectedImageIndex = 73;
+            treeNode29.Text = "SO_VIS2_ OBOFOB20181113134511_20181129090909";
+            treeNode30.ImageIndex = 75;
+            treeNode30.Name = "Узел14";
+            treeNode30.SelectedImageIndex = 75;
+            treeNode30.Text = "SUMSO_VIS2_20181113134511_vnikolaev";
+            treeNode31.ImageIndex = 170;
+            treeNode31.Name = "Узел15";
+            treeNode31.SelectedImageIndex = 170;
+            treeNode31.Text = "таблица покрытия";
+            treeNode32.ImageKey = "1.png";
+            treeNode32.Name = "Узел7";
+            treeNode32.SelectedImageIndex = 1;
+            treeNode32.Text = "VIS2_20181113134511_vnikolaev";
+            treeNode33.ImageKey = "3.png";
+            treeNode33.Name = "Узел16";
+            treeNode33.Text = "fan201811081111nikol, 1";
+            treeNode34.ImageKey = "3.png";
+            treeNode34.Name = "Узел17";
+            treeNode34.Text = "fan201811081111nikol, 2";
+            treeNode35.ImageKey = "3.png";
+            treeNode35.Name = "Узел18";
+            treeNode35.Text = "fan201811081111nikol, 3";
+            treeNode36.ImageKey = "4.png";
+            treeNode36.Name = "Узел19";
+            treeNode36.Text = "fan201811081111nikol, 4";
+            treeNode37.ImageKey = "2.png";
+            treeNode37.Name = "Узел8";
+            treeNode37.SelectedImageIndex = 2;
+            treeNode37.Text = "VIS2_20181113134511_vnikolaev";
+            treeNode38.ImageKey = "2.png";
+            treeNode38.Name = "Узел2";
+            treeNode38.SelectedImageIndex = 2;
+            treeNode38.Text = "VIS2. Видимость в ОН";
+            treeNode39.ImageKey = "1.png";
+            treeNode39.Name = "Узел9";
+            treeNode39.SelectedImageIndex = 1;
+            treeNode39.Text = "VIS3_20181113134511_vnikolaev";
+            treeNode40.ImageKey = "2.png";
+            treeNode40.Name = "Узел10";
+            treeNode40.SelectedImageIndex = 2;
+            treeNode40.Text = "VIS3_20181113134511_vnikolaev";
+            treeNode41.ImageKey = "3.png";
+            treeNode41.Name = "Узел3";
+            treeNode41.SelectedImageIndex = 3;
+            treeNode41.Text = "VIS3. Подбор параметров";
+            treeNode42.ImageIndex = 1;
+            treeNode42.Name = "Узел1";
+            treeNode42.Text = "VIS4_20181113134511_vnikolaev";
+            treeNode43.ImageIndex = 2;
+            treeNode43.Name = "Узел2";
+            treeNode43.SelectedImageIndex = 2;
+            treeNode43.Text = "VIS4_20181113134511_vnikolaev";
+            treeNode44.ImageIndex = 4;
+            treeNode44.Name = "Узел0";
+            treeNode44.SelectedImageIndex = 4;
+            treeNode44.Text = "VIS4. Анализ съемки";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3,
-            treeNode16,
-            treeNode19,
-            treeNode22});
+            treeNode25,
+            treeNode38,
+            treeNode41,
+            treeNode44});
             this.treeView1.SelectedImageKey = "Ok.png";
             this.treeView1.Size = new System.Drawing.Size(342, 244);
             this.treeView1.TabIndex = 73;
@@ -3391,21 +3407,6 @@
             this.label47.Size = new System.Drawing.Size(139, 17);
             this.label47.TabIndex = 2;
             this.label47.Text = "Список результатаов";
-            // 
-            // removeTask
-            // 
-            this.removeTask.ImageKey = "Cancel.png";
-            this.removeTask.Name = "removeTask";
-            // 
-            // addTask
-            // 
-            this.addTask.ImageKey = "Plus.png";
-            this.addTask.Name = "addTask";
-            // 
-            // wizardTask
-            // 
-            this.wizardTask.ImageKey = "Wizard.png";
-            this.wizardTask.Name = "wizardTask";
             // 
             // DockableWindowMilSpaceMVisibilitySt
             // 

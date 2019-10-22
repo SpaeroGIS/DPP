@@ -2,13 +2,18 @@
 using MilSpace.DataAccess.Definition;
 using MilSpace.DataAccess.Exceptions;
 using System;
+using System.Linq;
 using System.IO;
 using System.Xml.Serialization;
+using System.Collections.Generic;
+using MilSpace.Core;
 
 namespace MilSpace.DataAccess.DataTransfer
 {
     public static class ConvertCenter
     {
+        public static Dictionary<ObservationObjectTypesEnum, string> ObservationObjectTypes = Enum.GetValues(typeof(ObservationObjectTypesEnum)).Cast<ObservationObjectTypesEnum>().ToDictionary(k => k, v => v.ToString());
+
         internal static ProfileSession Get(this MilSp_Profile profileData)
         {
 
@@ -223,6 +228,13 @@ namespace MilSpace.DataAccess.DataTransfer
 
         internal static ObservationObject Get(this VisiblilityObservationObjects observObject)
         {
+            var objectType = ObservationObjectTypesEnum.Undefined;
+
+            if (ObservationObjectTypes.Values.Any(t => t.Equals(observObject.saffiliation, StringComparison.InvariantCultureIgnoreCase)))
+            {
+                objectType = ObservationObjectTypes.First(t => t.Value.Equals(observObject.saffiliation, StringComparison.InvariantCultureIgnoreCase)).Key;
+            }
+
             return new ObservationObject
             {
                 Creator = observObject.soper,
@@ -231,7 +243,8 @@ namespace MilSpace.DataAccess.DataTransfer
                 Id = observObject.idOO,
                 ObjectId = observObject.OBJECTID,
                 Shared = observObject.ifShare.HasValue ? observObject.ifShare.Value != 0 : false,
-                Title = observObject.sTitleOO
+                Title = observObject.sTitleOO,
+                ObjectType = objectType
             };
         }
 
@@ -243,6 +256,7 @@ namespace MilSpace.DataAccess.DataTransfer
                 DTO = observObject.DTO,
                 sGroupOO = observObject.Group,
                 idOO = observObject.Id,
+                saffiliation = observObject.ObjectType.ToString(),
                 OBJECTID = observObject.ObjectId,
                 ifShare = observObject.Shared ? 1 : 0,
                 sTitleOO = observObject.Title

@@ -68,10 +68,10 @@
         <elementListCompartment Id="71d007fb-8b9d-4f89-b711-99811ab5bc39" absoluteBounds="1.6400000000000001, 3.8350000000000009, 1.9700000000000002, 4.672322591145833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="b68407d3-ed43-492b-bf5d-0e5b34cd1975" absoluteBounds="1.375, 1, 2, 2.1554996744791666">
+    <classShape Id="b68407d3-ed43-492b-bf5d-0e5b34cd1975" absoluteBounds="1.375, 1, 2, 2.3478011067708335">
       <DataClassMoniker Name="/MilSpaceVisibilityContext/VisiblilityObservationObjects" />
       <nestedChildShapes>
-        <elementListCompartment Id="c3403db5-9ff2-4149-a873-6b221e182370" absoluteBounds="1.3900000000000001, 1.46, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="c3403db5-9ff2-4149-a873-6b221e182370" absoluteBounds="1.3900000000000001, 1.46, 1.9700000000000002, 1.7878011067708333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>
