@@ -167,5 +167,20 @@ namespace MilSpace.DataAccess.Facade
 
         }
 
+        public IEnumerable<ObservationObject> GetAllObservationObjectsByUser()
+        {
+            try
+            {
+                var result = context.VisiblilityObservationObjects.Where(oo => oo.soper == Environment.UserName).Select(op => op.Get() );
+                log.InfoEx($"Get all Observation objefcts ({result.Count()}). user {Environment.UserName}");
+                return result;
+            }
+            catch (Exception ex)
+            {
+                log.WarnEx($"Unexpected exception:{ex.Message}");
+            }
+            return null;
+        }
+
     }
 }
