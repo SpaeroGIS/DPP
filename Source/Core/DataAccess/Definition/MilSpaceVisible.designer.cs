@@ -2919,6 +2919,8 @@ namespace MilSpace.DataAccess.Definition
 		
 		private string _soper;
 		
+		private string _saffiliation;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -2937,6 +2939,8 @@ namespace MilSpace.DataAccess.Definition
     partial void OnifShareChanged();
     partial void OnsoperChanging(string value);
     partial void OnsoperChanged();
+    partial void OnsaffiliationChanging(string value);
+    partial void OnsaffiliationChanged();
     #endregion
 		
 		public VisiblilityObservationObjects()
@@ -3080,6 +3084,26 @@ namespace MilSpace.DataAccess.Definition
 					this._soper = value;
 					this.SendPropertyChanged("soper");
 					this.OnsoperChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_saffiliation", DbType="NVarChar(10)")]
+		public string saffiliation
+		{
+			get
+			{
+				return this._saffiliation;
+			}
+			set
+			{
+				if ((this._saffiliation != value))
+				{
+					this.OnsaffiliationChanging(value);
+					this.SendPropertyChanging();
+					this._saffiliation = value;
+					this.SendPropertyChanged("saffiliation");
+					this.OnsaffiliationChanged();
 				}
 			}
 		}

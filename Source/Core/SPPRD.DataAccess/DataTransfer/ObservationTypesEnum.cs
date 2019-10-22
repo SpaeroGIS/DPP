@@ -6,6 +6,15 @@ using System.Threading.Tasks;
 
 namespace MilSpace.DataAccess.DataTransfer
 {
+
+    public enum ObservationObjectTypesEnum
+    {
+        Undefined = 1,
+        Our,
+        Enemy,
+        Neutrality,
+    }
+
     public enum ObservationPointTypesEnum 
     {
         All = 0,
