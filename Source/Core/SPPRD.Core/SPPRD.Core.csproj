@@ -227,6 +227,9 @@
     <Compile Include="..\Core\Logging\Logging.cs">
       <Link>Logging\Logging.cs</Link>
     </Compile>
+    <Compile Include="..\Core\Tools\MapLayersManager.cs">
+      <Link>Tools\MapLayersManager.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\Core\ResourceManager\MilSpaceResourceManager.cs">
       <Link>ResourceManager\MilSpaceResourceManager.cs</Link>

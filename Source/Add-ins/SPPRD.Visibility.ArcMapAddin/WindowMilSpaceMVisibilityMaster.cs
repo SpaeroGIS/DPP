@@ -187,7 +187,11 @@ namespace MilSpace.Visibility
         
         private void NextStepButton_Click(object sender, EventArgs e)
         {
-            if(StepsTabControl.SelectedIndex < StepsTabControl.TabCount - 1) StepsTabControl.SelectedIndex++; 
+            if(StepsTabControl.SelectedIndex < StepsTabControl.TabCount - 1) StepsTabControl.SelectedIndex++;
+            if (StepsTabControl.SelectedIndex == StepsTabControl.TabCount - 1)
+            {
+                MessageBox.Show("Start calculation");
+            }
         }
 
         private void PreviousStepButton_Click(object sender, EventArgs e)
