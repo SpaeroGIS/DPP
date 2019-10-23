@@ -20,6 +20,7 @@ namespace MilSpace.DataAccess.Facade
             {
                 if (!context.MilSp_VisibilitySessions.Any(session => session.Id == visibilitySession.Id))
                 {
+                   
                     var sessionEntity = visibilitySession.Get();
                     context.MilSp_VisibilitySessions.InsertOnSubmit(sessionEntity);
 
