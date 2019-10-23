@@ -122,7 +122,7 @@ namespace MilSpace.DataAccess.DataTransfer
                     Id = visibilitySessionModel.Id,
                     Name = visibilitySessionModel.Name,
                     UserName = visibilitySessionModel.UserName,
-                    Created = visibilitySessionModel.Created,
+                    Created = visibilitySessionModel.Created.HasValue ? visibilitySessionModel.Created.Value : DateTime.Now,
                     Started = visibilitySessionModel.Started,
                     Finished = visibilitySessionModel.Finished,
                     CalculatedResults = visibilitySessionModel.CalculatedResults,
@@ -166,7 +166,7 @@ namespace MilSpace.DataAccess.DataTransfer
         {
             visibilitySessionEntity.Name = visibilitySession.Name;
             visibilitySessionEntity.UserName = visibilitySession.UserName;
-            visibilitySessionEntity.Created = visibilitySession.Created;
+            visibilitySessionEntity.Created = visibilitySession.Created.Value;
             visibilitySessionEntity.Started = visibilitySession.Started;
             visibilitySessionEntity.Finished = visibilitySession.Finished;
             visibilitySessionEntity.CalculatedResults = visibilitySession.CalculatedResults;

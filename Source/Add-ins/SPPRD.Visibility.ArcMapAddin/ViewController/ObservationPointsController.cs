@@ -234,7 +234,6 @@ namespace MilSpace.Visibility.ViewController
                 Id = "1",
                 Name = "TestSession",
                 UserName = Environment.UserName,
-                Created = DateTime.Now,
                 CalculatedResults = 23
             };
 
@@ -248,7 +247,6 @@ namespace MilSpace.Visibility.ViewController
                 Id = "1",
                 Name = "TestSessionEdit",
                 UserName = Environment.UserName,
-                Created = DateTime.Now,
                 CalculatedResults = 23
             };
 
