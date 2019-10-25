@@ -230,7 +230,7 @@ namespace MilSpace.DataAccess.Facade
                 try
                 {
                     //In case of performance issue reimplement it as context.ExecuteQuery with where clause OBJECTID == {ID1} OR OBJECTID == {ID2}.. 
-                    result = context.VisiblilityObservationObjects.Where(p => ids.Any(id => id == p.OBJECTID)).Select(p => p.Get());
+                    result = context.VisiblilityObservationObjects.Where(p => ids.Contains(p.OBJECTID)).Select(p => p.Get());
                 }
                 catch (MilSpaceDataException ex)
                 {
