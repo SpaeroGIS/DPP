@@ -20,6 +20,7 @@ namespace MilSpace.DataAccess.Facade
             {
                 if (!context.MilSp_VisibilitySessions.Any(session => session.Id == visibilitySession.Id))
                 {
+                   
                     var sessionEntity = visibilitySession.Get();
                     context.MilSp_VisibilitySessions.InsertOnSubmit(sessionEntity);
 
@@ -165,6 +166,83 @@ namespace MilSpace.DataAccess.Facade
             }
             return result;
 
+        }
+
+        public IEnumerable<ObservationPoint> GetObservationPointsByIds(IEnumerable<int> ids)
+        {
+
+            IEnumerable<ObservationPoint> result = null;
+            if (ids != null || ids.Count() > 0)
+            {
+
+                try
+                {
+                    //In case of performance issue reimplement it as context.ExecuteQuery with where clause OBJECTID == {ID1} OR OBJECTID == {ID2}.. 
+                    result = context.VisiblilityObservPoints.Where(p => ids.Any(id => id == p.OBJECTID)).Select(p => p.Get());
+                }
+                catch (MilSpaceDataException ex)
+                {
+                    log.WarnEx(ex.Message);
+                    if (ex.InnerException != null)
+                    {
+                        log.WarnEx(ex.InnerException.Message);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    log.WarnEx($"Unexpected exception:{ex.Message}");
+
+                }
+            }
+
+            return result;
+        }
+
+        public IEnumerable<ObservationObject> GetAllObservationObjects()
+        {
+            try
+            {
+                var result = context.VisiblilityObservationObjects.Select(op => op.Get() );
+                log.InfoEx($"Get all Observation objefcts ({result.Count()}). user {Environment.UserName}");
+                return result;
+            }
+            catch (Exception ex)
+            {
+                log.WarnEx($"Unexpected exception:{ex.Message}");
+            }
+            return null;
+        }
+
+        public IEnumerable<ObservationObject> GetObservationObjectByIds(IEnumerable<int> ids)
+        {
+
+            IEnumerable<ObservationObject> result = null;
+            if (ids != null || ids.Count() > 0)
+            {
+
+                try
+                {
+                    //In case of performance issue reimplement it as context.ExecuteQuery with where clause OBJECTID == {ID1} OR OBJECTID == {ID2}.. 
+                    result = context.VisiblilityObservationObjects.Where(p => ids.Any(id => id == p.OBJECTID)).Select(p => p.Get());
+                }
+                catch (MilSpaceDataException ex)
+                {
+                    log.WarnEx(ex.Message);
+                    if (ex.InnerException != null)
+                    {
+                        log.WarnEx(ex.InnerException.Message);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    log.WarnEx($"Unexpected exception:{ex.Message}");
+
+                }
+            }
+
+            return result;
         }
 
     }

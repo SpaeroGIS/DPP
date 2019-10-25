@@ -1,9 +1,11 @@
-﻿using ESRI.ArcGIS.Carto;
+﻿using ESRI.ArcGIS.ArcMapUI;
+using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
+using MilSpace.Core.Tools;
 using MilSpace.Tools;
 using System;
 using System.Collections.Generic;
@@ -18,15 +20,19 @@ namespace MilSpace.Visibility.ViewController
     {
         IObservationPointsView view;
         private static readonly string _observPointFeature = "MilSp_Visible_ObservPoints";
+        private static readonly string _observStationFeature = "MilSp_Visible_ObjectsObservation_R";
         private List<ObservationPoint> _observationPoints = new List<ObservationPoint>();
         /// <summary>
         /// The dictionary to localise the types
         /// </summary>
         private static Dictionary<ObservationPointMobilityTypesEnum, string> mobilityTypes = Enum.GetValues(typeof(ObservationPointMobilityTypesEnum)).Cast<ObservationPointMobilityTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
         private static Dictionary<ObservationPointTypesEnum, string> affiliationTypes = Enum.GetValues(typeof(ObservationPointTypesEnum)).Cast<ObservationPointTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
+        private IMxDocument mapDocument;
 
-        public ObservationPointsController()
-        { }
+        public ObservationPointsController(IMxDocument mapDocument)
+        {
+            this.mapDocument = mapDocument;
+        }
 
         internal void SetView(IObservationPointsView view)
         {
@@ -38,9 +44,14 @@ namespace MilSpace.Visibility.ViewController
             throw new NotImplementedException();
         }
 
-        internal string GetObservFeatureName()
+        internal string GetObservPointFeatureName()
         {
             return _observPointFeature;
+        }
+
+        internal string GetObservObjectFeatureName()
+        {
+            return _observStationFeature;
         }
 
         internal void UpdateObservationPointsList()
@@ -61,9 +72,9 @@ namespace MilSpace.Visibility.ViewController
             var featureClass = GetFeatureClass(featureName, activeView);
             PointClass pointGeometry;
 
-            if(oldPoint.X != newPoint.X && oldPoint.Y != newPoint.Y)
+            if (oldPoint.X != newPoint.X && oldPoint.Y != newPoint.Y)
             {
-                pointGeometry = new PointClass{ X = (double)newPoint.X, Y = (double)newPoint.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
+                pointGeometry = new PointClass { X = (double)newPoint.X, Y = (double)newPoint.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
 
                 pointGeometry.Z = (double)newPoint.RelativeHeight;
                 pointGeometry.ZAware = true;
@@ -107,7 +118,6 @@ namespace MilSpace.Visibility.ViewController
 
             EsriTools.FlashGeometry(activeView.ScreenDisplay, new IGeometry[] { pointGeometry });
         }
-
 
         internal IEnumerable<ObservationPoint> GetAllObservationPoints()
         {
@@ -162,39 +172,53 @@ namespace MilSpace.Visibility.ViewController
 
         internal void CalculateVisibility(IActiveView activeView, string scrDEM, IEnumerable<int> pointsTOCalculate = null)
         {
-            var observPoints = GetObservatioStationFeatureClass(activeView);
+            var observPoints = GetObservatioPointFeatureClass(activeView);
 
             if (pointsTOCalculate == null) // Get points forn the current extent
             {
-
-                var curExtent = activeView.Extent;
-                ISpatialFilter spatialFilter = new SpatialFilterClass();
-                spatialFilter.Geometry = activeView.Extent;
-                spatialFilter.GeometryField = observPoints.ShapeFieldName;
-                spatialFilter.SpatialRel = esriSpatialRelEnum.esriSpatialRelIntersects;
-
-
-                // Execute the query and iterate through the cursor's results.
-                IFeatureCursor cursor = observPoints.Search(spatialFilter, false);
-                IFeature observPoint = null;
-                var results = new List<int>();
-                while ((observPoint = cursor.NextFeature()) != null)
-                {
-                    results.Add(Convert.ToInt32(observPoint.get_Value(0)));
-                }
-
-                // Discard the cursors as they are no longer needed.
-                Marshal.ReleaseComObject(cursor);
-
-                //pointsTOCalculate
-                pointsTOCalculate = results;
+                pointsTOCalculate = EsriTools.GetSelectionByExtent(observPoints, activeView);
             }
 
             VisibilityManager.Generate(observPoints, scrDEM, pointsTOCalculate);
         }
 
+        //Returns Observation Points which are visible on the Current View Extent
+        internal IEnumerable<ObservationPoint> GetObservPointsOnCurrentMapExtent(IActiveView activeView)
+        {
+            var observPoints = GetObservatioPointFeatureClass(activeView);
+            IEnumerable<ObservationPoint> result = null;
+            if (observPoints != null)
+            {
+                IEnumerable<int> visiblePoints = EsriTools.GetSelectionByExtent(observPoints, activeView);
+                if (visiblePoints != null)
+                {
+                    result = VisibilityZonesFacade.GetObservationPointByObjectIds(visiblePoints);
+                }
+            }
+
+            return result;
+        }
+
+        //Returns Observation Stations\Objects which are visible on the Current View Extent
+        internal IEnumerable<ObservationObject> GetObservObjectsOnCurrentMapExtent(IActiveView activeView)
+        {
+            var observPoints = GetObservatioStationFeatureClass(activeView);
+            IEnumerable<ObservationObject> result = null;
+            if (observPoints != null)
+            {
+                IEnumerable<int> visiblePoints = EsriTools.GetSelectionByExtent(observPoints, activeView);
+                if (visiblePoints != null)
+                {
+                    result = VisibilityZonesFacade.GetObservationObjectByObjectIds(visiblePoints);
+                }
+            }
+
+            return result;
+        }
+
         internal IPoint GetEnvelopeCenterPoint(IEnvelope envelope)
         {
+            //TODO: Move this method to Core.Tools.EsriTools
             var x = (envelope.XMin + envelope.XMax) / 2;
             var y = (envelope.YMin + envelope.YMax) / 2;
 
@@ -210,7 +234,6 @@ namespace MilSpace.Visibility.ViewController
                 Id = "1",
                 Name = "TestSession",
                 UserName = Environment.UserName,
-                Created = DateTime.Now,
                 CalculatedResults = 23
             };
 
@@ -224,14 +247,13 @@ namespace MilSpace.Visibility.ViewController
                 Id = "1",
                 Name = "TestSessionEdit",
                 UserName = Environment.UserName,
-                Created = DateTime.Now,
                 CalculatedResults = 23
             };
 
             return VisibilityZonesFacade.UpdateVisibilitySession(visibilitySession);
         }
 
-         internal bool TestDelete()
+        internal bool TestDelete()
         {
             return VisibilityZonesFacade.DeleteVisibilitySession("1");
         }
@@ -258,25 +280,44 @@ namespace MilSpace.Visibility.ViewController
 
         public IEnumerable<string> GetObservationPointsLayers(IActiveView view)
         {
-            var obserPointsLayersNames = new List<string>();
-            var layers = view.FocusMap.Layers;
-            var layer = layers.Next();
+            MapLayersManager manager = new MapLayersManager(mapDocument.ActiveView);
 
-            while (layer != null)
+            var obserPointsLayersNames = new List<string>();
+            manager.PointLayers.ToList().ForEach(layer =>
             {
-                if (layer is IFeatureLayer fl && fl.FeatureClass.AliasName.Equals(_observPointFeature, StringComparison.InvariantCultureIgnoreCase))
+                if (layer is IFeatureLayer fl && fl.FeatureClass.AliasName.Equals(GetObservPointFeatureName(), StringComparison.InvariantCultureIgnoreCase))
                 {
                     obserPointsLayersNames.Add(layer.Name);
                 }
+            });
 
-                layer = layers.Next();
-            }
             return obserPointsLayersNames;
         }
 
-        public IFeatureClass GetObservatioStationFeatureClass(IActiveView esriView)
+        public IEnumerable<string> GetObservationStationsLayers()
+        {
+            MapLayersManager manager = new MapLayersManager(mapDocument.ActiveView);
+            var observstsLayersNames = new List<string>();
+
+            //TODO: Use getting layers from a Helper to obtain all feature classes which can be inside a CompositeLayer also filter by Point type
+            manager.PolygonLayers.ToList().ForEach(layer =>
+            {
+                if (layer is IFeatureLayer fl && fl.FeatureClass.AliasName.EndsWith(GetObservObjectFeatureName(), StringComparison.InvariantCultureIgnoreCase))
+                {
+                    observstsLayersNames.Add(layer.Name);
+                }
+            });
+
+            return observstsLayersNames;
+        }
+
+        public IFeatureClass GetObservatioPointFeatureClass(IActiveView esriView)
         {
             return GetFeatureClass(view.ObservationPointsFeatureClass, esriView);
+        }
+        public IFeatureClass GetObservatioStationFeatureClass(IActiveView esriView)
+        {
+            return GetFeatureClass(view.ObservationStationFeatureClass, esriView);
         }
 
         public bool IsObservPointsExists(IActiveView view)
@@ -301,7 +342,7 @@ namespace MilSpace.Visibility.ViewController
 
         public string GetObservationStationLayerName => view.ObservationStationFeatureClass;
 
-        private IEnumerable<VisibilitySession>  GetAllVisibilitySessions()
+        private IEnumerable<VisibilitySession> GetAllVisibilitySessions()
         {
             return VisibilityZonesFacade.GetAllVisibilitySessions();
         }
@@ -331,7 +372,7 @@ namespace MilSpace.Visibility.ViewController
 
         private IFeatureLayer GetFeatureLayer(string featureClassName, IActiveView activeView)
         {
-            if(string.IsNullOrWhiteSpace(featureClassName))
+            if (string.IsNullOrWhiteSpace(featureClassName))
             {
                 return null;
             }
@@ -339,9 +380,9 @@ namespace MilSpace.Visibility.ViewController
             var layers = activeView.FocusMap.Layers;
             var layer = layers.Next();
 
-            while(layer != null)
+            while (layer != null)
             {
-                if(layer is IFeatureLayer fl && fl.FeatureClass.AliasName.Equals(featureClassName, StringComparison.InvariantCultureIgnoreCase))
+                if (layer is IFeatureLayer fl && fl.FeatureClass.AliasName.Equals(featureClassName, StringComparison.InvariantCultureIgnoreCase))
                 {
                     return fl;
                 }
