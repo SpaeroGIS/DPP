@@ -223,14 +223,14 @@ namespace MilSpace.Visibility.ViewController
         //Returns Observation Stations\Objects which are visible on the Current View Extent
         internal IEnumerable<ObservationObject> GetObservObjectsOnCurrentMapExtent(IActiveView activeView)
         {
-            var observPoints = GetObservatioStationFeatureClass(activeView);
+            var observPoints = GetObservatioStationFeatureClass(mapDocument.ActiveView);
             IEnumerable<ObservationObject> result = null;
             if (observPoints != null)
             {
                 IEnumerable<int> visiblePoints = EsriTools.GetSelectionByExtent(observPoints, activeView);
                 if (visiblePoints != null)
                 {
-                    result = VisibilityZonesFacade.GetObservationObjectByObjectIds(visiblePoints);
+                    result = VisibilityZonesFacade.GetAllObservationObjects();
                 }
             }
 
@@ -301,6 +301,7 @@ namespace MilSpace.Visibility.ViewController
             return observstsLayersNames;
         }
 
+
         public IFeatureClass GetObservatioPointFeatureClass(IActiveView esriView)
         {
             return GetFeatureClass(view.ObservationPointsFeatureClass, esriView);
@@ -349,7 +350,7 @@ namespace MilSpace.Visibility.ViewController
 
             while (layer != null)
             {
-                if (layer is IFeatureLayer fl && fl.FeatureClass.AliasName.Equals(featureClassName, StringComparison.InvariantCultureIgnoreCase))
+                if (layer is IFeatureLayer fl && fl.FeatureClass != null && fl.FeatureClass.AliasName.Equals(featureClassName, StringComparison.InvariantCultureIgnoreCase))
                 {
                     return fl.FeatureClass;
                 }
