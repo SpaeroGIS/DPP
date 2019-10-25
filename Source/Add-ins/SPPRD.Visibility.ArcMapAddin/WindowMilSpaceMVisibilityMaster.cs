@@ -23,7 +23,7 @@ namespace MilSpace.Visibility
         public WindowMilSpaceMVisibilityMaster()
         {
             InitializeComponent();
-            this.controller = new ObservationPointsController();
+            this.controller = new ObservationPointsController(ArcMap.Document);
             this.controller.SetView(this);
             this.controller.UpdateObservationPointsList();
 
@@ -177,41 +177,17 @@ namespace MilSpace.Visibility
         
         private void NextStepButton_Click(object sender, EventArgs e)
         {
-            if(StepsTabControl.SelectedIndex < StepsTabControl.TabCount - 1) StepsTabControl.SelectedIndex++; 
+            if(StepsTabControl.SelectedIndex < StepsTabControl.TabCount - 1) StepsTabControl.SelectedIndex++;
+            if (StepsTabControl.SelectedIndex == StepsTabControl.TabCount - 1)
+            {
+                MessageBox.Show("Start calculation");
+            }
         }
 
         private void PreviousStepButton_Click(object sender, EventArgs e)
         {
             if (StepsTabControl.SelectedIndex != 0) StepsTabControl.SelectedIndex--;
         }
-
-        //todo
-        //private static IEnumerable<IRasterLayer> GetRasterLayers(ILayer layer)
-        //{
-        //    var result = new List<IRasterLayer>();
-
-
-        //    if (layer is IRasterLayer fLayer)
-        //    {
-        //        result.Add(fLayer);
-        //    }
-
-        //    if (layer is ICompositeLayer cLayer)
-        //    {
-
-        //        for (int j = 0; j < cLayer.Count; j++)
-
-        //        {
-        //            if ((layer is IRasterLayer cRastreLayer))
-        //            {
-        //                result.Add(cRastreLayer);
-        //            }
-        //        }
-
-        //    }
-
-        //    return result;
-        //}
 
         private void CustomPanel_Click(object sender, EventArgs e)
         {

@@ -14,20 +14,25 @@ namespace MilSpace.DataAccess.Facade
     {
         public override string ConnectionString => MilSpaceConfiguration.ConnectionProperty.WorkingDBConnection;
 
-        public bool SaveVisibilitySession(VisibilitySession visibilitySession)
+        public VisibilitySession AddVisibilitySession(VisibilitySession visibilitySession)
         {
             try
             {
                 if (!context.MilSp_VisibilitySessions.Any(session => session.Id == visibilitySession.Id))
                 {
+
                     var sessionEntity = visibilitySession.Get();
                     context.MilSp_VisibilitySessions.InsertOnSubmit(sessionEntity);
-
                     Submit();
-                    return true;
+                    log.InfoEx($"Session {visibilitySession.Id} was successfully added");
+                }
+                else
+                {
+                    log.WarnEx($"Session {visibilitySession.Id} cannot added because of it already exists");
                 }
 
-                log.WarnEx($"Session with the same id already exists");
+
+                return context.MilSp_VisibilitySessions.First(session => session.Id == visibilitySession.Id).Get();
             }
             catch (MilSpaceDataException ex)
             {
@@ -41,12 +46,13 @@ namespace MilSpace.DataAccess.Facade
             catch (Exception ex)
             {
                 log.WarnEx($"Unexpected exception:{ex.Message}");
+
             }
 
-            return false;
+            return null;
         }
 
-        public bool UpdateVisibilitySession(VisibilitySession visibilitySession)
+        public VisibilitySession UpdateVisibilitySession(VisibilitySession visibilitySession)
         {
             try
             {
@@ -57,10 +63,11 @@ namespace MilSpace.DataAccess.Facade
                     sessionEntity.Update(visibilitySession);
 
                     Submit();
-                    return true;
+                    log.InfoEx($"Session {visibilitySession.Id} was successfully updated");
+                    return context.MilSp_VisibilitySessions.First(session => session.Id == visibilitySession.Id).Get();
                 }
 
-                log.WarnEx($"Session not found");
+                log.WarnEx($"Session {visibilitySession.Id} not found");
             }
             catch (MilSpaceDataException ex)
             {
@@ -76,7 +83,7 @@ namespace MilSpace.DataAccess.Facade
                 log.WarnEx($"Unexpected exception:{ex.Message}");
             }
 
-            return false;
+            return null; ;
         }
 
         public bool DeleteVisibilitySession(string id)
@@ -165,6 +172,83 @@ namespace MilSpace.DataAccess.Facade
             }
             return result;
 
+        }
+
+        public IEnumerable<ObservationPoint> GetObservationPointsByIds(IEnumerable<int> ids)
+        {
+
+            IEnumerable<ObservationPoint> result = null;
+            if (ids != null || ids.Count() > 0)
+            {
+
+                try
+                {
+                    //In case of performance issue reimplement it as context.ExecuteQuery with where clause OBJECTID == {ID1} OR OBJECTID == {ID2}.. 
+                    result = context.VisiblilityObservPoints.Where(p => ids.Any(id => id == p.OBJECTID)).Select(p => p.Get());
+                }
+                catch (MilSpaceDataException ex)
+                {
+                    log.WarnEx(ex.Message);
+                    if (ex.InnerException != null)
+                    {
+                        log.WarnEx(ex.InnerException.Message);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    log.WarnEx($"Unexpected exception:{ex.Message}");
+
+                }
+            }
+
+            return result;
+        }
+
+        public IEnumerable<ObservationObject> GetAllObservationObjects()
+        {
+            try
+            {
+                var result = context.VisiblilityObservationObjects.Select(op => op.Get());
+                log.InfoEx($"Get all Observation objefcts ({result.Count()}). user {Environment.UserName}");
+                return result;
+            }
+            catch (Exception ex)
+            {
+                log.WarnEx($"Unexpected exception:{ex.Message}");
+            }
+            return null;
+        }
+
+        public IEnumerable<ObservationObject> GetObservationObjectByIds(IEnumerable<int> ids)
+        {
+
+            IEnumerable<ObservationObject> result = null;
+            if (ids != null || ids.Count() > 0)
+            {
+
+                try
+                {
+                    //In case of performance issue reimplement it as context.ExecuteQuery with where clause OBJECTID == {ID1} OR OBJECTID == {ID2}.. 
+                    result = context.VisiblilityObservationObjects.Where(p => ids.Any(id => id == p.OBJECTID)).Select(p => p.Get());
+                }
+                catch (MilSpaceDataException ex)
+                {
+                    log.WarnEx(ex.Message);
+                    if (ex.InnerException != null)
+                    {
+                        log.WarnEx(ex.InnerException.Message);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    log.WarnEx($"Unexpected exception:{ex.Message}");
+
+                }
+            }
+
+            return result;
         }
 
     }
