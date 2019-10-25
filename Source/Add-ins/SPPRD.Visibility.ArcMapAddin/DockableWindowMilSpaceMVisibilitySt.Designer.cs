@@ -257,7 +257,6 @@
             this.panel44 = new System.Windows.Forms.Panel();
             this.textBox24 = new System.Windows.Forms.TextBox();
             this.label43 = new System.Windows.Forms.Label();
-            this.tlbTest = new System.Windows.Forms.ToolBar();
             this.panel43 = new System.Windows.Forms.Panel();
             this.textBox23 = new System.Windows.Forms.TextBox();
             this.label42 = new System.Windows.Forms.Label();
@@ -2510,7 +2509,6 @@
             this.tabPage3.Controls.Add(this.panel46);
             this.tabPage3.Controls.Add(this.panel45);
             this.tabPage3.Controls.Add(this.panel44);
-            this.tabPage3.Controls.Add(this.tlbTest);
             this.tabPage3.Controls.Add(this.panel43);
             this.tabPage3.Controls.Add(this.panel40);
             this.tabPage3.Controls.Add(this.panel47);
@@ -2533,7 +2531,7 @@
             this.richTextBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBox3.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.richTextBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.richTextBox3.Location = new System.Drawing.Point(0, 551);
+            this.richTextBox3.Location = new System.Drawing.Point(0, 575);
             this.richTextBox3.Name = "richTextBox3";
             this.richTextBox3.Size = new System.Drawing.Size(342, 48);
             this.richTextBox3.TabIndex = 71;
@@ -2632,19 +2630,6 @@
             this.label43.Size = new System.Drawing.Size(118, 17);
             this.label43.TabIndex = 4;
             this.label43.Text = "время формирования";
-            // 
-            // tlbTest
-            // 
-            this.tlbTest.ButtonSize = new System.Drawing.Size(18, 18);
-            this.tlbTest.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tlbTest.DropDownArrows = true;
-            this.tlbTest.ImageList = this.imageList1;
-            this.tlbTest.Location = new System.Drawing.Point(0, 599);
-            this.tlbTest.Name = "tlbTest";
-            this.tlbTest.ShowToolTips = true;
-            this.tlbTest.Size = new System.Drawing.Size(342, 24);
-            this.tlbTest.TabIndex = 41;
-            this.tlbTest.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.tlbTest_ButtonClick);
             // 
             // panel43
             // 
@@ -3495,7 +3480,6 @@
             this.panel28.ResumeLayout(false);
             this.panel28.PerformLayout();
             this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
             this.panel46.ResumeLayout(false);
             this.panel46.PerformLayout();
             this.panel45.ResumeLayout(false);
@@ -3796,7 +3780,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ComboBox cmbObservTypesEdit;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.ToolBar tlbTest;
         private System.Windows.Forms.ToolBarButton toolBarButton2;
         private System.Windows.Forms.ToolBarButton toolBarButton3;
         private System.Windows.Forms.ToolBarButton toolBarButton4;

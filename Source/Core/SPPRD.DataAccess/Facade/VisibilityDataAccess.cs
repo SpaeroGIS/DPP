@@ -14,21 +14,25 @@ namespace MilSpace.DataAccess.Facade
     {
         public override string ConnectionString => MilSpaceConfiguration.ConnectionProperty.WorkingDBConnection;
 
-        public bool SaveVisibilitySession(VisibilitySession visibilitySession)
+        public VisibilitySession AddVisibilitySession(VisibilitySession visibilitySession)
         {
             try
             {
                 if (!context.MilSp_VisibilitySessions.Any(session => session.Id == visibilitySession.Id))
                 {
-                   
+
                     var sessionEntity = visibilitySession.Get();
                     context.MilSp_VisibilitySessions.InsertOnSubmit(sessionEntity);
-
                     Submit();
-                    return true;
+                    log.InfoEx($"Session {visibilitySession.Id} was successfully added");
+                }
+                else
+                {
+                    log.WarnEx($"Session {visibilitySession.Id} cannot added because of it already exists");
                 }
 
-                log.WarnEx($"Session with the same id already exists");
+
+                return context.MilSp_VisibilitySessions.First(session => session.Id == visibilitySession.Id).Get();
             }
             catch (MilSpaceDataException ex)
             {
@@ -42,12 +46,13 @@ namespace MilSpace.DataAccess.Facade
             catch (Exception ex)
             {
                 log.WarnEx($"Unexpected exception:{ex.Message}");
+
             }
 
-            return false;
+            return null;
         }
 
-        public bool UpdateVisibilitySession(VisibilitySession visibilitySession)
+        public VisibilitySession UpdateVisibilitySession(VisibilitySession visibilitySession)
         {
             try
             {
@@ -58,10 +63,11 @@ namespace MilSpace.DataAccess.Facade
                     sessionEntity.Update(visibilitySession);
 
                     Submit();
-                    return true;
+                    log.InfoEx($"Session {visibilitySession.Id} was successfully updated");
+                    return context.MilSp_VisibilitySessions.First(session => session.Id == visibilitySession.Id).Get();
                 }
 
-                log.WarnEx($"Session not found");
+                log.WarnEx($"Session {visibilitySession.Id} not found");
             }
             catch (MilSpaceDataException ex)
             {
@@ -77,7 +83,7 @@ namespace MilSpace.DataAccess.Facade
                 log.WarnEx($"Unexpected exception:{ex.Message}");
             }
 
-            return false;
+            return null; ;
         }
 
         public bool DeleteVisibilitySession(string id)
@@ -203,7 +209,7 @@ namespace MilSpace.DataAccess.Facade
         {
             try
             {
-                var result = context.VisiblilityObservationObjects.Select(op => op.Get() );
+                var result = context.VisiblilityObservationObjects.Select(op => op.Get());
                 log.InfoEx($"Get all Observation objefcts ({result.Count()}). user {Environment.UserName}");
                 return result;
             }

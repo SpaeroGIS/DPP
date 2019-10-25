@@ -22,9 +22,6 @@ namespace MilSpace.DataAccess.Facade
 
         private static readonly string profileCalcFeatureClass = "CalcProfile_L";
 
-        //Visibility dataset template 
-        private static readonly string visibilityCalcFeatureClass = "VDSR";
-        private static readonly string visibilityCalcFeatureDataset = $"{visibilityCalcFeatureClass}DS";
         private Logger logger = Logger.GetLoggerEx("GdbAccess");
 
         private GdbAccess()
@@ -128,16 +125,14 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
-
-        public string ExportObservationPoints(IDataset sourceDataset, int[] filter)
+        public string ExportObservationFeatureClass(IDataset sourceDataset, string nameOfTargetDataset, int[] filter)
         {
+
             IWorkspace targetWorkspace = calcWorkspace;
 
-            //Target dataset name
-            string temporarySuffix = MilSpace.DataAccess.Helper.GetTemporaryNameSuffix();
-            string datasetName = $"{visibilityCalcFeatureDataset}{temporarySuffix}";
-            string nameOfTargetDataset = $"{visibilityCalcFeatureClass}{temporarySuffix}";
 
+            IWorkspaceEdit workspaceEdit = null;
+            bool isBeingEdited = false;
             try
             {
                 //create source workspace name
@@ -146,8 +141,17 @@ namespace MilSpace.DataAccess.Facade
 
                 IDataset sourceWorkspaceDataset = (IDataset)sourceDataset.Workspace;
                 IWorkspaceName sourceWorkspaceName = (IWorkspaceName)sourceWorkspaceDataset.FullName;
-
                 IFeatureClassName sourceDatasetName = (IFeatureClassName)sourceDataset.FullName;
+
+                workspaceEdit = (IWorkspaceEdit)sourceDataset.Workspace;
+                isBeingEdited = workspaceEdit.IsBeingEdited();
+                if (!isBeingEdited)
+                {
+                    workspaceEdit.StartEditing(true);
+                    workspaceEdit.StartEditOperation();
+                }
+
+
 
                 //create target workspace name
                 IDataset targetWorkspaceDataset = (IDataset)targetWorkspace;
@@ -156,15 +160,9 @@ namespace MilSpace.DataAccess.Facade
                 IFeatureClassName targetFeatureClassName = new FeatureClassNameClass();
 
 
-                //IFeatureWorkspace featureworkspace = (IFeatureWorkspace)calcWorkspace;
-                //IFeatureDataset targetDataset = featureworkspace.CreateFeatureDataset(datasetName, EsriTools.Wgs84Spatialreference);
-
                 IDatasetName targetDatasetName = (IDatasetName)targetFeatureClassName;
                 targetDatasetName.WorkspaceName = targetWorkspaceName;
                 targetDatasetName.Name = nameOfTargetDataset;
-                ////Open input Featureclass to get field definitions.
-                //ESRI.ArcGIS.esriSystem.IName sourceName = (ESRI.ArcGIS.esriSystem.IName)sourceDatasetName;
-                //ITable sourceTable = (ITable)sourceName.Open();
 
                 // we want to convert all of the features
                 IQueryFilter queryFilter = new QueryFilterClass();
@@ -189,8 +187,25 @@ namespace MilSpace.DataAccess.Facade
                 IClone geometryDefClone = (IClone)geometryDef;
                 IClone targetGeometryDefClone = geometryDefClone.Clone();
                 IGeometryDef targetGeometryDef = (IGeometryDef)targetGeometryDefClone;
+                bool exportWithError = true;
+                //crutch CHeck if the errof in the AreField
+                if (enumFieldError != null)
+                {
+                    var error = enumFieldError.Next();
+                    while (error != null)
+                    {
+                        logger.WarnEx($"Export error in the filed {targetFields.Field[error.FieldIndex].AliasName}");
+                        if (!targetFields.Field[error.FieldIndex].AliasName.StartsWith("shape_ST", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            exportWithError = false;
+                            logger.ErrorEx("Export is not acceptable");
+                        }
 
-                if (enumFieldError == null)
+                        error = enumFieldError.Next();
+                    }
+                }
+
+                if (enumFieldError == null || exportWithError)
                 {
                     IFeatureDataConverter fctofc = new FeatureDataConverterClass();
 
@@ -198,15 +213,23 @@ namespace MilSpace.DataAccess.Facade
                     IEnumInvalidObject enumErrors =
                         fctofc.ConvertFeatureClass(sourceDatasetName, queryFilter, null, targetFeatureClassName, targetGeometryDef,
                         pSourceTab.Fields, "", 1000, 0);
+                    return ((IDatasetName)targetFeatureClassName).Name;
                 }
-
-                return ((IDatasetName)targetFeatureClassName).Name;
             }
             catch (Exception exp)
             {
                 logger.ErrorEx(exp.ToString());
-                return null;
             }
+            finally
+            {
+                if (workspaceEdit != null && !isBeingEdited)
+                {
+                    workspaceEdit.StopEditOperation();
+                    workspaceEdit.StopEditing(false);
+                }
+            }
+
+            return null;
         }
 
         public string GenerateTempProfileLinesStorage()
@@ -357,7 +380,7 @@ namespace MilSpace.DataAccess.Facade
             IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)calcWorkspace;
             workspaceEdit.StartEditing(true);
             workspaceEdit.StartEditOperation();
-            
+
             var pointFeature = featureClass.CreateFeature();
 
             SetObservPointValues(featureClass, pointFeature, point, pointArgs);
