@@ -7,6 +7,8 @@ using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
+using MilSpace.DataAccess.Facade;
+using MilSpace.Tools;
 using MilSpace.Visibility.DTO;
 using MilSpace.Visibility.ViewController;
 using System;
@@ -606,10 +608,19 @@ namespace MilSpace.Visibility
         private void toolBar9_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
 
-
             if (e.Button == addTask)
             {
-                controller.CalculateVisibility(ArcMap.Document.ActiveView, @"E:\Data\3D\Relief\20190715\cmrzoi0715");
+                addTask.Enabled = false;
+                
+                var clculated = controller.CalculateVisibility(@"E:\Data\3D\Relief\20190715\cmrzoi0715", VisibilityManager.GenerateResultId());
+                
+                if (!clculated)
+                {
+                    //Localize message
+                    MessageBox.Show("The calculation finished with errors.\nFor more detaole go to the log file", "SPPRD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                addTask.Enabled = true;
+
             }
             else if (e.Button == removeTask)
             {
@@ -882,39 +893,6 @@ namespace MilSpace.Visibility
         private void Fields_TextChanged(object sender, EventArgs e)
         {
             _isFieldsChanged = true;
-        }
-
-        private void tlbTest_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
-        {
-            switch (tlbTest.Buttons.IndexOf(e.Button))
-            {
-                case 0:
-
-                    if (!controller.TestSave())
-                    {
-                        MessageBox.Show("Session already exist");
-                    }
-
-                    break;
-
-                case 1:
-
-                    if (!controller.TestUpdate())
-                    {
-                        MessageBox.Show("Session not found");
-                    }
-
-                    break;
-
-                case 2:
-
-                    if (!controller.TestDelete())
-                    {
-                        MessageBox.Show("Session not found");
-                    }
-
-                    break;
-            }
         }
     }
 }

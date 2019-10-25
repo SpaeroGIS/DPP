@@ -52,6 +52,8 @@ namespace MilSpace.DataAccess.DataTransfer
 
         };
 
+        public const VisibilityCalculationresultsEnum DefaultResultsSet = VisibilityCalculationresultsEnum.ObservationPoints | VisibilityCalculationresultsEnum.ObservationStations | VisibilityCalculationresultsEnum.VisibilityAreaRaster;
+
         public int IdRow;
         public string Id;
         public string Name;
@@ -61,7 +63,7 @@ namespace MilSpace.DataAccess.DataTransfer
         public DateTime? Finished { get; internal set; }
         public int CalculatedResults;
         public string ReferencedGDB;
-        internal static string GetResultName(VisibilityCalculationresultsEnum resultType, string sessionName)
+        public static string GetResultName(VisibilityCalculationresultsEnum resultType, string sessionName)
         {
             return $"{sessionName}{VisibilityResulSuffixes[resultType]}";
         }

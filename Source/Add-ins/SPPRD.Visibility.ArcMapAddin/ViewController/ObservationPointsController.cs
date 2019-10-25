@@ -13,6 +13,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using MilSpace.Core;
 
 namespace MilSpace.Visibility.ViewController
 {
@@ -28,6 +29,7 @@ namespace MilSpace.Visibility.ViewController
         private static Dictionary<ObservationPointMobilityTypesEnum, string> mobilityTypes = Enum.GetValues(typeof(ObservationPointMobilityTypesEnum)).Cast<ObservationPointMobilityTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
         private static Dictionary<ObservationPointTypesEnum, string> affiliationTypes = Enum.GetValues(typeof(ObservationPointTypesEnum)).Cast<ObservationPointTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
         private IMxDocument mapDocument;
+        private static Logger log = Logger.GetLoggerEx("ObservationPointsController");
 
         public ObservationPointsController(IMxDocument mapDocument)
         {
@@ -170,16 +172,35 @@ namespace MilSpace.Visibility.ViewController
             view.AddRecord(_observationPoints.Last());
         }
 
-        internal void CalculateVisibility(IActiveView activeView, string scrDEM, IEnumerable<int> pointsTOCalculate = null)
+        // TODO: Define the field in the View Interface to take sessionName, scrDEM and  culcResults
+        internal bool CalculateVisibility(string scrDEM, string sessionName,
+            VisibilityCalculationresultsEnum culcResults = VisibilitySession.DefaultResultsSet,
+            IEnumerable<int> pointsTOCalculate = null, IEnumerable<int> stationsTOCalculate = null)
         {
-            var observPoints = GetObservatioPointFeatureClass(activeView);
-
-            if (pointsTOCalculate == null) // Get points forn the current extent
+            try
             {
-                pointsTOCalculate = EsriTools.GetSelectionByExtent(observPoints, activeView);
+                var observPoints = GetObservatioPointFeatureClass(mapDocument.ActiveView);
+
+                var observObjects = GetObservatioStationFeatureClass(mapDocument.ActiveView);
+
+                if (pointsTOCalculate == null) // Get points forn the current extent
+                {
+                    pointsTOCalculate = EsriTools.GetSelectionByExtent(observPoints, mapDocument.ActiveView);
+                }
+                if (stationsTOCalculate == null) // Get points forn the current extent
+                {
+                    stationsTOCalculate = EsriTools.GetSelectionByExtent(observObjects, mapDocument.ActiveView);
+                }
+
+                VisibilityManager.Generate(observPoints, pointsTOCalculate, observObjects, stationsTOCalculate, scrDEM, culcResults, sessionName);
+            }
+            catch (Exception ex)
+            {
+                log.ErrorEx(ex.Message);
+                return false;
             }
 
-            VisibilityManager.Generate(observPoints, scrDEM, pointsTOCalculate);
+            return true;
         }
 
         //Returns Observation Points which are visible on the Current View Extent
@@ -225,37 +246,6 @@ namespace MilSpace.Visibility.ViewController
             var point = new PointClass { X = x, Y = y, SpatialReference = envelope.SpatialReference };
             point.Project(EsriTools.Wgs84Spatialreference);
             return point;
-        }
-
-        internal bool TestSave()
-        {
-            var visibilitySession = new VisibilitySession
-            {
-                Id = "1",
-                Name = "TestSession",
-                UserName = Environment.UserName,
-                CalculatedResults = 23
-            };
-
-            return VisibilityZonesFacade.SaveVisibilitySession(visibilitySession);
-        }
-
-        internal bool TestUpdate()
-        {
-            var visibilitySession = new VisibilitySession
-            {
-                Id = "1",
-                Name = "TestSessionEdit",
-                UserName = Environment.UserName,
-                CalculatedResults = 23
-            };
-
-            return VisibilityZonesFacade.UpdateVisibilitySession(visibilitySession);
-        }
-
-        internal bool TestDelete()
-        {
-            return VisibilityZonesFacade.DeleteVisibilitySession("1");
         }
 
         public IEnumerable<string> GetObservationPointTypes()

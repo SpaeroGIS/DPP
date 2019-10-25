@@ -5,11 +5,14 @@ namespace MilSpace.Tools.Exceptions
 {
     public class MilSpaceVisibilityCalcFailedException : MilSpaceException
     {
-        private static string messageTempleate = "There was the error on calculating visibility";
+        private static string messageTempleate = "There was the error on calculating visibility.";
 
-        public MilSpaceVisibilityCalcFailedException() 
+        public MilSpaceVisibilityCalcFailedException(): this(string.Empty)
+        {}
+
+        public MilSpaceVisibilityCalcFailedException(string extendedMessage) 
         {
-            errorMessage = messageTempleate;
+            errorMessage = $"{messageTempleate} {extendedMessage}" ;
         }
     }
 }
