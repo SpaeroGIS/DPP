@@ -40,18 +40,17 @@ namespace MilSpace.Visibility
             this.StepsTabControl = new System.Windows.Forms.TabControl();
             this.stepOne = new System.Windows.Forms.TabPage();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.richTextBox4 = new System.Windows.Forms.RichTextBox();
+            this.button4 = new System.Windows.Forms.Button();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.richTextBox3 = new System.Windows.Forms.RichTextBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
             this.uButton2 = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.stepTwo = new System.Windows.Forms.TabPage();
             this.panel7 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.dvgCheckList = new System.Windows.Forms.DataGridView();
-            this.richTextBox7 = new System.Windows.Forms.RichTextBox();
             this.panel8 = new System.Windows.Forms.Panel();
             this.toolBar7 = new System.Windows.Forms.ToolBar();
             this.toolBarButton51 = new System.Windows.Forms.ToolBarButton();
@@ -61,7 +60,6 @@ namespace MilSpace.Visibility
             this.checkDate = new System.Windows.Forms.CheckBox();
             this.checkAffiliation = new System.Windows.Forms.CheckBox();
             this.checkType = new System.Windows.Forms.CheckBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.panel10 = new System.Windows.Forms.Panel();
             this.cmbAffiliation = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -83,7 +81,6 @@ namespace MilSpace.Visibility
             this.panel18 = new System.Windows.Forms.Panel();
             this.checkBox5 = new System.Windows.Forms.CheckBox();
             this.checkBox6 = new System.Windows.Forms.CheckBox();
-            this.checkBox8 = new System.Windows.Forms.CheckBox();
             this.panel17 = new System.Windows.Forms.Panel();
             this.comboBox6 = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -95,9 +92,8 @@ namespace MilSpace.Visibility
             this.panel14 = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
             this.panel47 = new System.Windows.Forms.Panel();
-            this.richTextBox5 = new System.Windows.Forms.RichTextBox();
+            this.label22 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label46 = new System.Windows.Forms.Label();
             this.stepThree = new System.Windows.Forms.TabPage();
             this.panel25 = new System.Windows.Forms.Panel();
             this.checkBox7 = new System.Windows.Forms.CheckBox();
@@ -128,6 +124,7 @@ namespace MilSpace.Visibility
             this.label10 = new System.Windows.Forms.Label();
             this.stepFour = new System.Windows.Forms.TabPage();
             this.richTextBox6 = new System.Windows.Forms.RichTextBox();
+            this.chkColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.panel1.SuspendLayout();
             this.StepsTabControl.SuspendLayout();
             this.stepOne.SuspendLayout();
@@ -170,16 +167,16 @@ namespace MilSpace.Visibility
             this.panel1.Controls.Add(this.PreviousStepButton);
             this.panel1.Controls.Add(this.NextStepButton);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 345);
+            this.panel1.Location = new System.Drawing.Point(0, 456);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(0, 0, 8, 0);
-            this.panel1.Size = new System.Drawing.Size(744, 27);
+            this.panel1.Size = new System.Drawing.Size(929, 27);
             this.panel1.TabIndex = 1;
             // 
             // PreviousStepButton
             // 
             this.PreviousStepButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.PreviousStepButton.Location = new System.Drawing.Point(516, 0);
+            this.PreviousStepButton.Location = new System.Drawing.Point(701, 0);
             this.PreviousStepButton.Name = "PreviousStepButton";
             this.PreviousStepButton.Size = new System.Drawing.Size(110, 27);
             this.PreviousStepButton.TabIndex = 1;
@@ -190,7 +187,7 @@ namespace MilSpace.Visibility
             // NextStepButton
             // 
             this.NextStepButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.NextStepButton.Location = new System.Drawing.Point(626, 0);
+            this.NextStepButton.Location = new System.Drawing.Point(811, 0);
             this.NextStepButton.Name = "NextStepButton";
             this.NextStepButton.Padding = new System.Windows.Forms.Padding(0, 0, 8, 0);
             this.NextStepButton.Size = new System.Drawing.Size(110, 27);
@@ -416,13 +413,14 @@ namespace MilSpace.Visibility
             this.StepsTabControl.Controls.Add(this.stepTwo);
             this.StepsTabControl.Controls.Add(this.stepThree);
             this.StepsTabControl.Controls.Add(this.stepFour);
+            this.StepsTabControl.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.StepsTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.StepsTabControl.ImageList = this.imageList1;
             this.StepsTabControl.ItemSize = new System.Drawing.Size(100, 24);
             this.StepsTabControl.Location = new System.Drawing.Point(0, 0);
             this.StepsTabControl.Name = "StepsTabControl";
             this.StepsTabControl.SelectedIndex = 0;
-            this.StepsTabControl.Size = new System.Drawing.Size(744, 345);
+            this.StepsTabControl.Size = new System.Drawing.Size(929, 456);
             this.StepsTabControl.TabIndex = 2;
             // 
             // stepOne
@@ -436,55 +434,53 @@ namespace MilSpace.Visibility
             this.stepOne.Location = new System.Drawing.Point(4, 28);
             this.stepOne.Name = "stepOne";
             this.stepOne.Padding = new System.Windows.Forms.Padding(3);
-            this.stepOne.Size = new System.Drawing.Size(736, 313);
+            this.stepOne.Size = new System.Drawing.Size(921, 424);
             this.stepOne.TabIndex = 0;
             this.stepOne.Text = "Шаг 1";
             // 
             // panel6
             // 
-            this.panel6.BackColor = System.Drawing.Color.Gray;
-            this.panel6.Controls.Add(this.richTextBox4);
+            this.panel6.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.panel6.Controls.Add(this.button4);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel6.Location = new System.Drawing.Point(3, 237);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(730, 78);
+            this.panel6.Size = new System.Drawing.Size(915, 78);
             this.panel6.TabIndex = 3;
             // 
-            // richTextBox4
+            // button4
             // 
-            this.richTextBox4.BackColor = System.Drawing.Color.Gray;
-            this.richTextBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.richTextBox4.Location = new System.Drawing.Point(0, 0);
-            this.richTextBox4.Name = "richTextBox4";
-            this.richTextBox4.Size = new System.Drawing.Size(730, 78);
-            this.richTextBox4.TabIndex = 1;
-            this.richTextBox4.Text = "4.\tАнализ результатов наблюдения с известными параметрами (например - аэрофотосъе" +
+            this.button4.Enabled = false;
+            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button4.Location = new System.Drawing.Point(0, 0);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(914, 78);
+            this.button4.TabIndex = 4;
+            this.button4.Text = "4.\tАнализ результатов наблюдения с известными параметрами (например - аэрофотосъе" +
     "мки) с точки зрения расположения кадров на местности и обеспечения видимости.";
+            this.button4.UseVisualStyleBackColor = true;
             // 
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.Color.Silver;
-            this.panel5.Controls.Add(this.richTextBox3);
+            this.panel5.Controls.Add(this.button2);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(3, 159);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(730, 78);
+            this.panel5.Size = new System.Drawing.Size(915, 78);
             this.panel5.TabIndex = 2;
             // 
-            // richTextBox3
+            // button2
             // 
-            this.richTextBox3.BackColor = System.Drawing.Color.Silver;
-            this.richTextBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.richTextBox3.Location = new System.Drawing.Point(0, 0);
-            this.richTextBox3.Name = "richTextBox3";
-            this.richTextBox3.Size = new System.Drawing.Size(730, 78);
-            this.richTextBox3.TabIndex = 1;
-            this.richTextBox3.Text = "3.\tПодбор параметров пунктов наблюдения для наилучшего наблюдения за заданными ОН" +
+            this.button2.Enabled = false;
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button2.Location = new System.Drawing.Point(-3, 0);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(917, 78);
+            this.button2.TabIndex = 0;
+            this.button2.Text = "3.\tПодбор параметров пунктов наблюдения для наилучшего наблюдения за заданными ОН" +
     " (параметры аппаратуры, высота над поверхностью, направления и углы обзора).";
+            this.button2.UseVisualStyleBackColor = true;
             // 
             // panel4
             // 
@@ -493,15 +489,15 @@ namespace MilSpace.Visibility
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(3, 81);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(730, 78);
+            this.panel4.Size = new System.Drawing.Size(915, 78);
             this.panel4.TabIndex = 1;
             // 
             // uButton2
             // 
-            this.uButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.uButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.uButton2.Location = new System.Drawing.Point(-3, 0);
             this.uButton2.Name = "uButton2";
-            this.uButton2.Size = new System.Drawing.Size(736, 78);
+            this.uButton2.Size = new System.Drawing.Size(917, 78);
             this.uButton2.TabIndex = 0;
             this.uButton2.Text = "2.\t Определение видимости в заданных ОН, для выбранных пунктов наблюдения, с учет" +
     "ом индивидуальных параметров пунктов наблюдения. ";
@@ -509,23 +505,22 @@ namespace MilSpace.Visibility
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.richTextBox1);
+            this.panel3.Controls.Add(this.button1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(3, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(730, 78);
+            this.panel3.Size = new System.Drawing.Size(915, 78);
             this.panel3.TabIndex = 0;
             // 
-            // richTextBox1
+            // button1
             // 
-            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.richTextBox1.Location = new System.Drawing.Point(0, 0);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(730, 78);
-            this.richTextBox1.TabIndex = 0;
-            this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button1.Location = new System.Drawing.Point(-3, -3);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(917, 81);
+            this.button1.TabIndex = 0;
+            this.button1.Text = resources.GetString("button1.Text");
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // stepTwo
             // 
@@ -535,7 +530,7 @@ namespace MilSpace.Visibility
             this.stepTwo.Location = new System.Drawing.Point(4, 28);
             this.stepTwo.Name = "stepTwo";
             this.stepTwo.Padding = new System.Windows.Forms.Padding(3);
-            this.stepTwo.Size = new System.Drawing.Size(736, 313);
+            this.stepTwo.Size = new System.Drawing.Size(921, 424);
             this.stepTwo.TabIndex = 1;
             this.stepTwo.Text = "Шаг 2";
             this.stepTwo.UseVisualStyleBackColor = true;
@@ -544,9 +539,9 @@ namespace MilSpace.Visibility
             // 
             this.panel7.Controls.Add(this.splitContainer1);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(3, 27);
+            this.panel7.Location = new System.Drawing.Point(3, 48);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(730, 283);
+            this.panel7.Size = new System.Drawing.Size(915, 373);
             this.panel7.TabIndex = 67;
             // 
             // splitContainer1
@@ -558,7 +553,6 @@ namespace MilSpace.Visibility
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.dvgCheckList);
-            this.splitContainer1.Panel1.Controls.Add(this.richTextBox7);
             this.splitContainer1.Panel1.Controls.Add(this.panel8);
             this.splitContainer1.Panel1.Controls.Add(this.panel9);
             this.splitContainer1.Panel1.Controls.Add(this.panel10);
@@ -575,8 +569,8 @@ namespace MilSpace.Visibility
             this.splitContainer1.Panel2.Controls.Add(this.panel16);
             this.splitContainer1.Panel2.Controls.Add(this.panel15);
             this.splitContainer1.Panel2.Controls.Add(this.panel14);
-            this.splitContainer1.Size = new System.Drawing.Size(730, 283);
-            this.splitContainer1.SplitterDistance = 354;
+            this.splitContainer1.Size = new System.Drawing.Size(915, 373);
+            this.splitContainer1.SplitterDistance = 441;
             this.splitContainer1.SplitterWidth = 10;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -587,35 +581,27 @@ namespace MilSpace.Visibility
             this.dvgCheckList.AllowUserToResizeColumns = false;
             this.dvgCheckList.AllowUserToResizeRows = false;
             this.dvgCheckList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
+            this.dvgCheckList.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dvgCheckList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dvgCheckList.ColumnHeadersVisible = false;
+            this.dvgCheckList.Dock = System.Windows.Forms.DockStyle.Top;
             this.dvgCheckList.Location = new System.Drawing.Point(0, 120);
             this.dvgCheckList.MultiSelect = false;
             this.dvgCheckList.Name = "dvgCheckList";
             this.dvgCheckList.ReadOnly = true;
+            this.dvgCheckList.RowHeadersVisible = false;
             this.dvgCheckList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dvgCheckList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dvgCheckList.Size = new System.Drawing.Size(354, 84);
+            this.dvgCheckList.Size = new System.Drawing.Size(441, 223);
             this.dvgCheckList.TabIndex = 23;
-            // 
-            // richTextBox7
-            // 
-            this.richTextBox7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.richTextBox7.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox7.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.richTextBox7.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.richTextBox7.Location = new System.Drawing.Point(0, 210);
-            this.richTextBox7.Name = "richTextBox7";
-            this.richTextBox7.Size = new System.Drawing.Size(354, 49);
-            this.richTextBox7.TabIndex = 22;
-            this.richTextBox7.Text = resources.GetString("richTextBox7.Text");
             // 
             // panel8
             // 
             this.panel8.Controls.Add(this.toolBar7);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel8.Location = new System.Drawing.Point(0, 259);
+            this.panel8.Location = new System.Drawing.Point(0, 349);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(354, 24);
+            this.panel8.Size = new System.Drawing.Size(441, 24);
             this.panel8.TabIndex = 21;
             // 
             // toolBar7
@@ -631,7 +617,7 @@ namespace MilSpace.Visibility
             this.toolBar7.Location = new System.Drawing.Point(0, 0);
             this.toolBar7.Name = "toolBar7";
             this.toolBar7.ShowToolTips = true;
-            this.toolBar7.Size = new System.Drawing.Size(354, 28);
+            this.toolBar7.Size = new System.Drawing.Size(441, 28);
             this.toolBar7.TabIndex = 40;
             // 
             // toolBarButton51
@@ -657,12 +643,11 @@ namespace MilSpace.Visibility
             this.panel9.Controls.Add(this.checkDate);
             this.panel9.Controls.Add(this.checkAffiliation);
             this.panel9.Controls.Add(this.checkType);
-            this.panel9.Controls.Add(this.checkBox1);
             this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel9.Location = new System.Drawing.Point(0, 96);
             this.panel9.Name = "panel9";
             this.panel9.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel9.Size = new System.Drawing.Size(354, 24);
+            this.panel9.Size = new System.Drawing.Size(441, 24);
             this.panel9.TabIndex = 17;
             // 
             // checkDate
@@ -671,7 +656,7 @@ namespace MilSpace.Visibility
             this.checkDate.Checked = true;
             this.checkDate.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkDate.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkDate.Location = new System.Drawing.Point(221, 0);
+            this.checkDate.Location = new System.Drawing.Point(174, 0);
             this.checkDate.Name = "checkDate";
             this.checkDate.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
             this.checkDate.Size = new System.Drawing.Size(53, 24);
@@ -686,7 +671,7 @@ namespace MilSpace.Visibility
             this.checkAffiliation.Checked = true;
             this.checkAffiliation.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkAffiliation.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkAffiliation.Location = new System.Drawing.Point(98, 0);
+            this.checkAffiliation.Location = new System.Drawing.Point(51, 0);
             this.checkAffiliation.Name = "checkAffiliation";
             this.checkAffiliation.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
             this.checkAffiliation.Size = new System.Drawing.Size(123, 24);
@@ -701,7 +686,7 @@ namespace MilSpace.Visibility
             this.checkType.Checked = true;
             this.checkType.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkType.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkType.Location = new System.Drawing.Point(51, 0);
+            this.checkType.Location = new System.Drawing.Point(4, 0);
             this.checkType.Name = "checkType";
             this.checkType.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
             this.checkType.Size = new System.Drawing.Size(47, 24);
@@ -709,20 +694,6 @@ namespace MilSpace.Visibility
             this.checkType.Text = "тип";
             this.checkType.UseVisualStyleBackColor = true;
             this.checkType.CheckedChanged += new System.EventHandler(this.Filter_CheckedChanged);
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkBox1.Location = new System.Drawing.Point(4, 0);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.checkBox1.Size = new System.Drawing.Size(47, 24);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "ИД";
-            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // panel10
             // 
@@ -734,7 +705,7 @@ namespace MilSpace.Visibility
             this.panel10.Location = new System.Drawing.Point(0, 72);
             this.panel10.Name = "panel10";
             this.panel10.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel10.Size = new System.Drawing.Size(354, 24);
+            this.panel10.Size = new System.Drawing.Size(441, 24);
             this.panel10.TabIndex = 16;
             // 
             // cmbAffiliation
@@ -794,7 +765,7 @@ namespace MilSpace.Visibility
             this.panel11.Location = new System.Drawing.Point(0, 48);
             this.panel11.Name = "panel11";
             this.panel11.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel11.Size = new System.Drawing.Size(354, 24);
+            this.panel11.Size = new System.Drawing.Size(441, 24);
             this.panel11.TabIndex = 15;
             // 
             // label4
@@ -816,7 +787,7 @@ namespace MilSpace.Visibility
             this.panel12.Location = new System.Drawing.Point(0, 24);
             this.panel12.Name = "panel12";
             this.panel12.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel12.Size = new System.Drawing.Size(354, 24);
+            this.panel12.Size = new System.Drawing.Size(441, 24);
             this.panel12.TabIndex = 14;
             // 
             // ObservPointLabel
@@ -847,7 +818,7 @@ namespace MilSpace.Visibility
             this.panel13.Location = new System.Drawing.Point(0, 0);
             this.panel13.Name = "panel13";
             this.panel13.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel13.Size = new System.Drawing.Size(354, 24);
+            this.panel13.Size = new System.Drawing.Size(441, 24);
             this.panel13.TabIndex = 13;
             // 
             // label5
@@ -866,9 +837,9 @@ namespace MilSpace.Visibility
             // 
             this.panel19.Controls.Add(this.toolBar1);
             this.panel19.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel19.Location = new System.Drawing.Point(0, 255);
+            this.panel19.Location = new System.Drawing.Point(0, 345);
             this.panel19.Name = "panel19";
-            this.panel19.Size = new System.Drawing.Size(366, 24);
+            this.panel19.Size = new System.Drawing.Size(464, 24);
             this.panel19.TabIndex = 22;
             // 
             // toolBar1
@@ -884,7 +855,7 @@ namespace MilSpace.Visibility
             this.toolBar1.Location = new System.Drawing.Point(0, 0);
             this.toolBar1.Name = "toolBar1";
             this.toolBar1.ShowToolTips = true;
-            this.toolBar1.Size = new System.Drawing.Size(366, 28);
+            this.toolBar1.Size = new System.Drawing.Size(464, 28);
             this.toolBar1.TabIndex = 40;
             // 
             // toolBarButton1
@@ -912,19 +883,18 @@ namespace MilSpace.Visibility
             this.checkedListBox2.FormattingEnabled = true;
             this.checkedListBox2.Location = new System.Drawing.Point(0, 120);
             this.checkedListBox2.Name = "checkedListBox2";
-            this.checkedListBox2.Size = new System.Drawing.Size(366, 135);
+            this.checkedListBox2.Size = new System.Drawing.Size(464, 225);
             this.checkedListBox2.TabIndex = 21;
             // 
             // panel18
             // 
             this.panel18.Controls.Add(this.checkBox5);
             this.panel18.Controls.Add(this.checkBox6);
-            this.panel18.Controls.Add(this.checkBox8);
             this.panel18.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel18.Location = new System.Drawing.Point(0, 96);
             this.panel18.Name = "panel18";
             this.panel18.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel18.Size = new System.Drawing.Size(366, 24);
+            this.panel18.Size = new System.Drawing.Size(464, 24);
             this.panel18.TabIndex = 18;
             // 
             // checkBox5
@@ -933,13 +903,14 @@ namespace MilSpace.Visibility
             this.checkBox5.Checked = true;
             this.checkBox5.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox5.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkBox5.Location = new System.Drawing.Point(174, 0);
+            this.checkBox5.Location = new System.Drawing.Point(127, 0);
             this.checkBox5.Name = "checkBox5";
             this.checkBox5.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
             this.checkBox5.Size = new System.Drawing.Size(53, 24);
             this.checkBox5.TabIndex = 3;
             this.checkBox5.Text = "дата";
             this.checkBox5.UseVisualStyleBackColor = true;
+            this.checkBox5.CheckedChanged += new System.EventHandler(this.checkBox5_CheckedChanged);
             // 
             // checkBox6
             // 
@@ -947,27 +918,13 @@ namespace MilSpace.Visibility
             this.checkBox6.Checked = true;
             this.checkBox6.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox6.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkBox6.Location = new System.Drawing.Point(51, 0);
+            this.checkBox6.Location = new System.Drawing.Point(4, 0);
             this.checkBox6.Name = "checkBox6";
             this.checkBox6.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
             this.checkBox6.Size = new System.Drawing.Size(123, 24);
             this.checkBox6.TabIndex = 2;
             this.checkBox6.Text = "принаждлежность";
             this.checkBox6.UseVisualStyleBackColor = true;
-            // 
-            // checkBox8
-            // 
-            this.checkBox8.AutoSize = true;
-            this.checkBox8.Checked = true;
-            this.checkBox8.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox8.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkBox8.Location = new System.Drawing.Point(4, 0);
-            this.checkBox8.Name = "checkBox8";
-            this.checkBox8.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.checkBox8.Size = new System.Drawing.Size(47, 24);
-            this.checkBox8.TabIndex = 0;
-            this.checkBox8.Text = "ИД";
-            this.checkBox8.UseVisualStyleBackColor = true;
             // 
             // panel17
             // 
@@ -977,7 +934,7 @@ namespace MilSpace.Visibility
             this.panel17.Location = new System.Drawing.Point(0, 72);
             this.panel17.Name = "panel17";
             this.panel17.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel17.Size = new System.Drawing.Size(366, 24);
+            this.panel17.Size = new System.Drawing.Size(464, 24);
             this.panel17.TabIndex = 17;
             // 
             // comboBox6
@@ -1012,7 +969,7 @@ namespace MilSpace.Visibility
             this.panel16.Location = new System.Drawing.Point(0, 48);
             this.panel16.Name = "panel16";
             this.panel16.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel16.Size = new System.Drawing.Size(366, 24);
+            this.panel16.Size = new System.Drawing.Size(464, 24);
             this.panel16.TabIndex = 16;
             // 
             // label8
@@ -1034,7 +991,7 @@ namespace MilSpace.Visibility
             this.panel15.Location = new System.Drawing.Point(0, 24);
             this.panel15.Name = "panel15";
             this.panel15.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel15.Size = new System.Drawing.Size(366, 24);
+            this.panel15.Size = new System.Drawing.Size(464, 24);
             this.panel15.TabIndex = 15;
             // 
             // label19
@@ -1043,9 +1000,8 @@ namespace MilSpace.Visibility
             this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label19.Location = new System.Drawing.Point(65, 4);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(118, 13);
+            this.label19.Size = new System.Drawing.Size(0, 13);
             this.label19.TabIndex = 1;
-            this.label19.Text = "ObStations_201810";
             // 
             // label7
             // 
@@ -1065,7 +1021,7 @@ namespace MilSpace.Visibility
             this.panel14.Location = new System.Drawing.Point(0, 0);
             this.panel14.Name = "panel14";
             this.panel14.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel14.Size = new System.Drawing.Size(366, 24);
+            this.panel14.Size = new System.Drawing.Size(464, 24);
             this.panel14.TabIndex = 14;
             // 
             // label6
@@ -1082,47 +1038,34 @@ namespace MilSpace.Visibility
             // 
             // panel47
             // 
-            this.panel47.Controls.Add(this.richTextBox5);
+            this.panel47.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.panel47.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel47.Controls.Add(this.label22);
             this.panel47.Controls.Add(this.comboBox1);
-            this.panel47.Controls.Add(this.label46);
             this.panel47.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel47.Location = new System.Drawing.Point(3, 3);
             this.panel47.Name = "panel47";
             this.panel47.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.panel47.Size = new System.Drawing.Size(730, 24);
+            this.panel47.Size = new System.Drawing.Size(915, 45);
             this.panel47.TabIndex = 66;
             // 
-            // richTextBox5
+            // label22
             // 
-            this.richTextBox5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.richTextBox5.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox5.Dock = System.Windows.Forms.DockStyle.Right;
-            this.richTextBox5.Location = new System.Drawing.Point(435, 0);
-            this.richTextBox5.Name = "richTextBox5";
-            this.richTextBox5.Size = new System.Drawing.Size(295, 24);
-            this.richTextBox5.TabIndex = 6;
-            this.richTextBox5.Text = "выбрать все ЦММ/ЦМР проекта";
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label22.Location = new System.Drawing.Point(8, 16);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(135, 13);
+            this.label22.TabIndex = 6;
+            this.label22.Text = "Поверхность расчета";
             // 
             // comboBox1
             // 
-            this.comboBox1.Dock = System.Windows.Forms.DockStyle.Left;
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(118, 0);
+            this.comboBox1.Location = new System.Drawing.Point(149, 13);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(313, 21);
+            this.comboBox1.Size = new System.Drawing.Size(290, 21);
             this.comboBox1.TabIndex = 5;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
-            // label46
-            // 
-            this.label46.AutoSize = true;
-            this.label46.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label46.Location = new System.Drawing.Point(4, 0);
-            this.label46.Name = "label46";
-            this.label46.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-            this.label46.Size = new System.Drawing.Size(114, 17);
-            this.label46.TabIndex = 4;
-            this.label46.Text = "поверхность расчета";
             // 
             // stepThree
             // 
@@ -1135,7 +1078,7 @@ namespace MilSpace.Visibility
             this.stepThree.ImageIndex = 3;
             this.stepThree.Location = new System.Drawing.Point(4, 28);
             this.stepThree.Name = "stepThree";
-            this.stepThree.Size = new System.Drawing.Size(736, 313);
+            this.stepThree.Size = new System.Drawing.Size(921, 424);
             this.stepThree.TabIndex = 2;
             this.stepThree.Text = "Шаг 3";
             this.stepThree.UseVisualStyleBackColor = true;
@@ -1149,7 +1092,7 @@ namespace MilSpace.Visibility
             this.panel25.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel25.Location = new System.Drawing.Point(0, 128);
             this.panel25.Name = "panel25";
-            this.panel25.Size = new System.Drawing.Size(736, 26);
+            this.panel25.Size = new System.Drawing.Size(921, 26);
             this.panel25.TabIndex = 19;
             // 
             // checkBox7
@@ -1210,7 +1153,7 @@ namespace MilSpace.Visibility
             this.panel24.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel24.Location = new System.Drawing.Point(0, 102);
             this.panel24.Name = "panel24";
-            this.panel24.Size = new System.Drawing.Size(736, 26);
+            this.panel24.Size = new System.Drawing.Size(921, 26);
             this.panel24.TabIndex = 18;
             // 
             // textBox1
@@ -1273,7 +1216,7 @@ namespace MilSpace.Visibility
             this.panel23.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel23.Location = new System.Drawing.Point(0, 76);
             this.panel23.Name = "panel23";
-            this.panel23.Size = new System.Drawing.Size(736, 26);
+            this.panel23.Size = new System.Drawing.Size(921, 26);
             this.panel23.TabIndex = 17;
             // 
             // comboBox9
@@ -1320,7 +1263,7 @@ namespace MilSpace.Visibility
             this.panel22.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel22.Location = new System.Drawing.Point(0, 50);
             this.panel22.Name = "panel22";
-            this.panel22.Size = new System.Drawing.Size(736, 26);
+            this.panel22.Size = new System.Drawing.Size(921, 26);
             this.panel22.TabIndex = 16;
             // 
             // comboBox8
@@ -1376,7 +1319,7 @@ namespace MilSpace.Visibility
             this.panel21.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel21.Location = new System.Drawing.Point(0, 24);
             this.panel21.Name = "panel21";
-            this.panel21.Size = new System.Drawing.Size(736, 26);
+            this.panel21.Size = new System.Drawing.Size(921, 26);
             this.panel21.TabIndex = 15;
             // 
             // checkBox9
@@ -1439,7 +1382,7 @@ namespace MilSpace.Visibility
             this.panel20.Location = new System.Drawing.Point(0, 0);
             this.panel20.Name = "panel20";
             this.panel20.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel20.Size = new System.Drawing.Size(736, 24);
+            this.panel20.Size = new System.Drawing.Size(921, 24);
             this.panel20.TabIndex = 14;
             // 
             // label10
@@ -1460,7 +1403,7 @@ namespace MilSpace.Visibility
             this.stepFour.ImageIndex = 4;
             this.stepFour.Location = new System.Drawing.Point(4, 28);
             this.stepFour.Name = "stepFour";
-            this.stepFour.Size = new System.Drawing.Size(736, 313);
+            this.stepFour.Size = new System.Drawing.Size(921, 424);
             this.stepFour.TabIndex = 3;
             this.stepFour.Text = "Шаг 4";
             this.stepFour.UseVisualStyleBackColor = true;
@@ -1470,21 +1413,29 @@ namespace MilSpace.Visibility
             this.richTextBox6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.richTextBox6.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBox6.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.richTextBox6.Location = new System.Drawing.Point(0, 170);
+            this.richTextBox6.Location = new System.Drawing.Point(0, 281);
             this.richTextBox6.Name = "richTextBox6";
-            this.richTextBox6.Size = new System.Drawing.Size(736, 143);
+            this.richTextBox6.Size = new System.Drawing.Size(921, 143);
             this.richTextBox6.TabIndex = 0;
             this.richTextBox6.Text = resources.GetString("richTextBox6.Text");
+            // 
+            // chkColumn
+            // 
+            this.chkColumn.Frozen = true;
+            this.chkColumn.HeaderText = "";
+            this.chkColumn.Name = "chkColumn";
+            this.chkColumn.Width = 5;
             // 
             // WindowMilSpaceMVisibilityMaster
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(744, 372);
+            this.ClientSize = new System.Drawing.Size(929, 483);
             this.Controls.Add(this.StepsTabControl);
             this.Controls.Add(this.panel1);
             this.Name = "WindowMilSpaceMVisibilityMaster";
             this.Text = "MilSpace. Module visibility. Master";
+            this.Load += new System.EventHandler(this.WindowMilSpaceMVisibilityMaster_Load);
             this.panel1.ResumeLayout(false);
             this.StepsTabControl.ResumeLayout(false);
             this.stepOne.ResumeLayout(false);
@@ -1554,15 +1505,12 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.TabControl StepsTabControl;
         private System.Windows.Forms.TabPage stepOne;
         private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.RichTextBox richTextBox4;
         private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.RichTextBox richTextBox3;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.TabPage stepTwo;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.RichTextBox richTextBox7;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.ToolBar toolBar7;
         private System.Windows.Forms.ToolBarButton toolBarButton51;
@@ -1572,7 +1520,6 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.CheckBox checkDate;
         private System.Windows.Forms.CheckBox checkAffiliation;
         private System.Windows.Forms.CheckBox checkType;
-        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.ComboBox cmbAffiliation;
         private System.Windows.Forms.Label label3;
@@ -1593,7 +1540,6 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Panel panel18;
         private System.Windows.Forms.CheckBox checkBox5;
         private System.Windows.Forms.CheckBox checkBox6;
-        private System.Windows.Forms.CheckBox checkBox8;
         private System.Windows.Forms.Panel panel17;
         private System.Windows.Forms.ComboBox comboBox6;
         private System.Windows.Forms.Label label9;
@@ -1604,9 +1550,6 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Panel panel14;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Panel panel47;
-        private System.Windows.Forms.RichTextBox richTextBox5;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Label label46;
         private System.Windows.Forms.TabPage stepThree;
         private System.Windows.Forms.Panel panel25;
         private System.Windows.Forms.CheckBox checkBox7;
@@ -1641,6 +1584,11 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Label ObservPointLabel;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Button uButton2;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn chkColumn;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
     }
 }

@@ -2,6 +2,7 @@
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Visibility.DTO;
 using MilSpace.Visibility.ViewController;
+using MilSpace.Core.Tools;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,34 +15,46 @@ namespace MilSpace.Visibility
     public partial class WindowMilSpaceMVisibilityMaster : Form , IObservationPointsView
     {
         private const string _allValuesFilterText = "All";
-        private ObservationPointsController controller;
+        private ObservationPointsController controller = new ObservationPointsController(ArcMap.Document);
         private BindingList<ObservPointGui> _observPointGuis;
-       
+        
 
-        public IActiveView ActiveView => ArcMap.Document.ActiveView;
+
+
+
+        private static IActiveView ActiveView => ArcMap.Document.ActiveView;
+
+
+       MapLayersManager manager = new MapLayersManager(ActiveView);
+        
 
 
 
         public WindowMilSpaceMVisibilityMaster()
         {
+            //this.ActiveView = ActiveView;
             InitializeComponent();
            
+            controller.SetView(this);
+
         }
         public void SecondTypePicked()
         {
-           controller = new ObservationPointsController();
-           controller.SetView(this);
+           
            controller.UpdateObservationPointsList();
+           
 
-            //FillPointsLayersComboBox();
-          //  PopulateComboBox(comboBox1, ProfileLayers.RasterLayers);
+            comboBox1.Items.AddRange(manager.RasterLayers.ToArray());
             FillObservPointLabel();
+            FillObsObj();
         }
         public void FillObservPointLabel()
         {
            var temp = controller.GetObservationPointsLayers(ActiveView).ToArray();
-            
+            //label слой ПН\ТН
             ObservPointLabel.Text = temp.FirstOrDefault();
+            //label слой ОН
+            label19.Text = controller.GetObservationStationsLayers().FirstOrDefault();
         }
         public void PopulateComboBox(ComboBox comboBox, IEnumerable<ILayer> layers)
         {
@@ -50,6 +63,12 @@ namespace MilSpace.Visibility
 
         public void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints, VeluableObservPointFieldsEnum filter)
         {
+
+            DataGridViewCheckBoxColumn checkColumn = new DataGridViewCheckBoxColumn();
+            
+
+            
+            dvgCheckList.Columns.Add(chkColumn);
             if (observationPoints.Any())
             {
                 var ItemsToShow = observationPoints.Select(i => new ObservPointGui
@@ -71,6 +90,26 @@ namespace MilSpace.Visibility
                 dvgCheckList.Update();
                 dvgCheckList.Rows[0].Selected = true;
             }
+        }
+        public void FillObsObj()
+        {
+            try { 
+                var temp = controller
+                    .GetObservObjectsOnCurrentMapExtent(ActiveView).ToArray()
+                    .Select(i => i.Title)
+                   ;
+            
+
+                if(temp != null)
+                {
+                    checkedListBox2.Items.Add(temp);
+                }
+            }
+            catch(ArgumentNullException)
+            {
+                checkedListBox2.Text = "no obser object added!";
+            }
+   
         }
 
         private void SetDataGridView()
@@ -171,13 +210,15 @@ namespace MilSpace.Visibility
         }
         
 
+         public string ObservationStationFeatureClass => label19.Text;
+        public string ObservationPointsFeatureClass => ObservPointLabel.Text;
 
-        public string ObservationPointsFeatureClass => throw new NotImplementedException();
+
         public IEnumerable<string> GetTypes => throw new NotImplementedException();
 
         public IEnumerable<string> GetAffiliation => throw new NotImplementedException();
 
-        public string ObservationStationFeatureClass => throw new NotImplementedException();
+       
 
         public void AddRecord(ObservationPoint observationPoint)
         {
@@ -227,7 +268,7 @@ namespace MilSpace.Visibility
         //    return result;
         //}
 
-        
+
 
         private void ultraButton1_Click(object sender, EventArgs e)
         {
@@ -235,7 +276,12 @@ namespace MilSpace.Visibility
             StepsTabControl.SelectedIndex++;
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void WindowMilSpaceMVisibilityMaster_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox5_CheckedChanged(object sender, EventArgs e)
         {
 
         }
