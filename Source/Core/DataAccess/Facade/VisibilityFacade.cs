@@ -1,4 +1,5 @@
 ﻿using MilSpace.DataAccess.DataTransfer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -36,21 +37,31 @@ namespace MilSpace.DataAccess.Facade
         {
             using (var accessor = new VisibilityDataAccess())
             {
-                var res = accessor.GetObservationObjectByIds(ids);
+                var res = accessor.GetObservationObjectByIds(ids).ToArray();
                 return res;
             }
         }
 
-        public static bool SaveVisibilitySession(VisibilitySession visibilitySession)
+        public static VisibilitySession AddVisibilitySession(VisibilitySession visibilitySession)
         {
             using(var accessor = new VisibilityDataAccess())
             {
-                var res = accessor.SaveVisibilitySession(visibilitySession);
+                var res = accessor.AddVisibilitySession(visibilitySession);
                 return res;
             }
         }
 
-        public static bool UpdateVisibilitySession(VisibilitySession visibilitySession)
+        public static VisibilitySession FinishVisibilitySession(VisibilitySession visibilitySession)
+        {
+            using (var accessor = new VisibilityDataAccess())
+            {
+                visibilitySession.Finished = DateTime.Now;
+                var res = accessor.UpdateVisibilitySession(visibilitySession);
+                return res;
+            }
+        }
+
+        public static VisibilitySession UpdateVisibilitySession(VisibilitySession visibilitySession)
         {
             using(var accessor = new VisibilityDataAccess())
             {

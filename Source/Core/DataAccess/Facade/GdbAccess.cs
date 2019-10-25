@@ -22,9 +22,6 @@ namespace MilSpace.DataAccess.Facade
 
         private static readonly string profileCalcFeatureClass = "CalcProfile_L";
 
-        //Visibility dataset template 
-        private static readonly string visibilityCalcFeatureClass = "VDSR";
-        private static readonly string visibilityCalcFeatureDataset = $"{visibilityCalcFeatureClass}DS";
         private Logger logger = Logger.GetLoggerEx("GdbAccess");
 
         private GdbAccess()
@@ -88,130 +85,34 @@ namespace MilSpace.DataAccess.Facade
             return featureClassName;
         }
 
-        //public string AddObservationPointsToCalculation(IWorkspace sourceWorkspace1, IFeatureClass sourceFeatureClass,
-        //    IEnumerable<IFeature> observationPoints)
-        //{
-        //    //Target dataset name
-        //    string temporarySuffix = MilSpace.DataAccess.Helper.GetTemporaryNameSuffix();
-        //    string datasetName = $"{visibilityCalcFeatureDataset}{temporarySuffix}";
-        //    string stringtargetFeatureClassName = $"{visibilityCalcFeatureClass}{temporarySuffix}";
+        public VisibilityCalculationresultsEnum CheckVisibilityResult(string sessionName)
+        {
+            //Check Points and Objects\Stations
 
-        //    // Create the objects and references necessary for field validation.
-        //    IFieldChecker fieldChecker = new FieldCheckerClass();
-        //    IFields sourceFields = sourceFeatureClass.Fields;
-        //    IFields targetFields = null;
-        //    IEnumFieldError enumFieldError = null;
+            VisibilityCalculationresultsEnum results = VisibilityCalculationresultsEnum.None;
 
-        //    // Set the required properties for the IFieldChecker interface.
+            foreach (var map in VisibilitySession.EsriDatatypeToresultMapping)
+            {
+                var datasets = calcWorkspace.get_DatasetNames(map.Key);
+                var dataSet = datasets.Next();
 
+                while (dataSet != null)
+                {
+                    foreach (var result in map.Value)
+                    {
+                        string comparitionName = VisibilitySession.GetResultName(result, sessionName);
+                        //it might be to check feature class type for FeatureClass dataset like Point for Observponts and Polygon for ObservObjects
+                        if (dataSet.Name.Equals(comparitionName, StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            results = results | result;
+                        }
+                    }
+                    dataSet = datasets.Next();
+                }
+            }
 
-        //    try
-        //    {
-        //        //Source Dataset name
-        //        //IFeatureClassName sourceFeatureClassName = new FeatureClassNameClass();
-        //        //sourceFeatureClassName.FeatureDatasetName = ((IDataset)sourceFeatureClass).FullName as IDatasetName;
-
-        //        // Create a name object for the source (shapefile) workspace and open it.
-        //        IWorkspaceName sourceWorkspaceName = new WorkspaceNameClass
-        //        {
-        //            WorkspaceFactoryProgID = "esriDataSourcesFile.ShapefileWorkspaceFactory",
-        //            PathName = @"E:\Data\MilSpace3D\MilSpaceCalc_40a.gdb"
-        //        };
-        //        IName sourceWorkspaceIName = (IName)sourceWorkspaceName;
-        //        IWorkspace sourceWorkspace = (IWorkspace)sourceWorkspaceIName.Open();
-
-        //        // Create a name object for the source dataset.
-        //        IFeatureClassName sourceFeatureClassName = new FeatureClassNameClass();
-        //        IDatasetName sourceDatasetName = (IDatasetName)sourceFeatureClassName;
-        //        sourceDatasetName.Name = "MilSp_Visible_ObservPoints";
-        //        sourceDatasetName.WorkspaceName = sourceWorkspaceName;
-
-
-
-        //        //IWorkspaceName targetWorkspaceName = new WorkspaceNameClass
-        //        //{
-        //        //    WorkspaceFactoryProgID = "esriDataSourcesGDB.FileGDBWorkspaceFactory",
-        //        //    PathName = @"E:\Data\MilSpace3D\MilSpaceCalc_40a.gdb"
-        //        //};
-
-
-
-        //        // Create a name object for the target dataset.
-        //        IFeatureClassName targetFeatureClassName = new FeatureClassNameClass();
-        //        IDatasetName targetDatasetName = (IDatasetName)targetFeatureClassName;
-        //        targetDatasetName.Name = stringtargetFeatureClassName;
-        //        targetDatasetName.WorkspaceName = (((IDataset)targetDataset).FullName as IDatasetName).WorkspaceName;
-
-
-        //        IWorkspaceName targetWorkspaceName = new WorkspaceNameClass
-        //        {
-        //            WorkspaceFactoryProgID = "esriDataSourcesGDB.FileGDBWorkspaceFactory",
-        //            PathName = @"E:\Data\MilSpace3D\MilSpaceCalc_40a.gdb"
-        //        };
-
-        //        IName targetWorkspaceIName = (IName)targetWorkspaceName;
-        //        IWorkspace targetWorkspace = (IWorkspace)targetWorkspaceIName.Open();
-        //        // Create a name object for the target dataset.
-        //        //IFeatureClassName targetFeatureClassName = new FeatureClassNameClass();
-        //        //IDatasetName targetDatasetName = (IDatasetName)targetFeatureClassName;
-        //        targetDatasetName.Name = "Cities";
-        //        targetDatasetName.WorkspaceName = targetWorkspaceName;
-
-
-        //        // Validate the fields and check for errors.
-        //        fieldChecker.InputWorkspace = sourceWorkspace;
-        //        fieldChecker.ValidateWorkspace = targetWorkspace;
-
-        //        fieldChecker.Validate(sourceFields, out enumFieldError, out targetFields);
-        //        if (enumFieldError != null)
-        //        {
-        //            // Handle the errors in a way appropriate to your application.
-        //            logger.ErrorEx("Errors were encountered during field validation.");
-        //            throw new InvalidDataException("Errors were encountered during field validation.");
-        //        }
-
-        //        // Find the shape field.
-        //        String shapeFieldName = sourceFeatureClass.ShapeFieldName;
-        //        int shapeFieldIndex = sourceFeatureClass.FindField(shapeFieldName);
-        //        IField shapeField = sourceFields.get_Field(shapeFieldIndex);
-
-        //        // Get the geometry definition from the shape field and clone it.
-        //        IGeometryDef geometryDef = shapeField.GeometryDef;
-        //        IClone geometryDefClone = (IClone)geometryDef;
-        //        IClone targetGeometryDefClone = geometryDefClone.Clone();
-        //        IGeometryDef targetGeometryDef = (IGeometryDef)targetGeometryDefClone;
-
-        //        //Define filter for importing
-        //        IQueryFilter queryFilter = new QueryFilterClass();
-        //        queryFilter.WhereClause = "ObjectId > 0";
-
-        //        // Create the converter and run the conversion.
-        //        IFeatureDataConverter featureDataConverter = new FeatureDataConverterClass();
-        //        IEnumInvalidObject enumInvalidObject = featureDataConverter.ConvertFeatureClass
-        //            (sourceFeatureClassName, null, null, targetFeatureClassName,
-        //            targetGeometryDef, targetFields, "", 1000, 0);
-
-        //        // Check for errors.
-        //        IInvalidObjectInfo invalidObjectInfo = null;
-        //        enumInvalidObject.Reset();
-        //        while ((invalidObjectInfo = enumInvalidObject.Next()) != null)
-        //        {
-        //            // Handle the errors in a way appropriate to the application.
-        //            Console.WriteLine("Errors occurred for the following feature: {0}",
-        //                invalidObjectInfo.InvalidObjectID);
-        //        }
-
-
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        logger.ErrorEx(ex.Message);
-        //        return null;
-        //    }
-
-        //    return datasetName;
-        //}
+            return results;
+        }
 
         public IApplication Application
         {
@@ -224,16 +125,14 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
-
-        public string ExportObservationPoints(IDataset sourceDataset, int[] filter)
+        public string ExportObservationFeatureClass(IDataset sourceDataset, string nameOfTargetDataset, int[] filter)
         {
+
             IWorkspace targetWorkspace = calcWorkspace;
 
-            //Target dataset name
-            string temporarySuffix = MilSpace.DataAccess.Helper.GetTemporaryNameSuffix();
-            string datasetName = $"{visibilityCalcFeatureDataset}{temporarySuffix}";
-            string nameOfTargetDataset = $"{visibilityCalcFeatureClass}{temporarySuffix}";
 
+            IWorkspaceEdit workspaceEdit = null;
+            bool isBeingEdited = false;
             try
             {
                 //create source workspace name
@@ -242,8 +141,17 @@ namespace MilSpace.DataAccess.Facade
 
                 IDataset sourceWorkspaceDataset = (IDataset)sourceDataset.Workspace;
                 IWorkspaceName sourceWorkspaceName = (IWorkspaceName)sourceWorkspaceDataset.FullName;
-
                 IFeatureClassName sourceDatasetName = (IFeatureClassName)sourceDataset.FullName;
+
+                workspaceEdit = (IWorkspaceEdit)sourceDataset.Workspace;
+                isBeingEdited = workspaceEdit.IsBeingEdited();
+                if (!isBeingEdited)
+                {
+                    workspaceEdit.StartEditing(true);
+                    workspaceEdit.StartEditOperation();
+                }
+
+
 
                 //create target workspace name
                 IDataset targetWorkspaceDataset = (IDataset)targetWorkspace;
@@ -252,15 +160,9 @@ namespace MilSpace.DataAccess.Facade
                 IFeatureClassName targetFeatureClassName = new FeatureClassNameClass();
 
 
-                //IFeatureWorkspace featureworkspace = (IFeatureWorkspace)calcWorkspace;
-                //IFeatureDataset targetDataset = featureworkspace.CreateFeatureDataset(datasetName, EsriTools.Wgs84Spatialreference);
-
                 IDatasetName targetDatasetName = (IDatasetName)targetFeatureClassName;
                 targetDatasetName.WorkspaceName = targetWorkspaceName;
                 targetDatasetName.Name = nameOfTargetDataset;
-                ////Open input Featureclass to get field definitions.
-                //ESRI.ArcGIS.esriSystem.IName sourceName = (ESRI.ArcGIS.esriSystem.IName)sourceDatasetName;
-                //ITable sourceTable = (ITable)sourceName.Open();
 
                 // we want to convert all of the features
                 IQueryFilter queryFilter = new QueryFilterClass();
@@ -285,8 +187,25 @@ namespace MilSpace.DataAccess.Facade
                 IClone geometryDefClone = (IClone)geometryDef;
                 IClone targetGeometryDefClone = geometryDefClone.Clone();
                 IGeometryDef targetGeometryDef = (IGeometryDef)targetGeometryDefClone;
+                bool exportWithError = true;
+                //crutch CHeck if the errof in the AreField
+                if (enumFieldError != null)
+                {
+                    var error = enumFieldError.Next();
+                    while (error != null)
+                    {
+                        logger.WarnEx($"Export error in the filed {targetFields.Field[error.FieldIndex].AliasName}");
+                        if (!targetFields.Field[error.FieldIndex].AliasName.StartsWith("shape_ST", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            exportWithError = false;
+                            logger.ErrorEx("Export is not acceptable");
+                        }
 
-                if (enumFieldError == null)
+                        error = enumFieldError.Next();
+                    }
+                }
+
+                if (enumFieldError == null || exportWithError)
                 {
                     IFeatureDataConverter fctofc = new FeatureDataConverterClass();
 
@@ -294,15 +213,23 @@ namespace MilSpace.DataAccess.Facade
                     IEnumInvalidObject enumErrors =
                         fctofc.ConvertFeatureClass(sourceDatasetName, queryFilter, null, targetFeatureClassName, targetGeometryDef,
                         pSourceTab.Fields, "", 1000, 0);
+                    return ((IDatasetName)targetFeatureClassName).Name;
                 }
-
-                return ((IDatasetName)targetFeatureClassName).Name;
             }
             catch (Exception exp)
             {
                 logger.ErrorEx(exp.ToString());
-                return null;
             }
+            finally
+            {
+                if (workspaceEdit != null && !isBeingEdited)
+                {
+                    workspaceEdit.StopEditOperation();
+                    workspaceEdit.StopEditing(false);
+                }
+            }
+
+            return null;
         }
 
         public string GenerateTempProfileLinesStorage()
@@ -453,7 +380,7 @@ namespace MilSpace.DataAccess.Facade
             IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)calcWorkspace;
             workspaceEdit.StartEditing(true);
             workspaceEdit.StartEditOperation();
-            
+
             var pointFeature = featureClass.CreateFeature();
 
             SetObservPointValues(featureClass, pointFeature, point, pointArgs);

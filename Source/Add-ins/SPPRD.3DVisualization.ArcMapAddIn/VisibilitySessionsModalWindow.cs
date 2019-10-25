@@ -1,12 +1,5 @@
 ﻿using MilSpace.DataAccess.DataTransfer;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MilSpace.Visualization3D
@@ -49,7 +42,7 @@ namespace MilSpace.Visualization3D
             foreach(var session in sessions)
             {
                 var newItem = new ListViewItem(session.Name);
-                newItem.SubItems.Add(session.Created.ToShortDateString());
+                newItem.SubItems.Add(session.Created.Value.ToShortDateString());
                 newItem.Tag = session;
 
                 lvVisibilitySessions.Items.Add(newItem);

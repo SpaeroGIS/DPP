@@ -10,6 +10,9 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
         public static string ProfileSource = "prfs";
         public static string ProfileOutTable = "prfot";
         public static string OutputSourceName = "outsrcname";
-        public static string FilteringIds = "filterringIds";
+        public static string FilteringPointsIds = "PntfltrIds";
+        public static string FilteringStationsIds = "StnsfltrIds";
+        public static string Calculationresults = "calcresults";
+
     }
 }

@@ -92,7 +92,7 @@ namespace MilSpace.Tools.SurfaceProfile
 
             GeoProcessorResult gpResult = new GeoProcessorResult();
 
-            gp.SetEnvironmentValue(environmentName, temporaryWorkspace); ;
+            gp.SetEnvironmentValue(environmentName, temporaryWorkspace);
 
             return RunTool(gp, visibility, null, messages);
         }
