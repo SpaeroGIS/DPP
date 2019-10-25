@@ -129,21 +129,22 @@ namespace MilSpace.Visualization3D
 
         private void GenerateButton_Click(object sender, EventArgs e)
         {
-            var profilesSets = new List<ProfileSession>();
-
-             foreach(var profileSetModel in profilesModels)
-             {
-                 var profilesSet = profileSetModel.NodeProfileSession;
-                 profilesSet.ConvertLinesToEsriPolypile(ArcMap.Document.FocusMap.SpatialReference);
-
-                 profilesSets.Add(profilesSet);
-             }
-
             try
             {
                 if(SurfaceComboBox.SelectedItem != null)
                 {
+                    var profilesSets = new List<ProfileSession>();
+
+                    foreach(var profileSetModel in profilesModels)
+                    {
+                        var profilesSet = profileSetModel.NodeProfileSession;
+                        profilesSet.ConvertLinesToEsriPolypile(ArcMap.Document.FocusMap.SpatialReference);
+
+                        profilesSets.Add(profilesSet);
+                    }
+
                     var arcSceneArguments = Feature3DManager.Get3DFeatures(SurfaceComboBox.SelectedItem.ToString(), profilesSets);
+                    if(!String.IsNullOrEmpty(tbCoef.Text)) arcSceneArguments.ZFactor = Convert.ToDouble(tbCoef.Text);
                     Visualization3DHandler.OpenProfilesSetIn3D(arcSceneArguments);
                 }
                 else
@@ -167,6 +168,18 @@ namespace MilSpace.Visualization3D
             Helper.SetConfiguration();
         }
 
+        private void TbCoef_TextChanged(object sender, EventArgs e)
+        {
+            if(!Double.TryParse(tbCoef.Text, out double res) && tbCoef.Text != string.Empty)
+            {
+                tbCoef.Text = string.Empty;
+                MessageBox.Show("Enter decimal number");
+            }
+        }
+
+
         #endregion
+
+
     }
 }

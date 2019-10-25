@@ -48,7 +48,7 @@
             this.sessionsToolBar.Margin = new System.Windows.Forms.Padding(0);
             this.sessionsToolBar.Name = "sessionsToolBar";
             this.sessionsToolBar.ShowToolTips = true;
-            this.sessionsToolBar.Size = new System.Drawing.Size(264, 28);
+            this.sessionsToolBar.Size = new System.Drawing.Size(423, 28);
             this.sessionsToolBar.TabIndex = 68;
             this.sessionsToolBar.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.SessionsToolBar_ButtonClick);
             // 
@@ -286,7 +286,7 @@
             this.lvVisibilitySessions.HideSelection = false;
             this.lvVisibilitySessions.Location = new System.Drawing.Point(0, 28);
             this.lvVisibilitySessions.Name = "lvVisibilitySessions";
-            this.lvVisibilitySessions.Size = new System.Drawing.Size(264, 253);
+            this.lvVisibilitySessions.Size = new System.Drawing.Size(423, 253);
             this.lvVisibilitySessions.TabIndex = 69;
             this.lvVisibilitySessions.UseCompatibleStateImageBehavior = false;
             // 
@@ -294,7 +294,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(264, 281);
+            this.ClientSize = new System.Drawing.Size(423, 281);
             this.Controls.Add(this.lvVisibilitySessions);
             this.Controls.Add(this.sessionsToolBar);
             this.Name = "VisibilitySessionsModalWindow";

@@ -135,6 +135,44 @@ namespace MilSpace.Visualization3D
         {
             comboBox.Items.AddRange(layers.Select(l => l.Name).ToArray());
         }
+
+        private List<ILayer> GetAdditionalLayers()
+        {
+            var selectedLayers = new object[4];
+            selectedLayers[0] = TransportLayerComboBox.SelectedItem;
+            selectedLayers[1] = BuildingsLayerComboBox.SelectedItem;
+            selectedLayers[2] = PlantsLayerComboBox.SelectedItem;
+            selectedLayers[3] = HydroLayerComboBox.SelectedItem;
+
+            var additionalLayers = new List<ILayer>();
+
+            foreach(var selectedLayer in selectedLayers)
+            {
+                if(selectedLayer != null)
+                {
+                    additionalLayers.Add(ProfileLayers.PolygonLayers.First(layer => layer.Name == selectedLayer.ToString()));
+                }
+            }
+
+            return additionalLayers;
+        }
+
+        private List<VisibilityResultInfo> GetVisibilityResultsInfo()
+        {
+            var info = new List<VisibilityResultInfo>();
+
+            foreach(var session in visibilitySessionsModel)
+            {
+                info.Add(new VisibilityResultInfo
+                {
+                    ResultName = session.VisibilitySession.Id,
+                    GdbPath = session.VisibilitySession.ReferencedGDB
+                });    
+            }
+
+            return info;
+        }
+
         #endregion
 
         #region Control Event Handlers       
@@ -175,42 +213,33 @@ namespace MilSpace.Visualization3D
 
         private void GenerateButton_Click(object sender, EventArgs e)
         {
-            var profilesSets = new List<ProfileSession>();
-
-            foreach (var profileSetModel in profilesModels)
-            {
-                var profilesSet = profileSetModel.NodeProfileSession;
-                profilesSet.ConvertLinesToEsriPolypile(ArcMap.Document.FocusMap.SpatialReference);
-
-                profilesSets.Add(profilesSet);
-            }
-
             try
             {
+                var profilesSets = new List<ProfileSession>();
+
+                foreach(var profileSetModel in profilesModels)
+                {
+                    var profilesSet = profileSetModel.NodeProfileSession;
+                    profilesSet.ConvertLinesToEsriPolypile(ArcMap.Document.FocusMap.SpatialReference);
+
+                    profilesSets.Add(profilesSet);
+                }
+
                 if(SurfaceComboBox.SelectedItem != null)
                 {
                     var arcSceneArguments = Feature3DManager.Get3DFeatures(SurfaceComboBox.SelectedItem.ToString(), profilesSets);
-                
-                    var selectedLayers = new object[4];
-                    selectedLayers[0] = TransportLayerComboBox.SelectedItem;
-                    selectedLayers[1] = BuildingsLayerComboBox.SelectedItem;
-                    selectedLayers[2] = PlantsLayerComboBox.SelectedItem;
-                    selectedLayers[3] = HydroLayerComboBox.SelectedItem;
 
-                    var additionalLayers = new List<ILayer>();
 
-                    foreach(var selectedLayer in selectedLayers)
+                    if(!String.IsNullOrEmpty(tbZFactor.Text))
                     {
-                        if(selectedLayer != null)
-                        {
-                            additionalLayers.Add(ProfileLayers.PolygonLayers.First(layer => layer.Name == selectedLayer.ToString()));
-                        }
+                        arcSceneArguments.ZFactor = Convert.ToDouble(tbZFactor.Text);
                     }
 
-                    arcSceneArguments.AdditionalLayers = additionalLayers;
+                    arcSceneArguments.AdditionalLayers = GetAdditionalLayers();
+                    arcSceneArguments.VisibilityResultsInfo = GetVisibilityResultsInfo();
 
                     Visualization3DHandler.OpenProfilesSetIn3D(arcSceneArguments);
-            }
+                }
                 else
                 {
                 //TODO: Exception message
@@ -222,7 +251,6 @@ namespace MilSpace.Visualization3D
 
             }
         }
-        #endregion
 
         private void btnRefreshLayers_Click(object sender, EventArgs e)
         {
@@ -257,5 +285,22 @@ namespace MilSpace.Visualization3D
                 }
             }
         }
+
+        private void TbZFactor_TextChanged(object sender, EventArgs e)
+        {
+            if(String.IsNullOrEmpty(tbZFactor.Text))
+            {
+                return;
+            }
+
+            if(!Double.TryParse(tbZFactor.Text, out double res) || res < 0)
+            {
+                var charsCount = tbZFactor.Text.Count();
+                tbZFactor.Text =  (charsCount > 1)?  tbZFactor.Text.Remove(tbZFactor.Text.Count() - 1) : string.Empty;
+                MessageBox.Show("Enter a decimal number greater than 0");
+            }
+        }
+
+        #endregion
     }
 }

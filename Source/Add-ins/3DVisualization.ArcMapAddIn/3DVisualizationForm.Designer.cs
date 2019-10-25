@@ -56,6 +56,9 @@
             this.panel12 = new System.Windows.Forms.Panel();
             this.GenerateButton = new System.Windows.Forms.Button();
             this.GenerateImageTab = new System.Windows.Forms.TabPage();
+            this.zFactorPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.tbZFactor = new System.Windows.Forms.TextBox();
+            this.lblZFactor = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.HydroLayerComboBox = new System.Windows.Forms.ComboBox();
@@ -94,6 +97,7 @@
             this.panel9.SuspendLayout();
             this.panel10.SuspendLayout();
             this.panel12.SuspendLayout();
+            this.zFactorPanel.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -104,13 +108,14 @@
             // basePanel
             // 
             this.basePanel.Controls.Add(this.GenerateTab);
+            this.basePanel.Controls.Add(this.zFactorPanel);
             this.basePanel.Controls.Add(this.tableLayoutPanel1);
             this.basePanel.Controls.Add(this.panel1);
             this.basePanel.Controls.Add(this.panel11);
             this.basePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.basePanel.Location = new System.Drawing.Point(0, 0);
             this.basePanel.Name = "basePanel";
-            this.basePanel.Size = new System.Drawing.Size(322, 1000);
+            this.basePanel.Size = new System.Drawing.Size(322, 700);
             this.basePanel.TabIndex = 0;
             // 
             // GenerateTab
@@ -119,10 +124,10 @@
             this.GenerateTab.Controls.Add(this.GenerateImageTab);
             this.GenerateTab.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GenerateTab.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.GenerateTab.Location = new System.Drawing.Point(0, 213);
+            this.GenerateTab.Location = new System.Drawing.Point(0, 237);
             this.GenerateTab.Name = "GenerateTab";
             this.GenerateTab.SelectedIndex = 0;
-            this.GenerateTab.Size = new System.Drawing.Size(322, 787);
+            this.GenerateTab.Size = new System.Drawing.Size(322, 463);
             this.GenerateTab.TabIndex = 70;
             // 
             // ProfilesTabPage
@@ -133,7 +138,7 @@
             this.ProfilesTabPage.Location = new System.Drawing.Point(4, 24);
             this.ProfilesTabPage.Name = "ProfilesTabPage";
             this.ProfilesTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.ProfilesTabPage.Size = new System.Drawing.Size(314, 759);
+            this.ProfilesTabPage.Size = new System.Drawing.Size(314, 435);
             this.ProfilesTabPage.TabIndex = 0;
             this.ProfilesTabPage.Text = "Profiles";
             // 
@@ -150,7 +155,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(308, 723);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(308, 399);
             this.tableLayoutPanel2.TabIndex = 62;
             // 
             // profilePanel
@@ -162,7 +167,7 @@
             this.profilePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.profilePanel.Location = new System.Drawing.Point(3, 3);
             this.profilePanel.Name = "profilePanel";
-            this.profilePanel.Size = new System.Drawing.Size(302, 355);
+            this.profilePanel.Size = new System.Drawing.Size(302, 193);
             this.profilePanel.TabIndex = 58;
             // 
             // panel7
@@ -171,7 +176,7 @@
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel7.Location = new System.Drawing.Point(0, 50);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(302, 305);
+            this.panel7.Size = new System.Drawing.Size(302, 143);
             this.panel7.TabIndex = 67;
             // 
             // ProfilesListBox
@@ -182,7 +187,7 @@
             this.ProfilesListBox.Location = new System.Drawing.Point(0, 0);
             this.ProfilesListBox.Name = "ProfilesListBox";
             this.ProfilesListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.ProfilesListBox.Size = new System.Drawing.Size(302, 305);
+            this.ProfilesListBox.Size = new System.Drawing.Size(302, 143);
             this.ProfilesListBox.TabIndex = 65;
             // 
             // panel6
@@ -466,9 +471,9 @@
             this.panel4.Controls.Add(this.panel9);
             this.panel4.Controls.Add(this.panel10);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(3, 364);
+            this.panel4.Location = new System.Drawing.Point(3, 202);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(302, 356);
+            this.panel4.Size = new System.Drawing.Size(302, 194);
             this.panel4.TabIndex = 60;
             // 
             // panel8
@@ -478,7 +483,7 @@
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(0, 50);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(302, 306);
+            this.panel8.Size = new System.Drawing.Size(302, 144);
             this.panel8.TabIndex = 67;
             // 
             // SessionsListBox
@@ -488,7 +493,7 @@
             this.SessionsListBox.ItemHeight = 15;
             this.SessionsListBox.Location = new System.Drawing.Point(0, 0);
             this.SessionsListBox.Name = "SessionsListBox";
-            this.SessionsListBox.Size = new System.Drawing.Size(302, 306);
+            this.SessionsListBox.Size = new System.Drawing.Size(302, 144);
             this.SessionsListBox.TabIndex = 65;
             // 
             // panel9
@@ -552,7 +557,7 @@
             // 
             this.panel12.Controls.Add(this.GenerateButton);
             this.panel12.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel12.Location = new System.Drawing.Point(3, 726);
+            this.panel12.Location = new System.Drawing.Point(3, 402);
             this.panel12.Name = "panel12";
             this.panel12.Size = new System.Drawing.Size(308, 30);
             this.panel12.TabIndex = 61;
@@ -578,9 +583,45 @@
             this.GenerateImageTab.Location = new System.Drawing.Point(4, 24);
             this.GenerateImageTab.Name = "GenerateImageTab";
             this.GenerateImageTab.Padding = new System.Windows.Forms.Padding(3);
-            this.GenerateImageTab.Size = new System.Drawing.Size(314, 759);
+            this.GenerateImageTab.Size = new System.Drawing.Size(314, 435);
             this.GenerateImageTab.TabIndex = 1;
             this.GenerateImageTab.Text = "tabPage2";
+            // 
+            // zFactorPanel
+            // 
+            this.zFactorPanel.ColumnCount = 2;
+            this.zFactorPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.zFactorPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.zFactorPanel.Controls.Add(this.tbZFactor, 0, 0);
+            this.zFactorPanel.Controls.Add(this.lblZFactor, 0, 0);
+            this.zFactorPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.zFactorPanel.Location = new System.Drawing.Point(0, 213);
+            this.zFactorPanel.Name = "zFactorPanel";
+            this.zFactorPanel.RowCount = 1;
+            this.zFactorPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.zFactorPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.zFactorPanel.Size = new System.Drawing.Size(322, 24);
+            this.zFactorPanel.TabIndex = 2;
+            // 
+            // tbZFactor
+            // 
+            this.tbZFactor.Dock = System.Windows.Forms.DockStyle.Left;
+            this.tbZFactor.Location = new System.Drawing.Point(228, 3);
+            this.tbZFactor.Name = "tbZFactor";
+            this.tbZFactor.Size = new System.Drawing.Size(74, 20);
+            this.tbZFactor.TabIndex = 1;
+            this.tbZFactor.TextChanged += new System.EventHandler(this.TbZFactor_TextChanged);
+            // 
+            // lblZFactor
+            // 
+            this.lblZFactor.AutoSize = true;
+            this.lblZFactor.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblZFactor.Location = new System.Drawing.Point(3, 6);
+            this.lblZFactor.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
+            this.lblZFactor.Name = "lblZFactor";
+            this.lblZFactor.Size = new System.Drawing.Size(219, 13);
+            this.lblZFactor.TabIndex = 0;
+            this.lblZFactor.Text = "Height conversion factor";
             // 
             // tableLayoutPanel1
             // 
@@ -868,7 +909,7 @@
             this.AutoSize = true;
             this.Controls.Add(this.basePanel);
             this.Name = "Visualization3DMainForm";
-            this.Size = new System.Drawing.Size(322, 1000);
+            this.Size = new System.Drawing.Size(322, 700);
             this.basePanel.ResumeLayout(false);
             this.basePanel.PerformLayout();
             this.GenerateTab.ResumeLayout(false);
@@ -889,6 +930,8 @@
             this.panel10.PerformLayout();
             this.panel12.ResumeLayout(false);
             this.panel12.PerformLayout();
+            this.zFactorPanel.ResumeLayout(false);
+            this.zFactorPanel.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.panel2.ResumeLayout(false);
@@ -958,5 +1001,8 @@
         private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Button btnRefreshLayers;
+        private System.Windows.Forms.TextBox tbZFactor;
+        private System.Windows.Forms.Label lblZFactor;
+        private System.Windows.Forms.TableLayoutPanel zFactorPanel;
     }
 }

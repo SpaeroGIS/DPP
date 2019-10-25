@@ -45,6 +45,9 @@
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
+    <Reference Include="ESRI.ArcGIS.DataSourcesRaster, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="ESRI.ArcGIS.Desktop.AddIns, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
@@ -180,6 +183,7 @@
     </Compile>
     <Compile Include="DataTransfer\ObservationPoint.cs" />
     <Compile Include="DataTransfer\ObservationPointTypesEnum.cs" />
+    <Compile Include="DataTransfer\VisibilityResultInfo.cs" />
     <Compile Include="DataTransfer\VisibilitySession.cs" />
     <Compile Include="Facade\VisibilityDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
