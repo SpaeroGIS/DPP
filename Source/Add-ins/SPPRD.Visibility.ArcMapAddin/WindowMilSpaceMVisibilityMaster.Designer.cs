@@ -124,7 +124,7 @@ namespace MilSpace.Visibility
             this.label10 = new System.Windows.Forms.Label();
             this.stepFour = new System.Windows.Forms.TabPage();
             this.richTextBox6 = new System.Windows.Forms.RichTextBox();
-            this.chkColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            
             this.panel1.SuspendLayout();
             this.StepsTabControl.SuspendLayout();
             this.stepOne.SuspendLayout();
@@ -521,6 +521,7 @@ namespace MilSpace.Visibility
             this.button1.TabIndex = 0;
             this.button1.Text = resources.GetString("button1.Text");
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // stepTwo
             // 
@@ -588,7 +589,7 @@ namespace MilSpace.Visibility
             this.dvgCheckList.Location = new System.Drawing.Point(0, 120);
             this.dvgCheckList.MultiSelect = false;
             this.dvgCheckList.Name = "dvgCheckList";
-            this.dvgCheckList.ReadOnly = true;
+            
             this.dvgCheckList.RowHeadersVisible = false;
             this.dvgCheckList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dvgCheckList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -1418,13 +1419,8 @@ namespace MilSpace.Visibility
             this.richTextBox6.Size = new System.Drawing.Size(921, 143);
             this.richTextBox6.TabIndex = 0;
             this.richTextBox6.Text = resources.GetString("richTextBox6.Text");
-            // 
-            // chkColumn
-            // 
-            this.chkColumn.Frozen = true;
-            this.chkColumn.HeaderText = "";
-            this.chkColumn.Name = "chkColumn";
-            this.chkColumn.Width = 5;
+           
+          
             // 
             // WindowMilSpaceMVisibilityMaster
             // 
@@ -1584,7 +1580,7 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Label ObservPointLabel;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Button uButton2;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn chkColumn;
+      
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Button button4;

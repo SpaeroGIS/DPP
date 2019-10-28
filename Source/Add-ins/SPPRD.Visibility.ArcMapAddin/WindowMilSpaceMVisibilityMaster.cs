@@ -16,7 +16,7 @@ namespace MilSpace.Visibility
     {
         private const string _allValuesFilterText = "All";
         private ObservationPointsController controller = new ObservationPointsController(ArcMap.Document);
-        private BindingList<ObservPointGui> _observPointGuis;
+        private BindingList<CheckObservPointGui> _observPointGuis;
         
 
 
@@ -42,12 +42,22 @@ namespace MilSpace.Visibility
         {
            
            controller.UpdateObservationPointsList();
-           
 
-            comboBox1.Items.AddRange(manager.RasterLayers.ToArray());
+            PopulateComboBox();
+
+
             FillObservPointLabel();
             FillObsObj();
         }
+        public void FirstTypePicked()
+        {
+            dvgCheckList.Rows.Clear();
+            FillObservPointsOnCurrentView(controller.GetObservPointsOnCurrentMapExtent(ActiveView));
+            //controller.GetObservPointsOnCurrentMapExtent(ActiveView);
+
+        }
+
+
         public void FillObservPointLabel()
         {
            var temp = controller.GetObservationPointsLayers(ActiveView).ToArray();
@@ -56,39 +66,64 @@ namespace MilSpace.Visibility
             //label слой ОН
             label19.Text = controller.GetObservationStationsLayers().FirstOrDefault();
         }
-        public void PopulateComboBox(ComboBox comboBox, IEnumerable<ILayer> layers)
+        public void PopulateComboBox()
         {
-            comboBox.Items.AddRange(layers.Select(l => l.Name).ToArray());
+            comboBox1.Items.AddRange(manager.RasterLayers.ToArray());
         }
 
         public void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints, VeluableObservPointFieldsEnum filter)
         {
-
-            DataGridViewCheckBoxColumn checkColumn = new DataGridViewCheckBoxColumn();
-            
-
-            
-            dvgCheckList.Columns.Add(chkColumn);
             if (observationPoints.Any())
             {
-                var ItemsToShow = observationPoints.Select(i => new ObservPointGui
+                var ItemsToShow = observationPoints.Select(t => new CheckObservPointGui
                 {
-                    Title = i.Title,
-                    Type = i.Type,
-                    Affiliation = i.Affiliation,
-                    Date = i.Dto.Value.ToShortDateString(),
-                    Id = i.Objectid
+                    Title = t.Title,
+                    Type = t.Type,
+                    Affiliation = t.Affiliation,
+                    Date = t.Dto.Value.ToShortDateString(),
+                    Id = t.Objectid
+
                 }).ToList();
 
                 dvgCheckList.Rows.Clear();
                 dvgCheckList.CurrentCell = null;
-                _observPointGuis = new BindingList<ObservPointGui>(ItemsToShow);
+               
+                _observPointGuis = new BindingList<CheckObservPointGui>(ItemsToShow);
                 dvgCheckList.DataSource = _observPointGuis;
-
                 SetDataGridView();
-                DisplaySelectedColumns(filter);
+
                 dvgCheckList.Update();
                 dvgCheckList.Rows[0].Selected = true;
+               
+            }
+            else
+            {
+               
+            }
+        }
+        public void FillObservPointsOnCurrentView(IEnumerable<ObservationPoint> observationPoints)
+        {
+            if (observationPoints != null && observationPoints.Any())
+            {
+                var ItemsToShow = observationPoints.Select(t => new CheckObservPointGui
+                {
+                    Title = t.Title,
+                    Type = t.Type,
+                    Affiliation = t.Affiliation,
+                    Date = t.Dto.Value.ToShortDateString(),
+                    Id = t.Objectid
+
+                }).ToList();
+                dvgCheckList.Rows.Clear();
+                dvgCheckList.CurrentCell = null;
+
+                _observPointGuis = new BindingList<CheckObservPointGui>(ItemsToShow);
+                dvgCheckList.DataSource = _observPointGuis;
+                SetDataGridView();
+
+                dvgCheckList.Update();
+                dvgCheckList.Rows[0].Selected = true;
+
             }
         }
         public void FillObsObj()
@@ -114,6 +149,10 @@ namespace MilSpace.Visibility
 
         private void SetDataGridView()
         {
+            dvgCheckList.Columns["Date"].ReadOnly = true;
+            dvgCheckList.Columns["Type"].ReadOnly = true;
+            dvgCheckList.Columns["Affiliation"].ReadOnly = true;
+            dvgCheckList.Columns["Title"].ReadOnly = true;
             dvgCheckList.Columns["Title"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dvgCheckList.Columns["Id"].Visible = false;
         }
@@ -238,41 +277,19 @@ namespace MilSpace.Visibility
         private void PreviousStepButton_Click(object sender, EventArgs e)
         {
             if (StepsTabControl.SelectedIndex != 0) StepsTabControl.SelectedIndex--;
+            dvgCheckList.Rows.Clear();
+            dvgCheckList.Columns.Clear();
         }
 
-        //todo
-        //private static IEnumerable<IRasterLayer> GetRasterLayers(ILayer layer)
-        //{
-        //    var result = new List<IRasterLayer>();
-
-
-        //    if (layer is IRasterLayer fLayer)
-        //    {
-        //        result.Add(fLayer);
-        //    }
-
-        //    if (layer is ICompositeLayer cLayer)
-        //    {
-
-        //        for (int j = 0; j < cLayer.Count; j++)
-
-        //        {
-        //            if ((layer is IRasterLayer cRastreLayer))
-        //            {
-        //                result.Add(cRastreLayer);
-        //            }
-        //        }
-
-        //    }
-
-        //    return result;
-        //}
-
-
-
+       
         private void ultraButton1_Click(object sender, EventArgs e)
         {
             SecondTypePicked();
+            StepsTabControl.SelectedIndex++;
+        }
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            FirstTypePicked();
             StepsTabControl.SelectedIndex++;
         }
 
