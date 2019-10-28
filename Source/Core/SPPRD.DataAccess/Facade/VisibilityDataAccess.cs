@@ -110,12 +110,12 @@ namespace MilSpace.DataAccess.Facade
             return false;
         }
 
-        public IEnumerable<VisibilitySession> GetAllVisibilitySessions()
+        public IEnumerable<VisibilitySession> GetAllVisibilitySessions(bool finished = false)
         {
             try
             {
-                var sessions = context.MilSp_VisibilitySessions.Select(s => s.Get());
-                return sessions;
+                var sessions = finished ? context.MilSp_VisibilitySessions.Where(s => s.Finished.HasValue) : context.MilSp_VisibilitySessions;
+                return sessions.Select(s => s.Get());
             }
             catch (Exception ex)
             {
