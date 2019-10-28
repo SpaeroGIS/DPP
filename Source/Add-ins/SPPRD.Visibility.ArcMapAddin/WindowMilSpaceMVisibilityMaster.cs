@@ -36,7 +36,15 @@ namespace MilSpace.Visibility
             InitializeComponent();
            
             controller.SetView(this);
-
+            ONload();
+        }
+        public void ONload()
+        {
+            foreach (TabPage tab in StepsTabControl.TabPages)
+            {
+                tab.Enabled = false;
+            }
+            (StepsTabControl.TabPages[0] as TabPage).Enabled = true;
         }
         public void SecondTypePicked()
         {
@@ -73,7 +81,7 @@ namespace MilSpace.Visibility
 
         public void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints, VeluableObservPointFieldsEnum filter)
         {
-            if (observationPoints.Any())
+            if (observationPoints != null && observationPoints.Any())
             {
                 var ItemsToShow = observationPoints.Select(t => new CheckObservPointGui
                 {
@@ -146,6 +154,7 @@ namespace MilSpace.Visibility
             }
    
         }
+
 
         private void SetDataGridView()
         {
@@ -267,11 +276,16 @@ namespace MilSpace.Visibility
         
         private void NextStepButton_Click(object sender, EventArgs e)
         {
-            if(StepsTabControl.SelectedIndex < StepsTabControl.TabCount - 1) StepsTabControl.SelectedIndex++;
+            
             if (StepsTabControl.SelectedIndex == StepsTabControl.TabCount - 1)
             {
                 MessageBox.Show("Start calculation");
             }
+            StepsTabControl.SelectedTab.Enabled = false;
+            var nextTab = StepsTabControl.TabPages[StepsTabControl.SelectedIndex + 1] as TabPage;
+            nextTab.Enabled = true;
+            if (StepsTabControl.SelectedIndex < StepsTabControl.TabCount - 1) StepsTabControl.SelectedIndex++;
+
         }
 
         private void PreviousStepButton_Click(object sender, EventArgs e)

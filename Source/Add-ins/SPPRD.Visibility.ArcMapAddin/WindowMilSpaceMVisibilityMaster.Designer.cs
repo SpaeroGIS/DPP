@@ -124,7 +124,6 @@ namespace MilSpace.Visibility
             this.label10 = new System.Windows.Forms.Label();
             this.stepFour = new System.Windows.Forms.TabPage();
             this.richTextBox6 = new System.Windows.Forms.RichTextBox();
-            
             this.panel1.SuspendLayout();
             this.StepsTabControl.SuspendLayout();
             this.stepOne.SuspendLayout();
@@ -589,11 +588,10 @@ namespace MilSpace.Visibility
             this.dvgCheckList.Location = new System.Drawing.Point(0, 120);
             this.dvgCheckList.MultiSelect = false;
             this.dvgCheckList.Name = "dvgCheckList";
-            
             this.dvgCheckList.RowHeadersVisible = false;
             this.dvgCheckList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dvgCheckList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dvgCheckList.Size = new System.Drawing.Size(441, 223);
+            this.dvgCheckList.Size = new System.Drawing.Size(441, 225);
             this.dvgCheckList.TabIndex = 23;
             // 
             // panel8
@@ -1419,8 +1417,6 @@ namespace MilSpace.Visibility
             this.richTextBox6.Size = new System.Drawing.Size(921, 143);
             this.richTextBox6.TabIndex = 0;
             this.richTextBox6.Text = resources.GetString("richTextBox6.Text");
-           
-          
             // 
             // WindowMilSpaceMVisibilityMaster
             // 
