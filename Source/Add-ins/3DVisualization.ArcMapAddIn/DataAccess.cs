@@ -52,7 +52,7 @@ namespace MilSpace.Visualization3D
 
         internal IEnumerable<VisibilitySession> GetVisibilitySessions()
         {
-            return VisibilityZonesFacade.GetAllVisibilitySessions();
+            return VisibilityZonesFacade.GetFinishedVisibilitySessions();
         }
 
         private void AddChildCollection(TreeViewNodeModel node, ProfileSession profileSession)

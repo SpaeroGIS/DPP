@@ -37,7 +37,7 @@ namespace MilSpace.DataAccess.Facade
         {
             using (var accessor = new VisibilityDataAccess())
             {
-                var res = accessor.GetObservationObjectByIds(ids);
+                var res = accessor.GetObservationObjectByIds(ids).ToArray();
                 return res;
             }
         }
@@ -84,6 +84,15 @@ namespace MilSpace.DataAccess.Facade
             using(var accessor = new VisibilityDataAccess())
             {
                 var res = accessor.GetAllVisibilitySessions();
+                return res.ToArray();
+            }
+        }
+
+        public static IEnumerable<VisibilitySession> GetFinishedVisibilitySessions()
+        {
+            using (var accessor = new VisibilityDataAccess())
+            {
+                var res = accessor.GetAllVisibilitySessions(true);
                 return res.ToArray();
             }
         }

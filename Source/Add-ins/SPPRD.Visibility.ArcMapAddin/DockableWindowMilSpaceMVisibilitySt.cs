@@ -607,13 +607,10 @@ namespace MilSpace.Visibility
 
         private void toolBar9_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
-
             if (e.Button == addTask)
             {
                 addTask.Enabled = false;
-                
                 var clculated = controller.CalculateVisibility(@"E:\Data\3D\Relief\20190715\cmrzoi0715", VisibilityManager.GenerateResultId());
-                
                 if (!clculated)
                 {
                     //Localize message

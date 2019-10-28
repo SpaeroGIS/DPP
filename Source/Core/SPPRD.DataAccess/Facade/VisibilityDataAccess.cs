@@ -110,12 +110,12 @@ namespace MilSpace.DataAccess.Facade
             return false;
         }
 
-        public IEnumerable<VisibilitySession> GetAllVisibilitySessions()
+        public IEnumerable<VisibilitySession> GetAllVisibilitySessions(bool finished = false)
         {
             try
             {
-                var sessions = context.MilSp_VisibilitySessions.Select(s => s.Get());
-                return sessions;
+                var sessions = finished ? context.MilSp_VisibilitySessions.Where(s => s.Finished.HasValue) : context.MilSp_VisibilitySessions;
+                return sessions.Select(s => s.Get());
             }
             catch (Exception ex)
             {
@@ -230,7 +230,7 @@ namespace MilSpace.DataAccess.Facade
                 try
                 {
                     //In case of performance issue reimplement it as context.ExecuteQuery with where clause OBJECTID == {ID1} OR OBJECTID == {ID2}.. 
-                    result = context.VisiblilityObservationObjects.Where(p => ids.Any(id => id == p.OBJECTID)).Select(p => p.Get());
+                    result = context.VisiblilityObservationObjects.Where(p => ids.Contains(p.OBJECTID)).Select(p => p.Get());
                 }
                 catch (MilSpaceDataException ex)
                 {
