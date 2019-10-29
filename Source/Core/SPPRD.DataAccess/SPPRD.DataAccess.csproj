@@ -184,6 +184,7 @@
     <Compile Include="DataTransfer\ObservationObjects.cs" />
     <Compile Include="DataTransfer\ObservationPoint.cs" />
     <Compile Include="DataTransfer\ObservationTypesEnum.cs" />
+    <Compile Include="DataTransfer\VisibilityCalculation.cs" />
     <Compile Include="DataTransfer\VisibilityResultInfo.cs" />
     <Compile Include="DataTransfer\VisibilitySession.cs" />
     <Compile Include="Facade\VisibilityDataAccess.cs" />

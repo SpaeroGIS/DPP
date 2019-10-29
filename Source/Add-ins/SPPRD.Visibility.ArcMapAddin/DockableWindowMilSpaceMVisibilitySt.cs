@@ -609,14 +609,6 @@ namespace MilSpace.Visibility
         {
             if (e.Button == addTask)
             {
-                addTask.Enabled = false;
-                var clculated = controller.CalculateVisibility(@"E:\Data\3D\Relief\20190715\cmrzoi0715", VisibilityManager.GenerateResultId());
-                if (!clculated)
-                {
-                    //Localize message
-                    MessageBox.Show("The calculation finished with errors.\nFor more detaole go to the log file", "SPPRD", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                addTask.Enabled = true;
 
             }
             else if (e.Button == removeTask)

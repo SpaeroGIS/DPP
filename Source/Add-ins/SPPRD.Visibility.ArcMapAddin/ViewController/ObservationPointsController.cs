@@ -14,6 +14,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using MilSpace.Core;
+using MilSpace.Tools.Exceptions;
 
 namespace MilSpace.Visibility.ViewController
 {
@@ -179,6 +180,17 @@ namespace MilSpace.Visibility.ViewController
         {
             try
             {
+                MapLayersManager layersManager = new MapLayersManager(mapDocument.ActiveView);
+
+                var demLayer = layersManager.RasterLayers.FirstOrDefault(l => l.Name.Equals(scrDEM));
+
+                if (demLayer == null)
+                {
+                    throw new MilSpaceVisibilityCalcFailedException($"Cannot find DEM layer {scrDEM }.");
+                }
+
+                scrDEM = demLayer.FilePath;
+
                 var observPoints = GetObservatioPointFeatureClass(mapDocument.ActiveView);
 
                 var observObjects = GetObservatioStationFeatureClass(mapDocument.ActiveView);
@@ -192,7 +204,9 @@ namespace MilSpace.Visibility.ViewController
                     stationsTOCalculate = EsriTools.GetSelectionByExtent(observObjects, mapDocument.ActiveView);
                 }
 
-                VisibilityManager.Generate(observPoints, pointsTOCalculate, observObjects, stationsTOCalculate, scrDEM, culcResults, sessionName);
+               var session =  VisibilityManager.Generate(observPoints, pointsTOCalculate, observObjects, stationsTOCalculate, scrDEM, culcResults, sessionName);
+
+
             }
             catch (Exception ex)
             {

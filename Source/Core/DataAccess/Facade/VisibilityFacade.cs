@@ -61,6 +61,16 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
+        public static VisibilitySession StarthVisibilitySession(VisibilitySession visibilitySession)
+        {
+            using (var accessor = new VisibilityDataAccess())
+            {
+                visibilitySession.Started = DateTime.Now;
+                var res = accessor.UpdateVisibilitySession(visibilitySession);
+                return res;
+            }
+        }
+
         public static VisibilitySession UpdateVisibilitySession(VisibilitySession visibilitySession)
         {
             using(var accessor = new VisibilityDataAccess())

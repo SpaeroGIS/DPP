@@ -114,7 +114,7 @@ namespace MilSpace.Core.Tools
             }
         }
 
-        public IEnumerable<ILayer> RasterLayers => Layers.Where(layer => layer is IRasterLayer);
+        public IEnumerable<IRasterLayer> RasterLayers => Layers.Where(layer => layer is IRasterLayer).Cast<IRasterLayer>();
 
         public IEnumerable<ILayer> PointLayers => GetFeatureLayers(pointTypes);
 

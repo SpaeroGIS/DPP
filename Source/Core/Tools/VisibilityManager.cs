@@ -27,6 +27,7 @@ namespace MilSpace.Tools
 
         private static readonly string WhereAllRecords = "OBJECTID > 0";
         private static Logger logger = Logger.GetLoggerEx("VisibilityManagerManager");
+        
 
         //Visibility dataset template 
         private static readonly string VisibilityCalcFeatureClass = "VDSR";
@@ -81,32 +82,15 @@ namespace MilSpace.Tools
                new ActionParam<string>() { ParamName = ActionParameters.ProfileSource, Value = sourceDem},
                new ActionParam<VisibilityCalculationresultsEnum>() { ParamName = ActionParameters.Calculationresults, Value = culcResults},
                new ActionParam<string>() { ParamName = ActionParameters.OutputSourceName, Value = nameOfTargetDataset},
+               new ActionParam<VisibilitySession>() { ParamName = ActionParameters.Session, Value = session},
             };
 
 
             var procc = new ActionProcessor(prm);
-            var res = procc.Process<StringCollectionResult>();
+            VisibilityZonesFacade.StarthVisibilitySession(session);
 
-            if (res.Result.Count() > 0)
-            {
-                foreach (var calcRes in res.Result)
-                {
-
-                    //Here should be checked if the results match with session.CalculatedResults
-                    logger.InfoEx($"The result layer {calcRes} was successfully composed in {session.ReferencedGDB}");
-                }
-            }
-
-            if (res.Exception != null)
-            {
-                VisibilityZonesFacade.FinishVisibilitySession(session);
-                throw res.Exception;
-            }
-
-            if (!string.IsNullOrWhiteSpace(res.ErrorMessage))
-            {
-                throw new MilSpaceVisibilityCalcFailedException(res.ErrorMessage);
-            }
+            //var res = procc.Process<StringCollectionResult>();
+            procc.ProcessAsync(OnCalculationFinished);
 
             return session;
         }
@@ -116,6 +100,35 @@ namespace MilSpace.Tools
             return $"{VisibilityCalcFeatureClass}{MilSpace.DataAccess.Helper.GetTemporaryNameSuffix()}";
         }
 
+        private static void  OnCalculationFinished(IActionResult message)
+        {
+            if (message is VisibilityCalculationResult res)
+            {
+                var session = res.Result.Session;
+
+                if (res.Result.CalculationMessages.Count() > 0)
+                {
+                    foreach (var calcRes in res.Result.CalculationMessages)
+                    {
+
+                        //Here should be checked if the results match with session.CalculatedResults
+                        logger.InfoEx($"The result layer {calcRes} was successfully composed in {session.ReferencedGDB}");
+                    }
+                }
+
+                if (res.Exception != null)
+                {
+                    VisibilityZonesFacade.FinishVisibilitySession(session);
+                    throw res.Exception;
+                }
+
+                if (!string.IsNullOrWhiteSpace(res.ErrorMessage))
+                {
+                    throw new MilSpaceVisibilityCalcFailedException(res.ErrorMessage);
+                }
+            }
+
+        }
 
     }
 }
