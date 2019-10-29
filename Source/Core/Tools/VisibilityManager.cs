@@ -104,8 +104,11 @@ namespace MilSpace.Tools
 
             if (res.Exception != null)
             {
-                VisibilityZonesFacade.FinishVisibilitySession(session);
                 throw res.Exception;
+            }
+            else
+            {
+                VisibilityZonesFacade.FinishVisibilitySession(session);
             }
 
             if (!string.IsNullOrWhiteSpace(res.ErrorMessage))
