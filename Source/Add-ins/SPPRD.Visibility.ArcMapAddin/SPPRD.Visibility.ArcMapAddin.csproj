@@ -122,6 +122,7 @@
     <Compile Include="Helpers\ArcMapHelper.cs" />
     <Compile Include="MapInteropTool.cs" />
     <Compile Include="ObservPointDefaultValues.cs" />
+    <Compile Include="DTO\CheckObservPointGui.cs" />
     <Compile Include="ViewController\IObservationPointsView.cs" />
     <Compile Include="ViewController\IOservPointsView.cs" />
     <Compile Include="ViewController\ObservationPointsController.cs" />
