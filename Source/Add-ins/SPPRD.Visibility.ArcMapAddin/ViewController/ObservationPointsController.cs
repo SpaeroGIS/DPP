@@ -5,14 +5,10 @@ using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
-using MilSpace.Core.Tools;
 using MilSpace.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using MilSpace.Core;
 
 namespace MilSpace.Visibility.ViewController

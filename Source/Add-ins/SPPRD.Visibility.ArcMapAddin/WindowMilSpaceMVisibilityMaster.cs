@@ -66,8 +66,6 @@ namespace MilSpace.Visibility
 
             DataGridViewCheckBoxColumn checkColumn = new DataGridViewCheckBoxColumn();
             
-
-            
             dvgCheckList.Columns.Add(chkColumn);
             if (observationPoints.Any())
             {
@@ -284,6 +282,11 @@ namespace MilSpace.Visibility
         private void checkBox5_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        public void FillVisibilitySessionsList(IEnumerable<VisibilitySession> visibilitySessions)
+        {
+            throw new NotImplementedException();
         }
     }
 }
