@@ -125,6 +125,7 @@
     <Compile Include="DTO\CheckObservPointGui.cs" />
     <Compile Include="ViewController\IObservationPointsView.cs" />
     <Compile Include="ViewController\IOservPointsView.cs" />
+    <Compile Include="ViewController\IVisibilityCalculationWizard.cs" />
     <Compile Include="ViewController\ObservationPointsController.cs" />
     <Compile Include="WindowMilSpaceMVisibilityMaster.cs">
       <SubType>Form</SubType>

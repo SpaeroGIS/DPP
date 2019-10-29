@@ -89,8 +89,31 @@ namespace MilSpace.Tools
             var procc = new ActionProcessor(prm);
             VisibilityZonesFacade.StarthVisibilitySession(session);
 
-            //var res = procc.Process<StringCollectionResult>();
-            procc.ProcessAsync(OnCalculationFinished);
+            var res = procc.Process<VisibilityCalculationResult>();
+
+            session = res.Result.Session;
+            if (res.Result.CalculationMessages.Count() > 0)
+            {
+                foreach (var calcRes in res.Result.CalculationMessages)
+                {
+
+                    //Here should be checked if the results match with session.CalculatedResults
+                    logger.InfoEx($"The result layer {calcRes} was successfully composed in {session.ReferencedGDB}");
+                }
+            }
+
+            if (res.Exception != null)
+            {
+                VisibilityZonesFacade.FinishVisibilitySession(session);
+                throw res.Exception;
+            }
+
+            if (!string.IsNullOrWhiteSpace(res.ErrorMessage))
+            {
+                throw new MilSpaceVisibilityCalcFailedException(res.ErrorMessage);
+            }
+
+            //procc.ProcessAsync(OnCalculationFinished);
 
             return session;
         }

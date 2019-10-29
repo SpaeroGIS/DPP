@@ -30,7 +30,7 @@ namespace MilSpace.DataAccess.Facade
             using (var accessor = new VisibilityDataAccess())
             {
                 var res = accessor.GetObservationPointsByIds(ids);
-                return res;
+                return res.ToArray();
             }
         }
         public static IEnumerable<ObservationObject> GetObservationObjectByObjectIds(IEnumerable<int> ids)

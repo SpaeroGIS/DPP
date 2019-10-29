@@ -69,7 +69,7 @@ namespace MilSpace.Visibility
             this.label4 = new System.Windows.Forms.Label();
             this.panel12 = new System.Windows.Forms.Panel();
             this.ObservPointLabel = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.observObjects = new System.Windows.Forms.Label();
             this.panel13 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.panel19 = new System.Windows.Forms.Panel();
@@ -77,7 +77,7 @@ namespace MilSpace.Visibility
             this.toolBarButton1 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton2 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton4 = new System.Windows.Forms.ToolBarButton();
-            this.checkedListBox2 = new System.Windows.Forms.CheckedListBox();
+            this.observObjectsChkList = new System.Windows.Forms.CheckedListBox();
             this.panel18 = new System.Windows.Forms.Panel();
             this.checkBox5 = new System.Windows.Forms.CheckBox();
             this.checkBox6 = new System.Windows.Forms.CheckBox();
@@ -87,7 +87,7 @@ namespace MilSpace.Visibility
             this.panel16 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
             this.panel15 = new System.Windows.Forms.Panel();
-            this.label19 = new System.Windows.Forms.Label();
+            this.observObjectsLabel = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.panel14 = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
@@ -563,7 +563,7 @@ namespace MilSpace.Visibility
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.panel19);
-            this.splitContainer1.Panel2.Controls.Add(this.checkedListBox2);
+            this.splitContainer1.Panel2.Controls.Add(this.observObjectsChkList);
             this.splitContainer1.Panel2.Controls.Add(this.panel18);
             this.splitContainer1.Panel2.Controls.Add(this.panel17);
             this.splitContainer1.Panel2.Controls.Add(this.panel16);
@@ -781,7 +781,7 @@ namespace MilSpace.Visibility
             // panel12
             // 
             this.panel12.Controls.Add(this.ObservPointLabel);
-            this.panel12.Controls.Add(this.label1);
+            this.panel12.Controls.Add(this.observObjects);
             this.panel12.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel12.Location = new System.Drawing.Point(0, 24);
             this.panel12.Name = "panel12";
@@ -799,16 +799,16 @@ namespace MilSpace.Visibility
             this.ObservPointLabel.TabIndex = 1;
             this.ObservPointLabel.Text = "ObStations_201810";
             // 
-            // label1
+            // observObjects
             // 
-            this.label1.AutoSize = true;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label1.Location = new System.Drawing.Point(4, 0);
-            this.label1.Name = "label1";
-            this.label1.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label1.Size = new System.Drawing.Size(75, 17);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Слой ПН/ТН";
+            this.observObjects.AutoSize = true;
+            this.observObjects.Dock = System.Windows.Forms.DockStyle.Left;
+            this.observObjects.Location = new System.Drawing.Point(4, 0);
+            this.observObjects.Name = "observObjects";
+            this.observObjects.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
+            this.observObjects.Size = new System.Drawing.Size(75, 17);
+            this.observObjects.TabIndex = 0;
+            this.observObjects.Text = "Слой ПН/ТН";
             // 
             // panel13
             // 
@@ -875,15 +875,15 @@ namespace MilSpace.Visibility
             this.toolBarButton4.Name = "toolBarButton4";
             this.toolBarButton4.ToolTipText = "Показать параметры на карте";
             // 
-            // checkedListBox2
+            // observObjectsChkList
             // 
-            this.checkedListBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.checkedListBox2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.checkedListBox2.FormattingEnabled = true;
-            this.checkedListBox2.Location = new System.Drawing.Point(0, 120);
-            this.checkedListBox2.Name = "checkedListBox2";
-            this.checkedListBox2.Size = new System.Drawing.Size(464, 225);
-            this.checkedListBox2.TabIndex = 21;
+            this.observObjectsChkList.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.observObjectsChkList.Dock = System.Windows.Forms.DockStyle.Top;
+            this.observObjectsChkList.FormattingEnabled = true;
+            this.observObjectsChkList.Location = new System.Drawing.Point(0, 120);
+            this.observObjectsChkList.Name = "observObjectsChkList";
+            this.observObjectsChkList.Size = new System.Drawing.Size(464, 225);
+            this.observObjectsChkList.TabIndex = 21;
             // 
             // panel18
             // 
@@ -984,7 +984,7 @@ namespace MilSpace.Visibility
             // 
             // panel15
             // 
-            this.panel15.Controls.Add(this.label19);
+            this.panel15.Controls.Add(this.observObjectsLabel);
             this.panel15.Controls.Add(this.label7);
             this.panel15.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel15.Location = new System.Drawing.Point(0, 24);
@@ -993,14 +993,14 @@ namespace MilSpace.Visibility
             this.panel15.Size = new System.Drawing.Size(464, 24);
             this.panel15.TabIndex = 15;
             // 
-            // label19
+            // observObjectsLabel
             // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label19.Location = new System.Drawing.Point(65, 4);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(0, 13);
-            this.label19.TabIndex = 1;
+            this.observObjectsLabel.AutoSize = true;
+            this.observObjectsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.observObjectsLabel.Location = new System.Drawing.Point(65, 4);
+            this.observObjectsLabel.Name = "observObjectsLabel";
+            this.observObjectsLabel.Size = new System.Drawing.Size(0, 13);
+            this.observObjectsLabel.TabIndex = 1;
             // 
             // label7
             // 
@@ -1520,7 +1520,7 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Panel panel12;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label observObjects;
         private System.Windows.Forms.Panel panel13;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel19;
@@ -1528,7 +1528,7 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.ToolBarButton toolBarButton1;
         private System.Windows.Forms.ToolBarButton toolBarButton2;
         private System.Windows.Forms.ToolBarButton toolBarButton4;
-        private System.Windows.Forms.CheckedListBox checkedListBox2;
+        private System.Windows.Forms.CheckedListBox observObjectsChkList;
         private System.Windows.Forms.Panel panel18;
         private System.Windows.Forms.CheckBox checkBox5;
         private System.Windows.Forms.CheckBox checkBox6;
@@ -1574,7 +1574,7 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.RichTextBox richTextBox6;
         private System.Windows.Forms.DataGridView dvgCheckList;
         private System.Windows.Forms.Label ObservPointLabel;
-        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label observObjectsLabel;
         private System.Windows.Forms.Button uButton2;
       
         private System.Windows.Forms.ComboBox comboBox1;

@@ -617,7 +617,7 @@ namespace MilSpace.Visibility
             }
             else if (e.Button == wizardTask)
             {
-                (new WindowMilSpaceMVisibilityMaster()).ShowDialog();
+                (new WindowMilSpaceMVisibilityMaster(ObservationPointsFeatureClass, ObservationStationFeatureClass)).ShowDialog();
             }
 
         }

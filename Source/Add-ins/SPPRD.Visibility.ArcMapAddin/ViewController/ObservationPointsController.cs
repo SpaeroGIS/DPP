@@ -204,7 +204,7 @@ namespace MilSpace.Visibility.ViewController
                     stationsTOCalculate = EsriTools.GetSelectionByExtent(observObjects, mapDocument.ActiveView);
                 }
 
-               var session =  VisibilityManager.Generate(observPoints, pointsTOCalculate, observObjects, stationsTOCalculate, scrDEM, culcResults, sessionName);
+                var session = VisibilityManager.Generate(observPoints, pointsTOCalculate, observObjects, stationsTOCalculate, scrDEM, culcResults, sessionName);
 
 
             }
@@ -237,20 +237,26 @@ namespace MilSpace.Visibility.ViewController
         //Returns Observation Stations\Objects which are visible on the Current View Extent
         internal IEnumerable<ObservationObject> GetObservObjectsOnCurrentMapExtent(IActiveView activeView)
         {
-            var observPoints = GetObservatioStationFeatureClass(mapDocument.ActiveView);
+            var observStation = GetObservatioStationFeatureClass(mapDocument.ActiveView);
             IEnumerable<ObservationObject> result = null;
-            if (observPoints != null)
+            if (observStation != null)
             {
-                IEnumerable<int> visiblePoints = EsriTools.GetSelectionByExtent(observPoints, activeView);
-                if (visiblePoints != null)
+                IEnumerable<int> visibleStations = EsriTools.GetSelectionByExtent(observStation, activeView);
+                if (visibleStations != null)
                 {
-                    result = VisibilityZonesFacade.GetAllObservationObjects();
+                    result = VisibilityZonesFacade.GetObservationObjectByObjectIds(visibleStations);
                 }
             }
 
             return result;
         }
 
+        internal IEnumerable<ObservationObject> GetAllObservObjects()
+        {
+            return VisibilityZonesFacade.GetAllObservationObjects();
+        }
+    
+      
         internal IPoint GetEnvelopeCenterPoint(IEnvelope envelope)
         {
             //TODO: Move this method to Core.Tools.EsriTools
