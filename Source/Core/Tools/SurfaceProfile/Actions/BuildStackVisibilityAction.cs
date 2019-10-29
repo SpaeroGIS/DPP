@@ -13,13 +13,14 @@ using A = MilSpace.Core.Actions.Base;
 
 namespace MilSpace.Tools.SurfaceProfile.Actions
 {
-    class BuildStackVisibilityAction : A.Action<StringCollectionResult>
+    class BuildStackVisibilityAction : A.Action<VisibilityCalculationResult>
     {
         private IFeatureClass obserpPointsfeatureClass;
         private IFeatureClass obserpStationsfeatureClass;
         private string rasterSource;
         private string outputSourceName;
         private string outGraphName;
+        private VisibilitySession session;
 
         private VisibilityCalculationresultsEnum calcResults;
 
@@ -30,7 +31,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
         private int[] stationsFilteringIds;
         Logger logger = Logger.GetLoggerEx("BuildStackVisibilityAction");
 
-        private StringCollectionResult result;
+        private VisibilityCalculationResult result;
 
         public BuildStackVisibilityAction() : base()
         {
@@ -46,6 +47,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             stationsFilteringIds = parameters.GetParameterWithValidition<int[]>(ActionParameters.FilteringStationsIds, null).Value;
             calcResults = parameters.GetParameterWithValidition<VisibilityCalculationresultsEnum>(ActionParameters.Calculationresults, VisibilityCalculationresultsEnum.None).Value;
             outputSourceName = parameters.GetParameterWithValidition<string>(ActionParameters.OutputSourceName, VisibilityManager.GenerateResultId()).Value;
+            session = parameters.GetParameterWithValidition<VisibilitySession>(ActionParameters.Session, null).Value;
         }
 
         public override string ActionId => ActionsEnum.vblt.ToString();
@@ -62,20 +64,23 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                    new ActionParam<int[]>() { ParamName = ActionParameters.FilteringPointsIds, Value = null},
                    new ActionParam<string>() { ParamName = ActionParameters.ProfileSource, Value = string.Empty},
                    new ActionParam<VisibilityCalculationresultsEnum>() { ParamName = ActionParameters.Calculationresults, Value = VisibilityCalculationresultsEnum.None},
-                   new ActionParam<string>() { ParamName = ActionParameters.OutputSourceName, Value = null}
+                   new ActionParam<string>() { ParamName = ActionParameters.OutputSourceName, Value = null},
+                   new ActionParam<string>() { ParamName = ActionParameters.Session, Value = null}
                };
             }
         }
 
 
-        public override StringCollectionResult GetResult()
+        public override VisibilityCalculationResult GetResult()
         {
             return result;
         }
 
         public override void Process()
         {
-            result = new StringCollectionResult();
+            result = new VisibilityCalculationResult();
+            result.Result.Session = session;
+
             var results = new List<string>();
 
             if (calcResults == VisibilityCalculationresultsEnum.None)
@@ -144,7 +149,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
                 //Here is the place to extend handle the rest of results 
 
-                result.Result = results;
+                result.Result.CalculationMessages = results;
                 if (messages != null && messages.Any())
                 {
                     messages.ToList().ForEach(m => { if (result.Exception != null) logger.ErrorEx(m); else logger.InfoEx(m); });

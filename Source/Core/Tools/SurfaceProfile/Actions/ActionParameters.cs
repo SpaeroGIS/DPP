@@ -13,6 +13,6 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
         public static string FilteringPointsIds = "PntfltrIds";
         public static string FilteringStationsIds = "StnsfltrIds";
         public static string Calculationresults = "calcresults";
-
+        public static string Session = "session";
     }
 }
