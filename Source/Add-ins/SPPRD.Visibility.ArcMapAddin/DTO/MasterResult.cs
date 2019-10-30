@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace MilSpace.Visibility.DTO
 {
-    class MasterResult
+    internal class MasterResult
     {
-        public IEnumerable<int>  ObservPointID{ get; set; }
-        public IEnumerable<int> ObservObjectID { get; set; }
-        public string RasterLayerNAME { get; set; }
+        public IEnumerable<int>  ObservPointIDs{ get; set; }
+        public IEnumerable<int> ObservObjectIDs { get; set; }
+        public string RasterLayerName { get; set; }
          
         public bool OP { get; set; }
-        public bool sumFieldOfView { get; set; }
+        public bool SumFieldOfView { get; set; }
         public bool Table { get; set; }
 
     }

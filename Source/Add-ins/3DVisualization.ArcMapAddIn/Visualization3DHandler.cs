@@ -34,7 +34,6 @@ namespace MilSpace.Visualization3D
 
         static Visualization3DHandler()
         {
-
         }
 
         internal static void OpenProfilesSetIn3D(ArcSceneArguments layers)
