@@ -269,7 +269,6 @@
             this.tlbVisibilitySessions = new System.Windows.Forms.ToolBar();
             this.wizardTask = new System.Windows.Forms.ToolBarButton();
             this.removeTask = new System.Windows.Forms.ToolBarButton();
-            this.addTask = new System.Windows.Forms.ToolBarButton();
             this.dgvVisibilitySessions = new System.Windows.Forms.DataGridView();
             this.panel39 = new System.Windows.Forms.Panel();
             this.cmbStateFilter = new System.Windows.Forms.ComboBox();
@@ -2723,7 +2722,6 @@
             // tlbVisibilitySessions
             // 
             this.tlbVisibilitySessions.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
-            this.addTask,
             this.wizardTask,
             this.removeTask});
             this.tlbVisibilitySessions.ButtonSize = new System.Drawing.Size(18, 18);
@@ -2735,7 +2733,7 @@
             this.tlbVisibilitySessions.ShowToolTips = true;
             this.tlbVisibilitySessions.Size = new System.Drawing.Size(342, 28);
             this.tlbVisibilitySessions.TabIndex = 40;
-            this.tlbVisibilitySessions.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.toolBar9_ButtonClick);
+            this.tlbVisibilitySessions.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.TlbVisiilitySessions_ButtonClick);
             // 
             // wizardTask
             // 
@@ -2746,11 +2744,6 @@
             // 
             this.removeTask.ImageKey = "Cancel.png";
             this.removeTask.Name = "removeTask";
-            // 
-            // addTask
-            // 
-            this.addTask.ImageKey = "Plus.png";
-            this.addTask.Name = "addTask";
             // 
             // dgvVisibilitySessions
             // 
@@ -3696,7 +3689,6 @@
         private System.Windows.Forms.ToolBarButton toolBarButton3;
         private System.Windows.Forms.ToolBarButton toolBarButton4;
         private System.Windows.Forms.ToolBarButton removeTask;
-        private System.Windows.Forms.ToolBarButton addTask;
         private System.Windows.Forms.ToolBarButton wizardTask;
     }
 }
