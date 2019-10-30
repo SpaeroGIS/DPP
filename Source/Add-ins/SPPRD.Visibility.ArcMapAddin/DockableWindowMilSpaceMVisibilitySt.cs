@@ -623,9 +623,19 @@ namespace MilSpace.Visibility
                 return;
             }
 
+            dgvVisibilitySessions.CurrentCell = null;
+
             foreach(DataGridViewRow row in dgvVisibilitySessions.Rows)
             {
-                FilterVisibilitySessionRow(row);
+                if(row.Cells["State"].Value.ToString() != cmbStateFilter.SelectedItem.ToString()
+                && cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All))
+                {
+                    row.Visible = false;
+                }
+                else
+                {
+                    row.Visible = true;
+                }
             }
 
             if(dgvVisibilitySessions.FirstDisplayedScrollingRowIndex != -1)
@@ -637,38 +647,7 @@ namespace MilSpace.Visibility
                 tlbVisibilitySessions.Buttons["removeTask"].Enabled = false;
             }
         }
-
-        private void FilterVisibilitySessionRow(DataGridViewRow row, bool isRowUpdate = false)
-        {
-            if(row.Cells["State"].Value.ToString() != cmbStateFilter.SelectedItem.ToString() 
-              && cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All))
-            {
-                if(dgvVisibilitySessions.FirstDisplayedScrollingRowIndex == row.Index)
-                {
-                    dgvVisibilitySessions.CurrentCell = null;
-                }
-
-                row.Visible = false;
-            }
-            else
-            {
-                row.Visible = true;
-            }
-
-            if(isRowUpdate)
-            {
-                if(dgvVisibilitySessions.FirstDisplayedScrollingRowIndex != -1)
-                {
-                    dgvVisibilitySessions.Rows[dgvVisibilitySessions.FirstDisplayedScrollingRowIndex].Selected = true;
-                }
-                else
-                {
-                    tlbVisibilitySessions.Buttons["removeTask"].Enabled = false;
-                }
-            }
-
-        }
-
+        
         private void OnSelectObserbPoint()
         {
 
@@ -860,45 +839,9 @@ namespace MilSpace.Visibility
             observPointCreator.Text = selectedPoint.Operator;
         }
 
-       
-
         #region ObservationPointsTabEvents
 
-        private void toolBar9_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
-        {
-            if(e.Button == addTask)
-            {
-            }
-            else if(e.Button == removeTask)
-            {
-                var result = MessageBox.Show("Do you really want to delete this session?", "SPPRD", MessageBoxButtons.OKCancel);
-
-                if (result == DialogResult.OK)
-                {
-                    var id = dgvVisibilitySessions.SelectedRows[0].Cells["Id"].Value.ToString();
-                    var rowIndex = dgvVisibilitySessions.SelectedRows[0].Index;
-                    _visibilitySessionsController.RemoveSession(id);
-                    _visibilitySessionsGui.Remove(_visibilitySessionsGui.First(session => session.Id == id));
-
-                    if(rowIndex < dgvObservationPoints.Rows.Count)
-                    {
-                        FilterVisibilitySessionRow(dgvVisibilitySessions.Rows[rowIndex]);
-                    }
-                }
-            }
-            else if(e.Button == wizardTask)
-            {
-               var dialogResult = (new WindowMilSpaceMVisibilityMaster(ObservationPointsFeatureClass, ObservationStationFeatureClass)).ShowDialog();
-
-                if(dialogResult == DialogResult.OK)
-                {
-                    _visibilitySessionsController.UpdateVisibilitySessionsList();
-                    FilterVisibilityList();
-                }
-            }
-
-        }
-
+      
         private void TlbObserPoints_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
             switch(e.Button.Name)
@@ -1036,6 +979,39 @@ namespace MilSpace.Visibility
         #endregion
 
         #region VisibilitySessionsTabEvents
+
+        private void TlbVisiilitySessions_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        {
+            if(e.Button == removeTask)
+            {
+                var result = MessageBox.Show("Do you really want to delete this session?", "SPPRD", MessageBoxButtons.OKCancel);
+
+                if(result == DialogResult.OK)
+                {
+                    var id = dgvVisibilitySessions.SelectedRows[0].Cells["Id"].Value.ToString();
+                    var rowIndex = dgvVisibilitySessions.SelectedRows[0].Index;
+                    _visibilitySessionsController.RemoveSession(id);
+                    _visibilitySessionsGui.Remove(_visibilitySessionsGui.First(session => session.Id == id));
+
+                    if(cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All))
+                    {
+                        FilterVisibilityList();
+                    }
+                }
+            }
+            else if(e.Button == wizardTask)
+            {
+                var dialogResult = (new WindowMilSpaceMVisibilityMaster(ObservationPointsFeatureClass, ObservationStationFeatureClass)).ShowDialog();
+
+                if(dialogResult == DialogResult.OK)
+                {
+                    _visibilitySessionsController.UpdateVisibilitySessionsList();
+                    FilterVisibilityList();
+                }
+            }
+
+        }
+
 
         private void MainTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
