@@ -5,8 +5,6 @@ using MilSpace.Visualization3D.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MilSpace.Visualization3D
 {
@@ -53,6 +51,11 @@ namespace MilSpace.Visualization3D
         internal IEnumerable<VisibilitySession> GetVisibilitySessions()
         {
             return VisibilityZonesFacade.GetFinishedVisibilitySessions();
+        }
+
+        internal IEnumerable<VisibilitySession> GetUserVisibilitySessions()
+        {
+            return VisibilityZonesFacade.GetFinishedVisibilitySessions().Where(session => session.UserName == Environment.UserName);
         }
 
         private void AddChildCollection(TreeViewNodeModel node, ProfileSession profileSession)

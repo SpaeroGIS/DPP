@@ -69,15 +69,11 @@ namespace MilSpace.Visibility
             this.label4 = new System.Windows.Forms.Label();
             this.panel12 = new System.Windows.Forms.Panel();
             this.ObservPointLabel = new System.Windows.Forms.Label();
-            this.observObjects = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.panel13 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.panel19 = new System.Windows.Forms.Panel();
-            this.toolBar1 = new System.Windows.Forms.ToolBar();
-            this.toolBarButton1 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton2 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton4 = new System.Windows.Forms.ToolBarButton();
-            this.observObjectsChkList = new System.Windows.Forms.CheckedListBox();
+            this.dgvObjects = new System.Windows.Forms.DataGridView();
             this.panel18 = new System.Windows.Forms.Panel();
             this.checkBox5 = new System.Windows.Forms.CheckBox();
             this.checkBox6 = new System.Windows.Forms.CheckBox();
@@ -87,7 +83,7 @@ namespace MilSpace.Visibility
             this.panel16 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
             this.panel15 = new System.Windows.Forms.Panel();
-            this.observObjectsLabel = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.panel14 = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
@@ -116,14 +112,25 @@ namespace MilSpace.Visibility
             this.label14 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.panel21 = new System.Windows.Forms.Panel();
-            this.checkBox9 = new System.Windows.Forms.CheckBox();
-            this.checkBox10 = new System.Windows.Forms.CheckBox();
-            this.checkBox11 = new System.Windows.Forms.CheckBox();
+            this.TableChkBox = new System.Windows.Forms.CheckBox();
+            this.SumChkBox = new System.Windows.Forms.CheckBox();
+            this.checkBoxOP = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
             this.panel20 = new System.Windows.Forms.Panel();
             this.label10 = new System.Windows.Forms.Label();
             this.stepFour = new System.Windows.Forms.TabPage();
-            this.richTextBox6 = new System.Windows.Forms.RichTextBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.panel26 = new System.Windows.Forms.Panel();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.observObjectsLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.StepsTabControl.SuspendLayout();
             this.stepOne.SuspendLayout();
@@ -145,6 +152,7 @@ namespace MilSpace.Visibility
             this.panel12.SuspendLayout();
             this.panel13.SuspendLayout();
             this.panel19.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvObjects)).BeginInit();
             this.panel18.SuspendLayout();
             this.panel17.SuspendLayout();
             this.panel16.SuspendLayout();
@@ -159,6 +167,8 @@ namespace MilSpace.Visibility
             this.panel21.SuspendLayout();
             this.panel20.SuspendLayout();
             this.stepFour.SuspendLayout();
+            this.panel26.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -166,10 +176,10 @@ namespace MilSpace.Visibility
             this.panel1.Controls.Add(this.PreviousStepButton);
             this.panel1.Controls.Add(this.NextStepButton);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 456);
+            this.panel1.Location = new System.Drawing.Point(0, 455);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(0, 0, 8, 0);
-            this.panel1.Size = new System.Drawing.Size(929, 27);
+            this.panel1.Size = new System.Drawing.Size(929, 28);
             this.panel1.TabIndex = 1;
             // 
             // PreviousStepButton
@@ -177,7 +187,7 @@ namespace MilSpace.Visibility
             this.PreviousStepButton.Dock = System.Windows.Forms.DockStyle.Right;
             this.PreviousStepButton.Location = new System.Drawing.Point(701, 0);
             this.PreviousStepButton.Name = "PreviousStepButton";
-            this.PreviousStepButton.Size = new System.Drawing.Size(110, 27);
+            this.PreviousStepButton.Size = new System.Drawing.Size(110, 28);
             this.PreviousStepButton.TabIndex = 1;
             this.PreviousStepButton.Text = "< Предыдущая";
             this.PreviousStepButton.UseVisualStyleBackColor = true;
@@ -189,7 +199,7 @@ namespace MilSpace.Visibility
             this.NextStepButton.Location = new System.Drawing.Point(811, 0);
             this.NextStepButton.Name = "NextStepButton";
             this.NextStepButton.Padding = new System.Windows.Forms.Padding(0, 0, 8, 0);
-            this.NextStepButton.Size = new System.Drawing.Size(110, 27);
+            this.NextStepButton.Size = new System.Drawing.Size(110, 28);
             this.NextStepButton.TabIndex = 0;
             this.NextStepButton.Text = "Следующая >";
             this.NextStepButton.UseVisualStyleBackColor = true;
@@ -419,7 +429,7 @@ namespace MilSpace.Visibility
             this.StepsTabControl.Location = new System.Drawing.Point(0, 0);
             this.StepsTabControl.Name = "StepsTabControl";
             this.StepsTabControl.SelectedIndex = 0;
-            this.StepsTabControl.Size = new System.Drawing.Size(929, 456);
+            this.StepsTabControl.Size = new System.Drawing.Size(929, 455);
             this.StepsTabControl.TabIndex = 2;
             // 
             // stepOne
@@ -433,7 +443,7 @@ namespace MilSpace.Visibility
             this.stepOne.Location = new System.Drawing.Point(4, 28);
             this.stepOne.Name = "stepOne";
             this.stepOne.Padding = new System.Windows.Forms.Padding(3);
-            this.stepOne.Size = new System.Drawing.Size(921, 424);
+            this.stepOne.Size = new System.Drawing.Size(921, 423);
             this.stepOne.TabIndex = 0;
             this.stepOne.Text = "Шаг 1";
             // 
@@ -530,7 +540,7 @@ namespace MilSpace.Visibility
             this.stepTwo.Location = new System.Drawing.Point(4, 28);
             this.stepTwo.Name = "stepTwo";
             this.stepTwo.Padding = new System.Windows.Forms.Padding(3);
-            this.stepTwo.Size = new System.Drawing.Size(921, 424);
+            this.stepTwo.Size = new System.Drawing.Size(921, 423);
             this.stepTwo.TabIndex = 1;
             this.stepTwo.Text = "Шаг 2";
             this.stepTwo.UseVisualStyleBackColor = true;
@@ -541,7 +551,7 @@ namespace MilSpace.Visibility
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel7.Location = new System.Drawing.Point(3, 48);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(915, 373);
+            this.panel7.Size = new System.Drawing.Size(915, 372);
             this.panel7.TabIndex = 67;
             // 
             // splitContainer1
@@ -563,13 +573,12 @@ namespace MilSpace.Visibility
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.panel19);
-            this.splitContainer1.Panel2.Controls.Add(this.observObjectsChkList);
             this.splitContainer1.Panel2.Controls.Add(this.panel18);
             this.splitContainer1.Panel2.Controls.Add(this.panel17);
             this.splitContainer1.Panel2.Controls.Add(this.panel16);
             this.splitContainer1.Panel2.Controls.Add(this.panel15);
             this.splitContainer1.Panel2.Controls.Add(this.panel14);
-            this.splitContainer1.Size = new System.Drawing.Size(915, 373);
+            this.splitContainer1.Size = new System.Drawing.Size(915, 372);
             this.splitContainer1.SplitterDistance = 441;
             this.splitContainer1.SplitterWidth = 10;
             this.splitContainer1.TabIndex = 0;
@@ -586,7 +595,6 @@ namespace MilSpace.Visibility
             this.dvgCheckList.ColumnHeadersVisible = false;
             this.dvgCheckList.Dock = System.Windows.Forms.DockStyle.Top;
             this.dvgCheckList.Location = new System.Drawing.Point(0, 120);
-            this.dvgCheckList.MultiSelect = false;
             this.dvgCheckList.Name = "dvgCheckList";
             this.dvgCheckList.RowHeadersVisible = false;
             this.dvgCheckList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
@@ -598,7 +606,7 @@ namespace MilSpace.Visibility
             // 
             this.panel8.Controls.Add(this.toolBar7);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel8.Location = new System.Drawing.Point(0, 349);
+            this.panel8.Location = new System.Drawing.Point(0, 348);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(441, 24);
             this.panel8.TabIndex = 21;
@@ -781,7 +789,7 @@ namespace MilSpace.Visibility
             // panel12
             // 
             this.panel12.Controls.Add(this.ObservPointLabel);
-            this.panel12.Controls.Add(this.observObjects);
+            this.panel12.Controls.Add(this.label1);
             this.panel12.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel12.Location = new System.Drawing.Point(0, 24);
             this.panel12.Name = "panel12";
@@ -799,16 +807,16 @@ namespace MilSpace.Visibility
             this.ObservPointLabel.TabIndex = 1;
             this.ObservPointLabel.Text = "ObStations_201810";
             // 
-            // observObjects
+            // label1
             // 
-            this.observObjects.AutoSize = true;
-            this.observObjects.Dock = System.Windows.Forms.DockStyle.Left;
-            this.observObjects.Location = new System.Drawing.Point(4, 0);
-            this.observObjects.Name = "observObjects";
-            this.observObjects.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.observObjects.Size = new System.Drawing.Size(75, 17);
-            this.observObjects.TabIndex = 0;
-            this.observObjects.Text = "Слой ПН/ТН";
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label1.Location = new System.Drawing.Point(4, 0);
+            this.label1.Name = "label1";
+            this.label1.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
+            this.label1.Size = new System.Drawing.Size(75, 17);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Слой ПН/ТН";
             // 
             // panel13
             // 
@@ -834,56 +842,28 @@ namespace MilSpace.Visibility
             // 
             // panel19
             // 
-            this.panel19.Controls.Add(this.toolBar1);
+            this.panel19.Controls.Add(this.dgvObjects);
             this.panel19.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel19.Location = new System.Drawing.Point(0, 345);
+            this.panel19.Location = new System.Drawing.Point(0, 120);
             this.panel19.Name = "panel19";
-            this.panel19.Size = new System.Drawing.Size(464, 24);
+            this.panel19.Size = new System.Drawing.Size(464, 225);
             this.panel19.TabIndex = 22;
             // 
-            // toolBar1
+            // dgvObjects
             // 
-            this.toolBar1.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
-            this.toolBarButton1,
-            this.toolBarButton2,
-            this.toolBarButton4});
-            this.toolBar1.ButtonSize = new System.Drawing.Size(18, 18);
-            this.toolBar1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolBar1.DropDownArrows = true;
-            this.toolBar1.ImageList = this.imageList1;
-            this.toolBar1.Location = new System.Drawing.Point(0, 0);
-            this.toolBar1.Name = "toolBar1";
-            this.toolBar1.ShowToolTips = true;
-            this.toolBar1.Size = new System.Drawing.Size(464, 28);
-            this.toolBar1.TabIndex = 40;
-            // 
-            // toolBarButton1
-            // 
-            this.toolBarButton1.ImageKey = "Pointer.png";
-            this.toolBarButton1.Name = "toolBarButton1";
-            this.toolBarButton1.ToolTipText = "Указать на карте";
-            // 
-            // toolBarButton2
-            // 
-            this.toolBarButton2.ImageKey = "Directions.png";
-            this.toolBarButton2.Name = "toolBarButton2";
-            this.toolBarButton2.ToolTipText = "Показать на карте";
-            // 
-            // toolBarButton4
-            // 
-            this.toolBarButton4.ImageKey = "Light.png";
-            this.toolBarButton4.Name = "toolBarButton4";
-            this.toolBarButton4.ToolTipText = "Показать параметры на карте";
-            // 
-            // observObjectsChkList
-            // 
-            this.observObjectsChkList.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.observObjectsChkList.Dock = System.Windows.Forms.DockStyle.Top;
-            this.observObjectsChkList.FormattingEnabled = true;
-            this.observObjectsChkList.Location = new System.Drawing.Point(0, 120);
-            this.observObjectsChkList.Name = "observObjectsChkList";
-            this.observObjectsChkList.Size = new System.Drawing.Size(464, 225);
-            this.observObjectsChkList.TabIndex = 21;
+            this.dgvObjects.AllowUserToAddRows = false;
+            this.dgvObjects.AllowUserToDeleteRows = false;
+            this.dgvObjects.AllowUserToResizeColumns = false;
+            this.dgvObjects.AllowUserToResizeRows = false;
+            this.dgvObjects.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
+            this.dgvObjects.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvObjects.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvObjects.ColumnHeadersVisible = false;
+            this.dgvObjects.Location = new System.Drawing.Point(0, 0);
+            this.dgvObjects.Name = "dgvObjects";
+            this.dgvObjects.RowHeadersVisible = false;
+            this.dgvObjects.Size = new System.Drawing.Size(463, 225);
+            this.dgvObjects.TabIndex = 23;
             // 
             // panel18
             // 
@@ -909,7 +889,6 @@ namespace MilSpace.Visibility
             this.checkBox5.TabIndex = 3;
             this.checkBox5.Text = "дата";
             this.checkBox5.UseVisualStyleBackColor = true;
-            this.checkBox5.CheckedChanged += new System.EventHandler(this.checkBox5_CheckedChanged);
             // 
             // checkBox6
             // 
@@ -985,6 +964,7 @@ namespace MilSpace.Visibility
             // panel15
             // 
             this.panel15.Controls.Add(this.observObjectsLabel);
+            this.panel15.Controls.Add(this.label19);
             this.panel15.Controls.Add(this.label7);
             this.panel15.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel15.Location = new System.Drawing.Point(0, 24);
@@ -993,14 +973,14 @@ namespace MilSpace.Visibility
             this.panel15.Size = new System.Drawing.Size(464, 24);
             this.panel15.TabIndex = 15;
             // 
-            // observObjectsLabel
+            // label19
             // 
-            this.observObjectsLabel.AutoSize = true;
-            this.observObjectsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.observObjectsLabel.Location = new System.Drawing.Point(65, 4);
-            this.observObjectsLabel.Name = "observObjectsLabel";
-            this.observObjectsLabel.Size = new System.Drawing.Size(0, 13);
-            this.observObjectsLabel.TabIndex = 1;
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label19.Location = new System.Drawing.Point(65, 4);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(0, 13);
+            this.label19.TabIndex = 1;
             // 
             // label7
             // 
@@ -1077,7 +1057,7 @@ namespace MilSpace.Visibility
             this.stepThree.ImageIndex = 3;
             this.stepThree.Location = new System.Drawing.Point(4, 28);
             this.stepThree.Name = "stepThree";
-            this.stepThree.Size = new System.Drawing.Size(921, 424);
+            this.stepThree.Size = new System.Drawing.Size(921, 423);
             this.stepThree.TabIndex = 2;
             this.stepThree.Text = "Шаг 3";
             this.stepThree.UseVisualStyleBackColor = true;
@@ -1311,9 +1291,9 @@ namespace MilSpace.Visibility
             // 
             // panel21
             // 
-            this.panel21.Controls.Add(this.checkBox9);
-            this.panel21.Controls.Add(this.checkBox10);
-            this.panel21.Controls.Add(this.checkBox11);
+            this.panel21.Controls.Add(this.TableChkBox);
+            this.panel21.Controls.Add(this.SumChkBox);
+            this.panel21.Controls.Add(this.checkBoxOP);
             this.panel21.Controls.Add(this.label11);
             this.panel21.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel21.Location = new System.Drawing.Point(0, 24);
@@ -1321,47 +1301,47 @@ namespace MilSpace.Visibility
             this.panel21.Size = new System.Drawing.Size(921, 26);
             this.panel21.TabIndex = 15;
             // 
-            // checkBox9
+            // TableChkBox
             // 
-            this.checkBox9.AutoSize = true;
-            this.checkBox9.Checked = true;
-            this.checkBox9.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox9.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkBox9.Location = new System.Drawing.Point(504, 0);
-            this.checkBox9.Name = "checkBox9";
-            this.checkBox9.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.checkBox9.Size = new System.Drawing.Size(123, 26);
-            this.checkBox9.TabIndex = 6;
-            this.checkBox9.Text = "таблица покрытия";
-            this.checkBox9.UseVisualStyleBackColor = true;
+            this.TableChkBox.AutoSize = true;
+            this.TableChkBox.Checked = true;
+            this.TableChkBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.TableChkBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.TableChkBox.Location = new System.Drawing.Point(504, 0);
+            this.TableChkBox.Name = "TableChkBox";
+            this.TableChkBox.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
+            this.TableChkBox.Size = new System.Drawing.Size(123, 26);
+            this.TableChkBox.TabIndex = 6;
+            this.TableChkBox.Text = "таблица покрытия";
+            this.TableChkBox.UseVisualStyleBackColor = true;
             // 
-            // checkBox10
+            // SumChkBox
             // 
-            this.checkBox10.AutoSize = true;
-            this.checkBox10.Checked = true;
-            this.checkBox10.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox10.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkBox10.Location = new System.Drawing.Point(383, 0);
-            this.checkBox10.Name = "checkBox10";
-            this.checkBox10.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.checkBox10.Size = new System.Drawing.Size(121, 26);
-            this.checkBox10.TabIndex = 5;
-            this.checkBox10.Text = "суммирующая ОВ";
-            this.checkBox10.UseVisualStyleBackColor = true;
+            this.SumChkBox.AutoSize = true;
+            this.SumChkBox.Checked = true;
+            this.SumChkBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.SumChkBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.SumChkBox.Location = new System.Drawing.Point(383, 0);
+            this.SumChkBox.Name = "SumChkBox";
+            this.SumChkBox.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
+            this.SumChkBox.Size = new System.Drawing.Size(121, 26);
+            this.SumChkBox.TabIndex = 5;
+            this.SumChkBox.Text = "суммирующая ОВ";
+            this.SumChkBox.UseVisualStyleBackColor = true;
             // 
-            // checkBox11
+            // checkBoxOP
             // 
-            this.checkBox11.AutoSize = true;
-            this.checkBox11.Checked = true;
-            this.checkBox11.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox11.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkBox11.Location = new System.Drawing.Point(174, 0);
-            this.checkBox11.Name = "checkBox11";
-            this.checkBox11.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.checkBox11.Size = new System.Drawing.Size(209, 26);
-            this.checkBox11.TabIndex = 4;
-            this.checkBox11.Text = "области видимости отдельных ПН";
-            this.checkBox11.UseVisualStyleBackColor = true;
+            this.checkBoxOP.AutoSize = true;
+            this.checkBoxOP.Checked = true;
+            this.checkBoxOP.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxOP.Dock = System.Windows.Forms.DockStyle.Left;
+            this.checkBoxOP.Location = new System.Drawing.Point(174, 0);
+            this.checkBoxOP.Name = "checkBoxOP";
+            this.checkBoxOP.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.checkBoxOP.Size = new System.Drawing.Size(209, 26);
+            this.checkBoxOP.TabIndex = 4;
+            this.checkBoxOP.Text = "области видимости отдельных ПН";
+            this.checkBoxOP.UseVisualStyleBackColor = true;
             // 
             // label11
             // 
@@ -1398,25 +1378,145 @@ namespace MilSpace.Visibility
             // 
             // stepFour
             // 
-            this.stepFour.Controls.Add(this.richTextBox6);
+            this.stepFour.Controls.Add(this.checkBox3);
+            this.stepFour.Controls.Add(this.checkBox2);
+            this.stepFour.Controls.Add(this.checkBox1);
+            this.stepFour.Controls.Add(this.panel26);
+            this.stepFour.Controls.Add(this.panel2);
+            this.stepFour.Controls.Add(this.label24);
+            this.stepFour.Controls.Add(this.label23);
             this.stepFour.ImageIndex = 4;
             this.stepFour.Location = new System.Drawing.Point(4, 28);
             this.stepFour.Name = "stepFour";
-            this.stepFour.Size = new System.Drawing.Size(921, 424);
+            this.stepFour.Size = new System.Drawing.Size(921, 423);
             this.stepFour.TabIndex = 3;
             this.stepFour.Text = "Шаг 4";
             this.stepFour.UseVisualStyleBackColor = true;
             // 
-            // richTextBox6
+            // checkBox3
             // 
-            this.richTextBox6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.richTextBox6.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox6.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.richTextBox6.Location = new System.Drawing.Point(0, 281);
-            this.richTextBox6.Name = "richTextBox6";
-            this.richTextBox6.Size = new System.Drawing.Size(921, 143);
-            this.richTextBox6.TabIndex = 0;
-            this.richTextBox6.Text = resources.GetString("richTextBox6.Text");
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Checked = true;
+            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox3.Location = new System.Drawing.Point(12, 136);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(119, 17);
+            this.checkBox3.TabIndex = 7;
+            this.checkBox3.Text = "таблица покрытия";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Checked = true;
+            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox2.Location = new System.Drawing.Point(12, 112);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(117, 17);
+            this.checkBox2.TabIndex = 6;
+            this.checkBox2.Text = "суммирующая ОВ";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.Location = new System.Drawing.Point(12, 88);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(201, 17);
+            this.checkBox1.TabIndex = 5;
+            this.checkBox1.Text = "области видимости отдельных ПН";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // panel26
+            // 
+            this.panel26.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel26.Controls.Add(this.label28);
+            this.panel26.Controls.Add(this.label26);
+            this.panel26.Location = new System.Drawing.Point(12, 61);
+            this.panel26.Name = "panel26";
+            this.panel26.Size = new System.Drawing.Size(313, 20);
+            this.panel26.TabIndex = 4;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(155, 0);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(41, 13);
+            this.label28.TabIndex = 2;
+            this.label28.Text = "label28";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label26.ForeColor = System.Drawing.Color.Black;
+            this.label26.Location = new System.Drawing.Point(3, 0);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(145, 15);
+            this.label26.TabIndex = 1;
+            this.label26.Text = "Выбранно объектов:";
+            // 
+            // panel2
+            // 
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.label27);
+            this.panel2.Controls.Add(this.label25);
+            this.panel2.Location = new System.Drawing.Point(12, 35);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(313, 20);
+            this.panel2.TabIndex = 3;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(116, 0);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(41, 13);
+            this.label27.TabIndex = 2;
+            this.label27.Text = "label27";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label25.ForeColor = System.Drawing.SystemColors.Desktop;
+            this.label25.Location = new System.Drawing.Point(3, 0);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(106, 15);
+            this.label25.TabIndex = 1;
+            this.label25.Text = "Выбранно ПН :";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(194, 19);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(41, 13);
+            this.label24.TabIndex = 2;
+            this.label24.Text = "label24";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label23.Location = new System.Drawing.Point(9, 15);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(179, 17);
+            this.label23.TabIndex = 1;
+            this.label23.Text = "Поверхность расчета :";
+            // 
+            // observObjectsLabel
+            // 
+            this.observObjectsLabel.AutoSize = true;
+            this.observObjectsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.observObjectsLabel.Location = new System.Drawing.Point(66, 4);
+            this.observObjectsLabel.Name = "observObjectsLabel";
+            this.observObjectsLabel.Size = new System.Drawing.Size(48, 13);
+            this.observObjectsLabel.TabIndex = 2;
+            this.observObjectsLabel.Text = "label29";
             // 
             // WindowMilSpaceMVisibilityMaster
             // 
@@ -1425,9 +1525,11 @@ namespace MilSpace.Visibility
             this.ClientSize = new System.Drawing.Size(929, 483);
             this.Controls.Add(this.StepsTabControl);
             this.Controls.Add(this.panel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "WindowMilSpaceMVisibilityMaster";
             this.Text = "MilSpace. Module visibility. Master";
-            this.Load += new System.EventHandler(this.WindowMilSpaceMVisibilityMaster_Load);
             this.panel1.ResumeLayout(false);
             this.StepsTabControl.ResumeLayout(false);
             this.stepOne.ResumeLayout(false);
@@ -1455,7 +1557,7 @@ namespace MilSpace.Visibility
             this.panel13.ResumeLayout(false);
             this.panel13.PerformLayout();
             this.panel19.ResumeLayout(false);
-            this.panel19.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvObjects)).EndInit();
             this.panel18.ResumeLayout(false);
             this.panel18.PerformLayout();
             this.panel17.ResumeLayout(false);
@@ -1482,6 +1584,11 @@ namespace MilSpace.Visibility
             this.panel20.ResumeLayout(false);
             this.panel20.PerformLayout();
             this.stepFour.ResumeLayout(false);
+            this.stepFour.PerformLayout();
+            this.panel26.ResumeLayout(false);
+            this.panel26.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1492,7 +1599,6 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button PreviousStepButton;
         private System.Windows.Forms.Button NextStepButton;
-        private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.TabControl StepsTabControl;
         private System.Windows.Forms.TabPage stepOne;
@@ -1520,15 +1626,10 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Panel panel12;
-        private System.Windows.Forms.Label observObjects;
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel13;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel19;
-        private System.Windows.Forms.ToolBar toolBar1;
-        private System.Windows.Forms.ToolBarButton toolBarButton1;
-        private System.Windows.Forms.ToolBarButton toolBarButton2;
-        private System.Windows.Forms.ToolBarButton toolBarButton4;
-        private System.Windows.Forms.CheckedListBox observObjectsChkList;
         private System.Windows.Forms.Panel panel18;
         private System.Windows.Forms.CheckBox checkBox5;
         private System.Windows.Forms.CheckBox checkBox6;
@@ -1564,17 +1665,16 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Panel panel21;
-        private System.Windows.Forms.CheckBox checkBox9;
-        private System.Windows.Forms.CheckBox checkBox10;
-        private System.Windows.Forms.CheckBox checkBox11;
+        private System.Windows.Forms.CheckBox TableChkBox;
+        private System.Windows.Forms.CheckBox SumChkBox;
+        private System.Windows.Forms.CheckBox checkBoxOP;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Panel panel20;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TabPage stepFour;
-        private System.Windows.Forms.RichTextBox richTextBox6;
         private System.Windows.Forms.DataGridView dvgCheckList;
         private System.Windows.Forms.Label ObservPointLabel;
-        private System.Windows.Forms.Label observObjectsLabel;
+        private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Button uButton2;
       
         private System.Windows.Forms.ComboBox comboBox1;
@@ -1582,5 +1682,19 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Panel panel26;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.DataGridView dgvObjects;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.Label observObjectsLabel;
     }
 }

@@ -37,7 +37,7 @@ namespace MilSpace.Visualization3D
             lvVisibilitySessions.Items.Clear();
 
             var dataAccess = new DataAccess(_localizationContext);
-            var sessions = dataAccess.GetVisibilitySessions();
+            var sessions = dataAccess.GetUserVisibilitySessions();
 
             foreach(var session in sessions)
             {

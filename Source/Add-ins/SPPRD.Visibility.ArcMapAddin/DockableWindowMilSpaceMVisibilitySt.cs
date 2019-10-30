@@ -27,16 +27,18 @@ namespace MilSpace.Visibility
     /// </summary>
     public partial class DockableWindowMilSpaceMVisibilitySt : UserControl, IObservationPointsView
     {
-        private ObservationPointsController controller;
+        private ObservationPointsController _observPointsController;
+        private VisibilitySessionsController _visibilitySessionsController;
         private BindingList<ObservPointGui> _observPointGuis = new BindingList<ObservPointGui>();
+        private BindingList<VisibilitySessionGui> _visibilitySessionsGui = new BindingList<VisibilitySessionGui>();
         private bool _isDropDownItemChangedManualy = false;
         private bool _isFieldsChanged = false;
 
         public DockableWindowMilSpaceMVisibilitySt(object hook, ObservationPointsController controller)
         {
             InitializeComponent();
-            this.controller = controller;
-            this.controller.SetView(this);
+            this._observPointsController = controller;
+            this._observPointsController.SetView(this);
             this.Hook = hook;
         }
 
@@ -51,13 +53,13 @@ namespace MilSpace.Visibility
             base.OnLoad(e);
             SubscribeForEvents();
             InitilizeData();
-            controller.UpdateObservationPointsList();
+            _observPointsController.UpdateObservationPointsList();
         }
 
         private void SubscribeForEvents()
         {
             IEditEvents_Event editEvent = (IEditEvents_Event)ArcMap.Editor;
-            editEvent.OnCreateFeature += controller.OnCreateFeature;
+            editEvent.OnCreateFeature += _observPointsController.OnCreateFeature;
 
             ArcMap.Events.OpenDocument += delegate ()
             {
@@ -115,14 +117,14 @@ namespace MilSpace.Visibility
         {
             get
             {
-                return controller.GetObservationPointMobilityTypes();
+                return _observPointsController.GetObservationPointMobilityTypes();
             }
         }
         public IEnumerable<string> GetAffiliation
         {
             get
             {
-                return controller.GetObservationPointTypes();
+                return _observPointsController.GetObservationPointTypes();
             }
         }
 
@@ -186,6 +188,59 @@ namespace MilSpace.Visibility
             }
         }
 
+        public void FillVisibilitySessionsList(IEnumerable<VisibilitySession> visibilitySessions)
+        {
+            if(visibilitySessions.Any())
+            {
+                dgvVisibilitySessions.Rows.Clear();
+
+                foreach (var session in visibilitySessions)
+                {
+                    string state;
+
+                    if(!session.Started.HasValue)
+                    {
+                        state = _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.Pending);
+                    }
+                    else if(!session.Finished.HasValue)
+                    {
+                        state = _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.Calculated);
+                    }
+                    else
+                    {
+                        state = _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.Finished);
+                    }
+
+                    _visibilitySessionsGui.Add(new VisibilitySessionGui
+                    {
+                        Id = session.Id,
+                        Name = session.Name,
+                        State = state
+                    });
+                }
+
+                dgvVisibilitySessions.CurrentCell = null;
+                dgvVisibilitySessions.DataSource = _visibilitySessionsGui;
+                SetVisibilitySessionsTableView();
+                dgvObservationPoints.Rows[0].Selected = true;
+            }
+        }
+
+        private void SetVisibilitySessionsTableView()
+        {
+            dgvVisibilitySessions.Columns["Id"].Visible = false;
+            dgvVisibilitySessions.Columns["Name"].HeaderText = "Название";
+            dgvVisibilitySessions.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvVisibilitySessions.Columns["State"].Width = 100;
+        }
+
+        private void SetVisibilitySessionsController()
+        {
+            var controller = new VisibilitySessionsController();
+            controller.SetView(this);
+            _visibilitySessionsController = controller;
+        }
+
         private void SetDataGridView()
         {
             dgvObservationPoints.Columns["Title"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -227,13 +282,13 @@ namespace MilSpace.Visibility
 
         private void CheckRowForFilter(DataGridViewRow row)
         {
-            if (cmbAffiliation.SelectedItem != null && cmbAffiliation.SelectedItem.ToString() != controller.GetAllAffiliationType())
+            if (cmbAffiliation.SelectedItem != null && cmbAffiliation.SelectedItem.ToString() != _observPointsController.GetAllAffiliationType())
             {
                 row.Visible = (row.Cells["Affiliation"].Value.ToString() == cmbAffiliation.SelectedItem.ToString());
                 if (!row.Visible) return;
             }
 
-            if (cmbObservPointType.SelectedItem != null && cmbObservPointType.SelectedItem.ToString() != controller.GetAllMobilityType())
+            if (cmbObservPointType.SelectedItem != null && cmbObservPointType.SelectedItem.ToString() != _observPointsController.GetAllMobilityType())
             {
                 row.Visible = (row.Cells["Type"].Value.ToString() == cmbObservPointType.SelectedItem.ToString());
                 return;
@@ -250,7 +305,7 @@ namespace MilSpace.Visibility
             filters.AddRange(GetTypes.ToArray());
 
             cmbObservPointType.Items.AddRange(filters.ToArray());
-            cmbObservPointType.Items.Add(controller.GetAllMobilityType());
+            cmbObservPointType.Items.Add(_observPointsController.GetAllMobilityType());
             cmbObservTypesEdit.Items.AddRange(GetTypes.ToArray());
 
             filters = new List<string>();
@@ -260,7 +315,7 @@ namespace MilSpace.Visibility
             cmbAffiliationEdit.Items.Clear();
 
             cmbAffiliation.Items.AddRange(filters.ToArray());
-            cmbAffiliation.Items.Add(controller.GetAllAffiliationType());
+            cmbAffiliation.Items.Add(_observPointsController.GetAllAffiliationType());
             cmbAffiliationEdit.Items.AddRange(GetAffiliation.ToArray());
 
             SetDefaultValues();
@@ -271,15 +326,15 @@ namespace MilSpace.Visibility
             if (cmbObservPointsLayers.Visible)
             {
                 cmbObservPointsLayers.Items.Clear();
-                cmbObservPointsLayers.Items.AddRange(controller.GetObservationPointsLayers(ActiveView).ToArray());
-                cmbObservPointsLayers.SelectedItem = controller.GetObservPointFeatureName();
+                cmbObservPointsLayers.Items.AddRange(_observPointsController.GetObservationPointsLayers(ActiveView).ToArray());
+                cmbObservPointsLayers.SelectedItem = _observPointsController.GetObservPointFeatureName();
             }
         }
 
         private void PopulateStationsLayersComboBox()
         {
             cmbObservStationLayers.Items.Clear();
-            cmbObservStationLayers.Items.AddRange(controller.GetObservationStationsLayers().ToArray());
+            cmbObservStationLayers.Items.AddRange(_observPointsController.GetObservationStationsLayers().ToArray());
             if (cmbObservStationLayers.Items.Count > 0)
             {
                 cmbObservStationLayers.SelectedItem = cmbObservStationLayers.Items[0];
@@ -292,8 +347,8 @@ namespace MilSpace.Visibility
 
             cmbObservTypesEdit.SelectedItem = ObservationPointMobilityTypesEnum.Stationary.ToString();
             cmbAffiliationEdit.SelectedItem = ObservationPointTypesEnum.Enemy.ToString();
-            cmbObservPointType.SelectedItem = controller.GetAllMobilityType();
-            cmbAffiliation.SelectedItem = controller.GetAllAffiliationType();
+            cmbObservPointType.SelectedItem = _observPointsController.GetAllMobilityType();
+            cmbAffiliation.SelectedItem = _observPointsController.GetAllAffiliationType();
 
             _isDropDownItemChangedManualy = true;
 
@@ -317,7 +372,7 @@ namespace MilSpace.Visibility
 
         private void SetCoordDefaultValues()
         {
-            var centerPoint = controller.GetEnvelopeCenterPoint(ArcMap.Document.ActiveView.Extent);
+            var centerPoint = _observPointsController.GetEnvelopeCenterPoint(ArcMap.Document.ActiveView.Extent);
             xCoord.Text = centerPoint.X.ToString();
             yCoord.Text = centerPoint.Y.ToString();
         }
@@ -329,11 +384,11 @@ namespace MilSpace.Visibility
                 return;
             }
 
-            var selectedPoint = controller.GetObservPointById(_selectedPointId);
+            var selectedPoint = _observPointsController.GetObservPointById(_selectedPointId);
 
             if (FieldsValidation(sender, selectedPoint))
             {
-                controller.UpdateObservPoint(GetObservationPoint(), cmbObservPointsLayers.SelectedItem.ToString(), ActiveView, selectedPoint.Objectid);
+                _observPointsController.UpdateObservPoint(GetObservationPoint(), cmbObservPointsLayers.SelectedItem.ToString(), ActiveView, selectedPoint.Objectid);
             }
         }
 
@@ -540,12 +595,60 @@ namespace MilSpace.Visibility
             lblLayer.Visible = cmbObservPointsLayers.Visible = cmbAffiliationEdit.Enabled = cmbObservTypesEdit.Enabled = azimuthB.Enabled
                 = azimuthE.Enabled = xCoord.Enabled = yCoord.Enabled = angleOFViewMin.Enabled = angleOFViewMax.Enabled
                 = heightCurrent.Enabled = heightMin.Enabled = azimuthMainAxis.Enabled = cameraRotationH.Enabled = cameraRotationV.Enabled
-                = heightMax.Enabled = observPointName.Enabled = tlbCoordinates.Enabled = (controller.IsObservPointsExists(ActiveView) && !isAllDisabled);
+                = heightMax.Enabled = observPointName.Enabled = tlbCoordinates.Enabled = (_observPointsController.IsObservPointsExists(ActiveView) && !isAllDisabled);
 
             angleFrameH.Enabled = angleFrameV.Enabled = observPointDate.Enabled = observPointCreator.Enabled = false;
             tlbObservPoints.Buttons["tlbbRemovePoint"].Enabled = tlbObservPoints.Buttons["tlbbShowPoint"].Enabled = (dgvObservationPoints.SelectedRows.Count != 0 && !isAllDisabled);
         }
 
+        private void FillVisibilitySessionFields(VisibilitySession session)
+        {
+            tbVisibilitySessionName.Text = session.Name;
+            tbVisibilitySessionCreator.Text = session.UserName;
+            tbVisibilitySessionCreated.Text = session.Created.Value.ToLongDateString();
+            tbVisibilitySessionStarted.Text = session.Started.HasValue? session.Started.Value.ToLongDateString() : string.Empty;
+            tbVisibilitySessionFinished.Text = session.Finished.HasValue? session.Finished.Value.ToLongDateString() : string.Empty;
+        }
+
+        private void PopulateVisibilityComboBoxes()
+        {
+            cmbStateFilter.Items.Clear();
+            cmbStateFilter.Items.AddRange(_visibilitySessionsController.GetVisibilitySessionStateTypes().ToArray());
+            cmbStateFilter.SelectedItem = _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All);
+        }
+
+        private void FilterVisibilityList()
+        {
+            if(dgvVisibilitySessions.Rows.Count == 0)
+            {
+                return;
+            }
+
+            dgvVisibilitySessions.CurrentCell = null;
+
+            foreach(DataGridViewRow row in dgvVisibilitySessions.Rows)
+            {
+                if(row.Cells["State"].Value.ToString() != cmbStateFilter.SelectedItem.ToString()
+                && cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All))
+                {
+                    row.Visible = false;
+                }
+                else
+                {
+                    row.Visible = true;
+                }
+            }
+
+            if(dgvVisibilitySessions.FirstDisplayedScrollingRowIndex != -1)
+            {
+                dgvVisibilitySessions.Rows[dgvVisibilitySessions.FirstDisplayedScrollingRowIndex].Selected = true;
+            }
+            else
+            {
+                tlbVisibilitySessions.Buttons["removeTask"].Enabled = false;
+            }
+        }
+        
         private void OnSelectObserbPoint()
         {
 
@@ -605,50 +708,7 @@ namespace MilSpace.Visibility
 
         }
 
-        private void toolBar9_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
-        {
-            if (e.Button == addTask)
-            {
-
-            }
-            else if (e.Button == removeTask)
-            {
-
-            }
-            else if (e.Button == wizardTask)
-            {
-                (new WindowMilSpaceMVisibilityMaster(ObservationPointsFeatureClass, ObservationStationFeatureClass)).ShowDialog();
-            }
-
-        }
-
-        private void TlbObserPoints_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
-        {
-            switch (e.Button.Name)
-            {
-
-                case "tlbbAddNewPoint":
-
-                    CreateNewPoint(GetObservationPoint());
-
-                    break;
-
-                case "tlbbRemovePoint":
-
-                    RemovePoint();
-
-                    break;
-
-
-                case "tlbbShowPoint":
-
-                    controller.ShowObservPoint(ActiveView, _selectedPointId);
-
-                    break;
-            }
-
-        }
-
+       
         private void RemovePoint()
         {
             var result = MessageBox.Show("Do you realy want to remove point?", "SPPRD", MessageBoxButtons.OKCancel);
@@ -657,7 +717,7 @@ namespace MilSpace.Visibility
             {
                 var rowIndex = dgvObservationPoints.SelectedRows[0].Index;
 
-                controller.RemoveObservPoint(cmbObservPointsLayers.SelectedItem.ToString(), ActiveView, _selectedPointId);
+                _observPointsController.RemoveObservPoint(cmbObservPointsLayers.SelectedItem.ToString(), ActiveView, _selectedPointId);
                 _observPointGuis.Remove(_observPointGuis.First(point => point.Id == _selectedPointId));
 
                 if (rowIndex < dgvObservationPoints.Rows.Count)
@@ -690,13 +750,124 @@ namespace MilSpace.Visibility
 
         private void SavePoint()
         {
-            var selectedPoint = controller.GetObservPointById(_selectedPointId);
-            controller.UpdateObservPoint(GetObservationPoint(), cmbObservPointsLayers.SelectedItem.ToString(), ActiveView, selectedPoint.Objectid);
+            var selectedPoint = _observPointsController.GetObservPointById(_selectedPointId);
+            _observPointsController.UpdateObservPoint(GetObservationPoint(), cmbObservPointsLayers.SelectedItem.ToString(), ActiveView, selectedPoint.Objectid);
         }
 
         private void CreateNewPoint(ObservationPoint point)
         {
-            controller.AddPoint(cmbObservPointsLayers.SelectedItem.ToString(), ActiveView);
+            _observPointsController.AddPoint(cmbObservPointsLayers.SelectedItem.ToString(), ActiveView);
+        }
+
+
+        private ObservationPoint GetObservationPoint()
+        {
+            return new ObservationPoint()
+            {
+                X = Convert.ToDouble(xCoord.Text),
+                Y = Convert.ToDouble(yCoord.Text),
+                Affiliation = cmbAffiliationEdit.SelectedItem.ToString(),
+                AngelMaxH = Convert.ToDouble(angleOFViewMax.Text),
+                AngelMinH = Convert.ToDouble(angleOFViewMin.Text),
+                AngelCameraRotationH = Convert.ToDouble(cameraRotationH.Text),
+                AngelCameraRotationV = Convert.ToDouble(cameraRotationV.Text),
+                RelativeHeight = Convert.ToDouble(heightCurrent.Text),
+                AvailableHeightLover = Convert.ToDouble(heightMin.Text),
+                AvailableHeightUpper = Convert.ToDouble(heightMax.Text),
+                AzimuthStart = Convert.ToDouble(azimuthB.Text),
+                AzimuthEnd = Convert.ToDouble(azimuthE.Text),
+                AzimuthMainAxis = Convert.ToDouble(azimuthMainAxis.Text),
+                Dto = Convert.ToDateTime(observPointDate.Text),
+                Operator = observPointCreator.Text,
+                Title = observPointName.Text,
+                Type = cmbObservTypesEdit.Text
+            };
+        }
+
+
+        private void UpdateFilter(DataGridViewRow row)
+        {
+            dgvObservationPoints.CurrentCell = null;
+
+            CheckRowForFilter(row);
+
+            if(row.Visible)
+            {
+                row.Selected = true;
+            }
+            else
+            {
+                if(dgvObservationPoints.FirstDisplayedScrollingRowIndex != -1)
+                {
+                    dgvObservationPoints.Rows[dgvObservationPoints.FirstDisplayedScrollingRowIndex].Selected = true;
+                    if(!_isFieldsEnabled) EnableObservPointsControls();
+                }
+                else
+                {
+                    EnableObservPointsControls(true);
+                }
+            }
+        }
+
+        private void FillFields(ObservationPoint selectedPoint)
+        {
+            _isDropDownItemChangedManualy = false;
+
+            cmbObservTypesEdit.SelectedItem = selectedPoint.Type.ToString();
+            cmbAffiliationEdit.SelectedItem = selectedPoint.Affiliation.ToString();
+
+            _isDropDownItemChangedManualy = true;
+
+            var centerPoint = _observPointsController.GetEnvelopeCenterPoint(ArcMap.Document.ActiveView.Extent);
+
+            xCoord.Text = selectedPoint.X != null ? selectedPoint.X.ToString() : centerPoint.X.ToString();
+            yCoord.Text = selectedPoint.Y != null ? selectedPoint.Y.ToString() : centerPoint.Y.ToString();
+            azimuthB.Text = selectedPoint.AzimuthStart != null ? selectedPoint.AzimuthStart.ToString() : ObservPointDefaultValues.AzimuthBText;
+            azimuthE.Text = selectedPoint.AzimuthEnd != null ? selectedPoint.AzimuthEnd.ToString() : ObservPointDefaultValues.AzimuthEText;
+            heightCurrent.Text = selectedPoint.RelativeHeight != null ? selectedPoint.RelativeHeight.ToString() : ObservPointDefaultValues.RelativeHeightText;
+            heightMin.Text = selectedPoint.AvailableHeightLover.ToString();
+            heightMax.Text = selectedPoint.AvailableHeightUpper.ToString();
+            observPointName.Text = selectedPoint.Title;
+            angleOFViewMin.Text = selectedPoint.AngelMinH != null ? selectedPoint.AngelMinH.ToString() : ObservPointDefaultValues.AngleOFViewMinText;
+            angleOFViewMax.Text = selectedPoint.AngelMaxH != null ? selectedPoint.AngelMaxH.ToString() : ObservPointDefaultValues.AngleOFViewMaxText;
+            angleFrameH.Text = selectedPoint.AngelFrameH != null ? selectedPoint.AngelFrameH.ToString() : ObservPointDefaultValues.AngleFrameHText;
+            angleFrameV.Text = selectedPoint.AngelFrameV != null ? selectedPoint.AngelFrameV.ToString() : ObservPointDefaultValues.AngleFrameVText;
+            cameraRotationH.Text = selectedPoint.AngelCameraRotationH != null ? selectedPoint.AngelCameraRotationH.ToString() : ObservPointDefaultValues.CameraRotationHText;
+            cameraRotationV.Text = selectedPoint.AngelCameraRotationV != null ? selectedPoint.AngelCameraRotationV.ToString() : ObservPointDefaultValues.CameraRotationVText;
+            azimuthMainAxis.Text = selectedPoint.AzimuthMainAxis != null ? selectedPoint.AzimuthMainAxis.ToString() : ObservPointDefaultValues.AzimuthMainAxisText;
+
+            observPointDate.Text = selectedPoint.Dto.Value.ToShortDateString();
+            observPointCreator.Text = selectedPoint.Operator;
+        }
+
+        #region ObservationPointsTabEvents
+
+      
+        private void TlbObserPoints_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        {
+            switch(e.Button.Name)
+            {
+
+                case "tlbbAddNewPoint":
+
+                    CreateNewPoint(GetObservationPoint());
+
+                    break;
+
+                case "tlbbRemovePoint":
+
+                    RemovePoint();
+
+                    break;
+
+
+                case "tlbbShowPoint":
+
+                    _observPointsController.ShowObservPoint(ActiveView, _selectedPointId);
+
+                    break;
+            }
+
         }
 
         private void TlbCoordinates_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
@@ -742,7 +913,7 @@ namespace MilSpace.Visibility
                         xCoord.Text = coords[0];
                         yCoord.Text = coords[1];
 
-                        controller.UpdateObservPoint(GetObservationPoint(), cmbObservPointsLayers.SelectedItem.ToString(), ActiveView, _selectedPointId);
+                        _observPointsController.UpdateObservPoint(GetObservationPoint(), cmbObservPointsLayers.SelectedItem.ToString(), ActiveView, _selectedPointId);
                     }
                     else
                     {
@@ -753,34 +924,10 @@ namespace MilSpace.Visibility
 
                 case "tlbbShowCoord":
 
-                    controller.ShowObservPoint(ActiveView, _selectedPointId);
+                    _observPointsController.ShowObservPoint(ActiveView, _selectedPointId);
 
                     break;
             }
-        }
-
-        private ObservationPoint GetObservationPoint()
-        {
-            return new ObservationPoint()
-            {
-                X = Convert.ToDouble(xCoord.Text),
-                Y = Convert.ToDouble(yCoord.Text),
-                Affiliation = cmbAffiliationEdit.SelectedItem.ToString(),
-                AngelMaxH = Convert.ToDouble(angleOFViewMax.Text),
-                AngelMinH = Convert.ToDouble(angleOFViewMin.Text),
-                AngelCameraRotationH = Convert.ToDouble(cameraRotationH.Text),
-                AngelCameraRotationV = Convert.ToDouble(cameraRotationV.Text),
-                RelativeHeight = Convert.ToDouble(heightCurrent.Text),
-                AvailableHeightLover = Convert.ToDouble(heightMin.Text),
-                AvailableHeightUpper = Convert.ToDouble(heightMax.Text),
-                AzimuthStart = Convert.ToDouble(azimuthB.Text),
-                AzimuthEnd = Convert.ToDouble(azimuthE.Text),
-                AzimuthMainAxis = Convert.ToDouble(azimuthMainAxis.Text),
-                Dto = Convert.ToDateTime(observPointDate.Text),
-                Operator = observPointCreator.Text,
-                Title = observPointName.Text,
-                Type = cmbObservTypesEdit.Text
-            };
         }
 
         private void Filter_CheckedChanged(object sender, EventArgs e)
@@ -799,7 +946,7 @@ namespace MilSpace.Visibility
             }
 
             if (!_isFieldsEnabled) EnableObservPointsControls();
-            var selectedPoint = controller.GetObservPointById(_selectedPointId);
+            var selectedPoint = _observPointsController.GetObservPointById(_selectedPointId);
 
             if (selectedPoint == null)
             {
@@ -809,60 +956,6 @@ namespace MilSpace.Visibility
             FillFields(selectedPoint);
         }
 
-        private void UpdateFilter(DataGridViewRow row)
-        {
-            dgvObservationPoints.CurrentCell = null;
-
-            CheckRowForFilter(row);
-
-            if (row.Visible)
-            {
-                row.Selected = true;
-            }
-            else
-            {
-                if (dgvObservationPoints.FirstDisplayedScrollingRowIndex != -1)
-                {
-                    dgvObservationPoints.Rows[dgvObservationPoints.FirstDisplayedScrollingRowIndex].Selected = true;
-                    if (!_isFieldsEnabled) EnableObservPointsControls();
-                }
-                else
-                {
-                    EnableObservPointsControls(true);
-                }
-            }
-        }
-
-        private void FillFields(ObservationPoint selectedPoint)
-        {
-            _isDropDownItemChangedManualy = false;
-
-            cmbObservTypesEdit.SelectedItem = selectedPoint.Type.ToString();
-            cmbAffiliationEdit.SelectedItem = selectedPoint.Affiliation.ToString();
-
-            _isDropDownItemChangedManualy = true;
-
-            var centerPoint = controller.GetEnvelopeCenterPoint(ArcMap.Document.ActiveView.Extent);
-
-            xCoord.Text = selectedPoint.X != null ? selectedPoint.X.ToString() : centerPoint.X.ToString();
-            yCoord.Text = selectedPoint.Y != null ? selectedPoint.Y.ToString() : centerPoint.Y.ToString();
-            azimuthB.Text = selectedPoint.AzimuthStart != null ? selectedPoint.AzimuthStart.ToString() : ObservPointDefaultValues.AzimuthBText;
-            azimuthE.Text = selectedPoint.AzimuthEnd != null ? selectedPoint.AzimuthEnd.ToString() : ObservPointDefaultValues.AzimuthEText;
-            heightCurrent.Text = selectedPoint.RelativeHeight != null ? selectedPoint.RelativeHeight.ToString() : ObservPointDefaultValues.RelativeHeightText;
-            heightMin.Text = selectedPoint.AvailableHeightLover.ToString();
-            heightMax.Text = selectedPoint.AvailableHeightUpper.ToString();
-            observPointName.Text = selectedPoint.Title;
-            angleOFViewMin.Text = selectedPoint.AngelMinH != null ? selectedPoint.AngelMinH.ToString() : ObservPointDefaultValues.AngleOFViewMinText;
-            angleOFViewMax.Text = selectedPoint.AngelMaxH != null ? selectedPoint.AngelMaxH.ToString() : ObservPointDefaultValues.AngleOFViewMaxText;
-            angleFrameH.Text = selectedPoint.AngelFrameH != null ? selectedPoint.AngelFrameH.ToString() : ObservPointDefaultValues.AngleFrameHText;
-            angleFrameV.Text = selectedPoint.AngelFrameV != null ? selectedPoint.AngelFrameV.ToString() : ObservPointDefaultValues.AngleFrameVText;
-            cameraRotationH.Text = selectedPoint.AngelCameraRotationH != null ? selectedPoint.AngelCameraRotationH.ToString() : ObservPointDefaultValues.CameraRotationHText;
-            cameraRotationV.Text = selectedPoint.AngelCameraRotationV != null ? selectedPoint.AngelCameraRotationV.ToString() : ObservPointDefaultValues.CameraRotationVText;
-            azimuthMainAxis.Text = selectedPoint.AzimuthMainAxis != null ? selectedPoint.AzimuthMainAxis.ToString() : ObservPointDefaultValues.AzimuthMainAxisText;
-
-            observPointDate.Text = selectedPoint.Dto.Value.ToShortDateString();
-            observPointCreator.Text = selectedPoint.Operator;
-        }
 
         private void FilterComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -882,6 +975,90 @@ namespace MilSpace.Visibility
         private void Fields_TextChanged(object sender, EventArgs e)
         {
             _isFieldsChanged = true;
+        }
+
+        #endregion
+
+        #region VisibilitySessionsTabEvents
+
+        private void TlbVisiilitySessions_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        {
+            if(e.Button == removeTask)
+            {
+                var result = MessageBox.Show("Do you really want to delete this session?", "SPPRD", MessageBoxButtons.OKCancel);
+
+                if(result == DialogResult.OK)
+                {
+                    var id = dgvVisibilitySessions.SelectedRows[0].Cells["Id"].Value.ToString();
+                    var rowIndex = dgvVisibilitySessions.SelectedRows[0].Index;
+                    _visibilitySessionsController.RemoveSession(id);
+                    _visibilitySessionsGui.Remove(_visibilitySessionsGui.First(session => session.Id == id));
+
+                    if(cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All))
+                    {
+                        FilterVisibilityList();
+                    }
+                }
+            }
+            else if(e.Button == wizardTask)
+            {
+                var wizard = (new WindowMilSpaceMVisibilityMaster(ObservationPointsFeatureClass, ObservationStationFeatureClass));
+                wizard.ShowDialog();
+                var dialogResult = wizard.DialogResult;
+
+                if (dialogResult == DialogResult.OK)
+                {
+                    var calcParams = wizard.FinalResult;
+
+                    var clculated = _observPointsController.CalculateVisibility(calcParams.RasterLayerName, VisibilityManager.GenerateResultId(), 
+                            VisibilitySession.DefaultResultsSet, calcParams.ObservPointIDs, calcParams.ObservObjectIDs);
+
+                    if (!clculated)
+                    {
+                        //Localize message
+                        MessageBox.Show("The calculation finished with errors.\nFor more detaole go to the log file", "SPPRD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+
+                    _visibilitySessionsController.UpdateVisibilitySessionsList();
+                    FilterVisibilityList();
+                }
+            }
+
+        }
+
+
+        private void MainTabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(mainTabControl.SelectedTab.Name == "tbpSessions")
+            {
+                if(_visibilitySessionsController == null)
+                {
+                    SetVisibilitySessionsController();
+                    PopulateVisibilityComboBoxes();
+                    _visibilitySessionsController.UpdateVisibilitySessionsList();
+                }
+            }
+        }
+
+        private void DgvVisibilitySessions_SelectionChanged(object sender, EventArgs e)
+        {
+            if(dgvVisibilitySessions.SelectedRows.Count == 0)
+            {
+                tlbVisibilitySessions.Buttons["removeTask"].Enabled = false;
+                return;
+            }
+
+            var selectedSessionId = dgvVisibilitySessions.SelectedRows[0].Cells["Id"].Value.ToString();
+            FillVisibilitySessionFields(_visibilitySessionsController.GetSession(selectedSessionId));
+            tlbVisibilitySessions.Buttons["removeTask"].Enabled = true;
+        }
+
+        #endregion
+
+        private void CmbStateFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FilterVisibilityList();
         }
     }
 }
