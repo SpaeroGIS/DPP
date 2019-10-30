@@ -325,5 +325,10 @@ namespace MilSpace.Visibility
         {
 
         }
+
+        public void FillVisibilitySessionsList(IEnumerable<VisibilitySession> visibilitySessions)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -119,6 +119,7 @@
     </Compile>
     <Compile Include="DockableWindow1Command.cs" />
     <Compile Include="DTO\ObservPointGui.cs" />
+    <Compile Include="DTO\VisibilitySessionGui.cs" />
     <Compile Include="Helpers\ArcMapHelper.cs" />
     <Compile Include="MapInteropTool.cs" />
     <Compile Include="ObservPointDefaultValues.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="ViewController\IOservPointsView.cs" />
     <Compile Include="ViewController\IVisibilityCalculationWizard.cs" />
     <Compile Include="ViewController\ObservationPointsController.cs" />
+    <Compile Include="ViewController\VisibilitySessionsController.cs" />
     <Compile Include="WindowMilSpaceMVisibilityMaster.cs">
       <SubType>Form</SubType>
     </Compile>
