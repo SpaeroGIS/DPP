@@ -225,429 +225,6 @@ namespace MilSpace.Visibility
                 dgvObservationPoints.Rows[0].Selected = true;
             }
         }
-
-        private void SetVisibilitySessionsTableView()
-        {
-            dgvVisibilitySessions.Columns["Id"].Visible = false;
-            dgvVisibilitySessions.Columns["Name"].HeaderText = "Название";
-            dgvVisibilitySessions.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvVisibilitySessions.Columns["State"].Width = 100;
-        }
-
-        private void SetVisibilitySessionsController()
-        {
-            var controller = new VisibilitySessionsController();
-            controller.SetView(this);
-            _visibilitySessionsController = controller;
-        }
-
-        private void SetDataGridView()
-        {
-            dgvObservationPoints.Columns["Title"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvObservationPoints.Columns["Id"].Visible = false;
-        }
-
-        private void DisplaySelectedColumns(VeluableObservPointFieldsEnum filter)
-        {
-            dgvObservationPoints.Columns["Affiliation"].Visible = chckFilterAffiliation.Checked;
-            dgvObservationPoints.Columns["Type"].Visible = chckFilterType.Checked;
-            dgvObservationPoints.Columns["Date"].Visible = chckFilterDate.Checked;
-        }
-
-        private void FilterData()
-        {
-            if (dgvObservationPoints.Rows.Count == 0)
-            {
-                return;
-            }
-
-            dgvObservationPoints.CurrentCell = null;
-
-            foreach (DataGridViewRow row in dgvObservationPoints.Rows)
-            {
-                CheckRowForFilter(row);
-            }
-
-            if (dgvObservationPoints.FirstDisplayedScrollingRowIndex != -1)
-            {
-                dgvObservationPoints.Rows[dgvObservationPoints.FirstDisplayedScrollingRowIndex].Selected = true;
-                if (!_isFieldsEnabled) EnableObservPointsControls();
-            }
-            else
-            {
-                EnableObservPointsControls(true);
-            }
-
-        }
-
-        private void CheckRowForFilter(DataGridViewRow row)
-        {
-            if (cmbAffiliation.SelectedItem != null && cmbAffiliation.SelectedItem.ToString() != _observPointsController.GetAllAffiliationType())
-            {
-                row.Visible = (row.Cells["Affiliation"].Value.ToString() == cmbAffiliation.SelectedItem.ToString());
-                if (!row.Visible) return;
-            }
-
-            if (cmbObservPointType.SelectedItem != null && cmbObservPointType.SelectedItem.ToString() != _observPointsController.GetAllMobilityType())
-            {
-                row.Visible = (row.Cells["Type"].Value.ToString() == cmbObservPointType.SelectedItem.ToString());
-                return;
-            }
-
-            row.Visible = true;
-        }
-
-        private void InitilizeData()
-        {
-            cmbObservPointType.Items.Clear();
-            cmbObservTypesEdit.Items.Clear();
-            var filters = new List<string>();
-            filters.AddRange(GetTypes.ToArray());
-
-            cmbObservPointType.Items.AddRange(filters.ToArray());
-            cmbObservPointType.Items.Add(_observPointsController.GetAllMobilityType());
-            cmbObservTypesEdit.Items.AddRange(GetTypes.ToArray());
-
-            filters = new List<string>();
-
-            filters.AddRange(GetAffiliation.ToArray());
-            cmbAffiliation.Items.Clear();
-            cmbAffiliationEdit.Items.Clear();
-
-            cmbAffiliation.Items.AddRange(filters.ToArray());
-            cmbAffiliation.Items.Add(_observPointsController.GetAllAffiliationType());
-            cmbAffiliationEdit.Items.AddRange(GetAffiliation.ToArray());
-
-            SetDefaultValues();
-        }
-
-        private void PopulatePointsLayersComboBox()
-        {
-            if (cmbObservPointsLayers.Visible)
-            {
-                cmbObservPointsLayers.Items.Clear();
-                cmbObservPointsLayers.Items.AddRange(_observPointsController.GetObservationPointsLayers(ActiveView).ToArray());
-                cmbObservPointsLayers.SelectedItem = _observPointsController.GetObservPointFeatureName();
-            }
-        }
-
-        private void PopulateStationsLayersComboBox()
-        {
-            cmbObservStationLayers.Items.Clear();
-            cmbObservStationLayers.Items.AddRange(_observPointsController.GetObservationStationsLayers().ToArray());
-            if (cmbObservStationLayers.Items.Count > 0)
-            {
-                cmbObservStationLayers.SelectedItem = cmbObservStationLayers.Items[0];
-            }
-        }
-
-        private void SetDefaultValues()
-        {
-            _isDropDownItemChangedManualy = false;
-
-            cmbObservTypesEdit.SelectedItem = ObservationPointMobilityTypesEnum.Stationary.ToString();
-            cmbAffiliationEdit.SelectedItem = ObservationPointTypesEnum.Enemy.ToString();
-            cmbObservPointType.SelectedItem = _observPointsController.GetAllMobilityType();
-            cmbAffiliation.SelectedItem = _observPointsController.GetAllAffiliationType();
-
-            _isDropDownItemChangedManualy = true;
-
-            azimuthB.Text = ObservPointDefaultValues.AzimuthBText;
-            azimuthE.Text = ObservPointDefaultValues.AzimuthEText;
-            heightCurrent.Text = ObservPointDefaultValues.RelativeHeightText;
-            heightMin.Text = ObservPointDefaultValues.HeightMinText;
-            heightMax.Text = ObservPointDefaultValues.HeightMaxText;
-            observPointName.Text = ObservPointDefaultValues.ObservPointNameText;
-            angleOFViewMin.Text = ObservPointDefaultValues.AngleOFViewMinText;
-            angleOFViewMax.Text = ObservPointDefaultValues.AngleOFViewMaxText;
-            angleFrameH.Text = ObservPointDefaultValues.AngleFrameHText;
-            angleFrameV.Text = ObservPointDefaultValues.AngleFrameVText;
-            cameraRotationH.Text = ObservPointDefaultValues.CameraRotationHText;
-            cameraRotationV.Text = ObservPointDefaultValues.CameraRotationVText;
-            azimuthMainAxis.Text = ObservPointDefaultValues.AzimuthMainAxisText;
-
-            observPointDate.Text = DateTime.Now.ToShortDateString();
-            observPointCreator.Text = Environment.UserName;
-        }
-
-        private void SetCoordDefaultValues()
-        {
-            var centerPoint = _observPointsController.GetEnvelopeCenterPoint(ArcMap.Document.ActiveView.Extent);
-            xCoord.Text = centerPoint.X.ToString();
-            yCoord.Text = centerPoint.Y.ToString();
-        }
-
-        private void OnFieldChanged(object sender, EventArgs e)
-        {
-            if (!_isFieldsChanged || !_isFieldsEnabled)
-            {
-                return;
-            }
-
-            var selectedPoint = _observPointsController.GetObservPointById(_selectedPointId);
-
-            if (FieldsValidation(sender, selectedPoint))
-            {
-                _observPointsController.UpdateObservPoint(GetObservationPoint(), cmbObservPointsLayers.SelectedItem.ToString(), ActiveView, selectedPoint.Objectid);
-            }
-        }
-
-        private bool FieldsValidation(object sender, ObservationPoint point)
-        {
-            try
-            {
-                var textBox = (TextBox)sender;
-
-                switch (textBox.Name)
-                {
-                    case "xCoord":
-
-                        if (!Regex.IsMatch(xCoord.Text, @"^([-]?[\d]{1,2}\,\d+)$"))
-                        {
-                            MessageBox.Show("Invalid data.\nInsert the coordinates in the WGS84 format.");
-                            xCoord.Text = point.X.ToString();
-
-                            return false;
-                        }
-                        else
-                        {
-                            var x = Convert.ToDouble(xCoord.Text);
-                            var y = Convert.ToDouble(yCoord.Text);
-                        }
-
-                        return true;
-
-                    case "yCoord":
-
-                        if (!Regex.IsMatch(yCoord.Text, @"^([-]?[\d]{1,2}\,\d+)$"))
-                        {
-                            MessageBox.Show("Invalid data.\nInsert the coordinates in the WGS84 format.");
-                            yCoord.Text = point.Y.ToString();
-
-                            return false;
-                        }
-                        else
-                        {
-                            var x = Convert.ToDouble(xCoord.Text);
-                            var y = Convert.ToDouble(yCoord.Text);
-                        }
-
-                        return true;
-
-                    case "angleOFViewMin":
-
-                        return ValidateRange(angleOFViewMin, point.AngelMinH.ToString(), -90, 0);
-
-                    case "angleOFViewMax":
-
-                        return ValidateRange(angleOFViewMax, point.AngelMaxH.ToString(), 0, 90);
-
-                    case "azimuthB":
-
-                        return ValidateAzimuth(textBox, point.AzimuthStart.ToString());
-
-                    case "azimuthE":
-
-                        return ValidateAzimuth(textBox, point.AzimuthEnd.ToString());
-
-                    case "azimuthMainAxis":
-
-                        return ValidateAzimuth(textBox, point.AzimuthMainAxis.ToString());
-
-                    case "cameraRotationH":
-
-                        return ValidateAzimuth(textBox, point.AngelCameraRotationH.ToString());
-
-                    case "cameraRotationV":
-
-                        return ValidateAzimuth(textBox, point.AngelCameraRotationV.ToString());
-
-                    case "heightCurrent":
-
-                        var currentHeight = ValidateHeight(textBox, point.RelativeHeight.ToString());
-
-                        if (currentHeight != -1)
-                        {
-                            var minHeight = Convert.ToDouble(heightMin.Text);
-                            var maxHeight = Convert.ToDouble(heightMax.Text);
-
-                            if (currentHeight > maxHeight)
-                            {
-                                heightMax.Text = currentHeight.ToString();
-                            }
-
-                            if (currentHeight < minHeight)
-                            {
-                                heightMin.Text = currentHeight.ToString();
-                            }
-
-                            return true;
-                        }
-
-                        return false;
-
-                    case "heightMin":
-
-                        var minHeightChanged = ValidateHeight(textBox, point.AvailableHeightLover.ToString());
-
-                        if (minHeightChanged != -1)
-                        {
-                            var curHeight = Convert.ToDouble(heightCurrent.Text);
-                            var maxHeight = Convert.ToDouble(heightMax.Text);
-
-                            if (minHeightChanged > curHeight)
-                            {
-                                heightCurrent.Text = minHeightChanged.ToString();
-                            }
-
-                            if (minHeightChanged > maxHeight)
-                            {
-                                heightMax.Text = minHeightChanged.ToString();
-                            }
-
-                            return true;
-                        }
-
-                        return false;
-
-                    case "heightMax":
-
-                        var maxHeightChanged = ValidateHeight(textBox, point.AvailableHeightUpper.ToString());
-
-                        if (maxHeightChanged != -1)
-                        {
-                            var curHeight = Convert.ToDouble(heightCurrent.Text);
-                            var minHeight = Convert.ToDouble(heightMin.Text);
-
-                            if (maxHeightChanged < curHeight)
-                            {
-                                heightCurrent.Text = maxHeightChanged.ToString();
-                            }
-
-                            if (maxHeightChanged < minHeight)
-                            {
-                                heightMax.Text = maxHeightChanged.ToString();
-                            }
-
-                            return true;
-                        }
-
-                        return false;
-
-                    default:
-
-                        return true;
-                }
-            }
-
-            catch (Exception ex) { return false; }
-        }
-
-        private bool ValidateAzimuth(TextBox azimuthTextBox, string defaultValue)
-        {
-            return ValidateRange(azimuthTextBox, defaultValue, 0, 360);
-        }
-
-        private bool ValidateRange(TextBox textBox, string defaultValue, double lowValue, double upperValue)
-        {
-            double value;
-
-            if (Double.TryParse(textBox.Text, out value))
-            {
-                if (value >= lowValue && value <= upperValue)
-                {
-                    return true;
-                }
-            }
-
-            textBox.Text = defaultValue;
-            MessageBox.Show($"Invalid data.\nInsert the value in the range from {lowValue} to {upperValue}");
-
-            return false;
-        }
-
-        private double ValidateHeight(TextBox heightTextBox, string defaultValue)
-        {
-            double height;
-
-            if (Double.TryParse(heightTextBox.Text, out height))
-            {
-                if (height >= 0)
-                {
-                    return height;
-                }
-
-                MessageBox.Show("Invalid data.\nValue cannot be less than 0");
-            }
-            else
-            {
-                MessageBox.Show("Invalid data.\nInsert the number");
-            }
-
-            heightTextBox.Text = defaultValue;
-
-            return -1;
-        }
-
-
-        private void EnableObservPointsControls(bool isAllDisabled = false)
-        {
-            lblLayer.Visible = cmbObservPointsLayers.Visible = cmbAffiliationEdit.Enabled = cmbObservTypesEdit.Enabled = azimuthB.Enabled
-                = azimuthE.Enabled = xCoord.Enabled = yCoord.Enabled = angleOFViewMin.Enabled = angleOFViewMax.Enabled
-                = heightCurrent.Enabled = heightMin.Enabled = azimuthMainAxis.Enabled = cameraRotationH.Enabled = cameraRotationV.Enabled
-                = heightMax.Enabled = observPointName.Enabled = tlbCoordinates.Enabled = (_observPointsController.IsObservPointsExists(ActiveView) && !isAllDisabled);
-
-            angleFrameH.Enabled = angleFrameV.Enabled = observPointDate.Enabled = observPointCreator.Enabled = false;
-            tlbObservPoints.Buttons["tlbbRemovePoint"].Enabled = tlbObservPoints.Buttons["tlbbShowPoint"].Enabled = (dgvObservationPoints.SelectedRows.Count != 0 && !isAllDisabled);
-        }
-
-        private void FillVisibilitySessionFields(VisibilitySession session)
-        {
-            tbVisibilitySessionName.Text = session.Name;
-            tbVisibilitySessionCreator.Text = session.UserName;
-            tbVisibilitySessionCreated.Text = session.Created.Value.ToLongDateString();
-            tbVisibilitySessionStarted.Text = session.Started.HasValue? session.Started.Value.ToLongDateString() : string.Empty;
-            tbVisibilitySessionFinished.Text = session.Finished.HasValue? session.Finished.Value.ToLongDateString() : string.Empty;
-        }
-
-        private void PopulateVisibilityComboBoxes()
-        {
-            cmbStateFilter.Items.Clear();
-            cmbStateFilter.Items.AddRange(_visibilitySessionsController.GetVisibilitySessionStateTypes().ToArray());
-            cmbStateFilter.SelectedItem = _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All);
-        }
-
-        private void FilterVisibilityList()
-        {
-            if(dgvVisibilitySessions.Rows.Count == 0)
-            {
-                return;
-            }
-
-            dgvVisibilitySessions.CurrentCell = null;
-
-            foreach(DataGridViewRow row in dgvVisibilitySessions.Rows)
-            {
-                if(row.Cells["State"].Value.ToString() != cmbStateFilter.SelectedItem.ToString()
-                && cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All))
-                {
-                    row.Visible = false;
-                }
-                else
-                {
-                    row.Visible = true;
-                }
-            }
-
-            if(dgvVisibilitySessions.FirstDisplayedScrollingRowIndex != -1)
-            {
-                dgvVisibilitySessions.Rows[dgvVisibilitySessions.FirstDisplayedScrollingRowIndex].Selected = true;
-            }
-            else
-            {
-                tlbVisibilitySessions.Buttons["removeTask"].Enabled = false;
-            }
-        }
         
         private void OnSelectObserbPoint()
         {
@@ -708,24 +285,6 @@ namespace MilSpace.Visibility
 
         }
 
-       
-        private void RemovePoint()
-        {
-            var result = MessageBox.Show("Do you realy want to remove point?", "SPPRD", MessageBoxButtons.OKCancel);
-
-            if (result == DialogResult.OK)
-            {
-                var rowIndex = dgvObservationPoints.SelectedRows[0].Index;
-
-                _observPointsController.RemoveObservPoint(cmbObservPointsLayers.SelectedItem.ToString(), ActiveView, _selectedPointId);
-                _observPointGuis.Remove(_observPointGuis.First(point => point.Id == _selectedPointId));
-
-                if (rowIndex < dgvObservationPoints.Rows.Count)
-                {
-                    UpdateFilter(dgvObservationPoints.Rows[rowIndex]);
-                }
-            }
-        }
 
         internal void ArcMap_OnMouseDown(int x, int y)
         {
@@ -748,6 +307,377 @@ namespace MilSpace.Visibility
             //Place Mouce Move logic here if needed
         }
 
+
+        #region ObservationPointsPrivateMethods
+
+        private void SetDataGridView()
+        {
+            dgvObservationPoints.Columns["Title"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvObservationPoints.Columns["Id"].Visible = false;
+        }
+
+        private void DisplaySelectedColumns(VeluableObservPointFieldsEnum filter)
+        {
+            dgvObservationPoints.Columns["Affiliation"].Visible = chckFilterAffiliation.Checked;
+            dgvObservationPoints.Columns["Type"].Visible = chckFilterType.Checked;
+            dgvObservationPoints.Columns["Date"].Visible = chckFilterDate.Checked;
+        }
+
+        private void FilterData()
+        {
+            if(dgvObservationPoints.Rows.Count == 0)
+            {
+                return;
+            }
+
+            dgvObservationPoints.CurrentCell = null;
+
+            foreach(DataGridViewRow row in dgvObservationPoints.Rows)
+            {
+                CheckRowForFilter(row);
+            }
+
+            if(dgvObservationPoints.FirstDisplayedScrollingRowIndex != -1)
+            {
+                dgvObservationPoints.Rows[dgvObservationPoints.FirstDisplayedScrollingRowIndex].Selected = true;
+                if(!_isFieldsEnabled) EnableObservPointsControls();
+            }
+            else
+            {
+                EnableObservPointsControls(true);
+            }
+
+        }
+
+        private void CheckRowForFilter(DataGridViewRow row)
+        {
+            if(cmbAffiliation.SelectedItem != null && cmbAffiliation.SelectedItem.ToString() != _observPointsController.GetAllAffiliationType())
+            {
+                row.Visible = (row.Cells["Affiliation"].Value.ToString() == cmbAffiliation.SelectedItem.ToString());
+                if(!row.Visible) return;
+            }
+
+            if(cmbObservPointType.SelectedItem != null && cmbObservPointType.SelectedItem.ToString() != _observPointsController.GetAllMobilityType())
+            {
+                row.Visible = (row.Cells["Type"].Value.ToString() == cmbObservPointType.SelectedItem.ToString());
+                return;
+            }
+
+            row.Visible = true;
+        }
+
+        private void InitilizeData()
+        {
+            cmbObservPointType.Items.Clear();
+            cmbObservTypesEdit.Items.Clear();
+            var filters = new List<string>();
+            filters.AddRange(GetTypes.ToArray());
+
+            cmbObservPointType.Items.AddRange(filters.ToArray());
+            cmbObservPointType.Items.Add(_observPointsController.GetAllMobilityType());
+            cmbObservTypesEdit.Items.AddRange(GetTypes.ToArray());
+
+            filters = new List<string>();
+
+            filters.AddRange(GetAffiliation.ToArray());
+            cmbAffiliation.Items.Clear();
+            cmbAffiliationEdit.Items.Clear();
+
+            cmbAffiliation.Items.AddRange(filters.ToArray());
+            cmbAffiliation.Items.Add(_observPointsController.GetAllAffiliationType());
+            cmbAffiliationEdit.Items.AddRange(GetAffiliation.ToArray());
+
+            SetDefaultValues();
+        }
+
+        private void PopulatePointsLayersComboBox()
+        {
+            if(cmbObservPointsLayers.Visible)
+            {
+                cmbObservPointsLayers.Items.Clear();
+                cmbObservPointsLayers.Items.AddRange(_observPointsController.GetObservationPointsLayers(ActiveView).ToArray());
+                cmbObservPointsLayers.SelectedItem = _observPointsController.GetObservPointFeatureName();
+            }
+        }
+
+        private void SetDefaultValues()
+        {
+            _isDropDownItemChangedManualy = false;
+
+            cmbObservTypesEdit.SelectedItem = ObservationPointMobilityTypesEnum.Stationary.ToString();
+            cmbAffiliationEdit.SelectedItem = ObservationPointTypesEnum.Enemy.ToString();
+            cmbObservPointType.SelectedItem = _observPointsController.GetAllMobilityType();
+            cmbAffiliation.SelectedItem = _observPointsController.GetAllAffiliationType();
+
+            _isDropDownItemChangedManualy = true;
+
+            azimuthB.Text = ObservPointDefaultValues.AzimuthBText;
+            azimuthE.Text = ObservPointDefaultValues.AzimuthEText;
+            heightCurrent.Text = ObservPointDefaultValues.RelativeHeightText;
+            heightMin.Text = ObservPointDefaultValues.HeightMinText;
+            heightMax.Text = ObservPointDefaultValues.HeightMaxText;
+            observPointName.Text = ObservPointDefaultValues.ObservPointNameText;
+            angleOFViewMin.Text = ObservPointDefaultValues.AngleOFViewMinText;
+            angleOFViewMax.Text = ObservPointDefaultValues.AngleOFViewMaxText;
+            angleFrameH.Text = ObservPointDefaultValues.AngleFrameHText;
+            angleFrameV.Text = ObservPointDefaultValues.AngleFrameVText;
+            cameraRotationH.Text = ObservPointDefaultValues.CameraRotationHText;
+            cameraRotationV.Text = ObservPointDefaultValues.CameraRotationVText;
+            azimuthMainAxis.Text = ObservPointDefaultValues.AzimuthMainAxisText;
+
+            observPointDate.Text = DateTime.Now.ToShortDateString();
+            observPointCreator.Text = Environment.UserName;
+        }
+
+        private void SetCoordDefaultValues()
+        {
+            var centerPoint = _observPointsController.GetEnvelopeCenterPoint(ArcMap.Document.ActiveView.Extent);
+            xCoord.Text = centerPoint.X.ToString();
+            yCoord.Text = centerPoint.Y.ToString();
+        }
+
+        private void OnFieldChanged(object sender, EventArgs e)
+        {
+            if(!_isFieldsChanged || !_isFieldsEnabled)
+            {
+                return;
+            }
+
+            var selectedPoint = _observPointsController.GetObservPointById(_selectedPointId);
+
+            if(FieldsValidation(sender, selectedPoint))
+            {
+                _observPointsController.UpdateObservPoint(GetObservationPoint(), cmbObservPointsLayers.SelectedItem.ToString(), ActiveView, selectedPoint.Objectid);
+            }
+        }
+
+        private bool FieldsValidation(object sender, ObservationPoint point)
+        {
+            try
+            {
+                var textBox = (TextBox)sender;
+
+                switch(textBox.Name)
+                {
+                    case "xCoord":
+
+                        if(!Regex.IsMatch(xCoord.Text, @"^([-]?[\d]{1,2}\,\d+)$"))
+                        {
+                            MessageBox.Show("Invalid data.\nInsert the coordinates in the WGS84 format.");
+                            xCoord.Text = point.X.ToString();
+
+                            return false;
+                        }
+                        else
+                        {
+                            var x = Convert.ToDouble(xCoord.Text);
+                            var y = Convert.ToDouble(yCoord.Text);
+                        }
+
+                        return true;
+
+                    case "yCoord":
+
+                        if(!Regex.IsMatch(yCoord.Text, @"^([-]?[\d]{1,2}\,\d+)$"))
+                        {
+                            MessageBox.Show("Invalid data.\nInsert the coordinates in the WGS84 format.");
+                            yCoord.Text = point.Y.ToString();
+
+                            return false;
+                        }
+                        else
+                        {
+                            var x = Convert.ToDouble(xCoord.Text);
+                            var y = Convert.ToDouble(yCoord.Text);
+                        }
+
+                        return true;
+
+                    case "angleOFViewMin":
+
+                        return ValidateRange(angleOFViewMin, point.AngelMinH.ToString(), -90, 0);
+
+                    case "angleOFViewMax":
+
+                        return ValidateRange(angleOFViewMax, point.AngelMaxH.ToString(), 0, 90);
+
+                    case "azimuthB":
+
+                        return ValidateAzimuth(textBox, point.AzimuthStart.ToString());
+
+                    case "azimuthE":
+
+                        return ValidateAzimuth(textBox, point.AzimuthEnd.ToString());
+
+                    case "azimuthMainAxis":
+
+                        return ValidateAzimuth(textBox, point.AzimuthMainAxis.ToString());
+
+                    case "cameraRotationH":
+
+                        return ValidateAzimuth(textBox, point.AngelCameraRotationH.ToString());
+
+                    case "cameraRotationV":
+
+                        return ValidateAzimuth(textBox, point.AngelCameraRotationV.ToString());
+
+                    case "heightCurrent":
+
+                        var currentHeight = ValidateHeight(textBox, point.RelativeHeight.ToString());
+
+                        if(currentHeight != -1)
+                        {
+                            var minHeight = Convert.ToDouble(heightMin.Text);
+                            var maxHeight = Convert.ToDouble(heightMax.Text);
+
+                            if(currentHeight > maxHeight)
+                            {
+                                heightMax.Text = currentHeight.ToString();
+                            }
+
+                            if(currentHeight < minHeight)
+                            {
+                                heightMin.Text = currentHeight.ToString();
+                            }
+
+                            return true;
+                        }
+
+                        return false;
+
+                    case "heightMin":
+
+                        var minHeightChanged = ValidateHeight(textBox, point.AvailableHeightLover.ToString());
+
+                        if(minHeightChanged != -1)
+                        {
+                            var curHeight = Convert.ToDouble(heightCurrent.Text);
+                            var maxHeight = Convert.ToDouble(heightMax.Text);
+
+                            if(minHeightChanged > curHeight)
+                            {
+                                heightCurrent.Text = minHeightChanged.ToString();
+                            }
+
+                            if(minHeightChanged > maxHeight)
+                            {
+                                heightMax.Text = minHeightChanged.ToString();
+                            }
+
+                            return true;
+                        }
+
+                        return false;
+
+                    case "heightMax":
+
+                        var maxHeightChanged = ValidateHeight(textBox, point.AvailableHeightUpper.ToString());
+
+                        if(maxHeightChanged != -1)
+                        {
+                            var curHeight = Convert.ToDouble(heightCurrent.Text);
+                            var minHeight = Convert.ToDouble(heightMin.Text);
+
+                            if(maxHeightChanged < curHeight)
+                            {
+                                heightCurrent.Text = maxHeightChanged.ToString();
+                            }
+
+                            if(maxHeightChanged < minHeight)
+                            {
+                                heightMax.Text = maxHeightChanged.ToString();
+                            }
+
+                            return true;
+                        }
+
+                        return false;
+
+                    default:
+
+                        return true;
+                }
+            }
+
+            catch(Exception ex) { return false; }
+        }
+
+        private bool ValidateAzimuth(TextBox azimuthTextBox, string defaultValue)
+        {
+            return ValidateRange(azimuthTextBox, defaultValue, 0, 360);
+        }
+
+        private bool ValidateRange(TextBox textBox, string defaultValue, double lowValue, double upperValue)
+        {
+            double value;
+
+            if(Double.TryParse(textBox.Text, out value))
+            {
+                if(value >= lowValue && value <= upperValue)
+                {
+                    return true;
+                }
+            }
+
+            textBox.Text = defaultValue;
+            MessageBox.Show($"Invalid data.\nInsert the value in the range from {lowValue} to {upperValue}");
+
+            return false;
+        }
+
+        private double ValidateHeight(TextBox heightTextBox, string defaultValue)
+        {
+            double height;
+
+            if(Double.TryParse(heightTextBox.Text, out height))
+            {
+                if(height >= 0)
+                {
+                    return height;
+                }
+
+                MessageBox.Show("Invalid data.\nValue cannot be less than 0");
+            }
+            else
+            {
+                MessageBox.Show("Invalid data.\nInsert the number");
+            }
+
+            heightTextBox.Text = defaultValue;
+
+            return -1;
+        }
+
+        private void EnableObservPointsControls(bool isAllDisabled = false)
+        {
+            lblLayer.Visible = cmbObservPointsLayers.Visible = cmbAffiliationEdit.Enabled = cmbObservTypesEdit.Enabled = azimuthB.Enabled
+                = azimuthE.Enabled = xCoord.Enabled = yCoord.Enabled = angleOFViewMin.Enabled = angleOFViewMax.Enabled
+                = heightCurrent.Enabled = heightMin.Enabled = azimuthMainAxis.Enabled = cameraRotationH.Enabled = cameraRotationV.Enabled
+                = heightMax.Enabled = observPointName.Enabled = tlbCoordinates.Enabled = (_observPointsController.IsObservPointsExists(ActiveView) && !isAllDisabled);
+
+            angleFrameH.Enabled = angleFrameV.Enabled = observPointDate.Enabled = observPointCreator.Enabled = false;
+            tlbObservPoints.Buttons["tlbbRemovePoint"].Enabled = tlbObservPoints.Buttons["tlbbShowPoint"].Enabled = (dgvObservationPoints.SelectedRows.Count != 0 && !isAllDisabled);
+        }
+
+
+        private void RemovePoint()
+        {
+            var result = MessageBox.Show("Do you realy want to remove point?", "SPPRD", MessageBoxButtons.OKCancel);
+
+            if(result == DialogResult.OK)
+            {
+                var rowIndex = dgvObservationPoints.SelectedRows[0].Index;
+
+                _observPointsController.RemoveObservPoint(cmbObservPointsLayers.SelectedItem.ToString(), ActiveView, _selectedPointId);
+                _observPointGuis.Remove(_observPointGuis.First(point => point.Id == _selectedPointId));
+
+                if(rowIndex < dgvObservationPoints.Rows.Count)
+                {
+                    UpdateFilter(dgvObservationPoints.Rows[rowIndex]);
+                }
+            }
+        }
+
         private void SavePoint()
         {
             var selectedPoint = _observPointsController.GetObservPointById(_selectedPointId);
@@ -758,7 +688,6 @@ namespace MilSpace.Visibility
         {
             _observPointsController.AddPoint(cmbObservPointsLayers.SelectedItem.ToString(), ActiveView);
         }
-
 
         private ObservationPoint GetObservationPoint()
         {
@@ -783,7 +712,6 @@ namespace MilSpace.Visibility
                 Type = cmbObservTypesEdit.Text
             };
         }
-
 
         private void UpdateFilter(DataGridViewRow row)
         {
@@ -840,9 +768,92 @@ namespace MilSpace.Visibility
             observPointCreator.Text = selectedPoint.Operator;
         }
 
+        #endregion
+
+        #region VisibilitySessionsPrivateMethods
+
+        private void PopulateStationsLayersComboBox()
+        {
+            cmbObservStationLayers.Items.Clear();
+            cmbObservStationLayers.Items.AddRange(_observPointsController.GetObservationStationsLayers().ToArray());
+            if(cmbObservStationLayers.Items.Count > 0)
+            {
+                cmbObservStationLayers.SelectedItem = cmbObservStationLayers.Items[0];
+            }
+        }
+
+        private void SetVisibilitySessionsTableView()
+        {
+            dgvVisibilitySessions.Columns["Id"].Visible = false;
+            dgvVisibilitySessions.Columns["Name"].HeaderText = "Название";
+            dgvVisibilitySessions.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvVisibilitySessions.Columns["State"].Width = 100;
+        }
+
+        private void SetVisibilitySessionsController()
+        {
+            var controller = new VisibilitySessionsController();
+            controller.SetView(this);
+            _visibilitySessionsController = controller;
+        }
+
+        private void FillVisibilitySessionFields(VisibilitySession session)
+        {
+            tbVisibilitySessionName.Text = session.Name;
+            tbVisibilitySessionCreator.Text = session.UserName;
+            tbVisibilitySessionCreated.Text = session.Created.Value.ToLongDateString();
+            tbVisibilitySessionStarted.Text = session.Started.HasValue ? session.Started.Value.ToLongDateString() : string.Empty;
+            tbVisibilitySessionFinished.Text = session.Finished.HasValue ? session.Finished.Value.ToLongDateString() : string.Empty;
+        }
+
+        private void PopulateVisibilityComboBoxes()
+        {
+            cmbStateFilter.Items.Clear();
+            cmbStateFilter.Items.AddRange(_visibilitySessionsController.GetVisibilitySessionStateTypes().ToArray());
+            cmbStateFilter.SelectedItem = _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All);
+        }
+
+        private void FilterVisibilityList()
+        {
+            if(dgvVisibilitySessions.Rows.Count == 0)
+            {
+                return;
+            }
+
+            dgvVisibilitySessions.CurrentCell = null;
+
+            foreach(DataGridViewRow row in dgvVisibilitySessions.Rows)
+            {
+                if(row.Cells["State"].Value.ToString() != cmbStateFilter.SelectedItem.ToString()
+                && cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All))
+                {
+                    row.Visible = false;
+                }
+                else
+                {
+                    row.Visible = true;
+                }
+            }
+
+            if(dgvVisibilitySessions.FirstDisplayedScrollingRowIndex != -1)
+            {
+                dgvVisibilitySessions.Rows[dgvVisibilitySessions.FirstDisplayedScrollingRowIndex].Selected = true;
+            }
+            else
+            {
+                tlbVisibilitySessions.Buttons["removeTask"].Enabled = false;
+            }
+        }
+
+        #endregion
+
+        #region ObservationObjectsPrivateMethods
+
+        #endregion
+
         #region ObservationPointsTabEvents
 
-      
+
         private void TlbObserPoints_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
             switch(e.Button.Name)
@@ -1019,14 +1030,11 @@ namespace MilSpace.Visibility
                         MessageBox.Show("The calculation finished with errors.\nFor more detaole go to the log file", "SPPRD", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
-
                     _visibilitySessionsController.UpdateVisibilitySessionsList();
                     FilterVisibilityList();
                 }
             }
-
         }
-
 
         private void MainTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -1054,11 +1062,15 @@ namespace MilSpace.Visibility
             tlbVisibilitySessions.Buttons["removeTask"].Enabled = true;
         }
 
-        #endregion
-
         private void CmbStateFilter_SelectedIndexChanged(object sender, EventArgs e)
         {
             FilterVisibilityList();
         }
+
+        #endregion
+
+        #region ObservationObjectsTabEvents
+
+        #endregion
     }
 }
