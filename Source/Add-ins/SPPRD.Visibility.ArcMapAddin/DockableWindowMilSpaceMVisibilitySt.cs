@@ -860,8 +860,6 @@ namespace MilSpace.Visibility
             observPointCreator.Text = selectedPoint.Operator;
         }
 
-       
-
         #region ObservationPointsTabEvents
 
         private void toolBar9_ButtonClick(object sender, ToolBarButtonClickEventArgs e)

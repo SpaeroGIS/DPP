@@ -55,6 +55,11 @@ namespace MilSpace.Visualization3D
             return VisibilityZonesFacade.GetFinishedVisibilitySessions();
         }
 
+        internal IEnumerable<VisibilitySession> GetUserVisibilitySessions()
+        {
+            return VisibilityZonesFacade.GetFinishedVisibilitySessions().Where(session => session.UserName == Environment.UserName);
+        }
+
         private void AddChildCollection(TreeViewNodeModel node, ProfileSession profileSession)
         {
             if (node == null || profileSession == null) return;
