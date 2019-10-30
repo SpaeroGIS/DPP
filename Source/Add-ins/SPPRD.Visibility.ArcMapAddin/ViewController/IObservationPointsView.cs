@@ -6,6 +6,7 @@ namespace MilSpace.Visibility.ViewController
     public interface IObservationPointsView
     {
         void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints, VeluableObservPointFieldsEnum filter);
+        void FillVisibilitySessionsList(IEnumerable<VisibilitySession> visibilitySessions);
         void ChangeRecord(int id, ObservationPoint observationPoint);
         void AddRecord(ObservationPoint observationPoint);
         string ObservationPointsFeatureClass { get; }
