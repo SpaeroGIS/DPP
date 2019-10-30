@@ -9,10 +9,11 @@ using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
+using MilSpace.Tools;
 
 namespace MilSpace.Visibility
 {
-    public partial class WindowMilSpaceMVisibilityMaster : Form , IObservationPointsView
+    public partial class WindowMilSpaceMVisibilityMaster : Form, IObservationPointsView
     {
         private const string _allValuesFilterText = "All";
         private ObservationPointsController controller = new ObservationPointsController(ArcMap.Document);
@@ -27,13 +28,9 @@ namespace MilSpace.Visibility
 
         private static IActiveView ActiveView => ArcMap.Document.ActiveView;
 
+        MapLayersManager manager = new MapLayersManager(ActiveView);
 
-       MapLayersManager manager = new MapLayersManager(ActiveView);
-        
-
-
-
-        public WindowMilSpaceMVisibilityMaster()
+        public WindowMilSpaceMVisibilityMaster(string selectedObservPoints, string selectedObservObjects)
         {
             InitializeComponent();
             controller.SetView(this);
@@ -74,11 +71,11 @@ namespace MilSpace.Visibility
 
         public void FillObservPointLabel()
         {
-           var temp = controller.GetObservationPointsLayers(ActiveView).ToArray();
+            var temp = controller.GetObservationPointsLayers(ActiveView).ToArray();
             //label слой ПН\ТН
             ObservPointLabel.Text = temp.FirstOrDefault();
             //label слой ОН
-            label19.Text = controller.GetObservationStationsLayers().FirstOrDefault();
+            observObjectsLabel.Text = controller.GetObservationStationsLayers().FirstOrDefault();
         }
         public void PopulateComboBox()
         {
@@ -102,18 +99,18 @@ namespace MilSpace.Visibility
 
                 dvgCheckList.Rows.Clear();
                 dvgCheckList.CurrentCell = null;
-               
+
                 _observPointGuis = new BindingList<CheckObservPointGui>(ItemsToShow);
                 dvgCheckList.DataSource = _observPointGuis;
                 SetDataGridView();
 
                 dvgCheckList.Update();
                 dvgCheckList.Rows[0].Selected = true;
-               
+
             }
             else
             {
-               
+
             }
         }
         public void FillObservPointsOnCurrentView(IEnumerable<ObservationPoint> observationPoints)
@@ -151,7 +148,7 @@ namespace MilSpace.Visibility
                 
             }
         }
-        public void FillObsObj()
+        public void FillObsObj(bool useCurrentExtent = false)
         {
             try {
 
@@ -175,11 +172,11 @@ namespace MilSpace.Visibility
                     SetDataGridView_For_Objects();
                 }
             }
-            catch(ArgumentNullException)
+            catch (ArgumentNullException)
             {
                 dgvObjects.Text = "no obser object added!";
             }
-   
+
         }
         private void SetDataGridView_For_Objects()
         {
@@ -339,7 +336,7 @@ namespace MilSpace.Visibility
             throw new NotImplementedException();
         }
         public void ChangeRecord(int id, ObservationPoint observationPoint) => throw new NotImplementedException();
-        
+
         private void NextStepButton_Click(object sender, EventArgs e)
         {
             if (StepsTabControl.SelectedIndex == 2)
@@ -352,7 +349,26 @@ namespace MilSpace.Visibility
             
             if (StepsTabControl.SelectedIndex == StepsTabControl.TabCount - 1)
             {
-                MessageBox.Show("Start calculation");
+                this.Hide();
+                if (string.IsNullOrEmpty(comboBox1.Text))
+                {
+                    MessageBox.Show("The Raster layer mus be selected!", "SPPRD", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                var clculated = controller.CalculateVisibility(comboBox1.Text, VisibilityManager.GenerateResultId());
+                if (!clculated)
+                {
+                    //Localize message
+                    MessageBox.Show("The calculation finished with errors.\nFor more detaole go to the log file", "SPPRD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                this.Close();
+
+            }
+            //StepsTabControl.SelectedTab.Enabled = false;
+            if (StepsTabControl.TabPages.Count - 1 == StepsTabControl.SelectedIndex)
+            {
+                return;
             }
            
            if (StepsTabControl.SelectedIndex < StepsTabControl.TabCount - 1)
