@@ -8,6 +8,7 @@ using MilSpace.DataAccess.Facade;
 using MilSpace.Tools.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using A = MilSpace.Core.Actions.Base;
 
@@ -29,7 +30,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
         /// </summary>
         private int[] pointSfilteringIds;
         private int[] stationsFilteringIds;
-        Logger logger = Logger.GetLoggerEx("BuildStackVisibilityAction");
+        static Logger logger = Logger.GetLoggerEx("BuildStackVisibilityAction");
 
         private VisibilityCalculationResult result;
 
@@ -40,6 +41,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
         public BuildStackVisibilityAction(IActionProcessor parameters)
                 : base(parameters)
         {
+
             obserpPointsfeatureClass = parameters.GetParameterWithValidition<IFeatureClass>(ActionParameters.FeatureClass, null).Value;
             obserpStationsfeatureClass = parameters.GetParameterWithValidition<IFeatureClass>(ActionParameters.FeatureClassX, null).Value;
             rasterSource = parameters.GetParameterWithValidition<string>(ActionParameters.ProfileSource, null).Value;
