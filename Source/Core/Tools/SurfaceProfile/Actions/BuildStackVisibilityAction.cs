@@ -48,7 +48,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             pointSfilteringIds = parameters.GetParameterWithValidition<int[]>(ActionParameters.FilteringPointsIds, null).Value;
             stationsFilteringIds = parameters.GetParameterWithValidition<int[]>(ActionParameters.FilteringStationsIds, null).Value;
             calcResults = parameters.GetParameterWithValidition<VisibilityCalculationresultsEnum>(ActionParameters.Calculationresults, VisibilityCalculationresultsEnum.None).Value;
-            outputSourceName = parameters.GetParameterWithValidition<string>(ActionParameters.OutputSourceName, VisibilityManager.GenerateResultId()).Value;
+            outputSourceName = parameters.GetParameterWithValidition<string>(ActionParameters.OutputSourceName, string.Empty).Value;
             session = parameters.GetParameterWithValidition<VisibilitySession>(ActionParameters.Session, null).Value;
         }
 
