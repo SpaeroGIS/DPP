@@ -36,6 +36,10 @@ namespace MilSpace.Visibility
             controller.SetView(this);
 
             ONload();
+            //label слой ПН\ТН
+            ObservPointLabel.Text = selectedObservPoints;
+            //label слой ОН
+            observObjectsLabel.Text = selectedObservObjects;
         }
 
         public void ONload()//disable all tabs
@@ -72,10 +76,7 @@ namespace MilSpace.Visibility
         public void FillObservPointLabel()
         {
             var temp = controller.GetObservationPointsLayers(ActiveView).ToArray();
-            //label слой ПН\ТН
-            ObservPointLabel.Text = temp.FirstOrDefault();
-            //label слой ОН
-            observObjectsLabel.Text = controller.GetObservationStationsLayers().FirstOrDefault();
+           
         }
         public void PopulateComboBox()
         {
@@ -328,7 +329,7 @@ namespace MilSpace.Visibility
             
         }
         
-         public string ObservationStationFeatureClass => label19.Text;
+         public string ObservationStationFeatureClass => observObjectsLabel.Text;
         public string ObservationPointsFeatureClass => ObservPointLabel.Text;
         
         public void AddRecord(ObservationPoint observationPoint)

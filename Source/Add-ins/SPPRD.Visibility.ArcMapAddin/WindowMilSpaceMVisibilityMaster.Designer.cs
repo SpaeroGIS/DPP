@@ -130,6 +130,7 @@ namespace MilSpace.Visibility
             this.label25 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
+            this.observObjectsLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.StepsTabControl.SuspendLayout();
             this.stepOne.SuspendLayout();
@@ -962,6 +963,7 @@ namespace MilSpace.Visibility
             // 
             // panel15
             // 
+            this.panel15.Controls.Add(this.observObjectsLabel);
             this.panel15.Controls.Add(this.label19);
             this.panel15.Controls.Add(this.label7);
             this.panel15.Dock = System.Windows.Forms.DockStyle.Top;
@@ -1506,6 +1508,16 @@ namespace MilSpace.Visibility
             this.label23.TabIndex = 1;
             this.label23.Text = "Поверхность расчета :";
             // 
+            // observObjectsLabel
+            // 
+            this.observObjectsLabel.AutoSize = true;
+            this.observObjectsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.observObjectsLabel.Location = new System.Drawing.Point(66, 4);
+            this.observObjectsLabel.Name = "observObjectsLabel";
+            this.observObjectsLabel.Size = new System.Drawing.Size(48, 13);
+            this.observObjectsLabel.TabIndex = 2;
+            this.observObjectsLabel.Text = "label29";
+            // 
             // WindowMilSpaceMVisibilityMaster
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1683,5 +1695,6 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.Label observObjectsLabel;
     }
 }
