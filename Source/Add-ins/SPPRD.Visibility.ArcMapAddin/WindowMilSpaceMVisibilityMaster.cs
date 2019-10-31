@@ -455,9 +455,14 @@ namespace MilSpace.Visibility
             StepsTabControl.SelectedIndex++;
         }
 
-
-
         public IEnumerable<string> GetTypes => throw new NotImplementedException();
+
+        public IEnumerable<string> GetAffiliation => throw new NotImplementedException();
+
+        public void FillVisibilitySessionsList(IEnumerable<VisibilitySession> visibilitySessions)
+        {
+            throw new NotImplementedException();
+        }
 
         public IEnumerable<string> GetAffiliation => throw new NotImplementedException();
 
