@@ -1,4 +1,5 @@
-﻿using ESRI.ArcGIS.DataSourcesGDB;
+﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.DataSourcesGDB;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geodatabase;
@@ -6,10 +7,10 @@ using ESRI.ArcGIS.Geometry;
 using MilSpace.Configurations;
 using MilSpace.Core;
 using MilSpace.DataAccess.DataTransfer;
-using MilSpace.Core.Tools;
 using MilSpace.DataAccess.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 
@@ -19,6 +20,9 @@ namespace MilSpace.DataAccess.Facade
     {
         private static GdbAccess instance = null;
         private static IApplication application = null;
+        private static string divider = "\\";
+
+
 
         private static readonly string profileCalcFeatureClass = "CalcProfile_L";
 
@@ -56,6 +60,8 @@ namespace MilSpace.DataAccess.Facade
             }
         }
         private static IWorkspace calcWorkspace = null;
+        private static IWorkspace workingWorkspace = null;
+
         public string AddProfileLinesToCalculation(IEnumerable<IPolyline> profileLines)
         {
             string featureClassName = GenerateTempProfileLinesStorage();
@@ -129,7 +135,6 @@ namespace MilSpace.DataAccess.Facade
         {
 
             IWorkspace targetWorkspace = calcWorkspace;
-
 
             IWorkspaceEdit workspaceEdit = null;
             bool isBeingEdited = false;
@@ -277,6 +282,39 @@ namespace MilSpace.DataAccess.Facade
             workspaceEdit.StopEditing(true);
 
             return newFeatureClassName;
+
+        }
+
+        private IWorkspace ConnectToSqlGDB()
+        {
+
+            SqlConnectionStringBuilder connectionBldr = new SqlConnectionStringBuilder(MilSpaceConfiguration.ConnectionProperty.WorkingGDBConnection);
+
+            //var props = pWrkspcFact.ReadConnectionPropertiesFromFile(@"C:\Users\copoka\AppData\Roaming\ESRI\Desktop10.4\ArcCatalog\Dno.sde");
+            //object names, values;
+            //props.GetAllProperties(out names, out values);
+
+            string dataSource = connectionBldr.DataSource;
+            int dividerIndex = dataSource.IndexOf(divider);
+            string server = dividerIndex > 0 ? dataSource.Substring(0, dividerIndex) : dataSource;
+
+            IPropertySet propertySet = new PropertySetClass();
+            propertySet.SetProperty("SERVER", server);
+            propertySet.SetProperty("INSTANCE", $"sde:sqlserver:{connectionBldr.DataSource}");
+            propertySet.SetProperty("DBCLIENT", "sqlserver");
+            propertySet.SetProperty("DATABASE", connectionBldr.InitialCatalog); // Only if it is needed
+            propertySet.SetProperty("AUTHENTICATION_MODE", "OSA");
+
+            try
+            {
+                IWorkspaceFactory pWrkspcFact = new SdeWorkspaceFactory();
+                return pWrkspcFact.Open(propertySet, 0);
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorEx($"Cannot open GDB from {MilSpaceConfiguration.ConnectionProperty.WorkingGDBConnection} /n{ex.Message}");
+                return null;
+            }
 
         }
 
@@ -512,16 +550,47 @@ namespace MilSpace.DataAccess.Facade
 
         public IFeatureClass GetCalcProfileFeatureClass(string currentFeatureClass)
         {
-            IWorkspace2 wsp2 = (IWorkspace2)calcWorkspace;
-            IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)calcWorkspace;
+            return OpenFeatureClass(calcWorkspace, currentFeatureClass);
+        }
 
-            if (!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, currentFeatureClass))
+        private static IFeatureClass OpenFeatureClass(IWorkspace workspace, string  featureClass)
+        {
+            IWorkspace2 wsp2 = (IWorkspace2)workspace;
+            IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)workspace;
+
+            if (!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, featureClass))
             {
                 //TODO: Create the feature class
-                throw new MilSpaceDataException(currentFeatureClass, Core.DataAccess.DataOperationsEnum.Access);
+                throw new MilSpaceDataException(featureClass, Core.DataAccess.DataOperationsEnum.Access);
             }
 
-            return featureWorkspace.OpenFeatureClass(currentFeatureClass);
+            return featureWorkspace.OpenFeatureClass(featureClass);
+
+        }
+
+        public ILayer GetLayerFromWorkingWorkspace(string featureClassName)
+        {
+            var featurelayer = new FeatureLayer();
+            featurelayer.Name = featureClassName;
+            featurelayer.FeatureClass = OpenFeatureClass(WorkingWorkspace, featureClassName);
+            return featurelayer;
+        }
+
+        private IWorkspace WorkingWorkspace
+        {
+            get
+            {
+                if (workingWorkspace == null)
+                {
+                    workingWorkspace = ConnectToSqlGDB();
+                    if (workingWorkspace == null)
+                    {
+                        throw new MilSpaceDataException(MilSpaceConfiguration.ConnectionProperty.WorkingGDBConnection, Core.DataAccess.DataOperationsEnum.Access);
+                        //throw new MilSpaceVisibilityDataException("Cannot open working GDB");
+                    }
+                }
+                return workingWorkspace;
+            }
         }
 
         private string GenerateTemp3DLineStorage()

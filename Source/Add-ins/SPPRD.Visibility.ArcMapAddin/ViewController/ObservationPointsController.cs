@@ -17,9 +17,6 @@ namespace MilSpace.Visibility.ViewController
     public class ObservationPointsController
     {
         IObservationPointsView view;
-        private static readonly string _observPointFeature = "MilSp_Visible_ObservPoints";
-      //  private static readonly string _observStationFeature = "MilSp_Visible_ObjectsObservation_R";
-        private static readonly string _observStationFeature = "DNOEGDB.DBO.MilSp_Visible_ObjectsObservation_R";
         private List<ObservationPoint> _observationPoints = new List<ObservationPoint>();
         private List<ObservationObject> _observationObjects = new List<ObservationObject>();
 
@@ -50,12 +47,12 @@ namespace MilSpace.Visibility.ViewController
 
         internal string GetObservPointFeatureName()
         {
-            return _observPointFeature;
+            return VisibilityManager.observPointFeature;
         }
 
         internal string GetObservObjectFeatureName()
         {
-            return _observStationFeature;
+            return VisibilityManager.observStationFeature;
         }
 
         internal void UpdateObservationPointsList()
@@ -186,6 +183,9 @@ namespace MilSpace.Visibility.ViewController
         {
             try
             {
+
+                VisibilityManager.AddVisibilityPointLayer(mapDocument.ActiveView);
+
                 MapLayersManager layersManager = new MapLayersManager(mapDocument.ActiveView);
 
                 var demLayer = layersManager.RasterLayers.FirstOrDefault(l => l.Name.Equals(scrDEM));

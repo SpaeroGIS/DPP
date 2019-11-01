@@ -188,6 +188,7 @@
     <Compile Include="DataTransfer\VisibilityResultInfo.cs" />
     <Compile Include="DataTransfer\VisibilitySession.cs" />
     <Compile Include="DataTransfer\VisibilitySessionStateEnum.cs" />
+    <Compile Include="Exceptions\MilSpaceVisibilityDataException.cs" />
     <Compile Include="Facade\VisibilityDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\DataAccess\Properties\Settings.Designer.cs">
