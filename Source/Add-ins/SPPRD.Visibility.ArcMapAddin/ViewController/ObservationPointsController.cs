@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MilSpace.Core;
 using MilSpace.Tools.Exceptions;
+using System.Text.RegularExpressions;
 
 namespace MilSpace.Visibility.ViewController
 {
@@ -284,9 +285,7 @@ namespace MilSpace.Visibility.ViewController
 
         public void AddObservObjectsLayer(IActiveView activeView)
         {
-            var layer = new FeatureLayerClass();
-           // layer.FeatureClass = GdbAccess.Instance.GetFeatureClass(_observStationFeature);
-            activeView.FocusMap.AddLayer(layer);
+            VisibilityManager.AddObservationObjectLayer(activeView);
         }
 
         public IEnumerable<string> GetObservationPointTypes()
@@ -378,12 +377,13 @@ namespace MilSpace.Visibility.ViewController
 
         private bool IsFeatureLayerExists(IActiveView view, string featureClass)
         {
+            var pattern = @"^[A-Za-z0-9]+\.[A-Za-z0-9]+\." + featureClass + "$";
             var layers = view.FocusMap.Layers;
             var layer = layers.Next();
 
             while(layer != null)
             {
-                if(layer is IFeatureLayer fl && fl.FeatureClass != null && fl.FeatureClass.AliasName.Equals(featureClass, StringComparison.InvariantCultureIgnoreCase))
+                if(layer is IFeatureLayer fl && fl.FeatureClass != null && (fl.FeatureClass.AliasName.Equals(featureClass, StringComparison.InvariantCultureIgnoreCase) || Regex.IsMatch(fl.FeatureClass.AliasName, pattern)))
                 {
                     return true;
                 }

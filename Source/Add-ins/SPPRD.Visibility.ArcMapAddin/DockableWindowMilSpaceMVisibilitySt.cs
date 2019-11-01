@@ -877,6 +877,8 @@ namespace MilSpace.Visibility
             dgvObservObjects.Columns["Affiliation"].Width = 100;
             dgvObservObjects.Columns["Group"].HeaderText = "Группа";
             dgvObservObjects.Columns["Group"].Width = 100;
+
+            dgvObservObjects.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void DisplayObservObjectsSelectedColumns()
@@ -912,6 +914,10 @@ namespace MilSpace.Visibility
             {
                 dgvObservObjects.Rows[dgvObservObjects.FirstDisplayedScrollingRowIndex].Selected = true;
             }
+            else
+            {
+                ClearObservObjectFields();
+            }
         }
 
         private void FillObservObjectFields(ObservationObject observObject)
@@ -920,6 +926,14 @@ namespace MilSpace.Visibility
             tbObservObjGroup.Text = observObject.Group;
             tbObservObjAffiliation.Text = _observPointsController.GetObservObjectsTypeString(observObject.ObjectType);
             tbObservObjDate.Text = observObject.DTO.ToLongDateString();
+        }
+
+        private void ClearObservObjectFields()
+        {
+            tbObservObjTitle.Text = string.Empty;
+            tbObservObjGroup.Text = string.Empty;
+            tbObservObjAffiliation.Text = string.Empty;
+            tbObservObjDate.Text = string.Empty;
         }
 
         private void SetObservObjectsControlsState(bool isObservObjectsExist)
@@ -1194,8 +1208,9 @@ namespace MilSpace.Visibility
 
         private void DgvObservObjects_SelectionChanged(object sender, EventArgs e)
         {
-            if(dgvObservObjects.SelectedRows.Count == 0)
+            if(dgvObservObjects.SelectedRows.Count == 0 || dgvObservObjects.SelectedRows[0].Cells["Id"].Value == null)
             {
+                ClearObservObjectFields();
                 return;
             }
 
