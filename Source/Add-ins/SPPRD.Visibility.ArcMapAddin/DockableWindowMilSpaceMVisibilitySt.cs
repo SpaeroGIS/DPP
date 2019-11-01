@@ -192,7 +192,9 @@ namespace MilSpace.Visibility
         {
             if(visibilitySessions.Any())
             {
-                foreach(var session in visibilitySessions)
+                dgvVisibilitySessions.Rows.Clear();
+
+                foreach (var session in visibilitySessions)
                 {
                     string state;
 
@@ -217,7 +219,6 @@ namespace MilSpace.Visibility
                     });
                 }
 
-                dgvVisibilitySessions.Rows.Clear();
                 dgvVisibilitySessions.CurrentCell = null;
                 dgvVisibilitySessions.DataSource = _visibilitySessionsGui;
                 SetVisibilitySessionsTableView();
@@ -1001,10 +1002,24 @@ namespace MilSpace.Visibility
             }
             else if(e.Button == wizardTask)
             {
-                var dialogResult = (new WindowMilSpaceMVisibilityMaster(ObservationPointsFeatureClass, ObservationStationFeatureClass)).ShowDialog();
+                var wizard = (new WindowMilSpaceMVisibilityMaster(ObservationPointsFeatureClass, ObservationStationFeatureClass));
+                wizard.ShowDialog();
+                var dialogResult = wizard.DialogResult;
 
-                if(dialogResult == DialogResult.OK)
+                if (dialogResult == DialogResult.OK)
                 {
+                    var calcParams = wizard.FinalResult;
+
+                    var clculated = _observPointsController.CalculateVisibility(calcParams.RasterLayerName, VisibilityManager.GenerateResultId(), 
+                            VisibilitySession.DefaultResultsSet, calcParams.ObservPointIDs, calcParams.ObservObjectIDs);
+
+                    if (!clculated)
+                    {
+                        //Localize message
+                        MessageBox.Show("The calculation finished with errors.\nFor more detaole go to the log file", "SPPRD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+
                     _visibilitySessionsController.UpdateVisibilitySessionsList();
                     FilterVisibilityList();
                 }
@@ -1044,6 +1059,10 @@ namespace MilSpace.Visibility
         private void CmbStateFilter_SelectedIndexChanged(object sender, EventArgs e)
         {
             FilterVisibilityList();
+        }
+
+        private void toolBar6_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        {
         }
     }
 }

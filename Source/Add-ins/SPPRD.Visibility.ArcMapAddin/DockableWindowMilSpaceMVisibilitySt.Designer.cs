@@ -2228,6 +2228,7 @@
             this.toolBar6.ShowToolTips = true;
             this.toolBar6.Size = new System.Drawing.Size(336, 28);
             this.toolBar6.TabIndex = 40;
+            this.toolBar6.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.toolBar6_ButtonClick);
             // 
             // toolBarButton26
             // 

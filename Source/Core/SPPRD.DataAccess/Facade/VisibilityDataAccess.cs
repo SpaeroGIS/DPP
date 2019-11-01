@@ -125,6 +125,21 @@ namespace MilSpace.DataAccess.Facade
             return null;
         }
 
+        public IEnumerable<VisibilitySession> GetUserVisibilitySessions()
+        {
+            try
+            {
+                var sessions = context.MilSp_VisibilitySessions.Where(s => s.UserName.Equals(Environment.UserName));
+                return sessions.Select(s => s.Get());
+            }
+            catch (Exception ex)
+            {
+                log.WarnEx($"Unexpected exception:{ex.Message}");
+            }
+
+            return null;
+        }
+
         public IEnumerable<ObservationPoint> GetObservationPoints()
         {
             try

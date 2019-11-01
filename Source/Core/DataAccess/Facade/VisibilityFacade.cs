@@ -89,11 +89,11 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
-        public static IEnumerable<VisibilitySession> GetAllVisibilitySessions()
+        public static IEnumerable<VisibilitySession> GetAllVisibilitySessions(bool forCurrentUser = false)
         {
             using(var accessor = new VisibilityDataAccess())
             {
-                var res = accessor.GetAllVisibilitySessions();
+                var res =  forCurrentUser ? accessor.GetUserVisibilitySessions() : accessor.GetAllVisibilitySessions();
                 return res.ToArray();
             }
         }
@@ -115,5 +115,6 @@ namespace MilSpace.DataAccess.Facade
                 return res.ToArray();
             }
         }
+       
     }
 }

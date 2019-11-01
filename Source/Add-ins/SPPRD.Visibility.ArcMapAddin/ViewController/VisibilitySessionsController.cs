@@ -31,7 +31,7 @@ namespace MilSpace.Visibility.ViewController
 
         internal void UpdateVisibilitySessionsList()
         {
-            _visibilitySessions = VisibilityZonesFacade.GetAllVisibilitySessions().ToList();
+            _visibilitySessions = VisibilityZonesFacade.GetAllVisibilitySessions(true).ToList();
             _view.FillVisibilitySessionsList(_visibilitySessions);
         }
 

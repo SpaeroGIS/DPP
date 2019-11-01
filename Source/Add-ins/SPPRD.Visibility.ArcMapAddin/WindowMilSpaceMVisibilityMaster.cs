@@ -26,8 +26,7 @@ namespace MilSpace.Visibility
         private List<CheckObservPointGui> CheckedList = new List<CheckObservPointGui>();
         private List<CheckObservPointGui> CheckedObjectList = new List<CheckObservPointGui>();
 
-        private MasterResult _finalResult = new MasterResult();
-
+        internal MasterResult FinalResult = new MasterResult();
 
 
         private static IActiveView ActiveView => ArcMap.Document.ActiveView;
@@ -347,15 +346,16 @@ namespace MilSpace.Visibility
                     CheckedObjectList.Add(PickedObSerPointRow);
                 }
             }
-          
 
-
-            _finalResult.ObservPointID = CheckedList.Select(i => i.Id).ToList();
-            _finalResult.ObservObjectID = CheckedObjectList.Select(i => i.Id).ToList();
-            _finalResult.Table = TableChkBox.Checked;
-            _finalResult.sumFieldOfView = SumChkBox.Checked;
-            _finalResult.RasterLayerNAME = comboBox1.SelectedItem.ToString();
-            _finalResult.OP = checkBoxOP.Checked;
+            FinalResult = new MasterResult
+            {
+                ObservPointIDs = CheckedList.Select(i => i.Id).ToList(),
+                ObservObjectIDs = CheckedObjectList.Select(i => i.Id).ToList(),
+                Table = TableChkBox.Checked,
+                SumFieldOfView = SumChkBox.Checked,
+                RasterLayerName = comboBox1.SelectedItem.ToString(),
+                OP = checkBoxOP.Checked
+            };
             
         }
         public void ALLinfo()
@@ -384,26 +384,18 @@ namespace MilSpace.Visibility
             if (StepsTabControl.SelectedIndex == 2)
             {
                 AssemblMasterResult();
-
-               
                 ALLinfo();
             }
             
             if (StepsTabControl.SelectedIndex == StepsTabControl.TabCount - 1)
             {
-                this.Hide();
                 if (string.IsNullOrEmpty(comboBox1.Text))
                 {
-                    MessageBox.Show("The Raster layer mus be selected!", "SPPRD", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show("The Raster layer must be selected!", "SPPRD", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return;
                 }
 
-                var clculated = controller.CalculateVisibility(comboBox1.Text, VisibilityManager.GenerateResultId());
-                if (!clculated)
-                {
-                    //Localize message
-                    MessageBox.Show("The calculation finished with errors.\nFor more detaole go to the log file", "SPPRD", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                DialogResult = DialogResult.OK;
                 this.Close();
 
             }

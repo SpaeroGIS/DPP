@@ -146,7 +146,7 @@ namespace MilSpace.DataAccess.DataTransfer
                     IdRow = visibilitySessionEntity.IdRow,
                     Id = visibilitySessionEntity.Id,
                     Name = visibilitySessionEntity.Name,
-                    UserName = visibilitySessionEntity.UserName,
+                    UserName = visibilitySessionEntity.UserName.Trim(),
                     Created = visibilitySessionEntity.Created,
                     Started = visibilitySessionEntity.Started,
                     Finished = visibilitySessionEntity.Finished,
