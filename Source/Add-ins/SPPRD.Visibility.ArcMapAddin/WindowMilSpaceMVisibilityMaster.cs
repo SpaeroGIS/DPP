@@ -415,5 +415,9 @@ namespace MilSpace.Visibility
             throw new NotImplementedException();
         }
 
+        public void FillObservationObjectsList(IEnumerable<ObservationObject> observationObjects)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

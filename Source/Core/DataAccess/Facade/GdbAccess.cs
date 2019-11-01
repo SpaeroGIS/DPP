@@ -512,7 +512,6 @@ namespace MilSpace.DataAccess.Facade
 
         public IFeatureClass GetCalcProfileFeatureClass(string currentFeatureClass)
         {
-
             IWorkspace2 wsp2 = (IWorkspace2)calcWorkspace;
             IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)calcWorkspace;
 
