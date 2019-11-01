@@ -464,7 +464,7 @@ namespace MilSpace.Visibility
             throw new NotImplementedException();
         }
 
-        public IEnumerable<string> GetAffiliation => throw new NotImplementedException();
+      
 
         private void labelOP_Click(object sender, EventArgs e)
         {
