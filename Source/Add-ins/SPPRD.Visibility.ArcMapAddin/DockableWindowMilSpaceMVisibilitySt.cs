@@ -534,6 +534,14 @@ namespace MilSpace.Visibility
 
                         return false;
 
+                    case "txtMinDistance":
+                        var innerrRadius = ValidateHeight(textBox, point.OuterRadius.ToString());
+                        return innerrRadius != -1;
+
+                    case "txtMaxDistance":
+                        var outerRadius  = ValidateHeight(textBox, point.OuterRadius.ToString());
+
+                        return outerRadius != -1;
                     default:
 
                         return true;
@@ -777,6 +785,8 @@ namespace MilSpace.Visibility
                 AzimuthStart = Convert.ToDouble(azimuthB.Text),
                 AzimuthEnd = Convert.ToDouble(azimuthE.Text),
                 AzimuthMainAxis = Convert.ToDouble(azimuthMainAxis.Text),
+                OuterRadius = Convert.ToDouble(txtMaxDistance.Text),
+                InnerRadius = Convert.ToDouble(txtMinDistance.Text),
                 Dto = Convert.ToDateTime(observPointDate.Text),
                 Operator = observPointCreator.Text,
                 Title = observPointName.Text,
@@ -835,36 +845,28 @@ namespace MilSpace.Visibility
             cameraRotationH.Text = selectedPoint.AngelCameraRotationH != null ? selectedPoint.AngelCameraRotationH.ToString() : ObservPointDefaultValues.CameraRotationHText;
             cameraRotationV.Text = selectedPoint.AngelCameraRotationV != null ? selectedPoint.AngelCameraRotationV.ToString() : ObservPointDefaultValues.CameraRotationVText;
             azimuthMainAxis.Text = selectedPoint.AzimuthMainAxis != null ? selectedPoint.AzimuthMainAxis.ToString() : ObservPointDefaultValues.AzimuthMainAxisText;
-
+            txtMaxDistance.Text = selectedPoint.OuterRadius.ToString();
+            txtMinDistance.Text = selectedPoint.InnerRadius.ToString();
             observPointDate.Text = selectedPoint.Dto.Value.ToShortDateString();
             observPointCreator.Text = selectedPoint.Operator;
         }
 
         #region ObservationPointsTabEvents
-
       
         private void TlbObserPoints_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
             switch(e.Button.Name)
             {
-
                 case "tlbbAddNewPoint":
-
                     CreateNewPoint(GetObservationPoint());
-
                     break;
 
                 case "tlbbRemovePoint":
-
                     RemovePoint();
-
                     break;
 
-
                 case "tlbbShowPoint":
-
                     _observPointsController.ShowObservPoint(ActiveView, _selectedPointId);
-
                     break;
             }
 
@@ -1059,10 +1061,6 @@ namespace MilSpace.Visibility
         private void CmbStateFilter_SelectedIndexChanged(object sender, EventArgs e)
         {
             FilterVisibilityList();
-        }
-
-        private void toolBar6_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
-        {
         }
     }
 }
