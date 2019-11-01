@@ -115,6 +115,9 @@ namespace MilSpace.DataAccess.DataTransfer
         /// </summary>
         public double? AngelCameraRotationV;
 
+
+        public double? InnerRadius;
+        public double? OuterRadius;
         /// <summary>
         /// The date and time when the item was created
         /// </summary>

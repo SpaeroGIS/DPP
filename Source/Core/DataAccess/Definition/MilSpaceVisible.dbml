@@ -80,33 +80,6 @@
       <Column Name="objectid" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
     </Type>
   </Table>
-  <Table Name="dbo.MILSP_VISIBLE_OBSERVPOINTS" Member="VisiblilityObservPoint__s">
-    <Type Name="VisiblilityObservPoint__">
-      <Column Name="OBJECTID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="soper" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="idOP" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="TitleOP" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="TypeOP" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="sGroup" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="saffiliation" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="ishare" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="XWGS" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="YWGS" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="HRel" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="AzimuthB" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="AzimuthE" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="AnglMinH" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="AnglMaxH" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="AzimuthMainAxis" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="AngFrameH" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="AnglFrameV" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="AnglCameraRotationH" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="AnglCameraRotationV" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="AvailableHeightUpper" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
-      <Column Name="AvailableHeightLover" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
-      <Column Name="dto" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.MILSP_VISIBILITY_SESSION" Member="MilSp_VisibilitySessions" AccessModifier="Internal">
     <Type Name="MilSp_VisibilitySession" AccessModifier="Internal">
       <Column Name="IdRow" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -145,6 +118,8 @@
       <Column Name="AvailableHeightUpper" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
       <Column Name="AvailableHeightLover" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
       <Column Name="dto" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+      <Column Name="InnerRadius" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="OuterRadius" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Table Name="dbo.MILSP_VISIBLE_OBJECTSOBSERVATION_R" Member="VisiblilityObservationObjects" AccessModifier="Internal">
