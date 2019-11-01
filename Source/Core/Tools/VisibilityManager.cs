@@ -1,4 +1,5 @@
-﻿using ESRI.ArcGIS.Geodatabase;
+﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Configurations;
 using MilSpace.Core;
@@ -26,6 +27,10 @@ namespace MilSpace.Tools
         private static readonly string LINE_ID_Field = "LINE_ID";
 
         private static readonly string WhereAllRecords = "OBJECTID > 0";
+
+        public static readonly string observPointFeature = "MilSp_Visible_ObservPoints";
+        public static readonly string observStationFeature = "MilSp_Visible_ObjectsObservation_R";
+
         private static Logger logger = Logger.GetLoggerEx("VisibilityManagerManager");
 
 
@@ -125,6 +130,26 @@ namespace MilSpace.Tools
             return $"{VisibilityCalcFeatureClass}{MilSpace.DataAccess.Helper.GetTemporaryNameSuffix()}";
         }
 
+        public static bool AddVisibilityPointLayer(IActiveView view)
+        {
+            try
+            {
+                var pointsLayer = GdbAccess.Instance.GetLayerFromWorkingWorkspace(observPointFeature);
+                view.FocusMap.AddLayer(pointsLayer);
+            }
+            catch (MilSpaceDataException ex)
+            {
+                logger.ErrorEx(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorEx("Unexpectede error");
+                logger.ErrorEx(ex.Message);
+            }
+
+            return false;
+        }
+
         private static void OnCalculationFinished(IActionResult message)
         {
             if (message is VisibilityCalculationResult res)
@@ -154,6 +179,7 @@ namespace MilSpace.Tools
             }
 
         }
+
 
     }
 }

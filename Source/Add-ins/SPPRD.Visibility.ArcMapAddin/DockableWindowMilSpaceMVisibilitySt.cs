@@ -1060,5 +1060,9 @@ namespace MilSpace.Visibility
         {
             FilterVisibilityList();
         }
+
+        private void toolBar6_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        {
+        }
     }
 }
