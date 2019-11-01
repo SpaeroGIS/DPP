@@ -17,6 +17,8 @@ namespace MilSpace.Visibility.ViewController
     public class ObservationPointsController
     {
         IObservationPointsView view;
+        private static readonly string _observPointFeature = "MilSp_Visible_ObservPoints";
+        private static readonly string _observStationFeature = "MilSp_Visible_ObjectsObservation_R";
         private List<ObservationPoint> _observationPoints = new List<ObservationPoint>();
         private List<ObservationObject> _observationObjects = new List<ObservationObject>();
 

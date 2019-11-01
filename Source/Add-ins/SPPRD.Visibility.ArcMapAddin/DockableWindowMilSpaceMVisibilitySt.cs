@@ -1225,8 +1225,6 @@ namespace MilSpace.Visibility
             dgvObservObjects.Columns["Affiliation"].Visible = chckObservObjAffiliation.Checked;
             dgvObservObjects.Columns["Group"].Visible = chckObservObjGroup.Checked;
         }
-
-        #endregion
-
     }
 }
+#endregion

@@ -237,8 +237,8 @@
             this.toolBarButton34 = new System.Windows.Forms.ToolBarButton();
             this.dgvObservObjects = new System.Windows.Forms.DataGridView();
             this.chckObservObjColumnsVisibilityPanel = new System.Windows.Forms.Panel();
-            this.chckObservObjGroup = new System.Windows.Forms.CheckBox();
             this.chckObservObjAffiliation = new System.Windows.Forms.CheckBox();
+            this.chckObservObjGroup = new System.Windows.Forms.CheckBox();
             this.chckObservObjTitle = new System.Windows.Forms.CheckBox();
             this.panel26 = new System.Windows.Forms.Panel();
             this.cmbObservObjAffiliationFilter = new System.Windows.Forms.ComboBox();
@@ -2422,21 +2422,6 @@
             this.chckObservObjColumnsVisibilityPanel.Size = new System.Drawing.Size(336, 24);
             this.chckObservObjColumnsVisibilityPanel.TabIndex = 44;
             // 
-            // chckObservObjGroup
-            // 
-            this.chckObservObjGroup.AutoSize = true;
-            this.chckObservObjGroup.Checked = true;
-            this.chckObservObjGroup.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chckObservObjGroup.Dock = System.Windows.Forms.DockStyle.Left;
-            this.chckObservObjGroup.Location = new System.Drawing.Point(84, 0);
-            this.chckObservObjGroup.Name = "chckObservObjGroup";
-            this.chckObservObjGroup.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.chckObservObjGroup.Size = new System.Drawing.Size(64, 24);
-            this.chckObservObjGroup.TabIndex = 3;
-            this.chckObservObjGroup.Text = "группа";
-            this.chckObservObjGroup.UseVisualStyleBackColor = true;
-            this.chckObservObjGroup.CheckedChanged += new System.EventHandler(this.ChckObservObj_CheckedChanged);
-            // 
             // chckObservObjAffiliation
             // 
             this.chckObservObjAffiliation.AutoSize = true;
@@ -2451,6 +2436,21 @@
             this.chckObservObjAffiliation.Text = "принадлежность";
             this.chckObservObjAffiliation.UseVisualStyleBackColor = true;
             this.chckObservObjAffiliation.CheckedChanged += new System.EventHandler(this.ChckObservObj_CheckedChanged);
+            // 
+            // chckObservObjGroup
+            // 
+            this.chckObservObjGroup.AutoSize = true;
+            this.chckObservObjGroup.Checked = true;
+            this.chckObservObjGroup.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chckObservObjGroup.Dock = System.Windows.Forms.DockStyle.Left;
+            this.chckObservObjGroup.Location = new System.Drawing.Point(84, 0);
+            this.chckObservObjGroup.Name = "chckObservObjGroup";
+            this.chckObservObjGroup.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
+            this.chckObservObjGroup.Size = new System.Drawing.Size(64, 24);
+            this.chckObservObjGroup.TabIndex = 3;
+            this.chckObservObjGroup.Text = "группа";
+            this.chckObservObjGroup.UseVisualStyleBackColor = true;
+            this.chckObservObjGroup.CheckedChanged += new System.EventHandler(this.ChckObservObj_CheckedChanged);
             // 
             // chckObservObjTitle
             // 
