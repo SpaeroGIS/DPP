@@ -975,6 +975,11 @@ namespace MilSpace.Visibility
                     SetVisibilitySessionsController();
                     PopulateVisibilityComboBoxes();
                     _visibilitySessionsController.UpdateVisibilitySessionsList();
+
+                    if(dgvVisibilitySessions.Rows.Count == 0)
+                    {
+                        tlbVisibilitySessions.Buttons["removeTask"].Enabled = false;
+                    }
                 }
             }
 
