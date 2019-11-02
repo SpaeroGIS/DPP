@@ -1136,7 +1136,13 @@ namespace MilSpace.Visibility
                 {
                     var id = dgvVisibilitySessions.SelectedRows[0].Cells["Id"].Value.ToString();
                     var rowIndex = dgvVisibilitySessions.SelectedRows[0].Index;
-                    _visibilitySessionsController.RemoveSession(id);
+
+                    if(!_visibilitySessionsController.RemoveSession(id))
+                    {
+                        MessageBox.Show("Unable to delete session");
+                        return;
+                    }
+                    
                     _visibilitySessionsGui.Remove(_visibilitySessionsGui.First(session => session.Id == id));
 
                     if(cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All))

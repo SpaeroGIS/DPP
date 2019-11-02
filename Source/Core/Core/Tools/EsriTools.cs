@@ -1,4 +1,5 @@
 ﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.DataSourcesGDB;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Geodatabase;
@@ -475,6 +476,40 @@ namespace MilSpace.Core.Tools
             }
 
             return null;
+        }
+
+        public static bool RemoveDataSet(string gdb, string name)
+        {
+            IWorkspaceFactory workspaceFactory = new FileGDBWorkspaceFactory();
+            IWorkspace workspace = workspaceFactory.OpenFromFile(gdb, 0);
+            IFeatureWorkspaceManage wspManage = (IFeatureWorkspaceManage)workspace;
+          
+            var datasets = workspace.Datasets[esriDatasetType.esriDTAny];
+            var currentDataset = datasets.Next();
+
+            while(currentDataset != null && !currentDataset.Name.EndsWith(name))
+            {
+                currentDataset = datasets.Next();
+            }
+
+            if(currentDataset != null)
+            {
+                if(wspManage.CanDelete(currentDataset.FullName))
+                {
+                    try
+                    {
+                        currentDataset.Delete();
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private static IPoint ConstructPoint3D(double x, double y, double z)

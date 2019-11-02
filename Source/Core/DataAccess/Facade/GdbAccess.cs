@@ -106,7 +106,7 @@ namespace MilSpace.DataAccess.Facade
                 {
                     foreach (var result in map.Value)
                     {
-                        string comparitionName = VisibilitySession.GetResultName(result, sessionName);
+                        string comparitionName = VisibilitySession.GetResultName(result, sessionName).Replace(" ", string.Empty);
                         //it might be to check feature class type for FeatureClass dataset like Point for Observponts and Polygon for ObservObjects
                         if (dataSet.Name.Equals(comparitionName, StringComparison.InvariantCultureIgnoreCase))
                         {
@@ -155,8 +155,6 @@ namespace MilSpace.DataAccess.Facade
                     workspaceEdit.StartEditing(true);
                     workspaceEdit.StartEditOperation();
                 }
-
-
 
                 //create target workspace name
                 IDataset targetWorkspaceDataset = (IDataset)targetWorkspace;
@@ -572,7 +570,6 @@ namespace MilSpace.DataAccess.Facade
            // }
 
             return featureWorkspace.OpenFeatureClass(featureClass);
-
         }
 
         public ILayer GetLayerFromWorkingWorkspace(string featureClassName)
