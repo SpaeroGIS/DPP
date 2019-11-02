@@ -14,7 +14,7 @@ namespace MilSpace.Tools.SurfaceProfile
         private static readonly string environmentName = "workspace";
         private static readonly string temporaryWorkspace = MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection;
         private static Logger log = Logger.GetLoggerEx("ProfileLibrary");
-        private const string NonvisibleCellValue = "ZERO";
+        private const string NonvisibleCellValue = "NODATA";
 
         //-------------------------------------------------------------------------
         static ProfileLibrary()
@@ -54,9 +54,7 @@ namespace MilSpace.Tools.SurfaceProfile
                         string outRasterName,
                         IEnumerable<string> messages,
                         VisibilityCurvatureCorrectionEnum curvatureCorrection = VisibilityCurvatureCorrectionEnum.FLAT_EARTH,
-                        string outAglRaster = null,
-                        int innerRadius = 0,
-                        int outerRadius = 0
+                        string outAglRaster = null
                         )
         {
             Geoprocessor gp = new Geoprocessor();
@@ -78,15 +76,8 @@ namespace MilSpace.Tools.SurfaceProfile
             visibility.horizontal_end_angle = VisibilityFieldsEnum.AzimuthE.ToString();
             visibility.vertical_lower_angle = VisibilityFieldsEnum.AnglMinH.ToString();
             visibility.vertical_upper_angle = VisibilityFieldsEnum.AnglMaxH.ToString();
-
-            if (innerRadius > 0)
-            {
-                visibility.inner_radius = innerRadius.ToString();
-            }
-            if (outerRadius > 0)
-            {
-                visibility.outer_radius = outerRadius.ToString();
-            }
+            visibility.inner_radius = VisibilityFieldsEnum.InnerRadius.ToString();
+            visibility.outer_radius = VisibilityFieldsEnum.OuterRadius.ToString();
 
             visibility.curvature_correction = curvatureCorrection.ToString();
 

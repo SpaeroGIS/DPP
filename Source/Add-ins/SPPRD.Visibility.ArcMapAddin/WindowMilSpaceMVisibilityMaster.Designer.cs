@@ -50,6 +50,7 @@ namespace MilSpace.Visibility
             this.stepTwo = new System.Windows.Forms.TabPage();
             this.panel7 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.checkBox6 = new System.Windows.Forms.CheckBox();
             this.dvgCheckList = new System.Windows.Forms.DataGridView();
             this.panel8 = new System.Windows.Forms.Panel();
             this.toolBar7 = new System.Windows.Forms.ToolBar();
@@ -73,16 +74,18 @@ namespace MilSpace.Visibility
             this.panel13 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.panel19 = new System.Windows.Forms.Panel();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.dgvObjects = new System.Windows.Forms.DataGridView();
             this.panel18 = new System.Windows.Forms.Panel();
             this.checkBox5 = new System.Windows.Forms.CheckBox();
-            this.checkBox6 = new System.Windows.Forms.CheckBox();
+            this.checkB_Affilation = new System.Windows.Forms.CheckBox();
             this.panel17 = new System.Windows.Forms.Panel();
             this.comboBox6 = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.panel16 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
             this.panel15 = new System.Windows.Forms.Panel();
+            this.observObjectsLabel = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.panel14 = new System.Windows.Forms.Panel();
@@ -119,9 +122,6 @@ namespace MilSpace.Visibility
             this.panel20 = new System.Windows.Forms.Panel();
             this.label10 = new System.Windows.Forms.Label();
             this.stepFour = new System.Windows.Forms.TabPage();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.panel26 = new System.Windows.Forms.Panel();
             this.label28 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
@@ -130,7 +130,9 @@ namespace MilSpace.Visibility
             this.label25 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
-            this.observObjectsLabel = new System.Windows.Forms.Label();
+            this.labelOP = new System.Windows.Forms.Label();
+            this.labelOB = new System.Windows.Forms.Label();
+            this.labelT = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.StepsTabControl.SuspendLayout();
             this.stepOne.SuspendLayout();
@@ -562,6 +564,7 @@ namespace MilSpace.Visibility
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.checkBox6);
             this.splitContainer1.Panel1.Controls.Add(this.dvgCheckList);
             this.splitContainer1.Panel1.Controls.Add(this.panel8);
             this.splitContainer1.Panel1.Controls.Add(this.panel9);
@@ -583,6 +586,16 @@ namespace MilSpace.Visibility
             this.splitContainer1.SplitterWidth = 10;
             this.splitContainer1.TabIndex = 0;
             // 
+            // checkBox6
+            // 
+            this.checkBox6.AutoSize = true;
+            this.checkBox6.Location = new System.Drawing.Point(5, 126);
+            this.checkBox6.Name = "checkBox6";
+            this.checkBox6.Size = new System.Drawing.Size(15, 14);
+            this.checkBox6.TabIndex = 24;
+            this.checkBox6.UseVisualStyleBackColor = true;
+            this.checkBox6.CheckedChanged += new System.EventHandler(this.Select_All_Points);
+            // 
             // dvgCheckList
             // 
             this.dvgCheckList.AllowUserToAddRows = false;
@@ -592,7 +605,6 @@ namespace MilSpace.Visibility
             this.dvgCheckList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
             this.dvgCheckList.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dvgCheckList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dvgCheckList.ColumnHeadersVisible = false;
             this.dvgCheckList.Dock = System.Windows.Forms.DockStyle.Top;
             this.dvgCheckList.Location = new System.Drawing.Point(0, 120);
             this.dvgCheckList.Name = "dvgCheckList";
@@ -842,12 +854,23 @@ namespace MilSpace.Visibility
             // 
             // panel19
             // 
+            this.panel19.Controls.Add(this.checkBox4);
             this.panel19.Controls.Add(this.dgvObjects);
             this.panel19.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel19.Location = new System.Drawing.Point(0, 120);
             this.panel19.Name = "panel19";
             this.panel19.Size = new System.Drawing.Size(464, 225);
             this.panel19.TabIndex = 22;
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Location = new System.Drawing.Point(5, 6);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(15, 14);
+            this.checkBox4.TabIndex = 24;
+            this.checkBox4.UseVisualStyleBackColor = true;
+            this.checkBox4.CheckedChanged += new System.EventHandler(this.Select_All);
             // 
             // dgvObjects
             // 
@@ -858,8 +881,8 @@ namespace MilSpace.Visibility
             this.dgvObjects.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
             this.dgvObjects.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvObjects.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvObjects.ColumnHeadersVisible = false;
             this.dgvObjects.Location = new System.Drawing.Point(0, 0);
+            this.dgvObjects.MultiSelect = false;
             this.dgvObjects.Name = "dgvObjects";
             this.dgvObjects.RowHeadersVisible = false;
             this.dgvObjects.Size = new System.Drawing.Size(463, 225);
@@ -868,7 +891,7 @@ namespace MilSpace.Visibility
             // panel18
             // 
             this.panel18.Controls.Add(this.checkBox5);
-            this.panel18.Controls.Add(this.checkBox6);
+            this.panel18.Controls.Add(this.checkB_Affilation);
             this.panel18.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel18.Location = new System.Drawing.Point(0, 96);
             this.panel18.Name = "panel18";
@@ -890,19 +913,20 @@ namespace MilSpace.Visibility
             this.checkBox5.Text = "дата";
             this.checkBox5.UseVisualStyleBackColor = true;
             // 
-            // checkBox6
+            // checkB_Affilation
             // 
-            this.checkBox6.AutoSize = true;
-            this.checkBox6.Checked = true;
-            this.checkBox6.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox6.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkBox6.Location = new System.Drawing.Point(4, 0);
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.checkBox6.Size = new System.Drawing.Size(123, 24);
-            this.checkBox6.TabIndex = 2;
-            this.checkBox6.Text = "принаждлежность";
-            this.checkBox6.UseVisualStyleBackColor = true;
+            this.checkB_Affilation.AutoSize = true;
+            this.checkB_Affilation.Checked = true;
+            this.checkB_Affilation.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkB_Affilation.Dock = System.Windows.Forms.DockStyle.Left;
+            this.checkB_Affilation.Location = new System.Drawing.Point(4, 0);
+            this.checkB_Affilation.Name = "checkB_Affilation";
+            this.checkB_Affilation.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
+            this.checkB_Affilation.Size = new System.Drawing.Size(123, 24);
+            this.checkB_Affilation.TabIndex = 2;
+            this.checkB_Affilation.Text = "принаждлежность";
+            this.checkB_Affilation.UseVisualStyleBackColor = true;
+            this.checkB_Affilation.CheckedChanged += new System.EventHandler(this.Filter_For_Object_CheckedChanged);
             // 
             // panel17
             // 
@@ -972,6 +996,16 @@ namespace MilSpace.Visibility
             this.panel15.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.panel15.Size = new System.Drawing.Size(464, 24);
             this.panel15.TabIndex = 15;
+            // 
+            // observObjectsLabel
+            // 
+            this.observObjectsLabel.AutoSize = true;
+            this.observObjectsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.observObjectsLabel.Location = new System.Drawing.Point(66, 4);
+            this.observObjectsLabel.Name = "observObjectsLabel";
+            this.observObjectsLabel.Size = new System.Drawing.Size(48, 13);
+            this.observObjectsLabel.TabIndex = 2;
+            this.observObjectsLabel.Text = "label29";
             // 
             // label19
             // 
@@ -1378,9 +1412,9 @@ namespace MilSpace.Visibility
             // 
             // stepFour
             // 
-            this.stepFour.Controls.Add(this.checkBox3);
-            this.stepFour.Controls.Add(this.checkBox2);
-            this.stepFour.Controls.Add(this.checkBox1);
+            this.stepFour.Controls.Add(this.labelT);
+            this.stepFour.Controls.Add(this.labelOB);
+            this.stepFour.Controls.Add(this.labelOP);
             this.stepFour.Controls.Add(this.panel26);
             this.stepFour.Controls.Add(this.panel2);
             this.stepFour.Controls.Add(this.label24);
@@ -1393,45 +1427,8 @@ namespace MilSpace.Visibility
             this.stepFour.Text = "Шаг 4";
             this.stepFour.UseVisualStyleBackColor = true;
             // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Checked = true;
-            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox3.Location = new System.Drawing.Point(12, 136);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(119, 17);
-            this.checkBox3.TabIndex = 7;
-            this.checkBox3.Text = "таблица покрытия";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Checked = true;
-            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.Location = new System.Drawing.Point(12, 112);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(117, 17);
-            this.checkBox2.TabIndex = 6;
-            this.checkBox2.Text = "суммирующая ОВ";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(12, 88);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(201, 17);
-            this.checkBox1.TabIndex = 5;
-            this.checkBox1.Text = "области видимости отдельных ПН";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
             // panel26
             // 
-            this.panel26.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel26.Controls.Add(this.label28);
             this.panel26.Controls.Add(this.label26);
             this.panel26.Location = new System.Drawing.Point(12, 61);
@@ -1461,7 +1458,6 @@ namespace MilSpace.Visibility
             // 
             // panel2
             // 
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.label27);
             this.panel2.Controls.Add(this.label25);
             this.panel2.Location = new System.Drawing.Point(12, 35);
@@ -1508,15 +1504,33 @@ namespace MilSpace.Visibility
             this.label23.TabIndex = 1;
             this.label23.Text = "Поверхность расчета :";
             // 
-            // observObjectsLabel
+            // labelOP
             // 
-            this.observObjectsLabel.AutoSize = true;
-            this.observObjectsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.observObjectsLabel.Location = new System.Drawing.Point(66, 4);
-            this.observObjectsLabel.Name = "observObjectsLabel";
-            this.observObjectsLabel.Size = new System.Drawing.Size(48, 13);
-            this.observObjectsLabel.TabIndex = 2;
-            this.observObjectsLabel.Text = "label29";
+            this.labelOP.AutoSize = true;
+            this.labelOP.Location = new System.Drawing.Point(12, 97);
+            this.labelOP.Name = "labelOP";
+            this.labelOP.Size = new System.Drawing.Size(182, 13);
+            this.labelOP.TabIndex = 5;
+            this.labelOP.Text = "области видимости отдельных ПН";
+            this.labelOP.Click += new System.EventHandler(this.labelOP_Click);
+            // 
+            // labelOB
+            // 
+            this.labelOB.AutoSize = true;
+            this.labelOB.Location = new System.Drawing.Point(12, 114);
+            this.labelOB.Name = "labelOB";
+            this.labelOB.Size = new System.Drawing.Size(98, 13);
+            this.labelOB.TabIndex = 6;
+            this.labelOB.Text = "суммирующая ОВ";
+            // 
+            // labelT
+            // 
+            this.labelT.AutoSize = true;
+            this.labelT.Location = new System.Drawing.Point(12, 136);
+            this.labelT.Name = "labelT";
+            this.labelT.Size = new System.Drawing.Size(100, 13);
+            this.labelT.TabIndex = 7;
+            this.labelT.Text = "таблица покрытия";
             // 
             // WindowMilSpaceMVisibilityMaster
             // 
@@ -1540,6 +1554,7 @@ namespace MilSpace.Visibility
             this.stepTwo.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
@@ -1557,6 +1572,7 @@ namespace MilSpace.Visibility
             this.panel13.ResumeLayout(false);
             this.panel13.PerformLayout();
             this.panel19.ResumeLayout(false);
+            this.panel19.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvObjects)).EndInit();
             this.panel18.ResumeLayout(false);
             this.panel18.PerformLayout();
@@ -1632,7 +1648,7 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Panel panel19;
         private System.Windows.Forms.Panel panel18;
         private System.Windows.Forms.CheckBox checkBox5;
-        private System.Windows.Forms.CheckBox checkBox6;
+        private System.Windows.Forms.CheckBox checkB_Affilation;
         private System.Windows.Forms.Panel panel17;
         private System.Windows.Forms.ComboBox comboBox6;
         private System.Windows.Forms.Label label9;
@@ -1692,9 +1708,11 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.DataGridView dgvObjects;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.Label observObjectsLabel;
+        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.CheckBox checkBox6;
+        private System.Windows.Forms.Label labelOP;
+        private System.Windows.Forms.Label labelT;
+        private System.Windows.Forms.Label labelOB;
     }
 }
