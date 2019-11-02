@@ -150,6 +150,26 @@ namespace MilSpace.Tools
             return false;
         }
 
+        public static bool AddObservationObjectLayer(IActiveView view)
+        {
+            try
+            {
+                var objLayer = GdbAccess.Instance.GetLayerFromWorkingWorkspace(observStationFeature);
+                view.FocusMap.AddLayer(objLayer);
+            }
+            catch(MilSpaceDataException ex)
+            {
+                logger.ErrorEx(ex.Message);
+            }
+            catch(Exception ex)
+            {
+                logger.ErrorEx("Unexpectede error");
+                logger.ErrorEx(ex.Message);
+            }
+
+            return false;
+        }
+
         private static void OnCalculationFinished(IActionResult message)
         {
             if (message is VisibilityCalculationResult res)
