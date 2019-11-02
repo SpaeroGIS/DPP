@@ -50,12 +50,6 @@
         <elementListCompartment Id="5a7eee2b-6797-44eb-8cc2-97b9d65dd36b" absoluteBounds="2.765, 7.085, 1.9700000000000002, 0.44169108072916669" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="f6344035-8085-43da-abe7-05df30fedfcc" isExpanded="false" absoluteBounds="0.75, 7.75, 2, 0.45">
-      <DataClassMoniker Name="/MilSpaceVisibilityContext/VisiblilityObservPoint__" />
-      <nestedChildShapes>
-        <elementListCompartment Id="9fa66ac7-e708-4c40-a0c6-235f1edaba83" absoluteBounds="0.76499999999999968, 8.21, 1.9700000000000002, 4.672322591145833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="6b5c3dc8-9f02-4376-8288-e0846df11b17" absoluteBounds="7.125, 1.375, 2, 2.5401025390624987">
       <DataClassMoniker Name="/MilSpaceVisibilityContext/MilSp_VisibilitySession" />
       <nestedChildShapes>
@@ -65,7 +59,7 @@
     <classShape Id="a92555ba-8333-4a3a-a5ad-1f35bd0919bf" isExpanded="false" absoluteBounds="1.625, 3.375, 2, 0.45">
       <DataClassMoniker Name="/MilSpaceVisibilityContext/VisiblilityObservPoint" />
       <nestedChildShapes>
-        <elementListCompartment Id="71d007fb-8b9d-4f89-b711-99811ab5bc39" absoluteBounds="1.6400000000000001, 3.8350000000000009, 1.9700000000000002, 4.672322591145833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="71d007fb-8b9d-4f89-b711-99811ab5bc39" absoluteBounds="1.6400000000000001, 3.8350000000000009, 1.9700000000000002, 5.0569254557291661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="b68407d3-ed43-492b-bf5d-0e5b34cd1975" absoluteBounds="1.375, 1, 2, 2.3478011067708335">

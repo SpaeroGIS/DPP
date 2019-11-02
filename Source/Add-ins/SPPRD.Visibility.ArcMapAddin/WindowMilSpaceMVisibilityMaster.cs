@@ -10,6 +10,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using MilSpace.Tools;
+using System.Drawing;
 
 namespace MilSpace.Visibility
 {
@@ -19,11 +20,12 @@ namespace MilSpace.Visibility
         private ObservationPointsController controller = new ObservationPointsController(ArcMap.Document);
         private BindingList<CheckObservPointGui> _observPointGuis;
 
+        BindingList<CheckObservPointGui> _AllObjects = new BindingList<CheckObservPointGui>();
+
         private List<CheckObservPointGui> CheckedList = new List<CheckObservPointGui>();
         private List<CheckObservPointGui> CheckedObjectList = new List<CheckObservPointGui>();
 
         internal MasterResult FinalResult = new MasterResult();
-
 
         private static IActiveView ActiveView => ArcMap.Document.ActiveView;
 
@@ -164,7 +166,7 @@ namespace MilSpace.Visibility
 
                 dgvObjects.DataSource = null; //Clearing listbox
 
-                BindingList<CheckObservPointGui> _AllObjects = new BindingList<CheckObservPointGui>(itemsToShow);
+               _AllObjects = new BindingList<CheckObservPointGui>(itemsToShow);
 
                 if (_AllObjects != null)
                 {
@@ -180,10 +182,14 @@ namespace MilSpace.Visibility
         }
         private void SetDataGridView_For_Objects()
         {
+
+            dgvObjects.Columns["Check"].HeaderText = "";
+
             dgvObjects.Columns["Title"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvObjects.Columns["Title"].ReadOnly = true;
             dgvObjects.Columns["Affiliation"].ReadOnly = true;
-            dgvObjects.Columns["Affiliation"].Width = 150;
-           dgvObjects.Columns["Id"].Visible = false;
+            dgvObjects.Columns["Affiliation"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvObjects.Columns["Id"].Visible = false;
             dgvObjects.Columns["Type"].Visible = false;
             dgvObjects.Columns["Date"].Visible = false;
         }
@@ -191,6 +197,7 @@ namespace MilSpace.Visibility
 
         private void SetDataGridView()
         {
+            dvgCheckList.Columns["Check"].HeaderText = "";
             dvgCheckList.Columns["Date"].ReadOnly = true;
             dvgCheckList.Columns["Type"].ReadOnly = true;
             dvgCheckList.Columns["Affiliation"].ReadOnly = true;
@@ -199,18 +206,51 @@ namespace MilSpace.Visibility
             dvgCheckList.Columns["Id"].Visible = false;
         }
 
-        private void DisplaySelectedColumns(VeluableObservPointFieldsEnum filter)
+        private void DisplaySelectedColumns(VeluableObservPointFieldsEnum filter, DataGridView D)
         {
-            dvgCheckList.Columns["Affiliation"].Visible = checkAffiliation.Checked;
-            dvgCheckList.Columns["Type"].Visible = checkType.Checked;
-            dvgCheckList.Columns["Date"].Visible = checkDate.Checked;
+            D.Columns["Affiliation"].Visible = checkAffiliation.Checked;
+            D.Columns["Type"].Visible = checkType.Checked;
+            D.Columns["Date"].Visible = checkDate.Checked;
+        }
+        private void DisplaySelectedColumns(DataGridView D)
+        {
+            D.Columns["Affiliation"].Visible = checkB_Affilation.Checked;
+           
         }
 
         private void Filter_CheckedChanged(object sender, EventArgs e)
         {
-            DisplaySelectedColumns(GetFilter);
+            DisplaySelectedColumns(GetFilter,dvgCheckList);
         }
-        
+        private void Filter_For_Object_CheckedChanged(object sender, EventArgs e)
+        {
+            DisplaySelectedColumns(dgvObjects);
+        }
+        private void Select_All(object sender,EventArgs e)
+        {
+            
+            foreach (CheckObservPointGui o in _AllObjects)
+            {
+                   
+
+                 o.Check = checkBox4.Checked;
+                dgvObjects.DataSource = _AllObjects;
+                dgvObjects.Refresh();
+            }
+           
+        }
+        private void Select_All_Points(object sender, EventArgs e)
+        {
+
+            foreach (CheckObservPointGui o in _observPointGuis)
+            {
+                
+                o.Check = checkBox6.Checked;
+                dvgCheckList.DataSource = _observPointGuis;
+                dvgCheckList.Refresh();
+            }
+
+        }
         public VeluableObservPointFieldsEnum GetFilter
         {
             get
@@ -318,11 +358,10 @@ namespace MilSpace.Visibility
         }
         public void ALLinfo()
         {
-            if (checkBoxOP.Checked) {
-                checkBox1.Visible = true;
-            } else { checkBox1.Visible = false; }
-            if (SumChkBox.Checked) { checkBox2.Visible = true; } else { checkBox2.Visible = false; }
-            if (TableChkBox.Checked) { checkBox3.Visible = true; } else { checkBox3.Visible = false; }
+            if (checkBoxOP.Checked) { labelOP.Visible = true;} else { labelOP.Visible = false; }
+            if (SumChkBox.Checked) { labelOB.Visible = true; } else { labelOB.Visible = false; }
+            if (TableChkBox.Checked) {labelT.Visible = true; } else { labelT.Visible = false; }
+
             label27.Text = CheckedList.Count().ToString();
             label24.Text = comboBox1.SelectedItem.ToString();
             label28.Text = CheckedObjectList.Count().ToString();
@@ -364,7 +403,7 @@ namespace MilSpace.Visibility
                 return;
             }
            
-           if (StepsTabControl.SelectedIndex < StepsTabControl.TabCount - 1)
+           if (StepsTabControl.SelectedIndex < StepsTabControl.TabCount - 1 && StepsTabControl.SelectedIndex != 0 )
             {
                 StepsTabControl.SelectedTab.Enabled = false;
 
@@ -415,9 +454,11 @@ namespace MilSpace.Visibility
             throw new NotImplementedException();
         }
 
-        public void FillObservationObjectsList(IEnumerable<ObservationObject> observationObjects)
+      
+
+        private void labelOP_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+
         }
     }
 }

@@ -5,7 +5,9 @@
         AzimuthB,
         AzimuthE,
         AnglMinH,
-        AnglMaxH
+        AnglMaxH,
+        InnerRadius,
+        OuterRadius
     }
 
     public enum VisibilityCurvatureCorrectionEnum

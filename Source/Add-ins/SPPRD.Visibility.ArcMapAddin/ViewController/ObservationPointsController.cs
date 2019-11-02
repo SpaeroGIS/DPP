@@ -187,8 +187,6 @@ namespace MilSpace.Visibility.ViewController
             try
             {
 
-                VisibilityManager.AddVisibilityPointLayer(mapDocument.ActiveView);
-
                 MapLayersManager layersManager = new MapLayersManager(mapDocument.ActiveView);
 
                 var demLayer = layersManager.RasterLayers.FirstOrDefault(l => l.Name.Equals(scrDEM));
