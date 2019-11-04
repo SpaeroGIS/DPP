@@ -23,6 +23,7 @@ namespace MilSpace.Visibility.ViewController
         /// </summary>
         private static Dictionary<ObservationPointMobilityTypesEnum, string> mobilityTypes = Enum.GetValues(typeof(ObservationPointMobilityTypesEnum)).Cast<ObservationPointMobilityTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
         private static Dictionary<ObservationPointTypesEnum, string> affiliationTypes = Enum.GetValues(typeof(ObservationPointTypesEnum)).Cast<ObservationPointTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
+        private static Dictionary<ObservationObjectTypesEnum, string> objectAffiliationTypes = Enum.GetValues(typeof(ObservationObjectTypesEnum)).Cast<ObservationObjectTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
         private IMxDocument mapDocument;
         private static Logger log = Logger.GetLoggerEx("ObservationPointsController");
 
@@ -267,11 +268,19 @@ namespace MilSpace.Visibility.ViewController
         {
             return affiliationTypes.Where(t => t.Key != ObservationPointTypesEnum.All).Select(t => t.Value);
         }
-
+        public IEnumerable<string> GetObservationObjectTypes()
+        {
+            return objectAffiliationTypes.Where(t => t.Key != ObservationObjectTypesEnum.Undefined).Select(t => t.Value);
+        }
+        public string GetAllAffiliationType_for_objects()
+        {
+            return objectAffiliationTypes.First(t => t.Key == ObservationObjectTypesEnum.Undefined).Value;
+        }
         public IEnumerable<string> GetObservationPointMobilityTypes()
         {
             return mobilityTypes.Where(t => t.Key != ObservationPointMobilityTypesEnum.All).Select(t => t.Value);
         }
+      
 
         public string GetAllAffiliationType()
         {
