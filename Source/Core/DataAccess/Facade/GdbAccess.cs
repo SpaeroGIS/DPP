@@ -23,7 +23,6 @@ namespace MilSpace.DataAccess.Facade
         private static string divider = "\\";
 
 
-
         private static readonly string profileCalcFeatureClass = "CalcProfile_L";
 
         private Logger logger = Logger.GetLoggerEx("GdbAccess");
@@ -155,8 +154,6 @@ namespace MilSpace.DataAccess.Facade
                     workspaceEdit.StartEditing(true);
                     workspaceEdit.StartEditOperation();
                 }
-
-
 
                 //create target workspace name
                 IDataset targetWorkspaceDataset = (IDataset)targetWorkspace;
@@ -547,25 +544,35 @@ namespace MilSpace.DataAccess.Facade
 
         }
 
-
         public IFeatureClass GetCalcProfileFeatureClass(string currentFeatureClass)
         {
             return OpenFeatureClass(calcWorkspace, currentFeatureClass);
         }
 
-        private static IFeatureClass OpenFeatureClass(IWorkspace workspace, string  featureClass)
+        public IFeatureClass GetFeatureFromWorkingWorkspace(string featureClassName)
+        {
+            return OpenFeatureClass(WorkingWorkspace, featureClassName);
+        }
+
+        private static IFeatureClass OpenFeatureClass(IWorkspace workspace, string featureClass)
         {
             IWorkspace2 wsp2 = (IWorkspace2)workspace;
             IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)workspace;
 
-            if (!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, featureClass))
-            {
-                //TODO: Create the feature class
-                throw new MilSpaceDataException(featureClass, Core.DataAccess.DataOperationsEnum.Access);
-            }
+            //if(!wsp2.NameExists[esriDatasetType.esriDTFeatureClass, featureClass])
+            //{
+                var datasetNames = workspace.DatasetNames[esriDatasetType.esriDTFeatureClass];
+                var featureName = datasetNames.Next().Name;
+
+                while(!featureName.EndsWith(featureClass))
+                {
+                    featureName = datasetNames.Next().Name;
+                }
+
+                featureClass = featureName;
+           // }
 
             return featureWorkspace.OpenFeatureClass(featureClass);
-
         }
 
         public ILayer GetLayerFromWorkingWorkspace(string featureClassName)
@@ -575,6 +582,7 @@ namespace MilSpace.DataAccess.Facade
             featurelayer.FeatureClass = OpenFeatureClass(WorkingWorkspace, featureClassName);
             return featurelayer;
         }
+
 
         private IWorkspace WorkingWorkspace
         {

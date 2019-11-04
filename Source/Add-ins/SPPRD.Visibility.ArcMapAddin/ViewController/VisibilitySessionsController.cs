@@ -1,10 +1,9 @@
-﻿using MilSpace.DataAccess.DataTransfer;
+﻿using MilSpace.Core.Tools;
+using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MilSpace.Visibility.ViewController
 {
@@ -40,10 +39,26 @@ namespace MilSpace.Visibility.ViewController
             return _visibilitySessions.FirstOrDefault(session => session.Id == id);
         }
 
-        internal void RemoveSession(string id)
+        internal bool RemoveSession(string id)
         {
+            var removedSession = _visibilitySessions.First(session => session.Id == id);
+            var results = removedSession.Resuls();
+
+            foreach(var result in results)
+            { 
+                if(result != removedSession.Id.Replace(" ", string.Empty))
+                {
+                    if (!EsriTools.RemoveDataSet(removedSession.ReferencedGDB, result))
+                    {
+                        return false;
+                    }
+                }
+            }
+
             VisibilityZonesFacade.DeleteVisibilitySession(id);
-            _visibilitySessions.Remove(_visibilitySessions.First(session => session.Id == id));
+            _visibilitySessions.Remove(removedSession);
+
+            return true;
         }
     }
 }

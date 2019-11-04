@@ -9,7 +9,8 @@ namespace MilSpace.DataAccess.DataTransfer
 
     public enum ObservationObjectTypesEnum
     {
-        Undefined = 1,
+        All = 0,
+        Undefined,
         Our,
         Enemy,
         Neutrality,
