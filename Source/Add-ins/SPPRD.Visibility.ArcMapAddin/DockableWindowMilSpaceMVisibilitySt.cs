@@ -158,6 +158,8 @@ namespace MilSpace.Visibility
         {
             if(observationObjects.Any())
             {
+                dgvObservObjects.Rows.Clear();
+
                 var itemsToShow = observationObjects.Select(i => new ObservObjectGui
                 {
                     Title = i.Title,
@@ -167,7 +169,7 @@ namespace MilSpace.Visibility
 
                 }).ToList();
 
-                dgvObservObjects.Rows.Clear();
+
                 dgvObservObjects.CurrentCell = null;
                 _observObjectsGui.DataSource = itemsToShow;
                 dgvObservObjects.DataSource = _observObjectsGui;
