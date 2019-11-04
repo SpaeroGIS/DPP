@@ -68,6 +68,7 @@ namespace MilSpace.Visibility
             list.AddRange(controller.GetObservationPointMobilityTypes().ToArray());
             cmbType.Items.AddRange(list.ToArray());
             cmbType.Items.Add(controller.GetAllMobilityType());
+            cmbType.SelectedItem = controller.GetAllMobilityType();
 
             foreach (TabPage tab in StepsTabControl.TabPages)//disable all tabs
             {
@@ -96,6 +97,8 @@ namespace MilSpace.Visibility
 
             FillObservPointLabel();
             FillObsObj();
+
+            
         }
        
         public void FillObservPointLabel()
@@ -175,8 +178,8 @@ namespace MilSpace.Visibility
             }
         }
         public void FillObsObj(bool useCurrentExtent = false)
-        {
-            try {
+        {   
+            try { 
 
                 var All = controller
                     .GetAllObservObjects();
@@ -224,46 +227,83 @@ namespace MilSpace.Visibility
         }
         private void SetDataGridView_For_Objects()
         {
+            try { 
+                dgvObjects.Columns["Check"].HeaderText = "";
+                 dgvObjects.Columns["Type"].HeaderText = "Group";//stands for "Afillation"
 
-            dgvObjects.Columns["Check"].HeaderText = "";
-             dgvObjects.Columns["Type"].HeaderText = "Group";//stands for "Afillation"
+                dgvObjects.Columns["Title"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dgvObjects.Columns["Affiliation"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;//stands for "Group"
+                dgvObjects.Columns["Type"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;//stands for "Afillation"
+                dgvObjects.Columns["Date"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
 
-            dgvObjects.Columns["Title"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvObjects.Columns["Affiliation"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;//stands for "Group"
-            dgvObjects.Columns["Type"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;//stands for "Afillation"
-            dgvObjects.Columns["Date"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+                dgvObjects.Columns["Check"].MinimumWidth = 20;
 
-            dgvObjects.Columns["Type"].ReadOnly = true;
-            dgvObjects.Columns["Title"].ReadOnly = true;
-            dgvObjects.Columns["Affiliation"].ReadOnly = true;
+                dgvObjects.Columns["Type"].ReadOnly = true;
+                dgvObjects.Columns["Title"].ReadOnly = true;
+                dgvObjects.Columns["Affiliation"].ReadOnly = true;
 
-            dgvObjects.Columns["Type"].Visible = true;//basically its an "Afillation" column
-            dgvObjects.Columns["Id"].Visible = false;
-            dgvObjects.Columns["Date"].Visible = true;
+                dgvObjects.Columns["Type"].Visible = true;//basically its an "Afillation" column
+                dgvObjects.Columns["Id"].Visible = false;
+                dgvObjects.Columns["Date"].Visible = true;
+            }
+            catch (NullReferenceException)
+            {
+
+            }
         }
 
 
         private void SetDataGridView()
         {
-            dvgCheckList.Columns["Check"].HeaderText = "";
-            dvgCheckList.Columns["Date"].ReadOnly = true;
-            dvgCheckList.Columns["Type"].ReadOnly = true;
-            dvgCheckList.Columns["Affiliation"].ReadOnly = true;
-            dvgCheckList.Columns["Title"].ReadOnly = true;
-            dvgCheckList.Columns["Title"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dvgCheckList.Columns["Id"].Visible = false;
+            try { 
+                dvgCheckList.Columns["Check"].HeaderText = "";
+                dvgCheckList.Columns["Id"].Visible = false;
+
+                dvgCheckList.Columns["Date"].ReadOnly = true;
+                dvgCheckList.Columns["Type"].ReadOnly = true;
+                dvgCheckList.Columns["Affiliation"].ReadOnly = true;
+                dvgCheckList.Columns["Title"].ReadOnly = true;
+
+                dvgCheckList.Columns["Affiliation"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+                dvgCheckList.Columns["Title"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dvgCheckList.Columns["Type"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+
+                dvgCheckList.Columns["Affiliation"].MinimumWidth = 50;
+                dvgCheckList.Columns["Title"].MinimumWidth = 50;
+                dvgCheckList.Columns["Type"].MinimumWidth = 50;
+                dvgCheckList.Columns["Date"].MinimumWidth = 50;
+                dvgCheckList.Columns["Chck"].MinimumWidth = 25;
+
+            }catch (NullReferenceException)
+            {
+
+            }
         }
 
         private void DisplaySelectedColumns_Points( DataGridView D)
         {
-            D.Columns["Affiliation"].Visible = checkAffiliation.Checked;
-            D.Columns["Type"].Visible = checkType.Checked;
-            D.Columns["Date"].Visible = checkDate.Checked;
+           try
+            { 
+                D.Columns["Affiliation"].Visible = checkAffiliation.Checked;
+                D.Columns["Type"].Visible = checkType.Checked;
+                D.Columns["Date"].Visible = checkDate.Checked;
+            }
+            catch (NullReferenceException)
+            {
+
+            }
         }
         private void DisplaySelectedColumns_Objects(DataGridView D)
         {
-            D.Columns["Affiliation"].Visible = checkB_Affilation.Checked;
-            D.Columns["Date"].Visible = checkDate_Object.Checked;
+            try
+            { 
+                D.Columns["Affiliation"].Visible = checkB_Affilation.Checked;
+                D.Columns["Date"].Visible = checkDate_Object.Checked;
+            }
+            catch (NullReferenceException)
+            {
+
+            }
             
         }
 

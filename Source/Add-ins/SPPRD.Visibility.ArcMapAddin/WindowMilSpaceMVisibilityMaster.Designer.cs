@@ -730,6 +730,7 @@ namespace MilSpace.Visibility
             // cmbAffiliation
             // 
             this.cmbAffiliation.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbAffiliation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbAffiliation.FormattingEnabled = true;
             this.cmbAffiliation.Location = new System.Drawing.Point(222, 0);
             this.cmbAffiliation.Name = "cmbAffiliation";
@@ -751,6 +752,7 @@ namespace MilSpace.Visibility
             // cmbType
             // 
             this.cmbType.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbType.FormattingEnabled = true;
             this.cmbType.Location = new System.Drawing.Point(32, 0);
             this.cmbType.Name = "cmbType";
@@ -936,6 +938,7 @@ namespace MilSpace.Visibility
             // cmbObservObject
             // 
             this.cmbObservObject.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbObservObject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbObservObject.FormattingEnabled = true;
             this.cmbObservObject.Location = new System.Drawing.Point(100, 0);
             this.cmbObservObject.Name = "cmbObservObject";
@@ -1064,6 +1067,7 @@ namespace MilSpace.Visibility
             // 
             // comboBox1
             // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(149, 13);
             this.comboBox1.Name = "comboBox1";
