@@ -12,6 +12,7 @@ using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Visualization3D.Models;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace MilSpace.Visualization3D
 {
@@ -23,6 +24,7 @@ namespace MilSpace.Visualization3D
         private static IAppROTEvents_Event m_appROTEvent;
         private static int m_appHWnd = 0;
         private static double zFactor;
+        private static readonly string _profileGdb = MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection;
 
         private enum LayerTypeEnum
         {
@@ -138,27 +140,35 @@ namespace MilSpace.Visualization3D
         {
             var layers = new Dictionary<LayerTypeEnum, ILayer>();
             var name = info.ResultName;
-       
-            var rasterLayer = CreateRasterLayer($"{name}_img", objFactory, info.GdbPath);
+
+            Type factoryType = Type.GetTypeFromProgID("esriDataSourcesGDB.FileGDBWorkspaceFactory");
+            string typeFactoryID = factoryType.GUID.ToString("B");
+
+            IWorkspaceFactory workspaceFactory = (IWorkspaceFactory)objFactory.Create(typeFactoryID);
+            IWorkspace2 workspace = (IWorkspace2)workspaceFactory.OpenFromFile(info.GdbPath, 0);
+
+            var rasterLayer = CreateRasterLayer($"{name}_img", workspace, objFactory, info.GdbPath);
             if (rasterLayer != null)
             {
                 SetVisibilitySessionRaster3DProperties(rasterLayer, objFactory, baseSurface);
                 layers.Add(LayerTypeEnum.Raster, rasterLayer);
             }
 
-            var pointFeatureLayer = CreateFeatureLayer($"{name}_op", objFactory, info.GdbPath);
+            var pointFeatureLayer = CreateFeatureLayer($"{name}_op", workspace, objFactory);
             if (pointFeatureLayer != null)
             {
                 SetFeatures3DProperties(pointFeatureLayer, objFactory, baseSurface);
                 layers.Add(LayerTypeEnum.PointFeature, pointFeatureLayer);
             }
 
-            var polygonFeatureLayer = CreateFeatureLayer($"{name}_oo", objFactory, info.GdbPath);
+            var polygonFeatureLayer = CreateFeatureLayer($"{name}_oo", workspace, objFactory);
             if(polygonFeatureLayer != null)
             {
                 SetFeatures3DProperties(polygonFeatureLayer, objFactory, baseSurface);
                 layers.Add(LayerTypeEnum.PolygonFeature, polygonFeatureLayer);
             }
+
+            Marshal.ReleaseComObject(workspaceFactory);
 
             return layers;
         }
@@ -174,32 +184,29 @@ namespace MilSpace.Visualization3D
             elevationRasterLayer.CreateFromFilePath(layers.DemLayer);
             preparedLayers.Add(LayerTypeEnum.Raster, elevationRasterLayer);
 
-            preparedLayers.Add(LayerTypeEnum.LineFeature, CreateFeatureLayer(layers.Line3DLayer, objFactory));
-            preparedLayers.Add(LayerTypeEnum.PointFeature, CreateFeatureLayer(layers.Point3DLayer, objFactory));
-            var polygon3DLayer = CreateFeatureLayer(layers.Polygon3DLayer, objFactory);
+            Type factoryType = Type.GetTypeFromProgID("esriDataSourcesGDB.FileGDBWorkspaceFactory");
+            string typeFactoryID = factoryType.GUID.ToString("B");
+
+            IWorkspaceFactory workspaceFactory = (IWorkspaceFactory)objFactory.Create(typeFactoryID);
+            IWorkspace2 workspace = (IWorkspace2)workspaceFactory.OpenFromFile(_profileGdb, 0);
+
+            preparedLayers.Add(LayerTypeEnum.LineFeature, CreateFeatureLayer(layers.Line3DLayer, workspace, objFactory));
+            preparedLayers.Add(LayerTypeEnum.PointFeature, CreateFeatureLayer(layers.Point3DLayer, workspace, objFactory));
+            var polygon3DLayer = CreateFeatureLayer(layers.Polygon3DLayer, workspace, objFactory);
 
             var polygonLayerEffects = (ILayerEffects)polygon3DLayer;
             polygonLayerEffects.Transparency = 50;
 
             preparedLayers.Add(LayerTypeEnum.PolygonFeature, polygon3DLayer);
 
+            Marshal.ReleaseComObject(workspaceFactory);
+
             return preparedLayers;
         }
 
       
-        private static IFeatureLayer CreateFeatureLayer(string featureClass, IObjectFactory objFactory, string gdb = null)
+        private static IFeatureLayer CreateFeatureLayer(string featureClass, IWorkspace2 workspace, IObjectFactory objFactory)
         {
-            if(gdb == null)
-            {
-                gdb = MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection;
-            }
-
-            Type factoryType = Type.GetTypeFromProgID("esriDataSourcesGDB.FileGDBWorkspaceFactory");
-            string typeFactoryID = factoryType.GUID.ToString("B");
-
-            IWorkspaceFactory workspaceFactory = (IWorkspaceFactory)objFactory.Create(typeFactoryID);
-            IWorkspace2 workspace = (IWorkspace2)workspaceFactory.OpenFromFile(gdb, 0);
-
             if(workspace.NameExists[esriDatasetType.esriDTFeatureClass, featureClass])
             {
                 IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)workspace;
@@ -216,14 +223,8 @@ namespace MilSpace.Visualization3D
             return null;
         }
 
-        private static IRasterLayer CreateRasterLayer(string layerName, IObjectFactory objFactory, string gdb)
+        private static IRasterLayer CreateRasterLayer(string layerName, IWorkspace2 workspace, IObjectFactory objFactory, string gdb)
         {
-            Type factoryType = Type.GetTypeFromProgID("esriDataSourcesGDB.FileGDBWorkspaceFactory");
-            string typeFactoryID = factoryType.GUID.ToString("B");
-
-            IWorkspaceFactory workspaceFactory = (IWorkspaceFactory)objFactory.Create(typeFactoryID);
-            IWorkspace2 workspace = (IWorkspace2)workspaceFactory.OpenFromFile(gdb, 0);
-
             if(workspace.NameExists[esriDatasetType.esriDTRasterDataset, layerName])
             {
                   Type rasterLayerType = typeof(RasterLayerClass);
@@ -260,6 +261,8 @@ namespace MilSpace.Visualization3D
             IGeoFeatureLayer geoArcMapLayer = layer as IGeoFeatureLayer;
             IGeoFeatureLayer geoFL = featureLayer as IGeoFeatureLayer;
             geoFL.Renderer = geoArcMapLayer.Renderer;
+
+            Marshal.ReleaseComObject(workspaceFactory);
 
             return geoFL;
         }
