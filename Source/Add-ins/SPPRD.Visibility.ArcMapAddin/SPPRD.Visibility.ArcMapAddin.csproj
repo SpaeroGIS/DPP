@@ -119,6 +119,7 @@
     </Compile>
     <Compile Include="DockableWindow1Command.cs" />
     <Compile Include="DTO\MasterResult.cs" />
+    <Compile Include="DTO\ObservObjectGui.cs" />
     <Compile Include="DTO\ObservPointGui.cs" />
     <Compile Include="DTO\VisibilitySessionGui.cs" />
     <Compile Include="Helpers\ArcMapHelper.cs" />

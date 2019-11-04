@@ -77,7 +77,7 @@ namespace MilSpace.DataAccess.DataTransfer
             {
                 if (resultsInGDB.HasFlag(result.Key))
                 {
-                    resulrs.Add(GetResultName(result.Key, Id));
+                    resulrs.Add(GetResultName(result.Key, Id.Replace(" ", string.Empty)));
                 }
             }
 
