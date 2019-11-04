@@ -75,9 +75,9 @@ namespace MilSpace.DataAccess.DataTransfer
 
             foreach (var result in VisibilityResulSuffixes)
             {
-                if (resultsInGDB.HasFlag(result.Key))
+                if (result.Key != VisibilityCalculationresultsEnum.None && resultsInGDB.HasFlag(result.Key))
                 {
-                    resulrs.Add(GetResultName(result.Key, Id.Replace(" ", string.Empty)));
+                    resulrs.Add(GetResultName(result.Key, Id));
                 }
             }
 
