@@ -30,6 +30,8 @@ namespace MilSpace.Tools
 
         public static readonly string observPointFeature = "MilSp_Visible_ObservPoints";
         public static readonly string observStationFeature = "MilSp_Visible_ObjectsObservation_R";
+        public static IFeatureClass observStationFeatureClass;
+        public static IFeatureClass observPointFeatureClass;
 
         private static Logger logger = Logger.GetLoggerEx("VisibilityManagerManager");
 
@@ -80,8 +82,8 @@ namespace MilSpace.Tools
             var prm = new List<IActionParam>
            {
                action,
-               new ActionParam<IFeatureClass>() { ParamName = ActionParameters.FeatureClass, Value = obervationPoints},
-               new ActionParam<IFeatureClass>() { ParamName = ActionParameters.FeatureClassX, Value = obervationStations},
+               new ActionParam<IFeatureClass>() { ParamName = ActionParameters.FeatureClass, Value = ObservationPointsFeatureClass},
+               new ActionParam<IFeatureClass>() { ParamName = ActionParameters.FeatureClassX, Value = ObservationStationsFeatureClass},
                new ActionParam<int[]>() { ParamName = ActionParameters.FilteringPointsIds, Value = pointsToExport.ToArray()},
                new ActionParam<int[]>() { ParamName = ActionParameters.FilteringStationsIds, Value = stationsToExport.ToArray()},
                new ActionParam<string>() { ParamName = ActionParameters.ProfileSource, Value = sourceDem},
@@ -120,8 +122,6 @@ namespace MilSpace.Tools
                 throw new MilSpaceVisibilityCalcFailedException(res.ErrorMessage);
             }
 
-            //procc.ProcessAsync(OnCalculationFinished);
-
             return session;
         }
 
@@ -157,17 +157,43 @@ namespace MilSpace.Tools
                 var objLayer = GdbAccess.Instance.GetLayerFromWorkingWorkspace(observStationFeature);
                 view.FocusMap.AddLayer(objLayer);
             }
-            catch(MilSpaceDataException ex)
+            catch (MilSpaceDataException ex)
             {
                 logger.ErrorEx(ex.Message);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.ErrorEx("Unexpectede error");
                 logger.ErrorEx(ex.Message);
             }
 
             return false;
+        }
+
+        public static IFeatureClass ObservationPointsFeatureClass
+        {
+            get
+            {
+                if (observPointFeatureClass == null)
+                {
+                    observPointFeatureClass = GdbAccess.Instance.GetFeatureFromWorkingWorkspace(observPointFeature);
+                }
+
+                return observPointFeatureClass;
+            }
+        }
+
+        public static IFeatureClass ObservationStationsFeatureClass
+        {
+            get
+            {
+                if (observStationFeatureClass == null)
+                {
+                    observStationFeatureClass = GdbAccess.Instance.GetFeatureFromWorkingWorkspace(observStationFeature);
+                }
+
+                return observStationFeatureClass;
+            }
         }
 
         private static void OnCalculationFinished(IActionResult message)

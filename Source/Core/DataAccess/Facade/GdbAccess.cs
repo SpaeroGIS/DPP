@@ -23,7 +23,6 @@ namespace MilSpace.DataAccess.Facade
         private static string divider = "\\";
 
 
-
         private static readonly string profileCalcFeatureClass = "CalcProfile_L";
 
         private Logger logger = Logger.GetLoggerEx("GdbAccess");
@@ -106,7 +105,7 @@ namespace MilSpace.DataAccess.Facade
                 {
                     foreach (var result in map.Value)
                     {
-                        string comparitionName = VisibilitySession.GetResultName(result, sessionName).Replace(" ", string.Empty);
+                        string comparitionName = VisibilitySession.GetResultName(result, sessionName);
                         //it might be to check feature class type for FeatureClass dataset like Point for Observponts and Polygon for ObservObjects
                         if (dataSet.Name.Equals(comparitionName, StringComparison.InvariantCultureIgnoreCase))
                         {
@@ -545,10 +544,14 @@ namespace MilSpace.DataAccess.Facade
 
         }
 
-
         public IFeatureClass GetCalcProfileFeatureClass(string currentFeatureClass)
         {
             return OpenFeatureClass(calcWorkspace, currentFeatureClass);
+        }
+
+        public IFeatureClass GetFeatureFromWorkingWorkspace(string featureClassName)
+        {
+            return OpenFeatureClass(WorkingWorkspace, featureClassName);
         }
 
         private static IFeatureClass OpenFeatureClass(IWorkspace workspace, string featureClass)
@@ -579,6 +582,7 @@ namespace MilSpace.DataAccess.Facade
             featurelayer.FeatureClass = OpenFeatureClass(WorkingWorkspace, featureClassName);
             return featurelayer;
         }
+
 
         private IWorkspace WorkingWorkspace
         {

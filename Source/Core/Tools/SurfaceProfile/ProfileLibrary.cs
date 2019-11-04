@@ -49,7 +49,7 @@ namespace MilSpace.Tools.SurfaceProfile
 
         public static bool GenerateVisibilityData(
                         string rasterSource,
-                        string observerObjectsFeatureClass,
+                        string observerPointsFeatureClass,
                         VisibilityAnalysisTypesEnum analyzeType,
                         string outRasterName,
                         IEnumerable<string> messages,
@@ -63,7 +63,7 @@ namespace MilSpace.Tools.SurfaceProfile
 
             visibility.analysis_type = analyzeType.ToString().ToUpper();
             visibility.in_raster = rasterSource;
-            visibility.in_observer_features = observerObjectsFeatureClass;
+            visibility.in_observer_features = observerPointsFeatureClass;
             visibility.out_raster = outRasterName;
             if (!string.IsNullOrWhiteSpace(outAglRaster))
             {
