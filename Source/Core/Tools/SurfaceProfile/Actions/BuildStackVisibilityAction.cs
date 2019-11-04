@@ -43,7 +43,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
         {
 
             obserpPointsfeatureClass = parameters.GetParameterWithValidition<IFeatureClass>(ActionParameters.FeatureClass, null).Value;
-            obserpStationsfeatureClass = parameters.GetParameterWithValidition<IFeatureClass>(ActionParameters.FeatureClassX, null).Value;
+            obserpStationsfeatureClass = parameters.GetParameter<IFeatureClass>(ActionParameters.FeatureClassX, null).Value;
             rasterSource = parameters.GetParameterWithValidition<string>(ActionParameters.ProfileSource, null).Value;
             pointSfilteringIds = parameters.GetParameterWithValidition<int[]>(ActionParameters.FilteringPointsIds, null).Value;
             stationsFilteringIds = parameters.GetParameterWithValidition<int[]>(ActionParameters.FilteringStationsIds, null).Value;
