@@ -21,6 +21,7 @@ namespace MilSpace.Visibility
         private BindingList<CheckObservPointGui> _observPointGuis;
 
         BindingList<CheckObservPointGui> _AllObjects = new BindingList<CheckObservPointGui>();
+     
 
         private List<CheckObservPointGui> CheckedList = new List<CheckObservPointGui>();
         private List<CheckObservPointGui> CheckedObjectList = new List<CheckObservPointGui>();
@@ -29,7 +30,7 @@ namespace MilSpace.Visibility
 
         private static IActiveView ActiveView => ArcMap.Document.ActiveView;
 
-        MapLayersManager manager = new MapLayersManager(ActiveView);
+        private MapLayersManager manager = new MapLayersManager(ActiveView);
 
         public WindowMilSpaceMVisibilityMaster(string selectedObservPoints, string selectedObservObjects)
         {
@@ -43,15 +44,48 @@ namespace MilSpace.Visibility
             observObjectsLabel.Text = selectedObservObjects;
         }
 
-        public void ONload()//disable all tabs
+        public void ONload()
         {
-            foreach (TabPage tab in StepsTabControl.TabPages)
+            var list = new List<string>();
+            list.AddRange(controller.GetObservationPointTypes().ToArray());
+            cmbAffiliation.Items.Clear();
+
+            cmbAffiliation.Items.Add(controller.GetAllAffiliationType());
+            cmbAffiliation.Items.AddRange(list.ToArray());
+            cmbAffiliation.SelectedItem = controller.GetAllAffiliationType();
+
+            list = new List<string>();
+            list.AddRange(controller.GetObservationObjectTypes().ToArray());
+            cmbObservObject.Items.Clear();
+
+            cmbObservObject.Items.AddRange(list.ToArray());
+            cmbObservObject.Items.Add(controller.GetAllAffiliationType_for_objects());
+            cmbObservObject.Items.Add(_allValuesFilterText);
+            cmbObservObject.SelectedItem = _allValuesFilterText;
+
+            list = new List<string>();
+            cmbType.Items.Clear();
+            list.AddRange(controller.GetObservationPointMobilityTypes().ToArray());
+            cmbType.Items.AddRange(list.ToArray());
+            cmbType.Items.Add(controller.GetAllMobilityType());
+
+            foreach (TabPage tab in StepsTabControl.TabPages)//disable all tabs
             {
                 tab.Enabled = false;
             }
             (StepsTabControl.TabPages[0] as TabPage).Enabled = true;
         }
 
+
+        public void FirstTypePicked()//triggers when user picks first type
+        {
+            controller.UpdateObservationPointsList();
+            PopulateComboBox();
+            FillObservPointLabel();
+            FillObservPointsOnCurrentView(controller.GetObservPointsOnCurrentMapExtent(ActiveView));
+            FillObsObj(true);
+
+        }
         public void SecondTypePicked()//triggers when user picks second type
         {
            
@@ -63,17 +97,7 @@ namespace MilSpace.Visibility
             FillObservPointLabel();
             FillObsObj();
         }
-        public void FirstTypePicked()//triggers when user picks first type
-        {
-            controller.UpdateObservationPointsList();
-            PopulateComboBox();
-            FillObservPointLabel();
-            FillObservPointsOnCurrentView(controller.GetObservPointsOnCurrentMapExtent(ActiveView));
-            FillObsObj();
-
-        }
-
-
+       
         public void FillObservPointLabel()
         {
             var temp = controller.GetObservationPointsLayers(ActiveView).ToArray();
@@ -154,14 +178,16 @@ namespace MilSpace.Visibility
         {
             try {
 
-                var temp = controller
-                    .GetObservObjectsOnCurrentMapExtent(ActiveView);
+                var All = controller
+                    .GetAllObservObjects();
 
-                var itemsToShow = temp.Select(t => new CheckObservPointGui
+                var itemsToShow = All.Select(t => new CheckObservPointGui
                 {
                     Title = t.Title,
-                    Affiliation = t.Group,
-                    Id = t.ObjectId
+                    Affiliation = t.ObjectType.ToString(),
+                    Id = t.ObjectId,
+                    Type = t.Group,
+                    Date = t.DTO.ToShortDateString()
                 }).ToList();
 
                 dgvObjects.DataSource = null; //Clearing listbox
@@ -173,10 +199,26 @@ namespace MilSpace.Visibility
                     dgvObjects.DataSource = _AllObjects;
                     SetDataGridView_For_Objects();
                 }
+                if (useCurrentExtent)
+                {
+                    var onCurrent = controller
+                                .GetObservObjectsOnCurrentMapExtent(ActiveView);
+
+                    var commonO = (itemsToShow.Select(a => a.Id).Intersect(onCurrent.Select(b => b.ObjectId))).ToList();
+
+                    foreach (CheckObservPointGui e in itemsToShow)
+                    {
+                        if (commonO.Contains(e.Id))
+                        {
+                            e.Check = true;
+                        }
+                    }
+                    dgvObjects.Refresh();
+                }
             }
             catch (ArgumentNullException)
             {
-                dgvObjects.Text = "no obser object added!";
+                dgvObjects.Text = "Objects are not found";
             }
 
         }
@@ -184,14 +226,20 @@ namespace MilSpace.Visibility
         {
 
             dgvObjects.Columns["Check"].HeaderText = "";
+             dgvObjects.Columns["Type"].HeaderText = "Group";//stands for "Afillation"
 
             dgvObjects.Columns["Title"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvObjects.Columns["Affiliation"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;//stands for "Group"
+            dgvObjects.Columns["Type"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;//stands for "Afillation"
+            dgvObjects.Columns["Date"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+
+            dgvObjects.Columns["Type"].ReadOnly = true;
             dgvObjects.Columns["Title"].ReadOnly = true;
             dgvObjects.Columns["Affiliation"].ReadOnly = true;
-            dgvObjects.Columns["Affiliation"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            dgvObjects.Columns["Type"].Visible = true;//basically its an "Afillation" column
             dgvObjects.Columns["Id"].Visible = false;
-            dgvObjects.Columns["Type"].Visible = false;
-            dgvObjects.Columns["Date"].Visible = false;
+            dgvObjects.Columns["Date"].Visible = true;
         }
 
 
@@ -206,25 +254,27 @@ namespace MilSpace.Visibility
             dvgCheckList.Columns["Id"].Visible = false;
         }
 
-        private void DisplaySelectedColumns(VeluableObservPointFieldsEnum filter, DataGridView D)
+        private void DisplaySelectedColumns_Points( DataGridView D)
         {
             D.Columns["Affiliation"].Visible = checkAffiliation.Checked;
             D.Columns["Type"].Visible = checkType.Checked;
             D.Columns["Date"].Visible = checkDate.Checked;
         }
-        private void DisplaySelectedColumns(DataGridView D)
+        private void DisplaySelectedColumns_Objects(DataGridView D)
         {
             D.Columns["Affiliation"].Visible = checkB_Affilation.Checked;
-           
+            D.Columns["Date"].Visible = checkDate_Object.Checked;
+            
         }
 
         private void Filter_CheckedChanged(object sender, EventArgs e)
         {
-            DisplaySelectedColumns(GetFilter,dvgCheckList);
+            DisplaySelectedColumns_Points(dvgCheckList);
         }
+
         private void Filter_For_Object_CheckedChanged(object sender, EventArgs e)
         {
-            DisplaySelectedColumns(dgvObjects);
+            DisplaySelectedColumns_Objects(dgvObjects);
         }
         private void Select_All(object sender,EventArgs e)
         {
@@ -276,37 +326,37 @@ namespace MilSpace.Visibility
 
         }
 
-        private void FilterData()
+        private void FilterData(DataGridView Grid , ComboBox combo)
         {
-            if (dvgCheckList.Rows.Count == 0)
+            if (Grid.Rows.Count == 0)
             {
                 return;
             }
 
-            dvgCheckList.CurrentCell = null;
+            Grid.CurrentCell = null;
 
-            foreach (DataGridViewRow row in dvgCheckList.Rows)
+            foreach (DataGridViewRow row in Grid.Rows)
             {
-                CheckRowForFilter(row);
+                CheckRowForFilter(row, combo);
             }
 
-            if (dvgCheckList.FirstDisplayedScrollingRowIndex != -1)
+            if (Grid.FirstDisplayedScrollingRowIndex != -1)
             {
-                dvgCheckList.Rows[dvgCheckList.FirstDisplayedScrollingRowIndex].Selected = true;
+                Grid.Rows[Grid.FirstDisplayedScrollingRowIndex].Selected = true;
                
             }
     
         }
 
-        private void CheckRowForFilter(DataGridViewRow row)
+        private void CheckRowForFilter(DataGridViewRow row , ComboBox combo)
         {
-            if (cmbAffiliation.SelectedItem != null && cmbAffiliation.SelectedItem.ToString() != _allValuesFilterText)
+            if (combo.SelectedItem != null && combo.SelectedItem.ToString() != _allValuesFilterText)
             {
-                row.Visible = (row.Cells["Affiliation"].Value.ToString() == cmbAffiliation.SelectedItem.ToString());
+                row.Visible = (row.Cells["Affiliation"].Value.ToString() == combo.SelectedItem.ToString());
                 if (!row.Visible) return;
             }
 
-            if (cmbType.SelectedItem != null && cmbType.SelectedItem.ToString() != _allValuesFilterText)
+            if (row.Cells["Type"].Value!= null && cmbType.SelectedItem != null && cmbType.SelectedItem.ToString() != _allValuesFilterText)
             {
                 row.Visible = (row.Cells["Type"].Value.ToString() == cmbType.SelectedItem.ToString());
                 return;
@@ -316,13 +366,20 @@ namespace MilSpace.Visibility
         }
         private void cmbType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            FilterData();
+            FilterData(dvgCheckList,cmbAffiliation);
         }
 
         private void cmbAffiliation_SelectedIndexChanged(object sender, EventArgs e)
         {
-            FilterData();
+            FilterData(dvgCheckList, cmbAffiliation);
         }
+        private void cmbObservObject_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FilterData(dgvObjects, cmbObservObject);
+        }
+
+
+
         public void AssemblMasterResult()
         {
 
@@ -453,8 +510,8 @@ namespace MilSpace.Visibility
         {
             throw new NotImplementedException();
         }
+       
 
-      
 
         private void labelOP_Click(object sender, EventArgs e)
         {
