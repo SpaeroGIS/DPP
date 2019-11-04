@@ -59,9 +59,9 @@ namespace MilSpace.DataAccess.DataTransfer
                 MilSp_Profile res = new MilSp_Profile
                 {
                     idRow = session.SessionId,
-                    ProfileName = session.SessionName.SafeTrim(),
+                    ProfileName = session.SessionName?.Trim(),
                     ProfileData = session.Serialized,
-                    Creator = session.CreatedBy.SafeTrim(),
+                    Creator = session.CreatedBy?.Trim(),
                     Created = session.CreatedOn,
                     Shared = session.Shared
                 };
@@ -93,12 +93,12 @@ namespace MilSpace.DataAccess.DataTransfer
                     AzimuthMainAxis = dbObservationPoint.AzimuthMainAxis,
                     Dto = dbObservationPoint.dto,
                     Group = dbObservationPoint.sGroup,
-                    Id = dbObservationPoint.idOP.SafeTrim(),
+                    Id = dbObservationPoint.idOP?.Trim(),
                     Objectid = dbObservationPoint.OBJECTID,
-                    Operator = dbObservationPoint.soper.SafeTrim(),
+                    Operator = dbObservationPoint.soper?.Trim(),
                     RelativeHeight = dbObservationPoint.HRel,
                     Share = dbObservationPoint.ishare,
-                    Title = dbObservationPoint.TitleOP.SafeTrim(),
+                    Title = dbObservationPoint.TitleOP?.Trim(),
                     Type = dbObservationPoint.TypeOP,
                     InnerRadius = dbObservationPoint.InnerRadius,
                     OuterRadius = dbObservationPoint.OuterRadius,
@@ -121,9 +121,9 @@ namespace MilSpace.DataAccess.DataTransfer
                 var visibilitySession = new MilSp_VisibilitySession
                 {
                     IdRow = visibilitySessionModel.IdRow,
-                    Id = visibilitySessionModel.Id.SafeTrim(),
-                    Name = visibilitySessionModel.Name.SafeTrim(),
-                    UserName = visibilitySessionModel.UserName.SafeTrim(),
+                    Id = visibilitySessionModel.Id?.Trim(),
+                    Name = visibilitySessionModel.Name?.Trim(),
+                    UserName = visibilitySessionModel.UserName?.Trim(),
                     Created = visibilitySessionModel.Created.HasValue ? visibilitySessionModel.Created.Value : DateTime.Now,
                     Started = visibilitySessionModel.Started,
                     Finished = visibilitySessionModel.Finished,
@@ -146,9 +146,9 @@ namespace MilSpace.DataAccess.DataTransfer
                 var visibilitySession = new VisibilitySession
                 {
                     IdRow = visibilitySessionEntity.IdRow,
-                    Id = visibilitySessionEntity.Id.SafeTrim(),
-                    Name = visibilitySessionEntity.Name.SafeTrim(),
-                    UserName = visibilitySessionEntity.UserName.SafeTrim(),
+                    Id = visibilitySessionEntity.Id?.Trim(),
+                    Name = visibilitySessionEntity.Name?.Trim(),
+                    UserName = visibilitySessionEntity.UserName?.Trim(),
                     Created = visibilitySessionEntity.Created,
                     Started = visibilitySessionEntity.Started,
                     Finished = visibilitySessionEntity.Finished,
@@ -166,8 +166,8 @@ namespace MilSpace.DataAccess.DataTransfer
 
         internal static void Update(this MilSp_VisibilitySession visibilitySessionEntity, VisibilitySession visibilitySession)
         {
-            visibilitySessionEntity.Name = visibilitySession.Name.SafeTrim();
-            visibilitySessionEntity.UserName = visibilitySession.UserName.SafeTrim();
+            visibilitySessionEntity.Name = visibilitySession.Name?.Trim();
+            visibilitySessionEntity.UserName = visibilitySession.UserName?.Trim();
             visibilitySessionEntity.Created = visibilitySession.Created.Value;
             visibilitySessionEntity.Started = visibilitySession.Started;
             visibilitySessionEntity.Finished = visibilitySession.Finished;
@@ -189,12 +189,12 @@ namespace MilSpace.DataAccess.DataTransfer
             dbObservationPoint.AzimuthMainAxis = observationPoint.AzimuthMainAxis;
             dbObservationPoint.dto = DateTime.Now;
             dbObservationPoint.sGroup = observationPoint.Group;
-            dbObservationPoint.idOP = observationPoint.Id.SafeTrim();
+            dbObservationPoint.idOP = observationPoint.Id?.Trim();
             dbObservationPoint.OBJECTID = observationPoint.Objectid;
-            dbObservationPoint.soper = observationPoint.Operator.SafeTrim();
+            dbObservationPoint.soper = observationPoint.Operator?.Trim();
             dbObservationPoint.HRel = observationPoint.RelativeHeight;
             dbObservationPoint.ishare = observationPoint.Share;
-            dbObservationPoint.TitleOP = observationPoint.Title.SafeTrim();
+            dbObservationPoint.TitleOP = observationPoint.Title?.Trim();
             dbObservationPoint.TypeOP = observationPoint.Type;
             dbObservationPoint.XWGS = observationPoint.X;
             dbObservationPoint.YWGS = observationPoint.Y;
@@ -216,12 +216,12 @@ namespace MilSpace.DataAccess.DataTransfer
                 AzimuthMainAxis = observationPoint.AzimuthMainAxis,
                 dto = observationPoint.Dto,
                 sGroup = observationPoint.Group,
-                idOP = observationPoint.Id.SafeTrim(),
+                idOP = observationPoint.Id?.Trim(),
                 OBJECTID = observationPoint.Objectid,
-                soper = observationPoint.Operator.SafeTrim(),
+                soper = observationPoint.Operator?.Trim(),
                 HRel = observationPoint.RelativeHeight,
                 ishare = observationPoint.Share,
-                TitleOP = observationPoint.Title.SafeTrim(),
+                TitleOP = observationPoint.Title?.Trim(),
                 TypeOP = observationPoint.Type,
                 XWGS = observationPoint.X,
                 YWGS = observationPoint.Y
@@ -239,13 +239,13 @@ namespace MilSpace.DataAccess.DataTransfer
 
             return new ObservationObject
             {
-                Creator = observObject.soper.SafeTrim(),
+                Creator = observObject.soper?.Trim(),
                 DTO = observObject.DTO.HasValue ? observObject.DTO.Value : DateTime.Now,
                 Group = observObject.sGroupOO,
-                Id = observObject.idOO.SafeTrim(),
+                Id = observObject.idOO?.Trim(),
                 ObjectId = observObject.OBJECTID,
                 Shared = observObject.ifShare.HasValue ? observObject.ifShare.Value != 0 : false,
-                Title = observObject.sTitleOO.SafeTrim(),
+                Title = observObject.sTitleOO?.Trim(),
                 ObjectType = objectType
             };
         }
@@ -254,20 +254,15 @@ namespace MilSpace.DataAccess.DataTransfer
         {
             return new VisiblilityObservationObjects
             {
-                soper = observObject.Creator.SafeTrim(),
+                soper = observObject.Creator?.Trim(),
                 DTO = observObject.DTO,
                 sGroupOO = observObject.Group,
-                idOO = observObject.Id.SafeTrim(),
+                idOO = observObject.Id?.Trim(),
                 saffiliation = observObject.ObjectType.ToString(),
                 OBJECTID = observObject.ObjectId,
                 ifShare = observObject.Shared ? 1 : 0,
-                sTitleOO = observObject.Title.SafeTrim()
+                sTitleOO = observObject.Title?.Trim()
             };
-        }
-
-        private static string SafeTrim(this string text)
-        {
-            return (!string.IsNullOrEmpty(text)) ? text.Trim() : text;
         }
     }
 }
