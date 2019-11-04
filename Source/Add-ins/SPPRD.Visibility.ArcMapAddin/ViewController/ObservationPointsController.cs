@@ -290,15 +290,17 @@ namespace MilSpace.Visibility.ViewController
         {
             return _affiliationTypes.Where(t => t.Key != ObservationPointTypesEnum.All).Select(t => t.Value);
         }
-
+        public IEnumerable<string> GetObservationObjectTypes()
+        {
+            return _observObjectsTypes.Where(t => t.Key != ObservationObjectTypesEnum.Undefined).Select(t => t.Value);
+        }
+        public string GetAllAffiliationType_for_objects()
+        {
+            return _observObjectsTypes.First(t => t.Key == ObservationObjectTypesEnum.Undefined).Value;
+        }
         public IEnumerable<string> GetObservationPointMobilityTypes()
         {
             return _mobilityTypes.Where(t => t.Key != ObservationPointMobilityTypesEnum.All).Select(t => t.Value);
-        }
-
-        public IEnumerable<string> GetObservationObjectTypes()
-        {
-            return _observObjectsTypes.Select(t => t.Value);
         }
 
         public string GetAllAffiliationType()
@@ -409,7 +411,7 @@ namespace MilSpace.Visibility.ViewController
 
             while (layer != null)
             {
-                if (layer is IFeatureLayer fl && fl.FeatureClass != null && fl.FeatureClass.AliasName.Equals(featureClassName, StringComparison.InvariantCultureIgnoreCase))
+                if (layer is IFeatureLayer fl && fl.FeatureClass != null && fl.FeatureClass.AliasName.EndsWith(featureClassName, StringComparison.InvariantCultureIgnoreCase))
                 {
                     return fl.FeatureClass;
                 }
