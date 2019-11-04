@@ -28,7 +28,6 @@ namespace MilSpace.Visibility
 
         internal MasterResult FinalResult = new MasterResult();
 
-
         private static IActiveView ActiveView => ArcMap.Document.ActiveView;
 
         MapLayersManager manager = new MapLayersManager(ActiveView);

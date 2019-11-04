@@ -100,6 +100,8 @@ namespace MilSpace.DataAccess.DataTransfer
                     Share = dbObservationPoint.ishare,
                     Title = dbObservationPoint.TitleOP,
                     Type = dbObservationPoint.TypeOP,
+                    InnerRadius = dbObservationPoint.InnerRadius,
+                    OuterRadius = dbObservationPoint.OuterRadius,
                     X = dbObservationPoint.XWGS,
                     Y = dbObservationPoint.YWGS
                 };

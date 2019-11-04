@@ -129,10 +129,6 @@
     <Compile Include="..\DataAccess\DataTransfer\ProfileLine.cs">
       <Link>DataTransfer\ProfileLine.cs</Link>
     </Compile>
-    <Compile Include="..\DataAccess\Definition\MilSpaceVisible.cs">
-      <Link>Definition\MilSpaceVisible.cs</Link>
-      <DependentUpon>MilSpaceVisible.dbml</DependentUpon>
-    </Compile>
     <Compile Include="..\DataAccess\Definition\MilSpaceVisible.designer.cs">
       <Link>Definition\MilSpaceVisible.designer.cs</Link>
       <AutoGen>True</AutoGen>
