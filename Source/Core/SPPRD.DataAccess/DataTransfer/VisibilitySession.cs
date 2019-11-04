@@ -68,7 +68,7 @@ namespace MilSpace.DataAccess.DataTransfer
             return $"{sessionName}{VisibilityResulSuffixes[resultType]}";
         }
 
-        public IEnumerable<string> Resuls()
+        public IEnumerable<string> Results()
         {
             VisibilityCalculationresultsEnum resultsInGDB = GdbAccess.Instance.CheckVisibilityResult(Id);
             List<string> resulrs = new List<string>();

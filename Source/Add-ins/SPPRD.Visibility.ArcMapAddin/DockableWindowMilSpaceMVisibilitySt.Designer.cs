@@ -2077,9 +2077,9 @@
             // tbObservObjDate
             // 
             this.tbObservObjDate.Dock = System.Windows.Forms.DockStyle.Left;
-            this.tbObservObjDate.Enabled = false;
             this.tbObservObjDate.Location = new System.Drawing.Point(89, 0);
             this.tbObservObjDate.Name = "tbObservObjDate";
+            this.tbObservObjDate.ReadOnly = true;
             this.tbObservObjDate.Size = new System.Drawing.Size(156, 20);
             this.tbObservObjDate.TabIndex = 5;
             // 
@@ -2108,9 +2108,9 @@
             // tbObservObjAffiliation
             // 
             this.tbObservObjAffiliation.Dock = System.Windows.Forms.DockStyle.Left;
-            this.tbObservObjAffiliation.Enabled = false;
             this.tbObservObjAffiliation.Location = new System.Drawing.Point(100, 0);
             this.tbObservObjAffiliation.Name = "tbObservObjAffiliation";
+            this.tbObservObjAffiliation.ReadOnly = true;
             this.tbObservObjAffiliation.Size = new System.Drawing.Size(156, 20);
             this.tbObservObjAffiliation.TabIndex = 5;
             // 
@@ -2139,9 +2139,9 @@
             // tbObservObjGroup
             // 
             this.tbObservObjGroup.Dock = System.Windows.Forms.DockStyle.Left;
-            this.tbObservObjGroup.Enabled = false;
             this.tbObservObjGroup.Location = new System.Drawing.Point(49, 0);
             this.tbObservObjGroup.Name = "tbObservObjGroup";
+            this.tbObservObjGroup.ReadOnly = true;
             this.tbObservObjGroup.Size = new System.Drawing.Size(170, 20);
             this.tbObservObjGroup.TabIndex = 5;
             // 
@@ -2170,9 +2170,9 @@
             // tbObservObjTitle
             // 
             this.tbObservObjTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbObservObjTitle.Enabled = false;
             this.tbObservObjTitle.Location = new System.Drawing.Point(63, 0);
             this.tbObservObjTitle.Name = "tbObservObjTitle";
+            this.tbObservObjTitle.ReadOnly = true;
             this.tbObservObjTitle.Size = new System.Drawing.Size(273, 20);
             this.tbObservObjTitle.TabIndex = 5;
             // 

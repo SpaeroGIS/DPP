@@ -137,8 +137,8 @@ namespace MilSpace.Visualization3D
         private static Dictionary<LayerTypeEnum, ILayer> GetVisibilityLayers(VisibilityResultInfo info, IObjectFactory objFactory, IFunctionalSurface baseSurface)
         {
             var layers = new Dictionary<LayerTypeEnum, ILayer>();
-            var name = info.ResultName.Replace(" ", string.Empty);
-
+            var name = info.ResultName;
+       
             var rasterLayer = CreateRasterLayer($"{name}_img", objFactory, info.GdbPath);
             if (rasterLayer != null)
             {
