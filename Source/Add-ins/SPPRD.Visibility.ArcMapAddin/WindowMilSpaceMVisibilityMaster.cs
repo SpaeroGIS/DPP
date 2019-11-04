@@ -218,7 +218,7 @@ namespace MilSpace.Visibility
             }
             catch (ArgumentNullException)
             {
-                dgvObjects.Rows[1].Cells[1].ErrorText = "Objects are not found";
+                dgvObjects.Text = "Objects are not found";
             }
 
         }
