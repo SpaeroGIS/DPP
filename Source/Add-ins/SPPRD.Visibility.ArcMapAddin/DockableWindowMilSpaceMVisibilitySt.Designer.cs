@@ -447,9 +447,9 @@
             this.lblMinDistance.Location = new System.Drawing.Point(161, 0);
             this.lblMinDistance.Name = "lblMinDistance";
             this.lblMinDistance.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.lblMinDistance.Size = new System.Drawing.Size(99, 17);
+            this.lblMinDistance.Size = new System.Drawing.Size(95, 17);
             this.lblMinDistance.TabIndex = 6;
-            this.lblMinDistance.Text = "Manimum distance";
+            this.lblMinDistance.Text = "Minimum distance";
             this.lblMinDistance.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // txtMaxDistance
