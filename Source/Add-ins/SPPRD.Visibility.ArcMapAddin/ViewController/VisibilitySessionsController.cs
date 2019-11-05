@@ -1,6 +1,7 @@
 ﻿using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
+using MilSpace.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,11 @@ namespace MilSpace.Visibility.ViewController
         private IObservationPointsView _view;
         private List<VisibilitySession> _visibilitySessions = new List<VisibilitySession>();
         private static Dictionary<VisibilitySessionStateEnum, string> states = Enum.GetValues(typeof(VisibilitySessionStateEnum)).Cast<VisibilitySessionStateEnum>().ToDictionary(t => t, ts => ts.ToString());
+
+        public VisibilitySessionsController()
+        {
+            VisibilityManager.OnGenerationStarted += UpdateVisibilitySessionsList;
+        }
 
         internal void SetView(IObservationPointsView view)
         {

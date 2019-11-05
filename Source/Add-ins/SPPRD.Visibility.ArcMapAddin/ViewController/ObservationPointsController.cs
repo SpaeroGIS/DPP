@@ -211,8 +211,16 @@ namespace MilSpace.Visibility.ViewController
                     stationsTOCalculate = EsriTools.GetSelectionByExtent(observObjects, mapDocument.ActiveView);
                 }
 
+                var statusBar = ArcMap.Application.StatusBar;
+                var animationProgressor = statusBar.ProgressAnimation;
+
+                animationProgressor.Show();
+                animationProgressor.Play(0, -1, -1);
+
                 var session = VisibilityManager.Generate(observPoints, pointsTOCalculate, observObjects, stationsTOCalculate, scrDEM, culcResults, sessionName);
 
+                animationProgressor.Stop();
+                animationProgressor.Hide();
 
             }
             catch (Exception ex)

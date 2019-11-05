@@ -220,6 +220,7 @@ namespace MilSpace.Visibility
             if (visibilitySessions.Any())
             {
                 dgvVisibilitySessions.Rows.Clear();
+                _visibilitySessionsGui = new BindingList<VisibilitySessionGui>();
 
                 foreach (var session in visibilitySessions)
                 {
