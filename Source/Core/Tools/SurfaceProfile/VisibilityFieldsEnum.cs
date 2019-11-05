@@ -7,7 +7,8 @@
         AnglMinH,
         AnglMaxH,
         InnerRadius,
-        OuterRadius
+        OuterRadius,
+        HRel
     }
 
     public enum VisibilityCurvatureCorrectionEnum

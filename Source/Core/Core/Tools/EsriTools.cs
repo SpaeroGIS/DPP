@@ -483,7 +483,8 @@ namespace MilSpace.Core.Tools
             IWorkspaceFactory workspaceFactory = new FileGDBWorkspaceFactory();
             IWorkspace workspace = workspaceFactory.OpenFromFile(gdb, 0);
             IFeatureWorkspaceManage wspManage = (IFeatureWorkspaceManage)workspace;
-          
+
+            var result = false;
             var datasets = workspace.Datasets[esriDatasetType.esriDTAny];
             var currentDataset = datasets.Next();
 
@@ -499,17 +500,17 @@ namespace MilSpace.Core.Tools
                     try
                     {
                         currentDataset.Delete();
+                        result = true;
                     }
-                    catch
+                    catch (Exception ex)
                     {
-                        return false;
+                        logger.ErrorEx(ex.Message);
                     }
-
-                    return true;
                 }
             }
 
-            return false;
+            Marshal.ReleaseComObject(workspaceFactory);
+            return result;
         }
 
         private static IPoint ConstructPoint3D(double x, double y, double z)
