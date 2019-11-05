@@ -34,10 +34,10 @@ namespace MilSpace.Visibility.ViewController
             return states[type];
         }
 
-        internal void UpdateVisibilitySessionsList()
+        internal void UpdateVisibilitySessionsList(bool isNewSessionAdded = false)
         {
             _visibilitySessions = VisibilityZonesFacade.GetAllVisibilitySessions(true).ToList();
-            _view.FillVisibilitySessionsList(_visibilitySessions);
+            _view.FillVisibilitySessionsList(_visibilitySessions, isNewSessionAdded);
         }
 
         internal VisibilitySession GetSession(string id)
