@@ -7,10 +7,11 @@ namespace MilSpace.Visibility.ViewController
     {
         void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints, VeluableObservPointFieldsEnum filter);
         void FillVisibilitySessionsList(IEnumerable<VisibilitySession> visibilitySessions);
+        void FillObservationObjectsList(IEnumerable<ObservationObject> observationObjects);
         void ChangeRecord(int id, ObservationPoint observationPoint);
         void AddRecord(ObservationPoint observationPoint);
         string ObservationPointsFeatureClass { get; }
-        string ObservationStationFeatureClass { get; }
+       // string ObservationStationFeatureClass { get; }
         VeluableObservPointFieldsEnum GetFilter { get; }
         IEnumerable<string> GetTypes { get; }
         IEnumerable<string> GetAffiliation { get; }

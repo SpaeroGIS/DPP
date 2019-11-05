@@ -68,14 +68,14 @@ namespace MilSpace.DataAccess.DataTransfer
             return $"{sessionName}{VisibilityResulSuffixes[resultType]}";
         }
 
-        public IEnumerable<string> Resuls()
+        public IEnumerable<string> Results()
         {
             VisibilityCalculationresultsEnum resultsInGDB = GdbAccess.Instance.CheckVisibilityResult(Id);
             List<string> resulrs = new List<string>();
 
             foreach (var result in VisibilityResulSuffixes)
             {
-                if (resultsInGDB.HasFlag(result.Key))
+                if (result.Key != VisibilityCalculationresultsEnum.None && resultsInGDB.HasFlag(result.Key))
                 {
                     resulrs.Add(GetResultName(result.Key, Id));
                 }

@@ -11,19 +11,25 @@ using System.Collections.Generic;
 using System.Linq;
 using MilSpace.Core;
 using MilSpace.Tools.Exceptions;
+using System.Text.RegularExpressions;
 
 namespace MilSpace.Visibility.ViewController
 {
     public class ObservationPointsController
     {
         IObservationPointsView view;
+        private static readonly string _observPointFeature = "MilSp_Visible_ObservPoints";
+        private static readonly string _observStationFeature = "MilSp_Visible_ObjectsObservation_R";
         private List<ObservationPoint> _observationPoints = new List<ObservationPoint>();
+        private List<ObservationObject> _observationObjects = new List<ObservationObject>();
+
         /// <summary>
         /// The dictionary to localise the types
         /// </summary>
-        private static Dictionary<ObservationPointMobilityTypesEnum, string> mobilityTypes = Enum.GetValues(typeof(ObservationPointMobilityTypesEnum)).Cast<ObservationPointMobilityTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
-        private static Dictionary<ObservationPointTypesEnum, string> affiliationTypes = Enum.GetValues(typeof(ObservationPointTypesEnum)).Cast<ObservationPointTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
-        private static Dictionary<ObservationObjectTypesEnum, string> objectAffiliationTypes = Enum.GetValues(typeof(ObservationObjectTypesEnum)).Cast<ObservationObjectTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
+        private static Dictionary<ObservationPointMobilityTypesEnum, string> _mobilityTypes = Enum.GetValues(typeof(ObservationPointMobilityTypesEnum)).Cast<ObservationPointMobilityTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
+        private static Dictionary<ObservationPointTypesEnum, string> _affiliationTypes = Enum.GetValues(typeof(ObservationPointTypesEnum)).Cast<ObservationPointTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
+        private static Dictionary<ObservationObjectTypesEnum, string> _observObjectsTypes = Enum.GetValues(typeof(ObservationObjectTypesEnum)).Cast<ObservationObjectTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
+
         private IMxDocument mapDocument;
         private static Logger log = Logger.GetLoggerEx("ObservationPointsController");
 
@@ -61,6 +67,11 @@ namespace MilSpace.Visibility.ViewController
         internal ObservationPoint GetObservPointById(int id)
         {
             return _observationPoints.FirstOrDefault(point => point.Objectid == id);
+        }
+
+        internal ObservationObject GetObservObjectById(string id)
+        {
+            return _observationObjects.FirstOrDefault(obj => obj.Id == id);
         }
 
         internal void UpdateObservPoint(ObservationPoint newPoint, string featureName, IActiveView activeView, int objId)
@@ -264,32 +275,47 @@ namespace MilSpace.Visibility.ViewController
             return point;
         }
 
+        internal void UpdateObservObjectsList()
+        {
+            _observationObjects = VisibilityZonesFacade.GetAllObservationObjects().ToList();
+            view.FillObservationObjectsList(_observationObjects);
+        }
+
+        public void AddObservObjectsLayer(IActiveView activeView)
+        {
+            VisibilityManager.AddObservationObjectLayer(activeView);
+        }
+
         public IEnumerable<string> GetObservationPointTypes()
         {
-            return affiliationTypes.Where(t => t.Key != ObservationPointTypesEnum.All).Select(t => t.Value);
+            return _affiliationTypes.Where(t => t.Key != ObservationPointTypesEnum.All).Select(t => t.Value);
         }
         public IEnumerable<string> GetObservationObjectTypes()
         {
-            return objectAffiliationTypes.Where(t => t.Key != ObservationObjectTypesEnum.Undefined).Select(t => t.Value);
+            return _observObjectsTypes.Where(t => t.Key != ObservationObjectTypesEnum.Undefined).Select(t => t.Value);
         }
         public string GetAllAffiliationType_for_objects()
         {
-            return objectAffiliationTypes.First(t => t.Key == ObservationObjectTypesEnum.Undefined).Value;
+            return _observObjectsTypes.First(t => t.Key == ObservationObjectTypesEnum.Undefined).Value;
         }
         public IEnumerable<string> GetObservationPointMobilityTypes()
         {
-            return mobilityTypes.Where(t => t.Key != ObservationPointMobilityTypesEnum.All).Select(t => t.Value);
+            return _mobilityTypes.Where(t => t.Key != ObservationPointMobilityTypesEnum.All).Select(t => t.Value);
         }
-      
 
         public string GetAllAffiliationType()
         {
-            return affiliationTypes.First(t => t.Key == ObservationPointTypesEnum.All).Value;
+            return _affiliationTypes.First(t => t.Key == ObservationPointTypesEnum.All).Value;
         }
 
         public string GetAllMobilityType()
         {
-            return mobilityTypes.First(t => t.Key == ObservationPointMobilityTypesEnum.All).Value;
+            return _mobilityTypes.First(t => t.Key == ObservationPointMobilityTypesEnum.All).Value;
+        }
+
+        public string GetObservObjectsTypeString(ObservationObjectTypesEnum type)
+        {
+            return _observObjectsTypes[type];
         }
 
         public IEnumerable<string> GetObservationPointsLayers(IActiveView view)
@@ -332,17 +358,32 @@ namespace MilSpace.Visibility.ViewController
         }
         public IFeatureClass GetObservatioStationFeatureClass(IActiveView esriView)
         {
-            return GetFeatureClass(view.ObservationStationFeatureClass, esriView);
+            return GetFeatureClass(_observStationFeature, esriView);
         }
 
         public bool IsObservPointsExists(IActiveView view)
         {
+            return IsFeatureLayerExists(view, _observPointFeature);
+        }
+
+        public bool IsObservObjectsExists(IActiveView view)
+        {
+            return IsFeatureLayerExists(view, _observStationFeature);
+        }
+
+        public string GetObservationPointsLayerName => view.ObservationPointsFeatureClass;
+
+        public string GetObservationStationLayerName => _observStationFeature;
+
+        private bool IsFeatureLayerExists(IActiveView view, string featureClass)
+        {
+            var pattern = @"^[A-Za-z0-9]+\.[A-Za-z0-9]+\." + featureClass + "$";
             var layers = view.FocusMap.Layers;
             var layer = layers.Next();
 
-            while (layer != null)
+            while(layer != null)
             {
-                if (layer is IFeatureLayer fl && fl.FeatureClass != null && fl.FeatureClass.AliasName.Equals(VisibilityManager.observPointFeature, StringComparison.InvariantCultureIgnoreCase))
+                if(layer is IFeatureLayer fl && fl.FeatureClass != null && (fl.FeatureClass.AliasName.Equals(featureClass, StringComparison.InvariantCultureIgnoreCase) || Regex.IsMatch(fl.FeatureClass.AliasName, pattern)))
                 {
                     return true;
                 }
@@ -352,10 +393,6 @@ namespace MilSpace.Visibility.ViewController
 
             return false;
         }
-
-        public string GetObservationPointsLayerName => view.ObservationPointsFeatureClass;
-
-        public string GetObservationStationLayerName => view.ObservationStationFeatureClass;
 
         private IEnumerable<VisibilitySession> GetAllVisibilitySessions()
         {
@@ -374,7 +411,7 @@ namespace MilSpace.Visibility.ViewController
 
             while (layer != null)
             {
-                if (layer is IFeatureLayer fl && fl.FeatureClass != null && fl.FeatureClass.AliasName.Equals(featureClassName, StringComparison.InvariantCultureIgnoreCase))
+                if (layer is IFeatureLayer fl && fl.FeatureClass != null && fl.FeatureClass.AliasName.EndsWith(featureClassName, StringComparison.InvariantCultureIgnoreCase))
                 {
                     return fl.FeatureClass;
                 }
