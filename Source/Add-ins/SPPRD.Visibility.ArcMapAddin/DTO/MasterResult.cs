@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MilSpace.DataAccess.DataTransfer;
+using System.Collections.Generic;
 
 namespace MilSpace.Visibility.DTO
 {
@@ -11,6 +12,7 @@ namespace MilSpace.Visibility.DTO
         public bool OP { get; set; }
         public bool SumFieldOfView { get; set; }
         public bool Table { get; set; }
+        public VisibilityCalculationresultsEnum VisibilityCalculationResults { get; set; }
 
     }
 }

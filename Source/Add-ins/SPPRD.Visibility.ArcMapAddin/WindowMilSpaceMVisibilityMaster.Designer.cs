@@ -420,6 +420,7 @@ namespace MilSpace.Visibility
             // StepsTabControl
             // 
             this.StepsTabControl.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
+            this.StepsTabControl.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControl_Selecting);
             this.StepsTabControl.Controls.Add(this.stepOne);
             this.StepsTabControl.Controls.Add(this.stepTwo);
             this.StepsTabControl.Controls.Add(this.stepThree);
@@ -467,8 +468,9 @@ namespace MilSpace.Visibility
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(914, 78);
             this.button4.TabIndex = 4;
-            this.button4.Text = "4.\tАнализ результатов наблюдения с известными параметрами (например - аэрофотосъе" +
-    "мки) с точки зрения расположения кадров на местности и обеспечения видимости.";
+            this.button4.Text = "4.  Анализ результатов наблюдения с известными параметрами (например - аэрофотосъ" +
+    "емки) с точки зрения расположения кадров на местности и обеспечения видимости.";
+            this.button4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button4.UseVisualStyleBackColor = true;
             // 
             // panel5
@@ -485,12 +487,13 @@ namespace MilSpace.Visibility
             // 
             this.button2.Enabled = false;
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.Location = new System.Drawing.Point(-3, 0);
+            this.button2.Location = new System.Drawing.Point(0, 0);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(917, 78);
+            this.button2.Size = new System.Drawing.Size(914, 78);
             this.button2.TabIndex = 0;
-            this.button2.Text = "3.\tПодбор параметров пунктов наблюдения для наилучшего наблюдения за заданными ОН" +
-    " (параметры аппаратуры, высота над поверхностью, направления и углы обзора).";
+            this.button2.Text = "3.  Подбор параметров пунктов наблюдения для наилучшего наблюдения за заданными О" +
+    "Н (параметры аппаратуры, высота над поверхностью, направления и углы обзора).";
+            this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button2.UseVisualStyleBackColor = true;
             // 
             // panel4
@@ -506,12 +509,13 @@ namespace MilSpace.Visibility
             // uButton2
             // 
             this.uButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.uButton2.Location = new System.Drawing.Point(-3, 0);
+            this.uButton2.Location = new System.Drawing.Point(0, 0);
             this.uButton2.Name = "uButton2";
-            this.uButton2.Size = new System.Drawing.Size(917, 78);
+            this.uButton2.Size = new System.Drawing.Size(914, 78);
             this.uButton2.TabIndex = 0;
-            this.uButton2.Text = "2.\t Определение видимости в заданных ОН, для выбранных пунктов наблюдения, с учет" +
+            this.uButton2.Text = "2.  Определение видимости в заданных ОН, для выбранных пунктов наблюдения, с учет" +
     "ом индивидуальных параметров пунктов наблюдения. ";
+            this.uButton2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.uButton2.Click += new System.EventHandler(this.ultraButton1_Click);
             // 
             // panel3
@@ -526,11 +530,12 @@ namespace MilSpace.Visibility
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(-3, -3);
+            this.button1.Location = new System.Drawing.Point(0, -3);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(917, 81);
+            this.button1.Size = new System.Drawing.Size(914, 81);
             this.button1.TabIndex = 0;
             this.button1.Text = resources.GetString("button1.Text");
+            this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
@@ -607,6 +612,7 @@ namespace MilSpace.Visibility
             this.dvgCheckList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dvgCheckList.Dock = System.Windows.Forms.DockStyle.Top;
             this.dvgCheckList.Location = new System.Drawing.Point(0, 120);
+            this.dvgCheckList.MultiSelect = false;
             this.dvgCheckList.Name = "dvgCheckList";
             this.dvgCheckList.RowHeadersVisible = false;
             this.dvgCheckList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
@@ -989,6 +995,7 @@ namespace MilSpace.Visibility
             this.panel15.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.panel15.Size = new System.Drawing.Size(464, 24);
             this.panel15.TabIndex = 15;
+            this.panel15.Paint += new System.Windows.Forms.PaintEventHandler(this.panel15_Paint);
             // 
             // observObjectsLabel
             // 
