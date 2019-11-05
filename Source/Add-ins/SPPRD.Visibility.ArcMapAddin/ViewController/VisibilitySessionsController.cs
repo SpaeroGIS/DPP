@@ -42,11 +42,11 @@ namespace MilSpace.Visibility.ViewController
         internal bool RemoveSession(string id)
         {
             var removedSession = _visibilitySessions.First(session => session.Id == id);
-            var results = removedSession.Resuls();
+            var results = removedSession.Results();
 
             foreach(var result in results)
             { 
-                if(result != removedSession.Id.Replace(" ", string.Empty))
+                if(result != removedSession.Id)
                 {
                     if (!EsriTools.RemoveDataSet(removedSession.ReferencedGDB, result))
                     {

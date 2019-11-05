@@ -56,7 +56,7 @@ namespace MilSpace.DataAccess.Facade
         {
             try
             {
-                var sessionEntity = context.MilSp_VisibilitySessions.FirstOrDefault(session => session.Id == visibilitySession.Id);
+                var sessionEntity = context.MilSp_VisibilitySessions.FirstOrDefault(session => session.Id.Trim() == visibilitySession.Id);
 
                 if (sessionEntity != null)
                 {
@@ -64,7 +64,7 @@ namespace MilSpace.DataAccess.Facade
 
                     Submit();
                     log.InfoEx($"Session {visibilitySession.Id} was successfully updated");
-                    return context.MilSp_VisibilitySessions.First(session => session.Id == visibilitySession.Id).Get();
+                    return context.MilSp_VisibilitySessions.First(session => session.Id.Trim() == visibilitySession.Id).Get();
                 }
 
                 log.WarnEx($"Session {visibilitySession.Id} not found");
@@ -90,7 +90,7 @@ namespace MilSpace.DataAccess.Facade
         {
             try
             {
-                var sessionEntity = context.MilSp_VisibilitySessions.FirstOrDefault(session => session.Id == id);
+                var sessionEntity = context.MilSp_VisibilitySessions.FirstOrDefault(session => session.Id.Trim() == id);
 
                 if (sessionEntity != null)
                 {

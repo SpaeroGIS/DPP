@@ -209,9 +209,9 @@ namespace MilSpace.Visibility
             dgvObservationPoints.Refresh();
             FilterData();
 
-            if (dgvObservationPoints.Rows[dgvObservationPoints.Rows.Count - 1].Visible)
+            if (dgvObservationPoints.Rows[dgvObservationPoints.RowCount - 1].Visible)
             {
-                dgvObservationPoints.Rows[dgvObservationPoints.Rows.Count - 1].Selected = true;
+                dgvObservationPoints.Rows[dgvObservationPoints.RowCount - 1].Selected = true;
             }
         }
 
@@ -330,7 +330,7 @@ namespace MilSpace.Visibility
             IPoint resultPoint = new Point();
 
             resultPoint = (currentDocument.FocusMap as IActiveView).ScreenDisplay.DisplayTransformation.ToMapPoint(x, y);
-            resultPoint.ID = dgvObservationPoints.Rows.Count + 1;
+            resultPoint.ID = dgvObservationPoints.RowCount + 1;
 
             resultPoint.Project(EsriTools.Wgs84Spatialreference);
 
@@ -362,7 +362,7 @@ namespace MilSpace.Visibility
 
         private void FilterData()
         {
-            if(dgvObservationPoints.Rows.Count == 0)
+            if(dgvObservationPoints.RowCount == 0)
             {
                 return;
             }
@@ -690,7 +690,7 @@ namespace MilSpace.Visibility
             lblLayer.Visible = cmbObservPointsLayers.Visible = cmbAffiliationEdit.Enabled = cmbObservTypesEdit.Enabled = azimuthB.Enabled
                 = azimuthE.Enabled = xCoord.Enabled = yCoord.Enabled = angleOFViewMin.Enabled = angleOFViewMax.Enabled
                 = heightCurrent.Enabled = heightMin.Enabled = azimuthMainAxis.Enabled = cameraRotationH.Enabled = cameraRotationV.Enabled
-                = heightMax.Enabled = observPointName.Enabled = tlbCoordinates.Enabled = (_observPointsController.IsObservPointsExists(ActiveView) && !isAllDisabled);
+                = heightMax.Enabled = observPointName.Enabled = tlbCoordinates.Enabled = tlbObservPoints.Buttons["tlbbAddNewPoint"].Enabled = (_observPointsController.IsObservPointsExists(ActiveView) && !isAllDisabled);
 
             angleFrameH.Enabled = angleFrameV.Enabled = observPointDate.Enabled = observPointCreator.Enabled = false;
             tlbObservPoints.Buttons["tlbbRemovePoint"].Enabled = tlbObservPoints.Buttons["tlbbShowPoint"].Enabled = (dgvObservationPoints.SelectedRows.Count != 0 && !isAllDisabled);
@@ -708,7 +708,7 @@ namespace MilSpace.Visibility
                 _observPointsController.RemoveObservPoint(cmbObservPointsLayers.SelectedItem.ToString(), ActiveView, _selectedPointId);
                 _observPointGuis.Remove(_observPointGuis.First(point => point.Id == _selectedPointId));
 
-                if(rowIndex < dgvObservationPoints.Rows.Count)
+                if(rowIndex < dgvObservationPoints.RowCount)
                 {
                     UpdateFilter(dgvObservationPoints.Rows[rowIndex]);
                 }
@@ -843,7 +843,7 @@ namespace MilSpace.Visibility
 
         private void FilterVisibilityList()
         {
-            if(dgvVisibilitySessions.Rows.Count == 0)
+            if(dgvVisibilitySessions.RowCount == 0)
             {
                 return;
             }
@@ -899,7 +899,7 @@ namespace MilSpace.Visibility
 
         private void FilterObservObjects()
         {
-            if(dgvObservObjects.Rows.Count == 0)
+            if(dgvObservObjects.RowCount == 0)
             {
                 return;
             }
@@ -967,7 +967,7 @@ namespace MilSpace.Visibility
                     PopulateVisibilityComboBoxes();
                     _visibilitySessionsController.UpdateVisibilitySessionsList();
 
-                    if(dgvVisibilitySessions.Rows.Count == 0)
+                    if(dgvVisibilitySessions.RowCount == 0)
                     {
                         tlbVisibilitySessions.Buttons["removeTask"].Enabled = false;
                     }
@@ -1155,6 +1155,13 @@ namespace MilSpace.Visibility
                     if(cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All))
                     {
                         FilterVisibilityList();
+                    }
+                    else
+                    {
+                        if(dgvVisibilitySessions.RowCount > 0)
+                        {
+                            dgvVisibilitySessions.Rows[0].Selected = true;
+                        }
                     }
                 }
             }
