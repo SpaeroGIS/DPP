@@ -236,7 +236,7 @@ namespace MilSpace.Visibility
                 dgvObjects.Columns["Type"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;//stands for "Afillation"
                 dgvObjects.Columns["Date"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
 
-                dgvObjects.Columns["Check"].MinimumWidth = 20;
+                dgvObjects.Columns["Check"].MinimumWidth = 25;
 
                 dgvObjects.Columns["Type"].ReadOnly = true;
                 dgvObjects.Columns["Title"].ReadOnly = true;
