@@ -502,9 +502,9 @@ namespace MilSpace.Core.Tools
                         currentDataset.Delete();
                         result = true;
                     }
-                    catch
+                    catch (Exception ex)
                     {
-                       
+                        logger.ErrorEx(ex.Message);
                     }
                 }
             }
