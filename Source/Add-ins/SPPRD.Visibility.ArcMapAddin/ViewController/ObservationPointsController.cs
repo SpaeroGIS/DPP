@@ -22,6 +22,7 @@ namespace MilSpace.Visibility.ViewController
         private static readonly string _observStationFeature = "MilSp_Visible_ObjectsObservation_R";
         private List<ObservationPoint> _observationPoints = new List<ObservationPoint>();
         private List<ObservationObject> _observationObjects = new List<ObservationObject>();
+        private string _previousPickedRasterLayer { get; set ; }
 
         /// <summary>
         /// The dictionary to localise the types
@@ -453,6 +454,12 @@ namespace MilSpace.Visibility.ViewController
             }
 
             return false;
+        }
+        public string GetPreviousPickedRasterLayer() => _previousPickedRasterLayer;
+        
+        public void UpdataPreviousPickedRasterLayer(string raster)
+        {
+            _previousPickedRasterLayer = raster;
         }
     }
 }

@@ -1164,7 +1164,7 @@ namespace MilSpace.Visibility
             }
             else if (e.Button == wizardTask)
             {
-                var wizard = (new WindowMilSpaceMVisibilityMaster(ObservationPointsFeatureClass, _observPointsController.GetObservationStationLayerName));
+                var wizard = (new WindowMilSpaceMVisibilityMaster(ObservationPointsFeatureClass, _observPointsController.GetObservationStationLayerName, _observPointsController.GetPreviousPickedRasterLayer()));
                 wizard.ShowDialog();
                 var dialogResult = wizard.DialogResult;
 
@@ -1172,8 +1172,10 @@ namespace MilSpace.Visibility
                 {
                     var calcParams = wizard.FinalResult;
 
+                    _observPointsController.UpdataPreviousPickedRasterLayer(calcParams.RasterLayerName);
+
                     var clculated = _observPointsController.CalculateVisibility(calcParams.RasterLayerName, VisibilityManager.GenerateResultId(),
-                            VisibilitySession.DefaultResultsSet, calcParams.ObservPointIDs, calcParams.ObservObjectIDs);
+                            calcParams.VisibilityCalculationResults, calcParams.ObservPointIDs, calcParams.ObservObjectIDs);
 
                     if (!clculated)
                     {
