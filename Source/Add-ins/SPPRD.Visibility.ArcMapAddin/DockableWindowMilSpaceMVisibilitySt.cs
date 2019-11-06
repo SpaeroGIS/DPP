@@ -263,7 +263,7 @@ namespace MilSpace.Visibility
         {
             EnableObservPointsControls();
             PopulatePointsLayersComboBox();
-            SetObservObjectsControlsState(_observPointsController.IsObservObjectsExists(ActiveView));
+            SetObservObjectsControlsState(_observPointsController.IsObservObjectsExists());
         }
 
         private void OnContentsChanged()
@@ -271,7 +271,7 @@ namespace MilSpace.Visibility
             EnableObservPointsControls();
             PopulatePointsLayersComboBox();
             SetCoordDefaultValues();
-            SetObservObjectsControlsState(_observPointsController.IsObservObjectsExists(ActiveView));
+            SetObservObjectsControlsState(_observPointsController.IsObservObjectsExists());
         }
 
         #endregion
@@ -682,7 +682,7 @@ namespace MilSpace.Visibility
             lblLayer.Visible = cmbObservPointsLayers.Visible = cmbAffiliationEdit.Enabled = cmbObservTypesEdit.Enabled = azimuthB.Enabled
                 = azimuthE.Enabled = xCoord.Enabled = yCoord.Enabled = angleOFViewMin.Enabled = angleOFViewMax.Enabled
                 = heightCurrent.Enabled = heightMin.Enabled = azimuthMainAxis.Enabled = cameraRotationH.Enabled = cameraRotationV.Enabled
-                = heightMax.Enabled = observPointName.Enabled = tlbCoordinates.Enabled = tlbObservPoints.Buttons["tlbbAddNewPoint"].Enabled = (_observPointsController.IsObservPointsExists(ActiveView) && !isAllDisabled);
+                = heightMax.Enabled = observPointName.Enabled = tlbCoordinates.Enabled = tlbObservPoints.Buttons["tlbbAddNewPoint"].Enabled = (_observPointsController.IsObservPointsExists() && !isAllDisabled);
 
             angleFrameH.Enabled = angleFrameV.Enabled = observPointDate.Enabled = observPointCreator.Enabled = false;
             tlbObservPoints.Buttons["tlbbRemovePoint"].Enabled = tlbObservPoints.Buttons["tlbbShowPoint"].Enabled = (dgvObservationPoints.SelectedRows.Count != 0 && !isAllDisabled);
@@ -975,7 +975,7 @@ namespace MilSpace.Visibility
             {
                 if (cmbObservObjAffiliationFilter.Items.Count == 0)
                 {
-                    if (_observPointsController.IsObservObjectsExists(ActiveView))
+                    if (_observPointsController.IsObservObjectsExists())
                     {
                         PopulateObservObjectsComboBoxes();
                         _observPointsController.UpdateObservObjectsList();
@@ -996,24 +996,14 @@ namespace MilSpace.Visibility
         {
             switch (e.Button.Name)
             {
-
                 case "tlbbAddNewPoint":
-
                     CreateNewPoint(GetObservationPoint());
-
                     break;
-
                 case "tlbbRemovePoint":
-
                     RemovePoint();
-
                     break;
-
-
                 case "tlbbShowPoint":
-
                     _observPointsController.ShowObservPoint(ActiveView, _selectedPointId);
-
                     break;
             }
 
@@ -1245,7 +1235,7 @@ namespace MilSpace.Visibility
             {
                 case "tlbbAddObservObjLayer":
 
-                    _observPointsController.AddObservObjectsLayer(ActiveView);
+                    _observPointsController.AddObservObjectsLayer();
 
                     break;
             }

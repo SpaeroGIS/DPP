@@ -46,6 +46,9 @@
             this.panel7 = new System.Windows.Forms.Panel();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.panelObservPointName = new System.Windows.Forms.Panel();
+            this.observPointName = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
             this.panel56 = new System.Windows.Forms.Panel();
             this.cameraRotationV = new System.Windows.Forms.TextBox();
             this.label55 = new System.Windows.Forms.Label();
@@ -131,6 +134,7 @@
             this.tlbObservPoints = new System.Windows.Forms.ToolBar();
             this.tlbbAddNewPoint = new System.Windows.Forms.ToolBarButton();
             this.tlbbShowPoint = new System.Windows.Forms.ToolBarButton();
+            this.tlbbAddObserPointLayer = new System.Windows.Forms.ToolBarButton();
             this.dgvObservationPoints = new System.Windows.Forms.DataGridView();
             this.panel5 = new System.Windows.Forms.Panel();
             this.chckFilterDate = new System.Windows.Forms.CheckBox();
@@ -271,9 +275,6 @@
             this.richTextBox4 = new System.Windows.Forms.RichTextBox();
             this.panel48 = new System.Windows.Forms.Panel();
             this.label47 = new System.Windows.Forms.Label();
-            this.panel8 = new System.Windows.Forms.Panel();
-            this.observPointName = new System.Windows.Forms.TextBox();
-            this.label20 = new System.Windows.Forms.Label();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.panel11 = new System.Windows.Forms.Panel();
             this.heightMax = new System.Windows.Forms.TextBox();
@@ -290,6 +291,7 @@
             this.panel7.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.tabPage5.SuspendLayout();
+            this.panelObservPointName.SuspendLayout();
             this.panel56.SuspendLayout();
             this.panel16.SuspendLayout();
             this.panel15.SuspendLayout();
@@ -353,7 +355,6 @@
             this.panel50.SuspendLayout();
             this.panel49.SuspendLayout();
             this.panel48.SuspendLayout();
-            this.panel8.SuspendLayout();
             this.panel11.SuspendLayout();
             this.panel17.SuspendLayout();
             this.SuspendLayout();
@@ -742,6 +743,7 @@
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.panelObservPointName);
             this.tabPage5.Controls.Add(this.panelRadiuses);
             this.tabPage5.Controls.Add(this.panel24);
             this.tabPage5.Controls.Add(this.panel56);
@@ -760,6 +762,39 @@
             this.tabPage5.TabIndex = 0;
             this.tabPage5.Text = "Параметры ПН";
             this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // panelObservPointName
+            // 
+            this.panelObservPointName.Controls.Add(this.observPointName);
+            this.panelObservPointName.Controls.Add(this.label20);
+            this.panelObservPointName.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelObservPointName.ForeColor = System.Drawing.Color.Coral;
+            this.panelObservPointName.Location = new System.Drawing.Point(3, 219);
+            this.panelObservPointName.Name = "panelObservPointName";
+            this.panelObservPointName.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
+            this.panelObservPointName.Size = new System.Drawing.Size(322, 24);
+            this.panelObservPointName.TabIndex = 28;
+            // 
+            // observPointName
+            // 
+            this.observPointName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.observPointName.Location = new System.Drawing.Point(63, 0);
+            this.observPointName.Name = "observPointName";
+            this.observPointName.Size = new System.Drawing.Size(259, 20);
+            this.observPointName.TabIndex = 5;
+            this.observPointName.Text = "\"Человеческое\" название ПН";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label20.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label20.Location = new System.Drawing.Point(8, 0);
+            this.label20.Name = "label20";
+            this.label20.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.label20.Size = new System.Drawing.Size(55, 17);
+            this.label20.TabIndex = 4;
+            this.label20.Text = "название";
             // 
             // panel56
             // 
@@ -1626,7 +1661,8 @@
             this.tlbObservPoints.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
             this.tlbbAddNewPoint,
             this.tlbbRemovePoint,
-            this.tlbbShowPoint});
+            this.tlbbShowPoint,
+            this.tlbbAddObserPointLayer});
             this.tlbObservPoints.ButtonSize = new System.Drawing.Size(18, 18);
             this.tlbObservPoints.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tlbObservPoints.DropDownArrows = true;
@@ -1649,6 +1685,11 @@
             this.tlbbShowPoint.ImageKey = "Directions.png";
             this.tlbbShowPoint.Name = "tlbbShowPoint";
             this.tlbbShowPoint.ToolTipText = "Показать пункт на карте";
+            // 
+            // tlbbAddObserPointLayer
+            // 
+            this.tlbbAddObserPointLayer.ImageKey = "Applications.png";
+            this.tlbbAddObserPointLayer.Name = "tlbbAddObserPointLayer";
             // 
             // dgvObservationPoints
             // 
@@ -1942,15 +1983,6 @@
             this.listBox4.Dock = System.Windows.Forms.DockStyle.Top;
             this.listBox4.Enabled = false;
             this.listBox4.FormattingEnabled = true;
-            this.listBox4.Items.AddRange(new object[] {
-            "OBOFOB20181113134511; чужой; 201811131",
-            "OBOFOB20181113134511; чужой; 201811131",
-            "OBOFOB20181113134511; чужой; 201811131",
-            "OBOFOB20181113134511; чужой; 201811131",
-            "OBOFOB20181113134511; чужой; 201811131",
-            "OBOFOB20181113134511; чужой; 201811131",
-            "OBOFOB20181113134511; чужой; 201811131",
-            ""});
             this.listBox4.Location = new System.Drawing.Point(0, 96);
             this.listBox4.Name = "listBox4";
             this.listBox4.Size = new System.Drawing.Size(336, 95);
@@ -3157,39 +3189,6 @@
             this.label47.TabIndex = 2;
             this.label47.Text = "Список результатаов";
             // 
-            // panel8
-            // 
-            this.panel8.Controls.Add(this.observPointName);
-            this.panel8.Controls.Add(this.label20);
-            this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel8.Location = new System.Drawing.Point(3, 219);
-            this.panel8.Name = "panel8";
-            this.panel8.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.panel8.Size = new System.Drawing.Size(322, 24);
-            this.panel8.TabIndex = 28;
-            // 
-            // observPointName
-            // 
-            this.observPointName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.observPointName.Location = new System.Drawing.Point(63, 0);
-            this.observPointName.Name = "observPointName";
-            this.observPointName.Size = new System.Drawing.Size(259, 20);
-            this.observPointName.TabIndex = 5;
-            this.observPointName.Text = "\"Человеческое\" название ПН";
-            this.observPointName.TextChanged += new System.EventHandler(this.Fields_TextChanged);
-            this.observPointName.Leave += new System.EventHandler(this.OnFieldChanged);
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label20.Location = new System.Drawing.Point(8, 0);
-            this.label20.Name = "label20";
-            this.label20.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-            this.label20.Size = new System.Drawing.Size(55, 17);
-            this.label20.TabIndex = 4;
-            this.label20.Text = "название";
-            // 
             // richTextBox1
             // 
             this.richTextBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
@@ -3307,6 +3306,8 @@
             this.panel7.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
+            this.panelObservPointName.ResumeLayout(false);
+            this.panelObservPointName.PerformLayout();
             this.panel56.ResumeLayout(false);
             this.panel56.PerformLayout();
             this.panel16.ResumeLayout(false);
@@ -3421,8 +3422,6 @@
             this.panel49.PerformLayout();
             this.panel48.ResumeLayout(false);
             this.panel48.PerformLayout();
-            this.panel8.ResumeLayout(false);
-            this.panel8.PerformLayout();
             this.panel11.ResumeLayout(false);
             this.panel11.PerformLayout();
             this.panel17.ResumeLayout(false);
@@ -3623,9 +3622,6 @@
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.TextBox observPointDate;
         private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.Panel panel8;
-        private System.Windows.Forms.TextBox observPointName;
-        private System.Windows.Forms.Label label20;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.TextBox heightMax;
@@ -3693,5 +3689,9 @@
         private System.Windows.Forms.TextBox txtMaxDistance;
         private System.Windows.Forms.Label lblMaxDistance;
         private System.Windows.Forms.Panel panelRadiuses;
+        private System.Windows.Forms.ToolBarButton tlbbAddObserPointLayer;
+        private System.Windows.Forms.Panel panelObservPointName;
+        private System.Windows.Forms.TextBox observPointName;
+        private System.Windows.Forms.Label label20;
     }
 }

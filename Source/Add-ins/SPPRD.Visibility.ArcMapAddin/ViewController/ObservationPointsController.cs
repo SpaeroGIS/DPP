@@ -281,9 +281,9 @@ namespace MilSpace.Visibility.ViewController
             view.FillObservationObjectsList(_observationObjects);
         }
 
-        public void AddObservObjectsLayer(IActiveView activeView)
+        public void AddObservObjectsLayer()
         {
-            VisibilityManager.AddObservationObjectLayer(activeView);
+            VisibilityManager.AddObservationObjectLayer(mapDocument.ActiveView);
         }
 
         public IEnumerable<string> GetObservationPointTypes()
@@ -361,14 +361,14 @@ namespace MilSpace.Visibility.ViewController
             return GetFeatureClass(_observStationFeature, esriView);
         }
 
-        public bool IsObservPointsExists(IActiveView view)
+        public bool IsObservPointsExists()
         {
-            return IsFeatureLayerExists(view, _observPointFeature);
+            return IsFeatureLayerExists(mapDocument.ActiveView, _observPointFeature);
         }
 
-        public bool IsObservObjectsExists(IActiveView view)
+        public bool IsObservObjectsExists()
         {
-            return IsFeatureLayerExists(view, _observStationFeature);
+            return IsFeatureLayerExists(mapDocument.ActiveView, _observStationFeature);
         }
 
         public string GetObservationPointsLayerName => view.ObservationPointsFeatureClass;
