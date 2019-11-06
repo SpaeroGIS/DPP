@@ -90,10 +90,12 @@ namespace MilSpace.Visibility
             controller.UpdateObservationPointsList();
             PopulateComboBox();
             FillObservPointLabel();
-            FillObservPointsOnCurrentView(controller.GetObservPointsOnCurrentMapExtent(ActiveView));
-
             DisabelObjList();
-            FillObsObj(true);
+            dgvObjects.DataSource = null;
+
+            //FillObservPointsOnCurrentView(controller.GetObservPointsOnCurrentMapExtent(ActiveView));
+            
+            //FillObsObj(true);
 
         }
         public void SecondTypePicked()//triggers when user picks second type
