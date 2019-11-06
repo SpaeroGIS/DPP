@@ -22,7 +22,7 @@ namespace MilSpace.Visibility.ViewController
         private static readonly string _observStationFeature = "MilSp_Visible_ObjectsObservation_R";
         private List<ObservationPoint> _observationPoints = new List<ObservationPoint>();
         private List<ObservationObject> _observationObjects = new List<ObservationObject>();
-
+       
         /// <summary>
         /// The dictionary to localise the types
         /// </summary>
@@ -184,6 +184,9 @@ namespace MilSpace.Visibility.ViewController
             VisibilityCalculationresultsEnum culcResults = VisibilitySession.DefaultResultsSet,
             IEnumerable<int> pointsTOCalculate = null, IEnumerable<int> stationsTOCalculate = null)
         {
+            var statusBar = ArcMap.Application.StatusBar;
+            var animationProgressor = statusBar.ProgressAnimation;
+
             try
             {
 
@@ -211,16 +214,23 @@ namespace MilSpace.Visibility.ViewController
                     stationsTOCalculate = EsriTools.GetSelectionByExtent(observObjects, mapDocument.ActiveView);
                 }
 
+               
+
+                animationProgressor.Show();
+                animationProgressor.Play(0, -1, -1);
+
                 var session = VisibilityManager.Generate(observPoints, pointsTOCalculate, observObjects, stationsTOCalculate, scrDEM, culcResults, sessionName);
-
-
             }
             catch (Exception ex)
             {
                 log.ErrorEx(ex.Message);
                 return false;
             }
-
+            finally
+            {
+                animationProgressor.Stop();
+                animationProgressor.Hide();
+            }
             return true;
         }
 
