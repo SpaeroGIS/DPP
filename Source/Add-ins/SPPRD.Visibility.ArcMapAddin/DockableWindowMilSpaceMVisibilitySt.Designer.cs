@@ -371,9 +371,9 @@
             // observPointCreator
             // 
             this.observPointCreator.Dock = System.Windows.Forms.DockStyle.Left;
-            this.observPointCreator.Enabled = false;
             this.observPointCreator.Location = new System.Drawing.Point(170, 0);
             this.observPointCreator.Name = "observPointCreator";
+            this.observPointCreator.ReadOnly = true;
             this.observPointCreator.Size = new System.Drawing.Size(127, 20);
             this.observPointCreator.TabIndex = 7;
             this.observPointCreator.Text = "vnikolaev";
@@ -394,9 +394,9 @@
             // observPointDate
             // 
             this.observPointDate.Dock = System.Windows.Forms.DockStyle.Left;
-            this.observPointDate.Enabled = false;
             this.observPointDate.Location = new System.Drawing.Point(38, 0);
             this.observPointDate.Name = "observPointDate";
+            this.observPointDate.ReadOnly = true;
             this.observPointDate.Size = new System.Drawing.Size(74, 20);
             this.observPointDate.TabIndex = 5;
             this.observPointDate.Text = "2018-11-30";
@@ -451,7 +451,7 @@
             // 
             // txtMaxDistance
             // 
-            this.txtMaxDistance.Location = new System.Drawing.Point(102, 1);
+            this.txtMaxDistance.Location = new System.Drawing.Point(106, 1);
             this.txtMaxDistance.Name = "txtMaxDistance";
             this.txtMaxDistance.Size = new System.Drawing.Size(52, 20);
             this.txtMaxDistance.TabIndex = 17;
@@ -1661,8 +1661,7 @@
             this.dgvObservationPoints.AllowUserToResizeRows = false;
             this.dgvObservationPoints.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
             this.dgvObservationPoints.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.dgvObservationPoints.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvObservationPoints.ColumnHeadersVisible = false;
+            this.dgvObservationPoints.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvObservationPoints.Dock = System.Windows.Forms.DockStyle.Top;
             this.dgvObservationPoints.Location = new System.Drawing.Point(3, 84);
             this.dgvObservationPoints.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
