@@ -1565,7 +1565,6 @@ namespace MilSpace.Visibility
             this.label29.Size = new System.Drawing.Size(246, 20);
             this.label29.TabIndex = 9;
             this.label29.Text = "Параметры задачи расчета";
-            this.label29.Click += new System.EventHandler(this.label29_Click);
             // 
             // panel28
             // 
