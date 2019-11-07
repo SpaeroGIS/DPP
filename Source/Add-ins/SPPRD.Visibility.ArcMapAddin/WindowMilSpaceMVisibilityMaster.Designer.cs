@@ -122,6 +122,9 @@ namespace MilSpace.Visibility
             this.panel20 = new System.Windows.Forms.Panel();
             this.label10 = new System.Windows.Forms.Label();
             this.stepFour = new System.Windows.Forms.TabPage();
+            this.panel27 = new System.Windows.Forms.Panel();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
             this.labelT = new System.Windows.Forms.Label();
             this.labelOB = new System.Windows.Forms.Label();
             this.labelOP = new System.Windows.Forms.Label();
@@ -131,11 +134,9 @@ namespace MilSpace.Visibility
             this.panel2 = new System.Windows.Forms.Panel();
             this.label27 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.panel27 = new System.Windows.Forms.Panel();
-            this.label29 = new System.Windows.Forms.Label();
             this.panel28 = new System.Windows.Forms.Panel();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.StepsTabControl.SuspendLayout();
             this.stepOne.SuspendLayout();
@@ -172,9 +173,9 @@ namespace MilSpace.Visibility
             this.panel21.SuspendLayout();
             this.panel20.SuspendLayout();
             this.stepFour.SuspendLayout();
+            this.panel27.SuspendLayout();
             this.panel26.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.panel27.SuspendLayout();
             this.panel28.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -185,14 +186,13 @@ namespace MilSpace.Visibility
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 455);
             this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(0, 0, 8, 0);
             this.panel1.Size = new System.Drawing.Size(929, 28);
             this.panel1.TabIndex = 1;
             // 
             // PreviousStepButton
             // 
             this.PreviousStepButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.PreviousStepButton.Location = new System.Drawing.Point(701, 0);
+            this.PreviousStepButton.Location = new System.Drawing.Point(709, 0);
             this.PreviousStepButton.Name = "PreviousStepButton";
             this.PreviousStepButton.Size = new System.Drawing.Size(110, 28);
             this.PreviousStepButton.TabIndex = 1;
@@ -203,7 +203,7 @@ namespace MilSpace.Visibility
             // NextStepButton
             // 
             this.NextStepButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.NextStepButton.Location = new System.Drawing.Point(811, 0);
+            this.NextStepButton.Location = new System.Drawing.Point(819, 0);
             this.NextStepButton.Name = "NextStepButton";
             this.NextStepButton.Padding = new System.Windows.Forms.Padding(0, 0, 8, 0);
             this.NextStepButton.Size = new System.Drawing.Size(110, 28);
@@ -425,7 +425,6 @@ namespace MilSpace.Visibility
             // StepsTabControl
             // 
             this.StepsTabControl.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
-            this.StepsTabControl.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControl_Selecting);
             this.StepsTabControl.Controls.Add(this.stepOne);
             this.StepsTabControl.Controls.Add(this.stepTwo);
             this.StepsTabControl.Controls.Add(this.stepThree);
@@ -435,6 +434,7 @@ namespace MilSpace.Visibility
             this.StepsTabControl.ImageList = this.imageList1;
             this.StepsTabControl.ItemSize = new System.Drawing.Size(100, 24);
             this.StepsTabControl.Location = new System.Drawing.Point(0, 0);
+            this.StepsTabControl.Margin = new System.Windows.Forms.Padding(0);
             this.StepsTabControl.Name = "StepsTabControl";
             this.StepsTabControl.SelectedIndex = 0;
             this.StepsTabControl.Size = new System.Drawing.Size(929, 455);
@@ -474,10 +474,8 @@ namespace MilSpace.Visibility
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(914, 78);
             this.button4.TabIndex = 4;
-
             this.button4.Text = "Анализ результатов наблюдения с известными параметрами (например - аэрофотосъемки" +
     ") с точки зрения расположения кадров на местности и обеспечения видимости.";
-
             this.button4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button4.UseVisualStyleBackColor = true;
             // 
@@ -499,7 +497,6 @@ namespace MilSpace.Visibility
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(914, 78);
             this.button2.TabIndex = 0;
-
             this.button2.Text = "Подбор параметров пунктов наблюдения для наилучшего наблюдения за заданными ОН (п" +
     "араметры аппаратуры, высота над поверхностью, направления и углы обзора).";
             this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -522,7 +519,6 @@ namespace MilSpace.Visibility
             this.uButton2.Name = "uButton2";
             this.uButton2.Size = new System.Drawing.Size(914, 78);
             this.uButton2.TabIndex = 0;
-
             this.uButton2.Text = "Определение видимости в заданных ОН, для выбранных пунктов наблюдения, с учетом и" +
     "ндивидуальных параметров пунктов наблюдения. ";
             this.uButton2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -541,11 +537,9 @@ namespace MilSpace.Visibility
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-
             this.button1.Location = new System.Drawing.Point(0, -3);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(914, 81);
-
             this.button1.TabIndex = 0;
             this.button1.Text = resources.GetString("button1.Text");
             this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -558,6 +552,7 @@ namespace MilSpace.Visibility
             this.stepTwo.Controls.Add(this.panel47);
             this.stepTwo.ImageIndex = 2;
             this.stepTwo.Location = new System.Drawing.Point(4, 28);
+            this.stepTwo.Margin = new System.Windows.Forms.Padding(0);
             this.stepTwo.Name = "stepTwo";
             this.stepTwo.Padding = new System.Windows.Forms.Padding(3);
             this.stepTwo.Size = new System.Drawing.Size(921, 423);
@@ -569,14 +564,13 @@ namespace MilSpace.Visibility
             // 
             this.panel7.Controls.Add(this.splitContainer1);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(3, 48);
+            this.panel7.Location = new System.Drawing.Point(3, 74);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(915, 372);
+            this.panel7.Size = new System.Drawing.Size(915, 346);
             this.panel7.TabIndex = 67;
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             // 
@@ -601,8 +595,9 @@ namespace MilSpace.Visibility
             this.splitContainer1.Panel2.Controls.Add(this.panel14);
             this.splitContainer1.Size = new System.Drawing.Size(915, 372);
             this.splitContainer1.SplitterDistance = 441;
-            this.splitContainer1.SplitterWidth = 10;
+            this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 0;
+            this.splitContainer1.TabStop = false;
             // 
             // checkBox6
             // 
@@ -624,8 +619,7 @@ namespace MilSpace.Visibility
             this.dvgCheckList.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dvgCheckList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dvgCheckList.Dock = System.Windows.Forms.DockStyle.Top;
-
-            this.dvgCheckList.Location = new System.Drawing.Point(0, 120);
+            this.dvgCheckList.Location = new System.Drawing.Point(0, 121);
             this.dvgCheckList.MultiSelect = false;
             this.dvgCheckList.Name = "dvgCheckList";
             this.dvgCheckList.RowHeadersVisible = false;
@@ -862,9 +856,9 @@ namespace MilSpace.Visibility
             this.label5.Location = new System.Drawing.Point(4, 0);
             this.label5.Name = "label5";
             this.label5.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label5.Size = new System.Drawing.Size(327, 24);
+            this.label5.Size = new System.Drawing.Size(256, 24);
             this.label5.TabIndex = 2;
-            this.label5.Text = "Список пунктов наблюдения (ПН/ТН)";
+            this.label5.Text = "Список пунктов наблюдения";
             // 
             // panel19
             // 
@@ -872,8 +866,9 @@ namespace MilSpace.Visibility
             this.panel19.Controls.Add(this.dgvObjects);
             this.panel19.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel19.Location = new System.Drawing.Point(0, 121);
+            this.panel19.Margin = new System.Windows.Forms.Padding(0);
             this.panel19.Name = "panel19";
-            this.panel19.Size = new System.Drawing.Size(464, 225);
+            this.panel19.Size = new System.Drawing.Size(473, 225);
             this.panel19.TabIndex = 22;
             // 
             // checkBox4
@@ -911,7 +906,7 @@ namespace MilSpace.Visibility
             this.panel18.Location = new System.Drawing.Point(0, 97);
             this.panel18.Name = "panel18";
             this.panel18.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel18.Size = new System.Drawing.Size(464, 24);
+            this.panel18.Size = new System.Drawing.Size(473, 24);
             this.panel18.TabIndex = 18;
             // 
             // checkDate_Object
@@ -952,7 +947,7 @@ namespace MilSpace.Visibility
             this.panel17.Location = new System.Drawing.Point(0, 73);
             this.panel17.Name = "panel17";
             this.panel17.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel17.Size = new System.Drawing.Size(464, 24);
+            this.panel17.Size = new System.Drawing.Size(473, 24);
             this.panel17.TabIndex = 17;
             // 
             // cmbObservObject
@@ -984,7 +979,7 @@ namespace MilSpace.Visibility
             this.panel16.Location = new System.Drawing.Point(0, 49);
             this.panel16.Name = "panel16";
             this.panel16.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel16.Size = new System.Drawing.Size(464, 24);
+            this.panel16.Size = new System.Drawing.Size(473, 24);
             this.panel16.TabIndex = 16;
             // 
             // label8
@@ -1007,9 +1002,8 @@ namespace MilSpace.Visibility
             this.panel15.Location = new System.Drawing.Point(0, 25);
             this.panel15.Name = "panel15";
             this.panel15.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel15.Size = new System.Drawing.Size(464, 24);
+            this.panel15.Size = new System.Drawing.Size(473, 24);
             this.panel15.TabIndex = 15;
-            this.panel15.Paint += new System.Windows.Forms.PaintEventHandler(this.panel15_Paint);
             // 
             // observObjectsLabel
             // 
@@ -1048,7 +1042,7 @@ namespace MilSpace.Visibility
             this.panel14.Location = new System.Drawing.Point(0, 0);
             this.panel14.Name = "panel14";
             this.panel14.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel14.Size = new System.Drawing.Size(464, 25);
+            this.panel14.Size = new System.Drawing.Size(473, 25);
             this.panel14.TabIndex = 14;
             // 
             // label6
@@ -1067,20 +1061,22 @@ namespace MilSpace.Visibility
             // 
             this.panel47.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.panel47.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel47.Controls.Add(this.label30);
             this.panel47.Controls.Add(this.label22);
             this.panel47.Controls.Add(this.comboBox1);
             this.panel47.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel47.Location = new System.Drawing.Point(3, 3);
+            this.panel47.Margin = new System.Windows.Forms.Padding(0);
             this.panel47.Name = "panel47";
             this.panel47.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.panel47.Size = new System.Drawing.Size(915, 45);
+            this.panel47.Size = new System.Drawing.Size(915, 71);
             this.panel47.TabIndex = 66;
             // 
             // label22
             // 
             this.label22.AutoSize = true;
             this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label22.Location = new System.Drawing.Point(9, 14);
+            this.label22.Location = new System.Drawing.Point(10, 44);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(134, 15);
             this.label22.TabIndex = 6;
@@ -1090,7 +1086,7 @@ namespace MilSpace.Visibility
             // 
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(149, 13);
+            this.comboBox1.Location = new System.Drawing.Point(150, 43);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(290, 21);
             this.comboBox1.TabIndex = 5;
@@ -1118,7 +1114,7 @@ namespace MilSpace.Visibility
             this.panel25.Controls.Add(this.label20);
             this.panel25.Controls.Add(this.label21);
             this.panel25.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel25.Location = new System.Drawing.Point(0, 132);
+            this.panel25.Location = new System.Drawing.Point(0, 137);
             this.panel25.Name = "panel25";
             this.panel25.Size = new System.Drawing.Size(921, 26);
             this.panel25.TabIndex = 19;
@@ -1179,7 +1175,7 @@ namespace MilSpace.Visibility
             this.panel24.Controls.Add(this.label16);
             this.panel24.Controls.Add(this.label17);
             this.panel24.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel24.Location = new System.Drawing.Point(0, 106);
+            this.panel24.Location = new System.Drawing.Point(0, 111);
             this.panel24.Name = "panel24";
             this.panel24.Size = new System.Drawing.Size(921, 26);
             this.panel24.TabIndex = 18;
@@ -1242,7 +1238,7 @@ namespace MilSpace.Visibility
             this.panel23.Controls.Add(this.label15);
             this.panel23.Controls.Add(this.label13);
             this.panel23.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel23.Location = new System.Drawing.Point(0, 80);
+            this.panel23.Location = new System.Drawing.Point(0, 85);
             this.panel23.Name = "panel23";
             this.panel23.Size = new System.Drawing.Size(921, 26);
             this.panel23.TabIndex = 17;
@@ -1289,7 +1285,7 @@ namespace MilSpace.Visibility
             this.panel22.Controls.Add(this.label14);
             this.panel22.Controls.Add(this.label12);
             this.panel22.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel22.Location = new System.Drawing.Point(0, 54);
+            this.panel22.Location = new System.Drawing.Point(0, 59);
             this.panel22.Name = "panel22";
             this.panel22.Size = new System.Drawing.Size(921, 26);
             this.panel22.TabIndex = 16;
@@ -1345,7 +1341,7 @@ namespace MilSpace.Visibility
             this.panel21.Controls.Add(this.checkBoxOP);
             this.panel21.Controls.Add(this.label11);
             this.panel21.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel21.Location = new System.Drawing.Point(0, 28);
+            this.panel21.Location = new System.Drawing.Point(0, 33);
             this.panel21.Name = "panel21";
             this.panel21.Size = new System.Drawing.Size(921, 26);
             this.panel21.TabIndex = 15;
@@ -1409,16 +1405,17 @@ namespace MilSpace.Visibility
             this.panel20.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel20.Location = new System.Drawing.Point(0, 0);
             this.panel20.Name = "panel20";
-            this.panel20.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel20.Size = new System.Drawing.Size(921, 28);
+            this.panel20.Padding = new System.Windows.Forms.Padding(4);
+            this.panel20.Size = new System.Drawing.Size(921, 33);
             this.panel20.TabIndex = 14;
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label10.Dock = System.Windows.Forms.DockStyle.Top;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label10.Location = new System.Drawing.Point(4, 0);
+            this.label10.Location = new System.Drawing.Point(4, 4);
+            this.label10.Margin = new System.Windows.Forms.Padding(3);
             this.label10.Name = "label10";
             this.label10.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
             this.label10.Size = new System.Drawing.Size(259, 24);
@@ -1436,16 +1433,45 @@ namespace MilSpace.Visibility
             this.stepFour.Controls.Add(this.panel28);
             this.stepFour.ImageIndex = 4;
             this.stepFour.Location = new System.Drawing.Point(4, 28);
+            this.stepFour.Margin = new System.Windows.Forms.Padding(0);
             this.stepFour.Name = "stepFour";
             this.stepFour.Size = new System.Drawing.Size(921, 423);
             this.stepFour.TabIndex = 3;
             this.stepFour.Text = "Шаг 4";
             this.stepFour.UseVisualStyleBackColor = true;
             // 
+            // panel27
+            // 
+            this.panel27.Controls.Add(this.label23);
+            this.panel27.Controls.Add(this.label24);
+            this.panel27.Location = new System.Drawing.Point(8, 35);
+            this.panel27.Name = "panel27";
+            this.panel27.Size = new System.Drawing.Size(313, 19);
+            this.panel27.TabIndex = 8;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label23.Location = new System.Drawing.Point(3, 0);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(161, 15);
+            this.label23.TabIndex = 1;
+            this.label23.Text = "Поверхность расчета :";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(170, 2);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(41, 13);
+            this.label24.TabIndex = 2;
+            this.label24.Text = "label24";
+            // 
             // labelT
             // 
             this.labelT.AutoSize = true;
-            this.labelT.Location = new System.Drawing.Point(12, 146);
+            this.labelT.Location = new System.Drawing.Point(12, 149);
             this.labelT.Name = "labelT";
             this.labelT.Size = new System.Drawing.Size(100, 13);
             this.labelT.TabIndex = 7;
@@ -1454,7 +1480,7 @@ namespace MilSpace.Visibility
             // labelOB
             // 
             this.labelOB.AutoSize = true;
-            this.labelOB.Location = new System.Drawing.Point(12, 133);
+            this.labelOB.Location = new System.Drawing.Point(12, 136);
             this.labelOB.Name = "labelOB";
             this.labelOB.Size = new System.Drawing.Size(98, 13);
             this.labelOB.TabIndex = 6;
@@ -1463,18 +1489,17 @@ namespace MilSpace.Visibility
             // labelOP
             // 
             this.labelOP.AutoSize = true;
-            this.labelOP.Location = new System.Drawing.Point(12, 120);
+            this.labelOP.Location = new System.Drawing.Point(12, 123);
             this.labelOP.Name = "labelOP";
             this.labelOP.Size = new System.Drawing.Size(182, 13);
             this.labelOP.TabIndex = 5;
             this.labelOP.Text = "области видимости отдельных ПН";
-            this.labelOP.Click += new System.EventHandler(this.labelOP_Click);
             // 
             // panel26
             // 
             this.panel26.Controls.Add(this.label28);
             this.panel26.Controls.Add(this.label26);
-            this.panel26.Location = new System.Drawing.Point(8, 83);
+            this.panel26.Location = new System.Drawing.Point(8, 86);
             this.panel26.Name = "panel26";
             this.panel26.Size = new System.Drawing.Size(313, 20);
             this.panel26.TabIndex = 4;
@@ -1503,7 +1528,7 @@ namespace MilSpace.Visibility
             // 
             this.panel2.Controls.Add(this.label27);
             this.panel2.Controls.Add(this.label25);
-            this.panel2.Location = new System.Drawing.Point(8, 57);
+            this.panel2.Location = new System.Drawing.Point(8, 60);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(313, 20);
             this.panel2.TabIndex = 3;
@@ -1528,33 +1553,14 @@ namespace MilSpace.Visibility
             this.label25.TabIndex = 1;
             this.label25.Text = "Выбранно ПН :";
             // 
-            // label24
+            // panel28
             // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(170, 2);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(41, 13);
-            this.label24.TabIndex = 2;
-            this.label24.Text = "label24";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label23.Location = new System.Drawing.Point(3, 0);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(161, 15);
-            this.label23.TabIndex = 1;
-            this.label23.Text = "Поверхность расчета :";
-            // 
-            // panel27
-            // 
-            this.panel27.Controls.Add(this.label23);
-            this.panel27.Controls.Add(this.label24);
-            this.panel27.Location = new System.Drawing.Point(8, 32);
-            this.panel27.Name = "panel27";
-            this.panel27.Size = new System.Drawing.Size(313, 19);
-            this.panel27.TabIndex = 8;
+            this.panel28.Controls.Add(this.label29);
+            this.panel28.Location = new System.Drawing.Point(0, 3);
+            this.panel28.Margin = new System.Windows.Forms.Padding(0);
+            this.panel28.Name = "panel28";
+            this.panel28.Size = new System.Drawing.Size(921, 28);
+            this.panel28.TabIndex = 10;
             // 
             // label29
             // 
@@ -1566,13 +1572,16 @@ namespace MilSpace.Visibility
             this.label29.TabIndex = 9;
             this.label29.Text = "Параметры задачи расчета";
             // 
-            // panel28
+            // label30
             // 
-            this.panel28.Controls.Add(this.label29);
-            this.panel28.Location = new System.Drawing.Point(0, 3);
-            this.panel28.Name = "panel28";
-            this.panel28.Size = new System.Drawing.Size(921, 28);
-            this.panel28.TabIndex = 10;
+            this.label30.AutoSize = true;
+            this.label30.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label30.Location = new System.Drawing.Point(0, 0);
+            this.label30.Name = "label30";
+            this.label30.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
+            this.label30.Size = new System.Drawing.Size(184, 24);
+            this.label30.TabIndex = 7;
+            this.label30.Text = "Параметры расчета";
             // 
             // WindowMilSpaceMVisibilityMaster
             // 
@@ -1643,12 +1652,12 @@ namespace MilSpace.Visibility
             this.panel20.PerformLayout();
             this.stepFour.ResumeLayout(false);
             this.stepFour.PerformLayout();
+            this.panel27.ResumeLayout(false);
+            this.panel27.PerformLayout();
             this.panel26.ResumeLayout(false);
             this.panel26.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.panel27.ResumeLayout(false);
-            this.panel27.PerformLayout();
             this.panel28.ResumeLayout(false);
             this.panel28.PerformLayout();
             this.ResumeLayout(false);
@@ -1670,40 +1679,6 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.TabPage stepTwo;
         private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Panel panel8;
-        private System.Windows.Forms.ToolBar toolBar7;
-        private System.Windows.Forms.ToolBarButton toolBarButton51;
-        private System.Windows.Forms.ToolBarButton toolBarButton3;
-        private System.Windows.Forms.ToolBarButton toolBarButton27;
-        private System.Windows.Forms.Panel panel9;
-        private System.Windows.Forms.CheckBox checkDate;
-        private System.Windows.Forms.CheckBox checkAffiliation;
-        private System.Windows.Forms.CheckBox checkType;
-        private System.Windows.Forms.Panel panel10;
-        private System.Windows.Forms.ComboBox cmbAffiliation;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox cmbType;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Panel panel11;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Panel panel12;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Panel panel13;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Panel panel19;
-        private System.Windows.Forms.Panel panel18;
-        private System.Windows.Forms.CheckBox checkDate_Object;
-        private System.Windows.Forms.CheckBox checkB_Affilation;
-        private System.Windows.Forms.Panel panel17;
-        private System.Windows.Forms.ComboBox cmbObservObject;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Panel panel16;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Panel panel15;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Panel panel14;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Panel panel47;
         private System.Windows.Forms.TabPage stepThree;
         private System.Windows.Forms.Panel panel25;
@@ -1734,9 +1709,6 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Panel panel20;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TabPage stepFour;
-        private System.Windows.Forms.DataGridView dvgCheckList;
-        private System.Windows.Forms.Label ObservPointLabel;
-        private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Button uButton2;
       
         private System.Windows.Forms.ComboBox comboBox1;
@@ -1751,17 +1723,55 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.DataGridView dgvObjects;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.Label observObjectsLabel;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.CheckBox checkBox6;
         private System.Windows.Forms.Label labelOP;
         private System.Windows.Forms.Label labelT;
         private System.Windows.Forms.Label labelOB;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Panel panel27;
         private System.Windows.Forms.Panel panel28;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.CheckBox checkBox6;
+        private System.Windows.Forms.DataGridView dvgCheckList;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.ToolBar toolBar7;
+        private System.Windows.Forms.ToolBarButton toolBarButton51;
+        private System.Windows.Forms.ToolBarButton toolBarButton3;
+        private System.Windows.Forms.ToolBarButton toolBarButton27;
+        private System.Windows.Forms.Panel panel9;
+        private System.Windows.Forms.CheckBox checkDate;
+        private System.Windows.Forms.CheckBox checkAffiliation;
+        private System.Windows.Forms.CheckBox checkType;
+        private System.Windows.Forms.Panel panel10;
+        private System.Windows.Forms.ComboBox cmbAffiliation;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox cmbType;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Panel panel11;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Panel panel12;
+        private System.Windows.Forms.Label ObservPointLabel;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel panel13;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Panel panel19;
+        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.DataGridView dgvObjects;
+        private System.Windows.Forms.Panel panel18;
+        private System.Windows.Forms.CheckBox checkDate_Object;
+        private System.Windows.Forms.CheckBox checkB_Affilation;
+        private System.Windows.Forms.Panel panel17;
+        private System.Windows.Forms.ComboBox cmbObservObject;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Panel panel16;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Panel panel15;
+        private System.Windows.Forms.Label observObjectsLabel;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Panel panel14;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label30;
     }
 }
