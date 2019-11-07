@@ -71,6 +71,16 @@ namespace MilSpace.Visibility
 
                 OnContentsChanged();
             };
+
+            ArcMap.Events.NewDocument += delegate ()
+            {
+                IActiveViewEvents_Event activeViewEvent = (IActiveViewEvents_Event)ActiveView;
+
+                activeViewEvent.SelectionChanged += OnContentsChanged;
+                activeViewEvent.ItemAdded += OnItemAdded;
+
+                OnContentsChanged();
+            };
         }
 
         /// <summary>
@@ -399,6 +409,11 @@ namespace MilSpace.Visibility
             }
 
             dgvObservationPoints.CurrentCell = null;
+
+            if(dgvObservationPoints.SelectedRows.Count > 0)
+            {
+                dgvObservationPoints.SelectedRows[0].Selected = false;
+            }
 
             foreach (DataGridViewRow row in dgvObservationPoints.Rows)
             {
@@ -784,6 +799,11 @@ namespace MilSpace.Visibility
         {
             dgvObservationPoints.CurrentCell = null;
 
+            if(dgvObservationPoints.SelectedRows.Count > 0)
+            {
+                dgvObservationPoints.SelectedRows[0].Selected = false;
+            }
+
             CheckRowForFilter(row);
 
             if (row.Visible)
@@ -883,6 +903,11 @@ namespace MilSpace.Visibility
 
             dgvVisibilitySessions.CurrentCell = null;
 
+            if(dgvVisibilitySessions.SelectedRows.Count > 0)
+            {
+                dgvVisibilitySessions.SelectedRows[0].Selected = false;
+            }
+
             foreach (DataGridViewRow row in dgvVisibilitySessions.Rows)
             {
                 row.Visible = row.Cells["State"].Value.ToString() == cmbStateFilter.SelectedItem.ToString()
@@ -939,6 +964,11 @@ namespace MilSpace.Visibility
 
             dgvObservObjects.CurrentCell = null;
 
+            if (dgvObservObjects.SelectedRows.Count > 0)
+            {
+                dgvObservObjects.SelectedRows[0].Selected = false;
+            }
+
             foreach (DataGridViewRow row in dgvObservObjects.Rows)
             {
                 row.Visible = row.Cells["Affiliation"].Value.ToString() == cmbObservObjAffiliationFilter.SelectedItem.ToString()
@@ -980,6 +1010,11 @@ namespace MilSpace.Visibility
             else
             {
                 _observPointsController.UpdateObservObjectsList();
+
+                if(cmbObservObjAffiliationFilter.Items.Count == 0)
+                {
+                    PopulateObservObjectsComboBoxes();
+                }
             }
 
             addNewObjectPanel.Enabled = isObservObjectsExist;
@@ -1011,16 +1046,7 @@ namespace MilSpace.Visibility
             {
                 if (cmbObservObjAffiliationFilter.Items.Count == 0)
                 {
-                    if (_observPointsController.IsObservObjectsExists())
-                    {
-                        PopulateObservObjectsComboBoxes();
-                        _observPointsController.UpdateObservObjectsList();
-                        SetObservObjectsControlsState(true);
-                    }
-                    else
-                    {
-                        SetObservObjectsControlsState(false);
-                    }
+                    SetObservObjectsControlsState(_observPointsController.IsObservObjectsExists());
                 }
             }
         }
