@@ -4,6 +4,7 @@ using ESRI.ArcGIS.Editor;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geometry;
+using MilSpace.Core;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Tools;
@@ -710,7 +711,7 @@ namespace MilSpace.Visibility
         {
             bool layerExists = IsPointFieldsEnabled;
 
-            lblLayer.Visible = cmbAffiliationEdit.Enabled = cmbObservTypesEdit.Enabled = azimuthB.Enabled
+            cmbAffiliationEdit.Enabled = cmbObservTypesEdit.Enabled = azimuthB.Enabled
                 = azimuthE.Enabled = xCoord.Enabled = yCoord.Enabled = angleOFViewMin.Enabled = angleOFViewMax.Enabled
                 = heightCurrent.Enabled = heightMin.Enabled = azimuthMainAxis.Enabled = cameraRotationH.Enabled = cameraRotationV.Enabled
                 = heightMax.Enabled = observPointName.Enabled = tlbCoordinates.Enabled = txtMaxDistance.Enabled = txtMinDistance.Enabled =
@@ -861,9 +862,9 @@ namespace MilSpace.Visibility
         {
             tbVisibilitySessionName.Text = session.Name;
             tbVisibilitySessionCreator.Text = session.UserName;
-            tbVisibilitySessionCreated.Text = session.Created.Value.ToLongDateString();
-            tbVisibilitySessionStarted.Text = session.Started.HasValue ? session.Started.Value.ToLongDateString() : string.Empty;
-            tbVisibilitySessionFinished.Text = session.Finished.HasValue ? session.Finished.Value.ToLongDateString() : string.Empty;
+            tbVisibilitySessionCreated.Text = session.Created.Value.ToString(Helper.DateFormat);
+            tbVisibilitySessionStarted.Text = session.Started.HasValue ? session.Started.Value.ToString(Helper.DateFormat) : string.Empty;
+            tbVisibilitySessionFinished.Text = session.Finished.HasValue ? session.Finished.Value.ToString(Helper.DateFormat) : string.Empty;
         }
 
         private void PopulateVisibilityComboBoxes()

@@ -641,22 +641,10 @@ namespace MilSpace.Visibility
             throw new NotImplementedException();
         }
 
-
-        private void labelOP_Click(object sender, EventArgs e)
-        {
-
-        }
-
         public void FillObservationObjectsList(IEnumerable<ObservationObject> observationObjects)
         {
             throw new NotImplementedException();
         }
-
-        private void panel15_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
 
     }
 }
