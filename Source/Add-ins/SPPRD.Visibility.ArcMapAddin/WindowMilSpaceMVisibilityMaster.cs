@@ -52,7 +52,6 @@ namespace MilSpace.Visibility
         {
 
             FillComboBoxes();
-
             foreach (TabPage tab in StepsTabControl.TabPages)//disable all tabs
             {
                 tab.Enabled = false;
@@ -627,16 +626,10 @@ namespace MilSpace.Visibility
         }
 
 
-
-
-
-
-
-
-
-
-
-
+        public void FillVisibilitySessionsList(IEnumerable<VisibilitySession> visibilitySessions, bool isNewSessionAdded)
+        {
+            throw new NotImplementedException();
+        }
 
 
         public IEnumerable<string> GetTypes => throw new NotImplementedException();
@@ -647,7 +640,6 @@ namespace MilSpace.Visibility
         {
             throw new NotImplementedException();
         }
-       
 
 
         private void labelOP_Click(object sender, EventArgs e)
@@ -670,9 +662,5 @@ namespace MilSpace.Visibility
             throw new NotImplementedException();
         }
 
-        private void label29_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

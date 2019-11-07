@@ -243,8 +243,8 @@ namespace MilSpace.Visualization3D
                 else
                 {
                 //TODO: Exception message
+                }
             }
-        }
             catch (Exception ex)
             {
                 //TODO: Log Error

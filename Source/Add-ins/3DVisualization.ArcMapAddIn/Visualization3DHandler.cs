@@ -90,8 +90,8 @@ namespace MilSpace.Visualization3D
 
             SetSurface3DProperties(preparedLayers[0], objFactory, functionalSurface);
             SetFeatures3DProperties((IFeatureLayer)preparedLayers[LayerTypeEnum.LineFeature], objFactory, functionalSurface);
-            SetFeatures3DProperties((IFeatureLayer)preparedLayers[LayerTypeEnum.PointFeature], objFactory, functionalSurface);
-            SetFeatures3DProperties((IFeatureLayer)preparedLayers[LayerTypeEnum.PolygonFeature], objFactory, functionalSurface);
+            SetHightFeatures3DProperties((IFeatureLayer)preparedLayers[LayerTypeEnum.PointFeature], objFactory);
+            SetHightFeatures3DProperties((IFeatureLayer)preparedLayers[LayerTypeEnum.PolygonFeature], objFactory);
 
             foreach(var layer in preparedLayers)
             {
@@ -332,16 +332,17 @@ namespace MilSpace.Visualization3D
             properties3D.Apply3DProperties(layer);
         }
 
-        //private static void SetFeatures3DProperties(IFeatureLayer layer, IObjectFactory objFactory)
-        //{
-        //    var properties3D = (I3DProperties)objFactory.Create("esrianalyst3d.Feature3DProperties");
-        //    properties3D.ZFactor = zFactor;
-        //    properties3D.OffsetExpressionString = "3";
+        private static void SetHightFeatures3DProperties(IFeatureLayer layer, IObjectFactory objFactory)
+        {
+            var properties3D = (I3DProperties)objFactory.Create("esrianalyst3d.Feature3DProperties");
+            properties3D.BaseOption = esriBaseOption.esriBaseShape;
+            properties3D.ZFactor = zFactor;
+            properties3D.OffsetExpressionString = "3";
 
-        //    ILayerExtensions layerExtensions = (ILayerExtensions)layer;
-        //    layerExtensions.AddExtension(properties3D);
-        //    properties3D.Apply3DProperties(layer);
-        //}
+            ILayerExtensions layerExtensions = (ILayerExtensions)layer;
+            layerExtensions.AddExtension(properties3D);
+            properties3D.Apply3DProperties(layer);
+        }
 
         private static void SetSurface3DProperties(ILayer layer, IObjectFactory objFactory, IFunctionalSurface surface)
         {
