@@ -178,8 +178,12 @@ namespace MilSpace.Visualization3D
         }
 
 
+
         #endregion
 
+        private void lbl3DProfiles_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }

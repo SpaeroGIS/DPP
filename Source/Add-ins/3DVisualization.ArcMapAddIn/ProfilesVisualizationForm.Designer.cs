@@ -852,6 +852,7 @@
             this.lbl3DProfiles.Size = new System.Drawing.Size(69, 26);
             this.lbl3DProfiles.TabIndex = 66;
             this.lbl3DProfiles.Text = "Profiles";
+            this.lbl3DProfiles.Click += new System.EventHandler(this.lbl3DProfiles_Click);
             // 
             // ProfilesVisualizationForm
             // 

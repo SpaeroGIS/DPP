@@ -995,7 +995,6 @@ namespace MilSpace.Visibility
             this.panel15.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.panel15.Size = new System.Drawing.Size(464, 24);
             this.panel15.TabIndex = 15;
-            this.panel15.Paint += new System.Windows.Forms.PaintEventHandler(this.panel15_Paint);
             // 
             // observObjectsLabel
             // 
