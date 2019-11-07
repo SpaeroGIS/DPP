@@ -28,10 +28,13 @@ namespace MilSpace.Tools
 
         private static readonly string WhereAllRecords = "OBJECTID > 0";
 
-        public static readonly string observPointFeature = "MilSp_Visible_ObservPoints";
-        public static readonly string observStationFeature = "MilSp_Visible_ObjectsObservation_R";
+        public static readonly string ObservPointFeature = "MilSp_Visible_ObservPoints";
+        public static readonly string ObservStationFeature = "MilSp_Visible_ObjectsObservation_R";
         public static IFeatureClass observStationFeatureClass;
         public static IFeatureClass observPointFeatureClass;
+
+        public delegate void SessionStartGenerationDelegate(bool isNewSessionAdded = false);
+        public static SessionStartGenerationDelegate OnGenerationStarted;
 
         private static Logger logger = Logger.GetLoggerEx("VisibilityManagerManager");
 
@@ -66,6 +69,7 @@ namespace MilSpace.Tools
             };
 
             session = VisibilityZonesFacade.AddVisibilitySession(session);
+            OnGenerationStarted.Invoke(true);
 
             if (session == null)
             {
@@ -134,7 +138,7 @@ namespace MilSpace.Tools
         {
             try
             {
-                var pointsLayer = GdbAccess.Instance.GetLayerFromWorkingWorkspace(observPointFeature);
+                var pointsLayer = GdbAccess.Instance.GetLayerFromWorkingWorkspace(ObservPointFeature);
                 view.FocusMap.AddLayer(pointsLayer);
             }
             catch (MilSpaceDataException ex)
@@ -154,7 +158,7 @@ namespace MilSpace.Tools
         {
             try
             {
-                var objLayer = GdbAccess.Instance.GetLayerFromWorkingWorkspace(observStationFeature);
+                var objLayer = GdbAccess.Instance.GetLayerFromWorkingWorkspace(ObservStationFeature);
                 view.FocusMap.AddLayer(objLayer);
             }
             catch (MilSpaceDataException ex)
@@ -176,7 +180,7 @@ namespace MilSpace.Tools
             {
                 if (observPointFeatureClass == null)
                 {
-                    observPointFeatureClass = GdbAccess.Instance.GetFeatureFromWorkingWorkspace(observPointFeature);
+                    observPointFeatureClass = GdbAccess.Instance.GetFeatureFromWorkingWorkspace(ObservPointFeature);
                 }
 
                 return observPointFeatureClass;
@@ -189,7 +193,7 @@ namespace MilSpace.Tools
             {
                 if (observStationFeatureClass == null)
                 {
-                    observStationFeatureClass = GdbAccess.Instance.GetFeatureFromWorkingWorkspace(observStationFeature);
+                    observStationFeatureClass = GdbAccess.Instance.GetFeatureFromWorkingWorkspace(ObservStationFeature);
                 }
 
                 return observStationFeatureClass;
