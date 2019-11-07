@@ -57,6 +57,8 @@ namespace MilSpace.Visibility
                 tab.Enabled = false;
             }
             (StepsTabControl.TabPages[0] as TabPage).Enabled = true;
+
+            panel1.Enabled = false;
         }
         public void DisabelObjList()
         {
@@ -580,8 +582,13 @@ namespace MilSpace.Visibility
                 StepsTabControl.SelectedTab.Enabled = false;
                 var prevTab = StepsTabControl.TabPages[StepsTabControl.SelectedIndex - 1] as TabPage;
                 prevTab.Enabled = true;
-                
+
+
                 StepsTabControl.SelectedIndex--;
+            }
+            if (StepsTabControl.SelectedIndex == 0)
+            {
+                panel1.Enabled = false;
             }
         }
         private void ultraButton1_Click(object sender, EventArgs e)
@@ -589,7 +596,10 @@ namespace MilSpace.Visibility
             SecondTypePicked();
             StepsTabControl.SelectedTab.Enabled = false;
             var nextTab = StepsTabControl.TabPages[StepsTabControl.SelectedIndex + 1] as TabPage;
+
             nextTab.Enabled = true;
+            panel1.Enabled = true;
+
             StepsTabControl.SelectedIndex++;
         }
         private void Button1_Click(object sender, EventArgs e)
@@ -598,7 +608,10 @@ namespace MilSpace.Visibility
 
             StepsTabControl.SelectedTab.Enabled = false;
             var nextTab = StepsTabControl.TabPages[StepsTabControl.SelectedIndex + 1] as TabPage;
+
             nextTab.Enabled = true;
+            panel1.Enabled = true;
+
             StepsTabControl.SelectedIndex++;
         }
         private void tabControl_Selecting(object sender, TabControlCancelEventArgs e)
@@ -612,10 +625,12 @@ namespace MilSpace.Visibility
 
         }
 
+
         public void FillVisibilitySessionsList(IEnumerable<VisibilitySession> visibilitySessions, bool isNewSessionAdded)
         {
             throw new NotImplementedException();
         }
+
 
         public IEnumerable<string> GetTypes => throw new NotImplementedException();
 
@@ -625,7 +640,6 @@ namespace MilSpace.Visibility
         {
             throw new NotImplementedException();
         }
-       
 
 
         private void labelOP_Click(object sender, EventArgs e)
@@ -637,5 +651,16 @@ namespace MilSpace.Visibility
         {
             throw new NotImplementedException();
         }
+
+        private void panel15_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        public void FillVisibilitySessionsList(IEnumerable<VisibilitySession> visibilitySessions, bool isNewSessionAdded)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
