@@ -185,6 +185,9 @@ namespace MilSpace.Visibility.ViewController
             VisibilityCalculationresultsEnum culcResults = VisibilitySession.DefaultResultsSet,
             IEnumerable<int> pointsTOCalculate = null, IEnumerable<int> stationsTOCalculate = null)
         {
+            var statusBar = ArcMap.Application.StatusBar;
+            var animationProgressor = statusBar.ProgressAnimation;
+
             try
             {
 
@@ -212,16 +215,23 @@ namespace MilSpace.Visibility.ViewController
                     stationsTOCalculate = EsriTools.GetSelectionByExtent(observObjects, mapDocument.ActiveView);
                 }
 
+               
+
+                animationProgressor.Show();
+                animationProgressor.Play(0, -1, -1);
+
                 var session = VisibilityManager.Generate(observPoints, pointsTOCalculate, observObjects, stationsTOCalculate, scrDEM, culcResults, sessionName);
-
-
             }
             catch (Exception ex)
             {
                 log.ErrorEx(ex.Message);
                 return false;
             }
-
+            finally
+            {
+                animationProgressor.Stop();
+                animationProgressor.Hide();
+            }
             return true;
         }
 

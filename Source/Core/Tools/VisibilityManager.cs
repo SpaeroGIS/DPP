@@ -33,6 +33,9 @@ namespace MilSpace.Tools
         public static IFeatureClass observStationFeatureClass;
         public static IFeatureClass observPointFeatureClass;
 
+        public delegate void SessionStartGenerationDelegate(bool isNewSessionAdded = false);
+        public static SessionStartGenerationDelegate OnGenerationStarted;
+
         private static Logger logger = Logger.GetLoggerEx("VisibilityManagerManager");
 
 
@@ -66,6 +69,7 @@ namespace MilSpace.Tools
             };
 
             session = VisibilityZonesFacade.AddVisibilitySession(session);
+            OnGenerationStarted.Invoke(true);
 
             if (session == null)
             {

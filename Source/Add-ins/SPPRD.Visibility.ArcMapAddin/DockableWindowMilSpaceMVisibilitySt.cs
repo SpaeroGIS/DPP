@@ -215,11 +215,12 @@ namespace MilSpace.Visibility
             }
         }
 
-        public void FillVisibilitySessionsList(IEnumerable<VisibilitySession> visibilitySessions)
+        public void FillVisibilitySessionsList(IEnumerable<VisibilitySession> visibilitySessions, bool isNewSessionAdded)
         {
             if (visibilitySessions.Any())
             {
                 dgvVisibilitySessions.Rows.Clear();
+                _visibilitySessionsGui = new BindingList<VisibilitySessionGui>();
 
                 foreach (var session in visibilitySessions)
                 {
@@ -249,7 +250,23 @@ namespace MilSpace.Visibility
                 dgvVisibilitySessions.CurrentCell = null;
                 dgvVisibilitySessions.DataSource = _visibilitySessionsGui;
                 SetVisibilitySessionsTableView();
-                dgvObservationPoints.Rows[0].Selected = true;
+                
+                var lastRow = dgvVisibilitySessions.Rows[dgvVisibilitySessions.RowCount - 1];
+
+                if(cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All))
+                {
+                    FilterVisibilityList();
+                }
+                else
+                {
+                    dgvVisibilitySessions.Rows[0].Selected = true;
+                }
+
+                if(lastRow.Visible && isNewSessionAdded)
+                {
+                    lastRow.Selected = true;
+                    dgvVisibilitySessions.CurrentCell = lastRow.Cells[1];
+                }
             }
         }
 
@@ -1183,8 +1200,8 @@ namespace MilSpace.Visibility
                         MessageBox.Show("The calculation finished with errors.\nFor more details go to the log file", "SPPRD", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
-                    _visibilitySessionsController.UpdateVisibilitySessionsList();
-                    FilterVisibilityList();
+                    _visibilitySessionsController.UpdateVisibilitySessionsList(true);
+                   
                 }
             }
         }

@@ -76,6 +76,9 @@ namespace MilSpace.Tools.SurfaceProfile
             visibility.horizontal_end_angle = VisibilityFieldsEnum.AzimuthE.ToString();
             visibility.vertical_lower_angle = VisibilityFieldsEnum.AnglMinH.ToString();
             visibility.vertical_upper_angle = VisibilityFieldsEnum.AnglMaxH.ToString();
+            visibility.surface_offset = "";
+            visibility.observer_elevation = "";
+            visibility.observer_offset = VisibilityFieldsEnum.HRel.ToString();
             visibility.inner_radius = VisibilityFieldsEnum.InnerRadius.ToString();
             visibility.outer_radius = VisibilityFieldsEnum.OuterRadius.ToString();
 
