@@ -883,9 +883,9 @@ namespace MilSpace.Visibility
             dgvObservObjects.Columns["Title"].HeaderText = "Название";
             dgvObservObjects.Columns["Title"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgvObservObjects.Columns["Affiliation"].HeaderText = "Принадлежность";
-            dgvObservObjects.Columns["Affiliation"].Width = 100;
+            dgvObservObjects.Columns["Affiliation"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dgvObservObjects.Columns["Group"].HeaderText = "Группа";
-            dgvObservObjects.Columns["Group"].Width = 100;
+            dgvObservObjects.Columns["Group"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
 
             dgvObservObjects.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
