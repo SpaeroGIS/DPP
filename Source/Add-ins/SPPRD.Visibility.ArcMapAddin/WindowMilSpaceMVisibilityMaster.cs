@@ -16,6 +16,8 @@ namespace MilSpace.Visibility
 {
     public partial class WindowMilSpaceMVisibilityMaster : Form, IObservationPointsView
     {
+        private string _previousPickedRasterLayer;
+        private int _stepControl = 0;
         private const string _allValuesFilterText = "All";
         private ObservationPointsController controller = new ObservationPointsController(ArcMap.Document);
         private BindingList<CheckObservPointGui> _observPointGuis;
@@ -32,19 +34,90 @@ namespace MilSpace.Visibility
 
         private MapLayersManager manager = new MapLayersManager(ActiveView);
 
-        public WindowMilSpaceMVisibilityMaster(string selectedObservPoints, string selectedObservObjects)
+        public WindowMilSpaceMVisibilityMaster(string selectedObservPoints, string selectedObservObjects, string previousPickedRaster)
         {
             InitializeComponent();
             controller.SetView(this);
-
+            _previousPickedRasterLayer = previousPickedRaster;
             ONload();
+
             //label слой ПН\ТН
             ObservPointLabel.Text = selectedObservPoints;
             //label слой ОН
             observObjectsLabel.Text = selectedObservObjects;
         }
+       
 
         public void ONload()
+        {
+
+            FillComboBoxes();
+            foreach (TabPage tab in StepsTabControl.TabPages)//disable all tabs
+            {
+                tab.Enabled = false;
+            }
+            (StepsTabControl.TabPages[0] as TabPage).Enabled = true;
+        }
+        public void DisabelObjList()
+        {
+            dgvObjects.Enabled = false;
+            
+           
+            panel15.Enabled = false;
+            panel16.Enabled = false;
+            panel17.Enabled = false;
+            panel18.Enabled = false;
+            panel19.Enabled = false;
+
+
+        }
+        public void EanableObjList()
+        {
+            dgvObjects.Enabled = true;     
+            dgvObjects.Refresh();
+
+            panel15.Enabled = true;
+            panel16.Enabled = true;
+            panel17.Enabled = true;
+            panel18.Enabled = true;
+            panel19.Enabled = true;
+
+
+        }
+        public void FirstTypePicked()//triggers when user picks first type
+        {
+            _stepControl = 1;
+            controller.UpdateObservationPointsList();
+            PopulateComboBox();
+            FillObservPointLabel();
+            DisabelObjList();
+            dgvObjects.DataSource = null;
+
+            //FillObservPointsOnCurrentView(controller.GetObservPointsOnCurrentMapExtent(ActiveView));
+            
+            //FillObsObj(true);
+
+        }
+        public void SecondTypePicked()//triggers when user picks second type
+        {
+            _stepControl = 2;
+            controller.UpdateObservationPointsList();
+            EanableObjList();
+           PopulateComboBox();
+
+
+            FillObservPointLabel();
+            FillObsObj();
+
+            
+        }
+       
+        public void FillObservPointLabel()
+        {
+            var temp = controller.GetObservationPointsLayers(ActiveView).ToArray();
+           
+        }
+        public void FillComboBoxes()
         {
             var list = new List<string>();
             list.AddRange(controller.GetObservationPointTypes().ToArray());
@@ -60,7 +133,7 @@ namespace MilSpace.Visibility
 
             cmbObservObject.Items.AddRange(list.ToArray());
             cmbObservObject.Items.Add(controller.GetAllAffiliationType_for_objects());
-            cmbObservObject.Items.Add(_allValuesFilterText);
+
             cmbObservObject.SelectedItem = _allValuesFilterText;
 
             list = new List<string>();
@@ -69,47 +142,16 @@ namespace MilSpace.Visibility
             cmbType.Items.AddRange(list.ToArray());
             cmbType.Items.Add(controller.GetAllMobilityType());
             cmbType.SelectedItem = controller.GetAllMobilityType();
-
-            foreach (TabPage tab in StepsTabControl.TabPages)//disable all tabs
-            {
-                tab.Enabled = false;
-            }
-            (StepsTabControl.TabPages[0] as TabPage).Enabled = true;
-        }
-
-
-        public void FirstTypePicked()//triggers when user picks first type
-        {
-            controller.UpdateObservationPointsList();
-            PopulateComboBox();
-            FillObservPointLabel();
-            FillObservPointsOnCurrentView(controller.GetObservPointsOnCurrentMapExtent(ActiveView));
-            FillObsObj(true);
-
-        }
-        public void SecondTypePicked()//triggers when user picks second type
-        {
-           
-           controller.UpdateObservationPointsList();
-
-           PopulateComboBox();
-
-
-            FillObservPointLabel();
-            FillObsObj();
-
-            
-        }
-       
-        public void FillObservPointLabel()
-        {
-            var temp = controller.GetObservationPointsLayers(ActiveView).ToArray();
-           
         }
         public void PopulateComboBox()
         {
             comboBox1.DataSource = null;
             comboBox1.DataSource = (manager.RasterLayers.Select(i=>i.Name).ToArray());
+
+            if (_previousPickedRasterLayer != null)
+            {
+                comboBox1.SelectedItem = _previousPickedRasterLayer;
+            }
         }
 
         public void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints, VeluableObservPointFieldsEnum filter)
@@ -442,16 +484,34 @@ namespace MilSpace.Visibility
                 }
             }
 
-            FinalResult = new MasterResult
+
+            if (_stepControl == 1)
             {
-                ObservPointIDs = CheckedList.Select(i => i.Id).ToList(),
-                ObservObjectIDs = CheckedObjectList.Select(i => i.Id).ToList(),
-                Table = TableChkBox.Checked,
-                SumFieldOfView = SumChkBox.Checked,
-                RasterLayerName = comboBox1.SelectedItem.ToString(),
-                OP = checkBoxOP.Checked
-            };
-            
+                FinalResult = new MasterResult
+                {
+                    ObservPointIDs = CheckedList.Select(i => i.Id).ToList(),
+                    
+                    Table = TableChkBox.Checked,
+                    SumFieldOfView = SumChkBox.Checked,
+                    RasterLayerName = comboBox1.SelectedItem.ToString(),
+                    OP = checkBoxOP.Checked,
+                    VisibilityCalculationResults = VisibilityCalculationresultsEnum.ObservationPoints | VisibilityCalculationresultsEnum.VisibilityAreaRaster
+                };
+            }
+            else if (_stepControl == 2)
+            {
+                FinalResult = new MasterResult
+                {
+                    ObservPointIDs = CheckedList.Select(i => i.Id).ToList(),
+                    ObservObjectIDs = CheckedObjectList.Select(i => i.Id).ToList(),
+                    Table = TableChkBox.Checked,
+                    SumFieldOfView = SumChkBox.Checked,
+                    RasterLayerName = comboBox1.SelectedItem.ToString(),
+                    OP = checkBoxOP.Checked,
+                    VisibilityCalculationResults = VisibilityCalculationresultsEnum.ObservationPoints | VisibilityCalculationresultsEnum.VisibilityAreaRaster | VisibilityCalculationresultsEnum.ObservationStations
+                };
+
+            }
         }
         public void ALLinfo()
         {
@@ -541,6 +601,21 @@ namespace MilSpace.Visibility
             nextTab.Enabled = true;
             StepsTabControl.SelectedIndex++;
         }
+        private void tabControl_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            TabPage current = (sender as TabControl).SelectedTab;
+            var nextTab = StepsTabControl.TabPages[StepsTabControl.SelectedIndex] as TabPage;
+            if (!nextTab.Enabled)
+            {
+                e.Cancel = true;
+            }
+
+        }
+
+        public void FillVisibilitySessionsList(IEnumerable<VisibilitySession> visibilitySessions, bool isNewSessionAdded)
+        {
+            throw new NotImplementedException();
+        }
 
         public IEnumerable<string> GetTypes => throw new NotImplementedException();
 
@@ -559,11 +634,6 @@ namespace MilSpace.Visibility
         }
 
         public void FillObservationObjectsList(IEnumerable<ObservationObject> observationObjects)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void FillVisibilitySessionsList(IEnumerable<VisibilitySession> visibilitySessions, bool isNewSessionAdded)
         {
             throw new NotImplementedException();
         }
