@@ -54,7 +54,6 @@ namespace MilSpace.Visibility
             base.OnLoad(e);
             SubscribeForEvents();
             InitilizeData();
-            _observPointsController.UpdateObservationPointsList();
         }
 
         private void SubscribeForEvents()
@@ -129,7 +128,6 @@ namespace MilSpace.Visibility
 
         public void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints, VeluableObservPointFieldsEnum filter)
         {
-
             dgvObservationPoints.Rows.Clear();
             dgvObservationPoints.CurrentCell = null;
 
@@ -278,7 +276,7 @@ namespace MilSpace.Visibility
         private void OnItemAdded(object item)
         {
             EnableObservPointsControls();
-            _observPointsController.UpdateObservationPointsList();
+            UpdateObservPointsList();
             SetObservObjectsControlsState(_observPointsController.IsObservObjectsExists());
         }
 
@@ -286,7 +284,7 @@ namespace MilSpace.Visibility
         {
             EnableObservPointsControls();
             SetCoordDefaultValues();
-            _observPointsController.UpdateObservationPointsList();
+            UpdateObservPointsList();
             SetObservObjectsControlsState(_observPointsController.IsObservObjectsExists());
         }
 
@@ -354,9 +352,34 @@ namespace MilSpace.Visibility
 
         #region ObservationPointsPrivateMethods
 
+        private void UpdateObservPointsList()
+        {
+            if(IsPointFieldsEnabled)
+            {
+                _observPointsController.UpdateObservationPointsList();
+            }
+            else
+            {
+                ClearObservPointsData();
+            }
+        }
+
+        private void ClearObservPointsData()
+        {
+            dgvObservationPoints.Rows.Clear();
+            SetDefaultValues();
+        }
+
         private void SetDataGridView()
         {
             dgvObservationPoints.Columns["Title"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvObservationPoints.Columns["Type"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            dgvObservationPoints.Columns["Affiliation"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            dgvObservationPoints.Columns["Date"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            dgvObservationPoints.Columns["Title"].HeaderText = "Name";
+            dgvObservationPoints.Columns["Type"].HeaderText = "Type";
+            dgvObservationPoints.Columns["Affiliation"].HeaderText = "Affiliation";
+            dgvObservationPoints.Columns["Date"].HeaderText = "Date";
             dgvObservationPoints.Columns["Id"].Visible = false;
         }
 
@@ -690,10 +713,12 @@ namespace MilSpace.Visibility
             lblLayer.Visible = cmbAffiliationEdit.Enabled = cmbObservTypesEdit.Enabled = azimuthB.Enabled
                 = azimuthE.Enabled = xCoord.Enabled = yCoord.Enabled = angleOFViewMin.Enabled = angleOFViewMax.Enabled
                 = heightCurrent.Enabled = heightMin.Enabled = azimuthMainAxis.Enabled = cameraRotationH.Enabled = cameraRotationV.Enabled
-                = heightMax.Enabled = observPointName.Enabled = tlbCoordinates.Enabled =
+                = heightMax.Enabled = observPointName.Enabled = tlbCoordinates.Enabled = txtMaxDistance.Enabled = txtMinDistance.Enabled =
                 tlbbShowPoint.Enabled = tlbbRemovePoint.Enabled = tlbbAddNewPoint.Enabled = (layerExists && !isAllDisabled);
 
-            angleFrameH.Enabled = angleFrameV.Enabled = observPointDate.Enabled = observPointCreator.Enabled = false;
+            angleFrameH.Enabled = angleFrameV.Enabled = false;
+            observPointDate.Enabled = observPointCreator.Enabled = true;
+            observPointDate.ReadOnly = observPointCreator.ReadOnly = true;
 
             tlbbAddObserPointLayer.Enabled = !layerExists || isAllDisabled;
         }
