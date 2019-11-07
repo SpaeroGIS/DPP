@@ -729,7 +729,6 @@
             this.tabControl2.Controls.Add(this.tabPage5);
             this.tabControl2.Controls.Add(this.tabPage6);
             this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl2.Enabled = false;
             this.tabControl2.ImageList = this.imageList1;
             this.tabControl2.Location = new System.Drawing.Point(0, 35);
             this.tabControl2.Name = "tabControl2";
