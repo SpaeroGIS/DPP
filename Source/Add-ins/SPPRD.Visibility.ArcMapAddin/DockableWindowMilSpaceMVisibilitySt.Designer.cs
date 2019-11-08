@@ -36,6 +36,9 @@
             this.panel7 = new System.Windows.Forms.Panel();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.panelRelativeHeight = new System.Windows.Forms.Panel();
+            this.heightCurrent = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
             this.panelRadiuses = new System.Windows.Forms.Panel();
             this.txtMaxDistance = new System.Windows.Forms.TextBox();
             this.label63 = new System.Windows.Forms.Label();
@@ -87,6 +90,11 @@
             this.panelAzimuthBase = new System.Windows.Forms.Panel();
             this.azimuthMainAxis = new System.Windows.Forms.TextBox();
             this.label58 = new System.Windows.Forms.Label();
+            this.panelCameraParam = new System.Windows.Forms.Panel();
+            this.cameraRotationV = new System.Windows.Forms.TextBox();
+            this.label55 = new System.Windows.Forms.Label();
+            this.cameraRotationH = new System.Windows.Forms.TextBox();
+            this.label56 = new System.Windows.Forms.Label();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.panel21 = new System.Windows.Forms.Panel();
             this.textBox13 = new System.Windows.Forms.TextBox();
@@ -277,19 +285,12 @@
             this.label12 = new System.Windows.Forms.Label();
             this.heightMin = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.label56 = new System.Windows.Forms.Label();
-            this.cameraRotationH = new System.Windows.Forms.TextBox();
-            this.label55 = new System.Windows.Forms.Label();
-            this.cameraRotationV = new System.Windows.Forms.TextBox();
-            this.panelCameraParam = new System.Windows.Forms.Panel();
-            this.panelRelativeHeight = new System.Windows.Forms.Panel();
-            this.heightCurrent = new System.Windows.Forms.TextBox();
-            this.label19 = new System.Windows.Forms.Label();
             this.mainTabControl.SuspendLayout();
             this.tbpPoints.SuspendLayout();
             this.panel7.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.tabPage5.SuspendLayout();
+            this.panelRelativeHeight.SuspendLayout();
             this.panelRadiuses.SuspendLayout();
             this.panelSignAngelVert.SuspendLayout();
             this.panelAzimuth.SuspendLayout();
@@ -300,6 +301,7 @@
             this.panel12.SuspendLayout();
             this.panelSignAngel.SuspendLayout();
             this.panelAzimuthBase.SuspendLayout();
+            this.panelCameraParam.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.panel21.SuspendLayout();
             this.panel19.SuspendLayout();
@@ -356,8 +358,6 @@
             this.panel49.SuspendLayout();
             this.panel48.SuspendLayout();
             this.panel11.SuspendLayout();
-            this.panelCameraParam.SuspendLayout();
-            this.panelRelativeHeight.SuspendLayout();
             this.SuspendLayout();
             // 
             // imageList1
@@ -644,6 +644,37 @@
             this.tabPage5.TabIndex = 0;
             this.tabPage5.Text = "Параметры ПН";
             this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // panelRelativeHeight
+            // 
+            this.panelRelativeHeight.Controls.Add(this.heightCurrent);
+            this.panelRelativeHeight.Controls.Add(this.label19);
+            this.panelRelativeHeight.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelRelativeHeight.Location = new System.Drawing.Point(3, 171);
+            this.panelRelativeHeight.Name = "panelRelativeHeight";
+            this.panelRelativeHeight.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
+            this.panelRelativeHeight.Size = new System.Drawing.Size(322, 24);
+            this.panelRelativeHeight.TabIndex = 40;
+            // 
+            // heightCurrent
+            // 
+            this.heightCurrent.Location = new System.Drawing.Point(241, 1);
+            this.heightCurrent.Name = "heightCurrent";
+            this.heightCurrent.Size = new System.Drawing.Size(77, 20);
+            this.heightCurrent.TabIndex = 5;
+            this.heightCurrent.TextChanged += new System.EventHandler(this.Fields_TextChanged);
+            this.heightCurrent.Leave += new System.EventHandler(this.OnFieldChanged);
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label19.Location = new System.Drawing.Point(8, 0);
+            this.label19.Name = "label19";
+            this.label19.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.label19.Size = new System.Drawing.Size(201, 17);
+            this.label19.TabIndex = 4;
+            this.label19.Text = "Высота над поверхностью текущая, м";
             // 
             // panelRadiuses
             // 
@@ -1188,6 +1219,60 @@
             this.label58.Size = new System.Drawing.Size(111, 17);
             this.label58.TabIndex = 4;
             this.label58.Text = "азимут осн. оси, дгр";
+            // 
+            // panelCameraParam
+            // 
+            this.panelCameraParam.Controls.Add(this.cameraRotationV);
+            this.panelCameraParam.Controls.Add(this.label55);
+            this.panelCameraParam.Controls.Add(this.cameraRotationH);
+            this.panelCameraParam.Controls.Add(this.label56);
+            this.panelCameraParam.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelCameraParam.Location = new System.Drawing.Point(0, 0);
+            this.panelCameraParam.Name = "panelCameraParam";
+            this.panelCameraParam.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
+            this.panelCameraParam.Size = new System.Drawing.Size(322, 24);
+            this.panelCameraParam.TabIndex = 26;
+            this.panelCameraParam.Visible = false;
+            // 
+            // cameraRotationV
+            // 
+            this.cameraRotationV.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cameraRotationV.Location = new System.Drawing.Point(233, 0);
+            this.cameraRotationV.Name = "cameraRotationV";
+            this.cameraRotationV.Size = new System.Drawing.Size(36, 20);
+            this.cameraRotationV.TabIndex = 7;
+            this.cameraRotationV.Text = "360";
+            // 
+            // label55
+            // 
+            this.label55.AutoSize = true;
+            this.label55.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label55.Location = new System.Drawing.Point(196, 0);
+            this.label55.Name = "label55";
+            this.label55.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
+            this.label55.Size = new System.Drawing.Size(37, 17);
+            this.label55.TabIndex = 6;
+            this.label55.Text = "верт.";
+            // 
+            // cameraRotationH
+            // 
+            this.cameraRotationH.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cameraRotationH.Location = new System.Drawing.Point(160, 0);
+            this.cameraRotationH.Name = "cameraRotationH";
+            this.cameraRotationH.Size = new System.Drawing.Size(36, 20);
+            this.cameraRotationH.TabIndex = 5;
+            this.cameraRotationH.Text = "0";
+            // 
+            // label56
+            // 
+            this.label56.AutoSize = true;
+            this.label56.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label56.Location = new System.Drawing.Point(8, 0);
+            this.label56.Name = "label56";
+            this.label56.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.label56.Size = new System.Drawing.Size(152, 17);
+            this.label56.TabIndex = 4;
+            this.label56.Text = "поворот камеры, дгр, гориз.";
             // 
             // tabPage6
             // 
@@ -3199,91 +3284,6 @@
             this.label9.TabIndex = 4;
             this.label9.Text = "высота над поверхностью, м, мин.";
             // 
-            // label56
-            // 
-            this.label56.AutoSize = true;
-            this.label56.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label56.Location = new System.Drawing.Point(8, 0);
-            this.label56.Name = "label56";
-            this.label56.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-            this.label56.Size = new System.Drawing.Size(152, 17);
-            this.label56.TabIndex = 4;
-            this.label56.Text = "поворот камеры, дгр, гориз.";
-            // 
-            // cameraRotationH
-            // 
-            this.cameraRotationH.Dock = System.Windows.Forms.DockStyle.Left;
-            this.cameraRotationH.Location = new System.Drawing.Point(160, 0);
-            this.cameraRotationH.Name = "cameraRotationH";
-            this.cameraRotationH.Size = new System.Drawing.Size(36, 20);
-            this.cameraRotationH.TabIndex = 5;
-            this.cameraRotationH.Text = "0";
-            // 
-            // label55
-            // 
-            this.label55.AutoSize = true;
-            this.label55.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label55.Location = new System.Drawing.Point(196, 0);
-            this.label55.Name = "label55";
-            this.label55.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label55.Size = new System.Drawing.Size(37, 17);
-            this.label55.TabIndex = 6;
-            this.label55.Text = "верт.";
-            // 
-            // cameraRotationV
-            // 
-            this.cameraRotationV.Dock = System.Windows.Forms.DockStyle.Left;
-            this.cameraRotationV.Location = new System.Drawing.Point(233, 0);
-            this.cameraRotationV.Name = "cameraRotationV";
-            this.cameraRotationV.Size = new System.Drawing.Size(36, 20);
-            this.cameraRotationV.TabIndex = 7;
-            this.cameraRotationV.Text = "360";
-            // 
-            // panelCameraParam
-            // 
-            this.panelCameraParam.Controls.Add(this.cameraRotationV);
-            this.panelCameraParam.Controls.Add(this.label55);
-            this.panelCameraParam.Controls.Add(this.cameraRotationH);
-            this.panelCameraParam.Controls.Add(this.label56);
-            this.panelCameraParam.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelCameraParam.Location = new System.Drawing.Point(0, 0);
-            this.panelCameraParam.Name = "panelCameraParam";
-            this.panelCameraParam.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.panelCameraParam.Size = new System.Drawing.Size(322, 24);
-            this.panelCameraParam.TabIndex = 26;
-            this.panelCameraParam.Visible = false;
-            // 
-            // panelRelativeHeight
-            // 
-            this.panelRelativeHeight.Controls.Add(this.heightCurrent);
-            this.panelRelativeHeight.Controls.Add(this.label19);
-            this.panelRelativeHeight.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelRelativeHeight.Location = new System.Drawing.Point(3, 171);
-            this.panelRelativeHeight.Name = "panelRelativeHeight";
-            this.panelRelativeHeight.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.panelRelativeHeight.Size = new System.Drawing.Size(322, 24);
-            this.panelRelativeHeight.TabIndex = 40;
-            // 
-            // heightCurrent
-            // 
-            this.heightCurrent.Location = new System.Drawing.Point(241, 1);
-            this.heightCurrent.Name = "heightCurrent";
-            this.heightCurrent.Size = new System.Drawing.Size(77, 20);
-            this.heightCurrent.TabIndex = 5;
-            this.heightCurrent.TextChanged += new System.EventHandler(this.Fields_TextChanged);
-            this.heightCurrent.Leave += new System.EventHandler(this.OnFieldChanged);
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label19.Location = new System.Drawing.Point(8, 0);
-            this.label19.Name = "label19";
-            this.label19.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-            this.label19.Size = new System.Drawing.Size(201, 17);
-            this.label19.TabIndex = 4;
-            this.label19.Text = "Высота над поверхностью текущая, м";
-            // 
             // DockableWindowMilSpaceMVisibilitySt
             // 
             this.Controls.Add(this.mainTabControl);
@@ -3294,6 +3294,8 @@
             this.panel7.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
+            this.panelRelativeHeight.ResumeLayout(false);
+            this.panelRelativeHeight.PerformLayout();
             this.panelRadiuses.ResumeLayout(false);
             this.panelRadiuses.PerformLayout();
             this.panelSignAngelVert.ResumeLayout(false);
@@ -3313,6 +3315,8 @@
             this.panelSignAngel.PerformLayout();
             this.panelAzimuthBase.ResumeLayout(false);
             this.panelAzimuthBase.PerformLayout();
+            this.panelCameraParam.ResumeLayout(false);
+            this.panelCameraParam.PerformLayout();
             this.tabPage6.ResumeLayout(false);
             this.panel21.ResumeLayout(false);
             this.panel21.PerformLayout();
@@ -3413,10 +3417,6 @@
             this.panel48.PerformLayout();
             this.panel11.ResumeLayout(false);
             this.panel11.PerformLayout();
-            this.panelCameraParam.ResumeLayout(false);
-            this.panelCameraParam.PerformLayout();
-            this.panelRelativeHeight.ResumeLayout(false);
-            this.panelRelativeHeight.PerformLayout();
             this.ResumeLayout(false);
 
         }

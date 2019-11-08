@@ -80,5 +80,6 @@ namespace MilSpace.Profile
 
         int GetProfileNameFromNode();
         TreeView GetTreeView();
+        void ChangeSessionHeightInNode(int sessionId, double height, ProfileSettingsTypeEnum type);
     }
 }

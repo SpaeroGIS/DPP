@@ -20,6 +20,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         private MilSpaceProfileGraphsController _graphsController;
         private double _defaultObserverHeight;
 
+        private List<int> _sessionsIds = new List<int>(); 
         private List<ProfileSurfacePoint> _extremePoints = new List<ProfileSurfacePoint>();
         private List<LineIntersections> _linesIntersections = new List<LineIntersections>();
 
@@ -33,12 +34,14 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         internal delegate void DeleteProfileDelegate(int sessionId, int lineId);
         internal delegate void SelectedProfileChangedDelegate(GroupedLines oldSelectedLines, GroupedLines newSelectedLines, int profileId);
         internal delegate void GetIntersectionLinesDelegate(ProfileLine selectedLine, ProfileSession profileSession);
+        internal delegate void ProfileSessionsHeightsChangeDelegate(List<int> sessionsIds, double height);
 
         internal event ProfileGrapchClickedDelegate OnProfileGraphClicked;
         internal event ProfileChangeInvisiblesZonesDelegate InvisibleZonesChanged;
         internal event DeleteProfileDelegate ProfileRemoved;
         internal event SelectedProfileChangedDelegate SelectedProfileChanged;
         internal event GetIntersectionLinesDelegate IntersectionLinesDrawing;
+        internal event ProfileSessionsHeightsChangeDelegate ProfileSessionsHeightsChange;
 
         public SurfaceProfileChartController()
         {
@@ -47,6 +50,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         internal void SetSession(ProfileSession profileSession)
         {
             _profileSession = profileSession;
+            _sessionsIds.Add(profileSession.SessionId);
 
             if(_profileSession.ProfileLines != null && _profileSession.ProfileLines.Length > 0)
             {
@@ -434,12 +438,17 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
         }
 
+        internal void ChangeSessionsHeights(double height)
+        {
+            ProfileSessionsHeightsChange.Invoke(_sessionsIds, height);
+        }
+
         internal void AddEmptyGraph()
         {
             _graphsController.AddEmptyGraph();
         }
 
-        internal void AddLineToGraph(ProfileLine profileLine, ProfileSurface profileSurface)
+        internal void AddLineToGraph(ProfileLine profileLine, ProfileSurface profileSurface, bool isOneLineProfile)
         {
             if(_profileSession.ProfileLines == null)
             {
@@ -447,7 +456,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
             else
             {
-                AddProfile(profileLine, profileSurface);
+                AddProfile(profileLine, profileSurface, isOneLineProfile);
             }
         }
 
@@ -693,8 +702,13 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             _surfaceProfileChart.SetControlSize();
         }
 
-        private void AddProfile(ProfileLine profileLine, ProfileSurface profileSurface)
+        private void AddProfile(ProfileLine profileLine, ProfileSurface profileSurface, bool isOneLineProfile)
         {
+            if(isOneLineProfile)
+            {
+                _sessionsIds.Add(profileLine.SessionId);
+            }
+
             var lineId = _profileSession.ProfileLines.Last().Id + 1;
 
             profileLine.Id = lineId;

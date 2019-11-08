@@ -157,6 +157,7 @@ namespace MilSpace.Profile
                     graphsController.GetProfileSessionById += GetProfileById;
                     graphsController.PanToSelectedProfile += PanToSelectedProfile;
                     graphsController.PanToSelectedProfilesSet += PanToSelectedProfilesSet;
+                    graphsController.OnSessionsHeightsChanged += ChangeProfilesHeights;
                 }
 
                 return graphsController;
@@ -565,7 +566,8 @@ namespace MilSpace.Profile
                     var profileSurface = profileSession.ProfileSurfaces.First(surface => surface.LineId == profileLine.Id);
                     GraphicsLayerManager.RemoveLineFromGraphic(profileSessionId, profileLine.Id);
                     profileLine.SessionId = profileSessionId;
-                    graphsController.AddProfileToTab(profileLine, profileSurface);
+                    var isOneLineProfile = (profileSession.DefinitionType == ProfileSettingsTypeEnum.Points || profileSession.DefinitionType == ProfileSettingsTypeEnum.Primitives);
+                    graphsController.AddProfileToTab(profileLine, profileSurface, isOneLineProfile);
                 }
             }
         }
@@ -954,6 +956,23 @@ namespace MilSpace.Profile
         private void PanToSelectedProfile(int sessionId, ProfileLine line)
         {
             ShowProfileOnMap(sessionId, line);
+        }
+
+        private void ChangeProfilesHeights(List<int> sessionsIds, double height)
+        {
+            foreach(var id in sessionsIds)
+            {
+                var session = GetProfileSessionById(id);
+
+                if(session != null)
+                {
+                    session.ObserverHeight = height;
+                    SaveProfileSet(session);
+                    _workingProfiles.First(profileSession => profileSession.SessionId == id).ObserverHeight = height;
+                    View.ChangeSessionHeightInNode(id, height, session.DefinitionType);
+                }
+
+            }
         }
 
         private ProfileSession GetEmptyProfileSession()

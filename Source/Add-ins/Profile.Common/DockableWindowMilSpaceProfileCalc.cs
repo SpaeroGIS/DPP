@@ -803,6 +803,40 @@ namespace MilSpace.Profile
             return (int)treeNode.Tag;
         }
 
+        public void ChangeSessionHeightInNode(int sessionId, double height, ProfileSettingsTypeEnum type)
+        {
+            if(type == ProfileSettingsTypeEnum.Points)
+            {
+                ChangeSessionHeigth(profilesTreeView.Nodes["Points"].Nodes, sessionId, height);
+                return;
+            }
+
+            if(type == ProfileSettingsTypeEnum.Fun)
+            {
+                ChangeSessionHeigth(profilesTreeView.Nodes["Fun"].Nodes, sessionId, height);
+                return;
+            }
+
+            if(type == ProfileSettingsTypeEnum.Primitives)
+            {
+                ChangeSessionHeigth(profilesTreeView.Nodes["Primitives"].Nodes, sessionId, height);
+                return;
+            }
+        }
+
+        private void ChangeSessionHeigth(TreeNodeCollection nodes, int id, double height)
+        {
+            foreach(TreeNode node in nodes)
+            {
+                if ((int)node.Tag == id)
+                {
+                    var profileNode = (ProfileTreeNode)node;
+                    profileNode.SetBasePointHeight(height.ToString());
+                    return;
+                }
+            }
+        }
+
         private void toolBtnShowOnMap_Click(object sender, EventArgs e)
         {
             var node = profilesTreeView.SelectedNode;
@@ -1061,7 +1095,7 @@ namespace MilSpace.Profile
 
                     newNode.SetBasePoint($"X= {firstX}; Y= {firstY};");
                     newNode.SetToPoint($"X= {secondX}; Y= {secondY};");
-                    newNode.SetBasePointHeight(SectionHeightFirst.ToString());
+                    newNode.SetBasePointHeight(profile.ObserverHeight.ToString());
                     newNode.SetToPointHeight(SectionHeightSecond.ToString());
                     newNode.SetLineDistance(lineDistance);
 
