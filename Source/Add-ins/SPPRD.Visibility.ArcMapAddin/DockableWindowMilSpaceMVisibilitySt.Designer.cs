@@ -775,6 +775,8 @@
             this.observPointName.Size = new System.Drawing.Size(259, 20);
             this.observPointName.TabIndex = 5;
             this.observPointName.Text = "\"Человеческое\" название ПН";
+            this.observPointName.TextChanged += new System.EventHandler(this.Fields_TextChanged);
+            this.observPointName.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label20
             // 
