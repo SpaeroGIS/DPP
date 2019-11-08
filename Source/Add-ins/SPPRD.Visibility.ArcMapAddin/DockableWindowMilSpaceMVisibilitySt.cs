@@ -42,6 +42,7 @@ namespace MilSpace.Visibility
             this._observPointsController = controller;
             this._observPointsController.SetView(this);
             this.Hook = hook;
+
         }
 
         public DockableWindowMilSpaceMVisibilitySt(object hook)
@@ -130,6 +131,8 @@ namespace MilSpace.Visibility
         public void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints, VeluableObservPointFieldsEnum filter)
         {
             dgvObservationPoints.Rows.Clear();
+
+            var selected = dgvObservationPoints.SelectedRows.Count > 0 ? dgvObservationPoints.SelectedRows[0].Index : 0;
             dgvObservationPoints.CurrentCell = null;
 
             if (observationPoints != null && observationPoints.Any())
@@ -139,7 +142,7 @@ namespace MilSpace.Visibility
                     Title = i.Title,
                     Type = i.Type,
                     Affiliation = i.Affiliation,
-                    Date = i.Dto.Value.ToShortDateString(),
+                    Date = i.Dto.Value.ToString(Helper.DateFormatSmall),
                     Id = i.Objectid
                 }).ToList();
 
@@ -148,7 +151,11 @@ namespace MilSpace.Visibility
                 SetDataGridView();
                 DisplaySelectedColumns(filter);
                 dgvObservationPoints.Update();
-                dgvObservationPoints.Rows[0].Selected = true;
+                if (selected > dgvObservationPoints.Rows.Count - 1)
+                {
+                    selected = dgvObservationPoints.Rows.Count - 1;
+                }
+                dgvObservationPoints.Rows[selected].Selected = true;
             }
         }
 
@@ -181,12 +188,12 @@ namespace MilSpace.Visibility
         public void ChangeRecord(int id, ObservationPoint observationPoint)
         {
             var rowIndex = dgvObservationPoints.SelectedRows[0].Index;
-            var pointGui = _observPointGuis.FirstOrDefault(point => point.Id == id);
+            //var pointGui = _observPointGuis.FirstOrDefault(point => point.Id == id);
 
-            pointGui.Title = observationPoint.Title;
-            pointGui.Type = observationPoint.Type;
-            pointGui.Affiliation = observationPoint.Affiliation;
-            pointGui.Date = observationPoint.Dto.Value.ToShortDateString();
+            //pointGui.Title = observationPoint.Title;
+            //pointGui.Type = observationPoint.Type;
+            //pointGui.Affiliation = observationPoint.Affiliation;
+            //pointGui.Date = observationPoint.Dto.Value.ToString(Helper.DateFormatSmall);
 
             dgvObservationPoints.Refresh();
             UpdateFilter(dgvObservationPoints.Rows[rowIndex]);
@@ -355,7 +362,7 @@ namespace MilSpace.Visibility
 
         private void UpdateObservPointsList()
         {
-            if(IsPointFieldsEnabled)
+            if (IsPointFieldsEnabled)
             {
                 _observPointsController.UpdateObservationPointsList();
             }
@@ -484,7 +491,7 @@ namespace MilSpace.Visibility
             azimuthMainAxis.Text = ObservPointDefaultValues.AzimuthMainAxisText;
 
 
-            observPointDate.Text = DateTime.Now.ToShortDateString();
+            observPointDate.Text = DateTime.Now.ToString(Helper.DateFormatSmall);
             observPointCreator.Text = Environment.UserName;
         }
 
@@ -507,6 +514,7 @@ namespace MilSpace.Visibility
             if (FieldsValidation(sender, selectedPoint))
             {
                 _observPointsController.UpdateObservPoint(GetObservationPoint(), VisibilityManager.ObservPointFeature, ActiveView, selectedPoint.Objectid);
+                UpdateObservPointsList();
             }
         }
 
@@ -1293,6 +1301,11 @@ namespace MilSpace.Visibility
 
         private void toolBar6_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
+        }
+
+        private void label41_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
