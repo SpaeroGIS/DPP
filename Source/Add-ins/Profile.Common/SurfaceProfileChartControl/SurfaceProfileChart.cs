@@ -855,6 +855,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             UpdateProfiles();
 
             _controller.AddInvisibleZones(GetAllColors(true), GetAllColors(false), GetSurfacesFromChart());
+            _controller.ChangeSessionsHeights(height);
             UpdateExtremePoints(profileChart.Series);
             UpdateTableWithNewObserverHeigth(profilePropertiesTable.Rows);
             ShowDetails();
@@ -1555,6 +1556,5 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
         }
     }
-
 }
 
