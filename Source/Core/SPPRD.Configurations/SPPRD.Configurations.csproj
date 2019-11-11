@@ -103,6 +103,12 @@
     <Compile Include="..\Configurations\Connection\MilSpaceConnectionProperty.cs">
       <Link>Connection\MilSpaceConnectionProperty.cs</Link>
     </Compile>
+    <Compile Include="..\Configurations\FeatrueClasses\FeatureClasses.cs">
+      <Link>FeatrueClasses\FeatureClasses.cs</Link>
+    </Compile>
+    <Compile Include="..\Configurations\FeatrueClasses\ObservationPoints.cs">
+      <Link>FeatrueClasses\ObservationPoints.cs</Link>
+    </Compile>
     <Compile Include="..\Configurations\MilSpaceConfiguration.cs">
       <Link>MilSpaceConfiguration.cs</Link>
     </Compile>
@@ -115,8 +121,6 @@
     <Compile Include="..\Configurations\MilSpaceRootConfiguration.cs">
       <Link>MilSpaceRootConfiguration.cs</Link>
     </Compile>
-    <Compile Include="FeatrueClasses\FeatureClasses.cs" />
-    <Compile Include="FeatrueClasses\ObservationPoints.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
