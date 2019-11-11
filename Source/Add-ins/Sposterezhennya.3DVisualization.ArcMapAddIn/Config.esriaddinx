@@ -1,0 +1,38 @@
+﻿<ESRI.Configuration xmlns="http://schemas.esri.com/Desktop/AddIns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>SPPRD.3DVisualization</Name>
+  <AddInID>{1FD41BCB-678C-436B-9DE6-176CB3359779}</AddInID>
+  <Description>SPPRD Profiles 3D Visualization.</Description>
+  <Version>20192008.5</Version>
+  <Image>Images\Button3DVisualization.png</Image>
+  <Author>DPP</Author>
+  <Company></Company>
+  <Date>13/08/2019</Date>
+  <Targets>
+    <Target name="Desktop" version="10.4" />
+  </Targets>
+  <AddIn language="CLR" library="SPPRD.Visualization3D.dll" namespace="MilSpace.Visualization3D">
+    <ArcMap>
+      <Commands>
+        <Button id="SPPRD.Visualization3D_Button3DVisualization" class="Button3DVisualization" 
+                message="Open 3D Visualization"  
+                caption="SPPRD.Visualization3D" tip="Open 3D Visualization." category="SPPRDTools" image="Images\Button3DVisualization.png" />
+      </Commands>
+      <DockableWindows>
+        <DockableWindow id="SPPRD.Visualization3D_Visualization3DMainForm" class="Visualization3DMainForm+AddinImpl"
+                        caption="SPPRD Visualization3D" image="Images\Button3DVisualization.png">
+          <InitialPlacement height="715" width="322" state="pinned" position="left" />
+        </DockableWindow>
+      </DockableWindows>
+      <Toolbars>
+        <Toolbar
+          id="SPPRDArcMapAddinToolbar"
+          caption="SPPRD спецінструменти"
+          showInitially="true">
+          <Items>
+            <Button refID="SPPRD.Visualization3D_Button3DVisualization" />
+          </Items>
+        </Toolbar>
+      </Toolbars>      
+    </ArcMap>
+  </AddIn>
+</ESRI.Configuration>

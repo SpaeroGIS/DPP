@@ -1,48 +1,54 @@
 ﻿<ESRI.Configuration xmlns="http://schemas.esri.com/Desktop/AddIns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Name>SPPRD.Visibility</Name>
   <AddInID>{FB57E9FC-FDCA-492A-980D-F73624C1BB77}</AddInID>
+  
   <Description>MilSpace 3-D solution. Module Visibility</Description>
-  <Version>1.1</Version>
-  <Image>Images\MilSpaceVisibility.png</Image>
+  <Version>1.5.0001</Version>
+  <Image>Images\ButtonMilSpaceMVis.png</Image>
   <Author>administrator</Author>
   <Company>DPP</Company>
-  <Date>03.12.2018</Date>
+  <Date>2019.11.11</Date>
+  
   <Targets>
     <Target name="Desktop" version="10.4" />
   </Targets>
+  
   <AddIn language="CLR" library="SPPRD.Visibility.dll" namespace="MilSpace.Visibility">
     <ArcMap>
       
       <Commands>
-        <Button 
-          id="DPP_ArcMapAddin_MilSpace_Visibility_ButtonMilSpaceMVis" 
-          class="ButtonMilSpaceMVis" 
-          message="SPPRD 3-D solution. Module Visibility window" 
-          caption="SPPRD Visibility" 
-          tip="SPPRD Module Visibility window" 
-          category="SPPRDTools" 
-          image="Images\ButtonMilSpaceMVis.png" />
-        <Tool id="DPP_ArcMapAddin_MilSpace_Visibility_MapInteropTool" class="MapInteropTool" message="SPPRD Visibility. Map Interop Tool"
-              caption="Tool" tip="Map Point Tool" category="SPPRDTools" image="Images\ButtonMilSpaceMVis.png" />
+        <Button id="MilSpace_Visibility_ButtonMilSpaceMVis" 
+                class="ButtonMilSpaceMVis" 
+                message="SPPRD 3-D solution. Module Visibility window" 
+                caption="SPPRD Visibility" 
+                tip="SPPRD Module Visibility window" 
+                category="СППРД інструменти" 
+                image="Images\ButtonMilSpaceMVis.png" />
+        
+        <Tool id="DPP_ArcMapAddin_MilSpace_Visibility_MapInteropTool" 
+              class="MapInteropTool" 
+              message="SPPRD Visibility. Map interop point tool"
+              caption="Map point Tool" 
+              tip="SPPRD visibility map point Tool" 
+              category="СППРД інструменти" 
+              image="Images\ButtonMilSpaceMVis.png" />
       </Commands>
       
       <DockableWindows>
-        <DockableWindow 
-          id="DPP_ArcMapAddin_MilSpace_Visibility_DockableWindowMilSpaceMVisibilitySt" 
-          class="DockableWindowMilSpaceMVisibilitySt+AddinImpl" 
-          caption="SPPRD Module Visibility" 
-          image="Images\DockableWindowMilSpaceMVisibilitySt.png">
-          <InitialPlacement height="650" width="350" state="pinned" position="float" />
+        <DockableWindow id="DPP_ArcMapAddin_MilSpace_Visibility_DockableWindowMilSpaceMVisibilitySt" 
+                        class="DockableWindowMilSpaceMVisibilitySt+AddinImpl" 
+                        caption="SPPRD Module Visibility" 
+                        image="Images\DockableWindowMilSpaceMVisibilitySt.png">
+          <InitialPlacement height="600" width="300" state="pinned" position="float" />
         </DockableWindow>
       </DockableWindows>
 
       <Toolbars>
-        <Toolbar
-          id="MilspaceArcMapAddinToolbar"
-          caption="SPPRD спецінструменти"
-          showInitially="true">
+        <Toolbar id="MilspaceArcMapAddinToolbar"
+                 caption="СППРД інструменти"
+                 showInitially="true">
           <Items>
-            <Button refID="DPP_ArcMapAddin_MilSpace_Visibility_ButtonMilSpaceMVis" />
+            <Button refID="MilSpace_Visibility_ButtonMilSpaceMVis" />
           </Items>
         </Toolbar>
       </Toolbars>

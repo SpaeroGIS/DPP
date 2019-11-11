@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MilSpace.GeoCalculator</RootNamespace>
-    <AssemblyName>SPPRD.GeoCalculator</AssemblyName>
+    <AssemblyName>SPPRD.GeoCalculator.ArcMapAddin</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>

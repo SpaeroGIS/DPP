@@ -1,5 +1,6 @@
 ﻿using ESRI.ArcGIS.Carto;
 using MilSpace.Core;
+using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Visualization3D.Models;
 using System;
@@ -124,11 +125,13 @@ namespace MilSpace.Visualization3D
             this.BuildingsLayerComboBox.Items.Clear();
             this.PlantsLayerComboBox.Items.Clear();
 
-            PopulateComboBox(SurfaceComboBox, ProfileLayers.RasterLayers);
-            PopulateComboBox(TransportLayerComboBox, ProfileLayers.PolygonLayers);
-            PopulateComboBox(HydroLayerComboBox, ProfileLayers.PolygonLayers);
-            PopulateComboBox(BuildingsLayerComboBox, ProfileLayers.PolygonLayers);
-            PopulateComboBox(PlantsLayerComboBox, ProfileLayers.PolygonLayers);
+            var mapLayerManager = new MapLayersManager(ArcMap.Document.ActiveView);
+
+            PopulateComboBox(SurfaceComboBox, mapLayerManager.RasterLayers);
+            PopulateComboBox(TransportLayerComboBox, mapLayerManager.PolygonLayers);
+            PopulateComboBox(HydroLayerComboBox, mapLayerManager.PolygonLayers);
+            PopulateComboBox(BuildingsLayerComboBox, mapLayerManager.PolygonLayers);
+            PopulateComboBox(PlantsLayerComboBox, mapLayerManager.PolygonLayers);
         }
 
         private static void PopulateComboBox(ComboBox comboBox, IEnumerable<ILayer> layers)
@@ -146,11 +149,14 @@ namespace MilSpace.Visualization3D
 
             var additionalLayers = new List<ILayer>();
 
-            foreach(var selectedLayer in selectedLayers)
+            var mapLayerManager = new MapLayersManager(ArcMap.Document.ActiveView);
+            var polygonLayers = mapLayerManager.PolygonLayers.ToArray();
+
+            foreach (var selectedLayer in selectedLayers)
             {
                 if(selectedLayer != null)
                 {
-                    additionalLayers.Add(ProfileLayers.PolygonLayers.First(layer => layer.Name == selectedLayer.ToString()));
+                    additionalLayers.Add(polygonLayers.First(layer => layer.Name == selectedLayer.ToString()));
                 }
             }
 

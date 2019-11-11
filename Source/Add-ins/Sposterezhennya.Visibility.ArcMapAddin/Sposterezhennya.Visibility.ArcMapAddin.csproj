@@ -116,9 +116,6 @@
     <Compile Include="..\Visibility.Common\ButtonMilSpaceMVis.cs">
       <Link>ButtonMilSpaceMVis.cs</Link>
     </Compile>
-    <Compile Include="..\Visibility.Common\DockableWindow1Command.cs">
-      <Link>DockableWindow1Command.cs</Link>
-    </Compile>
     <Compile Include="..\Visibility.Common\DockableWindowMilSpaceMVisibilitySt.cs">
       <Link>DockableWindowMilSpaceMVisibilitySt.cs</Link>
       <SubType>UserControl</SubType>
@@ -178,6 +175,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Config.esriaddinx</DependentUpon>
     </Compile>
+    <Compile Include="DockableWindow1Command.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

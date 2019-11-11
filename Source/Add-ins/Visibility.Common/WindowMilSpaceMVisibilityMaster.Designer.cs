@@ -39,14 +39,9 @@ namespace MilSpace.Visibility
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.StepsTabControl = new System.Windows.Forms.TabControl();
             this.stepOne = new System.Windows.Forms.TabPage();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.button4 = new System.Windows.Forms.Button();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.button2 = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.uButton2 = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
             this.stepTwo = new System.Windows.Forms.TabPage();
             this.panel7 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -91,6 +86,7 @@ namespace MilSpace.Visibility
             this.panel14 = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
             this.panel47 = new System.Windows.Forms.Panel();
+            this.label30 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.stepThree = new System.Windows.Forms.TabPage();
@@ -136,11 +132,22 @@ namespace MilSpace.Visibility
             this.label25 = new System.Windows.Forms.Label();
             this.panel28 = new System.Windows.Forms.Panel();
             this.label29 = new System.Windows.Forms.Label();
-            this.label30 = new System.Windows.Forms.Label();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.panel29 = new System.Windows.Forms.Panel();
+            this.button4 = new System.Windows.Forms.Button();
+            this.panel30 = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
+            this.panel31 = new System.Windows.Forms.Panel();
+            this.uButton2 = new System.Windows.Forms.Button();
+            this.panel32 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label31 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
+            this.label34 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.StepsTabControl.SuspendLayout();
             this.stepOne.SuspendLayout();
-            this.panel6.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -177,6 +184,11 @@ namespace MilSpace.Visibility
             this.panel26.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel28.SuspendLayout();
+            this.panel6.SuspendLayout();
+            this.panel29.SuspendLayout();
+            this.panel30.SuspendLayout();
+            this.panel31.SuspendLayout();
+            this.panel32.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -456,95 +468,37 @@ namespace MilSpace.Visibility
             this.stepOne.TabIndex = 0;
             this.stepOne.Text = "Шаг 1";
             // 
-            // panel6
-            // 
-            this.panel6.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.panel6.Controls.Add(this.button4);
-            this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel6.Location = new System.Drawing.Point(3, 237);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(915, 78);
-            this.panel6.TabIndex = 3;
-            // 
-            // button4
-            // 
-            this.button4.Enabled = false;
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button4.Location = new System.Drawing.Point(0, 0);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(914, 78);
-            this.button4.TabIndex = 4;
-            this.button4.Text = "Анализ результатов наблюдения с известными параметрами (например - аэрофотосъемки" +
-    ") с точки зрения расположения кадров на местности и обеспечения видимости.";
-            this.button4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button4.UseVisualStyleBackColor = true;
-            // 
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.Color.Silver;
             this.panel5.Controls.Add(this.button2);
+            this.panel5.Controls.Add(this.panel30);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(3, 159);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(915, 78);
             this.panel5.TabIndex = 2;
             // 
-            // button2
-            // 
-            this.button2.Enabled = false;
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.Location = new System.Drawing.Point(0, 0);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(914, 78);
-            this.button2.TabIndex = 0;
-            this.button2.Text = "Подбор параметров пунктов наблюдения для наилучшего наблюдения за заданными ОН (п" +
-    "араметры аппаратуры, высота над поверхностью, направления и углы обзора).";
-            this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button2.UseVisualStyleBackColor = true;
-            // 
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.panel4.Controls.Add(this.uButton2);
+            this.panel4.Controls.Add(this.panel31);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(3, 81);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(915, 78);
             this.panel4.TabIndex = 1;
             // 
-            // uButton2
-            // 
-            this.uButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.uButton2.Location = new System.Drawing.Point(0, 0);
-            this.uButton2.Name = "uButton2";
-            this.uButton2.Size = new System.Drawing.Size(914, 78);
-            this.uButton2.TabIndex = 0;
-            this.uButton2.Text = "Определение видимости в заданных ОН, для выбранных пунктов наблюдения, с учетом и" +
-    "ндивидуальных параметров пунктов наблюдения. ";
-            this.uButton2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.uButton2.UseVisualStyleBackColor = true;
-            this.uButton2.Click += new System.EventHandler(this.ultraButton1_Click);
-            // 
             // panel3
             // 
             this.panel3.Controls.Add(this.button1);
+            this.panel3.Controls.Add(this.panel32);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(3, 3);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(915, 78);
             this.panel3.TabIndex = 0;
-            // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(0, -3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(914, 81);
-            this.button1.TabIndex = 0;
-            this.button1.Text = resources.GetString("button1.Text");
-            this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // stepTwo
             // 
@@ -619,7 +573,7 @@ namespace MilSpace.Visibility
             this.dvgCheckList.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dvgCheckList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dvgCheckList.Dock = System.Windows.Forms.DockStyle.Top;
-            this.dvgCheckList.Location = new System.Drawing.Point(0, 121);
+            this.dvgCheckList.Location = new System.Drawing.Point(0, 126);
             this.dvgCheckList.MultiSelect = false;
             this.dvgCheckList.Name = "dvgCheckList";
             this.dvgCheckList.RowHeadersVisible = false;
@@ -677,7 +631,7 @@ namespace MilSpace.Visibility
             this.panel9.Controls.Add(this.checkAffiliation);
             this.panel9.Controls.Add(this.checkType);
             this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel9.Location = new System.Drawing.Point(0, 97);
+            this.panel9.Location = new System.Drawing.Point(0, 102);
             this.panel9.Name = "panel9";
             this.panel9.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.panel9.Size = new System.Drawing.Size(441, 24);
@@ -735,7 +689,7 @@ namespace MilSpace.Visibility
             this.panel10.Controls.Add(this.cmbType);
             this.panel10.Controls.Add(this.label2);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel10.Location = new System.Drawing.Point(0, 73);
+            this.panel10.Location = new System.Drawing.Point(0, 78);
             this.panel10.Name = "panel10";
             this.panel10.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.panel10.Size = new System.Drawing.Size(441, 24);
@@ -789,7 +743,7 @@ namespace MilSpace.Visibility
             // 
             this.panel11.Controls.Add(this.label4);
             this.panel11.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel11.Location = new System.Drawing.Point(0, 49);
+            this.panel11.Location = new System.Drawing.Point(0, 54);
             this.panel11.Name = "panel11";
             this.panel11.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.panel11.Size = new System.Drawing.Size(441, 24);
@@ -811,7 +765,7 @@ namespace MilSpace.Visibility
             this.panel12.Controls.Add(this.ObservPointLabel);
             this.panel12.Controls.Add(this.label1);
             this.panel12.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel12.Location = new System.Drawing.Point(0, 25);
+            this.panel12.Location = new System.Drawing.Point(0, 30);
             this.panel12.Name = "panel12";
             this.panel12.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.panel12.Size = new System.Drawing.Size(441, 24);
@@ -845,7 +799,7 @@ namespace MilSpace.Visibility
             this.panel13.Location = new System.Drawing.Point(0, 0);
             this.panel13.Name = "panel13";
             this.panel13.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel13.Size = new System.Drawing.Size(441, 25);
+            this.panel13.Size = new System.Drawing.Size(441, 30);
             this.panel13.TabIndex = 13;
             // 
             // label5
@@ -865,7 +819,7 @@ namespace MilSpace.Visibility
             this.panel19.Controls.Add(this.checkBox4);
             this.panel19.Controls.Add(this.dgvObjects);
             this.panel19.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel19.Location = new System.Drawing.Point(0, 121);
+            this.panel19.Location = new System.Drawing.Point(0, 126);
             this.panel19.Margin = new System.Windows.Forms.Padding(0);
             this.panel19.Name = "panel19";
             this.panel19.Size = new System.Drawing.Size(473, 225);
@@ -903,7 +857,7 @@ namespace MilSpace.Visibility
             this.panel18.Controls.Add(this.checkDate_Object);
             this.panel18.Controls.Add(this.checkB_Affilation);
             this.panel18.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel18.Location = new System.Drawing.Point(0, 97);
+            this.panel18.Location = new System.Drawing.Point(0, 102);
             this.panel18.Name = "panel18";
             this.panel18.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.panel18.Size = new System.Drawing.Size(473, 24);
@@ -944,7 +898,7 @@ namespace MilSpace.Visibility
             this.panel17.Controls.Add(this.cmbObservObject);
             this.panel17.Controls.Add(this.label9);
             this.panel17.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel17.Location = new System.Drawing.Point(0, 73);
+            this.panel17.Location = new System.Drawing.Point(0, 78);
             this.panel17.Name = "panel17";
             this.panel17.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.panel17.Size = new System.Drawing.Size(473, 24);
@@ -976,7 +930,7 @@ namespace MilSpace.Visibility
             // 
             this.panel16.Controls.Add(this.label8);
             this.panel16.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel16.Location = new System.Drawing.Point(0, 49);
+            this.panel16.Location = new System.Drawing.Point(0, 54);
             this.panel16.Name = "panel16";
             this.panel16.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.panel16.Size = new System.Drawing.Size(473, 24);
@@ -999,7 +953,7 @@ namespace MilSpace.Visibility
             this.panel15.Controls.Add(this.label19);
             this.panel15.Controls.Add(this.label7);
             this.panel15.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel15.Location = new System.Drawing.Point(0, 25);
+            this.panel15.Location = new System.Drawing.Point(0, 30);
             this.panel15.Name = "panel15";
             this.panel15.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.panel15.Size = new System.Drawing.Size(473, 24);
@@ -1042,7 +996,7 @@ namespace MilSpace.Visibility
             this.panel14.Location = new System.Drawing.Point(0, 0);
             this.panel14.Name = "panel14";
             this.panel14.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel14.Size = new System.Drawing.Size(473, 25);
+            this.panel14.Size = new System.Drawing.Size(473, 30);
             this.panel14.TabIndex = 14;
             // 
             // label6
@@ -1071,6 +1025,17 @@ namespace MilSpace.Visibility
             this.panel47.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.panel47.Size = new System.Drawing.Size(915, 71);
             this.panel47.TabIndex = 66;
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label30.Location = new System.Drawing.Point(0, 0);
+            this.label30.Name = "label30";
+            this.label30.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
+            this.label30.Size = new System.Drawing.Size(184, 24);
+            this.label30.TabIndex = 7;
+            this.label30.Text = "Параметры расчета";
             // 
             // label22
             // 
@@ -1568,20 +1533,170 @@ namespace MilSpace.Visibility
             this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label29.Location = new System.Drawing.Point(3, 6);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(246, 20);
+            this.label29.Size = new System.Drawing.Size(294, 20);
             this.label29.TabIndex = 9;
-            this.label29.Text = "Параметры задачи расчета";
+            this.label29.Text = "Параметры задания для расчета";
             // 
-            // label30
+            // panel6
             // 
-            this.label30.AutoSize = true;
-            this.label30.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label30.Location = new System.Drawing.Point(0, 0);
-            this.label30.Name = "label30";
-            this.label30.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label30.Size = new System.Drawing.Size(184, 24);
-            this.label30.TabIndex = 7;
-            this.label30.Text = "Параметры расчета";
+            this.panel6.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.panel6.Controls.Add(this.button4);
+            this.panel6.Controls.Add(this.panel29);
+            this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel6.Location = new System.Drawing.Point(3, 237);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(915, 78);
+            this.panel6.TabIndex = 3;
+            // 
+            // panel29
+            // 
+            this.panel29.BackColor = System.Drawing.SystemColors.Control;
+            this.panel29.Controls.Add(this.label34);
+            this.panel29.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel29.Location = new System.Drawing.Point(0, 0);
+            this.panel29.Name = "panel29";
+            this.panel29.Size = new System.Drawing.Size(78, 78);
+            this.panel29.TabIndex = 5;
+            // 
+            // button4
+            // 
+            this.button4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button4.Enabled = false;
+            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button4.Location = new System.Drawing.Point(78, 0);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(837, 78);
+            this.button4.TabIndex = 6;
+            this.button4.Text = "Анализ результатов наблюдения с известными параметрами (например - аэрофотосъемки" +
+    ") с точки зрения расположения кадров на местности и обеспечения видимости.";
+            this.button4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button4.UseVisualStyleBackColor = true;
+            // 
+            // panel30
+            // 
+            this.panel30.BackColor = System.Drawing.SystemColors.Control;
+            this.panel30.Controls.Add(this.label33);
+            this.panel30.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel30.Location = new System.Drawing.Point(0, 0);
+            this.panel30.Name = "panel30";
+            this.panel30.Size = new System.Drawing.Size(78, 78);
+            this.panel30.TabIndex = 6;
+            // 
+            // button2
+            // 
+            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button2.Enabled = false;
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button2.Location = new System.Drawing.Point(78, 0);
+            this.button2.Name = "button2";
+            this.button2.Padding = new System.Windows.Forms.Padding(4);
+            this.button2.Size = new System.Drawing.Size(837, 78);
+            this.button2.TabIndex = 7;
+            this.button2.Text = "Подбор параметров пунктов наблюдения для наилучшего наблюдения за заданными ОН (п" +
+    "араметры аппаратуры, высота над поверхностью, направления и углы обзора).";
+            this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // panel31
+            // 
+            this.panel31.BackColor = System.Drawing.SystemColors.Control;
+            this.panel31.Controls.Add(this.label32);
+            this.panel31.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel31.Location = new System.Drawing.Point(0, 0);
+            this.panel31.Name = "panel31";
+            this.panel31.Size = new System.Drawing.Size(78, 78);
+            this.panel31.TabIndex = 7;
+            // 
+            // uButton2
+            // 
+            this.uButton2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.uButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.uButton2.Location = new System.Drawing.Point(78, 0);
+            this.uButton2.Name = "uButton2";
+            this.uButton2.Size = new System.Drawing.Size(837, 78);
+            this.uButton2.TabIndex = 8;
+            this.uButton2.Text = "Определение видимости в заданных ОН, для выбранных пунктов наблюдения, с учетом и" +
+    "ндивидуальных параметров пунктов наблюдения. ";
+            this.uButton2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.uButton2.UseVisualStyleBackColor = true;
+            this.uButton2.Click += new System.EventHandler(this.ultraButton1_Click);
+            // 
+            // panel32
+            // 
+            this.panel32.BackColor = System.Drawing.SystemColors.Control;
+            this.panel32.Controls.Add(this.label31);
+            this.panel32.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel32.Location = new System.Drawing.Point(0, 0);
+            this.panel32.Name = "panel32";
+            this.panel32.Size = new System.Drawing.Size(78, 78);
+            this.panel32.TabIndex = 8;
+            // 
+            // button1
+            // 
+            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button1.Location = new System.Drawing.Point(78, 0);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(837, 78);
+            this.button1.TabIndex = 9;
+            this.button1.Text = resources.GetString("button1.Text");
+            this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
+            // 
+            // label31
+            // 
+            this.label31.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label31.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label31.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label31.Location = new System.Drawing.Point(0, 0);
+            this.label31.Margin = new System.Windows.Forms.Padding(0);
+            this.label31.Name = "label31";
+            this.label31.Padding = new System.Windows.Forms.Padding(20, 20, 10, 10);
+            this.label31.Size = new System.Drawing.Size(78, 78);
+            this.label31.TabIndex = 0;
+            this.label31.Text = "1";
+            // 
+            // label32
+            // 
+            this.label32.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label32.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label32.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label32.Location = new System.Drawing.Point(0, 0);
+            this.label32.Margin = new System.Windows.Forms.Padding(0);
+            this.label32.Name = "label32";
+            this.label32.Padding = new System.Windows.Forms.Padding(20, 20, 10, 10);
+            this.label32.Size = new System.Drawing.Size(78, 78);
+            this.label32.TabIndex = 2;
+            this.label32.Text = "2";
+            // 
+            // label33
+            // 
+            this.label33.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label33.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label33.Enabled = false;
+            this.label33.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label33.Location = new System.Drawing.Point(0, 0);
+            this.label33.Margin = new System.Windows.Forms.Padding(0);
+            this.label33.Name = "label33";
+            this.label33.Padding = new System.Windows.Forms.Padding(20, 20, 10, 10);
+            this.label33.Size = new System.Drawing.Size(78, 78);
+            this.label33.TabIndex = 1;
+            this.label33.Text = "3";
+            // 
+            // label34
+            // 
+            this.label34.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label34.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label34.Enabled = false;
+            this.label34.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label34.Location = new System.Drawing.Point(0, 0);
+            this.label34.Margin = new System.Windows.Forms.Padding(0);
+            this.label34.Name = "label34";
+            this.label34.Padding = new System.Windows.Forms.Padding(20, 20, 10, 10);
+            this.label34.Size = new System.Drawing.Size(78, 78);
+            this.label34.TabIndex = 1;
+            this.label34.Text = "4";
             // 
             // WindowMilSpaceMVisibilityMaster
             // 
@@ -1594,11 +1709,10 @@ namespace MilSpace.Visibility
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "WindowMilSpaceMVisibilityMaster";
-            this.Text = "MilSpace. Module visibility. Master";
+            this.Text = "Module visibility. Task master ";
             this.panel1.ResumeLayout(false);
             this.StepsTabControl.ResumeLayout(false);
             this.stepOne.ResumeLayout(false);
-            this.panel6.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
@@ -1660,6 +1774,11 @@ namespace MilSpace.Visibility
             this.panel2.PerformLayout();
             this.panel28.ResumeLayout(false);
             this.panel28.PerformLayout();
+            this.panel6.ResumeLayout(false);
+            this.panel29.ResumeLayout(false);
+            this.panel30.ResumeLayout(false);
+            this.panel31.ResumeLayout(false);
+            this.panel32.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1673,7 +1792,6 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.TabControl StepsTabControl;
         private System.Windows.Forms.TabPage stepOne;
-        private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Panel panel3;
@@ -1709,13 +1827,9 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Panel panel20;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TabPage stepFour;
-        private System.Windows.Forms.Button uButton2;
       
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label23;
@@ -1773,5 +1887,18 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Panel panel14;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Panel panel6;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Panel panel29;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Panel panel30;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.Button uButton2;
+        private System.Windows.Forms.Panel panel31;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Panel panel32;
+        private System.Windows.Forms.Label label31;
     }
 }
