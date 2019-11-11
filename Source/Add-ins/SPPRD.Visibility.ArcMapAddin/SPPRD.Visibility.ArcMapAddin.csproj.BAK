@@ -113,70 +113,29 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Visibility.Common\ButtonMilSpaceMVis.cs">
-      <Link>ButtonMilSpaceMVis.cs</Link>
-    </Compile>
-    <Compile Include="..\Visibility.Common\DockableWindow1Command.cs">
-      <Link>DockableWindow1Command.cs</Link>
-    </Compile>
-    <Compile Include="..\Visibility.Common\DockableWindowMilSpaceMVisibilitySt.cs">
-      <Link>DockableWindowMilSpaceMVisibilitySt.cs</Link>
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="..\Visibility.Common\DockableWindowMilSpaceMVisibilitySt.designer.cs">
-      <Link>DockableWindowMilSpaceMVisibilitySt.designer.cs</Link>
-      <DependentUpon>DockableWindowMilSpaceMVisibilitySt.cs</DependentUpon>
-    </Compile>
-    <Compile Include="..\Visibility.Common\DTO\CheckObservPointGui.cs">
-      <Link>DTO\CheckObservPointGui.cs</Link>
-    </Compile>
-    <Compile Include="..\Visibility.Common\DTO\MasterResult.cs">
-      <Link>DTO\MasterResult.cs</Link>
-    </Compile>
-    <Compile Include="..\Visibility.Common\DTO\ObservObjectGui.cs">
-      <Link>DTO\ObservObjectGui.cs</Link>
-    </Compile>
-    <Compile Include="..\Visibility.Common\DTO\ObservPointGui.cs">
-      <Link>DTO\ObservPointGui.cs</Link>
-    </Compile>
-    <Compile Include="..\Visibility.Common\DTO\VisibilitySessionGui.cs">
-      <Link>DTO\VisibilitySessionGui.cs</Link>
-    </Compile>
-    <Compile Include="..\Visibility.Common\Helpers\ArcMapHelper.cs">
-      <Link>Helpers\ArcMapHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\Visibility.Common\MapInteropTool.cs">
-      <Link>MapInteropTool.cs</Link>
-    </Compile>
-    <Compile Include="..\Visibility.Common\ObservPointDefaultValues.cs">
-      <Link>ObservPointDefaultValues.cs</Link>
-    </Compile>
-    <Compile Include="..\Visibility.Common\ViewController\IObservationPointsView.cs">
-      <Link>ViewController\IObservationPointsView.cs</Link>
-    </Compile>
-    <Compile Include="..\Visibility.Common\ViewController\IOservPointsView.cs">
-      <Link>ViewController\IOservPointsView.cs</Link>
-    </Compile>
-    <Compile Include="..\Visibility.Common\ViewController\IVisibilityCalculationWizard.cs">
-      <Link>ViewController\IVisibilityCalculationWizard.cs</Link>
-    </Compile>
-    <Compile Include="..\Visibility.Common\ViewController\ObservationPointsController.cs">
-      <Link>ViewController\ObservationPointsController.cs</Link>
-    </Compile>
-    <Compile Include="..\Visibility.Common\ViewController\VisibilitySessionsController.cs">
-      <Link>ViewController\VisibilitySessionsController.cs</Link>
-    </Compile>
-    <Compile Include="..\Visibility.Common\WindowMilSpaceMVisibilityMaster.cs">
-      <Link>WindowMilSpaceMVisibilityMaster.cs</Link>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="..\Visibility.Common\WindowMilSpaceMVisibilityMaster.designer.cs">
-      <Link>WindowMilSpaceMVisibilityMaster.designer.cs</Link>
-      <DependentUpon>WindowMilSpaceMVisibilityMaster.cs</DependentUpon>
-    </Compile>
     <Compile Include="Config.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Config.esriaddinx</DependentUpon>
+    </Compile>
+    <Compile Include="DockableWindow1Command.cs" />
+    <Compile Include="DTO\MasterResult.cs" />
+    <Compile Include="DTO\ObservObjectGui.cs" />
+    <Compile Include="DTO\ObservPointGui.cs" />
+    <Compile Include="DTO\VisibilitySessionGui.cs" />
+    <Compile Include="Helpers\ArcMapHelper.cs" />
+    <Compile Include="MapInteropTool.cs" />
+    <Compile Include="ObservPointDefaultValues.cs" />
+    <Compile Include="DTO\CheckObservPointGui.cs" />
+    <Compile Include="ViewController\IObservationPointsView.cs" />
+    <Compile Include="ViewController\IOservPointsView.cs" />
+    <Compile Include="ViewController\IVisibilityCalculationWizard.cs" />
+    <Compile Include="ViewController\ObservationPointsController.cs" />
+    <Compile Include="ViewController\VisibilitySessionsController.cs" />
+    <Compile Include="WindowMilSpaceMVisibilityMaster.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowMilSpaceMVisibilityMaster.Designer.cs">
+      <DependentUpon>WindowMilSpaceMVisibilityMaster.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -190,6 +149,7 @@
     <AddInContent Include="Images\MilSpaceVisibility.png" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ButtonMilSpaceMVis.cs" />
     <AddInContent Include="Images\ButtonMilSpaceMVis.png" />
   </ItemGroup>
   <ItemGroup>
@@ -197,6 +157,12 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DockableWindowMilSpaceMVisibilitySt.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DockableWindowMilSpaceMVisibilitySt.Designer.cs">
+      <DependentUpon>DockableWindowMilSpaceMVisibilitySt.cs</DependentUpon>
+    </Compile>
     <AddInContent Include="Images\DockableWindowMilSpaceMVisibilitySt.png" />
   </ItemGroup>
   <ItemGroup>
@@ -212,15 +178,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\Visibility.Common\DockableWindowMilSpaceMVisibilitySt.resx">
-      <Link>DockableWindowMilSpaceMVisibilitySt.resx</Link>
+    <EmbeddedResource Include="DockableWindow1Command.bmp" />
+    <EmbeddedResource Include="DockableWindowMilSpaceMVisibilitySt.resx">
       <DependentUpon>DockableWindowMilSpaceMVisibilitySt.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\Visibility.Common\WindowMilSpaceMVisibilityMaster.resx">
-      <Link>WindowMilSpaceMVisibilityMaster.resx</Link>
+    <EmbeddedResource Include="WindowMilSpaceMVisibilityMaster.resx">
       <DependentUpon>WindowMilSpaceMVisibilityMaster.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DockableWindow1Command.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MilSpace.snk" />

@@ -226,3 +226,15 @@
 /Source/Add-ins/SPPRD.GeoCalculator.ArcMapAddin/bin/Debug
 *.bat
 *.user
+/Source/Add-ins/Sposterezhennya.3DVisualization.ArcMapAddIn/.vs/Sposterezhennya.3DVisualization.ArcMapAddIn/v15
+/Source/Add-ins/Sposterezhennya.3DVisualization.ArcMapAddIn/bin/Debug
+/Source/Add-ins/Sposterezhennya.3DVisualization.ArcMapAddIn/obj
+/Source/Add-ins/Sposterezhennya.GeoCalculator.ArcMapAddin/bin/Debug
+/Source/Add-ins/Sposterezhennya.GeoCalculator.ArcMapAddin/obj
+/Source/Add-ins/Sposterezhennya.Profile.ArcMapAddin/bin/Debug
+/Source/Add-ins/Sposterezhennya.Profile.ArcMapAddin/obj
+/Source/Add-ins/Sposterezhennya.Visibility.ArcMapAddin/.vs/Sposterezhennya.Visibility.ArcMapAddin/v15
+/Source/Add-ins/Sposterezhennya.Visibility.ArcMapAddin/bin/Debug
+/Source/Add-ins/Sposterezhennya.Visibility.ArcMapAddin/obj
+/Source/Add-ins/Visibility.Common/bin/Debug
+/Source/Add-ins/Visibility.Common/obj
