@@ -33,7 +33,7 @@ namespace MilSpace.Profile
         internal delegate ProfileSession GetProfileSessionByIdDelegate(int id);
         internal delegate void PanToSelectedProfileDelegate(int sessionId, ProfileLine line);
         internal delegate void PanToSelectedProfilesSetDelegate(int sessionId);
-        internal delegate void ChangeSessionsHeightsDelegate(List<int> sessionsIds, double height);
+        internal delegate void ChangeSessionsHeightsDelegate(List<int> sessionsIds, double height, ProfileSurface[] surfaces);
 
         internal event ProfileRedrawDelegate ProfileRedrawn;
         internal event DeleteProfileDelegate ProfileRemoved;
@@ -130,9 +130,9 @@ namespace MilSpace.Profile
             PanToSelectedProfilesSet.Invoke(sessionId);
         }
 
-        internal void InvokeOnSessionsHeightsChanged(List<int> sessionsIds, double height)
+        internal void InvokeOnSessionsHeightsChanged(List<int> sessionsIds, double height, ProfileSurface[] surfaces)
         {
-            OnSessionsHeightsChanged.Invoke(sessionsIds, height);
+            OnSessionsHeightsChanged.Invoke(sessionsIds, height, surfaces);
         }
 
         internal void SetIntersections(List<IntersectionsInLayer> intersectionsLines, int lineId)

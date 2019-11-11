@@ -774,14 +774,6 @@ namespace MilSpace.Profile
             {
                 GraphicsLayerManager
                         .UpdateGraphicLine(profileLines, sessionId);
-
-                var profile = _workingProfiles.FirstOrDefault(p => p.SessionId == sessionId);
-                //Save Profile if it was recalculated
-                if (profile != null)
-                {
-                    SaveProfileSet(profile);
-                }
-
             }
             else
             {
@@ -958,7 +950,7 @@ namespace MilSpace.Profile
             ShowProfileOnMap(sessionId, line);
         }
 
-        private void ChangeProfilesHeights(List<int> sessionsIds, double height)
+        private void ChangeProfilesHeights(List<int> sessionsIds, double height, ProfileSurface[] surfaces)
         {
             foreach(var id in sessionsIds)
             {
@@ -967,8 +959,25 @@ namespace MilSpace.Profile
                 if(session != null)
                 {
                     session.ObserverHeight = height;
+                    var profileSurfaces = surfaces.Where(surface => surface.SessionId == id).ToArray();
+                    session.ProfileSurfaces = profileSurfaces.Select(ps => 
+                    {
+                        return new ProfileSurface()
+                        {
+                            LineId = ps.LineId,
+                            ProfileSurfacePoints = ps.ProfileSurfacePoints
+                        };
+                    }).ToArray();
+
+
+                    if(session.ProfileSurfaces.Count() == 1)
+                    {
+                        session.ProfileSurfaces[0].LineId = session.ProfileLines[0].Id;
+                    }
+
                     SaveProfileSet(session);
                     _workingProfiles.First(profileSession => profileSession.SessionId == id).ObserverHeight = height;
+
                     View.ChangeSessionHeightInNode(id, height, session.DefinitionType);
                 }
 
