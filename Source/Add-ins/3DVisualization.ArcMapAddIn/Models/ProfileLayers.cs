@@ -13,7 +13,7 @@ using ESRI.ArcGIS.Geometry;
 
 namespace MilSpace.Visualization3D.Models
 {
-    static class ProfileLayers
+    static class ProfileLayers_
     {
 
         private static readonly List<ILayer> Layers;
@@ -22,7 +22,7 @@ namespace MilSpace.Visualization3D.Models
         private static esriGeometryType[] pointTypes = new esriGeometryType[] { esriGeometryType.esriGeometryPoint };
         private static esriGeometryType[] polygonTypes = new esriGeometryType[] { esriGeometryType.esriGeometryPolygon };
 
-        static ProfileLayers()
+        static ProfileLayers_()
         {
             Layers = GetAllLayers();
         }
