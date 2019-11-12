@@ -122,6 +122,9 @@ namespace MilSpace.Visibility
             this.panel20 = new System.Windows.Forms.Panel();
             this.label10 = new System.Windows.Forms.Label();
             this.stepFour = new System.Windows.Forms.TabPage();
+            this.panel27 = new System.Windows.Forms.Panel();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
             this.labelT = new System.Windows.Forms.Label();
             this.labelOB = new System.Windows.Forms.Label();
             this.labelOP = new System.Windows.Forms.Label();
@@ -131,11 +134,8 @@ namespace MilSpace.Visibility
             this.panel2 = new System.Windows.Forms.Panel();
             this.label27 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.panel27 = new System.Windows.Forms.Panel();
-            this.label29 = new System.Windows.Forms.Label();
             this.panel28 = new System.Windows.Forms.Panel();
+            this.label29 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.StepsTabControl.SuspendLayout();
             this.stepOne.SuspendLayout();
@@ -172,9 +172,9 @@ namespace MilSpace.Visibility
             this.panel21.SuspendLayout();
             this.panel20.SuspendLayout();
             this.stepFour.SuspendLayout();
+            this.panel27.SuspendLayout();
             this.panel26.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.panel27.SuspendLayout();
             this.panel28.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -1434,6 +1434,34 @@ namespace MilSpace.Visibility
             this.stepFour.Text = "Шаг 4";
             this.stepFour.UseVisualStyleBackColor = true;
             // 
+            // panel27
+            // 
+            this.panel27.Controls.Add(this.label23);
+            this.panel27.Controls.Add(this.label24);
+            this.panel27.Location = new System.Drawing.Point(8, 32);
+            this.panel27.Name = "panel27";
+            this.panel27.Size = new System.Drawing.Size(313, 19);
+            this.panel27.TabIndex = 8;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label23.Location = new System.Drawing.Point(3, 0);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(161, 15);
+            this.label23.TabIndex = 1;
+            this.label23.Text = "Поверхность расчета :";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(170, 2);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(41, 13);
+            this.label24.TabIndex = 2;
+            this.label24.Text = "label24";
+            // 
             // labelT
             // 
             this.labelT.AutoSize = true;
@@ -1520,33 +1548,13 @@ namespace MilSpace.Visibility
             this.label25.TabIndex = 1;
             this.label25.Text = "Выбранно ПН :";
             // 
-            // label24
+            // panel28
             // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(170, 2);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(41, 13);
-            this.label24.TabIndex = 2;
-            this.label24.Text = "label24";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label23.Location = new System.Drawing.Point(3, 0);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(161, 15);
-            this.label23.TabIndex = 1;
-            this.label23.Text = "Поверхность расчета :";
-            // 
-            // panel27
-            // 
-            this.panel27.Controls.Add(this.label23);
-            this.panel27.Controls.Add(this.label24);
-            this.panel27.Location = new System.Drawing.Point(8, 32);
-            this.panel27.Name = "panel27";
-            this.panel27.Size = new System.Drawing.Size(313, 19);
-            this.panel27.TabIndex = 8;
+            this.panel28.Controls.Add(this.label29);
+            this.panel28.Location = new System.Drawing.Point(0, 3);
+            this.panel28.Name = "panel28";
+            this.panel28.Size = new System.Drawing.Size(921, 28);
+            this.panel28.TabIndex = 10;
             // 
             // label29
             // 
@@ -1558,14 +1566,6 @@ namespace MilSpace.Visibility
             this.label29.TabIndex = 9;
             this.label29.Text = "Параметры задачи расчета";
             this.label29.Click += new System.EventHandler(this.label29_Click);
-            // 
-            // panel28
-            // 
-            this.panel28.Controls.Add(this.label29);
-            this.panel28.Location = new System.Drawing.Point(0, 3);
-            this.panel28.Name = "panel28";
-            this.panel28.Size = new System.Drawing.Size(921, 28);
-            this.panel28.TabIndex = 10;
             // 
             // WindowMilSpaceMVisibilityMaster
             // 
@@ -1636,12 +1636,12 @@ namespace MilSpace.Visibility
             this.panel20.PerformLayout();
             this.stepFour.ResumeLayout(false);
             this.stepFour.PerformLayout();
+            this.panel27.ResumeLayout(false);
+            this.panel27.PerformLayout();
             this.panel26.ResumeLayout(false);
             this.panel26.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.panel27.ResumeLayout(false);
-            this.panel27.PerformLayout();
             this.panel28.ResumeLayout(false);
             this.panel28.PerformLayout();
             this.ResumeLayout(false);
