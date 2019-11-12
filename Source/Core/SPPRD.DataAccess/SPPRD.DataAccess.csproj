@@ -111,6 +111,15 @@
     <Compile Include="..\DataAccess\DataAccessor.cs">
       <Link>DataAccessor.cs</Link>
     </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\ObservationObjects.cs">
+      <Link>DataTransfer\ObservationObjects.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\ObservationPoint.cs">
+      <Link>DataTransfer\ObservationPoint.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\ObservationTypesEnum.cs">
+      <Link>DataTransfer\ObservationTypesEnum.cs</Link>
+    </Compile>
     <Compile Include="..\DataAccess\DataTransfer\ProfileSettingsTypeEnum.cs">
       <Link>DataTransfer\ProfileSettingsTypeEnum.cs</Link>
     </Compile>
@@ -128,6 +137,18 @@
     </Compile>
     <Compile Include="..\DataAccess\DataTransfer\ProfileLine.cs">
       <Link>DataTransfer\ProfileLine.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\VisibilityCalculation.cs">
+      <Link>DataTransfer\VisibilityCalculation.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\VisibilityResultInfo.cs">
+      <Link>DataTransfer\VisibilityResultInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\VisibilitySession.cs">
+      <Link>DataTransfer\VisibilitySession.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\VisibilitySessionStateEnum.cs">
+      <Link>DataTransfer\VisibilitySessionStateEnum.cs</Link>
     </Compile>
     <Compile Include="..\DataAccess\Definition\MilSpaceVisible.designer.cs">
       <Link>Definition\MilSpaceVisible.designer.cs</Link>
@@ -153,6 +174,9 @@
     <Compile Include="..\DataAccess\DataTransfer\ConvertCentre.cs">
       <Link>DataTransfer\ConvertCentre.cs</Link>
     </Compile>
+    <Compile Include="..\DataAccess\Exceptions\MilSpaceVisibilityDataException.cs">
+      <Link>Exceptions\MilSpaceVisibilityDataException.cs</Link>
+    </Compile>
     <Compile Include="..\DataAccess\Facade\DataAccess.cs">
       <Link>Facade\DataAccess.cs</Link>
     </Compile>
@@ -161,6 +185,9 @@
     </Compile>
     <Compile Include="..\DataAccess\Facade\MilSpaceProfileFacade.cs">
       <Link>Facade\MilSpaceProfileFacade.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\Facade\VisibilityDataAccess.cs">
+      <Link>Facade\VisibilityDataAccess.cs</Link>
     </Compile>
     <Compile Include="..\DataAccess\Facade\VisibilityFacade.cs">
       <Link>Facade\VisibilityFacade.cs</Link>
@@ -177,15 +204,6 @@
     <Compile Include="..\DataAccess\LayersEnum.cs">
       <Link>LayersEnum.cs</Link>
     </Compile>
-    <Compile Include="DataTransfer\ObservationObjects.cs" />
-    <Compile Include="DataTransfer\ObservationPoint.cs" />
-    <Compile Include="DataTransfer\ObservationTypesEnum.cs" />
-    <Compile Include="DataTransfer\VisibilityCalculation.cs" />
-    <Compile Include="DataTransfer\VisibilityResultInfo.cs" />
-    <Compile Include="DataTransfer\VisibilitySession.cs" />
-    <Compile Include="DataTransfer\VisibilitySessionStateEnum.cs" />
-    <Compile Include="Exceptions\MilSpaceVisibilityDataException.cs" />
-    <Compile Include="Facade\VisibilityDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\DataAccess\Properties\Settings.Designer.cs">
       <Link>Properties\Settings.Designer.cs</Link>

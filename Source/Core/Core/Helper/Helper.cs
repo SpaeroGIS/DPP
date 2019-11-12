@@ -156,6 +156,9 @@ namespace MilSpace.Core
             return vertices;
         }
 
+        public static string DateFormat => "yyyy-MM-dd H:mm";
+        public static string DateFormatSmall => "yyyy-MM-dd";
+
         public static double Azimuth(this ILine line)
         {
             var degrees = (line.Angle * 180 / Math.PI);

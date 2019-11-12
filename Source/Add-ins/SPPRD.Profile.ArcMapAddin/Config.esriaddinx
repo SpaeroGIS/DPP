@@ -2,46 +2,58 @@
   <Name>SPPRD.Profile</Name>
   <AddInID>{9FE5052E-668B-420B-B5C7-E9A43917DB69}</AddInID>
   <Description>SPPRD 3-D solution. Module Profile</Description>
-  <Version>20192008.5</Version>
+  
+  <Version>1.5.0001</Version>
   <Image>Images\SPPRD.Profile.png</Image>
-  <Author>admin</Author>
+  <Author>administrator</Author>
   <Company>DPP</Company>
-  <Date>30.05.2019</Date>
+  <Date>2019.11.11</Date>
+  
   <Targets>
     <Target name="Desktop" version="10.4" />
   </Targets>
+  
   <AddIn language="CLR" library="SPPRD.Profile.dll" namespace="MilSpace.Profile">
     <ArcMap>
+      
       <Commands>
-        <Button id="SPPRD.ProfileSolutionOpen" class="MilSpaceProfileCalcOpen" 
+        <Button id="SPPRD.ProfileSolutionOpen" 
+                class="MilSpaceProfileCalcOpen" 
                 message="SPPRD 3-D solution. Module Profile window" 
-                caption="SPPRD Profile window" tip="SPPRD 3-D solution. Module Profile" 
-                category="SPPRDTools" image="Images\Directions.png" />
+                caption="SPPRD Profile window" 
+                tip="SPPRD 3-D solution. Module Profile" 
+                category="СППРД інструменти" 
+                image="Images\Directions.png" />
+        
         <Tool id="SPPRD.PickProfileCoordinates" 
               class="PickProfileCoordinates" 
-              message="Pick Coordinates from the map." caption="Pick Profile Coordinates" tip="Pick Coordinates from the map." 
-              category="SPPRDTools" image="Images\PickCoordinates.png" cursor="Images\PickCoordinates.cur" />
+              message="Pick Coordinates from the map." 
+              caption="Pick Profile Coordinates" 
+              tip="Pick Coordinates from the map." 
+              category="СППРД інструменти" 
+              image="Images\PickCoordinates.png" 
+              cursor="Images\PickCoordinates.cur" />
       </Commands>
+      
       <DockableWindows>
         <DockableWindow id="SPPRD.Profile_DockableWindowMilSpaceProfileCalc" 
                         class="DockableWindowMilSpaceProfileCalc+AddinImpl" 
-                        caption="Спостереження Profile Calc" 
+                        caption="SPPRD Profile" 
                         image="Images\DockableWindowMilSpaceProfileCalc.png">
-          <InitialPlacement height="350" width="780" state="unpinned" position="float" />
+          <InitialPlacement height="350" width="300" state="unpinned" position="float" />
         </DockableWindow>
         <DockableWindow id="SPPRD.Profile_DockableWindowMilSpaceProfileGraph" 
                         class="DockableWindowMilSpaceProfileGraph+AddinImpl" 
-                        caption="SPPRD Profile Graph" 
+                        caption="SPPRD Profile Graphics" 
                         image="Images\DockableWindowMilSpaceProfileCalc.png">
           <InitialPlacement height="350" width="780" state="unpinned" position="float" />
         </DockableWindow>
       </DockableWindows>
 
       <Toolbars>
-        <Toolbar
-          id="SPPRDArcMapAddinToolbar" 
-          caption="SPPRD спецінструменти"
-          showInitially="true">
+        <Toolbar id="MilspaceArcMapAddinToolbar" 
+                 caption="СППРД інструменти"
+                 showInitially="true">
           <Items>
             <Button refID="SPPRD.ProfileSolutionOpen" />
           </Items>

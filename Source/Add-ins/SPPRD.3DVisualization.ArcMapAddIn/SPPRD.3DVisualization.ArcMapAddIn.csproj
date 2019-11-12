@@ -121,71 +121,70 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\3DVisualization.ArcMapAddIn\3DVisualizationForm.cs">
+    <Compile Include="..\3DVisualization.Common\3DVisualizationForm.cs">
       <Link>3DVisualizationForm.cs</Link>
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="..\3DVisualization.ArcMapAddIn\3DVisualizationForm.designer.cs">
+    <Compile Include="..\3DVisualization.Common\3DVisualizationForm.designer.cs">
       <Link>3DVisualizationForm.designer.cs</Link>
       <DependentUpon>3DVisualizationForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="..\3DVisualization.ArcMapAddIn\Button3DVisualization.cs">
+    <Compile Include="..\3DVisualization.Common\Button3DVisualization.cs">
       <Link>Button3DVisualization.cs</Link>
     </Compile>
-    <Compile Include="..\3DVisualization.ArcMapAddIn\DataAccess.cs">
+    <Compile Include="..\3DVisualization.Common\DataAccess.cs">
       <Link>DataAccess.cs</Link>
     </Compile>
-    <Compile Include="..\3DVisualization.ArcMapAddIn\DataPreparingHelper.cs">
+    <Compile Include="..\3DVisualization.Common\DataPreparingHelper.cs">
       <Link>DataPreparingHelper.cs</Link>
     </Compile>
-    <Compile Include="..\3DVisualization.ArcMapAddIn\Feature3DManager.cs">
+    <Compile Include="..\3DVisualization.Common\Feature3DManager.cs">
       <Link>Feature3DManager.cs</Link>
     </Compile>
-    <Compile Include="..\3DVisualization.ArcMapAddIn\Interfaces\IDataAccess.cs">
-      <Link>Interfaces\IDataAccess.cs</Link>
-    </Compile>
-    <Compile Include="..\3DVisualization.ArcMapAddIn\LocalizationContext.cs">
+    <Compile Include="..\3DVisualization.Common\LocalizationContext.cs">
       <Link>LocalizationContext.cs</Link>
     </Compile>
-    <Compile Include="..\3DVisualization.ArcMapAddIn\Models\ArcSceneArguments.cs">
+    <Compile Include="..\3DVisualization.Common\Models\ArcSceneArguments.cs">
       <Link>Models\ArcSceneArguments.cs</Link>
     </Compile>
-    <Compile Include="..\3DVisualization.ArcMapAddIn\Models\ProfileLayers.cs">
-      <Link>Models\ProfileLayers.cs</Link>
-    </Compile>
-    <Compile Include="..\3DVisualization.ArcMapAddIn\Models\TreeViewModel.cs">
+    <Compile Include="..\3DVisualization.Common\Models\TreeViewModel.cs">
       <Link>Models\TreeViewModel.cs</Link>
     </Compile>
-    <Compile Include="..\3DVisualization.ArcMapAddIn\Models\TreeViewNodeModel.cs">
+    <Compile Include="..\3DVisualization.Common\Models\TreeViewNodeModel.cs">
       <Link>Models\TreeViewNodeModel.cs</Link>
     </Compile>
-    <Compile Include="..\3DVisualization.ArcMapAddIn\ProfilesTreeView.cs">
+    <Compile Include="..\3DVisualization.Common\Models\VisibilitySessionModel.cs">
+      <Link>Models\VisibilitySessionModel.cs</Link>
+    </Compile>
+    <Compile Include="..\3DVisualization.Common\ProfilesTreeView.cs">
       <Link>ProfilesTreeView.cs</Link>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="..\3DVisualization.ArcMapAddIn\ProfilesTreeView.designer.cs">
+    <Compile Include="..\3DVisualization.Common\ProfilesTreeView.designer.cs">
       <Link>ProfilesTreeView.designer.cs</Link>
       <DependentUpon>ProfilesTreeView.cs</DependentUpon>
     </Compile>
-    <Compile Include="..\3DVisualization.ArcMapAddIn\ProfilesVisualizationForm.cs">
+    <Compile Include="..\3DVisualization.Common\ProfilesVisualizationForm.cs">
       <Link>ProfilesVisualizationForm.cs</Link>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="..\3DVisualization.ArcMapAddIn\ProfilesVisualizationForm.designer.cs">
+    <Compile Include="..\3DVisualization.Common\ProfilesVisualizationForm.designer.cs">
       <Link>ProfilesVisualizationForm.designer.cs</Link>
       <DependentUpon>ProfilesVisualizationForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="..\3DVisualization.ArcMapAddIn\ReferenceData\LocalizationConstants.cs">
+    <Compile Include="..\3DVisualization.Common\ReferenceData\LocalizationConstants.cs">
       <Link>ReferenceData\LocalizationConstants.cs</Link>
     </Compile>
-    <Compile Include="..\3DVisualization.ArcMapAddIn\Visualization3DHandler.cs">
+    <Compile Include="..\3DVisualization.Common\Visualization3DHandler.cs">
       <Link>Visualization3DHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\3DVisualization.Common\Interfaces\IDataAccess.cs">
+      <Link>Interfaces\IDataAccess.cs</Link>
     </Compile>
     <Compile Include="Config.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Config.esriaddinx</DependentUpon>
     </Compile>
-    <Compile Include="Models\VisibilitySessionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -227,15 +226,15 @@
     <None Include="..\Profile.Common\Localization\Profile.Calc.uk-UA.resx">
       <Link>Localization\Profile.Calc.uk-UA.resx</Link>
     </None>
-    <EmbeddedResource Include="..\3DVisualization.ArcMapAddIn\ProfilesTreeView.resx">
+    <EmbeddedResource Include="..\3DVisualization.Common\ProfilesTreeView.resx">
       <Link>ProfilesTreeView.resx</Link>
       <DependentUpon>ProfilesTreeView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\3DVisualization.ArcMapAddIn\ProfilesVisualizationForm.resx">
+    <EmbeddedResource Include="..\3DVisualization.Common\ProfilesVisualizationForm.resx">
       <Link>ProfilesVisualizationForm.resx</Link>
       <DependentUpon>ProfilesVisualizationForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\3DVisualization.ArcMapAddIn\3DVisualizationForm.resx">
+    <EmbeddedResource Include="..\3DVisualization.Common\3DVisualizationForm.resx">
       <Link>3DVisualizationForm.resx</Link>
       <DependentUpon>3DVisualizationForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -269,22 +268,22 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <AddInContent Include="..\3DVisualization.ArcMapAddIn\Images\Add.png">
+    <AddInContent Include="..\3DVisualization.Common\Images\Add.png">
       <Link>Images\Add.png</Link>
     </AddInContent>
-    <AddInContent Include="..\3DVisualization.ArcMapAddIn\Images\Button3DVisualization.png">
+    <AddInContent Include="..\3DVisualization.Common\Images\Button3DVisualization.png">
       <Link>Images\Button3DVisualization.png</Link>
     </AddInContent>
-    <AddInContent Include="..\3DVisualization.ArcMapAddIn\Images\Directions.png">
+    <AddInContent Include="..\3DVisualization.Common\Images\Directions.png">
       <Link>Images\Directions.png</Link>
     </AddInContent>
-    <AddInContent Include="..\3DVisualization.ArcMapAddIn\Images\ProfilesTreeViewFormIcon.ico">
+    <AddInContent Include="..\3DVisualization.Common\Images\ProfilesTreeViewFormIcon.ico">
       <Link>Images\ProfilesTreeViewFormIcon.ico</Link>
     </AddInContent>
-    <AddInContent Include="..\3DVisualization.ArcMapAddIn\Images\Remove.png">
+    <AddInContent Include="..\3DVisualization.Common\Images\Remove.png">
       <Link>Images\Remove.png</Link>
     </AddInContent>
-    <AddInContent Include="..\3DVisualization.ArcMapAddIn\Images\Tree.ico">
+    <AddInContent Include="..\3DVisualization.Common\Images\Tree.ico">
       <Link>Images\Tree.ico</Link>
     </AddInContent>
     <Content Include="Resources\Visualization3DLocalization.xml">
