@@ -157,6 +157,7 @@ namespace MilSpace.Profile
                     graphsController.GetProfileSessionById += GetProfileById;
                     graphsController.PanToSelectedProfile += PanToSelectedProfile;
                     graphsController.PanToSelectedProfilesSet += PanToSelectedProfilesSet;
+                    graphsController.OnSessionsHeightsChanged += ChangeProfilesHeights;
                 }
 
                 return graphsController;
@@ -565,7 +566,8 @@ namespace MilSpace.Profile
                     var profileSurface = profileSession.ProfileSurfaces.First(surface => surface.LineId == profileLine.Id);
                     GraphicsLayerManager.RemoveLineFromGraphic(profileSessionId, profileLine.Id);
                     profileLine.SessionId = profileSessionId;
-                    graphsController.AddProfileToTab(profileLine, profileSurface);
+                    var isOneLineProfile = (profileSession.DefinitionType == ProfileSettingsTypeEnum.Points || profileSession.DefinitionType == ProfileSettingsTypeEnum.Primitives);
+                    graphsController.AddProfileToTab(profileLine, profileSurface, isOneLineProfile);
                 }
             }
         }
@@ -772,14 +774,6 @@ namespace MilSpace.Profile
             {
                 GraphicsLayerManager
                         .UpdateGraphicLine(profileLines, sessionId);
-
-                var profile = _workingProfiles.FirstOrDefault(p => p.SessionId == sessionId);
-                //Save Profile if it was recalculated
-                if (profile != null)
-                {
-                    SaveProfileSet(profile);
-                }
-
             }
             else
             {
@@ -954,6 +948,40 @@ namespace MilSpace.Profile
         private void PanToSelectedProfile(int sessionId, ProfileLine line)
         {
             ShowProfileOnMap(sessionId, line);
+        }
+
+        private void ChangeProfilesHeights(List<int> sessionsIds, double height, ProfileSurface[] surfaces)
+        {
+            foreach(var id in sessionsIds)
+            {
+                var session = GetProfileSessionById(id);
+
+                if(session != null)
+                {
+                    session.ObserverHeight = height;
+                    var profileSurfaces = surfaces.Where(surface => surface.SessionId == id).ToArray();
+                    session.ProfileSurfaces = profileSurfaces.Select(ps => 
+                    {
+                        return new ProfileSurface()
+                        {
+                            LineId = ps.LineId,
+                            ProfileSurfacePoints = ps.ProfileSurfacePoints
+                        };
+                    }).ToArray();
+
+
+                    if(session.ProfileSurfaces.Count() == 1)
+                    {
+                        session.ProfileSurfaces[0].LineId = session.ProfileLines[0].Id;
+                    }
+
+                    SaveProfileSet(session);
+                    _workingProfiles.First(profileSession => profileSession.SessionId == id).ObserverHeight = height;
+
+                    View.ChangeSessionHeightInNode(id, height, session.DefinitionType);
+                }
+
+            }
         }
 
         private ProfileSession GetEmptyProfileSession()
