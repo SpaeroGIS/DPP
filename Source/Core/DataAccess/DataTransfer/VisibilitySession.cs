@@ -13,7 +13,9 @@ namespace MilSpace.DataAccess.DataTransfer
         VisibilityAreaRaster = 2,
         ObservationStations = 4,
         VisibilityAreaPolygons = 8,
-        CoverageTable = 16
+        CoverageTable = 16,
+        ObservationPointSingle = 32,
+        VisibilityAreaRasterSingle = 64,
     }
 
 
@@ -25,26 +27,30 @@ namespace MilSpace.DataAccess.DataTransfer
             { VisibilityCalculationresultsEnum.None , ""},
             { VisibilityCalculationresultsEnum.ObservationPoints , "_op"},
             { VisibilityCalculationresultsEnum.VisibilityAreaRaster , "_img"},
+            { VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle , "_imgs"},
             { VisibilityCalculationresultsEnum.ObservationStations , "_oo"},
             { VisibilityCalculationresultsEnum.VisibilityAreaPolygons , "_va"},
             { VisibilityCalculationresultsEnum.CoverageTable , "_ct"},
+            { VisibilityCalculationresultsEnum.ObservationPointSingle , "_ops"},
         };
 
         internal static VisibilityCalculationresultsEnum[] FeatureClassResults = {
             VisibilityCalculationresultsEnum.ObservationPoints,
             VisibilityCalculationresultsEnum.ObservationStations,
             VisibilityCalculationresultsEnum.VisibilityAreaPolygons,
+            VisibilityCalculationresultsEnum.ObservationPointSingle
         };
 
         internal static VisibilityCalculationresultsEnum[] RasterResults = {
-            VisibilityCalculationresultsEnum.VisibilityAreaRaster
+            VisibilityCalculationresultsEnum.VisibilityAreaRaster,
+            VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle
         };
 
         internal static VisibilityCalculationresultsEnum[] TableResults = {
-            VisibilityCalculationresultsEnum.VisibilityAreaRaster
+            VisibilityCalculationresultsEnum.CoverageTable
         };
 
-        internal static Dictionary<esriDatasetType, VisibilityCalculationresultsEnum[]> EsriDatatypeToresultMapping = new Dictionary<esriDatasetType, VisibilityCalculationresultsEnum[]>
+        internal static Dictionary<esriDatasetType, VisibilityCalculationresultsEnum[]> EsriDatatypeToResultMapping = new Dictionary<esriDatasetType, VisibilityCalculationresultsEnum[]>
         {
             { esriDatasetType.esriDTFeatureClass, FeatureClassResults},
             { esriDatasetType.esriDTRasterDataset, RasterResults},
@@ -63,21 +69,42 @@ namespace MilSpace.DataAccess.DataTransfer
         public DateTime? Finished { get; internal set; }
         public int CalculatedResults;
         public string ReferencedGDB;
-        public static string GetResultName(VisibilityCalculationresultsEnum resultType, string sessionName)
+        public VisibilityCalcTypeEnum CalculationType;
+
+        public static string GetResultName(VisibilityCalculationresultsEnum resultType, string sessionName, int pointId = -1)
         {
-            return $"{sessionName}{VisibilityResulSuffixes[resultType]}";
+            var pointIdstr = pointId > -1 ? $"_{pointId}" : string.Empty;
+            return $"{sessionName}{pointIdstr}{VisibilityResulSuffixes[resultType]}";
         }
 
         public IEnumerable<string> Results()
         {
             VisibilityCalculationresultsEnum resultsInGDB = GdbAccess.Instance.CheckVisibilityResult(Id);
+
+            VisibilityCalculationresultsEnum calculatedResults = (VisibilityCalculationresultsEnum)CalculatedResults;
             List<string> resulrs = new List<string>();
 
             foreach (var result in VisibilityResulSuffixes)
             {
-                if (result.Key != VisibilityCalculationresultsEnum.None && resultsInGDB.HasFlag(result.Key))
+                if (result.Key != VisibilityCalculationresultsEnum.None && calculatedResults.HasFlag(result.Key))
                 {
-                    resulrs.Add(GetResultName(result.Key, Id));
+
+                    if (result.Key == VisibilityCalculationresultsEnum.ObservationPointSingle ||
+                        result.Key == VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle)
+
+                    {
+                        int index = 0;
+                        string resultBName = GetResultName(result.Key, Id, index);
+                        while (VisibilityZonesFacade.CheckVisibilityResultEistance(resultBName, result.Key))
+                        {
+                            resulrs.Add(resultBName);
+                            resultBName = GetResultName(result.Key, Id, ++index);
+                        }
+                    }
+                    else
+                    {
+                        resulrs.Add(GetResultName(result.Key, Id));
+                    }
                 }
             }
 
