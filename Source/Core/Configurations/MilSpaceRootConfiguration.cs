@@ -24,7 +24,7 @@ namespace MilSpace.Configurations
             string sypplayingName = typeof(MilSpaceRootConfiguration).Assembly.GetName().Name;
 
             int pointPosition = sypplayingName.IndexOf('.');
-            //rootSectionNane = sypplayingName.Substring(0, pointPosition == 0 ? sypplayingName.Length : pointPosition ).ToLower();
+            rootSectionNane = sypplayingName.Substring(0, pointPosition == 0 ? sypplayingName.Length : pointPosition ).ToLower();
             registryPathToConfig = string.Format(registryPathToConfigTemplate, rootSectionNane);
         }
 
