@@ -33,6 +33,7 @@ namespace MilSpace.Profile
         internal delegate ProfileSession GetProfileSessionByIdDelegate(int id);
         internal delegate void PanToSelectedProfileDelegate(int sessionId, ProfileLine line);
         internal delegate void PanToSelectedProfilesSetDelegate(int sessionId);
+        internal delegate void ChangeSessionsHeightsDelegate(List<int> sessionsIds, double height, ProfileSurface[] surfaces);
 
         internal event ProfileRedrawDelegate ProfileRedrawn;
         internal event DeleteProfileDelegate ProfileRemoved;
@@ -45,6 +46,7 @@ namespace MilSpace.Profile
         internal event GetProfileSessionByIdDelegate GetProfileSessionById;
         internal event PanToSelectedProfileDelegate PanToSelectedProfile;
         internal event PanToSelectedProfilesSetDelegate PanToSelectedProfilesSet;
+        internal event ChangeSessionsHeightsDelegate OnSessionsHeightsChanged; 
 
         internal DockableWindowMilSpaceProfileGraph View { get; private set; }
 
@@ -128,6 +130,11 @@ namespace MilSpace.Profile
             PanToSelectedProfilesSet.Invoke(sessionId);
         }
 
+        internal void InvokeOnSessionsHeightsChanged(List<int> sessionsIds, double height, ProfileSurface[] surfaces)
+        {
+            OnSessionsHeightsChanged.Invoke(sessionsIds, height, surfaces);
+        }
+
         internal void SetIntersections(List<IntersectionsInLayer> intersectionsLines, int lineId)
         {
             _surfaceProfileChartController.SetIntersectionLines(intersectionsLines, lineId);
@@ -168,6 +175,7 @@ namespace MilSpace.Profile
             _surfaceProfileChartController.ProfileRemoved += InvokeProfileRemoved;
             _surfaceProfileChartController.SelectedProfileChanged += InvokeSelectedProfileChanged;
             _surfaceProfileChartController.IntersectionLinesDrawing += InvokeIntersectionLinesDrawing;
+            _surfaceProfileChartController.ProfileSessionsHeightsChange += InvokeOnSessionsHeightsChanged;
 
             _surfaceProfileChartController.SetSession(profileSession);
             SurfaceProfileChart surfaceProfileChart = _surfaceProfileChartController.CreateProfileChart(profileSession.ObserverHeight);
@@ -175,10 +183,10 @@ namespace MilSpace.Profile
             View.AddNewTab(surfaceProfileChart, profileSession.SessionId);
         }
 
-        internal void AddProfileToTab(ProfileLine profileLine, ProfileSurface profileSurface)
+        internal void AddProfileToTab(ProfileLine profileLine, ProfileSurface profileSurface, bool isOneLineProfile)
         {
             View.SetCurrentChart();
-            _surfaceProfileChartController.AddLineToGraph(profileLine, profileSurface);
+            _surfaceProfileChartController.AddLineToGraph(profileLine, profileSurface, isOneLineProfile);
         }
 
         internal void SetChart(SurfaceProfileChart currentChart)
