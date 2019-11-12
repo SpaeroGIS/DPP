@@ -513,6 +513,36 @@ namespace MilSpace.Core.Tools
             return result;
         }
 
+        public static void AddVisibilityGroupLayer(IEnumerable<string> visibilityLayersNames, string sessionName, string gdb, string relativeLayerName,
+                                                bool isLayerAbove, short transparency, IActiveView activeView)
+        {
+            var visibilityLayers = new List<ILayer>();
+
+            foreach(var layerName in visibilityLayersNames)
+            {
+                var layer = GetVisibilityLayer(gdb, layerName);
+                if(layer != null)
+                {
+                    visibilityLayers.Add(layer);
+                }
+            }
+
+            var relativeLayer = GetLayer(relativeLayerName, activeView.FocusMap);
+
+            AddLayersToMapAsGroupLayer(visibilityLayers, sessionName, transparency, relativeLayer, isLayerAbove, activeView);
+        }
+
+        public static int GetLayerIndex(ILayer layer, IActiveView activeView)
+        {
+            for(int index = 0; index < activeView.FocusMap.LayerCount; index++)
+            {
+                ILayer layerAtIndex = activeView.FocusMap.get_Layer(index);
+                if(layerAtIndex == layer)
+                    return index;
+            }
+            return -1;
+        }
+
         private static IPoint ConstructPoint3D(double x, double y, double z)
         {
             IPoint point = new PointClass();
@@ -627,6 +657,78 @@ namespace MilSpace.Core.Tools
             }
 
             return resultPolylines;
+        }
+
+        private static void AddLayersToMapAsGroupLayer(IEnumerable<ILayer> layers, string sessionName, short transparency,
+                                                ILayer relativeLayer, bool isGroupLayerAbove, IActiveView activeView)
+        {
+            IGroupLayer groupLayer = new GroupLayerClass();
+            groupLayer.Name = sessionName;
+
+            foreach(var layer in layers)
+            {
+                if(layer is IRasterLayer)
+                {
+                    var layerEffects = (ILayerEffects)layer;
+                    layerEffects.Transparency = transparency;
+                }
+                groupLayer.Add(layer);
+            }
+
+            var mapLayers = activeView.FocusMap as IMapLayers2;
+            int relativeLayerPosition = GetLayerIndex(relativeLayer, activeView);
+            int groupLayerPosition = (isGroupLayerAbove) ? relativeLayerPosition + 1 : relativeLayerPosition - 1;
+            mapLayers.InsertLayer(groupLayer, false, groupLayerPosition);
+        }
+
+        private static ILayer GetVisibilityLayer(string gdb, string datasetName)
+        {
+            IWorkspaceFactory workspaceFactory = new FileGDBWorkspaceFactory();
+            IWorkspace workspace = workspaceFactory.OpenFromFile(gdb, 0);
+
+            var datasets = workspace.Datasets[esriDatasetType.esriDTAny];
+            var currentDataset = datasets.Next();
+
+            while(currentDataset != null && !currentDataset.Name.EndsWith(datasetName))
+            {
+                currentDataset = datasets.Next();
+            }
+
+            Marshal.ReleaseComObject(workspaceFactory);
+
+            if(currentDataset != null)
+            {
+                if(currentDataset.Type == esriDatasetType.esriDTRasterDataset)
+                {
+                    return GetRasterLayer(currentDataset as IRasterDataset);
+                }
+
+                if(currentDataset.Type == esriDatasetType.esriDTFeatureClass)
+                {
+                    return GetFeatureLayer(workspace, currentDataset.Name);
+                }
+            }
+
+            return null;
+        }
+
+        private static ILayer GetFeatureLayer(IWorkspace workspace, string featureClassName)
+        {
+            var featurelayer = new FeatureLayer();
+            IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)workspace;
+
+            featurelayer.Name = featureClassName;
+            featurelayer.FeatureClass = featureWorkspace.OpenFeatureClass(featureClassName);
+
+            return featurelayer;
+        }
+
+        private static ILayer GetRasterLayer(IRasterDataset rasterDataset)
+        {
+            IRasterLayer rasterLayer = new RasterLayer();
+            rasterLayer.CreateFromDataset(rasterDataset);
+
+            return rasterLayer;
         }
     }
 }

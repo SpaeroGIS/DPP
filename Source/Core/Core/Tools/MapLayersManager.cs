@@ -122,6 +122,7 @@ namespace MilSpace.Core.Tools
 
         public IEnumerable<ILayer> PolygonLayers => GetFeatureLayers(polygonTypes);
 
+        public IEnumerable<ILayer> AllLayers => Layers;
 
         private IEnumerable<ILayer> GetFeatureLayers(IEnumerable<esriGeometryType> geomType)
         {

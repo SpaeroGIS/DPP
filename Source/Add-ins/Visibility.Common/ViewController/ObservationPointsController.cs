@@ -12,6 +12,7 @@ using System.Linq;
 using MilSpace.Core;
 using MilSpace.Tools.Exceptions;
 using System.Text.RegularExpressions;
+using MilSpace.Visibility.DTO;
 
 namespace MilSpace.Visibility.ViewController
 {
@@ -30,6 +31,7 @@ namespace MilSpace.Visibility.ViewController
         private static Dictionary<ObservationPointMobilityTypesEnum, string> _mobilityTypes = Enum.GetValues(typeof(ObservationPointMobilityTypesEnum)).Cast<ObservationPointMobilityTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
         private static Dictionary<ObservationPointTypesEnum, string> _affiliationTypes = Enum.GetValues(typeof(ObservationPointTypesEnum)).Cast<ObservationPointTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
         private static Dictionary<ObservationObjectTypesEnum, string> _observObjectsTypes = Enum.GetValues(typeof(ObservationObjectTypesEnum)).Cast<ObservationObjectTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
+        private static Dictionary<LayerPositionsEnum, string> _layerPositions = Enum.GetValues(typeof(LayerPositionsEnum)).Cast<LayerPositionsEnum>().ToDictionary(t => t, ts => ts.ToString());
 
         private IMxDocument mapDocument;
         private static Logger log = Logger.GetLoggerEx("ObservationPointsController");
@@ -180,47 +182,49 @@ namespace MilSpace.Visibility.ViewController
             view.AddRecord(_observationPoints.Last());
         }
 
-        // TODO: Define the field in the View Interface to take sessionName, scrDEM and  culcResults
-        internal bool CalculateVisibility(string scrDEM, string sessionName,
-            VisibilityCalculationresultsEnum culcResults = VisibilitySession.DefaultResultsSet,
-            IEnumerable<int> pointsTOCalculate = null, IEnumerable<int> stationsTOCalculate = null)
+        // TODO: Define the field in the View Interface to take sessionName, rasterLayerName and  visibilityCalculationResults
+        internal bool CalculateVisibility(MasterResult calcParams, string sessionName)
         {
             var statusBar = ArcMap.Application.StatusBar;
             var animationProgressor = statusBar.ProgressAnimation;
 
             try
             {
-
                 MapLayersManager layersManager = new MapLayersManager(mapDocument.ActiveView);
 
-                var demLayer = layersManager.RasterLayers.FirstOrDefault(l => l.Name.Equals(scrDEM));
+                var demLayer = layersManager.RasterLayers.FirstOrDefault(l => l.Name.Equals(calcParams.RasterLayerName));
 
                 if (demLayer == null)
                 {
-                    throw new MilSpaceVisibilityCalcFailedException($"Cannot find DEM layer {scrDEM }.");
+                    throw new MilSpaceVisibilityCalcFailedException($"Cannot find DEM layer {calcParams.RasterLayerName }.");
                 }
 
-                scrDEM = demLayer.FilePath;
+                calcParams.RasterLayerName = demLayer.FilePath;
 
                 var observPoints = GetObservatioPointFeatureClass(mapDocument.ActiveView);
 
                 var observObjects = GetObservatioStationFeatureClass(mapDocument.ActiveView);
 
-                if (pointsTOCalculate == null) // Get points forn the current extent
+                if (calcParams.ObservPointIDs == null) // Get points forn the current extent
                 {
-                    pointsTOCalculate = EsriTools.GetSelectionByExtent(observPoints, mapDocument.ActiveView);
+                    calcParams.ObservPointIDs = EsriTools.GetSelectionByExtent(observPoints, mapDocument.ActiveView);
                 }
-                if (stationsTOCalculate == null) // Get points forn the current extent
+                if (calcParams.ObservObjectIDs == null) // Get points forn the current extent
                 {
-                    stationsTOCalculate = EsriTools.GetSelectionByExtent(observObjects, mapDocument.ActiveView);
+                    calcParams.ObservObjectIDs = EsriTools.GetSelectionByExtent(observObjects, mapDocument.ActiveView);
                 }
-
-               
 
                 animationProgressor.Show();
                 animationProgressor.Play(0, -1, -1);
 
-                var session = VisibilityManager.Generate(observPoints, pointsTOCalculate, observObjects, stationsTOCalculate, scrDEM, culcResults, sessionName);
+                var session = VisibilityManager.Generate(observPoints, calcParams.ObservPointIDs, observObjects, calcParams.ObservObjectIDs, calcParams.RasterLayerName, calcParams.VisibilityCalculationResults, sessionName);
+                
+                if(session.Finished != null)
+                {
+                    var isLayerAbove = (calcParams.ResultLayerPosition == LayerPositionsEnum.Above);
+                    EsriTools.AddVisibilityGroupLayer(session.Results(), session.Name, session.ReferencedGDB, calcParams.RelativeLayerName
+                                                        , isLayerAbove, calcParams.ResultLayerTransparency, mapDocument.ActiveView);
+                }
             }
             catch (Exception ex)
             {
@@ -318,6 +322,10 @@ namespace MilSpace.Visibility.ViewController
         {
             return _mobilityTypes.Where(t => t.Key != ObservationPointMobilityTypesEnum.All).Select(t => t.Value);
         }
+        public IEnumerable<string> GetLayerPositions()
+        {
+            return _layerPositions.Select(t => t.Value);
+        }
 
         public string GetAllAffiliationType()
         {
@@ -329,9 +337,27 @@ namespace MilSpace.Visibility.ViewController
             return _mobilityTypes.First(t => t.Key == ObservationPointMobilityTypesEnum.All).Value;
         }
 
+        public string GetDefaultLayerPosition()
+        {
+            return _layerPositions.First(t => t.Key == LayerPositionsEnum.Above).Value;
+        }
+
         public string GetObservObjectsTypeString(ObservationObjectTypesEnum type)
         {
             return _observObjectsTypes[type];
+        }
+
+        public LayerPositionsEnum GetPositionByStringValue(string positionStringValue)
+        {
+            foreach(var position in _layerPositions)
+            {
+                if(position.Value == positionStringValue)
+                {
+                    return position.Key;
+                }
+            }
+
+            return LayerPositionsEnum.Above;
         }
 
         public IEnumerable<string> GetObservationPointsLayers(IActiveView view)
@@ -350,6 +376,26 @@ namespace MilSpace.Visibility.ViewController
             return obserPointsLayersNames;
         }
 
+        public IEnumerable<string> GetAllLayers()
+        {
+            MapLayersManager manager = new MapLayersManager(mapDocument.ActiveView);
+
+            var allLayersNames = new List<string>();
+
+            allLayersNames.AddRange(manager.AllLayers.Select(layer =>
+            {
+                return layer.Name;
+            }));
+
+            return allLayersNames;
+        }
+
+        public string GetLastLayer()
+        {
+            var map = mapDocument.ActiveView.FocusMap;
+            return map.Layer[map.LayerCount - 1].Name;
+        }
+
         public IEnumerable<string> GetObservationStationsLayers()
         {
             MapLayersManager manager = new MapLayersManager(mapDocument.ActiveView);
@@ -366,7 +412,6 @@ namespace MilSpace.Visibility.ViewController
 
             return observstsLayersNames;
         }
-
 
         public IFeatureClass GetObservatioPointFeatureClass(IActiveView esriView)
         {

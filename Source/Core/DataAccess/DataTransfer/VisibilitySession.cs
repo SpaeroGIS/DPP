@@ -16,7 +16,11 @@ namespace MilSpace.DataAccess.DataTransfer
         CoverageTable = 16
     }
 
-
+    public enum LayerPositionsEnum
+    {
+        Above,
+        Below
+    }
 
     public class VisibilitySession
     {

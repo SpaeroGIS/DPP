@@ -583,7 +583,6 @@ namespace MilSpace.DataAccess.Facade
             return featurelayer;
         }
 
-
         private IWorkspace WorkingWorkspace
         {
             get
