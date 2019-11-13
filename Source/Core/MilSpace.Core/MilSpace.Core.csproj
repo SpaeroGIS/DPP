@@ -43,6 +43,9 @@
       <EmbedInteropTypes>False</EmbedInteropTypes>
       <Private>False</Private>
     </Reference>
+    <Reference Include="ESRI.ArcGIS.DataSourcesGDB, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="ESRI.ArcGIS.Desktop.AddIns">
       <Private>False</Private>
     </Reference>
@@ -102,55 +105,145 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actions\ActionFinishedDelegate.cs" />
-    <Compile Include="Actions\ActionParamNamesCore.cs" />
-    <Compile Include="Actions\ActionProcessDelegate.cs" />
-    <Compile Include="Actions\ActionProcessor.cs" />
-    <Compile Include="Actions\ActionResults\BoolResult.cs" />
-    <Compile Include="Actions\ActionResults\IntCollectionResult.cs" />
-    <Compile Include="Actions\ActionResults\IntResult.cs" />
-    <Compile Include="Actions\ActionResults\StringActionResult.cs" />
-    <Compile Include="Actions\ActionResults\StringCollectionResult.cs" />
-    <Compile Include="Actions\ActionsCore.cs" />
-    <Compile Include="Actions\ActionStatesEnum.cs" />
-    <Compile Include="Actions\Actions\ActionSereilizer.cs" />
-    <Compile Include="Actions\Actions\AreaDescription.cs" />
-    <Compile Include="Actions\LoadedActions.cs" />
-    <Compile Include="Actions\Actions\Python\RunPythonAction.cs" />
-    <Compile Include="Actions\BaseInstance\Action.cs" />
-    <Compile Include="Actions\BaseInstance\ActionDefinition.cs" />
-    <Compile Include="Actions\BaseInstance\ActionDescription.cs" />
-    <Compile Include="Actions\BaseInstance\ActionParam.cs" />
-    <Compile Include="Actions\BaseInstance\ActionResultBase.cs" />
-    <Compile Include="Actions\Exceptions\ActiondescriptionNotDefinedException.cs" />
-    <Compile Include="Actions\Exceptions\ActionNotFoundException.cs" />
-    <Compile Include="Actions\Exceptions\CannotAccessThreadException.cs" />
-    <Compile Include="Actions\Exceptions\CannotOpenConnectionStringException.cs" />
-    <Compile Include="Actions\Exceptions\ExpectActionParameterException.cs" />
-    <Compile Include="Actions\Exceptions\ExpectActionResultException.cs" />
-    <Compile Include="Actions\Exceptions\NoConnectionStringConfiguredException.cs" />
-    <Compile Include="Actions\Exceptions\SpaeroDataException.cs" />
-    <Compile Include="Actions\Exceptions\SpaeroException.cs" />
-    <Compile Include="DataAccess\DataOperationsEnum.cs" />
-    <Compile Include="Exceptions\MilSpaceException.cs" />
-    <Compile Include="Exceptions\MilSpaceProfileLackOfParameter.cs" />
-    <Compile Include="Helper\Helper.cs" />
-    <Compile Include="Helper\SimpleDataTypesEnum.cs" />
-    <Compile Include="Actions\Interfaces\IAcationResult.cs" />
-    <Compile Include="Actions\Interfaces\IAction.cs" />
-    <Compile Include="Actions\Interfaces\IActionProcessor.cs" />
-    <Compile Include="Actions\Interfaces\IActonParam.cs" />
-    <Compile Include="Actions\Interfaces\IDataEntity.cs" />
-    <Compile Include="Localization\LocalizationManager.cs" />
-    <Compile Include="Logging\Logging.cs" />
-    <Compile Include="MilSpaceAppDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MilSpaceAppDataSet.xsd</DependentUpon>
+    <Compile Include="..\Core\Actions\ActionFinishedDelegate.cs">
+      <Link>Actions\ActionFinishedDelegate.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\ActionParamNamesCore.cs">
+      <Link>Actions\ActionParamNamesCore.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\ActionProcessDelegate.cs">
+      <Link>\Actions\ActionProcessDelegate.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\ActionProcessor.cs">
+      <Link>\Actions\ActionProcessor.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\ActionResults\BoolResult.cs">
+      <Link>\Actions\BoolResult.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\ActionResults\IntCollectionResult.cs">
+      <Link>\Actions\IntCollectionResult.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\ActionResults\IntResult.cs">
+      <Link>\Actions\IntResult.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\ActionResults\StringActionResult.cs">
+      <Link>\Actions\StringActionResult.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\ActionResults\StringCollectionResult.cs">
+      <Link>\Actions\StringCollectionResult.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\ActionsCore.cs">
+      <Link>\Actions\ActionsCore.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\ActionStatesEnum.cs">
+      <Link>\Actions\ActionStatesEnum.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Actions\ActionSereilizer.cs">
+      <Link>\Actions\ActionSereilizer.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Actions\AreaDescription.cs">
+      <Link>\Actions\AreaDescription.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\LoadedActions.cs">
+      <Link>\Actions\LoadedActions.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Actions\Python\RunPythonAction.cs">
+      <Link>\Actions\RunPythonAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\BaseInstance\Action.cs">
+      <Link>\Actions\Action.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\BaseInstance\ActionDefinition.cs">
+      <Link>\Actions\ActionDefinition.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\BaseInstance\ActionDescription.cs">
+      <Link>\Actions\ActionDescription.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\BaseInstance\ActionParam.cs">
+      <Link>\Actions\ActionParam.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\BaseInstance\ActionResultBase.cs">
+      <Link>\Actions\ActionResultBase.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Exceptions\ActiondescriptionNotDefinedException.cs">
+      <Link>\Actions\ActiondescriptionNotDefinedException.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Exceptions\ActionNotFoundException.cs">
+      <Link>\Actions\ActionNotFoundException.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Exceptions\CannotAccessThreadException.cs">
+      <Link>\Actions\CannotAccessThreadException.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Exceptions\CannotOpenConnectionStringException.cs">
+      <Link>\Actions\CannotOpenConnectionStringException.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Exceptions\ExpectActionParameterException.cs">
+      <Link>\Actions\ExpectActionParameterException.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Exceptions\ExpectActionResultException.cs">
+      <Link>\Actions\ExpectActionResultException.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Exceptions\NoConnectionStringConfiguredException.cs">
+      <Link>\Actions\NoConnectionStringConfiguredException.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Exceptions\SpaeroDataException.cs">
+      <Link>\Actions\SpaeroDataException.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Exceptions\SpaeroException.cs">
+      <Link>\Actions\SpaeroException.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\ArcMap\ArcMapInstance.cs">
+      <Link>ArcMap\ArcMapInstance.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\ArcMap\Hooks.cs">
+      <Link>ArcMap\Hooks.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\DataAccess\DataOperationsEnum.cs">
+      <Link>DataAccess\DataOperationsEnum.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Exceptions\MilSpaceException.cs">
+      <Link>Exceptions\MilSpaceException.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Exceptions\MilSpaceProfileLackOfParameter.cs">
+      <Link>Exceptions\MilSpaceProfileLackOfParameter.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Helper\Helper.cs">
+      <Link>Helper\Helper.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Helper\SimpleDataTypesEnum.cs">
+      <Link>Helper\SimpleDataTypesEnum.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Interfaces\IAcationResult.cs">
+      <Link>\Actions\IAcationResult.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Interfaces\IAction.cs">
+      <Link>\Actions\IAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Interfaces\IActionProcessor.cs">
+      <Link>\Actions\IActionProcessor.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Interfaces\IActonParam.cs">
+      <Link>\Actions\IActonParam.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Interfaces\IDataEntity.cs">
+      <Link>\Actions\IDataEntity.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Localization\LocalizationManager.cs">
+      <Link>Localization\LocalizationManager.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Logging\Logging.cs">
+      <Link>Logging\Logging.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Tools\MapLayersManager.cs">
+      <Link>Tools\MapLayersManager.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResourceManager\MilSpaceResourceManager.cs" />
-    <Compile Include="Tools\EsriTools.cs" />
+    <Compile Include="..\Core\ResourceManager\MilSpaceResourceManager.cs">
+      <Link>ResourceManager\MilSpaceResourceManager.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Tools\EsriTools.cs">
+      <Link>Tools\EsriTools.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MilSpace.Configurations\MilSpace.Configurations.csproj">

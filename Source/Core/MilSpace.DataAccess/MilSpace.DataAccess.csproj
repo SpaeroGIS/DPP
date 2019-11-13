@@ -108,37 +108,108 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArcMapInstance.cs" />
-    <Compile Include="DataAccessor.cs" />
-    <Compile Include="DataTransfer\ProfileSettingsTypeEnum.cs" />
-    <Compile Include="DataTransfer\ProfilePoint.cs" />
-    <Compile Include="DataTransfer\ProfileSession.cs" />
-    <Compile Include="DataTransfer\ProfileSurface.cs" />
-    <Compile Include="DataTransfer\ProfileSurfacePoint.cs" />
-    <Compile Include="DataTransfer\ProfileLine.cs" />
-    <Compile Include="Definition\MilSpaceVisible.designer.cs">
+    <Compile Include="..\DataAccess\ArcMapInstance.cs">
+      <Link>ArcMapInstance.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\DataAccessor.cs">
+      <Link>DataAccessor.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\ObservationObjects.cs">
+      <Link>DataTransfer\ObservationObjects.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\ObservationPoint.cs">
+      <Link>DataTransfer\ObservationPoint.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\ObservationTypesEnum.cs">
+      <Link>DataTransfer\ObservationTypesEnum.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\ProfileSettingsTypeEnum.cs">
+      <Link>DataTransfer\ProfileSettingsTypeEnum.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\ProfilePoint.cs">
+      <Link>DataTransfer\ProfilePoint.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\ProfileSession.cs">
+      <Link>DataTransfer\ProfileSession.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\ProfileSurface.cs">
+      <Link>DataTransfer\ProfileSurface.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\ProfileSurfacePoint.cs">
+      <Link>DataTransfer\ProfileSurfacePoint.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\ProfileLine.cs">
+      <Link>DataTransfer\ProfileLine.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\VisibilityCalculation.cs">
+      <Link>DataTransfer\VisibilityCalculation.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\VisibilityResultInfo.cs">
+      <Link>DataTransfer\VisibilityResultInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\VisibilitySession.cs">
+      <Link>DataTransfer\VisibilitySession.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\VisibilitySessionStateEnum.cs">
+      <Link>DataTransfer\VisibilitySessionStateEnum.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\Definition\MilSpaceVisible.designer.cs">
+      <Link>Definition\MilSpaceVisible.designer.cs</Link>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MilSpaceVisible.dbml</DependentUpon>
     </Compile>
-    <Compile Include="Definition\MilSpaceStorage.designer.cs">
+    <Compile Include="..\DataAccess\Definition\MilSpaceStorage.designer.cs">
+      <Link>Definition\MilSpaceStorage.designer.cs</Link>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MilSpaceStorage.dbml</DependentUpon>
     </Compile>
-    <Compile Include="Exceptions\MilSpaceCanotDeletePrifileCalcTable.cs" />
-    <Compile Include="Exceptions\MilSpaceProfileNotFoundException .cs" />
-    <Compile Include="Exceptions\MilSpaceDataException.cs" />
-    <Compile Include="DataTransfer\ConvertCentre.cs" />
-    <Compile Include="Facade\DataAccess.cs" />
-    <Compile Include="Facade\GdbAccess.cs" />
-    <Compile Include="Facade\MilSpaceProfileFacade.cs" />
-    <Compile Include="GroupedLines.cs" />
-    <Compile Include="Helper.cs" />
-    <Compile Include="Hooks.cs" />
-    <Compile Include="LayersEnum.cs" />
+    <Compile Include="..\DataAccess\Exceptions\MilSpaceCanotDeletePrifileCalcTable.cs">
+      <Link>Exceptions\MilSpaceCanotDeletePrifileCalcTable.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\Exceptions\MilSpaceProfileNotFoundException .cs">
+      <Link>Exceptions\MilSpaceProfileNotFoundException .cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\Exceptions\MilSpaceDataException.cs">
+      <Link>Exceptions\MilSpaceDataException.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\ConvertCentre.cs">
+      <Link>DataTransfer\ConvertCentre.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\Exceptions\MilSpaceVisibilityDataException.cs">
+      <Link>Exceptions\MilSpaceVisibilityDataException.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\Facade\DataAccess.cs">
+      <Link>Facade\DataAccess.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\Facade\GdbAccess.cs">
+      <Link>Facade\GdbAccess.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\Facade\MilSpaceProfileFacade.cs">
+      <Link>Facade\MilSpaceProfileFacade.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\Facade\VisibilityDataAccess.cs">
+      <Link>Facade\VisibilityDataAccess.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\Facade\VisibilityFacade.cs">
+      <Link>Facade\VisibilityFacade.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\GroupedLines.cs">
+      <Link>GroupedLines.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\Helper.cs">
+      <Link>Helper.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\Hooks.cs">
+      <Link>Hooks.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\LayersEnum.cs">
+      <Link>LayersEnum.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
+    <Compile Include="..\DataAccess\Properties\Settings.Designer.cs">
+      <Link>Properties\Settings.Designer.cs</Link>
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -169,16 +240,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Add-ins\MilSpace.Visibility.ArcMapAddin\MilSpace.Visibility.ArcMapAddin.csproj">
-      <Project>{B8A76C95-CC2B-4643-BBF8-ED33BDA7F512}</Project>
-      <Name>MilSpace.Visibility.ArcMapAddin</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MilSpace.Configurations\MilSpace.Configurations.csproj">
       <Project>{73334b96-54fd-4d83-b56d-967f8728d767}</Project>
       <Name>MilSpace.Configurations</Name>
     </ProjectReference>
     <ProjectReference Include="..\MilSpace.Core\MilSpace.Core.csproj">
-      <Project>{02023d3d-4f73-4e7e-a78f-eeaa5d66deac}</Project>
+      <Project>{a9deed9b-a54b-4c1d-aba7-d2c7bb5fa6ec}</Project>
       <Name>MilSpace.Core</Name>
     </ProjectReference>
   </ItemGroup>

@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MilSpace.GeoCalculator</RootNamespace>
-    <AssemblyName>SPPRD.GeoCalculator.ArcMapAddin</AssemblyName>
+    <AssemblyName>Sposterezhennya.GeoCalculator</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -193,6 +193,22 @@
     <Content Include="Images\Write.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\MilSpace.Configurations\MilSpace.Configurations.csproj">
+      <Project>{73334b96-54fd-4d83-b56d-967f8728d767}</Project>
+      <Name>MilSpace.Configurations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\MilSpace.Core\MilSpace.Core.csproj">
+      <Project>{a9deed9b-a54b-4c1d-aba7-d2c7bb5fa6ec}</Project>
+      <Name>MilSpace.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\MilSpace.DataAccess\MilSpace.DataAccess.csproj">
+      <Project>{651c40fa-e0b6-45ff-9b3e-9341eb671754}</Project>
+      <Name>MilSpace.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\MilSpace.Tools\MilSpace.Tools.csproj">
+      <Project>{cbd5675b-f382-497d-98cc-70539ed658b9}</Project>
+      <Name>MilSpace.Tools</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Modules\SPPRD.GeoCalculator.BusinessLogic\SPPRD.GeoCalculator.BusinessLogic.csproj">
       <Project>{57ed0351-ac25-4650-800b-d364d13799b1}</Project>
       <Name>SPPRD.GeoCalculator.BusinessLogic</Name>
