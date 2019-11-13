@@ -438,6 +438,21 @@ namespace MilSpace.Core.Tools
             return layer;
         }
 
+        public static IEnumerable<ILayer> GetVisibiltyImgLayers(string layerName, IMap map)
+        {
+            var imgLayers = new List<ILayer>();
+
+            for(int i = 0; i < map.LayerCount; i++)
+            {
+                if(!(map.Layer[i] is IGroupLayer) && map.Layer[i].Name.Contains(layerName))
+                {
+                    imgLayers.Add(map.Layer[i]);
+                }
+            }
+
+            return imgLayers;
+        }
+
         public static IEnumerable<int> GetSelectionByExtent(IFeatureClass featureClass, IActiveView activeView)
         {
             if (featureClass == null)
@@ -531,11 +546,9 @@ namespace MilSpace.Core.Tools
             }
 
             var relativeLayer = GetLayer(relativeLayerName, activeView.FocusMap);
-            var calcRaster = GetLayer(calcRasterName, activeView.FocusMap);
-
-
+            var calcRasters = GetVisibiltyImgLayers(calcRasterName, activeView.FocusMap);
             
-            AddLayersToMapAsGroupLayer(visibilityLayers, sessionName, transparency, relativeLayer, isLayerAbove, activeView, calcRaster);
+            AddLayersToMapAsGroupLayer(visibilityLayers, sessionName, transparency, relativeLayer, isLayerAbove, activeView, calcRasters);
 
         }
 
@@ -667,7 +680,7 @@ namespace MilSpace.Core.Tools
         }
 
         private static void AddLayersToMapAsGroupLayer(IEnumerable<ILayer> layers, string sessionName, short transparency,
-                                                ILayer relativeLayer, bool isGroupLayerAbove, IActiveView activeView, ILayer calcRaster)
+                                                ILayer relativeLayer, bool isGroupLayerAbove, IActiveView activeView, IEnumerable<ILayer> calcRasters)
         {
             IGroupLayer groupLayer = new GroupLayerClass();
             groupLayer.Name = sessionName;
@@ -687,14 +700,20 @@ namespace MilSpace.Core.Tools
             int groupLayerPosition = (isGroupLayerAbove) ? relativeLayerPosition - 1 : relativeLayerPosition + 1;
             mapLayers.InsertLayer(groupLayer, false, groupLayerPosition);
 
-            if(calcRaster != null)
+            if(calcRasters != null)
             {
-                IMoveLayersOperation moveOperation = new MoveLayersOperationClass();
-                moveOperation.AddLayerInfo(calcRaster, activeView.FocusMap, null);
-                moveOperation.SetDestinationInfo(layers.Count(), activeView.FocusMap, groupLayer);
+                foreach(var raster in calcRasters)
+                {
+                    var layerEffects = (ILayerEffects)raster;
+                    layerEffects.Transparency = transparency;
 
-                var doOperation = (IOperation)moveOperation;
-                doOperation.Do();
+                    IMoveLayersOperation moveOperation = new MoveLayersOperationClass();
+                    moveOperation.AddLayerInfo(raster, activeView.FocusMap, null);
+                    moveOperation.SetDestinationInfo(layers.Count(), activeView.FocusMap, groupLayer);
+
+                    var doOperation = (IOperation)moveOperation;
+                    doOperation.Do();
+                }
             }
         }
 
