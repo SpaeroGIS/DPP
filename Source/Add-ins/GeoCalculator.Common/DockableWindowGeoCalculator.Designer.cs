@@ -857,6 +857,7 @@
             // 
             // GridToolStrip
             // 
+            this.GridToolStrip.AutoSize = false;
             this.GridToolStrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.GridToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.GridToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -869,7 +870,7 @@
             this.GridToolStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.GridToolStrip.Location = new System.Drawing.Point(0, 419);
             this.GridToolStrip.Name = "GridToolStrip";
-            this.GridToolStrip.Size = new System.Drawing.Size(235, 24);
+            this.GridToolStrip.Size = new System.Drawing.Size(235, 28);
             this.GridToolStrip.TabIndex = 56;
             this.GridToolStrip.Text = "toolStrip2";
             // 
@@ -927,9 +928,6 @@
             this.PointsGridView.AllowUserToAddRows = false;
             this.PointsGridView.AllowUserToDeleteRows = false;
             this.PointsGridView.AllowUserToResizeColumns = false;
-            this.PointsGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.PointsGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.PointsGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.PointsGridView.BackgroundColor = System.Drawing.SystemColors.Window;
@@ -952,8 +950,9 @@
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.PointsGridView.DefaultCellStyle = dataGridViewCellStyle4;
+            this.PointsGridView.Dock = System.Windows.Forms.DockStyle.Top;
             this.PointsGridView.GridColor = System.Drawing.SystemColors.Window;
-            this.PointsGridView.Location = new System.Drawing.Point(0, 439);
+            this.PointsGridView.Location = new System.Drawing.Point(0, 447);
             this.PointsGridView.Name = "PointsGridView";
             this.PointsGridView.ReadOnly = true;
             this.PointsGridView.RowHeadersVisible = false;

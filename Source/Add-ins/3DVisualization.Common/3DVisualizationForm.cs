@@ -19,7 +19,7 @@ namespace MilSpace.Visualization3D
     {
         private ProfilesTreeView profilesTreeView;
         private LocalizationContext context;
-        private List<Models.TreeViewNodeModel> profilesModels = new List<Models.TreeViewNodeModel>();
+        private BindingList<TreeViewNodeModel> profilesModels = new BindingList<TreeViewNodeModel>();
         private BindingList<VisibilitySessionModel> visibilitySessionsModel = new BindingList<VisibilitySessionModel>();
 
         public Visualization3DMainForm(object hook)
@@ -97,7 +97,7 @@ namespace MilSpace.Visualization3D
                 this.SurfaceLabel.Text = context.SurfaceLabel;
                 this.lbl3DProfiles.Text = context.ArcSceneParamsLabel;
                 this.lblProfiles.Text = context.ProfilesLabel;
-                this.BuildingsHightLabel.Text = context.HightLablel;
+                this.BuildingsHight.Text = context.HightLablel;
                 this.HydroHightLabel.Text = context.HightLablel;
                 this.PlantsHightLablel.Text = context.HightLablel;
                 this.TransportHightLabel.Text = context.HightLablel;
@@ -194,7 +194,12 @@ namespace MilSpace.Visualization3D
 
                 if (dialogResult == DialogResult.OK)
                 {
-                    profilesModels.AddRange(profilesTreeView.SelectedTreeViewNodes.Where(item => !profilesModels.Contains(item)));
+                    var profiles = profilesTreeView.SelectedTreeViewNodes.Where(item => !profilesModels.Any(model => item.NodeProfileSession.SessionId == model.NodeProfileSession.SessionId));
+
+                    foreach(var profile in profiles)
+                    {
+                        profilesModels.Add(profile);
+                    }
 
                     ProfilesListBox.DataSource = profilesModels;
                     ProfilesListBox.DisplayMember = "Name";
@@ -205,10 +210,18 @@ namespace MilSpace.Visualization3D
             }
             else if (RemoveProfile.Equals(e.Button))
             {
-                foreach (var item in ProfilesListBox.SelectedItems)
+                var selectedItems = new List<TreeViewNodeModel>();
+
+                for(int i = 0; i < ProfilesListBox.SelectedItems.Count; i++)
                 {
-                    profilesModels.Remove(item as Models.TreeViewNodeModel);
+                    selectedItems.Add(ProfilesListBox.SelectedItems[i] as TreeViewNodeModel);
                 }
+
+                foreach(var item in selectedItems)
+                {
+                    profilesModels.Remove(item);
+                }
+
                 //TODO: Remove SPIKE with DataBindings reassigning
                 ProfilesListBox.DataSource = null;
                 ProfilesListBox.DataSource = profilesModels;
@@ -285,9 +298,16 @@ namespace MilSpace.Visualization3D
             }
             else if(RemoveSurface.Equals(e.Button))
             {
-                while(SessionsListBox.SelectedItems.Count > 0)
+                var selectedItems = new List<VisibilitySessionModel>();
+
+                for(int i = 0; i < SessionsListBox.SelectedItems.Count; i++)
                 {
-                    visibilitySessionsModel.Remove((VisibilitySessionModel)SessionsListBox.SelectedItems[0]);
+                    selectedItems.Add((VisibilitySessionModel)SessionsListBox.SelectedItems[i]);
+                }
+
+                foreach(var item in selectedItems)
+                {
+                    visibilitySessionsModel.Remove(item);
                 }
             }
         }
@@ -308,5 +328,15 @@ namespace MilSpace.Visualization3D
         }
 
         #endregion
+
+        private void panel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void HydroHightLabel_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

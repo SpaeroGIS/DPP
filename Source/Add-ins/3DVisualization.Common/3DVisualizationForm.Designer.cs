@@ -56,28 +56,30 @@
             this.panel12 = new System.Windows.Forms.Panel();
             this.GenerateButton = new System.Windows.Forms.Button();
             this.GenerateImageTab = new System.Windows.Forms.TabPage();
-            this.zFactorPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.tbZFactor = new System.Windows.Forms.TextBox();
             this.lblZFactor = new System.Windows.Forms.Label();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.HydroLayerComboBox = new System.Windows.Forms.ComboBox();
-            this.HydroLayerLabel = new System.Windows.Forms.Label();
-            this.TransportLayerComboBox = new System.Windows.Forms.ComboBox();
-            this.TransportLayerLabel = new System.Windows.Forms.Label();
-            this.BuildingsLayerComboBox = new System.Windows.Forms.ComboBox();
-            this.BuildingsLayerLabel = new System.Windows.Forms.Label();
-            this.PlantsLayerComboBox = new System.Windows.Forms.ComboBox();
-            this.PlantsLayerLabel = new System.Windows.Forms.Label();
-            this.panel3 = new System.Windows.Forms.Panel();
+            this.panel16 = new System.Windows.Forms.Panel();
             this.HydroHightTextBox = new System.Windows.Forms.TextBox();
             this.HydroHightLabel = new System.Windows.Forms.Label();
+            this.HydroLayerComboBox = new System.Windows.Forms.ComboBox();
+            this.HydroLayerLabel = new System.Windows.Forms.Label();
+            this.panel15 = new System.Windows.Forms.Panel();
             this.TransportHightTextBox = new System.Windows.Forms.TextBox();
             this.TransportHightLabel = new System.Windows.Forms.Label();
+            this.TransportLayerComboBox = new System.Windows.Forms.ComboBox();
+            this.TransportLayerLabel = new System.Windows.Forms.Label();
+            this.panel14 = new System.Windows.Forms.Panel();
             this.BuildingsHightComboBox = new System.Windows.Forms.ComboBox();
-            this.BuildingsHightLabel = new System.Windows.Forms.Label();
+            this.BuildingsHight = new System.Windows.Forms.Label();
+            this.BuildingsLayerComboBox = new System.Windows.Forms.ComboBox();
+            this.BuildingsLayerLabel = new System.Windows.Forms.Label();
+            this.panel13 = new System.Windows.Forms.Panel();
             this.PlantsHightComboBox = new System.Windows.Forms.ComboBox();
             this.PlantsHightLablel = new System.Windows.Forms.Label();
+            this.PlantsLayerComboBox = new System.Windows.Forms.ComboBox();
+            this.PlantsLayerLabel = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.SurfaceComboBox = new System.Windows.Forms.ComboBox();
             this.SurfaceLabel = new System.Windows.Forms.Label();
@@ -97,25 +99,32 @@
             this.panel9.SuspendLayout();
             this.panel10.SuspendLayout();
             this.panel12.SuspendLayout();
-            this.zFactorPanel.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.panel3.SuspendLayout();
+            this.panel16.SuspendLayout();
+            this.panel15.SuspendLayout();
+            this.panel14.SuspendLayout();
+            this.panel13.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel11.SuspendLayout();
             this.SuspendLayout();
             // 
             // basePanel
             // 
+            this.basePanel.BackColor = System.Drawing.SystemColors.Control;
             this.basePanel.Controls.Add(this.GenerateTab);
-            this.basePanel.Controls.Add(this.zFactorPanel);
-            this.basePanel.Controls.Add(this.tableLayoutPanel1);
+            this.basePanel.Controls.Add(this.panel3);
+            this.basePanel.Controls.Add(this.panel2);
+            this.basePanel.Controls.Add(this.panel16);
+            this.basePanel.Controls.Add(this.panel15);
+            this.basePanel.Controls.Add(this.panel14);
+            this.basePanel.Controls.Add(this.panel13);
             this.basePanel.Controls.Add(this.panel1);
             this.basePanel.Controls.Add(this.panel11);
             this.basePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.basePanel.Location = new System.Drawing.Point(0, 0);
+            this.basePanel.Margin = new System.Windows.Forms.Padding(0);
             this.basePanel.Name = "basePanel";
-            this.basePanel.Size = new System.Drawing.Size(322, 700);
+            this.basePanel.Size = new System.Drawing.Size(322, 600);
             this.basePanel.TabIndex = 0;
             // 
             // GenerateTab
@@ -124,11 +133,11 @@
             this.GenerateTab.Controls.Add(this.GenerateImageTab);
             this.GenerateTab.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GenerateTab.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.GenerateTab.Location = new System.Drawing.Point(0, 237);
+            this.GenerateTab.Location = new System.Drawing.Point(0, 206);
             this.GenerateTab.Name = "GenerateTab";
             this.GenerateTab.SelectedIndex = 0;
-            this.GenerateTab.Size = new System.Drawing.Size(322, 463);
-            this.GenerateTab.TabIndex = 70;
+            this.GenerateTab.Size = new System.Drawing.Size(322, 394);
+            this.GenerateTab.TabIndex = 1001;
             // 
             // ProfilesTabPage
             // 
@@ -138,7 +147,7 @@
             this.ProfilesTabPage.Location = new System.Drawing.Point(4, 24);
             this.ProfilesTabPage.Name = "ProfilesTabPage";
             this.ProfilesTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.ProfilesTabPage.Size = new System.Drawing.Size(314, 435);
+            this.ProfilesTabPage.Size = new System.Drawing.Size(314, 366);
             this.ProfilesTabPage.TabIndex = 0;
             this.ProfilesTabPage.Text = "Profiles";
             // 
@@ -155,7 +164,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(308, 399);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(308, 330);
             this.tableLayoutPanel2.TabIndex = 62;
             // 
             // profilePanel
@@ -167,16 +176,16 @@
             this.profilePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.profilePanel.Location = new System.Drawing.Point(3, 3);
             this.profilePanel.Name = "profilePanel";
-            this.profilePanel.Size = new System.Drawing.Size(302, 193);
+            this.profilePanel.Size = new System.Drawing.Size(302, 159);
             this.profilePanel.TabIndex = 58;
             // 
             // panel7
             // 
             this.panel7.Controls.Add(this.ProfilesListBox);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(0, 50);
+            this.panel7.Location = new System.Drawing.Point(0, 57);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(302, 143);
+            this.panel7.Size = new System.Drawing.Size(302, 102);
             this.panel7.TabIndex = 67;
             // 
             // ProfilesListBox
@@ -187,14 +196,14 @@
             this.ProfilesListBox.Location = new System.Drawing.Point(0, 0);
             this.ProfilesListBox.Name = "ProfilesListBox";
             this.ProfilesListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.ProfilesListBox.Size = new System.Drawing.Size(302, 143);
+            this.ProfilesListBox.Size = new System.Drawing.Size(302, 102);
             this.ProfilesListBox.TabIndex = 65;
             // 
             // panel6
             // 
             this.panel6.Controls.Add(this.profilesToolBar);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel6.Location = new System.Drawing.Point(0, 25);
+            this.panel6.Location = new System.Drawing.Point(0, 32);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(302, 25);
             this.panel6.TabIndex = 67;
@@ -217,7 +226,7 @@
             // 
             // AddProfile
             // 
-            this.AddProfile.ImageKey = "Health.png";
+            this.AddProfile.ImageKey = "Plus.png";
             this.AddProfile.Name = "AddProfile";
             // 
             // RemoveProfile
@@ -449,18 +458,18 @@
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(0, 0);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(302, 25);
+            this.panel5.Padding = new System.Windows.Forms.Padding(4);
+            this.panel5.Size = new System.Drawing.Size(302, 32);
             this.panel5.TabIndex = 66;
             // 
             // lblProfiles
             // 
-            this.lblProfiles.AutoSize = true;
-            this.lblProfiles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblProfiles.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblProfiles.Location = new System.Drawing.Point(0, 0);
+            this.lblProfiles.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblProfiles.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblProfiles.Location = new System.Drawing.Point(4, 4);
             this.lblProfiles.Name = "lblProfiles";
             this.lblProfiles.Padding = new System.Windows.Forms.Padding(0, 2, 0, 4);
-            this.lblProfiles.Size = new System.Drawing.Size(63, 23);
+            this.lblProfiles.Size = new System.Drawing.Size(274, 24);
             this.lblProfiles.TabIndex = 66;
             this.lblProfiles.Text = "Profiles";
             // 
@@ -471,9 +480,9 @@
             this.panel4.Controls.Add(this.panel9);
             this.panel4.Controls.Add(this.panel10);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(3, 202);
+            this.panel4.Location = new System.Drawing.Point(3, 168);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(302, 194);
+            this.panel4.Size = new System.Drawing.Size(302, 159);
             this.panel4.TabIndex = 60;
             // 
             // panel8
@@ -481,9 +490,9 @@
             this.panel8.AutoSize = true;
             this.panel8.Controls.Add(this.SessionsListBox);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel8.Location = new System.Drawing.Point(0, 50);
+            this.panel8.Location = new System.Drawing.Point(0, 57);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(302, 144);
+            this.panel8.Size = new System.Drawing.Size(302, 102);
             this.panel8.TabIndex = 67;
             // 
             // SessionsListBox
@@ -493,14 +502,14 @@
             this.SessionsListBox.ItemHeight = 15;
             this.SessionsListBox.Location = new System.Drawing.Point(0, 0);
             this.SessionsListBox.Name = "SessionsListBox";
-            this.SessionsListBox.Size = new System.Drawing.Size(302, 144);
+            this.SessionsListBox.Size = new System.Drawing.Size(302, 102);
             this.SessionsListBox.TabIndex = 65;
             // 
             // panel9
             // 
             this.panel9.Controls.Add(this.surfaceToolBar);
             this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel9.Location = new System.Drawing.Point(0, 25);
+            this.panel9.Location = new System.Drawing.Point(0, 32);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(302, 25);
             this.panel9.TabIndex = 67;
@@ -524,7 +533,7 @@
             // 
             // AddSurface
             // 
-            this.AddSurface.ImageKey = "Health.png";
+            this.AddSurface.ImageKey = "Plus.png";
             this.AddSurface.Name = "AddSurface";
             // 
             // RemoveSurface
@@ -538,18 +547,17 @@
             this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel10.Location = new System.Drawing.Point(0, 0);
             this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(302, 25);
+            this.panel10.Size = new System.Drawing.Size(302, 32);
             this.panel10.TabIndex = 66;
             // 
             // surfaceLabels
             // 
-            this.surfaceLabels.AutoSize = true;
-            this.surfaceLabels.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.surfaceLabels.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.surfaceLabels.Dock = System.Windows.Forms.DockStyle.Left;
+            this.surfaceLabels.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.surfaceLabels.Location = new System.Drawing.Point(0, 0);
             this.surfaceLabels.Name = "surfaceLabels";
-            this.surfaceLabels.Padding = new System.Windows.Forms.Padding(0, 2, 0, 4);
-            this.surfaceLabels.Size = new System.Drawing.Size(72, 23);
+            this.surfaceLabels.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.surfaceLabels.Size = new System.Drawing.Size(278, 32);
             this.surfaceLabels.TabIndex = 66;
             this.surfaceLabels.Text = "Surfaces";
             // 
@@ -557,7 +565,7 @@
             // 
             this.panel12.Controls.Add(this.GenerateButton);
             this.panel12.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel12.Location = new System.Drawing.Point(3, 402);
+            this.panel12.Location = new System.Drawing.Point(3, 333);
             this.panel12.Name = "panel12";
             this.panel12.Size = new System.Drawing.Size(308, 30);
             this.panel12.TabIndex = 61;
@@ -583,290 +591,295 @@
             this.GenerateImageTab.Location = new System.Drawing.Point(4, 24);
             this.GenerateImageTab.Name = "GenerateImageTab";
             this.GenerateImageTab.Padding = new System.Windows.Forms.Padding(3);
-            this.GenerateImageTab.Size = new System.Drawing.Size(314, 435);
+            this.GenerateImageTab.Size = new System.Drawing.Size(314, 366);
             this.GenerateImageTab.TabIndex = 1;
             this.GenerateImageTab.Text = "tabPage2";
             // 
-            // zFactorPanel
+            // panel3
             // 
-            this.zFactorPanel.ColumnCount = 2;
-            this.zFactorPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
-            this.zFactorPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.zFactorPanel.Controls.Add(this.tbZFactor, 0, 0);
-            this.zFactorPanel.Controls.Add(this.lblZFactor, 0, 0);
-            this.zFactorPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.zFactorPanel.Location = new System.Drawing.Point(0, 213);
-            this.zFactorPanel.Name = "zFactorPanel";
-            this.zFactorPanel.RowCount = 1;
-            this.zFactorPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.zFactorPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.zFactorPanel.Size = new System.Drawing.Size(322, 24);
-            this.zFactorPanel.TabIndex = 2;
+            this.panel3.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel3.Location = new System.Drawing.Point(0, 202);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(322, 4);
+            this.panel3.TabIndex = 78;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.tbZFactor);
+            this.panel2.Controls.Add(this.lblZFactor);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(0, 174);
+            this.panel2.Name = "panel2";
+            this.panel2.Padding = new System.Windows.Forms.Padding(4);
+            this.panel2.Size = new System.Drawing.Size(322, 28);
+            this.panel2.TabIndex = 77;
             // 
             // tbZFactor
             // 
             this.tbZFactor.Dock = System.Windows.Forms.DockStyle.Left;
-            this.tbZFactor.Location = new System.Drawing.Point(228, 3);
+            this.tbZFactor.Location = new System.Drawing.Point(134, 4);
             this.tbZFactor.Name = "tbZFactor";
             this.tbZFactor.Size = new System.Drawing.Size(74, 20);
-            this.tbZFactor.TabIndex = 1;
+            this.tbZFactor.TabIndex = 2;
             this.tbZFactor.TextChanged += new System.EventHandler(this.TbZFactor_TextChanged);
             // 
             // lblZFactor
             // 
-            this.lblZFactor.AutoSize = true;
-            this.lblZFactor.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblZFactor.Location = new System.Drawing.Point(3, 6);
+            this.lblZFactor.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblZFactor.Location = new System.Drawing.Point(4, 4);
             this.lblZFactor.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
             this.lblZFactor.Name = "lblZFactor";
-            this.lblZFactor.Size = new System.Drawing.Size(219, 13);
-            this.lblZFactor.TabIndex = 0;
+            this.lblZFactor.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.lblZFactor.Size = new System.Drawing.Size(130, 20);
+            this.lblZFactor.TabIndex = 1;
             this.lblZFactor.Text = "Height conversion factor";
             // 
-            // tableLayoutPanel1
+            // panel16
             // 
-            this.tableLayoutPanel1.AutoSize = true;
-            this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.panel3, 1, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 69);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(322, 144);
-            this.tableLayoutPanel1.TabIndex = 69;
-            // 
-            // panel2
-            // 
-            this.panel2.AutoSize = true;
-            this.panel2.Controls.Add(this.HydroLayerComboBox);
-            this.panel2.Controls.Add(this.HydroLayerLabel);
-            this.panel2.Controls.Add(this.TransportLayerComboBox);
-            this.panel2.Controls.Add(this.TransportLayerLabel);
-            this.panel2.Controls.Add(this.BuildingsLayerComboBox);
-            this.panel2.Controls.Add(this.BuildingsLayerLabel);
-            this.panel2.Controls.Add(this.PlantsLayerComboBox);
-            this.panel2.Controls.Add(this.PlantsLayerLabel);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(4, 4);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(217, 136);
-            this.panel2.TabIndex = 55;
-            // 
-            // HydroLayerComboBox
-            // 
-            this.HydroLayerComboBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.HydroLayerComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.HydroLayerComboBox.FormattingEnabled = true;
-            this.HydroLayerComboBox.Location = new System.Drawing.Point(0, 115);
-            this.HydroLayerComboBox.Name = "HydroLayerComboBox";
-            this.HydroLayerComboBox.Size = new System.Drawing.Size(217, 21);
-            this.HydroLayerComboBox.TabIndex = 47;
-            // 
-            // HydroLayerLabel
-            // 
-            this.HydroLayerLabel.AutoSize = true;
-            this.HydroLayerLabel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.HydroLayerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.HydroLayerLabel.Location = new System.Drawing.Point(0, 102);
-            this.HydroLayerLabel.Name = "HydroLayerLabel";
-            this.HydroLayerLabel.Size = new System.Drawing.Size(64, 13);
-            this.HydroLayerLabel.TabIndex = 46;
-            this.HydroLayerLabel.Text = "Hydro Layer";
-            // 
-            // TransportLayerComboBox
-            // 
-            this.TransportLayerComboBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.TransportLayerComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.TransportLayerComboBox.FormattingEnabled = true;
-            this.TransportLayerComboBox.Location = new System.Drawing.Point(0, 81);
-            this.TransportLayerComboBox.Name = "TransportLayerComboBox";
-            this.TransportLayerComboBox.Size = new System.Drawing.Size(217, 21);
-            this.TransportLayerComboBox.TabIndex = 45;
-            // 
-            // TransportLayerLabel
-            // 
-            this.TransportLayerLabel.AutoSize = true;
-            this.TransportLayerLabel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.TransportLayerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.TransportLayerLabel.Location = new System.Drawing.Point(0, 68);
-            this.TransportLayerLabel.Name = "TransportLayerLabel";
-            this.TransportLayerLabel.Size = new System.Drawing.Size(81, 13);
-            this.TransportLayerLabel.TabIndex = 44;
-            this.TransportLayerLabel.Text = "Transport Layer";
-            // 
-            // BuildingsLayerComboBox
-            // 
-            this.BuildingsLayerComboBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.BuildingsLayerComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.BuildingsLayerComboBox.FormattingEnabled = true;
-            this.BuildingsLayerComboBox.Location = new System.Drawing.Point(0, 47);
-            this.BuildingsLayerComboBox.Name = "BuildingsLayerComboBox";
-            this.BuildingsLayerComboBox.Size = new System.Drawing.Size(217, 21);
-            this.BuildingsLayerComboBox.TabIndex = 43;
-            // 
-            // BuildingsLayerLabel
-            // 
-            this.BuildingsLayerLabel.AutoSize = true;
-            this.BuildingsLayerLabel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.BuildingsLayerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.BuildingsLayerLabel.Location = new System.Drawing.Point(0, 34);
-            this.BuildingsLayerLabel.Name = "BuildingsLayerLabel";
-            this.BuildingsLayerLabel.Size = new System.Drawing.Size(78, 13);
-            this.BuildingsLayerLabel.TabIndex = 42;
-            this.BuildingsLayerLabel.Text = "Buildings Layer";
-            // 
-            // PlantsLayerComboBox
-            // 
-            this.PlantsLayerComboBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.PlantsLayerComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.PlantsLayerComboBox.FormattingEnabled = true;
-            this.PlantsLayerComboBox.Location = new System.Drawing.Point(0, 13);
-            this.PlantsLayerComboBox.Name = "PlantsLayerComboBox";
-            this.PlantsLayerComboBox.Size = new System.Drawing.Size(217, 21);
-            this.PlantsLayerComboBox.TabIndex = 41;
-            // 
-            // PlantsLayerLabel
-            // 
-            this.PlantsLayerLabel.AutoSize = true;
-            this.PlantsLayerLabel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.PlantsLayerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.PlantsLayerLabel.Location = new System.Drawing.Point(0, 0);
-            this.PlantsLayerLabel.Name = "PlantsLayerLabel";
-            this.PlantsLayerLabel.Size = new System.Drawing.Size(65, 13);
-            this.PlantsLayerLabel.TabIndex = 40;
-            this.PlantsLayerLabel.Text = "Plants Layer";
-            // 
-            // panel3
-            // 
-            this.panel3.AutoSize = true;
-            this.panel3.Controls.Add(this.HydroHightTextBox);
-            this.panel3.Controls.Add(this.HydroHightLabel);
-            this.panel3.Controls.Add(this.TransportHightTextBox);
-            this.panel3.Controls.Add(this.TransportHightLabel);
-            this.panel3.Controls.Add(this.BuildingsHightComboBox);
-            this.panel3.Controls.Add(this.BuildingsHightLabel);
-            this.panel3.Controls.Add(this.PlantsHightComboBox);
-            this.panel3.Controls.Add(this.PlantsHightLablel);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(228, 4);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(90, 136);
-            this.panel3.TabIndex = 56;
+            this.panel16.Controls.Add(this.HydroHightTextBox);
+            this.panel16.Controls.Add(this.HydroHightLabel);
+            this.panel16.Controls.Add(this.HydroLayerComboBox);
+            this.panel16.Controls.Add(this.HydroLayerLabel);
+            this.panel16.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel16.Location = new System.Drawing.Point(0, 146);
+            this.panel16.Name = "panel16";
+            this.panel16.Padding = new System.Windows.Forms.Padding(4);
+            this.panel16.Size = new System.Drawing.Size(322, 28);
+            this.panel16.TabIndex = 75;
             // 
             // HydroHightTextBox
             // 
-            this.HydroHightTextBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.HydroHightTextBox.Dock = System.Windows.Forms.DockStyle.Left;
             this.HydroHightTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.HydroHightTextBox.Location = new System.Drawing.Point(0, 114);
+            this.HydroHightTextBox.Location = new System.Drawing.Point(252, 4);
             this.HydroHightTextBox.Name = "HydroHightTextBox";
-            this.HydroHightTextBox.Size = new System.Drawing.Size(90, 20);
-            this.HydroHightTextBox.TabIndex = 61;
+            this.HydroHightTextBox.Size = new System.Drawing.Size(60, 20);
+            this.HydroHightTextBox.TabIndex = 62;
             // 
             // HydroHightLabel
             // 
-            this.HydroHightLabel.AutoSize = true;
-            this.HydroHightLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.HydroHightLabel.Dock = System.Windows.Forms.DockStyle.Left;
             this.HydroHightLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.HydroHightLabel.Location = new System.Drawing.Point(0, 101);
+            this.HydroHightLabel.Location = new System.Drawing.Point(208, 4);
             this.HydroHightLabel.Name = "HydroHightLabel";
-            this.HydroHightLabel.Size = new System.Drawing.Size(32, 13);
-            this.HydroHightLabel.TabIndex = 60;
+            this.HydroHightLabel.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
+            this.HydroHightLabel.Size = new System.Drawing.Size(44, 20);
+            this.HydroHightLabel.TabIndex = 61;
             this.HydroHightLabel.Text = "Hight";
+            this.HydroHightLabel.Click += new System.EventHandler(this.HydroHightLabel_Click);
+            // 
+            // HydroLayerComboBox
+            // 
+            this.HydroLayerComboBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.HydroLayerComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.HydroLayerComboBox.FormattingEnabled = true;
+            this.HydroLayerComboBox.Location = new System.Drawing.Point(74, 4);
+            this.HydroLayerComboBox.Name = "HydroLayerComboBox";
+            this.HydroLayerComboBox.Size = new System.Drawing.Size(134, 21);
+            this.HydroLayerComboBox.TabIndex = 48;
+            // 
+            // HydroLayerLabel
+            // 
+            this.HydroLayerLabel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.HydroLayerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.HydroLayerLabel.Location = new System.Drawing.Point(4, 4);
+            this.HydroLayerLabel.Name = "HydroLayerLabel";
+            this.HydroLayerLabel.Size = new System.Drawing.Size(70, 20);
+            this.HydroLayerLabel.TabIndex = 47;
+            this.HydroLayerLabel.Text = "Hydro";
+            // 
+            // panel15
+            // 
+            this.panel15.Controls.Add(this.TransportHightTextBox);
+            this.panel15.Controls.Add(this.TransportHightLabel);
+            this.panel15.Controls.Add(this.TransportLayerComboBox);
+            this.panel15.Controls.Add(this.TransportLayerLabel);
+            this.panel15.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel15.Location = new System.Drawing.Point(0, 118);
+            this.panel15.Name = "panel15";
+            this.panel15.Padding = new System.Windows.Forms.Padding(4);
+            this.panel15.Size = new System.Drawing.Size(322, 28);
+            this.panel15.TabIndex = 74;
             // 
             // TransportHightTextBox
             // 
-            this.TransportHightTextBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.TransportHightTextBox.Dock = System.Windows.Forms.DockStyle.Left;
             this.TransportHightTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.TransportHightTextBox.Location = new System.Drawing.Point(0, 81);
+            this.TransportHightTextBox.Location = new System.Drawing.Point(252, 4);
             this.TransportHightTextBox.Name = "TransportHightTextBox";
-            this.TransportHightTextBox.Size = new System.Drawing.Size(90, 20);
-            this.TransportHightTextBox.TabIndex = 59;
+            this.TransportHightTextBox.Size = new System.Drawing.Size(60, 20);
+            this.TransportHightTextBox.TabIndex = 60;
             // 
             // TransportHightLabel
             // 
-            this.TransportHightLabel.AutoSize = true;
-            this.TransportHightLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.TransportHightLabel.Dock = System.Windows.Forms.DockStyle.Left;
             this.TransportHightLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.TransportHightLabel.Location = new System.Drawing.Point(0, 68);
+            this.TransportHightLabel.Location = new System.Drawing.Point(208, 4);
             this.TransportHightLabel.Name = "TransportHightLabel";
-            this.TransportHightLabel.Size = new System.Drawing.Size(32, 13);
-            this.TransportHightLabel.TabIndex = 58;
+            this.TransportHightLabel.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
+            this.TransportHightLabel.Size = new System.Drawing.Size(44, 20);
+            this.TransportHightLabel.TabIndex = 59;
             this.TransportHightLabel.Text = "Hight";
+            // 
+            // TransportLayerComboBox
+            // 
+            this.TransportLayerComboBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.TransportLayerComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.TransportLayerComboBox.FormattingEnabled = true;
+            this.TransportLayerComboBox.Location = new System.Drawing.Point(74, 4);
+            this.TransportLayerComboBox.Name = "TransportLayerComboBox";
+            this.TransportLayerComboBox.Size = new System.Drawing.Size(134, 21);
+            this.TransportLayerComboBox.TabIndex = 46;
+            // 
+            // TransportLayerLabel
+            // 
+            this.TransportLayerLabel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.TransportLayerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.TransportLayerLabel.Location = new System.Drawing.Point(4, 4);
+            this.TransportLayerLabel.Name = "TransportLayerLabel";
+            this.TransportLayerLabel.Size = new System.Drawing.Size(70, 20);
+            this.TransportLayerLabel.TabIndex = 45;
+            this.TransportLayerLabel.Text = "Transport";
+            // 
+            // panel14
+            // 
+            this.panel14.Controls.Add(this.BuildingsHightComboBox);
+            this.panel14.Controls.Add(this.BuildingsHight);
+            this.panel14.Controls.Add(this.BuildingsLayerComboBox);
+            this.panel14.Controls.Add(this.BuildingsLayerLabel);
+            this.panel14.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel14.Location = new System.Drawing.Point(0, 90);
+            this.panel14.Name = "panel14";
+            this.panel14.Padding = new System.Windows.Forms.Padding(4);
+            this.panel14.Size = new System.Drawing.Size(322, 28);
+            this.panel14.TabIndex = 73;
             // 
             // BuildingsHightComboBox
             // 
-            this.BuildingsHightComboBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.BuildingsHightComboBox.Dock = System.Windows.Forms.DockStyle.Left;
             this.BuildingsHightComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.BuildingsHightComboBox.FormattingEnabled = true;
-            this.BuildingsHightComboBox.Location = new System.Drawing.Point(0, 47);
+            this.BuildingsHightComboBox.Location = new System.Drawing.Point(254, 4);
             this.BuildingsHightComboBox.Name = "BuildingsHightComboBox";
-            this.BuildingsHightComboBox.Size = new System.Drawing.Size(90, 21);
-            this.BuildingsHightComboBox.TabIndex = 57;
+            this.BuildingsHightComboBox.Size = new System.Drawing.Size(60, 21);
+            this.BuildingsHightComboBox.TabIndex = 58;
             // 
-            // BuildingsHightLabel
+            // BuildingsHight
             // 
-            this.BuildingsHightLabel.AutoSize = true;
-            this.BuildingsHightLabel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.BuildingsHightLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.BuildingsHightLabel.Location = new System.Drawing.Point(0, 34);
-            this.BuildingsHightLabel.Name = "BuildingsHightLabel";
-            this.BuildingsHightLabel.Size = new System.Drawing.Size(32, 13);
-            this.BuildingsHightLabel.TabIndex = 56;
-            this.BuildingsHightLabel.Text = "Hight";
+            this.BuildingsHight.AutoSize = true;
+            this.BuildingsHight.Dock = System.Windows.Forms.DockStyle.Left;
+            this.BuildingsHight.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.BuildingsHight.Location = new System.Drawing.Point(208, 4);
+            this.BuildingsHight.Name = "BuildingsHight";
+            this.BuildingsHight.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.BuildingsHight.Size = new System.Drawing.Size(46, 15);
+            this.BuildingsHight.TabIndex = 54;
+            this.BuildingsHight.Text = "высота";
+            // 
+            // BuildingsLayerComboBox
+            // 
+            this.BuildingsLayerComboBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.BuildingsLayerComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.BuildingsLayerComboBox.FormattingEnabled = true;
+            this.BuildingsLayerComboBox.Location = new System.Drawing.Point(74, 4);
+            this.BuildingsLayerComboBox.Name = "BuildingsLayerComboBox";
+            this.BuildingsLayerComboBox.Size = new System.Drawing.Size(134, 21);
+            this.BuildingsLayerComboBox.TabIndex = 44;
+            // 
+            // BuildingsLayerLabel
+            // 
+            this.BuildingsLayerLabel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.BuildingsLayerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.BuildingsLayerLabel.Location = new System.Drawing.Point(4, 4);
+            this.BuildingsLayerLabel.Name = "BuildingsLayerLabel";
+            this.BuildingsLayerLabel.Size = new System.Drawing.Size(70, 20);
+            this.BuildingsLayerLabel.TabIndex = 43;
+            this.BuildingsLayerLabel.Text = "Buildings Layer";
+            // 
+            // panel13
+            // 
+            this.panel13.Controls.Add(this.PlantsHightComboBox);
+            this.panel13.Controls.Add(this.PlantsHightLablel);
+            this.panel13.Controls.Add(this.PlantsLayerComboBox);
+            this.panel13.Controls.Add(this.PlantsLayerLabel);
+            this.panel13.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel13.Location = new System.Drawing.Point(0, 62);
+            this.panel13.Name = "panel13";
+            this.panel13.Padding = new System.Windows.Forms.Padding(4);
+            this.panel13.Size = new System.Drawing.Size(322, 28);
+            this.panel13.TabIndex = 72;
             // 
             // PlantsHightComboBox
             // 
-            this.PlantsHightComboBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.PlantsHightComboBox.Dock = System.Windows.Forms.DockStyle.Left;
             this.PlantsHightComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.PlantsHightComboBox.FormattingEnabled = true;
-            this.PlantsHightComboBox.Location = new System.Drawing.Point(0, 13);
+            this.PlantsHightComboBox.Location = new System.Drawing.Point(254, 4);
             this.PlantsHightComboBox.Name = "PlantsHightComboBox";
-            this.PlantsHightComboBox.Size = new System.Drawing.Size(90, 21);
-            this.PlantsHightComboBox.TabIndex = 55;
+            this.PlantsHightComboBox.Size = new System.Drawing.Size(60, 21);
+            this.PlantsHightComboBox.TabIndex = 56;
             // 
             // PlantsHightLablel
             // 
             this.PlantsHightLablel.AutoSize = true;
-            this.PlantsHightLablel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.PlantsHightLablel.Dock = System.Windows.Forms.DockStyle.Left;
             this.PlantsHightLablel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.PlantsHightLablel.Location = new System.Drawing.Point(0, 0);
+            this.PlantsHightLablel.Location = new System.Drawing.Point(208, 4);
             this.PlantsHightLablel.Name = "PlantsHightLablel";
-            this.PlantsHightLablel.Size = new System.Drawing.Size(32, 13);
-            this.PlantsHightLablel.TabIndex = 52;
-            this.PlantsHightLablel.Text = "Hight";
+            this.PlantsHightLablel.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.PlantsHightLablel.Size = new System.Drawing.Size(46, 15);
+            this.PlantsHightLablel.TabIndex = 53;
+            this.PlantsHightLablel.Text = "высота";
+            // 
+            // PlantsLayerComboBox
+            // 
+            this.PlantsLayerComboBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.PlantsLayerComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.PlantsLayerComboBox.FormattingEnabled = true;
+            this.PlantsLayerComboBox.Location = new System.Drawing.Point(74, 4);
+            this.PlantsLayerComboBox.Name = "PlantsLayerComboBox";
+            this.PlantsLayerComboBox.Size = new System.Drawing.Size(134, 21);
+            this.PlantsLayerComboBox.TabIndex = 42;
+            // 
+            // PlantsLayerLabel
+            // 
+            this.PlantsLayerLabel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.PlantsLayerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.PlantsLayerLabel.Location = new System.Drawing.Point(4, 4);
+            this.PlantsLayerLabel.Name = "PlantsLayerLabel";
+            this.PlantsLayerLabel.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.PlantsLayerLabel.Size = new System.Drawing.Size(70, 20);
+            this.PlantsLayerLabel.TabIndex = 41;
+            this.PlantsLayerLabel.Text = "Plants Layer";
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.SurfaceComboBox);
             this.panel1.Controls.Add(this.SurfaceLabel);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 25);
+            this.panel1.Location = new System.Drawing.Point(0, 32);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(322, 44);
+            this.panel1.Padding = new System.Windows.Forms.Padding(4);
+            this.panel1.Size = new System.Drawing.Size(322, 30);
             this.panel1.TabIndex = 68;
             // 
             // SurfaceComboBox
             // 
-            this.SurfaceComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SurfaceComboBox.Dock = System.Windows.Forms.DockStyle.Left;
             this.SurfaceComboBox.FormattingEnabled = true;
-            this.SurfaceComboBox.Location = new System.Drawing.Point(0, 15);
+            this.SurfaceComboBox.Location = new System.Drawing.Point(74, 4);
             this.SurfaceComboBox.Name = "SurfaceComboBox";
-            this.SurfaceComboBox.Size = new System.Drawing.Size(322, 21);
+            this.SurfaceComboBox.Size = new System.Drawing.Size(245, 21);
             this.SurfaceComboBox.TabIndex = 41;
             // 
             // SurfaceLabel
             // 
-            this.SurfaceLabel.AutoSize = true;
-            this.SurfaceLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.SurfaceLabel.Dock = System.Windows.Forms.DockStyle.Left;
             this.SurfaceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.SurfaceLabel.Location = new System.Drawing.Point(0, 0);
+            this.SurfaceLabel.Location = new System.Drawing.Point(4, 4);
             this.SurfaceLabel.Name = "SurfaceLabel";
-            this.SurfaceLabel.Size = new System.Drawing.Size(49, 15);
+            this.SurfaceLabel.Size = new System.Drawing.Size(70, 22);
             this.SurfaceLabel.TabIndex = 40;
             this.SurfaceLabel.Text = "Surface";
             // 
@@ -877,7 +890,8 @@
             this.panel11.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel11.Location = new System.Drawing.Point(0, 0);
             this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(322, 25);
+            this.panel11.Padding = new System.Windows.Forms.Padding(4);
+            this.panel11.Size = new System.Drawing.Size(322, 32);
             this.panel11.TabIndex = 71;
             // 
             // btnRefreshLayers
@@ -885,7 +899,7 @@
             this.btnRefreshLayers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRefreshLayers.ImageKey = "Refresh20x20.png";
             this.btnRefreshLayers.ImageList = this.imageList1;
-            this.btnRefreshLayers.Location = new System.Drawing.Point(294, -1);
+            this.btnRefreshLayers.Location = new System.Drawing.Point(290, 3);
             this.btnRefreshLayers.Name = "btnRefreshLayers";
             this.btnRefreshLayers.Size = new System.Drawing.Size(25, 25);
             this.btnRefreshLayers.TabIndex = 44;
@@ -894,24 +908,22 @@
             // 
             // lbl3DProfiles
             // 
-            this.lbl3DProfiles.AutoSize = true;
-            this.lbl3DProfiles.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbl3DProfiles.Dock = System.Windows.Forms.DockStyle.Left;
             this.lbl3DProfiles.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.lbl3DProfiles.Location = new System.Drawing.Point(0, 0);
+            this.lbl3DProfiles.Location = new System.Drawing.Point(4, 4);
             this.lbl3DProfiles.Name = "lbl3DProfiles";
             this.lbl3DProfiles.Padding = new System.Windows.Forms.Padding(0, 2, 0, 4);
-            this.lbl3DProfiles.Size = new System.Drawing.Size(69, 26);
+            this.lbl3DProfiles.Size = new System.Drawing.Size(218, 24);
             this.lbl3DProfiles.TabIndex = 66;
-            this.lbl3DProfiles.Text = "Profiles";
+            this.lbl3DProfiles.Text = "Layers";
             // 
             // Visualization3DMainForm
             // 
             this.AutoSize = true;
             this.Controls.Add(this.basePanel);
             this.Name = "Visualization3DMainForm";
-            this.Size = new System.Drawing.Size(322, 700);
+            this.Size = new System.Drawing.Size(322, 600);
             this.basePanel.ResumeLayout(false);
-            this.basePanel.PerformLayout();
             this.GenerateTab.ResumeLayout(false);
             this.ProfilesTabPage.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
@@ -921,27 +933,25 @@
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.panel5.ResumeLayout(false);
-            this.panel5.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             this.panel8.ResumeLayout(false);
             this.panel9.ResumeLayout(false);
             this.panel10.ResumeLayout(false);
-            this.panel10.PerformLayout();
             this.panel12.ResumeLayout(false);
             this.panel12.PerformLayout();
-            this.zFactorPanel.ResumeLayout(false);
-            this.zFactorPanel.PerformLayout();
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
+            this.panel16.ResumeLayout(false);
+            this.panel16.PerformLayout();
+            this.panel15.ResumeLayout(false);
+            this.panel15.PerformLayout();
+            this.panel14.ResumeLayout(false);
+            this.panel14.PerformLayout();
+            this.panel13.ResumeLayout(false);
+            this.panel13.PerformLayout();
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.panel11.ResumeLayout(false);
-            this.panel11.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -949,60 +959,62 @@
         #endregion
 
         private System.Windows.Forms.Panel basePanel;
-        private System.Windows.Forms.TabControl GenerateTab;
-        private System.Windows.Forms.TabPage ProfilesTabPage;
-        private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Panel panel8;
-        private System.Windows.Forms.ListBox SessionsListBox;
-        private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.ImageList imageList1;
-        private System.Windows.Forms.Panel panel10;
-        private System.Windows.Forms.Label surfaceLabels;
-        private System.Windows.Forms.Button GenerateButton;
-        private System.Windows.Forms.Panel profilePanel;
-        private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.ListBox ProfilesListBox;
-        private System.Windows.Forms.Panel panel6;
         internal System.Windows.Forms.ToolBarButton toolBarButton1;
         private System.Windows.Forms.ToolBarButton toolBarButton2;
-        private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.Label lblProfiles;
-        private System.Windows.Forms.TabPage GenerateImageTab;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.ComboBox HydroLayerComboBox;
-        private System.Windows.Forms.Label HydroLayerLabel;
-        private System.Windows.Forms.ComboBox TransportLayerComboBox;
-        private System.Windows.Forms.Label TransportLayerLabel;
-        private System.Windows.Forms.ComboBox BuildingsLayerComboBox;
-        private System.Windows.Forms.Label BuildingsLayerLabel;
-        private System.Windows.Forms.ComboBox PlantsLayerComboBox;
-        private System.Windows.Forms.Label PlantsLayerLabel;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.TextBox HydroHightTextBox;
-        private System.Windows.Forms.Label HydroHightLabel;
-        private System.Windows.Forms.TextBox TransportHightTextBox;
-        private System.Windows.Forms.Label TransportHightLabel;
-        private System.Windows.Forms.ComboBox BuildingsHightComboBox;
-        private System.Windows.Forms.Label BuildingsHightLabel;
-        private System.Windows.Forms.ComboBox PlantsHightComboBox;
-        private System.Windows.Forms.Label PlantsHightLablel;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ComboBox SurfaceComboBox;
         private System.Windows.Forms.Label SurfaceLabel;
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.Label lbl3DProfiles;
-        private System.Windows.Forms.ToolBar surfaceToolBar;
-        internal System.Windows.Forms.ToolBarButton AddSurface;
-        private System.Windows.Forms.ToolBarButton RemoveSurface;
+        private System.Windows.Forms.Button btnRefreshLayers;
+        private System.Windows.Forms.Panel panel14;
+        private System.Windows.Forms.ComboBox BuildingsHightComboBox;
+        private System.Windows.Forms.Label BuildingsHight;
+        private System.Windows.Forms.ComboBox BuildingsLayerComboBox;
+        private System.Windows.Forms.Label BuildingsLayerLabel;
+        private System.Windows.Forms.Panel panel13;
+        private System.Windows.Forms.ComboBox PlantsHightComboBox;
+        private System.Windows.Forms.Label PlantsHightLablel;
+        private System.Windows.Forms.ComboBox PlantsLayerComboBox;
+        private System.Windows.Forms.Label PlantsLayerLabel;
+        private System.Windows.Forms.Panel panel16;
+        private System.Windows.Forms.TextBox HydroHightTextBox;
+        private System.Windows.Forms.Label HydroHightLabel;
+        private System.Windows.Forms.ComboBox HydroLayerComboBox;
+        private System.Windows.Forms.Label HydroLayerLabel;
+        private System.Windows.Forms.Panel panel15;
+        private System.Windows.Forms.TextBox TransportHightTextBox;
+        private System.Windows.Forms.Label TransportHightLabel;
+        private System.Windows.Forms.ComboBox TransportLayerComboBox;
+        private System.Windows.Forms.Label TransportLayerLabel;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.TextBox tbZFactor;
+        private System.Windows.Forms.Label lblZFactor;
+        private System.Windows.Forms.TabControl GenerateTab;
+        private System.Windows.Forms.TabPage ProfilesTabPage;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.Panel profilePanel;
+        private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.ListBox ProfilesListBox;
+        private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.ToolBar profilesToolBar;
         internal System.Windows.Forms.ToolBarButton AddProfile;
         private System.Windows.Forms.ToolBarButton RemoveProfile;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Label lblProfiles;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.ListBox SessionsListBox;
+        private System.Windows.Forms.Panel panel9;
+        private System.Windows.Forms.ToolBar surfaceToolBar;
+        internal System.Windows.Forms.ToolBarButton AddSurface;
+        private System.Windows.Forms.ToolBarButton RemoveSurface;
+        private System.Windows.Forms.Panel panel10;
+        private System.Windows.Forms.Label surfaceLabels;
         private System.Windows.Forms.Panel panel12;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.Button btnRefreshLayers;
-        private System.Windows.Forms.TextBox tbZFactor;
-        private System.Windows.Forms.Label lblZFactor;
-        private System.Windows.Forms.TableLayoutPanel zFactorPanel;
+        private System.Windows.Forms.Button GenerateButton;
+        private System.Windows.Forms.TabPage GenerateImageTab;
+        private System.Windows.Forms.Panel panel3;
     }
 }

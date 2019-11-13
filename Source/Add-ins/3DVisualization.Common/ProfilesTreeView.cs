@@ -20,10 +20,29 @@ namespace MilSpace.Visualization3D
         {
             InitializeComponent();
             _context = context;
+            LocalizeComponent();
         }
 
         internal IList<TreeViewNodeModel> SelectedTreeViewNodes { get; } = new List<TreeViewNodeModel>();
 
+        private void LocalizeComponent()
+        {
+            try
+            {
+                //< WindowCaptionProfiles > Поверхні </ WindowCaptionProfiles >
+                //< LabelProfileTreeHeader > Поверхні для візуалізації</ LabelProfileTreeHeader >
+                //< ButtonAddSessionProfileTree > Додати </ ButtonAddSessionProfileTree >
+
+                _context = new LocalizationContext();
+                this.Text = _context.WindowCaptionProfiles;
+                this.LabelProfileTreeHeader.Text = _context.LabelProfileTreeHeader;
+                this.ButtonAddSessionProfileTree.Text = _context.ButtonAddSessionProfileTree;
+            }
+            catch
+            {
+                MessageBox.Show("No Localization.xml found or there is an error during loading", "Error Localization form");
+            }
+        }
 
         internal TreeViewModel LoadProfiles()
         {
@@ -125,6 +144,11 @@ namespace MilSpace.Visualization3D
             {
                 this.DialogResult = DialogResult.OK;
             }
+        }
+
+        private void AddSessionProfileTreeButton_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
         }
     }
 }

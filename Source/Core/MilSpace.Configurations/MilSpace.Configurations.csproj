@@ -69,20 +69,54 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActionConfiguration\ActionAssemblyElement.cs" />
-    <Compile Include="ActionConfiguration\ActionConfiguration.cs" />
-    <Compile Include="ActionConfiguration\ActionsAssemblyCollection.cs" />
-    <Compile Include="ActionConfiguration\LoadActionAssembliesSection.cs" />
-    <Compile Include="Connection\ConnectionsSection.cs" />
-    <Compile Include="Connection\TemporaryGDBConnectionSection.cs" />
-    <Compile Include="Connection\WorkingGDBConnectionSection.cs" />
-    <Compile Include="Connection\WorkingDBConnectionSection.cs" />
-    <Compile Include="Connection\MilSpaceConnectionProperty.cs" />
-    <Compile Include="Python\PythonConfiguration.cs" />
-    <Compile Include="Python\PythonConfiguratuinSection.cs" />
-    <Compile Include="MilSpaceConfiguration.cs" />
-    <Compile Include="MilSpaceRootConfiguration.cs" />
-    <Compile Include="ConfigurationEntities.cs" />
+    <Compile Include="..\Configurations\ConfigurationEntities.cs">
+      <Link>ConfigurationEntities.cs</Link>
+    </Compile>
+    <Compile Include="..\Configurations\ActionConfiguration\ActionAssemblyElement.cs">
+      <Link>ActionConfiguration\ActionAssemblyElement.cs</Link>
+    </Compile>
+    <Compile Include="..\Configurations\ActionConfiguration\ActionConfiguration.cs">
+      <Link>ActionConfiguration\ActionConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\Configurations\ActionConfiguration\ActionsAssemblyCollection.cs">
+      <Link>ActionConfiguration\ActionsAssemblyCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\Configurations\ActionConfiguration\LoadActionAssembliesSection.cs">
+      <Link>ActionConfiguration\LoadActionAssembliesSection.cs</Link>
+    </Compile>
+    <Compile Include="..\Configurations\Connection\ConnectionsSection.cs">
+      <Link>Connection\ConnectionsSection.cs</Link>
+    </Compile>
+    <Compile Include="..\Configurations\Connection\TemporaryGDBConnectionSection.cs">
+      <Link>Connection\TemporaryGDBConnectionSection.cs</Link>
+    </Compile>
+    <Compile Include="..\Configurations\Connection\WorkingGDBConnectionSection.cs">
+      <Link>Connection\WorkingGDBConnectionSection.cs</Link>
+    </Compile>
+    <Compile Include="..\Configurations\Connection\WorkingDBConnectionSection.cs">
+      <Link>Connection\WorkingDBConnectionSection.cs</Link>
+    </Compile>
+    <Compile Include="..\Configurations\Connection\MilSpaceConnectionProperty.cs">
+      <Link>Connection\MilSpaceConnectionProperty.cs</Link>
+    </Compile>
+    <Compile Include="..\Configurations\FeatrueClasses\FeatureClasses.cs">
+      <Link>FeatrueClasses\FeatureClasses.cs</Link>
+    </Compile>
+    <Compile Include="..\Configurations\FeatrueClasses\ObservationPoints.cs">
+      <Link>FeatrueClasses\ObservationPoints.cs</Link>
+    </Compile>
+    <Compile Include="..\Configurations\MilSpaceConfiguration.cs">
+      <Link>MilSpaceConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\Configurations\Python\PythonConfiguration.cs">
+      <Link>Python\PythonConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\Configurations\Python\PythonConfiguratuinSection.cs">
+      <Link>Python\PythonConfiguratuinSection.cs</Link>
+    </Compile>
+    <Compile Include="..\Configurations\MilSpaceRootConfiguration.cs">
+      <Link>MilSpaceRootConfiguration.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

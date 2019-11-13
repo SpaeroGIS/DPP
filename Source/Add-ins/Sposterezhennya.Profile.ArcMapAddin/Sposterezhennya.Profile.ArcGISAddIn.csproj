@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MilSpace.Profile</RootNamespace>
-    <AssemblyName>SPPRD.Profile</AssemblyName>
+    <AssemblyName>Sposterezhennya.Profile</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -347,6 +347,9 @@
       <Link>SurfaceProfileChartControl\SurfaceProfileChart.resx</Link>
       <DependentUpon>SurfaceProfileChart.cs</DependentUpon>
     </EmbeddedResource>
+    <AddInContent Include="Images\Poll.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AddInContent>
     <Content Include="Localization\SPPRD.Profile.Calc.en-US.resources">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -387,21 +390,21 @@
     <Content Include="Resources\Refresh20x20.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\SPPRD.Configurations\SPPRD.Configurations.csproj">
+    <ProjectReference Include="..\..\Core\MilSpace.Configurations\MilSpace.Configurations.csproj">
       <Project>{73334b96-54fd-4d83-b56d-967f8728d767}</Project>
-      <Name>SPPRD.Configurations</Name>
+      <Name>MilSpace.Configurations</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Core\SPPRD.Core\SPPRD.Core.csproj">
-      <Project>{02023d3d-4f73-4e7e-a78f-eeaa5d66deac}</Project>
-      <Name>SPPRD.Core</Name>
+    <ProjectReference Include="..\..\Core\MilSpace.Core\MilSpace.Core.csproj">
+      <Project>{a9deed9b-a54b-4c1d-aba7-d2c7bb5fa6ec}</Project>
+      <Name>MilSpace.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Core\SPPRD.DataAccess\SPPRD.DataAccess.csproj">
+    <ProjectReference Include="..\..\Core\MilSpace.DataAccess\MilSpace.DataAccess.csproj">
       <Project>{651c40fa-e0b6-45ff-9b3e-9341eb671754}</Project>
-      <Name>SPPRD.DataAccess</Name>
+      <Name>MilSpace.DataAccess</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Core\SPPRD.Tools\SPPRD.Tools.csproj">
+    <ProjectReference Include="..\..\Core\MilSpace.Tools\MilSpace.Tools.csproj">
       <Project>{cbd5675b-f382-497d-98cc-70539ed658b9}</Project>
-      <Name>SPPRD.Tools</Name>
+      <Name>MilSpace.Tools</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -4,5 +4,6 @@
     {
         public ProfileSurfacePoint[] ProfileSurfacePoints;
         public int LineId;
+        public int SessionId;
     }
 }

@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MilSpace.Visualization3D</RootNamespace>
-    <AssemblyName>SPPRD.Visualization3D</AssemblyName>
+    <AssemblyName>Sposterezhennya.Visualization3D</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -158,21 +158,22 @@
     </Compile>
     <Compile Include="..\3DVisualization.Common\ProfilesTreeView.cs">
       <Link>ProfilesTreeView.cs</Link>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="..\3DVisualization.Common\ProfilesTreeView.designer.cs">
       <Link>ProfilesTreeView.designer.cs</Link>
       <DependentUpon>ProfilesTreeView.cs</DependentUpon>
     </Compile>
-    <Compile Include="..\3DVisualization.Common\ProfilesVisualizationForm.cs">
-      <Link>ProfilesVisualizationForm.cs</Link>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="..\3DVisualization.Common\ProfilesVisualizationForm.designer.cs">
-      <Link>ProfilesVisualizationForm.designer.cs</Link>
-      <DependentUpon>ProfilesVisualizationForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="..\3DVisualization.Common\ReferenceData\LocalizationConstants.cs">
       <Link>ReferenceData\LocalizationConstants.cs</Link>
+    </Compile>
+    <Compile Include="..\3DVisualization.Common\VisibilitySessionsModalWindow.cs">
+      <Link>VisibilitySessionsModalWindow.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\3DVisualization.Common\VisibilitySessionsModalWindow.designer.cs">
+      <Link>VisibilitySessionsModalWindow.designer.cs</Link>
+      <DependentUpon>VisibilitySessionsModalWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="..\3DVisualization.Common\Visualization3DHandler.cs">
       <Link>Visualization3DHandler.cs</Link>
@@ -187,12 +188,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="VisibilitySessionsModalWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VisibilitySessionsModalWindow.Designer.cs">
-      <DependentUpon>VisibilitySessionsModalWindow.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -215,9 +210,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="VisibilitySessionsModalWindow.resx">
-      <DependentUpon>VisibilitySessionsModalWindow.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="..\Profile.Common\Localization\Profile.Calc.en-US.resx">
       <Link>Localization\Profile.Calc.en-US.resx</Link>
     </None>
@@ -227,10 +219,6 @@
     <EmbeddedResource Include="..\3DVisualization.Common\ProfilesTreeView.resx">
       <Link>ProfilesTreeView.resx</Link>
       <DependentUpon>ProfilesTreeView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\3DVisualization.Common\ProfilesVisualizationForm.resx">
-      <Link>ProfilesVisualizationForm.resx</Link>
-      <DependentUpon>ProfilesVisualizationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="..\3DVisualization.Common\3DVisualizationForm.resx">
       <Link>3DVisualizationForm.resx</Link>
@@ -242,27 +230,31 @@
     <Content Include="Localization\SPPRD.Profile.Calc.uk-UA.resources">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="..\3DVisualization.Common\VisibilitySessionsModalWindow.resx">
+      <Link>VisibilitySessionsModalWindow.resx</Link>
+      <DependentUpon>VisibilitySessionsModalWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\SPPRD.Configurations\SPPRD.Configurations.csproj">
+    <ProjectReference Include="..\..\Core\MilSpace.Configurations\MilSpace.Configurations.csproj">
       <Project>{73334b96-54fd-4d83-b56d-967f8728d767}</Project>
-      <Name>SPPRD.Configurations</Name>
+      <Name>MilSpace.Configurations</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Core\SPPRD.Core\SPPRD.Core.csproj">
-      <Project>{02023d3d-4f73-4e7e-a78f-eeaa5d66deac}</Project>
-      <Name>SPPRD.Core</Name>
+    <ProjectReference Include="..\..\Core\MilSpace.Core\MilSpace.Core.csproj">
+      <Project>{a9deed9b-a54b-4c1d-aba7-d2c7bb5fa6ec}</Project>
+      <Name>MilSpace.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Core\SPPRD.DataAccess\SPPRD.DataAccess.csproj">
+    <ProjectReference Include="..\..\Core\MilSpace.DataAccess\MilSpace.DataAccess.csproj">
       <Project>{651c40fa-e0b6-45ff-9b3e-9341eb671754}</Project>
-      <Name>SPPRD.DataAccess</Name>
+      <Name>MilSpace.DataAccess</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Core\SPPRD.Tools\SPPRD.Tools.csproj">
+    <ProjectReference Include="..\..\Core\MilSpace.Tools\MilSpace.Tools.csproj">
       <Project>{cbd5675b-f382-497d-98cc-70539ed658b9}</Project>
-      <Name>SPPRD.Tools</Name>
+      <Name>MilSpace.Tools</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

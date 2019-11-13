@@ -34,7 +34,13 @@
             this.tlbbAdd = new System.Windows.Forms.ToolBarButton();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.AddProfile = new System.Windows.Forms.ToolBarButton();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonAddProfilesTo3D = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.labelHeaderSessionProfiles = new System.Windows.Forms.Label();
             this.lvVisibilitySessions = new System.Windows.Forms.ListView();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // sessionsToolBar
@@ -42,19 +48,21 @@
             this.sessionsToolBar.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
             this.tlbbAdd});
             this.sessionsToolBar.ButtonSize = new System.Drawing.Size(18, 18);
+            this.sessionsToolBar.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.sessionsToolBar.DropDownArrows = true;
             this.sessionsToolBar.ImageList = this.imageList1;
-            this.sessionsToolBar.Location = new System.Drawing.Point(0, 0);
+            this.sessionsToolBar.Location = new System.Drawing.Point(0, 253);
             this.sessionsToolBar.Margin = new System.Windows.Forms.Padding(0);
             this.sessionsToolBar.Name = "sessionsToolBar";
             this.sessionsToolBar.ShowToolTips = true;
-            this.sessionsToolBar.Size = new System.Drawing.Size(423, 28);
+            this.sessionsToolBar.Size = new System.Drawing.Size(384, 28);
             this.sessionsToolBar.TabIndex = 68;
+            this.sessionsToolBar.Visible = false;
             this.sessionsToolBar.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.SessionsToolBar_ButtonClick);
             // 
             // tlbbAdd
             // 
-            this.tlbbAdd.ImageKey = "Health.png";
+            this.tlbbAdd.ImageKey = "Plus.png";
             this.tlbbAdd.Name = "tlbbAdd";
             // 
             // imageList1
@@ -280,27 +288,73 @@
             this.AddProfile.ImageKey = "Health.png";
             this.AddProfile.Name = "AddProfile";
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.buttonAddProfilesTo3D);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(0, 225);
+            this.panel1.Name = "panel1";
+            this.panel1.Padding = new System.Windows.Forms.Padding(2);
+            this.panel1.Size = new System.Drawing.Size(384, 28);
+            this.panel1.TabIndex = 70;
+            // 
+            // buttonAddProfilesTo3D
+            // 
+            this.buttonAddProfilesTo3D.Dock = System.Windows.Forms.DockStyle.Right;
+            this.buttonAddProfilesTo3D.Location = new System.Drawing.Point(307, 2);
+            this.buttonAddProfilesTo3D.Name = "buttonAddProfilesTo3D";
+            this.buttonAddProfilesTo3D.Size = new System.Drawing.Size(75, 24);
+            this.buttonAddProfilesTo3D.TabIndex = 0;
+            this.buttonAddProfilesTo3D.Text = "додати ";
+            this.buttonAddProfilesTo3D.UseVisualStyleBackColor = true;
+            this.buttonAddProfilesTo3D.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.labelHeaderSessionProfiles);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Padding = new System.Windows.Forms.Padding(4);
+            this.panel2.Size = new System.Drawing.Size(384, 32);
+            this.panel2.TabIndex = 71;
+            // 
+            // labelHeaderSessionProfiles
+            // 
+            this.labelHeaderSessionProfiles.Dock = System.Windows.Forms.DockStyle.Left;
+            this.labelHeaderSessionProfiles.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelHeaderSessionProfiles.Location = new System.Drawing.Point(4, 4);
+            this.labelHeaderSessionProfiles.Name = "labelHeaderSessionProfiles";
+            this.labelHeaderSessionProfiles.Size = new System.Drawing.Size(334, 24);
+            this.labelHeaderSessionProfiles.TabIndex = 0;
+            this.labelHeaderSessionProfiles.Text = "current session visibilites";
+            // 
             // lvVisibilitySessions
             // 
             this.lvVisibilitySessions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvVisibilitySessions.HideSelection = false;
-            this.lvVisibilitySessions.Location = new System.Drawing.Point(0, 28);
+            this.lvVisibilitySessions.Location = new System.Drawing.Point(0, 32);
             this.lvVisibilitySessions.Name = "lvVisibilitySessions";
-            this.lvVisibilitySessions.Size = new System.Drawing.Size(423, 253);
-            this.lvVisibilitySessions.TabIndex = 69;
+            this.lvVisibilitySessions.Size = new System.Drawing.Size(384, 193);
+            this.lvVisibilitySessions.TabIndex = 72;
             this.lvVisibilitySessions.UseCompatibleStateImageBehavior = false;
             // 
             // VisibilitySessionsModalWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(423, 281);
+            this.ClientSize = new System.Drawing.Size(384, 281);
             this.Controls.Add(this.lvVisibilitySessions);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.sessionsToolBar);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "VisibilitySessionsModalWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "VisibilitySessionsModalWindow";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.VisibilitySessionsModalWindow_KeyDown);
+            this.panel1.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -311,7 +365,11 @@
         private System.Windows.Forms.ImageList imageList1;
         internal System.Windows.Forms.ToolBarButton toolBarButton1;
         private System.Windows.Forms.ToolBarButton tlbbAdd;
-        private System.Windows.Forms.ListView lvVisibilitySessions;
         internal System.Windows.Forms.ToolBarButton AddProfile;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button buttonAddProfilesTo3D;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label labelHeaderSessionProfiles;
+        private System.Windows.Forms.ListView lvVisibilitySessions;
     }
 }
