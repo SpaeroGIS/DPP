@@ -645,5 +645,9 @@ namespace MilSpace.Visibility
                 tbTransparency.Text = "33";
             }
         }
+        public void FillVisibilitySessionsTree(IEnumerable<VisibilitySession> visibilitySessions, bool isNewSessionAdded)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

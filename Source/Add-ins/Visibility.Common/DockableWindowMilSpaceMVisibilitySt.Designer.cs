@@ -3131,6 +3131,7 @@
             this.treeView1.SelectedImageKey = "Ok.png";
             this.treeView1.Size = new System.Drawing.Size(342, 244);
             this.treeView1.TabIndex = 73;
+            this.treeView1.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.node_AfterCheck);
             // 
             // richTextBox4
             // 
