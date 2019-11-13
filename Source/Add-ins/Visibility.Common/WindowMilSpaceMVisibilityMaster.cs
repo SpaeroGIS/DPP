@@ -120,6 +120,14 @@ namespace MilSpace.Visibility
             cmbType.Items.AddRange(list.ToArray());
             cmbType.Items.Add(controller.GetAllMobilityType());
             cmbType.SelectedItem = controller.GetAllMobilityType();
+
+            cmbMapLayers.Items.Clear();
+            cmbMapLayers.Items.AddRange(controller.GetAllLayers().ToArray());
+            cmbMapLayers.SelectedItem = controller.GetLastLayer();
+
+            cmbPositions.Items.Clear();
+            cmbPositions.Items.AddRange(controller.GetLayerPositions().ToArray());
+            cmbPositions.SelectedItem = controller.GetDefaultLayerPosition(); 
         }
         public void PopulateComboBox()
         {
@@ -270,7 +278,6 @@ namespace MilSpace.Visibility
 
             }
         }
-
 
         private void SetDataGridView()
         {
@@ -469,6 +476,11 @@ namespace MilSpace.Visibility
                     Table = TableChkBox.Checked,
                     SumFieldOfView = SumChkBox.Checked,
                     RasterLayerName = comboBox1.SelectedItem.ToString(),
+                    OP = checkBoxOP.Checked,
+                    VisibilityCalculationResults = VisibilityCalculationresultsEnum.ObservationPoints | VisibilityCalculationresultsEnum.VisibilityAreaRaster,
+                    RelativeLayerName = cmbMapLayers.SelectedItem.ToString(),
+                    ResultLayerPosition = controller.GetPositionByStringValue(cmbPositions.SelectedItem.ToString()),
+                    ResultLayerTransparency = Convert.ToInt16(tbTransparency.Text)
                     CalculationType = calcType
                 };
             }
@@ -481,6 +493,11 @@ namespace MilSpace.Visibility
                     Table = TableChkBox.Checked,
                     SumFieldOfView = SumChkBox.Checked,
                     RasterLayerName = comboBox1.SelectedItem.ToString(),
+                    OP = checkBoxOP.Checked,
+                    VisibilityCalculationResults = VisibilityCalculationresultsEnum.ObservationPoints | VisibilityCalculationresultsEnum.VisibilityAreaRaster | VisibilityCalculationresultsEnum.ObservationStations,
+                    RelativeLayerName = cmbMapLayers.SelectedItem.ToString(),
+                    ResultLayerPosition = controller.GetPositionByStringValue(cmbPositions.SelectedItem.ToString()),
+                    ResultLayerTransparency = Convert.ToInt16(tbTransparency.Text)
                     VisibilityCalculationResults = VisibilityCalculationresultsEnum.ObservationStations,
                     CalculationType = calcType
                 };
@@ -598,7 +615,6 @@ namespace MilSpace.Visibility
             {
                 e.Cancel = true;
             }
-
         }
 
 
@@ -622,5 +638,13 @@ namespace MilSpace.Visibility
             throw new NotImplementedException();
         }
 
+        private void TbTransparency_Leave(object sender, EventArgs e)
+        {
+            if(!Int16.TryParse(tbTransparency.Text, out short res) || (res < 0 || res > 100))
+            {
+                MessageBox.Show($"Invalid data.\nInsert the value in the range from 0 to 100");
+                tbTransparency.Text = "33";
+            }
+        }
     }
 }
