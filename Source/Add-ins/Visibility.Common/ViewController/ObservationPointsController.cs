@@ -222,7 +222,7 @@ namespace MilSpace.Visibility.ViewController
                 if(session.Finished != null)
                 {
                     var isLayerAbove = (calcParams.ResultLayerPosition == LayerPositionsEnum.Above);
-                    EsriTools.AddVisibilityGroupLayer(session.Results(), session.Name, VisibilitySession.GetResultName(VisibilityCalculationresultsEnum.VisibilityAreaRaster, session.Id), session.ReferencedGDB, calcParams.RelativeLayerName
+                    EsriTools.AddVisibilityGroupLayer(session.Results(), session.Name, session.Id, session.ReferencedGDB, calcParams.RelativeLayerName
                                                         , isLayerAbove, calcParams.ResultLayerTransparency, mapDocument.ActiveView);
                 }
             }

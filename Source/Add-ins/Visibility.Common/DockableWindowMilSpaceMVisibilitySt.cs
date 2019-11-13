@@ -1020,7 +1020,7 @@ namespace MilSpace.Visibility
             {
                 _observPointsController.UpdateObservObjectsList();
 
-                if(cmbObservObjAffiliationFilter.Items.Count == 0)
+                if (cmbObservObjAffiliationFilter.Items.Count == 0)
                 {
                     PopulateObservObjectsComboBoxes();
                 }
@@ -1030,9 +1030,63 @@ namespace MilSpace.Visibility
             cmbObservObjAffiliationFilter.Enabled = isObservObjectsExist;
             chckObservObjColumnsVisibilityPanel.Enabled = isObservObjectsExist;
             tbObservObjects.Buttons["tlbbAddObservObjLayer"].Enabled = !isObservObjectsExist;
-        }
 
+        }
         #endregion
+
+        # region VisibilitySessionsTree
+        public void FillVisibilitySessionsTree(IEnumerable<VisibilitySession> visibilitySessions, bool isNewSessionAdded)
+        {
+            try
+            {
+                int rootpng = 1;
+
+                treeView1.Nodes.Clear();
+
+                foreach (VisibilitySession o in visibilitySessions)
+                {
+                    if (o.Finished != null)
+                    {
+                        int childpng = 1;
+                        TreeNode root = new TreeNode(o.Name, rootpng, rootpng);
+
+                        treeView1.Nodes.Add(root);
+
+                        foreach (var temp in o.Results())
+                        {
+                            root.Nodes.Add("", temp, childpng);
+                            childpng++;
+                        }
+                        rootpng++;
+                    }
+                }
+            }catch(NullReferenceException e) { }       
+        }
+        private void node_AfterCheck(object sender, TreeViewEventArgs e)
+        {
+            
+            if (e.Action != TreeViewAction.Unknown)
+            {
+                if (e.Node.Nodes.Count > 0)
+                {
+                    this.CheckAllChildNodes(e.Node, e.Node.Checked);
+                }
+            }
+        }
+        private void CheckAllChildNodes(TreeNode treeNode, bool nodeChecked)
+        {
+            foreach (TreeNode node in treeNode.Nodes)
+            {
+                node.Checked = nodeChecked;
+                if (node.Nodes.Count > 0)
+                {
+                    // If the current node has child nodes call the CheckAllChildsNodes method recursively
+                    this.CheckAllChildNodes(node, nodeChecked);
+                }
+            }
+        }
+        #endregion
+
 
         private void MainTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -1057,6 +1111,11 @@ namespace MilSpace.Visibility
                 {
                     SetObservObjectsControlsState(_observPointsController.IsObservObjectsExists());
                 }
+            }
+            if(mainTabControl.SelectedTab.Name== "tbpVisibilityAreas")
+            {
+                SetVisibilitySessionsController();
+                _visibilitySessionsController.UpdateVisibilitySessionsTree();
             }
         }
 

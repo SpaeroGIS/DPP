@@ -28,6 +28,7 @@ namespace MilSpace.Visibility.ViewController
         {
             return states.Select(t => t.Value);
         }
+        
 
         public string GetStringForStateType(VisibilitySessionStateEnum type)
         {
@@ -37,14 +38,21 @@ namespace MilSpace.Visibility.ViewController
         internal void UpdateVisibilitySessionsList(bool isNewSessionAdded = false)
         {
             _visibilitySessions = VisibilityZonesFacade.GetAllVisibilitySessions(true).ToList();
-            _view.FillVisibilitySessionsList(_visibilitySessions, isNewSessionAdded);
+            _view.FillVisibilitySessionsList(_visibilitySessions, isNewSessionAdded);           
+        }
+        internal void UpdateVisibilitySessionsTree(bool isNewSessionAdded = false)
+        {
+            _visibilitySessions = VisibilityZonesFacade.GetAllVisibilitySessions(true).ToList();
+         
+            _view.FillVisibilitySessionsTree(_visibilitySessions, isNewSessionAdded);
         }
 
         internal VisibilitySession GetSession(string id)
         {
             return _visibilitySessions.FirstOrDefault(session => session.Id == id);
         }
-
+        public IEnumerable<VisibilitySession> GetAllSessions() => _visibilitySessions;
+        
         internal bool RemoveSession(string id)
         {
             var removedSession = _visibilitySessions.First(session => session.Id == id);
