@@ -28,7 +28,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
         /// <summary>
         /// Ids are selected to expotr for visibility calculation
         /// </summary>
-        private int[] pointSfilteringIds;
+        private int[] pointsFilteringIds;
         private int[] stationsFilteringIds;
         static Logger logger = Logger.GetLoggerEx("BuildStackVisibilityAction");
 
@@ -45,7 +45,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             obserpPointsfeatureClass = parameters.GetParameterWithValidition<IFeatureClass>(ActionParameters.FeatureClass, null).Value;
             obserpStationsfeatureClass = parameters.GetParameter<IFeatureClass>(ActionParameters.FeatureClassX, null).Value;
             rasterSource = parameters.GetParameterWithValidition<string>(ActionParameters.ProfileSource, null).Value;
-            pointSfilteringIds = parameters.GetParameterWithValidition<int[]>(ActionParameters.FilteringPointsIds, null).Value;
+            pointsFilteringIds = parameters.GetParameterWithValidition<int[]>(ActionParameters.FilteringPointsIds, null).Value;
             stationsFilteringIds = parameters.GetParameterWithValidition<int[]>(ActionParameters.FilteringStationsIds, null).Value;
             calcResults = parameters.GetParameterWithValidition<VisibilityCalculationresultsEnum>(ActionParameters.Calculationresults, VisibilityCalculationresultsEnum.None).Value;
             outputSourceName = parameters.GetParameterWithValidition<string>(ActionParameters.OutputSourceName, string.Empty).Value;
@@ -93,7 +93,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                 return;
             }
 
-            if (!calcResults.HasFlag(VisibilityCalculationresultsEnum.ObservationPoints) && !calcResults.HasFlag(VisibilityCalculationresultsEnum.VisibilityAreaRaster))
+            if (!(calcResults.HasFlag(VisibilityCalculationresultsEnum.VisibilityAreaRaster) || calcResults.HasFlag(VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle)))
             {
                 string errorMessage = $"The values {VisibilityCalculationresultsEnum.ObservationPoints.ToString()} and {VisibilityCalculationresultsEnum.VisibilityAreaRaster.ToString()} must be in calculatuion results";
                 logger.WarnEx(errorMessage);
@@ -103,51 +103,8 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
             try
             {
-                var oservPointFeatureClassName = VisibilitySession.GetResultName(VisibilityCalculationresultsEnum.ObservationPoints, outputSourceName);
-                var exportedFeatureClass = GdbAccess.Instance.ExportObservationFeatureClass(obserpPointsfeatureClass as IDataset, oservPointFeatureClassName, pointSfilteringIds);
 
-                if (string.IsNullOrWhiteSpace(exportedFeatureClass))
-                {
-                    string errorMessage = $"The feature calss {oservPointFeatureClassName} was not exported";
-                    result.Exception = new MilSpaceVisibilityCalcFailedException(errorMessage);
-                    result.ErrorMessage = errorMessage;
-                    logger.ErrorEx(errorMessage);
-                    return;
-                }
-
-                results.Add(exportedFeatureClass);
-
-
-                if (calcResults.HasFlag(VisibilityCalculationresultsEnum.ObservationStations))
-                {
-                    var oservStationsFeatureClassName = VisibilitySession.GetResultName(VisibilityCalculationresultsEnum.ObservationStations, outputSourceName);
-                    exportedFeatureClass = GdbAccess.Instance.ExportObservationFeatureClass(obserpStationsfeatureClass as IDataset, oservStationsFeatureClassName, stationsFilteringIds);
-                    if (!string.IsNullOrWhiteSpace(exportedFeatureClass))
-                    {
-                        results.Add(exportedFeatureClass);
-                    }
-                    else
-                    {
-                        string errorMessage = $"The feature calss {oservPointFeatureClassName} was not exported";
-                        result.ErrorMessage = errorMessage;
-                        logger.ErrorEx(errorMessage);
-                    }
-                }
-
-                //Generate Visibility Raster
-                string featureClass = oservPointFeatureClassName;
-                outGraphName = VisibilitySession.GetResultName(VisibilityCalculationresultsEnum.VisibilityAreaRaster, outputSourceName); ;
-
-                IEnumerable<string> messages = null;
-                if (!ProfileLibrary.GenerateVisibilityData(rasterSource, featureClass, VisibilityAnalysisTypesEnum.Frequency, outGraphName, messages))
-                {
-                    result.Exception = new MilSpaceVisibilityCalcFailedException();
-                }
-                else
-                {
-                    results.Add(outGraphName);
-                }
-
+                var messages = ProcessObservationPoint(results);
 
                 //Here is the place to extend handle the rest of results 
 
@@ -162,6 +119,84 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             {
                 result.Exception = ex;
             }
+        }
+
+
+        private IEnumerable<string> ProcessObservationPoint(List<string> results)
+        {
+
+            IEnumerable<string> messages = null;
+
+            List<int[]> pointsIDs = new List<int[]>();
+
+            var fileNmeGeneration = VisibilityCalculationresultsEnum.ObservationPoints;
+
+            if (calcResults.HasFlag(VisibilityCalculationresultsEnum.ObservationPointSingle))
+            {
+                pointsIDs.AddRange(pointsFilteringIds.Select(id => new int[] { id }).ToArray());
+                fileNmeGeneration = VisibilityCalculationresultsEnum.ObservationPointSingle;
+            }
+            else
+            {
+                pointsIDs.Add(pointsFilteringIds);
+            }
+
+            int index = -1;
+
+            foreach (var curPoints in pointsIDs)
+            {
+                var pointId = curPoints.Length == 1 ? ++index : -1;
+
+                var oservPointFeatureClassName = VisibilitySession.GetResultName(fileNmeGeneration, outputSourceName, pointId);
+
+                var exportedFeatureClass = GdbAccess.Instance.ExportObservationFeatureClass(obserpPointsfeatureClass as IDataset, oservPointFeatureClassName, curPoints);
+
+                if (string.IsNullOrWhiteSpace(exportedFeatureClass))
+                {
+                    string errorMessage = $"The feature calss {oservPointFeatureClassName} was not exported";
+                    result.Exception = new MilSpaceVisibilityCalcFailedException(errorMessage);
+                    result.ErrorMessage = errorMessage;
+                    logger.ErrorEx(errorMessage);
+                    return messages;
+                }
+
+                results.Add(exportedFeatureClass);
+
+                //Generate Visibility Raster
+                string featureClass = oservPointFeatureClassName;
+
+
+                outGraphName = VisibilitySession.GetResultName(pointId == -1 ? VisibilityCalculationresultsEnum.VisibilityAreaRaster : VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle, outputSourceName, pointId);
+
+                if (!ProfileLibrary.GenerateVisibilityData(rasterSource, featureClass, VisibilityAnalysisTypesEnum.Frequency, outGraphName, messages))
+                {
+                    result.Exception = new MilSpaceVisibilityCalcFailedException();
+                }
+                else
+                {
+                    results.Add(outGraphName);
+                }
+            }
+
+
+            if (calcResults.HasFlag(VisibilityCalculationresultsEnum.ObservationStations))
+            {
+                var oservStationsFeatureClassName = VisibilitySession.GetResultName(VisibilityCalculationresultsEnum.ObservationStations, outputSourceName);
+                var exportedFeatureClass = GdbAccess.Instance.ExportObservationFeatureClass(obserpStationsfeatureClass as IDataset, oservStationsFeatureClassName, stationsFilteringIds);
+                if (!string.IsNullOrWhiteSpace(exportedFeatureClass))
+                {
+                    results.Add(exportedFeatureClass);
+                }
+                else
+                {
+                    string errorMessage = $"The feature calss {oservStationsFeatureClassName} was not exported";
+                    result.ErrorMessage = errorMessage;
+                    logger.ErrorEx(errorMessage);
+                }
+            }
+
+
+            return messages;
         }
     }
 }
