@@ -372,13 +372,21 @@ namespace MilSpace.Visualization3D
 
                 return simplePolygonSymbol as ISymbol;
             }
-            else if(featureGeometryType == esriGeometryType.esriGeometryPolyline)
+
+            if(featureGeometryType == esriGeometryType.esriGeometryPolyline)
             {
                 ISimpleLineSymbol simplePolylineSymbol = new SimpleLineSymbolClass();
                 simplePolylineSymbol.Color = color;
                 simplePolylineSymbol.Width = 4;
 
                 return simplePolylineSymbol as ISymbol;
+            }
+
+            if(featureGeometryType == esriGeometryType.esriGeometryPoint)
+            {
+                ISimpleMarker3DSymbol pointMarkerSymbol = new SimpleMarker3DSymbol();
+                pointMarkerSymbol.Style = esriSimple3DMarkerStyle.esriS3DMSSphere;
+                return pointMarkerSymbol as ISymbol;
             }
 
             ISimpleMarkerSymbol simpleMarkerSymbol = new SimpleMarkerSymbolClass();
