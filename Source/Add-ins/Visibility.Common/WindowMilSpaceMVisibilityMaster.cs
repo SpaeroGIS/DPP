@@ -503,7 +503,10 @@ namespace MilSpace.Visibility
                     SumFieldOfView = SumChkBox.Checked,
                     RasterLayerName = comboBox1.SelectedItem.ToString(),
                     OP = checkBoxOP.Checked,
-                    VisibilityCalculationResults = VisibilityCalculationresultsEnum.ObservationPoints | VisibilityCalculationresultsEnum.VisibilityAreaRaster
+                    VisibilityCalculationResults = VisibilityCalculationresultsEnum.ObservationPoints | VisibilityCalculationresultsEnum.VisibilityAreaRaster,
+                    RelativeLayerName = cmbMapLayers.SelectedItem.ToString(),
+                    ResultLayerPosition = controller.GetPositionByStringValue(cmbPositions.SelectedItem.ToString()),
+                    ResultLayerTransparency = Convert.ToInt16(tbTransparency.Text)
                 };
             }
             else if (_stepControl == 2)

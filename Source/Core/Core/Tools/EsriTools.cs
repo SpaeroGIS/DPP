@@ -1,9 +1,11 @@
-﻿using ESRI.ArcGIS.Carto;
+﻿using ESRI.ArcGIS.ArcMapUI;
+using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.DataSourcesGDB;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
+using ESRI.ArcGIS.SystemUI;
 using MilSpace.Core.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -427,7 +429,8 @@ namespace MilSpace.Core.Tools
         {
             var layers = map.Layers;
             var layer = map.Layer[0] as ILayer;
-            while(layer.Name != layerName)
+
+            while(layer != null && layer.Name != layerName)
             {
                 layer = layers.Next() as ILayer;
             }
@@ -513,7 +516,7 @@ namespace MilSpace.Core.Tools
             return result;
         }
 
-        public static void AddVisibilityGroupLayer(IEnumerable<string> visibilityLayersNames, string sessionName, string gdb, string relativeLayerName,
+        public static void AddVisibilityGroupLayer(IEnumerable<string> visibilityLayersNames, string sessionName, string calcRasterName, string gdb, string relativeLayerName,
                                                 bool isLayerAbove, short transparency, IActiveView activeView)
         {
             var visibilityLayers = new List<ILayer>();
@@ -528,8 +531,12 @@ namespace MilSpace.Core.Tools
             }
 
             var relativeLayer = GetLayer(relativeLayerName, activeView.FocusMap);
+            var calcRaster = GetLayer(calcRasterName, activeView.FocusMap);
 
-            AddLayersToMapAsGroupLayer(visibilityLayers, sessionName, transparency, relativeLayer, isLayerAbove, activeView);
+
+            
+            AddLayersToMapAsGroupLayer(visibilityLayers, sessionName, transparency, relativeLayer, isLayerAbove, activeView, calcRaster);
+
         }
 
         public static int GetLayerIndex(ILayer layer, IActiveView activeView)
@@ -660,7 +667,7 @@ namespace MilSpace.Core.Tools
         }
 
         private static void AddLayersToMapAsGroupLayer(IEnumerable<ILayer> layers, string sessionName, short transparency,
-                                                ILayer relativeLayer, bool isGroupLayerAbove, IActiveView activeView)
+                                                ILayer relativeLayer, bool isGroupLayerAbove, IActiveView activeView, ILayer calcRaster)
         {
             IGroupLayer groupLayer = new GroupLayerClass();
             groupLayer.Name = sessionName;
@@ -677,8 +684,18 @@ namespace MilSpace.Core.Tools
 
             var mapLayers = activeView.FocusMap as IMapLayers2;
             int relativeLayerPosition = GetLayerIndex(relativeLayer, activeView);
-            int groupLayerPosition = (isGroupLayerAbove) ? relativeLayerPosition + 1 : relativeLayerPosition - 1;
+            int groupLayerPosition = (isGroupLayerAbove) ? relativeLayerPosition - 1 : relativeLayerPosition + 1;
             mapLayers.InsertLayer(groupLayer, false, groupLayerPosition);
+
+            if(calcRaster != null)
+            {
+                IMoveLayersOperation moveOperation = new MoveLayersOperationClass();
+                moveOperation.AddLayerInfo(calcRaster, activeView.FocusMap, null);
+                moveOperation.SetDestinationInfo(layers.Count(), activeView.FocusMap, groupLayer);
+
+                var doOperation = (IOperation)moveOperation;
+                doOperation.Do();
+            }
         }
 
         private static ILayer GetVisibilityLayer(string gdb, string datasetName)

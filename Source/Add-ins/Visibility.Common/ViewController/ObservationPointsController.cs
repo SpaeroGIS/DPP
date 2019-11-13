@@ -215,14 +215,14 @@ namespace MilSpace.Visibility.ViewController
                 }
 
                 animationProgressor.Show();
-                animationProgressor.Play(0, -1, -1);
+                animationProgressor.Play(0, 200);
 
                 var session = VisibilityManager.Generate(observPoints, calcParams.ObservPointIDs, observObjects, calcParams.ObservObjectIDs, calcParams.RasterLayerName, calcParams.VisibilityCalculationResults, sessionName);
                 
                 if(session.Finished != null)
                 {
                     var isLayerAbove = (calcParams.ResultLayerPosition == LayerPositionsEnum.Above);
-                    EsriTools.AddVisibilityGroupLayer(session.Results(), session.Name, session.ReferencedGDB, calcParams.RelativeLayerName
+                    EsriTools.AddVisibilityGroupLayer(session.Results(), session.Name, VisibilitySession.GetResultName(VisibilityCalculationresultsEnum.VisibilityAreaRaster, session.Id), session.ReferencedGDB, calcParams.RelativeLayerName
                                                         , isLayerAbove, calcParams.ResultLayerTransparency, mapDocument.ActiveView);
                 }
             }
@@ -382,7 +382,7 @@ namespace MilSpace.Visibility.ViewController
 
             var allLayersNames = new List<string>();
 
-            allLayersNames.AddRange(manager.AllLayers.Select(layer =>
+            allLayersNames.AddRange(manager.FirstLevelLayers.Select(layer =>
             {
                 return layer.Name;
             }));

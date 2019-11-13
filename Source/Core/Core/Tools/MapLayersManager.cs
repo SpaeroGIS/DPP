@@ -114,6 +114,24 @@ namespace MilSpace.Core.Tools
             }
         }
 
+        internal List<ILayer> GetAllFirstLevelLayers()
+        {
+            var layersToReturn = new List<ILayer>();
+            try
+            {
+                for(int i = 0; i < activeView.FocusMap.LayerCount; i++)
+                {
+                   layersToReturn.Add(activeView.FocusMap.Layer[i]);
+                }
+                    return layersToReturn;
+            }
+            catch(Exception ex)
+            {
+                logger.ErrorEx("Error: " + ex.ToString());
+                return null;
+            }
+        }
+
         public IEnumerable<IRasterLayer> RasterLayers => Layers.Where(layer => layer is IRasterLayer).Cast<IRasterLayer>();
 
         public IEnumerable<ILayer> PointLayers => GetFeatureLayers(pointTypes);
@@ -122,7 +140,7 @@ namespace MilSpace.Core.Tools
 
         public IEnumerable<ILayer> PolygonLayers => GetFeatureLayers(polygonTypes);
 
-        public IEnumerable<ILayer> AllLayers => Layers;
+        public IEnumerable<ILayer> FirstLevelLayers => GetAllFirstLevelLayers();
 
         private IEnumerable<ILayer> GetFeatureLayers(IEnumerable<esriGeometryType> geomType)
         {

@@ -56,6 +56,7 @@ namespace MilSpace.Visibility
             base.OnLoad(e);
             SubscribeForEvents();
             InitilizeData();
+            OnContentsChanged();
         }
 
         private void SubscribeForEvents()
@@ -1233,7 +1234,7 @@ namespace MilSpace.Visibility
                 wizard.ShowDialog();
                 var dialogResult = wizard.DialogResult;
 
-                if (dialogResult == DialogResult.OK)
+                if(dialogResult == DialogResult.OK)
                 {
                     var calcParams = wizard.FinalResult;
 
@@ -1241,7 +1242,7 @@ namespace MilSpace.Visibility
 
                     var clculated = _observPointsController.CalculateVisibility(calcParams, VisibilityManager.GenerateResultId());
 
-                    if (!clculated)
+                    if(!clculated)
                     {
                         //Localize message
                         MessageBox.Show("The calculation finished with errors.\nFor more details go to the log file", "SPPRD", MessageBoxButtons.OK, MessageBoxIcon.Error);
