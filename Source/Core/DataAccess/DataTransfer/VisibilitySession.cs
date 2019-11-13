@@ -83,7 +83,7 @@ namespace MilSpace.DataAccess.DataTransfer
 
         public IEnumerable<string> Results()
         {
-            VisibilityCalculationresultsEnum resultsInGDB = GdbAccess.Instance.CheckVisibilityResult(Id);
+            //VisibilityCalculationresultsEnum resultsInGDB = GdbAccess.Instance.CheckVisibilityResult(Id);
 
             VisibilityCalculationresultsEnum calculatedResults = (VisibilityCalculationresultsEnum)CalculatedResults;
             List<string> resulrs = new List<string>();
