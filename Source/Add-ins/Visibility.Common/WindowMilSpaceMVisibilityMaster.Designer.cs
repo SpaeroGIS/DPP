@@ -109,7 +109,7 @@ namespace MilSpace.Visibility
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.panel24 = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbTransparency = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
@@ -119,8 +119,8 @@ namespace MilSpace.Visibility
             this.label15 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.panel22 = new System.Windows.Forms.Panel();
-            this.comboBox8 = new System.Windows.Forms.ComboBox();
-            this.comboBox7 = new System.Windows.Forms.ComboBox();
+            this.cmbPositions = new System.Windows.Forms.ComboBox();
+            this.cmbMapLayers = new System.Windows.Forms.ComboBox();
             this.label14 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.panel21 = new System.Windows.Forms.Panel();
@@ -1295,7 +1295,7 @@ namespace MilSpace.Visibility
             // 
             // panel24
             // 
-            this.panel24.Controls.Add(this.textBox1);
+            this.panel24.Controls.Add(this.tbTransparency);
             this.panel24.Controls.Add(this.label18);
             this.panel24.Controls.Add(this.button3);
             this.panel24.Controls.Add(this.label16);
@@ -1306,14 +1306,15 @@ namespace MilSpace.Visibility
             this.panel24.Size = new System.Drawing.Size(921, 26);
             this.panel24.TabIndex = 18;
             // 
-            // textBox1
+            // tbTransparency
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox1.Location = new System.Drawing.Point(383, 0);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(35, 20);
-            this.textBox1.TabIndex = 10;
-            this.textBox1.Text = "33";
+            this.tbTransparency.Dock = System.Windows.Forms.DockStyle.Left;
+            this.tbTransparency.Location = new System.Drawing.Point(383, 0);
+            this.tbTransparency.Name = "tbTransparency";
+            this.tbTransparency.Size = new System.Drawing.Size(35, 20);
+            this.tbTransparency.TabIndex = 10;
+            this.tbTransparency.Text = "33";
+            this.tbTransparency.Leave += new System.EventHandler(this.TbTransparency_Leave);
             // 
             // label18
             // 
@@ -1406,8 +1407,8 @@ namespace MilSpace.Visibility
             // 
             // panel22
             // 
-            this.panel22.Controls.Add(this.comboBox8);
-            this.panel22.Controls.Add(this.comboBox7);
+            this.panel22.Controls.Add(this.cmbPositions);
+            this.panel22.Controls.Add(this.cmbMapLayers);
             this.panel22.Controls.Add(this.label14);
             this.panel22.Controls.Add(this.label12);
             this.panel22.Dock = System.Windows.Forms.DockStyle.Top;
@@ -1416,27 +1417,27 @@ namespace MilSpace.Visibility
             this.panel22.Size = new System.Drawing.Size(921, 26);
             this.panel22.TabIndex = 16;
             // 
-            // comboBox8
+            // cmbPositions
             // 
-            this.comboBox8.Dock = System.Windows.Forms.DockStyle.Left;
-            this.comboBox8.FormattingEnabled = true;
-            this.comboBox8.Items.AddRange(new object[] {
+            this.cmbPositions.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbPositions.FormattingEnabled = true;
+            this.cmbPositions.Items.AddRange(new object[] {
             "сверху",
             "снизу"});
-            this.comboBox8.Location = new System.Drawing.Point(520, 0);
-            this.comboBox8.Name = "comboBox8";
-            this.comboBox8.Size = new System.Drawing.Size(125, 21);
-            this.comboBox8.TabIndex = 7;
+            this.cmbPositions.Location = new System.Drawing.Point(520, 0);
+            this.cmbPositions.Name = "cmbPositions";
+            this.cmbPositions.Size = new System.Drawing.Size(125, 21);
+            this.cmbPositions.TabIndex = 7;
             // 
-            // comboBox7
+            // cmbMapLayers
             // 
-            this.comboBox7.Dock = System.Windows.Forms.DockStyle.Left;
-            this.comboBox7.FormattingEnabled = true;
-            this.comboBox7.Location = new System.Drawing.Point(275, 0);
-            this.comboBox7.Name = "comboBox7";
-            this.comboBox7.Size = new System.Drawing.Size(245, 21);
-            this.comboBox7.TabIndex = 6;
-            this.comboBox7.Text = "Название группового слоя в проекте";
+            this.cmbMapLayers.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbMapLayers.FormattingEnabled = true;
+            this.cmbMapLayers.Location = new System.Drawing.Point(275, 0);
+            this.cmbMapLayers.Name = "cmbMapLayers";
+            this.cmbMapLayers.Size = new System.Drawing.Size(245, 21);
+            this.cmbMapLayers.TabIndex = 6;
+            this.cmbMapLayers.Text = "Название группового слоя в проекте";
             // 
             // label14
             // 
@@ -1805,7 +1806,7 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Panel panel24;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbTransparency;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label16;
@@ -1815,8 +1816,8 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Panel panel22;
-        private System.Windows.Forms.ComboBox comboBox8;
-        private System.Windows.Forms.ComboBox comboBox7;
+        private System.Windows.Forms.ComboBox cmbPositions;
+        private System.Windows.Forms.ComboBox cmbMapLayers;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Panel panel21;

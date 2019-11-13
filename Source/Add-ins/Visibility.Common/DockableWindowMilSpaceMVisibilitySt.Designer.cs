@@ -1251,6 +1251,7 @@
             this.panel21.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
             this.panel21.Size = new System.Drawing.Size(322, 24);
             this.panel21.TabIndex = 30;
+            this.panel21.Visible = false;
             // 
             // textBox13
             // 
@@ -1282,6 +1283,7 @@
             this.panel19.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
             this.panel19.Size = new System.Drawing.Size(322, 24);
             this.panel19.TabIndex = 29;
+            this.panel19.Visible = false;
             // 
             // textBox12
             // 
@@ -1315,6 +1317,7 @@
             this.panel22.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
             this.panel22.Size = new System.Drawing.Size(322, 24);
             this.panel22.TabIndex = 27;
+            this.panel22.Visible = false;
             // 
             // textBox14
             // 
@@ -1368,6 +1371,7 @@
             this.panel23.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.panel23.Size = new System.Drawing.Size(322, 24);
             this.panel23.TabIndex = 26;
+            this.panel23.Visible = false;
             // 
             // toolBar1
             // 
@@ -1430,6 +1434,7 @@
             this.label26.Size = new System.Drawing.Size(108, 17);
             this.label26.TabIndex = 2;
             this.label26.Text = "координаты XY, дгр";
+            this.label26.Visible = false;
             // 
             // panel20
             // 
@@ -1460,6 +1465,7 @@
             this.toolBar4.ShowToolTips = true;
             this.toolBar4.Size = new System.Drawing.Size(322, 28);
             this.toolBar4.TabIndex = 41;
+            this.toolBar4.Visible = false;
             // 
             // toolBarButton7
             // 
@@ -1511,6 +1517,7 @@
             this.listBox2.Name = "listBox2";
             this.listBox2.Size = new System.Drawing.Size(322, 108);
             this.listBox2.TabIndex = 9;
+            this.listBox2.Visible = false;
             // 
             // panel1
             // 
@@ -1524,6 +1531,7 @@
             this.panel1.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.panel1.Size = new System.Drawing.Size(322, 24);
             this.panel1.TabIndex = 8;
+            this.panel1.Visible = false;
             // 
             // dateTimePicker2
             // 
@@ -1533,6 +1541,7 @@
             this.dateTimePicker2.Name = "dateTimePicker2";
             this.dateTimePicker2.Size = new System.Drawing.Size(95, 20);
             this.dateTimePicker2.TabIndex = 5;
+            this.dateTimePicker2.Visible = false;
             // 
             // label6
             // 
@@ -1553,6 +1562,7 @@
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(95, 20);
             this.dateTimePicker1.TabIndex = 3;
+            this.dateTimePicker1.Visible = false;
             // 
             // label5
             // 
@@ -1574,6 +1584,7 @@
             this.panel18.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.panel18.Size = new System.Drawing.Size(322, 24);
             this.panel18.TabIndex = 6;
+            this.panel18.Visible = false;
             // 
             // label17
             // 

@@ -96,7 +96,7 @@ namespace MilSpace.DataAccess.Facade
 
             VisibilityCalculationresultsEnum results = VisibilityCalculationresultsEnum.None;
 
-            foreach (var map in VisibilitySession.EsriDatatypeToresultMapping)
+            foreach (var map in VisibilitySession.EsriDatatypeToResultMapping)
             {
                 var datasets = calcWorkspace.get_DatasetNames(map.Key);
                 var dataSet = datasets.Next();
@@ -575,6 +575,19 @@ namespace MilSpace.DataAccess.Facade
             return featureWorkspace.OpenFeatureClass(featureClass);
         }
 
+        internal bool CheckDatasetExistanceInCalcWorkspace(string dataSetName, esriDatasetType datasetType)
+        {
+            return IsFeatureClassExist(calcWorkspace, dataSetName, datasetType);
+        }
+
+        private static bool IsFeatureClassExist(IWorkspace workspace, string featureClass, esriDatasetType datasetType)
+        {
+            IWorkspace2 wsp2 = (IWorkspace2)workspace;
+            IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)workspace;
+
+            return wsp2.NameExists[datasetType, featureClass];
+        }
+
         public ILayer GetLayerFromWorkingWorkspace(string featureClassName)
         {
             var featurelayer = new FeatureLayer();
@@ -582,7 +595,6 @@ namespace MilSpace.DataAccess.Facade
             featurelayer.FeatureClass = OpenFeatureClass(WorkingWorkspace, featureClassName);
             return featurelayer;
         }
-
 
         private IWorkspace WorkingWorkspace
         {
