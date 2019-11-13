@@ -480,7 +480,7 @@ namespace MilSpace.Visibility
                     VisibilityCalculationResults = VisibilityCalculationresultsEnum.ObservationPoints | VisibilityCalculationresultsEnum.VisibilityAreaRaster,
                     RelativeLayerName = cmbMapLayers.SelectedItem.ToString(),
                     ResultLayerPosition = controller.GetPositionByStringValue(cmbPositions.SelectedItem.ToString()),
-                    ResultLayerTransparency = Convert.ToInt16(tbTransparency.Text)
+                    ResultLayerTransparency = Convert.ToInt16(tbTransparency.Text),
                     CalculationType = calcType
                 };
             }
@@ -494,10 +494,9 @@ namespace MilSpace.Visibility
                     SumFieldOfView = SumChkBox.Checked,
                     RasterLayerName = comboBox1.SelectedItem.ToString(),
                     OP = checkBoxOP.Checked,
-                    VisibilityCalculationResults = VisibilityCalculationresultsEnum.ObservationPoints | VisibilityCalculationresultsEnum.VisibilityAreaRaster | VisibilityCalculationresultsEnum.ObservationStations,
                     RelativeLayerName = cmbMapLayers.SelectedItem.ToString(),
                     ResultLayerPosition = controller.GetPositionByStringValue(cmbPositions.SelectedItem.ToString()),
-                    ResultLayerTransparency = Convert.ToInt16(tbTransparency.Text)
+                    ResultLayerTransparency = Convert.ToInt16(tbTransparency.Text),
                     VisibilityCalculationResults = VisibilityCalculationresultsEnum.ObservationStations,
                     CalculationType = calcType
                 };
