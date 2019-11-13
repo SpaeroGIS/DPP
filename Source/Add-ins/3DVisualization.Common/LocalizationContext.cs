@@ -23,7 +23,7 @@ namespace MilSpace.Visualization3D
         }
 
         //Captions
-        public string WindowCaption => FindLocalizedElement("WindowCaption", "Profiles 3D Visualization");
+        public string WindowCaption => FindLocalizedElement("WindowCaption", "Prepare 3D Visualization");
          
         //Buttons
         public string GenerateButton => FindLocalizedElement("GenerateButton", "Generate");
@@ -49,6 +49,16 @@ namespace MilSpace.Visualization3D
         public object Profile => FindLocalizedElement("Profile", "Profile");
 
         //Errors        
+
+        //Form visibility select
+        public string WindowCaptionVisibilites => FindLocalizedElement("WindowCaptionVisibilites", "Visibilites");
+        public string labelHeaderSessionVisibilites => FindLocalizedElement("labelHeaderSessionVisibilites", "Visibilites for Visualization");
+        public string buttonAddProfilesTo3D => FindLocalizedElement("buttonAddProfilesTo3D", "Add");
+
+        //Form Profiles select
+        public string WindowCaptionProfiles => FindLocalizedElement("WindowCaptionProfiles", "Profiles");
+        public string LabelProfileTreeHeader => FindLocalizedElement("LabelProfileTreeHeader", "Profiles for Visualization");
+        public string ButtonAddSessionProfileTree => FindLocalizedElement("ButtonAddSessionProfileTree", "Add");
 
         private string FindLocalizedElement(string xmlNodeName, string defaultValue)
         {

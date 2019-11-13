@@ -478,7 +478,7 @@
     <value>Do you realy want to remove tab?</value>
   </data>
   <data name="messageBoxTitle" xml:space="preserve">
-    <value>MilSpace</value>
+    <value>Sposterezhennya</value>
   </data>
   <data name="modalProfilesTreeModalTitle" xml:space="preserve">
     <value>Profiles tree</value>
@@ -599,5 +599,11 @@
   </data>
   <data name="btnTakeCoordToolTip" xml:space="preserve">
     <value>Take coordinates from the map</value>
+  </data>
+  <data name="buttonAddProfilesTo3D" xml:space="preserve">
+    <value>Add to scene</value>
+  </data>
+  <data name="labelHeaderSessionProfiles" xml:space="preserve">
+    <value>Сurrent session profiles</value>
   </data>
 </root>

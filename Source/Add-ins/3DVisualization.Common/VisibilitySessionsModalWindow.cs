@@ -8,12 +8,15 @@ namespace MilSpace.Visualization3D
     public partial class VisibilitySessionsModalWindow : Form
     {
         private LocalizationContext _localizationContext;
+        //private LocalizationContext context;
+
         public List<VisibilitySession> SelectedVisibilitySessions { get; } = new List<VisibilitySession>();
 
         internal VisibilitySessionsModalWindow(LocalizationContext context)
         {
             InitializeComponent();
             _localizationContext = context;
+            LocalizeComponent();
             LoadSessions();
             SetListView();
         }
@@ -29,9 +32,20 @@ namespace MilSpace.Visualization3D
             lvVisibilitySessions.HeaderStyle = ColumnHeaderStyle.None;
         }
 
-        //private void LocalizeControls()
-        //{
-        //}
+        private void LocalizeComponent()
+        {
+            try
+            {
+                _localizationContext = new LocalizationContext();
+                this.Text = _localizationContext.WindowCaptionVisibilites;
+                this.labelHeaderSessionProfiles.Text = _localizationContext.labelHeaderSessionVisibilites;
+                this.buttonAddProfilesTo3D.Text = _localizationContext.buttonAddProfilesTo3D;
+            }
+            catch
+            {
+                MessageBox.Show("No Localization.xml found or there is an error during loading", "Error Localization form");
+            }
+        }
 
         private void LoadSessions()
         {
@@ -75,6 +89,11 @@ namespace MilSpace.Visualization3D
         private void VisibilitySessionsModalWindow_KeyDown(object sender, KeyEventArgs e)
         {
             if(e.KeyCode == Keys.Enter) GetAllSelectedSessions();
+        }
+
+        private void button1_Click(object sender, System.EventArgs e)
+        {
+            GetAllSelectedSessions();
         }
     }
 }

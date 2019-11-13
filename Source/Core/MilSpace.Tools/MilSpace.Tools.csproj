@@ -101,16 +101,52 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Exceptions\MilSpaceProfileLineNotFound.cs" />
-    <Compile Include="GraphicsLayer\GraphicElement.cs" />
-    <Compile Include="GraphicsLayer\GraphicsLayerManager.cs" />
-    <Compile Include="GraphicsLayer\MilSpaceGraphicsTypeEnum.cs" />
-    <Compile Include="ProfileManager.cs" />
+    <Compile Include="..\Tools\Exceptions\MilSpaceProfileLineNotFound.cs">
+      <Link>Exceptions\MilSpaceProfileLineNotFound.cs</Link>
+    </Compile>
+    <Compile Include="..\Tools\Exceptions\MilSpaceVisibilityCalcFailed.cs">
+      <Link>Exceptions\MilSpaceVisibilityCalcFailed.cs</Link>
+    </Compile>
+    <Compile Include="..\Tools\GraphicsLayer\GraphicElement.cs">
+      <Link>GraphicsLayer\GraphicElement.cs</Link>
+    </Compile>
+    <Compile Include="..\Tools\GraphicsLayer\GraphicsLayerManager.cs">
+      <Link>GraphicsLayer\GraphicsLayerManager.cs</Link>
+    </Compile>
+    <Compile Include="..\Tools\GraphicsLayer\MilSpaceGraphicsTypeEnum.cs">
+      <Link>GraphicsLayer\MilSpaceGraphicsTypeEnum.cs</Link>
+    </Compile>
+    <Compile Include="..\Tools\ProfileManager.cs">
+      <Link>ProfileManager.cs</Link>
+    </Compile>
+    <Compile Include="..\Tools\SurfaceProfile\Actions\ActionParameters.cs">
+      <Link>SurfaceProfile\Actions\ActionParameters.cs</Link>
+    </Compile>
+    <Compile Include="..\Tools\SurfaceProfile\Actions\ActionsEnum.cs">
+      <Link>SurfaceProfile\Actions\ActionsEnum.cs</Link>
+    </Compile>
+    <Compile Include="..\Tools\SurfaceProfile\Actions\BuildStackProfileAction.cs">
+      <Link>SurfaceProfile\Actions\BuildStackProfileAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Tools\SurfaceProfile\Actions\BuildStackVisibilityAction.cs">
+      <Link>SurfaceProfile\Actions\BuildStackVisibilityAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Tools\SurfaceProfile\Actions\VisibilityCalculationResult.cs">
+      <Link>SurfaceProfile\Actions\VisibilityCalculationResult.cs</Link>
+    </Compile>
+    <Compile Include="..\Tools\SurfaceProfile\ProfileLibrary.cs">
+      <Link>SurfaceProfile\ProfileLibrary.cs</Link>
+    </Compile>
+    <Compile Include="..\Tools\SurfaceProfile\VisibilityAnalysisTypesEnum.cs">
+      <Link>SurfaceProfile\VisibilityAnalysisTypesEnum.cs</Link>
+    </Compile>
+    <Compile Include="..\Tools\SurfaceProfile\VisibilityFieldsEnum.cs">
+      <Link>SurfaceProfile\VisibilityFieldsEnum.cs</Link>
+    </Compile>
+    <Compile Include="..\Tools\VisibilityManager.cs">
+      <Link>VisibilityManager.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SurfaceProfile\Actions\ActionParameters.cs" />
-    <Compile Include="SurfaceProfile\Actions\ActionsEnum.cs" />
-    <Compile Include="SurfaceProfile\Actions\BuildStackProfileAction.cs" />
-    <Compile Include="SurfaceProfile\ProfileLibrary.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MilSpace.Configurations\MilSpace.Configurations.csproj">
@@ -118,7 +154,7 @@
       <Name>MilSpace.Configurations</Name>
     </ProjectReference>
     <ProjectReference Include="..\MilSpace.Core\MilSpace.Core.csproj">
-      <Project>{02023d3d-4f73-4e7e-a78f-eeaa5d66deac}</Project>
+      <Project>{a9deed9b-a54b-4c1d-aba7-d2c7bb5fa6ec}</Project>
       <Name>MilSpace.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\MilSpace.DataAccess\MilSpace.DataAccess.csproj">

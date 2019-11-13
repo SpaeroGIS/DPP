@@ -97,7 +97,7 @@ namespace MilSpace.Visualization3D
                 this.SurfaceLabel.Text = context.SurfaceLabel;
                 this.lbl3DProfiles.Text = context.ArcSceneParamsLabel;
                 this.lblProfiles.Text = context.ProfilesLabel;
-                this.BuildingsHightLabel.Text = context.HightLablel;
+                this.BuildingsHight.Text = context.HightLablel;
                 this.HydroHightLabel.Text = context.HightLablel;
                 this.PlantsHightLablel.Text = context.HightLablel;
                 this.TransportHightLabel.Text = context.HightLablel;
@@ -328,5 +328,15 @@ namespace MilSpace.Visualization3D
         }
 
         #endregion
+
+        private void panel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void HydroHightLabel_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -1,49 +1,61 @@
 ﻿<ESRI.Configuration xmlns="http://schemas.esri.com/Desktop/AddIns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Name>SPPRD.Profile</Name>
-  <AddInID>{9FE5052E-668B-420B-B5C7-E9A43917DB69}</AddInID>
-  <Description>SPPRD 3-D solution. Module Profile</Description>
-  <Version>20192008.5</Version>
-  <Image>Images\SPPRD.Profile.png</Image>
-  <Author>admin</Author>
+  <Name>Sposterezhennya.Profile</Name>
+  <AddInID>{B1C5AC1C-5F45-406F-B929-5ED62DE06E71}</AddInID>
+
+  <Description>Sposterezhennya 3-D solution. Module Profile</Description>
+  <Version>1.5.00002</Version>
+  <Image>Images\Poll.png</Image>
+  <Author>DPP</Author>
   <Company>DPP</Company>
-  <Date>30.05.2019</Date>
+  <Date>2019.11.12</Date>
+  
   <Targets>
     <Target name="Desktop" version="10.4" />
   </Targets>
-  <AddIn language="CLR" library="SPPRD.Profile.dll" namespace="MilSpace.Profile">
+  
+  <AddIn language="CLR" library="Sposterezhennya.Profile.dll" namespace="MilSpace.Profile">
     <ArcMap>
       <Commands>
-        <Button id="SPPRD.ProfileSolutionOpen" class="MilSpaceProfileCalcOpen" 
-                message="SPPRD 3-D solution. Module Profile window" 
-                caption="SPPRD Profile window" tip="SPPRD 3-D solution. Module Profile" 
-                category="SPPRDTools" image="Images\Directions.png" />
-        <Tool id="SPPRD.PickProfileCoordinates" 
+        
+        <Button id="Milspace.ButtonProfileSolutionOpen" 
+                class="MilSpaceProfileCalcOpen" 
+                message="Sposterezhennya 3-D solution. Module Profile window" 
+                caption="Sposterezhennya Profile window" 
+                tip="Sposterezhennya 3-D solution. Module Profile" 
+                category="Спостереження інструменти" 
+                image="Images\Poll.png" />
+        
+        <Tool id="Milspace.ToolPickProfileCoordinates" 
               class="PickProfileCoordinates" 
-              message="Pick Coordinates from the map." caption="Pick Profile Coordinates" tip="Pick Coordinates from the map." 
-              category="SPPRDTools" image="Images\PickCoordinates.png" cursor="Images\PickCoordinates.cur" />
+              message="Pick Coordinates from the map." 
+              caption="Pick Profile Coordinates" 
+              tip="Pick Coordinates from the map." 
+              category="Спостереження інструменти" 
+              image="Images\Directions.png" 
+              cursor="Images\PickCoordinates.cur" />
       </Commands>
+      
       <DockableWindows>
-        <DockableWindow id="SPPRD.Profile_DockableWindowMilSpaceProfileCalc" 
+        <DockableWindow id="Profile_DockableWindowMilSpaceProfileCalc" 
                         class="DockableWindowMilSpaceProfileCalc+AddinImpl" 
-                        caption="Спостереження Profile Calc" 
-                        image="Images\DockableWindowMilSpaceProfileCalc.png">
-          <InitialPlacement height="350" width="780" state="unpinned" position="float" />
+                        caption="Спостереження Профили" 
+                        image="Images\Poll.png">
+          <InitialPlacement height="600" width="320" state="unpinned" position="float" />
         </DockableWindow>
-        <DockableWindow id="SPPRD.Profile_DockableWindowMilSpaceProfileGraph" 
+        <DockableWindow id="Profile_DockableWindowMilSpaceProfileGraph" 
                         class="DockableWindowMilSpaceProfileGraph+AddinImpl" 
-                        caption="SPPRD Profile Graph" 
-                        image="Images\DockableWindowMilSpaceProfileCalc.png">
+                        caption="Спостереження Графики профилей" 
+                        image="Images\Poll.png">
           <InitialPlacement height="350" width="780" state="unpinned" position="float" />
         </DockableWindow>
       </DockableWindows>
 
       <Toolbars>
-        <Toolbar
-          id="SPPRDArcMapAddinToolbar" 
-          caption="SPPRD спецінструменти"
-          showInitially="true">
+        <Toolbar id="Sposterezhennya.MilspaceArcMapAddinToolbar" 
+                 caption="Спостереження інструменти"
+                 showInitially="true">
           <Items>
-            <Button refID="SPPRD.ProfileSolutionOpen" />
+            <Button refID="Milspace.ButtonProfileSolutionOpen" />
           </Items>
         </Toolbar>
       </Toolbars>
