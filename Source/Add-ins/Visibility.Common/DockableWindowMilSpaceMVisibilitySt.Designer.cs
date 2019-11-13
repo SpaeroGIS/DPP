@@ -1236,7 +1236,7 @@
             this.tabPage6.Location = new System.Drawing.Point(4, 4);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(328, 302);
+            this.tabPage6.Size = new System.Drawing.Size(298, 306);
             this.tabPage6.TabIndex = 1;
             this.tabPage6.Text = "Точки \"снимков\"";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -1249,7 +1249,7 @@
             this.panel21.Location = new System.Drawing.Point(3, 260);
             this.panel21.Name = "panel21";
             this.panel21.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.panel21.Size = new System.Drawing.Size(322, 24);
+            this.panel21.Size = new System.Drawing.Size(292, 24);
             this.panel21.TabIndex = 30;
             this.panel21.Visible = false;
             // 
@@ -1281,7 +1281,7 @@
             this.panel19.Location = new System.Drawing.Point(3, 236);
             this.panel19.Name = "panel19";
             this.panel19.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.panel19.Size = new System.Drawing.Size(322, 24);
+            this.panel19.Size = new System.Drawing.Size(292, 24);
             this.panel19.TabIndex = 29;
             this.panel19.Visible = false;
             // 
@@ -1315,7 +1315,7 @@
             this.panel22.Location = new System.Drawing.Point(3, 212);
             this.panel22.Name = "panel22";
             this.panel22.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.panel22.Size = new System.Drawing.Size(322, 24);
+            this.panel22.Size = new System.Drawing.Size(292, 24);
             this.panel22.TabIndex = 27;
             this.panel22.Visible = false;
             // 
@@ -1369,7 +1369,7 @@
             this.panel23.Location = new System.Drawing.Point(3, 188);
             this.panel23.Name = "panel23";
             this.panel23.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel23.Size = new System.Drawing.Size(322, 24);
+            this.panel23.Size = new System.Drawing.Size(292, 24);
             this.panel23.TabIndex = 26;
             this.panel23.Visible = false;
             // 
@@ -1387,7 +1387,7 @@
             this.toolBar1.Margin = new System.Windows.Forms.Padding(1, 3, 3, 3);
             this.toolBar1.Name = "toolBar1";
             this.toolBar1.ShowToolTips = true;
-            this.toolBar1.Size = new System.Drawing.Size(96, 28);
+            this.toolBar1.Size = new System.Drawing.Size(66, 50);
             this.toolBar1.TabIndex = 29;
             // 
             // toolBarButton13
@@ -1442,7 +1442,7 @@
             this.panel20.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel20.Location = new System.Drawing.Point(3, 159);
             this.panel20.Name = "panel20";
-            this.panel20.Size = new System.Drawing.Size(322, 29);
+            this.panel20.Size = new System.Drawing.Size(292, 29);
             this.panel20.TabIndex = 15;
             // 
             // toolBar4
@@ -1463,7 +1463,7 @@
             this.toolBar4.Margin = new System.Windows.Forms.Padding(8, 3, 3, 3);
             this.toolBar4.Name = "toolBar4";
             this.toolBar4.ShowToolTips = true;
-            this.toolBar4.Size = new System.Drawing.Size(322, 28);
+            this.toolBar4.Size = new System.Drawing.Size(292, 28);
             this.toolBar4.TabIndex = 41;
             this.toolBar4.Visible = false;
             // 
@@ -1515,7 +1515,7 @@
             this.listBox2.FormattingEnabled = true;
             this.listBox2.Location = new System.Drawing.Point(3, 51);
             this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(322, 108);
+            this.listBox2.Size = new System.Drawing.Size(292, 108);
             this.listBox2.TabIndex = 9;
             this.listBox2.Visible = false;
             // 
@@ -1529,7 +1529,7 @@
             this.panel1.Location = new System.Drawing.Point(3, 27);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel1.Size = new System.Drawing.Size(322, 24);
+            this.panel1.Size = new System.Drawing.Size(292, 24);
             this.panel1.TabIndex = 8;
             this.panel1.Visible = false;
             // 
@@ -1582,7 +1582,7 @@
             this.panel18.Location = new System.Drawing.Point(3, 3);
             this.panel18.Name = "panel18";
             this.panel18.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel18.Size = new System.Drawing.Size(322, 24);
+            this.panel18.Size = new System.Drawing.Size(292, 24);
             this.panel18.TabIndex = 6;
             this.panel18.Visible = false;
             // 
@@ -1844,7 +1844,7 @@
             this.tbpObservObjects.ImageIndex = 173;
             this.tbpObservObjects.Location = new System.Drawing.Point(4, 23);
             this.tbpObservObjects.Name = "tbpObservObjects";
-            this.tbpObservObjects.Size = new System.Drawing.Size(342, 623);
+            this.tbpObservObjects.Size = new System.Drawing.Size(312, 623);
             this.tbpObservObjects.TabIndex = 1;
             this.tbpObservObjects.Text = "Области Н";
             this.tbpObservObjects.UseVisualStyleBackColor = true;
@@ -1860,7 +1860,7 @@
             this.panel30.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel30.Location = new System.Drawing.Point(0, 305);
             this.panel30.Name = "panel30";
-            this.panel30.Size = new System.Drawing.Size(342, 325);
+            this.panel30.Size = new System.Drawing.Size(312, 325);
             this.panel30.TabIndex = 48;
             // 
             // panel3
@@ -1870,7 +1870,7 @@
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
             this.panel3.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel3.Size = new System.Drawing.Size(342, 33);
+            this.panel3.Size = new System.Drawing.Size(312, 33);
             this.panel3.TabIndex = 43;
             // 
             // label4
@@ -1881,7 +1881,7 @@
             this.label4.Location = new System.Drawing.Point(4, 0);
             this.label4.Name = "label4";
             this.label4.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label4.Size = new System.Drawing.Size(334, 33);
+            this.label4.Size = new System.Drawing.Size(304, 33);
             this.label4.TabIndex = 2;
             this.label4.Text = "Характеристики ОН";
             // 
@@ -1954,7 +1954,7 @@
             this.addNewObjectPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.addNewObjectPanel.Location = new System.Drawing.Point(0, 148);
             this.addNewObjectPanel.Name = "addNewObjectPanel";
-            this.addNewObjectPanel.Size = new System.Drawing.Size(342, 177);
+            this.addNewObjectPanel.Size = new System.Drawing.Size(312, 177);
             this.addNewObjectPanel.TabIndex = 3;
             // 
             // panel37
@@ -1963,7 +1963,7 @@
             this.panel37.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel37.Location = new System.Drawing.Point(0, 135);
             this.panel37.Name = "panel37";
-            this.panel37.Size = new System.Drawing.Size(342, 24);
+            this.panel37.Size = new System.Drawing.Size(312, 24);
             this.panel37.TabIndex = 55;
             // 
             // toolBar8
@@ -1981,7 +1981,7 @@
             this.toolBar8.Location = new System.Drawing.Point(0, -4);
             this.toolBar8.Name = "toolBar8";
             this.toolBar8.ShowToolTips = true;
-            this.toolBar8.Size = new System.Drawing.Size(342, 28);
+            this.toolBar8.Size = new System.Drawing.Size(312, 28);
             this.toolBar8.TabIndex = 40;
             // 
             // toolBarButton38
@@ -2015,7 +2015,7 @@
             this.listBox4.FormattingEnabled = true;
             this.listBox4.Location = new System.Drawing.Point(0, 105);
             this.listBox4.Name = "listBox4";
-            this.listBox4.Size = new System.Drawing.Size(342, 30);
+            this.listBox4.Size = new System.Drawing.Size(312, 30);
             this.listBox4.TabIndex = 54;
             // 
             // panel36
@@ -2025,7 +2025,7 @@
             this.panel36.Location = new System.Drawing.Point(0, 81);
             this.panel36.Name = "panel36";
             this.panel36.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel36.Size = new System.Drawing.Size(342, 24);
+            this.panel36.Size = new System.Drawing.Size(312, 24);
             this.panel36.TabIndex = 53;
             // 
             // label35
@@ -2048,7 +2048,7 @@
             this.panel33.Location = new System.Drawing.Point(0, 57);
             this.panel33.Name = "panel33";
             this.panel33.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.panel33.Size = new System.Drawing.Size(342, 24);
+            this.panel33.Size = new System.Drawing.Size(312, 24);
             this.panel33.TabIndex = 52;
             // 
             // textBox21
@@ -2080,7 +2080,7 @@
             this.panel32.Location = new System.Drawing.Point(0, 33);
             this.panel32.Name = "panel32";
             this.panel32.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel32.Size = new System.Drawing.Size(342, 24);
+            this.panel32.Size = new System.Drawing.Size(312, 24);
             this.panel32.TabIndex = 51;
             // 
             // comboBox5
@@ -2089,7 +2089,7 @@
             this.comboBox5.FormattingEnabled = true;
             this.comboBox5.Location = new System.Drawing.Point(193, 0);
             this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(145, 21);
+            this.comboBox5.Size = new System.Drawing.Size(115, 21);
             this.comboBox5.TabIndex = 3;
             this.comboBox5.Text = "ObPlaces_201810";
             // 
@@ -2111,7 +2111,7 @@
             this.panel34.Location = new System.Drawing.Point(0, 0);
             this.panel34.Name = "panel34";
             this.panel34.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel34.Size = new System.Drawing.Size(342, 33);
+            this.panel34.Size = new System.Drawing.Size(312, 33);
             this.panel34.TabIndex = 50;
             // 
             // label34
@@ -2121,7 +2121,7 @@
             this.label34.Location = new System.Drawing.Point(4, 0);
             this.label34.Name = "label34";
             this.label34.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label34.Size = new System.Drawing.Size(334, 33);
+            this.label34.Size = new System.Drawing.Size(304, 33);
             this.label34.TabIndex = 2;
             this.label34.Text = "Добавление ОН";
             // 
@@ -2190,7 +2190,7 @@
             this.panel29.Location = new System.Drawing.Point(0, 273);
             this.panel29.Name = "panel29";
             this.panel29.Padding = new System.Windows.Forms.Padding(2);
-            this.panel29.Size = new System.Drawing.Size(342, 32);
+            this.panel29.Size = new System.Drawing.Size(312, 32);
             this.panel29.TabIndex = 47;
             // 
             // tbObservObjects
@@ -2279,7 +2279,7 @@
             this.dgvObservObjects.RowHeadersVisible = false;
             this.dgvObservObjects.RowHeadersWidth = 15;
             this.dgvObservObjects.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvObservObjects.Size = new System.Drawing.Size(342, 190);
+            this.dgvObservObjects.Size = new System.Drawing.Size(312, 190);
             this.dgvObservObjects.TabIndex = 58;
             this.dgvObservObjects.SelectionChanged += new System.EventHandler(this.DgvObservObjects_SelectionChanged);
             // 
@@ -2292,7 +2292,7 @@
             this.chckObservObjColumnsVisibilityPanel.Location = new System.Drawing.Point(0, 59);
             this.chckObservObjColumnsVisibilityPanel.Name = "chckObservObjColumnsVisibilityPanel";
             this.chckObservObjColumnsVisibilityPanel.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.chckObservObjColumnsVisibilityPanel.Size = new System.Drawing.Size(342, 24);
+            this.chckObservObjColumnsVisibilityPanel.Size = new System.Drawing.Size(312, 24);
             this.chckObservObjColumnsVisibilityPanel.TabIndex = 44;
             // 
             // chckObservObjAffiliation
@@ -2348,7 +2348,7 @@
             this.panel26.Location = new System.Drawing.Point(0, 33);
             this.panel26.Name = "panel26";
             this.panel26.Padding = new System.Windows.Forms.Padding(4, 2, 4, 0);
-            this.panel26.Size = new System.Drawing.Size(342, 26);
+            this.panel26.Size = new System.Drawing.Size(312, 26);
             this.panel26.TabIndex = 43;
             // 
             // cmbObservObjAffiliationFilter
@@ -2380,7 +2380,7 @@
             this.panel27.Location = new System.Drawing.Point(0, 0);
             this.panel27.Name = "panel27";
             this.panel27.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel27.Size = new System.Drawing.Size(342, 33);
+            this.panel27.Size = new System.Drawing.Size(312, 33);
             this.panel27.TabIndex = 42;
             // 
             // label30
@@ -2391,7 +2391,7 @@
             this.label30.Location = new System.Drawing.Point(4, 0);
             this.label30.Name = "label30";
             this.label30.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label30.Size = new System.Drawing.Size(334, 33);
+            this.label30.Size = new System.Drawing.Size(304, 33);
             this.label30.TabIndex = 2;
             this.label30.Text = "Объекты наблюдения (ОН)";
             // 
@@ -2412,7 +2412,7 @@
             this.toolBar5.Location = new System.Drawing.Point(0, 0);
             this.toolBar5.Name = "toolBar5";
             this.toolBar5.ShowToolTips = true;
-            this.toolBar5.Size = new System.Drawing.Size(342, 28);
+            this.toolBar5.Size = new System.Drawing.Size(312, 28);
             this.toolBar5.TabIndex = 46;
             // 
             // toolBarButton18
@@ -2472,7 +2472,7 @@
             this.tbpSessions.ImageIndex = 50;
             this.tbpSessions.Location = new System.Drawing.Point(4, 23);
             this.tbpSessions.Name = "tbpSessions";
-            this.tbpSessions.Size = new System.Drawing.Size(342, 623);
+            this.tbpSessions.Size = new System.Drawing.Size(312, 623);
             this.tbpSessions.TabIndex = 2;
             this.tbpSessions.Text = "Задания";
             this.tbpSessions.UseVisualStyleBackColor = true;
@@ -2485,7 +2485,7 @@
             this.panel46.Location = new System.Drawing.Point(0, 445);
             this.panel46.Name = "panel46";
             this.panel46.Padding = new System.Windows.Forms.Padding(4, 1, 0, 0);
-            this.panel46.Size = new System.Drawing.Size(342, 24);
+            this.panel46.Size = new System.Drawing.Size(312, 24);
             this.panel46.TabIndex = 70;
             // 
             // tbVisibilitySessionFinished
@@ -2516,7 +2516,7 @@
             this.panel45.Location = new System.Drawing.Point(0, 421);
             this.panel45.Name = "panel45";
             this.panel45.Padding = new System.Windows.Forms.Padding(4, 1, 0, 0);
-            this.panel45.Size = new System.Drawing.Size(342, 24);
+            this.panel45.Size = new System.Drawing.Size(312, 24);
             this.panel45.TabIndex = 69;
             // 
             // tbVisibilitySessionStarted
@@ -2547,7 +2547,7 @@
             this.panel44.Location = new System.Drawing.Point(0, 397);
             this.panel44.Name = "panel44";
             this.panel44.Padding = new System.Windows.Forms.Padding(4, 1, 0, 0);
-            this.panel44.Size = new System.Drawing.Size(342, 24);
+            this.panel44.Size = new System.Drawing.Size(312, 24);
             this.panel44.TabIndex = 68;
             // 
             // tbVisibilitySessionCreated
@@ -2578,7 +2578,7 @@
             this.panel43.Location = new System.Drawing.Point(0, 373);
             this.panel43.Name = "panel43";
             this.panel43.Padding = new System.Windows.Forms.Padding(4, 1, 0, 0);
-            this.panel43.Size = new System.Drawing.Size(342, 24);
+            this.panel43.Size = new System.Drawing.Size(312, 24);
             this.panel43.TabIndex = 67;
             // 
             // tbVisibilitySessionCreator
@@ -2609,7 +2609,7 @@
             this.panel47.Location = new System.Drawing.Point(0, 349);
             this.panel47.Name = "panel47";
             this.panel47.Padding = new System.Windows.Forms.Padding(4, 1, 0, 0);
-            this.panel47.Size = new System.Drawing.Size(342, 24);
+            this.panel47.Size = new System.Drawing.Size(312, 24);
             this.panel47.TabIndex = 65;
             // 
             // tbVisibilitySessionName
@@ -2640,7 +2640,7 @@
             this.panel42.Location = new System.Drawing.Point(0, 316);
             this.panel42.Name = "panel42";
             this.panel42.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel42.Size = new System.Drawing.Size(342, 33);
+            this.panel42.Size = new System.Drawing.Size(312, 33);
             this.panel42.TabIndex = 59;
             // 
             // label40
@@ -2651,7 +2651,7 @@
             this.label40.Location = new System.Drawing.Point(4, 0);
             this.label40.Name = "label40";
             this.label40.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label40.Size = new System.Drawing.Size(334, 33);
+            this.label40.Size = new System.Drawing.Size(304, 33);
             this.label40.TabIndex = 2;
             this.label40.Text = "Информация о задании";
             // 
@@ -2662,7 +2662,7 @@
             this.panel41.Location = new System.Drawing.Point(0, 284);
             this.panel41.Name = "panel41";
             this.panel41.Padding = new System.Windows.Forms.Padding(2);
-            this.panel41.Size = new System.Drawing.Size(342, 32);
+            this.panel41.Size = new System.Drawing.Size(312, 32);
             this.panel41.TabIndex = 58;
             // 
             // tlbVisibilitySessions
@@ -2708,7 +2708,7 @@
             this.dgvVisibilitySessions.RowHeadersVisible = false;
             this.dgvVisibilitySessions.RowHeadersWidth = 15;
             this.dgvVisibilitySessions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvVisibilitySessions.Size = new System.Drawing.Size(342, 227);
+            this.dgvVisibilitySessions.Size = new System.Drawing.Size(312, 227);
             this.dgvVisibilitySessions.TabIndex = 57;
             this.dgvVisibilitySessions.SelectionChanged += new System.EventHandler(this.DgvVisibilitySessions_SelectionChanged);
             // 
@@ -2721,7 +2721,7 @@
             this.panel39.Location = new System.Drawing.Point(0, 33);
             this.panel39.Name = "panel39";
             this.panel39.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel39.Size = new System.Drawing.Size(342, 24);
+            this.panel39.Size = new System.Drawing.Size(312, 24);
             this.panel39.TabIndex = 55;
             // 
             // cmbStateFilter
@@ -2774,7 +2774,7 @@
             this.panel38.Location = new System.Drawing.Point(0, 0);
             this.panel38.Name = "panel38";
             this.panel38.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel38.Size = new System.Drawing.Size(342, 33);
+            this.panel38.Size = new System.Drawing.Size(312, 33);
             this.panel38.TabIndex = 54;
             // 
             // label36
@@ -2785,7 +2785,7 @@
             this.label36.Location = new System.Drawing.Point(4, 0);
             this.label36.Name = "label36";
             this.label36.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label36.Size = new System.Drawing.Size(334, 33);
+            this.label36.Size = new System.Drawing.Size(304, 33);
             this.label36.TabIndex = 2;
             this.label36.Text = "Список заданий";
             // 
@@ -2801,7 +2801,7 @@
             this.tbpVisibilityAreas.ImageIndex = 125;
             this.tbpVisibilityAreas.Location = new System.Drawing.Point(4, 23);
             this.tbpVisibilityAreas.Name = "tbpVisibilityAreas";
-            this.tbpVisibilityAreas.Size = new System.Drawing.Size(342, 623);
+            this.tbpVisibilityAreas.Size = new System.Drawing.Size(312, 623);
             this.tbpVisibilityAreas.TabIndex = 3;
             this.tbpVisibilityAreas.Text = "ОВ";
             this.tbpVisibilityAreas.UseVisualStyleBackColor = true;
@@ -2817,7 +2817,7 @@
             this.tabControl3.Location = new System.Drawing.Point(0, 344);
             this.tabControl3.Name = "tabControl3";
             this.tabControl3.SelectedIndex = 0;
-            this.tabControl3.Size = new System.Drawing.Size(342, 170);
+            this.tabControl3.Size = new System.Drawing.Size(312, 170);
             this.tabControl3.TabIndex = 77;
             // 
             // tabPage7
@@ -2831,7 +2831,7 @@
             this.tabPage7.Location = new System.Drawing.Point(4, 4);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage7.Size = new System.Drawing.Size(334, 143);
+            this.tabPage7.Size = new System.Drawing.Size(304, 143);
             this.tabPage7.TabIndex = 0;
             this.tabPage7.Text = "ОВ для ПН";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -2842,7 +2842,7 @@
             this.panel55.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel55.Location = new System.Drawing.Point(3, 107);
             this.panel55.Name = "panel55";
-            this.panel55.Size = new System.Drawing.Size(328, 26);
+            this.panel55.Size = new System.Drawing.Size(298, 26);
             this.panel55.TabIndex = 23;
             // 
             // label50
@@ -2863,7 +2863,7 @@
             this.panel54.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel54.Location = new System.Drawing.Point(3, 81);
             this.panel54.Name = "panel54";
-            this.panel54.Size = new System.Drawing.Size(328, 26);
+            this.panel54.Size = new System.Drawing.Size(298, 26);
             this.panel54.TabIndex = 22;
             // 
             // label49
@@ -2885,7 +2885,7 @@
             this.panel53.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel53.Location = new System.Drawing.Point(3, 55);
             this.panel53.Name = "panel53";
-            this.panel53.Size = new System.Drawing.Size(328, 26);
+            this.panel53.Size = new System.Drawing.Size(298, 26);
             this.panel53.TabIndex = 21;
             // 
             // textBox30
@@ -2915,7 +2915,7 @@
             this.panel52.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel52.Location = new System.Drawing.Point(3, 29);
             this.panel52.Name = "panel52";
-            this.panel52.Size = new System.Drawing.Size(328, 26);
+            this.panel52.Size = new System.Drawing.Size(298, 26);
             this.panel52.TabIndex = 20;
             // 
             // button1
@@ -2945,7 +2945,7 @@
             this.panel35.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel35.Location = new System.Drawing.Point(3, 3);
             this.panel35.Name = "panel35";
-            this.panel35.Size = new System.Drawing.Size(328, 26);
+            this.panel35.Size = new System.Drawing.Size(298, 26);
             this.panel35.TabIndex = 19;
             // 
             // label51
@@ -2986,7 +2986,7 @@
             this.panel51.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel51.Location = new System.Drawing.Point(0, 514);
             this.panel51.Name = "panel51";
-            this.panel51.Size = new System.Drawing.Size(342, 24);
+            this.panel51.Size = new System.Drawing.Size(312, 24);
             this.panel51.TabIndex = 76;
             // 
             // toolBar11
@@ -3003,7 +3003,7 @@
             this.toolBar11.Location = new System.Drawing.Point(0, 0);
             this.toolBar11.Name = "toolBar11";
             this.toolBar11.ShowToolTips = true;
-            this.toolBar11.Size = new System.Drawing.Size(342, 28);
+            this.toolBar11.Size = new System.Drawing.Size(312, 28);
             this.toolBar11.TabIndex = 40;
             // 
             // toolBarButton54
@@ -3037,7 +3037,7 @@
             this.panel50.Location = new System.Drawing.Point(0, 310);
             this.panel50.Name = "panel50";
             this.panel50.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel50.Size = new System.Drawing.Size(342, 34);
+            this.panel50.Size = new System.Drawing.Size(312, 34);
             this.panel50.TabIndex = 75;
             // 
             // label48
@@ -3047,7 +3047,7 @@
             this.label48.Location = new System.Drawing.Point(4, 0);
             this.label48.Name = "label48";
             this.label48.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label48.Size = new System.Drawing.Size(334, 34);
+            this.label48.Size = new System.Drawing.Size(304, 34);
             this.label48.TabIndex = 2;
             this.label48.Text = "Информация о результате";
             // 
@@ -3058,7 +3058,7 @@
             this.panel49.Location = new System.Drawing.Point(0, 278);
             this.panel49.Name = "panel49";
             this.panel49.Padding = new System.Windows.Forms.Padding(2);
-            this.panel49.Size = new System.Drawing.Size(342, 32);
+            this.panel49.Size = new System.Drawing.Size(312, 32);
             this.panel49.TabIndex = 74;
             // 
             // toolBarVisibleResults
@@ -3129,7 +3129,7 @@
             this.treeView1.Location = new System.Drawing.Point(0, 34);
             this.treeView1.Name = "treeView1";
             this.treeView1.SelectedImageKey = "Ok.png";
-            this.treeView1.Size = new System.Drawing.Size(342, 244);
+            this.treeView1.Size = new System.Drawing.Size(312, 244);
             this.treeView1.TabIndex = 73;
             this.treeView1.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.node_AfterCheck);
             // 
@@ -3141,7 +3141,7 @@
             this.richTextBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.richTextBox4.Location = new System.Drawing.Point(0, 538);
             this.richTextBox4.Name = "richTextBox4";
-            this.richTextBox4.Size = new System.Drawing.Size(342, 85);
+            this.richTextBox4.Size = new System.Drawing.Size(312, 85);
             this.richTextBox4.TabIndex = 72;
             this.richTextBox4.Text = resources.GetString("richTextBox4.Text");
             // 
@@ -3152,7 +3152,7 @@
             this.panel48.Location = new System.Drawing.Point(0, 0);
             this.panel48.Name = "panel48";
             this.panel48.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel48.Size = new System.Drawing.Size(342, 34);
+            this.panel48.Size = new System.Drawing.Size(312, 34);
             this.panel48.TabIndex = 55;
             // 
             // label47
@@ -3162,7 +3162,7 @@
             this.label47.Location = new System.Drawing.Point(4, 0);
             this.label47.Name = "label47";
             this.label47.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label47.Size = new System.Drawing.Size(334, 34);
+            this.label47.Size = new System.Drawing.Size(304, 34);
             this.label47.TabIndex = 2;
             this.label47.Text = "Список результатаов";
             // 
