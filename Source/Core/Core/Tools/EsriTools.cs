@@ -1,9 +1,11 @@
-﻿using ESRI.ArcGIS.Carto;
+﻿using ESRI.ArcGIS.ArcMapUI;
+using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.DataSourcesGDB;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
+using ESRI.ArcGIS.SystemUI;
 using MilSpace.Core.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -427,7 +429,8 @@ namespace MilSpace.Core.Tools
         {
             var layers = map.Layers;
             var layer = map.Layer[0] as ILayer;
-            while(layer.Name != layerName)
+
+            while(layer != null && layer.Name != layerName)
             {
                 layer = layers.Next() as ILayer;
             }
@@ -511,6 +514,40 @@ namespace MilSpace.Core.Tools
 
             Marshal.ReleaseComObject(workspaceFactory);
             return result;
+        }
+
+        public static void AddVisibilityGroupLayer(IEnumerable<string> visibilityLayersNames, string sessionName, string calcRasterName, string gdb, string relativeLayerName,
+                                                bool isLayerAbove, short transparency, IActiveView activeView)
+        {
+            var visibilityLayers = new List<ILayer>();
+
+            foreach(var layerName in visibilityLayersNames)
+            {
+                var layer = GetVisibilityLayer(gdb, layerName);
+                if(layer != null)
+                {
+                    visibilityLayers.Add(layer);
+                }
+            }
+
+            var relativeLayer = GetLayer(relativeLayerName, activeView.FocusMap);
+            var calcRaster = GetLayer(calcRasterName, activeView.FocusMap);
+
+
+            
+            AddLayersToMapAsGroupLayer(visibilityLayers, sessionName, transparency, relativeLayer, isLayerAbove, activeView, calcRaster);
+
+        }
+
+        public static int GetLayerIndex(ILayer layer, IActiveView activeView)
+        {
+            for(int index = 0; index < activeView.FocusMap.LayerCount; index++)
+            {
+                ILayer layerAtIndex = activeView.FocusMap.get_Layer(index);
+                if(layerAtIndex == layer)
+                    return index;
+            }
+            return -1;
         }
 
         private static IPoint ConstructPoint3D(double x, double y, double z)
@@ -627,6 +664,88 @@ namespace MilSpace.Core.Tools
             }
 
             return resultPolylines;
+        }
+
+        private static void AddLayersToMapAsGroupLayer(IEnumerable<ILayer> layers, string sessionName, short transparency,
+                                                ILayer relativeLayer, bool isGroupLayerAbove, IActiveView activeView, ILayer calcRaster)
+        {
+            IGroupLayer groupLayer = new GroupLayerClass();
+            groupLayer.Name = sessionName;
+
+            foreach(var layer in layers)
+            {
+                if(layer is IRasterLayer)
+                {
+                    var layerEffects = (ILayerEffects)layer;
+                    layerEffects.Transparency = transparency;
+                }
+                groupLayer.Add(layer);
+            }
+
+            var mapLayers = activeView.FocusMap as IMapLayers2;
+            int relativeLayerPosition = GetLayerIndex(relativeLayer, activeView);
+            int groupLayerPosition = (isGroupLayerAbove) ? relativeLayerPosition - 1 : relativeLayerPosition + 1;
+            mapLayers.InsertLayer(groupLayer, false, groupLayerPosition);
+
+            if(calcRaster != null)
+            {
+                IMoveLayersOperation moveOperation = new MoveLayersOperationClass();
+                moveOperation.AddLayerInfo(calcRaster, activeView.FocusMap, null);
+                moveOperation.SetDestinationInfo(layers.Count(), activeView.FocusMap, groupLayer);
+
+                var doOperation = (IOperation)moveOperation;
+                doOperation.Do();
+            }
+        }
+
+        private static ILayer GetVisibilityLayer(string gdb, string datasetName)
+        {
+            IWorkspaceFactory workspaceFactory = new FileGDBWorkspaceFactory();
+            IWorkspace workspace = workspaceFactory.OpenFromFile(gdb, 0);
+
+            var datasets = workspace.Datasets[esriDatasetType.esriDTAny];
+            var currentDataset = datasets.Next();
+
+            while(currentDataset != null && !currentDataset.Name.EndsWith(datasetName))
+            {
+                currentDataset = datasets.Next();
+            }
+
+            Marshal.ReleaseComObject(workspaceFactory);
+
+            if(currentDataset != null)
+            {
+                if(currentDataset.Type == esriDatasetType.esriDTRasterDataset)
+                {
+                    return GetRasterLayer(currentDataset as IRasterDataset);
+                }
+
+                if(currentDataset.Type == esriDatasetType.esriDTFeatureClass)
+                {
+                    return GetFeatureLayer(workspace, currentDataset.Name);
+                }
+            }
+
+            return null;
+        }
+
+        private static ILayer GetFeatureLayer(IWorkspace workspace, string featureClassName)
+        {
+            var featurelayer = new FeatureLayer();
+            IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)workspace;
+
+            featurelayer.Name = featureClassName;
+            featurelayer.FeatureClass = featureWorkspace.OpenFeatureClass(featureClassName);
+
+            return featurelayer;
+        }
+
+        private static ILayer GetRasterLayer(IRasterDataset rasterDataset)
+        {
+            IRasterLayer rasterLayer = new RasterLayer();
+            rasterLayer.CreateFromDataset(rasterDataset);
+
+            return rasterLayer;
         }
     }
 }

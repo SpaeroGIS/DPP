@@ -18,7 +18,11 @@ namespace MilSpace.DataAccess.DataTransfer
         VisibilityAreaRasterSingle = 64,
     }
 
-
+    public enum LayerPositionsEnum
+    {
+        Above,
+        Below
+    }
 
     public class VisibilitySession
     {
