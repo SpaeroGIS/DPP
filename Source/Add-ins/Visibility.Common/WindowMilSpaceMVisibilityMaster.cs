@@ -646,5 +646,9 @@ namespace MilSpace.Visibility
             throw new NotImplementedException();
         }
 
+        public void FillVisibilitySessionsTree(IEnumerable<VisibilitySession> visibilitySessions, bool isNewSessionAdded)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
