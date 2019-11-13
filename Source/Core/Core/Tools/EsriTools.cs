@@ -531,18 +531,23 @@ namespace MilSpace.Core.Tools
             return result;
         }
 
-        public static void AddVisibilityGroupLayer(IEnumerable<string> visibilityLayersNames, string sessionName, string calcRasterName, string gdb, string relativeLayerName,
+        public static void AddVisibilityGroupLayer(IEnumerable<IDataset> visibilityLayersNames, string sessionName, string calcRasterName, string gdb, string relativeLayerName,
                                                 bool isLayerAbove, short transparency, IActiveView activeView)
         {
             var visibilityLayers = new List<ILayer>();
 
-            foreach(var layerName in visibilityLayersNames)
+            foreach (var layerName in visibilityLayersNames)
             {
-                var layer = GetVisibilityLayer(gdb, layerName);
-                if(layer != null)
+                if (layerName is IRasterDataset raster)
                 {
-                    visibilityLayers.Add(layer);
+                    visibilityLayers.Add(GetRasterLayer(raster));
                 }
+
+                if (layerName is IFeatureClass feature)
+                {
+                    visibilityLayers.Add(GetFeatureLayer(feature));
+                }
+             
             }
 
             var relativeLayer = GetLayer(relativeLayerName, activeView.FocusMap);
@@ -741,25 +746,23 @@ namespace MilSpace.Core.Tools
 
                 if(currentDataset.Type == esriDatasetType.esriDTFeatureClass)
                 {
-                    return GetFeatureLayer(workspace, currentDataset.Name);
+                    return GetFeatureLayer(currentDataset as IFeatureClass);
                 }
             }
 
             return null;
         }
 
-        private static ILayer GetFeatureLayer(IWorkspace workspace, string featureClassName)
+        public static ILayer GetFeatureLayer(IFeatureClass dataset)
         {
             var featurelayer = new FeatureLayer();
-            IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)workspace;
-
-            featurelayer.Name = featureClassName;
-            featurelayer.FeatureClass = featureWorkspace.OpenFeatureClass(featureClassName);
+            featurelayer.Name = dataset.AliasName;
+            featurelayer.FeatureClass = dataset;
 
             return featurelayer;
         }
 
-        private static ILayer GetRasterLayer(IRasterDataset rasterDataset)
+        public static ILayer GetRasterLayer(IRasterDataset rasterDataset)
         {
             IRasterLayer rasterLayer = new RasterLayer();
             rasterLayer.CreateFromDataset(rasterDataset);

@@ -118,8 +118,7 @@ namespace MilSpace.DataAccess.Facade
 
         public static bool CheckVisibilityResultEistance(string resultName, VisibilityCalculationresultsEnum resultType)
         {
-            var result = VisibilitySession.EsriDatatypeToResultMapping.First(r => r.Value.Any(t => t == resultType)).Key;
-
+            var result = VisibilitySession.GetEsriDataTypeByVisibilityresyltType(resultType);
             return GdbAccess.Instance.CheckDatasetExistanceInCalcWorkspace(resultName, result);
         }
     }

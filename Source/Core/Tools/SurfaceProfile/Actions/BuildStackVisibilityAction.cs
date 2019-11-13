@@ -127,29 +127,30 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
             IEnumerable<string> messages = null;
 
-            List<int[]> pointsIDs = new List<int[]>();
 
-            var fileNmeGeneration = VisibilityCalculationresultsEnum.ObservationPoints;
+            List<KeyValuePair<VisibilityCalculationresultsEnum, int[]>> pointsIDs = new List<KeyValuePair<VisibilityCalculationresultsEnum, int[]>>();
 
-            if (calcResults.HasFlag(VisibilityCalculationresultsEnum.ObservationPointSingle))
+
+            if (calcResults.HasFlag(VisibilityCalculationresultsEnum.ObservationPoints))
             {
-                pointsIDs.AddRange(pointsFilteringIds.Select(id => new int[] { id }).ToArray());
-                fileNmeGeneration = VisibilityCalculationresultsEnum.ObservationPointSingle;
+                pointsIDs.Add(new KeyValuePair<VisibilityCalculationresultsEnum, int[]>(VisibilityCalculationresultsEnum.ObservationPoints, pointsFilteringIds));
             }
-            else
+
+            if (calcResults.HasFlag(VisibilityCalculationresultsEnum.ObservationPointSingle) && pointsFilteringIds.Length > 1)
             {
-                pointsIDs.Add(pointsFilteringIds);
+                pointsIDs.AddRange(
+                    pointsFilteringIds.Select(id => new KeyValuePair<VisibilityCalculationresultsEnum, int[]>(VisibilityCalculationresultsEnum.ObservationPoints, new int[] { id })).ToArray());
             }
 
             int index = -1;
 
             foreach (var curPoints in pointsIDs)
             {
-                var pointId = curPoints.Length == 1 ? ++index : -1;
+                var pointId = curPoints.Value.Length == 1 ? ++index : -1;
 
-                var oservPointFeatureClassName = VisibilitySession.GetResultName(fileNmeGeneration, outputSourceName, pointId);
+                var oservPointFeatureClassName = VisibilitySession.GetResultName(curPoints.Key, outputSourceName, pointId);
 
-                var exportedFeatureClass = GdbAccess.Instance.ExportObservationFeatureClass(obserpPointsfeatureClass as IDataset, oservPointFeatureClassName, curPoints);
+                var exportedFeatureClass = GdbAccess.Instance.ExportObservationFeatureClass(obserpPointsfeatureClass as IDataset, oservPointFeatureClassName, curPoints.Value);
 
                 if (string.IsNullOrWhiteSpace(exportedFeatureClass))
                 {
