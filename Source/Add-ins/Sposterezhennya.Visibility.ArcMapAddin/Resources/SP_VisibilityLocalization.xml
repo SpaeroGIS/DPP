@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<SP_Visibility xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  
+  <WindowCaption>Спостереження. Видимість</WindowCaption>
+
+  <GenerateButton>Генерувати</GenerateButton>
+  <SurfaceLabel>Поверхня</SurfaceLabel>
+  <PlantsLayerLabel>рослинність</PlantsLayerLabel>
+  <HightLablel>Висота</HightLablel>
+  <BuildingsLayerLabel>будівелі</BuildingsLayerLabel>
+  <TransportLayerLabel>транспорт</TransportLayerLabel>
+  <HydroLayerLabel>гідрографія</HydroLayerLabel>
+  <ProfilesLabel>Профілі</ProfilesLabel>
+  <SurfacesLabel>Поверхні</SurfacesLabel>
+  <Generat3DTabHeader>Проект</Generat3DTabHeader>
+  <ImageTabHeader>Знимок 3-Д сцени</ImageTabHeader>
+  <Section>Відрізки</Section>
+  <Fun>Віяло</Fun>
+  <Primitive>Графіки</Primitive>
+  <Profile>Профіль</Profile>
+  <ArcSceneParams>Шари для візуалізації</ArcSceneParams>
+
+</SP_Visibility>

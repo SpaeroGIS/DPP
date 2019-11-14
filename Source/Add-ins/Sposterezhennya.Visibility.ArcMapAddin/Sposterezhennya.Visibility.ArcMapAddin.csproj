@@ -142,6 +142,9 @@
     <Compile Include="..\Visibility.Common\Helpers\ArcMapHelper.cs">
       <Link>Helpers\ArcMapHelper.cs</Link>
     </Compile>
+    <Compile Include="..\Visibility.Common\LocalizationContext.cs">
+      <Link>LocalizationContext.cs</Link>
+    </Compile>
     <Compile Include="..\Visibility.Common\MapInteropTool.cs">
       <Link>MapInteropTool.cs</Link>
     </Compile>
@@ -244,6 +247,9 @@
       <Project>{cbd5675b-f382-497d-98cc-70539ed658b9}</Project>
       <Name>MilSpace.Tools</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\SP_VisibilityLocalization.xml" />
   </ItemGroup>
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>
