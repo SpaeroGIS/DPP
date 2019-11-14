@@ -346,7 +346,6 @@ namespace MilSpace.Visibility
 
         }
 
-
         internal void ArcMap_OnMouseDown(int x, int y)
         {
             if (!(this.Hook is IApplication arcMap) || !(arcMap.Document is IMxDocument currentDocument)) return;

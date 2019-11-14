@@ -129,7 +129,8 @@ namespace MilSpace.DataAccess.DataTransfer
                     Finished = visibilitySessionModel.Finished,
                     CalculatedResults = visibilitySessionModel.CalculatedResults,
                     ReferencedGDB = visibilitySessionModel.ReferencedGDB,
-                    Surface = visibilitySessionModel.Surface
+                    Surface = visibilitySessionModel.Surface,
+                    CalculationType = (int)visibilitySessionModel.CalculationType
                 };
 
                 return visibilitySession;
@@ -155,7 +156,9 @@ namespace MilSpace.DataAccess.DataTransfer
                     Finished = visibilitySessionEntity.Finished,
                     CalculatedResults = visibilitySessionEntity.CalculatedResults,
                     ReferencedGDB = visibilitySessionEntity.ReferencedGDB,
-                    Surface = visibilitySessionEntity.Surface
+                    Surface = visibilitySessionEntity.Surface,
+                    //TODO: Check value gatting form DB if ti is inside Enum's values
+                    CalculationType = (VisibilityCalcTypeEnum)visibilitySessionEntity.CalculationType
                 };
 
                 return visibilitySession;

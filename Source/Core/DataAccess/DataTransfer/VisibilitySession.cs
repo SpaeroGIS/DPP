@@ -17,6 +17,7 @@ namespace MilSpace.DataAccess.DataTransfer
         CoverageTable = 16,
         ObservationPointSingle = 32,
         VisibilityAreaRasterSingle = 64,
+        VisibilityObservStationClip = 128,
     }
 
     public enum LayerPositionsEnum
@@ -30,13 +31,14 @@ namespace MilSpace.DataAccess.DataTransfer
         public static Dictionary<VisibilityCalculationresultsEnum, string> VisibilityResulSuffixes = new Dictionary<VisibilityCalculationresultsEnum, string>
         {
             { VisibilityCalculationresultsEnum.None , ""},
-            { VisibilityCalculationresultsEnum.ObservationPoints , "_op"},
+            { VisibilityCalculationresultsEnum.ObservationPoints , "_op_p"},
             { VisibilityCalculationresultsEnum.VisibilityAreaRaster , "_img"},
             { VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle , "_imgs"},
-            { VisibilityCalculationresultsEnum.ObservationStations , "_oo"},
+            { VisibilityCalculationresultsEnum.ObservationStations , "_oo_r"},
             { VisibilityCalculationresultsEnum.VisibilityAreaPolygons , "_va"},
             { VisibilityCalculationresultsEnum.CoverageTable , "_ct"},
             { VisibilityCalculationresultsEnum.ObservationPointSingle , "_ops"},
+            { VisibilityCalculationresultsEnum.VisibilityObservStationClip , "__imgc"}
         };
 
         internal static VisibilityCalculationresultsEnum[] FeatureClassResults = {
@@ -48,7 +50,8 @@ namespace MilSpace.DataAccess.DataTransfer
 
         internal static VisibilityCalculationresultsEnum[] RasterResults = {
             VisibilityCalculationresultsEnum.VisibilityAreaRaster,
-            VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle
+            VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle,
+            VisibilityCalculationresultsEnum.VisibilityObservStationClip
         };
 
         internal static VisibilityCalculationresultsEnum[] TableResults = {

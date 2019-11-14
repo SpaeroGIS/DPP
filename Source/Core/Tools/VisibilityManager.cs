@@ -51,7 +51,9 @@ namespace MilSpace.Tools
             IFeatureClass obervationStations,
             IEnumerable<int> stationsToExport,
             string sourceDem,
-             VisibilityCalculationresultsEnum culcResults, string sessionName)
+             VisibilityCalculationresultsEnum culcResults, 
+             string sessionName,
+             VisibilityCalcTypeEnum calculationType)
         {
             //Target dataset name
             string nameOfTargetDataset = GenerateResultId();
@@ -66,6 +68,7 @@ namespace MilSpace.Tools
                 ReferencedGDB = MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection,
                 CalculatedResults = (int)culcResults,
                 UserName = Environment.UserName,
+                CalculationType = calculationType,
                 Surface = sourceDem
             };
 

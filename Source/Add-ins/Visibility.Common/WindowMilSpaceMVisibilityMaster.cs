@@ -350,8 +350,6 @@ namespace MilSpace.Visibility
 
             foreach (CheckObservPointGui o in _AllObjects)
             {
-
-
                 o.Check = checkBox4.Checked;
                 dgvObjects.DataSource = _AllObjects;
                 dgvObjects.Refresh();
@@ -500,7 +498,7 @@ namespace MilSpace.Visibility
                     VisibilityCalculationResults = (SumChkBox.Checked ? 
                                                     VisibilityCalculationresultsEnum.ObservationPoints | VisibilityCalculationresultsEnum.VisibilityAreaRaster :
                                                     VisibilityCalculationresultsEnum.None)  
-                                                    | VisibilityCalculationresultsEnum.ObservationStations,
+                                                    | VisibilityCalculationresultsEnum.ObservationStations | VisibilityCalculationresultsEnum.VisibilityObservStationClip,
                     CalculationType = calcType
                 };
             }
