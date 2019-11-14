@@ -131,9 +131,13 @@ namespace MilSpace.Visualization3D
             foreach(var resultInfo in info)
             {
                 var layer = GetVisibilityLayer(resultInfo, objFactory, baseSurface);
-                layers.Add(layer.Key, layer.Value);
 
-                document.AddLayer(layer.Key);
+                if(layer.Key != null)
+                {
+                    layers.Add(layer.Key, layer.Value);
+
+                    document.AddLayer(layer.Key);
+                }
             }
 
             if(layers.ContainsValue(LayerTypeEnum.PointFeature))
