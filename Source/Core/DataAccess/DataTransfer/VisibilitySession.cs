@@ -1,6 +1,7 @@
 ﻿using ESRI.ArcGIS.Geodatabase;
 using MilSpace.DataAccess.Facade;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace MilSpace.DataAccess.DataTransfer
@@ -26,7 +27,7 @@ namespace MilSpace.DataAccess.DataTransfer
 
     public class VisibilitySession
     {
-        internal static Dictionary<VisibilityCalculationresultsEnum, string> VisibilityResulSuffixes = new Dictionary<VisibilityCalculationresultsEnum, string>
+        public static Dictionary<VisibilityCalculationresultsEnum, string> VisibilityResulSuffixes = new Dictionary<VisibilityCalculationresultsEnum, string>
         {
             { VisibilityCalculationresultsEnum.None , ""},
             { VisibilityCalculationresultsEnum.ObservationPoints , "_op"},
@@ -73,7 +74,22 @@ namespace MilSpace.DataAccess.DataTransfer
         public DateTime? Finished { get; internal set; }
         public int CalculatedResults;
         public string ReferencedGDB;
+        public string Surface;
         public VisibilityCalcTypeEnum CalculationType;
+
+        public IEnumerable<VisibilityResultInfo> ResultsInfo
+        {
+            get
+            {
+                return
+                    Results().Select(r => new VisibilityResultInfo
+                    {
+                        ResultName = r,
+                        GdbPath = ReferencedGDB
+                    }).ToArray();
+
+            }
+        }
 
         public static string GetResultName(VisibilityCalculationresultsEnum resultType, string sessionName, int pointId = -1)
         {
@@ -113,6 +129,11 @@ namespace MilSpace.DataAccess.DataTransfer
             }
 
             return resulrs;
+        }
+
+        internal static esriDatasetType GetEsriDataTypeByVisibilityresyltType(VisibilityCalculationresultsEnum resultType)
+        {
+            return EsriDatatypeToResultMapping.First(r => r.Value.Any(t => t == resultType)).Key;
         }
     }
 }

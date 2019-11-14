@@ -169,11 +169,7 @@ namespace MilSpace.Visualization3D
 
             foreach(var session in visibilitySessionsModel)
             {
-                info.Add(new VisibilityResultInfo
-                {
-                    ResultName = session.VisibilitySession.Id,
-                    GdbPath = session.VisibilitySession.ReferencedGDB
-                });    
+                info.AddRange(session.VisibilitySession.ResultsInfo);    
             }
 
             return info;

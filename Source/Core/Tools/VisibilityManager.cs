@@ -65,7 +65,8 @@ namespace MilSpace.Tools
                 Name = sessionName,
                 ReferencedGDB = MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection,
                 CalculatedResults = (int)culcResults,
-                UserName = Environment.UserName
+                UserName = Environment.UserName,
+                Surface = sourceDem
             };
 
             session = VisibilityZonesFacade.AddVisibilitySession(session);

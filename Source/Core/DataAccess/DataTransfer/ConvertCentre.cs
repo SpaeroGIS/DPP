@@ -128,7 +128,8 @@ namespace MilSpace.DataAccess.DataTransfer
                     Started = visibilitySessionModel.Started,
                     Finished = visibilitySessionModel.Finished,
                     CalculatedResults = visibilitySessionModel.CalculatedResults,
-                    ReferencedGDB = visibilitySessionModel.ReferencedGDB
+                    ReferencedGDB = visibilitySessionModel.ReferencedGDB,
+                    Surface = visibilitySessionModel.Surface
                 };
 
                 return visibilitySession;
@@ -153,7 +154,8 @@ namespace MilSpace.DataAccess.DataTransfer
                     Started = visibilitySessionEntity.Started,
                     Finished = visibilitySessionEntity.Finished,
                     CalculatedResults = visibilitySessionEntity.CalculatedResults,
-                    ReferencedGDB = visibilitySessionEntity.ReferencedGDB
+                    ReferencedGDB = visibilitySessionEntity.ReferencedGDB,
+                    Surface = visibilitySessionEntity.Surface
                 };
 
                 return visibilitySession;

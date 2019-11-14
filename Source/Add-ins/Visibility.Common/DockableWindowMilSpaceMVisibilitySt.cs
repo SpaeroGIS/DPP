@@ -492,8 +492,8 @@ namespace MilSpace.Visibility
 
             _isDropDownItemChangedManualy = true;
 
-            azimuthB.Text = ObservPointDefaultValues.AzimuthBText;
-            azimuthE.Text = ObservPointDefaultValues.AzimuthEText;
+            azimuthE.Text = ObservPointDefaultValues.AzimuthBText;
+            azimuthB.Text = ObservPointDefaultValues.AzimuthEText;
             heightCurrent.Text = ObservPointDefaultValues.RelativeHeightText;
             heightMin.Text = ObservPointDefaultValues.HeightMinText;
             heightMax.Text = ObservPointDefaultValues.HeightMaxText;
@@ -735,8 +735,8 @@ namespace MilSpace.Visibility
         {
             bool layerExists = IsPointFieldsEnabled;
 
-            cmbAffiliationEdit.Enabled = cmbObservTypesEdit.Enabled = azimuthB.Enabled
-                = azimuthE.Enabled = xCoord.Enabled = yCoord.Enabled = angleOFViewMin.Enabled = angleOFViewMax.Enabled
+            cmbAffiliationEdit.Enabled = cmbObservTypesEdit.Enabled = azimuthE.Enabled
+                = azimuthB.Enabled = xCoord.Enabled = yCoord.Enabled = angleOFViewMin.Enabled = angleOFViewMax.Enabled
                 = heightCurrent.Enabled = heightMin.Enabled = azimuthMainAxis.Enabled = cameraRotationH.Enabled = cameraRotationV.Enabled
                 = heightMax.Enabled = observPointName.Enabled = tlbCoordinates.Enabled = txtMaxDistance.Enabled = txtMinDistance.Enabled =
                 tlbbShowPoint.Enabled = tlbbRemovePoint.Enabled = tlbbAddNewPoint.Enabled = (layerExists && !isAllDisabled);
@@ -792,8 +792,8 @@ namespace MilSpace.Visibility
                 RelativeHeight = Convert.ToDouble(heightCurrent.Text),
                 AvailableHeightLover = Convert.ToDouble(heightMin.Text),
                 AvailableHeightUpper = Convert.ToDouble(heightMax.Text),
-                AzimuthStart = Convert.ToDouble(azimuthB.Text),
-                AzimuthEnd = Convert.ToDouble(azimuthE.Text),
+                AzimuthStart = Convert.ToDouble(azimuthE.Text),
+                AzimuthEnd = Convert.ToDouble(azimuthB.Text),
                 AzimuthMainAxis = Convert.ToDouble(azimuthMainAxis.Text),
                 Dto = Convert.ToDateTime(observPointDate.Text),
                 Operator = observPointCreator.Text,
@@ -846,8 +846,8 @@ namespace MilSpace.Visibility
 
             xCoord.Text = selectedPoint.X.HasValue ? selectedPoint.X.Value.ToString("F5") : centerPoint.X.ToString("F5");
             yCoord.Text = selectedPoint.Y.HasValue ? selectedPoint.Y.Value.ToString("F5") : centerPoint.Y.ToString("F5");
-            azimuthB.Text = selectedPoint.AzimuthStart.HasValue ? selectedPoint.AzimuthStart.ToString() : ObservPointDefaultValues.AzimuthBText;
-            azimuthE.Text = selectedPoint.AzimuthEnd.HasValue ? selectedPoint.AzimuthEnd.ToString() : ObservPointDefaultValues.AzimuthEText;
+            azimuthE.Text = selectedPoint.AzimuthStart.HasValue ? selectedPoint.AzimuthStart.ToString() : ObservPointDefaultValues.AzimuthBText;
+            azimuthB.Text = selectedPoint.AzimuthEnd.HasValue ? selectedPoint.AzimuthEnd.ToString() : ObservPointDefaultValues.AzimuthEText;
             heightCurrent.Text = selectedPoint.RelativeHeight.HasValue ? selectedPoint.RelativeHeight.ToString() : ObservPointDefaultValues.RelativeHeightText;
             heightMin.Text = selectedPoint.AvailableHeightLover.ToString();
             heightMax.Text = selectedPoint.AvailableHeightUpper.ToString();
