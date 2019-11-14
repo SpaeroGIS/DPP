@@ -199,12 +199,12 @@ namespace MilSpace.Visibility
         public void ChangeRecord(int id, ObservationPoint observationPoint)
         {
             var rowIndex = dgvObservationPoints.SelectedRows[0].Index;
-            //var pointGui = _observPointGuis.FirstOrDefault(point => point.Id == id);
+            var pointGui = _observPointGuis.FirstOrDefault(point => point.Id == id);
 
-            //pointGui.Title = observationPoint.Title;
-            //pointGui.Type = observationPoint.Type;
-            //pointGui.Affiliation = observationPoint.Affiliation;
-            //pointGui.Date = observationPoint.Dto.Value.ToString(Helper.DateFormatSmall);
+            pointGui.Title = observationPoint.Title;
+            pointGui.Type = observationPoint.Type;
+            pointGui.Affiliation = observationPoint.Affiliation;
+            pointGui.Date = observationPoint.Dto.Value.ToString(Helper.DateFormatSmall);
 
             dgvObservationPoints.Refresh();
             UpdateFilter(dgvObservationPoints.Rows[rowIndex]);
@@ -1389,15 +1389,6 @@ namespace MilSpace.Visibility
             dgvObservObjects.Columns["Title"].Visible = chckObservObjTitle.Checked;
             dgvObservObjects.Columns["Affiliation"].Visible = chckObservObjAffiliation.Checked;
             dgvObservObjects.Columns["Group"].Visible = chckObservObjGroup.Checked;
-        }
-
-        private void toolBar6_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
-        {
-        }
-
-        private void label41_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
