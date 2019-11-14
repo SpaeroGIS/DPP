@@ -217,7 +217,10 @@ namespace MilSpace.Visibility.ViewController
                 animationProgressor.Show();
                 animationProgressor.Play(0, 200);
 
-                var session = VisibilityManager.Generate(observPoints, calcParams.ObservPointIDs, observObjects, calcParams.ObservObjectIDs, calcParams.RasterLayerName, calcParams.VisibilityCalculationResults, sessionName);
+                var session = VisibilityManager.Generate(
+                    observPoints, 
+                    calcParams.ObservPointIDs, 
+                    observObjects, calcParams.ObservObjectIDs, calcParams.RasterLayerName, calcParams.VisibilityCalculationResults, sessionName, calcParams.CalculationType);
                 
                 if(session.Finished != null)
                 {

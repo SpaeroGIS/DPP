@@ -346,7 +346,6 @@ namespace MilSpace.Visibility
 
         }
 
-
         internal void ArcMap_OnMouseDown(int x, int y)
         {
             if (!(this.Hook is IApplication arcMap) || !(arcMap.Document is IMxDocument currentDocument)) return;
@@ -1389,15 +1388,6 @@ namespace MilSpace.Visibility
             dgvObservObjects.Columns["Title"].Visible = chckObservObjTitle.Checked;
             dgvObservObjects.Columns["Affiliation"].Visible = chckObservObjAffiliation.Checked;
             dgvObservObjects.Columns["Group"].Visible = chckObservObjGroup.Checked;
-        }
-
-        private void toolBar6_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
-        {
-        }
-
-        private void label41_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

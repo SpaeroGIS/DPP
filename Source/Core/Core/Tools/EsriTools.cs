@@ -585,11 +585,6 @@ namespace MilSpace.Core.Tools
 
             layersToremove.ForEach( l=> mapLayers.DeleteLayer(l));
             mapLayers.InsertLayer(groupLayer, false, groupLayerPosition);
-
-
-            //AddLayersToMapAsGroupLayer(visibilityLayers, sessionName, transparency, relativeLayer, 
-            //    isLayerAbove, activeView, calcRasters);
-
         }
 
         public static int GetLayerIndex(ILayer layer, IActiveView activeView)
