@@ -11,6 +11,7 @@ using System.Linq;
 using System.Windows.Forms;
 using MilSpace.Tools;
 using System.Drawing;
+using MilSpace.Core;
 
 namespace MilSpace.Visibility
 {
@@ -179,7 +180,7 @@ namespace MilSpace.Visibility
                     Title = t.Title,
                     Type = t.Type,
                     Affiliation = t.Affiliation,
-                    Date = t.Dto.Value.ToShortDateString(),
+                    Date = t.Dto.Value.ToString(Helper.DateFormatSmall),
                     Id = t.Objectid
 
                 });
@@ -216,7 +217,7 @@ namespace MilSpace.Visibility
                     Affiliation = t.ObjectType.ToString(),
                     Id = t.ObjectId,
                     Type = t.Group,
-                    Date = t.DTO.ToShortDateString()
+                    Date = t.DTO.ToString(Helper.DateFormatSmall)
                 }).ToList();
 
                 dgvObjects.DataSource = null; //Clearing listbox
@@ -476,7 +477,6 @@ namespace MilSpace.Visibility
                     Table = TableChkBox.Checked,
                     SumFieldOfView = SumChkBox.Checked,
                     RasterLayerName = comboBox1.SelectedItem.ToString(),
-                    OP = checkBoxOP.Checked,
                     VisibilityCalculationResults = SumChkBox.Checked ? VisibilityCalculationresultsEnum.ObservationPoints | VisibilityCalculationresultsEnum.VisibilityAreaRaster :
                         VisibilityCalculationresultsEnum.None,
                     RelativeLayerName = cmbMapLayers.SelectedItem.ToString(),
@@ -494,11 +494,13 @@ namespace MilSpace.Visibility
                     Table = TableChkBox.Checked,
                     SumFieldOfView = SumChkBox.Checked,
                     RasterLayerName = comboBox1.SelectedItem.ToString(),
-                    OP = checkBoxOP.Checked,
                     RelativeLayerName = cmbMapLayers.SelectedItem.ToString(),
                     ResultLayerPosition = controller.GetPositionByStringValue(cmbPositions.SelectedItem.ToString()),
                     ResultLayerTransparency = Convert.ToInt16(tbTransparency.Text),
-                    VisibilityCalculationResults = VisibilityCalculationresultsEnum.ObservationStations,
+                    VisibilityCalculationResults = (SumChkBox.Checked ? 
+                                                    VisibilityCalculationresultsEnum.ObservationPoints | VisibilityCalculationresultsEnum.VisibilityAreaRaster :
+                                                    VisibilityCalculationresultsEnum.None)  
+                                                    | VisibilityCalculationresultsEnum.ObservationStations,
                     CalculationType = calcType
                 };
             }
