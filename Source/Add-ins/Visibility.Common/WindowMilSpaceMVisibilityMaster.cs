@@ -11,6 +11,7 @@ using System.Linq;
 using System.Windows.Forms;
 using MilSpace.Tools;
 using System.Drawing;
+using MilSpace.Core;
 
 namespace MilSpace.Visibility
 {
@@ -127,7 +128,7 @@ namespace MilSpace.Visibility
 
             cmbPositions.Items.Clear();
             cmbPositions.Items.AddRange(controller.GetLayerPositions().ToArray());
-            cmbPositions.SelectedItem = controller.GetDefaultLayerPosition(); 
+            cmbPositions.SelectedItem = controller.GetDefaultLayerPosition();
         }
         public void PopulateComboBox()
         {
@@ -179,7 +180,7 @@ namespace MilSpace.Visibility
                     Title = t.Title,
                     Type = t.Type,
                     Affiliation = t.Affiliation,
-                    Date = t.Dto.Value.ToShortDateString(),
+                    Date = t.Dto.Value.ToString(Helper.DateFormatSmall),
                     Id = t.Objectid
 
                 });
@@ -216,7 +217,7 @@ namespace MilSpace.Visibility
                     Affiliation = t.ObjectType.ToString(),
                     Id = t.ObjectId,
                     Type = t.Group,
-                    Date = t.DTO.ToShortDateString()
+                    Date = t.DTO.ToString(Helper.DateFormatSmall)
                 }).ToList();
 
                 dgvObjects.DataSource = null; //Clearing listbox
@@ -476,8 +477,8 @@ namespace MilSpace.Visibility
                     Table = TableChkBox.Checked,
                     SumFieldOfView = SumChkBox.Checked,
                     RasterLayerName = comboBox1.SelectedItem.ToString(),
-                    OP = checkBoxOP.Checked,
-                    VisibilityCalculationResults = VisibilityCalculationresultsEnum.ObservationPoints | VisibilityCalculationresultsEnum.VisibilityAreaRaster,
+                    VisibilityCalculationResults = SumChkBox.Checked ? VisibilityCalculationresultsEnum.ObservationPoints | VisibilityCalculationresultsEnum.VisibilityAreaRaster :
+                        VisibilityCalculationresultsEnum.None,
                     RelativeLayerName = cmbMapLayers.SelectedItem.ToString(),
                     ResultLayerPosition = controller.GetPositionByStringValue(cmbPositions.SelectedItem.ToString()),
                     ResultLayerTransparency = Convert.ToInt16(tbTransparency.Text),
@@ -493,18 +494,21 @@ namespace MilSpace.Visibility
                     Table = TableChkBox.Checked,
                     SumFieldOfView = SumChkBox.Checked,
                     RasterLayerName = comboBox1.SelectedItem.ToString(),
-                    OP = checkBoxOP.Checked,
                     RelativeLayerName = cmbMapLayers.SelectedItem.ToString(),
                     ResultLayerPosition = controller.GetPositionByStringValue(cmbPositions.SelectedItem.ToString()),
                     ResultLayerTransparency = Convert.ToInt16(tbTransparency.Text),
-                    VisibilityCalculationResults = VisibilityCalculationresultsEnum.ObservationStations,
+                    VisibilityCalculationResults = (SumChkBox.Checked ? 
+                                                    VisibilityCalculationresultsEnum.ObservationPoints | VisibilityCalculationresultsEnum.VisibilityAreaRaster :
+                                                    VisibilityCalculationresultsEnum.None)  
+                                                    | VisibilityCalculationresultsEnum.ObservationStations,
                     CalculationType = calcType
                 };
             }
 
-            FinalResult.VisibilityCalculationResults = FinalResult.VisibilityCalculationResults | (checkBoxOP.Checked ?
-                 VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle |  VisibilityCalculationresultsEnum.ObservationPointSingle :
-                 VisibilityCalculationresultsEnum.VisibilityAreaRaster | VisibilityCalculationresultsEnum.ObservationPoints);
+            if (checkBoxOP.Checked)
+            {
+                FinalResult.VisibilityCalculationResults = FinalResult.VisibilityCalculationResults | VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle | VisibilityCalculationresultsEnum.ObservationPointSingle;
+            }
 
         }
         public void ALLinfo()
@@ -538,8 +542,15 @@ namespace MilSpace.Visibility
 
             if (StepsTabControl.SelectedIndex == StepsTabControl.TabCount - 1)
             {
+                if (!FinalResult.VisibilityCalculationResults.HasFlag(VisibilityCalculationresultsEnum.ObservationPoints) && !FinalResult.VisibilityCalculationResults.HasFlag(VisibilityCalculationresultsEnum.ObservationPointSingle))
+                {
+                    //TODO: Localise
+                    MessageBox.Show("The is no results sources for calculating. Please, select source!", "SPPRD", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+
                 if (string.IsNullOrEmpty(comboBox1.Text))
                 {
+                    //TODO: Localise
                     MessageBox.Show("The Raster layer must be selected!", "SPPRD", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return;
                 }
@@ -639,7 +650,7 @@ namespace MilSpace.Visibility
 
         private void TbTransparency_Leave(object sender, EventArgs e)
         {
-            if(!Int16.TryParse(tbTransparency.Text, out short res) || (res < 0 || res > 100))
+            if (!Int16.TryParse(tbTransparency.Text, out short res) || (res < 0 || res > 100))
             {
                 MessageBox.Show($"Invalid data.\nInsert the value in the range from 0 to 100");
                 tbTransparency.Text = "33";

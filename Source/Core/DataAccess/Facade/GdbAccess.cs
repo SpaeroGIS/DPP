@@ -1,5 +1,6 @@
 ﻿using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.DataSourcesGDB;
+using ESRI.ArcGIS.DataSourcesRaster;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geodatabase;
@@ -554,6 +555,18 @@ namespace MilSpace.DataAccess.Facade
             return OpenFeatureClass(WorkingWorkspace, featureClassName);
         }
 
+        private static IRasterDataset OpenRasterDataset(IWorkspace workspace, string rasterDatasetName)
+        {
+            IRasterWorkspaceEx rasterWorkspace = workspace as IRasterWorkspaceEx;
+
+            if (IsDatasetExist(workspace, rasterDatasetName, esriDatasetType.esriDTRasterDataset))
+            {
+                return rasterWorkspace.OpenRasterDataset(rasterDatasetName);
+            }
+
+            return null;
+        }
+
         private static IFeatureClass OpenFeatureClass(IWorkspace workspace, string featureClass)
         {
             IWorkspace2 wsp2 = (IWorkspace2)workspace;
@@ -561,30 +574,56 @@ namespace MilSpace.DataAccess.Facade
 
             //if(!wsp2.NameExists[esriDatasetType.esriDTFeatureClass, featureClass])
             //{
-                var datasetNames = workspace.DatasetNames[esriDatasetType.esriDTFeatureClass];
-                var featureName = datasetNames.Next().Name;
+            var datasetNames = workspace.DatasetNames[esriDatasetType.esriDTFeatureClass];
+            var featureName = datasetNames.Next().Name;
 
-                while(!featureName.EndsWith(featureClass))
-                {
-                    featureName = datasetNames.Next().Name;
-                }
+            while (!featureName.EndsWith(featureClass))
+            {
+                featureName = datasetNames.Next().Name;
+            }
 
-                featureClass = featureName;
-           // }
+            featureClass = featureName;
+            // }
 
             return featureWorkspace.OpenFeatureClass(featureClass);
         }
 
         internal bool CheckDatasetExistanceInCalcWorkspace(string dataSetName, esriDatasetType datasetType)
         {
-            return IsFeatureClassExist(calcWorkspace, dataSetName, datasetType);
+            return IsDatasetExist(calcWorkspace, dataSetName, datasetType);
         }
 
-        private static bool IsFeatureClassExist(IWorkspace workspace, string featureClass, esriDatasetType datasetType)
+        private static IDataset GetDataset(IWorkspace workspace, string featureClass, esriDatasetType type)
+        {
+            if (type == esriDatasetType.esriDTFeatureClass)
+            {
+                return OpenFeatureClass(workspace, featureClass) as IDataset;
+            }
+            if (type == esriDatasetType.esriDTRasterDataset)
+            {
+                return OpenRasterDataset(workspace, featureClass) as IDataset;
+            }
+
+            throw new NotImplementedException(type.ToString());
+        }
+
+        public IEnumerable<IDataset> GetDatasetsFromCalcWorkspace(IEnumerable<VisibilityResultInfo> visibilityResults)
+        {
+            var mapping = VisibilitySession.EsriDatatypeToResultMapping;
+            return visibilityResults.Select(v =>
+            {
+                if (IsDatasetExist(calcWorkspace, v.ResultName, VisibilitySession.GetEsriDataTypeByVisibilityresyltType(v.RessutType)))
+                    {
+                    return GetDataset(calcWorkspace, v.ResultName, VisibilitySession.GetEsriDataTypeByVisibilityresyltType(v.RessutType));
+                }
+                return null;
+
+            }).Where(i => i != null).ToArray();
+        }
+
+        private static bool IsDatasetExist(IWorkspace workspace, string featureClass, esriDatasetType datasetType)
         {
             IWorkspace2 wsp2 = (IWorkspace2)workspace;
-            IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)workspace;
-
             return wsp2.NameExists[datasetType, featureClass];
         }
 
