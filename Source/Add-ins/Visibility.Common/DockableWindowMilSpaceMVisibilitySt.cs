@@ -1095,10 +1095,14 @@ namespace MilSpace.Visibility
                 if (_visibilitySessionsController == null)
                 {
                     SetVisibilitySessionsController();
+                }
+
+                if(dgvVisibilitySessions.RowCount == 0)
+                {
                     PopulateVisibilityComboBoxes();
                     _visibilitySessionsController.UpdateVisibilitySessionsList();
 
-                    if (dgvVisibilitySessions.RowCount == 0)
+                    if(dgvVisibilitySessions.RowCount == 0)
                     {
                         tlbVisibilitySessions.Buttons["removeTask"].Enabled = false;
                     }
@@ -1114,7 +1118,10 @@ namespace MilSpace.Visibility
             }
             if(mainTabControl.SelectedTab.Name== "tbpVisibilityAreas")
             {
-                SetVisibilitySessionsController();
+                if(_visibilitySessionsController == null)
+                {
+                    SetVisibilitySessionsController();
+                }
                 _visibilitySessionsController.UpdateVisibilitySessionsTree();
             }
         }
