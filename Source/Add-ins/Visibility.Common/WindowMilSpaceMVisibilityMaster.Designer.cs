@@ -710,7 +710,7 @@ namespace MilSpace.Visibility
             // checkBox6
             // 
             this.checkBox6.AutoSize = true;
-            this.checkBox6.Location = new System.Drawing.Point(0, 132);
+            this.checkBox6.Location = new System.Drawing.Point(5, 132);
             this.checkBox6.Name = "checkBox6";
             this.checkBox6.Size = new System.Drawing.Size(15, 14);
             this.checkBox6.TabIndex = 24;
