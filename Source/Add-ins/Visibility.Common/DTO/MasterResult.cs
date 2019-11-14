@@ -10,8 +10,6 @@ namespace MilSpace.Visibility.DTO
         public string RasterLayerName { get; set; }
         public string RelativeLayerName { get; set; }
         public short ResultLayerTransparency { get; set; }
-
-        public bool OP { get; set; }
         public bool SumFieldOfView { get; set; }
         public bool Table { get; set; }
         public VisibilityCalculationresultsEnum VisibilityCalculationResults { get; set; }
