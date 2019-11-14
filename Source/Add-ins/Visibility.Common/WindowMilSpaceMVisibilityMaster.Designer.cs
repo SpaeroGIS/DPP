@@ -1307,6 +1307,7 @@ namespace MilSpace.Visibility
             this.tbTransparency.Size = new System.Drawing.Size(35, 20);
             this.tbTransparency.TabIndex = 10;
             this.tbTransparency.Text = "33";
+            this.tbTransparency.TextChanged += new System.EventHandler(this.tbTransparency_TextChanged);
             this.tbTransparency.Leave += new System.EventHandler(this.TbTransparency_Leave);
             // 
             // label18
