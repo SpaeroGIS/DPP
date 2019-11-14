@@ -109,8 +109,6 @@ namespace MilSpace.Visualization3D
             document.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeography,
                                                VisibilityColorsRender((IFeatureLayer)preparedLayers[LayerTypeEnum.PolygonFeature], objFactory), document.ActiveView.Extent);
 
-          
-
             return functionalSurface;
         }
 
@@ -128,57 +126,73 @@ namespace MilSpace.Visualization3D
 
         private static void AddVisibilityLayers(IEnumerable<VisibilityResultInfo> info, IObjectFactory objFactory, IBasicDocument document, IFunctionalSurface baseSurface)
         {
+            Dictionary<ILayer, LayerTypeEnum> layers = new Dictionary<ILayer, LayerTypeEnum>();
+
             foreach(var resultInfo in info)
             {
-                var layers = GetVisibilityLayers(resultInfo, objFactory, baseSurface);
+                var layer = GetVisibilityLayer(resultInfo, objFactory, baseSurface);
+                layers.Add(layer.Key, layer.Value);
+
+                document.AddLayer(layer.Key);
+            }
+
+            if(layers.ContainsValue(LayerTypeEnum.PointFeature))
+            {
+                document.UpdateContents();
 
                 foreach(var layer in layers)
                 {
-                    document.AddLayer(layer.Value);
+                    if(layer.Value == LayerTypeEnum.PointFeature)
+                    {
+                        document.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeography,
+                                                   PointsRender((IFeatureLayer)layer.Key, new RgbColor() { Red = 24, Blue = 255, Green = 163 }, objFactory), document.ActiveView.Extent);
+                    }
                 }
-
-                document.UpdateContents();
-
-                document.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeography,
-                                                    PointsRender((IFeatureLayer)layers[LayerTypeEnum.PointFeature], new RgbColor() { Red = 24, Blue = 255, Green = 163 }, objFactory), document.ActiveView.Extent);
             }
         }
 
-        private static Dictionary<LayerTypeEnum, ILayer> GetVisibilityLayers(VisibilityResultInfo info, IObjectFactory objFactory, IFunctionalSurface baseSurface)
+        private static KeyValuePair<ILayer, LayerTypeEnum> GetVisibilityLayer(VisibilityResultInfo info, IObjectFactory objFactory, IFunctionalSurface baseSurface)
         {
-            var layers = new Dictionary<LayerTypeEnum, ILayer>();
-            var name = info.ResultName;
-
+            KeyValuePair<ILayer, LayerTypeEnum> layerKeyValuePair = new KeyValuePair<ILayer, LayerTypeEnum>();
             Type factoryType = Type.GetTypeFromProgID("esriDataSourcesGDB.FileGDBWorkspaceFactory");
             string typeFactoryID = factoryType.GUID.ToString("B");
 
             IWorkspaceFactory workspaceFactory = (IWorkspaceFactory)objFactory.Create(typeFactoryID);
             IWorkspace2 workspace = (IWorkspace2)workspaceFactory.OpenFromFile(info.GdbPath, 0);
-
-            var rasterLayer = CreateRasterLayer($"{name}_img", workspace, objFactory, info.GdbPath);
-            if (rasterLayer != null)
+            
+            if (info.RessutType == VisibilityCalculationresultsEnum.VisibilityAreaRaster || info.RessutType == VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle)
             {
-                SetVisibilitySessionRaster3DProperties(rasterLayer, objFactory, baseSurface);
-                layers.Add(LayerTypeEnum.Raster, rasterLayer);
+                var rasterLayer = CreateRasterLayer(info.ResultName, workspace, objFactory, info.GdbPath);
+                if(rasterLayer != null)
+                {
+                    SetVisibilitySessionRaster3DProperties(rasterLayer, objFactory, baseSurface);
+                    layerKeyValuePair =  new KeyValuePair<ILayer, LayerTypeEnum>(rasterLayer, LayerTypeEnum.Raster);
+                }
             }
 
-            var pointFeatureLayer = CreateFeatureLayer($"{name}_op", workspace, objFactory);
-            if (pointFeatureLayer != null)
+            if(info.RessutType == VisibilityCalculationresultsEnum.ObservationPoints || info.RessutType == VisibilityCalculationresultsEnum.ObservationPointSingle)
             {
-                SetFeatures3DProperties(pointFeatureLayer, objFactory, baseSurface);
-                layers.Add(LayerTypeEnum.PointFeature, pointFeatureLayer);
+                var pointFeatureLayer = CreateFeatureLayer(info.ResultName, workspace, objFactory);
+                if(pointFeatureLayer != null)
+                {
+                    SetFeatures3DProperties(pointFeatureLayer, objFactory, baseSurface);
+                    layerKeyValuePair = new KeyValuePair<ILayer, LayerTypeEnum>(pointFeatureLayer, LayerTypeEnum.PointFeature);
+                }
             }
 
-            var polygonFeatureLayer = CreateFeatureLayer($"{name}_oo", workspace, objFactory);
-            if(polygonFeatureLayer != null)
+            if(info.RessutType == VisibilityCalculationresultsEnum.VisibilityAreaPolygons || info.RessutType == VisibilityCalculationresultsEnum.ObservationStations)
             {
-                SetFeatures3DProperties(polygonFeatureLayer, objFactory, baseSurface);
-                layers.Add(LayerTypeEnum.PolygonFeature, polygonFeatureLayer);
+                var polygonFeatureLayer = CreateFeatureLayer(info.ResultName, workspace, objFactory);
+                if(polygonFeatureLayer != null)
+                {
+                    SetFeatures3DProperties(polygonFeatureLayer, objFactory, baseSurface);
+                    layerKeyValuePair = new KeyValuePair<ILayer, LayerTypeEnum>(polygonFeatureLayer, LayerTypeEnum.PolygonFeature);
+                }
             }
 
             Marshal.ReleaseComObject(workspaceFactory);
 
-            return layers;
+            return layerKeyValuePair;
         }
 
         private static Dictionary<LayerTypeEnum, ILayer> GetLayers(ArcSceneArguments layers, IObjectFactory objFactory)
