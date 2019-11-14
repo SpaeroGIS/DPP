@@ -104,7 +104,12 @@ namespace MilSpace.Visualization3D
                                                VisibilityColorsRender((IFeatureLayer)preparedLayers[LayerTypeEnum.LineFeature], objFactory), document.ActiveView.Extent);
 
             document.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeography,
+                                                  PointsRender((IFeatureLayer)preparedLayers[LayerTypeEnum.PointFeature], new RgbColor() { Red = 255, Blue = 24, Green = 198 }, objFactory), document.ActiveView.Extent);
+
+            document.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeography,
                                                VisibilityColorsRender((IFeatureLayer)preparedLayers[LayerTypeEnum.PolygonFeature], objFactory), document.ActiveView.Extent);
+
+          
 
             return functionalSurface;
         }
@@ -131,9 +136,12 @@ namespace MilSpace.Visualization3D
                 {
                     document.AddLayer(layer.Value);
                 }
-            }
 
-            document.UpdateContents();
+                document.UpdateContents();
+
+                document.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeography,
+                                                    PointsRender((IFeatureLayer)layers[LayerTypeEnum.PointFeature], new RgbColor() { Red = 24, Blue = 255, Green = 163 }, objFactory), document.ActiveView.Extent);
+            }
         }
 
         private static Dictionary<LayerTypeEnum, ILayer> GetVisibilityLayers(VisibilityResultInfo info, IObjectFactory objFactory, IFunctionalSurface baseSurface)
@@ -267,6 +275,20 @@ namespace MilSpace.Visualization3D
             return geoFL;
         }
 
+        private static IGeoFeatureLayer PointsRender(IFeatureLayer layer, RgbColor color, IObjectFactory objFactory)
+        {
+            Type renderType = typeof(SimpleRendererClass);
+            string typeRenderID = renderType.GUID.ToString("B");
+
+            ISimpleRenderer renderer = (ISimpleRenderer)objFactory.Create(typeRenderID);
+            renderer.Symbol = GetSymbol(esriGeometryType.esriGeometryPoint, color, objFactory);
+            
+            IGeoFeatureLayer geoFL = layer as IGeoFeatureLayer;
+            geoFL.Renderer = renderer as IFeatureRenderer;
+
+            return geoFL;
+        }
+
         private static IGeoFeatureLayer VisibilityColorsRender(IFeatureLayer layer, IObjectFactory objFactory)
         {
             const string fieldName = "IS_VISIBLE";
@@ -356,7 +378,7 @@ namespace MilSpace.Visualization3D
             properties3D.Apply3DProperties(layer);
         }
 
-        private static ISymbol GetSymbol(esriGeometryType featureGeometryType, RgbColor color)
+        private static ISymbol GetSymbol(esriGeometryType featureGeometryType, RgbColor color, IObjectFactory objFactory = null)
         {
             if(featureGeometryType == esriGeometryType.esriGeometryPolygon)
             {
@@ -384,8 +406,14 @@ namespace MilSpace.Visualization3D
 
             if(featureGeometryType == esriGeometryType.esriGeometryPoint)
             {
-                ISimpleMarker3DSymbol pointMarkerSymbol = new SimpleMarker3DSymbol();
-                pointMarkerSymbol.Style = esriSimple3DMarkerStyle.esriS3DMSSphere;
+                Type factoryType = Type.GetTypeFromProgID("esriDisplay.SimpleMarkerSymbol");
+                string typeFactoryID = factoryType.GUID.ToString("B");
+
+                ISimpleMarkerSymbol pointMarkerSymbol = (ISimpleMarkerSymbol)objFactory.Create(typeFactoryID);
+                pointMarkerSymbol.Color = color;
+                pointMarkerSymbol.Style = esriSimpleMarkerStyle.esriSMSCircle;
+                pointMarkerSymbol.Size = 30;
+
                 return pointMarkerSymbol as ISymbol;
             }
 
