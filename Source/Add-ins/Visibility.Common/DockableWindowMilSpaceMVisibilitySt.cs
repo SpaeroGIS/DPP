@@ -42,6 +42,7 @@ namespace MilSpace.Visibility
             this._observPointsController = controller;
             this._observPointsController.SetView(this);
             this.Hook = hook;
+            SetVisibilitySessionsController();
 
         }
 
@@ -873,9 +874,9 @@ namespace MilSpace.Visibility
         private void SetVisibilitySessionsTableView()
         {
             dgvVisibilitySessions.Columns["Id"].Visible = false;
-            dgvVisibilitySessions.Columns["Name"].HeaderText = "Название";
+            dgvVisibilitySessions.Columns["Name"].HeaderText = "ГЌГ Г§ГўГ Г­ГЁГҐ";
             dgvVisibilitySessions.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvVisibilitySessions.Columns["State"].HeaderText = "Состояние";
+            dgvVisibilitySessions.Columns["State"].HeaderText = "Г‘Г®Г±ГІГ®ГїГ­ГЁГҐ";
             dgvVisibilitySessions.Columns["State"].Width = 100;
         }
 
@@ -939,11 +940,11 @@ namespace MilSpace.Visibility
         private void SetObservObjectsTableView()
         {
             dgvObservObjects.Columns["Id"].Visible = false;
-            dgvObservObjects.Columns["Title"].HeaderText = "Название";
+            dgvObservObjects.Columns["Title"].HeaderText = "ГЌГ Г§ГўГ Г­ГЁГҐ";
             dgvObservObjects.Columns["Title"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvObservObjects.Columns["Affiliation"].HeaderText = "Принадлежность";
+            dgvObservObjects.Columns["Affiliation"].HeaderText = "ГЏГ°ГЁГ­Г Г¤Г«ГҐГ¦Г­Г®Г±ГІГј";
             dgvObservObjects.Columns["Affiliation"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dgvObservObjects.Columns["Group"].HeaderText = "Группа";
+            dgvObservObjects.Columns["Group"].HeaderText = "ГѓГ°ГіГЇГЇГ ";
             dgvObservObjects.Columns["Group"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
 
             dgvObservObjects.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -1091,12 +1092,7 @@ namespace MilSpace.Visibility
         {
             if (mainTabControl.SelectedTab.Name == "tbpSessions")
             {
-                if (_visibilitySessionsController == null)
-                {
-                    SetVisibilitySessionsController();
-                }
-
-                if(dgvVisibilitySessions.RowCount == 0)
+                if (dgvVisibilitySessions.DataSource == null)
                 {
                     PopulateVisibilityComboBoxes();
                     _visibilitySessionsController.UpdateVisibilitySessionsList();
@@ -1115,13 +1111,10 @@ namespace MilSpace.Visibility
                     SetObservObjectsControlsState(_observPointsController.IsObservObjectsExists());
                 }
             }
-            if(mainTabControl.SelectedTab.Name== "tbpVisibilityAreas")
+            if(mainTabControl.SelectedTab.Name == "tbpVisibilityAreas")
             {
-                if(_visibilitySessionsController == null)
-                {
-                    SetVisibilitySessionsController();
-                }
                 _visibilitySessionsController.UpdateVisibilitySessionsTree();
+                
             }
         }
 

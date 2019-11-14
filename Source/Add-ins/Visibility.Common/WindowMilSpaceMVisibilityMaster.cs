@@ -79,6 +79,7 @@ namespace MilSpace.Visibility
             PopulateComboBox();
             FillObservPointLabel();
             DisabelObjList();
+            FillObservPointsOnCurrentView(controller.GetObservPointsOnCurrentMapExtent(ActiveView));
             dgvObjects.DataSource = null;
         }
         public void SecondTypePicked()//triggers when user picks second type
@@ -164,12 +165,10 @@ namespace MilSpace.Visibility
 
                 dvgCheckList.Update();
                 dvgCheckList.Rows[0].Selected = true;
+              
 
             }
-            else
-            {
-
-            }
+            
         }
         public void FillObservPointsOnCurrentView(IEnumerable<ObservationPoint> observationPoints)
         {
