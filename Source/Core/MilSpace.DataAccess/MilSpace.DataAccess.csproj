@@ -223,26 +223,29 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Definition\MilSpaceVisible.dbml">
+    <None Include="..\DataAccess\Definition\MilSpaceVisible.dbml">
+      <Link>Definition\MilSpaceVisible.dbml</Link>
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>MilSpaceVisible.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <None Include="Definition\MilSpaceVisible.dbml.layout">
+    <None Include="..\DataAccess\Definition\MilSpaceVisible.dbml.layout">
+      <Link>Definition\MilSpaceVisible.dbml.layout</Link>
       <DependentUpon>MilSpaceVisible.dbml</DependentUpon>
     </None>
-    <None Include="Definition\MilSpaceStorage.dbml">
+    <None Include="..\DataAccess\Definition\MilSpaceStorage.dbml">
+      <Link>Definition\MilSpaceStorage.dbml</Link>
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>MilSpaceStorage.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <None Include="Definition\MilSpaceStorage.dbml.layout">
+    <None Include="..\DataAccess\Definition\MilSpaceStorage.dbml.layout">
+      <Link>Definition\MilSpaceStorage.dbml.layout</Link>
       <DependentUpon>MilSpaceStorage.dbml</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
