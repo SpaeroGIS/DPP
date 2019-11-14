@@ -21,7 +21,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
         private string rasterSource;
         private string outputSourceName;
         private string outGraphName;
-        private VisibilitySession session;
+        private readonly VisibilitySession session;
 
         private VisibilityCalculationresultsEnum calcResults;
 
@@ -30,7 +30,6 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
         /// </summary>
         private int[] pointsFilteringIds;
         private int[] stationsFilteringIds;
-        static Logger logger = Logger.GetLoggerEx("BuildStackVisibilityAction");
 
         private VisibilityCalculationResult result;
 
@@ -126,10 +125,10 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
         {
 
             IEnumerable<string> messages = null;
-
-
+            
+            
+            //Handle Observation Points
             List<KeyValuePair<VisibilityCalculationresultsEnum, int[]>> pointsIDs = new List<KeyValuePair<VisibilityCalculationresultsEnum, int[]>>();
-
 
             if (calcResults.HasFlag(VisibilityCalculationresultsEnum.ObservationPoints))
             {
@@ -139,15 +138,14 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             if (calcResults.HasFlag(VisibilityCalculationresultsEnum.ObservationPointSingle) && pointsFilteringIds.Length > 1)
             {
                 pointsIDs.AddRange(
-                    pointsFilteringIds.Select(id => new KeyValuePair<VisibilityCalculationresultsEnum, int[]>(VisibilityCalculationresultsEnum.ObservationPoints, new int[] { id })).ToArray());
+                    pointsFilteringIds.Select(id => new KeyValuePair<VisibilityCalculationresultsEnum, int[]>(VisibilityCalculationresultsEnum.ObservationPointSingle, new int[] { id })).ToArray());
             }
 
             int index = -1;
 
             foreach (var curPoints in pointsIDs)
             {
-                var pointId = curPoints.Value.Length == 1 ? ++index : -1;
-
+                var pointId = curPoints.Key == VisibilityCalculationresultsEnum.ObservationPoints ? -1 : ++index;
                 var oservPointFeatureClassName = VisibilitySession.GetResultName(curPoints.Key, outputSourceName, pointId);
 
                 var exportedFeatureClass = GdbAccess.Instance.ExportObservationFeatureClass(obserpPointsfeatureClass as IDataset, oservPointFeatureClassName, curPoints.Value);
@@ -165,9 +163,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
                 //Generate Visibility Raster
                 string featureClass = oservPointFeatureClassName;
-
-
-                outGraphName = VisibilitySession.GetResultName(pointId == -1 ? VisibilityCalculationresultsEnum.VisibilityAreaRaster : VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle, outputSourceName, pointId);
+                outGraphName = VisibilitySession.GetResultName(curPoints.Key == VisibilityCalculationresultsEnum.ObservationPoints ? VisibilityCalculationresultsEnum.VisibilityAreaRaster : VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle, outputSourceName, pointId);
 
                 if (!ProfileLibrary.GenerateVisibilityData(rasterSource, featureClass, VisibilityAnalysisTypesEnum.Frequency, outGraphName, messages))
                 {
@@ -179,7 +175,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                 }
             }
 
-
+            //Handle Observation Objects
             if (calcResults.HasFlag(VisibilityCalculationresultsEnum.ObservationStations))
             {
                 var oservStationsFeatureClassName = VisibilitySession.GetResultName(VisibilityCalculationresultsEnum.ObservationStations, outputSourceName);
@@ -195,8 +191,6 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                     logger.ErrorEx(errorMessage);
                 }
             }
-
-
             return messages;
         }
     }
