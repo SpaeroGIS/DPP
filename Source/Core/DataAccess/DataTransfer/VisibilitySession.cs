@@ -74,6 +74,7 @@ namespace MilSpace.DataAccess.DataTransfer
         public DateTime? Finished { get; internal set; }
         public int CalculatedResults;
         public string ReferencedGDB;
+        public string Surface;
         public VisibilityCalcTypeEnum CalculationType;
 
         public IEnumerable<VisibilityResultInfo> ResultsInfo
