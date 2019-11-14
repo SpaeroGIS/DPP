@@ -240,7 +240,7 @@ namespace MilSpace.Visualization3D
                     profilesSets.Add(profilesSet);
                 }
 
-                if(SurfaceComboBox.SelectedItem != null)
+                if(SurfaceComboBox.SelectedItem != null && (profilesSets.Count > 0 || visibilitySessionsModel.Count > 0))
                 {
                     var arcSceneArguments = Feature3DManager.Get3DFeatures(SurfaceComboBox.SelectedItem.ToString(), profilesSets);
 
