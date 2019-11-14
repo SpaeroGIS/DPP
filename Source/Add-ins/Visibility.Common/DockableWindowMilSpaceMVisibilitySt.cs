@@ -42,6 +42,7 @@ namespace MilSpace.Visibility
             this._observPointsController = controller;
             this._observPointsController.SetView(this);
             this.Hook = hook;
+            SetVisibilitySessionsController();
 
         }
 
@@ -1092,9 +1093,9 @@ namespace MilSpace.Visibility
         {
             if (mainTabControl.SelectedTab.Name == "tbpSessions")
             {
-                if (_visibilitySessionsController == null)
+                if (dgvVisibilitySessions.DataSource == null)
                 {
-                    SetVisibilitySessionsController();
+                   
                     PopulateVisibilityComboBoxes();
                     _visibilitySessionsController.UpdateVisibilitySessionsList();
 
@@ -1112,10 +1113,11 @@ namespace MilSpace.Visibility
                     SetObservObjectsControlsState(_observPointsController.IsObservObjectsExists());
                 }
             }
-            if(mainTabControl.SelectedTab.Name== "tbpVisibilityAreas")
+            if(mainTabControl.SelectedTab.Name == "tbpVisibilityAreas")
             {
-                SetVisibilitySessionsController();
+               
                 _visibilitySessionsController.UpdateVisibilitySessionsTree();
+                
             }
         }
 
