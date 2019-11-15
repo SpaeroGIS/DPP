@@ -236,7 +236,7 @@ namespace MilSpace.DataAccess.Facade
         {
             try
             {
-                var results = onlyUsersResults? context.MilSp_VisiblityResults.Where(s => s.UserName.Equals(Environment.UserName)) : context.MilSp_VisiblityResults;
+                var results = onlyUsersResults? context.MilSp_VisiblityResults.Where(s => s.UserName.Equals(Environment.UserName) || s.shared) : context.MilSp_VisiblityResults;
                 return results.Select(s => s.Get());
             }
             catch(Exception ex)
