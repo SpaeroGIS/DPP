@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 12.375, 8.5" name="DataClasses1">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 12.25, 8.5" name="DataClasses1">
   <DataContextMoniker Name="/MilSpaceVisibilityContext" />
   <nestedChildShapes>
     <classShape Id="62490a60-d5ff-406c-bcc9-b97ddb084a71" absoluteBounds="5.125, 4.5, 2, 3.3093082682291666">
@@ -60,12 +60,6 @@
       <DataClassMoniker Name="/MilSpaceVisibilityContext/VisiblilityObservationObjects" />
       <nestedChildShapes>
         <elementListCompartment Id="c3403db5-9ff2-4149-a873-6b221e182370" absoluteBounds="1.0150000000000001, 0.96, 1.9700000000000002, 1.7878011067708333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="dbbd537f-7f3b-4851-9c13-098636a36fad" absoluteBounds="10.125, 1.625, 2, 2.9247054036458331">
-      <DataClassMoniker Name="/MilSpaceVisibilityContext/MILSP_VISIBILITY_SESSION" />
-      <nestedChildShapes>
-        <elementListCompartment Id="acd514c5-a178-4ff9-85fc-081aa4223cad" absoluteBounds="10.14, 2.085, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="c2b1ce63-f5e9-4a2b-be78-b110b23a41d3" absoluteBounds="10, 5.125, 2, 2.7324039713541666">

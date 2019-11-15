@@ -40,7 +40,7 @@ namespace MilSpace.Tools
 
 
         //Visibility dataset template 
-        private static readonly string VisibilityCalcFeatureClass = "VDSR";
+        private const string VisibilityCalcFeatureClass = "VDSR";
 
         public VisibilityManager()
         { }
@@ -52,7 +52,7 @@ namespace MilSpace.Tools
             IEnumerable<int> stationsToExport,
             string sourceDem,
              VisibilityCalculationresultsEnum culcResults, 
-             string sessionName,
+             string taskName,
              VisibilityCalcTypeEnum calculationType)
         {
             //Target dataset name
@@ -61,10 +61,10 @@ namespace MilSpace.Tools
             logger.InfoEx("Starting generation visiblility resuilt for session {2} using DEM {0} from observation points {1}.".InvariantFormat(sourceDem, obervationPoints, nameOfTargetDataset));
 
 
-            var session = new VisibilitySession
+            var calcTask = new VisibilitySession
             {
                 Id = nameOfTargetDataset,
-                Name = sessionName,
+                Name = taskName,
                 ReferencedGDB = MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection,
                 CalculatedResults = (int)culcResults,
                 UserName = Environment.UserName,
@@ -72,10 +72,10 @@ namespace MilSpace.Tools
                 Surface = sourceDem
             };
 
-            session = VisibilityZonesFacade.AddVisibilitySession(session);
+            calcTask = VisibilityZonesFacade.AddVisibilitySession(calcTask);
             OnGenerationStarted.Invoke(true);
 
-            if (session == null)
+            if (calcTask == null)
             {
                 throw new MilSpaceVisibilityCalcFailedException("Cannot save visibility session.");
             }
@@ -97,22 +97,22 @@ namespace MilSpace.Tools
                new ActionParam<string>() { ParamName = ActionParameters.ProfileSource, Value = sourceDem},
                new ActionParam<VisibilityCalculationresultsEnum>() { ParamName = ActionParameters.Calculationresults, Value = culcResults},
                new ActionParam<string>() { ParamName = ActionParameters.OutputSourceName, Value = nameOfTargetDataset},
-               new ActionParam<VisibilitySession>() { ParamName = ActionParameters.Session, Value = session},
+               new ActionParam<VisibilitySession>() { ParamName = ActionParameters.Session, Value = calcTask},
             };
 
 
             var procc = new ActionProcessor(prm);
-            VisibilityZonesFacade.StarthVisibilitySession(session);
+            VisibilityZonesFacade.StarthVisibilitySession(calcTask);
 
             var res = procc.Process<VisibilityCalculationResult>();
 
-            session = res.Result.Session;
+            calcTask = res.Result.Session;
             if (res.Result.CalculationMessages != null && res.Result.CalculationMessages.Count() > 0)
             {
                 foreach (var calcRes in res.Result.CalculationMessages)
                 {
                     //Here should be checked if the results match with session.CalculatedResults
-                    logger.InfoEx($"The result layer {calcRes} was successfully composed in {session.ReferencedGDB}");
+                    logger.InfoEx($"The result layer {calcRes} was successfully composed in {calcTask.ReferencedGDB}");
                 }
             }
 
@@ -122,7 +122,7 @@ namespace MilSpace.Tools
             }
             else
             {
-                VisibilityZonesFacade.FinishVisibilitySession(session);
+                VisibilityZonesFacade.FinishVisibilitySession(calcTask);
             }
 
             if (!string.IsNullOrWhiteSpace(res.ErrorMessage))
@@ -130,12 +130,12 @@ namespace MilSpace.Tools
                 throw new MilSpaceVisibilityCalcFailedException(res.ErrorMessage);
             }
 
-            return session;
+            return calcTask;
         }
 
-        public static string GenerateResultId()
+        public static string GenerateResultId(string preffix = VisibilityCalcFeatureClass)
         {
-            return $"{VisibilityCalcFeatureClass}{MilSpace.DataAccess.Helper.GetTemporaryNameSuffix()}";
+            return $"{preffix}{MilSpace.DataAccess.Helper.GetTemporaryNameSuffix()}";
         }
 
         public static bool AddVisibilityPointLayer(IActiveView view)

@@ -145,7 +145,7 @@
     <value>Інформація про обране</value>
   </data>
   <data name="lblBuildingsLayerText" xml:space="preserve">
-    <value>Шар забудов</value>
+    <value>забудова</value>
   </data>
   <data name="lblCommonLengthText" xml:space="preserve">
     <value>Довжина вибраних об'єктів:</value>
@@ -154,7 +154,7 @@
     <value>Дата створення:</value>
   </data>
   <data name="lblDEMText" xml:space="preserve">
-    <value>Шар ЦМР/ ЦММ</value>
+    <value>ЦМР/ ЦММ</value>
   </data>
   <data name="lblDimensionFirstText" xml:space="preserve">
     <value>м</value>
@@ -196,7 +196,7 @@
     <value>Висота точки спостереження</value>
   </data>
   <data name="lblHydrographyLayerText" xml:space="preserve">
-    <value>Шар гідрогарфії</value>
+    <value>гідрогарфія</value>
   </data>
   <data name="lblLayersForCalcText" xml:space="preserve">
     <value>Шари для розрахунків</value>
@@ -217,7 +217,7 @@
     <value>Ім'я профілю</value>
   </data>
   <data name="lblRoadsLayerText" xml:space="preserve">
-    <value>Шар дорожньої мережі</value>
+    <value>транспорт</value>
   </data>
   <data name="lblSelectedPrimitivesText" xml:space="preserve">
     <value>Вибрані об'єкти:</value>
@@ -229,7 +229,7 @@
     <value>до</value>
   </data>
   <data name="lblVegetationLayerText" xml:space="preserve">
-    <value>Шар рослинності</value>
+    <value>рослинність</value>
   </data>
   <data name="lvProfilesSetsCreatorColHeader" xml:space="preserve">
     <value>Автор</value>
@@ -274,7 +274,7 @@
     <value>Назва профілю</value>
   </data>
   <data name="txtGraphicsLayerValue" xml:space="preserve">
-    <value>Шар графічних об'єктів</value>
+    <value>графічниы об'єкти</value>
   </data>
   <data name="txtNewProfileNameValue" xml:space="preserve">
     <value>Новий профіль</value>
@@ -472,7 +472,7 @@
     <value>Ви дійсно хочете видалити вкладку?</value>
   </data>
   <data name="messageBoxTitle" xml:space="preserve">
-    <value>СППРД</value>
+    <value>Спостереження</value>
   </data>
   <data name="modalProfilesSetsTitle" xml:space="preserve">
     <value>Додати доступні набори профілів</value>
@@ -493,7 +493,7 @@
     <value>Додати профілі до сесії</value>
   </data>
   <data name="txtProfileCalcHeader" xml:space="preserve">
-    <value />
+    <value>Профіль</value>
   </data>
   <data name="hintAddProfileToExistingGraphText" xml:space="preserve">
     <value>Додати профіль на графік</value>
@@ -602,5 +602,14 @@
   </data>
   <data name="btnTakeCoordToolTip" xml:space="preserve">
     <value>Взяти координати з карти</value>
+  </data>
+  <data name="lblZFactor" xml:space="preserve">
+    <value>Z-фактор</value>
+  </data>
+  <data name="buttonAddProfilesTo3D" xml:space="preserve">
+    <value>Додати</value>
+  </data>
+  <data name="labelHeaderSessionProfiles" xml:space="preserve">
+    <value>Профілі поточного сеансу</value>
   </data>
 </root>

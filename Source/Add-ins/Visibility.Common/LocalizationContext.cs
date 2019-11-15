@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MilSpace.DataAccess.DataTransfer;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -10,8 +12,13 @@ namespace MilSpace.Visibility
     internal class LocalizationContext
     {
         private readonly XmlNode _root;
+        private static readonly LocalizationContext instance = new LocalizationContext();
+        private Dictionary<VisibilityCalcTypeEnum, string> calcTypeLocalisation = new Dictionary<VisibilityCalcTypeEnum, string>();
+        private Dictionary<VisibilityCalcTypeEnum, string> calcTypeLocalisationShort = new Dictionary<VisibilityCalcTypeEnum, string>();
 
-        public LocalizationContext()
+        
+
+        private LocalizationContext()
         {         
             var localizationDoc = new XmlDocument();            
             var localizationFilePath = 
@@ -21,7 +28,42 @@ namespace MilSpace.Visibility
                 localizationDoc.Load(localizationFilePath);
                 _root = localizationDoc.SelectSingleNode("SP_Visibility");
             }
+            calcTypeLocalisation.Add(VisibilityCalcTypeEnum.None, string.Empty);
+            calcTypeLocalisationShort.Add(VisibilityCalcTypeEnum.None, string.Empty);
+
+            calcTypeLocalisation.Add(VisibilityCalcTypeEnum.OpservationPoints, CalcFirstTypeDescription);
+            calcTypeLocalisationShort.Add(VisibilityCalcTypeEnum.OpservationPoints, CalcFirstTypeDescriptionShort);
+            calcTypeLocalisation.Add(VisibilityCalcTypeEnum.ObservationObjecs, CalcTherdTypeDescription);
+            calcTypeLocalisationShort.Add(VisibilityCalcTypeEnum.ObservationObjecs, CalcTherdTypeDescriptionShort);
+            calcTypeLocalisation.Add(VisibilityCalcTypeEnum.BestObservationParameters, CalcTherdTypeDescription);
+            calcTypeLocalisationShort.Add(VisibilityCalcTypeEnum.BestObservationParameters, CalcTherdTypeDescriptionShort);
+            calcTypeLocalisation.Add(VisibilityCalcTypeEnum.ResultsAnalize, CalcFourthTypeDescription);
+            calcTypeLocalisationShort.Add(VisibilityCalcTypeEnum.ResultsAnalize, CalcFourthTypeDescriptionShort);
         }
+
+
+        internal static LocalizationContext Instance => instance;
+
+
+        internal Dictionary<VisibilityCalcTypeEnum, string> CalcTypeLocalisation => calcTypeLocalisation;
+        internal Dictionary<VisibilityCalcTypeEnum, string> CalcTypeLocalisationShort => calcTypeLocalisationShort;
+        internal string CalcFirstTypeDescriptionShort => FindLocalizedElement("CalcFirstTypeDescriptionShort", "VS");
+        internal string CalcFirstTypeDescription => FindLocalizedElement("CalcFirstTypeDescription","Визначення областей видимості на обраної поверхні в цілому.");
+        internal string CalcSecondTypeDescriptionShort => "VA";
+        internal string CalcSecondTypeDescription => "Визначення видимості в заданих ОC.";
+
+        internal string CalcTherdTypeDescriptionShort => "VO";
+        internal string CalcTherdTypeDescription => "Визначення параметрів пунктів спостереження (ПC).";
+        internal string CalcFourthTypeDescriptionShort => "VP";
+        internal string CalcFourthTypeDescription => "Аналіз результатів спостереження.";
+
+
+        public string YesWord => FindLocalizedElement("YesWord", "Yes");
+
+        public string NoWord => FindLocalizedElement("NoWord", "No");
+
+        public string PlaceLayerAbove => FindLocalizedElement("PlaceLayerAbove", "Above");
+        public string PlaceLayerBelow => FindLocalizedElement("PlaceLayerBelow", "Below");
 
         //Captions
         public string WindowCaption => FindLocalizedElement("WindowCaption", "Module Visibility");

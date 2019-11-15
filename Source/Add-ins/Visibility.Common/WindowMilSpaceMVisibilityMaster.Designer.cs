@@ -67,12 +67,45 @@ namespace MilSpace.Visibility
             this.panel39 = new System.Windows.Forms.Panel();
             this.label46 = new System.Windows.Forms.Label();
             this.stepTwo = new System.Windows.Forms.TabPage();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.checkBox6 = new System.Windows.Forms.CheckBox();
+            this.dvgCheckList = new System.Windows.Forms.DataGridView();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.checkDate = new System.Windows.Forms.CheckBox();
+            this.checkAffiliation = new System.Windows.Forms.CheckBox();
+            this.checkType = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.cmbAffiliation = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cmbType = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.panel13 = new System.Windows.Forms.Panel();
+            this.ObservPointLabel = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.panel19 = new System.Windows.Forms.Panel();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.dgvObjects = new System.Windows.Forms.DataGridView();
+            this.panel18 = new System.Windows.Forms.Panel();
+            this.checkDate_Object = new System.Windows.Forms.CheckBox();
+            this.checkB_Affilation = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.panel17 = new System.Windows.Forms.Panel();
+            this.cmbObservObject = new System.Windows.Forms.ComboBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.panel14 = new System.Windows.Forms.Panel();
+            this.observObjectsLabel = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.panel44 = new System.Windows.Forms.Panel();
+            this.imagesComboBox = new System.Windows.Forms.ComboBox();
+            this.label22 = new System.Windows.Forms.Label();
             this.panel47 = new System.Windows.Forms.Panel();
             this.label30 = new System.Windows.Forms.Label();
             this.stepThree = new System.Windows.Forms.TabPage();
             this.panel25 = new System.Windows.Forms.Panel();
             this.checkBox7 = new System.Windows.Forms.CheckBox();
-            this.comboBox10 = new System.Windows.Forms.ComboBox();
+            this.cmbEmptyDataValue = new System.Windows.Forms.ComboBox();
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.panel24 = new System.Windows.Forms.Panel();
@@ -99,67 +132,34 @@ namespace MilSpace.Visibility
             this.label10 = new System.Windows.Forms.Label();
             this.stepFour = new System.Windows.Forms.TabPage();
             this.panel27 = new System.Windows.Forms.Panel();
-            this.label41 = new System.Windows.Forms.Label();
+            this.lblTrimCalcresults = new System.Windows.Forms.Label();
             this.label42 = new System.Windows.Forms.Label();
             this.panel26 = new System.Windows.Forms.Panel();
-            this.label39 = new System.Windows.Forms.Label();
+            this.lblReferencedLayerName = new System.Windows.Forms.Label();
             this.label40 = new System.Windows.Forms.Label();
             this.panel37 = new System.Windows.Forms.Panel();
-            this.label36 = new System.Windows.Forms.Label();
+            this.lblObservObjectsAll = new System.Windows.Forms.Label();
             this.labelOB = new System.Windows.Forms.Label();
             this.panel36 = new System.Windows.Forms.Panel();
-            this.label35 = new System.Windows.Forms.Label();
+            this.lblObservObjectsSingle = new System.Windows.Forms.Label();
             this.labelOP = new System.Windows.Forms.Label();
             this.panel35 = new System.Windows.Forms.Panel();
-            this.label28 = new System.Windows.Forms.Label();
+            this.lblObservObjectsSummary = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.panel34 = new System.Windows.Forms.Panel();
-            this.label27 = new System.Windows.Forms.Label();
+            this.lblObservPointsSummary = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.panel33 = new System.Windows.Forms.Panel();
-            this.label24 = new System.Windows.Forms.Label();
+            this.lblDEMName = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.panel38 = new System.Windows.Forms.Panel();
-            this.label43 = new System.Windows.Forms.Label();
+            this.lblTaskName = new System.Windows.Forms.Label();
             this.label44 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.label38 = new System.Windows.Forms.Label();
+            this.lblCalcType = new System.Windows.Forms.Label();
             this.label37 = new System.Windows.Forms.Label();
             this.panel28 = new System.Windows.Forms.Panel();
             this.label29 = new System.Windows.Forms.Label();
-            this.panel44 = new System.Windows.Forms.Panel();
-            this.label22 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.checkBox6 = new System.Windows.Forms.CheckBox();
-            this.dvgCheckList = new System.Windows.Forms.DataGridView();
-            this.panel9 = new System.Windows.Forms.Panel();
-            this.panel10 = new System.Windows.Forms.Panel();
-            this.cmbAffiliation = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.cmbType = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.panel13 = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.panel19 = new System.Windows.Forms.Panel();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.dgvObjects = new System.Windows.Forms.DataGridView();
-            this.panel18 = new System.Windows.Forms.Panel();
-            this.panel17 = new System.Windows.Forms.Panel();
-            this.cmbObservObject = new System.Windows.Forms.ComboBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.panel14 = new System.Windows.Forms.Panel();
-            this.label6 = new System.Windows.Forms.Label();
-            this.ObservPointLabel = new System.Windows.Forms.Label();
-            this.observObjectsLabel = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.checkDate = new System.Windows.Forms.CheckBox();
-            this.checkAffiliation = new System.Windows.Forms.CheckBox();
-            this.checkType = new System.Windows.Forms.CheckBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.checkDate_Object = new System.Windows.Forms.CheckBox();
-            this.checkB_Affilation = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.StepsTabControl.SuspendLayout();
             this.stepOne.SuspendLayout();
@@ -177,6 +177,21 @@ namespace MilSpace.Visibility
             this.panel32.SuspendLayout();
             this.panel39.SuspendLayout();
             this.stepTwo.SuspendLayout();
+            this.panel7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dvgCheckList)).BeginInit();
+            this.panel9.SuspendLayout();
+            this.panel10.SuspendLayout();
+            this.panel13.SuspendLayout();
+            this.panel19.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvObjects)).BeginInit();
+            this.panel18.SuspendLayout();
+            this.panel17.SuspendLayout();
+            this.panel14.SuspendLayout();
+            this.panel44.SuspendLayout();
             this.panel47.SuspendLayout();
             this.stepThree.SuspendLayout();
             this.panel25.SuspendLayout();
@@ -196,21 +211,6 @@ namespace MilSpace.Visibility
             this.panel38.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel28.SuspendLayout();
-            this.panel44.SuspendLayout();
-            this.panel7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dvgCheckList)).BeginInit();
-            this.panel9.SuspendLayout();
-            this.panel10.SuspendLayout();
-            this.panel13.SuspendLayout();
-            this.panel19.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvObjects)).BeginInit();
-            this.panel18.SuspendLayout();
-            this.panel17.SuspendLayout();
-            this.panel14.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -607,8 +607,8 @@ namespace MilSpace.Visibility
             this.label49.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
             this.label49.Size = new System.Drawing.Size(694, 85);
             this.label49.TabIndex = 0;
-            this.label49.Text = "Визначення параметрів пунктів спостереження (ПН).\r\nПошук параметрів ПН для спосте" +
-    "реження заданих об\'ектів спостереження (ОН) (параметри апаратури, висота над пов" +
+            this.label49.Text = "Визначення параметрів пунктів спостереження (ПC).\r\nПошук параметрів ПC для спосте" +
+    "реження заданих об\'ектів спостереження (ОC) (параметри апаратури, висота над пов" +
     "ерхнею, напрямки і кути огляду)";
             this.label49.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -680,7 +680,7 @@ namespace MilSpace.Visibility
             this.label48.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
             this.label48.Size = new System.Drawing.Size(694, 85);
             this.label48.TabIndex = 0;
-            this.label48.Text = "Визначення видимості в заданих ОН. \r\nПроводиться для обраних пунктів спостереженн" +
+            this.label48.Text = "Визначення видимості в заданих ОC. \r\nПроводиться для обраних пунктів спостереженн" +
     "я (ПС) та об\'єктів нагляду, з урахуванням індивідуальних параметрів ПС";
             this.label48.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -827,6 +827,432 @@ namespace MilSpace.Visibility
             this.stepTwo.Text = "Крок 2";
             this.stepTwo.UseVisualStyleBackColor = true;
             // 
+            // panel7
+            // 
+            this.panel7.Controls.Add(this.splitContainer1);
+            this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel7.Location = new System.Drawing.Point(3, 73);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(915, 343);
+            this.panel7.TabIndex = 69;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.BackColor = System.Drawing.SystemColors.Window;
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer1.IsSplitterFixed = true;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.checkBox6);
+            this.splitContainer1.Panel1.Controls.Add(this.dvgCheckList);
+            this.splitContainer1.Panel1.Controls.Add(this.panel9);
+            this.splitContainer1.Panel1.Controls.Add(this.panel10);
+            this.splitContainer1.Panel1.Controls.Add(this.panel13);
+            this.splitContainer1.Panel1MinSize = 300;
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.panel19);
+            this.splitContainer1.Panel2.Controls.Add(this.panel18);
+            this.splitContainer1.Panel2.Controls.Add(this.panel17);
+            this.splitContainer1.Panel2.Controls.Add(this.panel14);
+            this.splitContainer1.Panel2MinSize = 300;
+            this.splitContainer1.Size = new System.Drawing.Size(915, 343);
+            this.splitContainer1.SplitterDistance = 441;
+            this.splitContainer1.SplitterWidth = 8;
+            this.splitContainer1.TabIndex = 0;
+            this.splitContainer1.TabStop = false;
+            // 
+            // checkBox6
+            // 
+            this.checkBox6.AutoSize = true;
+            this.checkBox6.Location = new System.Drawing.Point(5, 93);
+            this.checkBox6.Name = "checkBox6";
+            this.checkBox6.Size = new System.Drawing.Size(15, 14);
+            this.checkBox6.TabIndex = 24;
+            this.checkBox6.UseVisualStyleBackColor = true;
+            this.checkBox6.CheckedChanged += new System.EventHandler(this.Select_All_Points);
+            // 
+            // dvgCheckList
+            // 
+            this.dvgCheckList.AllowUserToAddRows = false;
+            this.dvgCheckList.AllowUserToDeleteRows = false;
+            this.dvgCheckList.AllowUserToResizeColumns = false;
+            this.dvgCheckList.AllowUserToResizeRows = false;
+            this.dvgCheckList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
+            this.dvgCheckList.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.dvgCheckList.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.dvgCheckList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dvgCheckList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dvgCheckList.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnF2;
+            this.dvgCheckList.Location = new System.Drawing.Point(0, 90);
+            this.dvgCheckList.MultiSelect = false;
+            this.dvgCheckList.Name = "dvgCheckList";
+            this.dvgCheckList.RowHeadersVisible = false;
+            this.dvgCheckList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dvgCheckList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dvgCheckList.Size = new System.Drawing.Size(441, 253);
+            this.dvgCheckList.TabIndex = 23;
+            // 
+            // panel9
+            // 
+            this.panel9.Controls.Add(this.checkDate);
+            this.panel9.Controls.Add(this.checkAffiliation);
+            this.panel9.Controls.Add(this.checkType);
+            this.panel9.Controls.Add(this.label1);
+            this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel9.Location = new System.Drawing.Point(0, 60);
+            this.panel9.Name = "panel9";
+            this.panel9.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.panel9.Size = new System.Drawing.Size(441, 30);
+            this.panel9.TabIndex = 17;
+            // 
+            // checkDate
+            // 
+            this.checkDate.Checked = true;
+            this.checkDate.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkDate.Dock = System.Windows.Forms.DockStyle.Left;
+            this.checkDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.checkDate.Location = new System.Drawing.Point(281, 0);
+            this.checkDate.Name = "checkDate";
+            this.checkDate.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
+            this.checkDate.Size = new System.Drawing.Size(83, 30);
+            this.checkDate.TabIndex = 7;
+            this.checkDate.Text = "дата";
+            this.checkDate.UseVisualStyleBackColor = true;
+            this.checkDate.CheckedChanged += new System.EventHandler(this.Filter_CheckedChanged);
+            // 
+            // checkAffiliation
+            // 
+            this.checkAffiliation.Checked = true;
+            this.checkAffiliation.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkAffiliation.Dock = System.Windows.Forms.DockStyle.Left;
+            this.checkAffiliation.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.checkAffiliation.Location = new System.Drawing.Point(174, 0);
+            this.checkAffiliation.Name = "checkAffiliation";
+            this.checkAffiliation.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
+            this.checkAffiliation.Size = new System.Drawing.Size(107, 30);
+            this.checkAffiliation.TabIndex = 6;
+            this.checkAffiliation.Text = "належність";
+            this.checkAffiliation.UseVisualStyleBackColor = true;
+            this.checkAffiliation.CheckedChanged += new System.EventHandler(this.Filter_CheckedChanged);
+            // 
+            // checkType
+            // 
+            this.checkType.Checked = true;
+            this.checkType.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkType.Dock = System.Windows.Forms.DockStyle.Left;
+            this.checkType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.checkType.Location = new System.Drawing.Point(106, 0);
+            this.checkType.Name = "checkType";
+            this.checkType.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.checkType.Size = new System.Drawing.Size(68, 30);
+            this.checkType.TabIndex = 5;
+            this.checkType.Text = "тип";
+            this.checkType.UseVisualStyleBackColor = true;
+            this.checkType.CheckedChanged += new System.EventHandler(this.Filter_CheckedChanged);
+            // 
+            // label1
+            // 
+            this.label1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(102, 30);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "відображати";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // panel10
+            // 
+            this.panel10.Controls.Add(this.cmbAffiliation);
+            this.panel10.Controls.Add(this.label3);
+            this.panel10.Controls.Add(this.cmbType);
+            this.panel10.Controls.Add(this.label2);
+            this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel10.Location = new System.Drawing.Point(0, 30);
+            this.panel10.Name = "panel10";
+            this.panel10.Padding = new System.Windows.Forms.Padding(4, 3, 3, 3);
+            this.panel10.Size = new System.Drawing.Size(441, 30);
+            this.panel10.TabIndex = 16;
+            // 
+            // cmbAffiliation
+            // 
+            this.cmbAffiliation.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbAffiliation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbAffiliation.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cmbAffiliation.FormattingEnabled = true;
+            this.cmbAffiliation.Location = new System.Drawing.Point(308, 3);
+            this.cmbAffiliation.Name = "cmbAffiliation";
+            this.cmbAffiliation.Size = new System.Drawing.Size(127, 24);
+            this.cmbAffiliation.TabIndex = 4;
+            this.cmbAffiliation.SelectedIndexChanged += new System.EventHandler(this.cmbAffiliation_SelectedIndexChanged);
+            // 
+            // label3
+            // 
+            this.label3.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.Location = new System.Drawing.Point(174, 3);
+            this.label3.Name = "label3";
+            this.label3.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
+            this.label3.Size = new System.Drawing.Size(134, 24);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "належність";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // cmbType
+            // 
+            this.cmbType.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cmbType.FormattingEnabled = true;
+            this.cmbType.Location = new System.Drawing.Point(39, 3);
+            this.cmbType.Name = "cmbType";
+            this.cmbType.Size = new System.Drawing.Size(135, 24);
+            this.cmbType.TabIndex = 2;
+            this.cmbType.SelectedIndexChanged += new System.EventHandler(this.cmbType_SelectedIndexChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Location = new System.Drawing.Point(4, 3);
+            this.label2.Name = "label2";
+            this.label2.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
+            this.label2.Size = new System.Drawing.Size(35, 21);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "тип";
+            // 
+            // panel13
+            // 
+            this.panel13.Controls.Add(this.ObservPointLabel);
+            this.panel13.Controls.Add(this.label5);
+            this.panel13.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel13.Location = new System.Drawing.Point(0, 0);
+            this.panel13.Name = "panel13";
+            this.panel13.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.panel13.Size = new System.Drawing.Size(441, 30);
+            this.panel13.TabIndex = 13;
+            // 
+            // ObservPointLabel
+            // 
+            this.ObservPointLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ObservPointLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ObservPointLabel.Location = new System.Drawing.Point(227, 0);
+            this.ObservPointLabel.Name = "ObservPointLabel";
+            this.ObservPointLabel.Size = new System.Drawing.Size(210, 30);
+            this.ObservPointLabel.TabIndex = 3;
+            this.ObservPointLabel.Text = "ObStations_201810";
+            this.ObservPointLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label5
+            // 
+            this.label5.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label5.Location = new System.Drawing.Point(4, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(223, 30);
+            this.label5.TabIndex = 2;
+            this.label5.Text = "Пункти спостереження (ПС)";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // panel19
+            // 
+            this.panel19.Controls.Add(this.checkBox4);
+            this.panel19.Controls.Add(this.dgvObjects);
+            this.panel19.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel19.Location = new System.Drawing.Point(0, 90);
+            this.panel19.Margin = new System.Windows.Forms.Padding(0);
+            this.panel19.Name = "panel19";
+            this.panel19.Size = new System.Drawing.Size(466, 253);
+            this.panel19.TabIndex = 22;
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Location = new System.Drawing.Point(5, 5);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(15, 14);
+            this.checkBox4.TabIndex = 24;
+            this.checkBox4.UseVisualStyleBackColor = true;
+            // 
+            // dgvObjects
+            // 
+            this.dgvObjects.AllowUserToAddRows = false;
+            this.dgvObjects.AllowUserToDeleteRows = false;
+            this.dgvObjects.AllowUserToResizeColumns = false;
+            this.dgvObjects.AllowUserToResizeRows = false;
+            this.dgvObjects.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
+            this.dgvObjects.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.dgvObjects.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvObjects.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvObjects.Location = new System.Drawing.Point(0, 0);
+            this.dgvObjects.MultiSelect = false;
+            this.dgvObjects.Name = "dgvObjects";
+            this.dgvObjects.RowHeadersVisible = false;
+            this.dgvObjects.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvObjects.Size = new System.Drawing.Size(466, 253);
+            this.dgvObjects.TabIndex = 23;
+            // 
+            // panel18
+            // 
+            this.panel18.Controls.Add(this.checkDate_Object);
+            this.panel18.Controls.Add(this.checkB_Affilation);
+            this.panel18.Controls.Add(this.label4);
+            this.panel18.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel18.Location = new System.Drawing.Point(0, 60);
+            this.panel18.Name = "panel18";
+            this.panel18.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.panel18.Size = new System.Drawing.Size(466, 30);
+            this.panel18.TabIndex = 18;
+            // 
+            // checkDate_Object
+            // 
+            this.checkDate_Object.Checked = true;
+            this.checkDate_Object.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkDate_Object.Dock = System.Windows.Forms.DockStyle.Left;
+            this.checkDate_Object.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.checkDate_Object.Location = new System.Drawing.Point(260, 0);
+            this.checkDate_Object.Name = "checkDate_Object";
+            this.checkDate_Object.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
+            this.checkDate_Object.Size = new System.Drawing.Size(80, 30);
+            this.checkDate_Object.TabIndex = 7;
+            this.checkDate_Object.Text = "дата";
+            this.checkDate_Object.UseVisualStyleBackColor = true;
+            this.checkDate_Object.CheckedChanged += new System.EventHandler(this.Filter_For_Object_CheckedChanged);
+            // 
+            // checkB_Affilation
+            // 
+            this.checkB_Affilation.Checked = true;
+            this.checkB_Affilation.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkB_Affilation.Dock = System.Windows.Forms.DockStyle.Left;
+            this.checkB_Affilation.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.checkB_Affilation.Location = new System.Drawing.Point(103, 0);
+            this.checkB_Affilation.Name = "checkB_Affilation";
+            this.checkB_Affilation.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
+            this.checkB_Affilation.Size = new System.Drawing.Size(157, 30);
+            this.checkB_Affilation.TabIndex = 6;
+            this.checkB_Affilation.Text = "належність";
+            this.checkB_Affilation.UseVisualStyleBackColor = true;
+            this.checkB_Affilation.CheckedChanged += new System.EventHandler(this.Filter_For_Object_CheckedChanged);
+            // 
+            // label4
+            // 
+            this.label4.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label4.Location = new System.Drawing.Point(4, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(99, 30);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "відображати";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // panel17
+            // 
+            this.panel17.Controls.Add(this.cmbObservObject);
+            this.panel17.Controls.Add(this.label9);
+            this.panel17.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel17.Location = new System.Drawing.Point(0, 30);
+            this.panel17.Name = "panel17";
+            this.panel17.Padding = new System.Windows.Forms.Padding(4, 3, 4, 0);
+            this.panel17.Size = new System.Drawing.Size(466, 30);
+            this.panel17.TabIndex = 17;
+            // 
+            // cmbObservObject
+            // 
+            this.cmbObservObject.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbObservObject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbObservObject.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cmbObservObject.FormattingEnabled = true;
+            this.cmbObservObject.Location = new System.Drawing.Point(103, 3);
+            this.cmbObservObject.Name = "cmbObservObject";
+            this.cmbObservObject.Size = new System.Drawing.Size(157, 24);
+            this.cmbObservObject.TabIndex = 4;
+            this.cmbObservObject.SelectedIndexChanged += new System.EventHandler(this.cmbObservObject_SelectedIndexChanged);
+            // 
+            // label9
+            // 
+            this.label9.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label9.Location = new System.Drawing.Point(4, 3);
+            this.label9.Name = "label9";
+            this.label9.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
+            this.label9.Size = new System.Drawing.Size(99, 27);
+            this.label9.TabIndex = 3;
+            this.label9.Text = "належність";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // panel14
+            // 
+            this.panel14.Controls.Add(this.observObjectsLabel);
+            this.panel14.Controls.Add(this.label6);
+            this.panel14.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel14.Location = new System.Drawing.Point(0, 0);
+            this.panel14.Name = "panel14";
+            this.panel14.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.panel14.Size = new System.Drawing.Size(466, 30);
+            this.panel14.TabIndex = 14;
+            // 
+            // observObjectsLabel
+            // 
+            this.observObjectsLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.observObjectsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.observObjectsLabel.Location = new System.Drawing.Point(241, 0);
+            this.observObjectsLabel.Name = "observObjectsLabel";
+            this.observObjectsLabel.Size = new System.Drawing.Size(221, 30);
+            this.observObjectsLabel.TabIndex = 3;
+            this.observObjectsLabel.Text = "label29";
+            this.observObjectsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label6
+            // 
+            this.label6.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label6.Location = new System.Drawing.Point(4, 0);
+            this.label6.Name = "label6";
+            this.label6.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
+            this.label6.Size = new System.Drawing.Size(237, 30);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "Об\'єкти нагляду (ОН)";
+            // 
+            // panel44
+            // 
+            this.panel44.BackColor = System.Drawing.SystemColors.Window;
+            this.panel44.Controls.Add(this.imagesComboBox);
+            this.panel44.Controls.Add(this.label22);
+            this.panel44.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel44.Location = new System.Drawing.Point(3, 43);
+            this.panel44.Name = "panel44";
+            this.panel44.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.panel44.Size = new System.Drawing.Size(915, 30);
+            this.panel44.TabIndex = 68;
+            // 
+            // imagesComboBox
+            // 
+            this.imagesComboBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.imagesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.imagesComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.imagesComboBox.FormattingEnabled = true;
+            this.imagesComboBox.Location = new System.Drawing.Point(227, 3);
+            this.imagesComboBox.Name = "imagesComboBox";
+            this.imagesComboBox.Size = new System.Drawing.Size(290, 24);
+            this.imagesComboBox.TabIndex = 8;
+            // 
+            // label22
+            // 
+            this.label22.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label22.Location = new System.Drawing.Point(4, 3);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(223, 24);
+            this.label22.TabIndex = 7;
+            this.label22.Text = "Поверхня для розпрахунку";
+            // 
             // panel47
             // 
             this.panel47.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -869,7 +1295,7 @@ namespace MilSpace.Visibility
             // panel25
             // 
             this.panel25.Controls.Add(this.checkBox7);
-            this.panel25.Controls.Add(this.comboBox10);
+            this.panel25.Controls.Add(this.cmbEmptyDataValue);
             this.panel25.Controls.Add(this.label20);
             this.panel25.Controls.Add(this.label21);
             this.panel25.Dock = System.Windows.Forms.DockStyle.Top;
@@ -895,18 +1321,19 @@ namespace MilSpace.Visibility
             this.checkBox7.UseVisualStyleBackColor = true;
             this.checkBox7.Visible = false;
             // 
-            // comboBox10
+            // cmbEmptyDataValue
             // 
-            this.comboBox10.Dock = System.Windows.Forms.DockStyle.Left;
-            this.comboBox10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboBox10.FormattingEnabled = true;
-            this.comboBox10.Items.AddRange(new object[] {
+            this.cmbEmptyDataValue.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbEmptyDataValue.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbEmptyDataValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cmbEmptyDataValue.FormattingEnabled = true;
+            this.cmbEmptyDataValue.Items.AddRange(new object[] {
             "0",
             "NoData"});
-            this.comboBox10.Location = new System.Drawing.Point(435, 3);
-            this.comboBox10.Name = "comboBox10";
-            this.comboBox10.Size = new System.Drawing.Size(158, 24);
-            this.comboBox10.TabIndex = 8;
+            this.cmbEmptyDataValue.Location = new System.Drawing.Point(435, 3);
+            this.cmbEmptyDataValue.Name = "cmbEmptyDataValue";
+            this.cmbEmptyDataValue.Size = new System.Drawing.Size(158, 24);
+            this.cmbEmptyDataValue.TabIndex = 8;
             // 
             // label20
             // 
@@ -954,7 +1381,6 @@ namespace MilSpace.Visibility
             this.tbTransparency.TabIndex = 10;
             this.tbTransparency.Text = "33";
             this.tbTransparency.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.tbTransparency.TextChanged += new System.EventHandler(this.tbTransparency_TextChanged);
             this.tbTransparency.Leave += new System.EventHandler(this.TbTransparency_Leave);
             // 
             // label18
@@ -1063,6 +1489,7 @@ namespace MilSpace.Visibility
             // cmbPositions
             // 
             this.cmbPositions.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbPositions.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbPositions.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cmbPositions.FormattingEnabled = true;
             this.cmbPositions.Items.AddRange(new object[] {
@@ -1076,13 +1503,13 @@ namespace MilSpace.Visibility
             // cmbMapLayers
             // 
             this.cmbMapLayers.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbMapLayers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMapLayers.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cmbMapLayers.FormattingEnabled = true;
             this.cmbMapLayers.Location = new System.Drawing.Point(311, 3);
             this.cmbMapLayers.Name = "cmbMapLayers";
             this.cmbMapLayers.Size = new System.Drawing.Size(282, 24);
             this.cmbMapLayers.TabIndex = 6;
-            this.cmbMapLayers.Text = "Название группового слоя в проекте";
             // 
             // label14
             // 
@@ -1221,7 +1648,7 @@ namespace MilSpace.Visibility
             // 
             // panel27
             // 
-            this.panel27.Controls.Add(this.label41);
+            this.panel27.Controls.Add(this.lblTrimCalcresults);
             this.panel27.Controls.Add(this.label42);
             this.panel27.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel27.Location = new System.Drawing.Point(0, 280);
@@ -1230,15 +1657,15 @@ namespace MilSpace.Visibility
             this.panel27.Size = new System.Drawing.Size(921, 30);
             this.panel27.TabIndex = 31;
             // 
-            // label41
+            // lblTrimCalcresults
             // 
-            this.label41.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label41.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label41.Location = new System.Drawing.Point(284, 3);
-            this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(533, 27);
-            this.label41.TabIndex = 8;
-            this.label41.Text = "Вказати Так/Ні";
+            this.lblTrimCalcresults.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblTrimCalcresults.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblTrimCalcresults.Location = new System.Drawing.Point(284, 3);
+            this.lblTrimCalcresults.Name = "lblTrimCalcresults";
+            this.lblTrimCalcresults.Size = new System.Drawing.Size(533, 27);
+            this.lblTrimCalcresults.TabIndex = 8;
+            this.lblTrimCalcresults.Text = "Вказати Так/Ні - Нема контролу";
             // 
             // label42
             // 
@@ -1252,7 +1679,7 @@ namespace MilSpace.Visibility
             // 
             // panel26
             // 
-            this.panel26.Controls.Add(this.label39);
+            this.panel26.Controls.Add(this.lblReferencedLayerName);
             this.panel26.Controls.Add(this.label40);
             this.panel26.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel26.Location = new System.Drawing.Point(0, 250);
@@ -1261,15 +1688,15 @@ namespace MilSpace.Visibility
             this.panel26.Size = new System.Drawing.Size(921, 30);
             this.panel26.TabIndex = 30;
             // 
-            // label39
+            // lblReferencedLayerName
             // 
-            this.label39.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label39.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label39.Location = new System.Drawing.Point(284, 3);
-            this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(533, 27);
-            this.label39.TabIndex = 8;
-            this.label39.Text = "Вказати шар та розташування \"Зверху\"/ \"Знизу\"";
+            this.lblReferencedLayerName.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblReferencedLayerName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblReferencedLayerName.Location = new System.Drawing.Point(284, 3);
+            this.lblReferencedLayerName.Name = "lblReferencedLayerName";
+            this.lblReferencedLayerName.Size = new System.Drawing.Size(533, 27);
+            this.lblReferencedLayerName.TabIndex = 8;
+            this.lblReferencedLayerName.Text = "Вказати шар та розташування \"Зверху\"/ \"Знизу\"";
             // 
             // label40
             // 
@@ -1283,7 +1710,7 @@ namespace MilSpace.Visibility
             // 
             // panel37
             // 
-            this.panel37.Controls.Add(this.label36);
+            this.panel37.Controls.Add(this.lblObservObjectsAll);
             this.panel37.Controls.Add(this.labelOB);
             this.panel37.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel37.Location = new System.Drawing.Point(0, 220);
@@ -1292,15 +1719,15 @@ namespace MilSpace.Visibility
             this.panel37.Size = new System.Drawing.Size(921, 30);
             this.panel37.TabIndex = 29;
             // 
-            // label36
+            // lblObservObjectsAll
             // 
-            this.label36.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label36.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label36.Location = new System.Drawing.Point(284, 3);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(533, 27);
-            this.label36.TabIndex = 8;
-            this.label36.Text = "Вказати Так/Ні";
+            this.lblObservObjectsAll.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblObservObjectsAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblObservObjectsAll.Location = new System.Drawing.Point(284, 3);
+            this.lblObservObjectsAll.Name = "lblObservObjectsAll";
+            this.lblObservObjectsAll.Size = new System.Drawing.Size(533, 27);
+            this.lblObservObjectsAll.TabIndex = 8;
+            this.lblObservObjectsAll.Text = "Вказати Так/Ні";
             // 
             // labelOB
             // 
@@ -1314,7 +1741,7 @@ namespace MilSpace.Visibility
             // 
             // panel36
             // 
-            this.panel36.Controls.Add(this.label35);
+            this.panel36.Controls.Add(this.lblObservObjectsSingle);
             this.panel36.Controls.Add(this.labelOP);
             this.panel36.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel36.Location = new System.Drawing.Point(0, 190);
@@ -1323,15 +1750,15 @@ namespace MilSpace.Visibility
             this.panel36.Size = new System.Drawing.Size(921, 30);
             this.panel36.TabIndex = 28;
             // 
-            // label35
+            // lblObservObjectsSingle
             // 
-            this.label35.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label35.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label35.Location = new System.Drawing.Point(284, 3);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(579, 27);
-            this.label35.TabIndex = 7;
-            this.label35.Text = "Вказати Так/Ні";
+            this.lblObservObjectsSingle.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblObservObjectsSingle.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblObservObjectsSingle.Location = new System.Drawing.Point(284, 3);
+            this.lblObservObjectsSingle.Name = "lblObservObjectsSingle";
+            this.lblObservObjectsSingle.Size = new System.Drawing.Size(579, 27);
+            this.lblObservObjectsSingle.TabIndex = 7;
+            this.lblObservObjectsSingle.Text = "Вказати Так/Ні";
             // 
             // labelOP
             // 
@@ -1345,7 +1772,7 @@ namespace MilSpace.Visibility
             // 
             // panel35
             // 
-            this.panel35.Controls.Add(this.label28);
+            this.panel35.Controls.Add(this.lblObservObjectsSummary);
             this.panel35.Controls.Add(this.label26);
             this.panel35.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel35.Location = new System.Drawing.Point(0, 160);
@@ -1354,15 +1781,15 @@ namespace MilSpace.Visibility
             this.panel35.Size = new System.Drawing.Size(921, 30);
             this.panel35.TabIndex = 27;
             // 
-            // label28
+            // lblObservObjectsSummary
             // 
-            this.label28.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label28.Location = new System.Drawing.Point(284, 3);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(579, 27);
-            this.label28.TabIndex = 4;
-            this.label28.Text = "вказати кількість ОН та їх перелік у форматі назви ОН розділені точкою с комою";
+            this.lblObservObjectsSummary.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblObservObjectsSummary.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblObservObjectsSummary.Location = new System.Drawing.Point(284, 3);
+            this.lblObservObjectsSummary.Name = "lblObservObjectsSummary";
+            this.lblObservObjectsSummary.Size = new System.Drawing.Size(579, 27);
+            this.lblObservObjectsSummary.TabIndex = 4;
+            this.lblObservObjectsSummary.Text = "вказати кількість ОН та їх перелік у форматі назви ОН розділені точкою с комою";
             // 
             // label26
             // 
@@ -1377,7 +1804,7 @@ namespace MilSpace.Visibility
             // 
             // panel34
             // 
-            this.panel34.Controls.Add(this.label27);
+            this.panel34.Controls.Add(this.lblObservPointsSummary);
             this.panel34.Controls.Add(this.label25);
             this.panel34.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel34.Location = new System.Drawing.Point(0, 130);
@@ -1386,15 +1813,15 @@ namespace MilSpace.Visibility
             this.panel34.Size = new System.Drawing.Size(921, 30);
             this.panel34.TabIndex = 26;
             // 
-            // label27
+            // lblObservPointsSummary
             // 
-            this.label27.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label27.Location = new System.Drawing.Point(284, 3);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(579, 27);
-            this.label27.TabIndex = 4;
-            this.label27.Text = "вказати кількість ПС та їх перелік у форматі назви ПС розділені точкою с комою";
+            this.lblObservPointsSummary.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblObservPointsSummary.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblObservPointsSummary.Location = new System.Drawing.Point(284, 3);
+            this.lblObservPointsSummary.Name = "lblObservPointsSummary";
+            this.lblObservPointsSummary.Size = new System.Drawing.Size(579, 27);
+            this.lblObservPointsSummary.TabIndex = 4;
+            this.lblObservPointsSummary.Text = "вказати кількість ПС та їх перелік у форматі назви ПС розділені точкою с комою";
             // 
             // label25
             // 
@@ -1409,7 +1836,7 @@ namespace MilSpace.Visibility
             // 
             // panel33
             // 
-            this.panel33.Controls.Add(this.label24);
+            this.panel33.Controls.Add(this.lblDEMName);
             this.panel33.Controls.Add(this.label23);
             this.panel33.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel33.Location = new System.Drawing.Point(0, 100);
@@ -1418,15 +1845,15 @@ namespace MilSpace.Visibility
             this.panel33.Size = new System.Drawing.Size(921, 30);
             this.panel33.TabIndex = 25;
             // 
-            // label24
+            // lblDEMName
             // 
-            this.label24.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label24.Location = new System.Drawing.Point(284, 3);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(579, 27);
-            this.label24.TabIndex = 5;
-            this.label24.Text = "вказати повернню для розрахунків";
+            this.lblDEMName.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblDEMName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblDEMName.Location = new System.Drawing.Point(284, 3);
+            this.lblDEMName.Name = "lblDEMName";
+            this.lblDEMName.Size = new System.Drawing.Size(579, 27);
+            this.lblDEMName.TabIndex = 5;
+            this.lblDEMName.Text = "вказати повернню для розрахунків";
             // 
             // label23
             // 
@@ -1440,7 +1867,7 @@ namespace MilSpace.Visibility
             // 
             // panel38
             // 
-            this.panel38.Controls.Add(this.label43);
+            this.panel38.Controls.Add(this.lblTaskName);
             this.panel38.Controls.Add(this.label44);
             this.panel38.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel38.Location = new System.Drawing.Point(0, 70);
@@ -1449,15 +1876,15 @@ namespace MilSpace.Visibility
             this.panel38.Size = new System.Drawing.Size(921, 30);
             this.panel38.TabIndex = 24;
             // 
-            // label43
+            // lblTaskName
             // 
-            this.label43.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label43.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label43.Location = new System.Drawing.Point(284, 3);
-            this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(579, 27);
-            this.label43.TabIndex = 8;
-            this.label43.Text = "Вказати заплановану назву розрахунку";
+            this.lblTaskName.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblTaskName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblTaskName.Location = new System.Drawing.Point(284, 3);
+            this.lblTaskName.Name = "lblTaskName";
+            this.lblTaskName.Size = new System.Drawing.Size(579, 27);
+            this.lblTaskName.TabIndex = 8;
+            this.lblTaskName.Text = "Вказати заплановану назву розрахунку";
             // 
             // label44
             // 
@@ -1471,7 +1898,7 @@ namespace MilSpace.Visibility
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.label38);
+            this.panel2.Controls.Add(this.lblCalcType);
             this.panel2.Controls.Add(this.label37);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 40);
@@ -1480,15 +1907,15 @@ namespace MilSpace.Visibility
             this.panel2.Size = new System.Drawing.Size(921, 30);
             this.panel2.TabIndex = 16;
             // 
-            // label38
+            // lblCalcType
             // 
-            this.label38.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label38.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label38.Location = new System.Drawing.Point(284, 3);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(579, 27);
-            this.label38.TabIndex = 6;
-            this.label38.Text = "вказати тип розрахунку, який обрано у \"Крок 1\"";
+            this.lblCalcType.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblCalcType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblCalcType.Location = new System.Drawing.Point(284, 3);
+            this.lblCalcType.Name = "lblCalcType";
+            this.lblCalcType.Size = new System.Drawing.Size(579, 27);
+            this.lblCalcType.TabIndex = 6;
+            this.lblCalcType.Text = "вказати тип розрахунку, який обрано у \"Крок 1\"";
             // 
             // label37
             // 
@@ -1520,432 +1947,6 @@ namespace MilSpace.Visibility
             this.label29.TabIndex = 9;
             this.label29.Text = "Крок 4. Перевірка параметрів розрахунку";
             // 
-            // panel44
-            // 
-            this.panel44.BackColor = System.Drawing.SystemColors.Window;
-            this.panel44.Controls.Add(this.comboBox1);
-            this.panel44.Controls.Add(this.label22);
-            this.panel44.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel44.Location = new System.Drawing.Point(3, 43);
-            this.panel44.Name = "panel44";
-            this.panel44.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.panel44.Size = new System.Drawing.Size(915, 30);
-            this.panel44.TabIndex = 68;
-            // 
-            // label22
-            // 
-            this.label22.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label22.Location = new System.Drawing.Point(4, 3);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(223, 24);
-            this.label22.TabIndex = 7;
-            this.label22.Text = "Поверхня для розпрахунку";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(227, 3);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(290, 24);
-            this.comboBox1.TabIndex = 8;
-            // 
-            // panel7
-            // 
-            this.panel7.Controls.Add(this.splitContainer1);
-            this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(3, 73);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(915, 343);
-            this.panel7.TabIndex = 69;
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.BackColor = System.Drawing.SystemColors.Window;
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer1.IsSplitterFixed = true;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.checkBox6);
-            this.splitContainer1.Panel1.Controls.Add(this.dvgCheckList);
-            this.splitContainer1.Panel1.Controls.Add(this.panel9);
-            this.splitContainer1.Panel1.Controls.Add(this.panel10);
-            this.splitContainer1.Panel1.Controls.Add(this.panel13);
-            this.splitContainer1.Panel1MinSize = 300;
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.panel19);
-            this.splitContainer1.Panel2.Controls.Add(this.panel18);
-            this.splitContainer1.Panel2.Controls.Add(this.panel17);
-            this.splitContainer1.Panel2.Controls.Add(this.panel14);
-            this.splitContainer1.Panel2MinSize = 300;
-            this.splitContainer1.Size = new System.Drawing.Size(915, 343);
-            this.splitContainer1.SplitterDistance = 441;
-            this.splitContainer1.SplitterWidth = 8;
-            this.splitContainer1.TabIndex = 0;
-            this.splitContainer1.TabStop = false;
-            // 
-            // checkBox6
-            // 
-            this.checkBox6.AutoSize = true;
-            this.checkBox6.Location = new System.Drawing.Point(5, 93);
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Size = new System.Drawing.Size(15, 14);
-            this.checkBox6.TabIndex = 24;
-            this.checkBox6.UseVisualStyleBackColor = true;
-            this.checkBox6.CheckedChanged += new System.EventHandler(this.Select_All_Points);
-            // 
-            // dvgCheckList
-            // 
-            this.dvgCheckList.AllowUserToAddRows = false;
-            this.dvgCheckList.AllowUserToDeleteRows = false;
-            this.dvgCheckList.AllowUserToResizeColumns = false;
-            this.dvgCheckList.AllowUserToResizeRows = false;
-            this.dvgCheckList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
-            this.dvgCheckList.BackgroundColor = System.Drawing.SystemColors.Window;
-            this.dvgCheckList.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            this.dvgCheckList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dvgCheckList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dvgCheckList.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnF2;
-            this.dvgCheckList.Location = new System.Drawing.Point(0, 90);
-            this.dvgCheckList.MultiSelect = false;
-            this.dvgCheckList.Name = "dvgCheckList";
-            this.dvgCheckList.RowHeadersVisible = false;
-            this.dvgCheckList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dvgCheckList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dvgCheckList.Size = new System.Drawing.Size(441, 253);
-            this.dvgCheckList.TabIndex = 23;
-            // 
-            // panel9
-            // 
-            this.panel9.Controls.Add(this.checkDate);
-            this.panel9.Controls.Add(this.checkAffiliation);
-            this.panel9.Controls.Add(this.checkType);
-            this.panel9.Controls.Add(this.label1);
-            this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel9.Location = new System.Drawing.Point(0, 60);
-            this.panel9.Name = "panel9";
-            this.panel9.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel9.Size = new System.Drawing.Size(441, 30);
-            this.panel9.TabIndex = 17;
-            // 
-            // panel10
-            // 
-            this.panel10.Controls.Add(this.cmbAffiliation);
-            this.panel10.Controls.Add(this.label3);
-            this.panel10.Controls.Add(this.cmbType);
-            this.panel10.Controls.Add(this.label2);
-            this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel10.Location = new System.Drawing.Point(0, 30);
-            this.panel10.Name = "panel10";
-            this.panel10.Padding = new System.Windows.Forms.Padding(4, 3, 3, 3);
-            this.panel10.Size = new System.Drawing.Size(441, 30);
-            this.panel10.TabIndex = 16;
-            // 
-            // cmbAffiliation
-            // 
-            this.cmbAffiliation.Dock = System.Windows.Forms.DockStyle.Left;
-            this.cmbAffiliation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbAffiliation.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cmbAffiliation.FormattingEnabled = true;
-            this.cmbAffiliation.Location = new System.Drawing.Point(308, 3);
-            this.cmbAffiliation.Name = "cmbAffiliation";
-            this.cmbAffiliation.Size = new System.Drawing.Size(127, 24);
-            this.cmbAffiliation.TabIndex = 4;
-            this.cmbAffiliation.SelectedIndexChanged += new System.EventHandler(this.cmbAffiliation_SelectedIndexChanged);
-            // 
-            // label3
-            // 
-            this.label3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(174, 3);
-            this.label3.Name = "label3";
-            this.label3.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label3.Size = new System.Drawing.Size(134, 24);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "належність";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // cmbType
-            // 
-            this.cmbType.Dock = System.Windows.Forms.DockStyle.Left;
-            this.cmbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cmbType.FormattingEnabled = true;
-            this.cmbType.Location = new System.Drawing.Point(39, 3);
-            this.cmbType.Name = "cmbType";
-            this.cmbType.Size = new System.Drawing.Size(135, 24);
-            this.cmbType.TabIndex = 2;
-            this.cmbType.SelectedIndexChanged += new System.EventHandler(this.cmbType_SelectedIndexChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(4, 3);
-            this.label2.Name = "label2";
-            this.label2.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label2.Size = new System.Drawing.Size(35, 21);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "тип";
-            // 
-            // panel13
-            // 
-            this.panel13.Controls.Add(this.ObservPointLabel);
-            this.panel13.Controls.Add(this.label5);
-            this.panel13.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel13.Location = new System.Drawing.Point(0, 0);
-            this.panel13.Name = "panel13";
-            this.panel13.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel13.Size = new System.Drawing.Size(441, 30);
-            this.panel13.TabIndex = 13;
-            // 
-            // label5
-            // 
-            this.label5.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(223, 30);
-            this.label5.TabIndex = 2;
-            this.label5.Text = "Пункти спостереження (ПС)";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // panel19
-            // 
-            this.panel19.Controls.Add(this.checkBox4);
-            this.panel19.Controls.Add(this.dgvObjects);
-            this.panel19.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel19.Location = new System.Drawing.Point(0, 90);
-            this.panel19.Margin = new System.Windows.Forms.Padding(0);
-            this.panel19.Name = "panel19";
-            this.panel19.Size = new System.Drawing.Size(466, 253);
-            this.panel19.TabIndex = 22;
-            // 
-            // checkBox4
-            // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(5, 5);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(15, 14);
-            this.checkBox4.TabIndex = 24;
-            this.checkBox4.UseVisualStyleBackColor = true;
-            // 
-            // dgvObjects
-            // 
-            this.dgvObjects.AllowUserToAddRows = false;
-            this.dgvObjects.AllowUserToDeleteRows = false;
-            this.dgvObjects.AllowUserToResizeColumns = false;
-            this.dgvObjects.AllowUserToResizeRows = false;
-            this.dgvObjects.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
-            this.dgvObjects.BackgroundColor = System.Drawing.SystemColors.Window;
-            this.dgvObjects.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvObjects.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvObjects.Location = new System.Drawing.Point(0, 0);
-            this.dgvObjects.MultiSelect = false;
-            this.dgvObjects.Name = "dgvObjects";
-            this.dgvObjects.RowHeadersVisible = false;
-            this.dgvObjects.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvObjects.Size = new System.Drawing.Size(466, 253);
-            this.dgvObjects.TabIndex = 23;
-            // 
-            // panel18
-            // 
-            this.panel18.Controls.Add(this.checkDate_Object);
-            this.panel18.Controls.Add(this.checkB_Affilation);
-            this.panel18.Controls.Add(this.label4);
-            this.panel18.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel18.Location = new System.Drawing.Point(0, 60);
-            this.panel18.Name = "panel18";
-            this.panel18.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel18.Size = new System.Drawing.Size(466, 30);
-            this.panel18.TabIndex = 18;
-            // 
-            // panel17
-            // 
-            this.panel17.Controls.Add(this.cmbObservObject);
-            this.panel17.Controls.Add(this.label9);
-            this.panel17.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel17.Location = new System.Drawing.Point(0, 30);
-            this.panel17.Name = "panel17";
-            this.panel17.Padding = new System.Windows.Forms.Padding(4, 3, 4, 0);
-            this.panel17.Size = new System.Drawing.Size(466, 30);
-            this.panel17.TabIndex = 17;
-            // 
-            // cmbObservObject
-            // 
-            this.cmbObservObject.Dock = System.Windows.Forms.DockStyle.Left;
-            this.cmbObservObject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbObservObject.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cmbObservObject.FormattingEnabled = true;
-            this.cmbObservObject.Location = new System.Drawing.Point(103, 3);
-            this.cmbObservObject.Name = "cmbObservObject";
-            this.cmbObservObject.Size = new System.Drawing.Size(157, 24);
-            this.cmbObservObject.TabIndex = 4;
-            this.cmbObservObject.SelectedIndexChanged += new System.EventHandler(this.cmbObservObject_SelectedIndexChanged);
-            // 
-            // label9
-            // 
-            this.label9.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label9.Location = new System.Drawing.Point(4, 3);
-            this.label9.Name = "label9";
-            this.label9.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.label9.Size = new System.Drawing.Size(99, 27);
-            this.label9.TabIndex = 3;
-            this.label9.Text = "належність";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // panel14
-            // 
-            this.panel14.Controls.Add(this.observObjectsLabel);
-            this.panel14.Controls.Add(this.label6);
-            this.panel14.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel14.Location = new System.Drawing.Point(0, 0);
-            this.panel14.Name = "panel14";
-            this.panel14.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel14.Size = new System.Drawing.Size(466, 30);
-            this.panel14.TabIndex = 14;
-            // 
-            // label6
-            // 
-            this.label6.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label6.Location = new System.Drawing.Point(4, 0);
-            this.label6.Name = "label6";
-            this.label6.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label6.Size = new System.Drawing.Size(237, 30);
-            this.label6.TabIndex = 2;
-            this.label6.Text = "Об\'єкти нагляду (ОН)";
-            // 
-            // ObservPointLabel
-            // 
-            this.ObservPointLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ObservPointLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ObservPointLabel.Location = new System.Drawing.Point(227, 0);
-            this.ObservPointLabel.Name = "ObservPointLabel";
-            this.ObservPointLabel.Size = new System.Drawing.Size(210, 30);
-            this.ObservPointLabel.TabIndex = 3;
-            this.ObservPointLabel.Text = "ObStations_201810";
-            this.ObservPointLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // observObjectsLabel
-            // 
-            this.observObjectsLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.observObjectsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.observObjectsLabel.Location = new System.Drawing.Point(241, 0);
-            this.observObjectsLabel.Name = "observObjectsLabel";
-            this.observObjectsLabel.Size = new System.Drawing.Size(221, 30);
-            this.observObjectsLabel.TabIndex = 3;
-            this.observObjectsLabel.Text = "label29";
-            this.observObjectsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label1
-            // 
-            this.label1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(102, 30);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "відображати";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // checkDate
-            // 
-            this.checkDate.Checked = true;
-            this.checkDate.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkDate.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkDate.Location = new System.Drawing.Point(281, 0);
-            this.checkDate.Name = "checkDate";
-            this.checkDate.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.checkDate.Size = new System.Drawing.Size(83, 30);
-            this.checkDate.TabIndex = 7;
-            this.checkDate.Text = "дата";
-            this.checkDate.UseVisualStyleBackColor = true;
-            this.checkDate.CheckedChanged += new System.EventHandler(this.Filter_CheckedChanged);
-            // 
-            // checkAffiliation
-            // 
-            this.checkAffiliation.Checked = true;
-            this.checkAffiliation.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkAffiliation.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkAffiliation.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkAffiliation.Location = new System.Drawing.Point(174, 0);
-            this.checkAffiliation.Name = "checkAffiliation";
-            this.checkAffiliation.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.checkAffiliation.Size = new System.Drawing.Size(107, 30);
-            this.checkAffiliation.TabIndex = 6;
-            this.checkAffiliation.Text = "належність";
-            this.checkAffiliation.UseVisualStyleBackColor = true;
-            this.checkAffiliation.CheckedChanged += new System.EventHandler(this.Filter_CheckedChanged);
-            // 
-            // checkType
-            // 
-            this.checkType.Checked = true;
-            this.checkType.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkType.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkType.Location = new System.Drawing.Point(106, 0);
-            this.checkType.Name = "checkType";
-            this.checkType.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.checkType.Size = new System.Drawing.Size(68, 30);
-            this.checkType.TabIndex = 5;
-            this.checkType.Text = "тип";
-            this.checkType.UseVisualStyleBackColor = true;
-            this.checkType.CheckedChanged += new System.EventHandler(this.Filter_CheckedChanged);
-            // 
-            // label4
-            // 
-            this.label4.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(4, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(99, 30);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "відображати";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // checkDate_Object
-            // 
-            this.checkDate_Object.Checked = true;
-            this.checkDate_Object.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkDate_Object.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkDate_Object.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkDate_Object.Location = new System.Drawing.Point(260, 0);
-            this.checkDate_Object.Name = "checkDate_Object";
-            this.checkDate_Object.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.checkDate_Object.Size = new System.Drawing.Size(80, 30);
-            this.checkDate_Object.TabIndex = 7;
-            this.checkDate_Object.Text = "дата";
-            this.checkDate_Object.UseVisualStyleBackColor = true;
-            this.checkDate_Object.CheckedChanged += new System.EventHandler(this.Filter_For_Object_CheckedChanged);
-            // 
-            // checkB_Affilation
-            // 
-            this.checkB_Affilation.Checked = true;
-            this.checkB_Affilation.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkB_Affilation.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkB_Affilation.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkB_Affilation.Location = new System.Drawing.Point(103, 0);
-            this.checkB_Affilation.Name = "checkB_Affilation";
-            this.checkB_Affilation.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.checkB_Affilation.Size = new System.Drawing.Size(157, 30);
-            this.checkB_Affilation.TabIndex = 6;
-            this.checkB_Affilation.Text = "належність";
-            this.checkB_Affilation.UseVisualStyleBackColor = true;
-            this.checkB_Affilation.CheckedChanged += new System.EventHandler(this.Filter_For_Object_CheckedChanged);
-            // 
             // WindowMilSpaceMVisibilityMaster
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1975,6 +1976,24 @@ namespace MilSpace.Visibility
             this.panel32.ResumeLayout(false);
             this.panel39.ResumeLayout(false);
             this.stepTwo.ResumeLayout(false);
+            this.panel7.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dvgCheckList)).EndInit();
+            this.panel9.ResumeLayout(false);
+            this.panel10.ResumeLayout(false);
+            this.panel10.PerformLayout();
+            this.panel13.ResumeLayout(false);
+            this.panel19.ResumeLayout(false);
+            this.panel19.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvObjects)).EndInit();
+            this.panel18.ResumeLayout(false);
+            this.panel17.ResumeLayout(false);
+            this.panel14.ResumeLayout(false);
+            this.panel44.ResumeLayout(false);
             this.panel47.ResumeLayout(false);
             this.stepThree.ResumeLayout(false);
             this.panel25.ResumeLayout(false);
@@ -1998,24 +2017,6 @@ namespace MilSpace.Visibility
             this.panel2.ResumeLayout(false);
             this.panel28.ResumeLayout(false);
             this.panel28.PerformLayout();
-            this.panel44.ResumeLayout(false);
-            this.panel7.ResumeLayout(false);
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel1.PerformLayout();
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dvgCheckList)).EndInit();
-            this.panel9.ResumeLayout(false);
-            this.panel10.ResumeLayout(false);
-            this.panel10.PerformLayout();
-            this.panel13.ResumeLayout(false);
-            this.panel19.ResumeLayout(false);
-            this.panel19.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvObjects)).EndInit();
-            this.panel18.ResumeLayout(false);
-            this.panel17.ResumeLayout(false);
-            this.panel14.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2034,7 +2035,7 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.TabPage stepThree;
         private System.Windows.Forms.Panel panel25;
         private System.Windows.Forms.CheckBox checkBox7;
-        private System.Windows.Forms.ComboBox comboBox10;
+        private System.Windows.Forms.ComboBox cmbEmptyDataValue;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Panel panel24;
@@ -2065,31 +2066,31 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Panel panel28;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.Label lblCalcType;
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Panel panel27;
-        private System.Windows.Forms.Label label41;
+        private System.Windows.Forms.Label lblTrimCalcresults;
         private System.Windows.Forms.Label label42;
         private System.Windows.Forms.Panel panel26;
-        private System.Windows.Forms.Label label39;
+        private System.Windows.Forms.Label lblReferencedLayerName;
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.Panel panel37;
-        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.Label lblObservObjectsAll;
         private System.Windows.Forms.Label labelOB;
         private System.Windows.Forms.Panel panel36;
-        private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.Label lblObservObjectsSingle;
         private System.Windows.Forms.Label labelOP;
         private System.Windows.Forms.Panel panel35;
-        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label lblObservObjectsSummary;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Panel panel34;
-        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Label lblObservPointsSummary;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Panel panel33;
-        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label lblDEMName;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Panel panel38;
-        private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.Label lblTaskName;
         private System.Windows.Forms.Label label44;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Panel panel43;
@@ -2146,7 +2147,7 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Label observObjectsLabel;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Panel panel44;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox imagesComboBox;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.CheckBox checkDate_Object;
         private System.Windows.Forms.CheckBox checkB_Affilation;
