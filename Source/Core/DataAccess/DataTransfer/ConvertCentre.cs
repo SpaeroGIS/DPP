@@ -114,11 +114,11 @@ namespace MilSpace.DataAccess.DataTransfer
             }
         }
 
-        internal static MilSp_VisibilitySession Get(this VisibilitySession visibilitySessionModel)
+        internal static MilSp_VisibilityTask Get(this VisibilityTask visibilitySessionModel)
         {
             try
             {
-                var visibilitySession = new MilSp_VisibilitySession
+                var visibilitySession = new MilSp_VisibilityTask
                 {
                     IdRow = visibilitySessionModel.IdRow,
                     Id = visibilitySessionModel.Id?.Trim(),
@@ -141,11 +141,11 @@ namespace MilSpace.DataAccess.DataTransfer
             }
         }
 
-        internal static VisibilitySession Get(this MilSp_VisibilitySession visibilitySessionEntity)
+        internal static VisibilityTask Get(this MilSp_VisibilityTask visibilitySessionEntity)
         {
             try
             {
-                var visibilitySession = new VisibilitySession
+                var visibilitySession = new VisibilityTask
                 {
                     IdRow = visibilitySessionEntity.IdRow,
                     Id = visibilitySessionEntity.Id?.Trim(),
@@ -169,7 +169,7 @@ namespace MilSpace.DataAccess.DataTransfer
             }
         }
 
-        internal static void Update(this MilSp_VisibilitySession visibilitySessionEntity, VisibilitySession visibilitySession)
+        internal static void Update(this MilSp_VisibilityTask visibilitySessionEntity, VisibilityTask visibilitySession)
         {
             visibilitySessionEntity.Name = visibilitySession.Name?.Trim();
             visibilitySessionEntity.UserName = visibilitySession.UserName?.Trim();

@@ -48,14 +48,14 @@ namespace MilSpace.Visualization3D
             return result;
         }
 
-        internal IEnumerable<VisibilitySession> GetVisibilitySessions()
+        internal IEnumerable<VisibilityTask> GetVisibilityTasks()
         {
-            return VisibilityZonesFacade.GetFinishedVisibilitySessions();
+            return VisibilityZonesFacade.GetFinishedVisibilityTasks();
         }
 
-        internal IEnumerable<VisibilitySession> GetUserVisibilitySessions()
+        internal IEnumerable<VisibilityTask> GetUserVisibilitySessions()
         {
-            return VisibilityZonesFacade.GetFinishedVisibilitySessions().Where(session => session.UserName == Environment.UserName);
+            return VisibilityZonesFacade.GetFinishedVisibilityTasks().Where(session => session.UserName == Environment.UserName);
         }
 
         private void AddChildCollection(TreeViewNodeModel node, ProfileSession profileSession)

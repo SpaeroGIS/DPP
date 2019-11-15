@@ -45,7 +45,7 @@ namespace MilSpace.Tools
         public VisibilityManager()
         { }
 
-        public static VisibilitySession Generate(
+        public static VisibilityTask Generate(
             IFeatureClass obervationPoints,
             IEnumerable<int> pointsToExport,
             IFeatureClass obervationStations,
@@ -61,7 +61,7 @@ namespace MilSpace.Tools
             logger.InfoEx("Starting generation visiblility resuilt for session {2} using DEM {0} from observation points {1}.".InvariantFormat(sourceDem, obervationPoints, nameOfTargetDataset));
 
 
-            var calcTask = new VisibilitySession
+            var calcTask = new VisibilityTask
             {
                 Id = nameOfTargetDataset,
                 Name = taskName,
@@ -97,7 +97,7 @@ namespace MilSpace.Tools
                new ActionParam<string>() { ParamName = ActionParameters.ProfileSource, Value = sourceDem},
                new ActionParam<VisibilityCalculationresultsEnum>() { ParamName = ActionParameters.Calculationresults, Value = culcResults},
                new ActionParam<string>() { ParamName = ActionParameters.OutputSourceName, Value = nameOfTargetDataset},
-               new ActionParam<VisibilitySession>() { ParamName = ActionParameters.Session, Value = calcTask},
+               new ActionParam<VisibilityTask>() { ParamName = ActionParameters.Session, Value = calcTask},
             };
 
 

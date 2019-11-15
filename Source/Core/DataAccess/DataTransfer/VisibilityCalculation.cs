@@ -5,7 +5,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 {
     public class VisibilityCalculation
     {
-        public VisibilitySession Session;
+        public VisibilityTask Session;
         public IEnumerable<string> CalculationMessages;
     }
 }

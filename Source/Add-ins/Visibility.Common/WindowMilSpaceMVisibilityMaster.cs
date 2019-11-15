@@ -597,7 +597,7 @@ namespace MilSpace.Visibility
         }
 
 
-        public void FillVisibilitySessionsList(IEnumerable<VisibilitySession> visibilitySessions, bool isNewSessionAdded)
+        public void FillVisibilitySessionsList(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded)
         {
             throw new NotImplementedException();
         }
@@ -607,7 +607,7 @@ namespace MilSpace.Visibility
 
         public IEnumerable<string> GetAffiliation => throw new NotImplementedException();
 
-        public void FillVisibilitySessionsList(IEnumerable<VisibilitySession> visibilitySessions)
+        public void FillVisibilitySessionsList(IEnumerable<VisibilityTask> visibilitySessions)
         {
             throw new NotImplementedException();
         }
@@ -625,7 +625,7 @@ namespace MilSpace.Visibility
                 tbTransparency.Text = "33";
             }
         }
-        public void FillVisibilitySessionsTree(IEnumerable<VisibilitySession> visibilitySessions, bool isNewSessionAdded)
+        public void FillVisibilitySessionsTree(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded)
         {
             throw new NotImplementedException();
         }

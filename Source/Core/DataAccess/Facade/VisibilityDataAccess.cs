@@ -12,15 +12,15 @@ namespace MilSpace.DataAccess.Facade
     {
         public override string ConnectionString => MilSpaceConfiguration.ConnectionProperty.WorkingDBConnection;
 
-        public VisibilitySession AddVisibilitySession(VisibilitySession visibilitySession)
+        public VisibilityTask AddVisibilityTask(VisibilityTask visibilitySession)
         {
             try
             {
-                if (!context.MilSp_VisibilitySessions.Any(session => session.Id == visibilitySession.Id))
+                if (!context.MilSp_VisibilityTasks.Any(session => session.Id == visibilitySession.Id))
                 {
 
                     var sessionEntity = visibilitySession.Get();
-                    context.MilSp_VisibilitySessions.InsertOnSubmit(sessionEntity);
+                    context.MilSp_VisibilityTasks.InsertOnSubmit(sessionEntity);
                     Submit();
                     log.InfoEx($"Session {visibilitySession.Id} was successfully added");
                 }
@@ -30,7 +30,7 @@ namespace MilSpace.DataAccess.Facade
                 }
 
 
-                return context.MilSp_VisibilitySessions.First(session => session.Id == visibilitySession.Id).Get();
+                return context.MilSp_VisibilityTasks.First(session => session.Id == visibilitySession.Id).Get();
             }
             catch (MilSpaceDataException ex)
             {
@@ -50,11 +50,11 @@ namespace MilSpace.DataAccess.Facade
             return null;
         }
 
-        public VisibilitySession UpdateVisibilitySession(VisibilitySession visibilitySession)
+        public VisibilityTask UpdateVisibilityTask(VisibilityTask visibilitySession)
         {
             try
             {
-                var sessionEntity = context.MilSp_VisibilitySessions.FirstOrDefault(session => session.Id.Trim() == visibilitySession.Id);
+                var sessionEntity = context.MilSp_VisibilityTasks.FirstOrDefault(session => session.Id.Trim() == visibilitySession.Id);
 
                 if (sessionEntity != null)
                 {
@@ -62,7 +62,7 @@ namespace MilSpace.DataAccess.Facade
 
                     Submit();
                     log.InfoEx($"Session {visibilitySession.Id} was successfully updated");
-                    return context.MilSp_VisibilitySessions.First(session => session.Id.Trim() == visibilitySession.Id).Get();
+                    return context.MilSp_VisibilityTasks.First(session => session.Id.Trim() == visibilitySession.Id).Get();
                 }
 
                 log.WarnEx($"Session {visibilitySession.Id} not found");
@@ -84,15 +84,15 @@ namespace MilSpace.DataAccess.Facade
             return null; ;
         }
 
-        public bool DeleteVisibilitySession(string id)
+        public bool DeleteVisibilityTask(string id)
         {
             try
             {
-                var sessionEntity = context.MilSp_VisibilitySessions.FirstOrDefault(session => session.Id.Trim() == id);
+                var sessionEntity = context.MilSp_VisibilityTasks.FirstOrDefault(session => session.Id.Trim() == id);
 
                 if (sessionEntity != null)
                 {
-                    context.MilSp_VisibilitySessions.DeleteOnSubmit(sessionEntity);
+                    context.MilSp_VisibilityTasks.DeleteOnSubmit(sessionEntity);
 
                     Submit();
                     return true;
@@ -108,11 +108,11 @@ namespace MilSpace.DataAccess.Facade
             return false;
         }
 
-        public IEnumerable<VisibilitySession> GetAllVisibilitySessions(bool finished = false)
+        public IEnumerable<VisibilityTask> GetAllVisibilityTasks(bool finished = false)
         {
             try
             {
-                var sessions = finished ? context.MilSp_VisibilitySessions.Where(s => s.Finished.HasValue) : context.MilSp_VisibilitySessions;
+                var sessions = finished ? context.MilSp_VisibilityTasks.Where(s => s.Finished.HasValue) : context.MilSp_VisibilityTasks;
                 return sessions.Select(s => s.Get());
             }
             catch (Exception ex)
@@ -123,11 +123,11 @@ namespace MilSpace.DataAccess.Facade
             return null;
         }
 
-        public IEnumerable<VisibilitySession> GetUserVisibilitySessions()
+        public IEnumerable<VisibilityTask> GetUserVisibilityTasks()
         {
             try
             {
-                var sessions = context.MilSp_VisibilitySessions.Where(s => s.UserName.Equals(Environment.UserName));
+                var sessions = context.MilSp_VisibilityTasks.Where(s => s.UserName.Equals(Environment.UserName));
                 return sessions.Select(s => s.Get());
             }
             catch (Exception ex)

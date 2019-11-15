@@ -234,7 +234,7 @@ namespace MilSpace.Visibility
             }
         }
 
-        public void FillVisibilitySessionsList(IEnumerable<VisibilitySession> visibilitySessions, bool isNewSessionAdded)
+        public void FillVisibilitySessionsList(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded)
         {
             if (visibilitySessions.Any())
             {
@@ -915,7 +915,7 @@ namespace MilSpace.Visibility
             _visibilitySessionsController = controller;
         }
 
-        private void FillVisibilitySessionFields(VisibilitySession session)
+        private void FillVisibilitySessionFields(VisibilityTask session)
         {
             tbVisibilitySessionName.Text = session.Name;
             tbVisibilitySessionCreator.Text = session.UserName;
@@ -1063,7 +1063,7 @@ namespace MilSpace.Visibility
         #endregion
 
         # region VisibilitySessionsTree
-        public void FillVisibilitySessionsTree(IEnumerable<VisibilitySession> visibilitySessions, bool isNewSessionAdded)
+        public void FillVisibilitySessionsTree(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded)
         {
             try
             {
@@ -1071,7 +1071,7 @@ namespace MilSpace.Visibility
 
                 treeView1.Nodes.Clear();
 
-                foreach (VisibilitySession o in visibilitySessions)
+                foreach (VisibilityTask o in visibilitySessions)
                 {
                     if (o.Finished != null)
                     {

@@ -488,9 +488,9 @@ namespace MilSpace.Visibility.ViewController
             }
         }
 
-        private IEnumerable<VisibilitySession> GetAllVisibilitySessions()
+        private IEnumerable<VisibilityTask> GetAllVisibilitySessions()
         {
-            return VisibilityZonesFacade.GetAllVisibilitySessions();
+            return VisibilityZonesFacade.GetAllVisibilityTasks();
         }
 
         private IFeatureClass GetFeatureClass(string featureClassName, IActiveView activeView)

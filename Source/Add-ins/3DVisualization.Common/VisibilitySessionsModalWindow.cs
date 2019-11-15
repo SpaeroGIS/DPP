@@ -10,7 +10,7 @@ namespace MilSpace.Visualization3D
         private LocalizationContext _localizationContext;
         //private LocalizationContext context;
 
-        public List<VisibilitySession> SelectedVisibilitySessions { get; } = new List<VisibilitySession>();
+        public List<VisibilityTask> SelectedVisibilitySessions { get; } = new List<VisibilityTask>();
 
         internal VisibilitySessionsModalWindow(LocalizationContext context)
         {
@@ -68,7 +68,7 @@ namespace MilSpace.Visualization3D
         {
             foreach(ListViewItem selectedItem in lvVisibilitySessions.SelectedItems)
             {
-                SelectedVisibilitySessions.Add((VisibilitySession)selectedItem.Tag);
+                SelectedVisibilitySessions.Add((VisibilityTask)selectedItem.Tag);
             }
 
             DialogResult = DialogResult.OK;

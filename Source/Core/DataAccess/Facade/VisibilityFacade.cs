@@ -42,40 +42,40 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
-        public static VisibilitySession AddVisibilitySession(VisibilitySession visibilitySession)
+        public static VisibilityTask AddVisibilitySession(VisibilityTask visibilitySession)
         {
             using(var accessor = new VisibilityDataAccess())
             {
-                var res = accessor.AddVisibilitySession(visibilitySession);
+                var res = accessor.AddVisibilityTask(visibilitySession);
                 return res;
             }
         }
 
-        public static VisibilitySession FinishVisibilitySession(VisibilitySession visibilitySession)
+        public static VisibilityTask FinishVisibilitySession(VisibilityTask visibilitySession)
         {
             using (var accessor = new VisibilityDataAccess())
             {
                 visibilitySession.Finished = DateTime.Now;
-                var res = accessor.UpdateVisibilitySession(visibilitySession);
+                var res = accessor.UpdateVisibilityTask(visibilitySession);
                 return res;
             }
         }
 
-        public static VisibilitySession StarthVisibilitySession(VisibilitySession visibilitySession)
+        public static VisibilityTask StarthVisibilitySession(VisibilityTask visibilitySession)
         {
             using (var accessor = new VisibilityDataAccess())
             {
                 visibilitySession.Started = DateTime.Now;
-                var res = accessor.UpdateVisibilitySession(visibilitySession);
+                var res = accessor.UpdateVisibilityTask(visibilitySession);
                 return res;
             }
         }
 
-        public static VisibilitySession UpdateVisibilitySession(VisibilitySession visibilitySession)
+        public static VisibilityTask UpdateVisibilitySession(VisibilityTask visibilitySession)
         {
             using(var accessor = new VisibilityDataAccess())
             {
-                var res = accessor.UpdateVisibilitySession(visibilitySession);
+                var res = accessor.UpdateVisibilityTask(visibilitySession);
                 return res;
             }
         }
@@ -84,25 +84,25 @@ namespace MilSpace.DataAccess.Facade
         {
             using(var accessor = new VisibilityDataAccess())
             {
-                var res = accessor.DeleteVisibilitySession(id);
+                var res = accessor.DeleteVisibilityTask(id);
                 return res;
             }
         }
 
-        public static IEnumerable<VisibilitySession> GetAllVisibilitySessions(bool forCurrentUser = false)
+        public static IEnumerable<VisibilityTask> GetAllVisibilityTasks(bool forCurrentUser = false)
         {
             using(var accessor = new VisibilityDataAccess())
             {
-                var res =  forCurrentUser ? accessor.GetUserVisibilitySessions() : accessor.GetAllVisibilitySessions();
+                var res =  forCurrentUser ? accessor.GetUserVisibilityTasks() : accessor.GetAllVisibilityTasks();
                 return res.ToArray();
             }
         }
 
-        public static IEnumerable<VisibilitySession> GetFinishedVisibilitySessions()
+        public static IEnumerable<VisibilityTask> GetFinishedVisibilityTasks()
         {
             using (var accessor = new VisibilityDataAccess())
             {
-                var res = accessor.GetAllVisibilitySessions(true);
+                var res = accessor.GetAllVisibilityTasks(true);
                 return res.ToArray();
             }
         }
@@ -118,7 +118,7 @@ namespace MilSpace.DataAccess.Facade
 
         public static bool CheckVisibilityResultEistance(string resultName, VisibilityCalculationresultsEnum resultType)
         {
-            var result = VisibilitySession.GetEsriDataTypeByVisibilityresyltType(resultType);
+            var result = VisibilityTask.GetEsriDataTypeByVisibilityresyltType(resultType);
             return GdbAccess.Instance.CheckDatasetExistanceInCalcWorkspace(resultName, result);
         }
     }
