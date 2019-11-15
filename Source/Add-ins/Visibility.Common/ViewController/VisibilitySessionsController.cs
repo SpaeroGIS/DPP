@@ -57,23 +57,41 @@ namespace MilSpace.Visibility.ViewController
         internal bool RemoveSession(string id)
         {
             var removedSession = _visibilitySessions.First(session => session.Id == id);
-            var results = removedSession.Results();
+
+           var result = VisibilityZonesFacade.DeleteVisibilitySession(id);
+
+            if(result)
+            {
+                _visibilitySessions.Remove(removedSession);
+            }
+
+            return result;
+        }
+
+        internal bool RemoveResult(string id)
+        {
+            var selectedResults = _visibilityResults.First(res => res.Id == id);
+            var results = selectedResults.Results();
 
             foreach(var result in results)
-            { 
-                if(result != removedSession.Id)
+            {
+                if(result != selectedResults.Id)
                 {
-                    if (!EsriTools.RemoveDataSet(removedSession.ReferencedGDB, result))
+                    if(!EsriTools.RemoveDataSet(selectedResults.ReferencedGDB, result))
                     {
                         return false;
                     }
                 }
             }
 
-            VisibilityZonesFacade.DeleteVisibilitySession(id);
-            _visibilitySessions.Remove(removedSession);
+            var removingResult = VisibilityZonesFacade.DeleteVisibilityResults(id);
 
-            return true;
+            if(removingResult)
+            {
+                _visibilityResults.Remove(selectedResults);
+            }
+
+            return removingResult;
         }
     }
 }

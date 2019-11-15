@@ -213,7 +213,7 @@
             this.toolBarButton44 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton5 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton59 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton47 = new System.Windows.Forms.ToolBarButton();
+            this.tlbbRemoveResult = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton8 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton9 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton37 = new System.Windows.Forms.ToolBarButton();
@@ -2464,7 +2464,7 @@
             this.toolBarButton44,
             this.toolBarButton5,
             this.toolBarButton59,
-            this.toolBarButton47,
+            this.tlbbRemoveResult,
             this.toolBarButton8,
             this.toolBarButton9,
             this.toolBarButton37});
@@ -2477,6 +2477,7 @@
             this.toolBarVisibleResults.ShowToolTips = true;
             this.toolBarVisibleResults.Size = new System.Drawing.Size(308, 190);
             this.toolBarVisibleResults.TabIndex = 40;
+            this.toolBarVisibleResults.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.ToolBarVisibleResults_ButtonClick);
             // 
             // toolBarButton43
             // 
@@ -2501,11 +2502,11 @@
             this.toolBarButton59.Name = "toolBarButton59";
             this.toolBarButton59.ToolTipText = "Добавить";
             // 
-            // toolBarButton47
+            // tlbbRemoveResult
             // 
-            this.toolBarButton47.ImageKey = "Cancel.png";
-            this.toolBarButton47.Name = "toolBarButton47";
-            this.toolBarButton47.ToolTipText = "Удалить";
+            this.tlbbRemoveResult.ImageKey = "Cancel.png";
+            this.tlbbRemoveResult.Name = "tlbbRemoveResult";
+            this.tlbbRemoveResult.ToolTipText = "Удалить";
             // 
             // toolBarButton8
             // 
@@ -2816,7 +2817,6 @@
         private System.Windows.Forms.ToolBarButton toolBarButton43;
         private System.Windows.Forms.ToolBarButton toolBarButton44;
         private System.Windows.Forms.ToolBarButton toolBarButton59;
-        private System.Windows.Forms.ToolBarButton toolBarButton47;
         private System.Windows.Forms.Panel panel48;
         private System.Windows.Forms.Label labelHeaderVisibilityResult;
         private System.Windows.Forms.ToolBarButton tlbbShowPoint;
@@ -2912,5 +2912,6 @@
         private System.Windows.Forms.Label labelHeaderVisibilityInfo;
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.Button buttonSaveOPoint;
+        private System.Windows.Forms.ToolBarButton tlbbRemoveResult;
     }
 }

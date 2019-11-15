@@ -1062,7 +1062,7 @@ namespace MilSpace.Visibility
         }
         #endregion
 
-        # region VisibilitySessionsTree
+        #region VisibilitySessionsTree
         public void FillVisibilityResultsTree(IEnumerable<VisibilityCalcResults> visibilityResults)
         {
             try
@@ -1149,7 +1149,6 @@ namespace MilSpace.Visibility
         }
 
         #region ObservationPointsTabEvents
-
 
         private void TlbObserPoints_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
@@ -1418,6 +1417,44 @@ namespace MilSpace.Visibility
         {
             SavePoint();
         }
+
+        #endregion
+
+
+        #region VisibilityResultsTabEvents
+
+
+        private void ToolBarVisibleResults_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        {
+            switch(e.Button.Name)
+            {
+                case "tlbbRemoveResult":
+
+                    var result = MessageBox.Show("Do you realy want to remove results?", "SPPRD", MessageBoxButtons.OKCancel);
+
+                    if(result == DialogResult.OK)
+                    {
+                        var selectedNode = tvResults.SelectedNode;
+                        var isRemovingSuccessfull = _visibilitySessionsController.RemoveResult(selectedNode.Tag.ToString());
+
+                        if(!isRemovingSuccessfull)
+                        {
+                            MessageBox.Show("Unable to delete session");
+                        }
+                        else
+                        {
+                            tvResults.Nodes.Remove(selectedNode);
+                        }
+                    }
+
+                    break;
+
+
+            }
+        }
+
+        #endregion
+
     }
 }
-#endregion
+
