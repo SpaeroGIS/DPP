@@ -2,6 +2,7 @@
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Geoprocessing;
 using ESRI.ArcGIS.Geoprocessor;
+using ESRI.ArcGIS.DataManagementTools;
 using MilSpace.Configurations;
 using MilSpace.Core;
 using System;
@@ -15,6 +16,7 @@ namespace MilSpace.Tools.SurfaceProfile
         private static readonly string temporaryWorkspace = MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection;
         private static Logger log = Logger.GetLoggerEx("ProfileLibrary");
         private const string NonvisibleCellValue = "NODATA";
+        private const string ClippingGeometry = "ClippingGeometry";
 
         //-------------------------------------------------------------------------
         static ProfileLibrary()
@@ -89,6 +91,30 @@ namespace MilSpace.Tools.SurfaceProfile
             gp.SetEnvironmentValue(environmentName, temporaryWorkspace);
 
             return RunTool(gp, visibility, null, messages);
+        }
+
+        public static bool ClipVisibilityZonesByAreas(
+            string inRaster,
+            string outRaster,
+            string templateDataser,
+            IEnumerable<string> messages)
+        {
+            Geoprocessor gp = new Geoprocessor();
+
+            Clip clipper = new Clip()
+            {
+                in_template_dataset = templateDataser,
+                in_raster = inRaster,
+                out_raster = outRaster,
+                clipping_geometry = ClippingGeometry
+            };
+
+            clipper.nodata_value = NonvisibleCellValue;
+            GeoProcessorResult gpResult = new GeoProcessorResult();
+
+            gp.SetEnvironmentValue(environmentName, temporaryWorkspace);
+
+            return RunTool(gp, clipper, null, messages); ;
         }
 
         private static bool RunTool(Geoprocessor gp, IGPProcess process, ITrackCancel TC, IEnumerable<string> messages)

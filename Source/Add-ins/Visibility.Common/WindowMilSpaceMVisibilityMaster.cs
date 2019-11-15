@@ -82,6 +82,7 @@ namespace MilSpace.Visibility
             PopulateComboBox();
             FillObservPointLabel();
             DisabelObjList();
+            FillObservPointsOnCurrentView(controller.GetObservPointsOnCurrentMapExtent(ActiveView));
             dgvObjects.DataSource = null;
         }
         public void SecondTypePicked()//triggers when user picks second type
@@ -167,12 +168,10 @@ namespace MilSpace.Visibility
 
                 dvgCheckList.Update();
                 dvgCheckList.Rows[0].Selected = true;
+              
 
             }
-            else
-            {
-
-            }
+            
         }
         public void FillObservPointsOnCurrentView(IEnumerable<ObservationPoint> observationPoints)
         {
@@ -353,8 +352,6 @@ namespace MilSpace.Visibility
 
             foreach (CheckObservPointGui o in _AllObjects)
             {
-
-
                 o.Check = checkBox4.Checked;
                 dgvObjects.DataSource = _AllObjects;
                 dgvObjects.Refresh();
@@ -502,7 +499,7 @@ namespace MilSpace.Visibility
                     VisibilityCalculationResults = (SumChkBox.Checked ? 
                                                     VisibilityCalculationresultsEnum.ObservationPoints | VisibilityCalculationresultsEnum.VisibilityAreaRaster :
                                                     VisibilityCalculationresultsEnum.None)  
-                                                    | VisibilityCalculationresultsEnum.ObservationStations,
+                                                    | VisibilityCalculationresultsEnum.ObservationStations | VisibilityCalculationresultsEnum.VisibilityObservStationClip,
                     CalculationType = calcType
                 };
             }

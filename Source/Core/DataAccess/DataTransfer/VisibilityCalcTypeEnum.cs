@@ -2,7 +2,7 @@
 {
     public enum VisibilityCalcTypeEnum
     {
-        None,
+        None = 0,
         OpservationPointsCommon,
         ObservationObjecs,
         BestObservationParameters,

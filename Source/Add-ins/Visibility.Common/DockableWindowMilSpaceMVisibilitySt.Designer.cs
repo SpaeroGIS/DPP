@@ -668,6 +668,7 @@
             this.txtMaxDistance.TabIndex = 20;
             this.txtMaxDistance.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtMaxDistance.TextChanged += new System.EventHandler(this.Fields_TextChanged);
+            this.txtMaxDistance.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // lblMinDistance
             // 
@@ -689,6 +690,7 @@
             this.txtMinDistance.TabIndex = 18;
             this.txtMinDistance.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtMinDistance.TextChanged += new System.EventHandler(this.Fields_TextChanged);
+            this.txtMinDistance.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // lblMaxDistance
             // 
@@ -722,6 +724,7 @@
             this.angleOFViewMax.TabIndex = 11;
             this.angleOFViewMax.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.angleOFViewMax.TextChanged += new System.EventHandler(this.Fields_TextChanged);
+            this.angleOFViewMax.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label52
             // 
@@ -777,6 +780,7 @@
             this.azimuthE.TabIndex = 9;
             this.azimuthE.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.azimuthE.TextChanged += new System.EventHandler(this.Fields_TextChanged);
+            this.azimuthE.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label13
             // 
@@ -881,6 +885,7 @@
             this.yCoord.TabIndex = 32;
             this.yCoord.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.yCoord.TextChanged += new System.EventHandler(this.Fields_TextChanged);
+            this.yCoord.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // xCoord
             // 
@@ -931,6 +936,7 @@
             this.cmbAffiliationEdit.Name = "cmbAffiliationEdit";
             this.cmbAffiliationEdit.Size = new System.Drawing.Size(85, 21);
             this.cmbAffiliationEdit.TabIndex = 6;
+            this.cmbAffiliationEdit.SelectedIndexChanged += new System.EventHandler(this.EditComboBox_SelectedIndexChanged);
             // 
             // label10
             // 
@@ -1087,6 +1093,8 @@
             this.angleFrameV.Size = new System.Drawing.Size(36, 20);
             this.angleFrameV.TabIndex = 7;
             this.angleFrameV.Text = "360";
+            this.angleFrameV.TextChanged += new System.EventHandler(this.Fields_TextChanged);
+            this.angleFrameV.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label15
             // 
@@ -1107,6 +1115,8 @@
             this.angleFrameH.Size = new System.Drawing.Size(36, 20);
             this.angleFrameH.TabIndex = 5;
             this.angleFrameH.Text = "0";
+            this.angleFrameH.TextChanged += new System.EventHandler(this.Fields_TextChanged);
+            this.angleFrameH.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label16
             // 
@@ -1139,6 +1149,8 @@
             this.azimuthMainAxis.Size = new System.Drawing.Size(36, 20);
             this.azimuthMainAxis.TabIndex = 5;
             this.azimuthMainAxis.Text = "0";
+            this.azimuthMainAxis.TextChanged += new System.EventHandler(this.Fields_TextChanged);
+            this.azimuthMainAxis.Leave += new System.EventHandler(this.OnFieldChanged);
             // 
             // label58
             // 
