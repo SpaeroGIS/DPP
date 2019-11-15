@@ -551,7 +551,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         private void SetTableView()
         {
-            var fontPixelSize = profilePropertiesTable.Font.Size * 1.3;
+            var fontPixelSize = profilePropertiesTable.Font.Size * 1.25;
 
             var twoPositionWidth = (int)Math.Round((fontPixelSize * 2 + 0.4), 0);
             var threePositionWidth = (int)Math.Round((fontPixelSize * 3), 0);
@@ -559,14 +559,18 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             var fivePoristionWidth = (int)Math.Round((fontPixelSize * 5), 0);
 
             profilePropertiesTable.Columns["ProfileNumberCol"].Width = twoPositionWidth;
+            profilePropertiesTable.Columns["AzimuthCol"].Width = threePositionWidth;
+
             profilePropertiesTable.Columns["ProfileLengthCol"].Width = fivePoristionWidth;
-            profilePropertiesTable.Columns["AzimuthCol"].Width = fourPoristionWidth;
+
             profilePropertiesTable.Columns["ObserverHeightCol"].Width = fourPoristionWidth;
-            profilePropertiesTable.Columns["MinHeightCol"].Width = threePositionWidth;
-            profilePropertiesTable.Columns["MaxHeightCol"].Width = threePositionWidth;
-            profilePropertiesTable.Columns["HeightDifferenceCol"].Width = twoPositionWidth;
+            profilePropertiesTable.Columns["MinHeightCol"].Width = fourPoristionWidth;
+            profilePropertiesTable.Columns["MaxHeightCol"].Width = fourPoristionWidth;
+            profilePropertiesTable.Columns["HeightDifferenceCol"].Width = fourPoristionWidth;
+
             profilePropertiesTable.Columns["DescendingAngleCol"].Width = twoPositionWidth;
             profilePropertiesTable.Columns["AscendingAngleCol"].Width = twoPositionWidth;
+
             profilePropertiesTable.Columns["VisiblePercentCol"].Width = threePositionWidth;
 
             var tableWidth = 0;

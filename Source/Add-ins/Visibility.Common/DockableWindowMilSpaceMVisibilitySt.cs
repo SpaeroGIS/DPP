@@ -35,6 +35,8 @@ namespace MilSpace.Visibility
 
         private bool _isDropDownItemChangedManualy = false;
         private bool _isFieldsChanged = false;
+        private ObservationPoint selectedPointMEM = new ObservationPoint() ;
+        
 
         public DockableWindowMilSpaceMVisibilitySt(object hook, ObservationPointsController controller)
         {
@@ -529,8 +531,32 @@ namespace MilSpace.Visibility
 
             if (FieldsValidation(sender, selectedPoint))
             {
-                _observPointsController.UpdateObservPoint(GetObservationPoint(), VisibilityManager.ObservPointFeature, ActiveView, selectedPoint.Objectid);
-                UpdateObservPointsList();
+                if (!FieldsEQ(selectedPoint))
+                {
+                    _observPointsController.UpdateObservPoint(
+                        GetObservationPoint(),
+                        VisibilityManager.ObservPointFeature,
+                        ActiveView,
+                        selectedPoint.Objectid
+                        );
+                    UpdateObservPointsList();
+                }
+            }
+        }
+
+        private bool FieldsEQ(ObservationPoint point)
+        {
+            try
+            {
+                if (point == selectedPointMEM)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
             }
         }
 
@@ -770,7 +796,9 @@ namespace MilSpace.Visibility
         private void SavePoint()
         {
             var selectedPoint = _observPointsController.GetObservPointById(_selectedPointId);
-            _observPointsController.UpdateObservPoint(GetObservationPoint(), VisibilityManager.ObservPointFeature, ActiveView, selectedPoint.Objectid);
+            _observPointsController.UpdateObservPoint(
+                GetObservationPoint(), VisibilityManager.ObservPointFeature, ActiveView, selectedPoint.Objectid
+                );
         }
 
         private void CreateNewPoint(ObservationPoint point)
@@ -1220,6 +1248,7 @@ namespace MilSpace.Visibility
 
             EnableObservPointsControls();
             var selectedPoint = _observPointsController.GetObservPointById(_selectedPointId);
+            selectedPointMEM = selectedPoint; 
 
             if (selectedPoint == null)
             {
@@ -1381,6 +1410,11 @@ namespace MilSpace.Visibility
             dgvObservObjects.Columns["Title"].Visible = chckObservObjTitle.Checked;
             dgvObservObjects.Columns["Affiliation"].Visible = chckObservObjAffiliation.Checked;
             dgvObservObjects.Columns["Group"].Visible = chckObservObjGroup.Checked;
+        }
+
+        private void buttonSaveOPoint_Click(object sender, EventArgs e)
+        {
+            SavePoint();
         }
     }
 }
