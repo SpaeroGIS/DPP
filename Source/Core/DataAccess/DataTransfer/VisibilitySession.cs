@@ -26,7 +26,7 @@ namespace MilSpace.DataAccess.DataTransfer
         Below
     }
 
-    public class VisibilitySession
+    public class VisibilityTask
     {
         public static Dictionary<VisibilityCalculationresultsEnum, string> VisibilityResulSuffixes = new Dictionary<VisibilityCalculationresultsEnum, string>
         {

@@ -19,5 +19,17 @@
   <Primitive>Графіки</Primitive>
   <Profile>Профіль</Profile>
   <ArcSceneParams>Шари для візуалізації</ArcSceneParams>
+  <YesWord>Так</YesWord>
+  <NoWord>Ні</NoWord>
+  <PlaceLayerAbove>Зверху</PlaceLayerAbove>
+  <PlaceLayerBelow>Знизу</PlaceLayerBelow>
+  <CalcFirstTypeDescription>Визначення областей видимості на обраної поверхні в цілому.</CalcFirstTypeDescription>
+  <CalcSecondTypeDescriptionShort>VA</CalcSecondTypeDescriptionShort>
+  <CalcSecondTypeDescription>Визначення видимості в заданих ОН.</CalcSecondTypeDescription>
+
+  <CalcTherdTypeDescriptionShort>VO</CalcTherdTypeDescriptionShort>
+  <CalcTherdTypeDescription>Визначення параметрів пунктів спостереження (ПН).</CalcTherdTypeDescription>
+  <CalcFourthTypeDescriptionShort>VP</CalcFourthTypeDescriptionShort>
+  <CalcFourthTypeDescription>Аналіз результатів спостереження.</CalcFourthTypeDescription>
 
 </SP_Visibility>

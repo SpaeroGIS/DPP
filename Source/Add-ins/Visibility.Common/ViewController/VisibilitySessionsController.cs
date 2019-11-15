@@ -11,7 +11,7 @@ namespace MilSpace.Visibility.ViewController
     public class VisibilitySessionsController
     {
         private IObservationPointsView _view;
-        private List<VisibilitySession> _visibilitySessions = new List<VisibilitySession>();
+        private List<VisibilityTask> _visibilitySessions = new List<VisibilityTask>();
         private static Dictionary<VisibilitySessionStateEnum, string> states = Enum.GetValues(typeof(VisibilitySessionStateEnum)).Cast<VisibilitySessionStateEnum>().ToDictionary(t => t, ts => ts.ToString());
 
         public VisibilitySessionsController()
@@ -37,21 +37,21 @@ namespace MilSpace.Visibility.ViewController
 
         internal void UpdateVisibilitySessionsList(bool isNewSessionAdded = false)
         {
-            _visibilitySessions = VisibilityZonesFacade.GetAllVisibilitySessions(true).ToList();
+            _visibilitySessions = VisibilityZonesFacade.GetAllVisibilityTasks(true).ToList();
             _view.FillVisibilitySessionsList(_visibilitySessions, isNewSessionAdded);           
         }
         internal void UpdateVisibilitySessionsTree(bool isNewSessionAdded = false)
         {
-            _visibilitySessions = VisibilityZonesFacade.GetAllVisibilitySessions(true).ToList();
+            _visibilitySessions = VisibilityZonesFacade.GetAllVisibilityTasks(true).ToList();
          
             _view.FillVisibilitySessionsTree(_visibilitySessions, isNewSessionAdded);
         }
 
-        internal VisibilitySession GetSession(string id)
+        internal VisibilityTask GetSession(string id)
         {
             return _visibilitySessions.FirstOrDefault(session => session.Id == id);
         }
-        public IEnumerable<VisibilitySession> GetAllSessions() => _visibilitySessions;
+        public IEnumerable<VisibilityTask> GetAllSessions() => _visibilitySessions;
         
         internal bool RemoveSession(string id)
         {

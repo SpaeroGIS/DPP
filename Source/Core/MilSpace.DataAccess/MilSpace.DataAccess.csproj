@@ -159,6 +159,9 @@
     <Compile Include="..\DataAccess\DataTransfer\VisibilitySessionStateEnum.cs">
       <Link>DataTransfer\VisibilitySessionStateEnum.cs</Link>
     </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\WizardResult.cs">
+      <Link>DataTransfer\WizardResult.cs</Link>
+    </Compile>
     <Compile Include="..\DataAccess\Definition\MilSpaceVisible.designer.cs">
       <Link>Definition\MilSpaceVisible.designer.cs</Link>
       <AutoGen>True</AutoGen>

@@ -1,9 +1,8 @@
-﻿using MilSpace.DataAccess.DataTransfer;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace MilSpace.DataAccess.DataTransfer
 {
-    internal class WizardResult
+    public class WizardResult
     {
         public IEnumerable<int>  ObservPointIDs{ get; set; }
         public IEnumerable<int> ObservObjectIDs { get; set; }

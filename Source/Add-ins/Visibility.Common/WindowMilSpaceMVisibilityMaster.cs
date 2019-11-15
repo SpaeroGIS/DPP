@@ -1,35 +1,27 @@
 ﻿using ESRI.ArcGIS.Carto;
-using MilSpace.DataAccess.DataTransfer;
-using MilSpace.Visibility.DTO;
-using MilSpace.Visibility.ViewController;
+using MilSpace.Core;
 using MilSpace.Core.Tools;
+using MilSpace.DataAccess.DataTransfer;
+using MilSpace.Tools;
+using MilSpace.Visibility.ViewController;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
-using MilSpace.Tools;
-using System.Drawing;
-using MilSpace.Core;
 
 namespace MilSpace.Visibility
 {
     public partial class WindowMilSpaceMVisibilityMaster : Form, IObservationPointsView
     {
         private string _previousPickedRasterLayer;
-        private int _stepControl = 0;
+        private VisibilityCalcTypeEnum _stepControl = VisibilityCalcTypeEnum.None;
         private const string _allValuesFilterText = "All";
         private ObservationPointsController controller = new ObservationPointsController(ArcMap.Document);
         private BindingList<CheckObservPointGui> _observPointGuis;
-
-        BindingList<CheckObservPointGui> _AllObjects = new BindingList<CheckObservPointGui>();
-
-
-        private List<CheckObservPointGui> CheckedList = new List<CheckObservPointGui>();
-        private List<CheckObservPointGui> CheckedObjectList = new List<CheckObservPointGui>();
-
-        internal MasterResult FinalResult = new MasterResult();
+        private BindingList<CheckObservPointGui> _observationObjects;
+        internal WizardResult FinalResult = new WizardResult();
 
         private static IActiveView ActiveView => ArcMap.Document.ActiveView;
 
@@ -40,20 +32,22 @@ namespace MilSpace.Visibility
             InitializeComponent();
             controller.SetView(this);
             _previousPickedRasterLayer = previousPickedRaster;
-            ONload();
 
             //label слой ПН\ТН
             ObservPointLabel.Text = selectedObservPoints;
             //label слой ОН
             observObjectsLabel.Text = selectedObservObjects;
+
+            cmbEmptyDataValue.SelectedIndex = 1;
+
         }
 
-
-        public void ONload()
+        protected override void OnLoad(EventArgs e)
         {
-
             FillComboBoxes();
-            foreach (TabPage tab in StepsTabControl.TabPages)//disable all tabs
+
+            //disable all tabs
+            foreach (TabPage tab in StepsTabControl.TabPages)
             {
                 tab.Enabled = false;
             }
@@ -61,9 +55,9 @@ namespace MilSpace.Visibility
 
             panel1.Enabled = false;
         }
+
         public void DisabelObjList()
         {
-            //dgvObjects.Enabled = panel15.Enabled = panel16.Enabled = panel17.Enabled = panel18.Enabled = panel19.Enabled = false;
             dgvObjects.Enabled = false;
             splitContainer1.Panel2.Enabled = false;
         }
@@ -71,13 +65,12 @@ namespace MilSpace.Visibility
         {
             dgvObjects.Enabled = true;
             dgvObjects.Refresh();
-            //panel15.Enabled = panel16.Enabled = panel17.Enabled = panel18.Enabled = panel19.Enabled = true;
             splitContainer1.Panel2.Enabled = true;
 
         }
         public void FirstTypePicked()//triggers when user picks first type
         {
-            _stepControl = 1;
+            _stepControl = VisibilityCalcTypeEnum.OpservationPoints;
             controller.UpdateObservationPointsList();
             PopulateComboBox();
             FillObservPointLabel();
@@ -87,7 +80,7 @@ namespace MilSpace.Visibility
         }
         public void SecondTypePicked()//triggers when user picks second type
         {
-            _stepControl = 2;
+            _stepControl = VisibilityCalcTypeEnum.ObservationObjecs;
             controller.UpdateObservationPointsList();
             EanableObjList();
             PopulateComboBox();
@@ -136,12 +129,12 @@ namespace MilSpace.Visibility
         }
         public void PopulateComboBox()
         {
-            comboBox1.DataSource = null;
-            comboBox1.DataSource = (manager.RasterLayers.Select(i => i.Name).ToArray());
+            imagesComboBox.DataSource = null;
+            imagesComboBox.DataSource = (manager.RasterLayers.Select(i => i.Name).ToArray());
 
             if (_previousPickedRasterLayer != null)
             {
-                comboBox1.SelectedItem = _previousPickedRasterLayer;
+                imagesComboBox.SelectedItem = _previousPickedRasterLayer;
             }
         }
 
@@ -164,14 +157,15 @@ namespace MilSpace.Visibility
 
                 _observPointGuis = new BindingList<CheckObservPointGui>(ItemsToShow);
                 dvgCheckList.DataSource = _observPointGuis;
+
                 SetDataGridView();
 
                 dvgCheckList.Update();
                 dvgCheckList.Rows[0].Selected = true;
-              
+
 
             }
-            
+
         }
         public void FillObservPointsOnCurrentView(IEnumerable<ObservationPoint> observationPoints)
         {
@@ -224,11 +218,11 @@ namespace MilSpace.Visibility
 
                 dgvObjects.DataSource = null; //Clearing listbox
 
-                _AllObjects = new BindingList<CheckObservPointGui>(itemsToShow);
+                _observationObjects = new BindingList<CheckObservPointGui>(itemsToShow);
 
-                if (_AllObjects != null)
+                if (_observationObjects != null)
                 {
-                    dgvObjects.DataSource = _AllObjects;
+                    dgvObjects.DataSource = _observationObjects;
                     SetDataGridView_For_Objects();
                 }
                 if (useCurrentExtent)
@@ -350,12 +344,13 @@ namespace MilSpace.Visibility
         private void Select_All(object sender, EventArgs e)
         {
 
-            foreach (CheckObservPointGui o in _AllObjects)
+            foreach (CheckObservPointGui o in _observationObjects)
             {
                 o.Check = checkBox4.Checked;
-                dgvObjects.DataSource = _AllObjects;
-                dgvObjects.Refresh();
             }
+
+            dgvObjects.DataSource = _observationObjects;
+            dgvObjects.Refresh();
 
         }
         private void Select_All_Points(object sender, EventArgs e)
@@ -364,10 +359,10 @@ namespace MilSpace.Visibility
             foreach (CheckObservPointGui o in _observPointGuis)
             {
                 o.Check = checkBox6.Checked;
-                dvgCheckList.DataSource = _observPointGuis;
-                dvgCheckList.Refresh();
             }
 
+            dvgCheckList.DataSource = _observPointGuis;
+            dvgCheckList.Refresh();
         }
         public VeluableObservPointFieldsEnum GetFilter
         {
@@ -391,7 +386,6 @@ namespace MilSpace.Visibility
 
                 return result;
             }
-
         }
 
         private void FilterData(DataGridView Grid, ComboBox combo)
@@ -444,82 +438,59 @@ namespace MilSpace.Visibility
             FilterData(dgvObjects, cmbObservObject);
         }
 
-        public void AssemblMasterResult()
+        private void AssemblyWizardResult()
         {
 
-            CheckedObjectList = new List<CheckObservPointGui>();
-            CheckedList = new List<CheckObservPointGui>();
-            foreach (DataGridViewRow row in dvgCheckList.Rows)
+            FinalResult = new WizardResult
             {
-                var PickedObSerPointRow = row.DataBoundItem as CheckObservPointGui;
-                if (PickedObSerPointRow.Check)
-                {
-                    CheckedList.Add(PickedObSerPointRow);
-                }
-            }
-            foreach (DataGridViewRow row in dgvObjects.Rows)
-            {
-                var PickedObSerPointRow = row.DataBoundItem as CheckObservPointGui;
-                if (PickedObSerPointRow.Check)
-                {
-                    CheckedObjectList.Add(PickedObSerPointRow);
-                }
-            }
+                ObservPointIDs = _observPointGuis.Where(p => p.Check).Select(i => i.Id).ToArray(),
+                Table = TableChkBox.Checked,
+                SumFieldOfView = SumChkBox.Checked,
+                RasterLayerName = imagesComboBox.SelectedItem.ToString(),
+                RelativeLayerName = cmbMapLayers.SelectedItem.ToString(),
+                ResultLayerPosition = controller.GetPositionByStringValue(cmbPositions.SelectedItem.ToString()),
+                ResultLayerTransparency = Convert.ToInt16(tbTransparency.Text),
+                CalculationType = _stepControl,
+                TaskName = VisibilityManager.GenerateResultId(LocalizationContext.Instance.CalcTypeLocalisationShort[_stepControl])
+            };
 
-            VisibilityCalcTypeEnum calcType = (VisibilityCalcTypeEnum)_stepControl;
 
-            if (_stepControl == 1)
+            if (_stepControl == VisibilityCalcTypeEnum.OpservationPoints)
             {
-                FinalResult = new MasterResult
-                {
-                    ObservPointIDs = CheckedList.Select(i => i.Id).ToList(),
-                    Table = TableChkBox.Checked,
-                    SumFieldOfView = SumChkBox.Checked,
-                    RasterLayerName = comboBox1.SelectedItem.ToString(),
-                    VisibilityCalculationResults = SumChkBox.Checked ? VisibilityCalculationresultsEnum.ObservationPoints | VisibilityCalculationresultsEnum.VisibilityAreaRaster :
-                        VisibilityCalculationresultsEnum.None,
-                    RelativeLayerName = cmbMapLayers.SelectedItem.ToString(),
-                    ResultLayerPosition = controller.GetPositionByStringValue(cmbPositions.SelectedItem.ToString()),
-                    ResultLayerTransparency = Convert.ToInt16(tbTransparency.Text),
-                    CalculationType = calcType
-                };
+                FinalResult.VisibilityCalculationResults = SumChkBox.Checked ?
+                    VisibilityCalculationresultsEnum.ObservationPoints | VisibilityCalculationresultsEnum.VisibilityAreaRaster :
+                    VisibilityCalculationresultsEnum.None;
             }
-            else if (_stepControl == 2)
+            else if (_stepControl == VisibilityCalcTypeEnum.ObservationObjecs)
             {
-                FinalResult = new MasterResult
-                {
-                    ObservPointIDs = CheckedList.Select(i => i.Id).ToList(),
-                    ObservObjectIDs = CheckedObjectList.Select(i => i.Id).ToList(),
-                    Table = TableChkBox.Checked,
-                    SumFieldOfView = SumChkBox.Checked,
-                    RasterLayerName = comboBox1.SelectedItem.ToString(),
-                    RelativeLayerName = cmbMapLayers.SelectedItem.ToString(),
-                    ResultLayerPosition = controller.GetPositionByStringValue(cmbPositions.SelectedItem.ToString()),
-                    ResultLayerTransparency = Convert.ToInt16(tbTransparency.Text),
-                    VisibilityCalculationResults = (SumChkBox.Checked ? 
+                FinalResult.ObservObjectIDs = _observationObjects.Where(o=> o.Check).Select(i => i.Id).ToArray();
+                FinalResult.VisibilityCalculationResults = (SumChkBox.Checked ?
                                                     VisibilityCalculationresultsEnum.ObservationPoints | VisibilityCalculationresultsEnum.VisibilityAreaRaster :
-                                                    VisibilityCalculationresultsEnum.None)  
-                                                    | VisibilityCalculationresultsEnum.ObservationStations | VisibilityCalculationresultsEnum.VisibilityObservStationClip,
-                    CalculationType = calcType
-                };
+                                                    VisibilityCalculationresultsEnum.None)
+                                                    | VisibilityCalculationresultsEnum.ObservationStations | VisibilityCalculationresultsEnum.VisibilityObservStationClip;
+
             }
 
             if (checkBoxOP.Checked)
             {
                 FinalResult.VisibilityCalculationResults = FinalResult.VisibilityCalculationResults | VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle | VisibilityCalculationresultsEnum.ObservationPointSingle;
             }
-
         }
-        public void ALLinfo()
+        public void SummaryInfo()
         {
-            if (checkBoxOP.Checked) { labelOP.Visible = true; } else { labelOP.Visible = false; }
-            if (SumChkBox.Checked) { labelOB.Visible = true; } else { labelOB.Visible = false; }
+            lblCalcType.Text = LocalizationContext.Instance.CalcTypeLocalisation[FinalResult.CalculationType];
+            lblTaskName.Text = FinalResult.TaskName;
+            lblDEMName.Text = FinalResult.RasterLayerName;
+            lblObservObjectsSingle.Text = checkBoxOP.Checked ? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord;
+            lblObservObjectsAll.Text = checkBoxOP.Checked ? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord;
+            lblReferencedLayerName.Text = cmbPositions.SelectedItem.ToString();
+            var selectedObservPoints = _observPointGuis.Where(p => p.Check).Select(o => o.Title).ToArray();
+            var selectedObservObjects = _observationObjects.Where(p => p.Check).Select(o => o.Title).ToArray();
 
-            //if (TableChkBox.Checked) { labelT.Visible = true; } else { labelT.Visible = false; }
+            lblObservPointsSummary.Text = $"{selectedObservPoints.Length} - {string.Join("; ", selectedObservPoints)}";
+            lblObservObjectsSummary.Text = $"{selectedObservObjects.Length} - {string.Join("; ", selectedObservObjects)}";
 
-            label27.Text = CheckedList.Count().ToString();
-            label24.Text = comboBox1.SelectedItem.ToString();
-            label28.Text = CheckedObjectList.Count().ToString();
+            lblTrimCalcresults.Text = "There is no any controls!!!!!!";
         }
 
         public string ObservationStationFeatureClass => observObjectsLabel.Text;
@@ -535,8 +506,8 @@ namespace MilSpace.Visibility
         {
             if (StepsTabControl.SelectedIndex == 2)
             {
-                AssemblMasterResult();
-                ALLinfo();
+                AssemblyWizardResult();
+                SummaryInfo();
             }
 
             if (StepsTabControl.SelectedIndex == StepsTabControl.TabCount - 1)
@@ -547,7 +518,7 @@ namespace MilSpace.Visibility
                     MessageBox.Show("The is no results sources for calculating. Please, select source!", "SPPRD", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
 
-                if (string.IsNullOrEmpty(comboBox1.Text))
+                if (string.IsNullOrEmpty(imagesComboBox.Text))
                 {
                     //TODO: Localise
                     MessageBox.Show("The Raster layer must be selected!", "SPPRD", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -584,7 +555,6 @@ namespace MilSpace.Visibility
                 StepsTabControl.SelectedTab.Enabled = false;
                 var prevTab = StepsTabControl.TabPages[StepsTabControl.SelectedIndex - 1] as TabPage;
                 prevTab.Enabled = true;
-
 
                 StepsTabControl.SelectedIndex--;
             }
@@ -627,7 +597,7 @@ namespace MilSpace.Visibility
         }
 
 
-        public void FillVisibilitySessionsList(IEnumerable<VisibilitySession> visibilitySessions, bool isNewSessionAdded)
+        public void FillVisibilitySessionsList(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded)
         {
             throw new NotImplementedException();
         }
@@ -637,7 +607,7 @@ namespace MilSpace.Visibility
 
         public IEnumerable<string> GetAffiliation => throw new NotImplementedException();
 
-        public void FillVisibilitySessionsList(IEnumerable<VisibilitySession> visibilitySessions)
+        public void FillVisibilitySessionsList(IEnumerable<VisibilityTask> visibilitySessions)
         {
             throw new NotImplementedException();
         }
@@ -655,14 +625,9 @@ namespace MilSpace.Visibility
                 tbTransparency.Text = "33";
             }
         }
-        public void FillVisibilitySessionsTree(IEnumerable<VisibilitySession> visibilitySessions, bool isNewSessionAdded)
+        public void FillVisibilitySessionsTree(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded)
         {
             throw new NotImplementedException();
-        }
-
-        private void tbTransparency_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

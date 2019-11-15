@@ -97,7 +97,7 @@ namespace MilSpace.DataAccess.Facade
 
             VisibilityCalculationresultsEnum results = VisibilityCalculationresultsEnum.None;
 
-            foreach (var map in VisibilitySession.EsriDatatypeToResultMapping)
+            foreach (var map in VisibilityTask.EsriDatatypeToResultMapping)
             {
                 var datasets = calcWorkspace.get_DatasetNames(map.Key);
                 var dataSet = datasets.Next();
@@ -106,7 +106,7 @@ namespace MilSpace.DataAccess.Facade
                 {
                     foreach (var result in map.Value)
                     {
-                        string comparitionName = VisibilitySession.GetResultName(result, sessionName);
+                        string comparitionName = VisibilityTask.GetResultName(result, sessionName);
                         //it might be to check feature class type for FeatureClass dataset like Point for Observponts and Polygon for ObservObjects
                         if (dataSet.Name.Equals(comparitionName, StringComparison.InvariantCultureIgnoreCase))
                         {
@@ -609,12 +609,12 @@ namespace MilSpace.DataAccess.Facade
 
         public IEnumerable<IDataset> GetDatasetsFromCalcWorkspace(IEnumerable<VisibilityResultInfo> visibilityResults)
         {
-            var mapping = VisibilitySession.EsriDatatypeToResultMapping;
+            var mapping = VisibilityTask.EsriDatatypeToResultMapping;
             return visibilityResults.Select(v =>
             {
-                if (IsDatasetExist(calcWorkspace, v.ResultName, VisibilitySession.GetEsriDataTypeByVisibilityresyltType(v.RessutType)))
+                if (IsDatasetExist(calcWorkspace, v.ResultName, VisibilityTask.GetEsriDataTypeByVisibilityresyltType(v.RessutType)))
                     {
-                    return GetDataset(calcWorkspace, v.ResultName, VisibilitySession.GetEsriDataTypeByVisibilityresyltType(v.RessutType));
+                    return GetDataset(calcWorkspace, v.ResultName, VisibilityTask.GetEsriDataTypeByVisibilityresyltType(v.RessutType));
                 }
                 return null;
 

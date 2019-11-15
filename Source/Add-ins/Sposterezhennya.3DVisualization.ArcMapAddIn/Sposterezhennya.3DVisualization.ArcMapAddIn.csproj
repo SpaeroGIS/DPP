@@ -276,10 +276,10 @@
     <AddInContent Include="..\3DVisualization.Common\Images\Tree.ico">
       <Link>Images\Tree.ico</Link>
     </AddInContent>
-    <Content Include="Resources\Visualization3DLocalization.xml">
+    <AddInContent Include="Resources\Visualization3DLocalization.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </AddInContent>
   </ItemGroup>
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>
