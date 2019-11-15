@@ -90,44 +90,8 @@
             this.label55 = new System.Windows.Forms.Label();
             this.cameraRotationH = new System.Windows.Forms.TextBox();
             this.label56 = new System.Windows.Forms.Label();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.panel21 = new System.Windows.Forms.Panel();
-            this.textBox13 = new System.Windows.Forms.TextBox();
-            this.label22 = new System.Windows.Forms.Label();
-            this.panel19 = new System.Windows.Forms.Panel();
-            this.textBox12 = new System.Windows.Forms.TextBox();
-            this.label21 = new System.Windows.Forms.Label();
-            this.panel22 = new System.Windows.Forms.Panel();
-            this.textBox14 = new System.Windows.Forms.TextBox();
-            this.label23 = new System.Windows.Forms.Label();
-            this.textBox16 = new System.Windows.Forms.TextBox();
-            this.label25 = new System.Windows.Forms.Label();
-            this.panel23 = new System.Windows.Forms.Panel();
-            this.toolBar1 = new System.Windows.Forms.ToolBar();
-            this.toolBarButton13 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton14 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton15 = new System.Windows.Forms.ToolBarButton();
-            this.textBox17 = new System.Windows.Forms.TextBox();
-            this.textBox18 = new System.Windows.Forms.TextBox();
-            this.label26 = new System.Windows.Forms.Label();
-            this.panel20 = new System.Windows.Forms.Panel();
-            this.toolBar4 = new System.Windows.Forms.ToolBar();
-            this.toolBarButton7 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton10 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton11 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton12 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton1 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton6 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton16 = new System.Windows.Forms.ToolBarButton();
-            this.listBox2 = new System.Windows.Forms.ListBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.label6 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.label5 = new System.Windows.Forms.Label();
-            this.panel18 = new System.Windows.Forms.Panel();
-            this.label17 = new System.Windows.Forms.Label();
             this.panel9 = new System.Windows.Forms.Panel();
+            this.buttonSaveOPoint = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
             this.tlbObservPoints = new System.Windows.Forms.ToolBar();
@@ -278,14 +242,6 @@
             this.panelSignAngel.SuspendLayout();
             this.panelAzimuthBase.SuspendLayout();
             this.panelCameraParam.SuspendLayout();
-            this.tabPage6.SuspendLayout();
-            this.panel21.SuspendLayout();
-            this.panel19.SuspendLayout();
-            this.panel22.SuspendLayout();
-            this.panel23.SuspendLayout();
-            this.panel20.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.panel18.SuspendLayout();
             this.panel9.SuspendLayout();
             this.panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvObservationPoints)).BeginInit();
@@ -550,7 +506,7 @@
             this.mainTabControl.Location = new System.Drawing.Point(0, 0);
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.SelectedIndex = 0;
-            this.mainTabControl.Size = new System.Drawing.Size(320, 600);
+            this.mainTabControl.Size = new System.Drawing.Size(320, 640);
             this.mainTabControl.TabIndex = 2;
             this.mainTabControl.SelectedIndexChanged += new System.EventHandler(this.MainTabControl_SelectedIndexChanged);
             // 
@@ -566,7 +522,7 @@
             this.tbpPoints.Location = new System.Drawing.Point(4, 23);
             this.tbpPoints.Name = "tbpPoints";
             this.tbpPoints.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpPoints.Size = new System.Drawing.Size(312, 573);
+            this.tbpPoints.Size = new System.Drawing.Size(312, 613);
             this.tbpPoints.TabIndex = 0;
             this.tbpPoints.Text = "Пункти Н";
             this.tbpPoints.UseVisualStyleBackColor = true;
@@ -578,20 +534,19 @@
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel7.Location = new System.Drawing.Point(3, 253);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(306, 317);
+            this.panel7.Size = new System.Drawing.Size(306, 357);
             this.panel7.TabIndex = 7;
             // 
             // tabControl2
             // 
             this.tabControl2.Alignment = System.Windows.Forms.TabAlignment.Bottom;
             this.tabControl2.Controls.Add(this.tabPage5);
-            this.tabControl2.Controls.Add(this.tabPage6);
             this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl2.ImageList = this.imageList1;
             this.tabControl2.Location = new System.Drawing.Point(0, 32);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(306, 285);
+            this.tabControl2.Size = new System.Drawing.Size(306, 325);
             this.tabControl2.TabIndex = 10;
             // 
             // tabPage5
@@ -609,9 +564,9 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 4);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(298, 258);
+            this.tabPage5.Size = new System.Drawing.Size(298, 298);
             this.tabPage5.TabIndex = 0;
-            this.tabPage5.Text = "Параметры ПН";
+            this.tabPage5.Text = "Параметри ПС";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
             // panelRelativeHeight
@@ -644,7 +599,7 @@
             this.label19.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
             this.label19.Size = new System.Drawing.Size(200, 22);
             this.label19.TabIndex = 4;
-            this.label19.Text = "Высота над поверхностью, м";
+            this.label19.Text = "Висота над поверхнею, м";
             // 
             // panelRadiuses
             // 
@@ -700,7 +655,7 @@
             this.lblMaxDistance.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
             this.lblMaxDistance.Size = new System.Drawing.Size(70, 22);
             this.lblMaxDistance.TabIndex = 4;
-            this.lblMaxDistance.Text = "Расст., м от";
+            this.lblMaxDistance.Text = "Відст., м від";
             // 
             // panelSignAngelVert
             // 
@@ -756,7 +711,7 @@
             this.label18.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
             this.label18.Size = new System.Drawing.Size(70, 22);
             this.label18.TabIndex = 4;
-            this.label18.Text = "Верт угол от";
+            this.label18.Text = "Верт вугол від";
             // 
             // panelAzimuth
             // 
@@ -812,7 +767,7 @@
             this.label14.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
             this.label14.Size = new System.Drawing.Size(70, 22);
             this.label14.TabIndex = 4;
-            this.label14.Text = "Азимут от";
+            this.label14.Text = "Азимут від";
             // 
             // panel10
             // 
@@ -907,7 +862,7 @@
             this.label8.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
             this.label8.Size = new System.Drawing.Size(70, 26);
             this.label8.TabIndex = 2;
-            this.label8.Text = "Координаты";
+            this.label8.Text = "Координати";
             // 
             // panel13
             // 
@@ -946,7 +901,7 @@
             this.label10.Padding = new System.Windows.Forms.Padding(0, 4, 2, 0);
             this.label10.Size = new System.Drawing.Size(60, 24);
             this.label10.TabIndex = 5;
-            this.label10.Text = "Принадл";
+            this.label10.Text = "Належн";
             this.label10.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // cmbObservTypesEdit
@@ -1057,7 +1012,7 @@
             this.label20.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.label20.Size = new System.Drawing.Size(70, 24);
             this.label20.TabIndex = 4;
-            this.label20.Text = "Название";
+            this.label20.Text = "Назва";
             // 
             // panel12
             // 
@@ -1065,7 +1020,7 @@
             this.panel12.Controls.Add(this.panelAzimuthBase);
             this.panel12.Controls.Add(this.panelCameraParam);
             this.panel12.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel12.Location = new System.Drawing.Point(3, 180);
+            this.panel12.Location = new System.Drawing.Point(3, 220);
             this.panel12.Name = "panel12";
             this.panel12.Size = new System.Drawing.Size(292, 75);
             this.panel12.TabIndex = 13;
@@ -1080,7 +1035,7 @@
             this.panelSignAngel.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelSignAngel.Location = new System.Drawing.Point(0, 48);
             this.panelSignAngel.Name = "panelSignAngel";
-            this.panelSignAngel.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
+            this.panelSignAngel.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.panelSignAngel.Size = new System.Drawing.Size(292, 24);
             this.panelSignAngel.TabIndex = 28;
             this.panelSignAngel.Visible = false;
@@ -1088,7 +1043,7 @@
             // angleFrameV
             // 
             this.angleFrameV.Dock = System.Windows.Forms.DockStyle.Left;
-            this.angleFrameV.Location = new System.Drawing.Point(214, 0);
+            this.angleFrameV.Location = new System.Drawing.Point(210, 0);
             this.angleFrameV.Name = "angleFrameV";
             this.angleFrameV.Size = new System.Drawing.Size(36, 20);
             this.angleFrameV.TabIndex = 7;
@@ -1100,7 +1055,7 @@
             // 
             this.label15.AutoSize = true;
             this.label15.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label15.Location = new System.Drawing.Point(177, 0);
+            this.label15.Location = new System.Drawing.Point(173, 0);
             this.label15.Name = "label15";
             this.label15.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
             this.label15.Size = new System.Drawing.Size(37, 17);
@@ -1110,7 +1065,7 @@
             // angleFrameH
             // 
             this.angleFrameH.Dock = System.Windows.Forms.DockStyle.Left;
-            this.angleFrameH.Location = new System.Drawing.Point(141, 0);
+            this.angleFrameH.Location = new System.Drawing.Point(137, 0);
             this.angleFrameH.Name = "angleFrameH";
             this.angleFrameH.Size = new System.Drawing.Size(36, 20);
             this.angleFrameH.TabIndex = 5;
@@ -1122,7 +1077,7 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label16.Location = new System.Drawing.Point(8, 0);
+            this.label16.Location = new System.Drawing.Point(4, 0);
             this.label16.Name = "label16";
             this.label16.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
             this.label16.Size = new System.Drawing.Size(133, 17);
@@ -1136,7 +1091,7 @@
             this.panelAzimuthBase.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelAzimuthBase.Location = new System.Drawing.Point(0, 24);
             this.panelAzimuthBase.Name = "panelAzimuthBase";
-            this.panelAzimuthBase.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
+            this.panelAzimuthBase.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.panelAzimuthBase.Size = new System.Drawing.Size(292, 24);
             this.panelAzimuthBase.TabIndex = 27;
             this.panelAzimuthBase.Visible = false;
@@ -1144,7 +1099,7 @@
             // azimuthMainAxis
             // 
             this.azimuthMainAxis.Dock = System.Windows.Forms.DockStyle.Left;
-            this.azimuthMainAxis.Location = new System.Drawing.Point(119, 0);
+            this.azimuthMainAxis.Location = new System.Drawing.Point(115, 0);
             this.azimuthMainAxis.Name = "azimuthMainAxis";
             this.azimuthMainAxis.Size = new System.Drawing.Size(36, 20);
             this.azimuthMainAxis.TabIndex = 5;
@@ -1156,7 +1111,7 @@
             // 
             this.label58.AutoSize = true;
             this.label58.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label58.Location = new System.Drawing.Point(8, 0);
+            this.label58.Location = new System.Drawing.Point(4, 0);
             this.label58.Name = "label58";
             this.label58.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
             this.label58.Size = new System.Drawing.Size(111, 17);
@@ -1217,383 +1172,9 @@
             this.label56.TabIndex = 4;
             this.label56.Text = "поворот камеры, дгр, гориз.";
             // 
-            // tabPage6
-            // 
-            this.tabPage6.Controls.Add(this.panel21);
-            this.tabPage6.Controls.Add(this.panel19);
-            this.tabPage6.Controls.Add(this.panel22);
-            this.tabPage6.Controls.Add(this.panel23);
-            this.tabPage6.Controls.Add(this.panel20);
-            this.tabPage6.Controls.Add(this.listBox2);
-            this.tabPage6.Controls.Add(this.panel1);
-            this.tabPage6.Controls.Add(this.panel18);
-            this.tabPage6.ImageIndex = 189;
-            this.tabPage6.Location = new System.Drawing.Point(4, 4);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(298, 258);
-            this.tabPage6.TabIndex = 1;
-            this.tabPage6.Text = "Точки \"снимков\"";
-            this.tabPage6.UseVisualStyleBackColor = true;
-            // 
-            // panel21
-            // 
-            this.panel21.Controls.Add(this.textBox13);
-            this.panel21.Controls.Add(this.label22);
-            this.panel21.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel21.Location = new System.Drawing.Point(3, 260);
-            this.panel21.Name = "panel21";
-            this.panel21.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.panel21.Size = new System.Drawing.Size(292, 24);
-            this.panel21.TabIndex = 30;
-            this.panel21.Visible = false;
-            // 
-            // textBox13
-            // 
-            this.textBox13.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox13.Location = new System.Drawing.Point(82, 0);
-            this.textBox13.Name = "textBox13";
-            this.textBox13.Size = new System.Drawing.Size(109, 20);
-            this.textBox13.TabIndex = 5;
-            this.textBox13.Text = "2018-11-30 14:35:11";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label22.Location = new System.Drawing.Point(8, 0);
-            this.label22.Name = "label22";
-            this.label22.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-            this.label22.Size = new System.Drawing.Size(74, 17);
-            this.label22.TabIndex = 4;
-            this.label22.Text = "дата и время";
-            // 
-            // panel19
-            // 
-            this.panel19.Controls.Add(this.textBox12);
-            this.panel19.Controls.Add(this.label21);
-            this.panel19.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel19.Location = new System.Drawing.Point(3, 236);
-            this.panel19.Name = "panel19";
-            this.panel19.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.panel19.Size = new System.Drawing.Size(292, 24);
-            this.panel19.TabIndex = 29;
-            this.panel19.Visible = false;
-            // 
-            // textBox12
-            // 
-            this.textBox12.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox12.Location = new System.Drawing.Point(162, 0);
-            this.textBox12.Name = "textBox12";
-            this.textBox12.Size = new System.Drawing.Size(36, 20);
-            this.textBox12.TabIndex = 5;
-            this.textBox12.Text = "2035";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label21.Location = new System.Drawing.Point(8, 0);
-            this.label21.Name = "label21";
-            this.label21.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-            this.label21.Size = new System.Drawing.Size(154, 17);
-            this.label21.TabIndex = 4;
-            this.label21.Text = "высота над поверхностью, м";
-            // 
-            // panel22
-            // 
-            this.panel22.Controls.Add(this.textBox14);
-            this.panel22.Controls.Add(this.label23);
-            this.panel22.Controls.Add(this.textBox16);
-            this.panel22.Controls.Add(this.label25);
-            this.panel22.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel22.Location = new System.Drawing.Point(3, 212);
-            this.panel22.Name = "panel22";
-            this.panel22.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.panel22.Size = new System.Drawing.Size(292, 24);
-            this.panel22.TabIndex = 27;
-            this.panel22.Visible = false;
-            // 
-            // textBox14
-            // 
-            this.textBox14.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox14.Location = new System.Drawing.Point(220, 0);
-            this.textBox14.Name = "textBox14";
-            this.textBox14.Size = new System.Drawing.Size(36, 20);
-            this.textBox14.TabIndex = 7;
-            this.textBox14.Text = "0";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label23.Location = new System.Drawing.Point(163, 0);
-            this.label23.Name = "label23";
-            this.label23.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-            this.label23.Size = new System.Drawing.Size(57, 17);
-            this.label23.TabIndex = 6;
-            this.label23.Text = "крен, дгр ";
-            // 
-            // textBox16
-            // 
-            this.textBox16.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox16.Location = new System.Drawing.Point(127, 0);
-            this.textBox16.Name = "textBox16";
-            this.textBox16.Size = new System.Drawing.Size(36, 20);
-            this.textBox16.TabIndex = 5;
-            this.textBox16.Text = "0";
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label25.Location = new System.Drawing.Point(8, 0);
-            this.label25.Name = "label25";
-            this.label25.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-            this.label25.Size = new System.Drawing.Size(119, 17);
-            this.label25.TabIndex = 4;
-            this.label25.Text = "азимут движения, дгр";
-            // 
-            // panel23
-            // 
-            this.panel23.Controls.Add(this.toolBar1);
-            this.panel23.Controls.Add(this.textBox17);
-            this.panel23.Controls.Add(this.textBox18);
-            this.panel23.Controls.Add(this.label26);
-            this.panel23.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel23.Location = new System.Drawing.Point(3, 188);
-            this.panel23.Name = "panel23";
-            this.panel23.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel23.Size = new System.Drawing.Size(292, 24);
-            this.panel23.TabIndex = 26;
-            this.panel23.Visible = false;
-            // 
-            // toolBar1
-            // 
-            this.toolBar1.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
-            this.toolBarButton13,
-            this.toolBarButton14,
-            this.toolBarButton15});
-            this.toolBar1.ButtonSize = new System.Drawing.Size(16, 16);
-            this.toolBar1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolBar1.DropDownArrows = true;
-            this.toolBar1.ImageList = this.imageList1;
-            this.toolBar1.Location = new System.Drawing.Point(222, 0);
-            this.toolBar1.Margin = new System.Windows.Forms.Padding(1, 3, 3, 3);
-            this.toolBar1.Name = "toolBar1";
-            this.toolBar1.ShowToolTips = true;
-            this.toolBar1.Size = new System.Drawing.Size(66, 50);
-            this.toolBar1.TabIndex = 29;
-            // 
-            // toolBarButton13
-            // 
-            this.toolBarButton13.ImageIndex = 68;
-            this.toolBarButton13.Name = "toolBarButton13";
-            // 
-            // toolBarButton14
-            // 
-            this.toolBarButton14.ImageKey = "Clipboard Copy.png";
-            this.toolBarButton14.Name = "toolBarButton14";
-            // 
-            // toolBarButton15
-            // 
-            this.toolBarButton15.ImageKey = "Clipboard Paste.png";
-            this.toolBarButton15.Name = "toolBarButton15";
-            // 
-            // textBox17
-            // 
-            this.textBox17.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox17.Location = new System.Drawing.Point(167, 0);
-            this.textBox17.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
-            this.textBox17.Name = "textBox17";
-            this.textBox17.Size = new System.Drawing.Size(55, 20);
-            this.textBox17.TabIndex = 4;
-            this.textBox17.Text = "50.12345";
-            // 
-            // textBox18
-            // 
-            this.textBox18.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox18.Location = new System.Drawing.Point(112, 0);
-            this.textBox18.Name = "textBox18";
-            this.textBox18.Size = new System.Drawing.Size(55, 20);
-            this.textBox18.TabIndex = 3;
-            this.textBox18.Text = "36.54321";
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label26.Location = new System.Drawing.Point(4, 0);
-            this.label26.Name = "label26";
-            this.label26.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-            this.label26.Size = new System.Drawing.Size(108, 17);
-            this.label26.TabIndex = 2;
-            this.label26.Text = "координаты XY, дгр";
-            this.label26.Visible = false;
-            // 
-            // panel20
-            // 
-            this.panel20.Controls.Add(this.toolBar4);
-            this.panel20.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel20.Location = new System.Drawing.Point(3, 159);
-            this.panel20.Name = "panel20";
-            this.panel20.Size = new System.Drawing.Size(292, 29);
-            this.panel20.TabIndex = 15;
-            // 
-            // toolBar4
-            // 
-            this.toolBar4.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
-            this.toolBarButton7,
-            this.toolBarButton10,
-            this.toolBarButton11,
-            this.toolBarButton12,
-            this.toolBarButton1,
-            this.toolBarButton6,
-            this.toolBarButton16});
-            this.toolBar4.ButtonSize = new System.Drawing.Size(18, 18);
-            this.toolBar4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolBar4.DropDownArrows = true;
-            this.toolBar4.ImageList = this.imageList1;
-            this.toolBar4.Location = new System.Drawing.Point(0, 0);
-            this.toolBar4.Margin = new System.Windows.Forms.Padding(8, 3, 3, 3);
-            this.toolBar4.Name = "toolBar4";
-            this.toolBar4.ShowToolTips = true;
-            this.toolBar4.Size = new System.Drawing.Size(292, 28);
-            this.toolBar4.TabIndex = 41;
-            this.toolBar4.Visible = false;
-            // 
-            // toolBarButton7
-            // 
-            this.toolBarButton7.ImageIndex = 138;
-            this.toolBarButton7.Name = "toolBarButton7";
-            this.toolBarButton7.ToolTipText = "указать";
-            // 
-            // toolBarButton10
-            // 
-            this.toolBarButton10.ImageKey = "Refresh.png";
-            this.toolBarButton10.Name = "toolBarButton10";
-            this.toolBarButton10.ToolTipText = "Обновить";
-            // 
-            // toolBarButton11
-            // 
-            this.toolBarButton11.ImageKey = "Directions.png";
-            this.toolBarButton11.Name = "toolBarButton11";
-            this.toolBarButton11.ToolTipText = "Показать на карте";
-            // 
-            // toolBarButton12
-            // 
-            this.toolBarButton12.ImageKey = "Light.png";
-            this.toolBarButton12.Name = "toolBarButton12";
-            this.toolBarButton12.ToolTipText = "Показать параметры на карте";
-            // 
-            // toolBarButton1
-            // 
-            this.toolBarButton1.ImageIndex = 200;
-            this.toolBarButton1.Name = "toolBarButton1";
-            this.toolBarButton1.ToolTipText = "редактировать";
-            // 
-            // toolBarButton6
-            // 
-            this.toolBarButton6.ImageIndex = 43;
-            this.toolBarButton6.Name = "toolBarButton6";
-            this.toolBarButton6.ToolTipText = "удалить";
-            // 
-            // toolBarButton16
-            // 
-            this.toolBarButton16.ImageIndex = 147;
-            this.toolBarButton16.Name = "toolBarButton16";
-            this.toolBarButton16.ToolTipText = "сохранить";
-            // 
-            // listBox2
-            // 
-            this.listBox2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.Location = new System.Drawing.Point(3, 51);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(292, 108);
-            this.listBox2.TabIndex = 9;
-            this.listBox2.Visible = false;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.dateTimePicker2);
-            this.panel1.Controls.Add(this.label6);
-            this.panel1.Controls.Add(this.dateTimePicker1);
-            this.panel1.Controls.Add(this.label5);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(3, 27);
-            this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel1.Size = new System.Drawing.Size(292, 24);
-            this.panel1.TabIndex = 8;
-            this.panel1.Visible = false;
-            // 
-            // dateTimePicker2
-            // 
-            this.dateTimePicker2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker2.Location = new System.Drawing.Point(185, 0);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(95, 20);
-            this.dateTimePicker2.TabIndex = 5;
-            this.dateTimePicker2.Visible = false;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label6.Location = new System.Drawing.Point(142, 0);
-            this.label6.Name = "label6";
-            this.label6.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label6.Size = new System.Drawing.Size(43, 17);
-            this.label6.TabIndex = 4;
-            this.label6.Text = "дата 2";
-            // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker1.Location = new System.Drawing.Point(47, 0);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(95, 20);
-            this.dateTimePicker1.TabIndex = 3;
-            this.dateTimePicker1.Visible = false;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label5.Location = new System.Drawing.Point(4, 0);
-            this.label5.Name = "label5";
-            this.label5.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label5.Size = new System.Drawing.Size(43, 17);
-            this.label5.TabIndex = 2;
-            this.label5.Text = "дата 1";
-            // 
-            // panel18
-            // 
-            this.panel18.Controls.Add(this.label17);
-            this.panel18.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel18.Location = new System.Drawing.Point(3, 3);
-            this.panel18.Name = "panel18";
-            this.panel18.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel18.Size = new System.Drawing.Size(292, 24);
-            this.panel18.TabIndex = 6;
-            this.panel18.Visible = false;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label17.Location = new System.Drawing.Point(4, 0);
-            this.label17.Name = "label17";
-            this.label17.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label17.Size = new System.Drawing.Size(177, 17);
-            this.label17.TabIndex = 2;
-            this.label17.Text = "Фильтр и список точек снимков";
-            // 
             // panel9
             // 
+            this.panel9.Controls.Add(this.buttonSaveOPoint);
             this.panel9.Controls.Add(this.label7);
             this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel9.Location = new System.Drawing.Point(0, 0);
@@ -1601,6 +1182,17 @@
             this.panel9.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.panel9.Size = new System.Drawing.Size(306, 32);
             this.panel9.TabIndex = 9;
+            // 
+            // buttonSaveOPoint
+            // 
+            this.buttonSaveOPoint.Dock = System.Windows.Forms.DockStyle.Right;
+            this.buttonSaveOPoint.Location = new System.Drawing.Point(240, 0);
+            this.buttonSaveOPoint.Name = "buttonSaveOPoint";
+            this.buttonSaveOPoint.Size = new System.Drawing.Size(62, 32);
+            this.buttonSaveOPoint.TabIndex = 3;
+            this.buttonSaveOPoint.Text = "зберегти";
+            this.buttonSaveOPoint.UseVisualStyleBackColor = true;
+            this.buttonSaveOPoint.Click += new System.EventHandler(this.buttonSaveOPoint_Click);
             // 
             // label7
             // 
@@ -1612,7 +1204,7 @@
             this.label7.Padding = new System.Windows.Forms.Padding(0, 6, 4, 0);
             this.label7.Size = new System.Drawing.Size(298, 32);
             this.label7.TabIndex = 2;
-            this.label7.Text = "ПараметриПС";
+            this.label7.Text = "Параметри ПС";
             // 
             // panel6
             // 
@@ -1676,6 +1268,8 @@
             this.dgvObservationPoints.AllowUserToResizeRows = false;
             this.dgvObservationPoints.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
             this.dgvObservationPoints.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.dgvObservationPoints.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvObservationPoints.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.RaisedHorizontal;
             this.dgvObservationPoints.ColumnHeadersHeight = 22;
             this.dgvObservationPoints.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvObservationPoints.Dock = System.Windows.Forms.DockStyle.Top;
@@ -1706,14 +1300,13 @@
             // 
             // chckFilterDate
             // 
-            this.chckFilterDate.AutoSize = true;
             this.chckFilterDate.Checked = true;
             this.chckFilterDate.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chckFilterDate.Dock = System.Windows.Forms.DockStyle.Left;
-            this.chckFilterDate.Location = new System.Drawing.Point(171, 0);
+            this.chckFilterDate.Location = new System.Drawing.Point(180, 0);
             this.chckFilterDate.Name = "chckFilterDate";
             this.chckFilterDate.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.chckFilterDate.Size = new System.Drawing.Size(53, 24);
+            this.chckFilterDate.Size = new System.Drawing.Size(60, 24);
             this.chckFilterDate.TabIndex = 3;
             this.chckFilterDate.Text = "дата";
             this.chckFilterDate.UseVisualStyleBackColor = true;
@@ -1721,29 +1314,27 @@
             // 
             // chckFilterAffiliation
             // 
-            this.chckFilterAffiliation.AutoSize = true;
             this.chckFilterAffiliation.Checked = true;
             this.chckFilterAffiliation.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chckFilterAffiliation.Dock = System.Windows.Forms.DockStyle.Left;
-            this.chckFilterAffiliation.Location = new System.Drawing.Point(51, 0);
+            this.chckFilterAffiliation.Location = new System.Drawing.Point(74, 0);
             this.chckFilterAffiliation.Name = "chckFilterAffiliation";
             this.chckFilterAffiliation.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.chckFilterAffiliation.Size = new System.Drawing.Size(120, 24);
+            this.chckFilterAffiliation.Size = new System.Drawing.Size(106, 24);
             this.chckFilterAffiliation.TabIndex = 2;
-            this.chckFilterAffiliation.Text = "принаждлехность";
+            this.chckFilterAffiliation.Text = "належність";
             this.chckFilterAffiliation.UseVisualStyleBackColor = true;
             this.chckFilterAffiliation.CheckedChanged += new System.EventHandler(this.Filter_CheckedChanged);
             // 
             // chckFilterType
             // 
-            this.chckFilterType.AutoSize = true;
             this.chckFilterType.Checked = true;
             this.chckFilterType.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chckFilterType.Dock = System.Windows.Forms.DockStyle.Left;
             this.chckFilterType.Location = new System.Drawing.Point(4, 0);
             this.chckFilterType.Name = "chckFilterType";
-            this.chckFilterType.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.chckFilterType.Size = new System.Drawing.Size(47, 24);
+            this.chckFilterType.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.chckFilterType.Size = new System.Drawing.Size(70, 24);
             this.chckFilterType.TabIndex = 1;
             this.chckFilterType.Text = "тип";
             this.chckFilterType.UseVisualStyleBackColor = true;
@@ -1781,7 +1372,7 @@
             this.label3.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
             this.label3.Size = new System.Drawing.Size(60, 22);
             this.label3.TabIndex = 3;
-            this.label3.Text = "Принадл";
+            this.label3.Text = "Належн";
             this.label3.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // cmbObservPointType
@@ -1839,7 +1430,7 @@
             this.tbpObservObjects.ImageIndex = 173;
             this.tbpObservObjects.Location = new System.Drawing.Point(4, 23);
             this.tbpObservObjects.Name = "tbpObservObjects";
-            this.tbpObservObjects.Size = new System.Drawing.Size(312, 573);
+            this.tbpObservObjects.Size = new System.Drawing.Size(312, 613);
             this.tbpObservObjects.TabIndex = 1;
             this.tbpObservObjects.Text = "Області Н";
             this.tbpObservObjects.UseVisualStyleBackColor = true;
@@ -1896,7 +1487,7 @@
             this.tbObservObjTitle.Location = new System.Drawing.Point(104, 1);
             this.tbObservObjTitle.Name = "tbObservObjTitle";
             this.tbObservObjTitle.ReadOnly = true;
-            this.tbObservObjTitle.Size = new System.Drawing.Size(230, 20);
+            this.tbObservObjTitle.Size = new System.Drawing.Size(204, 20);
             this.tbObservObjTitle.TabIndex = 5;
             // 
             // label29
@@ -1907,7 +1498,7 @@
             this.label29.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
             this.label29.Size = new System.Drawing.Size(100, 23);
             this.label29.TabIndex = 4;
-            this.label29.Text = "название";
+            this.label29.Text = "назва";
             // 
             // panel58
             // 
@@ -1925,7 +1516,7 @@
             this.tbObservObjDate.Location = new System.Drawing.Point(104, 1);
             this.tbObservObjDate.Name = "tbObservObjDate";
             this.tbObservObjDate.ReadOnly = true;
-            this.tbObservObjDate.Size = new System.Drawing.Size(230, 20);
+            this.tbObservObjDate.Size = new System.Drawing.Size(204, 20);
             this.tbObservObjDate.TabIndex = 5;
             // 
             // label39
@@ -1936,7 +1527,7 @@
             this.label39.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
             this.label39.Size = new System.Drawing.Size(100, 23);
             this.label39.TabIndex = 4;
-            this.label39.Text = "дата создания";
+            this.label39.Text = "дата створення";
             // 
             // addNewObjectPanel
             // 
@@ -2136,7 +1727,7 @@
             this.tbObservObjAffiliation.Location = new System.Drawing.Point(104, 1);
             this.tbObservObjAffiliation.Name = "tbObservObjAffiliation";
             this.tbObservObjAffiliation.ReadOnly = true;
-            this.tbObservObjAffiliation.Size = new System.Drawing.Size(230, 20);
+            this.tbObservObjAffiliation.Size = new System.Drawing.Size(204, 20);
             this.tbObservObjAffiliation.TabIndex = 5;
             // 
             // label31
@@ -2147,7 +1738,7 @@
             this.label31.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
             this.label31.Size = new System.Drawing.Size(100, 23);
             this.label31.TabIndex = 4;
-            this.label31.Text = "принадлежность";
+            this.label31.Text = "належність";
             // 
             // panel28
             // 
@@ -2165,7 +1756,7 @@
             this.tbObservObjGroup.Location = new System.Drawing.Point(104, 1);
             this.tbObservObjGroup.Name = "tbObservObjGroup";
             this.tbObservObjGroup.ReadOnly = true;
-            this.tbObservObjGroup.Size = new System.Drawing.Size(230, 20);
+            this.tbObservObjGroup.Size = new System.Drawing.Size(204, 20);
             this.tbObservObjGroup.TabIndex = 5;
             // 
             // label1
@@ -2176,7 +1767,7 @@
             this.label1.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
             this.label1.Size = new System.Drawing.Size(100, 23);
             this.label1.TabIndex = 4;
-            this.label1.Text = "группа";
+            this.label1.Text = "група";
             // 
             // panel29
             // 
@@ -2296,12 +1887,12 @@
             this.chckObservObjAffiliation.Checked = true;
             this.chckObservObjAffiliation.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chckObservObjAffiliation.Dock = System.Windows.Forms.DockStyle.Left;
-            this.chckObservObjAffiliation.Location = new System.Drawing.Point(148, 0);
+            this.chckObservObjAffiliation.Location = new System.Drawing.Point(122, 0);
             this.chckObservObjAffiliation.Name = "chckObservObjAffiliation";
             this.chckObservObjAffiliation.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.chckObservObjAffiliation.Size = new System.Drawing.Size(115, 24);
+            this.chckObservObjAffiliation.Size = new System.Drawing.Size(87, 24);
             this.chckObservObjAffiliation.TabIndex = 2;
-            this.chckObservObjAffiliation.Text = "принадлежность";
+            this.chckObservObjAffiliation.Text = "належність";
             this.chckObservObjAffiliation.UseVisualStyleBackColor = true;
             this.chckObservObjAffiliation.CheckedChanged += new System.EventHandler(this.ChckObservObj_CheckedChanged);
             // 
@@ -2311,12 +1902,12 @@
             this.chckObservObjGroup.Checked = true;
             this.chckObservObjGroup.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chckObservObjGroup.Dock = System.Windows.Forms.DockStyle.Left;
-            this.chckObservObjGroup.Location = new System.Drawing.Point(84, 0);
+            this.chckObservObjGroup.Location = new System.Drawing.Point(64, 0);
             this.chckObservObjGroup.Name = "chckObservObjGroup";
             this.chckObservObjGroup.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.chckObservObjGroup.Size = new System.Drawing.Size(64, 24);
+            this.chckObservObjGroup.Size = new System.Drawing.Size(58, 24);
             this.chckObservObjGroup.TabIndex = 3;
-            this.chckObservObjGroup.Text = "группа";
+            this.chckObservObjGroup.Text = "група";
             this.chckObservObjGroup.UseVisualStyleBackColor = true;
             this.chckObservObjGroup.CheckedChanged += new System.EventHandler(this.ChckObservObj_CheckedChanged);
             // 
@@ -2329,9 +1920,9 @@
             this.chckObservObjTitle.Location = new System.Drawing.Point(4, 0);
             this.chckObservObjTitle.Name = "chckObservObjTitle";
             this.chckObservObjTitle.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.chckObservObjTitle.Size = new System.Drawing.Size(80, 24);
+            this.chckObservObjTitle.Size = new System.Drawing.Size(60, 24);
             this.chckObservObjTitle.TabIndex = 0;
-            this.chckObservObjTitle.Text = "Название";
+            this.chckObservObjTitle.Text = "назва";
             this.chckObservObjTitle.UseVisualStyleBackColor = true;
             this.chckObservObjTitle.CheckedChanged += new System.EventHandler(this.ChckObservObj_CheckedChanged);
             // 
@@ -2351,7 +1942,7 @@
             this.cmbObservObjAffiliationFilter.Dock = System.Windows.Forms.DockStyle.Left;
             this.cmbObservObjAffiliationFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbObservObjAffiliationFilter.FormattingEnabled = true;
-            this.cmbObservObjAffiliationFilter.Location = new System.Drawing.Point(100, 2);
+            this.cmbObservObjAffiliationFilter.Location = new System.Drawing.Point(72, 2);
             this.cmbObservObjAffiliationFilter.Name = "cmbObservObjAffiliationFilter";
             this.cmbObservObjAffiliationFilter.Size = new System.Drawing.Size(94, 21);
             this.cmbObservObjAffiliationFilter.TabIndex = 4;
@@ -2364,9 +1955,9 @@
             this.label28.Location = new System.Drawing.Point(4, 2);
             this.label28.Name = "label28";
             this.label28.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label28.Size = new System.Drawing.Size(96, 17);
+            this.label28.Size = new System.Drawing.Size(68, 17);
             this.label28.TabIndex = 3;
-            this.label28.Text = "принадлежность";
+            this.label28.Text = "належність";
             // 
             // panel27
             // 
@@ -2388,7 +1979,7 @@
             this.label30.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
             this.label30.Size = new System.Drawing.Size(304, 33);
             this.label30.TabIndex = 2;
-            this.label30.Text = "об\'єкти нагляду (ОН)";
+            this.label30.Text = "Області нагляду (ОН)";
             // 
             // toolBar5
             // 
@@ -2467,7 +2058,7 @@
             this.tbpSessions.ImageIndex = 50;
             this.tbpSessions.Location = new System.Drawing.Point(4, 23);
             this.tbpSessions.Name = "tbpSessions";
-            this.tbpSessions.Size = new System.Drawing.Size(312, 573);
+            this.tbpSessions.Size = new System.Drawing.Size(312, 613);
             this.tbpSessions.TabIndex = 2;
             this.tbpSessions.Text = "Завдання";
             this.tbpSessions.ToolTipText = "Завдання для розрахунків";
@@ -2734,7 +2325,7 @@
             "чужие ",
             "нейтральные",
             "неизвкчтно"});
-            this.cmbStateFilter.Location = new System.Drawing.Point(38, 2);
+            this.cmbStateFilter.Location = new System.Drawing.Point(74, 2);
             this.cmbStateFilter.Name = "cmbStateFilter";
             this.cmbStateFilter.Size = new System.Drawing.Size(86, 21);
             this.cmbStateFilter.TabIndex = 8;
@@ -2742,12 +2333,11 @@
             // 
             // label38
             // 
-            this.label38.AutoSize = true;
             this.label38.Dock = System.Windows.Forms.DockStyle.Left;
             this.label38.Location = new System.Drawing.Point(4, 2);
             this.label38.Name = "label38";
             this.label38.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label38.Size = new System.Drawing.Size(34, 17);
+            this.label38.Size = new System.Drawing.Size(70, 24);
             this.label38.TabIndex = 7;
             this.label38.Text = "стан";
             // 
@@ -2783,7 +2373,7 @@
             this.tbpVisibilityAreas.ImageIndex = 125;
             this.tbpVisibilityAreas.Location = new System.Drawing.Point(4, 23);
             this.tbpVisibilityAreas.Name = "tbpVisibilityAreas";
-            this.tbpVisibilityAreas.Size = new System.Drawing.Size(312, 573);
+            this.tbpVisibilityAreas.Size = new System.Drawing.Size(312, 613);
             this.tbpVisibilityAreas.TabIndex = 3;
             this.tbpVisibilityAreas.Text = "ОВ";
             this.tbpVisibilityAreas.ToolTipText = "Області видимості (результати розрахунків)";
@@ -2796,7 +2386,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 267);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(312, 306);
+            this.panel2.Size = new System.Drawing.Size(312, 346);
             this.panel2.TabIndex = 82;
             // 
             // panel8
@@ -2804,7 +2394,7 @@
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(0, 32);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(312, 274);
+            this.panel8.Size = new System.Drawing.Size(312, 314);
             this.panel8.TabIndex = 81;
             // 
             // panel50
@@ -3029,7 +2619,7 @@
             // 
             this.Controls.Add(this.mainTabControl);
             this.Name = "DockableWindowMilSpaceMVisibilitySt";
-            this.Size = new System.Drawing.Size(320, 600);
+            this.Size = new System.Drawing.Size(320, 640);
             this.mainTabControl.ResumeLayout(false);
             this.tbpPoints.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
@@ -3057,26 +2647,10 @@
             this.panelAzimuthBase.PerformLayout();
             this.panelCameraParam.ResumeLayout(false);
             this.panelCameraParam.PerformLayout();
-            this.tabPage6.ResumeLayout(false);
-            this.panel21.ResumeLayout(false);
-            this.panel21.PerformLayout();
-            this.panel19.ResumeLayout(false);
-            this.panel19.PerformLayout();
-            this.panel22.ResumeLayout(false);
-            this.panel22.PerformLayout();
-            this.panel23.ResumeLayout(false);
-            this.panel23.PerformLayout();
-            this.panel20.ResumeLayout(false);
-            this.panel20.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.panel18.ResumeLayout(false);
-            this.panel18.PerformLayout();
             this.panel9.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvObservationPoints)).EndInit();
             this.panel5.ResumeLayout(false);
-            this.panel5.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panelPointsHeader.ResumeLayout(false);
             this.tbpObservObjects.ResumeLayout(false);
@@ -3123,7 +2697,6 @@
             this.panel41.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvVisibilitySessions)).EndInit();
             this.panel39.ResumeLayout(false);
-            this.panel39.PerformLayout();
             this.panel38.ResumeLayout(false);
             this.tbpVisibilityAreas.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
@@ -3146,43 +2719,6 @@
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.ToolBarButton takeCoordToolBarBtn;
         private System.Windows.Forms.Panel panel12;
-        private System.Windows.Forms.TabPage tabPage6;
-        private System.Windows.Forms.Panel panel21;
-        private System.Windows.Forms.TextBox textBox13;
-        private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.Panel panel19;
-        private System.Windows.Forms.TextBox textBox12;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Panel panel22;
-        private System.Windows.Forms.TextBox textBox14;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.TextBox textBox16;
-        private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.Panel panel23;
-        private System.Windows.Forms.ToolBar toolBar1;
-        private System.Windows.Forms.ToolBarButton toolBarButton13;
-        private System.Windows.Forms.ToolBarButton toolBarButton14;
-        private System.Windows.Forms.ToolBarButton toolBarButton15;
-        private System.Windows.Forms.TextBox textBox17;
-        private System.Windows.Forms.TextBox textBox18;
-        private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.Panel panel20;
-        private System.Windows.Forms.ToolBar toolBar4;
-        private System.Windows.Forms.ToolBarButton toolBarButton7;
-        private System.Windows.Forms.ToolBarButton toolBarButton10;
-        private System.Windows.Forms.ToolBarButton toolBarButton11;
-        private System.Windows.Forms.ToolBarButton toolBarButton12;
-        private System.Windows.Forms.ToolBarButton toolBarButton1;
-        private System.Windows.Forms.ToolBarButton toolBarButton6;
-        private System.Windows.Forms.ToolBarButton toolBarButton16;
-        private System.Windows.Forms.ListBox listBox2;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Panel panel18;
-        private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Panel panel6;
@@ -3375,5 +2911,6 @@
         private System.Windows.Forms.Panel panel50;
         private System.Windows.Forms.Label labelHeaderVisibilityInfo;
         private System.Windows.Forms.Splitter splitter1;
+        private System.Windows.Forms.Button buttonSaveOPoint;
     }
 }
