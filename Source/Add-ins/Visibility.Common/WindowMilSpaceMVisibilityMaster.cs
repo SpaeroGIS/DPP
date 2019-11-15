@@ -664,5 +664,10 @@ namespace MilSpace.Visibility
         {
 
         }
+
+        public void FillVisibilityResultsTree(IEnumerable<VisibilityCalcResults> visibilityResults)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

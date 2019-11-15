@@ -12,6 +12,7 @@ namespace MilSpace.Visibility.ViewController
     {
         private IObservationPointsView _view;
         private List<VisibilitySession> _visibilitySessions = new List<VisibilitySession>();
+        private List<VisibilityCalcResults> _visibilityResults = new List<VisibilityCalcResults>();
         private static Dictionary<VisibilitySessionStateEnum, string> states = Enum.GetValues(typeof(VisibilitySessionStateEnum)).Cast<VisibilitySessionStateEnum>().ToDictionary(t => t, ts => ts.ToString());
 
         public VisibilitySessionsController()
@@ -40,11 +41,11 @@ namespace MilSpace.Visibility.ViewController
             _visibilitySessions = VisibilityZonesFacade.GetAllVisibilitySessions(true).ToList();
             _view.FillVisibilitySessionsList(_visibilitySessions, isNewSessionAdded);           
         }
-        internal void UpdateVisibilitySessionsTree(bool isNewSessionAdded = false)
+        internal void UpdateVisibilityResultsTree(bool isNewSessionAdded = false)
         {
-            _visibilitySessions = VisibilityZonesFacade.GetAllVisibilitySessions(true).ToList();
+            _visibilityResults = VisibilityZonesFacade.GetAllVisibilityResults(true).ToList();
          
-            _view.FillVisibilitySessionsTree(_visibilitySessions, isNewSessionAdded);
+            _view.FillVisibilityResultsTree(_visibilityResults);
         }
 
         internal VisibilitySession GetSession(string id)

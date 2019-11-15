@@ -144,6 +144,9 @@
     <Compile Include="..\DataAccess\DataTransfer\ProfileLine.cs">
       <Link>DataTransfer\ProfileLine.cs</Link>
     </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\Visibility.cs">
+      <Link>DataTransfer\Visibility.cs</Link>
+    </Compile>
     <Compile Include="..\DataAccess\DataTransfer\VisibilityCalcTypeEnum.cs">
       <Link>DataTransfer\VisibilityCalcTypeEnum.cs</Link>
     </Compile>

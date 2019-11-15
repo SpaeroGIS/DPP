@@ -242,7 +242,7 @@
             this.panel50 = new System.Windows.Forms.Panel();
             this.labelHeaderVisibilityInfo = new System.Windows.Forms.Label();
             this.splitter1 = new System.Windows.Forms.Splitter();
-            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.tvResults = new System.Windows.Forms.TreeView();
             this.panel49 = new System.Windows.Forms.Panel();
             this.toolBarVisibleResults = new System.Windows.Forms.ToolBar();
             this.toolBarButton43 = new System.Windows.Forms.ToolBarButton();
@@ -2777,7 +2777,7 @@
             // 
             this.tbpVisibilityAreas.Controls.Add(this.panel2);
             this.tbpVisibilityAreas.Controls.Add(this.splitter1);
-            this.tbpVisibilityAreas.Controls.Add(this.treeView1);
+            this.tbpVisibilityAreas.Controls.Add(this.tvResults);
             this.tbpVisibilityAreas.Controls.Add(this.panel49);
             this.tbpVisibilityAreas.Controls.Add(this.panel48);
             this.tbpVisibilityAreas.ImageIndex = 125;
@@ -2839,21 +2839,21 @@
             this.splitter1.TabIndex = 81;
             this.splitter1.TabStop = false;
             // 
-            // treeView1
+            // tvResults
             // 
-            this.treeView1.BackColor = System.Drawing.SystemColors.Window;
-            this.treeView1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.treeView1.CheckBoxes = true;
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.treeView1.FullRowSelect = true;
-            this.treeView1.ImageKey = "0.png";
-            this.treeView1.ImageList = this.imageList1;
-            this.treeView1.Location = new System.Drawing.Point(0, 64);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.SelectedImageKey = "Ok.png";
-            this.treeView1.Size = new System.Drawing.Size(312, 199);
-            this.treeView1.TabIndex = 78;
-            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.node_AfterCheck);
+            this.tvResults.BackColor = System.Drawing.SystemColors.Window;
+            this.tvResults.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tvResults.CheckBoxes = true;
+            this.tvResults.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tvResults.FullRowSelect = true;
+            this.tvResults.ImageKey = "0.png";
+            this.tvResults.ImageList = this.imageList1;
+            this.tvResults.Location = new System.Drawing.Point(0, 64);
+            this.tvResults.Name = "tvResults";
+            this.tvResults.SelectedImageKey = "Ok.png";
+            this.tvResults.Size = new System.Drawing.Size(312, 199);
+            this.tvResults.TabIndex = 78;
+            this.tvResults.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.node_AfterCheck);
             // 
             // panel49
             // 
@@ -3366,7 +3366,7 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox observPointCreator;
         private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.TreeView tvResults;
         private System.Windows.Forms.ToolBarButton toolBarButton5;
         private System.Windows.Forms.ToolBarButton toolBarButton8;
         private System.Windows.Forms.ToolBarButton toolBarButton9;

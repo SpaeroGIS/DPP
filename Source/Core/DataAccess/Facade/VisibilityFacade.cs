@@ -121,5 +121,42 @@ namespace MilSpace.DataAccess.Facade
             var result = VisibilitySession.GetEsriDataTypeByVisibilityresyltType(resultType);
             return GdbAccess.Instance.CheckDatasetExistanceInCalcWorkspace(resultName, result);
         }
+
+
+        public static VisibilityCalcResults AddVisibilityResults(VisibilityCalcResults visibilityResults)
+        {
+            using(var accessor = new VisibilityDataAccess())
+            {
+                var res = accessor.AddVisibilityResults(visibilityResults);
+                return res;
+            }
+        }
+
+        public static VisibilityCalcResults UpdateVisibilityResults(VisibilityCalcResults visibilityResults)
+        {
+            using(var accessor = new VisibilityDataAccess())
+            {
+                var res = accessor.UpdateVisibilityResults(visibilityResults);
+                return res;
+            }
+        }
+
+        public static bool DeleteVisibilityResults(string id)
+        {
+            using(var accessor = new VisibilityDataAccess())
+            {
+                var res = accessor.DeleteVisibilityResults(id);
+                return res;
+            }
+        }
+
+        public static IEnumerable<VisibilityCalcResults> GetAllVisibilityResults(bool forCurrentUser = false)
+        {
+            using(var accessor = new VisibilityDataAccess())
+            {
+                var res = accessor.GetAllVisibilityResults(forCurrentUser);
+                return res.ToArray();
+            }
+        }
     }
 }

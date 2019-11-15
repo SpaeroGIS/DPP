@@ -138,6 +138,115 @@ namespace MilSpace.DataAccess.Facade
             return null;
         }
 
+        public VisibilityCalcResults AddVisibilityResults(VisibilityCalcResults visibilityResults)
+        {
+            try
+            {
+                if(!context.MilSp_VisiblityResults.Any(res => res.Id == visibilityResults.Id))
+                {
+                    var resultsEntity = visibilityResults.Get();
+                    context.MilSp_VisiblityResults.InsertOnSubmit(resultsEntity);
+                    Submit();
+                    log.InfoEx($"Session {visibilityResults.Id} was successfully added");
+                }
+                else
+                {
+                    log.WarnEx($"Session {visibilityResults.Id} cannot added because of it already exists");
+                }
+
+
+                return context.MilSp_VisiblityResults.First(session => session.Id == visibilityResults.Id).Get();
+            }
+            catch(MilSpaceDataException ex)
+            {
+                log.WarnEx(ex.Message);
+
+                if(ex.InnerException != null)
+                {
+                    log.WarnEx(ex.InnerException.Message);
+                }
+            }
+            catch(Exception ex)
+            {
+                log.WarnEx($"Unexpected exception:{ex.Message}");
+            }
+
+            return null;
+        }
+
+        public VisibilityCalcResults UpdateVisibilityResults(VisibilityCalcResults visibilityResults)
+        {
+            try
+            {
+                var resultsEntity = context.MilSp_VisiblityResults.FirstOrDefault(res => res.Id.Trim() == visibilityResults.Id);
+
+                if(resultsEntity != null)
+                {
+                    resultsEntity.Update(visibilityResults);
+
+                    Submit();
+                    log.InfoEx($"Visibility results {visibilityResults.Id} was successfully updated");
+                    return context.MilSp_VisiblityResults.First(session => session.Id.Trim() == visibilityResults.Id).Get();
+                }
+
+                log.WarnEx($"Visibility results {visibilityResults.Id} not found");
+            }
+            catch(MilSpaceDataException ex)
+            {
+                log.WarnEx(ex.Message);
+
+                if(ex.InnerException != null)
+                {
+                    log.WarnEx(ex.InnerException.Message);
+                }
+            }
+            catch(Exception ex)
+            {
+                log.WarnEx($"Unexpected exception:{ex.Message}");
+            }
+
+            return null; ;
+        }
+
+        public bool DeleteVisibilityResults(string id)
+        {
+            try
+            {
+                var resultEntity = context.MilSp_VisiblityResults.FirstOrDefault(res => res.Id.Trim() == id);
+
+                if(resultEntity != null)
+                {
+                    context.MilSp_VisiblityResults.DeleteOnSubmit(resultEntity);
+
+                    Submit();
+                    return true;
+                }
+
+                log.WarnEx($"Visibility results not found");
+            }
+            catch(Exception ex)
+            {
+                log.WarnEx($"Unexpected exception:{ex.Message}");
+            }
+
+            return false;
+        }
+
+        public IEnumerable<VisibilityCalcResults> GetAllVisibilityResults(bool onlyUsersResults)
+        {
+            try
+            {
+                var results = onlyUsersResults? context.MilSp_VisiblityResults.Where(s => s.UserName.Equals(Environment.UserName)) : context.MilSp_VisiblityResults;
+                return results.Select(s => s.Get());
+            }
+            catch(Exception ex)
+            {
+                log.WarnEx($"Unexpected exception:{ex.Message}");
+            }
+
+            return null;
+        }
+
         public IEnumerable<ObservationPoint> GetObservationPoints()
         {
             try
@@ -235,7 +344,6 @@ namespace MilSpace.DataAccess.Facade
 
         public IEnumerable<ObservationObject> GetObservationObjectByIds(IEnumerable<int> ids)
         {
-
             IEnumerable<ObservationObject> result = null;
             if (ids != null || ids.Count() > 0)
             {
