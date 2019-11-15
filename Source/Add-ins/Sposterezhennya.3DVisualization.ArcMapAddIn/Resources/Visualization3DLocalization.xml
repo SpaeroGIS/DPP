@@ -18,6 +18,7 @@
   <Primitive>Графіки</Primitive>
   <Profile>Профіль</Profile>
   <ArcSceneParams>Шари для візуалізації</ArcSceneParams>
+  <lblZFactor>Коефіцієнт перетворення висоти</lblZFactor>
 
   <WindowCaptionVisibilites>Поверхні</WindowCaptionVisibilites>
   <labelHeaderSessionVisibilites>Поверхні для візуалізації</labelHeaderSessionVisibilites>

@@ -109,7 +109,7 @@ namespace MilSpace.Visualization3D
                 this.GenerateImageTab.Text = context.GenerateImageTabHeader;
 
                 this.surfaceLabels.Text = context.SurfacessLabel;
-
+                this.lblZFactor.Text = context.lblZFactor;
 
                 //Buttons
                 this.GenerateButton.Text = context.GenerateButton;
