@@ -618,7 +618,7 @@
             // tbZFactor
             // 
             this.tbZFactor.Dock = System.Windows.Forms.DockStyle.Left;
-            this.tbZFactor.Location = new System.Drawing.Point(134, 4);
+            this.tbZFactor.Location = new System.Drawing.Point(208, 4);
             this.tbZFactor.Name = "tbZFactor";
             this.tbZFactor.Size = new System.Drawing.Size(74, 20);
             this.tbZFactor.TabIndex = 2;
@@ -631,7 +631,7 @@
             this.lblZFactor.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
             this.lblZFactor.Name = "lblZFactor";
             this.lblZFactor.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.lblZFactor.Size = new System.Drawing.Size(130, 20);
+            this.lblZFactor.Size = new System.Drawing.Size(204, 20);
             this.lblZFactor.TabIndex = 1;
             this.lblZFactor.Text = "Height conversion factor";
             // 

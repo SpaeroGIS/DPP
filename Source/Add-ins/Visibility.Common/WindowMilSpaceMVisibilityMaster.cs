@@ -20,7 +20,7 @@ namespace MilSpace.Visibility
         private const string _allValuesFilterText = "All";
         private ObservationPointsController controller = new ObservationPointsController(ArcMap.Document);
         private BindingList<CheckObservPointGui> _observPointGuis;
-        private BindingList<CheckObservPointGui> _observationObjects = new BindingList<CheckObservPointGui>();
+        private BindingList<CheckObservPointGui> _observationObjects;
         internal WizardResult FinalResult = new WizardResult();
 
         private static IActiveView ActiveView => ArcMap.Document.ActiveView;

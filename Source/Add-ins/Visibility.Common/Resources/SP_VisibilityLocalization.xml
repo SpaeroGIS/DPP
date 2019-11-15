@@ -25,10 +25,10 @@
   <PlaceLayerBelow>Знизу</PlaceLayerBelow>
   <CalcFirstTypeDescription>Визначення областей видимості на обраної поверхні в цілому.</CalcFirstTypeDescription>
   <CalcSecondTypeDescriptionShort>VA</CalcSecondTypeDescriptionShort>
-  <CalcSecondTypeDescription>Визначення видимості в заданих ОC.</CalcSecondTypeDescription>
+  <CalcSecondTypeDescription>Визначення видимості в заданих ОН.</CalcSecondTypeDescription>
 
   <CalcTherdTypeDescriptionShort>VO</CalcTherdTypeDescriptionShort>
-  <CalcTherdTypeDescription>Визначення параметрів пунктів спостереження (ПC).</CalcTherdTypeDescription>
+  <CalcTherdTypeDescription>Визначення параметрів пунктів спостереження (ПН).</CalcTherdTypeDescription>
   <CalcFourthTypeDescriptionShort>VP</CalcFourthTypeDescriptionShort>
   <CalcFourthTypeDescription>Аналіз результатів спостереження.</CalcFourthTypeDescription>
 

@@ -50,10 +50,10 @@ namespace MilSpace.Visibility
         internal string CalcFirstTypeDescriptionShort => FindLocalizedElement("CalcFirstTypeDescriptionShort", "VS");
         internal string CalcFirstTypeDescription => FindLocalizedElement("CalcFirstTypeDescription","Визначення областей видимості на обраної поверхні в цілому.");
         internal string CalcSecondTypeDescriptionShort => "VA";
-        internal string CalcSecondTypeDescription => "Визначення видимості в заданих ОC.";
+        internal string CalcSecondTypeDescription => "Визначення видимості в заданих ОН.";
 
         internal string CalcTherdTypeDescriptionShort => "VO";
-        internal string CalcTherdTypeDescription => "Визначення параметрів пунктів спостереження (ПC).";
+        internal string CalcTherdTypeDescription => "Визначення параметрів пунктів спостереження (ПН).";
         internal string CalcFourthTypeDescriptionShort => "VP";
         internal string CalcFourthTypeDescription => "Аналіз результатів спостереження.";
 

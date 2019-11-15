@@ -1043,9 +1043,9 @@ namespace MilSpace.Visibility
             // 
             this.ObservPointLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ObservPointLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ObservPointLabel.Location = new System.Drawing.Point(227, 0);
+            this.ObservPointLabel.Location = new System.Drawing.Point(224, 0);
             this.ObservPointLabel.Name = "ObservPointLabel";
-            this.ObservPointLabel.Size = new System.Drawing.Size(210, 30);
+            this.ObservPointLabel.Size = new System.Drawing.Size(213, 30);
             this.ObservPointLabel.TabIndex = 3;
             this.ObservPointLabel.Text = "ObStations_201810";
             this.ObservPointLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1056,7 +1056,7 @@ namespace MilSpace.Visibility
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label5.Location = new System.Drawing.Point(4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(223, 30);
+            this.label5.Size = new System.Drawing.Size(220, 30);
             this.label5.TabIndex = 2;
             this.label5.Text = "Пункти спостереження (ПС)";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1202,9 +1202,9 @@ namespace MilSpace.Visibility
             // 
             this.observObjectsLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.observObjectsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.observObjectsLabel.Location = new System.Drawing.Point(241, 0);
+            this.observObjectsLabel.Location = new System.Drawing.Point(224, 0);
             this.observObjectsLabel.Name = "observObjectsLabel";
-            this.observObjectsLabel.Size = new System.Drawing.Size(221, 30);
+            this.observObjectsLabel.Size = new System.Drawing.Size(238, 30);
             this.observObjectsLabel.TabIndex = 3;
             this.observObjectsLabel.Text = "label29";
             this.observObjectsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1216,7 +1216,7 @@ namespace MilSpace.Visibility
             this.label6.Location = new System.Drawing.Point(4, 0);
             this.label6.Name = "label6";
             this.label6.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label6.Size = new System.Drawing.Size(237, 30);
+            this.label6.Size = new System.Drawing.Size(220, 30);
             this.label6.TabIndex = 2;
             this.label6.Text = "Об\'єкти нагляду (ОН)";
             // 
@@ -1238,9 +1238,9 @@ namespace MilSpace.Visibility
             this.imagesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.imagesComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.imagesComboBox.FormattingEnabled = true;
-            this.imagesComboBox.Location = new System.Drawing.Point(227, 3);
+            this.imagesComboBox.Location = new System.Drawing.Point(224, 3);
             this.imagesComboBox.Name = "imagesComboBox";
-            this.imagesComboBox.Size = new System.Drawing.Size(290, 24);
+            this.imagesComboBox.Size = new System.Drawing.Size(214, 24);
             this.imagesComboBox.TabIndex = 8;
             // 
             // label22
@@ -1249,7 +1249,7 @@ namespace MilSpace.Visibility
             this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label22.Location = new System.Drawing.Point(4, 3);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(223, 24);
+            this.label22.Size = new System.Drawing.Size(220, 24);
             this.label22.TabIndex = 7;
             this.label22.Text = "Поверхня для розпрахунку";
             // 
@@ -1547,7 +1547,6 @@ namespace MilSpace.Visibility
             // 
             // TableChkBox
             // 
-            this.TableChkBox.AutoSize = true;
             this.TableChkBox.Checked = true;
             this.TableChkBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.TableChkBox.Dock = System.Windows.Forms.DockStyle.Left;
@@ -1555,7 +1554,7 @@ namespace MilSpace.Visibility
             this.TableChkBox.Location = new System.Drawing.Point(592, 1);
             this.TableChkBox.Name = "TableChkBox";
             this.TableChkBox.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.TableChkBox.Size = new System.Drawing.Size(154, 28);
+            this.TableChkBox.Size = new System.Drawing.Size(165, 28);
             this.TableChkBox.TabIndex = 6;
             this.TableChkBox.Text = "таблица покрытия";
             this.TableChkBox.UseVisualStyleBackColor = true;
@@ -1563,22 +1562,20 @@ namespace MilSpace.Visibility
             // 
             // SumChkBox
             // 
-            this.SumChkBox.AutoSize = true;
             this.SumChkBox.Checked = true;
             this.SumChkBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.SumChkBox.Dock = System.Windows.Forms.DockStyle.Left;
             this.SumChkBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.SumChkBox.Location = new System.Drawing.Point(445, 1);
+            this.SumChkBox.Location = new System.Drawing.Point(423, 1);
             this.SumChkBox.Name = "SumChkBox";
             this.SumChkBox.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.SumChkBox.Size = new System.Drawing.Size(147, 28);
+            this.SumChkBox.Size = new System.Drawing.Size(169, 28);
             this.SumChkBox.TabIndex = 5;
-            this.SumChkBox.Text = "суммирующая ОВ";
+            this.SumChkBox.Text = "загальна видимость";
             this.SumChkBox.UseVisualStyleBackColor = true;
             // 
             // checkBoxOP
             // 
-            this.checkBoxOP.AutoSize = true;
             this.checkBoxOP.Checked = true;
             this.checkBoxOP.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxOP.Dock = System.Windows.Forms.DockStyle.Left;
@@ -1586,9 +1583,9 @@ namespace MilSpace.Visibility
             this.checkBoxOP.Location = new System.Drawing.Point(184, 1);
             this.checkBoxOP.Name = "checkBoxOP";
             this.checkBoxOP.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.checkBoxOP.Size = new System.Drawing.Size(261, 28);
+            this.checkBoxOP.Size = new System.Drawing.Size(239, 28);
             this.checkBoxOP.TabIndex = 4;
-            this.checkBoxOP.Text = "области видимости отдельных ПН";
+            this.checkBoxOP.Text = "видимость для окремих ПС";
             this.checkBoxOP.UseVisualStyleBackColor = true;
             // 
             // label11
@@ -1821,7 +1818,7 @@ namespace MilSpace.Visibility
             this.lblObservPointsSummary.Name = "lblObservPointsSummary";
             this.lblObservPointsSummary.Size = new System.Drawing.Size(579, 27);
             this.lblObservPointsSummary.TabIndex = 4;
-            this.lblObservPointsSummary.Text = "вказати кількість ПС та їх перелік у форматі назви ПС розділені точкою с комою";
+            this.lblObservPointsSummary.Text = "вказати кількість ПН та їх перелік у форматі назви ПН\r\n розділені точкою с комою";
             // 
             // label25
             // 
@@ -1832,7 +1829,7 @@ namespace MilSpace.Visibility
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(280, 27);
             this.label25.TabIndex = 3;
-            this.label25.Text = "Обрані пункти спостереження (ПС)";
+            this.label25.Text = "Обрані пункти спостереження (ПН)";
             // 
             // panel33
             // 
@@ -2003,7 +2000,6 @@ namespace MilSpace.Visibility
             this.panel23.ResumeLayout(false);
             this.panel22.ResumeLayout(false);
             this.panel21.ResumeLayout(false);
-            this.panel21.PerformLayout();
             this.panel20.ResumeLayout(false);
             this.stepFour.ResumeLayout(false);
             this.panel27.ResumeLayout(false);
