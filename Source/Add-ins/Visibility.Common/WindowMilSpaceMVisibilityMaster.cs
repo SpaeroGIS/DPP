@@ -63,13 +63,16 @@ namespace MilSpace.Visibility
         }
         public void DisabelObjList()
         {
-            dgvObjects.Enabled = panel15.Enabled = panel16.Enabled = panel17.Enabled = panel18.Enabled = panel19.Enabled = false;
+            //dgvObjects.Enabled = panel15.Enabled = panel16.Enabled = panel17.Enabled = panel18.Enabled = panel19.Enabled = false;
+            dgvObjects.Enabled = false;
+            splitContainer1.Panel2.Enabled = false;
         }
         public void EanableObjList()
         {
             dgvObjects.Enabled = true;
             dgvObjects.Refresh();
-            panel15.Enabled = panel16.Enabled = panel17.Enabled = panel18.Enabled = panel19.Enabled = true;
+            //panel15.Enabled = panel16.Enabled = panel17.Enabled = panel18.Enabled = panel19.Enabled = true;
+            splitContainer1.Panel2.Enabled = true;
 
         }
         public void FirstTypePicked()//triggers when user picks first type
@@ -363,7 +366,6 @@ namespace MilSpace.Visibility
 
             foreach (CheckObservPointGui o in _observPointGuis)
             {
-
                 o.Check = checkBox6.Checked;
                 dvgCheckList.DataSource = _observPointGuis;
                 dvgCheckList.Refresh();
@@ -515,12 +517,12 @@ namespace MilSpace.Visibility
         {
             if (checkBoxOP.Checked) { labelOP.Visible = true; } else { labelOP.Visible = false; }
             if (SumChkBox.Checked) { labelOB.Visible = true; } else { labelOB.Visible = false; }
-            if (TableChkBox.Checked) { labelT.Visible = true; } else { labelT.Visible = false; }
+
+            //if (TableChkBox.Checked) { labelT.Visible = true; } else { labelT.Visible = false; }
 
             label27.Text = CheckedList.Count().ToString();
             label24.Text = comboBox1.SelectedItem.ToString();
             label28.Text = CheckedObjectList.Count().ToString();
-
         }
 
         public string ObservationStationFeatureClass => observObjectsLabel.Text;
