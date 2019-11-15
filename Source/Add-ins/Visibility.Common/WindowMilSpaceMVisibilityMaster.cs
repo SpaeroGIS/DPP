@@ -63,13 +63,16 @@ namespace MilSpace.Visibility
         }
         public void DisabelObjList()
         {
-            dgvObjects.Enabled = panel15.Enabled = panel16.Enabled = panel17.Enabled = panel18.Enabled = panel19.Enabled = false;
+            //dgvObjects.Enabled = panel15.Enabled = panel16.Enabled = panel17.Enabled = panel18.Enabled = panel19.Enabled = false;
+            dgvObjects.Enabled = false;
+            splitContainer1.Panel2.Enabled = false;
         }
         public void EanableObjList()
         {
             dgvObjects.Enabled = true;
             dgvObjects.Refresh();
-            panel15.Enabled = panel16.Enabled = panel17.Enabled = panel18.Enabled = panel19.Enabled = true;
+            //panel15.Enabled = panel16.Enabled = panel17.Enabled = panel18.Enabled = panel19.Enabled = true;
+            splitContainer1.Panel2.Enabled = true;
 
         }
         public void FirstTypePicked()//triggers when user picks first type
@@ -79,6 +82,7 @@ namespace MilSpace.Visibility
             PopulateComboBox();
             FillObservPointLabel();
             DisabelObjList();
+            FillObservPointsOnCurrentView(controller.GetObservPointsOnCurrentMapExtent(ActiveView));
             dgvObjects.DataSource = null;
         }
         public void SecondTypePicked()//triggers when user picks second type
@@ -164,12 +168,10 @@ namespace MilSpace.Visibility
 
                 dvgCheckList.Update();
                 dvgCheckList.Rows[0].Selected = true;
+              
 
             }
-            else
-            {
-
-            }
+            
         }
         public void FillObservPointsOnCurrentView(IEnumerable<ObservationPoint> observationPoints)
         {
@@ -350,8 +352,6 @@ namespace MilSpace.Visibility
 
             foreach (CheckObservPointGui o in _AllObjects)
             {
-
-
                 o.Check = checkBox4.Checked;
                 dgvObjects.DataSource = _AllObjects;
                 dgvObjects.Refresh();
@@ -363,7 +363,6 @@ namespace MilSpace.Visibility
 
             foreach (CheckObservPointGui o in _observPointGuis)
             {
-
                 o.Check = checkBox6.Checked;
                 dvgCheckList.DataSource = _observPointGuis;
                 dvgCheckList.Refresh();
@@ -500,7 +499,7 @@ namespace MilSpace.Visibility
                     VisibilityCalculationResults = (SumChkBox.Checked ? 
                                                     VisibilityCalculationresultsEnum.ObservationPoints | VisibilityCalculationresultsEnum.VisibilityAreaRaster :
                                                     VisibilityCalculationresultsEnum.None)  
-                                                    | VisibilityCalculationresultsEnum.ObservationStations,
+                                                    | VisibilityCalculationresultsEnum.ObservationStations | VisibilityCalculationresultsEnum.VisibilityObservStationClip,
                     CalculationType = calcType
                 };
             }
@@ -515,12 +514,12 @@ namespace MilSpace.Visibility
         {
             if (checkBoxOP.Checked) { labelOP.Visible = true; } else { labelOP.Visible = false; }
             if (SumChkBox.Checked) { labelOB.Visible = true; } else { labelOB.Visible = false; }
-            if (TableChkBox.Checked) { labelT.Visible = true; } else { labelT.Visible = false; }
+
+            //if (TableChkBox.Checked) { labelT.Visible = true; } else { labelT.Visible = false; }
 
             label27.Text = CheckedList.Count().ToString();
             label24.Text = comboBox1.SelectedItem.ToString();
             label28.Text = CheckedObjectList.Count().ToString();
-
         }
 
         public string ObservationStationFeatureClass => observObjectsLabel.Text;

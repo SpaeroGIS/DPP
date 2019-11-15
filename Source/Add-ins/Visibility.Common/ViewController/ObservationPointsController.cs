@@ -217,7 +217,10 @@ namespace MilSpace.Visibility.ViewController
                 animationProgressor.Show();
                 animationProgressor.Play(0, 200);
 
-                var session = VisibilityManager.Generate(observPoints, calcParams.ObservPointIDs, observObjects, calcParams.ObservObjectIDs, calcParams.RasterLayerName, calcParams.VisibilityCalculationResults, sessionName);
+                var session = VisibilityManager.Generate(
+                    observPoints, 
+                    calcParams.ObservPointIDs, 
+                    observObjects, calcParams.ObservObjectIDs, calcParams.RasterLayerName, calcParams.VisibilityCalculationResults, sessionName, calcParams.CalculationType);
                 
                 if(session.Finished != null)
                 {
@@ -441,21 +444,36 @@ namespace MilSpace.Visibility.ViewController
 
         private bool IsFeatureLayerExists(IActiveView view, string featureClass)
         {
+            log.DebugEx("> IsFeatureLayerExists START");
+
             var pattern = @"^[A-Za-z0-9]+\.[A-Za-z0-9]+\." + featureClass + "$";
             var layers = view.FocusMap.Layers;
             var layer = layers.Next();
 
-            while(layer != null)
+            log.DebugEx("IsFeatureLayerExists featureClass:{0} pattern:{1}", featureClass, pattern);
+
+            try
             {
-                if(layer is IFeatureLayer fl && fl.FeatureClass != null && (fl.FeatureClass.AliasName.Equals(featureClass, StringComparison.InvariantCultureIgnoreCase) || Regex.IsMatch(fl.FeatureClass.AliasName, pattern)))
+                while (layer != null)
                 {
-                    return true;
+                    if (layer is IFeatureLayer fl
+                        && fl.FeatureClass != null
+                        && (fl.FeatureClass.AliasName.Equals(featureClass, StringComparison.InvariantCultureIgnoreCase) || Regex.IsMatch(fl.FeatureClass.AliasName, pattern)))
+                    {
+                        log.DebugEx("> IsFeatureLayerExists END, FeatureLayerExists");
+                        return true;
+                    }
+
+                    layer = layers.Next();
                 }
-
-                layer = layers.Next();
+                log.DebugEx("> IsFeatureLayerExists END, NOT FeatureLayerExists");
+                return false;
             }
-
-            return false;
+            catch (Exception ex)
+            {
+                log.DebugEx("> IsFeatureLayerExists Exception. EX:{0}", ex.Message);
+                return false;
+            }
         }
 
         private IEnumerable<VisibilitySession> GetAllVisibilitySessions()
