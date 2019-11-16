@@ -232,7 +232,7 @@ namespace MilSpace.DataAccess.DataTransfer
             }
         }
 
-        internal static VisibilityCalcResults ToVisibilityResults(this VisibilitySession session, bool shared)
+        internal static VisibilityCalcResults ToVisibilityResults(this VisibilityTask session, bool shared)
         {
             try
             {

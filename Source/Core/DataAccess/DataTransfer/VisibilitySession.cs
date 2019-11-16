@@ -26,7 +26,7 @@ namespace MilSpace.DataAccess.DataTransfer
         Below
     }
 
-    public class VisibilitySession: VisibilityCalcResults
+    public class VisibilityTask: VisibilityCalcResults
     {
         public DateTime? Started { get; internal set; }
         public DateTime? Finished { get; internal set; }
