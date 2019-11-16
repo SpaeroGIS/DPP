@@ -20,7 +20,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
         private IFeatureClass obserpStationsfeatureClass;
         private string rasterSource;
         private string outputSourceName;
-        private readonly VisibilitySession session;
+        private readonly VisibilityTask session;
 
         private VisibilityCalculationresultsEnum calcResults;
 
@@ -47,7 +47,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             stationsFilteringIds = parameters.GetParameterWithValidition<int[]>(ActionParameters.FilteringStationsIds, null).Value;
             calcResults = parameters.GetParameterWithValidition<VisibilityCalculationresultsEnum>(ActionParameters.Calculationresults, VisibilityCalculationresultsEnum.None).Value;
             outputSourceName = parameters.GetParameterWithValidition<string>(ActionParameters.OutputSourceName, string.Empty).Value;
-            session = parameters.GetParameterWithValidition<VisibilitySession>(ActionParameters.Session, null).Value;
+            session = parameters.GetParameterWithValidition<VisibilityTask>(ActionParameters.Session, null).Value;
         }
 
         public override string ActionId => ActionsEnum.vblt.ToString();
@@ -130,7 +130,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             //Handle Observation Objects
             if (calcResults.HasFlag(VisibilityCalculationresultsEnum.ObservationStations))
             {
-                oservStationsFeatureClassName = VisibilitySession.GetResultName(VisibilityCalculationresultsEnum.ObservationStations, outputSourceName);
+                oservStationsFeatureClassName = VisibilityTask.GetResultName(VisibilityCalculationresultsEnum.ObservationStations, outputSourceName);
                 var exportedFeatureClass = GdbAccess.Instance.ExportObservationFeatureClass(obserpStationsfeatureClass as IDataset, oservStationsFeatureClassName, stationsFilteringIds);
                 if (!string.IsNullOrWhiteSpace(exportedFeatureClass))
                 {
@@ -163,7 +163,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             foreach (var curPoints in pointsIDs)
             {
                 var pointId = curPoints.Key == VisibilityCalculationresultsEnum.ObservationPoints ? -1 : ++index;
-                var oservPointFeatureClassName = VisibilitySession.GetResultName(curPoints.Key, outputSourceName, pointId);
+                var oservPointFeatureClassName = VisibilityTask.GetResultName(curPoints.Key, outputSourceName, pointId);
 
                 var exportedFeatureClass = GdbAccess.Instance.ExportObservationFeatureClass(obserpPointsfeatureClass as IDataset, oservPointFeatureClassName, curPoints.Value);
 
@@ -180,7 +180,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
                 //Generate Visibility Raster
                 string featureClass = oservPointFeatureClassName;
-                string outImageName = VisibilitySession.GetResultName(curPoints.Key == VisibilityCalculationresultsEnum.ObservationPoints ? 
+                string outImageName = VisibilityTask.GetResultName(curPoints.Key == VisibilityCalculationresultsEnum.ObservationPoints ? 
                         VisibilityCalculationresultsEnum.VisibilityAreaRaster : VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle, outputSourceName, pointId);
 
                 if (!ProfileLibrary.GenerateVisibilityData(rasterSource, featureClass, VisibilityAnalysisTypesEnum.Frequency, outImageName, messages))
@@ -198,7 +198,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                     if (!string.IsNullOrEmpty(oservStationsFeatureClassName))
                     {
                         var inClipName = outImageName;
-                        var outClipName = VisibilitySession.GetResultName(VisibilityCalculationresultsEnum.VisibilityObservStationClip, outputSourceName, pointId);
+                        var outClipName = VisibilityTask.GetResultName(VisibilityCalculationresultsEnum.VisibilityObservStationClip, outputSourceName, pointId);
                         if (!ProfileLibrary.ClipVisibilityZonesByAreas(inClipName, outClipName, oservStationsFeatureClassName, messages))
                         {
                             string errorMessage = $"The result {outClipName} was not generated";

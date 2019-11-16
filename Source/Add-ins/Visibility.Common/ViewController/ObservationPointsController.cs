@@ -12,7 +12,6 @@ using System.Linq;
 using MilSpace.Core;
 using MilSpace.Tools.Exceptions;
 using System.Text.RegularExpressions;
-using MilSpace.Visibility.DTO;
 
 namespace MilSpace.Visibility.ViewController
 {
@@ -23,6 +22,7 @@ namespace MilSpace.Visibility.ViewController
         private static readonly string _observStationFeature = "MilSp_Visible_ObjectsObservation_R";
         private List<ObservationPoint> _observationPoints = new List<ObservationPoint>();
         private List<ObservationObject> _observationObjects = new List<ObservationObject>();
+        private static bool localized = false;
         private string _previousPickedRasterLayer { get; set ; }
 
         /// <summary>
@@ -39,6 +39,17 @@ namespace MilSpace.Visibility.ViewController
         public ObservationPointsController(IMxDocument mapDocument)
         {
             this.mapDocument = mapDocument;
+            LocalizeDictionaries();
+        }
+
+        private static void LocalizeDictionaries()
+        {
+            if (!localized)
+            {
+                _layerPositions[LayerPositionsEnum.Above] = LocalizationContext.Instance.PlaceLayerAbove;
+                _layerPositions[LayerPositionsEnum.Below] = LocalizationContext.Instance.PlaceLayerBelow;
+                localized = true;
+            }
         }
 
         internal void SetView(IObservationPointsView view)
@@ -183,7 +194,7 @@ namespace MilSpace.Visibility.ViewController
         }
 
         // TODO: Define the field in the View Interface to take sessionName, rasterLayerName and  visibilityCalculationResults
-        internal bool CalculateVisibility(MasterResult calcParams, string sessionName)
+        internal bool CalculateVisibility(WizardResult calcParams)
         {
             var statusBar = ArcMap.Application.StatusBar;
             var animationProgressor = statusBar.ProgressAnimation;
@@ -217,18 +228,19 @@ namespace MilSpace.Visibility.ViewController
                 animationProgressor.Show();
                 animationProgressor.Play(0, 200);
 
-                var session = VisibilityManager.Generate(
+                var calcTask = VisibilityManager.Generate(
                     observPoints, 
                     calcParams.ObservPointIDs, 
-                    observObjects, calcParams.ObservObjectIDs, calcParams.RasterLayerName, calcParams.VisibilityCalculationResults, sessionName, calcParams.CalculationType);
+                    observObjects, calcParams.ObservObjectIDs, calcParams.RasterLayerName, calcParams.VisibilityCalculationResults, calcParams.TaskName, 
+                    calcParams.CalculationType);
                 
-                if(session.Finished != null)
+                if(calcTask.Finished != null)
                 {
                     var isLayerAbove = (calcParams.ResultLayerPosition == LayerPositionsEnum.Above);
 
-                    var datasets = GdbAccess.Instance.GetDatasetsFromCalcWorkspace(session.ResultsInfo);
+                    var datasets = GdbAccess.Instance.GetDatasetsFromCalcWorkspace(calcTask.ResultsInfo);
 
-                    EsriTools.AddVisibilityGroupLayer(datasets, session.Name, session.Id, session.ReferencedGDB, calcParams.RelativeLayerName
+                    EsriTools.AddVisibilityGroupLayer(datasets, calcTask.Name, calcTask.Id, calcTask.ReferencedGDB, calcParams.RelativeLayerName
                                                         , isLayerAbove, calcParams.ResultLayerTransparency, mapDocument.ActiveView);
                 }
             }
@@ -476,9 +488,9 @@ namespace MilSpace.Visibility.ViewController
             }
         }
 
-        private IEnumerable<VisibilitySession> GetAllVisibilitySessions()
+        private IEnumerable<VisibilityTask> GetAllVisibilitySessions()
         {
-            return VisibilityZonesFacade.GetAllVisibilitySessions();
+            return VisibilityZonesFacade.GetAllVisibilityTasks();
         }
 
         private IFeatureClass GetFeatureClass(string featureClassName, IActiveView activeView)

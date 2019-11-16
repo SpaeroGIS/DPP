@@ -1034,7 +1034,7 @@
             this.funTab.Location = new System.Drawing.Point(4, 24);
             this.funTab.Name = "funTab";
             this.funTab.Padding = new System.Windows.Forms.Padding(3);
-            this.funTab.Size = new System.Drawing.Size(428, 307);
+            this.funTab.Size = new System.Drawing.Size(298, 172);
             this.funTab.TabIndex = 1;
             this.funTab.Text = "\"Веером\"";
             this.funTab.UseVisualStyleBackColor = true;
@@ -1050,7 +1050,7 @@
             this.panel9.Margin = new System.Windows.Forms.Padding(3, 4, 3, 3);
             this.panel9.Name = "panel9";
             this.panel9.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.panel9.Size = new System.Drawing.Size(422, 24);
+            this.panel9.Size = new System.Drawing.Size(292, 24);
             this.panel9.TabIndex = 26;
             // 
             // azimuth2
@@ -1107,7 +1107,7 @@
             this.panel8.Location = new System.Drawing.Point(3, 105);
             this.panel8.Name = "panel8";
             this.panel8.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.panel8.Size = new System.Drawing.Size(422, 24);
+            this.panel8.Size = new System.Drawing.Size(292, 24);
             this.panel8.TabIndex = 25;
             // 
             // funLinesCount
@@ -1176,7 +1176,7 @@
             this.panel10.Location = new System.Drawing.Point(3, 54);
             this.panel10.Name = "panel10";
             this.panel10.Padding = new System.Windows.Forms.Padding(8, 2, 0, 0);
-            this.panel10.Size = new System.Drawing.Size(422, 26);
+            this.panel10.Size = new System.Drawing.Size(292, 26);
             this.panel10.TabIndex = 20;
             // 
             // lblHeightOfViewFunBaseText
@@ -1211,7 +1211,7 @@
             this.panel7.Location = new System.Drawing.Point(3, 28);
             this.panel7.Name = "panel7";
             this.panel7.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.panel7.Size = new System.Drawing.Size(422, 26);
+            this.panel7.Size = new System.Drawing.Size(292, 26);
             this.panel7.TabIndex = 13;
             // 
             // basePointToolbar
@@ -1229,7 +1229,7 @@
             this.basePointToolbar.Location = new System.Drawing.Point(168, 0);
             this.basePointToolbar.Name = "basePointToolbar";
             this.basePointToolbar.ShowToolTips = true;
-            this.basePointToolbar.Size = new System.Drawing.Size(254, 28);
+            this.basePointToolbar.Size = new System.Drawing.Size(124, 28);
             this.basePointToolbar.TabIndex = 28;
             this.basePointToolbar.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.toolBar3_ButtonClick);
             // 
@@ -1302,7 +1302,7 @@
             this.primitiveTab.ImageKey = "vector-polygon.png";
             this.primitiveTab.Location = new System.Drawing.Point(4, 24);
             this.primitiveTab.Name = "primitiveTab";
-            this.primitiveTab.Size = new System.Drawing.Size(428, 307);
+            this.primitiveTab.Size = new System.Drawing.Size(298, 172);
             this.primitiveTab.TabIndex = 2;
             this.primitiveTab.Text = "Примитивом";
             this.primitiveTab.UseVisualStyleBackColor = true;
@@ -1328,7 +1328,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 51);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(8, 2, 0, 0);
-            this.panel1.Size = new System.Drawing.Size(428, 26);
+            this.panel1.Size = new System.Drawing.Size(281, 26);
             this.panel1.TabIndex = 45;
             // 
             // lblHeightOfViewGraphics
@@ -1362,10 +1362,10 @@
             this.toolBarSelectedPrimitives.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.toolBarSelectedPrimitives.DropDownArrows = true;
             this.toolBarSelectedPrimitives.ImageList = this.imageList1;
-            this.toolBarSelectedPrimitives.Location = new System.Drawing.Point(0, 279);
+            this.toolBarSelectedPrimitives.Location = new System.Drawing.Point(0, 164);
             this.toolBarSelectedPrimitives.Name = "toolBarSelectedPrimitives";
             this.toolBarSelectedPrimitives.ShowToolTips = true;
-            this.toolBarSelectedPrimitives.Size = new System.Drawing.Size(428, 28);
+            this.toolBarSelectedPrimitives.Size = new System.Drawing.Size(281, 28);
             this.toolBarSelectedPrimitives.TabIndex = 27;
             this.toolBarSelectedPrimitives.Visible = false;
             this.toolBarSelectedPrimitives.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.toolBarSelectedPrimitives_ButtonClick);
@@ -1383,7 +1383,7 @@
             this.panel13.Location = new System.Drawing.Point(0, 25);
             this.panel13.Name = "panel13";
             this.panel13.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.panel13.Size = new System.Drawing.Size(428, 26);
+            this.panel13.Size = new System.Drawing.Size(281, 26);
             this.panel13.TabIndex = 17;
             // 
             // layersToSelectLine
@@ -1393,7 +1393,7 @@
             this.layersToSelectLine.FormattingEnabled = true;
             this.layersToSelectLine.Location = new System.Drawing.Point(8, 0);
             this.layersToSelectLine.Name = "layersToSelectLine";
-            this.layersToSelectLine.Size = new System.Drawing.Size(420, 21);
+            this.layersToSelectLine.Size = new System.Drawing.Size(273, 21);
             this.layersToSelectLine.TabIndex = 0;
             // 
             // lblPrimitivesLayerToSelect
@@ -1424,7 +1424,7 @@
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(419, 56);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(272, 56);
             this.tableLayoutPanel3.TabIndex = 46;
             // 
             // lblCommonLengthValue
@@ -1435,7 +1435,7 @@
             this.lblCommonLengthValue.Location = new System.Drawing.Point(119, 26);
             this.lblCommonLengthValue.Name = "lblCommonLengthValue";
             this.lblCommonLengthValue.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.lblCommonLengthValue.Size = new System.Drawing.Size(297, 21);
+            this.lblCommonLengthValue.Size = new System.Drawing.Size(150, 21);
             this.lblCommonLengthValue.TabIndex = 62;
             this.lblCommonLengthValue.Text = "0";
             // 
@@ -1447,7 +1447,7 @@
             this.lblSelectedPrimitivesValue.Location = new System.Drawing.Point(119, 0);
             this.lblSelectedPrimitivesValue.Name = "lblSelectedPrimitivesValue";
             this.lblSelectedPrimitivesValue.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.lblSelectedPrimitivesValue.Size = new System.Drawing.Size(297, 21);
+            this.lblSelectedPrimitivesValue.Size = new System.Drawing.Size(150, 21);
             this.lblSelectedPrimitivesValue.TabIndex = 61;
             this.lblSelectedPrimitivesValue.Text = "0";
             // 
@@ -1487,7 +1487,7 @@
             this.loadTab.ImageKey = "Download.png";
             this.loadTab.Location = new System.Drawing.Point(4, 24);
             this.loadTab.Name = "loadTab";
-            this.loadTab.Size = new System.Drawing.Size(428, 307);
+            this.loadTab.Size = new System.Drawing.Size(298, 172);
             this.loadTab.TabIndex = 3;
             this.loadTab.Text = "Загрузить";
             this.loadTab.UseVisualStyleBackColor = true;
@@ -1508,7 +1508,7 @@
             this.toolBar5.Location = new System.Drawing.Point(0, 159);
             this.toolBar5.Name = "toolBar5";
             this.toolBar5.ShowToolTips = true;
-            this.toolBar5.Size = new System.Drawing.Size(428, 28);
+            this.toolBar5.Size = new System.Drawing.Size(281, 28);
             this.toolBar5.TabIndex = 31;
             this.toolBar5.Visible = false;
             // 
@@ -1550,7 +1550,7 @@
             this.richTextBox8.Dock = System.Windows.Forms.DockStyle.Top;
             this.richTextBox8.Location = new System.Drawing.Point(0, 102);
             this.richTextBox8.Name = "richTextBox8";
-            this.richTextBox8.Size = new System.Drawing.Size(428, 57);
+            this.richTextBox8.Size = new System.Drawing.Size(281, 57);
             this.richTextBox8.TabIndex = 30;
             this.richTextBox8.Text = "Выбрано - 1\nДлина - 3 км\nАтрибуты - в строку, подряд: <название>:<значение>; <наз" +
     "вание>:<значение> и т.д";
@@ -1575,7 +1575,7 @@
             this.panel15.Location = new System.Drawing.Point(0, 25);
             this.panel15.Name = "panel15";
             this.panel15.Padding = new System.Windows.Forms.Padding(8, 0, 8, 0);
-            this.panel15.Size = new System.Drawing.Size(428, 52);
+            this.panel15.Size = new System.Drawing.Size(281, 52);
             this.panel15.TabIndex = 28;
             // 
             // panel14
@@ -1590,13 +1590,13 @@
             this.panel14.Margin = new System.Windows.Forms.Padding(3, 4, 3, 3);
             this.panel14.Name = "panel14";
             this.panel14.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.panel14.Size = new System.Drawing.Size(412, 24);
+            this.panel14.Size = new System.Drawing.Size(265, 24);
             this.panel14.TabIndex = 31;
             // 
             // button3
             // 
             this.button3.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button3.Location = new System.Drawing.Point(349, 0);
+            this.button3.Location = new System.Drawing.Point(202, 0);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(63, 24);
             this.button3.TabIndex = 20;
@@ -1657,7 +1657,7 @@
             this.comboBox8.FormattingEnabled = true;
             this.comboBox8.Location = new System.Drawing.Point(8, 31);
             this.comboBox8.Name = "comboBox8";
-            this.comboBox8.Size = new System.Drawing.Size(412, 21);
+            this.comboBox8.Size = new System.Drawing.Size(265, 21);
             this.comboBox8.TabIndex = 0;
             // 
             // richTextBox5
@@ -1665,9 +1665,9 @@
             this.richTextBox5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.richTextBox5.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBox5.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.richTextBox5.Location = new System.Drawing.Point(0, 207);
+            this.richTextBox5.Location = new System.Drawing.Point(0, 159);
             this.richTextBox5.Name = "richTextBox5";
-            this.richTextBox5.Size = new System.Drawing.Size(428, 100);
+            this.richTextBox5.Size = new System.Drawing.Size(281, 100);
             this.richTextBox5.TabIndex = 27;
             this.richTextBox5.Text = resources.GetString("richTextBox5.Text");
             // 

@@ -2,9 +2,9 @@
 
 namespace MilSpace.Visualization3D.Models
 {
-    internal class VisibilitySessionModel
+    internal class VisibilityResultModel
     {
-        public VisibilitySession VisibilitySession{ get; set; }
+        public VisibilityTask VisibilityTask{ get; set; }
         public string Gui { get; set; }
 
     }

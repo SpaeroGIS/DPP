@@ -15,9 +15,9 @@ namespace MilSpace.DataAccess.DataTransfer
 
                 if (resultType == VisibilityCalculationresultsEnum.None)
                 {
-                    if (VisibilitySession.VisibilityResulSuffixes.Any(v => ResultName.EndsWith(v.Value)))
+                    if (VisibilityTask.VisibilityResulSuffixes.Any(v => ResultName.EndsWith(v.Value)))
                     {
-                        resultType = VisibilitySession.VisibilityResulSuffixes.FirstOrDefault(v => v.Key != VisibilityCalculationresultsEnum.None &&
+                        resultType = VisibilityTask.VisibilityResulSuffixes.FirstOrDefault(v => v.Key != VisibilityCalculationresultsEnum.None &&
                         ResultName.EndsWith(v.Value)
                         
                         ).Key;

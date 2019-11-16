@@ -127,9 +127,6 @@
     <Compile Include="..\Visibility.Common\DTO\CheckObservPointGui.cs">
       <Link>DTO\CheckObservPointGui.cs</Link>
     </Compile>
-    <Compile Include="..\Visibility.Common\DTO\MasterResult.cs">
-      <Link>DTO\MasterResult.cs</Link>
-    </Compile>
     <Compile Include="..\Visibility.Common\DTO\ObservObjectGui.cs">
       <Link>DTO\ObservObjectGui.cs</Link>
     </Compile>
@@ -257,8 +254,12 @@
       <Name>MilSpace.Tools</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Content Include="Resources\SP_VisibilityLocalization.xml" />
+    <Content Include="..\Visibility.Common\Resources\SP_VisibilityLocalization.xml">
+      <Link>Resources\SP_VisibilityLocalization.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>

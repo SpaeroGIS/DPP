@@ -170,12 +170,14 @@ namespace MilSpace.Profile
             cmbPointLayers.Items.Clear();
             layersToSelectLine.Items.Clear();
 
-            PopulateComboBox(cmbRasterLayers, ProfileLayers.RasterLayers);
-            PopulateComboBox(cmbRoadLayers, ProfileLayers.PolygonLayers);
-            PopulateComboBox(cmbHydrographyLayer, ProfileLayers.PolygonLayers);
-            PopulateComboBox(cmbBuildings, ProfileLayers.PolygonLayers);
-            PopulateComboBox(cmbVegetationLayer, ProfileLayers.PolygonLayers);
-            PopulateComboBox(cmbPointLayers, ProfileLayers.PointLayers);
+            MapLayersManager mlmngr = new MapLayersManager(ActiveView);
+
+            PopulateComboBox(cmbRasterLayers, mlmngr.RasterLayers);
+            PopulateComboBox(cmbRoadLayers, mlmngr.PolygonLayers);
+            PopulateComboBox(cmbHydrographyLayer, mlmngr.PolygonLayers);
+            PopulateComboBox(cmbBuildings, mlmngr.PolygonLayers);
+            PopulateComboBox(cmbVegetationLayer, mlmngr.PolygonLayers);
+            PopulateComboBox(cmbPointLayers, mlmngr.PointLayers);
 
             layersToSelectLine.Items.AddRange(GetLayersForLineSelection.ToArray());
             layersToSelectLine.SelectedItem = layersToSelectLine.Items[0];

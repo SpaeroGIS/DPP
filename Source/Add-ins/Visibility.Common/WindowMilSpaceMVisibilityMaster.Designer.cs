@@ -98,14 +98,14 @@ namespace MilSpace.Visibility
             this.observObjectsLabel = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.panel44 = new System.Windows.Forms.Panel();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.imagesComboBox = new System.Windows.Forms.ComboBox();
             this.label22 = new System.Windows.Forms.Label();
             this.panel47 = new System.Windows.Forms.Panel();
             this.label30 = new System.Windows.Forms.Label();
             this.stepThree = new System.Windows.Forms.TabPage();
             this.panel25 = new System.Windows.Forms.Panel();
             this.checkBox7 = new System.Windows.Forms.CheckBox();
-            this.comboBox10 = new System.Windows.Forms.ComboBox();
+            this.cmbEmptyDataValue = new System.Windows.Forms.ComboBox();
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.panel24 = new System.Windows.Forms.Panel();
@@ -132,31 +132,31 @@ namespace MilSpace.Visibility
             this.label10 = new System.Windows.Forms.Label();
             this.stepFour = new System.Windows.Forms.TabPage();
             this.panel27 = new System.Windows.Forms.Panel();
-            this.label41 = new System.Windows.Forms.Label();
+            this.lblTrimCalcresults = new System.Windows.Forms.Label();
             this.label42 = new System.Windows.Forms.Label();
             this.panel26 = new System.Windows.Forms.Panel();
-            this.label39 = new System.Windows.Forms.Label();
+            this.lblReferencedLayerName = new System.Windows.Forms.Label();
             this.label40 = new System.Windows.Forms.Label();
             this.panel37 = new System.Windows.Forms.Panel();
-            this.label36 = new System.Windows.Forms.Label();
+            this.lblObservObjectsAll = new System.Windows.Forms.Label();
             this.labelOB = new System.Windows.Forms.Label();
             this.panel36 = new System.Windows.Forms.Panel();
-            this.label35 = new System.Windows.Forms.Label();
+            this.lblObservObjectsSingle = new System.Windows.Forms.Label();
             this.labelOP = new System.Windows.Forms.Label();
             this.panel35 = new System.Windows.Forms.Panel();
-            this.label28 = new System.Windows.Forms.Label();
+            this.lblObservObjectsSummary = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.panel34 = new System.Windows.Forms.Panel();
-            this.label27 = new System.Windows.Forms.Label();
+            this.lblObservPointsSummary = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.panel33 = new System.Windows.Forms.Panel();
-            this.label24 = new System.Windows.Forms.Label();
+            this.lblDEMName = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.panel38 = new System.Windows.Forms.Panel();
-            this.label43 = new System.Windows.Forms.Label();
+            this.lblTaskName = new System.Windows.Forms.Label();
             this.label44 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.label38 = new System.Windows.Forms.Label();
+            this.lblCalcType = new System.Windows.Forms.Label();
             this.label37 = new System.Windows.Forms.Label();
             this.panel28 = new System.Windows.Forms.Panel();
             this.label29 = new System.Windows.Forms.Label();
@@ -607,8 +607,8 @@ namespace MilSpace.Visibility
             this.label49.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
             this.label49.Size = new System.Drawing.Size(694, 85);
             this.label49.TabIndex = 0;
-            this.label49.Text = "Визначення параметрів пунктів спостереження (ПН).\r\nПошук параметрів ПН для спосте" +
-    "реження заданих об\'ектів спостереження (ОН) (параметри апаратури, висота над пов" +
+            this.label49.Text = "Визначення параметрів пунктів спостереження (ПC).\r\nПошук параметрів ПC для спосте" +
+    "реження заданих об\'ектів спостереження (ОC) (параметри апаратури, висота над пов" +
     "ерхнею, напрямки і кути огляду)";
             this.label49.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -680,7 +680,7 @@ namespace MilSpace.Visibility
             this.label48.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
             this.label48.Size = new System.Drawing.Size(694, 85);
             this.label48.TabIndex = 0;
-            this.label48.Text = "Визначення видимості в заданих ОН. \r\nПроводиться для обраних пунктів спостереженн" +
+            this.label48.Text = "Визначення видимості в заданих ОC. \r\nПроводиться для обраних пунктів спостереженн" +
     "я (ПС) та об\'єктів нагляду, з урахуванням індивідуальних параметрів ПС";
             this.label48.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -1223,7 +1223,7 @@ namespace MilSpace.Visibility
             // panel44
             // 
             this.panel44.BackColor = System.Drawing.SystemColors.Window;
-            this.panel44.Controls.Add(this.comboBox1);
+            this.panel44.Controls.Add(this.imagesComboBox);
             this.panel44.Controls.Add(this.label22);
             this.panel44.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel44.Location = new System.Drawing.Point(3, 43);
@@ -1232,16 +1232,16 @@ namespace MilSpace.Visibility
             this.panel44.Size = new System.Drawing.Size(915, 30);
             this.panel44.TabIndex = 68;
             // 
-            // comboBox1
+            // imagesComboBox
             // 
-            this.comboBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(224, 3);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(214, 24);
-            this.comboBox1.TabIndex = 8;
+            this.imagesComboBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.imagesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.imagesComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.imagesComboBox.FormattingEnabled = true;
+            this.imagesComboBox.Location = new System.Drawing.Point(224, 3);
+            this.imagesComboBox.Name = "imagesComboBox";
+            this.imagesComboBox.Size = new System.Drawing.Size(214, 24);
+            this.imagesComboBox.TabIndex = 8;
             // 
             // label22
             // 
@@ -1295,7 +1295,7 @@ namespace MilSpace.Visibility
             // panel25
             // 
             this.panel25.Controls.Add(this.checkBox7);
-            this.panel25.Controls.Add(this.comboBox10);
+            this.panel25.Controls.Add(this.cmbEmptyDataValue);
             this.panel25.Controls.Add(this.label20);
             this.panel25.Controls.Add(this.label21);
             this.panel25.Dock = System.Windows.Forms.DockStyle.Top;
@@ -1321,18 +1321,19 @@ namespace MilSpace.Visibility
             this.checkBox7.UseVisualStyleBackColor = true;
             this.checkBox7.Visible = false;
             // 
-            // comboBox10
+            // cmbEmptyDataValue
             // 
-            this.comboBox10.Dock = System.Windows.Forms.DockStyle.Left;
-            this.comboBox10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboBox10.FormattingEnabled = true;
-            this.comboBox10.Items.AddRange(new object[] {
+            this.cmbEmptyDataValue.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbEmptyDataValue.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbEmptyDataValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cmbEmptyDataValue.FormattingEnabled = true;
+            this.cmbEmptyDataValue.Items.AddRange(new object[] {
             "0",
             "NoData"});
-            this.comboBox10.Location = new System.Drawing.Point(435, 3);
-            this.comboBox10.Name = "comboBox10";
-            this.comboBox10.Size = new System.Drawing.Size(158, 24);
-            this.comboBox10.TabIndex = 8;
+            this.cmbEmptyDataValue.Location = new System.Drawing.Point(435, 3);
+            this.cmbEmptyDataValue.Name = "cmbEmptyDataValue";
+            this.cmbEmptyDataValue.Size = new System.Drawing.Size(158, 24);
+            this.cmbEmptyDataValue.TabIndex = 8;
             // 
             // label20
             // 
@@ -1380,7 +1381,6 @@ namespace MilSpace.Visibility
             this.tbTransparency.TabIndex = 10;
             this.tbTransparency.Text = "33";
             this.tbTransparency.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.tbTransparency.TextChanged += new System.EventHandler(this.tbTransparency_TextChanged);
             this.tbTransparency.Leave += new System.EventHandler(this.TbTransparency_Leave);
             // 
             // label18
@@ -1489,6 +1489,7 @@ namespace MilSpace.Visibility
             // cmbPositions
             // 
             this.cmbPositions.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbPositions.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbPositions.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cmbPositions.FormattingEnabled = true;
             this.cmbPositions.Items.AddRange(new object[] {
@@ -1502,13 +1503,13 @@ namespace MilSpace.Visibility
             // cmbMapLayers
             // 
             this.cmbMapLayers.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbMapLayers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMapLayers.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cmbMapLayers.FormattingEnabled = true;
             this.cmbMapLayers.Location = new System.Drawing.Point(311, 3);
             this.cmbMapLayers.Name = "cmbMapLayers";
             this.cmbMapLayers.Size = new System.Drawing.Size(282, 24);
             this.cmbMapLayers.TabIndex = 6;
-            this.cmbMapLayers.Text = "Название группового слоя в проекте";
             // 
             // label14
             // 
@@ -1644,7 +1645,7 @@ namespace MilSpace.Visibility
             // 
             // panel27
             // 
-            this.panel27.Controls.Add(this.label41);
+            this.panel27.Controls.Add(this.lblTrimCalcresults);
             this.panel27.Controls.Add(this.label42);
             this.panel27.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel27.Location = new System.Drawing.Point(0, 280);
@@ -1653,15 +1654,15 @@ namespace MilSpace.Visibility
             this.panel27.Size = new System.Drawing.Size(921, 30);
             this.panel27.TabIndex = 31;
             // 
-            // label41
+            // lblTrimCalcresults
             // 
-            this.label41.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label41.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label41.Location = new System.Drawing.Point(284, 3);
-            this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(533, 27);
-            this.label41.TabIndex = 8;
-            this.label41.Text = "Вказати Так/Ні";
+            this.lblTrimCalcresults.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblTrimCalcresults.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblTrimCalcresults.Location = new System.Drawing.Point(284, 3);
+            this.lblTrimCalcresults.Name = "lblTrimCalcresults";
+            this.lblTrimCalcresults.Size = new System.Drawing.Size(533, 27);
+            this.lblTrimCalcresults.TabIndex = 8;
+            this.lblTrimCalcresults.Text = "Вказати Так/Ні - Нема контролу";
             // 
             // label42
             // 
@@ -1675,7 +1676,7 @@ namespace MilSpace.Visibility
             // 
             // panel26
             // 
-            this.panel26.Controls.Add(this.label39);
+            this.panel26.Controls.Add(this.lblReferencedLayerName);
             this.panel26.Controls.Add(this.label40);
             this.panel26.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel26.Location = new System.Drawing.Point(0, 250);
@@ -1684,15 +1685,15 @@ namespace MilSpace.Visibility
             this.panel26.Size = new System.Drawing.Size(921, 30);
             this.panel26.TabIndex = 30;
             // 
-            // label39
+            // lblReferencedLayerName
             // 
-            this.label39.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label39.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label39.Location = new System.Drawing.Point(284, 3);
-            this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(533, 27);
-            this.label39.TabIndex = 8;
-            this.label39.Text = "Вказати шар та розташування \"Зверху\"/ \"Знизу\"";
+            this.lblReferencedLayerName.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblReferencedLayerName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblReferencedLayerName.Location = new System.Drawing.Point(284, 3);
+            this.lblReferencedLayerName.Name = "lblReferencedLayerName";
+            this.lblReferencedLayerName.Size = new System.Drawing.Size(533, 27);
+            this.lblReferencedLayerName.TabIndex = 8;
+            this.lblReferencedLayerName.Text = "Вказати шар та розташування \"Зверху\"/ \"Знизу\"";
             // 
             // label40
             // 
@@ -1706,7 +1707,7 @@ namespace MilSpace.Visibility
             // 
             // panel37
             // 
-            this.panel37.Controls.Add(this.label36);
+            this.panel37.Controls.Add(this.lblObservObjectsAll);
             this.panel37.Controls.Add(this.labelOB);
             this.panel37.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel37.Location = new System.Drawing.Point(0, 220);
@@ -1715,15 +1716,15 @@ namespace MilSpace.Visibility
             this.panel37.Size = new System.Drawing.Size(921, 30);
             this.panel37.TabIndex = 29;
             // 
-            // label36
+            // lblObservObjectsAll
             // 
-            this.label36.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label36.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label36.Location = new System.Drawing.Point(284, 3);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(533, 27);
-            this.label36.TabIndex = 8;
-            this.label36.Text = "Вказати Так/Ні";
+            this.lblObservObjectsAll.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblObservObjectsAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblObservObjectsAll.Location = new System.Drawing.Point(284, 3);
+            this.lblObservObjectsAll.Name = "lblObservObjectsAll";
+            this.lblObservObjectsAll.Size = new System.Drawing.Size(533, 27);
+            this.lblObservObjectsAll.TabIndex = 8;
+            this.lblObservObjectsAll.Text = "Вказати Так/Ні";
             // 
             // labelOB
             // 
@@ -1737,7 +1738,7 @@ namespace MilSpace.Visibility
             // 
             // panel36
             // 
-            this.panel36.Controls.Add(this.label35);
+            this.panel36.Controls.Add(this.lblObservObjectsSingle);
             this.panel36.Controls.Add(this.labelOP);
             this.panel36.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel36.Location = new System.Drawing.Point(0, 190);
@@ -1746,15 +1747,15 @@ namespace MilSpace.Visibility
             this.panel36.Size = new System.Drawing.Size(921, 30);
             this.panel36.TabIndex = 28;
             // 
-            // label35
+            // lblObservObjectsSingle
             // 
-            this.label35.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label35.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label35.Location = new System.Drawing.Point(284, 3);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(579, 27);
-            this.label35.TabIndex = 7;
-            this.label35.Text = "Вказати Так/Ні";
+            this.lblObservObjectsSingle.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblObservObjectsSingle.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblObservObjectsSingle.Location = new System.Drawing.Point(284, 3);
+            this.lblObservObjectsSingle.Name = "lblObservObjectsSingle";
+            this.lblObservObjectsSingle.Size = new System.Drawing.Size(579, 27);
+            this.lblObservObjectsSingle.TabIndex = 7;
+            this.lblObservObjectsSingle.Text = "Вказати Так/Ні";
             // 
             // labelOP
             // 
@@ -1768,7 +1769,7 @@ namespace MilSpace.Visibility
             // 
             // panel35
             // 
-            this.panel35.Controls.Add(this.label28);
+            this.panel35.Controls.Add(this.lblObservObjectsSummary);
             this.panel35.Controls.Add(this.label26);
             this.panel35.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel35.Location = new System.Drawing.Point(0, 160);
@@ -1777,15 +1778,15 @@ namespace MilSpace.Visibility
             this.panel35.Size = new System.Drawing.Size(921, 30);
             this.panel35.TabIndex = 27;
             // 
-            // label28
+            // lblObservObjectsSummary
             // 
-            this.label28.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label28.Location = new System.Drawing.Point(284, 3);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(579, 27);
-            this.label28.TabIndex = 4;
-            this.label28.Text = "вказати кількість ОН та їх перелік у форматі назви ОН розділені точкою с комою";
+            this.lblObservObjectsSummary.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblObservObjectsSummary.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblObservObjectsSummary.Location = new System.Drawing.Point(284, 3);
+            this.lblObservObjectsSummary.Name = "lblObservObjectsSummary";
+            this.lblObservObjectsSummary.Size = new System.Drawing.Size(579, 27);
+            this.lblObservObjectsSummary.TabIndex = 4;
+            this.lblObservObjectsSummary.Text = "вказати кількість ОН та їх перелік у форматі назви ОН розділені точкою с комою";
             // 
             // label26
             // 
@@ -1800,7 +1801,7 @@ namespace MilSpace.Visibility
             // 
             // panel34
             // 
-            this.panel34.Controls.Add(this.label27);
+            this.panel34.Controls.Add(this.lblObservPointsSummary);
             this.panel34.Controls.Add(this.label25);
             this.panel34.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel34.Location = new System.Drawing.Point(0, 130);
@@ -1809,15 +1810,15 @@ namespace MilSpace.Visibility
             this.panel34.Size = new System.Drawing.Size(921, 30);
             this.panel34.TabIndex = 26;
             // 
-            // label27
+            // lblObservPointsSummary
             // 
-            this.label27.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label27.Location = new System.Drawing.Point(284, 3);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(579, 27);
-            this.label27.TabIndex = 4;
-            this.label27.Text = "вказати кількість ПС та їх перелік у форматі назви ПС розділені точкою с комою";
+            this.lblObservPointsSummary.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblObservPointsSummary.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblObservPointsSummary.Location = new System.Drawing.Point(284, 3);
+            this.lblObservPointsSummary.Name = "lblObservPointsSummary";
+            this.lblObservPointsSummary.Size = new System.Drawing.Size(579, 27);
+            this.lblObservPointsSummary.TabIndex = 4;
+            this.lblObservPointsSummary.Text = "вказати кількість ПН та їх перелік у форматі назви ПН\r\n розділені точкою с комою";
             // 
             // label25
             // 
@@ -1828,11 +1829,11 @@ namespace MilSpace.Visibility
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(280, 27);
             this.label25.TabIndex = 3;
-            this.label25.Text = "Обрані пункти спостереження (ПС)";
+            this.label25.Text = "Обрані пункти спостереження (ПН)";
             // 
             // panel33
             // 
-            this.panel33.Controls.Add(this.label24);
+            this.panel33.Controls.Add(this.lblDEMName);
             this.panel33.Controls.Add(this.label23);
             this.panel33.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel33.Location = new System.Drawing.Point(0, 100);
@@ -1841,15 +1842,15 @@ namespace MilSpace.Visibility
             this.panel33.Size = new System.Drawing.Size(921, 30);
             this.panel33.TabIndex = 25;
             // 
-            // label24
+            // lblDEMName
             // 
-            this.label24.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label24.Location = new System.Drawing.Point(284, 3);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(579, 27);
-            this.label24.TabIndex = 5;
-            this.label24.Text = "вказати повернню для розрахунків";
+            this.lblDEMName.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblDEMName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblDEMName.Location = new System.Drawing.Point(284, 3);
+            this.lblDEMName.Name = "lblDEMName";
+            this.lblDEMName.Size = new System.Drawing.Size(579, 27);
+            this.lblDEMName.TabIndex = 5;
+            this.lblDEMName.Text = "вказати повернню для розрахунків";
             // 
             // label23
             // 
@@ -1863,7 +1864,7 @@ namespace MilSpace.Visibility
             // 
             // panel38
             // 
-            this.panel38.Controls.Add(this.label43);
+            this.panel38.Controls.Add(this.lblTaskName);
             this.panel38.Controls.Add(this.label44);
             this.panel38.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel38.Location = new System.Drawing.Point(0, 70);
@@ -1872,15 +1873,15 @@ namespace MilSpace.Visibility
             this.panel38.Size = new System.Drawing.Size(921, 30);
             this.panel38.TabIndex = 24;
             // 
-            // label43
+            // lblTaskName
             // 
-            this.label43.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label43.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label43.Location = new System.Drawing.Point(284, 3);
-            this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(579, 27);
-            this.label43.TabIndex = 8;
-            this.label43.Text = "Вказати заплановану назву розрахунку";
+            this.lblTaskName.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblTaskName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblTaskName.Location = new System.Drawing.Point(284, 3);
+            this.lblTaskName.Name = "lblTaskName";
+            this.lblTaskName.Size = new System.Drawing.Size(579, 27);
+            this.lblTaskName.TabIndex = 8;
+            this.lblTaskName.Text = "Вказати заплановану назву розрахунку";
             // 
             // label44
             // 
@@ -1894,7 +1895,7 @@ namespace MilSpace.Visibility
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.label38);
+            this.panel2.Controls.Add(this.lblCalcType);
             this.panel2.Controls.Add(this.label37);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 40);
@@ -1903,15 +1904,15 @@ namespace MilSpace.Visibility
             this.panel2.Size = new System.Drawing.Size(921, 30);
             this.panel2.TabIndex = 16;
             // 
-            // label38
+            // lblCalcType
             // 
-            this.label38.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label38.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label38.Location = new System.Drawing.Point(284, 3);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(579, 27);
-            this.label38.TabIndex = 6;
-            this.label38.Text = "вказати тип розрахунку, який обрано у \"Крок 1\"";
+            this.lblCalcType.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblCalcType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblCalcType.Location = new System.Drawing.Point(284, 3);
+            this.lblCalcType.Name = "lblCalcType";
+            this.lblCalcType.Size = new System.Drawing.Size(579, 27);
+            this.lblCalcType.TabIndex = 6;
+            this.lblCalcType.Text = "вказати тип розрахунку, який обрано у \"Крок 1\"";
             // 
             // label37
             // 
@@ -2030,7 +2031,7 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.TabPage stepThree;
         private System.Windows.Forms.Panel panel25;
         private System.Windows.Forms.CheckBox checkBox7;
-        private System.Windows.Forms.ComboBox comboBox10;
+        private System.Windows.Forms.ComboBox cmbEmptyDataValue;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Panel panel24;
@@ -2061,31 +2062,31 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Panel panel28;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.Label lblCalcType;
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Panel panel27;
-        private System.Windows.Forms.Label label41;
+        private System.Windows.Forms.Label lblTrimCalcresults;
         private System.Windows.Forms.Label label42;
         private System.Windows.Forms.Panel panel26;
-        private System.Windows.Forms.Label label39;
+        private System.Windows.Forms.Label lblReferencedLayerName;
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.Panel panel37;
-        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.Label lblObservObjectsAll;
         private System.Windows.Forms.Label labelOB;
         private System.Windows.Forms.Panel panel36;
-        private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.Label lblObservObjectsSingle;
         private System.Windows.Forms.Label labelOP;
         private System.Windows.Forms.Panel panel35;
-        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label lblObservObjectsSummary;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Panel panel34;
-        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Label lblObservPointsSummary;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Panel panel33;
-        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label lblDEMName;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Panel panel38;
-        private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.Label lblTaskName;
         private System.Windows.Forms.Label label44;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Panel panel43;
@@ -2142,7 +2143,7 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Label observObjectsLabel;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Panel panel44;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox imagesComboBox;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.CheckBox checkDate_Object;
         private System.Windows.Forms.CheckBox checkB_Affilation;

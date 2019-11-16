@@ -20,7 +20,7 @@ namespace MilSpace.Visualization3D
         private ProfilesTreeView profilesTreeView;
         private LocalizationContext context;
         private BindingList<TreeViewNodeModel> profilesModels = new BindingList<TreeViewNodeModel>();
-        private BindingList<VisibilitySessionModel> visibilitySessionsModel = new BindingList<VisibilitySessionModel>();
+        private BindingList<VisibilityResultModel> visibilitySessionsModel = new BindingList<VisibilityResultModel>();
 
         public Visualization3DMainForm(object hook)
         {
@@ -169,7 +169,7 @@ namespace MilSpace.Visualization3D
 
             foreach(var session in visibilitySessionsModel)
             {
-                info.AddRange(session.VisibilitySession.ResultsInfo);    
+                info.AddRange(session.VisibilityTask.ResultsInfo);    
             }
 
             return info;
@@ -280,13 +280,13 @@ namespace MilSpace.Visualization3D
 
                 if(visibilitySessionsWindow.ShowDialog(this) == DialogResult.OK)
                 {
-                    var newSessions = visibilitySessionsWindow.SelectedVisibilitySessions.Where(session => !visibilitySessionsModel.Any(model => model.VisibilitySession.Id == session.Id));
+                    var newSessions = visibilitySessionsWindow.SelectedVisibilitySessions.Where(session => !visibilitySessionsModel.Any(model => model.VisibilityTask.Id == session.Id));
 
                     foreach(var session in newSessions)
                     {
-                        visibilitySessionsModel.Add(new VisibilitySessionModel
+                        visibilitySessionsModel.Add(new VisibilityResultModel
                         {
-                            VisibilitySession = session,
+                            VisibilityTask = session,
                             Gui = $"{session.Name} {session.Created}"
                         });
                     }
@@ -294,11 +294,11 @@ namespace MilSpace.Visualization3D
             }
             else if(RemoveSurface.Equals(e.Button))
             {
-                var selectedItems = new List<VisibilitySessionModel>();
+                var selectedItems = new List<VisibilityResultModel>();
 
                 for(int i = 0; i < SessionsListBox.SelectedItems.Count; i++)
                 {
-                    selectedItems.Add((VisibilitySessionModel)SessionsListBox.SelectedItems[i]);
+                    selectedItems.Add((VisibilityResultModel)SessionsListBox.SelectedItems[i]);
                 }
 
                 foreach(var item in selectedItems)

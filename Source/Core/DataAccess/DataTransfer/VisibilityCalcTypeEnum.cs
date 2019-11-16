@@ -3,7 +3,7 @@
     public enum VisibilityCalcTypeEnum
     {
         None = 0,
-        OpservationPointsCommon,
+        OpservationPoints,
         ObservationObjecs,
         BestObservationParameters,
         ResultsAnalize
