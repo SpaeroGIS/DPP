@@ -629,5 +629,15 @@ namespace MilSpace.Visibility
         {
             throw new NotImplementedException();
         }
+
+        private void tbTransparency_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        public void FillVisibilityResultsTree(IEnumerable<VisibilityCalcResults> visibilityResults)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
