@@ -12,6 +12,7 @@ namespace MilSpace.Visibility.ViewController
     {
         private IObservationPointsView _view;
         private List<VisibilityTask> _visibilitySessions = new List<VisibilityTask>();
+        private List<VisibilityCalcResults> _visibilityResults = new List<VisibilityCalcResults>();
         private static Dictionary<VisibilitySessionStateEnum, string> states = Enum.GetValues(typeof(VisibilitySessionStateEnum)).Cast<VisibilitySessionStateEnum>().ToDictionary(t => t, ts => ts.ToString());
 
         public VisibilitySessionsController()
@@ -40,11 +41,11 @@ namespace MilSpace.Visibility.ViewController
             _visibilitySessions = VisibilityZonesFacade.GetAllVisibilityTasks(true).ToList();
             _view.FillVisibilitySessionsList(_visibilitySessions, isNewSessionAdded);           
         }
-        internal void UpdateVisibilitySessionsTree(bool isNewSessionAdded = false)
+        internal void UpdateVisibilityResultsTree(bool isNewSessionAdded = false)
         {
-            _visibilitySessions = VisibilityZonesFacade.GetAllVisibilityTasks(true).ToList();
+            _visibilityResults = VisibilityZonesFacade.GetAllVisibilityResults(true).ToList();
          
-            _view.FillVisibilitySessionsTree(_visibilitySessions, isNewSessionAdded);
+            _view.FillVisibilityResultsTree(_visibilityResults);
         }
 
         internal VisibilityTask GetSession(string id)
@@ -56,23 +57,41 @@ namespace MilSpace.Visibility.ViewController
         internal bool RemoveSession(string id)
         {
             var removedSession = _visibilitySessions.First(session => session.Id == id);
-            var results = removedSession.Results();
+
+           var result = VisibilityZonesFacade.DeleteVisibilitySession(id);
+
+            if(result)
+            {
+                _visibilitySessions.Remove(removedSession);
+            }
+
+            return result;
+        }
+
+        internal bool RemoveResult(string id)
+        {
+            var selectedResults = _visibilityResults.First(res => res.Id == id);
+            var results = selectedResults.Results();
 
             foreach(var result in results)
-            { 
-                if(result != removedSession.Id)
+            {
+                if(result != selectedResults.Id)
                 {
-                    if (!EsriTools.RemoveDataSet(removedSession.ReferencedGDB, result))
+                    if(!EsriTools.RemoveDataSet(selectedResults.ReferencedGDB, result))
                     {
                         return false;
                     }
                 }
             }
 
-            VisibilityZonesFacade.DeleteVisibilitySession(id);
-            _visibilitySessions.Remove(removedSession);
+            var removingResult = VisibilityZonesFacade.DeleteVisibilityResults(id);
 
-            return true;
+            if(removingResult)
+            {
+                _visibilityResults.Remove(selectedResults);
+            }
+
+            return removingResult;
         }
     }
 }

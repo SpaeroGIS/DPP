@@ -123,6 +123,7 @@ namespace MilSpace.Tools
             else
             {
                 VisibilityZonesFacade.FinishVisibilitySession(calcTask);
+                VisibilityZonesFacade.AddVisibilityResults(calcTask.GetVisibilityResults(false));
             }
 
             if (!string.IsNullOrWhiteSpace(res.ErrorMessage))

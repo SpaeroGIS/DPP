@@ -902,9 +902,9 @@ namespace MilSpace.Visibility
         private void SetVisibilitySessionsTableView()
         {
             dgvVisibilitySessions.Columns["Id"].Visible = false;
-            dgvVisibilitySessions.Columns["Name"].HeaderText = "Íàçâàíèå";
+            dgvVisibilitySessions.Columns["Name"].HeaderText = "Назва";
             dgvVisibilitySessions.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvVisibilitySessions.Columns["State"].HeaderText = "Ñîñòîÿíèå";
+            dgvVisibilitySessions.Columns["State"].HeaderText = "Стан";
             dgvVisibilitySessions.Columns["State"].Width = 100;
         }
 
@@ -968,11 +968,11 @@ namespace MilSpace.Visibility
         private void SetObservObjectsTableView()
         {
             dgvObservObjects.Columns["Id"].Visible = false;
-            dgvObservObjects.Columns["Title"].HeaderText = "Íàçâàíèå";
+            dgvObservObjects.Columns["Title"].HeaderText = "Назва";
             dgvObservObjects.Columns["Title"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvObservObjects.Columns["Affiliation"].HeaderText = "Ïðèíàäëåæíîñòü";
+            dgvObservObjects.Columns["Affiliation"].HeaderText = "Належність";
             dgvObservObjects.Columns["Affiliation"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dgvObservObjects.Columns["Group"].HeaderText = "Ãðóïïà";
+            dgvObservObjects.Columns["Group"].HeaderText = "Група";
             dgvObservObjects.Columns["Group"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
 
             dgvObservObjects.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -1062,33 +1062,32 @@ namespace MilSpace.Visibility
         }
         #endregion
 
-        # region VisibilitySessionsTree
-        public void FillVisibilitySessionsTree(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded)
+        #region VisibilitySessionsTree
+        public void FillVisibilityResultsTree(IEnumerable<VisibilityCalcResults> visibilityResults)
         {
             try
             {
                 int rootpng = 1;
 
-                treeView1.Nodes.Clear();
+                tvResults.Nodes.Clear();
 
-                foreach (VisibilityTask o in visibilitySessions)
+                foreach(VisibilityCalcResults res in visibilityResults)
                 {
-                    if (o.Finished != null)
+                    int childpng = 1;
+                    TreeNode root = new TreeNode(res.Name, rootpng, rootpng);
+                    root.Tag = res.Id;
+
+                    tvResults.Nodes.Add(root);
+
+                    foreach(var result in res.Results())
                     {
-                        int childpng = 1;
-                        TreeNode root = new TreeNode(o.Name, rootpng, rootpng);
-
-                        treeView1.Nodes.Add(root);
-
-                        foreach (var temp in o.Results())
-                        {
-                            root.Nodes.Add("", temp, childpng);
-                            childpng++;
-                        }
-                        rootpng++;
+                        root.Nodes.Add(res.Id, result, childpng);
+                        childpng++;
                     }
+                    rootpng++;
                 }
-            }catch(NullReferenceException e) { }       
+            }
+            catch(NullReferenceException e) { }       
         }
         private void node_AfterCheck(object sender, TreeViewEventArgs e)
         {
@@ -1141,13 +1140,15 @@ namespace MilSpace.Visibility
             }
             if(mainTabControl.SelectedTab.Name == "tbpVisibilityAreas")
             {
-                _visibilitySessionsController.UpdateVisibilitySessionsTree();
+                if(tvResults.Nodes.Count == 0)
+                {
+                    _visibilitySessionsController.UpdateVisibilityResultsTree();
+                }
                 
             }
         }
 
         #region ObservationPointsTabEvents
-
 
         private void TlbObserPoints_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
@@ -1336,7 +1337,7 @@ namespace MilSpace.Visibility
                     }
 
                     _visibilitySessionsController.UpdateVisibilitySessionsList(true);
-
+                    _visibilitySessionsController.UpdateVisibilityResultsTree();
                 }
             }
         }
@@ -1416,6 +1417,44 @@ namespace MilSpace.Visibility
         {
             SavePoint();
         }
+
+        #endregion
+
+
+        #region VisibilityResultsTabEvents
+
+
+        private void ToolBarVisibleResults_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        {
+            switch(e.Button.Name)
+            {
+                case "tlbbRemoveResult":
+
+                    var result = MessageBox.Show("Do you realy want to remove results?", "SPPRD", MessageBoxButtons.OKCancel);
+
+                    if(result == DialogResult.OK)
+                    {
+                        var selectedNode = tvResults.SelectedNode;
+                        var isRemovingSuccessfull = _visibilitySessionsController.RemoveResult(selectedNode.Tag.ToString());
+
+                        if(!isRemovingSuccessfull)
+                        {
+                            MessageBox.Show("Unable to delete session");
+                        }
+                        else
+                        {
+                            tvResults.Nodes.Remove(selectedNode);
+                        }
+                    }
+
+                    break;
+
+
+            }
+        }
+
+        #endregion
+
     }
 }
-#endregion
+

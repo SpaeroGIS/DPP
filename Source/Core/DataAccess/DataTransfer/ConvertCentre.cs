@@ -180,6 +180,96 @@ namespace MilSpace.DataAccess.DataTransfer
             visibilitySessionEntity.ReferencedGDB = visibilitySession.ReferencedGDB;
         }
 
+        internal static MilSp_VisiblityResults Get(this VisibilityCalcResults visibilityResultsModel)
+        {
+            try
+            {
+                var visibilityResults = new MilSp_VisiblityResults
+                {
+                    IdRow = visibilityResultsModel.IdRow,
+                    Id = visibilityResultsModel.Id?.Trim(),
+                    Name = visibilityResultsModel.Name?.Trim(),
+                    UserName = visibilityResultsModel.UserName?.Trim(),
+                    Created = visibilityResultsModel.Created.HasValue ? visibilityResultsModel.Created.Value : DateTime.Now,
+                    CalculatedResults = visibilityResultsModel.CalculatedResults,
+                    ReferencedGDB = visibilityResultsModel.ReferencedGDB,
+                    CalculationType = (int)visibilityResultsModel.CalculationType,
+                    shared = visibilityResultsModel.Shared,
+                    surface = visibilityResultsModel.Surface
+                };
+
+                return visibilityResults;
+            }
+            catch(Exception ex)
+            {
+                throw new MilSpaceDataException("VisibilityResults", DataOperationsEnum.Convert, ex);
+            }
+        }
+
+        internal static VisibilityCalcResults Get(this MilSp_VisiblityResults visibilityResultsEntity)
+        {
+            try
+            {
+                var visibility = new VisibilityCalcResults
+                {
+                    IdRow = visibilityResultsEntity.IdRow,
+                    Id = visibilityResultsEntity.Id?.Trim(),
+                    Name = visibilityResultsEntity.Name?.Trim(),
+                    UserName = visibilityResultsEntity.UserName?.Trim(),
+                    Created = visibilityResultsEntity.Created,
+                    CalculatedResults = visibilityResultsEntity.CalculatedResults,
+                    ReferencedGDB = visibilityResultsEntity.ReferencedGDB,
+                    Surface = visibilityResultsEntity.surface,
+                    Shared = visibilityResultsEntity.shared,
+                    CalculationType = (VisibilityCalcTypeEnum)visibilityResultsEntity.CalculationType
+                };
+
+                return visibility;
+            }
+            catch(Exception ex)
+            {
+                throw new MilSpaceDataException("VisibilityResults", DataOperationsEnum.Convert, ex);
+            }
+        }
+
+        internal static VisibilityCalcResults ToVisibilityResults(this VisibilityTask session, bool shared)
+        {
+            try
+            {
+                var visibility = new VisibilityCalcResults
+                {
+                    IdRow = session.IdRow,
+                    Id = session.Id?.Trim(),
+                    Name = session.Name?.Trim(),
+                    UserName = session.UserName?.Trim(),
+                    Created = session.Created,
+                    CalculatedResults = session.CalculatedResults,
+                    ReferencedGDB = session.ReferencedGDB,
+                    Surface = session.Surface,
+                    Shared = shared,
+                    CalculationType = (VisibilityCalcTypeEnum)session.CalculationType
+                };
+
+                return visibility;
+            }
+            catch(Exception ex)
+            {
+                throw new MilSpaceDataException("VisibilityResults", DataOperationsEnum.Convert, ex);
+            }
+        }
+
+        internal static void Update(this MilSp_VisiblityResults visibilityResultsEntity, VisibilityCalcResults visibility)
+        {
+            visibilityResultsEntity.Name = visibility.Name?.Trim();
+            visibilityResultsEntity.UserName = visibility.UserName?.Trim();
+            visibilityResultsEntity.Created = visibility.Created.Value;
+            visibilityResultsEntity.shared = visibility.Shared;
+            visibilityResultsEntity.surface = visibility.Surface;
+            visibilityResultsEntity.CalculatedResults = visibility.CalculatedResults;
+            visibilityResultsEntity.ReferencedGDB = visibility.ReferencedGDB;
+            visibilityResultsEntity.CalculationType = (int)visibility.CalculationType;
+        }
+
         internal static void Update(this VisiblilityObservPoint dbObservationPoint, ObservationPoint observationPoint)
         {
             dbObservationPoint.saffiliation = observationPoint.Affiliation;
