@@ -1,4 +1,5 @@
 ﻿using MilSpace.Configurations;
+using MilSpace.Core.DataAccess;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Definition;
 using MilSpace.DataAccess.Exceptions;
@@ -142,10 +143,14 @@ namespace MilSpace.DataAccess.Facade
         {
             try
             {
-                if(!context.MilSp_VisiblityResults.Any(res => res.Id == visibilityResults.Id))
+                if (!context.MilSp_VisiblityResults.Any(res => res.Id == visibilityResults.Id))
                 {
                     var resultsEntity = visibilityResults.Get();
                     context.MilSp_VisiblityResults.InsertOnSubmit(resultsEntity);
+                    if (!AddResultToUserSession(visibilityResults))
+                    {
+                        throw new MilSpaceDataException("VisibilityUserSession", DataOperationsEnum.Insert);
+                    }
                     Submit();
                     log.InfoEx($"Session {visibilityResults.Id} was successfully added");
                 }
@@ -157,16 +162,16 @@ namespace MilSpace.DataAccess.Facade
 
                 return context.MilSp_VisiblityResults.First(session => session.Id == visibilityResults.Id).Get();
             }
-            catch(MilSpaceDataException ex)
+            catch (MilSpaceDataException ex)
             {
                 log.WarnEx(ex.Message);
 
-                if(ex.InnerException != null)
+                if (ex.InnerException != null)
                 {
                     log.WarnEx(ex.InnerException.Message);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 log.WarnEx($"Unexpected exception:{ex.Message}");
             }
@@ -180,7 +185,7 @@ namespace MilSpace.DataAccess.Facade
             {
                 var resultsEntity = context.MilSp_VisiblityResults.FirstOrDefault(res => res.Id.Trim() == visibilityResults.Id);
 
-                if(resultsEntity != null)
+                if (resultsEntity != null)
                 {
                     resultsEntity.Update(visibilityResults);
 
@@ -191,16 +196,16 @@ namespace MilSpace.DataAccess.Facade
 
                 log.WarnEx($"Visibility results {visibilityResults.Id} not found");
             }
-            catch(MilSpaceDataException ex)
+            catch (MilSpaceDataException ex)
             {
                 log.WarnEx(ex.Message);
 
-                if(ex.InnerException != null)
+                if (ex.InnerException != null)
                 {
                     log.WarnEx(ex.InnerException.Message);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 log.WarnEx($"Unexpected exception:{ex.Message}");
             }
@@ -208,13 +213,37 @@ namespace MilSpace.DataAccess.Facade
             return null; ;
         }
 
+        public bool AddShareddResultsToUserSession(VisibilityCalcResults visibilityResults)
+        {
+            return AddResultToUserSession(visibilityResults);
+        }
+
+        private bool AddResultToUserSession(VisibilityCalcResults visibilityResults)
+        {
+            try
+            {
+                if (!context.MilSp_VisibilityUserSessions.Any(r => r.userName == visibilityResults.UserName && r.visibilityResultId == visibilityResults.Id))
+                {
+                    var sessionValue = new MilSp_VisibilityUserSession { userName = visibilityResults.UserName, visibilityResultId = visibilityResults.Id};
+                    context.MilSp_VisibilityUserSessions.InsertOnSubmit(sessionValue);
+                }
+                return true;
+            }
+
+            catch (Exception ex)
+            {
+                log.WarnEx($"Unexpected exception:{ex.Message}");
+            }
+
+            return false;
+        }
         public bool DeleteVisibilityResults(string id)
         {
             try
             {
                 var resultEntity = context.MilSp_VisiblityResults.FirstOrDefault(res => res.Id.Trim() == id);
 
-                if(resultEntity != null)
+                if (resultEntity != null)
                 {
                     context.MilSp_VisiblityResults.DeleteOnSubmit(resultEntity);
 
@@ -224,7 +253,7 @@ namespace MilSpace.DataAccess.Facade
 
                 log.WarnEx($"Visibility results not found");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 log.WarnEx($"Unexpected exception:{ex.Message}");
             }
@@ -236,10 +265,20 @@ namespace MilSpace.DataAccess.Facade
         {
             try
             {
-                var results = onlyUsersResults? context.MilSp_VisiblityResults.Where(s => s.UserName.Equals(Environment.UserName) || s.shared) : context.MilSp_VisiblityResults;
+                IEnumerable<MilSp_VisiblityResults> results = null;
+
+                if (onlyUsersResults)
+                {
+                    results = context.MilSp_VisibilityUserSessions.Where(s => s.userName.Equals(Environment.UserName)).Select(r => r.MilSp_VisiblityResults);
+                }
+                else
+                {
+                    results = context.MilSp_VisiblityResults.Where(r => r.UserName.Equals(Environment.UserName) || r.shared);
+                }
+                        
                 return results.Select(s => s.Get());
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 log.WarnEx($"Unexpected exception:{ex.Message}");
             }
