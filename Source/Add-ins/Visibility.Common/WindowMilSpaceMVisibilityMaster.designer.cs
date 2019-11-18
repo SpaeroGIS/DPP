@@ -115,6 +115,7 @@ namespace MilSpace.Visibility
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.panel23 = new System.Windows.Forms.Panel();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label13 = new System.Windows.Forms.Label();
             this.panel22 = new System.Windows.Forms.Panel();
             this.cmbPositions = new System.Windows.Forms.ComboBox();
@@ -122,6 +123,8 @@ namespace MilSpace.Visibility
             this.label14 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.panel21 = new System.Windows.Forms.Panel();
+            this.TableChkBox = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.SumChkBox = new System.Windows.Forms.CheckBox();
             this.checkBoxOP = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
@@ -157,9 +160,6 @@ namespace MilSpace.Visibility
             this.label37 = new System.Windows.Forms.Label();
             this.panel28 = new System.Windows.Forms.Panel();
             this.label29 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.TableChkBox = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.StepsTabControl.SuspendLayout();
             this.stepOne.SuspendLayout();
@@ -1439,6 +1439,20 @@ namespace MilSpace.Visibility
             this.panel23.Size = new System.Drawing.Size(921, 32);
             this.panel23.TabIndex = 17;
             // 
+            // checkBox1
+            // 
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.checkBox1.Location = new System.Drawing.Point(184, 3);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
+            this.checkBox1.Size = new System.Drawing.Size(409, 29);
+            this.checkBox1.TabIndex = 6;
+            this.checkBox1.Text = "обрізати растри до дійсного екстенту";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // label13
             // 
             this.label13.Dock = System.Windows.Forms.DockStyle.Left;
@@ -1522,6 +1536,35 @@ namespace MilSpace.Visibility
             this.panel21.Padding = new System.Windows.Forms.Padding(4, 1, 1, 1);
             this.panel21.Size = new System.Drawing.Size(921, 32);
             this.panel21.TabIndex = 15;
+            // 
+            // TableChkBox
+            // 
+            this.TableChkBox.Checked = true;
+            this.TableChkBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.TableChkBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.TableChkBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.TableChkBox.Location = new System.Drawing.Point(766, 1);
+            this.TableChkBox.Name = "TableChkBox";
+            this.TableChkBox.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
+            this.TableChkBox.Size = new System.Drawing.Size(152, 30);
+            this.TableChkBox.TabIndex = 8;
+            this.TableChkBox.Text = "таблиця покриття";
+            this.TableChkBox.UseVisualStyleBackColor = true;
+            this.TableChkBox.Visible = false;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.Checked = true;
+            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.checkBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.checkBox2.Location = new System.Drawing.Point(572, 1);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
+            this.checkBox2.Size = new System.Drawing.Size(194, 30);
+            this.checkBox2.TabIndex = 7;
+            this.checkBox2.Text = "конвертувати у полігони";
+            this.checkBox2.UseVisualStyleBackColor = true;
             // 
             // SumChkBox
             // 
@@ -1906,49 +1949,6 @@ namespace MilSpace.Visibility
             this.label29.Size = new System.Drawing.Size(358, 20);
             this.label29.TabIndex = 9;
             this.label29.Text = "Крок 4. Перевірка параметрів розрахунку";
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBox1.Location = new System.Drawing.Point(184, 3);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.checkBox1.Size = new System.Drawing.Size(409, 29);
-            this.checkBox1.TabIndex = 6;
-            this.checkBox1.Text = "обрізати растри до дійсного екстенту";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.Checked = true;
-            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBox2.Location = new System.Drawing.Point(572, 1);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.checkBox2.Size = new System.Drawing.Size(194, 30);
-            this.checkBox2.TabIndex = 7;
-            this.checkBox2.Text = "конвертувати у полігони";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // TableChkBox
-            // 
-            this.TableChkBox.Checked = true;
-            this.TableChkBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.TableChkBox.Dock = System.Windows.Forms.DockStyle.Left;
-            this.TableChkBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.TableChkBox.Location = new System.Drawing.Point(766, 1);
-            this.TableChkBox.Name = "TableChkBox";
-            this.TableChkBox.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.TableChkBox.Size = new System.Drawing.Size(152, 30);
-            this.TableChkBox.TabIndex = 8;
-            this.TableChkBox.Text = "таблиця покриття";
-            this.TableChkBox.UseVisualStyleBackColor = true;
-            this.TableChkBox.Visible = false;
             // 
             // WindowMilSpaceMVisibilityMaster
             // 

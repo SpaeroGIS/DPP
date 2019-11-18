@@ -247,7 +247,7 @@ namespace MilSpace.DataAccess.DataTransfer
                     ReferencedGDB = session.ReferencedGDB,
                     Surface = session.Surface,
                     Shared = shared,
-                    CalculationType = (VisibilityCalcTypeEnum)session.CalculationType
+                    CalculationType = session.CalculationType
                 };
 
                 return visibility;
