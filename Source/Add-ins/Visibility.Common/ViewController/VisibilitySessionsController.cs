@@ -13,7 +13,8 @@ namespace MilSpace.Visibility.ViewController
         private IObservationPointsView _view;
         private List<VisibilityTask> _visibilitySessions = new List<VisibilityTask>();
         private List<VisibilityCalcResults> _visibilityResults = new List<VisibilityCalcResults>();
-        private static Dictionary<VisibilitySessionStateEnum, string> states = Enum.GetValues(typeof(VisibilitySessionStateEnum)).Cast<VisibilitySessionStateEnum>().ToDictionary(t => t, ts => ts.ToString());
+        private static Dictionary<VisibilitySessionStateEnum, string> _states = Enum.GetValues(typeof(VisibilitySessionStateEnum)).Cast<VisibilitySessionStateEnum>().ToDictionary(t => t, ts => ts.ToString());
+        private static Dictionary<VisibilityCalcTypeEnum, string> _calcTypes = Enum.GetValues(typeof(VisibilityCalcTypeEnum)).Cast<VisibilityCalcTypeEnum>().ToDictionary(t => t, ts => ts.ToString());
 
         public VisibilitySessionsController()
         {
@@ -25,15 +26,45 @@ namespace MilSpace.Visibility.ViewController
             _view = view;
         }
 
-        public IEnumerable<string> GetVisibilitySessionStateTypes()
+        internal IEnumerable<string> GetVisibilitySessionStateTypes()
         {
-            return states.Select(t => t.Value);
+            return _states.Select(t => t.Value);
         }
-        
 
-        public string GetStringForStateType(VisibilitySessionStateEnum type)
+        internal IEnumerable<string> GetVisibilityCalcTypesStrings()
         {
-            return states[type];
+            return _calcTypes.Select(t => t.Value);
+        }
+
+        internal string GetStringForStateType(VisibilitySessionStateEnum type)
+        {
+            return _states[type];
+        }
+
+        internal string GetStringForCalcType(VisibilityCalcTypeEnum type)
+        {
+            return _calcTypes[type];
+        }
+
+        internal string GetImgName(VisibilityCalculationresultsEnum resultType)
+        {
+            if(resultType == VisibilityCalculationresultsEnum.ObservationPoints || resultType == VisibilityCalculationresultsEnum.ObservationPointSingle)
+            {
+                return "Flag.png";
+            }
+
+            if(resultType == VisibilityCalculationresultsEnum.ObservationStations)
+            {
+                return "Target.png";
+            }
+
+            if(resultType == VisibilityCalculationresultsEnum.VisibilityAreaRaster || resultType == VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle 
+                || resultType == VisibilityCalculationresultsEnum.VisibilityAreaPolygons || resultType ==  VisibilityCalculationresultsEnum.VisibilityObservStationClip)
+            {
+                return "Dots Up.png";
+            }
+
+            return string.Empty;
         }
 
         internal void UpdateVisibilitySessionsList(bool isNewSessionAdded = false)
@@ -53,6 +84,7 @@ namespace MilSpace.Visibility.ViewController
             return _visibilitySessions.FirstOrDefault(session => session.Id == id);
         }
 
+        internal Dictionary<VisibilityCalcTypeEnum, string> GetCalcTypes() => _calcTypes;
         internal IEnumerable<VisibilityCalcResults> GetAllResults() => _visibilityResults;
 
         public IEnumerable<VisibilityTask> GetAllSessions() => _visibilitySessions;

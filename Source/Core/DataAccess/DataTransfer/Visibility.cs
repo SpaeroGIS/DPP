@@ -79,6 +79,11 @@ namespace MilSpace.DataAccess.DataTransfer
             return $"{sessionName}{pointIdstr}{VisibilityResulSuffixes[resultType]}";
         }
 
+        public static VisibilityCalculationresultsEnum GetResultTypeByName(string name)
+        {
+            return VisibilityResulSuffixes.FirstOrDefault(suff => name.EndsWith(suff.Value) && suff.Key != VisibilityCalculationresultsEnum.None).Key;
+        }
+
         public IEnumerable<string> Results()
         {
             //VisibilityCalculationresultsEnum resultsInGDB = GdbAccess.Instance.CheckVisibilityResult(Id);
