@@ -232,7 +232,8 @@ namespace MilSpace.Visibility.ViewController
                 var calcTask = VisibilityManager.Generate(
                     observPoints, 
                     calcParams.ObservPointIDs, 
-                    observObjects, calcParams.ObservObjectIDs, calcParams.RasterLayerName, calcParams.VisibilityCalculationResults, calcParams.TaskName, 
+                    observObjects, calcParams.ObservObjectIDs, calcParams.RasterLayerName, calcParams.VisibilityCalculationResults, calcParams.TaskName,
+                    calcParams.TaskName,
                     calcParams.CalculationType);
                 
                 if(calcTask.Finished != null)

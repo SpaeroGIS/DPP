@@ -1,8 +1,4 @@
-﻿using ESRI.ArcGIS.Geodatabase;
-using MilSpace.DataAccess.Facade;
-using System;
-using System.Linq;
-using System.Collections.Generic;
+﻿using System;
 
 namespace MilSpace.DataAccess.DataTransfer
 {
