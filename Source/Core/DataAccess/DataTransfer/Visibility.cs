@@ -21,6 +21,16 @@ namespace MilSpace.DataAccess.DataTransfer
             { VisibilityCalculationresultsEnum.VisibilityObservStationClip , "__imgc"}
         };
 
+        private static IEnumerable<VisibilityCalculationresultsEnum> ResultsToShow = new VisibilityCalculationresultsEnum[]
+        {
+            VisibilityCalculationresultsEnum.ObservationPoints,
+            VisibilityCalculationresultsEnum.VisibilityAreaRaster,
+            VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle,
+            VisibilityCalculationresultsEnum.ObservationStations,
+            VisibilityCalculationresultsEnum.VisibilityAreaPolygons,
+            VisibilityCalculationresultsEnum.VisibilityObservStationClip
+        };
+
         internal static VisibilityCalculationresultsEnum[] FeatureClassResults = {
             VisibilityCalculationresultsEnum.ObservationPoints,
             VisibilityCalculationresultsEnum.ObservationStations,
@@ -86,18 +96,18 @@ namespace MilSpace.DataAccess.DataTransfer
             VisibilityCalculationresultsEnum calculatedResults = (VisibilityCalculationresultsEnum)CalculatedResults;
             List<string> resulrs = new List<string>();
 
-            foreach(var result in VisibilityResulSuffixes)
+            foreach (var result in VisibilityResulSuffixes)
             {
-                if(result.Key != VisibilityCalculationresultsEnum.None && calculatedResults.HasFlag(result.Key))
+                if (calculatedResults.HasFlag(result.Key) && ResultsToShow.Any( r=> r.Equals(result.Key)))
                 {
 
-                    if(result.Key == VisibilityCalculationresultsEnum.ObservationPointSingle ||
+                    if (result.Key == VisibilityCalculationresultsEnum.ObservationPointSingle ||
                         result.Key == VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle)
 
                     {
                         int index = 0;
                         string resultBName = GetResultName(result.Key, Id, index);
-                        while(VisibilityZonesFacade.CheckVisibilityResultEistance(resultBName, result.Key))
+                        while (VisibilityZonesFacade.CheckVisibilityResultEistance(resultBName, result.Key))
                         {
                             resulrs.Add(resultBName);
                             resultBName = GetResultName(result.Key, Id, ++index);

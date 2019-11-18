@@ -51,12 +51,13 @@ namespace MilSpace.Tools
             IFeatureClass obervationStations,
             IEnumerable<int> stationsToExport,
             string sourceDem,
-             VisibilityCalculationresultsEnum culcResults, 
-             string taskName,
-             VisibilityCalcTypeEnum calculationType)
+            VisibilityCalculationresultsEnum culcResults,
+            string taskName,
+            string taskId,
+            VisibilityCalcTypeEnum calculationType)
         {
             //Target dataset name
-            string nameOfTargetDataset = GenerateResultId();
+            string nameOfTargetDataset = taskId;
 
             logger.InfoEx("Starting generation visiblility resuilt for session {2} using DEM {0} from observation points {1}.".InvariantFormat(sourceDem, obervationPoints, nameOfTargetDataset));
 
