@@ -7,6 +7,7 @@ using MilSpace.Configurations;
 using MilSpace.Core;
 using System;
 using System.Collections.Generic;
+using ESRI.ArcGIS.ConversionTools;
 
 namespace MilSpace.Tools.SurfaceProfile
 {
@@ -17,6 +18,7 @@ namespace MilSpace.Tools.SurfaceProfile
         private static Logger log = Logger.GetLoggerEx("ProfileLibrary");
         private const string NonvisibleCellValue = "NODATA";
         private const string ClippingGeometry = "ClippingGeometry";
+        private static Geoprocessor gp = null;
 
         //-------------------------------------------------------------------------
         static ProfileLibrary()
@@ -42,10 +44,8 @@ namespace MilSpace.Tools.SurfaceProfile
             stackProfile.out_table = outTable;
             if (!string.IsNullOrEmpty(outGraphName)) stackProfile.out_graph = outGraphName;
 
-            GeoProcessorResult gpResult = new GeoProcessorResult();
-
-            gp.SetEnvironmentValue(environmentName, temporaryWorkspace);
-            return RunTool(gp, stackProfile, null, messages);
+            
+            return RunTool(stackProfile, null, messages);
         }
         //-------------------------------------------------------------------------
 
@@ -59,7 +59,6 @@ namespace MilSpace.Tools.SurfaceProfile
                         string outAglRaster = null
                         )
         {
-            Geoprocessor gp = new Geoprocessor();
 
             Visibility visibility = new Visibility();
 
@@ -86,20 +85,18 @@ namespace MilSpace.Tools.SurfaceProfile
 
             visibility.curvature_correction = curvatureCorrection.ToString();
 
-            GeoProcessorResult gpResult = new GeoProcessorResult();
 
-            gp.SetEnvironmentValue(environmentName, temporaryWorkspace);
-
-            return RunTool(gp, visibility, null, messages);
+            return RunTool(visibility, null, messages);
         }
 
         public static bool ClipVisibilityZonesByAreas(
             string inRaster,
             string outRaster,
             string templateDataser,
-            IEnumerable<string> messages)
+            IEnumerable<string> messages,
+            string clippingGeometry = ClippingGeometry
+            )
         {
-            Geoprocessor gp = new Geoprocessor();
 
             Clip clipper = new Clip()
             {
@@ -110,15 +107,32 @@ namespace MilSpace.Tools.SurfaceProfile
             };
 
             clipper.nodata_value = NonvisibleCellValue;
-            GeoProcessorResult gpResult = new GeoProcessorResult();
-
-            gp.SetEnvironmentValue(environmentName, temporaryWorkspace);
-
-            return RunTool(gp, clipper, null, messages); ;
+            
+            return RunTool(clipper, null, messages); 
         }
 
-        private static bool RunTool(Geoprocessor gp, IGPProcess process, ITrackCancel TC, IEnumerable<string> messages)
+        public static bool ConvertTasterToPolygon(string inRaster, string outPolygon, IEnumerable<string> messages)
         {
+            RasterToPolygon rasterToPolygon = new RasterToPolygon()
+            {
+                in_raster = inRaster,
+                out_polygon_features = outPolygon,
+                simplify = "SIMPLIFY",
+                raster_field = "Value"
+            };
+
+            return RunTool(rasterToPolygon, null, messages);
+        }
+
+        private static bool RunTool( IGPProcess process, ITrackCancel TC, IEnumerable<string> messages)
+        {
+            if (gp == null)
+            {
+                gp = new Geoprocessor();
+                gp.AddOutputsToMap = false;
+                gp.SetEnvironmentValue(environmentName, temporaryWorkspace);
+            }
+
             gp.OverwriteOutput = true; // Set the overwrite output option to true
             bool result = true;
             try

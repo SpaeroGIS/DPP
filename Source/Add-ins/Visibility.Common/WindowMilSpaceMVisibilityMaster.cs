@@ -163,8 +163,6 @@ namespace MilSpace.Visibility
 
                 dvgCheckList.Update();
                 dvgCheckList.Rows[0].Selected = true;
-
-
             }
 
         }
@@ -464,7 +462,7 @@ namespace MilSpace.Visibility
             }
             else if (_stepControl == VisibilityCalcTypeEnum.ObservationObjecs)
             {
-                FinalResult.ObservObjectIDs = _observationObjects.Where(o=> o.Check).Select(i => i.Id).ToArray();
+                FinalResult.ObservObjectIDs = _observationObjects.Where(o => o.Check).Select(i => i.Id).ToArray();
                 FinalResult.VisibilityCalculationResults = (SumChkBox.Checked ?
                                                     VisibilityCalculationresultsEnum.ObservationPoints | VisibilityCalculationresultsEnum.VisibilityAreaRaster :
                                                     VisibilityCalculationresultsEnum.None)
@@ -472,9 +470,28 @@ namespace MilSpace.Visibility
 
             }
 
+            //Trim by real Area
+            if (chkTrimRaster.Checked)
+            {
+                FinalResult.VisibilityCalculationResults |= VisibilityCalculationresultsEnum.VisibilityAreasTrimmedByPoly;
+                if (checkBoxOP.Checked)
+                {
+                    FinalResult.VisibilityCalculationResults |= VisibilityCalculationresultsEnum.VisibilityAreaTrimmedByPolySingle;
+                }
+            }
+
+            if (chkConvertToPolygon.Checked)
+            {
+                FinalResult.VisibilityCalculationResults |= VisibilityCalculationresultsEnum.VisibilityAreaPolygons;
+                if (checkBoxOP.Checked)
+                {
+                    FinalResult.VisibilityCalculationResults |= VisibilityCalculationresultsEnum.VisibilityAreaPolygonSingle;
+                }
+            }
+
             if (checkBoxOP.Checked)
             {
-                FinalResult.VisibilityCalculationResults = FinalResult.VisibilityCalculationResults | VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle | VisibilityCalculationresultsEnum.ObservationPointSingle;
+                FinalResult.VisibilityCalculationResults |= VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle | VisibilityCalculationresultsEnum.ObservationPointSingle;
             }
         }
         public void SummaryInfo()
@@ -485,11 +502,11 @@ namespace MilSpace.Visibility
             lblObservObjectsSingle.Text = checkBoxOP.Checked ? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord;
             lblObservObjectsAll.Text = checkBoxOP.Checked ? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord;
             lblReferencedLayerName.Text = cmbPositions.SelectedItem.ToString();
-            var selectedObservPoints = _observPointGuis.Where(p => p.Check).Select(o => o.Title).ToArray();
-            var selectedObservObjects = _observationObjects.Where(p => p.Check).Select(o => o.Title).ToArray();
+            var selectedObservPoints = _observPointGuis != null ? _observPointGuis.Where(p => p.Check).Select(o => o.Title).ToArray() : null;
+            var selectedObservObjects = _observationObjects != null ? _observationObjects.Where(p => p.Check).Select(o => o.Title).ToArray() : null;
 
-            lblObservPointsSummary.Text = $"{selectedObservPoints.Length} - {string.Join("; ", selectedObservPoints)}";
-            lblObservObjectsSummary.Text = $"{selectedObservObjects.Length} - {string.Join("; ", selectedObservObjects)}";
+            lblObservPointsSummary.Text = selectedObservPoints == null ? string.Empty : $"{selectedObservPoints.Length} - {string.Join("; ", selectedObservPoints)}";
+            lblObservObjectsSummary.Text = selectedObservObjects == null ? string.Empty : $"{selectedObservObjects.Length} - {string.Join("; ", selectedObservObjects)}";
 
             lblTrimCalcresults.Text = "There is no any controls!!!!!!";
         }
