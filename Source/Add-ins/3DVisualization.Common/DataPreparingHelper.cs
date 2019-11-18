@@ -43,6 +43,64 @@ namespace MilSpace.Visualization3D
             return lines;
         }
 
+        internal static Dictionary<ProfileSurface, bool> GetLinesSegmentsForPrimitive(ProfileSurface segment)
+        {
+            var lines = new Dictionary<ProfileSurface, bool>();
+
+            var visibility = segment.ProfileSurfacePoints.First().Visible;
+            var segmentPoints = new List<ProfileSurfacePoint>();
+
+            var points = segment.ProfileSurfacePoints;
+
+            for(int i = 1; i < points.Length; i++)
+            {
+                segmentPoints.Add(points[i]);
+                if(visibility != segment.ProfileSurfacePoints[i].Visible || i == segment.ProfileSurfacePoints.Length - 1)
+                {
+                    lines.Add(new ProfileSurface() { ProfileSurfacePoints = segmentPoints.ToArray() }, visibility);
+                    visibility = !visibility;
+                    segmentPoints = new List<ProfileSurfacePoint>();
+                    segmentPoints.Add(points[i]);
+                }
+            }
+
+            return lines;
+        }
+
+        internal static List<ProfileSurface> GetPrimitiveSegments(ProfileSession profileSession)
+        {
+            var segmentSurfaces = new List<ProfileSurface>();
+
+            foreach(var line in profileSession.ProfileLines)
+            {
+                var surface = profileSession.ProfileSurfaces.First(profileSurface => profileSurface.LineId == line.Id);
+                var segment = new List<ProfileSurfacePoint>();
+
+                foreach(var point in surface.ProfileSurfacePoints)
+                {
+                    segment.Add(point);
+
+                    if(point.isVertex)
+                    {
+                        if(point.Distance != 0)
+                        {
+                            segmentSurfaces.Add(new ProfileSurface
+                            {
+                                LineId = surface.LineId,
+                                ProfileSurfacePoints = segment.ToArray()
+                            });
+
+                            segment = new List<ProfileSurfacePoint>();
+                            segment.Add(point);
+                        }
+                    }
+                }
+            }
+
+            return segmentSurfaces;
+
+        }
+
         internal static Dictionary<IPolyline, bool> GetPolylinesSegments(Dictionary<IPointCollection, bool> segments)
         {
             if(segments == null)
