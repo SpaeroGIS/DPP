@@ -52,6 +52,9 @@ namespace MilSpace.Visibility.ViewController
         {
             return _visibilitySessions.FirstOrDefault(session => session.Id == id);
         }
+
+        internal IEnumerable<VisibilityCalcResults> GetAllResults() => _visibilityResults;
+
         public IEnumerable<VisibilityTask> GetAllSessions() => _visibilitySessions;
         
         internal bool RemoveSession(string id)
@@ -92,6 +95,16 @@ namespace MilSpace.Visibility.ViewController
             }
 
             return removingResult;
+        }
+
+        internal void ShareResults(string id)
+        {
+            var selectedResults = _visibilityResults.First(res => res.Id == id);
+            if(!selectedResults.Shared)
+            {
+                selectedResults.Shared = true;
+                VisibilityZonesFacade.UpdateVisibilityResults(selectedResults);
+            }
         }
     }
 }

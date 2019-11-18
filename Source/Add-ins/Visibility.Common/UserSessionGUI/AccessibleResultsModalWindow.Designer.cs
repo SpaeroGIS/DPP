@@ -1,6 +1,6 @@
 ﻿namespace MilSpace.Visibility
 {
-    partial class AccessibleProfilesModalWindow
+    partial class AccessibleResultsModalWindow
     {
         /// <summary>
         /// Required designer variable.

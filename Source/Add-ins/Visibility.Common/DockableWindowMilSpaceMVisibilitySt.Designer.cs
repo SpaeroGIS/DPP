@@ -214,7 +214,7 @@
             this.toolBarButton5 = new System.Windows.Forms.ToolBarButton();
             this.tlbbAddFromDB = new System.Windows.Forms.ToolBarButton();
             this.toolBarButtonViewOnMap = new System.Windows.Forms.ToolBarButton();
-            this.tlbbRemoveResult = new System.Windows.Forms.ToolBarButton();
+            this.tlbbFullDelete = new System.Windows.Forms.ToolBarButton();
             this.toolBarButtonRemoveFromSeanse = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton8 = new System.Windows.Forms.ToolBarButton();
             this.tlbbShare = new System.Windows.Forms.ToolBarButton();
@@ -2467,7 +2467,7 @@
             this.toolBarButton5,
             this.tlbbAddFromDB,
             this.toolBarButtonViewOnMap,
-            this.tlbbRemoveResult,
+            this.tlbbFullDelete,
             this.toolBarButtonRemoveFromSeanse,
             this.toolBarButton8,
             this.tlbbShare,
@@ -2513,11 +2513,11 @@
             this.toolBarButtonViewOnMap.ImageIndex = 148;
             this.toolBarButtonViewOnMap.Name = "toolBarButtonViewOnMap";
             // 
-            // tlbbRemoveResult
+            // tlbbFullDelete
             // 
-            this.tlbbRemoveResult.ImageKey = "Cancel.png";
-            this.tlbbRemoveResult.Name = "tlbbRemoveResult";
-            this.tlbbRemoveResult.ToolTipText = "видалити звідусіль";
+            this.tlbbFullDelete.ImageKey = "Cancel.png";
+            this.tlbbFullDelete.Name = "tlbbFullDelete";
+            this.tlbbFullDelete.ToolTipText = "видалити звідусіль";
             // 
             // toolBarButtonRemoveFromSeanse
             // 
@@ -2939,7 +2939,6 @@
         private System.Windows.Forms.ToolBarButton tlbbViewParamOnMap;
         private System.Windows.Forms.ToolBarButton tlbbAddFromDB;
         private System.Windows.Forms.ToolBarButton tlbbFullDelete;
-        private System.Windows.Forms.ToolBarButton tlbbRemoveResult;
         private System.Windows.Forms.ToolBarButton tlbbShare;
         private System.Windows.Forms.ToolBarButton tlbbUpdate;
     }
