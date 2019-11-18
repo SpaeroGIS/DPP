@@ -1027,7 +1027,7 @@ namespace MilSpace.Visibility
             tbObservObjTitle.Text = observObject.Title;
             tbObservObjGroup.Text = observObject.Group;
             tbObservObjAffiliation.Text = _observPointsController.GetObservObjectsTypeString(observObject.ObjectType);
-            tbObservObjDate.Text = observObject.DTO.ToString(Helper.DateFormat);
+            tbObservObjDate.Text = observObject.DTO.ToString(Helper.DateFormatSmall);
         }
 
         private void ClearObservObjectFields()
