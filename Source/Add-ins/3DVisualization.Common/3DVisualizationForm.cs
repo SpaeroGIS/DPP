@@ -287,7 +287,7 @@ namespace MilSpace.Visualization3D
                         visibilitySessionsModel.Add(new VisibilityResultModel
                         {
                             VisibilityTask = session,
-                            Gui = $"{session.Name} {session.Created}"
+                            Gui = $"{session.Name} {session.Created.Value.ToString(Helper.DateFormat)}"
                         });
                     }
                 }

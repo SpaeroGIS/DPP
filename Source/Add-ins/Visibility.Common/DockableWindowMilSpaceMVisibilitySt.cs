@@ -891,7 +891,7 @@ namespace MilSpace.Visibility
             txtMaxDistance.Text = selectedPoint.OuterRadius.HasValue ? selectedPoint.OuterRadius.ToString() : ObservPointDefaultValues.DefaultRadiusText;
 
 
-            observPointDate.Text = selectedPoint.Dto.Value.ToShortDateString();
+            observPointDate.Text = selectedPoint.Dto.Value.ToString(Helper.DateFormat);
             observPointCreator.Text = selectedPoint.Operator;
         }
 
@@ -1027,7 +1027,7 @@ namespace MilSpace.Visibility
             tbObservObjTitle.Text = observObject.Title;
             tbObservObjGroup.Text = observObject.Group;
             tbObservObjAffiliation.Text = _observPointsController.GetObservObjectsTypeString(observObject.ObjectType);
-            tbObservObjDate.Text = observObject.DTO.ToLongDateString();
+            tbObservObjDate.Text = observObject.DTO.ToString(Helper.DateFormat);
         }
 
         private void ClearObservObjectFields()
