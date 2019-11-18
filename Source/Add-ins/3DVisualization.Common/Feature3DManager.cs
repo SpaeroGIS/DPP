@@ -37,20 +37,50 @@ namespace MilSpace.Visualization3D
             {
                 foreach(var profilesSet in profileSessions)
                 {
-                    var segmentsGeoPoints = DataPreparingHelper.GetSegmentsGeoPoints(DataPreparingHelper.GetLinesSegments(profilesSet));
-                    var setPolylines = DataPreparingHelper.GetPolylinesSegments(segmentsGeoPoints);
-
-                    foreach(var polyline in setPolylines)
+                    if(profilesSet == null || profilesSet.ProfileLines == null)
                     {
-                        polylines.Add(polyline.Key, polyline.Value);
+                        continue;
                     }
 
-                    observerPoints.Add(DataPreparingHelper.GetObserverPoint(profilesSet.ObserverHeight, profilesSet.ProfileSurfaces[0].ProfileSurfacePoints[0]));
+                    var segments = new List<ProfileSurface>();
 
-                    var setPolygons = (DataPreparingHelper.GetVisibilityPolygons(observerPoints.Last(), segmentsGeoPoints));
-                    foreach(var polygon in setPolygons)
+                    if(profilesSet.DefinitionType == ProfileSettingsTypeEnum.Primitives)
                     {
-                        visibilityPolygons.Add(polygon.Key, polygon.Value);
+                        segments = DataPreparingHelper.GetPrimitiveSegments(profilesSet);
+                    }
+                    else
+                    {
+                        segments = new List<ProfileSurface> { profilesSet.ProfileSurfaces[0] };
+                    }
+
+                    foreach(var segment in segments)
+                    {
+                        Dictionary<ProfileSurface, bool> segmentsSurfaces;
+
+                        if(profilesSet.DefinitionType == ProfileSettingsTypeEnum.Primitives)
+                        {
+                            segmentsSurfaces = DataPreparingHelper.GetLinesSegmentsForPrimitive(segment);
+                        }
+                        else
+                        {
+                            segmentsSurfaces = DataPreparingHelper.GetLinesSegments(profilesSet);
+                        }
+
+                        var segmentsGeoPoints = DataPreparingHelper.GetSegmentsGeoPoints(segmentsSurfaces);
+                        var setPolylines = DataPreparingHelper.GetPolylinesSegments(segmentsGeoPoints);
+
+                        foreach(var polyline in setPolylines)
+                        {
+                            polylines.Add(polyline.Key, polyline.Value);
+                        }
+
+                        observerPoints.Add(DataPreparingHelper.GetObserverPoint(profilesSet.ObserverHeight, segment.ProfileSurfacePoints[0]));
+
+                        var setPolygons = (DataPreparingHelper.GetVisibilityPolygons(observerPoints.Last(), segmentsGeoPoints));
+                        foreach(var polygon in setPolygons)
+                        {
+                            visibilityPolygons.Add(polygon.Key, polygon.Value);
+                        }
                     }
                 }
 

@@ -209,13 +209,16 @@
             this.tvResults = new System.Windows.Forms.TreeView();
             this.panel49 = new System.Windows.Forms.Panel();
             this.toolBarVisibleResults = new System.Windows.Forms.ToolBar();
-            this.toolBarButtonZoomToResultRaser = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButtonViewParamOnMap = new System.Windows.Forms.ToolBarButton();
+            this.toolBarButton43 = new System.Windows.Forms.ToolBarButton();
+            this.toolBarButton44 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton5 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButtonAddFromDB = new System.Windows.Forms.ToolBarButton();
-            this.tlbbFullDelete = new System.Windows.Forms.ToolBarButton();
+            this.toolBarButton59 = new System.Windows.Forms.ToolBarButton();
+            this.toolBarButtonViewOnMap = new System.Windows.Forms.ToolBarButton();
+            this.tlbbRemoveResult = new System.Windows.Forms.ToolBarButton();
+            this.toolBarButtonRemoveFromSeanse = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton8 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton9 = new System.Windows.Forms.ToolBarButton();
+            this.toolBarButton1 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton37 = new System.Windows.Forms.ToolBarButton();
             this.panel48 = new System.Windows.Forms.Panel();
             this.labelHeaderVisibilityResult = new System.Windows.Forms.Label();
@@ -225,9 +228,6 @@
             this.label12 = new System.Windows.Forms.Label();
             this.heightMin = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.toolBarButtonRemoveFromSeanse = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButtonViewOnMap = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton1 = new System.Windows.Forms.ToolBarButton();
             this.mainTabControl.SuspendLayout();
             this.tbpPoints.SuspendLayout();
             this.panel7.SuspendLayout();
@@ -2439,7 +2439,7 @@
             this.tvResults.CheckBoxes = true;
             this.tvResults.Dock = System.Windows.Forms.DockStyle.Top;
             this.tvResults.FullRowSelect = true;
-            this.tvResults.ImageKey = "0.png";
+            this.tvResults.ImageKey = "Table.png";
             this.tvResults.ImageList = this.imageList1;
             this.tvResults.Location = new System.Drawing.Point(0, 64);
             this.tvResults.Name = "tvResults";
@@ -2463,12 +2463,12 @@
             this.toolBarVisibleResults.Appearance = System.Windows.Forms.ToolBarAppearance.Flat;
             this.toolBarVisibleResults.AutoSize = false;
             this.toolBarVisibleResults.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
-            this.toolBarButtonZoomToResultRaser,
-            this.toolBarButtonViewParamOnMap,
+            this.toolBarButton43,
+            this.toolBarButton44,
             this.toolBarButton5,
-            this.toolBarButtonAddFromDB,
+            this.toolBarButton59,
             this.toolBarButtonViewOnMap,
-            this.tlbbFullDelete,
+            this.tlbbRemoveResult,
             this.toolBarButtonRemoveFromSeanse,
             this.toolBarButton8,
             this.toolBarButton9,
@@ -2485,35 +2485,46 @@
             this.toolBarVisibleResults.TabIndex = 40;
             this.toolBarVisibleResults.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.ToolBarVisibleResults_ButtonClick);
             // 
-            // toolBarButtonZoomToResultRaser
+            // toolBarButton43
             // 
-            this.toolBarButtonZoomToResultRaser.ImageKey = "Directions.png";
-            this.toolBarButtonZoomToResultRaser.Name = "toolBarButton43";
-            this.toolBarButtonZoomToResultRaser.ToolTipText = "Показать на карте";
+            this.toolBarButton43.ImageKey = "Directions.png";
+            this.toolBarButton43.Name = "toolBarButton43";
+            this.toolBarButton43.ToolTipText = "Показать на карте";
             // 
-            // toolBarButtonViewParamOnMap
+            // toolBarButton44
             // 
-            this.toolBarButtonViewParamOnMap.Enabled = false;
-            this.toolBarButtonViewParamOnMap.ImageKey = "Light.png";
-            this.toolBarButtonViewParamOnMap.Name = "toolBarButton44";
-            this.toolBarButtonViewParamOnMap.ToolTipText = "Показать параметры на карте";
+            this.toolBarButton44.Enabled = false;
+            this.toolBarButton44.ImageKey = "Light.png";
+            this.toolBarButton44.Name = "toolBarButton44";
+            this.toolBarButton44.ToolTipText = "Показать параметры на карте";
             // 
             // toolBarButton5
             // 
             this.toolBarButton5.Name = "toolBarButton5";
             this.toolBarButton5.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
             // 
-            // toolBarButtonAddFromDB
+            // toolBarButton59
             // 
-            this.toolBarButtonAddFromDB.ImageIndex = 136;
-            this.toolBarButtonAddFromDB.Name = "toolBarButton59";
-            this.toolBarButtonAddFromDB.ToolTipText = "Добавить";
+            this.toolBarButton59.ImageIndex = 136;
+            this.toolBarButton59.Name = "toolBarButton59";
+            this.toolBarButton59.ToolTipText = "Добавить";
             // 
-            // tlbbFullDelete
+            // toolBarButtonViewOnMap
             // 
-            this.tlbbFullDelete.ImageKey = "Cancel.png";
-            this.tlbbFullDelete.Name = "tlbbRemoveResult";
-            this.tlbbFullDelete.ToolTipText = "видалити звідусіль";
+            this.toolBarButtonViewOnMap.ImageIndex = 148;
+            this.toolBarButtonViewOnMap.Name = "toolBarButtonViewOnMap";
+            // 
+            // tlbbRemoveResult
+            // 
+            this.tlbbRemoveResult.ImageKey = "Cancel.png";
+            this.tlbbRemoveResult.Name = "tlbbRemoveResult";
+            this.tlbbRemoveResult.ToolTipText = "видалити звідусіль";
+            // 
+            // toolBarButtonRemoveFromSeanse
+            // 
+            this.toolBarButtonRemoveFromSeanse.ImageIndex = 53;
+            this.toolBarButtonRemoveFromSeanse.Name = "toolBarButtonRemoveFromSeanse";
+            this.toolBarButtonRemoveFromSeanse.ToolTipText = "видалити з сеансу роботи";
             // 
             // toolBarButton8
             // 
@@ -2524,6 +2535,11 @@
             // 
             this.toolBarButton9.ImageIndex = 107;
             this.toolBarButton9.Name = "toolBarButton9";
+            // 
+            // toolBarButton1
+            // 
+            this.toolBarButton1.Name = "toolBarButton1";
+            this.toolBarButton1.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
             // 
             // toolBarButton37
             // 
@@ -2622,22 +2638,6 @@
             this.label9.Size = new System.Drawing.Size(183, 17);
             this.label9.TabIndex = 4;
             this.label9.Text = "высота над поверхностью, м, мин.";
-            // 
-            // toolBarButtonRemoveFromSeanse
-            // 
-            this.toolBarButtonRemoveFromSeanse.ImageIndex = 53;
-            this.toolBarButtonRemoveFromSeanse.Name = "toolBarButtonRemoveFromSeanse";
-            this.toolBarButtonRemoveFromSeanse.ToolTipText = "видалити з сеансу роботи";
-            // 
-            // toolBarButtonViewOnMap
-            // 
-            this.toolBarButtonViewOnMap.ImageIndex = 148;
-            this.toolBarButtonViewOnMap.Name = "toolBarButtonViewOnMap";
-            // 
-            // toolBarButton1
-            // 
-            this.toolBarButton1.Name = "toolBarButton1";
-            this.toolBarButton1.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
             // 
             // DockableWindowMilSpaceMVisibilitySt
             // 
@@ -2939,5 +2939,9 @@
         private System.Windows.Forms.ToolBarButton toolBarButtonRemoveFromSeanse;
         private System.Windows.Forms.ToolBarButton toolBarButtonViewOnMap;
         private System.Windows.Forms.ToolBarButton toolBarButton1;
+        private System.Windows.Forms.ToolBarButton toolBarButton43;
+        private System.Windows.Forms.ToolBarButton toolBarButton44;
+        private System.Windows.Forms.ToolBarButton toolBarButton59;
+        private System.Windows.Forms.ToolBarButton tlbbRemoveResult;
     }
 }
