@@ -133,12 +133,14 @@
       <Column Name="ReferencedGDB" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="shared" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="surface" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Association Name="MilSp_VisiblityResults_MilSp_VisibilityUserSession" Member="MilSp_VisibilityUserSessions" ThisKey="Id" OtherKey="visibilityResultId" Type="MilSp_VisibilityUserSession" />
     </Type>
   </Table>
   <Table Name="dbo.MILSP_VISIBILITY_USER_SESSION" Member="MilSp_VisibilityUserSessions" AccessModifier="Internal">
     <Type Name="MilSp_VisibilityUserSession" AccessModifier="Internal">
       <Column Name="userName" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="visibilityResultId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="visibilityResultId" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="MilSp_VisiblityResults_MilSp_VisibilityUserSession" Member="MilSp_VisiblityResults" ThisKey="visibilityResultId" OtherKey="Id" Type="MilSp_VisiblityResults" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

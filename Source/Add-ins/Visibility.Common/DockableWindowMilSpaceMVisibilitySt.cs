@@ -1300,9 +1300,7 @@ namespace MilSpace.Visibility
                         MessageBox.Show("Unable to delete session");
                         return;
                     }
-
                     _visibilitySessionsGui.Remove(_visibilitySessionsGui.First(session => session.Id == id));
-
                     if (cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All))
                     {
                         FilterVisibilityList();

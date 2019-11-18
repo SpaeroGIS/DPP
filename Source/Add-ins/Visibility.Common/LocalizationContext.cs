@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Xml;
 
-namespace MilSpace.Visibility
+namespace MilSpace.Visibility.Localization
 {
     internal class LocalizationContext
     {
