@@ -115,7 +115,7 @@ namespace MilSpace.Visibility
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.panel23 = new System.Windows.Forms.Panel();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.chkTrimRaster = new System.Windows.Forms.CheckBox();
             this.label13 = new System.Windows.Forms.Label();
             this.panel22 = new System.Windows.Forms.Panel();
             this.cmbPositions = new System.Windows.Forms.ComboBox();
@@ -124,7 +124,7 @@ namespace MilSpace.Visibility
             this.label12 = new System.Windows.Forms.Label();
             this.panel21 = new System.Windows.Forms.Panel();
             this.TableChkBox = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.chkConvertToPolygon = new System.Windows.Forms.CheckBox();
             this.SumChkBox = new System.Windows.Forms.CheckBox();
             this.checkBoxOP = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
@@ -1430,7 +1430,7 @@ namespace MilSpace.Visibility
             // 
             // panel23
             // 
-            this.panel23.Controls.Add(this.checkBox1);
+            this.panel23.Controls.Add(this.chkTrimRaster);
             this.panel23.Controls.Add(this.label13);
             this.panel23.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel23.Location = new System.Drawing.Point(0, 104);
@@ -1439,19 +1439,19 @@ namespace MilSpace.Visibility
             this.panel23.Size = new System.Drawing.Size(921, 32);
             this.panel23.TabIndex = 17;
             // 
-            // checkBox1
+            // chkTrimRaster
             // 
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBox1.Location = new System.Drawing.Point(184, 3);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.checkBox1.Size = new System.Drawing.Size(409, 29);
-            this.checkBox1.TabIndex = 6;
-            this.checkBox1.Text = "обрізати растри до дійсного екстенту";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.chkTrimRaster.Checked = true;
+            this.chkTrimRaster.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkTrimRaster.Dock = System.Windows.Forms.DockStyle.Left;
+            this.chkTrimRaster.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.chkTrimRaster.Location = new System.Drawing.Point(184, 3);
+            this.chkTrimRaster.Name = "chkTrimRaster";
+            this.chkTrimRaster.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
+            this.chkTrimRaster.Size = new System.Drawing.Size(409, 29);
+            this.chkTrimRaster.TabIndex = 6;
+            this.chkTrimRaster.Text = "обрізати растри до дійсного екстенту";
+            this.chkTrimRaster.UseVisualStyleBackColor = true;
             // 
             // label13
             // 
@@ -1526,7 +1526,7 @@ namespace MilSpace.Visibility
             // panel21
             // 
             this.panel21.Controls.Add(this.TableChkBox);
-            this.panel21.Controls.Add(this.checkBox2);
+            this.panel21.Controls.Add(this.chkConvertToPolygon);
             this.panel21.Controls.Add(this.SumChkBox);
             this.panel21.Controls.Add(this.checkBoxOP);
             this.panel21.Controls.Add(this.label11);
@@ -1552,19 +1552,19 @@ namespace MilSpace.Visibility
             this.TableChkBox.UseVisualStyleBackColor = true;
             this.TableChkBox.Visible = false;
             // 
-            // checkBox2
+            // chkConvertToPolygon
             // 
-            this.checkBox2.Checked = true;
-            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBox2.Location = new System.Drawing.Point(572, 1);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.checkBox2.Size = new System.Drawing.Size(194, 30);
-            this.checkBox2.TabIndex = 7;
-            this.checkBox2.Text = "конвертувати у полігони";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.chkConvertToPolygon.Checked = true;
+            this.chkConvertToPolygon.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkConvertToPolygon.Dock = System.Windows.Forms.DockStyle.Left;
+            this.chkConvertToPolygon.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.chkConvertToPolygon.Location = new System.Drawing.Point(572, 1);
+            this.chkConvertToPolygon.Name = "chkConvertToPolygon";
+            this.chkConvertToPolygon.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
+            this.chkConvertToPolygon.Size = new System.Drawing.Size(194, 30);
+            this.chkConvertToPolygon.TabIndex = 7;
+            this.chkConvertToPolygon.Text = "конвертувати у полігони";
+            this.chkConvertToPolygon.UseVisualStyleBackColor = true;
             // 
             // SumChkBox
             // 
@@ -2151,8 +2151,8 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.CheckBox checkDate_Object;
         private System.Windows.Forms.CheckBox checkB_Affilation;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox chkTrimRaster;
         private System.Windows.Forms.CheckBox TableChkBox;
-        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox chkConvertToPolygon;
     }
 }

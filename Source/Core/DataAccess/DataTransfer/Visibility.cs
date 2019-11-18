@@ -15,10 +15,14 @@ namespace MilSpace.DataAccess.DataTransfer
             { VisibilityCalculationresultsEnum.VisibilityAreaRaster , "_img"},
             { VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle , "_imgs"},
             { VisibilityCalculationresultsEnum.ObservationStations , "_oo_r"},
-            { VisibilityCalculationresultsEnum.VisibilityAreaPolygons , "_va"},
+            { VisibilityCalculationresultsEnum.VisibilityAreaPolygons , "_va_r"},
+            { VisibilityCalculationresultsEnum.VisibilityAreaPolygonSingle , "_vas_r"},
             { VisibilityCalculationresultsEnum.CoverageTable , "_ct"},
             { VisibilityCalculationresultsEnum.ObservationPointSingle , "_ops"},
-            { VisibilityCalculationresultsEnum.VisibilityObservStationClip , "__imgc"}
+            { VisibilityCalculationresultsEnum.VisibilityObservStationClip , "_imgc"},
+            { VisibilityCalculationresultsEnum.VisibilityAreasTrimmedByPoly , "_imgt"},
+            { VisibilityCalculationresultsEnum.VisibilityAreaTrimmedByPolySingle , "_imgts"}
+
         };
 
         private static IEnumerable<VisibilityCalculationresultsEnum> ResultsToShow = new VisibilityCalculationresultsEnum[]
@@ -28,20 +32,24 @@ namespace MilSpace.DataAccess.DataTransfer
             VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle,
             VisibilityCalculationresultsEnum.ObservationStations,
             VisibilityCalculationresultsEnum.VisibilityAreaPolygons,
-            VisibilityCalculationresultsEnum.VisibilityObservStationClip
+            VisibilityCalculationresultsEnum.VisibilityObservStationClip,
+            VisibilityCalculationresultsEnum.VisibilityAreasTrimmedByPoly,
+            VisibilityCalculationresultsEnum.VisibilityAreaTrimmedByPolySingle
         };
 
         internal static VisibilityCalculationresultsEnum[] FeatureClassResults = {
             VisibilityCalculationresultsEnum.ObservationPoints,
             VisibilityCalculationresultsEnum.ObservationStations,
             VisibilityCalculationresultsEnum.VisibilityAreaPolygons,
-            VisibilityCalculationresultsEnum.ObservationPointSingle
+            VisibilityCalculationresultsEnum.ObservationPointSingle,
         };
 
         internal static VisibilityCalculationresultsEnum[] RasterResults = {
             VisibilityCalculationresultsEnum.VisibilityAreaRaster,
             VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle,
-            VisibilityCalculationresultsEnum.VisibilityObservStationClip
+            VisibilityCalculationresultsEnum.VisibilityObservStationClip,
+            VisibilityCalculationresultsEnum.VisibilityAreasTrimmedByPoly,
+            VisibilityCalculationresultsEnum.VisibilityAreaTrimmedByPolySingle
         };
 
         internal static VisibilityCalculationresultsEnum[] TableResults = {
@@ -54,6 +62,12 @@ namespace MilSpace.DataAccess.DataTransfer
             { esriDatasetType.esriDTRasterDataset, RasterResults},
             { esriDatasetType.esriDTTable, TableResults}
 
+        };
+
+        private static IEnumerable<VisibilityCalculationresultsEnum> ResultsRelatedToSingle = new VisibilityCalculationresultsEnum[] {
+            VisibilityCalculationresultsEnum.ObservationPointSingle,
+            VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle,
+             VisibilityCalculationresultsEnum.VisibilityAreaPolygonSingle
         };
 
         public const VisibilityCalculationresultsEnum DefaultResultsSet = VisibilityCalculationresultsEnum.ObservationPoints | VisibilityCalculationresultsEnum.ObservationStations | VisibilityCalculationresultsEnum.VisibilityAreaRaster;
@@ -98,12 +112,10 @@ namespace MilSpace.DataAccess.DataTransfer
 
             foreach (var result in VisibilityResulSuffixes)
             {
-                if (calculatedResults.HasFlag(result.Key) && ResultsToShow.Any( r=> r.Equals(result.Key)))
+                if (calculatedResults.HasFlag(result.Key) && ResultsToShow.Any(r => r.Equals(result.Key)))
                 {
 
-                    if (result.Key == VisibilityCalculationresultsEnum.ObservationPointSingle ||
-                        result.Key == VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle)
-
+                    if (ResultsRelatedToSingle.Any(v => result.Key == v))
                     {
                         int index = 0;
                         string resultBName = GetResultName(result.Key, Id, index);

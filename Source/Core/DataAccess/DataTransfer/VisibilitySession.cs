@@ -3,7 +3,7 @@
 namespace MilSpace.DataAccess.DataTransfer
 {
     [Flags]
-    public enum VisibilityCalculationresultsEnum : byte
+    public enum VisibilityCalculationresultsEnum 
     {
         None = 0,
         ObservationPoints = 1,
@@ -14,6 +14,9 @@ namespace MilSpace.DataAccess.DataTransfer
         ObservationPointSingle = 32,
         VisibilityAreaRasterSingle = 64,
         VisibilityObservStationClip = 128,
+        VisibilityAreaPolygonSingle = 256,
+        VisibilityAreasTrimmedByPoly = 512,
+        VisibilityAreaTrimmedByPolySingle = 1024
     }
 
     public enum LayerPositionsEnum

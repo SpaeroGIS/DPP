@@ -20,7 +20,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
         private IFeatureClass obserpStationsfeatureClass;
         private string rasterSource;
         private string outputSourceName;
-        private readonly VisibilityTask session;
+        private VisibilityTask session;
 
         private VisibilityCalculationresultsEnum calcResults;
 
@@ -160,6 +160,8 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
             int index = -1;
 
+            bool removeFullImageFromresult = false;
+
             foreach (var curPoints in pointsIDs)
             {
                 var pointId = curPoints.Key == VisibilityCalculationresultsEnum.ObservationPoints ? -1 : ++index;
@@ -180,7 +182,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
                 //Generate Visibility Raster
                 string featureClass = oservPointFeatureClassName;
-                string outImageName = VisibilityTask.GetResultName(curPoints.Key == VisibilityCalculationresultsEnum.ObservationPoints ? 
+                string outImageName = VisibilityTask.GetResultName(curPoints.Key == VisibilityCalculationresultsEnum.ObservationPoints ?
                         VisibilityCalculationresultsEnum.VisibilityAreaRaster : VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle, outputSourceName, pointId);
 
                 if (!ProfileLibrary.GenerateVisibilityData(rasterSource, featureClass, VisibilityAnalysisTypesEnum.Frequency, outImageName, messages))
@@ -194,6 +196,25 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                 else
                 {
                     results.Add(outImageName);
+
+                    string visibilityArePolyFCName = null;
+                    //COnvertToPolygon
+                    if (calcResults.HasFlag(VisibilityCalculationresultsEnum.VisibilityAreaPolygons))
+                    {
+                        visibilityArePolyFCName = VisibilityTask.GetResultName(pointId > -1 ?
+                            VisibilityCalculationresultsEnum.VisibilityAreaPolygonSingle : VisibilityCalculationresultsEnum.VisibilityAreaPolygons,
+                            outputSourceName, pointId);
+                        if (!ProfileLibrary.ConvertTasterToPolygon(outImageName, visibilityArePolyFCName, messages))
+                        {
+                            string errorMessage = $"The result {visibilityArePolyFCName} was not generated";
+                            result.Exception = new MilSpaceVisibilityCalcFailedException(errorMessage);
+                            result.ErrorMessage = errorMessage;
+                            logger.ErrorEx(errorMessage);
+                            return messages;
+                        }
+                        results.Add(visibilityArePolyFCName);
+                    }
+
                     //Clip 
                     if (!string.IsNullOrEmpty(oservStationsFeatureClassName))
                     {
@@ -210,14 +231,45 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                         else
                         {
                             results.Add(outClipName);
+                            removeFullImageFromresult = true;
                         }
+                    } else  if (calcResults.HasFlag(VisibilityCalculationresultsEnum.VisibilityAreasTrimmedByPoly) && !string.IsNullOrEmpty(visibilityArePolyFCName))
+                    {
+                        //Clip visibility images to valuable extent
+                        var inClipName = outImageName;
+                        var outClipName = VisibilityTask.GetResultName(pointId > -1 ?
+                          VisibilityCalculationresultsEnum.VisibilityAreaTrimmedByPolySingle : VisibilityCalculationresultsEnum.VisibilityAreasTrimmedByPoly,
+                          outputSourceName, pointId);
 
+                        if (!ProfileLibrary.ClipVisibilityZonesByAreas(inClipName, outClipName, visibilityArePolyFCName, messages, "NONE"))
+                        {
+                            string errorMessage = $"The result {outClipName} was not generated";
+                            result.Exception = new MilSpaceVisibilityCalcFailedException(errorMessage);
+                            result.ErrorMessage = errorMessage;
+                            logger.ErrorEx(errorMessage);
+                            return messages;
+                        }
+                        else
+                        {
+                            results.Add(outClipName);
+                            removeFullImageFromresult = true;
+                        }
                     }
                 }
             }
 
-          
+            //Set real results to show
+            if (removeFullImageFromresult)
+            {
+                if (calcResults.HasFlag(VisibilityCalculationresultsEnum.VisibilityAreaRaster))
+                { calcResults &= ~VisibilityCalculationresultsEnum.VisibilityAreaRaster; }
+                if (calcResults.HasFlag(VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle))
+                { calcResults &= ~VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle; }
+
+            }
+
+            session.CalculatedResults = (int)calcResults;
             return messages;
         }
-    }
+}
 }
