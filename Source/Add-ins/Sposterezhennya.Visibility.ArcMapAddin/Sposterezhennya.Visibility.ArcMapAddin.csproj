@@ -148,6 +148,17 @@
     <Compile Include="..\Visibility.Common\ObservPointDefaultValues.cs">
       <Link>ObservPointDefaultValues.cs</Link>
     </Compile>
+    <Compile Include="..\Visibility.Common\UserSessionGUI\AccessibleResultsController.cs">
+      <Link>UserSessionGUI\AccessibleResultsController.cs</Link>
+    </Compile>
+    <Compile Include="..\Visibility.Common\UserSessionGUI\AccessibleResultsModalWindow.cs">
+      <Link>UserSessionGUI\AccessibleResultsModalWindow.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\Visibility.Common\UserSessionGUI\AccessibleResultsModalWindow.designer.cs">
+      <Link>UserSessionGUI\AccessibleResultsModalWindow.designer.cs</Link>
+      <DependentUpon>AccessibleResultsModalWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="..\Visibility.Common\ViewController\IObservationPointsView.cs">
       <Link>ViewController\IObservationPointsView.cs</Link>
     </Compile>

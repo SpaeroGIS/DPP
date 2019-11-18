@@ -2474,6 +2474,8 @@ namespace MilSpace.DataAccess.Definition
 		
 		private string _surface;
 		
+		private EntitySet<MilSp_VisibilityUserSession> _MilSp_VisibilityUserSessions;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -2502,6 +2504,7 @@ namespace MilSpace.DataAccess.Definition
 		
 		public MilSp_VisiblityResults()
 		{
+			this._MilSp_VisibilityUserSessions = new EntitySet<MilSp_VisibilityUserSession>(new Action<MilSp_VisibilityUserSession>(this.attach_MilSp_VisibilityUserSessions), new Action<MilSp_VisibilityUserSession>(this.detach_MilSp_VisibilityUserSessions));
 			OnCreated();
 		}
 		
@@ -2705,6 +2708,19 @@ namespace MilSpace.DataAccess.Definition
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MilSp_VisiblityResults_MilSp_VisibilityUserSession", Storage="_MilSp_VisibilityUserSessions", ThisKey="Id", OtherKey="visibilityResultId")]
+		public EntitySet<MilSp_VisibilityUserSession> MilSp_VisibilityUserSessions
+		{
+			get
+			{
+				return this._MilSp_VisibilityUserSessions;
+			}
+			set
+			{
+				this._MilSp_VisibilityUserSessions.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2724,6 +2740,18 @@ namespace MilSpace.DataAccess.Definition
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
+		
+		private void attach_MilSp_VisibilityUserSessions(MilSp_VisibilityUserSession entity)
+		{
+			this.SendPropertyChanging();
+			entity.MilSp_VisiblityResults = this;
+		}
+		
+		private void detach_MilSp_VisibilityUserSessions(MilSp_VisibilityUserSession entity)
+		{
+			this.SendPropertyChanging();
+			entity.MilSp_VisiblityResults = null;
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MILSP_VISIBILITY_USER_SESSION")]
@@ -2734,7 +2762,9 @@ namespace MilSpace.DataAccess.Definition
 		
 		private string _userName;
 		
-		private int _visibilityResultId;
+		private string _visibilityResultId;
+		
+		private EntityRef<MilSp_VisiblityResults> _MilSp_VisiblityResults;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -2742,12 +2772,13 @@ namespace MilSpace.DataAccess.Definition
     partial void OnCreated();
     partial void OnuserNameChanging(string value);
     partial void OnuserNameChanged();
-    partial void OnvisibilityResultIdChanging(int value);
+    partial void OnvisibilityResultIdChanging(string value);
     partial void OnvisibilityResultIdChanged();
     #endregion
 		
 		public MilSp_VisibilityUserSession()
 		{
+			this._MilSp_VisiblityResults = default(EntityRef<MilSp_VisiblityResults>);
 			OnCreated();
 		}
 		
@@ -2771,8 +2802,8 @@ namespace MilSpace.DataAccess.Definition
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_visibilityResultId", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int visibilityResultId
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_visibilityResultId", DbType="VarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string visibilityResultId
 		{
 			get
 			{
@@ -2782,11 +2813,49 @@ namespace MilSpace.DataAccess.Definition
 			{
 				if ((this._visibilityResultId != value))
 				{
+					if (this._MilSp_VisiblityResults.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnvisibilityResultIdChanging(value);
 					this.SendPropertyChanging();
 					this._visibilityResultId = value;
 					this.SendPropertyChanged("visibilityResultId");
 					this.OnvisibilityResultIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MilSp_VisiblityResults_MilSp_VisibilityUserSession", Storage="_MilSp_VisiblityResults", ThisKey="visibilityResultId", OtherKey="Id", IsForeignKey=true)]
+		public MilSp_VisiblityResults MilSp_VisiblityResults
+		{
+			get
+			{
+				return this._MilSp_VisiblityResults.Entity;
+			}
+			set
+			{
+				MilSp_VisiblityResults previousValue = this._MilSp_VisiblityResults.Entity;
+				if (((previousValue != value) 
+							|| (this._MilSp_VisiblityResults.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._MilSp_VisiblityResults.Entity = null;
+						previousValue.MilSp_VisibilityUserSessions.Remove(this);
+					}
+					this._MilSp_VisiblityResults.Entity = value;
+					if ((value != null))
+					{
+						value.MilSp_VisibilityUserSessions.Add(this);
+						this._visibilityResultId = value.Id;
+					}
+					else
+					{
+						this._visibilityResultId = default(string);
+					}
+					this.SendPropertyChanged("MilSp_VisiblityResults");
 				}
 			}
 		}

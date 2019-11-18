@@ -3,6 +3,7 @@ using MilSpace.Core;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Tools;
+using MilSpace.Visibility.Localization;
 using MilSpace.Visibility.ViewController;
 using System;
 using System.Collections.Generic;

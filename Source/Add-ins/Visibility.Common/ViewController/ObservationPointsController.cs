@@ -12,6 +12,7 @@ using System.Linq;
 using MilSpace.Core;
 using MilSpace.Tools.Exceptions;
 using System.Text.RegularExpressions;
+using MilSpace.Visibility.Localization;
 
 namespace MilSpace.Visibility.ViewController
 {
