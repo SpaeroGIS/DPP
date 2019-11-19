@@ -638,35 +638,27 @@ namespace MilSpace.Visibility
                         return true;
 
                     case "angleOFViewMin":
-
                         return ValidateRange(angleOFViewMin, point.AngelMinH.ToString(), -90, 0);
 
                     case "angleOFViewMax":
-
                         return ValidateRange(angleOFViewMax, point.AngelMaxH.ToString(), 0, 90);
 
                     case "azimuthB":
-
                         return ValidateAzimuth(textBox, point.AzimuthStart.ToString());
 
                     case "azimuthE":
-
                         return ValidateAzimuth(textBox, point.AzimuthEnd.ToString());
 
                     case "azimuthMainAxis":
-
                         return ValidateAzimuth(textBox, point.AzimuthMainAxis.ToString());
 
                     case "cameraRotationH":
-
                         return ValidateAzimuth(textBox, point.AngelCameraRotationH.ToString());
 
                     case "cameraRotationV":
-
                         return ValidateAzimuth(textBox, point.AngelCameraRotationV.ToString());
 
                     case "heightCurrent":
-
                         var currentHeight = ValidateHeight(textBox, point.RelativeHeight.ToString());
 
                         if (currentHeight != -1)
@@ -690,7 +682,6 @@ namespace MilSpace.Visibility
                         return false;
 
                     case "heightMin":
-
                         var minHeightChanged = ValidateHeight(textBox, point.AvailableHeightLover.ToString());
 
                         if (minHeightChanged != -1)
@@ -714,7 +705,6 @@ namespace MilSpace.Visibility
                         return false;
 
                     case "heightMax":
-
                         var maxHeightChanged = ValidateHeight(textBox, point.AvailableHeightUpper.ToString());
 
                         if (maxHeightChanged != -1)
@@ -755,10 +745,11 @@ namespace MilSpace.Visibility
         {
             double value;
 
-            if (Double.TryParse(textBox.Text, out value))
+            if (Helper.TryParceToDouble(textBox.Text, out value))
             {
                 if (value >= lowValue && value <= upperValue)
                 {
+                    textBox.Text = value.ToString();
                     return true;
                 }
             }
