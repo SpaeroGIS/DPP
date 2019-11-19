@@ -193,6 +193,13 @@ namespace MilSpace.Visibility.ViewController
                                                 true, 33, activeView);
         }
 
+        internal void ZoomToLayer(string id, IActiveView activeView)
+        {
+            var resName = _visibilityResults.First(res => res.Id == id).Name;
+
+            EsriTools.ZoomToLayer(resName, activeView);
+        }
+
         private string GetLastLayer(IActiveView activeView)
         {
             var map = activeView.FocusMap;

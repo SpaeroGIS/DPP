@@ -438,6 +438,14 @@ namespace MilSpace.Core.Tools
             return layer;
         }
 
+        public static void ZoomToLayer(string layerName, IActiveView activeView)
+        {
+            var layer = GetLayer(layerName, activeView.FocusMap);
+
+            activeView.Extent = layer.AreaOfInterest;
+            activeView.Refresh();
+        }
+
         public static IEnumerable<ILayer> GetVisibiltyImgLayers(string layerName, IMap map)
         {
             var imgLayers = new List<ILayer>();

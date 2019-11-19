@@ -1557,6 +1557,11 @@ namespace MilSpace.Visibility
                 SetVisibilityResultsButtonsState(true);
             }
 
+            if(e.Button.Name == tlbbZoomToResultRaster.Name)
+            {
+                _visibilitySessionsController.ZoomToLayer(tvResults.SelectedNode.Tag.ToString(), ActiveView);
+            }
+
             if (e.Button.Name == tlbbAddFromDB.Name)
             {
                 var accessibleResultsWindow = new AccessibleResultsModalWindow(_visibilitySessionsController.GetAllResults(), ActiveView.FocusMap.SpatialReference);
@@ -1583,13 +1588,6 @@ namespace MilSpace.Visibility
             }
         }
 
-        #endregion
-
-        private void tvResults_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void tvResults_AfterSelect(object sender, TreeViewEventArgs e)
         {
             var selectedNode = e.Node;
@@ -1597,14 +1595,17 @@ namespace MilSpace.Visibility
             SetVisibilityResultsButtonsState(selectedNode.Parent != null);
 
             int devuders = selectedNode.FullPath.Split('%').Length;
-            if (devuders == 0) //Root node
+            if(devuders == 0) //Root node
             {
             }
-            else if (devuders == 1)
+            else if(devuders == 1)
             { }
-            else if (devuders == 2)
+            else if(devuders == 2)
             { }
         }
+
+        #endregion
+
     }
 }
 
