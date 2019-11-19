@@ -1107,7 +1107,11 @@ namespace MilSpace.Visibility
                     }
                 }
             }
-            catch (NullReferenceException e) { }
+            catch (NullReferenceException e)
+            {
+
+                //TODO: log the error
+            }
         }
 
         #endregion
@@ -1476,6 +1480,25 @@ namespace MilSpace.Visibility
 
         #endregion
 
+        private void tvResults_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tvResults_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+
+            var selectedNode = e.Node;
+
+            int devuders = selectedNode.FullPath.Split('%').Length;
+            if (devuders == 0) //Root node
+            {
+            }
+            else if (devuders == 1)
+            { }
+            else if (devuders == 2)
+            { }
+        }
     }
 }
 
