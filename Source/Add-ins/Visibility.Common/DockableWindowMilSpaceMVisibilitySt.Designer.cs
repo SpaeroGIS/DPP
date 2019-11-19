@@ -1882,14 +1882,15 @@
             this.tvResults.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tvResults.Dock = System.Windows.Forms.DockStyle.Top;
             this.tvResults.FullRowSelect = true;
-            this.tvResults.ImageKey = "0.png";
+            this.tvResults.ImageIndex = 201;
             this.tvResults.ImageList = this.imageList1;
             this.tvResults.Location = new System.Drawing.Point(0, 64);
             this.tvResults.Name = "tvResults";
-            this.tvResults.SelectedImageKey = "Ok.png";
+            this.tvResults.PathSeparator = "%";
+            this.tvResults.SelectedImageIndex = 0;
             this.tvResults.Size = new System.Drawing.Size(312, 199);
             this.tvResults.TabIndex = 78;
-            this.tvResults.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.node_AfterCheck);
+            this.tvResults.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvResults_AfterSelect);
             // 
             // panel49
             // 

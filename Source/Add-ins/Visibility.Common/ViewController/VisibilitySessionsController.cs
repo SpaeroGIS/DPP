@@ -103,23 +103,27 @@ namespace MilSpace.Visibility.ViewController
             return result;
         }
 
-        internal bool RemoveResult(string id)
+        internal bool RemoveResult(string id, bool fromBase = false)
         {
             var selectedResults = _visibilityResults.First(res => res.Id == id);
             var results = selectedResults.Results();
+            var removingResult = true;
 
-            foreach(var result in results)
+            if(fromBase)
             {
-                if(result != selectedResults.Id)
+                foreach(var result in results)
                 {
-                    if(!EsriTools.RemoveDataSet(selectedResults.ReferencedGDB, result))
+                    if(result != selectedResults.Id)
                     {
-                        return false;
+                        if(!EsriTools.RemoveDataSet(selectedResults.ReferencedGDB, result))
+                        {
+                            return false;
+                        }
                     }
                 }
-            }
 
-            var removingResult = VisibilityZonesFacade.DeleteVisibilityResults(id);
+                removingResult = VisibilityZonesFacade.DeleteVisibilityResults(id);
+            }
 
             if(removingResult)
             {
@@ -129,14 +133,36 @@ namespace MilSpace.Visibility.ViewController
             return removingResult;
         }
 
-        internal void ShareResults(string id)
+        internal bool ShareResults(string id)
         {
             var selectedResults = _visibilityResults.First(res => res.Id == id);
             if(!selectedResults.Shared)
             {
                 selectedResults.Shared = true;
                 VisibilityZonesFacade.UpdateVisibilityResults(selectedResults);
+                return true;
             }
+
+            return false;
+        }
+
+        internal bool AddSharedResults(IEnumerable<VisibilityCalcResults> results)
+        {
+            var res = true;
+
+            foreach(var result in results)
+            {
+                if(!VisibilityZonesFacade.AddSharedVisibilityResultsToUserSession(result))
+                {
+                     res = false;
+                }
+                else
+                {
+                    _visibilityResults.Add(result);
+                }
+            }
+
+            return res;
         }
     }
 }

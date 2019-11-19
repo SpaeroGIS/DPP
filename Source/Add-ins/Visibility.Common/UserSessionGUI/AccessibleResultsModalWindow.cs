@@ -85,6 +85,7 @@ namespace MilSpace.Visibility
             //TODO:Localize
             cmbGraphType.Items.Add("Усі типи");
             cmbGraphType.Items.AddRange(LocalizationContext.Instance.CalcTypeLocalisationShort.Values.ToArray());
+            cmbGraphType.Items.Remove(LocalizationContext.Instance.CalcTypeLocalisationShort.First(type => type.Key == VisibilityCalcTypeEnum.None).Value);
 
         }
 
