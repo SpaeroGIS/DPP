@@ -1586,10 +1586,5 @@ namespace MilSpace.Visibility
         }
     }
 }
-        private void panel29_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-    }
-}
+ 
 
