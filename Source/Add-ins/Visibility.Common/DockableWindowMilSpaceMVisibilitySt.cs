@@ -35,8 +35,8 @@ namespace MilSpace.Visibility
 
         private bool _isDropDownItemChangedManualy = false;
         private bool _isFieldsChanged = false;
-        private ObservationPoint selectedPointMEM = new ObservationPoint() ;
-        
+        private ObservationPoint selectedPointMEM = new ObservationPoint();
+
 
         public DockableWindowMilSpaceMVisibilitySt(object hook, ObservationPointsController controller)
         {
@@ -420,7 +420,7 @@ namespace MilSpace.Visibility
 
             dgvObservationPoints.CurrentCell = null;
 
-            if(dgvObservationPoints.SelectedRows.Count > 0)
+            if (dgvObservationPoints.SelectedRows.Count > 0)
             {
                 dgvObservationPoints.SelectedRows[0].Selected = false;
             }
@@ -836,7 +836,7 @@ namespace MilSpace.Visibility
         {
             dgvObservationPoints.CurrentCell = null;
 
-            if(dgvObservationPoints.SelectedRows.Count > 0)
+            if (dgvObservationPoints.SelectedRows.Count > 0)
             {
                 dgvObservationPoints.SelectedRows[0].Selected = false;
             }
@@ -922,6 +922,8 @@ namespace MilSpace.Visibility
             tbVisibilitySessionCreated.Text = session.Created.Value.ToString(Helper.DateFormat);
             tbVisibilitySessionStarted.Text = session.Started.HasValue ? session.Started.Value.ToString(Helper.DateFormat) : string.Empty;
             tbVisibilitySessionFinished.Text = session.Finished.HasValue ? session.Finished.Value.ToString(Helper.DateFormat) : string.Empty;
+
+            wizardTask.Enabled = _observPointsController.IsObservObjectsExists() && _observPointsController.IsObservPointsExists();
         }
 
         private void PopulateVisibilityComboBoxes()
@@ -940,7 +942,7 @@ namespace MilSpace.Visibility
 
             dgvVisibilitySessions.CurrentCell = null;
 
-            if(dgvVisibilitySessions.SelectedRows.Count > 0)
+            if (dgvVisibilitySessions.SelectedRows.Count > 0)
             {
                 dgvVisibilitySessions.SelectedRows[0].Selected = false;
             }
@@ -1070,68 +1072,48 @@ namespace MilSpace.Visibility
             var calcTypes = _visibilitySessionsController.GetCalcTypes();
             calcTypes.Remove(VisibilityCalcTypeEnum.None);
 
-            foreach(var type in calcTypes)
+            foreach (var type in calcTypes)
             {
                 tvResults.Nodes.Add(type.Key.ToString(), type.Value, (int)type.Key);
             }
 
             AddNewResultsToTree(visibilityResults);
-                     
+
         }
 
         private void AddNewResultsToTree(IEnumerable<VisibilityCalcResults> visibilityResults)
         {
             try
             {
-                foreach(VisibilityCalcResults res in visibilityResults)
+                foreach (VisibilityCalcResults res in visibilityResults)
                 {
                     var parentNode = tvResults.Nodes.Find(res.CalculationType.ToString(), false).FirstOrDefault();
 
-                    if(parentNode == null)
+                    if (parentNode == null)
                     {
                         throw new NullReferenceException();
                     }
 
                     TreeNode taskNode = new TreeNode(res.Name);
-                    taskNode.ImageKey = string.Empty;
+                    taskNode.ImageKey = "Stats.png";
                     taskNode.Tag = res.Id;
 
                     parentNode.Nodes.Add(taskNode);
 
-                    foreach(var result in res.Results())
+                    foreach (var result in res.Results())
                     {
                         var img = _visibilitySessionsController.GetImgName(VisibilityCalcResults.GetResultTypeByName(result));
                         taskNode.Nodes.Add(res.Id, result, img);
                     }
                 }
             }
-            catch(NullReferenceException e) { }
+            catch (NullReferenceException e)
+            {
+
+                //TODO: log the error
+            }
         }
 
-        private void node_AfterCheck(object sender, TreeViewEventArgs e)
-        {
-            
-            if (e.Action != TreeViewAction.Unknown)
-            {
-                if (e.Node.Nodes.Count > 0)
-                {
-                    e.Node.Toggle();
-                    this.CheckAllChildNodes(e.Node, e.Node.Checked);
-                }
-            }
-        }
-        private void CheckAllChildNodes(TreeNode treeNode, bool nodeChecked)
-        {
-            foreach (TreeNode node in treeNode.Nodes)
-            {
-                node.Checked = nodeChecked;
-                if (node.Nodes.Count > 0)
-                {
-                    // If the current node has child nodes call the CheckAllChildsNodes method recursively
-                    this.CheckAllChildNodes(node, nodeChecked);
-                }
-            }
-        }
         #endregion
 
 
@@ -1144,7 +1126,7 @@ namespace MilSpace.Visibility
                     PopulateVisibilityComboBoxes();
                     _visibilitySessionsController.UpdateVisibilitySessionsList();
 
-                    if(dgvVisibilitySessions.RowCount == 0)
+                    if (dgvVisibilitySessions.RowCount == 0)
                     {
                         tlbVisibilitySessions.Buttons["removeTask"].Enabled = false;
                     }
@@ -1158,13 +1140,13 @@ namespace MilSpace.Visibility
                     SetObservObjectsControlsState(_observPointsController.IsObservObjectsExists());
                 }
             }
-            if(mainTabControl.SelectedTab.Name == "tbpVisibilityAreas")
+            if (mainTabControl.SelectedTab.Name == "tbpVisibilityAreas")
             {
-                if(tvResults.Nodes.Count == 0)
+                if (tvResults.Nodes.Count == 0)
                 {
                     _visibilitySessionsController.UpdateVisibilityResultsTree();
                 }
-                
+
             }
         }
 
@@ -1269,7 +1251,7 @@ namespace MilSpace.Visibility
 
             EnableObservPointsControls();
             var selectedPoint = _observPointsController.GetObservPointById(_selectedPointId);
-            selectedPointMEM = selectedPoint; 
+            selectedPointMEM = selectedPoint;
 
             if (selectedPoint == null)
             {
@@ -1336,11 +1318,16 @@ namespace MilSpace.Visibility
             }
             else if (e.Button == wizardTask)
             {
-                var wizard = (new WindowMilSpaceMVisibilityMaster(ObservationPointsFeatureClass, _observPointsController.GetObservationStationLayerName, _observPointsController.GetPreviousPickedRasterLayer()));
+                MapLayersManager mlm = new MapLayersManager(ActiveView);
+
+                string obserPointLayerName = mlm.GetLayerAliasByFeatureClass(_observPointsController.GetObservationPointsLayerName);
+                string obserAreaLayerName = mlm.GetLayerAliasByFeatureClass(_observPointsController.GetObservationStationLayerName);
+
+                var wizard = (new WindowMilSpaceMVisibilityMaster(obserPointLayerName, obserAreaLayerName, _observPointsController.GetPreviousPickedRasterLayer()));
                 wizard.ShowDialog();
                 var dialogResult = wizard.DialogResult;
 
-                if(dialogResult == DialogResult.OK)
+                if (dialogResult == DialogResult.OK)
                 {
                     var calcParams = wizard.FinalResult;
 
@@ -1348,7 +1335,7 @@ namespace MilSpace.Visibility
 
                     var clculated = _observPointsController.CalculateVisibility(calcParams);
 
-                    if(!clculated)
+                    if (!clculated)
                     {
                         //Localize message
                         MessageBox.Show("The calculation finished with errors.\nFor more details go to the log file", "SPPRD", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1444,16 +1431,16 @@ namespace MilSpace.Visibility
 
         private void ToolBarVisibleResults_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
-            if(e.Button.Name == tlbbFullDelete.Name)
+            if (e.Button.Name == tlbbFullDelete.Name)
             {
                 var result = MessageBox.Show("Do you realy want to remove results?", "SPPRD", MessageBoxButtons.OKCancel);
 
-                if(result == DialogResult.OK)
+                if (result == DialogResult.OK)
                 {
                     var selectedNode = tvResults.SelectedNode;
                     var isRemovingSuccessfull = _visibilitySessionsController.RemoveResult(selectedNode.Tag.ToString());
 
-                    if(!isRemovingSuccessfull)
+                    if (!isRemovingSuccessfull)
                     {
                         MessageBox.Show("Unable to delete session");
                     }
@@ -1466,26 +1453,26 @@ namespace MilSpace.Visibility
                 return;
             }
 
-            if(e.Button.Name == tlbbShare.Name)
+            if (e.Button.Name == tlbbShare.Name)
             {
                 _visibilitySessionsController.ShareResults(tvResults.SelectedNode.Tag.ToString());
             }
 
-            if(e.Button.Name == tlbbAddFromDB.Name)
+            if (e.Button.Name == tlbbAddFromDB.Name)
             {
                 var accessibleResultsWindow = new AccessibleResultsModalWindow(_visibilitySessionsController.GetAllResults(), ActiveView.FocusMap.SpatialReference);
                 var dialogResult = accessibleResultsWindow.ShowDialog();
 
-                if(dialogResult == DialogResult.OK)
+                if (dialogResult == DialogResult.OK)
                 {
-                   if(accessibleResultsWindow.SelectedResults != null)
-                   {
-                       AddNewResultsToTree(accessibleResultsWindow.SelectedResults);
-                   }
+                    if (accessibleResultsWindow.SelectedResults != null)
+                    {
+                        AddNewResultsToTree(accessibleResultsWindow.SelectedResults);
+                    }
                 }
             }
 
-            if(e.Button.Name == tlbbUpdate.Name)
+            if (e.Button.Name == tlbbUpdate.Name)
             {
                 _visibilitySessionsController.UpdateVisibilityResultsTree();
             }
@@ -1493,6 +1480,25 @@ namespace MilSpace.Visibility
 
         #endregion
 
+        private void tvResults_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tvResults_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+
+            var selectedNode = e.Node;
+
+            int devuders = selectedNode.FullPath.Split('%').Length;
+            if (devuders == 0) //Root node
+            {
+            }
+            else if (devuders == 1)
+            { }
+            else if (devuders == 2)
+            { }
+        }
     }
 }
 
