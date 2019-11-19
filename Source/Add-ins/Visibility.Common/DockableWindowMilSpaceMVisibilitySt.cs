@@ -1571,8 +1571,9 @@ namespace MilSpace.Visibility
 
         private void tvResults_AfterSelect(object sender, TreeViewEventArgs e)
         {
-
             var selectedNode = e.Node;
+
+            SetVisibilityResultsButtonsState(selectedNode.Parent != null);
 
             int devuders = selectedNode.FullPath.Split('%').Length;
             if (devuders == 0) //Root node
