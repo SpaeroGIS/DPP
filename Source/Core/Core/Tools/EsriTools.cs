@@ -534,6 +534,11 @@ namespace MilSpace.Core.Tools
                     }
                 }
             }
+            else
+            {
+                result = true;
+                logger.ErrorEx($"Dataset {name} doesn`t exist");
+            }
 
             Marshal.ReleaseComObject(workspaceFactory);
             return result;

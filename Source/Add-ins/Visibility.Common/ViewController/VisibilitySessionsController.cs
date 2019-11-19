@@ -92,6 +92,11 @@ namespace MilSpace.Visibility.ViewController
 
         internal bool RemoveSession(string id)
         {
+            if(_visibilitySessions.Count == 0)
+            {
+                UpdateVisibilitySessionsList();
+            }
+
             var removedSession = _visibilitySessions.First(session => session.Id == id);
 
             var result = VisibilityZonesFacade.DeleteVisibilitySession(id);
