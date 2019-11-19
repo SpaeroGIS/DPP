@@ -147,6 +147,7 @@
             this.chckObservObjGroup = new System.Windows.Forms.CheckBox();
             this.chckObservObjTitle = new System.Windows.Forms.CheckBox();
             this.panel26 = new System.Windows.Forms.Panel();
+            this.tlbbAddObservObjLayer = new System.Windows.Forms.Button();
             this.cmbObservObjAffiliationFilter = new System.Windows.Forms.ComboBox();
             this.label28 = new System.Windows.Forms.Label();
             this.panel27 = new System.Windows.Forms.Panel();
@@ -1778,6 +1779,7 @@
             // 
             // panel26
             // 
+            this.panel26.Controls.Add(this.tlbbAddObservObjLayer);
             this.panel26.Controls.Add(this.cmbObservObjAffiliationFilter);
             this.panel26.Controls.Add(this.label28);
             this.panel26.Dock = System.Windows.Forms.DockStyle.Top;
@@ -1786,6 +1788,18 @@
             this.panel26.Padding = new System.Windows.Forms.Padding(4);
             this.panel26.Size = new System.Drawing.Size(312, 30);
             this.panel26.TabIndex = 59;
+            // 
+            // tlbbAddObservObjLayer
+            // 
+            this.tlbbAddObservObjLayer.Dock = System.Windows.Forms.DockStyle.Right;
+            this.tlbbAddObservObjLayer.ImageIndex = 173;
+            this.tlbbAddObservObjLayer.ImageList = this.imageList1;
+            this.tlbbAddObservObjLayer.Location = new System.Drawing.Point(282, 4);
+            this.tlbbAddObservObjLayer.Name = "tlbbAddObservObjLayer";
+            this.tlbbAddObservObjLayer.Size = new System.Drawing.Size(26, 22);
+            this.tlbbAddObservObjLayer.TabIndex = 5;
+            this.tlbbAddObservObjLayer.UseVisualStyleBackColor = true;
+            this.tlbbAddObservObjLayer.Click += new System.EventHandler(this.tbObservObjects_ButtonClick);
             // 
             // cmbObservObjAffiliationFilter
             // 
@@ -2765,5 +2779,6 @@
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button tlbbAddObservObjLayer;
     }
 }
