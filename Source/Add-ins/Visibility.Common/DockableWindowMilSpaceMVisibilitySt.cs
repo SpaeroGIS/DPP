@@ -1054,7 +1054,7 @@ namespace MilSpace.Visibility
                 }
             }
 
-            addNewObjectPanel.Enabled = isObservObjectsExist;
+            //addNewObjectPanel.Enabled = isObservObjectsExist;
             cmbObservObjAffiliationFilter.Enabled = isObservObjectsExist;
             chckObservObjColumnsVisibilityPanel.Enabled = isObservObjectsExist;
             tbObservObjects.Buttons["tlbbAddObservObjLayer"].Enabled = !isObservObjectsExist;
