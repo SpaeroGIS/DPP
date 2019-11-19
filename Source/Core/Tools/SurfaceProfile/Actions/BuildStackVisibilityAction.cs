@@ -198,8 +198,8 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                     results.Add(outImageName);
 
                     string visibilityArePolyFCName = null;
-                    //COnvertToPolygon
-                    if (calcResults.HasFlag(VisibilityCalculationresultsEnum.VisibilityAreaPolygons))
+                    //ConvertToPolygon full visibility area
+                    if (calcResults.HasFlag(VisibilityCalculationresultsEnum.VisibilityAreaPolygons) && !calcResults.HasFlag(VisibilityCalculationresultsEnum.ObservationStations))
                     {
                         visibilityArePolyFCName = VisibilityTask.GetResultName(pointId > -1 ?
                             VisibilityCalculationresultsEnum.VisibilityAreaPolygonSingle : VisibilityCalculationresultsEnum.VisibilityAreaPolygons,
@@ -232,6 +232,20 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                         {
                             results.Add(outClipName);
                             removeFullImageFromresult = true;
+
+                            //Change to VisibilityAreaPolygonForObjects
+                            visibilityArePolyFCName = VisibilityTask.GetResultName(pointId > -1 ?
+                            VisibilityCalculationresultsEnum.VisibilityAreaPolygonSingle : VisibilityCalculationresultsEnum.VisibilityAreaPolygons,
+                            outputSourceName, pointId);
+                            if (!ProfileLibrary.ConvertTasterToPolygon(outClipName, visibilityArePolyFCName, messages))
+                            {
+                                string errorMessage = $"The result {visibilityArePolyFCName} was not generated";
+                                result.Exception = new MilSpaceVisibilityCalcFailedException(errorMessage);
+                                result.ErrorMessage = errorMessage;
+                                logger.ErrorEx(errorMessage);
+                                return messages;
+                            }
+                            results.Add(visibilityArePolyFCName);
                         }
                     } else  if (calcResults.HasFlag(VisibilityCalculationresultsEnum.VisibilityAreasTrimmedByPoly) && !string.IsNullOrEmpty(visibilityArePolyFCName))
                     {
