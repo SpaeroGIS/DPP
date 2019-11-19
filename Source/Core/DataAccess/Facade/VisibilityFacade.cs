@@ -132,6 +132,15 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
+        public static bool AddSharedVisibilityResultsToUserSession(VisibilityCalcResults visibilityResults)
+        {
+            using(var accessor = new VisibilityDataAccess())
+            {
+                var res = accessor.AddShareddResultsToUserSession(visibilityResults);
+                return res;
+            }
+        }
+
         public static VisibilityCalcResults UpdateVisibilityResults(VisibilityCalcResults visibilityResults)
         {
             using(var accessor = new VisibilityDataAccess())
