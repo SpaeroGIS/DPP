@@ -294,6 +294,23 @@ namespace MilSpace.Visibility
             _visibilitySessionsController.UpdateVisibilityResultsTree();
         }
 
+        public void RemoveSessionFromList(string id)
+        {
+            _visibilitySessionsGui.Remove(_visibilitySessionsGui.First(session => session.Id == id));
+
+            if(cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All))
+            {
+                FilterVisibilityList();
+            }
+            else
+            {
+                if(dgvVisibilitySessions.RowCount > 0)
+                {
+                    dgvVisibilitySessions.Rows[0].Selected = true;
+                }
+            }
+        }
+
 
         private void OnSelectObserbPoint()
         {
@@ -976,6 +993,13 @@ namespace MilSpace.Visibility
             }
         }
 
+        public bool RemoveSelectedSession()
+        {
+            var id = dgvVisibilitySessions.SelectedRows[0].Cells["Id"].Value.ToString();
+
+            return _visibilitySessionsController.RemoveSession(id);
+        }
+
         #endregion
 
         #region ObservationObjectsPrivateMethods
@@ -1082,9 +1106,16 @@ namespace MilSpace.Visibility
 
         private void SetVisibilityResultsButtonsState(bool enabled)
         {
-            toolBarVisibleResults.Buttons["tlbbZoomToResultRaster"].Enabled = enabled;
+            bool isGroupedLayerExists = false;
+
+            if(enabled)
+            {
+                isGroupedLayerExists = _visibilitySessionsController.IsResultsLayerExist(tvResults.SelectedNode.Tag.ToString(), ActiveView);
+            }
+
+            toolBarVisibleResults.Buttons["tlbbZoomToResultRaster"].Enabled = isGroupedLayerExists;
            // toolBarVisibleResults.Buttons["tlbbViewParamOnMap"].Enabled = enabled;
-            toolBarVisibleResults.Buttons["toolBarButtonViewOnMap"].Enabled = enabled;
+            toolBarVisibleResults.Buttons["toolBarButtonViewOnMap"].Enabled = enabled && !isGroupedLayerExists;
             toolBarVisibleResults.Buttons["tlbbFullDelete"].Enabled = enabled;
             toolBarVisibleResults.Buttons["toolBarButtonRemoveFromSeanse"].Enabled = enabled;
             toolBarVisibleResults.Buttons["tlbbShare"].Enabled = enabled;
@@ -1349,25 +1380,9 @@ namespace MilSpace.Visibility
 
                 if (result == DialogResult.OK)
                 {
-                    var id = dgvVisibilitySessions.SelectedRows[0].Cells["Id"].Value.ToString();
-                    var rowIndex = dgvVisibilitySessions.SelectedRows[0].Index;
-
-                    if (!_visibilitySessionsController.RemoveSession(id))
+                    if (!RemoveSelectedSession())
                     {
                         MessageBox.Show("Unable to delete session");
-                        return;
-                    }
-                    _visibilitySessionsGui.Remove(_visibilitySessionsGui.First(session => session.Id == id));
-                    if (cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All))
-                    {
-                        FilterVisibilityList();
-                    }
-                    else
-                    {
-                        if (dgvVisibilitySessions.RowCount > 0)
-                        {
-                            dgvVisibilitySessions.Rows[0].Selected = true;
-                        }
                     }
                 }
             }
@@ -1493,7 +1508,7 @@ namespace MilSpace.Visibility
                 if (result == DialogResult.OK)
                 {
                     var resultId = tvResults.SelectedNode.Tag.ToString();
-                    var isRemovingSuccessfull = _visibilitySessionsController.RemoveResult(resultId, true);
+                    var isRemovingSuccessfull = _visibilitySessionsController.RemoveResult(resultId, ActiveView, true);
 
                     if (!isRemovingSuccessfull)
                     {
@@ -1534,6 +1549,12 @@ namespace MilSpace.Visibility
                 {
                     MessageBox.Show("Results are already shared");
                 }
+            }
+
+            if(e.Button.Name == toolBarButtonViewOnMap.Name)
+            {
+                _visibilitySessionsController.AddResultsGroupLayer(tvResults.SelectedNode.Tag.ToString(), ActiveView);
+                SetVisibilityResultsButtonsState(true);
             }
 
             if (e.Button.Name == tlbbAddFromDB.Name)

@@ -531,6 +531,19 @@ namespace MilSpace.Core.Tools
             return result;
         }
 
+        public static void RemoveLayer(string layerName, IMap map)
+        {
+            var layer = GetLayer(layerName, map);
+
+            if(layer == null)
+            {
+                return;
+            }
+
+            var mapLayers = map as IMapLayers2;
+            mapLayers.DeleteLayer(layer);
+        }
+
         public static void AddVisibilityGroupLayer(IEnumerable<IDataset> visibilityLayersNames, string sessionName, string calcRasterName, string gdb, string relativeLayerName,
                                                 bool isLayerAbove, short transparency, IActiveView activeView)
         {

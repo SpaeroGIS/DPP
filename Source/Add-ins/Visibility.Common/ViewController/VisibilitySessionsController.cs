@@ -1,4 +1,5 @@
-﻿using MilSpace.Core.Tools;
+﻿using ESRI.ArcGIS.Carto;
+using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
 using MilSpace.Tools;
@@ -58,8 +59,8 @@ namespace MilSpace.Visibility.ViewController
                 return "Target.png";
             }
 
-            if(resultType == VisibilityCalculationresultsEnum.VisibilityAreaRaster || resultType == VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle 
-                || resultType == VisibilityCalculationresultsEnum.VisibilityAreaPolygons || resultType ==  VisibilityCalculationresultsEnum.VisibilityObservStationClip)
+            if(resultType == VisibilityCalculationresultsEnum.VisibilityAreaRaster || resultType == VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle
+                || resultType == VisibilityCalculationresultsEnum.VisibilityAreaPolygons || resultType == VisibilityCalculationresultsEnum.VisibilityObservStationClip)
             {
                 return "Dots Up.png";
             }
@@ -70,12 +71,12 @@ namespace MilSpace.Visibility.ViewController
         internal void UpdateVisibilitySessionsList(bool isNewSessionAdded = false)
         {
             _visibilitySessions = VisibilityZonesFacade.GetAllVisibilityTasks(true).ToList();
-            _view.FillVisibilitySessionsList(_visibilitySessions, isNewSessionAdded);           
+            _view.FillVisibilitySessionsList(_visibilitySessions, isNewSessionAdded);
         }
         internal void UpdateVisibilityResultsTree(bool isNewSessionAdded = false)
         {
             _visibilityResults = VisibilityZonesFacade.GetAllVisibilityResults(true).ToList();
-         
+
             _view.FillVisibilityResultsTree(_visibilityResults);
         }
 
@@ -88,22 +89,23 @@ namespace MilSpace.Visibility.ViewController
         internal IEnumerable<VisibilityCalcResults> GetAllResults() => _visibilityResults;
 
         public IEnumerable<VisibilityTask> GetAllSessions() => _visibilitySessions;
-        
+
         internal bool RemoveSession(string id)
         {
             var removedSession = _visibilitySessions.First(session => session.Id == id);
 
-           var result = VisibilityZonesFacade.DeleteVisibilitySession(id);
+            var result = VisibilityZonesFacade.DeleteVisibilitySession(id);
 
             if(result)
             {
                 _visibilitySessions.Remove(removedSession);
+                _view.RemoveSessionFromList(id);
             }
 
             return result;
         }
 
-        internal bool RemoveResult(string id, bool fromBase = false)
+        internal bool RemoveResult(string id, IActiveView activeView = null, bool fromBase = false)
         {
             var selectedResults = _visibilityResults.First(res => res.Id == id);
             var results = selectedResults.Results();
@@ -123,6 +125,15 @@ namespace MilSpace.Visibility.ViewController
                 }
 
                 removingResult = VisibilityZonesFacade.DeleteVisibilityResults(id);
+
+                if(removingResult)
+                {
+                    RemoveSession(id);
+                    if(activeView != null)
+                    {
+                        EsriTools.RemoveLayer(selectedResults.Name, activeView.FocusMap);
+                    }
+                }
             }
 
             if(removingResult)
@@ -154,7 +165,7 @@ namespace MilSpace.Visibility.ViewController
             {
                 if(!VisibilityZonesFacade.AddSharedVisibilityResultsToUserSession(result))
                 {
-                     res = false;
+                    res = false;
                 }
                 else
                 {
@@ -163,6 +174,29 @@ namespace MilSpace.Visibility.ViewController
             }
 
             return res;
+        }
+
+        internal bool IsResultsLayerExist(string resultsId, IActiveView activeView)
+        {
+            var selectedResults = _visibilityResults.First(res => res.Id == resultsId).Name;
+            var layer = EsriTools.GetLayer(selectedResults, activeView.FocusMap);
+
+            return (layer != null);
+        }
+
+        internal void AddResultsGroupLayer(string id, IActiveView activeView)
+        {
+            var selectedResults = _visibilityResults.First(res => res.Id == id);
+
+            var datasets = GdbAccess.Instance.GetDatasetsFromCalcWorkspace(selectedResults.ResultsInfo);
+            EsriTools.AddVisibilityGroupLayer(datasets, selectedResults.Name, selectedResults.Id, selectedResults.ReferencedGDB, GetLastLayer(activeView),
+                                                true, 33, activeView);
+        }
+
+        private string GetLastLayer(IActiveView activeView)
+        {
+            var map = activeView.FocusMap;
+            return map.Layer[map.LayerCount - 1].Name;
         }
     }
 }
