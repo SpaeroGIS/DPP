@@ -1453,6 +1453,10 @@ namespace MilSpace.Visibility
 
         #endregion
 
+        private void panel29_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
 
