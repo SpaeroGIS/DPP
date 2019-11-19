@@ -16,7 +16,8 @@ namespace MilSpace.DataAccess.DataTransfer
         VisibilityObservStationClip = 128,
         VisibilityAreaPolygonSingle = 256,
         VisibilityAreasTrimmedByPoly = 512,
-        VisibilityAreaTrimmedByPolySingle = 1024
+        VisibilityAreaTrimmedByPolySingle = 1024,
+        VisibilityAreaPolygonForObjects = 2048,
     }
 
     public enum LayerPositionsEnum

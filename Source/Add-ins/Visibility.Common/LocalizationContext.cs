@@ -33,8 +33,8 @@ namespace MilSpace.Visibility.Localization
 
             calcTypeLocalisation.Add(VisibilityCalcTypeEnum.OpservationPoints, CalcFirstTypeDescription);
             calcTypeLocalisationShort.Add(VisibilityCalcTypeEnum.OpservationPoints, CalcFirstTypeDescriptionShort);
-            calcTypeLocalisation.Add(VisibilityCalcTypeEnum.ObservationObjecs, CalcTherdTypeDescription);
-            calcTypeLocalisationShort.Add(VisibilityCalcTypeEnum.ObservationObjecs, CalcTherdTypeDescriptionShort);
+            calcTypeLocalisation.Add(VisibilityCalcTypeEnum.ObservationObjects, CalcTherdTypeDescription);
+            calcTypeLocalisationShort.Add(VisibilityCalcTypeEnum.ObservationObjects, CalcTherdTypeDescriptionShort);
             calcTypeLocalisation.Add(VisibilityCalcTypeEnum.BestObservationParameters, CalcTherdTypeDescription);
             calcTypeLocalisationShort.Add(VisibilityCalcTypeEnum.BestObservationParameters, CalcTherdTypeDescriptionShort);
             calcTypeLocalisation.Add(VisibilityCalcTypeEnum.ResultsAnalize, CalcFourthTypeDescription);
