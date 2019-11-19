@@ -4,7 +4,7 @@
     {
         None = 0,
         OpservationPoints,
-        ObservationObjecs,
+        ObservationObjects,
         BestObservationParameters,
         ResultsAnalize
     }

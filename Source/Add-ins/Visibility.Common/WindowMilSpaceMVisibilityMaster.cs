@@ -81,12 +81,13 @@ namespace MilSpace.Visibility
         }
         public void SecondTypePicked()//triggers when user picks second type
         {
-            _stepControl = VisibilityCalcTypeEnum.ObservationObjecs;
+            _stepControl = VisibilityCalcTypeEnum.ObservationObjects;
             controller.UpdateObservationPointsList();
             EanableObjList();
             PopulateComboBox();
             FillObservPointLabel();
-            FillObsObj();
+            FillObsObj(true);
+            FillObservPointsOnCurrentView(controller.GetObservPointsOnCurrentMapExtent(ActiveView));
         }
 
         public void FillObservPointLabel()
@@ -213,11 +214,11 @@ namespace MilSpace.Visibility
                     Id = t.ObjectId,
                     Type = t.Group,
                     Date = t.DTO.ToString(Helper.DateFormatSmall)
-                }).ToList();
+                });
 
                 dgvObjects.DataSource = null; //Clearing listbox
 
-                _observationObjects = new BindingList<CheckObservPointGui>(itemsToShow);
+                _observationObjects = new BindingList<CheckObservPointGui>(itemsToShow.ToArray());
 
                 if (_observationObjects != null)
                 {
@@ -229,9 +230,9 @@ namespace MilSpace.Visibility
                     var onCurrent = controller
                                 .GetObservObjectsOnCurrentMapExtent(ActiveView);
 
-                    var commonO = (itemsToShow.Select(a => a.Id).Intersect(onCurrent.Select(b => b.ObjectId))).ToList();
+                    var commonO = (_observationObjects.Select(a => a.Id).Intersect(onCurrent.Select(b => b.ObjectId)));
 
-                    foreach (CheckObservPointGui e in itemsToShow)
+                    foreach (CheckObservPointGui e in _observationObjects)
                     {
                         if (commonO.Contains(e.Id))
                         {
@@ -460,7 +461,7 @@ namespace MilSpace.Visibility
                     VisibilityCalculationresultsEnum.ObservationPoints | VisibilityCalculationresultsEnum.VisibilityAreaRaster :
                     VisibilityCalculationresultsEnum.None;
             }
-            else if (_stepControl == VisibilityCalcTypeEnum.ObservationObjecs)
+            else if (_stepControl == VisibilityCalcTypeEnum.ObservationObjects)
             {
                 FinalResult.ObservObjectIDs = _observationObjects.Where(o => o.Check).Select(i => i.Id).ToArray();
                 FinalResult.VisibilityCalculationResults = (SumChkBox.Checked ?
@@ -508,7 +509,7 @@ namespace MilSpace.Visibility
             lblObservPointsSummary.Text = selectedObservPoints == null ? string.Empty : $"{selectedObservPoints.Length} - {string.Join("; ", selectedObservPoints)}";
             lblObservObjectsSummary.Text = selectedObservObjects == null ? string.Empty : $"{selectedObservObjects.Length} - {string.Join("; ", selectedObservObjects)}";
 
-            lblTrimCalcresults.Text = "There is no any controls!!!!!!";
+            lblTrimCalcresults.Text = !chkTrimRaster.Enabled ? string.Empty : (chkTrimRaster.Checked ? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord);
         }
 
         public string ObservationStationFeatureClass => observObjectsLabel.Text;
@@ -522,6 +523,7 @@ namespace MilSpace.Visibility
 
         private void NextStepButton_Click(object sender, EventArgs e)
         {
+
             if (StepsTabControl.SelectedIndex == 2)
             {
                 AssemblyWizardResult();
@@ -584,12 +586,8 @@ namespace MilSpace.Visibility
         private void ultraButton1_Click(object sender, EventArgs e)
         {
             SecondTypePicked();
-            StepsTabControl.SelectedTab.Enabled = false;
-            var nextTab = StepsTabControl.TabPages[StepsTabControl.SelectedIndex + 1] as TabPage;
-
-            nextTab.Enabled = true;
-            panel1.Enabled = true;
-
+            StepsTabControl.SelectedTab.Enabled = chkTrimRaster.Enabled = chkTrimRaster.Checked = false;
+            (StepsTabControl.TabPages[StepsTabControl.SelectedIndex + 1] as TabPage).Enabled = panel1.Enabled = true;
             StepsTabControl.SelectedIndex++;
         }
         private void Button1_Click(object sender, EventArgs e)
@@ -597,16 +595,11 @@ namespace MilSpace.Visibility
             FirstTypePicked();
 
             StepsTabControl.SelectedTab.Enabled = false;
-            var nextTab = StepsTabControl.TabPages[StepsTabControl.SelectedIndex + 1] as TabPage;
-
-            nextTab.Enabled = true;
-            panel1.Enabled = true;
-
+            (StepsTabControl.TabPages[StepsTabControl.SelectedIndex + 1] as TabPage).Enabled = panel1.Enabled = chkTrimRaster.Enabled = chkTrimRaster.Checked = true;
             StepsTabControl.SelectedIndex++;
         }
         private void tabControl_Selecting(object sender, TabControlCancelEventArgs e)
         {
-            TabPage current = (sender as TabControl).SelectedTab;
             var nextTab = StepsTabControl.TabPages[StepsTabControl.SelectedIndex] as TabPage;
             if (!nextTab.Enabled)
             {
