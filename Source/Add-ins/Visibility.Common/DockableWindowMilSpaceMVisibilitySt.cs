@@ -1065,30 +1065,49 @@ namespace MilSpace.Visibility
         #region VisibilitySessionsTree
         public void FillVisibilityResultsTree(IEnumerable<VisibilityCalcResults> visibilityResults)
         {
+            tvResults.Nodes.Clear();
+
+            var calcTypes = _visibilitySessionsController.GetCalcTypes();
+            calcTypes.Remove(VisibilityCalcTypeEnum.None);
+
+            foreach(var type in calcTypes)
+            {
+                tvResults.Nodes.Add(type.Key.ToString(), type.Value, (int)type.Key);
+            }
+
+            AddNewResultsToTree(visibilityResults);
+                     
+        }
+
+        private void AddNewResultsToTree(IEnumerable<VisibilityCalcResults> visibilityResults)
+        {
             try
             {
-                int rootpng = 1;
-
-                tvResults.Nodes.Clear();
-
                 foreach(VisibilityCalcResults res in visibilityResults)
                 {
-                    int childpng = 1;
-                    TreeNode root = new TreeNode(res.Name, rootpng, rootpng);
-                    root.Tag = res.Id;
+                    var parentNode = tvResults.Nodes.Find(res.CalculationType.ToString(), false).FirstOrDefault();
 
-                    tvResults.Nodes.Add(root);
+                    if(parentNode == null)
+                    {
+                        throw new NullReferenceException();
+                    }
+
+                    TreeNode taskNode = new TreeNode(res.Name);
+                    taskNode.ImageKey = string.Empty;
+                    taskNode.Tag = res.Id;
+
+                    parentNode.Nodes.Add(taskNode);
 
                     foreach(var result in res.Results())
                     {
-                        root.Nodes.Add(res.Id, result, childpng);
-                        childpng++;
+                        var img = _visibilitySessionsController.GetImgName(VisibilityCalcResults.GetResultTypeByName(result));
+                        taskNode.Nodes.Add(res.Id, result, img);
                     }
-                    rootpng++;
                 }
             }
-            catch(NullReferenceException e) { }       
+            catch(NullReferenceException e) { }
         }
+
         private void node_AfterCheck(object sender, TreeViewEventArgs e)
         {
             
@@ -1096,6 +1115,7 @@ namespace MilSpace.Visibility
             {
                 if (e.Node.Nodes.Count > 0)
                 {
+                    e.Node.Toggle();
                     this.CheckAllChildNodes(e.Node, e.Node.Checked);
                 }
             }
@@ -1424,30 +1444,50 @@ namespace MilSpace.Visibility
 
         private void ToolBarVisibleResults_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
-            switch(e.Button.Name)
+            if(e.Button.Name == tlbbFullDelete.Name)
             {
-                case "tlbbRemoveResult":
+                var result = MessageBox.Show("Do you realy want to remove results?", "SPPRD", MessageBoxButtons.OKCancel);
 
-                    var result = MessageBox.Show("Do you realy want to remove results?", "SPPRD", MessageBoxButtons.OKCancel);
+                if(result == DialogResult.OK)
+                {
+                    var selectedNode = tvResults.SelectedNode;
+                    var isRemovingSuccessfull = _visibilitySessionsController.RemoveResult(selectedNode.Tag.ToString());
 
-                    if(result == DialogResult.OK)
+                    if(!isRemovingSuccessfull)
                     {
-                        var selectedNode = tvResults.SelectedNode;
-                        var isRemovingSuccessfull = _visibilitySessionsController.RemoveResult(selectedNode.Tag.ToString());
-
-                        if(!isRemovingSuccessfull)
-                        {
-                            MessageBox.Show("Unable to delete session");
-                        }
-                        else
-                        {
-                            tvResults.Nodes.Remove(selectedNode);
-                        }
+                        MessageBox.Show("Unable to delete session");
                     }
+                    else
+                    {
+                        tvResults.Nodes.Remove(selectedNode);
+                    }
+                }
 
-                    break;
+                return;
+            }
 
+            if(e.Button.Name == tlbbShare.Name)
+            {
+                _visibilitySessionsController.ShareResults(tvResults.SelectedNode.Tag.ToString());
+            }
 
+            if(e.Button.Name == tlbbAddFromDB.Name)
+            {
+                var accessibleResultsWindow = new AccessibleResultsModalWindow(_visibilitySessionsController.GetAllResults(), ActiveView.FocusMap.SpatialReference);
+                var dialogResult = accessibleResultsWindow.ShowDialog();
+
+                if(dialogResult == DialogResult.OK)
+                {
+                   if(accessibleResultsWindow.SelectedResults != null)
+                   {
+                       AddNewResultsToTree(accessibleResultsWindow.SelectedResults);
+                   }
+                }
+            }
+
+            if(e.Button.Name == tlbbUpdate.Name)
+            {
+                _visibilitySessionsController.UpdateVisibilityResultsTree();
             }
         }
 
