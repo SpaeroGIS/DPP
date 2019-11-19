@@ -204,13 +204,19 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                         visibilityArePolyFCName = VisibilityTask.GetResultName(pointId > -1 ?
                             VisibilityCalculationresultsEnum.VisibilityAreaPolygonSingle : VisibilityCalculationresultsEnum.VisibilityAreaPolygons,
                             outputSourceName, pointId);
-                        if (!ProfileLibrary.ConvertTasterToPolygon(outImageName, visibilityArePolyFCName, messages))
+
+
+                        if (!ProfileLibrary.ConvertTasterToPolygon(outImageName, visibilityArePolyFCName, out messages))
                         {
-                            string errorMessage = $"The result {visibilityArePolyFCName} was not generated";
-                            result.Exception = new MilSpaceVisibilityCalcFailedException(errorMessage);
-                            result.ErrorMessage = errorMessage;
-                            logger.ErrorEx(errorMessage);
-                            return messages;
+                            if (!messages.Any(m => m.StartsWith("ERROR 010151"))) // Observatioj areas dont intersect Visibility aresa
+                            {
+                                string errorMessage = $"The result {visibilityArePolyFCName} was not generated";
+                                result.Exception = new MilSpaceVisibilityCalcFailedException(errorMessage);
+                                result.ErrorMessage = errorMessage;
+                                logger.ErrorEx(errorMessage);
+                                return messages;
+                            }
+
                         }
                         results.Add(visibilityArePolyFCName);
                     }
@@ -237,17 +243,23 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                             visibilityArePolyFCName = VisibilityTask.GetResultName(pointId > -1 ?
                             VisibilityCalculationresultsEnum.VisibilityAreaPolygonSingle : VisibilityCalculationresultsEnum.VisibilityAreaPolygons,
                             outputSourceName, pointId);
-                            if (!ProfileLibrary.ConvertTasterToPolygon(outClipName, visibilityArePolyFCName, messages))
+
+
+                            if (!ProfileLibrary.ConvertTasterToPolygon(outClipName, visibilityArePolyFCName, out messages))
                             {
-                                string errorMessage = $"The result {visibilityArePolyFCName} was not generated";
-                                result.Exception = new MilSpaceVisibilityCalcFailedException(errorMessage);
-                                result.ErrorMessage = errorMessage;
-                                logger.ErrorEx(errorMessage);
-                                return messages;
+                                if (!messages.Any(m => m.StartsWith("ERROR 010151"))) // Observatioj areas dont intersect Visibility aresa
+                                {
+                                    string errorMessage = $"The result {visibilityArePolyFCName} was not generated";
+                                    result.Exception = new MilSpaceVisibilityCalcFailedException(errorMessage);
+                                    result.ErrorMessage = errorMessage;
+                                    logger.ErrorEx(errorMessage);
+                                    return messages;
+                                }
                             }
                             results.Add(visibilityArePolyFCName);
                         }
-                    } else  if (calcResults.HasFlag(VisibilityCalculationresultsEnum.VisibilityAreasTrimmedByPoly) && !string.IsNullOrEmpty(visibilityArePolyFCName))
+                    }
+                    else if (calcResults.HasFlag(VisibilityCalculationresultsEnum.VisibilityAreasTrimmedByPoly) && !string.IsNullOrEmpty(visibilityArePolyFCName))
                     {
                         //Clip visibility images to valuable extent
                         var inClipName = outImageName;
@@ -285,5 +297,5 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             session.CalculatedResults = (int)calcResults;
             return messages;
         }
-}
+    }
 }
