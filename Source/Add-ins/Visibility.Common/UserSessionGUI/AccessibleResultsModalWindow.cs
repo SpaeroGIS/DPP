@@ -10,18 +10,18 @@ using MilSpace.Core;
 
 namespace MilSpace.Visibility
 {
-    public partial class AccessibleProfilesModalWindow : Form
+    public partial class AccessibleResultsModalWindow : Form
     {
         private AccessibleResultsController _controller;
 
-        internal List<VisibilityCalcResults> SelectedProfilesSets;
+        internal List<VisibilityCalcResults> SelectedResults;
 
-        public AccessibleProfilesModalWindow(List<VisibilityCalcResults> userSession, ISpatialReference spatialReference)
+        public AccessibleResultsModalWindow(IEnumerable<VisibilityCalcResults> userSession, ISpatialReference spatialReference)
         {
             InitializeComponent();
             LocalizeControls();
 
-            _controller = new AccessibleResultsController(userSession, spatialReference);
+            _controller = new AccessibleResultsController(userSession.ToList(), spatialReference);
 
             SetComponentsView();
             SetTextDefaultValues();
@@ -255,11 +255,11 @@ namespace MilSpace.Visibility
 
         private void BtnOk_Click(object sender, EventArgs e)
         {
-            SelectedProfilesSets = new List<VisibilityCalcResults>(lvProfilesSets.Items.Count);
+            SelectedResults = new List<VisibilityCalcResults>(lvProfilesSets.Items.Count);
 
             foreach (ListViewItem selectedItem in lvProfilesSets.SelectedItems)
             {
-                SelectedProfilesSets.Add((VisibilityCalcResults)selectedItem.Tag);
+                SelectedResults.Add((VisibilityCalcResults)selectedItem.Tag);
             }
         }
     }
