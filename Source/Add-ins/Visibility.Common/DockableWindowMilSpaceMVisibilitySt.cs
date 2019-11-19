@@ -1093,7 +1093,7 @@ namespace MilSpace.Visibility
                     }
 
                     TreeNode taskNode = new TreeNode(res.Name);
-                    taskNode.ImageKey = string.Empty;
+                    taskNode.ImageKey = "Stats.png";
                     taskNode.Tag = res.Id;
 
                     parentNode.Nodes.Add(taskNode);
@@ -1115,7 +1115,6 @@ namespace MilSpace.Visibility
             {
                 if (e.Node.Nodes.Count > 0)
                 {
-                    e.Node.Toggle();
                     this.CheckAllChildNodes(e.Node, e.Node.Checked);
                 }
             }
