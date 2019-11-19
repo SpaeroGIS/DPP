@@ -54,6 +54,11 @@ namespace MilSpace.Visibility
             this.Hook = hook;
         }
 
+        private void LocalizeComponents()
+        {
+            tlbbAddObservObjLayer.Text = "Додати шар ОН";
+        }
+
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
@@ -1093,10 +1098,10 @@ namespace MilSpace.Visibility
                 }
             }
 
-            addNewObjectPanel.Enabled = isObservObjectsExist;
+            //addNewObjectPanel.Enabled = isObservObjectsExist;
             cmbObservObjAffiliationFilter.Enabled = isObservObjectsExist;
             chckObservObjColumnsVisibilityPanel.Enabled = isObservObjectsExist;
-            tbObservObjects.Buttons["tlbbAddObservObjLayer"].Enabled = !isObservObjectsExist;
+            tlbbAddObservObjLayer.Enabled = !isObservObjectsExist;
 
         }
         #endregion
@@ -1173,15 +1178,15 @@ namespace MilSpace.Visibility
                     }
                 }
             }
-            catch(NullReferenceException e) { }
+            catch (NullReferenceException e) { }
         }
 
         private void Node_AfterCheck(object sender, TreeViewEventArgs e)
         {
             if (e.Action != TreeViewAction.Unknown)
             {
-               SetVisibilityResultsButtonsState(e.Node.Parent != null);
-               
+                SetVisibilityResultsButtonsState(e.Node.Parent != null);
+
                 if (e.Node.Nodes.Count > 0)
                 {
                     this.CheckAllChildNodes(e.Node, e.Node.Checked);
@@ -1226,7 +1231,7 @@ namespace MilSpace.Visibility
                 }
             }
 
-            if(mainTabControl.SelectedTab.Name == "tbpVisibilityAreas")
+            if (mainTabControl.SelectedTab.Name == "tbpVisibilityAreas")
             {
                 if (tvResults.Nodes.Count == 0)
                 {
@@ -1469,16 +1474,9 @@ namespace MilSpace.Visibility
             }
         }
 
-        private void TbObservObjects_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        private void tbObservObjects_ButtonClick(object sender, EventArgs e)
         {
-            switch (e.Button.Name)
-            {
-                case "tlbbAddObservObjLayer":
-
-                    _observPointsController.AddObservObjectsLayer();
-
-                    break;
-            }
+            _observPointsController.AddObservObjectsLayer();
         }
 
         private void ChckObservObj_CheckedChanged(object sender, EventArgs e)
@@ -1524,11 +1522,11 @@ namespace MilSpace.Visibility
                 return;
             }
 
-            if(e.Button.Name == toolBarButtonRemoveFromSeanse.Name)
+            if (e.Button.Name == toolBarButtonRemoveFromSeanse.Name)
             {
                 var result = MessageBox.Show("Do you realy want to remove results?", "SPPRD", MessageBoxButtons.OKCancel);
 
-                if(result == DialogResult.OK)
+                if (result == DialogResult.OK)
                 {
                     var resultId = tvResults.SelectedNode.Tag.ToString();
                     var isRemovingSuccessfull = _visibilitySessionsController.RemoveResult(resultId);
@@ -1537,11 +1535,11 @@ namespace MilSpace.Visibility
                 }
             }
 
-            if(e.Button.Name == tlbbShare.Name)
+            if (e.Button.Name == tlbbShare.Name)
             {
                 var isShared = _visibilitySessionsController.ShareResults(tvResults.SelectedNode.Tag.ToString());
 
-                if(isShared)
+                if (isShared)
                 {
                     MessageBox.Show("Results successfully shared");
                 }
@@ -1569,16 +1567,16 @@ namespace MilSpace.Visibility
 
                 if (dialogResult == DialogResult.OK)
                 {
-                   if(accessibleResultsWindow.SelectedResults != null)
-                   {
-                       AddNewResultsToTree(accessibleResultsWindow.SelectedResults);
-                       var operationResult = _visibilitySessionsController.AddSharedResults(accessibleResultsWindow.SelectedResults);
+                    if (accessibleResultsWindow.SelectedResults != null)
+                    {
+                        AddNewResultsToTree(accessibleResultsWindow.SelectedResults);
+                        var operationResult = _visibilitySessionsController.AddSharedResults(accessibleResultsWindow.SelectedResults);
 
-                        if(!operationResult)
+                        if (!operationResult)
                         {
                             MessageBox.Show("Some results can`t be added to session");
                         }
-                   }
+                    }
                 }
             }
 
@@ -1608,4 +1606,5 @@ namespace MilSpace.Visibility
 
     }
 }
+
 
