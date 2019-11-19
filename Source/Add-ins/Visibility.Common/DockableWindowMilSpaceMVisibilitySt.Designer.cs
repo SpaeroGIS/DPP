@@ -2445,7 +2445,6 @@
             this.tvResults.SelectedImageKey = "Ok.png";
             this.tvResults.Size = new System.Drawing.Size(312, 199);
             this.tvResults.TabIndex = 78;
-            this.tvResults.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.node_AfterCheck);
             // 
             // panel49
             // 
