@@ -3,6 +3,7 @@ using ESRI.ArcGIS.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace MilSpace.Core.Tools
 {
@@ -130,6 +131,22 @@ namespace MilSpace.Core.Tools
                 logger.ErrorEx("Error: " + ex.ToString());
                 return null;
             }
+        }
+
+        public string GetLayerAliasByFeatureClass(string featureClassName)
+        {
+            string result = null;
+            var pattern = @"^[A-Za-z0-9]+\.[A-Za-z0-9]+\." + featureClassName + "$";
+
+            var layer = GetAllLayers().Where(l => l is IFeatureLayer).Cast<IFeatureLayer>().
+                FirstOrDefault( fl => fl.FeatureClass.AliasName.Equals(featureClassName, StringComparison.InvariantCultureIgnoreCase) || 
+                                                  Regex.IsMatch(fl.FeatureClass.AliasName, pattern));
+
+            if (layer != null)
+            {
+                result = layer.Name;
+            }
+            return result;
         }
 
         public IEnumerable<IRasterLayer> RasterLayers => Layers.Where(layer => layer is IRasterLayer).Cast<IRasterLayer>();
