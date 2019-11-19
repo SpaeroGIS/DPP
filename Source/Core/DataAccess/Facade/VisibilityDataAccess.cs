@@ -215,6 +215,7 @@ namespace MilSpace.DataAccess.Facade
 
         public bool AddShareddResultsToUserSession(VisibilityCalcResults visibilityResults)
         {
+            visibilityResults.UserName = Environment.UserName;
             return AddResultToUserSession(visibilityResults);
         }
 
@@ -226,6 +227,7 @@ namespace MilSpace.DataAccess.Facade
                 {
                     var sessionValue = new MilSp_VisibilityUserSession { userName = visibilityResults.UserName, visibilityResultId = visibilityResults.Id};
                     context.MilSp_VisibilityUserSessions.InsertOnSubmit(sessionValue);
+                    Submit();
                 }
                 return true;
             }
