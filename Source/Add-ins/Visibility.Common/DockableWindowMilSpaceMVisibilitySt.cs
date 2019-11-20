@@ -1372,13 +1372,16 @@ namespace MilSpace.Visibility
         {
             if (e.Button == removeTask)
             {
-                var result = MessageBox.Show("Do you really want to delete this session?", "SPPRD", MessageBoxButtons.OKCancel);
+                var result = MessageBox.Show(
+                    "Ви дійсно бажаєте видалити результет з поточної сесії?", 
+                    "Спостереження", 
+                    MessageBoxButtons.OKCancel);
 
                 if (result == DialogResult.OK)
                 {
                     if (!RemoveSelectedSession())
                     {
-                        MessageBox.Show("Unable to delete session");
+                        MessageBox.Show("Неможливо видалити результат розрахунку з поточної сесії", "Спостереження");
                     }
                 }
             }
@@ -1404,7 +1407,9 @@ namespace MilSpace.Visibility
                     if (!clculated)
                     {
                         //Localize message
-                        MessageBox.Show("The calculation finished with errors.\nFor more details go to the log file", "SPPRD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(
+                            "Розрахунок скінчився з помилкою\nДля перегляду повної інформації зверніться до журналу роботи", 
+                            "Спостереження", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
                     _visibilitySessionsController.UpdateVisibilitySessionsList(true);
@@ -1492,7 +1497,10 @@ namespace MilSpace.Visibility
         {
             if (e.Button.Name == tlbbFullDelete.Name)
             {
-                var result = MessageBox.Show("Do you realy want to remove results?", "SPPRD", MessageBoxButtons.OKCancel);
+                var result = MessageBox.Show(
+                    "Ви дійсно бажаєте повністтю видалити результат розрахунку?", 
+                    "Спостереження", 
+                    MessageBoxButtons.OKCancel);
 
                 if (result == DialogResult.OK)
                 {
@@ -1501,7 +1509,10 @@ namespace MilSpace.Visibility
 
                     if (!isRemovingSuccessfull)
                     {
-                        MessageBox.Show("Unable to delete session");
+                        MessageBox.Show(
+                            "Неможливо повністтю видалити результат розрахунку", 
+                            "Спостереження"
+                            );
                     }
                     else
                     {
@@ -1515,7 +1526,8 @@ namespace MilSpace.Visibility
 
             if (e.Button.Name == toolBarButtonRemoveFromSeanse.Name)
             {
-                var result = MessageBox.Show("Do you realy want to remove results?", "SPPRD", MessageBoxButtons.OKCancel);
+
+                var result = MessageBox.Show("Ви дійсно бажаєте видалити результат розрахунку?", "Спостереження", MessageBoxButtons.OKCancel);
 
                 if (result == DialogResult.OK)
                 {
@@ -1532,11 +1544,11 @@ namespace MilSpace.Visibility
 
                 if (isShared)
                 {
-                    MessageBox.Show("Results successfully shared");
+                    MessageBox.Show("Доступ для усіх користувачыв встановлено", "Спостереження. Встановити доступ");
                 }
                 else
                 {
-                    MessageBox.Show("Results are already shared");
+                    MessageBox.Show("Доступ для усіх користувачыв вже встановлено", "Спостереження. Встановити доступ");
                 }
             }
 
@@ -1565,7 +1577,9 @@ namespace MilSpace.Visibility
 
                         if (!operationResult)
                         {
-                            MessageBox.Show("Some results can`t be added to session");
+                            MessageBox.Show(
+                                "Частина результатів розрахунку не може бути добавлена до поточної сесії", 
+                                "Попередження");
                         }
                     }
                 }

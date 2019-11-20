@@ -93,13 +93,15 @@
             this.panel9 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.buttonSaveOPoint = new System.Windows.Forms.Button();
+            this.splitter4 = new System.Windows.Forms.Splitter();
+            this.panel16 = new System.Windows.Forms.Panel();
+            this.dgvObservationPoints = new System.Windows.Forms.DataGridView();
             this.panel6 = new System.Windows.Forms.Panel();
             this.tlbObservPoints = new System.Windows.Forms.ToolBar();
             this.tlbbShowPoint = new System.Windows.Forms.ToolBarButton();
             this.tlbbAddNewPoint = new System.Windows.Forms.ToolBarButton();
             this.tlbbAddObserPointLayer = new System.Windows.Forms.ToolBarButton();
             this.tlbbRemovePoint = new System.Windows.Forms.ToolBarButton();
-            this.dgvObservationPoints = new System.Windows.Forms.DataGridView();
             this.panel5 = new System.Windows.Forms.Panel();
             this.chckFilterDate = new System.Windows.Forms.CheckBox();
             this.chckFilterAffiliation = new System.Windows.Forms.CheckBox();
@@ -129,8 +131,8 @@
             this.tbObservObjGroup = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.splitter2 = new System.Windows.Forms.Splitter();
             this._panelGridON = new System.Windows.Forms.Panel();
             this.dgvObservObjects = new System.Windows.Forms.DataGridView();
@@ -147,11 +149,11 @@
             this.chckObservObjGroup = new System.Windows.Forms.CheckBox();
             this.chckObservObjTitle = new System.Windows.Forms.CheckBox();
             this.panel26 = new System.Windows.Forms.Panel();
-            this.tlbbAddObservObjLayer = new System.Windows.Forms.Button();
             this.cmbObservObjAffiliationFilter = new System.Windows.Forms.ComboBox();
             this.label28 = new System.Windows.Forms.Label();
             this.panel27 = new System.Windows.Forms.Panel();
             this.label30 = new System.Windows.Forms.Label();
+            this.tlbbAddObservObjLayer = new System.Windows.Forms.Button();
             this.toolBar5 = new System.Windows.Forms.ToolBar();
             this.toolBarButton18 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton20 = new System.Windows.Forms.ToolBarButton();
@@ -161,6 +163,7 @@
             this.toolBarButton24 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton25 = new System.Windows.Forms.ToolBarButton();
             this.tbpSessions = new System.Windows.Forms.TabPage();
+            this.panel14 = new System.Windows.Forms.Panel();
             this.panel46 = new System.Windows.Forms.Panel();
             this.tbVisibilitySessionFinished = new System.Windows.Forms.TextBox();
             this.label45 = new System.Windows.Forms.Label();
@@ -178,11 +181,13 @@
             this.label46 = new System.Windows.Forms.Label();
             this.panel42 = new System.Windows.Forms.Panel();
             this.label40 = new System.Windows.Forms.Label();
+            this.splitter3 = new System.Windows.Forms.Splitter();
+            this.panel15 = new System.Windows.Forms.Panel();
+            this.dgvVisibilitySessions = new System.Windows.Forms.DataGridView();
             this.panel41 = new System.Windows.Forms.Panel();
             this.tlbVisibilitySessions = new System.Windows.Forms.ToolBar();
             this.wizardTask = new System.Windows.Forms.ToolBarButton();
             this.removeTask = new System.Windows.Forms.ToolBarButton();
-            this.dgvVisibilitySessions = new System.Windows.Forms.DataGridView();
             this.panel39 = new System.Windows.Forms.Panel();
             this.cmbStateFilter = new System.Windows.Forms.ComboBox();
             this.label38 = new System.Windows.Forms.Label();
@@ -194,6 +199,7 @@
             this.panel50 = new System.Windows.Forms.Panel();
             this.labelHeaderVisibilityInfo = new System.Windows.Forms.Label();
             this.splitter1 = new System.Windows.Forms.Splitter();
+            this.panel17 = new System.Windows.Forms.Panel();
             this.tvResults = new System.Windows.Forms.TreeView();
             this.panel49 = new System.Windows.Forms.Panel();
             this.toolBarVisibleResults = new System.Windows.Forms.ToolBar();
@@ -234,8 +240,9 @@
             this.panelAzimuthBase.SuspendLayout();
             this.panelCameraParam.SuspendLayout();
             this.panel9.SuspendLayout();
-            this.panel6.SuspendLayout();
+            this.panel16.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvObservationPoints)).BeginInit();
+            this.panel6.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panelPointsHeader.SuspendLayout();
@@ -254,19 +261,22 @@
             this.panel26.SuspendLayout();
             this.panel27.SuspendLayout();
             this.tbpSessions.SuspendLayout();
+            this.panel14.SuspendLayout();
             this.panel46.SuspendLayout();
             this.panel45.SuspendLayout();
             this.panel44.SuspendLayout();
             this.panel43.SuspendLayout();
             this.panel47.SuspendLayout();
             this.panel42.SuspendLayout();
-            this.panel41.SuspendLayout();
+            this.panel15.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVisibilitySessions)).BeginInit();
+            this.panel41.SuspendLayout();
             this.panel39.SuspendLayout();
             this.panel38.SuspendLayout();
             this.tbpVisibilityAreas.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel50.SuspendLayout();
+            this.panel17.SuspendLayout();
             this.panel49.SuspendLayout();
             this.panel48.SuspendLayout();
             this.panel11.SuspendLayout();
@@ -500,18 +510,16 @@
             // tbpPoints
             // 
             this.tbpPoints.Controls.Add(this.panel7);
-            this.tbpPoints.Controls.Add(this.panel6);
-            this.tbpPoints.Controls.Add(this.dgvObservationPoints);
-            this.tbpPoints.Controls.Add(this.panel5);
-            this.tbpPoints.Controls.Add(this.panel4);
+            this.tbpPoints.Controls.Add(this.splitter4);
+            this.tbpPoints.Controls.Add(this.panel16);
             this.tbpPoints.Controls.Add(this.panelPointsHeader);
-            this.tbpPoints.ImageIndex = 196;
+            this.tbpPoints.ImageIndex = 137;
             this.tbpPoints.Location = new System.Drawing.Point(4, 23);
             this.tbpPoints.Name = "tbpPoints";
             this.tbpPoints.Padding = new System.Windows.Forms.Padding(3);
             this.tbpPoints.Size = new System.Drawing.Size(312, 613);
             this.tbpPoints.TabIndex = 0;
-            this.tbpPoints.Text = "Пункти Н";
+            this.tbpPoints.Text = "Пункти С";
             this.tbpPoints.UseVisualStyleBackColor = true;
             // 
             // panel7
@@ -519,9 +527,10 @@
             this.panel7.Controls.Add(this.tabControl2);
             this.panel7.Controls.Add(this.panel9);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(3, 257);
+            this.panel7.Location = new System.Drawing.Point(3, 241);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(306, 353);
+            this.panel7.Padding = new System.Windows.Forms.Padding(0, 0, 0, 8);
+            this.panel7.Size = new System.Drawing.Size(306, 369);
             this.panel7.TabIndex = 7;
             // 
             // tabControl2
@@ -533,7 +542,7 @@
             this.tabControl2.Location = new System.Drawing.Point(0, 34);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(306, 319);
+            this.tabControl2.Size = new System.Drawing.Size(306, 327);
             this.tabControl2.TabIndex = 10;
             // 
             // tabPage5
@@ -547,11 +556,11 @@
             this.tabPage5.Controls.Add(this.panelDataAndUser);
             this.tabPage5.Controls.Add(this.panelObservPointName);
             this.tabPage5.Controls.Add(this.panel12);
-            this.tabPage5.ImageIndex = 181;
+            this.tabPage5.ImageIndex = 137;
             this.tabPage5.Location = new System.Drawing.Point(4, 4);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(298, 292);
+            this.tabPage5.Size = new System.Drawing.Size(298, 300);
             this.tabPage5.TabIndex = 0;
             this.tabPage5.Text = "Параметри ПС";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -765,7 +774,7 @@
             this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel10.Location = new System.Drawing.Point(3, 75);
             this.panel10.Name = "panel10";
-            this.panel10.Padding = new System.Windows.Forms.Padding(4, 2, 0, 0);
+            this.panel10.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
             this.panel10.Size = new System.Drawing.Size(292, 28);
             this.panel10.TabIndex = 36;
             // 
@@ -783,11 +792,11 @@
             this.tlbCoordinates.Dock = System.Windows.Forms.DockStyle.Left;
             this.tlbCoordinates.DropDownArrows = true;
             this.tlbCoordinates.ImageList = this.imageList1;
-            this.tlbCoordinates.Location = new System.Drawing.Point(204, 2);
+            this.tlbCoordinates.Location = new System.Drawing.Point(204, 4);
             this.tlbCoordinates.Margin = new System.Windows.Forms.Padding(1, 3, 3, 3);
             this.tlbCoordinates.Name = "tlbCoordinates";
             this.tlbCoordinates.ShowToolTips = true;
-            this.tlbCoordinates.Size = new System.Drawing.Size(92, 26);
+            this.tlbCoordinates.Size = new System.Drawing.Size(92, 24);
             this.tlbCoordinates.TabIndex = 33;
             this.tlbCoordinates.Wrappable = false;
             this.tlbCoordinates.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.TlbCoordinates_ButtonClick);
@@ -820,7 +829,7 @@
             // 
             this.yCoord.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.yCoord.Dock = System.Windows.Forms.DockStyle.Left;
-            this.yCoord.Location = new System.Drawing.Point(144, 2);
+            this.yCoord.Location = new System.Drawing.Point(144, 4);
             this.yCoord.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
             this.yCoord.Name = "yCoord";
             this.yCoord.Size = new System.Drawing.Size(60, 20);
@@ -833,7 +842,7 @@
             // 
             this.xCoord.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.xCoord.Dock = System.Windows.Forms.DockStyle.Left;
-            this.xCoord.Location = new System.Drawing.Point(74, 2);
+            this.xCoord.Location = new System.Drawing.Point(74, 4);
             this.xCoord.Name = "xCoord";
             this.xCoord.Size = new System.Drawing.Size(70, 20);
             this.xCoord.TabIndex = 31;
@@ -844,10 +853,10 @@
             // label8
             // 
             this.label8.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label8.Location = new System.Drawing.Point(4, 2);
+            this.label8.Location = new System.Drawing.Point(4, 4);
             this.label8.Name = "label8";
-            this.label8.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-            this.label8.Size = new System.Drawing.Size(70, 26);
+            this.label8.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.label8.Size = new System.Drawing.Size(70, 24);
             this.label8.TabIndex = 2;
             this.label8.Text = "Координати";
             // 
@@ -1007,7 +1016,7 @@
             this.panel12.Controls.Add(this.panelAzimuthBase);
             this.panel12.Controls.Add(this.panelCameraParam);
             this.panel12.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel12.Location = new System.Drawing.Point(3, 214);
+            this.panel12.Location = new System.Drawing.Point(3, 222);
             this.panel12.Name = "panel12";
             this.panel12.Size = new System.Drawing.Size(292, 75);
             this.panel12.TabIndex = 13;
@@ -1166,7 +1175,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel9.Location = new System.Drawing.Point(0, 0);
             this.panel9.Name = "panel9";
-            this.panel9.Padding = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.panel9.Padding = new System.Windows.Forms.Padding(4);
             this.panel9.Size = new System.Drawing.Size(306, 34);
             this.panel9.TabIndex = 9;
             // 
@@ -1175,10 +1184,10 @@
             this.label7.BackColor = System.Drawing.SystemColors.Control;
             this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.label7.Location = new System.Drawing.Point(4, 2);
+            this.label7.Location = new System.Drawing.Point(4, 4);
             this.label7.Name = "label7";
             this.label7.Padding = new System.Windows.Forms.Padding(0, 6, 4, 0);
-            this.label7.Size = new System.Drawing.Size(268, 30);
+            this.label7.Size = new System.Drawing.Size(272, 26);
             this.label7.TabIndex = 4;
             this.label7.Text = "Параметри ПС";
             // 
@@ -1187,22 +1196,71 @@
             this.buttonSaveOPoint.Dock = System.Windows.Forms.DockStyle.Right;
             this.buttonSaveOPoint.ImageIndex = 147;
             this.buttonSaveOPoint.ImageList = this.imageList1;
-            this.buttonSaveOPoint.Location = new System.Drawing.Point(272, 2);
+            this.buttonSaveOPoint.Location = new System.Drawing.Point(276, 4);
             this.buttonSaveOPoint.Name = "buttonSaveOPoint";
-            this.buttonSaveOPoint.Size = new System.Drawing.Size(30, 30);
+            this.buttonSaveOPoint.Size = new System.Drawing.Size(26, 26);
             this.buttonSaveOPoint.TabIndex = 3;
             this.buttonSaveOPoint.UseVisualStyleBackColor = true;
             this.buttonSaveOPoint.Click += new System.EventHandler(this.buttonSaveOPoint_Click);
             // 
+            // splitter4
+            // 
+            this.splitter4.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.splitter4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.splitter4.Location = new System.Drawing.Point(3, 237);
+            this.splitter4.Name = "splitter4";
+            this.splitter4.Size = new System.Drawing.Size(306, 4);
+            this.splitter4.TabIndex = 8;
+            this.splitter4.TabStop = false;
+            // 
+            // panel16
+            // 
+            this.panel16.Controls.Add(this.dgvObservationPoints);
+            this.panel16.Controls.Add(this.panel6);
+            this.panel16.Controls.Add(this.panel5);
+            this.panel16.Controls.Add(this.panel4);
+            this.panel16.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel16.Location = new System.Drawing.Point(3, 35);
+            this.panel16.Name = "panel16";
+            this.panel16.Padding = new System.Windows.Forms.Padding(0, 0, 0, 4);
+            this.panel16.Size = new System.Drawing.Size(306, 202);
+            this.panel16.TabIndex = 9;
+            // 
+            // dgvObservationPoints
+            // 
+            this.dgvObservationPoints.AllowUserToAddRows = false;
+            this.dgvObservationPoints.AllowUserToDeleteRows = false;
+            this.dgvObservationPoints.AllowUserToResizeColumns = false;
+            this.dgvObservationPoints.AllowUserToResizeRows = false;
+            this.dgvObservationPoints.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
+            this.dgvObservationPoints.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.dgvObservationPoints.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvObservationPoints.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.RaisedHorizontal;
+            this.dgvObservationPoints.ColumnHeadersHeight = 22;
+            this.dgvObservationPoints.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dgvObservationPoints.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvObservationPoints.Location = new System.Drawing.Point(0, 56);
+            this.dgvObservationPoints.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
+            this.dgvObservationPoints.MultiSelect = false;
+            this.dgvObservationPoints.Name = "dgvObservationPoints";
+            this.dgvObservationPoints.ReadOnly = true;
+            this.dgvObservationPoints.RowHeadersVisible = false;
+            this.dgvObservationPoints.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dgvObservationPoints.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvObservationPoints.Size = new System.Drawing.Size(306, 112);
+            this.dgvObservationPoints.TabIndex = 11;
+            this.dgvObservationPoints.TabStop = false;
+            this.dgvObservationPoints.SelectionChanged += new System.EventHandler(this.DgvObservationPoints_SelectionChanged);
+            // 
             // panel6
             // 
             this.panel6.Controls.Add(this.tlbObservPoints);
-            this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel6.Location = new System.Drawing.Point(3, 227);
+            this.panel6.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel6.Location = new System.Drawing.Point(0, 168);
             this.panel6.Name = "panel6";
             this.panel6.Padding = new System.Windows.Forms.Padding(2);
             this.panel6.Size = new System.Drawing.Size(306, 30);
-            this.panel6.TabIndex = 6;
+            this.panel6.TabIndex = 10;
             // 
             // tlbObservPoints
             // 
@@ -1219,7 +1277,7 @@
             this.tlbObservPoints.Location = new System.Drawing.Point(2, 2);
             this.tlbObservPoints.Name = "tlbObservPoints";
             this.tlbObservPoints.ShowToolTips = true;
-            this.tlbObservPoints.Size = new System.Drawing.Size(302, 28);
+            this.tlbObservPoints.Size = new System.Drawing.Size(302, 30);
             this.tlbObservPoints.TabIndex = 40;
             this.tlbObservPoints.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.TlbObserPoints_ButtonClick);
             // 
@@ -1247,43 +1305,17 @@
             this.tlbbRemovePoint.Name = "tlbbRemovePoint";
             this.tlbbRemovePoint.ToolTipText = "Удалить точку наблюдения";
             // 
-            // dgvObservationPoints
-            // 
-            this.dgvObservationPoints.AllowUserToAddRows = false;
-            this.dgvObservationPoints.AllowUserToDeleteRows = false;
-            this.dgvObservationPoints.AllowUserToResizeColumns = false;
-            this.dgvObservationPoints.AllowUserToResizeRows = false;
-            this.dgvObservationPoints.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
-            this.dgvObservationPoints.BackgroundColor = System.Drawing.SystemColors.Window;
-            this.dgvObservationPoints.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvObservationPoints.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.RaisedHorizontal;
-            this.dgvObservationPoints.ColumnHeadersHeight = 22;
-            this.dgvObservationPoints.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dgvObservationPoints.Dock = System.Windows.Forms.DockStyle.Top;
-            this.dgvObservationPoints.Location = new System.Drawing.Point(3, 87);
-            this.dgvObservationPoints.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
-            this.dgvObservationPoints.MultiSelect = false;
-            this.dgvObservationPoints.Name = "dgvObservationPoints";
-            this.dgvObservationPoints.ReadOnly = true;
-            this.dgvObservationPoints.RowHeadersVisible = false;
-            this.dgvObservationPoints.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dgvObservationPoints.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvObservationPoints.Size = new System.Drawing.Size(306, 140);
-            this.dgvObservationPoints.TabIndex = 5;
-            this.dgvObservationPoints.TabStop = false;
-            this.dgvObservationPoints.SelectionChanged += new System.EventHandler(this.DgvObservationPoints_SelectionChanged);
-            // 
             // panel5
             // 
             this.panel5.Controls.Add(this.chckFilterDate);
             this.panel5.Controls.Add(this.chckFilterAffiliation);
             this.panel5.Controls.Add(this.chckFilterType);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel5.Location = new System.Drawing.Point(3, 63);
+            this.panel5.Location = new System.Drawing.Point(0, 28);
             this.panel5.Name = "panel5";
             this.panel5.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel5.Size = new System.Drawing.Size(306, 24);
-            this.panel5.TabIndex = 4;
+            this.panel5.Size = new System.Drawing.Size(306, 28);
+            this.panel5.TabIndex = 8;
             // 
             // chckFilterDate
             // 
@@ -1293,7 +1325,7 @@
             this.chckFilterDate.Location = new System.Drawing.Point(180, 0);
             this.chckFilterDate.Name = "chckFilterDate";
             this.chckFilterDate.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.chckFilterDate.Size = new System.Drawing.Size(60, 24);
+            this.chckFilterDate.Size = new System.Drawing.Size(60, 28);
             this.chckFilterDate.TabIndex = 3;
             this.chckFilterDate.Text = "дата";
             this.chckFilterDate.UseVisualStyleBackColor = true;
@@ -1307,7 +1339,7 @@
             this.chckFilterAffiliation.Location = new System.Drawing.Point(74, 0);
             this.chckFilterAffiliation.Name = "chckFilterAffiliation";
             this.chckFilterAffiliation.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.chckFilterAffiliation.Size = new System.Drawing.Size(106, 24);
+            this.chckFilterAffiliation.Size = new System.Drawing.Size(106, 28);
             this.chckFilterAffiliation.TabIndex = 2;
             this.chckFilterAffiliation.Text = "належність";
             this.chckFilterAffiliation.UseVisualStyleBackColor = true;
@@ -1321,7 +1353,7 @@
             this.chckFilterType.Location = new System.Drawing.Point(4, 0);
             this.chckFilterType.Name = "chckFilterType";
             this.chckFilterType.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.chckFilterType.Size = new System.Drawing.Size(70, 24);
+            this.chckFilterType.Size = new System.Drawing.Size(70, 28);
             this.chckFilterType.TabIndex = 1;
             this.chckFilterType.Text = "тип";
             this.chckFilterType.UseVisualStyleBackColor = true;
@@ -1334,11 +1366,11 @@
             this.panel4.Controls.Add(this.cmbObservPointType);
             this.panel4.Controls.Add(this.label2);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel4.Location = new System.Drawing.Point(3, 35);
+            this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
             this.panel4.Padding = new System.Windows.Forms.Padding(4);
             this.panel4.Size = new System.Drawing.Size(306, 28);
-            this.panel4.TabIndex = 2;
+            this.panel4.TabIndex = 7;
             // 
             // cmbAffiliation
             // 
@@ -1364,6 +1396,7 @@
             // 
             // cmbObservPointType
             // 
+            this.cmbObservPointType.BackColor = System.Drawing.SystemColors.Window;
             this.cmbObservPointType.Dock = System.Windows.Forms.DockStyle.Left;
             this.cmbObservPointType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbObservPointType.FormattingEnabled = true;
@@ -1586,14 +1619,25 @@
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.button1);
             this.panel3.Controls.Add(this.label4);
+            this.panel3.Controls.Add(this.button1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
             this.panel3.Padding = new System.Windows.Forms.Padding(4);
             this.panel3.Size = new System.Drawing.Size(312, 34);
             this.panel3.TabIndex = 43;
+            // 
+            // label4
+            // 
+            this.label4.BackColor = System.Drawing.SystemColors.Control;
+            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.label4.Location = new System.Drawing.Point(4, 4);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(278, 26);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "Характеристики ОН";
             // 
             // button1
             // 
@@ -1604,18 +1648,8 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(26, 26);
             this.button1.TabIndex = 3;
+            this.button1.Tag = "Зберегти зміни";
             this.button1.UseVisualStyleBackColor = true;
-            // 
-            // label4
-            // 
-            this.label4.BackColor = System.Drawing.SystemColors.Control;
-            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.label4.Location = new System.Drawing.Point(4, 4);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(304, 26);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "Характеристики ОН";
             // 
             // splitter2
             // 
@@ -1646,6 +1680,8 @@
             this.dgvObservObjects.AllowUserToDeleteRows = false;
             this.dgvObservObjects.AllowUserToResizeRows = false;
             this.dgvObservObjects.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.dgvObservObjects.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvObservObjects.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.RaisedHorizontal;
             this.dgvObservObjects.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvObservObjects.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvObservObjects.Location = new System.Drawing.Point(0, 60);
@@ -1657,6 +1693,7 @@
             this.dgvObservObjects.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvObservObjects.Size = new System.Drawing.Size(312, 200);
             this.dgvObservObjects.TabIndex = 63;
+            this.dgvObservObjects.SelectionChanged += new System.EventHandler(this.DgvObservObjects_SelectionChanged);
             // 
             // panel29
             // 
@@ -1680,13 +1717,12 @@
             this.toolBarButton7,
             this.toolBarButton29});
             this.tbObservObjects.ButtonSize = new System.Drawing.Size(16, 16);
-            this.tbObservObjects.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbObservObjects.DropDownArrows = true;
             this.tbObservObjects.ImageList = this.imageList1;
             this.tbObservObjects.Location = new System.Drawing.Point(2, 2);
             this.tbObservObjects.Name = "tbObservObjects";
             this.tbObservObjects.ShowToolTips = true;
-            this.tbObservObjects.Size = new System.Drawing.Size(308, 154);
+            this.tbObservObjects.Size = new System.Drawing.Size(308, 30);
             this.tbObservObjects.TabIndex = 40;
             // 
             // toolBarButton31
@@ -1710,7 +1746,7 @@
             // 
             this.toolBarButton34.ImageKey = "Cancel.png";
             this.toolBarButton34.Name = "toolBarButton34";
-            this.toolBarButton34.ToolTipText = "Удалить";
+            this.toolBarButton34.ToolTipText = "видилити ОН";
             // 
             // toolBarButton7
             // 
@@ -1721,7 +1757,7 @@
             // 
             this.toolBarButton29.ImageKey = "Refresh.png";
             this.toolBarButton29.Name = "toolBarButton29";
-            this.toolBarButton29.ToolTipText = "Поновити список ОН";
+            this.toolBarButton29.ToolTipText = "поновити список ОН";
             // 
             // chckObservObjColumnsVisibilityPanel
             // 
@@ -1779,7 +1815,6 @@
             // 
             // panel26
             // 
-            this.panel26.Controls.Add(this.tlbbAddObservObjLayer);
             this.panel26.Controls.Add(this.cmbObservObjAffiliationFilter);
             this.panel26.Controls.Add(this.label28);
             this.panel26.Dock = System.Windows.Forms.DockStyle.Top;
@@ -1788,18 +1823,6 @@
             this.panel26.Padding = new System.Windows.Forms.Padding(4);
             this.panel26.Size = new System.Drawing.Size(312, 30);
             this.panel26.TabIndex = 59;
-            // 
-            // tlbbAddObservObjLayer
-            // 
-            this.tlbbAddObservObjLayer.Dock = System.Windows.Forms.DockStyle.Right;
-            this.tlbbAddObservObjLayer.ImageIndex = 173;
-            this.tlbbAddObservObjLayer.ImageList = this.imageList1;
-            this.tlbbAddObservObjLayer.Location = new System.Drawing.Point(282, 4);
-            this.tlbbAddObservObjLayer.Name = "tlbbAddObservObjLayer";
-            this.tlbbAddObservObjLayer.Size = new System.Drawing.Size(26, 22);
-            this.tlbbAddObservObjLayer.TabIndex = 5;
-            this.tlbbAddObservObjLayer.UseVisualStyleBackColor = true;
-            this.tlbbAddObservObjLayer.Click += new System.EventHandler(this.tbObservObjects_ButtonClick);
             // 
             // cmbObservObjAffiliationFilter
             // 
@@ -1825,10 +1848,11 @@
             // panel27
             // 
             this.panel27.Controls.Add(this.label30);
+            this.panel27.Controls.Add(this.tlbbAddObservObjLayer);
             this.panel27.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel27.Location = new System.Drawing.Point(0, 0);
             this.panel27.Name = "panel27";
-            this.panel27.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.panel27.Padding = new System.Windows.Forms.Padding(4);
             this.panel27.Size = new System.Drawing.Size(312, 34);
             this.panel27.TabIndex = 42;
             // 
@@ -1837,12 +1861,25 @@
             this.label30.BackColor = System.Drawing.SystemColors.Control;
             this.label30.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label30.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.label30.Location = new System.Drawing.Point(4, 0);
+            this.label30.Location = new System.Drawing.Point(4, 4);
             this.label30.Name = "label30";
             this.label30.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label30.Size = new System.Drawing.Size(304, 34);
-            this.label30.TabIndex = 2;
+            this.label30.Size = new System.Drawing.Size(278, 26);
+            this.label30.TabIndex = 7;
             this.label30.Text = "Області нагляду (ОН)";
+            // 
+            // tlbbAddObservObjLayer
+            // 
+            this.tlbbAddObservObjLayer.Dock = System.Windows.Forms.DockStyle.Right;
+            this.tlbbAddObservObjLayer.ImageIndex = 173;
+            this.tlbbAddObservObjLayer.ImageList = this.imageList1;
+            this.tlbbAddObservObjLayer.Location = new System.Drawing.Point(282, 4);
+            this.tlbbAddObservObjLayer.Name = "tlbbAddObservObjLayer";
+            this.tlbbAddObservObjLayer.Size = new System.Drawing.Size(26, 26);
+            this.tlbbAddObservObjLayer.TabIndex = 6;
+            this.tlbbAddObservObjLayer.Tag = "Додати шар ОН до карти";
+            this.tlbbAddObservObjLayer.UseVisualStyleBackColor = true;
+            this.tlbbAddObservObjLayer.Click += new System.EventHandler(this.tbObservObjects_ButtonClick);
             // 
             // toolBar5
             // 
@@ -1908,17 +1945,11 @@
             // 
             // tbpSessions
             // 
-            this.tbpSessions.Controls.Add(this.panel46);
-            this.tbpSessions.Controls.Add(this.panel45);
-            this.tbpSessions.Controls.Add(this.panel44);
-            this.tbpSessions.Controls.Add(this.panel43);
-            this.tbpSessions.Controls.Add(this.panel47);
-            this.tbpSessions.Controls.Add(this.panel42);
-            this.tbpSessions.Controls.Add(this.panel41);
-            this.tbpSessions.Controls.Add(this.dgvVisibilitySessions);
-            this.tbpSessions.Controls.Add(this.panel39);
+            this.tbpSessions.Controls.Add(this.panel14);
+            this.tbpSessions.Controls.Add(this.splitter3);
+            this.tbpSessions.Controls.Add(this.panel15);
             this.tbpSessions.Controls.Add(this.panel38);
-            this.tbpSessions.ImageIndex = 50;
+            this.tbpSessions.ImageIndex = 44;
             this.tbpSessions.Location = new System.Drawing.Point(4, 23);
             this.tbpSessions.Name = "tbpSessions";
             this.tbpSessions.Size = new System.Drawing.Size(312, 613);
@@ -1927,16 +1958,31 @@
             this.tbpSessions.ToolTipText = "Завдання для розрахунків";
             this.tbpSessions.UseVisualStyleBackColor = true;
             // 
+            // panel14
+            // 
+            this.panel14.Controls.Add(this.panel46);
+            this.panel14.Controls.Add(this.panel45);
+            this.panel14.Controls.Add(this.panel44);
+            this.panel14.Controls.Add(this.panel43);
+            this.panel14.Controls.Add(this.panel47);
+            this.panel14.Controls.Add(this.panel42);
+            this.panel14.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel14.Location = new System.Drawing.Point(0, 306);
+            this.panel14.Name = "panel14";
+            this.panel14.Padding = new System.Windows.Forms.Padding(0, 0, 0, 10);
+            this.panel14.Size = new System.Drawing.Size(312, 307);
+            this.panel14.TabIndex = 72;
+            // 
             // panel46
             // 
             this.panel46.Controls.Add(this.tbVisibilitySessionFinished);
             this.panel46.Controls.Add(this.label45);
             this.panel46.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel46.Location = new System.Drawing.Point(0, 467);
+            this.panel46.Location = new System.Drawing.Point(0, 146);
             this.panel46.Name = "panel46";
             this.panel46.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
             this.panel46.Size = new System.Drawing.Size(312, 28);
-            this.panel46.TabIndex = 70;
+            this.panel46.TabIndex = 76;
             // 
             // tbVisibilitySessionFinished
             // 
@@ -1956,18 +2002,18 @@
             this.label45.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
             this.label45.Size = new System.Drawing.Size(100, 24);
             this.label45.TabIndex = 4;
-            this.label45.Text = "время окончания";
+            this.label45.Text = "час закінчення";
             // 
             // panel45
             // 
             this.panel45.Controls.Add(this.tbVisibilitySessionStarted);
             this.panel45.Controls.Add(this.label44);
             this.panel45.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel45.Location = new System.Drawing.Point(0, 439);
+            this.panel45.Location = new System.Drawing.Point(0, 118);
             this.panel45.Name = "panel45";
             this.panel45.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
             this.panel45.Size = new System.Drawing.Size(312, 28);
-            this.panel45.TabIndex = 69;
+            this.panel45.TabIndex = 75;
             // 
             // tbVisibilitySessionStarted
             // 
@@ -1987,18 +2033,18 @@
             this.label44.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
             this.label44.Size = new System.Drawing.Size(100, 24);
             this.label44.TabIndex = 4;
-            this.label44.Text = "время старта";
+            this.label44.Text = "час старту";
             // 
             // panel44
             // 
             this.panel44.Controls.Add(this.tbVisibilitySessionCreated);
             this.panel44.Controls.Add(this.label43);
             this.panel44.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel44.Location = new System.Drawing.Point(0, 411);
+            this.panel44.Location = new System.Drawing.Point(0, 90);
             this.panel44.Name = "panel44";
             this.panel44.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
             this.panel44.Size = new System.Drawing.Size(312, 28);
-            this.panel44.TabIndex = 68;
+            this.panel44.TabIndex = 74;
             // 
             // tbVisibilitySessionCreated
             // 
@@ -2025,11 +2071,11 @@
             this.panel43.Controls.Add(this.tbVisibilitySessionCreator);
             this.panel43.Controls.Add(this.label42);
             this.panel43.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel43.Location = new System.Drawing.Point(0, 383);
+            this.panel43.Location = new System.Drawing.Point(0, 62);
             this.panel43.Name = "panel43";
             this.panel43.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
             this.panel43.Size = new System.Drawing.Size(312, 28);
-            this.panel43.TabIndex = 67;
+            this.panel43.TabIndex = 73;
             // 
             // tbVisibilitySessionCreator
             // 
@@ -2056,11 +2102,11 @@
             this.panel47.Controls.Add(this.tbVisibilitySessionName);
             this.panel47.Controls.Add(this.label46);
             this.panel47.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel47.Location = new System.Drawing.Point(0, 355);
+            this.panel47.Location = new System.Drawing.Point(0, 34);
             this.panel47.Name = "panel47";
             this.panel47.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
             this.panel47.Size = new System.Drawing.Size(312, 28);
-            this.panel47.TabIndex = 65;
+            this.panel47.TabIndex = 72;
             // 
             // tbVisibilitySessionName
             // 
@@ -2087,11 +2133,11 @@
             this.panel42.Controls.Add(this.label40);
             this.panel42.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel42.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.panel42.Location = new System.Drawing.Point(0, 321);
+            this.panel42.Location = new System.Drawing.Point(0, 0);
             this.panel42.Name = "panel42";
             this.panel42.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.panel42.Size = new System.Drawing.Size(312, 34);
-            this.panel42.TabIndex = 59;
+            this.panel42.TabIndex = 71;
             // 
             // label40
             // 
@@ -2103,17 +2149,60 @@
             this.label40.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
             this.label40.Size = new System.Drawing.Size(304, 34);
             this.label40.TabIndex = 2;
-            this.label40.Text = "Информація про завдання";
+            this.label40.Text = "Інформація про завдання";
+            // 
+            // splitter3
+            // 
+            this.splitter3.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.splitter3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.splitter3.Location = new System.Drawing.Point(0, 302);
+            this.splitter3.Name = "splitter3";
+            this.splitter3.Size = new System.Drawing.Size(312, 4);
+            this.splitter3.TabIndex = 74;
+            this.splitter3.TabStop = false;
+            // 
+            // panel15
+            // 
+            this.panel15.Controls.Add(this.dgvVisibilitySessions);
+            this.panel15.Controls.Add(this.panel41);
+            this.panel15.Controls.Add(this.panel39);
+            this.panel15.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel15.Location = new System.Drawing.Point(0, 34);
+            this.panel15.Name = "panel15";
+            this.panel15.Padding = new System.Windows.Forms.Padding(0, 0, 0, 4);
+            this.panel15.Size = new System.Drawing.Size(312, 268);
+            this.panel15.TabIndex = 73;
+            // 
+            // dgvVisibilitySessions
+            // 
+            this.dgvVisibilitySessions.AllowUserToAddRows = false;
+            this.dgvVisibilitySessions.AllowUserToDeleteRows = false;
+            this.dgvVisibilitySessions.AllowUserToResizeRows = false;
+            this.dgvVisibilitySessions.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.dgvVisibilitySessions.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvVisibilitySessions.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.RaisedHorizontal;
+            this.dgvVisibilitySessions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvVisibilitySessions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvVisibilitySessions.Location = new System.Drawing.Point(0, 28);
+            this.dgvVisibilitySessions.MultiSelect = false;
+            this.dgvVisibilitySessions.Name = "dgvVisibilitySessions";
+            this.dgvVisibilitySessions.ReadOnly = true;
+            this.dgvVisibilitySessions.RowHeadersVisible = false;
+            this.dgvVisibilitySessions.RowHeadersWidth = 15;
+            this.dgvVisibilitySessions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvVisibilitySessions.Size = new System.Drawing.Size(312, 204);
+            this.dgvVisibilitySessions.TabIndex = 62;
+            this.dgvVisibilitySessions.SelectionChanged += new System.EventHandler(this.DgvVisibilitySessions_SelectionChanged);
             // 
             // panel41
             // 
             this.panel41.Controls.Add(this.tlbVisibilitySessions);
-            this.panel41.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel41.Location = new System.Drawing.Point(0, 289);
+            this.panel41.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel41.Location = new System.Drawing.Point(0, 232);
             this.panel41.Name = "panel41";
             this.panel41.Padding = new System.Windows.Forms.Padding(2);
             this.panel41.Size = new System.Drawing.Size(312, 32);
-            this.panel41.TabIndex = 58;
+            this.panel41.TabIndex = 61;
             // 
             // tlbVisibilitySessions
             // 
@@ -2128,7 +2217,7 @@
             this.tlbVisibilitySessions.Location = new System.Drawing.Point(2, 2);
             this.tlbVisibilitySessions.Name = "tlbVisibilitySessions";
             this.tlbVisibilitySessions.ShowToolTips = true;
-            this.tlbVisibilitySessions.Size = new System.Drawing.Size(308, 24);
+            this.tlbVisibilitySessions.Size = new System.Drawing.Size(308, 30);
             this.tlbVisibilitySessions.TabIndex = 40;
             this.tlbVisibilitySessions.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.TlbVisiilitySessions_ButtonClick);
             // 
@@ -2136,57 +2225,40 @@
             // 
             this.wizardTask.ImageKey = "Wizard.png";
             this.wizardTask.Name = "wizardTask";
+            this.wizardTask.ToolTipText = "сформувати завдання на розрахунок";
             // 
             // removeTask
             // 
             this.removeTask.ImageKey = "Cancel.png";
             this.removeTask.Name = "removeTask";
-            // 
-            // dgvVisibilitySessions
-            // 
-            this.dgvVisibilitySessions.AllowUserToAddRows = false;
-            this.dgvVisibilitySessions.AllowUserToDeleteRows = false;
-            this.dgvVisibilitySessions.AllowUserToResizeRows = false;
-            this.dgvVisibilitySessions.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.dgvVisibilitySessions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvVisibilitySessions.Dock = System.Windows.Forms.DockStyle.Top;
-            this.dgvVisibilitySessions.Location = new System.Drawing.Point(0, 62);
-            this.dgvVisibilitySessions.MultiSelect = false;
-            this.dgvVisibilitySessions.Name = "dgvVisibilitySessions";
-            this.dgvVisibilitySessions.ReadOnly = true;
-            this.dgvVisibilitySessions.RowHeadersVisible = false;
-            this.dgvVisibilitySessions.RowHeadersWidth = 15;
-            this.dgvVisibilitySessions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvVisibilitySessions.Size = new System.Drawing.Size(312, 227);
-            this.dgvVisibilitySessions.TabIndex = 57;
-            this.dgvVisibilitySessions.SelectionChanged += new System.EventHandler(this.DgvVisibilitySessions_SelectionChanged);
+            this.removeTask.ToolTipText = "видалити інформацію про завдання";
             // 
             // panel39
             // 
             this.panel39.Controls.Add(this.cmbStateFilter);
             this.panel39.Controls.Add(this.label38);
             this.panel39.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel39.Location = new System.Drawing.Point(0, 34);
+            this.panel39.Location = new System.Drawing.Point(0, 0);
             this.panel39.Name = "panel39";
             this.panel39.Padding = new System.Windows.Forms.Padding(4, 3, 4, 0);
             this.panel39.Size = new System.Drawing.Size(312, 28);
-            this.panel39.TabIndex = 55;
+            this.panel39.TabIndex = 59;
             // 
             // cmbStateFilter
             // 
             this.cmbStateFilter.AutoCompleteCustomSource.AddRange(new string[] {
-            "В очереди",
-            "Выполняется",
-            "Закончено",
-            "Остановлено"});
+            "у черзі",
+            "виконується",
+            "закінчено",
+            "зупинено"});
             this.cmbStateFilter.Dock = System.Windows.Forms.DockStyle.Left;
             this.cmbStateFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbStateFilter.FormattingEnabled = true;
             this.cmbStateFilter.Items.AddRange(new object[] {
-            "свои",
-            "чужие ",
-            "нейтральные",
-            "неизвкчтно"});
+            "своі",
+            "чужі ",
+            "нейтральні",
+            "невідомо"});
             this.cmbStateFilter.Location = new System.Drawing.Point(104, 3);
             this.cmbStateFilter.Name = "cmbStateFilter";
             this.cmbStateFilter.Size = new System.Drawing.Size(110, 21);
@@ -2229,10 +2301,9 @@
             // 
             this.tbpVisibilityAreas.Controls.Add(this.panel2);
             this.tbpVisibilityAreas.Controls.Add(this.splitter1);
-            this.tbpVisibilityAreas.Controls.Add(this.tvResults);
-            this.tbpVisibilityAreas.Controls.Add(this.panel49);
+            this.tbpVisibilityAreas.Controls.Add(this.panel17);
             this.tbpVisibilityAreas.Controls.Add(this.panel48);
-            this.tbpVisibilityAreas.ImageIndex = 125;
+            this.tbpVisibilityAreas.ImageIndex = 126;
             this.tbpVisibilityAreas.Location = new System.Drawing.Point(4, 23);
             this.tbpVisibilityAreas.Name = "tbpVisibilityAreas";
             this.tbpVisibilityAreas.Size = new System.Drawing.Size(312, 613);
@@ -2246,9 +2317,9 @@
             this.panel2.Controls.Add(this.panel8);
             this.panel2.Controls.Add(this.panel50);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 267);
+            this.panel2.Location = new System.Drawing.Point(0, 340);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(312, 346);
+            this.panel2.Size = new System.Drawing.Size(312, 273);
             this.panel2.TabIndex = 82;
             // 
             // panel8
@@ -2256,7 +2327,7 @@
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(0, 32);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(312, 314);
+            this.panel8.Size = new System.Drawing.Size(312, 241);
             this.panel8.TabIndex = 81;
             // 
             // panel50
@@ -2285,37 +2356,49 @@
             // 
             this.splitter1.BackColor = System.Drawing.SystemColors.ControlDark;
             this.splitter1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.splitter1.Location = new System.Drawing.Point(0, 263);
+            this.splitter1.Location = new System.Drawing.Point(0, 336);
             this.splitter1.Name = "splitter1";
             this.splitter1.Size = new System.Drawing.Size(312, 4);
             this.splitter1.TabIndex = 81;
             this.splitter1.TabStop = false;
             // 
+            // panel17
+            // 
+            this.panel17.BackColor = System.Drawing.Color.Transparent;
+            this.panel17.Controls.Add(this.tvResults);
+            this.panel17.Controls.Add(this.panel49);
+            this.panel17.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel17.Location = new System.Drawing.Point(0, 34);
+            this.panel17.Name = "panel17";
+            this.panel17.Padding = new System.Windows.Forms.Padding(0, 0, 0, 4);
+            this.panel17.Size = new System.Drawing.Size(312, 302);
+            this.panel17.TabIndex = 83;
+            // 
             // tvResults
             // 
             this.tvResults.BackColor = System.Drawing.SystemColors.Window;
-            this.tvResults.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tvResults.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tvResults.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tvResults.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvResults.FullRowSelect = true;
             this.tvResults.ImageIndex = 201;
             this.tvResults.ImageList = this.imageList1;
-            this.tvResults.Location = new System.Drawing.Point(0, 64);
+            this.tvResults.Location = new System.Drawing.Point(0, 0);
             this.tvResults.Name = "tvResults";
             this.tvResults.PathSeparator = "%";
             this.tvResults.SelectedImageIndex = 0;
-            this.tvResults.Size = new System.Drawing.Size(312, 199);
-            this.tvResults.TabIndex = 78;
+            this.tvResults.Size = new System.Drawing.Size(312, 268);
+            this.tvResults.TabIndex = 79;
             this.tvResults.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvResults_AfterSelect);
             // 
             // panel49
             // 
             this.panel49.Controls.Add(this.toolBarVisibleResults);
-            this.panel49.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel49.Location = new System.Drawing.Point(0, 34);
+            this.panel49.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel49.Location = new System.Drawing.Point(0, 268);
             this.panel49.Name = "panel49";
             this.panel49.Padding = new System.Windows.Forms.Padding(2);
             this.panel49.Size = new System.Drawing.Size(312, 30);
-            this.panel49.TabIndex = 74;
+            this.panel49.TabIndex = 75;
             // 
             // toolBarVisibleResults
             // 
@@ -2334,13 +2417,12 @@
             this.toolBarButton1,
             this.tlbbUpdate});
             this.toolBarVisibleResults.ButtonSize = new System.Drawing.Size(18, 18);
-            this.toolBarVisibleResults.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolBarVisibleResults.DropDownArrows = true;
             this.toolBarVisibleResults.ImageList = this.imageList1;
             this.toolBarVisibleResults.Location = new System.Drawing.Point(2, 2);
             this.toolBarVisibleResults.Name = "toolBarVisibleResults";
             this.toolBarVisibleResults.ShowToolTips = true;
-            this.toolBarVisibleResults.Size = new System.Drawing.Size(308, 190);
+            this.toolBarVisibleResults.Size = new System.Drawing.Size(308, 30);
             this.toolBarVisibleResults.TabIndex = 40;
             this.toolBarVisibleResults.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.ToolBarVisibleResults_ButtonClick);
             // 
@@ -2531,8 +2613,9 @@
             this.panelCameraParam.ResumeLayout(false);
             this.panelCameraParam.PerformLayout();
             this.panel9.ResumeLayout(false);
-            this.panel6.ResumeLayout(false);
+            this.panel16.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvObservationPoints)).EndInit();
+            this.panel6.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panelPointsHeader.ResumeLayout(false);
@@ -2557,6 +2640,7 @@
             this.panel26.ResumeLayout(false);
             this.panel27.ResumeLayout(false);
             this.tbpSessions.ResumeLayout(false);
+            this.panel14.ResumeLayout(false);
             this.panel46.ResumeLayout(false);
             this.panel46.PerformLayout();
             this.panel45.ResumeLayout(false);
@@ -2568,13 +2652,15 @@
             this.panel47.ResumeLayout(false);
             this.panel47.PerformLayout();
             this.panel42.ResumeLayout(false);
-            this.panel41.ResumeLayout(false);
+            this.panel15.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvVisibilitySessions)).EndInit();
+            this.panel41.ResumeLayout(false);
             this.panel39.ResumeLayout(false);
             this.panel38.ResumeLayout(false);
             this.tbpVisibilityAreas.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel50.ResumeLayout(false);
+            this.panel17.ResumeLayout(false);
             this.panel49.ResumeLayout(false);
             this.panel48.ResumeLayout(false);
             this.panel11.ResumeLayout(false);
@@ -2594,18 +2680,6 @@
         private System.Windows.Forms.ToolBarButton takeCoordToolBarBtn;
         private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.Panel panel9;
-        private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.ToolBar tlbObservPoints;
-        private System.Windows.Forms.ToolBarButton tlbbAddNewPoint;
-        private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.CheckBox chckFilterDate;
-        private System.Windows.Forms.CheckBox chckFilterAffiliation;
-        private System.Windows.Forms.CheckBox chckFilterType;
-        private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.ComboBox cmbAffiliation;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox cmbObservPointType;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panelPointsHeader;
         private System.Windows.Forms.Label lblLayer;
         private System.Windows.Forms.TabPage tbpObservObjects;
@@ -2618,42 +2692,15 @@
         private System.Windows.Forms.ToolBarButton toolBarButton24;
         private System.Windows.Forms.ToolBarButton toolBarButton25;
         private System.Windows.Forms.TabPage tbpSessions;
-        private System.Windows.Forms.Panel panel46;
-        private System.Windows.Forms.TextBox tbVisibilitySessionFinished;
-        private System.Windows.Forms.Label label45;
-        private System.Windows.Forms.Panel panel45;
-        private System.Windows.Forms.TextBox tbVisibilitySessionStarted;
-        private System.Windows.Forms.Label label44;
-        private System.Windows.Forms.Panel panel44;
-        private System.Windows.Forms.TextBox tbVisibilitySessionCreated;
-        private System.Windows.Forms.Label label43;
-        private System.Windows.Forms.Panel panel43;
-        private System.Windows.Forms.TextBox tbVisibilitySessionCreator;
-        private System.Windows.Forms.Label label42;
-        private System.Windows.Forms.Panel panel47;
-        private System.Windows.Forms.TextBox tbVisibilitySessionName;
-        private System.Windows.Forms.Label label46;
-        private System.Windows.Forms.Panel panel42;
-        private System.Windows.Forms.Label label40;
-        private System.Windows.Forms.Panel panel41;
-        private System.Windows.Forms.ToolBar tlbVisibilitySessions;
         private System.Windows.Forms.ToolBarButton tlddUpd;
         private System.Windows.Forms.ToolBarButton tlbbDel;
-        private System.Windows.Forms.DataGridView dgvVisibilitySessions;
-        private System.Windows.Forms.Panel panel39;
-        private System.Windows.Forms.ComboBox cmbStateFilter;
-        private System.Windows.Forms.Label label38;
         private System.Windows.Forms.Panel panel38;
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.TabPage tbpVisibilityAreas;
-        private System.Windows.Forms.Panel panel49;
-        private System.Windows.Forms.ToolBar toolBarVisibleResults;
         private System.Windows.Forms.ToolBarButton toolBarButtonViewParamOnMap;
         private System.Windows.Forms.ToolBarButton toolBarButtonAddFromDB;
         private System.Windows.Forms.Panel panel48;
         private System.Windows.Forms.Label labelHeaderVisibilityResult;
-        private System.Windows.Forms.ToolBarButton tlbbShowPoint;
-        private System.Windows.Forms.DataGridView dgvObservationPoints;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.TextBox heightMax;
@@ -2663,9 +2710,6 @@
         private System.Windows.Forms.ToolBarButton toolBarButton2;
         private System.Windows.Forms.ToolBarButton toolBarButton3;
         private System.Windows.Forms.ToolBarButton toolBarButton4;
-        private System.Windows.Forms.ToolBarButton removeTask;
-        private System.Windows.Forms.ToolBarButton wizardTask;
-        private System.Windows.Forms.ToolBarButton tlbbAddObserPointLayer;
         private System.Windows.Forms.Panel panelObservPointName;
         private System.Windows.Forms.TextBox observPointName;
         private System.Windows.Forms.Label label20;
@@ -2678,8 +2722,6 @@
         private System.Windows.Forms.TextBox azimuthMainAxis;
         private System.Windows.Forms.Label label58;
         private System.Windows.Forms.Panel panel27;
-        private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.ToolBarButton tlbbRemovePoint;
         private System.Windows.Forms.Panel panelRadiuses;
         private System.Windows.Forms.TextBox txtMinDistance;
         private System.Windows.Forms.Label lblMaxDistance;
@@ -2722,24 +2764,12 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox observPointCreator;
         private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.TreeView tvResults;
-        private System.Windows.Forms.ToolBarButton toolBarButton5;
-        private System.Windows.Forms.ToolBarButton toolBarButton8;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Panel panel50;
         private System.Windows.Forms.Label labelHeaderVisibilityInfo;
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.Button buttonSaveOPoint;
-        private System.Windows.Forms.ToolBarButton toolBarButtonRemoveFromSeanse;
-        private System.Windows.Forms.ToolBarButton toolBarButtonViewOnMap;
-        private System.Windows.Forms.ToolBarButton toolBarButton1;
-        private System.Windows.Forms.ToolBarButton tlbbZoomToResultRaster;
-        private System.Windows.Forms.ToolBarButton tlbbViewParamOnMap;
-        private System.Windows.Forms.ToolBarButton tlbbAddFromDB;
-        private System.Windows.Forms.ToolBarButton tlbbFullDelete;
-        private System.Windows.Forms.ToolBarButton tlbbShare;
-        private System.Windows.Forms.ToolBarButton tlbbUpdate;
         private System.Windows.Forms.Panel panel30;
         private System.Windows.Forms.Panel panel58;
         private System.Windows.Forms.TextBox tbObservObjDate;
@@ -2757,7 +2787,6 @@
         private System.Windows.Forms.TextBox tbObservObjGroup;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Splitter splitter2;
         private System.Windows.Forms.Panel _panelGridON;
         private System.Windows.Forms.DataGridView dgvObservObjects;
@@ -2778,6 +2807,69 @@
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Panel panel14;
+        private System.Windows.Forms.Panel panel46;
+        private System.Windows.Forms.TextBox tbVisibilitySessionFinished;
+        private System.Windows.Forms.Label label45;
+        private System.Windows.Forms.Panel panel45;
+        private System.Windows.Forms.TextBox tbVisibilitySessionStarted;
+        private System.Windows.Forms.Label label44;
+        private System.Windows.Forms.Panel panel44;
+        private System.Windows.Forms.TextBox tbVisibilitySessionCreated;
+        private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.Panel panel43;
+        private System.Windows.Forms.TextBox tbVisibilitySessionCreator;
+        private System.Windows.Forms.Label label42;
+        private System.Windows.Forms.Panel panel47;
+        private System.Windows.Forms.TextBox tbVisibilitySessionName;
+        private System.Windows.Forms.Label label46;
+        private System.Windows.Forms.Panel panel42;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.Splitter splitter3;
+        private System.Windows.Forms.Panel panel15;
+        private System.Windows.Forms.DataGridView dgvVisibilitySessions;
+        private System.Windows.Forms.Panel panel41;
+        private System.Windows.Forms.ToolBar tlbVisibilitySessions;
+        private System.Windows.Forms.ToolBarButton wizardTask;
+        private System.Windows.Forms.ToolBarButton removeTask;
+        private System.Windows.Forms.Panel panel39;
+        private System.Windows.Forms.ComboBox cmbStateFilter;
+        private System.Windows.Forms.Label label38;
         private System.Windows.Forms.Button tlbbAddObservObjLayer;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Splitter splitter4;
+        private System.Windows.Forms.Panel panel16;
+        private System.Windows.Forms.DataGridView dgvObservationPoints;
+        private System.Windows.Forms.Panel panel6;
+        private System.Windows.Forms.ToolBar tlbObservPoints;
+        private System.Windows.Forms.ToolBarButton tlbbShowPoint;
+        private System.Windows.Forms.ToolBarButton tlbbAddNewPoint;
+        private System.Windows.Forms.ToolBarButton tlbbAddObserPointLayer;
+        private System.Windows.Forms.ToolBarButton tlbbRemovePoint;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.CheckBox chckFilterDate;
+        private System.Windows.Forms.CheckBox chckFilterAffiliation;
+        private System.Windows.Forms.CheckBox chckFilterType;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.ComboBox cmbAffiliation;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox cmbObservPointType;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Panel panel17;
+        private System.Windows.Forms.TreeView tvResults;
+        private System.Windows.Forms.Panel panel49;
+        private System.Windows.Forms.ToolBar toolBarVisibleResults;
+        private System.Windows.Forms.ToolBarButton tlbbZoomToResultRaster;
+        private System.Windows.Forms.ToolBarButton tlbbViewParamOnMap;
+        private System.Windows.Forms.ToolBarButton toolBarButton5;
+        private System.Windows.Forms.ToolBarButton tlbbAddFromDB;
+        private System.Windows.Forms.ToolBarButton toolBarButtonViewOnMap;
+        private System.Windows.Forms.ToolBarButton tlbbFullDelete;
+        private System.Windows.Forms.ToolBarButton toolBarButtonRemoveFromSeanse;
+        private System.Windows.Forms.ToolBarButton toolBarButton8;
+        private System.Windows.Forms.ToolBarButton tlbbShare;
+        private System.Windows.Forms.ToolBarButton toolBarButton1;
+        private System.Windows.Forms.ToolBarButton tlbbUpdate;
     }
 }
