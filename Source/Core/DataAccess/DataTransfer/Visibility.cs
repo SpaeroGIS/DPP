@@ -108,6 +108,37 @@ namespace MilSpace.DataAccess.DataTransfer
             return VisibilityResulSuffixes.FirstOrDefault(suff => name.EndsWith(suff.Value) && suff.Key != VisibilityCalculationresultsEnum.None).Key;
         }
 
+        public IEnumerable<string> WholeResults()
+        {
+            //VisibilityCalculationresultsEnum resultsInGDB = GdbAccess.Instance.CheckVisibilityResult(Id);
+
+            VisibilityCalculationresultsEnum calculatedResults = (VisibilityCalculationresultsEnum)CalculatedResults;
+            List<string> resulrs = new List<string>();
+
+            foreach (var result in VisibilityResulSuffixes)
+            {
+                if (calculatedResults.HasFlag(result.Key))
+                {
+
+                    if (ResultsRelatedToSingle.Any(v => result.Key == v))
+                    {
+                        int index = 0;
+                        string resultBName = GetResultName(result.Key, Id, index);
+                        while (VisibilityZonesFacade.CheckVisibilityResultEistance(resultBName, result.Key))
+                        {
+                            resulrs.Add(resultBName);
+                            resultBName = GetResultName(result.Key, Id, ++index);
+                        }
+                    }
+                    else
+                    {
+                        resulrs.Add(GetResultName(result.Key, Id));
+                    }
+                }
+            }
+
+            return resulrs;
+        }
         public IEnumerable<string> Results()
         {
             //VisibilityCalculationresultsEnum resultsInGDB = GdbAccess.Instance.CheckVisibilityResult(Id);

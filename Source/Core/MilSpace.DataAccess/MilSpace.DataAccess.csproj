@@ -219,6 +219,9 @@
     <Compile Include="..\DataAccess\LayersEnum.cs">
       <Link>LayersEnum.cs</Link>
     </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\VisibilityresultSummary.cs">
+      <Link>DataTransfer\VisibilityresultSummary.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\DataAccess\Properties\Settings.Designer.cs">
       <Link>Properties\Settings.Designer.cs</Link>

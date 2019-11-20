@@ -147,7 +147,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             //Handle Observation Points
             List<KeyValuePair<VisibilityCalculationresultsEnum, int[]>> pointsIDs = new List<KeyValuePair<VisibilityCalculationresultsEnum, int[]>>();
 
-            if (calcResults.HasFlag(VisibilityCalculationresultsEnum.ObservationPoints))
+            if (calcResults.HasFlag(VisibilityCalculationresultsEnum.VisibilityAreaRaster))
             {
                 pointsIDs.Add(new KeyValuePair<VisibilityCalculationresultsEnum, int[]>(VisibilityCalculationresultsEnum.ObservationPoints, pointsFilteringIds));
             }

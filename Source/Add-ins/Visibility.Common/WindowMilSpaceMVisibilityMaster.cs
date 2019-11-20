@@ -494,6 +494,8 @@ namespace MilSpace.Visibility
             {
                 FinalResult.VisibilityCalculationResults |= VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle | VisibilityCalculationresultsEnum.ObservationPointSingle;
             }
+
+
         }
         public void SummaryInfo()
         {
@@ -501,7 +503,7 @@ namespace MilSpace.Visibility
             lblTaskName.Text = FinalResult.TaskName;
             lblDEMName.Text = FinalResult.RasterLayerName;
             lblObservObjectsSingle.Text = checkBoxOP.Checked ? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord;
-            lblObservObjectsAll.Text = checkBoxOP.Checked ? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord;
+            lblObservObjectsAll.Text = SumChkBox.Checked ? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord;
             lblReferencedLayerName.Text = cmbPositions.SelectedItem.ToString();
             var selectedObservPoints = _observPointGuis != null ? _observPointGuis.Where(p => p.Check).Select(o => o.Title).ToArray() : null;
             var selectedObservObjects = _observationObjects != null ? _observationObjects.Where(p => p.Check).Select(o => o.Title).ToArray() : null;
