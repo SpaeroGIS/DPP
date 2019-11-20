@@ -250,12 +250,90 @@ namespace MilSpace.DataAccess.Facade
                     context.MilSp_VisiblityResults.DeleteOnSubmit(resultEntity);
 
                     Submit();
+
+                    if(!DeleteVisibilityResultsFromAllUsersSessions(id))
+                    {
+                        return false;
+                    }
+
                     return true;
                 }
 
                 log.WarnEx($"Visibility results not found");
             }
             catch (Exception ex)
+            {
+                log.WarnEx($"Unexpected exception:{ex.Message}");
+            }
+
+            return false;
+        }
+
+        public bool DeleteVisibilityResultsFromAllUsersSessions(string id)
+        {
+            try
+            {
+                var resultEntity = context.MilSp_VisibilityUserSessions.Where(res => res.visibilityResultId.Trim() == id).ToArray();
+
+                if(resultEntity != null)
+                {
+                    foreach(var entity in resultEntity)
+                    {
+                        context.MilSp_VisibilityUserSessions.DeleteOnSubmit(entity);
+
+                        Submit();
+                    }
+                    return true;
+                }
+
+                log.WarnEx($"Visibility results not found");
+            }
+            catch(Exception ex)
+            {
+                log.WarnEx($"Unexpected exception:{ex.Message}");
+            }
+
+            return false;
+        }
+
+        public bool DeleteVisibilityResultsFromUserSession(string id)
+        {
+            try
+            {
+                var resultEntity = context.MilSp_VisibilityUserSessions.FirstOrDefault(res => res.visibilityResultId.Trim() == id && res.userName.Trim().Equals(Environment.UserName));
+
+                if(resultEntity != null)
+                {
+                    context.MilSp_VisibilityUserSessions.DeleteOnSubmit(resultEntity);
+
+                    Submit();
+                    return true;
+                }
+
+                log.WarnEx($"Visibility results not found");
+            }
+            catch(Exception ex)
+            {
+                log.WarnEx($"Unexpected exception:{ex.Message}");
+            }
+
+            return false;
+        }
+
+        public bool IsResultsBelongToUser(string id)
+        {
+            try
+            {
+                var resultEntity = context.MilSp_VisiblityResults.FirstOrDefault(res => res.Id.Trim() == id);
+
+                if(resultEntity != null)
+                {
+                    return resultEntity.UserName.Trim().Equals(Environment.UserName);
+                }
+
+                log.WarnEx($"Visibility results not found");
+            }
+            catch(Exception ex)
             {
                 log.WarnEx($"Unexpected exception:{ex.Message}");
             }
@@ -271,11 +349,11 @@ namespace MilSpace.DataAccess.Facade
 
                 if (onlyUsersResults)
                 {
-                    results = context.MilSp_VisibilityUserSessions.Where(s => s.userName.Equals(Environment.UserName)).Select(r => r.MilSp_VisiblityResults);
+                    results = context.MilSp_VisibilityUserSessions.Where(s => s.userName.Trim().Equals(Environment.UserName)).Select(r => r.MilSp_VisiblityResults);
                 }
                 else
                 {
-                    results = context.MilSp_VisiblityResults.Where(r => r.UserName.Equals(Environment.UserName) || r.shared);
+                    results = context.MilSp_VisiblityResults.Where(r => r.UserName.Trim().Equals(Environment.UserName) || r.shared);
                 }
                         
                 return results.Select(s => s.Get());

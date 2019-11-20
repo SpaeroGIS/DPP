@@ -159,6 +159,24 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
+        public static bool DeleteVisibilityResultsFromUserSession(string id)
+        {
+            using(var accessor = new VisibilityDataAccess())
+            {
+                var res = accessor.DeleteVisibilityResultsFromUserSession(id);
+                return res;
+            }
+        }
+
+        public static bool IsResultsBelongToUser(string id)
+        {
+            using(var accessor = new VisibilityDataAccess())
+            {
+                var res = accessor.IsResultsBelongToUser(id);
+                return res;
+            }
+        }
+
         public static IEnumerable<VisibilityCalcResults> GetAllVisibilityResults(bool forCurrentUser = false)
         {
             using(var accessor = new VisibilityDataAccess())
