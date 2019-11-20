@@ -303,13 +303,13 @@ namespace MilSpace.Visibility
         {
             _visibilitySessionsGui.Remove(_visibilitySessionsGui.First(session => session.Id == id));
 
-            if(cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All))
+            if (cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All))
             {
                 FilterVisibilityList();
             }
             else
             {
-                if(dgvVisibilitySessions.RowCount > 0)
+                if (dgvVisibilitySessions.RowCount > 0)
                 {
                     dgvVisibilitySessions.Rows[0].Selected = true;
                 }
@@ -608,7 +608,7 @@ namespace MilSpace.Visibility
                         if (!Regex.IsMatch(xCoord.Text, @"^([-]?[\d]{1,2}\,\d+)$"))
                         {
                             MessageBox.Show(
-                                "Invalid data.\nПотрібні коордінати представлені у СК WGS-84, десяткові градуси", 
+                                "Invalid data.\nПотрібні коордінати представлені у СК WGS-84, десяткові градуси",
                                 "Спостереження",
                                 MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
                             xCoord.Text = point.X.ToString();
@@ -781,7 +781,7 @@ namespace MilSpace.Visibility
                 }
 
                 MessageBox.Show(
-                    "Invalid data.\nЗначення не має бути меньш за 0", 
+                    "Invalid data.\nЗначення не має бути меньш за 0",
                     "Спостереження",
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
             }
@@ -819,8 +819,8 @@ namespace MilSpace.Visibility
         private void RemovePoint()
         {
             var result = MessageBox.Show(
-                "Ви дійсно бажаєте видалити точку (ПС)?", 
-                "Спостереження", 
+                "Ви дійсно бажаєте видалити точку (ПС)?",
+                "Спостереження",
                 MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
             if (result == DialogResult.OK)
@@ -1123,14 +1123,14 @@ namespace MilSpace.Visibility
             var isGroupedLayerExists = false;
             var isResultsShared = false;
 
-            if(enabled)
+            if (enabled)
             {
                 isGroupedLayerExists = _visibilitySessionsController.IsResultsLayerExist(tvResults.SelectedNode.Tag.ToString(), ActiveView);
                 isResultsShared = _visibilitySessionsController.IsResultsShared(tvResults.SelectedNode.Tag.ToString());
             }
 
             toolBarVisibleResults.Buttons["tlbbZoomToResultRaster"].Enabled = isGroupedLayerExists;
-           // toolBarVisibleResults.Buttons["tlbbViewParamOnMap"].Enabled = enabled;
+            // toolBarVisibleResults.Buttons["tlbbViewParamOnMap"].Enabled = enabled;
             toolBarVisibleResults.Buttons["toolBarButtonViewOnMap"].Enabled = enabled && !isGroupedLayerExists;
             toolBarVisibleResults.Buttons["tlbbFullDelete"].Enabled = enabled;
             toolBarVisibleResults.Buttons["toolBarButtonRemoveFromSeanse"].Enabled = enabled;
@@ -1177,7 +1177,7 @@ namespace MilSpace.Visibility
 
                     parentNode.Nodes.Add(taskNode);
 
-                    foreach (var result in res.Results())
+                    foreach (var result in res.ValueableResults())
                     {
                         var img = _visibilitySessionsController.GetImgName(VisibilityCalcResults.GetResultTypeByName(result));
 
@@ -1393,8 +1393,8 @@ namespace MilSpace.Visibility
             if (e.Button == removeTask)
             {
                 var result = MessageBox.Show(
-                    "Ви дійсно бажаєте видалити результат розрахунку з поточного сеансу?", 
-                    "Спостереження", 
+                    "Ви дійсно бажаєте видалити результат розрахунку з поточного сеансу?",
+                    "Спостереження",
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
                 if (result == DialogResult.OK)
@@ -1402,7 +1402,7 @@ namespace MilSpace.Visibility
                     if (!RemoveSelectedSession())
                     {
                         MessageBox.Show(
-                            "Неможливо видалити результат розрахунку видимісті поточної сеансу", 
+                            "Неможливо видалити результат розрахунку видимісті поточної сеансу",
                             "Спостереження",
                             MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
                     }
@@ -1431,8 +1431,8 @@ namespace MilSpace.Visibility
                     {
                         //Localize message
                         MessageBox.Show(
-                            "Розрахунок скінчився з помилкою\nДля перегляду повної інформації зверніться до журналу роботи", 
-                            "Спостереження", 
+                            "Розрахунок скінчився з помилкою\nДля перегляду повної інформації зверніться до журналу роботи",
+                            "Спостереження",
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
@@ -1522,8 +1522,8 @@ namespace MilSpace.Visibility
             if (e.Button.Name == tlbbFullDelete.Name)
             {
                 var result = MessageBox.Show(
-                    "Ви дійсно бажаєте повністтю видалити результат розрахунку?", 
-                    "Спостереження", 
+                    "Ви дійсно бажаєте повністтю видалити результат розрахунку?",
+                    "Спостереження",
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
                 if (result == DialogResult.OK)
@@ -1534,7 +1534,7 @@ namespace MilSpace.Visibility
                     if (!isRemovingSuccessfull)
                     {
                         MessageBox.Show(
-                            "Неможливо повністтю видалити результат розрахунку", 
+                            "Неможливо повністтю видалити результат розрахунку",
                             "Спостереження",
                             MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
                     }
@@ -1552,8 +1552,8 @@ namespace MilSpace.Visibility
             {
 
                 var result = MessageBox.Show(
-                    "Ви дійсно бажаєте видалити результат розрахунку?", 
-                    "Спостереження", 
+                    "Ви дійсно бажаєте видалити результат розрахунку?",
+                    "Спостереження",
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
                 if (result == DialogResult.OK)
@@ -1573,26 +1573,26 @@ namespace MilSpace.Visibility
                 {
                     SetVisibilityResultsButtonsState(true);
                     MessageBox.Show(
-                        "Доступ для усіх користувачів встановлено", 
+                        "Доступ для усіх користувачів встановлено",
                         "Спостереження. Встановити доступ",
                         MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
                 }
                 else
                 {
                     MessageBox.Show(
-                        "Доступ для усіх користувачів вже встановлено", 
+                        "Доступ для усіх користувачів вже встановлено",
                         "Спостереження. Встановити доступ",
                         MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
                 }
             }
 
-            if(e.Button.Name == toolBarButtonViewOnMap.Name)
+            if (e.Button.Name == toolBarButtonViewOnMap.Name)
             {
                 _visibilitySessionsController.AddResultsGroupLayer(tvResults.SelectedNode.Tag.ToString(), ActiveView);
                 SetVisibilityResultsButtonsState(true);
             }
 
-            if(e.Button.Name == tlbbZoomToResultRaster.Name)
+            if (e.Button.Name == tlbbZoomToResultRaster.Name)
             {
                 _visibilitySessionsController.ZoomToLayer(tvResults.SelectedNode.Tag.ToString(), ActiveView);
             }
@@ -1612,7 +1612,7 @@ namespace MilSpace.Visibility
                         if (!operationResult)
                         {
                             MessageBox.Show(
-                                "Частина результатів розрахунку не може бути добавлена до поточного сеансу", 
+                                "Частина результатів розрахунку не може бути добавлена до поточного сеансу",
                                 "Спостереження. Попередження",
                                 MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
                         }
@@ -1633,13 +1633,26 @@ namespace MilSpace.Visibility
             SetVisibilityResultsButtonsState(selectedNode.Parent != null);
 
             int devuders = selectedNode.FullPath.Split('%').Length;
-            if(devuders == 0) //Root node
+            if (devuders == 1) //Root node
             {
+                return;
             }
-            else if(devuders == 1)
-            { }
-            else if(devuders == 2)
-            { }
+
+            if (lvResultsSummary.Tag == null || !lvResultsSummary.Tag.Equals(selectedNode.Tag))
+            {
+                lvResultsSummary.Tag = selectedNode.Tag;
+
+                var summary = _visibilitySessionsController.GetSummaryResultById(selectedNode.Tag.ToString());
+
+                var summaryInfos = summary.SummaryToString();
+
+            }
+            //else if(devuders == 1)
+            //{ }
+            //else if(devuders == 2)
+            //{ }
+
+
         }
 
         #endregion

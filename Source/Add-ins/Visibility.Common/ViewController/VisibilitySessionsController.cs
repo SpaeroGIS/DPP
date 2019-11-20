@@ -47,20 +47,20 @@ namespace MilSpace.Visibility.ViewController
             return _calcTypes[type];
         }
 
-        internal string GetImgName(VisibilityCalculationresultsEnum resultType)
+        internal string GetImgName(VisibilityCalculationResultsEnum resultType)
         {
-            if(resultType == VisibilityCalculationresultsEnum.ObservationPoints || resultType == VisibilityCalculationresultsEnum.ObservationPointSingle)
+            if(resultType == VisibilityCalculationResultsEnum.ObservationPoints || resultType == VisibilityCalculationResultsEnum.ObservationPointSingle)
             {
                 return "Flag.png";
             }
 
-            if(resultType == VisibilityCalculationresultsEnum.ObservationStations)
+            if(resultType == VisibilityCalculationResultsEnum.ObservationObjects)
             {
                 return "Target.png";
             }
 
-            if(resultType == VisibilityCalculationresultsEnum.VisibilityAreaRaster || resultType == VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle
-                || resultType == VisibilityCalculationresultsEnum.VisibilityAreaPolygons || resultType == VisibilityCalculationresultsEnum.VisibilityObservStationClip)
+            if(resultType == VisibilityCalculationResultsEnum.VisibilityAreaRaster || resultType == VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle
+                || resultType == VisibilityCalculationResultsEnum.VisibilityAreaPolygons || resultType == VisibilityCalculationResultsEnum.VisibilityObservStationClip)
             {
                 return "Dots Up.png";
             }
@@ -110,10 +110,21 @@ namespace MilSpace.Visibility.ViewController
             return result;
         }
 
+        internal VisibilityresultSummary GetSummaryResultById(string id)
+        {
+            var result = _visibilityResults.FirstOrDefault(res => res.Id == id);
+            if (result != null)
+            {
+                return result.Summary;
+            }
+
+            return null;
+        }
+
         internal bool RemoveResult(string id, IActiveView activeView = null, bool fromBase = false)
         {
             var selectedResults = _visibilityResults.First(res => res.Id == id);
-            var results = selectedResults.Results();
+            var results = selectedResults.ValueableResults();
             var removingResult = true;
 
             if(fromBase)
