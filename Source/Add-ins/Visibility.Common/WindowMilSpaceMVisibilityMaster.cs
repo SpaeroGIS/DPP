@@ -650,5 +650,10 @@ namespace MilSpace.Visibility
         {
             throw new NotImplementedException();
         }
+
+        public void RemoveSessionFromList(string id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

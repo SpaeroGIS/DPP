@@ -299,6 +299,23 @@ namespace MilSpace.Visibility
             _visibilitySessionsController.UpdateVisibilityResultsTree();
         }
 
+        public void RemoveSessionFromList(string id)
+        {
+            _visibilitySessionsGui.Remove(_visibilitySessionsGui.First(session => session.Id == id));
+
+            if(cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All))
+            {
+                FilterVisibilityList();
+            }
+            else
+            {
+                if(dgvVisibilitySessions.RowCount > 0)
+                {
+                    dgvVisibilitySessions.Rows[0].Selected = true;
+                }
+            }
+        }
+
 
         private void OnSelectObserbPoint()
         {
@@ -621,35 +638,27 @@ namespace MilSpace.Visibility
                         return true;
 
                     case "angleOFViewMin":
-
                         return ValidateRange(angleOFViewMin, point.AngelMinH.ToString(), -90, 0);
 
                     case "angleOFViewMax":
-
                         return ValidateRange(angleOFViewMax, point.AngelMaxH.ToString(), 0, 90);
 
                     case "azimuthB":
-
                         return ValidateAzimuth(textBox, point.AzimuthStart.ToString());
 
                     case "azimuthE":
-
                         return ValidateAzimuth(textBox, point.AzimuthEnd.ToString());
 
                     case "azimuthMainAxis":
-
                         return ValidateAzimuth(textBox, point.AzimuthMainAxis.ToString());
 
                     case "cameraRotationH":
-
                         return ValidateAzimuth(textBox, point.AngelCameraRotationH.ToString());
 
                     case "cameraRotationV":
-
                         return ValidateAzimuth(textBox, point.AngelCameraRotationV.ToString());
 
                     case "heightCurrent":
-
                         var currentHeight = ValidateHeight(textBox, point.RelativeHeight.ToString());
 
                         if (currentHeight != -1)
@@ -673,7 +682,6 @@ namespace MilSpace.Visibility
                         return false;
 
                     case "heightMin":
-
                         var minHeightChanged = ValidateHeight(textBox, point.AvailableHeightLover.ToString());
 
                         if (minHeightChanged != -1)
@@ -697,7 +705,6 @@ namespace MilSpace.Visibility
                         return false;
 
                     case "heightMax":
-
                         var maxHeightChanged = ValidateHeight(textBox, point.AvailableHeightUpper.ToString());
 
                         if (maxHeightChanged != -1)
@@ -738,10 +745,11 @@ namespace MilSpace.Visibility
         {
             double value;
 
-            if (Double.TryParse(textBox.Text, out value))
+            if (Helper.TryParceToDouble(textBox.Text, out value))
             {
                 if (value >= lowValue && value <= upperValue)
                 {
+                    textBox.Text = value.ToString();
                     return true;
                 }
             }
@@ -981,6 +989,13 @@ namespace MilSpace.Visibility
             }
         }
 
+        public bool RemoveSelectedSession()
+        {
+            var id = dgvVisibilitySessions.SelectedRows[0].Cells["Id"].Value.ToString();
+
+            return _visibilitySessionsController.RemoveSession(id);
+        }
+
         #endregion
 
         #region ObservationObjectsPrivateMethods
@@ -1087,9 +1102,16 @@ namespace MilSpace.Visibility
 
         private void SetVisibilityResultsButtonsState(bool enabled)
         {
-            toolBarVisibleResults.Buttons["tlbbZoomToResultRaster"].Enabled = enabled;
-            // toolBarVisibleResults.Buttons["tlbbViewParamOnMap"].Enabled = enabled;
-            toolBarVisibleResults.Buttons["toolBarButtonViewOnMap"].Enabled = enabled;
+            bool isGroupedLayerExists = false;
+
+            if(enabled)
+            {
+                isGroupedLayerExists = _visibilitySessionsController.IsResultsLayerExist(tvResults.SelectedNode.Tag.ToString(), ActiveView);
+            }
+
+            toolBarVisibleResults.Buttons["tlbbZoomToResultRaster"].Enabled = isGroupedLayerExists;
+           // toolBarVisibleResults.Buttons["tlbbViewParamOnMap"].Enabled = enabled;
+            toolBarVisibleResults.Buttons["toolBarButtonViewOnMap"].Enabled = enabled && !isGroupedLayerExists;
             toolBarVisibleResults.Buttons["tlbbFullDelete"].Enabled = enabled;
             toolBarVisibleResults.Buttons["toolBarButtonRemoveFromSeanse"].Enabled = enabled;
             toolBarVisibleResults.Buttons["tlbbShare"].Enabled = enabled;
@@ -1354,25 +1376,9 @@ namespace MilSpace.Visibility
 
                 if (result == DialogResult.OK)
                 {
-                    var id = dgvVisibilitySessions.SelectedRows[0].Cells["Id"].Value.ToString();
-                    var rowIndex = dgvVisibilitySessions.SelectedRows[0].Index;
-
-                    if (!_visibilitySessionsController.RemoveSession(id))
+                    if (!RemoveSelectedSession())
                     {
                         MessageBox.Show("Unable to delete session");
-                        return;
-                    }
-                    _visibilitySessionsGui.Remove(_visibilitySessionsGui.First(session => session.Id == id));
-                    if (cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All))
-                    {
-                        FilterVisibilityList();
-                    }
-                    else
-                    {
-                        if (dgvVisibilitySessions.RowCount > 0)
-                        {
-                            dgvVisibilitySessions.Rows[0].Selected = true;
-                        }
                     }
                 }
             }
@@ -1491,7 +1497,7 @@ namespace MilSpace.Visibility
                 if (result == DialogResult.OK)
                 {
                     var resultId = tvResults.SelectedNode.Tag.ToString();
-                    var isRemovingSuccessfull = _visibilitySessionsController.RemoveResult(resultId, true);
+                    var isRemovingSuccessfull = _visibilitySessionsController.RemoveResult(resultId, ActiveView, true);
 
                     if (!isRemovingSuccessfull)
                     {
@@ -1534,6 +1540,17 @@ namespace MilSpace.Visibility
                 }
             }
 
+            if(e.Button.Name == toolBarButtonViewOnMap.Name)
+            {
+                _visibilitySessionsController.AddResultsGroupLayer(tvResults.SelectedNode.Tag.ToString(), ActiveView);
+                SetVisibilityResultsButtonsState(true);
+            }
+
+            if(e.Button.Name == tlbbZoomToResultRaster.Name)
+            {
+                _visibilitySessionsController.ZoomToLayer(tvResults.SelectedNode.Tag.ToString(), ActiveView);
+            }
+
             if (e.Button.Name == tlbbAddFromDB.Name)
             {
                 var accessibleResultsWindow = new AccessibleResultsModalWindow(_visibilitySessionsController.GetAllResults(), ActiveView.FocusMap.SpatialReference);
@@ -1560,8 +1577,6 @@ namespace MilSpace.Visibility
             }
         }
 
-        #endregion
-
         private void tvResults_AfterSelect(object sender, TreeViewEventArgs e)
         {
             var selectedNode = e.Node;
@@ -1569,14 +1584,17 @@ namespace MilSpace.Visibility
             SetVisibilityResultsButtonsState(selectedNode.Parent != null);
 
             int devuders = selectedNode.FullPath.Split('%').Length;
-            if (devuders == 0) //Root node
+            if(devuders == 0) //Root node
             {
             }
-            else if (devuders == 1)
+            else if(devuders == 1)
             { }
-            else if (devuders == 2)
+            else if(devuders == 2)
             { }
         }
+
+        #endregion
+
     }
 }
 

@@ -2648,7 +2648,6 @@
         private System.Windows.Forms.TabPage tbpVisibilityAreas;
         private System.Windows.Forms.Panel panel49;
         private System.Windows.Forms.ToolBar toolBarVisibleResults;
-        private System.Windows.Forms.ToolBarButton toolBarButtonZoomToResultRaser;
         private System.Windows.Forms.ToolBarButton toolBarButtonViewParamOnMap;
         private System.Windows.Forms.ToolBarButton toolBarButtonAddFromDB;
         private System.Windows.Forms.Panel panel48;
