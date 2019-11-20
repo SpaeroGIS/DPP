@@ -14,7 +14,10 @@ namespace MilSpace.Visualization3D
         public LocalizationContext()
         {         
             var localizationDoc = new XmlDocument();            
-            var localizationFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Resources\Visualization3DLocalization.xml");
+            var localizationFilePath = Path.Combine(
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), 
+                @"Resources\Visualization3DLocalization.xml");
+
             if (File.Exists(localizationFilePath))
             {
                 localizationDoc.Load(localizationFilePath);

@@ -22,15 +22,24 @@ namespace MilSpace.Visualization3D
         private BindingList<TreeViewNodeModel> profilesModels = new BindingList<TreeViewNodeModel>();
         private BindingList<VisibilityResultModel> visibilitySessionsModel = new BindingList<VisibilityResultModel>();
 
+        private static Logger log = Logger.GetLoggerEx("MilSpace.Visualization3D.Visualization3DMainForm");
+
         public Visualization3DMainForm(object hook)
         {
+            log.DebugEx("> Visualization3DMainForm START");
             InitializeComponent();
+            log.DebugEx("Visualization3DMainForm InitializeComponent() ok");
             LocalizeComponent();
+            log.DebugEx("Visualization3DMainForm LocalizeComponent() ok");
             SetSessionsListView();
+            log.DebugEx("Visualization3DMainForm SetSessionsListView() ok");
             SubscribeForArcMapEvents();
+            log.DebugEx("Visualization3DMainForm SubscribeForArcMapEvents() ok");
             OnDocumentOpenFillDropdowns();
+            log.DebugEx("Visualization3DMainForm OnDocumentOpenFillDropdowns() ok");
             this.Hook = hook;
             Helper.SetConfiguration();
+            log.DebugEx("> Visualization3DMainForm END");
         }
 
         /// <summary>
