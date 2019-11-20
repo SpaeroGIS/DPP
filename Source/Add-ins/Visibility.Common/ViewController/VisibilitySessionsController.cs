@@ -110,7 +110,7 @@ namespace MilSpace.Visibility.ViewController
             return result;
         }
 
-        internal bool RemoveResult(string id, IActiveView activeView = null, bool fromBase = false)
+        internal bool RemoveResult(string id, IActiveView activeView = null, bool fromBase = false, bool removeLayers = false)
         {
             var selectedResults = _visibilityResults.First(res => res.Id == id);
             var results = selectedResults.Results();
@@ -120,14 +120,16 @@ namespace MilSpace.Visibility.ViewController
             {
                 if(VisibilityZonesFacade.IsResultsBelongToUser(id))
                 {
-
-                    foreach(var result in results)
+                    if(removeLayers)
                     {
-                        if(result != selectedResults.Id)
+                        foreach(var result in results)
                         {
-                            if(!EsriTools.RemoveDataSet(selectedResults.ReferencedGDB, result))
+                            if(result != selectedResults.Id)
                             {
-                                return false;
+                                if(!EsriTools.RemoveDataSet(selectedResults.ReferencedGDB, result))
+                                {
+                                    return false;
+                                }
                             }
                         }
                     }
@@ -137,7 +139,8 @@ namespace MilSpace.Visibility.ViewController
                     if(removingResult)
                     {
                         RemoveSession(id);
-                        if(activeView != null)
+
+                        if(activeView != null && removeLayers)
                         {
                             EsriTools.RemoveLayer(selectedResults.Name, activeView.FocusMap);
                         }

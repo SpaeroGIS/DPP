@@ -1132,7 +1132,7 @@ namespace MilSpace.Visibility
         private void SetVisibilityResultsButtonsState(bool enabled)
         {
             var isGroupedLayerExists = false;
-            var isResultsShared = false;
+            var isResultsShared = true;
 
             if(enabled)
             {
@@ -1540,7 +1540,21 @@ namespace MilSpace.Visibility
                 if (result == DialogResult.OK)
                 {
                     var resultId = tvResults.SelectedNode.Tag.ToString();
-                    var isRemovingSuccessfull = _visibilitySessionsController.RemoveResult(resultId, ActiveView, true);
+
+
+                    var removeLayers = _visibilitySessionsController.IsResultsLayerExist(resultId, ActiveView);
+
+                    if(removeLayers)
+                    {
+                        var removeLayersDialogResult = MessageBox.Show(
+                        "Ви бажаєте видалити шари розрахунку?",
+                        "Спостереження",
+                        MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+
+                        removeLayers = removeLayersDialogResult == DialogResult.OK;
+                    }
+
+                    var isRemovingSuccessfull = _visibilitySessionsController.RemoveResult(resultId, ActiveView, true, removeLayers);
 
                     if (!isRemovingSuccessfull)
                     {
