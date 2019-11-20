@@ -239,7 +239,7 @@ namespace MilSpace.Visibility
             }
         }
 
-        public void FillVisibilitySessionsList(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded)
+        public void FillVisibilitySessionsList(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded, string newTaskId)
         {
             if (visibilitySessions.Any())
             {
@@ -275,8 +275,6 @@ namespace MilSpace.Visibility
                 dgvVisibilitySessions.DataSource = _visibilitySessionsGui;
                 SetVisibilitySessionsTableView();
 
-                var lastRow = dgvVisibilitySessions.Rows[dgvVisibilitySessions.RowCount - 1];
-
                 if (cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All))
                 {
                     FilterVisibilityList();
@@ -286,10 +284,23 @@ namespace MilSpace.Visibility
                     dgvVisibilitySessions.Rows[0].Selected = true;
                 }
 
-                if (lastRow.Visible && isNewSessionAdded)
+                if (isNewSessionAdded && !String.IsNullOrEmpty(newTaskId))
                 {
-                    lastRow.Selected = true;
-                    dgvVisibilitySessions.CurrentCell = lastRow.Cells[1];
+                    var newRow = dgvVisibilitySessions.Rows[0];
+
+                    foreach(DataGridViewRow row in dgvVisibilitySessions.Rows)
+                    {
+                        if(row.Cells["Id"].Value.Equals(newTaskId))
+                        {
+                            newRow = row;
+                        }
+                    }
+
+                    if(newRow.Visible)
+                    {
+                        newRow.Selected = true;
+                        dgvVisibilitySessions.CurrentCell = newRow.Cells[1];
+                    }
                 }
             }
         }
@@ -1409,7 +1420,7 @@ namespace MilSpace.Visibility
                         MessageBox.Show("The calculation finished with errors.\nFor more details go to the log file", "SPPRD", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
-                    _visibilitySessionsController.UpdateVisibilitySessionsList(true);
+                    _visibilitySessionsController.UpdateVisibilitySessionsList(true, calcParams.TaskName);
                     _visibilitySessionsController.UpdateVisibilityResultsTree();
                 }
             }
