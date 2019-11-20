@@ -118,26 +118,34 @@ namespace MilSpace.Visibility.ViewController
 
             if(fromBase)
             {
-                foreach(var result in results)
+                if(VisibilityZonesFacade.IsResultsBelongToUser(id))
                 {
-                    if(result != selectedResults.Id)
+
+                    foreach(var result in results)
                     {
-                        if(!EsriTools.RemoveDataSet(selectedResults.ReferencedGDB, result))
+                        if(result != selectedResults.Id)
                         {
-                            return false;
+                            if(!EsriTools.RemoveDataSet(selectedResults.ReferencedGDB, result))
+                            {
+                                return false;
+                            }
+                        }
+                    }
+
+                    removingResult = VisibilityZonesFacade.DeleteVisibilityResults(id);
+
+                    if(removingResult)
+                    {
+                        RemoveSession(id);
+                        if(activeView != null)
+                        {
+                            EsriTools.RemoveLayer(selectedResults.Name, activeView.FocusMap);
                         }
                     }
                 }
-
-                removingResult = VisibilityZonesFacade.DeleteVisibilityResults(id);
-
-                if(removingResult)
+                else
                 {
-                    RemoveSession(id);
-                    if(activeView != null)
-                    {
-                        EsriTools.RemoveLayer(selectedResults.Name, activeView.FocusMap);
-                    }
+                    VisibilityZonesFacade.DeleteVisibilityResultsFromUserSession(id);
                 }
             }
 
@@ -151,15 +159,18 @@ namespace MilSpace.Visibility.ViewController
 
         internal bool ShareResults(string id)
         {
-            var selectedResults = _visibilityResults.First(res => res.Id == id);
-            if(!selectedResults.Shared)
+            try
             {
-                selectedResults.Shared = true;
+                var selectedResults = _visibilityResults.First(res => res.Id == id);
                 VisibilityZonesFacade.UpdateVisibilityResults(selectedResults);
+                selectedResults.Shared = true;
                 return true;
             }
+            catch
+            {
+                return false;
+            }
 
-            return false;
         }
 
         internal bool AddSharedResults(IEnumerable<VisibilityCalcResults> results)
@@ -203,6 +214,11 @@ namespace MilSpace.Visibility.ViewController
             var resName = _visibilityResults.First(res => res.Id == id).Name;
 
             EsriTools.ZoomToLayer(resName, activeView);
+        }
+
+        internal bool IsResultsShared(string id)
+        {
+           return _visibilityResults.First(res => res.Id == id).Shared;
         }
 
         private string GetLastLayer(IActiveView activeView)

@@ -1102,11 +1102,13 @@ namespace MilSpace.Visibility
 
         private void SetVisibilityResultsButtonsState(bool enabled)
         {
-            bool isGroupedLayerExists = false;
+            var isGroupedLayerExists = false;
+            var isResultsShared = false;
 
             if(enabled)
             {
                 isGroupedLayerExists = _visibilitySessionsController.IsResultsLayerExist(tvResults.SelectedNode.Tag.ToString(), ActiveView);
+                isResultsShared = _visibilitySessionsController.IsResultsShared(tvResults.SelectedNode.Tag.ToString());
             }
 
             toolBarVisibleResults.Buttons["tlbbZoomToResultRaster"].Enabled = isGroupedLayerExists;
@@ -1114,7 +1116,7 @@ namespace MilSpace.Visibility
             toolBarVisibleResults.Buttons["toolBarButtonViewOnMap"].Enabled = enabled && !isGroupedLayerExists;
             toolBarVisibleResults.Buttons["tlbbFullDelete"].Enabled = enabled;
             toolBarVisibleResults.Buttons["toolBarButtonRemoveFromSeanse"].Enabled = enabled;
-            toolBarVisibleResults.Buttons["tlbbShare"].Enabled = enabled;
+            toolBarVisibleResults.Buttons["tlbbShare"].Enabled = !isResultsShared;
         }
 
         #endregion
@@ -1544,6 +1546,7 @@ namespace MilSpace.Visibility
 
                 if (isShared)
                 {
+                    SetVisibilityResultsButtonsState(true);
                     MessageBox.Show("Доступ для усіх користувачыв встановлено", "Спостереження. Встановити доступ");
                 }
                 else
