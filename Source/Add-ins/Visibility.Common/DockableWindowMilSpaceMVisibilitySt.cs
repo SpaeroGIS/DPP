@@ -607,7 +607,10 @@ namespace MilSpace.Visibility
 
                         if (!Regex.IsMatch(xCoord.Text, @"^([-]?[\d]{1,2}\,\d+)$"))
                         {
-                            MessageBox.Show("Invalid data.\nInsert the coordinates in the WGS84 format.");
+                            MessageBox.Show(
+                                "Invalid data.\nПотрібні коордінати представлені у СК WGS-84, десяткові градуси", 
+                                "Спостереження",
+                                MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
                             xCoord.Text = point.X.ToString();
 
                             return false;
@@ -624,7 +627,10 @@ namespace MilSpace.Visibility
 
                         if (!Regex.IsMatch(yCoord.Text, @"^([-]?[\d]{1,2}\,\d+)$"))
                         {
-                            MessageBox.Show("Invalid data.\nInsert the coordinates in the WGS84 format.");
+                            MessageBox.Show(
+                                "Invalid data.\nПотрібні коордінати представлені у СК WGS-84, десяткові градуси",
+                                "Спостереження",
+                                MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
                             yCoord.Text = point.Y.ToString();
 
                             return false;
@@ -755,7 +761,10 @@ namespace MilSpace.Visibility
             }
 
             textBox.Text = defaultValue;
-            MessageBox.Show($"Invalid data.\nInsert the value in the range from {lowValue} to {upperValue}");
+            MessageBox.Show(
+                $"Invalid data.\nЗначення має бути від {lowValue} до {upperValue}",
+                "Спостереження",
+                MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
 
             return false;
         }
@@ -771,11 +780,17 @@ namespace MilSpace.Visibility
                     return height;
                 }
 
-                MessageBox.Show("Invalid data.\nValue cannot be less than 0");
+                MessageBox.Show(
+                    "Invalid data.\nЗначення не має бути меньш за 0", 
+                    "Спостереження",
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
             }
             else
             {
-                MessageBox.Show("Invalid data.\nInsert the number");
+                MessageBox.Show(
+                    "Invalid data.\nВкажить число",
+                    "Спостереження",
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
             }
 
             heightTextBox.Text = defaultValue;
@@ -803,7 +818,10 @@ namespace MilSpace.Visibility
 
         private void RemovePoint()
         {
-            var result = MessageBox.Show("Do you realy want to remove point?", "SPPRD", MessageBoxButtons.OKCancel);
+            var result = MessageBox.Show(
+                "Ви дійсно бажаєте видалити точку (ПС)?", 
+                "Спостереження", 
+                MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
             if (result == DialogResult.OK)
             {
@@ -1102,11 +1120,13 @@ namespace MilSpace.Visibility
 
         private void SetVisibilityResultsButtonsState(bool enabled)
         {
-            bool isGroupedLayerExists = false;
+            var isGroupedLayerExists = false;
+            var isResultsShared = false;
 
             if(enabled)
             {
                 isGroupedLayerExists = _visibilitySessionsController.IsResultsLayerExist(tvResults.SelectedNode.Tag.ToString(), ActiveView);
+                isResultsShared = _visibilitySessionsController.IsResultsShared(tvResults.SelectedNode.Tag.ToString());
             }
 
             toolBarVisibleResults.Buttons["tlbbZoomToResultRaster"].Enabled = isGroupedLayerExists;
@@ -1114,7 +1134,7 @@ namespace MilSpace.Visibility
             toolBarVisibleResults.Buttons["toolBarButtonViewOnMap"].Enabled = enabled && !isGroupedLayerExists;
             toolBarVisibleResults.Buttons["tlbbFullDelete"].Enabled = enabled;
             toolBarVisibleResults.Buttons["toolBarButtonRemoveFromSeanse"].Enabled = enabled;
-            toolBarVisibleResults.Buttons["tlbbShare"].Enabled = enabled;
+            toolBarVisibleResults.Buttons["tlbbShare"].Enabled = !isResultsShared;
         }
 
         #endregion
@@ -1372,13 +1392,19 @@ namespace MilSpace.Visibility
         {
             if (e.Button == removeTask)
             {
-                var result = MessageBox.Show("Do you really want to delete this session?", "SPPRD", MessageBoxButtons.OKCancel);
+                var result = MessageBox.Show(
+                    "Ви дійсно бажаєте видалити результат розрахунку з поточного сеансу?", 
+                    "Спостереження", 
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
                 if (result == DialogResult.OK)
                 {
                     if (!RemoveSelectedSession())
                     {
-                        MessageBox.Show("Unable to delete session");
+                        MessageBox.Show(
+                            "Неможливо видалити результат розрахунку видимісті поточної сеансу", 
+                            "Спостереження",
+                            MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
                     }
                 }
             }
@@ -1404,7 +1430,10 @@ namespace MilSpace.Visibility
                     if (!clculated)
                     {
                         //Localize message
-                        MessageBox.Show("The calculation finished with errors.\nFor more details go to the log file", "SPPRD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(
+                            "Розрахунок скінчився з помилкою\nДля перегляду повної інформації зверніться до журналу роботи", 
+                            "Спостереження", 
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
                     _visibilitySessionsController.UpdateVisibilitySessionsList(true);
@@ -1492,7 +1521,10 @@ namespace MilSpace.Visibility
         {
             if (e.Button.Name == tlbbFullDelete.Name)
             {
-                var result = MessageBox.Show("Do you realy want to remove results?", "SPPRD", MessageBoxButtons.OKCancel);
+                var result = MessageBox.Show(
+                    "Ви дійсно бажаєте повністтю видалити результат розрахунку?", 
+                    "Спостереження", 
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
                 if (result == DialogResult.OK)
                 {
@@ -1501,7 +1533,10 @@ namespace MilSpace.Visibility
 
                     if (!isRemovingSuccessfull)
                     {
-                        MessageBox.Show("Unable to delete session");
+                        MessageBox.Show(
+                            "Неможливо повністтю видалити результат розрахунку", 
+                            "Спостереження",
+                            MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
                     }
                     else
                     {
@@ -1515,7 +1550,11 @@ namespace MilSpace.Visibility
 
             if (e.Button.Name == toolBarButtonRemoveFromSeanse.Name)
             {
-                var result = MessageBox.Show("Do you realy want to remove results?", "SPPRD", MessageBoxButtons.OKCancel);
+
+                var result = MessageBox.Show(
+                    "Ви дійсно бажаєте видалити результат розрахунку?", 
+                    "Спостереження", 
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
                 if (result == DialogResult.OK)
                 {
@@ -1532,11 +1571,18 @@ namespace MilSpace.Visibility
 
                 if (isShared)
                 {
-                    MessageBox.Show("Results successfully shared");
+                    SetVisibilityResultsButtonsState(true);
+                    MessageBox.Show(
+                        "Доступ для усіх користувачів встановлено", 
+                        "Спостереження. Встановити доступ",
+                        MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    MessageBox.Show("Results are already shared");
+                    MessageBox.Show(
+                        "Доступ для усіх користувачів вже встановлено", 
+                        "Спостереження. Встановити доступ",
+                        MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
                 }
             }
 
@@ -1565,7 +1611,10 @@ namespace MilSpace.Visibility
 
                         if (!operationResult)
                         {
-                            MessageBox.Show("Some results can`t be added to session");
+                            MessageBox.Show(
+                                "Частина результатів розрахунку не може бути добавлена до поточного сеансу", 
+                                "Спостереження. Попередження",
+                                MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
                         }
                     }
                 }
