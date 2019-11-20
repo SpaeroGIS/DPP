@@ -1541,20 +1541,7 @@ namespace MilSpace.Visibility
                 {
                     var resultId = tvResults.SelectedNode.Tag.ToString();
 
-
-                    var removeLayers = _visibilitySessionsController.IsResultsLayerExist(resultId, ActiveView);
-
-                    if(removeLayers)
-                    {
-                        var removeLayersDialogResult = MessageBox.Show(
-                        "Ви бажаєте видалити шари розрахунку?",
-                        "Спостереження",
-                        MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
-
-                        removeLayers = removeLayersDialogResult == DialogResult.OK;
-                    }
-
-                    var isRemovingSuccessfull = _visibilitySessionsController.RemoveResult(resultId, ActiveView, true, removeLayers);
+                    var isRemovingSuccessfull = _visibilitySessionsController.RemoveResult(resultId, ActiveView);
 
                     if (!isRemovingSuccessfull)
                     {
@@ -1584,7 +1571,20 @@ namespace MilSpace.Visibility
                 if (result == DialogResult.OK)
                 {
                     var resultId = tvResults.SelectedNode.Tag.ToString();
-                    var isRemovingSuccessfull = _visibilitySessionsController.RemoveResult(resultId);
+
+                    var removeLayers = _visibilitySessionsController.IsResultsLayerExist(resultId, ActiveView);
+
+                    if(removeLayers)
+                    {
+                        var removeLayersDialogResult = MessageBox.Show(
+                        "Ви бажаєте видалити шари розрахунку?",
+                        "Спостереження",
+                        MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+
+                        removeLayers = removeLayersDialogResult == DialogResult.OK;
+                    }
+
+                    _visibilitySessionsController.RemoveResultsFromSession(resultId, removeLayers, ActiveView);
                     var node = tvResults.Nodes.Find(resultId, true).First();
                     tvResults.Nodes.Remove(node);
                 }
