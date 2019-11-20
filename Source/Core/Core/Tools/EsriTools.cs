@@ -438,6 +438,18 @@ namespace MilSpace.Core.Tools
             return layer;
         }
 
+        public static void ZoomToLayer(string layerName, IActiveView activeView)
+        {
+            var layer = GetLayer(layerName, activeView.FocusMap);
+            var envelope = layer.AreaOfInterest;
+
+            if(envelope != null)
+            {
+                activeView.Extent = layer.AreaOfInterest;
+                activeView.Refresh();
+            }
+        }
+
         public static IEnumerable<ILayer> GetVisibiltyImgLayers(string layerName, IMap map)
         {
             var imgLayers = new List<ILayer>();
@@ -526,9 +538,27 @@ namespace MilSpace.Core.Tools
                     }
                 }
             }
+            else
+            {
+                result = true;
+                logger.ErrorEx($"Dataset {name} doesn`t exist");
+            }
 
             Marshal.ReleaseComObject(workspaceFactory);
             return result;
+        }
+
+        public static void RemoveLayer(string layerName, IMap map)
+        {
+            var layer = GetLayer(layerName, map);
+
+            if(layer == null)
+            {
+                return;
+            }
+
+            var mapLayers = map as IMapLayers2;
+            mapLayers.DeleteLayer(layer);
         }
 
         public static void AddVisibilityGroupLayer(IEnumerable<IDataset> visibilityLayersNames, string sessionName, string calcRasterName, string gdb, string relativeLayerName,

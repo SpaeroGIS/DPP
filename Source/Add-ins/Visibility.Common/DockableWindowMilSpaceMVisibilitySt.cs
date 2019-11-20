@@ -299,6 +299,23 @@ namespace MilSpace.Visibility
             _visibilitySessionsController.UpdateVisibilityResultsTree();
         }
 
+        public void RemoveSessionFromList(string id)
+        {
+            _visibilitySessionsGui.Remove(_visibilitySessionsGui.First(session => session.Id == id));
+
+            if(cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All))
+            {
+                FilterVisibilityList();
+            }
+            else
+            {
+                if(dgvVisibilitySessions.RowCount > 0)
+                {
+                    dgvVisibilitySessions.Rows[0].Selected = true;
+                }
+            }
+        }
+
 
         private void OnSelectObserbPoint()
         {
@@ -972,6 +989,13 @@ namespace MilSpace.Visibility
             }
         }
 
+        public bool RemoveSelectedSession()
+        {
+            var id = dgvVisibilitySessions.SelectedRows[0].Cells["Id"].Value.ToString();
+
+            return _visibilitySessionsController.RemoveSession(id);
+        }
+
         #endregion
 
         #region ObservationObjectsPrivateMethods
@@ -1078,12 +1102,21 @@ namespace MilSpace.Visibility
 
         private void SetVisibilityResultsButtonsState(bool enabled)
         {
-            toolBarVisibleResults.Buttons["tlbbZoomToResultRaster"].Enabled = enabled;
-            // toolBarVisibleResults.Buttons["tlbbViewParamOnMap"].Enabled = enabled;
-            toolBarVisibleResults.Buttons["toolBarButtonViewOnMap"].Enabled = enabled;
+            var isGroupedLayerExists = false;
+            var isResultsShared = false;
+
+            if(enabled)
+            {
+                isGroupedLayerExists = _visibilitySessionsController.IsResultsLayerExist(tvResults.SelectedNode.Tag.ToString(), ActiveView);
+                isResultsShared = _visibilitySessionsController.IsResultsShared(tvResults.SelectedNode.Tag.ToString());
+            }
+
+            toolBarVisibleResults.Buttons["tlbbZoomToResultRaster"].Enabled = isGroupedLayerExists;
+           // toolBarVisibleResults.Buttons["tlbbViewParamOnMap"].Enabled = enabled;
+            toolBarVisibleResults.Buttons["toolBarButtonViewOnMap"].Enabled = enabled && !isGroupedLayerExists;
             toolBarVisibleResults.Buttons["tlbbFullDelete"].Enabled = enabled;
             toolBarVisibleResults.Buttons["toolBarButtonRemoveFromSeanse"].Enabled = enabled;
-            toolBarVisibleResults.Buttons["tlbbShare"].Enabled = enabled;
+            toolBarVisibleResults.Buttons["tlbbShare"].Enabled = !isResultsShared;
         }
 
         #endregion
@@ -1341,29 +1374,16 @@ namespace MilSpace.Visibility
         {
             if (e.Button == removeTask)
             {
-                var result = MessageBox.Show("Do you really want to delete this session?", "SPPRD", MessageBoxButtons.OKCancel);
+                var result = MessageBox.Show(
+                    "Ви дійсно бажаєте видалити результет з поточної сесії?", 
+                    "Спостереження", 
+                    MessageBoxButtons.OKCancel);
 
                 if (result == DialogResult.OK)
                 {
-                    var id = dgvVisibilitySessions.SelectedRows[0].Cells["Id"].Value.ToString();
-                    var rowIndex = dgvVisibilitySessions.SelectedRows[0].Index;
-
-                    if (!_visibilitySessionsController.RemoveSession(id))
+                    if (!RemoveSelectedSession())
                     {
-                        MessageBox.Show("Unable to delete session");
-                        return;
-                    }
-                    _visibilitySessionsGui.Remove(_visibilitySessionsGui.First(session => session.Id == id));
-                    if (cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All))
-                    {
-                        FilterVisibilityList();
-                    }
-                    else
-                    {
-                        if (dgvVisibilitySessions.RowCount > 0)
-                        {
-                            dgvVisibilitySessions.Rows[0].Selected = true;
-                        }
+                        MessageBox.Show("Неможливо видалити результат розрахунку з поточної сесії", "Спостереження");
                     }
                 }
             }
@@ -1389,7 +1409,9 @@ namespace MilSpace.Visibility
                     if (!clculated)
                     {
                         //Localize message
-                        MessageBox.Show("The calculation finished with errors.\nFor more details go to the log file", "SPPRD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(
+                            "Розрахунок скінчився з помилкою\nДля перегляду повної інформації зверніться до журналу роботи", 
+                            "Спостереження", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
                     _visibilitySessionsController.UpdateVisibilitySessionsList(true);
@@ -1477,16 +1499,22 @@ namespace MilSpace.Visibility
         {
             if (e.Button.Name == tlbbFullDelete.Name)
             {
-                var result = MessageBox.Show("Do you realy want to remove results?", "SPPRD", MessageBoxButtons.OKCancel);
+                var result = MessageBox.Show(
+                    "Ви дійсно бажаєте повністтю видалити результат розрахунку?", 
+                    "Спостереження", 
+                    MessageBoxButtons.OKCancel);
 
                 if (result == DialogResult.OK)
                 {
                     var resultId = tvResults.SelectedNode.Tag.ToString();
-                    var isRemovingSuccessfull = _visibilitySessionsController.RemoveResult(resultId, true);
+                    var isRemovingSuccessfull = _visibilitySessionsController.RemoveResult(resultId, ActiveView, true);
 
                     if (!isRemovingSuccessfull)
                     {
-                        MessageBox.Show("Unable to delete session");
+                        MessageBox.Show(
+                            "Неможливо повністтю видалити результат розрахунку", 
+                            "Спостереження"
+                            );
                     }
                     else
                     {
@@ -1500,7 +1528,8 @@ namespace MilSpace.Visibility
 
             if (e.Button.Name == toolBarButtonRemoveFromSeanse.Name)
             {
-                var result = MessageBox.Show("Do you realy want to remove results?", "SPPRD", MessageBoxButtons.OKCancel);
+
+                var result = MessageBox.Show("Ви дійсно бажаєте видалити результат розрахунку?", "Спостереження", MessageBoxButtons.OKCancel);
 
                 if (result == DialogResult.OK)
                 {
@@ -1517,12 +1546,24 @@ namespace MilSpace.Visibility
 
                 if (isShared)
                 {
-                    MessageBox.Show("Results successfully shared");
+                    SetVisibilityResultsButtonsState(true);
+                    MessageBox.Show("Доступ для усіх користувачыв встановлено", "Спостереження. Встановити доступ");
                 }
                 else
                 {
-                    MessageBox.Show("Results are already shared");
+                    MessageBox.Show("Доступ для усіх користувачыв вже встановлено", "Спостереження. Встановити доступ");
                 }
+            }
+
+            if(e.Button.Name == toolBarButtonViewOnMap.Name)
+            {
+                _visibilitySessionsController.AddResultsGroupLayer(tvResults.SelectedNode.Tag.ToString(), ActiveView);
+                SetVisibilityResultsButtonsState(true);
+            }
+
+            if(e.Button.Name == tlbbZoomToResultRaster.Name)
+            {
+                _visibilitySessionsController.ZoomToLayer(tvResults.SelectedNode.Tag.ToString(), ActiveView);
             }
 
             if (e.Button.Name == tlbbAddFromDB.Name)
@@ -1539,7 +1580,9 @@ namespace MilSpace.Visibility
 
                         if (!operationResult)
                         {
-                            MessageBox.Show("Some results can`t be added to session");
+                            MessageBox.Show(
+                                "Частина результатів розрахунку не може бути добавлена до поточної сесії", 
+                                "Попередження");
                         }
                     }
                 }
@@ -1551,8 +1594,6 @@ namespace MilSpace.Visibility
             }
         }
 
-        #endregion
-
         private void tvResults_AfterSelect(object sender, TreeViewEventArgs e)
         {
             var selectedNode = e.Node;
@@ -1560,14 +1601,17 @@ namespace MilSpace.Visibility
             SetVisibilityResultsButtonsState(selectedNode.Parent != null);
 
             int devuders = selectedNode.FullPath.Split('%').Length;
-            if (devuders == 0) //Root node
+            if(devuders == 0) //Root node
             {
             }
-            else if (devuders == 1)
+            else if(devuders == 1)
             { }
-            else if (devuders == 2)
+            else if(devuders == 2)
             { }
         }
+
+        #endregion
+
     }
 }
 
