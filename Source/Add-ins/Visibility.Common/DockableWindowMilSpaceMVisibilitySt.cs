@@ -607,7 +607,10 @@ namespace MilSpace.Visibility
 
                         if (!Regex.IsMatch(xCoord.Text, @"^([-]?[\d]{1,2}\,\d+)$"))
                         {
-                            MessageBox.Show("Invalid data.\nInsert the coordinates in the WGS84 format.");
+                            MessageBox.Show(
+                                "Invalid data.\nПотрібні коордінати представлені у СК WGS-84, десяткові градуси", 
+                                "Спостереження",
+                                MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
                             xCoord.Text = point.X.ToString();
 
                             return false;
@@ -624,7 +627,10 @@ namespace MilSpace.Visibility
 
                         if (!Regex.IsMatch(yCoord.Text, @"^([-]?[\d]{1,2}\,\d+)$"))
                         {
-                            MessageBox.Show("Invalid data.\nInsert the coordinates in the WGS84 format.");
+                            MessageBox.Show(
+                                "Invalid data.\nПотрібні коордінати представлені у СК WGS-84, десяткові градуси",
+                                "Спостереження",
+                                MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
                             yCoord.Text = point.Y.ToString();
 
                             return false;
@@ -755,7 +761,10 @@ namespace MilSpace.Visibility
             }
 
             textBox.Text = defaultValue;
-            MessageBox.Show($"Invalid data.\nInsert the value in the range from {lowValue} to {upperValue}");
+            MessageBox.Show(
+                $"Invalid data.\nЗначення має бути від {lowValue} до {upperValue}",
+                "Спостереження",
+                MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
 
             return false;
         }
@@ -771,11 +780,17 @@ namespace MilSpace.Visibility
                     return height;
                 }
 
-                MessageBox.Show("Invalid data.\nValue cannot be less than 0");
+                MessageBox.Show(
+                    "Invalid data.\nЗначення не має бути меньш за 0", 
+                    "Спостереження",
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
             }
             else
             {
-                MessageBox.Show("Invalid data.\nInsert the number");
+                MessageBox.Show(
+                    "Invalid data.\nВкажить число",
+                    "Спостереження",
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
             }
 
             heightTextBox.Text = defaultValue;
@@ -803,7 +818,10 @@ namespace MilSpace.Visibility
 
         private void RemovePoint()
         {
-            var result = MessageBox.Show("Do you realy want to remove point?", "SPPRD", MessageBoxButtons.OKCancel);
+            var result = MessageBox.Show(
+                "Ви дійсно бажаєте видалити точку (ПС)?", 
+                "Спостереження", 
+                MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
             if (result == DialogResult.OK)
             {
@@ -1375,15 +1393,18 @@ namespace MilSpace.Visibility
             if (e.Button == removeTask)
             {
                 var result = MessageBox.Show(
-                    "Ви дійсно бажаєте видалити результет з поточної сесії?", 
+                    "Ви дійсно бажаєте видалити результат розрахунку з поточного сеансу?", 
                     "Спостереження", 
-                    MessageBoxButtons.OKCancel);
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
                 if (result == DialogResult.OK)
                 {
                     if (!RemoveSelectedSession())
                     {
-                        MessageBox.Show("Неможливо видалити результат розрахунку з поточної сесії", "Спостереження");
+                        MessageBox.Show(
+                            "Неможливо видалити результат розрахунку видимісті поточної сеансу", 
+                            "Спостереження",
+                            MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
                     }
                 }
             }
@@ -1411,7 +1432,8 @@ namespace MilSpace.Visibility
                         //Localize message
                         MessageBox.Show(
                             "Розрахунок скінчився з помилкою\nДля перегляду повної інформації зверніться до журналу роботи", 
-                            "Спостереження", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            "Спостереження", 
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
                     _visibilitySessionsController.UpdateVisibilitySessionsList(true);
@@ -1502,7 +1524,7 @@ namespace MilSpace.Visibility
                 var result = MessageBox.Show(
                     "Ви дійсно бажаєте повністтю видалити результат розрахунку?", 
                     "Спостереження", 
-                    MessageBoxButtons.OKCancel);
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
                 if (result == DialogResult.OK)
                 {
@@ -1513,8 +1535,8 @@ namespace MilSpace.Visibility
                     {
                         MessageBox.Show(
                             "Неможливо повністтю видалити результат розрахунку", 
-                            "Спостереження"
-                            );
+                            "Спостереження",
+                            MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
                     }
                     else
                     {
@@ -1529,7 +1551,10 @@ namespace MilSpace.Visibility
             if (e.Button.Name == toolBarButtonRemoveFromSeanse.Name)
             {
 
-                var result = MessageBox.Show("Ви дійсно бажаєте видалити результат розрахунку?", "Спостереження", MessageBoxButtons.OKCancel);
+                var result = MessageBox.Show(
+                    "Ви дійсно бажаєте видалити результат розрахунку?", 
+                    "Спостереження", 
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
                 if (result == DialogResult.OK)
                 {
@@ -1547,11 +1572,17 @@ namespace MilSpace.Visibility
                 if (isShared)
                 {
                     SetVisibilityResultsButtonsState(true);
-                    MessageBox.Show("Доступ для усіх користувачыв встановлено", "Спостереження. Встановити доступ");
+                    MessageBox.Show(
+                        "Доступ для усіх користувачів встановлено", 
+                        "Спостереження. Встановити доступ",
+                        MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    MessageBox.Show("Доступ для усіх користувачыв вже встановлено", "Спостереження. Встановити доступ");
+                    MessageBox.Show(
+                        "Доступ для усіх користувачів вже встановлено", 
+                        "Спостереження. Встановити доступ",
+                        MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
                 }
             }
 
@@ -1581,8 +1612,9 @@ namespace MilSpace.Visibility
                         if (!operationResult)
                         {
                             MessageBox.Show(
-                                "Частина результатів розрахунку не може бути добавлена до поточної сесії", 
-                                "Попередження");
+                                "Частина результатів розрахунку не може бути добавлена до поточного сеансу", 
+                                "Спостереження. Попередження",
+                                MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
                         }
                     }
                 }
