@@ -22,7 +22,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
         private string outputSourceName;
         private VisibilityTask session;
 
-        private VisibilityCalculationresultsEnum calcResults;
+        private VisibilityCalculationResultsEnum calcResults;
 
         /// <summary>
         /// Ids are selected to expotr for visibility calculation
@@ -45,7 +45,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             rasterSource = parameters.GetParameterWithValidition<string>(ActionParameters.ProfileSource, null).Value;
             pointsFilteringIds = parameters.GetParameterWithValidition<int[]>(ActionParameters.FilteringPointsIds, null).Value;
             stationsFilteringIds = parameters.GetParameterWithValidition<int[]>(ActionParameters.FilteringStationsIds, null).Value;
-            calcResults = parameters.GetParameterWithValidition<VisibilityCalculationresultsEnum>(ActionParameters.Calculationresults, VisibilityCalculationresultsEnum.None).Value;
+            calcResults = parameters.GetParameterWithValidition<VisibilityCalculationResultsEnum>(ActionParameters.Calculationresults, VisibilityCalculationResultsEnum.None).Value;
             outputSourceName = parameters.GetParameterWithValidition<string>(ActionParameters.OutputSourceName, string.Empty).Value;
             session = parameters.GetParameterWithValidition<VisibilityTask>(ActionParameters.Session, null).Value;
         }
@@ -63,7 +63,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                    new ActionParam<int[]>() { ParamName = ActionParameters.FilteringStationsIds, Value = null},
                    new ActionParam<int[]>() { ParamName = ActionParameters.FilteringPointsIds, Value = null},
                    new ActionParam<string>() { ParamName = ActionParameters.ProfileSource, Value = string.Empty},
-                   new ActionParam<VisibilityCalculationresultsEnum>() { ParamName = ActionParameters.Calculationresults, Value = VisibilityCalculationresultsEnum.None},
+                   new ActionParam<VisibilityCalculationResultsEnum>() { ParamName = ActionParameters.Calculationresults, Value = VisibilityCalculationResultsEnum.None},
                    new ActionParam<string>() { ParamName = ActionParameters.OutputSourceName, Value = null},
                    new ActionParam<string>() { ParamName = ActionParameters.Session, Value = null}
                };
@@ -83,17 +83,17 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
             var results = new List<string>();
 
-            if (calcResults == VisibilityCalculationresultsEnum.None)
+            if (calcResults == VisibilityCalculationResultsEnum.None)
             {
-                string errorMessage = $"The value {VisibilityCalculationresultsEnum.None.ToString()} is not acceptable for calculatuion results";
+                string errorMessage = $"The value {VisibilityCalculationResultsEnum.None.ToString()} is not acceptable for calculatuion results";
                 logger.WarnEx(errorMessage);
                 result.Exception = new MilSpaceVisibilityCalcFailedException(errorMessage);
                 return;
             }
 
-            if (!(calcResults.HasFlag(VisibilityCalculationresultsEnum.VisibilityAreaRaster) || calcResults.HasFlag(VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle)))
+            if (!(calcResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreaRaster) || calcResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle)))
             {
-                string errorMessage = $"The values {VisibilityCalculationresultsEnum.ObservationPoints.ToString()} and {VisibilityCalculationresultsEnum.VisibilityAreaRaster.ToString()} must be in calculatuion results";
+                string errorMessage = $"The values {VisibilityCalculationResultsEnum.ObservationPoints.ToString()} and {VisibilityCalculationResultsEnum.VisibilityAreaRaster.ToString()} must be in calculatuion results";
                 logger.WarnEx(errorMessage);
                 result.Exception = new MilSpaceVisibilityCalcFailedException(errorMessage);
                 return;
@@ -101,11 +101,8 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
             try
             {
-
                 var messages = ProcessObservationPoint(results);
-
                 //Here is the place to extend handle the rest of results 
-
                 result.Result.CalculationMessages = results;
                 if (messages != null && messages.Any())
                 {
@@ -128,9 +125,9 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             string oservStationsFeatureClassName = null;
 
             //Handle Observation Objects
-            if (calcResults.HasFlag(VisibilityCalculationresultsEnum.ObservationStations))
+            if (calcResults.HasFlag(VisibilityCalculationResultsEnum.ObservationObjects))
             {
-                oservStationsFeatureClassName = VisibilityTask.GetResultName(VisibilityCalculationresultsEnum.ObservationStations, outputSourceName);
+                oservStationsFeatureClassName = VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.ObservationObjects, outputSourceName);
                 var exportedFeatureClass = GdbAccess.Instance.ExportObservationFeatureClass(obserpStationsfeatureClass as IDataset, oservStationsFeatureClassName, stationsFilteringIds);
                 if (!string.IsNullOrWhiteSpace(exportedFeatureClass))
                 {
@@ -145,17 +142,26 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             }
 
             //Handle Observation Points
-            List<KeyValuePair<VisibilityCalculationresultsEnum, int[]>> pointsIDs = new List<KeyValuePair<VisibilityCalculationresultsEnum, int[]>>();
+            List<KeyValuePair<VisibilityCalculationResultsEnum, int[]>> pointsIDs = new List<KeyValuePair<VisibilityCalculationResultsEnum, int[]>>();
 
-            if (calcResults.HasFlag(VisibilityCalculationresultsEnum.VisibilityAreaRaster))
+            if (calcResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreaRaster))
             {
-                pointsIDs.Add(new KeyValuePair<VisibilityCalculationresultsEnum, int[]>(VisibilityCalculationresultsEnum.ObservationPoints, pointsFilteringIds));
+                pointsIDs.Add(new KeyValuePair<VisibilityCalculationResultsEnum, int[]>(VisibilityCalculationResultsEnum.ObservationPoints, pointsFilteringIds));
             }
 
-            if (calcResults.HasFlag(VisibilityCalculationresultsEnum.ObservationPointSingle) && pointsFilteringIds.Length > 1)
+            if (calcResults.HasFlag(VisibilityCalculationResultsEnum.ObservationPointSingle))
             {
-                pointsIDs.AddRange(
-                    pointsFilteringIds.Select(id => new KeyValuePair<VisibilityCalculationresultsEnum, int[]>(VisibilityCalculationresultsEnum.ObservationPointSingle, new int[] { id })).ToArray());
+
+                if (pointsFilteringIds.Length > 1)
+                {
+                    pointsIDs.AddRange(
+                        pointsFilteringIds.Select(id => new KeyValuePair<VisibilityCalculationResultsEnum, int[]>(VisibilityCalculationResultsEnum.ObservationPointSingle, new int[] { id })).ToArray());
+                }
+                else
+                {
+                    calcResults &= ~VisibilityCalculationResultsEnum.ObservationPointSingle;
+                    calcResults &= ~VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle;
+                }
             }
 
             int index = -1;
@@ -164,7 +170,9 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
             foreach (var curPoints in pointsIDs)
             {
-                var pointId = curPoints.Key == VisibilityCalculationresultsEnum.ObservationPoints ? -1 : ++index;
+                //curPoints.Key is VisibilityCalculationresultsEnum.ObservationPoints or VisibilityCalculationresultsEnum.ObservationPointSingle
+
+                var pointId = curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints ? -1 : ++index;
                 var oservPointFeatureClassName = VisibilityTask.GetResultName(curPoints.Key, outputSourceName, pointId);
 
                 var exportedFeatureClass = GdbAccess.Instance.ExportObservationFeatureClass(obserpPointsfeatureClass as IDataset, oservPointFeatureClassName, curPoints.Value);
@@ -182,8 +190,8 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
                 //Generate Visibility Raster
                 string featureClass = oservPointFeatureClassName;
-                string outImageName = VisibilityTask.GetResultName(curPoints.Key == VisibilityCalculationresultsEnum.ObservationPoints ?
-                        VisibilityCalculationresultsEnum.VisibilityAreaRaster : VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle, outputSourceName, pointId);
+                string outImageName = VisibilityTask.GetResultName(curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints ?
+                        VisibilityCalculationResultsEnum.VisibilityAreaRaster : VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle, outputSourceName, pointId);
 
                 if (!ProfileLibrary.GenerateVisibilityData(rasterSource, featureClass, VisibilityAnalysisTypesEnum.Frequency, outImageName, messages))
                 {
@@ -199,10 +207,10 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
                     string visibilityArePolyFCName = null;
                     //ConvertToPolygon full visibility area
-                    if (calcResults.HasFlag(VisibilityCalculationresultsEnum.VisibilityAreaPolygons) && !calcResults.HasFlag(VisibilityCalculationresultsEnum.ObservationStations))
+                    if (calcResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreaPolygons) && !calcResults.HasFlag(VisibilityCalculationResultsEnum.ObservationObjects))
                     {
                         visibilityArePolyFCName = VisibilityTask.GetResultName(pointId > -1 ?
-                            VisibilityCalculationresultsEnum.VisibilityAreaPolygonSingle : VisibilityCalculationresultsEnum.VisibilityAreaPolygons,
+                            VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle : VisibilityCalculationResultsEnum.VisibilityAreaPolygons,
                             outputSourceName, pointId);
 
 
@@ -225,7 +233,11 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                     if (!string.IsNullOrEmpty(oservStationsFeatureClassName))
                     {
                         var inClipName = outImageName;
-                        var outClipName = VisibilityTask.GetResultName(VisibilityCalculationresultsEnum.VisibilityObservStationClip, outputSourceName, pointId);
+
+
+                        var outClipName = VisibilityTask.GetResultName(
+                            pointId > -1 ? VisibilityCalculationResultsEnum.VisibilityObservStationClipSingle : VisibilityCalculationResultsEnum.VisibilityObservStationClip,
+                            outputSourceName, pointId);
                         if (!ProfileLibrary.ClipVisibilityZonesByAreas(inClipName, outClipName, oservStationsFeatureClassName, messages))
                         {
                             string errorMessage = $"The result {outClipName} was not generated";
@@ -237,11 +249,10 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                         else
                         {
                             results.Add(outClipName);
-                            removeFullImageFromresult = true;
 
                             //Change to VisibilityAreaPolygonForObjects
                             visibilityArePolyFCName = VisibilityTask.GetResultName(pointId > -1 ?
-                            VisibilityCalculationresultsEnum.VisibilityAreaPolygonSingle : VisibilityCalculationresultsEnum.VisibilityAreaPolygons,
+                            VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle : VisibilityCalculationResultsEnum.VisibilityAreaPolygons,
                             outputSourceName, pointId);
 
 
@@ -259,12 +270,12 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                             results.Add(visibilityArePolyFCName);
                         }
                     }
-                    else if (calcResults.HasFlag(VisibilityCalculationresultsEnum.VisibilityAreasTrimmedByPoly) && !string.IsNullOrEmpty(visibilityArePolyFCName))
+                    else if (calcResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly) && !string.IsNullOrEmpty(visibilityArePolyFCName))
                     {
                         //Clip visibility images to valuable extent
                         var inClipName = outImageName;
                         var outClipName = VisibilityTask.GetResultName(pointId > -1 ?
-                          VisibilityCalculationresultsEnum.VisibilityAreaTrimmedByPolySingle : VisibilityCalculationresultsEnum.VisibilityAreasTrimmedByPoly,
+                          VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle : VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly,
                           outputSourceName, pointId);
 
                         if (!ProfileLibrary.ClipVisibilityZonesByAreas(inClipName, outClipName, visibilityArePolyFCName, messages, "NONE"))
@@ -287,10 +298,10 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             //Set real results to show
             if (removeFullImageFromresult)
             {
-                if (calcResults.HasFlag(VisibilityCalculationresultsEnum.VisibilityAreaRaster))
-                { calcResults &= ~VisibilityCalculationresultsEnum.VisibilityAreaRaster; }
-                if (calcResults.HasFlag(VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle))
-                { calcResults &= ~VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle; }
+                if (calcResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreaRaster))
+                { calcResults &= ~VisibilityCalculationResultsEnum.VisibilityAreaRaster; }
+                if (calcResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle))
+                { calcResults &= ~VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle; }
 
             }
 

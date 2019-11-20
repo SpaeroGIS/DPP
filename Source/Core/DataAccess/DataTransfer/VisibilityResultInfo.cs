@@ -4,20 +4,20 @@ namespace MilSpace.DataAccess.DataTransfer
 {
     public class VisibilityResultInfo
     {
-        private VisibilityCalculationresultsEnum resultType = VisibilityCalculationresultsEnum.None;
+        private VisibilityCalculationResultsEnum resultType = VisibilityCalculationResultsEnum.None;
         public string ResultName { get; internal set; }
         public string GdbPath { get; internal set; }
 
-        public VisibilityCalculationresultsEnum RessutType
+        public VisibilityCalculationResultsEnum RessutType
         {
             get
             {
 
-                if (resultType == VisibilityCalculationresultsEnum.None)
+                if (resultType == VisibilityCalculationResultsEnum.None)
                 {
                     if (VisibilityTask.VisibilityResulSuffixes.Any(v => ResultName.EndsWith(v.Value)))
                     {
-                        resultType = VisibilityTask.VisibilityResulSuffixes.FirstOrDefault(v => v.Key != VisibilityCalculationresultsEnum.None &&
+                        resultType = VisibilityTask.VisibilityResulSuffixes.FirstOrDefault(v => v.Key != VisibilityCalculationResultsEnum.None &&
                         ResultName.EndsWith(v.Value)
                         
                         ).Key;

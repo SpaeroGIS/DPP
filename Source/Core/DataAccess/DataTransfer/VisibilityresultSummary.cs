@@ -1,21 +1,34 @@
-﻿using System;
+﻿using MilSpace.DataAccess.Facade;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MilSpace.DataAccess.DataTransfer
 {
+    public enum VisibilityresultSummaryItemsEnum
+    {
+        Type,
+        Name,
+        Surface,
+        ObservationPoints,
+        ObservationObjects,
+        CalculateSeparatedPoints,
+        CalculateCommonVisibilityResult,
+        TrimCalculatedSurface,
+        ConvertToPolygon
+    }
+
     public class VisibilityresultSummary
     {
         private VisibilityCalcResults basedResult;
         private string sourceSurfaceame;
-        VisibilityCalculationresultsEnum calculatedResults;
+        private IEnumerable<string> pointsName;
+        private IEnumerable<string> objectsName;
+        VisibilityCalculationResultsEnum calculatedResults;
+
 
         internal VisibilityresultSummary(VisibilityCalcResults basedResult)
         {
             this.basedResult = basedResult;
-            calculatedResults = (VisibilityCalculationresultsEnum)basedResult.CalculatedResults;
+            calculatedResults = (VisibilityCalculationResultsEnum)basedResult.CalculatedResults;
         }
 
         public VisibilityCalcTypeEnum CalculationType => basedResult.CalculationType;
@@ -44,23 +57,63 @@ namespace MilSpace.DataAccess.DataTransfer
         /// Calculate visibility for sepatare observation points
         /// </summary>
         //    SeparatedVisibilityResult ? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord;
-        public bool SeparatedVisibilityResult => calculatedResults.HasFlag(VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle);
+        public bool SeparatedVisibilityResult => calculatedResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle);
 
         /// <summary>
         /// Calculate common visibility for observation points
         /// </summary>
         //CommonVisibilityResult? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord;
-        public bool CommonVisibilityResult => calculatedResults.HasFlag(VisibilityCalculationresultsEnum.VisibilityAreaRaster) || calculatedResults.HasFlag(VisibilityCalculationresultsEnum.VisibilityObservStationClip);
+        public bool CommonVisibilityResult => calculatedResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreaRaster) ||
+                                    calculatedResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly) ;
 
         /// <summary>
         /// Trim visibility result by valueable area
         /// </summary>
-        public bool TrimVisibilityResult => calculatedResults.HasFlag(VisibilityCalculationresultsEnum.VisibilityAreasTrimmedByPoly);
+        public bool TrimVisibilityResult => calculatedResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly);
 
-        public IEnumerable<string> OpeservationPoints { get; private set; }
+        public bool ConvrtToPolygonResult => calculatedResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreaPolygons);
+        
 
-        public IEnumerable<string> OpeservationObjects { get; private set; }
+        public IEnumerable<string> ObservationPoints
+        {
+            get
+            {
+                if (pointsName == null)
+                {
+                    pointsName = VisibilityZonesFacade.GetCalculatedObserPointsName(Id);
+                }
 
+                return pointsName;
+            }
+        }
+
+        public IEnumerable<string> ObservationObjects {
+            get
+            {
+                if (objectsName == null)
+                {
+                    objectsName = VisibilityZonesFacade.GetCalculatedObserObjectsName(Id);
+                }
+
+                return objectsName;
+            }
+        }
+
+        public Dictionary<VisibilityresultSummaryItemsEnum, string> SummaryToString()
+        {
+            return new Dictionary<VisibilityresultSummaryItemsEnum, string>
+            {
+                { VisibilityresultSummaryItemsEnum.Type,  CalculationType.ToString() },
+                { VisibilityresultSummaryItemsEnum.Name, ResultName },
+                { VisibilityresultSummaryItemsEnum.Surface,  SourceSurfaceame },
+                { VisibilityresultSummaryItemsEnum.ObservationPoints, ObservationPoints == null ? string.Empty : string.Join(", ",ObservationPoints) },
+                { VisibilityresultSummaryItemsEnum.ObservationObjects, ObservationObjects == null ? string.Empty : string.Join(", ",ObservationObjects) },
+                { VisibilityresultSummaryItemsEnum.CalculateCommonVisibilityResult, CommonVisibilityResult.ToString() },
+                { VisibilityresultSummaryItemsEnum.CalculateSeparatedPoints, SeparatedVisibilityResult.ToString() },
+                { VisibilityresultSummaryItemsEnum.TrimCalculatedSurface,  TrimVisibilityResult.ToString() },
+                { VisibilityresultSummaryItemsEnum.ConvertToPolygon,  ConvrtToPolygonResult.ToString() },
+            };
+        }
 
 
 

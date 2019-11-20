@@ -164,7 +164,7 @@ namespace MilSpace.Visualization3D
             IWorkspaceFactory workspaceFactory = (IWorkspaceFactory)objFactory.Create(typeFactoryID);
             IWorkspace2 workspace = (IWorkspace2)workspaceFactory.OpenFromFile(info.GdbPath, 0);
             
-            if (info.RessutType == VisibilityCalculationresultsEnum.VisibilityAreaRaster || info.RessutType == VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle)
+            if (info.RessutType == VisibilityCalculationResultsEnum.VisibilityAreaRaster || info.RessutType == VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle)
             {
                 var rasterLayer = CreateRasterLayer(info.ResultName, workspace, objFactory, info.GdbPath);
                 if(rasterLayer != null)
@@ -174,7 +174,7 @@ namespace MilSpace.Visualization3D
                 }
             }
 
-            if(info.RessutType == VisibilityCalculationresultsEnum.ObservationPoints || info.RessutType == VisibilityCalculationresultsEnum.ObservationPointSingle)
+            if(info.RessutType == VisibilityCalculationResultsEnum.ObservationPoints || info.RessutType == VisibilityCalculationResultsEnum.ObservationPointSingle)
             {
                 var pointFeatureLayer = CreateFeatureLayer(info.ResultName, workspace, objFactory);
                 if(pointFeatureLayer != null)
@@ -184,7 +184,7 @@ namespace MilSpace.Visualization3D
                 }
             }
 
-            if(info.RessutType == VisibilityCalculationresultsEnum.VisibilityAreaPolygons || info.RessutType == VisibilityCalculationresultsEnum.ObservationStations)
+            if(info.RessutType == VisibilityCalculationResultsEnum.VisibilityAreaPolygons || info.RessutType == VisibilityCalculationResultsEnum.ObservationObjects)
             {
                 var polygonFeatureLayer = CreateFeatureLayer(info.ResultName, workspace, objFactory);
                 if(polygonFeatureLayer != null)

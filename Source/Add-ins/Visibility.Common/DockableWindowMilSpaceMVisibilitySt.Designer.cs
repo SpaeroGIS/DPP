@@ -196,6 +196,9 @@
             this.tbpVisibilityAreas = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel8 = new System.Windows.Forms.Panel();
+            this.lvResultsSummary = new System.Windows.Forms.ListView();
+            this.Attribute = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Value = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel50 = new System.Windows.Forms.Panel();
             this.labelHeaderVisibilityInfo = new System.Windows.Forms.Label();
             this.splitter1 = new System.Windows.Forms.Splitter();
@@ -222,9 +225,6 @@
             this.label12 = new System.Windows.Forms.Label();
             this.heightMin = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.lvResultsSummary = new System.Windows.Forms.ListView();
-            this.Attribute = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Value = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.mainTabControl.SuspendLayout();
             this.tbpPoints.SuspendLayout();
             this.panel7.SuspendLayout();
@@ -2335,6 +2335,32 @@
             this.panel8.Size = new System.Drawing.Size(312, 241);
             this.panel8.TabIndex = 81;
             // 
+            // lvResultsSummary
+            // 
+            this.lvResultsSummary.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.Attribute,
+            this.Value});
+            this.lvResultsSummary.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvResultsSummary.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvResultsSummary.HideSelection = false;
+            this.lvResultsSummary.Location = new System.Drawing.Point(0, 0);
+            this.lvResultsSummary.Name = "lvResultsSummary";
+            this.lvResultsSummary.Size = new System.Drawing.Size(312, 241);
+            this.lvResultsSummary.TabIndex = 37;
+            this.lvResultsSummary.UseCompatibleStateImageBehavior = false;
+            this.lvResultsSummary.View = System.Windows.Forms.View.Details;
+            this.lvResultsSummary.Visible = false;
+            // 
+            // Attribute
+            // 
+            this.Attribute.Text = "";
+            this.Attribute.Width = 210;
+            // 
+            // Value
+            // 
+            this.Value.Text = "";
+            this.Value.Width = 542;
+            // 
             // panel50
             // 
             this.panel50.BackColor = System.Drawing.SystemColors.Control;
@@ -2584,32 +2610,6 @@
             this.label9.Size = new System.Drawing.Size(183, 17);
             this.label9.TabIndex = 4;
             this.label9.Text = "высота над поверхностью, м, мин.";
-            // 
-            // lvResultsSummary
-            // 
-            this.lvResultsSummary.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.Attribute,
-            this.Value});
-            this.lvResultsSummary.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvResultsSummary.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.lvResultsSummary.HideSelection = false;
-            this.lvResultsSummary.Location = new System.Drawing.Point(0, 0);
-            this.lvResultsSummary.Name = "lvResultsSummary";
-            this.lvResultsSummary.Size = new System.Drawing.Size(312, 241);
-            this.lvResultsSummary.TabIndex = 37;
-            this.lvResultsSummary.UseCompatibleStateImageBehavior = false;
-            this.lvResultsSummary.View = System.Windows.Forms.View.Details;
-            this.lvResultsSummary.Visible = false;
-            // 
-            // Attribute
-            // 
-            this.Attribute.Text = "";
-            this.Attribute.Width = 210;
-            // 
-            // Value
-            // 
-            this.Value.Text = "";
-            this.Value.Width = 542;
             // 
             // DockableWindowMilSpaceMVisibilitySt
             // 

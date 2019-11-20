@@ -51,7 +51,7 @@ namespace MilSpace.Tools
             IFeatureClass obervationStations,
             IEnumerable<int> stationsToExport,
             string sourceDem,
-            VisibilityCalculationresultsEnum culcResults,
+            VisibilityCalculationResultsEnum culcResults,
             string taskName,
             string taskId,
             VisibilityCalcTypeEnum calculationType)
@@ -96,7 +96,7 @@ namespace MilSpace.Tools
                new ActionParam<int[]>() { ParamName = ActionParameters.FilteringPointsIds, Value = pointsToExport.ToArray()},
                new ActionParam<int[]>() { ParamName = ActionParameters.FilteringStationsIds, Value = stationsToExport.ToArray()},
                new ActionParam<string>() { ParamName = ActionParameters.ProfileSource, Value = sourceDem},
-               new ActionParam<VisibilityCalculationresultsEnum>() { ParamName = ActionParameters.Calculationresults, Value = culcResults},
+               new ActionParam<VisibilityCalculationResultsEnum>() { ParamName = ActionParameters.Calculationresults, Value = culcResults},
                new ActionParam<string>() { ParamName = ActionParameters.OutputSourceName, Value = nameOfTargetDataset},
                new ActionParam<VisibilityTask>() { ParamName = ActionParameters.Session, Value = calcTask},
             };
