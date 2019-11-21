@@ -131,11 +131,12 @@
   <MainW_lblLayer_Text>Пункти спостереження (ПС)</MainW_lblLayer_Text>
 
 
-  <Affiliation_Own>"свої</Affiliation_Own>
+  <Affiliation_Own>свої</Affiliation_Own>
   <AffiliationEdit_strangers>чужі</AffiliationEdit_strangers>
   <AffiliationEdit_neutral>нейтральні</AffiliationEdit_neutral>
   <AffiliationEdit_unknown>невідомі</AffiliationEdit_unknown>
 
+  <State_Calculate_all>всі</State_Calculate_all>
   <State_Calculate_queue>у черзі</State_Calculate_queue>
   <StateFilter_Calculate_run>виконується</StateFilter_Calculate_run>
   <StateFilter_Calculate_finished>закінчено</StateFilter_Calculate_finished>

@@ -210,6 +210,7 @@ namespace MilSpace.Visibility
             set;
         }
 
+
         #region
         private int _selectedPointId => Convert.ToInt32(dgvObservationPoints.SelectedRows[0].Cells["Id"].Value);
         private bool IsPointFieldsEnabled => _observPointsController.IsObservPointsExists();
@@ -264,11 +265,13 @@ namespace MilSpace.Visibility
 
             if (observationPoints != null && observationPoints.Any())
             {
+
+
                 var ItemsToShow = observationPoints.Select(i => new ObservPointGui
                 {
                     Title = i.Title,
                     Type = i.Type,
-                    Affiliation = i.Affiliation,
+                    Affiliation = LocalizationContext.Instance.AffiliationTypes[i.ObservationPointType],
                     Date = i.Dto.Value.ToString(Helper.DateFormatSmall),
                     Id = i.Objectid
                 }).ToList();
@@ -360,15 +363,15 @@ namespace MilSpace.Visibility
 
                     if (!session.Started.HasValue)
                     {
-                        state = _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.Pending);
+                        state = _visibilitySessionsController.GetStringForStateType(VisibilityTaskStateEnum.Pending);
                     }
                     else if (!session.Finished.HasValue)
                     {
-                        state = _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.Calculated);
+                        state = _visibilitySessionsController.GetStringForStateType(VisibilityTaskStateEnum.Calculated);
                     }
                     else
                     {
-                        state = _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.Finished);
+                        state = _visibilitySessionsController.GetStringForStateType(VisibilityTaskStateEnum.Finished);
                     }
 
                     _visibilitySessionsGui.Add(new VisibilitySessionGui
@@ -385,7 +388,7 @@ namespace MilSpace.Visibility
 
                 var lastRow = dgvVisibilitySessions.Rows[dgvVisibilitySessions.RowCount - 1];
 
-                if (cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All))
+                if (cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilityTaskStateEnum.All))
                 {
                     FilterVisibilityList();
                 }
@@ -411,7 +414,7 @@ namespace MilSpace.Visibility
         {
             _visibilitySessionsGui.Remove(_visibilitySessionsGui.First(session => session.Id == id));
 
-            if (cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All))
+            if (cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilityTaskStateEnum.All))
             {
                 FilterVisibilityList();
             }
@@ -1111,7 +1114,7 @@ namespace MilSpace.Visibility
         {
             cmbStateFilter.Items.Clear();
             cmbStateFilter.Items.AddRange(_visibilitySessionsController.GetVisibilitySessionStateTypes().ToArray());
-            cmbStateFilter.SelectedItem = _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All);
+            cmbStateFilter.SelectedItem = _visibilitySessionsController.GetStringForStateType(VisibilityTaskStateEnum.All);
         }
 
         private void FilterVisibilityList()
@@ -1131,7 +1134,7 @@ namespace MilSpace.Visibility
             foreach (DataGridViewRow row in dgvVisibilitySessions.Rows)
             {
                 row.Visible = row.Cells["State"].Value.ToString() == cmbStateFilter.SelectedItem.ToString()
-                || cmbStateFilter.SelectedItem.ToString() == _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All);
+                || cmbStateFilter.SelectedItem.ToString() == _visibilitySessionsController.GetStringForStateType(VisibilityTaskStateEnum.All);
             }
 
             if (dgvVisibilitySessions.FirstDisplayedScrollingRowIndex != -1)
