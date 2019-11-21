@@ -1424,7 +1424,7 @@
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(272, 56);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(255, 56);
             this.tableLayoutPanel3.TabIndex = 46;
             // 
             // lblCommonLengthValue
@@ -1435,7 +1435,7 @@
             this.lblCommonLengthValue.Location = new System.Drawing.Point(119, 26);
             this.lblCommonLengthValue.Name = "lblCommonLengthValue";
             this.lblCommonLengthValue.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.lblCommonLengthValue.Size = new System.Drawing.Size(150, 21);
+            this.lblCommonLengthValue.Size = new System.Drawing.Size(133, 21);
             this.lblCommonLengthValue.TabIndex = 62;
             this.lblCommonLengthValue.Text = "0";
             // 
@@ -1447,7 +1447,7 @@
             this.lblSelectedPrimitivesValue.Location = new System.Drawing.Point(119, 0);
             this.lblSelectedPrimitivesValue.Name = "lblSelectedPrimitivesValue";
             this.lblSelectedPrimitivesValue.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.lblSelectedPrimitivesValue.Size = new System.Drawing.Size(150, 21);
+            this.lblSelectedPrimitivesValue.Size = new System.Drawing.Size(133, 21);
             this.lblSelectedPrimitivesValue.TabIndex = 61;
             this.lblSelectedPrimitivesValue.Text = "0";
             // 

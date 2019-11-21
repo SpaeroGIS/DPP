@@ -1830,7 +1830,7 @@ namespace MilSpace.Visibility
             // 
             this.label25.Dock = System.Windows.Forms.DockStyle.Left;
             this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label25.ForeColor = System.Drawing.SystemColors.Desktop;
+            this.label25.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label25.Location = new System.Drawing.Point(4, 3);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(280, 27);

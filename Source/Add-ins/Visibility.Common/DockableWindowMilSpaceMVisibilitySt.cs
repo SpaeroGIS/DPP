@@ -325,13 +325,13 @@ namespace MilSpace.Visibility
         {
             _visibilitySessionsGui.Remove(_visibilitySessionsGui.First(session => session.Id == id));
 
-            if(cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All))
+            if (cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All))
             {
                 FilterVisibilityList();
             }
             else
             {
-                if(dgvVisibilitySessions.RowCount > 0)
+                if (dgvVisibilitySessions.RowCount > 0)
                 {
                     dgvVisibilitySessions.Rows[0].Selected = true;
                 }
@@ -1145,14 +1145,14 @@ namespace MilSpace.Visibility
             var isGroupedLayerExists = false;
             var isResultsShared = true;
 
-            if(enabled)
+            if (enabled)
             {
                 isGroupedLayerExists = _visibilitySessionsController.IsResultsLayerExist(tvResults.SelectedNode.Tag.ToString(), ActiveView);
                 isResultsShared = _visibilitySessionsController.IsResultsShared(tvResults.SelectedNode.Tag.ToString());
             }
 
             toolBarVisibleResults.Buttons["tlbbZoomToResultRaster"].Enabled = isGroupedLayerExists;
-           // toolBarVisibleResults.Buttons["tlbbViewParamOnMap"].Enabled = enabled;
+            // toolBarVisibleResults.Buttons["tlbbViewParamOnMap"].Enabled = enabled;
             toolBarVisibleResults.Buttons["toolBarButtonViewOnMap"].Enabled = enabled && !isGroupedLayerExists;
             toolBarVisibleResults.Buttons["tlbbFullDelete"].Enabled = enabled;
             toolBarVisibleResults.Buttons["toolBarButtonRemoveFromSeanse"].Enabled = enabled;
@@ -1199,7 +1199,7 @@ namespace MilSpace.Visibility
 
                     parentNode.Nodes.Add(taskNode);
 
-                    foreach (var result in res.Results())
+                    foreach (var result in res.ValueableResults())
                     {
                         var img = _visibilitySessionsController.GetImgName(VisibilityCalcResults.GetResultTypeByName(result));
 
@@ -1623,13 +1623,13 @@ namespace MilSpace.Visibility
                 }
             }
 
-            if(e.Button.Name == toolBarButtonViewOnMap.Name)
+            if (e.Button.Name == toolBarButtonViewOnMap.Name)
             {
                 _visibilitySessionsController.AddResultsGroupLayer(tvResults.SelectedNode.Tag.ToString(), ActiveView);
                 SetVisibilityResultsButtonsState(true);
             }
 
-            if(e.Button.Name == tlbbZoomToResultRaster.Name)
+            if (e.Button.Name == tlbbZoomToResultRaster.Name)
             {
                 _visibilitySessionsController.ZoomToLayer(tvResults.SelectedNode.Tag.ToString(), ActiveView);
             }
@@ -1670,13 +1670,26 @@ namespace MilSpace.Visibility
             SetVisibilityResultsButtonsState(selectedNode.Parent != null);
 
             int devuders = selectedNode.FullPath.Split('%').Length;
-            if(devuders == 0) //Root node
+            if (devuders == 1) //Root node
             {
+                return;
             }
-            else if(devuders == 1)
-            { }
-            else if(devuders == 2)
-            { }
+
+            if (lvResultsSummary.Tag == null || !lvResultsSummary.Tag.Equals(selectedNode.Tag))
+            {
+                lvResultsSummary.Tag = selectedNode.Tag;
+
+                var summary = _visibilitySessionsController.GetSummaryResultById(selectedNode.Tag.ToString());
+
+                var summaryInfos = summary.SummaryToString();
+
+            }
+            //else if(devuders == 1)
+            //{ }
+            //else if(devuders == 2)
+            //{ }
+
+
         }
 
         #endregion
