@@ -41,8 +41,10 @@ namespace MilSpace.DataAccess.DataTransfer
             { VisibilityCalcTypeEnum.ObservationObjects, new VisibilityCalculationResultsEnum[]
                         {
                             VisibilityCalculationResultsEnum.VisibilityObservStationClip,
+                            VisibilityCalculationResultsEnum.VisibilityObservStationClipSingle,
                             VisibilityCalculationResultsEnum.ObservationObjects,
                             VisibilityCalculationResultsEnum.ObservationPoints,
+                            VisibilityCalculationResultsEnum.ObservationPointSingle,
                             VisibilityCalculationResultsEnum.VisibilityAreaPolygons,
                         }
             }
@@ -79,7 +81,8 @@ namespace MilSpace.DataAccess.DataTransfer
             VisibilityCalculationResultsEnum.ObservationPointSingle,
             VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle,
             VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle,
-            VisibilityCalculationResultsEnum.VisibilityObservStationClipSingle
+            VisibilityCalculationResultsEnum.VisibilityObservStationClipSingle,
+            VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle
         };
 
         public const VisibilityCalculationResultsEnum DefaultResultsSet = VisibilityCalculationResultsEnum.ObservationPoints | VisibilityCalculationResultsEnum.ObservationObjects | VisibilityCalculationResultsEnum.VisibilityAreaRaster;

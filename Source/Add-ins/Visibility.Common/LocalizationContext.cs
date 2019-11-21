@@ -1,5 +1,6 @@
 ﻿using MilSpace.DataAccess.DataTransfer;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -17,6 +18,8 @@ namespace MilSpace.Visibility.Localization
 
         private Dictionary<VisibilityCalcTypeEnum, string> calcTypeLocalisation = new Dictionary<VisibilityCalcTypeEnum, string>();
         private Dictionary<VisibilityCalcTypeEnum, string> calcTypeLocalisationShort = new Dictionary<VisibilityCalcTypeEnum, string>();
+        private Dictionary<VisibilityresultSummaryItemsEnum, string> summaryItems = Enum.GetValues(typeof(VisibilityresultSummaryItemsEnum)).Cast<VisibilityresultSummaryItemsEnum>()
+            .ToDictionary(t => t, t => t.ToString());
 
         private LocalizationContext()
         {         
@@ -26,11 +29,13 @@ namespace MilSpace.Visibility.Localization
                     Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), 
                     @"Resources\SP_VisibilityLocalization.xml");
 
-            if (File.Exists(localizationFilePath))
+            if (!File.Exists(localizationFilePath))
             {
-                localizationDoc.Load(localizationFilePath);
-                _root = localizationDoc.SelectSingleNode("SP_Visibility");
+                throw new FileNotFoundException(localizationFilePath);
             }
+
+            localizationDoc.Load(localizationFilePath);
+            _root = localizationDoc.SelectSingleNode("SP_Visibility");
 
             calcTypeLocalisation.Add(VisibilityCalcTypeEnum.None, string.Empty);
             calcTypeLocalisationShort.Add(VisibilityCalcTypeEnum.None, string.Empty);
@@ -43,6 +48,17 @@ namespace MilSpace.Visibility.Localization
             calcTypeLocalisationShort.Add(VisibilityCalcTypeEnum.BestObservationParameters, CalcTherdTypeDescriptionShort);
             calcTypeLocalisation.Add(VisibilityCalcTypeEnum.ResultsObservationAnalize, CalcFourthTypeDescription);
             calcTypeLocalisationShort.Add(VisibilityCalcTypeEnum.ResultsObservationAnalize, CalcFourthTypeDescriptionShort);
+
+            //TODO: Add it to XML file
+            summaryItems[VisibilityresultSummaryItemsEnum.Name] = "Назва результату розрахунку";
+            summaryItems[VisibilityresultSummaryItemsEnum.CalculateCommonVisibilityResult] = "Розрахувати загальну ОВ";
+            summaryItems[VisibilityresultSummaryItemsEnum.CalculateSeparatedPoints] = "Розрахувати поверхні всіх ПН";
+            summaryItems[VisibilityresultSummaryItemsEnum.ConvertToPolygon] = "Конвертувати у полігони";
+            summaryItems[VisibilityresultSummaryItemsEnum.ObservationObjects] = "Обрані області нагляду (ОН)";
+            summaryItems[VisibilityresultSummaryItemsEnum.ObservationPoints] = "Обрані пункти спостереження (ПН)";
+            summaryItems[VisibilityresultSummaryItemsEnum.Surface] = "Поверхня для розпрахунку";
+            summaryItems[VisibilityresultSummaryItemsEnum.TrimCalculatedSurface] = "Обрізати розраховані поверхні";
+            summaryItems[VisibilityresultSummaryItemsEnum.Type] = "Тип розрахунку";
         }
 
 
@@ -51,6 +67,8 @@ namespace MilSpace.Visibility.Localization
 
         internal Dictionary<VisibilityCalcTypeEnum, string> CalcTypeLocalisation => calcTypeLocalisation;
         internal Dictionary<VisibilityCalcTypeEnum, string> CalcTypeLocalisationShort => calcTypeLocalisationShort;
+        internal Dictionary<VisibilityresultSummaryItemsEnum, string> SummaryItems => summaryItems;
+
 
         internal string CalcFirstTypeDescriptionShort => 
             FindLocalizedElement("CalcFirstTypeDescriptionShort", "VS");
@@ -113,6 +131,17 @@ namespace MilSpace.Visibility.Localization
         //            this.cmbStateFilter.Items.AddRange(new object[] {"своі", "чужі ", "нейтральні", "невідомо"});
 
         //----------------------------------------------------------------------------------------
+
+        internal bool HasLocalizedElement(string xmlNodeName)
+        {
+            try
+            {
+                return _root.SelectSingleNode(xmlNodeName) != null;
+            }catch
+            {
+                return false;
+            }
+        }
 
         internal string FindLocalizedElement(string xmlNodeName, string defaultValue)
         {

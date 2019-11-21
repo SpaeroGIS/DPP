@@ -32,6 +32,10 @@
   <CalcFourthTypeDescriptionShort>VP</CalcFourthTypeDescriptionShort>
   <CalcFourthTypeDescription>Аналіз результатів спостереження</CalcFourthTypeDescription>
 
+
+  <True>Так</True>
+  <False>Ні</False>
+
   <MsgBoxWarningHeader>Спостереження. Попередження</MsgBoxWarningHeader>
   <MsgBoxInfoHeader>Спостереження. Інфо</MsgBoxInfoHeader>
   <MsgBoxQueryHeader>Спостереження. Запит</MsgBoxQueryHeader>
