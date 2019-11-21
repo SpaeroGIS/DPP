@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Графика");
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.profileTabPage = new System.Windows.Forms.TabPage();
             this.btnRefreshLayers = new System.Windows.Forms.Button();
@@ -1424,7 +1424,7 @@
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(255, 56);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(238, 56);
             this.tableLayoutPanel3.TabIndex = 46;
             // 
             // lblCommonLengthValue
@@ -1435,7 +1435,7 @@
             this.lblCommonLengthValue.Location = new System.Drawing.Point(119, 26);
             this.lblCommonLengthValue.Name = "lblCommonLengthValue";
             this.lblCommonLengthValue.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.lblCommonLengthValue.Size = new System.Drawing.Size(133, 21);
+            this.lblCommonLengthValue.Size = new System.Drawing.Size(116, 21);
             this.lblCommonLengthValue.TabIndex = 62;
             this.lblCommonLengthValue.Text = "0";
             // 
@@ -1447,7 +1447,7 @@
             this.lblSelectedPrimitivesValue.Location = new System.Drawing.Point(119, 0);
             this.lblSelectedPrimitivesValue.Name = "lblSelectedPrimitivesValue";
             this.lblSelectedPrimitivesValue.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.lblSelectedPrimitivesValue.Size = new System.Drawing.Size(133, 21);
+            this.lblSelectedPrimitivesValue.Size = new System.Drawing.Size(116, 21);
             this.lblSelectedPrimitivesValue.TabIndex = 61;
             this.lblSelectedPrimitivesValue.Text = "0";
             // 
@@ -1713,7 +1713,6 @@
             this.lvProfileAttributes.TabIndex = 36;
             this.lvProfileAttributes.UseCompatibleStateImageBehavior = false;
             this.lvProfileAttributes.View = System.Windows.Forms.View.Details;
-            this.lvProfileAttributes.Visible = false;
             // 
             // Attribute
             // 
@@ -1735,25 +1734,25 @@
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.Location = new System.Drawing.Point(3, 65);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode1.Checked = true;
-            treeNode1.ImageKey = "vector-path-line.png";
-            treeNode1.Name = "Points";
-            treeNode1.SelectedImageIndex = 205;
-            treeNode1.Text = "Отрезки";
-            treeNode2.Checked = true;
-            treeNode2.ImageKey = "Editing-Line-icon3.png";
-            treeNode2.Name = "Fun";
-            treeNode2.SelectedImageIndex = 208;
-            treeNode2.Text = "Веер";
-            treeNode3.Checked = true;
-            treeNode3.ImageKey = "vector-polygon.png";
-            treeNode3.Name = "Primitives";
-            treeNode3.SelectedImageIndex = 209;
-            treeNode3.Text = "Графика";
+            treeNode4.Checked = true;
+            treeNode4.ImageKey = "vector-path-line.png";
+            treeNode4.Name = "Points";
+            treeNode4.SelectedImageIndex = 205;
+            treeNode4.Text = "Отрезки";
+            treeNode5.Checked = true;
+            treeNode5.ImageKey = "Editing-Line-icon3.png";
+            treeNode5.Name = "Fun";
+            treeNode5.SelectedImageIndex = 208;
+            treeNode5.Text = "Веер";
+            treeNode6.Checked = true;
+            treeNode6.ImageKey = "vector-polygon.png";
+            treeNode6.Name = "Primitives";
+            treeNode6.SelectedImageIndex = 209;
+            treeNode6.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
+            treeNode4,
+            treeNode5,
+            treeNode6});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(306, 263);
             this.profilesTreeView.TabIndex = 35;

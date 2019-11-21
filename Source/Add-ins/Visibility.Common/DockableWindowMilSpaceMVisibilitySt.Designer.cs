@@ -112,6 +112,8 @@
             this.cmbObservPointType = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panelPointsHeader = new System.Windows.Forms.Panel();
+            this.lblLayer = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
             this.tbpObservObjects = new System.Windows.Forms.TabPage();
             this.panel30 = new System.Windows.Forms.Panel();
             this.panel58 = new System.Windows.Forms.Panel();
@@ -224,8 +226,6 @@
             this.label12 = new System.Windows.Forms.Label();
             this.heightMin = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.lblLayer = new System.Windows.Forms.Label();
             this.mainTabControl.SuspendLayout();
             this.tbpPoints.SuspendLayout();
             this.panel7.SuspendLayout();
@@ -1433,6 +1433,30 @@
             this.panelPointsHeader.Size = new System.Drawing.Size(306, 34);
             this.panelPointsHeader.TabIndex = 0;
             // 
+            // lblLayer
+            // 
+            this.lblLayer.BackColor = System.Drawing.SystemColors.Control;
+            this.lblLayer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblLayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.lblLayer.Location = new System.Drawing.Point(4, 4);
+            this.lblLayer.Name = "lblLayer";
+            this.lblLayer.Padding = new System.Windows.Forms.Padding(0, 2, 4, 0);
+            this.lblLayer.Size = new System.Drawing.Size(272, 26);
+            this.lblLayer.TabIndex = 2;
+            this.lblLayer.Text = "Пункти спостереження (ПС)";
+            // 
+            // button2
+            // 
+            this.button2.Dock = System.Windows.Forms.DockStyle.Right;
+            this.button2.ImageIndex = 137;
+            this.button2.ImageList = this.imageList1;
+            this.button2.Location = new System.Drawing.Point(276, 4);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(26, 26);
+            this.button2.TabIndex = 1;
+            this.button2.Tag = "додати шар ПС до карти";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
             // tbpObservObjects
             // 
             this.tbpObservObjects.Controls.Add(this.panel30);
@@ -2340,7 +2364,6 @@
             this.lvResultsSummary.TabIndex = 37;
             this.lvResultsSummary.UseCompatibleStateImageBehavior = false;
             this.lvResultsSummary.View = System.Windows.Forms.View.Details;
-            this.lvResultsSummary.Visible = false;
             // 
             // Attribute
             // 
@@ -2601,30 +2624,6 @@
             this.label9.Size = new System.Drawing.Size(183, 17);
             this.label9.TabIndex = 4;
             this.label9.Text = "высота над поверхностью, м, мин.";
-            // 
-            // button2
-            // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button2.ImageIndex = 137;
-            this.button2.ImageList = this.imageList1;
-            this.button2.Location = new System.Drawing.Point(276, 4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(26, 26);
-            this.button2.TabIndex = 1;
-            this.button2.Tag = "додати шар ПС до карти";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // lblLayer
-            // 
-            this.lblLayer.BackColor = System.Drawing.SystemColors.Control;
-            this.lblLayer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblLayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.lblLayer.Location = new System.Drawing.Point(4, 4);
-            this.lblLayer.Name = "lblLayer";
-            this.lblLayer.Padding = new System.Windows.Forms.Padding(0, 2, 4, 0);
-            this.lblLayer.Size = new System.Drawing.Size(272, 26);
-            this.lblLayer.TabIndex = 2;
-            this.lblLayer.Text = "Пункти спостереження (ПС)";
             // 
             // DockableWindowMilSpaceMVisibilitySt
             // 
