@@ -110,7 +110,7 @@ namespace MilSpace.Visibility.ViewController
             return result;
         }
 
-        internal bool RemoveResult(string id, IActiveView activeView)
+        
         internal VisibilityresultSummary GetSummaryResultById(string id)
         {
             var result = _visibilityResults.FirstOrDefault(res => res.Id == id);
@@ -122,7 +122,7 @@ namespace MilSpace.Visibility.ViewController
             return null;
         }
 
-        internal bool RemoveResult(string id, IActiveView activeView = null, bool fromBase = false)
+        internal bool RemoveResult(string id, IActiveView activeView)
         {
             var selectedResults = _visibilityResults.First(res => res.Id == id);
             var results = selectedResults.ValueableResults();
