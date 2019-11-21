@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace MilSpace.DataAccess.Facade
 {
@@ -91,11 +92,11 @@ namespace MilSpace.DataAccess.Facade
             return featureClassName;
         }
 
-        public VisibilityCalculationresultsEnum CheckVisibilityResult(string sessionName)
+        public VisibilityCalculationResultsEnum CheckVisibilityResult(string sessionName)
         {
             //Check Points and Objects\Stations
 
-            VisibilityCalculationresultsEnum results = VisibilityCalculationresultsEnum.None;
+            VisibilityCalculationResultsEnum results = VisibilityCalculationResultsEnum.None;
 
             foreach (var map in VisibilityTask.EsriDatatypeToResultMapping)
             {
@@ -591,6 +592,59 @@ namespace MilSpace.DataAccess.Facade
         internal bool CheckDatasetExistanceInCalcWorkspace(string dataSetName, esriDatasetType datasetType)
         {
             return IsDatasetExist(calcWorkspace, dataSetName, datasetType);
+        }
+
+        internal IEnumerable<string> GetCalculatedObserPointsNames(string observPoinsFeatureClassName)
+        {
+            if (GdbAccess.Instance.CheckDatasetExistanceInCalcWorkspace(observPoinsFeatureClassName, esriDatasetType.esriDTFeatureClass))
+            {
+                var fx = OpenFeatureClass(calcWorkspace, observPoinsFeatureClassName);
+
+                var titleFld = fx.FindField("TitleOP");
+                var observPoints = fx.GetFeatures(titleFld, false);
+                var observPoint = observPoints.NextFeature();
+                var result = new List<string>();
+                while (observPoint != null)
+                {
+                    result.Add(observPoint.Value[titleFld].ToString());
+                    observPoint = observPoints.NextFeature();
+                }
+                observPoint = null;
+                observPoints = null;
+                Marshal.ReleaseComObject(observPoint);
+                Marshal.ReleaseComObject(observPoints);
+                return result;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Returns Calculation entity title 
+        /// </summary>
+        /// <param name="observPoinsFeatureClassName"></param>
+        /// <param name="titleField"></param>
+        /// <returns></returns>
+        internal IEnumerable<string> GetCalcEntityNamesFromFeatureClass(string entityFeatureClassName, string titleField)
+        {
+            if (GdbAccess.Instance.CheckDatasetExistanceInCalcWorkspace(entityFeatureClassName, esriDatasetType.esriDTFeatureClass))
+            {
+                var fx = OpenFeatureClass(calcWorkspace, entityFeatureClassName);
+
+                var titleFld = fx.FindField(titleField);
+                var observPoints = fx.Search(null, false);
+                var observPoint = observPoints.NextFeature();
+                var result = new List<string>();
+                while (observPoint != null)
+                {
+                    result.Add(observPoint.Value[titleFld].ToString());
+                    observPoint = observPoints.NextFeature();
+                }
+                Marshal.ReleaseComObject(observPoints);
+                return result;
+            }
+
+            return null;
         }
 
         private static IDataset GetDataset(IWorkspace workspace, string featureClass, esriDatasetType type)
