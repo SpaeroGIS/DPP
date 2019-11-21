@@ -239,7 +239,7 @@ namespace MilSpace.Visibility
             }
         }
 
-        public void FillVisibilitySessionsList(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded)
+        public void FillVisibilitySessionsList(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded, string newTaskId)
         {
             if (visibilitySessions.Any())
             {
@@ -275,8 +275,6 @@ namespace MilSpace.Visibility
                 dgvVisibilitySessions.DataSource = _visibilitySessionsGui;
                 SetVisibilitySessionsTableView();
 
-                var lastRow = dgvVisibilitySessions.Rows[dgvVisibilitySessions.RowCount - 1];
-
                 if (cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilitySessionStateEnum.All))
                 {
                     FilterVisibilityList();
@@ -286,10 +284,23 @@ namespace MilSpace.Visibility
                     dgvVisibilitySessions.Rows[0].Selected = true;
                 }
 
-                if (lastRow.Visible && isNewSessionAdded)
+                if (isNewSessionAdded && !String.IsNullOrEmpty(newTaskId))
                 {
-                    lastRow.Selected = true;
-                    dgvVisibilitySessions.CurrentCell = lastRow.Cells[1];
+                    var newRow = dgvVisibilitySessions.Rows[0];
+
+                    foreach(DataGridViewRow row in dgvVisibilitySessions.Rows)
+                    {
+                        if(row.Cells["Id"].Value.Equals(newTaskId))
+                        {
+                            newRow = row;
+                        }
+                    }
+
+                    if(newRow.Visible)
+                    {
+                        newRow.Selected = true;
+                        dgvVisibilitySessions.CurrentCell = newRow.Cells[1];
+                    }
                 }
             }
         }
@@ -1121,7 +1132,7 @@ namespace MilSpace.Visibility
         private void SetVisibilityResultsButtonsState(bool enabled)
         {
             var isGroupedLayerExists = false;
-            var isResultsShared = false;
+            var isResultsShared = true;
 
             if (enabled)
             {
@@ -1436,7 +1447,7 @@ namespace MilSpace.Visibility
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
-                    _visibilitySessionsController.UpdateVisibilitySessionsList(true);
+                    _visibilitySessionsController.UpdateVisibilitySessionsList(true, calcParams.TaskName);
                     _visibilitySessionsController.UpdateVisibilityResultsTree();
                 }
             }
@@ -1529,7 +1540,8 @@ namespace MilSpace.Visibility
                 if (result == DialogResult.OK)
                 {
                     var resultId = tvResults.SelectedNode.Tag.ToString();
-                    var isRemovingSuccessfull = _visibilitySessionsController.RemoveResult(resultId, ActiveView, true);
+
+                    var isRemovingSuccessfull = _visibilitySessionsController.RemoveResult(resultId, ActiveView);
 
                     if (!isRemovingSuccessfull)
                     {
@@ -1559,7 +1571,20 @@ namespace MilSpace.Visibility
                 if (result == DialogResult.OK)
                 {
                     var resultId = tvResults.SelectedNode.Tag.ToString();
-                    var isRemovingSuccessfull = _visibilitySessionsController.RemoveResult(resultId);
+
+                    var removeLayers = _visibilitySessionsController.IsResultsLayerExist(resultId, ActiveView);
+
+                    if(removeLayers)
+                    {
+                        var removeLayersDialogResult = MessageBox.Show(
+                        "Ви бажаєте видалити шари розрахунку?",
+                        "Спостереження",
+                        MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+
+                        removeLayers = removeLayersDialogResult == DialogResult.OK;
+                    }
+
+                    _visibilitySessionsController.RemoveResultsFromSession(resultId, removeLayers, ActiveView);
                     var node = tvResults.Nodes.Find(resultId, true).First();
                     tvResults.Nodes.Remove(node);
                 }
