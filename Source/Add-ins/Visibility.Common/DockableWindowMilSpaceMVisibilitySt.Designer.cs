@@ -112,7 +112,7 @@
             this.cmbObservPointType = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panelPointsHeader = new System.Windows.Forms.Panel();
-            this.lblLayer = new System.Windows.Forms.Label();
+            this.lblPointsHeader = new System.Windows.Forms.Label();
             this.tbpObservObjects = new System.Windows.Forms.TabPage();
             this.panel30 = new System.Windows.Forms.Panel();
             this.panel58 = new System.Windows.Forms.Panel();
@@ -152,7 +152,7 @@
             this.cmbObservObjAffiliationFilter = new System.Windows.Forms.ComboBox();
             this.label28 = new System.Windows.Forms.Label();
             this.panel27 = new System.Windows.Forms.Panel();
-            this.label30 = new System.Windows.Forms.Label();
+            this.lblObservObjHeader = new System.Windows.Forms.Label();
             this.tlbbAddObservObjLayer = new System.Windows.Forms.Button();
             this.toolBar5 = new System.Windows.Forms.ToolBar();
             this.toolBarButton18 = new System.Windows.Forms.ToolBarButton();
@@ -192,7 +192,7 @@
             this.cmbStateFilter = new System.Windows.Forms.ComboBox();
             this.label38 = new System.Windows.Forms.Label();
             this.panel38 = new System.Windows.Forms.Panel();
-            this.label36 = new System.Windows.Forms.Label();
+            this.lblCalcTasksHeader = new System.Windows.Forms.Label();
             this.tbpVisibilityAreas = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel8 = new System.Windows.Forms.Panel();
@@ -215,7 +215,7 @@
             this.toolBarButton1 = new System.Windows.Forms.ToolBarButton();
             this.tlbbUpdate = new System.Windows.Forms.ToolBarButton();
             this.panel48 = new System.Windows.Forms.Panel();
-            this.labelHeaderVisibilityResult = new System.Windows.Forms.Label();
+            this.lblHeaderVisibilityResult = new System.Windows.Forms.Label();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.panel11 = new System.Windows.Forms.Panel();
             this.heightMax = new System.Windows.Forms.TextBox();
@@ -1418,7 +1418,7 @@
             // 
             // panelPointsHeader
             // 
-            this.panelPointsHeader.Controls.Add(this.lblLayer);
+            this.panelPointsHeader.Controls.Add(this.lblPointsHeader);
             this.panelPointsHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelPointsHeader.Location = new System.Drawing.Point(3, 3);
             this.panelPointsHeader.Name = "panelPointsHeader";
@@ -1426,17 +1426,17 @@
             this.panelPointsHeader.Size = new System.Drawing.Size(306, 32);
             this.panelPointsHeader.TabIndex = 0;
             // 
-            // lblLayer
+            // lblPointsHeader
             // 
-            this.lblLayer.BackColor = System.Drawing.SystemColors.Control;
-            this.lblLayer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblLayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.lblLayer.Location = new System.Drawing.Point(4, 0);
-            this.lblLayer.Name = "lblLayer";
-            this.lblLayer.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.lblLayer.Size = new System.Drawing.Size(298, 32);
-            this.lblLayer.TabIndex = 0;
-            this.lblLayer.Text = "Пункти спостереження (ПС)";
+            this.lblPointsHeader.BackColor = System.Drawing.SystemColors.Control;
+            this.lblPointsHeader.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblPointsHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.lblPointsHeader.Location = new System.Drawing.Point(4, 0);
+            this.lblPointsHeader.Name = "lblPointsHeader";
+            this.lblPointsHeader.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
+            this.lblPointsHeader.Size = new System.Drawing.Size(298, 32);
+            this.lblPointsHeader.TabIndex = 0;
+            this.lblPointsHeader.Text = "Пункти спостереження (ПС)";
             // 
             // tbpObservObjects
             // 
@@ -1847,7 +1847,7 @@
             // 
             // panel27
             // 
-            this.panel27.Controls.Add(this.label30);
+            this.panel27.Controls.Add(this.lblObservObjHeader);
             this.panel27.Controls.Add(this.tlbbAddObservObjLayer);
             this.panel27.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel27.Location = new System.Drawing.Point(0, 0);
@@ -1856,17 +1856,17 @@
             this.panel27.Size = new System.Drawing.Size(312, 34);
             this.panel27.TabIndex = 42;
             // 
-            // label30
+            // lblObservObjHeader
             // 
-            this.label30.BackColor = System.Drawing.SystemColors.Control;
-            this.label30.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label30.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.label30.Location = new System.Drawing.Point(4, 4);
-            this.label30.Name = "label30";
-            this.label30.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label30.Size = new System.Drawing.Size(278, 26);
-            this.label30.TabIndex = 7;
-            this.label30.Text = "Області нагляду (ОН)";
+            this.lblObservObjHeader.BackColor = System.Drawing.SystemColors.Control;
+            this.lblObservObjHeader.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblObservObjHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.lblObservObjHeader.Location = new System.Drawing.Point(4, 4);
+            this.lblObservObjHeader.Name = "lblObservObjHeader";
+            this.lblObservObjHeader.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
+            this.lblObservObjHeader.Size = new System.Drawing.Size(278, 26);
+            this.lblObservObjHeader.TabIndex = 7;
+            this.lblObservObjHeader.Text = "Області нагляду (ОН)";
             // 
             // tlbbAddObservObjLayer
             // 
@@ -2277,7 +2277,7 @@
             // 
             // panel38
             // 
-            this.panel38.Controls.Add(this.label36);
+            this.panel38.Controls.Add(this.lblCalcTasksHeader);
             this.panel38.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel38.Location = new System.Drawing.Point(0, 0);
             this.panel38.Name = "panel38";
@@ -2285,17 +2285,17 @@
             this.panel38.Size = new System.Drawing.Size(312, 34);
             this.panel38.TabIndex = 54;
             // 
-            // label36
+            // lblCalcTasksHeader
             // 
-            this.label36.BackColor = System.Drawing.SystemColors.Control;
-            this.label36.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label36.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.label36.Location = new System.Drawing.Point(4, 0);
-            this.label36.Name = "label36";
-            this.label36.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label36.Size = new System.Drawing.Size(304, 34);
-            this.label36.TabIndex = 2;
-            this.label36.Text = "Завдання для розрахунків";
+            this.lblCalcTasksHeader.BackColor = System.Drawing.SystemColors.Control;
+            this.lblCalcTasksHeader.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblCalcTasksHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.lblCalcTasksHeader.Location = new System.Drawing.Point(4, 0);
+            this.lblCalcTasksHeader.Name = "lblCalcTasksHeader";
+            this.lblCalcTasksHeader.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
+            this.lblCalcTasksHeader.Size = new System.Drawing.Size(304, 34);
+            this.lblCalcTasksHeader.TabIndex = 2;
+            this.lblCalcTasksHeader.Text = "Завдання для розрахунків";
             // 
             // tbpVisibilityAreas
             // 
@@ -2491,7 +2491,7 @@
             // panel48
             // 
             this.panel48.BackColor = System.Drawing.SystemColors.Control;
-            this.panel48.Controls.Add(this.labelHeaderVisibilityResult);
+            this.panel48.Controls.Add(this.lblHeaderVisibilityResult);
             this.panel48.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel48.Location = new System.Drawing.Point(0, 0);
             this.panel48.Name = "panel48";
@@ -2499,16 +2499,16 @@
             this.panel48.Size = new System.Drawing.Size(312, 34);
             this.panel48.TabIndex = 55;
             // 
-            // labelHeaderVisibilityResult
+            // lblHeaderVisibilityResult
             // 
-            this.labelHeaderVisibilityResult.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelHeaderVisibilityResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelHeaderVisibilityResult.Location = new System.Drawing.Point(4, 0);
-            this.labelHeaderVisibilityResult.Name = "labelHeaderVisibilityResult";
-            this.labelHeaderVisibilityResult.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.labelHeaderVisibilityResult.Size = new System.Drawing.Size(304, 34);
-            this.labelHeaderVisibilityResult.TabIndex = 2;
-            this.labelHeaderVisibilityResult.Text = "Cписок результатів";
+            this.lblHeaderVisibilityResult.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblHeaderVisibilityResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblHeaderVisibilityResult.Location = new System.Drawing.Point(4, 0);
+            this.lblHeaderVisibilityResult.Name = "lblHeaderVisibilityResult";
+            this.lblHeaderVisibilityResult.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
+            this.lblHeaderVisibilityResult.Size = new System.Drawing.Size(304, 34);
+            this.lblHeaderVisibilityResult.TabIndex = 2;
+            this.lblHeaderVisibilityResult.Text = "Cписок результатів";
             // 
             // richTextBox1
             // 
@@ -2681,7 +2681,7 @@
         private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.Panel panelPointsHeader;
-        private System.Windows.Forms.Label lblLayer;
+        private System.Windows.Forms.Label lblPointsHeader;
         private System.Windows.Forms.TabPage tbpObservObjects;
         private System.Windows.Forms.ToolBar toolBar5;
         private System.Windows.Forms.ToolBarButton toolBarButton18;
@@ -2695,12 +2695,12 @@
         private System.Windows.Forms.ToolBarButton tlddUpd;
         private System.Windows.Forms.ToolBarButton tlbbDel;
         private System.Windows.Forms.Panel panel38;
-        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.Label lblCalcTasksHeader;
         private System.Windows.Forms.TabPage tbpVisibilityAreas;
         private System.Windows.Forms.ToolBarButton toolBarButtonViewParamOnMap;
         private System.Windows.Forms.ToolBarButton toolBarButtonAddFromDB;
         private System.Windows.Forms.Panel panel48;
-        private System.Windows.Forms.Label labelHeaderVisibilityResult;
+        private System.Windows.Forms.Label lblHeaderVisibilityResult;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.TextBox heightMax;
@@ -2836,7 +2836,7 @@
         private System.Windows.Forms.ComboBox cmbStateFilter;
         private System.Windows.Forms.Label label38;
         private System.Windows.Forms.Button tlbbAddObservObjLayer;
-        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label lblObservObjHeader;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Splitter splitter4;
         private System.Windows.Forms.Panel panel16;

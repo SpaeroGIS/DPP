@@ -9,6 +9,7 @@ using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Tools;
 using MilSpace.Visibility.DTO;
+using MilSpace.Visibility.Localization;
 using MilSpace.Visibility.ViewController;
 using System;
 using System.Collections.Generic;
@@ -56,6 +57,16 @@ namespace MilSpace.Visibility
 
         private void LocalizeComponents()
         {
+            mainTabControl.TabPages["tbpPoints"].Text = LocalizationContext.Instance.ObservPointsTabCaption;
+            mainTabControl.TabPages["tbpObservObjects"].Text = LocalizationContext.Instance.ObservObjTabCaption;
+            mainTabControl.TabPages["tbpSessions"].Text = LocalizationContext.Instance.TasksTabCaption;
+            mainTabControl.TabPages["tbpVisibilityAreas"].Text = LocalizationContext.Instance.ResultsTabCaption;
+
+            lblPointsHeader.Text = LocalizationContext.Instance.ObservPointsHeaderLabel;
+            lblObservObjHeader.Text = LocalizationContext.Instance.ObservObjHeaderLabel;
+            lblCalcTasksHeader.Text = LocalizationContext.Instance.TasksHeaderLabel;
+            lblHeaderVisibilityResult.Text = LocalizationContext.Instance.ResultsHeaderLabel;
+
             tlbbAddObservObjLayer.Text = "Додати шар ОН";
         }
 
@@ -443,10 +454,10 @@ namespace MilSpace.Visibility
             dgvObservationPoints.Columns["Type"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dgvObservationPoints.Columns["Affiliation"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dgvObservationPoints.Columns["Date"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dgvObservationPoints.Columns["Title"].HeaderText = "Name";
-            dgvObservationPoints.Columns["Type"].HeaderText = "Type";
-            dgvObservationPoints.Columns["Affiliation"].HeaderText = "Affiliation";
-            dgvObservationPoints.Columns["Date"].HeaderText = "Date";
+            dgvObservationPoints.Columns["Title"].HeaderText = LocalizationContext.Instance.NameHeaderText;
+            dgvObservationPoints.Columns["Type"].HeaderText = LocalizationContext.Instance.TypeHeaderText;
+            dgvObservationPoints.Columns["Affiliation"].HeaderText = LocalizationContext.Instance.AffiliationHeaderText;
+            dgvObservationPoints.Columns["Date"].HeaderText = LocalizationContext.Instance.DateHeaderText;
             dgvObservationPoints.Columns["Id"].Visible = false;
         }
 
@@ -619,8 +630,8 @@ namespace MilSpace.Visibility
                         if (!Regex.IsMatch(xCoord.Text, @"^([-]?[\d]{1,2}\,\d+)$"))
                         {
                             MessageBox.Show(
-                                "Invalid data.\nПотрібні коордінати представлені у СК WGS-84, десяткові градуси", 
-                                "Спостереження",
+                                LocalizationContext.Instance.IncorrectCoordMessage, 
+                                LocalizationContext.Instance.MessageBoxCaption,
                                 MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
                             xCoord.Text = point.X.ToString();
 
@@ -639,8 +650,8 @@ namespace MilSpace.Visibility
                         if (!Regex.IsMatch(yCoord.Text, @"^([-]?[\d]{1,2}\,\d+)$"))
                         {
                             MessageBox.Show(
-                                "Invalid data.\nПотрібні коордінати представлені у СК WGS-84, десяткові градуси",
-                                "Спостереження",
+                                LocalizationContext.Instance.IncorrectCoordMessage,
+                                LocalizationContext.Instance.MessageBoxCaption,
                                 MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
                             yCoord.Text = point.Y.ToString();
 
@@ -773,8 +784,8 @@ namespace MilSpace.Visibility
 
             textBox.Text = defaultValue;
             MessageBox.Show(
-                $"Invalid data.\nЗначення має бути від {lowValue} до {upperValue}",
-                "Спостереження",
+                String.Format(LocalizationContext.Instance.IncorrectRangeMessage, lowValue, upperValue),
+                LocalizationContext.Instance.MessageBoxCaption,
                 MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
 
             return false;
@@ -792,15 +803,15 @@ namespace MilSpace.Visibility
                 }
 
                 MessageBox.Show(
-                    "Invalid data.\nЗначення не має бути меньш за 0", 
-                    "Спостереження",
+                    LocalizationContext.Instance.ValueLessThenZeroMessage,
+                    LocalizationContext.Instance.MessageBoxCaption,
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
             }
             else
             {
                 MessageBox.Show(
-                    "Invalid data.\nВкажить число",
-                    "Спостереження",
+                    LocalizationContext.Instance.EmptyValueMessage,
+                    LocalizationContext.Instance.MessageBoxCaption,
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
             }
 
@@ -830,8 +841,8 @@ namespace MilSpace.Visibility
         private void RemovePoint()
         {
             var result = MessageBox.Show(
-                "Ви дійсно бажаєте видалити точку (ПС)?", 
-                "Спостереження", 
+                LocalizationContext.Instance.ObservPointRemoveMessage,
+                LocalizationContext.Instance.MessageBoxCaption,
                 MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
             if (result == DialogResult.OK)
@@ -957,9 +968,9 @@ namespace MilSpace.Visibility
         private void SetVisibilitySessionsTableView()
         {
             dgvVisibilitySessions.Columns["Id"].Visible = false;
-            dgvVisibilitySessions.Columns["Name"].HeaderText = "Назва";
+            dgvVisibilitySessions.Columns["Name"].HeaderText = LocalizationContext.Instance.NameHeaderText;
             dgvVisibilitySessions.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvVisibilitySessions.Columns["State"].HeaderText = "Стан";
+            dgvVisibilitySessions.Columns["State"].HeaderText = LocalizationContext.Instance.StateHeaderText;
             dgvVisibilitySessions.Columns["State"].Width = 100;
         }
 
@@ -1032,11 +1043,11 @@ namespace MilSpace.Visibility
         private void SetObservObjectsTableView()
         {
             dgvObservObjects.Columns["Id"].Visible = false;
-            dgvObservObjects.Columns["Title"].HeaderText = "Назва";
+            dgvObservObjects.Columns["Title"].HeaderText = LocalizationContext.Instance.NameHeaderText;
             dgvObservObjects.Columns["Title"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvObservObjects.Columns["Affiliation"].HeaderText = "Належність";
+            dgvObservObjects.Columns["Affiliation"].HeaderText = LocalizationContext.Instance.AffiliationHeaderText;
             dgvObservObjects.Columns["Affiliation"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dgvObservObjects.Columns["Group"].HeaderText = "Група";
+            dgvObservObjects.Columns["Group"].HeaderText = LocalizationContext.Instance.GroupHeaderText;
             dgvObservObjects.Columns["Group"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
 
             dgvObservObjects.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -1334,7 +1345,9 @@ namespace MilSpace.Visibility
                     }
                     else
                     {
-                        MessageBox.Show("Invalid format");
+                        MessageBox.Show(LocalizationContext.Instance.MessageBoxCaption,
+                                        LocalizationContext.Instance.InvalidFormatMessage,
+                                        MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
                     }
 
                     break;
@@ -1404,8 +1417,8 @@ namespace MilSpace.Visibility
             if (e.Button == removeTask)
             {
                 var result = MessageBox.Show(
-                    "Ви дійсно бажаєте видалити результат розрахунку з поточного сеансу?", 
-                    "Спостереження", 
+                    LocalizationContext.Instance.VisibilityTaskRemoveMessage,
+                    LocalizationContext.Instance.MessageBoxCaption, 
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
                 if (result == DialogResult.OK)
@@ -1413,8 +1426,8 @@ namespace MilSpace.Visibility
                     if (!RemoveSelectedSession())
                     {
                         MessageBox.Show(
-                            "Неможливо видалити результат розрахунку видимісті поточної сеансу", 
-                            "Спостереження",
+                            LocalizationContext.Instance.UnableToRemoveTaskMessage,
+                            LocalizationContext.Instance.MessageBoxCaption,
                             MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
                     }
                 }
@@ -1440,10 +1453,9 @@ namespace MilSpace.Visibility
 
                     if (!clculated)
                     {
-                        //Localize message
                         MessageBox.Show(
-                            "Розрахунок скінчився з помилкою\nДля перегляду повної інформації зверніться до журналу роботи", 
-                            "Спостереження", 
+                            LocalizationContext.Instance.CalculationErrorMessage,
+                            LocalizationContext.Instance.MessageBoxCaption, 
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
@@ -1533,8 +1545,8 @@ namespace MilSpace.Visibility
             if (e.Button.Name == tlbbFullDelete.Name)
             {
                 var result = MessageBox.Show(
-                    "Ви дійсно бажаєте повністтю видалити результат розрахунку?", 
-                    "Спостереження", 
+                    LocalizationContext.Instance.VisibilityResultsFullRemoveMessage, 
+                    LocalizationContext.Instance.MessageBoxCaption, 
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
                 if (result == DialogResult.OK)
@@ -1546,8 +1558,8 @@ namespace MilSpace.Visibility
                     if (!isRemovingSuccessfull)
                     {
                         MessageBox.Show(
-                            "Неможливо повністтю видалити результат розрахунку", 
-                            "Спостереження",
+                            LocalizationContext.Instance.UnableToFullRemoveTaskMessage, 
+                            LocalizationContext.Instance.MessageBoxCaption,
                             MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
                     }
                     else
@@ -1564,8 +1576,8 @@ namespace MilSpace.Visibility
             {
 
                 var result = MessageBox.Show(
-                    "Ви дійсно бажаєте видалити результат розрахунку?", 
-                    "Спостереження", 
+                    LocalizationContext.Instance.VisibilityResultsRemoveFromSessionMessage, 
+                    LocalizationContext.Instance.MessageBoxCaption, 
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
                 if (result == DialogResult.OK)
@@ -1577,8 +1589,8 @@ namespace MilSpace.Visibility
                     if(removeLayers)
                     {
                         var removeLayersDialogResult = MessageBox.Show(
-                        "Ви бажаєте видалити шари розрахунку?",
-                        "Спостереження",
+                        LocalizationContext.Instance.VisibilityResultLayersRemoveMessage,
+                        LocalizationContext.Instance.MessageBoxCaption,
                         MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
                         removeLayers = removeLayersDialogResult == DialogResult.OK;
@@ -1598,15 +1610,15 @@ namespace MilSpace.Visibility
                 {
                     SetVisibilityResultsButtonsState(true);
                     MessageBox.Show(
-                        "Доступ для усіх користувачів встановлено", 
-                        "Спостереження. Встановити доступ",
+                        LocalizationContext.Instance.SuccessfullySharedMessage,
+                        LocalizationContext.Instance.MessageBoxShareCaption,
                         MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
                 }
                 else
                 {
                     MessageBox.Show(
-                        "Доступ для усіх користувачів вже встановлено", 
-                        "Спостереження. Встановити доступ",
+                        LocalizationContext.Instance.AlreadySharedMessage,
+                        LocalizationContext.Instance.MessageBoxShareCaption,
                         MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
                 }
             }
@@ -1637,8 +1649,8 @@ namespace MilSpace.Visibility
                         if (!operationResult)
                         {
                             MessageBox.Show(
-                                "Частина результатів розрахунку не може бути добавлена до поточного сеансу", 
-                                "Спостереження. Попередження",
+                                LocalizationContext.Instance.SomeResultsNotAddedMessage, 
+                                LocalizationContext.Instance.MessageBoxWarningCaption,
                                 MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
                         }
                     }

@@ -2,8 +2,18 @@
 <SP_Visibility xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   
   <WindowCaption>Спостереження. Видимість</WindowCaption>
+  <MessageBoxCaption>Спостереження</MessageBoxCaption>
+  <MessageBoxShareCaption>Спостереження. Встановити доступ</MessageBoxShareCaption>
+  <MessageBoxWarningCaption>Спостереження. Попередження</MessageBoxWarningCaption>
+
+  <ObservPointsTabCaption>Пункти С</ObservPointsTabCaption>
+  <ObservObjTabCaption>Області Н</ObservObjTabCaption>
+  <TasksTabCaption>Завдання</TasksTabCaption>
+  <ResultsTabCaption>ОВ</ResultsTabCaption>
 
   <GenerateButton>Генерувати</GenerateButton>
+  
+  
   <SurfaceLabel>Поверхня</SurfaceLabel>
   <PlantsLayerLabel>рослинність</PlantsLayerLabel>
   <HightLablel>Висота</HightLablel>
@@ -12,6 +22,11 @@
   <HydroLayerLabel>гідрографія</HydroLayerLabel>
   <ProfilesLabel>Профілі</ProfilesLabel>
   <SurfacesLabel>Поверхні</SurfacesLabel>
+  <ObservPointsHeaderLabel>Пункти спостереження (ПС)</ObservPointsHeaderLabel>
+  <ObservObjHeaderLabel>Області нагляду (ОН)</ObservObjHeaderLabel>
+  <TasksHeaderLabel>Завдання для розрахунків</TasksHeaderLabel>
+  <ResultsHeaderLabel>Cписок результатів</ResultsHeaderLabel>
+  
   <Generat3DTabHeader>Проект</Generat3DTabHeader>
   <ImageTabHeader>Знимок 3-Д сцени</ImageTabHeader>
   <Section>Відрізки</Section>
@@ -32,4 +47,29 @@
   <CalcFourthTypeDescriptionShort>VP</CalcFourthTypeDescriptionShort>
   <CalcFourthTypeDescription>Аналіз результатів спостереження.</CalcFourthTypeDescription>
 
+  <IncorrectCoordMessage>Invalid data.\nПотрібні координати представлені у СК WGS-84, десяткові градуси</IncorrectCoordMessage>
+  <IncorrectRangeMessage>Invalid data.\nЗначення має бути від {0} до {1}</IncorrectRangeMessage>
+  <ValueLessThenZeroMessage>Invalid data.\nЗначення не має бути менше нуля</ValueLessThenZeroMessage>
+  <EmptyValueMessage>Invalid data.\nВкажіть число</EmptyValueMessage>
+  <InvalidFormatMessage>Невірний формат</InvalidFormatMessage>
+  <UnableToRemoveTaskMessage>Неможливо видалити результат розрахунку видимості поточного сеансу</UnableToRemoveTaskMessage>
+  <UnableToFullRemoveTaskMessage>Неможливо повністтю видалити результат розрахунку</UnableToFullRemoveTaskMessage>
+  <CalculationErrorMessage>Розрахунок скінчився з помилкою\nДля перегляду повної інформації зверніться до журналу роботи</CalculationErrorMessage>
+  <SomeResultsNotAddedMessage>Частина результатів розрахунку не може бути додана до поточного сеансу</SomeResultsNotAddedMessage>
+
+  <ObservPointRemoveMessage>Ви дійсно бажаєте видалити точку (ПС)?</ObservPointRemoveMessage>
+  <VisibilityTaskRemoveMessage>Ви дійсно бажаєте видалити результат розрахунку з поточного сеансу?</VisibilityTaskRemoveMessage>
+  <VisibilityResultsFullRemoveMessage>Ви дійсно бажаєте повністтю видалити результат розрахунку?</VisibilityResultsFullRemoveMessage>
+  <VisibilityResultsRemoveFromSessionMessage>Ви дійсно бажаєте видалити результат розрахунку?</VisibilityResultsRemoveFromSessionMessage>
+  <VisibilityResultLayersRemoveMessage>Ви бажаєте видалити шари розрахунку?</VisibilityResultLayersRemoveMessage>
+  <SuccessfullySharedMessage>Доступ для всіх користувачів встановлено</SuccessfullySharedMessage>
+  <AlreadySharedMessage>Доступ для усіх користувачів вже встановлено</AlreadySharedMessage>
+
+  <NameHeaderText>Назва</NameHeaderText>
+  <StateHeaderText>Стан</StateHeaderText>
+  <TypeHeaderText>Тип</TypeHeaderText>
+  <AffiliationHeaderText>Належність</AffiliationHeaderText>
+  <DateHeaderText>Дата</DateHeaderText>
+  <GroupHeaderText>Група</GroupHeaderText>
+  
 </SP_Visibility>
