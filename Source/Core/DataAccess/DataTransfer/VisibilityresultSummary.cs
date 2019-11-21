@@ -57,7 +57,7 @@ namespace MilSpace.DataAccess.DataTransfer
         /// Calculate visibility for sepatare observation points
         /// </summary>
         //    SeparatedVisibilityResult ? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord;
-        public bool SeparatedVisibilityResult => calculatedResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle);
+        public bool SeparatedVisibilityResult => calculatedResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle) || calculatedResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle);
 
         /// <summary>
         /// Calculate common visibility for observation points
