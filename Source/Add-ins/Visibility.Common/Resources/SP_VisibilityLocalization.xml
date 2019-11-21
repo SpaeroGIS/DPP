@@ -1,35 +1,145 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <SP_Visibility xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   
-  <WindowCaption>Спостереження. Видимість</WindowCaption>
+  <WindowCaption>Спостереження. Модуль видимості</WindowCaption>
 
   <GenerateButton>Генерувати</GenerateButton>
   <SurfaceLabel>Поверхня</SurfaceLabel>
+
   <PlantsLayerLabel>рослинність</PlantsLayerLabel>
   <HightLablel>Висота</HightLablel>
   <BuildingsLayerLabel>будівелі</BuildingsLayerLabel>
   <TransportLayerLabel>транспорт</TransportLayerLabel>
   <HydroLayerLabel>гідрографія</HydroLayerLabel>
   <ProfilesLabel>Профілі</ProfilesLabel>
-  <SurfacesLabel>Поверхні</SurfacesLabel>
-  <Generat3DTabHeader>Проект</Generat3DTabHeader>
-  <ImageTabHeader>Знимок 3-Д сцени</ImageTabHeader>
+
   <Section>Відрізки</Section>
   <Fun>Віяло</Fun>
   <Primitive>Графіки</Primitive>
   <Profile>Профіль</Profile>
-  <ArcSceneParams>Шари для візуалізації</ArcSceneParams>
+
   <YesWord>Так</YesWord>
   <NoWord>Ні</NoWord>
   <PlaceLayerAbove>Зверху</PlaceLayerAbove>
   <PlaceLayerBelow>Знизу</PlaceLayerBelow>
-  <CalcFirstTypeDescription>Визначення областей видимості на обраної поверхні в цілому.</CalcFirstTypeDescription>
-  <CalcSecondTypeDescriptionShort>VA</CalcSecondTypeDescriptionShort>
-  <CalcSecondTypeDescription>Визначення видимості в заданих ОН.</CalcSecondTypeDescription>
 
+  <CalcFirstTypeDescriptionShort>VS</CalcFirstTypeDescriptionShort>
+  <CalcFirstTypeDescription>Визначення видимості в цілому</CalcFirstTypeDescription>
+  <CalcSecondTypeDescriptionShort>VA</CalcSecondTypeDescriptionShort>
+  <CalcSecondTypeDescription>Визначення видимості в заданих ОН</CalcSecondTypeDescription>
   <CalcTherdTypeDescriptionShort>VO</CalcTherdTypeDescriptionShort>
-  <CalcTherdTypeDescription>Визначення параметрів пунктів спостереження (ПН).</CalcTherdTypeDescription>
+  <CalcTherdTypeDescription>Визначення параметрів пунктів спостереження</CalcTherdTypeDescription>
   <CalcFourthTypeDescriptionShort>VP</CalcFourthTypeDescriptionShort>
-  <CalcFourthTypeDescription>Аналіз результатів спостереження.</CalcFourthTypeDescription>
+  <CalcFourthTypeDescription>Аналіз результатів спостереження</CalcFourthTypeDescription>
+
+
+  <True>Так</True>
+  <False>Ні</False>
+
+  <MsgBoxWarningHeader>Спостереження. Попередження</MsgBoxWarningHeader>
+  <MsgBoxInfoHeader>Спостереження. Інфо</MsgBoxInfoHeader>
+  <MsgBoxQueryHeader>Спостереження. Запит</MsgBoxQueryHeader>
+  <MsgBoxErrorHeader>Спостереження. Помилка</MsgBoxErrorHeader>
+  <MsgTextNoLocalizationXML>Не знайдено файл локалізації, або виникла ошибка при його завантаженні\nВікно розрахунку видимоста може бути локалізовано не повністью</MsgTextNoLocalizationXML>
+
+  <MainW_tbpPoints_Text>Пункти С</MainW_tbpPoints_Text>
+  <MainW_tabPage5_Text>Параметри ПС</MainW_tabPage5_Text>
+  <MainW_label19_Text>Висота над поверхнею, м</MainW_label19_Text>
+  <MainW_lblMinDistance_Text>до</MainW_lblMinDistance_Text>
+  <MainW_lblMaxDistance_Text>Відст., м від</MainW_lblMaxDistance_Text>
+  <MainW_label52_Text>до</MainW_label52_Text>
+  <MainW_label18_Text>Верт вугол від</MainW_label18_Text>
+  <MainW_label13_Text>до</MainW_label13_Text>
+  <MainW_label14_Text>Азимут від</MainW_label14_Text>
+  <MainW_tlbbGetCoord_ToolTipText>Получить координаты с карты</MainW_tlbbGetCoord_ToolTipText>
+  <MainW_tlbbCopyCoord_ToolTipText>Скопировать</MainW_tlbbCopyCoord_ToolTipText>
+  <MainW_tlbbPasteCoord_ToolTipText>Вставить</MainW_tlbbPasteCoord_ToolTipText>
+  <MainW_tlbbShowCoord_ToolTipText>Показать на карте</MainW_tlbbShowCoord_ToolTipText>
+  <MainW_label8_Text>Координати</MainW_label8_Text>
+  <MainW_label10_Text>Належн</MainW_label10_Text>
+  <MainW_label11_Text>Тип</MainW_label11_Text>
+  <MainW_label24_Text>Оператор</MainW_label24_Text>
+  <MainW_label27_Text>Дата</MainW_label27_Text>
+  <MainW_label20_Text>Назва</MainW_label20_Text>
+  <MainW_label15_Text>верт.</MainW_label15_Text>
+  <MainW_label16_Text>вугол бачення гориз</MainW_label16_Text>
+  <MainW_label58_Text>азимут осн. оси, дгр</MainW_label58_Text>
+  <MainW_label55_Text>верт.</MainW_label55_Text>
+  <MainW_label56_Text>поворот камеры, дгр, гориз</MainW_label56_Text>
+  <MainW_label7_Text>Параметри ПС</MainW_label7_Text>
+  <MainW_buttonSaveOPoint_Tag>зберегти параметри ПС</MainW_buttonSaveOPoint_Tag>
+  <MainW_tlbbShowPoint_ToolTipText>Показать пункт на карте</MainW_tlbbShowPoint_ToolTipText>
+  <MainW_tlbbAddNewPoint_ToolTipText>Добавить новый пункт</MainW_tlbbAddNewPoint_ToolTipText>
+  <MainW_tlbbAddObserPointLayer_ToolTipText>Добавить слой точек наблюдения</MainW_tlbbAddObserPointLayer_ToolTipText>
+  <MainW_tlbbRemovePoint_ToolTipText>Удалить точку наблюдения</MainW_tlbbRemovePoint_ToolTipText>
+  <MainW_chckFilterDate_Text>дата</MainW_chckFilterDate_Text>
+  <MainW_chckFilterAffiliation_Text>належність</MainW_chckFilterAffiliation_Text>
+  <MainW_chckFilterType_Text>тип</MainW_chckFilterType_Text>
+  <MainW_label3_Text>Належн</MainW_label3_Text>
+  <MainW_label2_Text>Тип</MainW_label2_Text>
+  <MainW_tbpObservObjects_Text>Області Н</MainW_tbpObservObjects_Text>
+  <MainW_label39_Text>дата створення</MainW_label39_Text>
+  <MainW_label5_Text>оператор</MainW_label5_Text>
+  <MainW_label29_Text>назва</MainW_label29_Text>
+  <MainW_label31_Text>належність</MainW_label31_Text>
+  <MainW_label1_Text>група</MainW_label1_Text>
+  <MainW_label4_Text>Характеристики ОН</MainW_label4_Text>
+  <MainW_button1_Tag>Зберегти зміни</MainW_button1_Tag>
+  <MainW_toolBarButton31_ToolTipText>Показати ОН на карті </MainW_toolBarButton31_ToolTipText>
+  <MainW_toolBarButton32_ToolTipText>Підсвітити ОН на карті</MainW_toolBarButton32_ToolTipText>
+  <MainW_toolBarButton34_ToolTipText>видилити ОН</MainW_toolBarButton34_ToolTipText>
+  <MainW_toolBarButton29_ToolTipText>поновити список ОН</MainW_toolBarButton29_ToolTipText>
+  <MainW_chckObservObjAffiliation_Text>належність</MainW_chckObservObjAffiliation_Text>
+  <MainW_chckObservObjGroup_Text>група</MainW_chckObservObjGroup_Text>
+  <MainW_chckObservObjTitle_Text>назва</MainW_chckObservObjTitle_Text>
+  <MainW_label28_Text>належність</MainW_label28_Text>
+  <MainW_label30_Text>Області нагляду (ОН)</MainW_label30_Text>
+  <MainW_tlbbAddObservObjLayer_Tag>Додати шар ОН до карти</MainW_tlbbAddObservObjLayer_Tag>
+  <MainW_toolBarButton18_ToolTipText>Указать на карте</MainW_toolBarButton18_ToolTipText>
+  <MainW_toolBarButton20_ToolTipText>Обновить</MainW_toolBarButton20_ToolTipText>
+  <MainW_toolBarButton21_ToolTipText>Редактировать</MainW_toolBarButton21_ToolTipText>
+  <MainW_toolBarButton22_ToolTipText>Показать на карте</MainW_toolBarButton22_ToolTipText>
+  <MainW_toolBarButton23_ToolTipText>Показать параметры на карте</MainW_toolBarButton23_ToolTipText>
+  <MainW_toolBarButton24_ToolTipText>Добавить</MainW_toolBarButton24_ToolTipText>
+  <MainW_toolBarButton25_ToolTipText>Удалить</MainW_toolBarButton25_ToolTipText>
+  <MainW_tbpSessions_Text>Завдання</MainW_tbpSessions_Text>
+  <MainW_tbpSessions_ToolTipText>Завдання для розрахунків</MainW_tbpSessions_ToolTipText>
+  <MainW_label45_Text>час закінчення</MainW_label45_Text>
+  <MainW_label44_Text>час старту</MainW_label44_Text>
+  <MainW_label43_Text>час створення</MainW_label43_Text>
+  <MainW_label42_Text>користувач</MainW_label42_Text>
+  <MainW_label46_Text>назва</MainW_label46_Text>
+  <MainW_label40_Text>Інформація про завдання</MainW_label40_Text>
+  <MainW_wizardTask_ToolTipText>сформувати завдання на розрахунок</MainW_wizardTask_ToolTipText>
+  <MainW_removeTask_ToolTipText>видалити інформацію про завдання</MainW_removeTask_ToolTipText>
+  <MainW_label38_Text>стан</MainW_label38_Text>
+  <MainW_label36_Text>Завдання для розрахунків</MainW_label36_Text>
+  <MainW_tbpVisibilityAreas_Text>ОВ</MainW_tbpVisibilityAreas_Text>
+  <MainW_tbpVisibilityAreas_ToolTipText>Області видимості (результати розрахунків)</MainW_tbpVisibilityAreas_ToolTipText>
+  <MainW_labelHeaderVisibilityInfo_Text>Інформація про результат</MainW_labelHeaderVisibilityInfo_Text>
+  <MainW_tlbbZoomToResultRaster_ToolTipText>Показать на карте</MainW_tlbbZoomToResultRaster_ToolTipText>
+  <MainW_tlbbViewParamOnMap_ToolTipText>Показать параметры на карте</MainW_tlbbViewParamOnMap_ToolTipText>
+  <MainW_tlbbAddFromDB_ToolTipText>Добавить</MainW_tlbbAddFromDB_ToolTipText>
+  <MainW_tlbbFullDelete_ToolTipText>видалити звідусіль</MainW_tlbbFullDelete_ToolTipText>
+  <MainW_toolBarButtonRemoveFromSeanse_ToolTipText>видалити з сеансу роботи</MainW_toolBarButtonRemoveFromSeanse_ToolTipText>
+  <MainW_tlbbUpdate_ToolTipText>Обновить</MainW_tlbbUpdate_ToolTipText>
+  <MainW_labelHeaderVisibilityResult_Text>Cписок результатів</MainW_labelHeaderVisibilityResult_Text>
+  <MainW_richTextBox1_Text>при выборе мобильного типа углы нелоступны, высоты недоступны, координаты недоступны, при добавлении дата и время автоматом</MainW_richTextBox1_Text>
+  <MainW_label12_Text>макс</MainW_label12_Text>
+  <MainW_label9_Text>высота над поверхностью, м, мин.</MainW_label9_Text>
+  <MainW_button2_Tag>додати шар ПС до карти</MainW_button2_Tag>
+  <MainW_lblLayer_Text>Пункти спостереження (ПС)</MainW_lblLayer_Text>
+
+
+  <Affiliation_Own>свої</Affiliation_Own>
+  <AffiliationEdit_strangers>чужі</AffiliationEdit_strangers>
+  <AffiliationEdit_neutral>нейтральні</AffiliationEdit_neutral>
+  <AffiliationEdit_unknown>невідомі</AffiliationEdit_unknown>
+
+  <State_Calculate_all>всі</State_Calculate_all>
+  <State_Calculate_queue>у черзі</State_Calculate_queue>
+  <StateFilter_Calculate_run>виконується</StateFilter_Calculate_run>
+  <StateFilter_Calculate_finished>закінчено</StateFilter_Calculate_finished>
+  <StateFilter_Calculate_stopped>зупинено</StateFilter_Calculate_stopped>
 
 </SP_Visibility>

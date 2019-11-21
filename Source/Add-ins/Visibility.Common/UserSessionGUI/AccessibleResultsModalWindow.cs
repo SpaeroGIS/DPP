@@ -35,12 +35,13 @@ namespace MilSpace.Visibility
 
         private void SetListView()
         {
-            lvProfilesSets.Columns.Add(new ColumnHeader
-            {
-                Name = "NameCol",
-                Width = (int)(lvProfilesSets.Width * 0.32),
-                Text = "Name"
-            });
+            lvProfilesSets.Columns.Add(
+                new ColumnHeader
+                {
+                    Name = "NameCol",
+                    Width = (int)(lvProfilesSets.Width * 0.32),
+                    Text = "Name"
+                });
             lvProfilesSets.Columns.Add(new ColumnHeader
             {
                 Name = "CreatorCol",

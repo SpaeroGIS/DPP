@@ -33,10 +33,34 @@ namespace MilSpace.Profile.ModalWindows
 
         private void SetListView()
         {
-            lvProfilesSets.Columns.Add(new ColumnHeader { Name = "NameCol", Width = (int)(lvProfilesSets.Width * 0.32), Text = LocalizationConstants.ProfilesSetsNameColHeader });
-            lvProfilesSets.Columns.Add(new ColumnHeader { Name = "CreatorCol", Width = (int)(lvProfilesSets.Width * 0.25), Text = LocalizationConstants.ProfilesSetsCreatorColHeader});
-            lvProfilesSets.Columns.Add(new ColumnHeader { Name = "DateCol",  Width = (int)(lvProfilesSets.Width * 0.15), Text = LocalizationConstants.ProfilesSetsDateColHeader});
-            lvProfilesSets.Columns.Add(new ColumnHeader { Name = "TypeCol", Width = (int)(lvProfilesSets.Width * 0.12), Text = LocalizationConstants.ProfilesSetsTypeColHeader});
+            lvProfilesSets.Columns.Add(
+                new ColumnHeader
+                {
+                    Name = "NameCol",
+                    Width = (int)(lvProfilesSets.Width * 0.32),
+                    Text = LocalizationConstants.ProfilesSetsNameColHeader
+                });
+            lvProfilesSets.Columns.Add(
+                new ColumnHeader
+                {
+                    Name = "CreatorCol",
+                    Width = (int)(lvProfilesSets.Width * 0.25),
+                    Text = LocalizationConstants.ProfilesSetsCreatorColHeader
+                });
+            lvProfilesSets.Columns.Add(
+                new ColumnHeader
+                {
+                    Name = "DateCol",
+                    Width = (int)(lvProfilesSets.Width * 0.15),
+                    Text = LocalizationConstants.ProfilesSetsDateColHeader
+                });
+            lvProfilesSets.Columns.Add(
+                new ColumnHeader
+                {
+                    Name = "TypeCol",
+                    Width = (int)(lvProfilesSets.Width * 0.12),
+                    Text = LocalizationConstants.ProfilesSetsTypeColHeader
+                });
 
             var occupiedSpace = 0;
 
@@ -47,7 +71,13 @@ namespace MilSpace.Profile.ModalWindows
 
             var colSize = lvProfilesSets.Width - occupiedSpace - SystemInformation.VerticalScrollBarWidth;
 
-            lvProfilesSets.Columns.Add(new ColumnHeader { Name = "IsSharedCol", Width = colSize, Text = LocalizationConstants.ProfilesSetsSharedColHeader});
+            lvProfilesSets.Columns.Add(
+                new ColumnHeader
+                {
+                    Name = "IsSharedCol",
+                    Width = colSize,
+                    Text = LocalizationConstants.ProfilesSetsSharedColHeader
+                });
 
             lvProfilesSets.View = View.Details;
         }

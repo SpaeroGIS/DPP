@@ -99,9 +99,6 @@ namespace MilSpace.Profile.Localization
         private static string ErrorHappendTextMessageKey = "msgErrorHappendText";
         private static string DeleteProfaileMessageKey = "msgDeleteProfaileText";
 
-
-
-
         //ProfilesTreeModalWindow
         private static string PointsNodeTextKey = "tvProfilesPointsNodeText";
         private static string FunNodeTextKey = "tvProfilesFunNodeText";

@@ -48,7 +48,8 @@ namespace MilSpace.Profile
         List<ProfileSession> _fanProfiles = new List<ProfileSession>();
         List<ProfileSession> _graphicProfiles = new List<ProfileSession>();
 
-        Dictionary<ProfileSettingsTypeEnum, List<ProfileSession>> profileLists = new Dictionary<ProfileSettingsTypeEnum, List<ProfileSession>>
+        Dictionary<ProfileSettingsTypeEnum, List<ProfileSession>> profileLists = 
+            new Dictionary<ProfileSettingsTypeEnum, List<ProfileSession>>
         {
             {ProfileSettingsTypeEnum.Points, new List<ProfileSession>() }
 
@@ -217,8 +218,9 @@ namespace MilSpace.Profile
             removeProfile.Enabled = addProfileToGraph.Enabled = toolPanOnMap.Enabled = toolBtnFlash.Enabled = treeViewselectedIds.ProfileSessionId > 0;
 
             var profileType = GetProfileTypeFromNode();
-            setProfileSettingsToCalc.Enabled = (addProfileToGraph.Enabled &&
-                                                    (profileType == ProfileSettingsTypeEnum.Points || profileType == ProfileSettingsTypeEnum.Fun));
+            setProfileSettingsToCalc.Enabled = 
+                (addProfileToGraph.Enabled &&
+                (profileType == ProfileSettingsTypeEnum.Points || profileType == ProfileSettingsTypeEnum.Fun));
 
             openGraphWindow.Enabled = !controller.MilSpaceProfileGraphsController.IsWindowVisible;
 
@@ -367,7 +369,10 @@ namespace MilSpace.Profile
                     {
                         linePickCoordFirst.Pushed = false;
                         var message = LocalizationConstants.PickCoordinatesToolMessage;
-                        MessageBox.Show(message, "Profile Calc", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        MessageBox.Show(
+                            message, 
+                            "Profile Calc", 
+                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         break;
                     }
                     activeButtton = ProfileSettingsPointButtonEnum.PointsFist;
@@ -925,7 +930,10 @@ namespace MilSpace.Profile
             }
 
             //TODO - Localize message
-            MessageBox.Show("Значення повинно бути быльше за 0 та меньше 360", "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(
+                "Значення повинно бути быльше за 0 та меньше 360", 
+                "MilSpace", 
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             athimuthControl.Focus();
         }
@@ -1056,7 +1064,10 @@ namespace MilSpace.Profile
             {
                 if (!controller.RemoveProfilesFromUserSession())
                 {
-                    MessageBox.Show("There was an error. Look at the log file for more detail", "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show(
+                        "There was an error. Look at the log file for more detail", 
+                        "MilSpace", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }
@@ -1216,7 +1227,10 @@ namespace MilSpace.Profile
 
             if (!res.HasValue)
             {
-                MessageBox.Show(LocalizationConstants.NotAllowedToShareMessage, "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    LocalizationConstants.NotAllowedToShareMessage, 
+                    "MilSpace", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
