@@ -123,7 +123,12 @@ namespace MilSpace.Visualization3D
                 //Buttons
                 this.GenerateButton.Text = context.GenerateButton;
             }
-            catch { MessageBox.Show("No Localization.xml found or there is an error during loading. Coordinates Converter window is not fully localized."); }
+            catch
+            {
+                MessageBox.Show(
+                    "No Localization.xml found or there is an error during loading. Coordinates Converter window is not fully localized."
+                    );
+            }
         }
 
         private void OnDocumentOpenFillDropdowns()

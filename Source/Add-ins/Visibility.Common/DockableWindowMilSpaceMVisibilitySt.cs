@@ -4,12 +4,15 @@ using ESRI.ArcGIS.Editor;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geometry;
+
 using MilSpace.Core;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Tools;
 using MilSpace.Visibility.DTO;
 using MilSpace.Visibility.ViewController;
+using MilSpace.Visibility.Localization;
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -41,22 +44,127 @@ namespace MilSpace.Visibility
         public DockableWindowMilSpaceMVisibilitySt(object hook, ObservationPointsController controller)
         {
             InitializeComponent();
+            LocalizeComponent();
             this._observPointsController = controller;
             this._observPointsController.SetView(this);
             this.Hook = hook;
             SetVisibilitySessionsController();
-
         }
 
+        private void LocalizeComponent()
+        {
+            try
+            {
+                //LocalizationContext.Instance.FindLocalizedElement("", "");
+                this.Text = LocalizationContext.Instance.FindLocalizedElement("WindowCaption", "Спостереження. Модуль видимості");
+                this.tbpPoints.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_tbpPoints_Text", "Пункти С");
+                this.tabPage5.Text =  LocalizationContext.Instance.FindLocalizedElement("MainW_tabPage5_Text", "Параметри ПС)" );
+                this.label19.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label19_Text", "Висота над поверхнею, м");
+                this.lblMinDistance.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_lblMinDistance_Text", "до");
+                this.lblMaxDistance.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_lblMaxDistance_Text", "Відст., м від");
+                this.label52.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label52_Text", "до");
+                this.label18.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label18_Text", "Верт вугол від" );
+                this.label13.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label13_Text", "до" );
+                this.label14.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label14_Text", "Азимут від" );
+                this.tlbbGetCoord.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbGetCoord_ToolTipText", "Получить координаты с карты" );
+                this.tlbbCopyCoord.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbCopyCoord_ToolTipText", "Скопировать" );
+                this.tlbbPasteCoord.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbPasteCoord_ToolTipText", "Вставить" );
+                this.tlbbShowCoord.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbShowCoord_ToolTipText", "Показать на карте" );
+                this.label8.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label8_Text", "Координати" );
+                this.label10.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label10_Text", "Належн" );
+                this.label11.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label11_Text", "Тип" );
+                this.label24.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label24_Text", "Оператор" );
+                this.label27.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label27_Text", "Дата" );
+                this.label20.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label20_Text", "Назва" );
+                this.label15.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label15_Text", "верт." );
+                this.label16.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label16_Text", "вугол бачення гориз" );
+                this.label58.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label58_Text", "азимут осн. оси, дгр" );
+                this.label55.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label55_Text", "верт" );
+                this.label56.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label56_Text", "поворот камеры, дгр, гориз." );
+                this.label7.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label7_Text", "Параметри ПС" );
+                this.buttonSaveOPoint.Tag = LocalizationContext.Instance.FindLocalizedElement("MainW_buttonSaveOPoint_Tag", "зберегти параметри ПС" );
+                this.tlbbShowPoint.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbShowPoint_ToolTipText", "показати ПС на карті" );
+                this.tlbbAddNewPoint.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbAddNewPoint_ToolTipText", "добавити новий ПС" );
+                this.tlbbAddObserPointLayer.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbAddObserPointLayer_ToolTipText", "добавити шар пунктів спостереження" );
+                this.tlbbRemovePoint.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbRemovePoint_ToolTipText", "видалити ПС" );
+                this.chckFilterDate.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_chckFilterDate_Text", "дата" );
+                this.chckFilterAffiliation.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_chckFilterAffiliation_Text", "належність" );
+                this.chckFilterType.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_chckFilterType_Text", "тип" );
+                this.label3.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label3_Text", "Належн" );
+                this.label2.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label2_Text", "Тип" );
+                this.tbpObservObjects.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_tbpObservObjects_Text", "Області Н" );
+                this.label39.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label39_Text", "дата створення" );
+                this.label5.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label5_Text", "оператор" );
+                this.label29.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label29_Text", "назва" );
+                this.label31.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label31_Text", "належність" );
+                this.label1.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label1_Text", "група" );
+                this.label4.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label4_Text", "Характеристики ОН" );
+                this.button1.Tag = LocalizationContext.Instance.FindLocalizedElement("MainW_button1_Tag", "Зберегти зміни" );
+                this.toolBarButton31.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_toolBarButton31_ToolTipText", "Показати ОН на карті " );
+                this.toolBarButton32.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_toolBarButton32_ToolTipText", "Підсвітити ОН на карті" );
+                this.toolBarButton34.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_toolBarButton34_ToolTipText", "видилити ОН" );
+                this.toolBarButton29.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_toolBarButton29_ToolTipText", "поновити список ОН" );
+                this.chckObservObjAffiliation.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_chckObservObjAffiliation_Text", "належність" );
+                this.chckObservObjGroup.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_chckObservObjGroup_Text", "група" );
+                this.chckObservObjTitle.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_chckObservObjTitle_Text", "назва" );
+                this.label28.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label28_Text", "належність" );
+                this.label30.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label30_Text", "Області нагляду (ОН)" );
+                this.tlbbAddObservObjLayer.Tag = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbAddObservObjLayer_Tag", "Додати шар ОН до карти" );
+                this.toolBarButton18.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_toolBarButton18_ToolTipText", "Вказать на карті" );
+                this.toolBarButton20.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_toolBarButton20_ToolTipText", "Побновити" );
+                this.toolBarButton21.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_toolBarButton21_ToolTipText", "Редагувати" );
+                this.toolBarButton22.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_toolBarButton22_ToolTipText", "Показати на карті" );
+                this.toolBarButton23.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_toolBarButton23_ToolTipText", "Показати параметри на карті" );
+                this.toolBarButton24.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_toolBarButton24_ToolTipText", "Додати" );
+                this.toolBarButton25.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_toolBarButton25_ToolTipText", "Видалити" );
+                this.tbpSessions.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_tbpSessions_Text", "Завдання" );
+                this.tbpSessions.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tbpSessions_ToolTipText", "Завдання для розрахунків" );
+                this.label45.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label45_Text", "час закінчення" );
+                this.label44.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label44_Text", "час старту" );
+                this.label43.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label43_Text", "час створення" );
+                this.label42.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label42_Text", "користувач" );
+                this.label46.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label46_Text", "назва" );
+                this.label40.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label40_Text", "Інформація про завдання" );
+                this.wizardTask.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_wizardTask_ToolTipText", "сформувати завдання на розрахунок" );
+                this.removeTask.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_removeTask_ToolTipText", "видалити інформацію про завдання" );
+                this.label38.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label38_Text", "стан" );
+                this.label36.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label36_Text", "Завдання для розрахунків" );
+                this.tbpVisibilityAreas.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_tbpVisibilityAreas_Text", "ОВ" );
+                this.tbpVisibilityAreas.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tbpVisibilityAreas_ToolTipText", "Області видимості (результати розрахунків)" );
+                this.labelHeaderVisibilityInfo.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_labelHeaderVisibilityInfo_Text", "Інформація про результат" );
+                this.tlbbZoomToResultRaster.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbZoomToResultRaster_ToolTipText", "Показати" );
+                this.tlbbViewParamOnMap.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbViewParamOnMap_ToolTipText", "Показати параметри на карті" );
+                this.tlbbAddFromDB.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbAddFromDB_ToolTipText", "Додати" );
+                this.tlbbFullDelete.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbFullDelete_ToolTipText", "видалити звідусіль" );
+                this.toolBarButtonRemoveFromSeanse.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_toolBarButtonRemoveFromSeanse_ToolTipText", "видалити з сеансу роботи" );
+                this.tlbbUpdate.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbUpdate_ToolTipText", "Поновити" );
+                this.labelHeaderVisibilityResult.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_labelHeaderVisibilityResult_Text", "Список результатів");
+                this.richTextBox1.Text = LocalizationContext.Instance.FindLocalizedElement(
+                    "MainW_richTextBox1_Text", 
+                    "при выборе мобильного типа углы нелоступны, высоты недоступны, координаты недоступны, при добавлении дата и время автоматом" );
+                this.label12.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label12_Text", "макс" );
+                this.label9.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label9_Text", "висота над поверхнею (м) мин");
+                this.button2.Tag = LocalizationContext.Instance.FindLocalizedElement("MainW_button2_Tag", "додати шар ПС до карти" );
+                this.lblLayer.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_lblLayer_Text", "Пункти спостереження (ПС)" );
+
+
+            }
+            catch
+            {
+                string sMsgText = LocalizationContext.Instance.FindLocalizedElement(
+                    "MsgTextNoLocalizationXML",
+                    "No Localization xml-file found or there is an error during loading/nVisibility window is not fully localized");
+                MessageBox.Show(
+                    sMsgText,
+                    LocalizationContext.Instance.MsgBoxInfoHeader,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
+        }
         public DockableWindowMilSpaceMVisibilitySt(object hook)
         {
             InitializeComponent();
             this.Hook = hook;
-        }
-
-        private void LocalizeComponents()
-        {
-            tlbbAddObservObjLayer.Text = "Додати шар ОН";
         }
 
         protected override void OnLoad(EventArgs e)
@@ -607,10 +715,14 @@ namespace MilSpace.Visibility
 
                         if (!Regex.IsMatch(xCoord.Text, @"^([-]?[\d]{1,2}\,\d+)$"))
                         {
+                            string sMsgText = LocalizationContext.Instance.FindLocalizedElement(
+                                "MsgInvalidCoordinatesDD",
+                                "недійсні дані \nПотрібні коордінати представлені у СК WGS-84, десяткові градуси");
                             MessageBox.Show(
-                                "Invalid data.\nПотрібні коордінати представлені у СК WGS-84, десяткові градуси",
-                                "Спостереження",
-                                MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                                sMsgText,
+                                LocalizationContext.Instance.MsgBoxErrorHeader,
+                                MessageBoxButtons.OK, 
+                                MessageBoxIcon.Error);
                             xCoord.Text = point.X.ToString();
 
                             return false;
@@ -627,10 +739,15 @@ namespace MilSpace.Visibility
 
                         if (!Regex.IsMatch(yCoord.Text, @"^([-]?[\d]{1,2}\,\d+)$"))
                         {
+                            string sMsgText = LocalizationContext.Instance.FindLocalizedElement(
+                                "MsgInvalidCoordinatesDD",
+                                "Недійсні дані \nПотрібні коордінати представлені у СК WGS-84, десяткові градуси");
                             MessageBox.Show(
-                                "Invalid data.\nПотрібні коордінати представлені у СК WGS-84, десяткові градуси",
-                                "Спостереження",
-                                MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                                sMsgText,
+                                LocalizationContext.Instance.MsgBoxErrorHeader,
+                                MessageBoxButtons.OK, 
+                                MessageBoxIcon.Error);
+
                             yCoord.Text = point.Y.ToString();
 
                             return false;
@@ -761,10 +878,14 @@ namespace MilSpace.Visibility
             }
 
             textBox.Text = defaultValue;
+            string sMsgText = LocalizationContext.Instance.FindLocalizedElement(
+                "MsgErrorDataRange", 
+                $"Invalid data.\nЗначення має бути від {lowValue} до {upperValue}");
             MessageBox.Show(
-                $"Invalid data.\nЗначення має бути від {lowValue} до {upperValue}",
-                "Спостереження",
-                MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                sMsgText,
+                LocalizationContext.Instance.MsgBoxErrorHeader,
+                MessageBoxButtons.OK, 
+                MessageBoxIcon.Error);
 
             return false;
         }
@@ -780,17 +901,25 @@ namespace MilSpace.Visibility
                     return height;
                 }
 
+                string sMsgText = LocalizationContext.Instance.FindLocalizedElement(
+                    "MsgErrorValueLassNul",
+                    "Недійсні дані \nЗначення не має бути меньш за 0");
                 MessageBox.Show(
-                    "Invalid data.\nЗначення не має бути меньш за 0",
-                    "Спостереження",
-                    MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                    sMsgText, 
+                    LocalizationContext.Instance.MsgBoxErrorHeader,
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error);
             }
             else
             {
+                string sMsgText = LocalizationContext.Instance.FindLocalizedElement(
+                    "MsgErrorValueNotNumeric",
+                    "Недійсні дані \nПотрыбно вказати число число");
                 MessageBox.Show(
-                    "Invalid data.\nВкажить число",
-                    "Спостереження",
-                    MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                    sMsgText,
+                    LocalizationContext.Instance.MsgBoxErrorHeader,
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error);
             }
 
             heightTextBox.Text = defaultValue;
@@ -818,10 +947,14 @@ namespace MilSpace.Visibility
 
         private void RemovePoint()
         {
+            string sMsgText = LocalizationContext.Instance.FindLocalizedElement(
+                "MsgQueryDeletePointPS", 
+                "Ви дійсно бажаєте видалити точку (ПС)?");
             var result = MessageBox.Show(
-                "Ви дійсно бажаєте видалити точку (ПС)?",
-                "Спостереження",
-                MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                sMsgText, 
+                LocalizationContext.Instance.MsgBoxInfoHeader, 
+                MessageBoxButtons.OK, 
+                MessageBoxIcon.Information);
 
             if (result == DialogResult.OK)
             {
@@ -946,9 +1079,11 @@ namespace MilSpace.Visibility
         private void SetVisibilitySessionsTableView()
         {
             dgvVisibilitySessions.Columns["Id"].Visible = false;
-            dgvVisibilitySessions.Columns["Name"].HeaderText = "Назва";
+            dgvVisibilitySessions.Columns["Name"].HeaderText = 
+                LocalizationContext.Instance.FindLocalizedElement("HeaderNameGridSessionResult", "Назва");
             dgvVisibilitySessions.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvVisibilitySessions.Columns["State"].HeaderText = "Стан";
+            dgvVisibilitySessions.Columns["State"].HeaderText =
+                LocalizationContext.Instance.FindLocalizedElement("HeaderStateGridSessionResult", "Стан");
             dgvVisibilitySessions.Columns["State"].Width = 100;
         }
 
@@ -964,8 +1099,10 @@ namespace MilSpace.Visibility
             tbVisibilitySessionName.Text = session.Name;
             tbVisibilitySessionCreator.Text = session.UserName;
             tbVisibilitySessionCreated.Text = session.Created.Value.ToString(Helper.DateFormat);
-            tbVisibilitySessionStarted.Text = session.Started.HasValue ? session.Started.Value.ToString(Helper.DateFormat) : string.Empty;
-            tbVisibilitySessionFinished.Text = session.Finished.HasValue ? session.Finished.Value.ToString(Helper.DateFormat) : string.Empty;
+            tbVisibilitySessionStarted.Text = 
+                session.Started.HasValue ? session.Started.Value.ToString(Helper.DateFormat) : string.Empty;
+            tbVisibilitySessionFinished.Text = 
+                session.Finished.HasValue ? session.Finished.Value.ToString(Helper.DateFormat) : string.Empty;
 
             wizardTask.Enabled = _observPointsController.IsObservObjectsExists() && _observPointsController.IsObservPointsExists();
         }
@@ -1021,11 +1158,14 @@ namespace MilSpace.Visibility
         private void SetObservObjectsTableView()
         {
             dgvObservObjects.Columns["Id"].Visible = false;
-            dgvObservObjects.Columns["Title"].HeaderText = "Назва";
+            dgvObservObjects.Columns["Title"].HeaderText = 
+                LocalizationContext.Instance.FindLocalizedElement("HeaderNameGridON", "Назва");
             dgvObservObjects.Columns["Title"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvObservObjects.Columns["Affiliation"].HeaderText = "Належність";
+            dgvObservObjects.Columns["Affiliation"].HeaderText =
+                LocalizationContext.Instance.FindLocalizedElement("HeaderAfilGridON", "Належність");
             dgvObservObjects.Columns["Affiliation"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dgvObservObjects.Columns["Group"].HeaderText = "Група";
+            dgvObservObjects.Columns["Group"].HeaderText =
+                LocalizationContext.Instance.FindLocalizedElement("HeaderGroupGridON", "Група");
             dgvObservObjects.Columns["Group"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
 
             dgvObservObjects.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -1125,12 +1265,14 @@ namespace MilSpace.Visibility
 
             if (enabled)
             {
-                isGroupedLayerExists = _visibilitySessionsController.IsResultsLayerExist(tvResults.SelectedNode.Tag.ToString(), ActiveView);
-                isResultsShared = _visibilitySessionsController.IsResultsShared(tvResults.SelectedNode.Tag.ToString());
+                isGroupedLayerExists = 
+                    _visibilitySessionsController.IsResultsLayerExist(tvResults.SelectedNode.Tag.ToString(), ActiveView);
+                isResultsShared = 
+                    _visibilitySessionsController.IsResultsShared(tvResults.SelectedNode.Tag.ToString());
             }
 
             toolBarVisibleResults.Buttons["tlbbZoomToResultRaster"].Enabled = isGroupedLayerExists;
-            // toolBarVisibleResults.Buttons["tlbbViewParamOnMap"].Enabled = enabled;
+           // toolBarVisibleResults.Buttons["tlbbViewParamOnMap"].Enabled = enabled;
             toolBarVisibleResults.Buttons["toolBarButtonViewOnMap"].Enabled = enabled && !isGroupedLayerExists;
             toolBarVisibleResults.Buttons["tlbbFullDelete"].Enabled = enabled;
             toolBarVisibleResults.Buttons["toolBarButtonRemoveFromSeanse"].Enabled = enabled;
@@ -1323,7 +1465,14 @@ namespace MilSpace.Visibility
                     }
                     else
                     {
-                        MessageBox.Show("Invalid format");
+                        string sMsgText = LocalizationContext.Instance.FindLocalizedElement(
+                            "MsgInvalidCoordinatesDD",
+                            "недійсні дані \nПотрібні коордінати представлені у СК WGS-84, десяткові градуси");
+                        MessageBox.Show(
+                            sMsgText,
+                            LocalizationContext.Instance.MsgBoxErrorHeader,
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);                            
                     }
 
                     break;
@@ -1392,19 +1541,27 @@ namespace MilSpace.Visibility
         {
             if (e.Button == removeTask)
             {
+                string sMsgText = LocalizationContext.Instance.FindLocalizedElement(
+                    "MsgQueryToDeleteResultFromSession",
+                    "Ви дійсно бажаєте видалити результат розрахунку з поточного сеансу?");
                 var result = MessageBox.Show(
-                    "Ви дійсно бажаєте видалити результат розрахунку з поточного сеансу?",
-                    "Спостереження",
-                    MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                    sMsgText, 
+                    LocalizationContext.Instance.MsgBoxQueryHeader, 
+                    MessageBoxButtons.OKCancel, 
+                    MessageBoxIcon.Question);
 
                 if (result == DialogResult.OK)
                 {
                     if (!RemoveSelectedSession())
                     {
+                        string sMsgText1 = LocalizationContext.Instance.FindLocalizedElement(
+                            "MsgWarningToDeleteResultFromSession",
+                            "Неможливо видалити результат розрахунку видимісті поточної сеансу");
                         MessageBox.Show(
-                            "Неможливо видалити результат розрахунку видимісті поточної сеансу",
-                            "Спостереження",
-                            MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                            sMsgText1, 
+                            LocalizationContext.Instance.MsgBoxWarningHeader,
+                            MessageBoxButtons.OK, 
+                            MessageBoxIcon.Warning);
                     }
                 }
             }
@@ -1429,11 +1586,14 @@ namespace MilSpace.Visibility
 
                     if (!clculated)
                     {
-                        //Localize message
+                        string sMsgText = LocalizationContext.Instance.FindLocalizedElement(
+                            "MsgErrorCalculateVisibility",
+                            "Розрахунок скінчився з помилкою\nДля перегляду повної інформації зверніться до журналу роботи");
                         MessageBox.Show(
-                            "Розрахунок скінчився з помилкою\nДля перегляду повної інформації зверніться до журналу роботи",
-                            "Спостереження",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            sMsgText, 
+                            LocalizationContext.Instance.MsgBoxErrorHeader, 
+                            MessageBoxButtons.OK, 
+                            MessageBoxIcon.Error);
                     }
 
                     _visibilitySessionsController.UpdateVisibilitySessionsList(true);
@@ -1521,10 +1681,14 @@ namespace MilSpace.Visibility
         {
             if (e.Button.Name == tlbbFullDelete.Name)
             {
+                string sMsgText = LocalizationContext.Instance.FindLocalizedElement(
+                    "MsgQueryDeleteResultFull",
+                    "Ви дійсно бажаєте повністтю видалити результат розрахунку?");
                 var result = MessageBox.Show(
-                    "Ви дійсно бажаєте повністтю видалити результат розрахунку?",
-                    "Спостереження",
-                    MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                    sMsgText, 
+                    LocalizationContext.Instance.MsgBoxQueryHeader, 
+                    MessageBoxButtons.OKCancel, 
+                    MessageBoxIcon.Question);
 
                 if (result == DialogResult.OK)
                 {
@@ -1533,10 +1697,14 @@ namespace MilSpace.Visibility
 
                     if (!isRemovingSuccessfull)
                     {
+                        string sMsgText1 = LocalizationContext.Instance.FindLocalizedElement(
+                            "MsgWarningDeleteResultFull",
+                            "Неможливо повністтю видалити результат розрахунку");
                         MessageBox.Show(
-                            "Неможливо повністтю видалити результат розрахунку",
-                            "Спостереження",
-                            MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                            sMsgText1, 
+                            LocalizationContext.Instance.MsgBoxWarningHeader,
+                            MessageBoxButtons.OK, 
+                            MessageBoxIcon.Warning);
                     }
                     else
                     {
@@ -1550,11 +1718,14 @@ namespace MilSpace.Visibility
 
             if (e.Button.Name == toolBarButtonRemoveFromSeanse.Name)
             {
-
+                string sMsgText1 = LocalizationContext.Instance.FindLocalizedElement(
+                    "MsgQueryDeleteResultFromSession",
+                    "Ви дійсно бажаєте видалити результат розрахунку?");
                 var result = MessageBox.Show(
-                    "Ви дійсно бажаєте видалити результат розрахунку?",
-                    "Спостереження",
-                    MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                    "Ви дійсно бажаєте видалити результат розрахунку?", 
+                    LocalizationContext.Instance.MsgBoxQueryHeader, 
+                    MessageBoxButtons.OKCancel, 
+                    MessageBoxIcon.Question);
 
                 if (result == DialogResult.OK)
                 {
@@ -1572,17 +1743,26 @@ namespace MilSpace.Visibility
                 if (isShared)
                 {
                     SetVisibilityResultsButtonsState(true);
+
+                    string sMsgText1 = LocalizationContext.Instance.FindLocalizedElement(
+                        "MsgInfoSetResultShare",
+                        "Доступ до результату для усіх користувачів встановлено");
                     MessageBox.Show(
-                        "Доступ для усіх користувачів встановлено",
-                        "Спостереження. Встановити доступ",
-                        MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                        sMsgText1, 
+                        LocalizationContext.Instance.MsgBoxInfoHeader,
+                        MessageBoxButtons.OK, 
+                        MessageBoxIcon.Information);
                 }
                 else
                 {
+                    string sMsgText1 = LocalizationContext.Instance.FindLocalizedElement(
+                        "MsgInfoSetResultShareAgain",
+                        "Доступ до результату для усіх користувачів вже встановлено");
                     MessageBox.Show(
-                        "Доступ для усіх користувачів вже встановлено",
-                        "Спостереження. Встановити доступ",
-                        MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                        sMsgText1,
+                        LocalizationContext.Instance.MsgBoxInfoHeader,
+                        MessageBoxButtons.OK, 
+                        MessageBoxIcon.Information);
                 }
             }
 
@@ -1611,10 +1791,14 @@ namespace MilSpace.Visibility
 
                         if (!operationResult)
                         {
+                            string sMsgText1 = LocalizationContext.Instance.FindLocalizedElement(
+                                "MsgWarninsNoSetPartResultToSession",
+                                "Частина результатів розрахунку не може бути добавлена до поточного сеансу");
                             MessageBox.Show(
-                                "Частина результатів розрахунку не може бути добавлена до поточного сеансу",
-                                "Спостереження. Попередження",
-                                MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                                sMsgText1, 
+                                LocalizationContext.Instance.MsgBoxWarningHeader,
+                                MessageBoxButtons.OK, 
+                                MessageBoxIcon.Warning);
                         }
                     }
                 }
