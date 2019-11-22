@@ -32,7 +32,6 @@
   <CalcFourthTypeDescriptionShort>VP</CalcFourthTypeDescriptionShort>
   <CalcFourthTypeDescription>Аналіз результатів спостереження</CalcFourthTypeDescription>
 
-
   <True>Так</True>
   <False>Ні</False>
 
@@ -132,6 +131,7 @@
   <MainW_tlbbAddObservObjLayer_Tag>Додати шар ОН до карти</MainW_tlbbAddObservObjLayer_Tag>
 
 
+  <Affiliation_All>всі</Affiliation_All>
   <Affiliation_Own>свої</Affiliation_Own>
   <AffiliationEdit_strangers>чужі</AffiliationEdit_strangers>
   <AffiliationEdit_neutral>нейтральні</AffiliationEdit_neutral>
@@ -142,5 +142,19 @@
   <StateFilter_Calculate_run>виконується</StateFilter_Calculate_run>
   <StateFilter_Calculate_finished>закінчено</StateFilter_Calculate_finished>
   <StateFilter_Calculate_stopped>зупинено</StateFilter_Calculate_stopped>
+
+  <VisibilityresultSummaryItemsEnum.Name> Назва результату розрахунку</VisibilityresultSummaryItemsEnum.Name>
+  <VisibilityresultSummaryItemsEnum.CalculateCommonVisibilityResult> Розрахувати загальну ОВ</VisibilityresultSummaryItemsEnum.CalculateCommonVisibilityResult>
+  <VisibilityresultSummaryItemsEnum.CalculateSeparatedPoints> Розрахувати поверхні всіх ПН</VisibilityresultSummaryItemsEnum.CalculateSeparatedPoints>
+  <VisibilityresultSummaryItemsEnum.ConvertToPolygon> Конвертувати у полігони</VisibilityresultSummaryItemsEnum.ConvertToPolygon>
+  <VisibilityresultSummaryItemsEnum.ObservationObjects> Обрані області нагляду (ОН)</VisibilityresultSummaryItemsEnum.ObservationObjects>
+  <VisibilityresultSummaryItemsEnum.ObservationPoints> Обрані пункти спостереження (ПН)</VisibilityresultSummaryItemsEnum.ObservationPoints>
+  <VisibilityresultSummaryItemsEnum.Surface> Поверхня для розпрахунку</VisibilityresultSummaryItemsEnum.Surface>
+  <VisibilityresultSummaryItemsEnum.TrimCalculatedSurface> Обрізати розраховані поверхні</VisibilityresultSummaryItemsEnum.TrimCalculatedSurface>
+  <VisibilityresultSummaryItemsEnum.Type> Тип розрахунку</VisibilityresultSummaryItemsEnum.Type>
+
+  <mobilityTypes_All>Всі</mobilityTypes_All> 
+  <mobilityTypes_Mobile>Мобільні</mobilityTypes_Mobile>
+  <mobilityTypes_Stationary>Стаціонарні</mobilityTypes_Stationary>
 
 </SP_Visibility>

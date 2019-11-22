@@ -55,8 +55,8 @@ namespace MilSpace.Visibility
         {
             try
             {
-                //LocalizationContext.Instance.FindLocalizedElement("", "");
-                this.Text = LocalizationContext.Instance.FindLocalizedElement("WindowCaption", "Спостереження. Модуль видимості");
+                this.Text = LocalizationContext.Instance.WindowCaption;
+
                 this.tbpPoints.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_tbpPoints_Text", "Пункти С");
                 this.tabPage5.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_tabPage5_Text", "Параметри ПС)");
                 this.label19.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label19_Text", "Висота над поверхнею, м");
@@ -979,7 +979,10 @@ namespace MilSpace.Visibility
         {
             var selectedPoint = _observPointsController.GetObservPointById(_selectedPointId);
             _observPointsController.UpdateObservPoint(
-                GetObservationPoint(), VisibilityManager.ObservPointFeature, ActiveView, selectedPoint.Objectid
+                GetObservationPoint(), 
+                VisibilityManager.ObservPointFeature, 
+                ActiveView, 
+                selectedPoint.Objectid
                 );
         }
 
