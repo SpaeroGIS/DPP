@@ -1,9 +1,19 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <SP_Visibility xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   
-  <WindowCaption>Спостереження. Модуль видимості</WindowCaption>
+  <WindowCaption>Спостереження. Видимість</WindowCaption>
+  <MessageBoxCaption>Спостереження</MessageBoxCaption>
+  <MessageBoxShareCaption>Спостереження. Встановити доступ</MessageBoxShareCaption>
+  <MessageBoxWarningCaption>Спостереження. Попередження</MessageBoxWarningCaption>
+
+  <ObservPointsTabCaption>Пункти С</ObservPointsTabCaption>
+  <ObservObjTabCaption>Області Н</ObservObjTabCaption>
+  <TasksTabCaption>Завдання</TasksTabCaption>
+  <ResultsTabCaption>ОВ</ResultsTabCaption>
 
   <GenerateButton>Генерувати</GenerateButton>
+  
+  
   <SurfaceLabel>Поверхня</SurfaceLabel>
 
   <PlantsLayerLabel>рослинність</PlantsLayerLabel>
@@ -12,7 +22,14 @@
   <TransportLayerLabel>транспорт</TransportLayerLabel>
   <HydroLayerLabel>гідрографія</HydroLayerLabel>
   <ProfilesLabel>Профілі</ProfilesLabel>
-
+  <SurfacesLabel>Поверхні</SurfacesLabel>
+  <ObservPointsHeaderLabel>Пункти спостереження (ПС)</ObservPointsHeaderLabel>
+  <ObservObjHeaderLabel>Області нагляду (ОН)</ObservObjHeaderLabel>
+  <TasksHeaderLabel>Завдання для розрахунків</TasksHeaderLabel>
+  <ResultsHeaderLabel>Cписок результатів</ResultsHeaderLabel>
+  
+  <Generat3DTabHeader>Проект</Generat3DTabHeader>
+  <ImageTabHeader>Знимок 3-Д сцени</ImageTabHeader>
   <Section>Відрізки</Section>
   <Fun>Віяло</Fun>
   <Primitive>Графіки</Primitive>
@@ -31,7 +48,6 @@
   <CalcTherdTypeDescription>Визначення параметрів пунктів спостереження</CalcTherdTypeDescription>
   <CalcFourthTypeDescriptionShort>VP</CalcFourthTypeDescriptionShort>
   <CalcFourthTypeDescription>Аналіз результатів спостереження</CalcFourthTypeDescription>
-
 
   <True>Так</True>
   <False>Ні</False>
@@ -67,7 +83,6 @@
   <MainW_label55_Text>верт.</MainW_label55_Text>
   <MainW_label56_Text>поворот камеры, дгр, гориз</MainW_label56_Text>
   <MainW_label7_Text>Параметри ПС</MainW_label7_Text>
-  <MainW_buttonSaveOPoint_Tag>зберегти параметри ПС</MainW_buttonSaveOPoint_Tag>
   <MainW_tlbbShowPoint_ToolTipText>Показать пункт на карте</MainW_tlbbShowPoint_ToolTipText>
   <MainW_tlbbAddNewPoint_ToolTipText>Добавить новый пункт</MainW_tlbbAddNewPoint_ToolTipText>
   <MainW_tlbbAddObserPointLayer_ToolTipText>Добавить слой точек наблюдения</MainW_tlbbAddObserPointLayer_ToolTipText>
@@ -84,7 +99,6 @@
   <MainW_label31_Text>належність</MainW_label31_Text>
   <MainW_label1_Text>група</MainW_label1_Text>
   <MainW_label4_Text>Характеристики ОН</MainW_label4_Text>
-  <MainW_button1_Tag>Зберегти зміни</MainW_button1_Tag>
   <MainW_toolBarButton31_ToolTipText>Показати ОН на карті </MainW_toolBarButton31_ToolTipText>
   <MainW_toolBarButton32_ToolTipText>Підсвітити ОН на карті</MainW_toolBarButton32_ToolTipText>
   <MainW_toolBarButton34_ToolTipText>видилити ОН</MainW_toolBarButton34_ToolTipText>
@@ -94,7 +108,6 @@
   <MainW_chckObservObjTitle_Text>назва</MainW_chckObservObjTitle_Text>
   <MainW_label28_Text>належність</MainW_label28_Text>
   <MainW_label30_Text>Області нагляду (ОН)</MainW_label30_Text>
-  <MainW_tlbbAddObservObjLayer_Tag>Додати шар ОН до карти</MainW_tlbbAddObservObjLayer_Tag>
   <MainW_toolBarButton18_ToolTipText>Указать на карте</MainW_toolBarButton18_ToolTipText>
   <MainW_toolBarButton20_ToolTipText>Обновить</MainW_toolBarButton20_ToolTipText>
   <MainW_toolBarButton21_ToolTipText>Редактировать</MainW_toolBarButton21_ToolTipText>
@@ -127,10 +140,15 @@
   <MainW_richTextBox1_Text>при выборе мобильного типа углы нелоступны, высоты недоступны, координаты недоступны, при добавлении дата и время автоматом</MainW_richTextBox1_Text>
   <MainW_label12_Text>макс</MainW_label12_Text>
   <MainW_label9_Text>высота над поверхностью, м, мин.</MainW_label9_Text>
-  <MainW_button2_Tag>додати шар ПС до карти</MainW_button2_Tag>
   <MainW_lblLayer_Text>Пункти спостереження (ПС)</MainW_lblLayer_Text>
 
+  <MainW_btnAddLayerPS_Tag>додати шар ПС до карти</MainW_btnAddLayerPS_Tag>
+  <MainW_btnSaveParamPS_Tag>Зберегти зміни</MainW_btnSaveParamPS_Tag>
+  <MainW_buttonSaveOPoint_Tag>зберегти параметри ПС</MainW_buttonSaveOPoint_Tag>
+  <MainW_tlbbAddObservObjLayer_Tag>Додати шар ОН до карти</MainW_tlbbAddObservObjLayer_Tag>
 
+
+  <Affiliation_All>всі</Affiliation_All>
   <Affiliation_Own>свої</Affiliation_Own>
   <AffiliationEdit_strangers>чужі</AffiliationEdit_strangers>
   <AffiliationEdit_neutral>нейтральні</AffiliationEdit_neutral>
@@ -142,4 +160,43 @@
   <StateFilter_Calculate_finished>закінчено</StateFilter_Calculate_finished>
   <StateFilter_Calculate_stopped>зупинено</StateFilter_Calculate_stopped>
 
+  <VisibilityresultSummaryItemsEnum.Name> Назва результату розрахунку</VisibilityresultSummaryItemsEnum.Name>
+  <VisibilityresultSummaryItemsEnum.CalculateCommonVisibilityResult> Розрахувати загальну ОВ</VisibilityresultSummaryItemsEnum.CalculateCommonVisibilityResult>
+  <VisibilityresultSummaryItemsEnum.CalculateSeparatedPoints> Розрахувати поверхні всіх ПН</VisibilityresultSummaryItemsEnum.CalculateSeparatedPoints>
+  <VisibilityresultSummaryItemsEnum.ConvertToPolygon> Конвертувати у полігони</VisibilityresultSummaryItemsEnum.ConvertToPolygon>
+  <VisibilityresultSummaryItemsEnum.ObservationObjects> Обрані області нагляду (ОН)</VisibilityresultSummaryItemsEnum.ObservationObjects>
+  <VisibilityresultSummaryItemsEnum.ObservationPoints> Обрані пункти спостереження (ПН)</VisibilityresultSummaryItemsEnum.ObservationPoints>
+  <VisibilityresultSummaryItemsEnum.Surface> Поверхня для розпрахунку</VisibilityresultSummaryItemsEnum.Surface>
+  <VisibilityresultSummaryItemsEnum.TrimCalculatedSurface> Обрізати розраховані поверхні</VisibilityresultSummaryItemsEnum.TrimCalculatedSurface>
+  <VisibilityresultSummaryItemsEnum.Type> Тип розрахунку</VisibilityresultSummaryItemsEnum.Type>
+
+  <mobilityTypes_All>Всі</mobilityTypes_All> 
+  <mobilityTypes_Mobile>Мобільні</mobilityTypes_Mobile>
+  <mobilityTypes_Stationary>Стаціонарні</mobilityTypes_Stationary>
+
+  <IncorrectCoordMessage>Invalid data.\nПотрібні координати представлені у СК WGS-84, десяткові градуси</IncorrectCoordMessage>
+  <IncorrectRangeMessage>Invalid data.\nЗначення має бути від {0} до {1}</IncorrectRangeMessage>
+  <ValueLessThenZeroMessage>Invalid data.\nЗначення не має бути менше нуля</ValueLessThenZeroMessage>
+  <EmptyValueMessage>Invalid data.\nВкажіть число</EmptyValueMessage>
+  <InvalidFormatMessage>Невірний формат</InvalidFormatMessage>
+  <UnableToRemoveTaskMessage>Неможливо видалити результат розрахунку видимості поточного сеансу</UnableToRemoveTaskMessage>
+  <UnableToFullRemoveTaskMessage>Неможливо повністтю видалити результат розрахунку</UnableToFullRemoveTaskMessage>
+  <CalculationErrorMessage>Розрахунок скінчився з помилкою\nДля перегляду повної інформації зверніться до журналу роботи</CalculationErrorMessage>
+  <SomeResultsNotAddedMessage>Частина результатів розрахунку не може бути додана до поточного сеансу</SomeResultsNotAddedMessage>
+
+  <ObservPointRemoveMessage>Ви дійсно бажаєте видалити точку (ПС)?</ObservPointRemoveMessage>
+  <VisibilityTaskRemoveMessage>Ви дійсно бажаєте видалити результат розрахунку з поточного сеансу?</VisibilityTaskRemoveMessage>
+  <VisibilityResultsFullRemoveMessage>Ви дійсно бажаєте повністтю видалити результат розрахунку?</VisibilityResultsFullRemoveMessage>
+  <VisibilityResultsRemoveFromSessionMessage>Ви дійсно бажаєте видалити результат розрахунку?</VisibilityResultsRemoveFromSessionMessage>
+  <VisibilityResultLayersRemoveMessage>Ви бажаєте видалити шари розрахунку?</VisibilityResultLayersRemoveMessage>
+  <SuccessfullySharedMessage>Доступ для всіх користувачів встановлено</SuccessfullySharedMessage>
+  <AlreadySharedMessage>Доступ для усіх користувачів вже встановлено</AlreadySharedMessage>
+
+  <NameHeaderText>Назва</NameHeaderText>
+  <StateHeaderText>Стан</StateHeaderText>
+  <TypeHeaderText>Тип</TypeHeaderText>
+  <AffiliationHeaderText>Належність</AffiliationHeaderText>
+  <DateHeaderText>Дата</DateHeaderText>
+  <GroupHeaderText>Група</GroupHeaderText>
+  
 </SP_Visibility>

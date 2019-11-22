@@ -16,17 +16,36 @@ namespace MilSpace.Visibility.Localization
 
         private static readonly LocalizationContext instance = new LocalizationContext();
 
-        private Dictionary<VisibilityCalcTypeEnum, string> calcTypeLocalisation = new Dictionary<VisibilityCalcTypeEnum, string>();
-        private Dictionary<VisibilityCalcTypeEnum, string> calcTypeLocalisationShort = new Dictionary<VisibilityCalcTypeEnum, string>();
-        private Dictionary<VisibilityresultSummaryItemsEnum, string> summaryItems = Enum.GetValues(typeof(VisibilityresultSummaryItemsEnum)).Cast<VisibilityresultSummaryItemsEnum>()
+        private Dictionary<VisibilityCalcTypeEnum, string> calcTypeLocalisation = 
+            new Dictionary<VisibilityCalcTypeEnum, string>();
+
+        private Dictionary<VisibilityCalcTypeEnum, string> calcTypeLocalisationShort = 
+            new Dictionary<VisibilityCalcTypeEnum, string>();
+
+        private Dictionary<VisibilityresultSummaryItemsEnum, string> summaryItems = 
+            Enum.GetValues(typeof(VisibilityresultSummaryItemsEnum))
+            .Cast<VisibilityresultSummaryItemsEnum>()
             .ToDictionary(t => t, t => t.ToString());
 
-        private Dictionary<VisibilityTaskStateEnum, string> states = Enum.GetValues(typeof(VisibilityTaskStateEnum)).Cast<VisibilityTaskStateEnum>().ToDictionary(t => t, ts => ts.ToString());
+        private Dictionary<VisibilityTaskStateEnum, string> states = 
+            Enum.GetValues(typeof(VisibilityTaskStateEnum)).
+            Cast<VisibilityTaskStateEnum>().
+            ToDictionary(t => t, ts => ts.ToString());
 
-        private  Dictionary<ObservationPointMobilityTypesEnum, string> _mobilityTypes = Enum.GetValues(typeof(ObservationPointMobilityTypesEnum)).Cast<ObservationPointMobilityTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
-        private  Dictionary<ObservationPointTypesEnum, string> affiliationTypes = Enum.GetValues(typeof(ObservationPointTypesEnum)).Cast<ObservationPointTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
-        private  Dictionary<ObservationObjectTypesEnum, string> observObjectsTypes = Enum.GetValues(typeof(ObservationObjectTypesEnum)).Cast<ObservationObjectTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
+        private  Dictionary<ObservationPointMobilityTypesEnum, string> mobilityTypes = 
+            Enum.GetValues(typeof(ObservationPointMobilityTypesEnum)).
+            Cast<ObservationPointMobilityTypesEnum>().
+            ToDictionary(t => t, ts => ts.ToString());
 
+        private  Dictionary<ObservationPointTypesEnum, string> affiliationTypes = 
+            Enum.GetValues(typeof(ObservationPointTypesEnum)).
+            Cast<ObservationPointTypesEnum>().
+            ToDictionary(t => t, ts => ts.ToString());
+
+        private  Dictionary<ObservationObjectTypesEnum, string> observObjectsTypes = 
+            Enum.GetValues(typeof(ObservationObjectTypesEnum)).
+            Cast<ObservationObjectTypesEnum>().
+            ToDictionary(t => t, ts => ts.ToString());
 
 
         private LocalizationContext()
@@ -47,7 +66,6 @@ namespace MilSpace.Visibility.Localization
 
             calcTypeLocalisation.Add(VisibilityCalcTypeEnum.None, string.Empty);
             calcTypeLocalisationShort.Add(VisibilityCalcTypeEnum.None, string.Empty);
-
             calcTypeLocalisation.Add(VisibilityCalcTypeEnum.OpservationPoints, CalcFirstTypeDescription);
             calcTypeLocalisationShort.Add(VisibilityCalcTypeEnum.OpservationPoints, CalcFirstTypeDescriptionShort);
             calcTypeLocalisation.Add(VisibilityCalcTypeEnum.ObservationObjects, CalcTherdTypeDescription);
@@ -57,46 +75,72 @@ namespace MilSpace.Visibility.Localization
             calcTypeLocalisation.Add(VisibilityCalcTypeEnum.ResultsObservationAnalize, CalcFourthTypeDescription);
             calcTypeLocalisationShort.Add(VisibilityCalcTypeEnum.ResultsObservationAnalize, CalcFourthTypeDescriptionShort);
 
-            //TODO: Add it to XML file
-            summaryItems[VisibilityresultSummaryItemsEnum.Name] = "Назва результату розрахунку";
-            summaryItems[VisibilityresultSummaryItemsEnum.CalculateCommonVisibilityResult] = "Розрахувати загальну ОВ";
-            summaryItems[VisibilityresultSummaryItemsEnum.CalculateSeparatedPoints] = "Розрахувати поверхні всіх ПН";
-            summaryItems[VisibilityresultSummaryItemsEnum.ConvertToPolygon] = "Конвертувати у полігони";
-            summaryItems[VisibilityresultSummaryItemsEnum.ObservationObjects] = "Обрані області нагляду (ОН)";
-            summaryItems[VisibilityresultSummaryItemsEnum.ObservationPoints] = "Обрані пункти спостереження (ПН)";
-            summaryItems[VisibilityresultSummaryItemsEnum.Surface] = "Поверхня для розпрахунку";
-            summaryItems[VisibilityresultSummaryItemsEnum.TrimCalculatedSurface] = "Обрізати розраховані поверхні";
-            summaryItems[VisibilityresultSummaryItemsEnum.Type] = "Тип розрахунку";
+            summaryItems[VisibilityresultSummaryItemsEnum.Name] =
+                FindLocalizedElement("VisibilityresultSummaryItemsEnum.Name", "Назва результату розрахунку");
+            summaryItems[VisibilityresultSummaryItemsEnum.CalculateCommonVisibilityResult] =
+                FindLocalizedElement("VisibilityresultSummaryItemsEnum.CalculateCommonVisibilityResult", "Розрахувати загальну ОВ");
+            summaryItems[VisibilityresultSummaryItemsEnum.CalculateSeparatedPoints] =
+                FindLocalizedElement("VisibilityresultSummaryItemsEnum.CalculateSeparatedPoints", "Розрахувати поверхні всіх ПН");
+            summaryItems[VisibilityresultSummaryItemsEnum.ConvertToPolygon] =
+                FindLocalizedElement("VisibilityresultSummaryItemsEnum.ConvertToPolygon", "Конвертувати у полігони");
+            summaryItems[VisibilityresultSummaryItemsEnum.ObservationObjects] =
+                FindLocalizedElement("VisibilityresultSummaryItemsEnum.ObservationObjects", "Обрані області нагляду (ОН)");
+            summaryItems[VisibilityresultSummaryItemsEnum.ObservationPoints] =
+                FindLocalizedElement("VisibilityresultSummaryItemsEnum.ObservationPoints", "Обрані пункти спостереження (ПН)");
+            summaryItems[VisibilityresultSummaryItemsEnum.Surface] =
+                FindLocalizedElement("VisibilityresultSummaryItemsEnum.Surface", "Поверхня для розпрахунку");
+            summaryItems[VisibilityresultSummaryItemsEnum.TrimCalculatedSurface] =
+                FindLocalizedElement("VisibilityresultSummaryItemsEnum.TrimCalculatedSurface", "Обрізати розраховані поверхні");
+            summaryItems[VisibilityresultSummaryItemsEnum.Type] =
+                FindLocalizedElement("VisibilityresultSummaryItemsEnum.Type", "Тип розрахунку");
 
-            states[VisibilityTaskStateEnum.All] = FindLocalizedElement("State_Calculate_all", states[VisibilityTaskStateEnum.All]);
-            states[VisibilityTaskStateEnum.Calculated] = FindLocalizedElement("State_Calculate_queue", states[VisibilityTaskStateEnum.Calculated]);
-            states[VisibilityTaskStateEnum.Finished] = FindLocalizedElement("StateFilter_Calculate_finished", states[VisibilityTaskStateEnum.Finished]);
-            states[VisibilityTaskStateEnum.Pending] = FindLocalizedElement("StateFilter_Calculate_run", states[VisibilityTaskStateEnum.Pending]);
+            states[VisibilityTaskStateEnum.All] = 
+                FindLocalizedElement("State_Calculate_all", states[VisibilityTaskStateEnum.All]);
+            states[VisibilityTaskStateEnum.Calculated] = 
+                FindLocalizedElement("State_Calculate_queue", states[VisibilityTaskStateEnum.Calculated]);
+            states[VisibilityTaskStateEnum.Finished] = 
+                FindLocalizedElement("StateFilter_Calculate_finished", states[VisibilityTaskStateEnum.Finished]);
+            states[VisibilityTaskStateEnum.Pending] = 
+                FindLocalizedElement("StateFilter_Calculate_run", states[VisibilityTaskStateEnum.Pending]);
 
+            mobilityTypes[ObservationPointMobilityTypesEnum.All] =
+                FindLocalizedElement("mobilityTypes_All", mobilityTypes[ObservationPointMobilityTypesEnum.All]);
+            mobilityTypes[ObservationPointMobilityTypesEnum.Mobile] =
+                FindLocalizedElement("mobilityTypes_Mobile", mobilityTypes[ObservationPointMobilityTypesEnum.Mobile]);
+            mobilityTypes[ObservationPointMobilityTypesEnum.Stationary] =
+                FindLocalizedElement("mobilityTypes_Stationary", mobilityTypes[ObservationPointMobilityTypesEnum.Stationary]);
 
-            affiliationTypes[ObservationPointTypesEnum.All] = FindLocalizedElement("State_Calculate_all", affiliationTypes[ObservationPointTypesEnum.All]);
-            affiliationTypes[ObservationPointTypesEnum.Enemy] = FindLocalizedElement("AffiliationEdit_strangers", affiliationTypes[ObservationPointTypesEnum.Enemy]);
-            affiliationTypes[ObservationPointTypesEnum.Neutrality] = FindLocalizedElement("AffiliationEdit_neutral", affiliationTypes[ObservationPointTypesEnum.Neutrality]);
-            affiliationTypes[ObservationPointTypesEnum.Our] = FindLocalizedElement("Affiliation_Own", affiliationTypes[ObservationPointTypesEnum.Our]);
-            affiliationTypes[ObservationPointTypesEnum.Undefined] = FindLocalizedElement("AffiliationEdit_unknown", affiliationTypes[ObservationPointTypesEnum.Undefined]);
+            affiliationTypes[ObservationPointTypesEnum.All] = 
+                FindLocalizedElement("Affiliation_All", affiliationTypes[ObservationPointTypesEnum.All]);
+            affiliationTypes[ObservationPointTypesEnum.Enemy] = 
+                FindLocalizedElement("AffiliationEdit_strangers", affiliationTypes[ObservationPointTypesEnum.Enemy]);
+            affiliationTypes[ObservationPointTypesEnum.Neutrality] = 
+                FindLocalizedElement("AffiliationEdit_neutral", affiliationTypes[ObservationPointTypesEnum.Neutrality]);
+            affiliationTypes[ObservationPointTypesEnum.Our] = 
+                FindLocalizedElement("Affiliation_Own", affiliationTypes[ObservationPointTypesEnum.Our]);
+            affiliationTypes[ObservationPointTypesEnum.Undefined] = 
+                FindLocalizedElement("AffiliationEdit_unknown", affiliationTypes[ObservationPointTypesEnum.Undefined]);
 
-
-            observObjectsTypes[ObservationObjectTypesEnum.All] = FindLocalizedElement("State_Calculate_all", observObjectsTypes[ObservationObjectTypesEnum.All]);
-            observObjectsTypes[ObservationObjectTypesEnum.Enemy] = FindLocalizedElement("AffiliationEdit_strangers", observObjectsTypes[ObservationObjectTypesEnum.Enemy]);
-            observObjectsTypes[ObservationObjectTypesEnum.Neutrality] = FindLocalizedElement("AffiliationEdit_neutral", observObjectsTypes[ObservationObjectTypesEnum.Neutrality]);
-            observObjectsTypes[ObservationObjectTypesEnum.Our] = FindLocalizedElement("Affiliation_Own", observObjectsTypes[ObservationObjectTypesEnum.Our]);
-            observObjectsTypes[ObservationObjectTypesEnum.Undefined] = FindLocalizedElement("AffiliationEdit_unknown", observObjectsTypes[ObservationObjectTypesEnum.Undefined]);
+            observObjectsTypes[ObservationObjectTypesEnum.All] = 
+                FindLocalizedElement("Affiliation_All", observObjectsTypes[ObservationObjectTypesEnum.All]);
+            observObjectsTypes[ObservationObjectTypesEnum.Enemy] = 
+                FindLocalizedElement("AffiliationEdit_strangers", observObjectsTypes[ObservationObjectTypesEnum.Enemy]);
+            observObjectsTypes[ObservationObjectTypesEnum.Neutrality] = 
+                FindLocalizedElement("AffiliationEdit_neutral", observObjectsTypes[ObservationObjectTypesEnum.Neutrality]);
+            observObjectsTypes[ObservationObjectTypesEnum.Our] = 
+                FindLocalizedElement("Affiliation_Own", observObjectsTypes[ObservationObjectTypesEnum.Our]);
+            observObjectsTypes[ObservationObjectTypesEnum.Undefined] = 
+                FindLocalizedElement("AffiliationEdit_unknown", observObjectsTypes[ObservationObjectTypesEnum.Undefined]);
         }
 
-
         internal static LocalizationContext Instance => instance;
-        //FindLocalizedElement("", "");
 
         internal Dictionary<VisibilityCalcTypeEnum, string> CalcTypeLocalisation => calcTypeLocalisation;
         internal Dictionary<VisibilityCalcTypeEnum, string> CalcTypeLocalisationShort => calcTypeLocalisationShort;
         internal Dictionary<VisibilityresultSummaryItemsEnum, string> SummaryItems => summaryItems;
         internal Dictionary<VisibilityTaskStateEnum, string> CalculationStates => states;
 
+        internal Dictionary<ObservationPointMobilityTypesEnum, string> MobilityTypes => mobilityTypes;
         internal Dictionary<ObservationPointTypesEnum, string> AffiliationTypes => affiliationTypes;
         internal Dictionary<ObservationObjectTypesEnum, string> ObservObjectsTypes => observObjectsTypes;
 
@@ -122,27 +166,35 @@ namespace MilSpace.Visibility.Localization
             FindLocalizedElement("CalcFourthTypeDescription", "Аналіз результатів спостереження");
 
 
-        public string YesWord =>
-            FindLocalizedElement("YesWord", "Yes");
-        public string NoWord =>
-            FindLocalizedElement("NoWord", "No");
+        public string YesWord => FindLocalizedElement("YesWord", "Yes");
+        public string NoWord => FindLocalizedElement("NoWord", "No");
 
-        public string PlaceLayerAbove =>
-            FindLocalizedElement("PlaceLayerAbove", "Above");
-        public string PlaceLayerBelow =>
-            FindLocalizedElement("PlaceLayerBelow", "Below");
+        public string PlaceLayerAbove => FindLocalizedElement("PlaceLayerAbove", "Above");
+        public string PlaceLayerBelow => FindLocalizedElement("PlaceLayerBelow", "Below");
 
-        //Captions
-        public string WindowCaption =>
-            FindLocalizedElement("WindowCaption", "Module Visibility");
+        public string WindowCaption => FindLocalizedElement("WindowCaption", "Module Visibility");
+        public string MessageBoxCaption => FindLocalizedElement("MessageBoxCaption", "Sposterezhennya");
+        public string MessageBoxShareCaption => FindLocalizedElement("MessageBoxShareCaption", "Sposterezhennya. Set access");
+        public string MessageBoxWarningCaption => FindLocalizedElement("MessageBoxWarningCaption", "Sposterezhennya. Warning");
 
+        public string ObservPointsTabCaption => FindLocalizedElement("ObservPointsTabCaption", "Observ P");
+        public string ObservObjTabCaption => FindLocalizedElement("ObservObjTabCaption", "Observ O");
+        public string TasksTabCaption => FindLocalizedElement("TasksTabCaption", "Tasks");
+        public string ResultsTabCaption => FindLocalizedElement("ResultsTabCaption", "Results");
+
+        //Header
+        public string NameHeaderText => FindLocalizedElement("NameHeaderText", "Name");
+        public string StateHeaderText => FindLocalizedElement("StateHeaderText", "State");
+        public string TypeHeaderText => FindLocalizedElement("TypeHeaderText", "Type");
+        public string AffiliationHeaderText => FindLocalizedElement("AffiliationHeaderText", "Affiliation");
+        public string DateHeaderText => FindLocalizedElement("DateHeaderText", "Date");
+        public string GroupHeaderText => FindLocalizedElement("GroupHeaderText", "Group");
+         
         //Buttons
-        public string GenerateButton =>
-            FindLocalizedElement("GenerateButton", "Generate");
+        public string GenerateButton => FindLocalizedElement("GenerateButton", "Generate");
 
-        //Labels
-        public string SurfaceLabel =>
-            FindLocalizedElement("SurfaceLabel", "Surface");
+        //public string GenerateButton => FindLocalizedElement("GenerateButton", "Generate");
+        //public string SurfaceLabel => FindLocalizedElement("SurfaceLabel", "Surface");
 
         public string MsgBoxWarningHeader => FindLocalizedElement("MsgBoxWarningHeader", "Спостереження. Попередження");
         public string MsgBoxInfoHeader => FindLocalizedElement("MsgBoxInfoHeader", "Спостереження. Інфо");
@@ -151,9 +203,33 @@ namespace MilSpace.Visibility.Localization
 
         //<MsgTextNoLocalizationXML>"Не знайдено файл локалізації, або виникла ошибка при його завантаженні/nВікно розрахунку видимоста може бути локалізовано не повністью"</MsgTextNoLocalizationXML>
 
-
+        //Labels
+        public string SurfaceLabel => FindLocalizedElement("SurfaceLabel", "Surface");
+        public string ObservPointsHeaderLabel => FindLocalizedElement("ObservPointsHeaderLabel", "Observation points (OP)");
+        public string ObservObjHeaderLabel => FindLocalizedElement("ObservObjHeaderLabel", "Observation objects (OO)");
+        public string TasksHeaderLabel => FindLocalizedElement("TasksHeaderLabel", "Calculation tasks");
+        public string ResultsHeaderLabel => FindLocalizedElement("ResultsHeaderLabel", "Results list");
 
         //Errors        
+        public string IncorrectCoordMessage => FindLocalizedElement("IncorrectCoordMessage", "Invalid data. \nThe required coordinates are represented in WGS-84 CS, decimal degrees");
+        public string IncorrectRangeMessage => FindLocalizedElement("IncorrectRangeMessage", "Invalid data.\nThe value must be in range from {0} to {1}");
+        public string ValueLessThenZeroMessage => FindLocalizedElement("ValueLessThenZeroMessage", "Invalid data.\nThe value must be greater than zero");
+        public string EmptyValueMessage => FindLocalizedElement("EmptyValueMessage", "Invalid data.\nPlease enter a value");
+        public string InvalidFormatMessage => FindLocalizedElement("InvalidFormatMessage", "Invalid format");
+        public string UnableToRemoveTaskMessage => FindLocalizedElement("UnableToRemoveTaskMessage", "The result of the current session visibility calculation cannot be deleted");
+        public string UnableToFullRemoveTaskMessage => FindLocalizedElement("UnableToFullRemoveTaskMessage", "The result of the visibility calculation cannot be completely deleted");
+        public string CalculationErrorMessage => FindLocalizedElement("CalculationErrorMessage", "The calculation finished with error\nTo view complete information go to the work log");
+        public string SomeResultsNotAddedMessage => FindLocalizedElement("SomeResultsNotAddedMessage", "Some results cannot be added to the current session");
+
+        //Info
+        public string ObservPointRemoveMessage => FindLocalizedElement("ObservPointRemoveMessage", "Are you sure you want to delete this point (OP)?");
+        public string VisibilityTaskRemoveMessage => FindLocalizedElement("VisibilityTaskRemoveMessage", "Are you sure you want to delete the calculation result from the current session?");
+        public string VisibilityResultsFullRemoveMessage => FindLocalizedElement("VisibilityResultsFullRemoveMessage", "Are you sure you want to completely delete the calculation result?");
+        public string VisibilityResultsRemoveFromSessionMessage => FindLocalizedElement("VisibilityResultsRemoveFromSessionMessage", "Are you sure you want to delete the calculation result from the current session?");
+        public string VisibilityResultLayersRemoveMessage => FindLocalizedElement("VisibilityResultLayersRemoveMessage", "Are you sure you want to delete the calculation result layers?");
+        public string SuccessfullySharedMessage => FindLocalizedElement("SuccessfullySharedMessage", "Shared with all users");
+        public string AlreadySharedMessage => FindLocalizedElement("AlreadySharedMessage", "Results are already shared");
+
 
         ////---------------------------------------------------------------------------------------
 

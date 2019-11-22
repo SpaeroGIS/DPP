@@ -113,7 +113,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.panelPointsHeader = new System.Windows.Forms.Panel();
             this.lblLayer = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnAddLayerPS = new System.Windows.Forms.Button();
             this.tbpObservObjects = new System.Windows.Forms.TabPage();
             this.panel30 = new System.Windows.Forms.Panel();
             this.panel58 = new System.Windows.Forms.Panel();
@@ -133,7 +133,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnSaveParamPS = new System.Windows.Forms.Button();
             this.splitter2 = new System.Windows.Forms.Splitter();
             this._panelGridON = new System.Windows.Forms.Panel();
             this.dgvObservObjects = new System.Windows.Forms.DataGridView();
@@ -153,7 +153,7 @@
             this.cmbObservObjAffiliationFilter = new System.Windows.Forms.ComboBox();
             this.label28 = new System.Windows.Forms.Label();
             this.panel27 = new System.Windows.Forms.Panel();
-            this.label30 = new System.Windows.Forms.Label();
+            this.lblObservObjHeader = new System.Windows.Forms.Label();
             this.tlbbAddObservObjLayer = new System.Windows.Forms.Button();
             this.toolBar5 = new System.Windows.Forms.ToolBar();
             this.toolBarButton18 = new System.Windows.Forms.ToolBarButton();
@@ -193,7 +193,7 @@
             this.cmbStateFilter = new System.Windows.Forms.ComboBox();
             this.label38 = new System.Windows.Forms.Label();
             this.panel38 = new System.Windows.Forms.Panel();
-            this.label36 = new System.Windows.Forms.Label();
+            this.lblCalcTasksHeader = new System.Windows.Forms.Label();
             this.tbpVisibilityAreas = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel8 = new System.Windows.Forms.Panel();
@@ -219,7 +219,7 @@
             this.toolBarButton1 = new System.Windows.Forms.ToolBarButton();
             this.tlbbUpdate = new System.Windows.Forms.ToolBarButton();
             this.panel48 = new System.Windows.Forms.Panel();
-            this.labelHeaderVisibilityResult = new System.Windows.Forms.Label();
+            this.lblHeaderVisibilityResult = new System.Windows.Forms.Label();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.panel11 = new System.Windows.Forms.Panel();
             this.heightMax = new System.Windows.Forms.TextBox();
@@ -1303,7 +1303,8 @@
             // 
             this.tlbbAddObserPointLayer.ImageKey = "Applications.png";
             this.tlbbAddObserPointLayer.Name = "tlbbAddObserPointLayer";
-            this.tlbbAddObserPointLayer.ToolTipText = "Добавить слой точек наблюдения";
+            this.tlbbAddObserPointLayer.ToolTipText = "додати шар ПС";
+            this.tlbbAddObserPointLayer.Visible = false;
             // 
             // tlbbRemovePoint
             // 
@@ -1425,7 +1426,7 @@
             // panelPointsHeader
             // 
             this.panelPointsHeader.Controls.Add(this.lblLayer);
-            this.panelPointsHeader.Controls.Add(this.button2);
+            this.panelPointsHeader.Controls.Add(this.btnAddLayerPS);
             this.panelPointsHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelPointsHeader.Location = new System.Drawing.Point(3, 3);
             this.panelPointsHeader.Name = "panelPointsHeader";
@@ -1445,17 +1446,18 @@
             this.lblLayer.TabIndex = 2;
             this.lblLayer.Text = "Пункти спостереження (ПС)";
             // 
-            // button2
+            // btnAddLayerPS
             // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button2.ImageIndex = 137;
-            this.button2.ImageList = this.imageList1;
-            this.button2.Location = new System.Drawing.Point(276, 4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(26, 26);
-            this.button2.TabIndex = 1;
-            this.button2.Tag = "додати шар ПС до карти";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnAddLayerPS.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnAddLayerPS.ImageIndex = 137;
+            this.btnAddLayerPS.ImageList = this.imageList1;
+            this.btnAddLayerPS.Location = new System.Drawing.Point(276, 4);
+            this.btnAddLayerPS.Name = "btnAddLayerPS";
+            this.btnAddLayerPS.Size = new System.Drawing.Size(26, 26);
+            this.btnAddLayerPS.TabIndex = 1;
+            this.btnAddLayerPS.Tag = "додати шар ПС до карти";
+            this.btnAddLayerPS.UseVisualStyleBackColor = true;
+            this.btnAddLayerPS.Click += new System.EventHandler(this.button2_Click);
             // 
             // tbpObservObjects
             // 
@@ -1639,7 +1641,7 @@
             // panel3
             // 
             this.panel3.Controls.Add(this.label4);
-            this.panel3.Controls.Add(this.button1);
+            this.panel3.Controls.Add(this.btnSaveParamPS);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
@@ -1658,17 +1660,17 @@
             this.label4.TabIndex = 4;
             this.label4.Text = "Характеристики ОН";
             // 
-            // button1
+            // btnSaveParamPS
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button1.ImageIndex = 147;
-            this.button1.ImageList = this.imageList1;
-            this.button1.Location = new System.Drawing.Point(282, 4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(26, 26);
-            this.button1.TabIndex = 3;
-            this.button1.Tag = "Зберегти зміни";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnSaveParamPS.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSaveParamPS.ImageIndex = 147;
+            this.btnSaveParamPS.ImageList = this.imageList1;
+            this.btnSaveParamPS.Location = new System.Drawing.Point(282, 4);
+            this.btnSaveParamPS.Name = "btnSaveParamPS";
+            this.btnSaveParamPS.Size = new System.Drawing.Size(26, 26);
+            this.btnSaveParamPS.TabIndex = 3;
+            this.btnSaveParamPS.Tag = "Зберегти зміни";
+            this.btnSaveParamPS.UseVisualStyleBackColor = true;
             // 
             // splitter2
             // 
@@ -1866,7 +1868,7 @@
             // 
             // panel27
             // 
-            this.panel27.Controls.Add(this.label30);
+            this.panel27.Controls.Add(this.lblObservObjHeader);
             this.panel27.Controls.Add(this.tlbbAddObservObjLayer);
             this.panel27.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel27.Location = new System.Drawing.Point(0, 0);
@@ -1875,17 +1877,17 @@
             this.panel27.Size = new System.Drawing.Size(312, 34);
             this.panel27.TabIndex = 42;
             // 
-            // label30
+            // lblObservObjHeader
             // 
-            this.label30.BackColor = System.Drawing.SystemColors.Control;
-            this.label30.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label30.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.label30.Location = new System.Drawing.Point(4, 4);
-            this.label30.Name = "label30";
-            this.label30.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label30.Size = new System.Drawing.Size(278, 26);
-            this.label30.TabIndex = 7;
-            this.label30.Text = "Області нагляду (ОН)";
+            this.lblObservObjHeader.BackColor = System.Drawing.SystemColors.Control;
+            this.lblObservObjHeader.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblObservObjHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.lblObservObjHeader.Location = new System.Drawing.Point(4, 4);
+            this.lblObservObjHeader.Name = "lblObservObjHeader";
+            this.lblObservObjHeader.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
+            this.lblObservObjHeader.Size = new System.Drawing.Size(278, 26);
+            this.lblObservObjHeader.TabIndex = 7;
+            this.lblObservObjHeader.Text = "Області нагляду (ОН)";
             // 
             // tlbbAddObservObjLayer
             // 
@@ -2296,7 +2298,7 @@
             // 
             // panel38
             // 
-            this.panel38.Controls.Add(this.label36);
+            this.panel38.Controls.Add(this.lblCalcTasksHeader);
             this.panel38.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel38.Location = new System.Drawing.Point(0, 0);
             this.panel38.Name = "panel38";
@@ -2304,17 +2306,17 @@
             this.panel38.Size = new System.Drawing.Size(312, 34);
             this.panel38.TabIndex = 54;
             // 
-            // label36
+            // lblCalcTasksHeader
             // 
-            this.label36.BackColor = System.Drawing.SystemColors.Control;
-            this.label36.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label36.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.label36.Location = new System.Drawing.Point(4, 0);
-            this.label36.Name = "label36";
-            this.label36.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label36.Size = new System.Drawing.Size(304, 34);
-            this.label36.TabIndex = 2;
-            this.label36.Text = "Завдання для розрахунків";
+            this.lblCalcTasksHeader.BackColor = System.Drawing.SystemColors.Control;
+            this.lblCalcTasksHeader.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblCalcTasksHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.lblCalcTasksHeader.Location = new System.Drawing.Point(4, 0);
+            this.lblCalcTasksHeader.Name = "lblCalcTasksHeader";
+            this.lblCalcTasksHeader.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
+            this.lblCalcTasksHeader.Size = new System.Drawing.Size(304, 34);
+            this.lblCalcTasksHeader.TabIndex = 2;
+            this.lblCalcTasksHeader.Text = "Завдання для розрахунків";
             // 
             // tbpVisibilityAreas
             // 
@@ -2536,7 +2538,7 @@
             // panel48
             // 
             this.panel48.BackColor = System.Drawing.SystemColors.Control;
-            this.panel48.Controls.Add(this.labelHeaderVisibilityResult);
+            this.panel48.Controls.Add(this.lblHeaderVisibilityResult);
             this.panel48.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel48.Location = new System.Drawing.Point(0, 0);
             this.panel48.Name = "panel48";
@@ -2544,16 +2546,16 @@
             this.panel48.Size = new System.Drawing.Size(312, 34);
             this.panel48.TabIndex = 55;
             // 
-            // labelHeaderVisibilityResult
+            // lblHeaderVisibilityResult
             // 
-            this.labelHeaderVisibilityResult.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelHeaderVisibilityResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelHeaderVisibilityResult.Location = new System.Drawing.Point(4, 0);
-            this.labelHeaderVisibilityResult.Name = "labelHeaderVisibilityResult";
-            this.labelHeaderVisibilityResult.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.labelHeaderVisibilityResult.Size = new System.Drawing.Size(304, 34);
-            this.labelHeaderVisibilityResult.TabIndex = 2;
-            this.labelHeaderVisibilityResult.Text = "Cписок результатів";
+            this.lblHeaderVisibilityResult.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblHeaderVisibilityResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblHeaderVisibilityResult.Location = new System.Drawing.Point(4, 0);
+            this.lblHeaderVisibilityResult.Name = "lblHeaderVisibilityResult";
+            this.lblHeaderVisibilityResult.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
+            this.lblHeaderVisibilityResult.Size = new System.Drawing.Size(304, 34);
+            this.lblHeaderVisibilityResult.TabIndex = 2;
+            this.lblHeaderVisibilityResult.Text = "Cписок результатів";
             // 
             // richTextBox1
             // 
@@ -2630,6 +2632,7 @@
             this.Controls.Add(this.mainTabControl);
             this.Name = "DockableWindowMilSpaceMVisibilitySt";
             this.Size = new System.Drawing.Size(320, 640);
+            this.Load += new System.EventHandler(this.DockableWindowMilSpaceMVisibilitySt_Load);
             this.mainTabControl.ResumeLayout(false);
             this.tbpPoints.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
@@ -2727,6 +2730,7 @@
         private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.Panel panelPointsHeader;
+        private System.Windows.Forms.Label lblLayer;
         private System.Windows.Forms.TabPage tbpObservObjects;
         private System.Windows.Forms.ToolBar toolBar5;
         private System.Windows.Forms.ToolBarButton toolBarButton18;
@@ -2740,12 +2744,12 @@
         private System.Windows.Forms.ToolBarButton tlddUpd;
         private System.Windows.Forms.ToolBarButton tlbbDel;
         private System.Windows.Forms.Panel panel38;
-        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.Label lblCalcTasksHeader;
         private System.Windows.Forms.TabPage tbpVisibilityAreas;
         private System.Windows.Forms.ToolBarButton toolBarButtonViewParamOnMap;
         private System.Windows.Forms.ToolBarButton toolBarButtonAddFromDB;
         private System.Windows.Forms.Panel panel48;
-        private System.Windows.Forms.Label labelHeaderVisibilityResult;
+        private System.Windows.Forms.Label lblHeaderVisibilityResult;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.TextBox heightMax;
@@ -2850,7 +2854,7 @@
         private System.Windows.Forms.Panel panel26;
         private System.Windows.Forms.ComboBox cmbObservObjAffiliationFilter;
         private System.Windows.Forms.Label label28;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnSaveParamPS;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Panel panel14;
         private System.Windows.Forms.Panel panel46;
@@ -2881,7 +2885,7 @@
         private System.Windows.Forms.ComboBox cmbStateFilter;
         private System.Windows.Forms.Label label38;
         private System.Windows.Forms.Button tlbbAddObservObjLayer;
-        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label lblObservObjHeader;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Splitter splitter4;
         private System.Windows.Forms.Panel panel16;
@@ -2919,7 +2923,6 @@
         private System.Windows.Forms.ListView lvResultsSummary;
         private System.Windows.Forms.ColumnHeader Attribute;
         private System.Windows.Forms.ColumnHeader Value;
-        private System.Windows.Forms.Label lblLayer;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnAddLayerPS;
     }
 }

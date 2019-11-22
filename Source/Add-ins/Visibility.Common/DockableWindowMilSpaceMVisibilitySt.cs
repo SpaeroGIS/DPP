@@ -10,6 +10,7 @@ using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Tools;
 using MilSpace.Visibility.DTO;
+using MilSpace.Visibility.Localization;
 using MilSpace.Visibility.ViewController;
 using MilSpace.Visibility.Localization;
 
@@ -55,8 +56,8 @@ namespace MilSpace.Visibility
         {
             try
             {
-                //LocalizationContext.Instance.FindLocalizedElement("", "");
-                this.Text = LocalizationContext.Instance.FindLocalizedElement("WindowCaption", "Спостереження. Модуль видимості");
+                this.Text = LocalizationContext.Instance.WindowCaption;
+
                 this.tbpPoints.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_tbpPoints_Text", "Пункти С");
                 this.tabPage5.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_tabPage5_Text", "Параметри ПС)");
                 this.label19.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label19_Text", "Висота над поверхнею, м");
@@ -99,7 +100,7 @@ namespace MilSpace.Visibility
                 this.label31.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label31_Text", "належність");
                 this.label1.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label1_Text", "група");
                 this.label4.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label4_Text", "Характеристики ОН");
-                this.button1.Tag = LocalizationContext.Instance.FindLocalizedElement("MainW_button1_Tag", "Зберегти зміни");
+                this.btnSaveParamPS.Tag = LocalizationContext.Instance.FindLocalizedElement("MainW_btnSaveParamPS_Tag", "Зберегти зміни");
                 this.toolBarButton31.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_toolBarButton31_ToolTipText", "Показати ОН на карті ");
                 this.toolBarButton32.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_toolBarButton32_ToolTipText", "Підсвітити ОН на карті");
                 this.toolBarButton34.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_toolBarButton34_ToolTipText", "видилити ОН");
@@ -144,7 +145,7 @@ namespace MilSpace.Visibility
                     "при выборе мобильного типа углы нелоступны, высоты недоступны, координаты недоступны, при добавлении дата и время автоматом");
                 this.label12.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label12_Text", "макс");
                 this.label9.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label9_Text", "висота над поверхнею (м) мин");
-                this.button2.Tag = LocalizationContext.Instance.FindLocalizedElement("MainW_button2_Tag", "додати шар ПС до карти");
+                this.btnAddLayerPS.Tag = LocalizationContext.Instance.FindLocalizedElement("MainW_btnAddLayerPS_Tag", "додати шар ПС до карти");
                 this.lblLayer.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_lblLayer_Text", "Пункти спостереження (ПС)");
 
 
@@ -265,13 +266,11 @@ namespace MilSpace.Visibility
 
             if (observationPoints != null && observationPoints.Any())
             {
-
-
                 var ItemsToShow = observationPoints.Select(i => new ObservPointGui
                 {
                     Title = i.Title,
-                    Type = i.Type,
-                    Affiliation = LocalizationContext.Instance.AffiliationTypes[i.ObservationPointType],
+                    Type = LocalizationContext.Instance.MobilityTypes[i.ObservationPointMobilityType],
+                    Affiliation = LocalizationContext.Instance.AffiliationTypes[i.ObservationPointAffiliationType],
                     Date = i.Dto.Value.ToString(Helper.DateFormatSmall),
                     Id = i.Objectid
                 }).ToList();
@@ -320,9 +319,10 @@ namespace MilSpace.Visibility
             var rowIndex = dgvObservationPoints.SelectedRows[0].Index;
             var pointGui = _observPointGuis.FirstOrDefault(point => point.Id == id);
 
+
             pointGui.Title = observationPoint.Title;
-            pointGui.Type = observationPoint.Type;
-            pointGui.Affiliation = observationPoint.Affiliation;
+            pointGui.Type = LocalizationContext.Instance.MobilityTypes[observationPoint.ObservationPointMobilityType];
+            pointGui.Affiliation = LocalizationContext.Instance.AffiliationTypes[observationPoint.ObservationPointAffiliationType];
             pointGui.Date = observationPoint.Dto.Value.ToString(Helper.DateFormatSmall);
 
             dgvObservationPoints.Refresh();
@@ -556,10 +556,10 @@ namespace MilSpace.Visibility
             dgvObservationPoints.Columns["Type"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dgvObservationPoints.Columns["Affiliation"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dgvObservationPoints.Columns["Date"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dgvObservationPoints.Columns["Title"].HeaderText = "Name";
-            dgvObservationPoints.Columns["Type"].HeaderText = "Type";
-            dgvObservationPoints.Columns["Affiliation"].HeaderText = "Affiliation";
-            dgvObservationPoints.Columns["Date"].HeaderText = "Date";
+            dgvObservationPoints.Columns["Title"].HeaderText = LocalizationContext.Instance.NameHeaderText;
+            dgvObservationPoints.Columns["Type"].HeaderText = LocalizationContext.Instance.TypeHeaderText;
+            dgvObservationPoints.Columns["Affiliation"].HeaderText = LocalizationContext.Instance.AffiliationHeaderText;
+            dgvObservationPoints.Columns["Date"].HeaderText = LocalizationContext.Instance.DateHeaderText;
             dgvObservationPoints.Columns["Id"].Visible = false;
         }
 
@@ -636,6 +636,7 @@ namespace MilSpace.Visibility
             cmbAffiliationEdit.Items.Clear();
 
             cmbAffiliation.Items.AddRange(filters.ToArray());
+
             cmbAffiliation.Items.Add(_observPointsController.GetAllAffiliationType());
             cmbAffiliationEdit.Items.AddRange(GetAffiliation.ToArray());
 
@@ -958,6 +959,8 @@ namespace MilSpace.Visibility
             observPointDate.ReadOnly = observPointCreator.ReadOnly = true;
 
             tlbbAddObserPointLayer.Enabled = !layerExists || isAllDisabled;
+            btnAddLayerPS.Enabled = !layerExists;
+
         }
 
 
@@ -990,7 +993,10 @@ namespace MilSpace.Visibility
         {
             var selectedPoint = _observPointsController.GetObservPointById(_selectedPointId);
             _observPointsController.UpdateObservPoint(
-                GetObservationPoint(), VisibilityManager.ObservPointFeature, ActiveView, selectedPoint.Objectid
+                GetObservationPoint(),
+                VisibilityManager.ObservPointFeature,
+                ActiveView,
+                selectedPoint.Objectid
                 );
         }
 
@@ -1001,11 +1007,16 @@ namespace MilSpace.Visibility
 
         private ObservationPoint GetObservationPoint()
         {
+
+            var affiliationType = LocalizationContext.Instance.AffiliationTypes.First(v => v.Value.Equals(cmbAffiliationEdit.SelectedItem));
+            var mobilityType = LocalizationContext.Instance.MobilityTypes.First(v => v.Value.Equals(cmbObservTypesEdit.SelectedItem));
+
+
             return new ObservationPoint()
             {
                 X = Convert.ToDouble(xCoord.Text),
                 Y = Convert.ToDouble(yCoord.Text),
-                Affiliation = cmbAffiliationEdit.SelectedItem.ToString(),
+                Affiliation = affiliationType.Key.ToString(),
                 AngelMaxH = Convert.ToDouble(angleOFViewMax.Text),
                 AngelMinH = Convert.ToDouble(angleOFViewMin.Text),
                 AngelCameraRotationH = Convert.ToDouble(cameraRotationH.Text),
@@ -1019,7 +1030,7 @@ namespace MilSpace.Visibility
                 Dto = Convert.ToDateTime(observPointDate.Text),
                 Operator = observPointCreator.Text,
                 Title = observPointName.Text,
-                Type = cmbObservTypesEdit.Text,
+                Type = mobilityType.Key.ToString(),
                 InnerRadius = Convert.ToDouble(txtMinDistance.Text),
                 OuterRadius = Convert.ToDouble(txtMaxDistance.Text),
             };
@@ -1054,12 +1065,12 @@ namespace MilSpace.Visibility
             }
         }
 
-        private void FillFields(ObservationPoint selectedPoint)
+        private void FillObservPointsFields(ObservationPoint selectedPoint)
         {
             _isDropDownItemChangedManualy = false;
 
-            cmbObservTypesEdit.SelectedItem = selectedPoint.Type.ToString();
-            cmbAffiliationEdit.SelectedItem = selectedPoint.Affiliation.ToString();
+            cmbObservTypesEdit.SelectedItem = _observPointsController.GetObservationPointMobilityTypeLocalized(selectedPoint.ObservationPointMobilityType);
+            cmbAffiliationEdit.SelectedItem = _observPointsController.GetObservationPointTypeLocalized(selectedPoint.ObservationPointAffiliationType);
 
             _isDropDownItemChangedManualy = true;
 
@@ -1525,7 +1536,7 @@ namespace MilSpace.Visibility
                 return;
             }
 
-            FillFields(selectedPoint);
+            FillObservPointsFields(selectedPoint);
         }
 
 
@@ -1753,8 +1764,8 @@ namespace MilSpace.Visibility
                     if(removeLayers)
                     {
                         var removeLayersDialogResult = MessageBox.Show(
-                        "Ви бажаєте видалити шари розрахунку?",
-                        "Спостереження",
+                        LocalizationContext.Instance.VisibilityResultLayersRemoveMessage,
+                        LocalizationContext.Instance.MessageBoxCaption,
                         MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
                         removeLayers = removeLayersDialogResult == DialogResult.OK;
@@ -1865,7 +1876,7 @@ namespace MilSpace.Visibility
                 foreach (var item in summaryInfos)
                 {
                     var lstViewitem = new ListViewItem(LocalizationContext.Instance.SummaryItems[item.Key]);
-                    
+
                     string contentValue = item.Value;
                     if (LocalizationContext.Instance.HasLocalizedElement(item.Value))
                     {
@@ -1885,6 +1896,38 @@ namespace MilSpace.Visibility
 
         #endregion
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            _observPointsController.AddObservPointsLayer();
+            btnAddLayerPS.Enabled = false;
+        }
+
+        private void DockableWindowMilSpaceMVisibilitySt_Load(object sender, EventArgs e)
+        {
+            ToolTip toolTip1 = new ToolTip();
+            toolTip1.AutoPopDelay = 5000;
+            toolTip1.InitialDelay = 1000;
+            toolTip1.ReshowDelay = 500;
+            toolTip1.ShowAlways = true;
+
+            //foreach (Control ctrl in this.Controls)
+            //{
+            //    if (ctrl is System.Windows.Forms.Button && ctrl.Tag is string)
+            //    {
+            //        ctrl.MouseHover += new EventHandler(delegate (Object o, EventArgs a)
+            //        {
+            //            var btn = (Control)o;
+            //            toolTip1.SetToolTip(btn, btn.Tag.ToString());
+            //        });
+            //    }
+            //}
+
+
+            toolTip1.SetToolTip(this.tlbbAddObservObjLayer, this.tlbbAddObservObjLayer.Tag.ToString());
+            toolTip1.SetToolTip(this.btnAddLayerPS, this.btnAddLayerPS.Tag.ToString());
+            toolTip1.SetToolTip(this.buttonSaveOPoint, this.buttonSaveOPoint.Tag.ToString());
+            toolTip1.SetToolTip(this.btnSaveParamPS, this.btnSaveParamPS.Tag.ToString());
+        }
     }
 }
 
