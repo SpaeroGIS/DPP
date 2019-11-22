@@ -173,6 +173,25 @@ namespace MilSpace.Visibility.Localization
         public string PlaceLayerBelow => FindLocalizedElement("PlaceLayerBelow", "Below");
 
         public string WindowCaption => FindLocalizedElement("WindowCaption", "Module Visibility");
+        public string MessageBoxCaption => FindLocalizedElement("MessageBoxCaption", "Sposterezhennya");
+        public string MessageBoxShareCaption => FindLocalizedElement("MessageBoxShareCaption", "Sposterezhennya. Set access");
+        public string MessageBoxWarningCaption => FindLocalizedElement("MessageBoxWarningCaption", "Sposterezhennya. Warning");
+
+        public string ObservPointsTabCaption => FindLocalizedElement("ObservPointsTabCaption", "Observ P");
+        public string ObservObjTabCaption => FindLocalizedElement("ObservObjTabCaption", "Observ O");
+        public string TasksTabCaption => FindLocalizedElement("TasksTabCaption", "Tasks");
+        public string ResultsTabCaption => FindLocalizedElement("ResultsTabCaption", "Results");
+
+        //Header
+        public string NameHeaderText => FindLocalizedElement("NameHeaderText", "Name");
+        public string StateHeaderText => FindLocalizedElement("StateHeaderText", "State");
+        public string TypeHeaderText => FindLocalizedElement("TypeHeaderText", "Type");
+        public string AffiliationHeaderText => FindLocalizedElement("AffiliationHeaderText", "Affiliation");
+        public string DateHeaderText => FindLocalizedElement("DateHeaderText", "Date");
+        public string GroupHeaderText => FindLocalizedElement("GroupHeaderText", "Group");
+         
+        //Buttons
+        public string GenerateButton => FindLocalizedElement("GenerateButton", "Generate");
 
         public string WindowCaptionMaster => 
             FindLocalizedElement("WindowCaptionMaster", "Спостереження. Майстер розрахунку видимостей");
@@ -187,8 +206,33 @@ namespace MilSpace.Visibility.Localization
 
         //<MsgTextNoLocalizationXML>"Не знайдено файл локалізації, або виникла ошибка при його завантаженні/nВікно розрахунку видимоста може бути локалізовано не повністью"</MsgTextNoLocalizationXML>
 
+        //Labels
+        public string SurfaceLabel => FindLocalizedElement("SurfaceLabel", "Surface");
+        public string ObservPointsHeaderLabel => FindLocalizedElement("ObservPointsHeaderLabel", "Observation points (OP)");
+        public string ObservObjHeaderLabel => FindLocalizedElement("ObservObjHeaderLabel", "Observation objects (OO)");
+        public string TasksHeaderLabel => FindLocalizedElement("TasksHeaderLabel", "Calculation tasks");
+        public string ResultsHeaderLabel => FindLocalizedElement("ResultsHeaderLabel", "Results list");
 
         //Errors        
+        public string IncorrectCoordMessage => FindLocalizedElement("IncorrectCoordMessage", "Invalid data. \nThe required coordinates are represented in WGS-84 CS, decimal degrees");
+        public string IncorrectRangeMessage => FindLocalizedElement("IncorrectRangeMessage", "Invalid data.\nThe value must be in range from {0} to {1}");
+        public string ValueLessThenZeroMessage => FindLocalizedElement("ValueLessThenZeroMessage", "Invalid data.\nThe value must be greater than zero");
+        public string EmptyValueMessage => FindLocalizedElement("EmptyValueMessage", "Invalid data.\nPlease enter a value");
+        public string InvalidFormatMessage => FindLocalizedElement("InvalidFormatMessage", "Invalid format");
+        public string UnableToRemoveTaskMessage => FindLocalizedElement("UnableToRemoveTaskMessage", "The result of the current session visibility calculation cannot be deleted");
+        public string UnableToFullRemoveTaskMessage => FindLocalizedElement("UnableToFullRemoveTaskMessage", "The result of the visibility calculation cannot be completely deleted");
+        public string CalculationErrorMessage => FindLocalizedElement("CalculationErrorMessage", "The calculation finished with error\nTo view complete information go to the work log");
+        public string SomeResultsNotAddedMessage => FindLocalizedElement("SomeResultsNotAddedMessage", "Some results cannot be added to the current session");
+
+        //Info
+        public string ObservPointRemoveMessage => FindLocalizedElement("ObservPointRemoveMessage", "Are you sure you want to delete this point (OP)?");
+        public string VisibilityTaskRemoveMessage => FindLocalizedElement("VisibilityTaskRemoveMessage", "Are you sure you want to delete the calculation result from the current session?");
+        public string VisibilityResultsFullRemoveMessage => FindLocalizedElement("VisibilityResultsFullRemoveMessage", "Are you sure you want to completely delete the calculation result?");
+        public string VisibilityResultsRemoveFromSessionMessage => FindLocalizedElement("VisibilityResultsRemoveFromSessionMessage", "Are you sure you want to delete the calculation result from the current session?");
+        public string VisibilityResultLayersRemoveMessage => FindLocalizedElement("VisibilityResultLayersRemoveMessage", "Are you sure you want to delete the calculation result layers?");
+        public string SuccessfullySharedMessage => FindLocalizedElement("SuccessfullySharedMessage", "Shared with all users");
+        public string AlreadySharedMessage => FindLocalizedElement("AlreadySharedMessage", "Results are already shared");
+
 
         ////---------------------------------------------------------------------------------------
 

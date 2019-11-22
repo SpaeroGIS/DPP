@@ -619,7 +619,9 @@ namespace MilSpace.Visibility
 
             if (StepsTabControl.SelectedIndex == StepsTabControl.TabCount - 1)
             {
-                if (!FinalResult.VisibilityCalculationResults.HasFlag(VisibilityCalculationResultsEnum.ObservationPoints) && !FinalResult.VisibilityCalculationResults.HasFlag(VisibilityCalculationResultsEnum.ObservationPointSingle))
+                if (!FinalResult.VisibilityCalculationResults.HasFlag(VisibilityCalculationResultsEnum.ObservationPoints) 
+                    && !FinalResult.VisibilityCalculationResults.HasFlag(VisibilityCalculationResultsEnum.ObservationPointSingle)
+                    )
                 {
                     MessageBox.Show(
                         LocalizationContext.Instance.FindLocalizedElement(
@@ -754,6 +756,11 @@ namespace MilSpace.Visibility
         }
 
         public void RemoveSessionFromList(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void FillVisibilitySessionsList(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded, string newTaskName)
         {
             throw new NotImplementedException();
         }
