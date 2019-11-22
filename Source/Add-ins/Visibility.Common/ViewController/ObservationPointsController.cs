@@ -29,7 +29,7 @@ namespace MilSpace.Visibility.ViewController
         /// <summary>
         /// The dictionary to localise the types
         /// </summary>
-        private static Dictionary<ObservationPointMobilityTypesEnum, string> _mobilityTypes = Enum.GetValues(typeof(ObservationPointMobilityTypesEnum)).Cast<ObservationPointMobilityTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
+        private static Dictionary<ObservationPointMobilityTypesEnum, string> _mobilityTypes = null;// = Enum.GetValues(typeof(ObservationPointMobilityTypesEnum)).Cast<ObservationPointMobilityTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
         private static Dictionary<ObservationPointTypesEnum, string> _affiliationTypes = null;//Enum.GetValues(typeof(ObservationPointTypesEnum)).Cast<ObservationPointTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
         private static Dictionary<string, ObservationObjectTypesEnum> _observObjectsTypesToConvert = Enum.GetValues(typeof(ObservationObjectTypesEnum)).Cast<ObservationObjectTypesEnum>().ToDictionary(ts => ts.ToString(), t => t);
         private static Dictionary<ObservationObjectTypesEnum, string> _observObjectsTypes = null; //Enum.GetValues(typeof(ObservationObjectTypesEnum)).Cast<ObservationObjectTypesEnum>().ToDictionary(ts => ts.ToString(), t => t);
@@ -50,6 +50,7 @@ namespace MilSpace.Visibility.ViewController
             {
                 _affiliationTypes = LocalizationContext.Instance.AffiliationTypes;
                 _observObjectsTypes = LocalizationContext.Instance.ObservObjectsTypes;
+                _mobilityTypes = LocalizationContext.Instance.MobilityTypes;
                 _layerPositions[LayerPositionsEnum.Above] = LocalizationContext.Instance.PlaceLayerAbove;
                 _layerPositions[LayerPositionsEnum.Below] = LocalizationContext.Instance.PlaceLayerBelow;
                 localized = true;
@@ -338,6 +339,11 @@ namespace MilSpace.Visibility.ViewController
         public string GetObservationPointTypeLocalized(ObservationPointTypesEnum type)
         {
             return _affiliationTypes[type];
+        }
+
+        public string GetObservationPointMobilityTypeLocalized(ObservationPointMobilityTypesEnum type)
+        {
+            return _mobilityTypes[type];
         }
 
         public IEnumerable<string> GetObservationObjectTypes()
