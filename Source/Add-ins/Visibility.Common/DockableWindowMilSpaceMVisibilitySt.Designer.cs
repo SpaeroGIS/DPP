@@ -2923,7 +2923,6 @@
         private System.Windows.Forms.ListView lvResultsSummary;
         private System.Windows.Forms.ColumnHeader Attribute;
         private System.Windows.Forms.ColumnHeader Value;
-        private System.Windows.Forms.Label lblLayer;
         private System.Windows.Forms.Button btnAddLayerPS;
     }
 }
