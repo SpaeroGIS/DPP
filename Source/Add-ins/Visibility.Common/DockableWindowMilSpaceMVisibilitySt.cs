@@ -10,6 +10,7 @@ using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Tools;
 using MilSpace.Visibility.DTO;
+using MilSpace.Visibility.Localization;
 using MilSpace.Visibility.ViewController;
 using MilSpace.Visibility.Localization;
 
@@ -349,7 +350,7 @@ namespace MilSpace.Visibility
             }
         }
 
-        public void FillVisibilitySessionsList(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded)
+        public void FillVisibilitySessionsList(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded, string newTaskId)
         {
             if (visibilitySessions.Any())
             {
@@ -396,10 +397,23 @@ namespace MilSpace.Visibility
                     dgvVisibilitySessions.Rows[0].Selected = true;
                 }
 
-                if (lastRow.Visible && isNewSessionAdded)
+                if (isNewSessionAdded && !String.IsNullOrEmpty(newTaskId))
                 {
-                    lastRow.Selected = true;
-                    dgvVisibilitySessions.CurrentCell = lastRow.Cells[1];
+                    var newRow = dgvVisibilitySessions.Rows[0];
+
+                    foreach(DataGridViewRow row in dgvVisibilitySessions.Rows)
+                    {
+                        if(row.Cells["Id"].Value.Equals(newTaskId))
+                        {
+                            newRow = row;
+                        }
+                    }
+
+                    if(newRow.Visible)
+                    {
+                        newRow.Selected = true;
+                        dgvVisibilitySessions.CurrentCell = newRow.Cells[1];
+                    }
                 }
             }
         }
@@ -542,10 +556,10 @@ namespace MilSpace.Visibility
             dgvObservationPoints.Columns["Type"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dgvObservationPoints.Columns["Affiliation"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dgvObservationPoints.Columns["Date"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dgvObservationPoints.Columns["Title"].HeaderText = "Name";
-            dgvObservationPoints.Columns["Type"].HeaderText = "Type";
-            dgvObservationPoints.Columns["Affiliation"].HeaderText = "Affiliation";
-            dgvObservationPoints.Columns["Date"].HeaderText = "Date";
+            dgvObservationPoints.Columns["Title"].HeaderText = LocalizationContext.Instance.NameHeaderText;
+            dgvObservationPoints.Columns["Type"].HeaderText = LocalizationContext.Instance.TypeHeaderText;
+            dgvObservationPoints.Columns["Affiliation"].HeaderText = LocalizationContext.Instance.AffiliationHeaderText;
+            dgvObservationPoints.Columns["Date"].HeaderText = LocalizationContext.Instance.DateHeaderText;
             dgvObservationPoints.Columns["Id"].Visible = false;
         }
 
@@ -1274,7 +1288,7 @@ namespace MilSpace.Visibility
         private void SetVisibilityResultsButtonsState(bool enabled)
         {
             var isGroupedLayerExists = false;
-            var isResultsShared = false;
+            var isResultsShared = true;
 
             if (enabled)
             {
@@ -1609,7 +1623,7 @@ namespace MilSpace.Visibility
                             MessageBoxIcon.Error);
                     }
 
-                    _visibilitySessionsController.UpdateVisibilitySessionsList(true);
+                    _visibilitySessionsController.UpdateVisibilitySessionsList(true, calcParams.TaskName);
                     _visibilitySessionsController.UpdateVisibilityResultsTree();
                 }
             }
@@ -1706,7 +1720,8 @@ namespace MilSpace.Visibility
                 if (result == DialogResult.OK)
                 {
                     var resultId = tvResults.SelectedNode.Tag.ToString();
-                    var isRemovingSuccessfull = _visibilitySessionsController.RemoveResult(resultId, ActiveView, true);
+
+                    var isRemovingSuccessfull = _visibilitySessionsController.RemoveResult(resultId, ActiveView);
 
                     if (!isRemovingSuccessfull)
                     {
@@ -1743,7 +1758,20 @@ namespace MilSpace.Visibility
                 if (result == DialogResult.OK)
                 {
                     var resultId = tvResults.SelectedNode.Tag.ToString();
-                    var isRemovingSuccessfull = _visibilitySessionsController.RemoveResult(resultId);
+
+                    var removeLayers = _visibilitySessionsController.IsResultsLayerExist(resultId, ActiveView);
+
+                    if(removeLayers)
+                    {
+                        var removeLayersDialogResult = MessageBox.Show(
+                        LocalizationContext.Instance.VisibilityResultLayersRemoveMessage,
+                        LocalizationContext.Instance.MessageBoxCaption,
+                        MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+
+                        removeLayers = removeLayersDialogResult == DialogResult.OK;
+                    }
+
+                    _visibilitySessionsController.RemoveResultsFromSession(resultId, removeLayers, ActiveView);
                     var node = tvResults.Nodes.Find(resultId, true).First();
                     tvResults.Nodes.Remove(node);
                 }
