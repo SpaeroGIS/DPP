@@ -104,7 +104,7 @@ namespace MilSpace.Tools.SurfaceProfile
                 in_template_dataset = templateDataser,
                 in_raster = inRaster,
                 out_raster = outRaster,
-                clipping_geometry = ClippingGeometry
+                clipping_geometry = clippingGeometry
             };
 
             clipper.nodata_value = NonvisibleCellValue;
