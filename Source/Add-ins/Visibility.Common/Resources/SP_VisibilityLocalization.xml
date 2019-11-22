@@ -12,8 +12,8 @@
   <ResultsTabCaption>ОВ</ResultsTabCaption>
 
   <GenerateButton>Генерувати</GenerateButton>
-  
-  
+
+  <MsgValueLessThenZerro>Значення бовинно бути більше нуля</MsgValueLessThenZerro>
   <SurfaceLabel>Поверхня</SurfaceLabel>
 
   <PlantsLayerLabel>рослинність</PlantsLayerLabel>
