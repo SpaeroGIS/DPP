@@ -2366,7 +2366,6 @@
             this.lvResultsSummary.TabIndex = 37;
             this.lvResultsSummary.UseCompatibleStateImageBehavior = false;
             this.lvResultsSummary.View = System.Windows.Forms.View.Details;
-            this.lvResultsSummary.Visible = false;
             // 
             // Attribute
             // 

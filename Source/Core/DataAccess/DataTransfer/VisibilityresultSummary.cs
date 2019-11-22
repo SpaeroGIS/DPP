@@ -47,7 +47,7 @@ namespace MilSpace.DataAccess.DataTransfer
                 if (string.IsNullOrEmpty(sourceSurfaceame))
                 {
                     var lastDelim = basedResult.Surface.LastIndexOf(@"\");
-                    sourceSurfaceame = (lastDelim > 0) ? basedResult.Surface.Substring(lastDelim) : basedResult.Surface;
+                    sourceSurfaceame = (lastDelim > 0) ? basedResult.Surface.Substring(lastDelim + 1) : basedResult.Surface;
                 }
                 return sourceSurfaceame;
             }
@@ -57,14 +57,14 @@ namespace MilSpace.DataAccess.DataTransfer
         /// Calculate visibility for sepatare observation points
         /// </summary>
         //    SeparatedVisibilityResult ? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord;
-        public bool SeparatedVisibilityResult => calculatedResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle);
+        public bool SeparatedVisibilityResult => calculatedResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle) || calculatedResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle);
 
         /// <summary>
         /// Calculate common visibility for observation points
         /// </summary>
         //CommonVisibilityResult? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord;
         public bool CommonVisibilityResult => calculatedResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreaRaster) ||
-                                    calculatedResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly) ;
+                                    calculatedResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly);
 
         /// <summary>
         /// Trim visibility result by valueable area
@@ -72,7 +72,7 @@ namespace MilSpace.DataAccess.DataTransfer
         public bool TrimVisibilityResult => calculatedResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly);
 
         public bool ConvrtToPolygonResult => calculatedResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreaPolygons);
-        
+
 
         public IEnumerable<string> ObservationPoints
         {
@@ -87,7 +87,8 @@ namespace MilSpace.DataAccess.DataTransfer
             }
         }
 
-        public IEnumerable<string> ObservationObjects {
+        public IEnumerable<string> ObservationObjects
+        {
             get
             {
                 if (objectsName == null)

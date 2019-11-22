@@ -3,6 +3,7 @@ using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
 using MilSpace.Tools;
+using MilSpace.Visibility.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,15 @@ namespace MilSpace.Visibility.ViewController
         private IObservationPointsView _view;
         private List<VisibilityTask> _visibilitySessions = new List<VisibilityTask>();
         private List<VisibilityCalcResults> _visibilityResults = new List<VisibilityCalcResults>();
-        private static Dictionary<VisibilitySessionStateEnum, string> _states = Enum.GetValues(typeof(VisibilitySessionStateEnum)).Cast<VisibilitySessionStateEnum>().ToDictionary(t => t, ts => ts.ToString());
-        private static Dictionary<VisibilityCalcTypeEnum, string> _calcTypes = Enum.GetValues(typeof(VisibilityCalcTypeEnum)).Cast<VisibilityCalcTypeEnum>().ToDictionary(t => t, ts => ts.ToString());
+        private static Dictionary<VisibilityTaskStateEnum, string> _states = null; //Enum.GetValues(typeof(VisibilityTaskStateEnum)).Cast<VisibilityTaskStateEnum>().ToDictionary(t => t, ts => ts.ToString());
+        private static Dictionary<VisibilityCalcTypeEnum, string> _calcTypes = null;// Enum.GetValues(typeof(VisibilityCalcTypeEnum)).Cast<VisibilityCalcTypeEnum>().ToDictionary(t => t, ts => ts.ToString());
 
         public VisibilitySessionsController()
         {
             VisibilityManager.OnGenerationStarted += UpdateVisibilitySessionsList;
+
+            _calcTypes = LocalizationContext.Instance.CalcTypeLocalisationShort;
+            _states = LocalizationContext.Instance.CalculationStates;
         }
 
         internal void SetView(IObservationPointsView view)
@@ -37,7 +41,7 @@ namespace MilSpace.Visibility.ViewController
             return _calcTypes.Select(t => t.Value);
         }
 
-        internal string GetStringForStateType(VisibilitySessionStateEnum type)
+        internal string GetStringForStateType(VisibilityTaskStateEnum type)
         {
             return _states[type];
         }

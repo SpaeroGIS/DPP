@@ -1,6 +1,6 @@
 ﻿namespace MilSpace.DataAccess.DataTransfer
 {
-    public enum VisibilitySessionStateEnum
+    public enum VisibilityTaskStateEnum
     {
         All,
         Pending,

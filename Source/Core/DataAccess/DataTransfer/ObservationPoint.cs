@@ -115,6 +115,16 @@ namespace MilSpace.DataAccess.DataTransfer
         /// </summary>
         public double? AngelCameraRotationV;
 
+        public ObservationPointTypesEnum ObservationPointType
+        {
+            get
+            {
+                ObservationPointTypesEnum temp = ObservationPointTypesEnum.Undefined;
+                Enum.TryParse(Affiliation, out temp);
+                return temp;
+            }
+        }
+
 
         public double? InnerRadius;
         public double? OuterRadius;
