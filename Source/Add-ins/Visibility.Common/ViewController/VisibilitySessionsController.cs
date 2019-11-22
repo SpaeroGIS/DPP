@@ -72,10 +72,10 @@ namespace MilSpace.Visibility.ViewController
             return string.Empty;
         }
 
-        internal void UpdateVisibilitySessionsList(bool isNewSessionAdded = false)
+        internal void UpdateVisibilitySessionsList(bool isNewSessionAdded = false, string newSessionName = null)
         {
             _visibilitySessions = VisibilityZonesFacade.GetAllVisibilityTasks(true).ToList();
-            _view.FillVisibilitySessionsList(_visibilitySessions, isNewSessionAdded);
+            _view.FillVisibilitySessionsList(_visibilitySessions, isNewSessionAdded, newSessionName);
         }
         internal void UpdateVisibilityResultsTree(bool isNewSessionAdded = false)
         {
@@ -114,6 +114,7 @@ namespace MilSpace.Visibility.ViewController
             return result;
         }
 
+        
         internal VisibilityresultSummary GetSummaryResultById(string id)
         {
             var result = _visibilityResults.FirstOrDefault(res => res.Id == id);
@@ -125,43 +126,37 @@ namespace MilSpace.Visibility.ViewController
             return null;
         }
 
-        internal bool RemoveResult(string id, IActiveView activeView = null, bool fromBase = false)
+        internal bool RemoveResult(string id, IActiveView activeView)
         {
             var selectedResults = _visibilityResults.First(res => res.Id == id);
             var results = selectedResults.ValueableResults();
             var removingResult = true;
 
-            if(fromBase)
+            if(VisibilityZonesFacade.IsResultsBelongToUser(id))
             {
-                if(VisibilityZonesFacade.IsResultsBelongToUser(id))
+                foreach(var result in results)
                 {
-
-                    foreach(var result in results)
+                    if(result != selectedResults.Id)
                     {
-                        if(result != selectedResults.Id)
+                        if(!EsriTools.RemoveDataSet(selectedResults.ReferencedGDB, result))
                         {
-                            if(!EsriTools.RemoveDataSet(selectedResults.ReferencedGDB, result))
-                            {
-                                return false;
-                            }
-                        }
-                    }
-
-                    removingResult = VisibilityZonesFacade.DeleteVisibilityResults(id);
-
-                    if(removingResult)
-                    {
-                        RemoveSession(id);
-                        if(activeView != null)
-                        {
-                            EsriTools.RemoveLayer(selectedResults.Name, activeView.FocusMap);
+                            return false;
                         }
                     }
                 }
-                else
+
+                removingResult = VisibilityZonesFacade.DeleteVisibilityResults(id);
+
+                if(removingResult)
                 {
-                    VisibilityZonesFacade.DeleteVisibilityResultsFromUserSession(id);
+                    RemoveSession(id);
+
+                    EsriTools.RemoveLayer(selectedResults.Name, activeView.FocusMap);
                 }
+            }
+            else
+            {
+                VisibilityZonesFacade.DeleteVisibilityResultsFromUserSession(id);
             }
 
             if(removingResult)
@@ -170,6 +165,18 @@ namespace MilSpace.Visibility.ViewController
             }
 
             return removingResult;
+        }
+
+        internal void RemoveResultsFromSession(string id, bool removeLayers, IActiveView activeView)
+        {
+            var selectedResults = _visibilityResults.First(res => res.Id == id);
+
+            if(removeLayers)
+            {
+                EsriTools.RemoveLayer(selectedResults.Name, activeView.FocusMap);
+            }
+
+            _visibilityResults.Remove(selectedResults);
         }
 
         internal bool ShareResults(string id)
@@ -233,7 +240,7 @@ namespace MilSpace.Visibility.ViewController
 
         internal bool IsResultsShared(string id)
         {
-           return _visibilityResults.First(res => res.Id == id).Shared;
+            return _visibilityResults.First(res => res.Id == id).Shared;
         }
 
         private string GetLastLayer(IActiveView activeView)
@@ -243,4 +250,3 @@ namespace MilSpace.Visibility.ViewController
         }
     }
 }
- 
