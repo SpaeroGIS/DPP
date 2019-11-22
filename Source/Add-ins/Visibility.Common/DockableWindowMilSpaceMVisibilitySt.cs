@@ -109,7 +109,7 @@ namespace MilSpace.Visibility
                 this.chckObservObjGroup.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_chckObservObjGroup_Text", "група");
                 this.chckObservObjTitle.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_chckObservObjTitle_Text", "назва");
                 this.label28.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label28_Text", "належність");
-                this.label30.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label30_Text", "Області нагляду (ОН)");
+                this.lblObservObjHeader.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label30_Text", "Області нагляду (ОН)");
                 this.tlbbAddObservObjLayer.Tag = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbAddObservObjLayer_Tag", "Додати шар ОН до карти");
                 this.toolBarButton18.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_toolBarButton18_ToolTipText", "Вказать на карті");
                 this.toolBarButton20.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_toolBarButton20_ToolTipText", "Побновити");
@@ -129,7 +129,7 @@ namespace MilSpace.Visibility
                 this.wizardTask.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_wizardTask_ToolTipText", "сформувати завдання на розрахунок");
                 this.removeTask.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_removeTask_ToolTipText", "видалити інформацію про завдання");
                 this.label38.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label38_Text", "стан");
-                this.label36.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label36_Text", "Завдання для розрахунків");
+                this.lblCalcTasksHeader.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label36_Text", "Завдання для розрахунків");
                 this.tbpVisibilityAreas.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_tbpVisibilityAreas_Text", "ОВ");
                 this.tbpVisibilityAreas.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tbpVisibilityAreas_ToolTipText", "Області видимості (результати розрахунків)");
                 this.labelHeaderVisibilityInfo.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_labelHeaderVisibilityInfo_Text", "Інформація про результат");
@@ -139,7 +139,7 @@ namespace MilSpace.Visibility
                 this.tlbbFullDelete.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbFullDelete_ToolTipText", "видалити звідусіль");
                 this.toolBarButtonRemoveFromSeanse.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_toolBarButtonRemoveFromSeanse_ToolTipText", "видалити з сеансу роботи");
                 this.tlbbUpdate.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbUpdate_ToolTipText", "Поновити");
-                this.labelHeaderVisibilityResult.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_labelHeaderVisibilityResult_Text", "Список результатів");
+                this.lblHeaderVisibilityResult.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_labelHeaderVisibilityResult_Text", "Список результатів");
                 this.richTextBox1.Text = LocalizationContext.Instance.FindLocalizedElement(
                     "MainW_richTextBox1_Text",
                     "при выборе мобильного типа углы нелоступны, высоты недоступны, координаты недоступны, при добавлении дата и время автоматом");
@@ -401,15 +401,15 @@ namespace MilSpace.Visibility
                 {
                     var newRow = dgvVisibilitySessions.Rows[0];
 
-                    foreach(DataGridViewRow row in dgvVisibilitySessions.Rows)
+                    foreach (DataGridViewRow row in dgvVisibilitySessions.Rows)
                     {
-                        if(row.Cells["Id"].Value.Equals(newTaskId))
+                        if (row.Cells["Id"].Value.Equals(newTaskId))
                         {
                             newRow = row;
                         }
                     }
 
-                    if(newRow.Visible)
+                    if (newRow.Visible)
                     {
                         newRow.Selected = true;
                         dgvVisibilitySessions.CurrentCell = newRow.Cells[1];
@@ -689,19 +689,21 @@ namespace MilSpace.Visibility
 
             var selectedPoint = _observPointsController.GetObservPointById(_selectedPointId);
 
-            if (FieldsValidation(sender, selectedPoint))
+            if (!FieldsValidation(sender, selectedPoint))
             {
-                if (!FieldsEQ(selectedPoint))
-                {
-                    _observPointsController.UpdateObservPoint(
-                        GetObservationPoint(),
-                        VisibilityManager.ObservPointFeature,
-                        ActiveView,
-                        selectedPoint.Objectid
-                        );
-                    UpdateObservPointsList();
-                }
+                ((TextBox)sender).Focus();
             }
+            if (!FieldsEQ(selectedPoint))
+            {
+                _observPointsController.UpdateObservPoint(
+                    GetObservationPoint(),
+                    VisibilityManager.ObservPointFeature,
+                    ActiveView,
+                    selectedPoint.Objectid
+                    );
+                UpdateObservPointsList();
+            }
+
         }
 
         private bool FieldsEQ(ObservationPoint point)
@@ -728,6 +730,60 @@ namespace MilSpace.Visibility
 
                 switch (textBox.Name)
                 {
+                    case "txtMinDistance":
+                        double minValue;
+                        string sMsgTextMinValue = LocalizationContext.Instance.FindLocalizedElement(
+                                                                                 "MsgValueLessThenZerro",
+                                                                                 "Значення бовинно бути більше нуля.");
+                        if (!Helper.TryParceToDouble(txtMinDistance.Text, out minValue))
+                        {
+                            MessageBox.Show(
+                                    sMsgTextMinValue,
+                                    LocalizationContext.Instance.MsgBoxErrorHeader,
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
+                            return false;
+                        }
+                        if (minValue <= 0)
+                        {
+                            MessageBox.Show(
+                                sMsgTextMinValue,
+                                LocalizationContext.Instance.MsgBoxErrorHeader,
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                            return false;
+                        }
+
+                        txtMinDistance.Text = minValue.ToString();
+                        break;
+                    case "txtMaxDistance":
+
+                        double maxValue;
+                        string sMsgTextMaxValue = LocalizationContext.Instance.FindLocalizedElement(
+                                                                                  "MsgValueLessThenZerro",
+                                                                                  "Значення бовинно бути більше нуля.");
+                        if (!Helper.TryParceToDouble(txtMaxDistance.Text, out maxValue))
+                        {
+                            MessageBox.Show(
+                               sMsgTextMaxValue,
+                               LocalizationContext.Instance.MsgBoxErrorHeader,
+                               MessageBoxButtons.OK,
+                               MessageBoxIcon.Error);
+                            return false;
+                        }
+                        if (maxValue <= 0)
+                        {
+
+                            MessageBox.Show(
+                                sMsgTextMaxValue,
+                                LocalizationContext.Instance.MsgBoxErrorHeader,
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                            return false;
+                        }
+
+                        txtMaxDistance.Text = maxValue.ToString();
+                        break;
                     case "xCoord":
 
                         if (!Regex.IsMatch(xCoord.Text, @"^([-]?[\d]{1,2}\,\d+)$"))
@@ -871,6 +927,8 @@ namespace MilSpace.Visibility
 
                         return true;
                 }
+
+                return true;
             }
 
             catch (Exception ex) { return false; }
@@ -1761,7 +1819,7 @@ namespace MilSpace.Visibility
 
                     var removeLayers = _visibilitySessionsController.IsResultsLayerExist(resultId, ActiveView);
 
-                    if(removeLayers)
+                    if (removeLayers)
                     {
                         var removeLayersDialogResult = MessageBox.Show(
                         LocalizationContext.Instance.VisibilityResultLayersRemoveMessage,
