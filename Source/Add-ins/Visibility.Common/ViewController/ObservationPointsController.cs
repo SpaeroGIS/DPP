@@ -334,6 +334,12 @@ namespace MilSpace.Visibility.ViewController
         {
             return _affiliationTypes.Where(t => t.Key != ObservationPointTypesEnum.All).Select(t => t.Value);
         }
+
+        public string GetObservationPointTypeLocalized(ObservationPointTypesEnum type)
+        {
+            return _affiliationTypes[type];
+        }
+
         public IEnumerable<string> GetObservationObjectTypes()
         {
             return _observObjectsTypes.Where(t => t.Key != ObservationObjectTypesEnum.Undefined).Select(t => t.Value);

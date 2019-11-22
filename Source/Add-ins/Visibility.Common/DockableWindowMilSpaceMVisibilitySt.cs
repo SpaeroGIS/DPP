@@ -623,6 +623,7 @@ namespace MilSpace.Visibility
             cmbAffiliationEdit.Items.Clear();
 
             cmbAffiliation.Items.AddRange(filters.ToArray());
+
             cmbAffiliation.Items.Add(_observPointsController.GetAllAffiliationType());
             cmbAffiliationEdit.Items.AddRange(GetAffiliation.ToArray());
 
@@ -1041,12 +1042,12 @@ namespace MilSpace.Visibility
             }
         }
 
-        private void FillFields(ObservationPoint selectedPoint)
+        private void FillObservPointsFields(ObservationPoint selectedPoint)
         {
             _isDropDownItemChangedManualy = false;
 
-            cmbObservTypesEdit.SelectedItem = selectedPoint.Type.ToString();
-            cmbAffiliationEdit.SelectedItem = selectedPoint.Affiliation.ToString();
+            cmbObservTypesEdit.SelectedItem = selectedPoint.Type;
+            cmbAffiliationEdit.SelectedItem = _observPointsController.GetObservationPointTypeLocalized(selectedPoint.ObservationPointType);
 
             _isDropDownItemChangedManualy = true;
 
@@ -1512,7 +1513,7 @@ namespace MilSpace.Visibility
                 return;
             }
 
-            FillFields(selectedPoint);
+            FillObservPointsFields(selectedPoint);
         }
 
 
