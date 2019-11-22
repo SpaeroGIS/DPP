@@ -28,6 +28,46 @@ namespace MilSpace.Visibility
             InitializeListView(_controller.GetAllAccessibleProfilesSets());
         }
 
+        private void LocalizeControls()
+        {
+            //this.Text = LocalizationConstants.ProfilesSetsTitle; 
+            //gbFilters.Text = LocalizationConstants.FiltersTitle;
+            //lblDateText.Text = LocalizationConstants.CreationDateText;
+            //lblFrom.Text = LocalizationConstants.FromText;
+            //lblTo.Text = LocalizationConstants.ToText;
+            //btnFilter.Text = LocalizationConstants.FilterText;
+            //btnOk.Text = LocalizationConstants.AddToSessionText;
+            //btnCancel.Text = LocalizationConstants.CloseText;
+            //btnReset.Text = LocalizationConstants.ResetText;
+            //Text = LocalizationConstants.SavedProfilesModalWindowText;
+
+            try
+            {
+                this.Text = LocalizationContext.Instance.FindLocalizedElement("WinDB.Caption", "SavedProfilesModalWindow");
+                this.gbFilters.Text = LocalizationContext.Instance.FindLocalizedElement("WinDB.gbFilters.Text", "Filters");
+                this.btnReset.Text = LocalizationContext.Instance.FindLocalizedElement("WinDB.btnReset.Text", "Reset");
+                this.btnFilter.Text = LocalizationContext.Instance.FindLocalizedElement("WinDB.btnFilter.Text", "Filter");
+                this.cmbGraphType.Text = LocalizationContext.Instance.FindLocalizedElement("WinDB.cmbGraphType.Text", "Type");
+                this.lblTo.Text = LocalizationContext.Instance.FindLocalizedElement("WinDB.lblTo.Text", "to");
+                this.lblFrom.Text = LocalizationContext.Instance.FindLocalizedElement("WinDB.lblFrom.Text", "from");
+                this.lblDateText.Text = LocalizationContext.Instance.FindLocalizedElement("WinDB.lblDateText.Text", "Creation date:");
+                this.txtName.Text = LocalizationContext.Instance.FindLocalizedElement("WinDB.txtName.Text", "Name");
+                this.btnCancel.Text = LocalizationContext.Instance.FindLocalizedElement("WinDB.btnCancel.Text", "Close");
+                this.btnOk.Text = LocalizationContext.Instance.FindLocalizedElement("WinDB.btnOk.Text", "Add to session");
+            }
+            catch
+            {
+                string sMsgText = LocalizationContext.Instance.FindLocalizedElement(
+                    "MsgTextNoLocalizationXML",
+                    "No Localization xml-file found or there is an error during loading/nVisibility window is not fully localized");
+                MessageBox.Show(
+                    sMsgText,
+                    LocalizationContext.Instance.MsgBoxInfoHeader,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
+        }
+
         private void SetComponentsView()
         {
             SetListView();
@@ -40,26 +80,29 @@ namespace MilSpace.Visibility
                 {
                     Name = "NameCol",
                     Width = (int)(lvProfilesSets.Width * 0.32),
-                    Text = "Name"
+                    Text = LocalizationContext.Instance.FindLocalizedElement("WinDB.ColumnName", "Name")
                 });
-            lvProfilesSets.Columns.Add(new ColumnHeader
-            {
+
+            lvProfilesSets.Columns.Add(
+                new ColumnHeader
+                {
                 Name = "CreatorCol",
                 Width = (int)(lvProfilesSets.Width * 0.25),
-                Text = "CreateBy"
-            });
+                Text = LocalizationContext.Instance.FindLocalizedElement("WinDB.ColumnCreator", "CreateBy")
+                });
+
             lvProfilesSets.Columns.Add(new ColumnHeader
             {
                 Name = "DateCol",
                 Width = (int)(lvProfilesSets.Width * 0.15),
-                Text = "Date"
+                Text = LocalizationContext.Instance.FindLocalizedElement("WinDB.ColumnDate", "Date")
             }
             );
             lvProfilesSets.Columns.Add(new ColumnHeader
             {
                 Name = "TypeCol",
                 Width = (int)(lvProfilesSets.Width * 0.12),
-                Text = "Type"
+                Text = LocalizationContext.Instance.FindLocalizedElement("WinDB.ColumnType", "Type")
             });
 
             var occupiedSpace = 0;
@@ -73,7 +116,7 @@ namespace MilSpace.Visibility
             {
                 Name = "IsSharedCol",
                 Width = colSize,
-                Text = "Shared"
+                Text = LocalizationContext.Instance.FindLocalizedElement("WinDB.ColumnShared", "Shared")
             });
 
             lvProfilesSets.View = View.Details;
@@ -85,9 +128,10 @@ namespace MilSpace.Visibility
 
             //TODO:Localize
             cmbGraphType.Items.Add("Усі типи");
-            cmbGraphType.Items.AddRange(LocalizationContext.Instance.CalcTypeLocalisationShort.Values.ToArray());
-            cmbGraphType.Items.Remove(LocalizationContext.Instance.CalcTypeLocalisationShort.First(type => type.Key == VisibilityCalcTypeEnum.None).Value);
-
+            cmbGraphType.Items.AddRange(
+                LocalizationContext.Instance.CalcTypeLocalisationShort
+                .Where(v => v.Key != VisibilityCalcTypeEnum.None)
+                .Select(k => k.Value).ToArray());
         }
 
         private void SetTextDefaultValues()
@@ -151,22 +195,6 @@ namespace MilSpace.Visibility
             return String.Empty;
         }
 
-        private void LocalizeControls()
-        {
-            //this.Text = LocalizationConstants.ProfilesSetsTitle; 
-
-            //gbFilters.Text = LocalizationConstants.FiltersTitle;
-
-            //lblDateText.Text = LocalizationConstants.CreationDateText;
-            //lblFrom.Text = LocalizationConstants.FromText;
-            //lblTo.Text = LocalizationConstants.ToText;
-
-            //btnFilter.Text = LocalizationConstants.FilterText;
-            //btnOk.Text = LocalizationConstants.AddToSessionText;
-            //btnCancel.Text = LocalizationConstants.CloseText;
-            //btnReset.Text = LocalizationConstants.ResetText;
-            //Text = LocalizationConstants.SavedProfilesModalWindowText;
-        }
 
         private void BtnFilter_Click(object sender, EventArgs e)
         {

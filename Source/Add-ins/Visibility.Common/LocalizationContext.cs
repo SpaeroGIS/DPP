@@ -174,6 +174,9 @@ namespace MilSpace.Visibility.Localization
 
         public string WindowCaption => FindLocalizedElement("WindowCaption", "Module Visibility");
 
+        public string WindowCaptionMaster => 
+            FindLocalizedElement("WindowCaptionMaster", "Спостереження. Майстер розрахунку видимостей");
+
         //public string GenerateButton => FindLocalizedElement("GenerateButton", "Generate");
         //public string SurfaceLabel => FindLocalizedElement("SurfaceLabel", "Surface");
 

@@ -1871,29 +1871,29 @@ namespace MilSpace.Visibility
 
         private void DockableWindowMilSpaceMVisibilitySt_Load(object sender, EventArgs e)
         {
-            ToolTip toolTip1 = new ToolTip();
-            toolTip1.AutoPopDelay = 5000;
-            toolTip1.InitialDelay = 1000;
-            toolTip1.ReshowDelay = 500;
-            toolTip1.ShowAlways = true;
+            ToolTip toolTip = new ToolTip();
+            toolTip.AutoPopDelay = 5000;
+            toolTip.InitialDelay = 1000;
+            toolTip.ReshowDelay = 500;
+            toolTip.ShowAlways = true;
 
             //foreach (Control ctrl in this.Controls)
             //{
             //    if (ctrl is System.Windows.Forms.Button && ctrl.Tag is string)
             //    {
-            //        ctrl.MouseHover += new EventHandler(delegate (Object o, EventArgs a)
-            //        {
-            //            var btn = (Control)o;
-            //            toolTip1.SetToolTip(btn, btn.Tag.ToString());
-            //        });
+            //        ctrl.MouseHover += new EventHandler(
+            //            delegate (Object o, EventArgs a)
+            //            {
+            //                var btn = (Control)o;
+            //                toolTip.SetToolTip(btn, btn.Tag.ToString());
+            //            });
             //    }
             //}
 
-
-            toolTip1.SetToolTip(this.tlbbAddObservObjLayer, this.tlbbAddObservObjLayer.Tag.ToString());
-            toolTip1.SetToolTip(this.btnAddLayerPS, this.btnAddLayerPS.Tag.ToString());
-            toolTip1.SetToolTip(this.buttonSaveOPoint, this.buttonSaveOPoint.Tag.ToString());
-            toolTip1.SetToolTip(this.btnSaveParamPS, this.btnSaveParamPS.Tag.ToString());
+            toolTip.SetToolTip(this.tlbbAddObservObjLayer, this.tlbbAddObservObjLayer.Tag.ToString());
+            toolTip.SetToolTip(this.btnAddLayerPS, this.btnAddLayerPS.Tag.ToString());
+            toolTip.SetToolTip(this.buttonSaveOPoint, this.buttonSaveOPoint.Tag.ToString());
+            toolTip.SetToolTip(this.btnSaveParamPS, this.btnSaveParamPS.Tag.ToString());
         }
     }
 }
