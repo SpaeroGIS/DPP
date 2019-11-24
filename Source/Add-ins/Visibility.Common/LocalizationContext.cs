@@ -66,12 +66,16 @@ namespace MilSpace.Visibility.Localization
 
             calcTypeLocalisation.Add(VisibilityCalcTypeEnum.None, string.Empty);
             calcTypeLocalisationShort.Add(VisibilityCalcTypeEnum.None, string.Empty);
+
             calcTypeLocalisation.Add(VisibilityCalcTypeEnum.OpservationPoints, CalcFirstTypeDescription);
             calcTypeLocalisationShort.Add(VisibilityCalcTypeEnum.OpservationPoints, CalcFirstTypeDescriptionShort);
-            calcTypeLocalisation.Add(VisibilityCalcTypeEnum.ObservationObjects, CalcTherdTypeDescription);
-            calcTypeLocalisationShort.Add(VisibilityCalcTypeEnum.ObservationObjects, CalcTherdTypeDescriptionShort);
+
+            calcTypeLocalisation.Add(VisibilityCalcTypeEnum.ObservationObjects, CalcSecondTypeDescription);
+            calcTypeLocalisationShort.Add(VisibilityCalcTypeEnum.ObservationObjects, CalcSecondTypeDescriptionShort);
+
             calcTypeLocalisation.Add(VisibilityCalcTypeEnum.BestObservationParameters, CalcTherdTypeDescription);
             calcTypeLocalisationShort.Add(VisibilityCalcTypeEnum.BestObservationParameters, CalcTherdTypeDescriptionShort);
+
             calcTypeLocalisation.Add(VisibilityCalcTypeEnum.ResultsObservationAnalize, CalcFourthTypeDescription);
             calcTypeLocalisationShort.Add(VisibilityCalcTypeEnum.ResultsObservationAnalize, CalcFourthTypeDescriptionShort);
 

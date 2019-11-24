@@ -584,19 +584,33 @@ namespace MilSpace.Visibility
 
         public void SummaryInfo()
         {
-            lblCalcType.Text = LocalizationContext.Instance.CalcTypeLocalisation[FinalResult.CalculationType];
-            lblTaskName.Text = FinalResult.TaskName;
-            lblDEMName.Text = FinalResult.RasterLayerName;
-            lblObservObjectsSingle.Text = checkBoxOP.Checked ? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord;
-            lblObservObjectsAll.Text = SumChkBox.Checked ? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord;
-            lblReferencedLayerName.Text = cmbPositions.SelectedItem.ToString();
-            var selectedObservPoints = _observPointGuis != null ? _observPointGuis.Where(p => p.Check).Select(o => o.Title).ToArray() : null;
-            var selectedObservObjects = _observationObjects != null ? _observationObjects.Where(p => p.Check).Select(o => o.Title).ToArray() : null;
+            lblCalcType.Text = 
+                LocalizationContext.Instance.CalcTypeLocalisation[FinalResult.CalculationType];
+            lblTaskName.Text = 
+                FinalResult.TaskName;
+            lblDEMName.Text = 
+                FinalResult.RasterLayerName;
+            lblObservObjectsSingle.Text = 
+                checkBoxOP.Checked ? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord;
 
-            lblObservPointsSummary.Text = selectedObservPoints == null ? string.Empty : $"{selectedObservPoints.Length} - {string.Join("; ", selectedObservPoints)}";
-            lblObservObjectsSummary.Text = selectedObservObjects == null ? string.Empty : $"{selectedObservObjects.Length} - {string.Join("; ", selectedObservObjects)}";
+            lblObservObjectsAll.Text = 
+                SumChkBox.Checked ? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord;
 
-            lblTrimCalcresults.Text = !chkTrimRaster.Enabled ? string.Empty : (chkTrimRaster.Checked ? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord);
+            lblReferencedLayerName.Text = 
+                cmbPositions.SelectedItem.ToString() + " " + cmbMapLayers.SelectedItem.ToString();
+
+            var selectedObservPoints = 
+                _observPointGuis != null ? _observPointGuis.Where(p => p.Check).Select(o => o.Title).ToArray() : null;
+            var selectedObservObjects = 
+                _observationObjects != null ? _observationObjects.Where(p => p.Check).Select(o => o.Title).ToArray() : null;
+
+            lblObservPointsSummary.Text = 
+                selectedObservPoints == null ? string.Empty : $"{selectedObservPoints.Length} - {string.Join("; ", selectedObservPoints)}";
+            lblObservObjectsSummary.Text = 
+                selectedObservObjects == null ? string.Empty : $"{selectedObservObjects.Length} - {string.Join("; ", selectedObservObjects)}";
+
+            lblTrimCalcresults.Text = 
+                !chkTrimRaster.Enabled ? string.Empty : (chkTrimRaster.Checked ? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord);
         }
 
         public string ObservationStationFeatureClass => observObjectsLabel.Text;

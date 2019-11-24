@@ -802,13 +802,13 @@ namespace MilSpace.Visibility
             // 
             // label46
             // 
-            this.label46.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label46.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label46.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label46.Location = new System.Drawing.Point(4, 4);
             this.label46.Margin = new System.Windows.Forms.Padding(3);
             this.label46.Name = "label46";
             this.label46.Padding = new System.Windows.Forms.Padding(0, 2, 4, 0);
-            this.label46.Size = new System.Drawing.Size(787, 32);
+            this.label46.Size = new System.Drawing.Size(907, 32);
             this.label46.TabIndex = 2;
             this.label46.Text = "Крок 1. Обрати тип розрахунку";
             // 
@@ -1261,18 +1261,18 @@ namespace MilSpace.Visibility
             this.panel47.Location = new System.Drawing.Point(3, 3);
             this.panel47.Margin = new System.Windows.Forms.Padding(0);
             this.panel47.Name = "panel47";
-            this.panel47.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.panel47.Padding = new System.Windows.Forms.Padding(4);
             this.panel47.Size = new System.Drawing.Size(915, 40);
             this.panel47.TabIndex = 66;
             // 
             // label30
             // 
-            this.label30.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label30.Dock = System.Windows.Forms.DockStyle.Left;
             this.label30.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label30.Location = new System.Drawing.Point(4, 0);
+            this.label30.Location = new System.Drawing.Point(4, 4);
             this.label30.Name = "label30";
-            this.label30.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label30.Size = new System.Drawing.Size(911, 40);
+            this.label30.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.label30.Size = new System.Drawing.Size(437, 32);
             this.label30.TabIndex = 7;
             this.label30.Text = "Крок 2. Основні параметри розрахунку";
             // 
@@ -1623,7 +1623,7 @@ namespace MilSpace.Visibility
             this.label10.Location = new System.Drawing.Point(4, 4);
             this.label10.Margin = new System.Windows.Forms.Padding(3);
             this.label10.Name = "label10";
-            this.label10.Padding = new System.Windows.Forms.Padding(0, 2, 4, 0);
+            this.label10.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
             this.label10.Size = new System.Drawing.Size(496, 32);
             this.label10.TabIndex = 2;
             this.label10.Text = "Крок 3. Додаткові параметри формування результату";
@@ -1937,16 +1937,18 @@ namespace MilSpace.Visibility
             this.panel28.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel28.Location = new System.Drawing.Point(0, 0);
             this.panel28.Name = "panel28";
+            this.panel28.Padding = new System.Windows.Forms.Padding(4);
             this.panel28.Size = new System.Drawing.Size(921, 40);
             this.panel28.TabIndex = 10;
             // 
             // label29
             // 
-            this.label29.AutoSize = true;
+            this.label29.Dock = System.Windows.Forms.DockStyle.Left;
             this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label29.Location = new System.Drawing.Point(3, 6);
+            this.label29.Location = new System.Drawing.Point(4, 4);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(358, 20);
+            this.label29.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.label29.Size = new System.Drawing.Size(435, 32);
             this.label29.TabIndex = 9;
             this.label29.Text = "Крок 4. Перевірка параметрів розрахунку";
             // 
@@ -1958,6 +1960,7 @@ namespace MilSpace.Visibility
             this.Controls.Add(this.StepsTabControl);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "WindowMilSpaceMVisibilityMaster";
@@ -2018,7 +2021,6 @@ namespace MilSpace.Visibility
             this.panel38.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel28.ResumeLayout(false);
-            this.panel28.PerformLayout();
             this.ResumeLayout(false);
 
         }

@@ -25,7 +25,6 @@ namespace MilSpace.Tools
         private static readonly string FIRST_DIST_Field = "FIRST_DIST";
         private static readonly string FIRST_Z_Field = "FIRST_Z";
         private static readonly string LINE_ID_Field = "LINE_ID";
-
         private static readonly string WhereAllRecords = "OBJECTID > 0";
 
         public static readonly string ObservPointFeature = "MilSp_Visible_ObservPoints";
@@ -59,7 +58,7 @@ namespace MilSpace.Tools
             //Target dataset name
             string nameOfTargetDataset = taskId;
 
-            logger.InfoEx("Starting generation visiblility resuilt for session {2} using DEM {0} from observation points {1}.".InvariantFormat(sourceDem, obervationPoints, nameOfTargetDataset));
+            logger.InfoEx("> Generate. Starting generation visiblility resuilt for session {2} using DEM {0} from observation points {1}.".InvariantFormat(sourceDem, obervationPoints, nameOfTargetDataset));
 
 
             var calcTask = new VisibilityTask
@@ -137,6 +136,7 @@ namespace MilSpace.Tools
 
         public static string GenerateResultId(string preffix = VisibilityCalcFeatureClass)
         {
+            logger.DebugEx("> GenerateResultId Periffics: {0}", preffix);
             return $"{preffix}{MilSpace.DataAccess.Helper.GetTemporaryNameSuffix()}";
         }
 
@@ -149,12 +149,11 @@ namespace MilSpace.Tools
             }
             catch (MilSpaceDataException ex)
             {
-                logger.ErrorEx(ex.Message);
+                logger.ErrorEx("> AddVisibilityPointLayer Exception: {0}", ex.Message);
             }
             catch (Exception ex)
             {
-                logger.ErrorEx("Unexpectede error");
-                logger.ErrorEx(ex.Message);
+                logger.ErrorEx("> AddVisibilityPointLayer Exception 2: {0}", ex.Message);
             }
 
             return false;
@@ -169,12 +168,11 @@ namespace MilSpace.Tools
             }
             catch (MilSpaceDataException ex)
             {
-                logger.ErrorEx(ex.Message);
+                logger.ErrorEx("> AddObservationObjectLayer Exception: {0}", ex.Message);
             }
             catch (Exception ex)
             {
-                logger.ErrorEx("Unexpectede error");
-                logger.ErrorEx(ex.Message);
+                logger.ErrorEx("> AddObservationObjectLayer Exception 2: {0}", ex.Message);
             }
 
             return false;
@@ -216,9 +214,8 @@ namespace MilSpace.Tools
                 {
                     foreach (var calcRes in res.Result.CalculationMessages)
                     {
-
                         //Here should be checked if the results match with session.CalculatedResults
-                        logger.InfoEx($"The result layer {calcRes} was successfully composed in {session.ReferencedGDB}");
+                        logger.InfoEx("> OnCalculationFinished. The result layer {0} was composed in {1}", calcRes, session.ReferencedGDB);
                     }
                 }
 
