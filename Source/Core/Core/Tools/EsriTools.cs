@@ -842,6 +842,12 @@ namespace MilSpace.Core.Tools
                 ISegment segmentOut = (ISegment)outArc;
 
                 outFullRing.AddSegment(segmentOut);
+                IRing outFullRingGeometry = outFullRing as IRing;
+
+                if(!outFullRingGeometry.IsExterior)
+                {
+                    outFullRingGeometry.ReverseOrientation();
+                }
 
                 ICircularArc innerArc = new CircularArcClass();
                 innerArc.PutCoordsByAngle(point, 0, 2 * Math.PI, minDistance);
@@ -849,6 +855,12 @@ namespace MilSpace.Core.Tools
                 ISegment segmentIn = (ISegment)innerArc;
 
                 innerFullRing.AddSegment(segmentIn);
+                IRing innerFullRingGeometry = innerFullRing as IRing;
+
+                if(innerFullRingGeometry.IsExterior)
+                {
+                    innerFullRingGeometry.ReverseOrientation();
+                }
 
                 IGeometryCollection polygonRound = new PolygonClass();
                 polygonRound.AddGeometry(outFullRing as IGeometry);
