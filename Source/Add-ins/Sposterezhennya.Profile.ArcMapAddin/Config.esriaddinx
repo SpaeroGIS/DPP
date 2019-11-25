@@ -7,7 +7,7 @@
   <Image>Images\Poll.png</Image>
   <Author>DPP</Author>
   <Company>DPP</Company>
-  <Date>2019.11.12</Date>
+  <Date>2019.11.25</Date>
   
   <Targets>
     <Target name="Desktop" version="10.4" />
@@ -38,13 +38,13 @@
       <DockableWindows>
         <DockableWindow id="Profile_DockableWindowMilSpaceProfileCalc" 
                         class="DockableWindowMilSpaceProfileCalc+AddinImpl" 
-                        caption="Спостереження Профили" 
+                        caption="Спостереження. Модуль профілів" 
                         image="Images\Poll.png">
           <InitialPlacement height="600" width="320" state="unpinned" position="float" />
         </DockableWindow>
         <DockableWindow id="Profile_DockableWindowMilSpaceProfileGraph" 
                         class="DockableWindowMilSpaceProfileGraph+AddinImpl" 
-                        caption="Спостереження Графики профилей" 
+                        caption="Спостереження. Графіки профілів" 
                         image="Images\Poll.png">
           <InitialPlacement height="350" width="780" state="unpinned" position="float" />
         </DockableWindow>

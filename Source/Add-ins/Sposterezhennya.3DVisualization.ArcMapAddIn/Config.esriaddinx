@@ -8,7 +8,7 @@
   <Image>Images\Button3DVisualization.png</Image>
   <Author>DPP</Author>
   <Company>DPP</Company>
-  <Date>2019.11.12</Date>
+  <Date>2019.11.25</Date>
   
   <Targets>
     <Target name="Desktop" version="10.4" />
@@ -30,7 +30,7 @@
       <DockableWindows>
         <DockableWindow id="Visualization3D_Visualization3DMainForm" 
                         class="Visualization3DMainForm+AddinImpl"
-                        caption="Sposterezhennya Visualization3D" 
+                        caption="Спостереження. 3Д-візуалізація" 
                         image="Images\Button3DVisualization.png">
           <InitialPlacement height="600" width="320" state="unpinned" position="float" />
         </DockableWindow>

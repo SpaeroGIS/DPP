@@ -210,12 +210,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Profile.Common\Localization\Profile.Calc.en-US.resx">
-      <Link>Localization\Profile.Calc.en-US.resx</Link>
-    </None>
-    <None Include="..\Profile.Common\Localization\Profile.Calc.uk-UA.resx">
-      <Link>Localization\Profile.Calc.uk-UA.resx</Link>
-    </None>
     <EmbeddedResource Include="..\3DVisualization.Common\ProfilesTreeView.resx">
       <Link>ProfilesTreeView.resx</Link>
       <DependentUpon>ProfilesTreeView.cs</DependentUpon>
@@ -224,12 +218,6 @@
       <Link>3DVisualizationForm.resx</Link>
       <DependentUpon>3DVisualizationForm.cs</DependentUpon>
     </EmbeddedResource>
-    <Content Include="Localization\SPPRD.Profile.Calc.en-US.resources">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Localization\SPPRD.Profile.Calc.uk-UA.resources">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <EmbeddedResource Include="..\3DVisualization.Common\VisibilitySessionsModalWindow.resx">
       <Link>VisibilitySessionsModalWindow.resx</Link>
       <DependentUpon>VisibilitySessionsModalWindow.cs</DependentUpon>
@@ -276,10 +264,10 @@
     <AddInContent Include="..\3DVisualization.Common\Images\Tree.ico">
       <Link>Images\Tree.ico</Link>
     </AddInContent>
-    <AddInContent Include="Resources\Visualization3DLocalization.xml">
+    <Content Include="Resources\Visualization3DLocalization.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AddInContent>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>

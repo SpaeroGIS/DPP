@@ -24,14 +24,15 @@ namespace MilSpace.Visibility.ViewController
         private List<ObservationPoint> _observationPoints = new List<ObservationPoint>();
         private List<ObservationObject> _observationObjects = new List<ObservationObject>();
         private static bool localized = false;
-        private string _previousPickedRasterLayer { get; set ; }
+        private string _previousPickedRasterLayer { get; set; }
 
         /// <summary>
         /// The dictionary to localise the types
         /// </summary>
-        private static Dictionary<ObservationPointMobilityTypesEnum, string> _mobilityTypes = Enum.GetValues(typeof(ObservationPointMobilityTypesEnum)).Cast<ObservationPointMobilityTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
-        private static Dictionary<ObservationPointTypesEnum, string> _affiliationTypes = Enum.GetValues(typeof(ObservationPointTypesEnum)).Cast<ObservationPointTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
-        private static Dictionary<ObservationObjectTypesEnum, string> _observObjectsTypes = Enum.GetValues(typeof(ObservationObjectTypesEnum)).Cast<ObservationObjectTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
+        private static Dictionary<ObservationPointMobilityTypesEnum, string> _mobilityTypes = null;// = Enum.GetValues(typeof(ObservationPointMobilityTypesEnum)).Cast<ObservationPointMobilityTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
+        private static Dictionary<ObservationPointTypesEnum, string> _affiliationTypes = null;//Enum.GetValues(typeof(ObservationPointTypesEnum)).Cast<ObservationPointTypesEnum>().ToDictionary(t => t, ts => ts.ToString());
+        private static Dictionary<string, ObservationObjectTypesEnum> _observObjectsTypesToConvert = Enum.GetValues(typeof(ObservationObjectTypesEnum)).Cast<ObservationObjectTypesEnum>().ToDictionary(ts => ts.ToString(), t => t);
+        private static Dictionary<ObservationObjectTypesEnum, string> _observObjectsTypes = null; //Enum.GetValues(typeof(ObservationObjectTypesEnum)).Cast<ObservationObjectTypesEnum>().ToDictionary(ts => ts.ToString(), t => t);
         private static Dictionary<LayerPositionsEnum, string> _layerPositions = Enum.GetValues(typeof(LayerPositionsEnum)).Cast<LayerPositionsEnum>().ToDictionary(t => t, ts => ts.ToString());
 
         private IMxDocument mapDocument;
@@ -47,6 +48,9 @@ namespace MilSpace.Visibility.ViewController
         {
             if (!localized)
             {
+                _affiliationTypes = LocalizationContext.Instance.AffiliationTypes;
+                _observObjectsTypes = LocalizationContext.Instance.ObservObjectsTypes;
+                _mobilityTypes = LocalizationContext.Instance.MobilityTypes;
                 _layerPositions[LayerPositionsEnum.Above] = LocalizationContext.Instance.PlaceLayerAbove;
                 _layerPositions[LayerPositionsEnum.Below] = LocalizationContext.Instance.PlaceLayerBelow;
                 localized = true;
@@ -83,6 +87,7 @@ namespace MilSpace.Visibility.ViewController
         {
             return _observationPoints.FirstOrDefault(point => point.Objectid == id);
         }
+
 
         internal ObservationObject GetObservObjectById(string id)
         {
@@ -230,13 +235,13 @@ namespace MilSpace.Visibility.ViewController
                 animationProgressor.Play(0, 200);
 
                 var calcTask = VisibilityManager.Generate(
-                    observPoints, 
-                    calcParams.ObservPointIDs, 
+                    observPoints,
+                    calcParams.ObservPointIDs,
                     observObjects, calcParams.ObservObjectIDs, calcParams.RasterLayerName, calcParams.VisibilityCalculationResults, calcParams.TaskName,
                     calcParams.TaskName,
                     calcParams.CalculationType);
-                
-                if(calcTask.Finished != null)
+
+                if (calcTask.Finished != null)
                 {
                     var isLayerAbove = (calcParams.ResultLayerPosition == LayerPositionsEnum.Above);
 
@@ -297,8 +302,8 @@ namespace MilSpace.Visibility.ViewController
         {
             return VisibilityZonesFacade.GetAllObservationObjects();
         }
-    
-      
+
+
         internal IPoint GetEnvelopeCenterPoint(IEnvelope envelope)
         {
             //TODO: Move this method to Core.Tools.EsriTools
@@ -330,6 +335,17 @@ namespace MilSpace.Visibility.ViewController
         {
             return _affiliationTypes.Where(t => t.Key != ObservationPointTypesEnum.All).Select(t => t.Value);
         }
+
+        public string GetObservationPointTypeLocalized(ObservationPointTypesEnum type)
+        {
+            return _affiliationTypes[type];
+        }
+
+        public string GetObservationPointMobilityTypeLocalized(ObservationPointMobilityTypesEnum type)
+        {
+            return _mobilityTypes[type];
+        }
+
         public IEnumerable<string> GetObservationObjectTypes()
         {
             return _observObjectsTypes.Where(t => t.Key != ObservationObjectTypesEnum.Undefined).Select(t => t.Value);
@@ -369,9 +385,9 @@ namespace MilSpace.Visibility.ViewController
 
         public LayerPositionsEnum GetPositionByStringValue(string positionStringValue)
         {
-            foreach(var position in _layerPositions)
+            foreach (var position in _layerPositions)
             {
-                if(position.Value == positionStringValue)
+                if (position.Value == positionStringValue)
                 {
                     return position.Key;
                 }
@@ -551,7 +567,7 @@ namespace MilSpace.Visibility.ViewController
             return false;
         }
         public string GetPreviousPickedRasterLayer() => _previousPickedRasterLayer;
-        
+
         public void UpdataPreviousPickedRasterLayer(string raster)
         {
             _previousPickedRasterLayer = raster;

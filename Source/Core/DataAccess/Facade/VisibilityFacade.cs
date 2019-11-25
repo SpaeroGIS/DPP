@@ -116,12 +116,23 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
-        public static bool CheckVisibilityResultEistance(string resultName, VisibilityCalculationresultsEnum resultType)
+        public static bool CheckVisibilityResultEistance(string resultId, VisibilityCalculationResultsEnum resultType)
         {
             var result = VisibilityTask.GetEsriDataTypeByVisibilityresyltType(resultType);
-            return GdbAccess.Instance.CheckDatasetExistanceInCalcWorkspace(resultName, result);
+            return GdbAccess.Instance.CheckDatasetExistanceInCalcWorkspace(resultId, result);
         }
 
+        public static IEnumerable<string> GetCalculatedObserPointsName(string resultId)
+        {
+            var calcObservPointsFeatureClass = VisibilityCalcResults.GetResultName(VisibilityCalculationResultsEnum.ObservationPoints, resultId);
+            return GdbAccess.Instance.GetCalcEntityNamesFromFeatureClass(calcObservPointsFeatureClass, "TitleOP");
+        }
+
+        public static IEnumerable<string> GetCalculatedObserObjectsName(string resultId)
+        {
+            var calcObservObjectsFeatureClass =  VisibilityCalcResults.GetResultName(VisibilityCalculationResultsEnum.ObservationObjects, resultId);
+            return GdbAccess.Instance.GetCalcEntityNamesFromFeatureClass(calcObservObjectsFeatureClass, "sTitleOO");
+        }
 
         public static VisibilityCalcResults AddVisibilityResults(VisibilityCalcResults visibilityResults)
         {
@@ -155,6 +166,24 @@ namespace MilSpace.DataAccess.Facade
             using(var accessor = new VisibilityDataAccess())
             {
                 var res = accessor.DeleteVisibilityResults(id);
+                return res;
+            }
+        }
+
+        public static bool DeleteVisibilityResultsFromUserSession(string id)
+        {
+            using(var accessor = new VisibilityDataAccess())
+            {
+                var res = accessor.DeleteVisibilityResultsFromUserSession(id);
+                return res;
+            }
+        }
+
+        public static bool IsResultsBelongToUser(string id)
+        {
+            using(var accessor = new VisibilityDataAccess())
+            {
+                var res = accessor.IsResultsBelongToUser(id);
                 return res;
             }
         }

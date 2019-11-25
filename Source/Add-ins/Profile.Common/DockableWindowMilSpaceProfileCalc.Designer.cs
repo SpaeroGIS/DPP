@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Графика");
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.profileTabPage = new System.Windows.Forms.TabPage();
             this.btnRefreshLayers = new System.Windows.Forms.Button();
@@ -232,7 +232,6 @@
             this.profileTabPage.ImageKey = "Dots.png";
             this.profileTabPage.Location = new System.Drawing.Point(4, 26);
             this.profileTabPage.Name = "profileTabPage";
-            this.profileTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.profileTabPage.Size = new System.Drawing.Size(312, 620);
             this.profileTabPage.TabIndex = 0;
             this.profileTabPage.Text = "Параметры профиля";
@@ -242,7 +241,7 @@
             this.btnRefreshLayers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRefreshLayers.ImageKey = "Refresh20x20.png";
             this.btnRefreshLayers.ImageList = this.imageList1;
-            this.btnRefreshLayers.Location = new System.Drawing.Point(284, 3);
+            this.btnRefreshLayers.Location = new System.Drawing.Point(287, 0);
             this.btnRefreshLayers.Name = "btnRefreshLayers";
             this.btnRefreshLayers.Size = new System.Drawing.Size(25, 25);
             this.btnRefreshLayers.TabIndex = 43;
@@ -478,13 +477,13 @@
             this.tableLayoutPanel1.Controls.Add(this.lblBuildingsLayer, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.cmbVegetationLayer, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.lblVegetationLayer, 0, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(7, 85);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(4, 82);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(303, 54);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(309, 54);
             this.tableLayoutPanel1.TabIndex = 36;
             // 
             // cmbBuildings
@@ -494,16 +493,16 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbBuildings.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBuildings.FormattingEnabled = true;
-            this.cmbBuildings.Location = new System.Drawing.Point(152, 30);
+            this.cmbBuildings.Location = new System.Drawing.Point(155, 30);
             this.cmbBuildings.Name = "cmbBuildings";
-            this.cmbBuildings.Size = new System.Drawing.Size(148, 21);
+            this.cmbBuildings.Size = new System.Drawing.Size(151, 21);
             this.cmbBuildings.TabIndex = 42;
             // 
             // lblBuildingsLayer
             // 
             this.lblBuildingsLayer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblBuildingsLayer.AutoSize = true;
-            this.lblBuildingsLayer.Location = new System.Drawing.Point(152, 6);
+            this.lblBuildingsLayer.Location = new System.Drawing.Point(155, 6);
             this.lblBuildingsLayer.Name = "lblBuildingsLayer";
             this.lblBuildingsLayer.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.lblBuildingsLayer.Size = new System.Drawing.Size(96, 21);
@@ -519,7 +518,7 @@
             this.cmbVegetationLayer.FormattingEnabled = true;
             this.cmbVegetationLayer.Location = new System.Drawing.Point(3, 30);
             this.cmbVegetationLayer.Name = "cmbVegetationLayer";
-            this.cmbVegetationLayer.Size = new System.Drawing.Size(143, 21);
+            this.cmbVegetationLayer.Size = new System.Drawing.Size(146, 21);
             this.cmbVegetationLayer.TabIndex = 40;
             // 
             // lblVegetationLayer
@@ -538,7 +537,7 @@
             this.calcProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.calcProfile.Enabled = false;
             this.calcProfile.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.calcProfile.Location = new System.Drawing.Point(119, 577);
+            this.calcProfile.Location = new System.Drawing.Point(122, 580);
             this.calcProfile.Name = "calcProfile";
             this.calcProfile.Size = new System.Drawing.Size(183, 37);
             this.calcProfile.TabIndex = 27;
@@ -551,7 +550,7 @@
             this.txtProfileName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.txtProfileName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtProfileName.Location = new System.Drawing.Point(98, 300);
+            this.txtProfileName.Location = new System.Drawing.Point(95, 297);
             this.txtProfileName.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
             this.txtProfileName.Name = "txtProfileName";
             this.txtProfileName.Size = new System.Drawing.Size(173, 20);
@@ -563,7 +562,7 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.lblProfileName.AutoSize = true;
             this.lblProfileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblProfileName.Location = new System.Drawing.Point(2, 300);
+            this.lblProfileName.Location = new System.Drawing.Point(-1, 297);
             this.lblProfileName.Name = "lblProfileName";
             this.lblProfileName.Padding = new System.Windows.Forms.Padding(0, 2, 0, 4);
             this.lblProfileName.Size = new System.Drawing.Size(98, 23);
@@ -576,7 +575,7 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.lblSetPeofileProperties.AutoSize = true;
             this.lblSetPeofileProperties.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblSetPeofileProperties.Location = new System.Drawing.Point(2, 270);
+            this.lblSetPeofileProperties.Location = new System.Drawing.Point(-1, 267);
             this.lblSetPeofileProperties.Margin = new System.Windows.Forms.Padding(3, 0, 3, 10);
             this.lblSetPeofileProperties.Name = "lblSetPeofileProperties";
             this.lblSetPeofileProperties.Padding = new System.Windows.Forms.Padding(0, 6, 0, 6);
@@ -595,9 +594,9 @@
             "Указанием отрезка на карте",
             "От \"базовой\" точки",
             "Выбором графики"});
-            this.cmbPointLayers.Location = new System.Drawing.Point(7, 236);
+            this.cmbPointLayers.Location = new System.Drawing.Point(4, 233);
             this.cmbPointLayers.Name = "cmbPointLayers";
-            this.cmbPointLayers.Size = new System.Drawing.Size(303, 21);
+            this.cmbPointLayers.Size = new System.Drawing.Size(309, 21);
             this.cmbPointLayers.TabIndex = 20;
             this.cmbPointLayers.Tag = "";
             // 
@@ -612,14 +611,14 @@
             this.tableLayoutPanel2.Controls.Add(this.lblHydrographyLayer, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.lblRoadsLayer, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.cmbRoadLayers, 0, 1);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(7, 145);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 142);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 53.7037F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 46.2963F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(303, 54);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(309, 54);
             this.tableLayoutPanel2.TabIndex = 41;
             // 
             // cmbHydrographyLayer
@@ -631,9 +630,9 @@
             "Указанием отрезка на карте",
             "От \"базовой\" точки",
             "Выбором графики"});
-            this.cmbHydrographyLayer.Location = new System.Drawing.Point(152, 31);
+            this.cmbHydrographyLayer.Location = new System.Drawing.Point(155, 31);
             this.cmbHydrographyLayer.Name = "cmbHydrographyLayer";
-            this.cmbHydrographyLayer.Size = new System.Drawing.Size(148, 21);
+            this.cmbHydrographyLayer.Size = new System.Drawing.Size(151, 21);
             this.cmbHydrographyLayer.TabIndex = 38;
             // 
             // lblHydrographyLayer
@@ -641,10 +640,10 @@
             this.lblHydrographyLayer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblHydrographyLayer.AutoSize = true;
-            this.lblHydrographyLayer.Location = new System.Drawing.Point(152, 7);
+            this.lblHydrographyLayer.Location = new System.Drawing.Point(155, 7);
             this.lblHydrographyLayer.Name = "lblHydrographyLayer";
             this.lblHydrographyLayer.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.lblHydrographyLayer.Size = new System.Drawing.Size(148, 21);
+            this.lblHydrographyLayer.Size = new System.Drawing.Size(151, 21);
             this.lblHydrographyLayer.TabIndex = 42;
             this.lblHydrographyLayer.Text = "Слой гидрография";
             // 
@@ -672,7 +671,7 @@
             "Выбором графики"});
             this.cmbRoadLayers.Location = new System.Drawing.Point(3, 31);
             this.cmbRoadLayers.Name = "cmbRoadLayers";
-            this.cmbRoadLayers.Size = new System.Drawing.Size(143, 21);
+            this.cmbRoadLayers.Size = new System.Drawing.Size(146, 21);
             this.cmbRoadLayers.TabIndex = 41;
             // 
             // lblPointOfViewLayer
@@ -681,7 +680,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblPointOfViewLayer.AutoSize = true;
-            this.lblPointOfViewLayer.Location = new System.Drawing.Point(6, 215);
+            this.lblPointOfViewLayer.Location = new System.Drawing.Point(3, 212);
             this.lblPointOfViewLayer.Name = "lblPointOfViewLayer";
             this.lblPointOfViewLayer.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.lblPointOfViewLayer.Size = new System.Drawing.Size(128, 21);
@@ -694,9 +693,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbRasterLayers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbRasterLayers.Location = new System.Drawing.Point(7, 58);
+            this.cmbRasterLayers.Location = new System.Drawing.Point(4, 55);
             this.cmbRasterLayers.Name = "cmbRasterLayers";
-            this.cmbRasterLayers.Size = new System.Drawing.Size(303, 21);
+            this.cmbRasterLayers.Size = new System.Drawing.Size(304, 21);
             this.cmbRasterLayers.TabIndex = 9;
             this.cmbRasterLayers.SelectedIndexChanged += new System.EventHandler(this.cmbRasterLayers_SelectedIndexChanged);
             // 
@@ -706,7 +705,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblDEM.AutoSize = true;
-            this.lblDEM.Location = new System.Drawing.Point(3, 37);
+            this.lblDEM.Location = new System.Drawing.Point(0, 34);
             this.lblDEM.Name = "lblDEM";
             this.lblDEM.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.lblDEM.Size = new System.Drawing.Size(93, 21);
@@ -720,13 +719,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblLayersForCalc.AutoSize = true;
             this.lblLayersForCalc.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblLayersForCalc.Location = new System.Drawing.Point(3, 3);
+            this.lblLayersForCalc.Location = new System.Drawing.Point(0, 0);
             this.lblLayersForCalc.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
             this.lblLayersForCalc.Name = "lblLayersForCalc";
             this.lblLayersForCalc.Padding = new System.Windows.Forms.Padding(0, 6, 0, 6);
-            this.lblLayersForCalc.Size = new System.Drawing.Size(174, 32);
+            this.lblLayersForCalc.Size = new System.Drawing.Size(150, 32);
             this.lblLayersForCalc.TabIndex = 7;
-            this.lblLayersForCalc.Text = "Слои для расчетов";
+            this.lblLayersForCalc.Text = "Шари розрахунку";
             // 
             // profileSettingsTab
             // 
@@ -738,10 +737,10 @@
             this.profileSettingsTab.Controls.Add(this.primitiveTab);
             this.profileSettingsTab.Controls.Add(this.loadTab);
             this.profileSettingsTab.ItemSize = new System.Drawing.Size(63, 20);
-            this.profileSettingsTab.Location = new System.Drawing.Point(3, 330);
+            this.profileSettingsTab.Location = new System.Drawing.Point(0, 327);
             this.profileSettingsTab.Name = "profileSettingsTab";
             this.profileSettingsTab.SelectedIndex = 0;
-            this.profileSettingsTab.Size = new System.Drawing.Size(306, 200);
+            this.profileSettingsTab.Size = new System.Drawing.Size(312, 218);
             this.profileSettingsTab.TabIndex = 6;
             this.profileSettingsTab.SelectedIndexChanged += new System.EventHandler(this.profileSettingsTab_SelectedIndexChanged);
             // 
@@ -761,7 +760,7 @@
             this.sectionTab.Location = new System.Drawing.Point(4, 24);
             this.sectionTab.Name = "sectionTab";
             this.sectionTab.Padding = new System.Windows.Forms.Padding(3);
-            this.sectionTab.Size = new System.Drawing.Size(298, 172);
+            this.sectionTab.Size = new System.Drawing.Size(304, 190);
             this.sectionTab.TabIndex = 0;
             this.sectionTab.Text = "Отрезком";
             this.sectionTab.UseVisualStyleBackColor = true;
@@ -774,7 +773,7 @@
             this.panel16.Location = new System.Drawing.Point(3, 165);
             this.panel16.Name = "panel16";
             this.panel16.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.panel16.Size = new System.Drawing.Size(275, 26);
+            this.panel16.Size = new System.Drawing.Size(281, 28);
             this.panel16.TabIndex = 30;
             // 
             // lblDimensionSecond
@@ -817,7 +816,7 @@
             this.panel5.Location = new System.Drawing.Point(3, 118);
             this.panel5.Name = "panel5";
             this.panel5.Padding = new System.Windows.Forms.Padding(8, 3, 0, 0);
-            this.panel5.Size = new System.Drawing.Size(275, 26);
+            this.panel5.Size = new System.Drawing.Size(281, 26);
             this.panel5.TabIndex = 28;
             // 
             // secondPointToolbar
@@ -835,7 +834,7 @@
             this.secondPointToolbar.Location = new System.Drawing.Point(180, 3);
             this.secondPointToolbar.Name = "secondPointToolbar";
             this.secondPointToolbar.ShowToolTips = true;
-            this.secondPointToolbar.Size = new System.Drawing.Size(95, 72);
+            this.secondPointToolbar.Size = new System.Drawing.Size(101, 28);
             this.secondPointToolbar.TabIndex = 28;
             this.secondPointToolbar.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.secondPointToolbar_ButtonClick);
             // 
@@ -901,7 +900,7 @@
             this.panel17.Location = new System.Drawing.Point(3, 71);
             this.panel17.Name = "panel17";
             this.panel17.Padding = new System.Windows.Forms.Padding(8, 1, 0, 0);
-            this.panel17.Size = new System.Drawing.Size(275, 26);
+            this.panel17.Size = new System.Drawing.Size(281, 26);
             this.panel17.TabIndex = 26;
             // 
             // lblDimensionFirst
@@ -945,7 +944,7 @@
             this.panel4.Margin = new System.Windows.Forms.Padding(2);
             this.panel4.Name = "panel4";
             this.panel4.Padding = new System.Windows.Forms.Padding(8, 3, 0, 0);
-            this.panel4.Size = new System.Drawing.Size(275, 26);
+            this.panel4.Size = new System.Drawing.Size(281, 26);
             this.panel4.TabIndex = 11;
             // 
             // firstPointToolBar
@@ -964,7 +963,7 @@
             this.firstPointToolBar.Margin = new System.Windows.Forms.Padding(0);
             this.firstPointToolBar.Name = "firstPointToolBar";
             this.firstPointToolBar.ShowToolTips = true;
-            this.firstPointToolBar.Size = new System.Drawing.Size(95, 72);
+            this.firstPointToolBar.Size = new System.Drawing.Size(101, 28);
             this.firstPointToolBar.TabIndex = 27;
             this.firstPointToolBar.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.toolBar1_ButtonClick);
             // 
@@ -1424,7 +1423,7 @@
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(272, 56);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(221, 56);
             this.tableLayoutPanel3.TabIndex = 46;
             // 
             // lblCommonLengthValue
@@ -1435,7 +1434,7 @@
             this.lblCommonLengthValue.Location = new System.Drawing.Point(119, 26);
             this.lblCommonLengthValue.Name = "lblCommonLengthValue";
             this.lblCommonLengthValue.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.lblCommonLengthValue.Size = new System.Drawing.Size(150, 21);
+            this.lblCommonLengthValue.Size = new System.Drawing.Size(99, 21);
             this.lblCommonLengthValue.TabIndex = 62;
             this.lblCommonLengthValue.Text = "0";
             // 
@@ -1447,7 +1446,7 @@
             this.lblSelectedPrimitivesValue.Location = new System.Drawing.Point(119, 0);
             this.lblSelectedPrimitivesValue.Name = "lblSelectedPrimitivesValue";
             this.lblSelectedPrimitivesValue.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.lblSelectedPrimitivesValue.Size = new System.Drawing.Size(150, 21);
+            this.lblSelectedPrimitivesValue.Size = new System.Drawing.Size(99, 21);
             this.lblSelectedPrimitivesValue.TabIndex = 61;
             this.lblSelectedPrimitivesValue.Text = "0";
             // 
@@ -1692,7 +1691,6 @@
             this.profileTreeTabPage.ImageKey = "Table.png";
             this.profileTreeTabPage.Location = new System.Drawing.Point(4, 26);
             this.profileTreeTabPage.Name = "profileTreeTabPage";
-            this.profileTreeTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.profileTreeTabPage.Size = new System.Drawing.Size(312, 620);
             this.profileTreeTabPage.TabIndex = 1;
             this.profileTreeTabPage.Text = "Список профилей";
@@ -1707,13 +1705,12 @@
             this.Value});
             this.lvProfileAttributes.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvProfileAttributes.HideSelection = false;
-            this.lvProfileAttributes.Location = new System.Drawing.Point(3, 334);
+            this.lvProfileAttributes.Location = new System.Drawing.Point(0, 337);
             this.lvProfileAttributes.Name = "lvProfileAttributes";
-            this.lvProfileAttributes.Size = new System.Drawing.Size(306, 286);
+            this.lvProfileAttributes.Size = new System.Drawing.Size(312, 286);
             this.lvProfileAttributes.TabIndex = 36;
             this.lvProfileAttributes.UseCompatibleStateImageBehavior = false;
             this.lvProfileAttributes.View = System.Windows.Forms.View.Details;
-            this.lvProfileAttributes.Visible = false;
             // 
             // Attribute
             // 
@@ -1733,29 +1730,29 @@
             this.profilesTreeView.CheckBoxes = true;
             this.profilesTreeView.FullRowSelect = true;
             this.profilesTreeView.ImageKey = "0.png";
-            this.profilesTreeView.Location = new System.Drawing.Point(3, 65);
+            this.profilesTreeView.Location = new System.Drawing.Point(0, 62);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode1.Checked = true;
-            treeNode1.ImageKey = "vector-path-line.png";
-            treeNode1.Name = "Points";
-            treeNode1.SelectedImageIndex = 205;
-            treeNode1.Text = "Отрезки";
-            treeNode2.Checked = true;
-            treeNode2.ImageKey = "Editing-Line-icon3.png";
-            treeNode2.Name = "Fun";
-            treeNode2.SelectedImageIndex = 208;
-            treeNode2.Text = "Веер";
-            treeNode3.Checked = true;
-            treeNode3.ImageKey = "vector-polygon.png";
-            treeNode3.Name = "Primitives";
-            treeNode3.SelectedImageIndex = 209;
-            treeNode3.Text = "Графика";
+            treeNode4.Checked = true;
+            treeNode4.ImageKey = "vector-path-line.png";
+            treeNode4.Name = "Points";
+            treeNode4.SelectedImageIndex = 205;
+            treeNode4.Text = "Отрезки";
+            treeNode5.Checked = true;
+            treeNode5.ImageKey = "Editing-Line-icon3.png";
+            treeNode5.Name = "Fun";
+            treeNode5.SelectedImageIndex = 208;
+            treeNode5.Text = "Веер";
+            treeNode6.Checked = true;
+            treeNode6.ImageKey = "vector-polygon.png";
+            treeNode6.Name = "Primitives";
+            treeNode6.SelectedImageIndex = 209;
+            treeNode6.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
+            treeNode4,
+            treeNode5,
+            treeNode6});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
-            this.profilesTreeView.Size = new System.Drawing.Size(306, 263);
+            this.profilesTreeView.Size = new System.Drawing.Size(312, 269);
             this.profilesTreeView.TabIndex = 35;
             this.profilesTreeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.profilesTreeView_AfterCheck);
             // 
@@ -1763,9 +1760,9 @@
             // 
             this.panel6.Controls.Add(this.profilesToolStrip);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel6.Location = new System.Drawing.Point(3, 35);
+            this.panel6.Location = new System.Drawing.Point(0, 32);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(306, 30);
+            this.panel6.Size = new System.Drawing.Size(312, 30);
             this.panel6.TabIndex = 34;
             // 
             // profilesToolStrip
@@ -1790,7 +1787,7 @@
             this.clearExtraGraphic});
             this.profilesToolStrip.Location = new System.Drawing.Point(0, 0);
             this.profilesToolStrip.Name = "profilesToolStrip";
-            this.profilesToolStrip.Size = new System.Drawing.Size(306, 30);
+            this.profilesToolStrip.Size = new System.Drawing.Size(312, 30);
             this.profilesToolStrip.TabIndex = 37;
             this.profilesToolStrip.Text = "toolStrip1";
             // 
@@ -1934,7 +1931,7 @@
             this.lblProfileList.AutoSize = true;
             this.lblProfileList.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblProfileList.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblProfileList.Location = new System.Drawing.Point(3, 3);
+            this.lblProfileList.Location = new System.Drawing.Point(0, 0);
             this.lblProfileList.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
             this.lblProfileList.Name = "lblProfileList";
             this.lblProfileList.Padding = new System.Windows.Forms.Padding(0, 6, 0, 6);

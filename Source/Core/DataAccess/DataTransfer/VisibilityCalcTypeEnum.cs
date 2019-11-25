@@ -6,6 +6,6 @@
         OpservationPoints,
         ObservationObjects,
         BestObservationParameters,
-        ResultsAnalize
+        ResultsObservationAnalize
     }
 }

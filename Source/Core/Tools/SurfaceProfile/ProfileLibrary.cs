@@ -1,13 +1,14 @@
 ﻿using ESRI.ArcGIS.Analyst3DTools;
+using ESRI.ArcGIS.ConversionTools;
+using ESRI.ArcGIS.DataManagementTools;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Geoprocessing;
 using ESRI.ArcGIS.Geoprocessor;
-using ESRI.ArcGIS.DataManagementTools;
 using MilSpace.Configurations;
 using MilSpace.Core;
 using System;
 using System.Collections.Generic;
-using ESRI.ArcGIS.ConversionTools;
+using System.Linq;
 
 namespace MilSpace.Tools.SurfaceProfile
 {
@@ -44,8 +45,8 @@ namespace MilSpace.Tools.SurfaceProfile
             stackProfile.out_table = outTable;
             if (!string.IsNullOrEmpty(outGraphName)) stackProfile.out_graph = outGraphName;
 
-            
-            return RunTool(stackProfile, null, messages);
+
+            return RunTool(stackProfile, null, out messages);
         }
         //-------------------------------------------------------------------------
 
@@ -86,7 +87,7 @@ namespace MilSpace.Tools.SurfaceProfile
             visibility.curvature_correction = curvatureCorrection.ToString();
 
 
-            return RunTool(visibility, null, messages);
+            return RunTool(visibility, null, out messages);
         }
 
         public static bool ClipVisibilityZonesByAreas(
@@ -103,15 +104,15 @@ namespace MilSpace.Tools.SurfaceProfile
                 in_template_dataset = templateDataser,
                 in_raster = inRaster,
                 out_raster = outRaster,
-                clipping_geometry = ClippingGeometry
+                clipping_geometry = clippingGeometry
             };
 
             clipper.nodata_value = NonvisibleCellValue;
-            
-            return RunTool(clipper, null, messages); 
+
+            return RunTool(clipper, null, out messages);
         }
 
-        public static bool ConvertTasterToPolygon(string inRaster, string outPolygon, IEnumerable<string> messages)
+        public static bool ConvertTasterToPolygon(string inRaster, string outPolygon, out IEnumerable<string> messages)
         {
             RasterToPolygon rasterToPolygon = new RasterToPolygon()
             {
@@ -121,10 +122,10 @@ namespace MilSpace.Tools.SurfaceProfile
                 raster_field = "Value"
             };
 
-            return RunTool(rasterToPolygon, null, messages);
+            return RunTool(rasterToPolygon, null, out messages);
         }
 
-        private static bool RunTool( IGPProcess process, ITrackCancel TC, IEnumerable<string> messages)
+        private static bool RunTool(IGPProcess process, ITrackCancel TC, out IEnumerable<string> messages)
         {
             if (gp == null)
             {
@@ -145,7 +146,7 @@ namespace MilSpace.Tools.SurfaceProfile
                 result = false;
             }
 
-            messages = ReturnMessages(gp);
+            messages = ReturnMessages(gp).ToArray();
             return result;
         }
         //-------------------------------------------------------------------------

@@ -32,6 +32,7 @@ namespace MilSpace.Visibility
         public WindowMilSpaceMVisibilityMaster(string selectedObservPoints, string selectedObservObjects, string previousPickedRaster)
         {
             InitializeComponent();
+            LocalizeComponent();
             controller.SetView(this);
             _previousPickedRasterLayer = previousPickedRaster;
 
@@ -42,6 +43,91 @@ namespace MilSpace.Visibility
 
             cmbEmptyDataValue.SelectedIndex = 1;
 
+        }
+
+        private void LocalizeComponent()
+        {
+            try
+            {
+                this.Text = LocalizationContext.Instance.WindowCaptionMaster;
+                this.PreviousStepButton.Text = 
+                    LocalizationContext.Instance.FindLocalizedElement("this.PreviousStepButton.Text", "< Попередній");
+                this.NextStepButton.Text = 
+                    LocalizationContext.Instance.FindLocalizedElement("WinM.NextStepButton.Text", "Наступний >");
+                this.stepOne.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.stepOne.Text", "Крок 1");
+                this.label50.Text = 
+                    LocalizationContext.Instance.FindLocalizedElement("WinM.label50.Text", "Аналіз результатів спостереження \r\nАналіз результатів спостереження з відомими параметрами (наприклад - аерофотозйомки) з точки зору розташування кадрів на місцевості і забезпечення видимості");
+                this.button4.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.button4.Text", "Обрати >");
+                this.label45.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label45.Text", "4 (VP)");
+                this.label49.Text = 
+                    LocalizationContext.Instance.FindLocalizedElement("WinM.label49.Text", "Визначення параметрів пунктів спостереження (ПC) \r\nПошук параметрів ПC для спостереження заданих об\'ектів спостереження (ОC) (параметри апаратури, висота над поверхнею, напрямки і кути огляду)");
+                this.button2.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.button2.Text", "Обрати >");
+                this.label33.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label33.Text", "3 (VO)");
+                this.label48.Text =
+                    LocalizationContext.Instance.FindLocalizedElement("WinM.label48.Text", "Визначення видимості в заданих ОC. \r\nПроводиться для обраних пунктів спостереження (ПС) та об\'єктів нагляду, з урахуванням індивідуальних параметрів ПС");
+                this.uButton2.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.uButton2.Text", "Обрати >");
+                this.label32.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label32.Text", "2 (VA)");
+                this.label47.Text =
+                    LocalizationContext.Instance.FindLocalizedElement("WinM.label47.Text", "Визначення областей видимості на обраної поверхні в цілому.\r\nРозрахунок проводиться для заданих характеристик обраних пунктів спостереження. \r\nОцінка результату проводиться для вказаной поверхні.");
+                this.button1.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.button1.Text", "Обрати >");
+                this.label31.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label31.Text", "1 (VS)");
+                this.label46.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label46.Text", "Крок 1. Обрати тип розрахунку");
+                this.stepTwo.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.stepTwo.Text", "Крок 2");
+                this.checkDate.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.checkDate.Text", "дата");
+                this.checkAffiliation.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.checkAffiliation.Text", "належність");
+                this.checkType.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.checkType.Text", "тип");
+                this.label1.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label1.Text", "відображати");
+                this.label3.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label3.Text", "належність");
+                this.label2.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label2.Text", "тип");
+                this.ObservPointLabel.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.ObservPointLabel.Text", "ObStations_201810");
+                this.label5.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label5.Text", "Пункти спостереження (ПС)");
+                this.checkDate_Object.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.checkDate_Object.Text", "дата");
+                this.checkB_Affilation.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.checkB_Affilation.Text", "належність");
+                this.label4.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label4.Text", "відображати");
+                this.label9.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label9.Text", "належність");
+                this.label6.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label6.Text", "Об\'єкти нагляду (ОН)");
+                this.label22.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label22.Text", "Поверхня для розпрахунку");
+                this.label30.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label30.Text", "Крок 2. Основні параметри розрахунку");
+                this.stepThree.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.stepThree.Text", "Крок 3");
+                this.checkBox7.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.checkBox7.Text", "розрахувати \"пірамиду\"");
+                this.label20.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label20.Text", "значення для відсутності видимості");
+                this.label21.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label21.Text", "Вигляд растрів");
+                this.label18.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label18.Text", "прозорість (%)");
+                this.label16.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label16.Text", "колір ОВ");
+                this.label17.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label17.Text", "Оформлення");
+                this.chkTrimRaster.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.chkTrimRaster.Text", "обрізати растри до дійсного екстенту");
+                this.label13.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label13.Text", "Додаткова обробка");
+                this.label14.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label14.Text", "відносно шару");
+                this.label12.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label12.Text", "Розташувати у карті");
+                this.TableChkBox.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.TableChkBox.Text", "таблиця покриття");
+                this.chkConvertToPolygon.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.chkConvertToPolygon.Text", "конвертувати у полігони");
+                this.SumChkBox.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.SumChkBox.Text", "загальна видимость");
+                this.checkBoxOP.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.checkBoxOP.Text", "видимость для окремих ПС");
+                this.label11.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label11.Text", "Склад результату");
+                this.label10.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label10.Text", "Крок 3. Додаткові параметри формування результату");
+                this.stepFour.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.stepFour.Text", "Крок 4");
+                this.label42.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label42.Text", "Обрізати розраховані поверхні");
+                this.label40.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label40.Text", "Розташувати відносно шару");
+                this.labelOB.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.labelOB.Text", "Розрахувати загальну ОВ");
+                this.labelOP.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.labelOP.Text", "Розрахувати поверхні всіх ПН");
+                this.label26.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label26.Text", "Обрані області нагляду (ОН)");
+                this.label25.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label25.Text", "Обрані пункти спостереження (ПН)");
+                this.label23.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label23.Text", "Поверхня розрахунку");
+                this.label44.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label44.Text", "Назва результату розрахунку");
+                this.label37.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label37.Text", "Тип  розрахунку");
+                this.label29.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label29.Text", "Крок 4. Перевірка параметрів розрахунку");
+            }
+            catch
+            {
+                string sMsgText = LocalizationContext.Instance.FindLocalizedElement(
+                    "MsgTextNoLocalizationXML",
+                    "No Localization xml-file found or there is an error during loading/nVisibility window is not fully localized");
+                MessageBox.Show(
+                    sMsgText,
+                    LocalizationContext.Instance.MsgBoxInfoHeader,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
         }
 
         protected override void OnLoad(EventArgs e)
@@ -460,58 +546,73 @@ namespace MilSpace.Visibility
             if (_stepControl == VisibilityCalcTypeEnum.OpservationPoints)
             {
                 FinalResult.VisibilityCalculationResults = SumChkBox.Checked ?
-                    VisibilityCalculationresultsEnum.ObservationPoints | VisibilityCalculationresultsEnum.VisibilityAreaRaster :
-                    VisibilityCalculationresultsEnum.None;
+                    VisibilityCalculationResultsEnum.ObservationPoints | VisibilityCalculationResultsEnum.VisibilityAreaRaster :
+                    VisibilityCalculationResultsEnum.None;
             }
             else if (_stepControl == VisibilityCalcTypeEnum.ObservationObjects)
             {
                 FinalResult.ObservObjectIDs = _observationObjects.Where(o => o.Check).Select(i => i.Id).ToArray();
                 FinalResult.VisibilityCalculationResults = (SumChkBox.Checked ?
-                                                    VisibilityCalculationresultsEnum.ObservationPoints | VisibilityCalculationresultsEnum.VisibilityAreaRaster :
-                                                    VisibilityCalculationresultsEnum.None)
-                                                    | VisibilityCalculationresultsEnum.ObservationStations | VisibilityCalculationresultsEnum.VisibilityObservStationClip;
+                                                    VisibilityCalculationResultsEnum.ObservationPoints | VisibilityCalculationResultsEnum.VisibilityAreaRaster :
+                                                    VisibilityCalculationResultsEnum.None)
+                                                    | VisibilityCalculationResultsEnum.ObservationObjects | VisibilityCalculationResultsEnum.VisibilityObservStationClip;
 
             }
 
             //Trim by real Area
             if (chkTrimRaster.Checked)
             {
-                FinalResult.VisibilityCalculationResults |= VisibilityCalculationresultsEnum.VisibilityAreasTrimmedByPoly;
+                FinalResult.VisibilityCalculationResults |= VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly;
                 if (checkBoxOP.Checked)
                 {
-                    FinalResult.VisibilityCalculationResults |= VisibilityCalculationresultsEnum.VisibilityAreaTrimmedByPolySingle;
+                    FinalResult.VisibilityCalculationResults |= VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle;
                 }
             }
 
             if (chkConvertToPolygon.Checked)
             {
-                FinalResult.VisibilityCalculationResults |= VisibilityCalculationresultsEnum.VisibilityAreaPolygons;
+                FinalResult.VisibilityCalculationResults |= VisibilityCalculationResultsEnum.VisibilityAreaPolygons;
                 if (checkBoxOP.Checked)
                 {
-                    FinalResult.VisibilityCalculationResults |= VisibilityCalculationresultsEnum.VisibilityAreaPolygonSingle;
+                    FinalResult.VisibilityCalculationResults |= VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle;
                 }
             }
 
-            if (checkBoxOP.Checked)
+            if (checkBoxOP.Checked && (_observPointGuis != null && _observPointGuis.Count(p => p.Check) > 1))
             {
-                FinalResult.VisibilityCalculationResults |= VisibilityCalculationresultsEnum.VisibilityAreaRasterSingle | VisibilityCalculationresultsEnum.ObservationPointSingle;
+                FinalResult.VisibilityCalculationResults |= VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle | VisibilityCalculationResultsEnum.ObservationPointSingle;
             }
         }
+
         public void SummaryInfo()
         {
-            lblCalcType.Text = LocalizationContext.Instance.CalcTypeLocalisation[FinalResult.CalculationType];
-            lblTaskName.Text = FinalResult.TaskName;
-            lblDEMName.Text = FinalResult.RasterLayerName;
-            lblObservObjectsSingle.Text = checkBoxOP.Checked ? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord;
-            lblObservObjectsAll.Text = checkBoxOP.Checked ? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord;
-            lblReferencedLayerName.Text = cmbPositions.SelectedItem.ToString();
-            var selectedObservPoints = _observPointGuis != null ? _observPointGuis.Where(p => p.Check).Select(o => o.Title).ToArray() : null;
-            var selectedObservObjects = _observationObjects != null ? _observationObjects.Where(p => p.Check).Select(o => o.Title).ToArray() : null;
+            lblCalcType.Text = 
+                LocalizationContext.Instance.CalcTypeLocalisation[FinalResult.CalculationType];
+            lblTaskName.Text = 
+                FinalResult.TaskName;
+            lblDEMName.Text = 
+                FinalResult.RasterLayerName;
+            lblObservObjectsSingle.Text = 
+                checkBoxOP.Checked ? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord;
 
-            lblObservPointsSummary.Text = selectedObservPoints == null ? string.Empty : $"{selectedObservPoints.Length} - {string.Join("; ", selectedObservPoints)}";
-            lblObservObjectsSummary.Text = selectedObservObjects == null ? string.Empty : $"{selectedObservObjects.Length} - {string.Join("; ", selectedObservObjects)}";
+            lblObservObjectsAll.Text = 
+                SumChkBox.Checked ? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord;
 
-            lblTrimCalcresults.Text = !chkTrimRaster.Enabled ? string.Empty : (chkTrimRaster.Checked ? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord);
+            lblReferencedLayerName.Text = 
+                cmbPositions.SelectedItem.ToString() + " " + cmbMapLayers.SelectedItem.ToString();
+
+            var selectedObservPoints = 
+                _observPointGuis != null ? _observPointGuis.Where(p => p.Check).Select(o => o.Title).ToArray() : null;
+            var selectedObservObjects = 
+                _observationObjects != null ? _observationObjects.Where(p => p.Check).Select(o => o.Title).ToArray() : null;
+
+            lblObservPointsSummary.Text = 
+                selectedObservPoints == null ? string.Empty : $"{selectedObservPoints.Length} - {string.Join("; ", selectedObservPoints)}";
+            lblObservObjectsSummary.Text = 
+                selectedObservObjects == null ? string.Empty : $"{selectedObservObjects.Length} - {string.Join("; ", selectedObservObjects)}";
+
+            lblTrimCalcresults.Text = 
+                !chkTrimRaster.Enabled ? string.Empty : (chkTrimRaster.Checked ? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord);
         }
 
         public string ObservationStationFeatureClass => observObjectsLabel.Text;
@@ -531,16 +632,28 @@ namespace MilSpace.Visibility
 
             if (StepsTabControl.SelectedIndex == StepsTabControl.TabCount - 1)
             {
-                if (!FinalResult.VisibilityCalculationResults.HasFlag(VisibilityCalculationresultsEnum.ObservationPoints) && !FinalResult.VisibilityCalculationResults.HasFlag(VisibilityCalculationresultsEnum.ObservationPointSingle))
+                if (!FinalResult.VisibilityCalculationResults.HasFlag(VisibilityCalculationResultsEnum.ObservationPoints) 
+                    && !FinalResult.VisibilityCalculationResults.HasFlag(VisibilityCalculationResultsEnum.ObservationPointSingle)
+                    )
                 {
-                    //TODO: Localise
-                    MessageBox.Show("The is no results sources for calculating. Please, select source!", "SPPRD", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show(
+                        LocalizationContext.Instance.FindLocalizedElement(
+                            "WinMWarningNoSourceForCalculation", 
+                            "The is no results sources for calculating. Please, select source!"),
+                        LocalizationContext.Instance.MsgBoxWarningHeader, 
+                        MessageBoxButtons.OK, 
+                        MessageBoxIcon.Warning);
                 }
 
                 if (string.IsNullOrEmpty(imagesComboBox.Text))
                 {
-                    //TODO: Localise
-                    MessageBox.Show("The Raster layer must be selected!", "SPPRD", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show(
+                        LocalizationContext.Instance.FindLocalizedElement(
+                            "WinMWarningNoRasterLayrSelected",
+                            "The Raster layer must be selected!"),
+                        LocalizationContext.Instance.MsgBoxWarningHeader, 
+                        MessageBoxButtons.OK, 
+                        MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -610,7 +723,12 @@ namespace MilSpace.Visibility
         {
             if (!Int16.TryParse(tbTransparency.Text, out short res) || (res < 0 || res > 100))
             {
-                MessageBox.Show($"Invalid data.\nInsert the value in the range from 0 to 100");
+                MessageBox.Show(
+                        LocalizationContext.Instance.FindLocalizedElement(
+                            "WinMErrorValueOutRange",  $"Invalid data.\nInsert the value in the range from 0 to 100"),
+                        LocalizationContext.Instance.MsgBoxWarningHeader,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
                 tbTransparency.Text = "33";
             }
         }
@@ -619,6 +737,16 @@ namespace MilSpace.Visibility
         private void tbTransparency_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        public void RemoveSessionFromList(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void FillVisibilitySessionsList(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded, string newTaskName)
+        {
+            throw new NotImplementedException();
         }
     }
 }
