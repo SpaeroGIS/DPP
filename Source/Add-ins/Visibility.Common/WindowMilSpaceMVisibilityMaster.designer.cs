@@ -69,7 +69,7 @@ namespace MilSpace.Visibility
             this.stepTwo = new System.Windows.Forms.TabPage();
             this.panel7 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.checkBox6 = new System.Windows.Forms.CheckBox();
+            this.checkB_Select_All_Points = new System.Windows.Forms.CheckBox();
             this.dvgCheckList = new System.Windows.Forms.DataGridView();
             this.panel9 = new System.Windows.Forms.Panel();
             this.checkDate = new System.Windows.Forms.CheckBox();
@@ -85,7 +85,7 @@ namespace MilSpace.Visibility
             this.ObservPointLabel = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.panel19 = new System.Windows.Forms.Panel();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.checkB_All_object = new System.Windows.Forms.CheckBox();
             this.dgvObjects = new System.Windows.Forms.DataGridView();
             this.panel18 = new System.Windows.Forms.Panel();
             this.checkDate_Object = new System.Windows.Forms.CheckBox();
@@ -847,7 +847,7 @@ namespace MilSpace.Visibility
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.checkBox6);
+            this.splitContainer1.Panel1.Controls.Add(this.checkB_Select_All_Points);
             this.splitContainer1.Panel1.Controls.Add(this.dvgCheckList);
             this.splitContainer1.Panel1.Controls.Add(this.panel9);
             this.splitContainer1.Panel1.Controls.Add(this.panel10);
@@ -867,15 +867,15 @@ namespace MilSpace.Visibility
             this.splitContainer1.TabIndex = 0;
             this.splitContainer1.TabStop = false;
             // 
-            // checkBox6
+            // checkB_Select_All_Points
             // 
-            this.checkBox6.AutoSize = true;
-            this.checkBox6.Location = new System.Drawing.Point(5, 93);
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Size = new System.Drawing.Size(15, 14);
-            this.checkBox6.TabIndex = 24;
-            this.checkBox6.UseVisualStyleBackColor = true;
-            this.checkBox6.CheckedChanged += new System.EventHandler(this.Select_All_Points);
+            this.checkB_Select_All_Points.AutoSize = true;
+            this.checkB_Select_All_Points.Location = new System.Drawing.Point(5, 93);
+            this.checkB_Select_All_Points.Name = "checkB_Select_All_Points";
+            this.checkB_Select_All_Points.Size = new System.Drawing.Size(15, 14);
+            this.checkB_Select_All_Points.TabIndex = 24;
+            this.checkB_Select_All_Points.UseVisualStyleBackColor = true;
+            this.checkB_Select_All_Points.CheckedChanged += new System.EventHandler(this.Select_All_Points);
             // 
             // dvgCheckList
             // 
@@ -1063,7 +1063,7 @@ namespace MilSpace.Visibility
             // 
             // panel19
             // 
-            this.panel19.Controls.Add(this.checkBox4);
+            this.panel19.Controls.Add(this.checkB_All_object);
             this.panel19.Controls.Add(this.dgvObjects);
             this.panel19.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel19.Location = new System.Drawing.Point(0, 90);
@@ -1072,14 +1072,15 @@ namespace MilSpace.Visibility
             this.panel19.Size = new System.Drawing.Size(466, 253);
             this.panel19.TabIndex = 22;
             // 
-            // checkBox4
+            // checkB_All_object
             // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(5, 5);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(15, 14);
-            this.checkBox4.TabIndex = 24;
-            this.checkBox4.UseVisualStyleBackColor = true;
+            this.checkB_All_object.AutoSize = true;
+            this.checkB_All_object.Location = new System.Drawing.Point(6, 5);
+            this.checkB_All_object.Name = "checkB_All_object";
+            this.checkB_All_object.Size = new System.Drawing.Size(15, 14);
+            this.checkB_All_object.TabIndex = 24;
+            this.checkB_All_object.UseVisualStyleBackColor = true;
+            this.checkB_All_object.CheckedChanged += new System.EventHandler(this.Select_All);
             // 
             // dgvObjects
             // 
@@ -2120,7 +2121,7 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Label label46;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.CheckBox checkBox6;
+        private System.Windows.Forms.CheckBox checkB_Select_All_Points;
         private System.Windows.Forms.DataGridView dvgCheckList;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.CheckBox checkDate;
@@ -2136,7 +2137,7 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Label ObservPointLabel;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel19;
-        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.CheckBox checkB_All_object;
         private System.Windows.Forms.DataGridView dgvObjects;
         private System.Windows.Forms.Panel panel18;
         private System.Windows.Forms.Panel panel17;

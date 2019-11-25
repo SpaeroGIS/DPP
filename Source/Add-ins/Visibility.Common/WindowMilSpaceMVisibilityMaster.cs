@@ -5,6 +5,7 @@ using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Tools;
 using MilSpace.Visibility.Localization;
 using MilSpace.Visibility.ViewController;
+using MilSpace.Visibility.ViewController.WizardController;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,12 +15,12 @@ using System.Windows.Forms;
 
 namespace MilSpace.Visibility
 {
-    public partial class WindowMilSpaceMVisibilityMaster : Form, IObservationPointsView
+    public partial class WindowMilSpaceMVisibilityMaster : Form, IWizardView
     {
         private string _previousPickedRasterLayer;
         private VisibilityCalcTypeEnum _stepControl = VisibilityCalcTypeEnum.None;
         private const string _allValuesFilterText = "All";
-        private ObservationPointsController controller = new ObservationPointsController(ArcMap.Document);
+        private WizardViewController controller = new WizardViewController(ArcMap.Document);
         private BindingList<CheckObservPointGui> _observPointGuis;
         private BindingList<CheckObservPointGui> _observationObjects;
         internal WizardResult FinalResult = new WizardResult();
@@ -74,9 +75,8 @@ namespace MilSpace.Visibility
             _stepControl = VisibilityCalcTypeEnum.OpservationPoints;
             controller.UpdateObservationPointsList();
             PopulateComboBox();
-            FillObservPointLabel();
             DisabelObjList();
-            FillObservPointsOnCurrentView(controller.GetObservPointsOnCurrentMapExtent(ActiveView));
+            controller.UpdateObservationPointsList_OnCurrentExtend(ActiveView);
             dgvObjects.DataSource = null;
         }
         public void SecondTypePicked()//triggers when user picks second type
@@ -85,9 +85,8 @@ namespace MilSpace.Visibility
             controller.UpdateObservationPointsList();
             EanableObjList();
             PopulateComboBox();
-            FillObservPointLabel();
-            FillObsObj(true);
-            FillObservPointsOnCurrentView(controller.GetObservPointsOnCurrentMapExtent(ActiveView));
+            controller.UpdateObservObjectsList(true);
+            controller.UpdateObservationPointsList_OnCurrentExtend(ActiveView);
         }
 
         public void FillObservPointLabel()
@@ -140,7 +139,7 @@ namespace MilSpace.Visibility
             }
         }
 
-        public void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints, VeluableObservPointFieldsEnum filter)
+        public void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints )
         {
             if (observationPoints != null && observationPoints.Any())
             {
@@ -164,6 +163,7 @@ namespace MilSpace.Visibility
 
                 dvgCheckList.Update();
                 dvgCheckList.Rows[0].Selected = true;
+              
             }
 
         }
@@ -180,6 +180,7 @@ namespace MilSpace.Visibility
                     Id = t.Objectid
 
                 });
+
                 //Finding coincidence
                 var commonT = (_observPointGuis.Select(a => a.Id).Intersect(ItemsToShow.Select(b => b.Id))).ToList();
 
@@ -199,14 +200,13 @@ namespace MilSpace.Visibility
                 SetDataGridView();
 
                 dvgCheckList.Update();
-
             }
         }
-        public void FillObsObj(bool useCurrentExtent = false)
+        public void FillObsObj(IEnumerable<ObservationObject> All, bool useCurrentExtent = false)
         {
             try
             {
-                var All = controller.GetAllObservObjects();
+            
                 var itemsToShow = All.Select(t => new CheckObservPointGui
                 {
                     Title = t.Title,
@@ -272,7 +272,7 @@ namespace MilSpace.Visibility
             }
             catch (NullReferenceException)
             {
-
+                dgvObjects.Text = "some error occurred";
             }
         }
 
@@ -296,12 +296,12 @@ namespace MilSpace.Visibility
                 dvgCheckList.Columns["Title"].MinimumWidth = 50;
                 dvgCheckList.Columns["Type"].MinimumWidth = 50;
                 dvgCheckList.Columns["Date"].MinimumWidth = 50;
-                dvgCheckList.Columns["Chck"].MinimumWidth = 25;
+                dvgCheckList.Columns["Check"].MinimumWidth = 25;
 
             }
             catch (NullReferenceException)
             {
-
+                dvgCheckList.Text = "some error occurred";
             }
         }
 
@@ -341,29 +341,31 @@ namespace MilSpace.Visibility
         {
             DisplaySelectedColumns_Objects(dgvObjects);
         }
+
         private void Select_All(object sender, EventArgs e)
         {
 
-            foreach (CheckObservPointGui o in _observationObjects)
-            {
-                o.Check = checkBox4.Checked;
-            }
-
-            dgvObjects.DataSource = _observationObjects;
-            dgvObjects.Refresh();
+            CheckBox_All(_observationObjects, dgvObjects,checkB_All_object);
 
         }
+
         private void Select_All_Points(object sender, EventArgs e)
         {
 
-            foreach (CheckObservPointGui o in _observPointGuis)
-            {
-                o.Check = checkBox6.Checked;
-            }
+            CheckBox_All(_observPointGuis, dvgCheckList,checkB_Select_All_Points);
 
-            dvgCheckList.DataSource = _observPointGuis;
-            dvgCheckList.Refresh();
         }
+
+        private void CheckBox_All(BindingList<CheckObservPointGui> Bin_list, DataGridView dgv, CheckBox Box)
+        {
+            foreach (CheckObservPointGui o in Bin_list)
+            {
+                o.Check = Box.Checked;
+            }
+            dgv.DataSource = Bin_list;
+            dgv.Refresh();
+        }
+
         public VeluableObservPointFieldsEnum GetFilter
         {
             get
@@ -515,11 +517,8 @@ namespace MilSpace.Visibility
         public string ObservationStationFeatureClass => observObjectsLabel.Text;
         public string ObservationPointsFeatureClass => ObservPointLabel.Text;
 
-        public void AddRecord(ObservationPoint observationPoint)
-        {
-            throw new NotImplementedException();
-        }
-        public void ChangeRecord(int id, ObservationPoint observationPoint) => throw new NotImplementedException();
+
+
 
         private void NextStepButton_Click(object sender, EventArgs e)
         {
@@ -606,28 +605,7 @@ namespace MilSpace.Visibility
                 e.Cancel = true;
             }
         }
-
-
-        public void FillVisibilitySessionsList(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public IEnumerable<string> GetTypes => throw new NotImplementedException();
-
-        public IEnumerable<string> GetAffiliation => throw new NotImplementedException();
-
-        public void FillVisibilitySessionsList(IEnumerable<VisibilityTask> visibilitySessions)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void FillObservationObjectsList(IEnumerable<ObservationObject> observationObjects)
-        {
-            throw new NotImplementedException();
-        }
-
+      
         private void TbTransparency_Leave(object sender, EventArgs e)
         {
             if (!Int16.TryParse(tbTransparency.Text, out short res) || (res < 0 || res > 100))
@@ -636,19 +614,11 @@ namespace MilSpace.Visibility
                 tbTransparency.Text = "33";
             }
         }
-        public void FillVisibilitySessionsTree(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded)
-        {
-            throw new NotImplementedException();
-        }
+
 
         private void tbTransparency_TextChanged(object sender, EventArgs e)
         {
 
-        }
-
-        public void FillVisibilityResultsTree(IEnumerable<VisibilityCalcResults> visibilityResults)
-        {
-            throw new NotImplementedException();
         }
     }
 }

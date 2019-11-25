@@ -193,6 +193,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewController\WizardView\IWizardView.cs" />
+    <Compile Include="ViewController\WizardController\WizardViewController.cs" />
   </ItemGroup>
   <ItemGroup>
     <AddInContent Include="Config.esriaddinx">
