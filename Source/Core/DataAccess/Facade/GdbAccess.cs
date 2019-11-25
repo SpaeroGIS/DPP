@@ -865,5 +865,82 @@ namespace MilSpace.DataAccess.Facade
 
             pointFeature.Store();
         }
+
+        //public IGeometry GetGeometry(string featureClassName, string gdb, int objId)
+        //{
+        //    IWorkspaceFactory workspaceFactory = new FileGDBWorkspaceFactory();
+        //    var factory = workspaceFactory.OpenFromFile(gdb, 0);
+
+        //    var featureClass = OpenFeatureClass(factory, featureClassName);
+        //    var feature = featureClass.GetFeature(objId);
+
+        //    var geometry = feature.Shape;
+
+        //    Marshal.ReleaseComObject(workspaceFactory);
+
+        //    return geometry;
+        //}
+
+        private string GenerateTESTStorage(string name)
+        {
+            string newFeatureClassName = $"TestArea{name}{Helper.GetTemporaryNameSuffix()}";
+
+            IFeatureClassDescription fcDescription = new FeatureClassDescriptionClass();
+            IObjectClassDescription ocDescription = (IObjectClassDescription)fcDescription;
+            IFields fields = ocDescription.RequiredFields;
+
+            int shapeFieldIndex = fields.FindField(fcDescription.ShapeFieldName);
+
+            IField field = fields.get_Field(shapeFieldIndex);
+            IGeometryDef geometryDef = field.GeometryDef;
+            IGeometryDefEdit geometryDefEdit = (IGeometryDefEdit)geometryDef;
+            geometryDefEdit.HasZ_2 = false;
+            geometryDefEdit.GeometryType_2 = esriGeometryType.esriGeometryPolygon;
+            geometryDefEdit.SpatialReference_2 = ArcMapInstance.Document.FocusMap.SpatialReference;
+
+            IFieldsEdit fieldsEdit = (IFieldsEdit)fields;
+
+            IField nameField = new FieldClass();
+            IFieldEdit nameFieldEdit = (IFieldEdit)nameField;
+            nameFieldEdit.Name_2 = "ID";
+            nameFieldEdit.Type_2 = esriFieldType.esriFieldTypeInteger;
+            fieldsEdit.AddField(nameField);
+
+            IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)calcWorkspace;
+            workspaceEdit.StartEditing(true);
+            workspaceEdit.StartEditOperation();
+
+            IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)calcWorkspace;
+          
+            IFeatureClass featureClass = featureWorkspace.CreateFeatureClass(newFeatureClassName, fields,
+                    ocDescription.InstanceCLSID, ocDescription.ClassExtensionCLSID, esriFeatureType.esriFTSimple, "shape", "");
+
+            workspaceEdit.StopEditOperation();
+            workspaceEdit.StopEditing(true);
+
+            return newFeatureClassName;
+        }
+
+        public IFeatureClass GetTestFeature(IPolygon polygon, string name)
+        {
+            string featureClassName = GenerateTESTStorage(name);
+
+            IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)calcWorkspace;
+            workspaceEdit.StartEditing(true);
+            workspaceEdit.StartEditOperation();
+
+            IFeatureClass calc = GetCalcProfileFeatureClass(featureClassName);
+            var GCS_WGS = Helper.GetBasePointSpatialReference();
+
+            var testFeature = calc.CreateFeature();
+            testFeature.Shape = polygon;
+
+            testFeature.Store();
+
+            workspaceEdit.StopEditOperation();
+            workspaceEdit.StopEditing(true);
+
+            return calc;
+        }
     }
 }

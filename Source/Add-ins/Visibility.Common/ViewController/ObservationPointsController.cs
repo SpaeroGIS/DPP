@@ -231,25 +231,33 @@ namespace MilSpace.Visibility.ViewController
                     calcParams.ObservObjectIDs = EsriTools.GetSelectionByExtent(observObjects, mapDocument.ActiveView);
                 }
 
-                animationProgressor.Show();
-                animationProgressor.Play(0, 200);
+                //animationProgressor.Show();
+                //animationProgressor.Play(0, 200);
 
-                var calcTask = VisibilityManager.Generate(
-                    observPoints,
-                    calcParams.ObservPointIDs,
-                    observObjects, calcParams.ObservObjectIDs, calcParams.RasterLayerName, calcParams.VisibilityCalculationResults, calcParams.TaskName,
-                    calcParams.TaskName,
-                    calcParams.CalculationType);
+                //var calcTask = VisibilityManager.Generate(
+                //    observPoints,
+                //    calcParams.ObservPointIDs,
+                //    observObjects, calcParams.ObservObjectIDs, calcParams.RasterLayerName, calcParams.VisibilityCalculationResults, calcParams.TaskName,
+                //    calcParams.TaskName,
+                //    calcParams.CalculationType);
 
-                if (calcTask.Finished != null)
-                {
-                    var isLayerAbove = (calcParams.ResultLayerPosition == LayerPositionsEnum.Above);
+                //if (calcTask.Finished != null)
+                //{
+                //    var isLayerAbove = (calcParams.ResultLayerPosition == LayerPositionsEnum.Above);
 
-                    var datasets = GdbAccess.Instance.GetDatasetsFromCalcWorkspace(calcTask.ResultsInfo);
+                //    var datasets = GdbAccess.Instance.GetDatasetsFromCalcWorkspace(calcTask.ResultsInfo);
 
-                    EsriTools.AddVisibilityGroupLayer(datasets, calcTask.Name, calcTask.Id, calcTask.ReferencedGDB, calcParams.RelativeLayerName
-                                                        , isLayerAbove, calcParams.ResultLayerTransparency, mapDocument.ActiveView);
-                }
+                //    EsriTools.AddVisibilityGroupLayer(datasets, calcTask.Name, calcTask.Id, calcTask.ReferencedGDB, calcParams.RelativeLayerName
+                //                                        , isLayerAbove, calcParams.ResultLayerTransparency, mapDocument.ActiveView);
+
+                    var index = calcParams.ObservPointIDs.ToArray().First();
+                    var indexObj = calcParams.ObservObjectIDs.ToArray().First();
+
+                   var pointToCalc = VisibilityZonesFacade.GetAllObservationPoints().First(point => point.Objectid == index);
+                   var objToCalc = VisibilityZonesFacade.GetAllObservationObjects().First(obj => obj.ObjectId == indexObj);
+
+                    TestPolygonFinding(pointToCalc, objToCalc, observPoints, observObjects);
+               // }
             }
             catch (Exception ex)
             {
@@ -571,6 +579,37 @@ namespace MilSpace.Visibility.ViewController
         public void UpdataPreviousPickedRasterLayer(string raster)
         {
             _previousPickedRasterLayer = raster;
+        }
+
+        private void TestPolygonFinding(ObservationPoint point, ObservationObject obj, IFeatureClass pointsFC, IFeatureClass objFC)
+        {
+            try
+            {
+                var feature = pointsFC.GetFeature(point.Objectid);
+                IPoint pointGeom = feature.Shape as IPoint;
+
+                pointGeom.Project(mapDocument.ActivatedView.FocusMap.SpatialReference);
+
+                var featureObj = objFC.GetFeature(obj.ObjectId);
+                IPolygon objGeom = featureObj.Shape as IPolygon;
+
+                var area = EsriTools.GetCoverageArea(pointGeom, point.AzimuthStart.Value, point.AzimuthEnd.Value, point.InnerRadius.Value, point.OuterRadius.Value);
+                var area1 = EsriTools.GetCoverageArea(pointGeom, point.AzimuthStart.Value, point.AzimuthEnd.Value, point.InnerRadius.Value, point.OuterRadius.Value, objGeom);
+
+                IFeatureLayer test1Layer = new FeatureLayerClass();
+                test1Layer.Name = $"WithObj{DateTime.Now.ToShortTimeString()}";
+                test1Layer.FeatureClass = GdbAccess.Instance.GetTestFeature(area, $"WithObj");
+                mapDocument.AddLayer(test1Layer);
+
+                IFeatureLayer test2Layer = new FeatureLayerClass();
+                test2Layer.Name = $"WithoutObj{DateTime.Now.ToShortTimeString()}";
+                test2Layer.FeatureClass = GdbAccess.Instance.GetTestFeature(area1, $"WithoutObj");
+                mapDocument.AddLayer(test2Layer);
+            }
+            catch(Exception Ex)
+            {
+
+            }
         }
     }
 }

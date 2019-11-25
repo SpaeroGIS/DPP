@@ -829,5 +829,117 @@ namespace MilSpace.Core.Tools
 
             return rasterLayer;
         }
+
+        public static IPolygon GetCoverageArea(IPoint point, double azimuthB, double azimuthE, double minDistance, double maxDistance, IPolygon observObject = null)
+        {
+            IPolygon coverageArea;
+
+            if(azimuthB == 0 && azimuthE == 360)
+            {
+                ICircularArc outArc = new CircularArcClass();
+                outArc.PutCoordsByAngle(point, 0, 2 * Math.PI, maxDistance);
+                ISegmentCollection outFullRing = new RingClass();
+                ISegment segmentOut = (ISegment)outArc;
+
+                outFullRing.AddSegment(segmentOut);
+
+                ICircularArc innerArc = new CircularArcClass();
+                innerArc.PutCoordsByAngle(point, 0, 2 * Math.PI, minDistance);
+                ISegmentCollection innerFullRing = new RingClass();
+                ISegment segmentIn = (ISegment)innerArc;
+
+                innerFullRing.AddSegment(segmentIn);
+
+                IGeometryCollection polygonRound = new PolygonClass();
+                polygonRound.AddGeometry(outFullRing as IGeometry);
+                polygonRound.AddGeometry(innerFullRing as IGeometry);
+
+                coverageArea = polygonRound as IPolygon;
+            }
+            else
+            {
+                var pointFromOutArc = GetPointByAzimuthAndLength(point, azimuthB, maxDistance);
+                var pointToOutArc = GetPointByAzimuthAndLength(point, azimuthE, maxDistance);
+
+                ICircularArc circularArc = new CircularArcClass();
+
+                circularArc.PutCoords(point, pointFromOutArc, pointToOutArc, esriArcOrientation.esriArcClockwise);
+
+                var pointFromInnerArc = GetPointByAzimuthAndLength(point, azimuthB, minDistance);
+                var pointToInnerArc = GetPointByAzimuthAndLength(point, azimuthE, minDistance);
+
+                ISegmentCollection outRing = new RingClass();
+
+                ILine rightLine = new LineClass() { FromPoint = pointFromInnerArc, ToPoint = pointFromOutArc, SpatialReference = point.SpatialReference };
+                var rightLineSeg = (ISegment)rightLine;
+
+                outRing.AddSegment(rightLineSeg);
+
+                ISegment outArcSeg = (ISegment)circularArc;
+                outRing.AddSegment(outArcSeg);
+
+                ILine leftLine = new LineClass() { FromPoint = pointToOutArc, ToPoint = pointToInnerArc, SpatialReference = point.SpatialReference };
+                var leftLineSeg = (ISegment)leftLine;
+
+                outRing.AddSegment(leftLineSeg);
+
+                IGeometryCollection outRoundPolygon = new PolygonClass();
+                outRoundPolygon.AddGeometry(outRing as IGeometry);
+
+                IPolygon outPolygonGeometry = outRoundPolygon as IPolygon;
+
+                if(minDistance != 0)
+                {
+                    ISegmentCollection innerRing = new RingClass();
+
+                    ILine innerRightLine = new LineClass() { FromPoint = point, ToPoint = pointFromInnerArc, SpatialReference = point.SpatialReference };
+                    var rightLineSegIn = (ISegment)innerRightLine;
+
+                    innerRing.AddSegment(rightLineSegIn);
+
+                    ICircularArc invisibleCircularArc = new CircularArcClass();
+                    
+                    invisibleCircularArc.PutCoords(point, pointFromInnerArc, pointToInnerArc, esriArcOrientation.esriArcClockwise);
+
+                    ISegment innerRingSeg = (ISegment)invisibleCircularArc;
+                    innerRing.AddSegment(innerRingSeg);
+
+                    ILine innerLeftLine = new LineClass() { FromPoint = pointToInnerArc, ToPoint = point, SpatialReference = point.SpatialReference };
+                    var leftLineSegIn = (ISegment)innerLeftLine;
+
+                    innerRing.AddSegment(leftLineSegIn);
+
+                    IGeometryCollection polygonIn = new PolygonClass();
+                    polygonIn.AddGeometry(innerRing as IGeometry);
+
+                    IPolygon innerPolygonGeometry = polygonIn as IPolygon;
+
+                    ITopologicalOperator arcTopoOp = outPolygonGeometry as ITopologicalOperator;
+
+                    var diff = arcTopoOp.Difference(innerPolygonGeometry);
+                    coverageArea = diff as IPolygon;
+                }
+                else
+                {
+                    coverageArea = outPolygonGeometry;
+                }
+            }
+            
+            if(observObject != null)
+            {
+                observObject.Project(point.SpatialReference);
+                var polygonGeometry = observObject as IGeometry;
+                ITopologicalOperator polygonTopoOp = coverageArea as ITopologicalOperator;
+                return polygonTopoOp.Intersect(polygonGeometry, esriGeometryDimension.esriGeometry2Dimension) as IPolygon;
+            }
+           
+            return coverageArea;
+        }
+
+        private static IPoint GetPointByAzimuthAndLength(IPoint centerPoint, double azimuth, double distance)
+        {
+            double radian = (90 - azimuth) * (Math.PI / 180);
+            return GetPointFromAngelAndDistance(centerPoint, radian, distance);
+        }
     }
 }
