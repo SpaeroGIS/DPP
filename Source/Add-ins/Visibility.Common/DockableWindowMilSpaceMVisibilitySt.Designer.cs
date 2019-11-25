@@ -494,6 +494,7 @@
             this.mainTabControl.Controls.Add(this.tbpVisibilityAreas);
             this.mainTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainTabControl.ImageList = this.imageList1;
+            this.mainTabControl.ItemSize = new System.Drawing.Size(80, 22);
             this.mainTabControl.Location = new System.Drawing.Point(0, 0);
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.SelectedIndex = 0;
@@ -508,9 +509,9 @@
             this.tbpPoints.Controls.Add(this.panel16);
             this.tbpPoints.Controls.Add(this.panelPointsHeader);
             this.tbpPoints.ImageIndex = 137;
-            this.tbpPoints.Location = new System.Drawing.Point(4, 23);
+            this.tbpPoints.Location = new System.Drawing.Point(4, 26);
             this.tbpPoints.Name = "tbpPoints";
-            this.tbpPoints.Size = new System.Drawing.Size(312, 613);
+            this.tbpPoints.Size = new System.Drawing.Size(312, 610);
             this.tbpPoints.TabIndex = 0;
             this.tbpPoints.Text = "Пункти С";
             this.tbpPoints.UseVisualStyleBackColor = true;
@@ -522,7 +523,7 @@
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel7.Location = new System.Drawing.Point(0, 267);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(312, 346);
+            this.panel7.Size = new System.Drawing.Size(312, 343);
             this.panel7.TabIndex = 7;
             // 
             // tabControl2
@@ -535,7 +536,7 @@
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.Padding = new System.Drawing.Point(0, 0);
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(312, 312);
+            this.tabControl2.Size = new System.Drawing.Size(312, 309);
             this.tabControl2.TabIndex = 10;
             // 
             // tabPage5
@@ -554,7 +555,7 @@
             this.tabPage5.ImageIndex = 137;
             this.tabPage5.Location = new System.Drawing.Point(4, 4);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(304, 285);
+            this.tabPage5.Size = new System.Drawing.Size(304, 282);
             this.tabPage5.TabIndex = 0;
             this.tabPage5.Text = "Базові";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -1048,6 +1049,7 @@
             // 
             // panel9
             // 
+            this.panel9.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.panel9.Controls.Add(this.label7);
             this.panel9.Controls.Add(this.buttonSaveOPoint);
             this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
@@ -1296,6 +1298,7 @@
             // 
             // panelPointsHeader
             // 
+            this.panelPointsHeader.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.panelPointsHeader.Controls.Add(this.lblLayer);
             this.panelPointsHeader.Controls.Add(this.btnAddLayerPS);
             this.panelPointsHeader.Dock = System.Windows.Forms.DockStyle.Top;
@@ -1338,9 +1341,9 @@
             this.tbpObservObjects.Controls.Add(this.panel27);
             this.tbpObservObjects.Controls.Add(this.toolBar5);
             this.tbpObservObjects.ImageIndex = 173;
-            this.tbpObservObjects.Location = new System.Drawing.Point(4, 23);
+            this.tbpObservObjects.Location = new System.Drawing.Point(4, 26);
             this.tbpObservObjects.Name = "tbpObservObjects";
-            this.tbpObservObjects.Size = new System.Drawing.Size(312, 613);
+            this.tbpObservObjects.Size = new System.Drawing.Size(312, 610);
             this.tbpObservObjects.TabIndex = 1;
             this.tbpObservObjects.Text = "Області Н";
             this.tbpObservObjects.UseVisualStyleBackColor = true;
@@ -1356,7 +1359,7 @@
             this.panel30.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel30.Location = new System.Drawing.Point(0, 334);
             this.panel30.Name = "panel30";
-            this.panel30.Size = new System.Drawing.Size(312, 279);
+            this.panel30.Size = new System.Drawing.Size(312, 276);
             this.panel30.TabIndex = 61;
             // 
             // panel58
@@ -1511,6 +1514,7 @@
             // 
             // panel3
             // 
+            this.panel3.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.panel3.Controls.Add(this.label4);
             this.panel3.Controls.Add(this.btnSaveParamPS);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
@@ -1527,6 +1531,7 @@
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.label4.Location = new System.Drawing.Point(4, 4);
             this.label4.Name = "label4";
+            this.label4.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.label4.Size = new System.Drawing.Size(278, 26);
             this.label4.TabIndex = 4;
             this.label4.Text = "Характеристики ОН";
@@ -1739,6 +1744,7 @@
             // 
             // panel27
             // 
+            this.panel27.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.panel27.Controls.Add(this.lblObservObjHeader);
             this.panel27.Controls.Add(this.tlbbAddObservObjLayer);
             this.panel27.Dock = System.Windows.Forms.DockStyle.Top;
@@ -1755,7 +1761,7 @@
             this.lblObservObjHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.lblObservObjHeader.Location = new System.Drawing.Point(4, 4);
             this.lblObservObjHeader.Name = "lblObservObjHeader";
-            this.lblObservObjHeader.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
+            this.lblObservObjHeader.Padding = new System.Windows.Forms.Padding(0, 2, 4, 0);
             this.lblObservObjHeader.Size = new System.Drawing.Size(278, 26);
             this.lblObservObjHeader.TabIndex = 7;
             this.lblObservObjHeader.Text = "Області нагляду (ОН)";
@@ -1842,9 +1848,9 @@
             this.tbpSessions.Controls.Add(this.panel15);
             this.tbpSessions.Controls.Add(this.panel38);
             this.tbpSessions.ImageIndex = 44;
-            this.tbpSessions.Location = new System.Drawing.Point(4, 23);
+            this.tbpSessions.Location = new System.Drawing.Point(4, 26);
             this.tbpSessions.Name = "tbpSessions";
-            this.tbpSessions.Size = new System.Drawing.Size(312, 613);
+            this.tbpSessions.Size = new System.Drawing.Size(312, 610);
             this.tbpSessions.TabIndex = 2;
             this.tbpSessions.Text = "Завдання";
             this.tbpSessions.ToolTipText = "Завдання для розрахунків";
@@ -1862,7 +1868,7 @@
             this.panel14.Location = new System.Drawing.Point(0, 306);
             this.panel14.Name = "panel14";
             this.panel14.Padding = new System.Windows.Forms.Padding(0, 0, 0, 10);
-            this.panel14.Size = new System.Drawing.Size(312, 307);
+            this.panel14.Size = new System.Drawing.Size(312, 304);
             this.panel14.TabIndex = 72;
             // 
             // panel46
@@ -2022,12 +2028,13 @@
             // 
             // panel42
             // 
+            this.panel42.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.panel42.Controls.Add(this.label40);
             this.panel42.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel42.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.panel42.Location = new System.Drawing.Point(0, 0);
             this.panel42.Name = "panel42";
-            this.panel42.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.panel42.Padding = new System.Windows.Forms.Padding(4);
             this.panel42.Size = new System.Drawing.Size(312, 34);
             this.panel42.TabIndex = 71;
             // 
@@ -2036,10 +2043,10 @@
             this.label40.BackColor = System.Drawing.SystemColors.Control;
             this.label40.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label40.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.label40.Location = new System.Drawing.Point(4, 0);
+            this.label40.Location = new System.Drawing.Point(4, 4);
             this.label40.Name = "label40";
-            this.label40.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label40.Size = new System.Drawing.Size(304, 34);
+            this.label40.Padding = new System.Windows.Forms.Padding(0, 2, 4, 0);
+            this.label40.Size = new System.Drawing.Size(304, 26);
             this.label40.TabIndex = 2;
             this.label40.Text = "Інформація про завдання";
             // 
@@ -2169,11 +2176,12 @@
             // 
             // panel38
             // 
+            this.panel38.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.panel38.Controls.Add(this.lblCalcTasksHeader);
             this.panel38.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel38.Location = new System.Drawing.Point(0, 0);
             this.panel38.Name = "panel38";
-            this.panel38.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.panel38.Padding = new System.Windows.Forms.Padding(4);
             this.panel38.Size = new System.Drawing.Size(312, 34);
             this.panel38.TabIndex = 54;
             // 
@@ -2182,10 +2190,10 @@
             this.lblCalcTasksHeader.BackColor = System.Drawing.SystemColors.Control;
             this.lblCalcTasksHeader.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblCalcTasksHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.lblCalcTasksHeader.Location = new System.Drawing.Point(4, 0);
+            this.lblCalcTasksHeader.Location = new System.Drawing.Point(4, 4);
             this.lblCalcTasksHeader.Name = "lblCalcTasksHeader";
-            this.lblCalcTasksHeader.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.lblCalcTasksHeader.Size = new System.Drawing.Size(304, 34);
+            this.lblCalcTasksHeader.Padding = new System.Windows.Forms.Padding(0, 2, 4, 0);
+            this.lblCalcTasksHeader.Size = new System.Drawing.Size(304, 26);
             this.lblCalcTasksHeader.TabIndex = 2;
             this.lblCalcTasksHeader.Text = "Завдання для розрахунків";
             // 
@@ -2196,9 +2204,9 @@
             this.tbpVisibilityAreas.Controls.Add(this.panel17);
             this.tbpVisibilityAreas.Controls.Add(this.panel48);
             this.tbpVisibilityAreas.ImageIndex = 126;
-            this.tbpVisibilityAreas.Location = new System.Drawing.Point(4, 23);
+            this.tbpVisibilityAreas.Location = new System.Drawing.Point(4, 26);
             this.tbpVisibilityAreas.Name = "tbpVisibilityAreas";
-            this.tbpVisibilityAreas.Size = new System.Drawing.Size(312, 613);
+            this.tbpVisibilityAreas.Size = new System.Drawing.Size(312, 610);
             this.tbpVisibilityAreas.TabIndex = 3;
             this.tbpVisibilityAreas.Text = "ОВ";
             this.tbpVisibilityAreas.ToolTipText = "Області видимості (результати розрахунків)";
@@ -2211,7 +2219,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 340);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(312, 273);
+            this.panel2.Size = new System.Drawing.Size(312, 270);
             this.panel2.TabIndex = 82;
             // 
             // panel8
@@ -2220,7 +2228,7 @@
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(0, 32);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(312, 241);
+            this.panel8.Size = new System.Drawing.Size(312, 238);
             this.panel8.TabIndex = 81;
             // 
             // lvResultsSummary
@@ -2233,7 +2241,7 @@
             this.lvResultsSummary.HideSelection = false;
             this.lvResultsSummary.Location = new System.Drawing.Point(0, 0);
             this.lvResultsSummary.Name = "lvResultsSummary";
-            this.lvResultsSummary.Size = new System.Drawing.Size(312, 241);
+            this.lvResultsSummary.Size = new System.Drawing.Size(312, 238);
             this.lvResultsSummary.TabIndex = 37;
             this.lvResultsSummary.UseCompatibleStateImageBehavior = false;
             this.lvResultsSummary.View = System.Windows.Forms.View.Details;
@@ -2255,7 +2263,7 @@
             this.panel50.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel50.Location = new System.Drawing.Point(0, 0);
             this.panel50.Name = "panel50";
-            this.panel50.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.panel50.Padding = new System.Windows.Forms.Padding(4);
             this.panel50.Size = new System.Drawing.Size(312, 32);
             this.panel50.TabIndex = 80;
             // 
@@ -2263,10 +2271,10 @@
             // 
             this.labelHeaderVisibilityInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelHeaderVisibilityInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelHeaderVisibilityInfo.Location = new System.Drawing.Point(4, 0);
+            this.labelHeaderVisibilityInfo.Location = new System.Drawing.Point(4, 4);
             this.labelHeaderVisibilityInfo.Name = "labelHeaderVisibilityInfo";
-            this.labelHeaderVisibilityInfo.Padding = new System.Windows.Forms.Padding(0, 6, 4, 0);
-            this.labelHeaderVisibilityInfo.Size = new System.Drawing.Size(304, 32);
+            this.labelHeaderVisibilityInfo.Padding = new System.Windows.Forms.Padding(0, 2, 4, 0);
+            this.labelHeaderVisibilityInfo.Size = new System.Drawing.Size(304, 24);
             this.labelHeaderVisibilityInfo.TabIndex = 2;
             this.labelHeaderVisibilityInfo.Text = "Інформація про результат";
             // 
@@ -2408,12 +2416,12 @@
             // 
             // panel48
             // 
-            this.panel48.BackColor = System.Drawing.SystemColors.Control;
+            this.panel48.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.panel48.Controls.Add(this.lblHeaderVisibilityResult);
             this.panel48.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel48.Location = new System.Drawing.Point(0, 0);
             this.panel48.Name = "panel48";
-            this.panel48.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.panel48.Padding = new System.Windows.Forms.Padding(4);
             this.panel48.Size = new System.Drawing.Size(312, 34);
             this.panel48.TabIndex = 55;
             // 
@@ -2421,10 +2429,10 @@
             // 
             this.lblHeaderVisibilityResult.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblHeaderVisibilityResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblHeaderVisibilityResult.Location = new System.Drawing.Point(4, 0);
+            this.lblHeaderVisibilityResult.Location = new System.Drawing.Point(4, 4);
             this.lblHeaderVisibilityResult.Name = "lblHeaderVisibilityResult";
-            this.lblHeaderVisibilityResult.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.lblHeaderVisibilityResult.Size = new System.Drawing.Size(304, 34);
+            this.lblHeaderVisibilityResult.Padding = new System.Windows.Forms.Padding(0, 2, 4, 0);
+            this.lblHeaderVisibilityResult.Size = new System.Drawing.Size(304, 26);
             this.lblHeaderVisibilityResult.TabIndex = 2;
             this.lblHeaderVisibilityResult.Text = "Cписок результатів";
             // 
