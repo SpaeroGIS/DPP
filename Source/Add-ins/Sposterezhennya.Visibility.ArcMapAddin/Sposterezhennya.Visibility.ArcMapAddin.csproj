@@ -199,19 +199,13 @@
       <Generator>ArcGISAddInHostGenerator</Generator>
       <LastGenOutput>Config.Designer.cs</LastGenOutput>
     </AddInContent>
-  </ItemGroup>
-  <ItemGroup>
-    <AddInContent Include="Images\MilSpaceVisibility.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AddInContent Include="Images\ButtonMilSpaceMVis.png" />
+    <AddInContent Include="Images\Flag.png" />
+    <AddInContent Include="Images\Visibility.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Drawing" />
-  </ItemGroup>
-  <ItemGroup>
-    <AddInContent Include="Images\DockableWindowMilSpaceMVisibilitySt.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ESRI.ArcGIS.ArcMapUI">
@@ -230,6 +224,10 @@
       <Link>DockableWindowMilSpaceMVisibilitySt.resx</Link>
       <DependentUpon>DockableWindowMilSpaceMVisibilitySt.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="..\Visibility.Common\UserSessionGUI\AccessibleResultsModalWindow.resx">
+      <Link>UserSessionGUI\AccessibleResultsModalWindow.resx</Link>
+      <DependentUpon>AccessibleResultsModalWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="..\Visibility.Common\WindowMilSpaceMVisibilityMaster.resx">
       <Link>WindowMilSpaceMVisibilityMaster.resx</Link>
       <DependentUpon>WindowMilSpaceMVisibilityMaster.cs</DependentUpon>
@@ -242,10 +240,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="MilSpace.snk" />
-  </ItemGroup>
-  <ItemGroup>
-    <AddInContent Include="Images\Flag.png" />
-    <AddInContent Include="Images\Visibility.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\MilSpace.Configurations\MilSpace.Configurations.csproj">
@@ -270,7 +264,9 @@
     <Content Include="..\Visibility.Common\Resources\SP_VisibilityLocalization.xml">
       <Link>Resources\SP_VisibilityLocalization.xml</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
+    <Content Include="Images\Visibility.ico" />
   </ItemGroup>
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>

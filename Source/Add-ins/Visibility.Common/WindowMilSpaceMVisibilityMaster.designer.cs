@@ -469,10 +469,11 @@ namespace MilSpace.Visibility
             this.StepsTabControl.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.StepsTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.StepsTabControl.ImageList = this.imageList1;
-            this.StepsTabControl.ItemSize = new System.Drawing.Size(100, 24);
+            this.StepsTabControl.ItemSize = new System.Drawing.Size(120, 26);
             this.StepsTabControl.Location = new System.Drawing.Point(0, 0);
             this.StepsTabControl.Margin = new System.Windows.Forms.Padding(0);
             this.StepsTabControl.Name = "StepsTabControl";
+            this.StepsTabControl.Padding = new System.Drawing.Point(0, 0);
             this.StepsTabControl.SelectedIndex = 0;
             this.StepsTabControl.Size = new System.Drawing.Size(929, 451);
             this.StepsTabControl.TabIndex = 2;
@@ -487,10 +488,9 @@ namespace MilSpace.Visibility
             this.stepOne.Controls.Add(this.panel3);
             this.stepOne.Controls.Add(this.panel39);
             this.stepOne.ImageIndex = 1;
-            this.stepOne.Location = new System.Drawing.Point(4, 28);
+            this.stepOne.Location = new System.Drawing.Point(4, 30);
             this.stepOne.Name = "stepOne";
-            this.stepOne.Padding = new System.Windows.Forms.Padding(3);
-            this.stepOne.Size = new System.Drawing.Size(921, 419);
+            this.stepOne.Size = new System.Drawing.Size(921, 417);
             this.stepOne.TabIndex = 0;
             this.stepOne.Text = "Крок 1";
             // 
@@ -501,10 +501,10 @@ namespace MilSpace.Visibility
             this.panel6.Controls.Add(this.button4);
             this.panel6.Controls.Add(this.panel29);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel6.Location = new System.Drawing.Point(3, 322);
+            this.panel6.Location = new System.Drawing.Point(0, 322);
             this.panel6.Name = "panel6";
             this.panel6.Padding = new System.Windows.Forms.Padding(4);
-            this.panel6.Size = new System.Drawing.Size(915, 93);
+            this.panel6.Size = new System.Drawing.Size(921, 94);
             this.panel6.TabIndex = 19;
             // 
             // panel43
@@ -513,7 +513,7 @@ namespace MilSpace.Visibility
             this.panel43.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel43.Location = new System.Drawing.Point(97, 4);
             this.panel43.Name = "panel43";
-            this.panel43.Size = new System.Drawing.Size(694, 85);
+            this.panel43.Size = new System.Drawing.Size(700, 86);
             this.panel43.TabIndex = 10;
             // 
             // label50
@@ -524,7 +524,7 @@ namespace MilSpace.Visibility
             this.label50.Location = new System.Drawing.Point(0, 0);
             this.label50.Name = "label50";
             this.label50.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.label50.Size = new System.Drawing.Size(694, 85);
+            this.label50.Size = new System.Drawing.Size(700, 86);
             this.label50.TabIndex = 0;
             this.label50.Text = "Аналіз результатів спостереження.\r\nАналіз результатів спостереження з відомими па" +
     "раметрами (наприклад - аерофотозйомки) з точки зору розташування кадрів на місце" +
@@ -537,9 +537,9 @@ namespace MilSpace.Visibility
             this.button4.Enabled = false;
             this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button4.Location = new System.Drawing.Point(791, 4);
+            this.button4.Location = new System.Drawing.Point(797, 4);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(120, 85);
+            this.button4.Size = new System.Drawing.Size(120, 86);
             this.button4.TabIndex = 6;
             this.button4.Text = "Обрати >";
             this.button4.UseVisualStyleBackColor = true;
@@ -552,7 +552,7 @@ namespace MilSpace.Visibility
             this.panel29.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel29.Location = new System.Drawing.Point(4, 4);
             this.panel29.Name = "panel29";
-            this.panel29.Size = new System.Drawing.Size(93, 85);
+            this.panel29.Size = new System.Drawing.Size(93, 86);
             this.panel29.TabIndex = 5;
             // 
             // label45
@@ -563,7 +563,7 @@ namespace MilSpace.Visibility
             this.label45.Location = new System.Drawing.Point(0, 0);
             this.label45.Margin = new System.Windows.Forms.Padding(0);
             this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(93, 85);
+            this.label45.Size = new System.Drawing.Size(93, 86);
             this.label45.TabIndex = 2;
             this.label45.Text = "4 (VP)";
             this.label45.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -582,10 +582,10 @@ namespace MilSpace.Visibility
             this.panel5.Controls.Add(this.button2);
             this.panel5.Controls.Add(this.panel30);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel5.Location = new System.Drawing.Point(3, 229);
+            this.panel5.Location = new System.Drawing.Point(0, 228);
             this.panel5.Name = "panel5";
             this.panel5.Padding = new System.Windows.Forms.Padding(4);
-            this.panel5.Size = new System.Drawing.Size(915, 93);
+            this.panel5.Size = new System.Drawing.Size(921, 94);
             this.panel5.TabIndex = 18;
             // 
             // panel42
@@ -594,7 +594,7 @@ namespace MilSpace.Visibility
             this.panel42.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel42.Location = new System.Drawing.Point(97, 4);
             this.panel42.Name = "panel42";
-            this.panel42.Size = new System.Drawing.Size(694, 85);
+            this.panel42.Size = new System.Drawing.Size(700, 86);
             this.panel42.TabIndex = 10;
             // 
             // label49
@@ -605,7 +605,7 @@ namespace MilSpace.Visibility
             this.label49.Location = new System.Drawing.Point(0, 0);
             this.label49.Name = "label49";
             this.label49.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.label49.Size = new System.Drawing.Size(694, 85);
+            this.label49.Size = new System.Drawing.Size(700, 86);
             this.label49.TabIndex = 0;
             this.label49.Text = "Визначення параметрів пунктів спостереження (ПC).\r\nПошук параметрів ПC для спосте" +
     "реження заданих об\'ектів спостереження (ОC) (параметри апаратури, висота над пов" +
@@ -618,10 +618,10 @@ namespace MilSpace.Visibility
             this.button2.Enabled = false;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.Location = new System.Drawing.Point(791, 4);
+            this.button2.Location = new System.Drawing.Point(797, 4);
             this.button2.Name = "button2";
             this.button2.Padding = new System.Windows.Forms.Padding(4);
-            this.button2.Size = new System.Drawing.Size(120, 85);
+            this.button2.Size = new System.Drawing.Size(120, 86);
             this.button2.TabIndex = 7;
             this.button2.Text = "Обрати >";
             this.button2.UseVisualStyleBackColor = true;
@@ -633,7 +633,7 @@ namespace MilSpace.Visibility
             this.panel30.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel30.Location = new System.Drawing.Point(4, 4);
             this.panel30.Name = "panel30";
-            this.panel30.Size = new System.Drawing.Size(93, 85);
+            this.panel30.Size = new System.Drawing.Size(93, 86);
             this.panel30.TabIndex = 6;
             // 
             // label33
@@ -644,7 +644,7 @@ namespace MilSpace.Visibility
             this.label33.Location = new System.Drawing.Point(0, 0);
             this.label33.Margin = new System.Windows.Forms.Padding(0);
             this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(93, 85);
+            this.label33.Size = new System.Drawing.Size(93, 86);
             this.label33.TabIndex = 1;
             this.label33.Text = "3 (VO)";
             this.label33.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -656,10 +656,10 @@ namespace MilSpace.Visibility
             this.panel4.Controls.Add(this.uButton2);
             this.panel4.Controls.Add(this.panel31);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel4.Location = new System.Drawing.Point(3, 136);
+            this.panel4.Location = new System.Drawing.Point(0, 134);
             this.panel4.Name = "panel4";
             this.panel4.Padding = new System.Windows.Forms.Padding(4);
-            this.panel4.Size = new System.Drawing.Size(915, 93);
+            this.panel4.Size = new System.Drawing.Size(921, 94);
             this.panel4.TabIndex = 17;
             // 
             // panel41
@@ -668,7 +668,7 @@ namespace MilSpace.Visibility
             this.panel41.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel41.Location = new System.Drawing.Point(97, 4);
             this.panel41.Name = "panel41";
-            this.panel41.Size = new System.Drawing.Size(694, 85);
+            this.panel41.Size = new System.Drawing.Size(700, 86);
             this.panel41.TabIndex = 9;
             // 
             // label48
@@ -678,7 +678,7 @@ namespace MilSpace.Visibility
             this.label48.Location = new System.Drawing.Point(0, 0);
             this.label48.Name = "label48";
             this.label48.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.label48.Size = new System.Drawing.Size(694, 85);
+            this.label48.Size = new System.Drawing.Size(700, 86);
             this.label48.TabIndex = 0;
             this.label48.Text = "Визначення видимості в заданих ОC. \r\nПроводиться для обраних пунктів спостереженн" +
     "я (ПС) та об\'єктів нагляду, з урахуванням індивідуальних параметрів ПС";
@@ -689,9 +689,9 @@ namespace MilSpace.Visibility
             this.uButton2.Dock = System.Windows.Forms.DockStyle.Right;
             this.uButton2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.uButton2.Location = new System.Drawing.Point(791, 4);
+            this.uButton2.Location = new System.Drawing.Point(797, 4);
             this.uButton2.Name = "uButton2";
-            this.uButton2.Size = new System.Drawing.Size(120, 85);
+            this.uButton2.Size = new System.Drawing.Size(120, 86);
             this.uButton2.TabIndex = 8;
             this.uButton2.Text = "Обрати >";
             this.uButton2.UseVisualStyleBackColor = true;
@@ -704,7 +704,7 @@ namespace MilSpace.Visibility
             this.panel31.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel31.Location = new System.Drawing.Point(4, 4);
             this.panel31.Name = "panel31";
-            this.panel31.Size = new System.Drawing.Size(93, 85);
+            this.panel31.Size = new System.Drawing.Size(93, 86);
             this.panel31.TabIndex = 7;
             // 
             // label32
@@ -714,7 +714,7 @@ namespace MilSpace.Visibility
             this.label32.Location = new System.Drawing.Point(0, 0);
             this.label32.Margin = new System.Windows.Forms.Padding(0);
             this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(93, 85);
+            this.label32.Size = new System.Drawing.Size(93, 86);
             this.label32.TabIndex = 2;
             this.label32.Text = "2 (VA)";
             this.label32.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -725,10 +725,10 @@ namespace MilSpace.Visibility
             this.panel3.Controls.Add(this.button1);
             this.panel3.Controls.Add(this.panel32);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel3.Location = new System.Drawing.Point(3, 43);
+            this.panel3.Location = new System.Drawing.Point(0, 40);
             this.panel3.Name = "panel3";
             this.panel3.Padding = new System.Windows.Forms.Padding(4);
-            this.panel3.Size = new System.Drawing.Size(915, 93);
+            this.panel3.Size = new System.Drawing.Size(921, 94);
             this.panel3.TabIndex = 16;
             // 
             // panel40
@@ -737,7 +737,7 @@ namespace MilSpace.Visibility
             this.panel40.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel40.Location = new System.Drawing.Point(97, 4);
             this.panel40.Name = "panel40";
-            this.panel40.Size = new System.Drawing.Size(694, 85);
+            this.panel40.Size = new System.Drawing.Size(700, 86);
             this.panel40.TabIndex = 10;
             // 
             // label47
@@ -747,7 +747,7 @@ namespace MilSpace.Visibility
             this.label47.Location = new System.Drawing.Point(0, 0);
             this.label47.Name = "label47";
             this.label47.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.label47.Size = new System.Drawing.Size(694, 85);
+            this.label47.Size = new System.Drawing.Size(700, 86);
             this.label47.TabIndex = 0;
             this.label47.Text = "Визначення областей видимості на обраної поверхні в цілому.\r\nРозрахунок проводить" +
     "ся для заданих характеристик обраних пунктів спостереження. \r\nОцінка результату " +
@@ -759,9 +759,9 @@ namespace MilSpace.Visibility
             this.button1.Dock = System.Windows.Forms.DockStyle.Right;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(791, 4);
+            this.button1.Location = new System.Drawing.Point(797, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(120, 85);
+            this.button1.Size = new System.Drawing.Size(120, 86);
             this.button1.TabIndex = 9;
             this.button1.Text = "Обрати >";
             this.button1.UseVisualStyleBackColor = true;
@@ -774,7 +774,7 @@ namespace MilSpace.Visibility
             this.panel32.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel32.Location = new System.Drawing.Point(4, 4);
             this.panel32.Name = "panel32";
-            this.panel32.Size = new System.Drawing.Size(93, 85);
+            this.panel32.Size = new System.Drawing.Size(93, 86);
             this.panel32.TabIndex = 8;
             // 
             // label31
@@ -784,20 +784,20 @@ namespace MilSpace.Visibility
             this.label31.Location = new System.Drawing.Point(0, 0);
             this.label31.Margin = new System.Windows.Forms.Padding(0);
             this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(93, 85);
+            this.label31.Size = new System.Drawing.Size(93, 86);
             this.label31.TabIndex = 0;
             this.label31.Text = "1 (VS)";
             this.label31.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel39
             // 
-            this.panel39.BackColor = System.Drawing.SystemColors.Control;
+            this.panel39.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.panel39.Controls.Add(this.label46);
             this.panel39.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel39.Location = new System.Drawing.Point(3, 3);
+            this.panel39.Location = new System.Drawing.Point(0, 0);
             this.panel39.Name = "panel39";
             this.panel39.Padding = new System.Windows.Forms.Padding(4);
-            this.panel39.Size = new System.Drawing.Size(915, 40);
+            this.panel39.Size = new System.Drawing.Size(921, 40);
             this.panel39.TabIndex = 15;
             // 
             // label46
@@ -807,8 +807,8 @@ namespace MilSpace.Visibility
             this.label46.Location = new System.Drawing.Point(4, 4);
             this.label46.Margin = new System.Windows.Forms.Padding(3);
             this.label46.Name = "label46";
-            this.label46.Padding = new System.Windows.Forms.Padding(0, 2, 4, 0);
-            this.label46.Size = new System.Drawing.Size(787, 32);
+            this.label46.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
+            this.label46.Size = new System.Drawing.Size(413, 32);
             this.label46.TabIndex = 2;
             this.label46.Text = "Крок 1. Обрати тип розрахунку";
             // 
@@ -818,11 +818,10 @@ namespace MilSpace.Visibility
             this.stepTwo.Controls.Add(this.panel44);
             this.stepTwo.Controls.Add(this.panel47);
             this.stepTwo.ImageIndex = 2;
-            this.stepTwo.Location = new System.Drawing.Point(4, 28);
+            this.stepTwo.Location = new System.Drawing.Point(4, 30);
             this.stepTwo.Margin = new System.Windows.Forms.Padding(0);
             this.stepTwo.Name = "stepTwo";
-            this.stepTwo.Padding = new System.Windows.Forms.Padding(3);
-            this.stepTwo.Size = new System.Drawing.Size(921, 419);
+            this.stepTwo.Size = new System.Drawing.Size(921, 417);
             this.stepTwo.TabIndex = 1;
             this.stepTwo.Text = "Крок 2";
             this.stepTwo.UseVisualStyleBackColor = true;
@@ -831,9 +830,9 @@ namespace MilSpace.Visibility
             // 
             this.panel7.Controls.Add(this.splitContainer1);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(3, 73);
+            this.panel7.Location = new System.Drawing.Point(0, 70);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(915, 343);
+            this.panel7.Size = new System.Drawing.Size(921, 347);
             this.panel7.TabIndex = 69;
             // 
             // splitContainer1
@@ -861,7 +860,7 @@ namespace MilSpace.Visibility
             this.splitContainer1.Panel2.Controls.Add(this.panel17);
             this.splitContainer1.Panel2.Controls.Add(this.panel14);
             this.splitContainer1.Panel2MinSize = 300;
-            this.splitContainer1.Size = new System.Drawing.Size(915, 343);
+            this.splitContainer1.Size = new System.Drawing.Size(921, 347);
             this.splitContainer1.SplitterDistance = 441;
             this.splitContainer1.SplitterWidth = 8;
             this.splitContainer1.TabIndex = 0;
@@ -895,7 +894,7 @@ namespace MilSpace.Visibility
             this.dvgCheckList.RowHeadersVisible = false;
             this.dvgCheckList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dvgCheckList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dvgCheckList.Size = new System.Drawing.Size(441, 253);
+            this.dvgCheckList.Size = new System.Drawing.Size(441, 257);
             this.dvgCheckList.TabIndex = 23;
             // 
             // panel9
@@ -1035,7 +1034,7 @@ namespace MilSpace.Visibility
             this.panel13.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel13.Location = new System.Drawing.Point(0, 0);
             this.panel13.Name = "panel13";
-            this.panel13.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.panel13.Padding = new System.Windows.Forms.Padding(4, 3, 4, 0);
             this.panel13.Size = new System.Drawing.Size(441, 30);
             this.panel13.TabIndex = 13;
             // 
@@ -1043,9 +1042,9 @@ namespace MilSpace.Visibility
             // 
             this.ObservPointLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ObservPointLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ObservPointLabel.Location = new System.Drawing.Point(224, 0);
+            this.ObservPointLabel.Location = new System.Drawing.Point(224, 3);
             this.ObservPointLabel.Name = "ObservPointLabel";
-            this.ObservPointLabel.Size = new System.Drawing.Size(213, 30);
+            this.ObservPointLabel.Size = new System.Drawing.Size(213, 27);
             this.ObservPointLabel.TabIndex = 3;
             this.ObservPointLabel.Text = "ObStations_201810";
             this.ObservPointLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1054,9 +1053,9 @@ namespace MilSpace.Visibility
             // 
             this.label5.Dock = System.Windows.Forms.DockStyle.Left;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(4, 0);
+            this.label5.Location = new System.Drawing.Point(4, 3);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(220, 30);
+            this.label5.Size = new System.Drawing.Size(220, 27);
             this.label5.TabIndex = 2;
             this.label5.Text = "Пункти спостереження (ПС)";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1069,7 +1068,7 @@ namespace MilSpace.Visibility
             this.panel19.Location = new System.Drawing.Point(0, 90);
             this.panel19.Margin = new System.Windows.Forms.Padding(0);
             this.panel19.Name = "panel19";
-            this.panel19.Size = new System.Drawing.Size(466, 253);
+            this.panel19.Size = new System.Drawing.Size(472, 257);
             this.panel19.TabIndex = 22;
             // 
             // checkBox4
@@ -1096,7 +1095,7 @@ namespace MilSpace.Visibility
             this.dgvObjects.Name = "dgvObjects";
             this.dgvObjects.RowHeadersVisible = false;
             this.dgvObjects.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvObjects.Size = new System.Drawing.Size(466, 253);
+            this.dgvObjects.Size = new System.Drawing.Size(472, 257);
             this.dgvObjects.TabIndex = 23;
             // 
             // panel18
@@ -1108,7 +1107,7 @@ namespace MilSpace.Visibility
             this.panel18.Location = new System.Drawing.Point(0, 60);
             this.panel18.Name = "panel18";
             this.panel18.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel18.Size = new System.Drawing.Size(466, 30);
+            this.panel18.Size = new System.Drawing.Size(472, 30);
             this.panel18.TabIndex = 18;
             // 
             // checkDate_Object
@@ -1160,7 +1159,7 @@ namespace MilSpace.Visibility
             this.panel17.Location = new System.Drawing.Point(0, 30);
             this.panel17.Name = "panel17";
             this.panel17.Padding = new System.Windows.Forms.Padding(4, 3, 4, 0);
-            this.panel17.Size = new System.Drawing.Size(466, 30);
+            this.panel17.Size = new System.Drawing.Size(472, 30);
             this.panel17.TabIndex = 17;
             // 
             // cmbObservObject
@@ -1194,17 +1193,18 @@ namespace MilSpace.Visibility
             this.panel14.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel14.Location = new System.Drawing.Point(0, 0);
             this.panel14.Name = "panel14";
-            this.panel14.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel14.Size = new System.Drawing.Size(466, 30);
+            this.panel14.Padding = new System.Windows.Forms.Padding(4);
+            this.panel14.Size = new System.Drawing.Size(472, 30);
             this.panel14.TabIndex = 14;
             // 
             // observObjectsLabel
             // 
             this.observObjectsLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.observObjectsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.observObjectsLabel.Location = new System.Drawing.Point(224, 0);
+            this.observObjectsLabel.Location = new System.Drawing.Point(224, 4);
             this.observObjectsLabel.Name = "observObjectsLabel";
-            this.observObjectsLabel.Size = new System.Drawing.Size(238, 30);
+            this.observObjectsLabel.Padding = new System.Windows.Forms.Padding(4);
+            this.observObjectsLabel.Size = new System.Drawing.Size(244, 22);
             this.observObjectsLabel.TabIndex = 3;
             this.observObjectsLabel.Text = "label29";
             this.observObjectsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1213,10 +1213,10 @@ namespace MilSpace.Visibility
             // 
             this.label6.Dock = System.Windows.Forms.DockStyle.Left;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label6.Location = new System.Drawing.Point(4, 0);
+            this.label6.Location = new System.Drawing.Point(4, 4);
             this.label6.Name = "label6";
             this.label6.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label6.Size = new System.Drawing.Size(220, 30);
+            this.label6.Size = new System.Drawing.Size(220, 22);
             this.label6.TabIndex = 2;
             this.label6.Text = "Об\'єкти нагляду (ОН)";
             // 
@@ -1226,10 +1226,10 @@ namespace MilSpace.Visibility
             this.panel44.Controls.Add(this.imagesComboBox);
             this.panel44.Controls.Add(this.label22);
             this.panel44.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel44.Location = new System.Drawing.Point(3, 43);
+            this.panel44.Location = new System.Drawing.Point(0, 40);
             this.panel44.Name = "panel44";
             this.panel44.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.panel44.Size = new System.Drawing.Size(915, 30);
+            this.panel44.Size = new System.Drawing.Size(921, 30);
             this.panel44.TabIndex = 68;
             // 
             // imagesComboBox
@@ -1249,6 +1249,7 @@ namespace MilSpace.Visibility
             this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label22.Location = new System.Drawing.Point(4, 3);
             this.label22.Name = "label22";
+            this.label22.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.label22.Size = new System.Drawing.Size(220, 24);
             this.label22.TabIndex = 7;
             this.label22.Text = "Поверхня для розпрахунку";
@@ -1258,21 +1259,21 @@ namespace MilSpace.Visibility
             this.panel47.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.panel47.Controls.Add(this.label30);
             this.panel47.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel47.Location = new System.Drawing.Point(3, 3);
+            this.panel47.Location = new System.Drawing.Point(0, 0);
             this.panel47.Margin = new System.Windows.Forms.Padding(0);
             this.panel47.Name = "panel47";
-            this.panel47.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.panel47.Size = new System.Drawing.Size(915, 40);
+            this.panel47.Padding = new System.Windows.Forms.Padding(4);
+            this.panel47.Size = new System.Drawing.Size(921, 40);
             this.panel47.TabIndex = 66;
             // 
             // label30
             // 
-            this.label30.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label30.Dock = System.Windows.Forms.DockStyle.Left;
             this.label30.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label30.Location = new System.Drawing.Point(4, 0);
+            this.label30.Location = new System.Drawing.Point(4, 4);
             this.label30.Name = "label30";
-            this.label30.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label30.Size = new System.Drawing.Size(911, 40);
+            this.label30.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.label30.Size = new System.Drawing.Size(437, 32);
             this.label30.TabIndex = 7;
             this.label30.Text = "Крок 2. Основні параметри розрахунку";
             // 
@@ -1286,9 +1287,9 @@ namespace MilSpace.Visibility
             this.stepThree.Controls.Add(this.panel21);
             this.stepThree.Controls.Add(this.panel20);
             this.stepThree.ImageIndex = 3;
-            this.stepThree.Location = new System.Drawing.Point(4, 28);
+            this.stepThree.Location = new System.Drawing.Point(4, 30);
             this.stepThree.Name = "stepThree";
-            this.stepThree.Size = new System.Drawing.Size(921, 419);
+            this.stepThree.Size = new System.Drawing.Size(921, 417);
             this.stepThree.TabIndex = 2;
             this.stepThree.Text = "Крок 3";
             // 
@@ -1623,7 +1624,7 @@ namespace MilSpace.Visibility
             this.label10.Location = new System.Drawing.Point(4, 4);
             this.label10.Margin = new System.Windows.Forms.Padding(3);
             this.label10.Name = "label10";
-            this.label10.Padding = new System.Windows.Forms.Padding(0, 2, 4, 0);
+            this.label10.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
             this.label10.Size = new System.Drawing.Size(496, 32);
             this.label10.TabIndex = 2;
             this.label10.Text = "Крок 3. Додаткові параметри формування результату";
@@ -1642,10 +1643,10 @@ namespace MilSpace.Visibility
             this.stepFour.Controls.Add(this.panel2);
             this.stepFour.Controls.Add(this.panel28);
             this.stepFour.ImageIndex = 4;
-            this.stepFour.Location = new System.Drawing.Point(4, 28);
+            this.stepFour.Location = new System.Drawing.Point(4, 30);
             this.stepFour.Margin = new System.Windows.Forms.Padding(0);
             this.stepFour.Name = "stepFour";
-            this.stepFour.Size = new System.Drawing.Size(921, 419);
+            this.stepFour.Size = new System.Drawing.Size(921, 417);
             this.stepFour.TabIndex = 3;
             this.stepFour.Text = "Крок 4";
             // 
@@ -1937,16 +1938,18 @@ namespace MilSpace.Visibility
             this.panel28.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel28.Location = new System.Drawing.Point(0, 0);
             this.panel28.Name = "panel28";
+            this.panel28.Padding = new System.Windows.Forms.Padding(4);
             this.panel28.Size = new System.Drawing.Size(921, 40);
             this.panel28.TabIndex = 10;
             // 
             // label29
             // 
-            this.label29.AutoSize = true;
+            this.label29.Dock = System.Windows.Forms.DockStyle.Left;
             this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label29.Location = new System.Drawing.Point(3, 6);
+            this.label29.Location = new System.Drawing.Point(4, 4);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(358, 20);
+            this.label29.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.label29.Size = new System.Drawing.Size(435, 32);
             this.label29.TabIndex = 9;
             this.label29.Text = "Крок 4. Перевірка параметрів розрахунку";
             // 
@@ -1958,6 +1961,7 @@ namespace MilSpace.Visibility
             this.Controls.Add(this.StepsTabControl);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "WindowMilSpaceMVisibilityMaster";
@@ -2018,7 +2022,6 @@ namespace MilSpace.Visibility
             this.panel38.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel28.ResumeLayout(false);
-            this.panel28.PerformLayout();
             this.ResumeLayout(false);
 
         }

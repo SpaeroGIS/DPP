@@ -28,11 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AccessibleResultsModalWindow));
             this.lvProfilesSets = new System.Windows.Forms.ListView();
             this.gbFilters = new System.Windows.Forms.GroupBox();
             this.btnReset = new System.Windows.Forms.Button();
             this.btnFilter = new System.Windows.Forms.Button();
-            this.cmbGraphType = new System.Windows.Forms.ComboBox();
+            this.cmbCalcType = new System.Windows.Forms.ComboBox();
             this.lblTo = new System.Windows.Forms.Label();
             this.toDate = new System.Windows.Forms.DateTimePicker();
             this.lblFrom = new System.Windows.Forms.Label();
@@ -64,7 +65,7 @@
             // 
             this.gbFilters.Controls.Add(this.btnReset);
             this.gbFilters.Controls.Add(this.btnFilter);
-            this.gbFilters.Controls.Add(this.cmbGraphType);
+            this.gbFilters.Controls.Add(this.cmbCalcType);
             this.gbFilters.Controls.Add(this.lblTo);
             this.gbFilters.Controls.Add(this.toDate);
             this.gbFilters.Controls.Add(this.lblFrom);
@@ -83,9 +84,9 @@
             // btnReset
             // 
             this.btnReset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnReset.Location = new System.Drawing.Point(505, 83);
+            this.btnReset.Location = new System.Drawing.Point(471, 83);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(72, 20);
+            this.btnReset.Size = new System.Drawing.Size(112, 20);
             this.btnReset.TabIndex = 10;
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
@@ -94,23 +95,23 @@
             // btnFilter
             // 
             this.btnFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFilter.Location = new System.Drawing.Point(419, 83);
+            this.btnFilter.Location = new System.Drawing.Point(359, 83);
             this.btnFilter.Name = "btnFilter";
-            this.btnFilter.Size = new System.Drawing.Size(80, 20);
+            this.btnFilter.Size = new System.Drawing.Size(112, 20);
             this.btnFilter.TabIndex = 9;
             this.btnFilter.Text = "Filter";
             this.btnFilter.UseVisualStyleBackColor = true;
             this.btnFilter.Click += new System.EventHandler(this.BtnFilter_Click);
             // 
-            // cmbGraphType
+            // cmbCalcType
             // 
-            this.cmbGraphType.ForeColor = System.Drawing.Color.Black;
-            this.cmbGraphType.FormattingEnabled = true;
-            this.cmbGraphType.Location = new System.Drawing.Point(13, 82);
-            this.cmbGraphType.Name = "cmbGraphType";
-            this.cmbGraphType.Size = new System.Drawing.Size(172, 21);
-            this.cmbGraphType.TabIndex = 7;
-            this.cmbGraphType.Text = "Type";
+            this.cmbCalcType.ForeColor = System.Drawing.Color.Black;
+            this.cmbCalcType.FormattingEnabled = true;
+            this.cmbCalcType.Location = new System.Drawing.Point(13, 82);
+            this.cmbCalcType.Name = "cmbCalcType";
+            this.cmbCalcType.Size = new System.Drawing.Size(172, 21);
+            this.cmbCalcType.TabIndex = 7;
+            this.cmbCalcType.Text = "Type";
             // 
             // lblTo
             // 
@@ -135,7 +136,7 @@
             // 
             this.lblFrom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblFrom.AutoSize = true;
-            this.lblFrom.Location = new System.Drawing.Point(351, 55);
+            this.lblFrom.Location = new System.Drawing.Point(358, 55);
             this.lblFrom.Name = "lblFrom";
             this.lblFrom.Size = new System.Drawing.Size(27, 13);
             this.lblFrom.TabIndex = 4;
@@ -145,7 +146,7 @@
             // 
             this.fromDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.fromDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.fromDate.Location = new System.Drawing.Point(384, 52);
+            this.fromDate.Location = new System.Drawing.Point(391, 52);
             this.fromDate.Name = "fromDate";
             this.fromDate.Size = new System.Drawing.Size(80, 20);
             this.fromDate.TabIndex = 3;
@@ -154,7 +155,7 @@
             // 
             this.lblDateText.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblDateText.AutoSize = true;
-            this.lblDateText.Location = new System.Drawing.Point(351, 22);
+            this.lblDateText.Location = new System.Drawing.Point(356, 22);
             this.lblDateText.Name = "lblDateText";
             this.lblDateText.Size = new System.Drawing.Size(73, 13);
             this.lblDateText.TabIndex = 2;
@@ -184,8 +185,8 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
+            this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(10, 354);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
@@ -197,9 +198,9 @@
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(515, 0);
+            this.btnCancel.Location = new System.Drawing.Point(471, 0);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(68, 25);
+            this.btnCancel.Size = new System.Drawing.Size(112, 25);
             this.btnCancel.TabIndex = 11;
             this.btnCancel.Text = "Close";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -208,16 +209,16 @@
             // btnOk
             // 
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOk.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnOk.Location = new System.Drawing.Point(0, 0);
+            this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnOk.Location = new System.Drawing.Point(359, 0);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(118, 25);
-            this.btnOk.TabIndex = 10;
+            this.btnOk.Size = new System.Drawing.Size(112, 25);
+            this.btnOk.TabIndex = 12;
             this.btnOk.Text = "Add to session";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.BtnOk_Click);
             // 
-            // AccessibleProfilesModalWindow
+            // AccessibleResultsModalWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -228,9 +229,10 @@
             this.Controls.Add(this.lvProfilesSets);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "AccessibleProfilesModalWindow";
+            this.Name = "AccessibleResultsModalWindow";
             this.Padding = new System.Windows.Forms.Padding(10, 5, 10, 10);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SavedProfilesModalWindow";
@@ -252,11 +254,11 @@
         private System.Windows.Forms.Label lblTo;
         private System.Windows.Forms.DateTimePicker toDate;
         private System.Windows.Forms.Label lblFrom;
-        private System.Windows.Forms.ComboBox cmbGraphType;
+        private System.Windows.Forms.ComboBox cmbCalcType;
         private System.Windows.Forms.Button btnFilter;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.Button btnOk;
     }
 }

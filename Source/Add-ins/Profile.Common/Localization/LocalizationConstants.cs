@@ -197,7 +197,7 @@ namespace MilSpace.Profile.Localization
             mngr = new MilSpaceResourceManager("SPPRD.Profile.Calc", CultureInfo.GetCultureInfo("uk-UA"));
         }
 
-        public static string ProfileCalcDocableWinCationText => instance.GetLocalization(ProfileCalcDocableWinCationKey, "Спостереження. Розрахунок профіля");
+        public static string ProfileCalcDocableWinCationText => instance.GetLocalization(ProfileCalcDocableWinCationKey, "Спостереження. Розрахунок профілю");
         public static string AttrProfileDateText => instance.GetLocalization(AttrProfileDateTextKey, "Дата");
         public static string AttrProfileCreatorText => instance.GetLocalization(AttrProfileCreatorTextKey, "Автор");
         public static string AttrProfileCountText => instance.GetLocalization(AttrProfileCountTextKey, "Кількість ліній");

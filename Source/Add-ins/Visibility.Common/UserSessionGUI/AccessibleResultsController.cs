@@ -18,7 +18,8 @@ namespace MilSpace.Visibility
             SetAccessibleResultsSets(userSession, spatialReference);
         }
 
-        internal VisibilityCalcResults[] GetAllAccessibleProfilesSets()
+        //internal VisibilityCalcResults[] GetAllAccessibleProfilesSets()
+        internal VisibilityCalcResults[] GetAllAccessibleVisibilitesSets()
         {
             return (VisibilityCalcResults[])_accessibleProfilesSets.Clone();
         }
