@@ -77,11 +77,11 @@ namespace MilSpace.Visibility
                 this.label24.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label24_Text", "Оператор");
                 this.label27.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label27_Text", "Дата");
                 this.label20.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label20_Text", "Назва");
-                this.label15.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label15_Text", "верт.");
-                this.label16.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label16_Text", "вугол бачення гориз");
-                this.label58.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label58_Text", "азимут осн. оси, дгр");
-                this.label55.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label55_Text", "верт");
-                this.label56.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label56_Text", "поворот камеры, дгр, гориз.");
+                //this.label15.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label15_Text", "верт.");
+                //this.label16.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label16_Text", "кут бачення гориз");
+                //this.label58.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label58_Text", "азимут осн. оси, дгр");
+                //this.label55.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label55_Text", "верт");
+                //this.label56.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label56_Text", "поворот камеры, дгр, гориз.");
                 this.label7.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label7_Text", "Параметри ПС");
                 this.buttonSaveOPoint.Tag = LocalizationContext.Instance.FindLocalizedElement("MainW_buttonSaveOPoint_Tag", "зберегти параметри ПС");
                 this.tlbbShowPoint.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbShowPoint_ToolTipText", "показати ПС на карті");
@@ -556,10 +556,17 @@ namespace MilSpace.Visibility
             dgvObservationPoints.Columns["Type"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dgvObservationPoints.Columns["Affiliation"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dgvObservationPoints.Columns["Date"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+
             dgvObservationPoints.Columns["Title"].HeaderText = LocalizationContext.Instance.NameHeaderText;
             dgvObservationPoints.Columns["Type"].HeaderText = LocalizationContext.Instance.TypeHeaderText;
             dgvObservationPoints.Columns["Affiliation"].HeaderText = LocalizationContext.Instance.AffiliationHeaderText;
             dgvObservationPoints.Columns["Date"].HeaderText = LocalizationContext.Instance.DateHeaderText;
+
+            dgvObservationPoints.Columns["Title"].SortMode = DataGridViewColumnSortMode.Automatic;
+            dgvObservationPoints.Columns["Type"].SortMode = DataGridViewColumnSortMode.Automatic;
+            dgvObservationPoints.Columns["Affiliation"].SortMode = DataGridViewColumnSortMode.Automatic;
+            dgvObservationPoints.Columns["Date"].SortMode = DataGridViewColumnSortMode.Automatic;
+
             dgvObservationPoints.Columns["Id"].Visible = false;
         }
 
@@ -662,11 +669,12 @@ namespace MilSpace.Visibility
             observPointName.Text = ObservPointDefaultValues.ObservPointNameText;
             angleOFViewMin.Text = ObservPointDefaultValues.AngleOFViewMinText;
             angleOFViewMax.Text = ObservPointDefaultValues.AngleOFViewMaxText;
-            angleFrameH.Text = ObservPointDefaultValues.AngleFrameHText;
-            angleFrameV.Text = ObservPointDefaultValues.AngleFrameVText;
-            cameraRotationH.Text = ObservPointDefaultValues.CameraRotationHText;
-            cameraRotationV.Text = ObservPointDefaultValues.CameraRotationVText;
-            azimuthMainAxis.Text = ObservPointDefaultValues.AzimuthMainAxisText;
+
+            //angleFrameH.Text = ObservPointDefaultValues.AngleFrameHText;
+            //angleFrameV.Text = ObservPointDefaultValues.AngleFrameVText;
+            //cameraRotationH.Text = ObservPointDefaultValues.CameraRotationHText;
+            //cameraRotationV.Text = ObservPointDefaultValues.CameraRotationVText;
+            //azimuthMainAxis.Text = ObservPointDefaultValues.AzimuthMainAxisText;
 
 
             observPointDate.Text = DateTime.Now.ToString(Helper.DateFormatSmall);
@@ -1008,11 +1016,15 @@ namespace MilSpace.Visibility
 
             cmbAffiliationEdit.Enabled = cmbObservTypesEdit.Enabled = azimuthE.Enabled
                 = azimuthB.Enabled = xCoord.Enabled = yCoord.Enabled = angleOFViewMin.Enabled = angleOFViewMax.Enabled
-                = heightCurrent.Enabled = heightMin.Enabled = azimuthMainAxis.Enabled = cameraRotationH.Enabled = cameraRotationV.Enabled
-                = heightMax.Enabled = observPointName.Enabled = tlbCoordinates.Enabled = txtMaxDistance.Enabled = txtMinDistance.Enabled =
-                tlbbShowPoint.Enabled = tlbbRemovePoint.Enabled = tlbbAddNewPoint.Enabled = (layerExists && !isAllDisabled);
+                = heightCurrent.Enabled = heightMin.Enabled 
+                = heightMax.Enabled = observPointName.Enabled = tlbCoordinates.Enabled 
+                = txtMaxDistance.Enabled = txtMinDistance.Enabled =
+                tlbbShowPoint.Enabled = tlbbRemovePoint.Enabled 
+                = tlbbAddNewPoint.Enabled = (layerExists && !isAllDisabled);
 
-            angleFrameH.Enabled = angleFrameV.Enabled = false;
+            //= azimuthMainAxis.Enabled = cameraRotationH.Enabled = cameraRotationV.Enabled
+
+            //angleFrameH.Enabled = angleFrameV.Enabled = false;
             observPointDate.Enabled = observPointCreator.Enabled = true;
             observPointDate.ReadOnly = observPointCreator.ReadOnly = true;
 
@@ -1077,14 +1089,14 @@ namespace MilSpace.Visibility
                 Affiliation = affiliationType.Key.ToString(),
                 AngelMaxH = Convert.ToDouble(angleOFViewMax.Text),
                 AngelMinH = Convert.ToDouble(angleOFViewMin.Text),
-                AngelCameraRotationH = Convert.ToDouble(cameraRotationH.Text),
-                AngelCameraRotationV = Convert.ToDouble(cameraRotationV.Text),
+                //AngelCameraRotationH = Convert.ToDouble(cameraRotationH.Text),
+                //AngelCameraRotationV = Convert.ToDouble(cameraRotationV.Text),
                 RelativeHeight = Convert.ToDouble(heightCurrent.Text),
                 AvailableHeightLover = Convert.ToDouble(heightMin.Text),
                 AvailableHeightUpper = Convert.ToDouble(heightMax.Text),
                 AzimuthStart = Convert.ToDouble(azimuthB.Text),
                 AzimuthEnd = Convert.ToDouble(azimuthE.Text),
-                AzimuthMainAxis = Convert.ToDouble(azimuthMainAxis.Text),
+                //AzimuthMainAxis = Convert.ToDouble(azimuthMainAxis.Text),
                 Dto = Convert.ToDateTime(observPointDate.Text),
                 Operator = observPointCreator.Text,
                 Title = observPointName.Text,
@@ -1144,14 +1156,14 @@ namespace MilSpace.Visibility
             observPointName.Text = selectedPoint.Title;
             angleOFViewMin.Text = selectedPoint.AngelMinH.HasValue ? selectedPoint.AngelMinH.ToString() : ObservPointDefaultValues.AngleOFViewMinText;
             angleOFViewMax.Text = selectedPoint.AngelMaxH.HasValue ? selectedPoint.AngelMaxH.ToString() : ObservPointDefaultValues.AngleOFViewMaxText;
-            angleFrameH.Text = selectedPoint.AngelFrameH.HasValue ? selectedPoint.AngelFrameH.ToString() : ObservPointDefaultValues.AngleFrameHText;
-            angleFrameV.Text = selectedPoint.AngelFrameV.HasValue ? selectedPoint.AngelFrameV.ToString() : ObservPointDefaultValues.AngleFrameVText;
-            cameraRotationH.Text = selectedPoint.AngelCameraRotationH.HasValue ? selectedPoint.AngelCameraRotationH.ToString() : ObservPointDefaultValues.CameraRotationHText;
-            cameraRotationV.Text = selectedPoint.AngelCameraRotationV.HasValue ? selectedPoint.AngelCameraRotationV.ToString() : ObservPointDefaultValues.CameraRotationVText;
-            azimuthMainAxis.Text = selectedPoint.AzimuthMainAxis != null ? selectedPoint.AzimuthMainAxis.ToString() : ObservPointDefaultValues.AzimuthMainAxisText;
             txtMinDistance.Text = selectedPoint.InnerRadius.HasValue ? selectedPoint.InnerRadius.ToString() : ObservPointDefaultValues.DefaultRadiusText;
             txtMaxDistance.Text = selectedPoint.OuterRadius.HasValue ? selectedPoint.OuterRadius.ToString() : ObservPointDefaultValues.DefaultRadiusText;
 
+            //angleFrameH.Text = selectedPoint.AngelFrameH.HasValue ? selectedPoint.AngelFrameH.ToString() : ObservPointDefaultValues.AngleFrameHText;
+            //angleFrameV.Text = selectedPoint.AngelFrameV.HasValue ? selectedPoint.AngelFrameV.ToString() : ObservPointDefaultValues.AngleFrameVText;
+            //cameraRotationH.Text = selectedPoint.AngelCameraRotationH.HasValue ? selectedPoint.AngelCameraRotationH.ToString() : ObservPointDefaultValues.CameraRotationHText;
+            //cameraRotationV.Text = selectedPoint.AngelCameraRotationV.HasValue ? selectedPoint.AngelCameraRotationV.ToString() : ObservPointDefaultValues.CameraRotationVText;
+            //azimuthMainAxis.Text = selectedPoint.AzimuthMainAxis != null ? selectedPoint.AzimuthMainAxis.ToString() : ObservPointDefaultValues.AzimuthMainAxisText;
 
             observPointDate.Text = selectedPoint.Dto.Value.ToString(Helper.DateFormat);
             observPointCreator.Text = selectedPoint.Operator;
@@ -1962,29 +1974,29 @@ namespace MilSpace.Visibility
 
         private void DockableWindowMilSpaceMVisibilitySt_Load(object sender, EventArgs e)
         {
-            ToolTip toolTip1 = new ToolTip();
-            toolTip1.AutoPopDelay = 5000;
-            toolTip1.InitialDelay = 1000;
-            toolTip1.ReshowDelay = 500;
-            toolTip1.ShowAlways = true;
+            ToolTip toolTip = new ToolTip();
+            toolTip.AutoPopDelay = 5000;
+            toolTip.InitialDelay = 1000;
+            toolTip.ReshowDelay = 500;
+            toolTip.ShowAlways = true;
 
             //foreach (Control ctrl in this.Controls)
             //{
             //    if (ctrl is System.Windows.Forms.Button && ctrl.Tag is string)
             //    {
-            //        ctrl.MouseHover += new EventHandler(delegate (Object o, EventArgs a)
-            //        {
-            //            var btn = (Control)o;
-            //            toolTip1.SetToolTip(btn, btn.Tag.ToString());
-            //        });
+            //        ctrl.MouseHover += new EventHandler(
+            //            delegate (Object o, EventArgs a)
+            //            {
+            //                var btn = (Control)o;
+            //                toolTip.SetToolTip(btn, btn.Tag.ToString());
+            //            });
             //    }
             //}
 
-
-            toolTip1.SetToolTip(this.tlbbAddObservObjLayer, this.tlbbAddObservObjLayer.Tag.ToString());
-            toolTip1.SetToolTip(this.btnAddLayerPS, this.btnAddLayerPS.Tag.ToString());
-            toolTip1.SetToolTip(this.buttonSaveOPoint, this.buttonSaveOPoint.Tag.ToString());
-            toolTip1.SetToolTip(this.btnSaveParamPS, this.btnSaveParamPS.Tag.ToString());
+            toolTip.SetToolTip(this.tlbbAddObservObjLayer, this.tlbbAddObservObjLayer.Tag.ToString());
+            toolTip.SetToolTip(this.btnAddLayerPS, this.btnAddLayerPS.Tag.ToString());
+            toolTip.SetToolTip(this.buttonSaveOPoint, this.buttonSaveOPoint.Tag.ToString());
+            toolTip.SetToolTip(this.btnSaveParamPS, this.btnSaveParamPS.Tag.ToString());
         }
     }
 }
