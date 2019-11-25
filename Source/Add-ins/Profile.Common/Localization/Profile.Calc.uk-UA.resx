@@ -196,7 +196,7 @@
     <value>Висота точки спостереження</value>
   </data>
   <data name="lblHydrographyLayerText" xml:space="preserve">
-    <value>гідрогарфія</value>
+    <value>гідрографія</value>
   </data>
   <data name="lblLayersForCalcText" xml:space="preserve">
     <value>Шари для розрахунків</value>
@@ -274,7 +274,7 @@
     <value>Назва профілю</value>
   </data>
   <data name="txtGraphicsLayerValue" xml:space="preserve">
-    <value>графічниы об'єкти</value>
+    <value>графічні об'єкти</value>
   </data>
   <data name="txtNewProfileNameValue" xml:space="preserve">
     <value>Новий профіль</value>
@@ -589,7 +589,7 @@
     <value>Тип:</value>
   </data>
   <data name="lblProfileDocableWinCaption" xml:space="preserve">
-    <value>Спостереження. Розгахунок профіля</value>
+    <value>Спостереження. Розрахунок профілю</value>
   </data>
   <data name="btnCopyCoordToolTip" xml:space="preserve">
     <value>Копіювати координату</value>

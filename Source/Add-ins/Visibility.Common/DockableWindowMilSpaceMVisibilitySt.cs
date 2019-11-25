@@ -77,11 +77,11 @@ namespace MilSpace.Visibility
                 this.label24.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label24_Text", "Оператор");
                 this.label27.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label27_Text", "Дата");
                 this.label20.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label20_Text", "Назва");
-                this.label15.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label15_Text", "верт.");
-                this.label16.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label16_Text", "вугол бачення гориз");
-                this.label58.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label58_Text", "азимут осн. оси, дгр");
-                this.label55.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label55_Text", "верт");
-                this.label56.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label56_Text", "поворот камеры, дгр, гориз.");
+                //this.label15.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label15_Text", "верт.");
+                //this.label16.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label16_Text", "кут бачення гориз");
+                //this.label58.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label58_Text", "азимут осн. оси, дгр");
+                //this.label55.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label55_Text", "верт");
+                //this.label56.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label56_Text", "поворот камеры, дгр, гориз.");
                 this.label7.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label7_Text", "Параметри ПС");
                 this.buttonSaveOPoint.Tag = LocalizationContext.Instance.FindLocalizedElement("MainW_buttonSaveOPoint_Tag", "зберегти параметри ПС");
                 this.tlbbShowPoint.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbShowPoint_ToolTipText", "показати ПС на карті");
@@ -109,7 +109,7 @@ namespace MilSpace.Visibility
                 this.chckObservObjGroup.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_chckObservObjGroup_Text", "група");
                 this.chckObservObjTitle.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_chckObservObjTitle_Text", "назва");
                 this.label28.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label28_Text", "належність");
-                this.label30.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label30_Text", "Області нагляду (ОН)");
+                this.lblObservObjHeader.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label30_Text", "Області нагляду (ОН)");
                 this.tlbbAddObservObjLayer.Tag = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbAddObservObjLayer_Tag", "Додати шар ОН до карти");
                 this.toolBarButton18.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_toolBarButton18_ToolTipText", "Вказать на карті");
                 this.toolBarButton20.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_toolBarButton20_ToolTipText", "Побновити");
@@ -129,7 +129,7 @@ namespace MilSpace.Visibility
                 this.wizardTask.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_wizardTask_ToolTipText", "сформувати завдання на розрахунок");
                 this.removeTask.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_removeTask_ToolTipText", "видалити інформацію про завдання");
                 this.label38.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label38_Text", "стан");
-                this.label36.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label36_Text", "Завдання для розрахунків");
+                this.lblCalcTasksHeader.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label36_Text", "Завдання для розрахунків");
                 this.tbpVisibilityAreas.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_tbpVisibilityAreas_Text", "ОВ");
                 this.tbpVisibilityAreas.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tbpVisibilityAreas_ToolTipText", "Області видимості (результати розрахунків)");
                 this.labelHeaderVisibilityInfo.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_labelHeaderVisibilityInfo_Text", "Інформація про результат");
@@ -139,7 +139,7 @@ namespace MilSpace.Visibility
                 this.tlbbFullDelete.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbFullDelete_ToolTipText", "видалити звідусіль");
                 this.toolBarButtonRemoveFromSeanse.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_toolBarButtonRemoveFromSeanse_ToolTipText", "видалити з сеансу роботи");
                 this.tlbbUpdate.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbUpdate_ToolTipText", "Поновити");
-                this.labelHeaderVisibilityResult.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_labelHeaderVisibilityResult_Text", "Список результатів");
+                this.lblHeaderVisibilityResult.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_labelHeaderVisibilityResult_Text", "Список результатів");
                 this.richTextBox1.Text = LocalizationContext.Instance.FindLocalizedElement(
                     "MainW_richTextBox1_Text",
                     "при выборе мобильного типа углы нелоступны, высоты недоступны, координаты недоступны, при добавлении дата и время автоматом");
@@ -401,15 +401,15 @@ namespace MilSpace.Visibility
                 {
                     var newRow = dgvVisibilitySessions.Rows[0];
 
-                    foreach(DataGridViewRow row in dgvVisibilitySessions.Rows)
+                    foreach (DataGridViewRow row in dgvVisibilitySessions.Rows)
                     {
-                        if(row.Cells["Id"].Value.Equals(newTaskId))
+                        if (row.Cells["Id"].Value.Equals(newTaskId))
                         {
                             newRow = row;
                         }
                     }
 
-                    if(newRow.Visible)
+                    if (newRow.Visible)
                     {
                         newRow.Selected = true;
                         dgvVisibilitySessions.CurrentCell = newRow.Cells[1];
@@ -556,10 +556,17 @@ namespace MilSpace.Visibility
             dgvObservationPoints.Columns["Type"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dgvObservationPoints.Columns["Affiliation"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dgvObservationPoints.Columns["Date"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+
             dgvObservationPoints.Columns["Title"].HeaderText = LocalizationContext.Instance.NameHeaderText;
             dgvObservationPoints.Columns["Type"].HeaderText = LocalizationContext.Instance.TypeHeaderText;
             dgvObservationPoints.Columns["Affiliation"].HeaderText = LocalizationContext.Instance.AffiliationHeaderText;
             dgvObservationPoints.Columns["Date"].HeaderText = LocalizationContext.Instance.DateHeaderText;
+
+            dgvObservationPoints.Columns["Title"].SortMode = DataGridViewColumnSortMode.Automatic;
+            dgvObservationPoints.Columns["Type"].SortMode = DataGridViewColumnSortMode.Automatic;
+            dgvObservationPoints.Columns["Affiliation"].SortMode = DataGridViewColumnSortMode.Automatic;
+            dgvObservationPoints.Columns["Date"].SortMode = DataGridViewColumnSortMode.Automatic;
+
             dgvObservationPoints.Columns["Id"].Visible = false;
         }
 
@@ -662,11 +669,12 @@ namespace MilSpace.Visibility
             observPointName.Text = ObservPointDefaultValues.ObservPointNameText;
             angleOFViewMin.Text = ObservPointDefaultValues.AngleOFViewMinText;
             angleOFViewMax.Text = ObservPointDefaultValues.AngleOFViewMaxText;
-            angleFrameH.Text = ObservPointDefaultValues.AngleFrameHText;
-            angleFrameV.Text = ObservPointDefaultValues.AngleFrameVText;
-            cameraRotationH.Text = ObservPointDefaultValues.CameraRotationHText;
-            cameraRotationV.Text = ObservPointDefaultValues.CameraRotationVText;
-            azimuthMainAxis.Text = ObservPointDefaultValues.AzimuthMainAxisText;
+
+            //angleFrameH.Text = ObservPointDefaultValues.AngleFrameHText;
+            //angleFrameV.Text = ObservPointDefaultValues.AngleFrameVText;
+            //cameraRotationH.Text = ObservPointDefaultValues.CameraRotationHText;
+            //cameraRotationV.Text = ObservPointDefaultValues.CameraRotationVText;
+            //azimuthMainAxis.Text = ObservPointDefaultValues.AzimuthMainAxisText;
 
 
             observPointDate.Text = DateTime.Now.ToString(Helper.DateFormatSmall);
@@ -689,19 +697,21 @@ namespace MilSpace.Visibility
 
             var selectedPoint = _observPointsController.GetObservPointById(_selectedPointId);
 
-            if (FieldsValidation(sender, selectedPoint))
+            if (!FieldsValidation(sender, selectedPoint))
             {
-                if (!FieldsEQ(selectedPoint))
-                {
-                    _observPointsController.UpdateObservPoint(
-                        GetObservationPoint(),
-                        VisibilityManager.ObservPointFeature,
-                        ActiveView,
-                        selectedPoint.Objectid
-                        );
-                    UpdateObservPointsList();
-                }
+                ((TextBox)sender).Focus();
             }
+            if (!FieldsEQ(selectedPoint))
+            {
+                _observPointsController.UpdateObservPoint(
+                    GetObservationPoint(),
+                    VisibilityManager.ObservPointFeature,
+                    ActiveView,
+                    selectedPoint.Objectid
+                    );
+                UpdateObservPointsList();
+            }
+
         }
 
         private bool FieldsEQ(ObservationPoint point)
@@ -728,6 +738,60 @@ namespace MilSpace.Visibility
 
                 switch (textBox.Name)
                 {
+                    case "txtMinDistance":
+                        double minValue;
+                        string sMsgTextMinValue = LocalizationContext.Instance.FindLocalizedElement(
+                                                                                 "MsgValueLessThenZerro",
+                                                                                 "Значення бовинно бути більше нуля.");
+                        if (!Helper.TryParceToDouble(txtMinDistance.Text, out minValue))
+                        {
+                            MessageBox.Show(
+                                    sMsgTextMinValue,
+                                    LocalizationContext.Instance.MsgBoxErrorHeader,
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
+                            return false;
+                        }
+                        if (minValue <= 0)
+                        {
+                            MessageBox.Show(
+                                sMsgTextMinValue,
+                                LocalizationContext.Instance.MsgBoxErrorHeader,
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                            return false;
+                        }
+
+                        txtMinDistance.Text = minValue.ToString();
+                        break;
+                    case "txtMaxDistance":
+
+                        double maxValue;
+                        string sMsgTextMaxValue = LocalizationContext.Instance.FindLocalizedElement(
+                                                                                  "MsgValueLessThenZerro",
+                                                                                  "Значення бовинно бути більше нуля.");
+                        if (!Helper.TryParceToDouble(txtMaxDistance.Text, out maxValue))
+                        {
+                            MessageBox.Show(
+                               sMsgTextMaxValue,
+                               LocalizationContext.Instance.MsgBoxErrorHeader,
+                               MessageBoxButtons.OK,
+                               MessageBoxIcon.Error);
+                            return false;
+                        }
+                        if (maxValue <= 0)
+                        {
+
+                            MessageBox.Show(
+                                sMsgTextMaxValue,
+                                LocalizationContext.Instance.MsgBoxErrorHeader,
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                            return false;
+                        }
+
+                        txtMaxDistance.Text = maxValue.ToString();
+                        break;
                     case "xCoord":
 
                         if (!Regex.IsMatch(xCoord.Text, @"^([-]?[\d]{1,2}\,\d+)$"))
@@ -871,6 +935,8 @@ namespace MilSpace.Visibility
 
                         return true;
                 }
+
+                return true;
             }
 
             catch (Exception ex) { return false; }
@@ -950,11 +1016,15 @@ namespace MilSpace.Visibility
 
             cmbAffiliationEdit.Enabled = cmbObservTypesEdit.Enabled = azimuthE.Enabled
                 = azimuthB.Enabled = xCoord.Enabled = yCoord.Enabled = angleOFViewMin.Enabled = angleOFViewMax.Enabled
-                = heightCurrent.Enabled = heightMin.Enabled = azimuthMainAxis.Enabled = cameraRotationH.Enabled = cameraRotationV.Enabled
-                = heightMax.Enabled = observPointName.Enabled = tlbCoordinates.Enabled = txtMaxDistance.Enabled = txtMinDistance.Enabled =
-                tlbbShowPoint.Enabled = tlbbRemovePoint.Enabled = tlbbAddNewPoint.Enabled = (layerExists && !isAllDisabled);
+                = heightCurrent.Enabled = heightMin.Enabled 
+                = heightMax.Enabled = observPointName.Enabled = tlbCoordinates.Enabled 
+                = txtMaxDistance.Enabled = txtMinDistance.Enabled =
+                tlbbShowPoint.Enabled = tlbbRemovePoint.Enabled 
+                = tlbbAddNewPoint.Enabled = (layerExists && !isAllDisabled);
 
-            angleFrameH.Enabled = angleFrameV.Enabled = false;
+            //= azimuthMainAxis.Enabled = cameraRotationH.Enabled = cameraRotationV.Enabled
+
+            //angleFrameH.Enabled = angleFrameV.Enabled = false;
             observPointDate.Enabled = observPointCreator.Enabled = true;
             observPointDate.ReadOnly = observPointCreator.ReadOnly = true;
 
@@ -1019,14 +1089,14 @@ namespace MilSpace.Visibility
                 Affiliation = affiliationType.Key.ToString(),
                 AngelMaxH = Convert.ToDouble(angleOFViewMax.Text),
                 AngelMinH = Convert.ToDouble(angleOFViewMin.Text),
-                AngelCameraRotationH = Convert.ToDouble(cameraRotationH.Text),
-                AngelCameraRotationV = Convert.ToDouble(cameraRotationV.Text),
+                //AngelCameraRotationH = Convert.ToDouble(cameraRotationH.Text),
+                //AngelCameraRotationV = Convert.ToDouble(cameraRotationV.Text),
                 RelativeHeight = Convert.ToDouble(heightCurrent.Text),
                 AvailableHeightLover = Convert.ToDouble(heightMin.Text),
                 AvailableHeightUpper = Convert.ToDouble(heightMax.Text),
                 AzimuthStart = Convert.ToDouble(azimuthB.Text),
                 AzimuthEnd = Convert.ToDouble(azimuthE.Text),
-                AzimuthMainAxis = Convert.ToDouble(azimuthMainAxis.Text),
+                //AzimuthMainAxis = Convert.ToDouble(azimuthMainAxis.Text),
                 Dto = Convert.ToDateTime(observPointDate.Text),
                 Operator = observPointCreator.Text,
                 Title = observPointName.Text,
@@ -1086,14 +1156,14 @@ namespace MilSpace.Visibility
             observPointName.Text = selectedPoint.Title;
             angleOFViewMin.Text = selectedPoint.AngelMinH.HasValue ? selectedPoint.AngelMinH.ToString() : ObservPointDefaultValues.AngleOFViewMinText;
             angleOFViewMax.Text = selectedPoint.AngelMaxH.HasValue ? selectedPoint.AngelMaxH.ToString() : ObservPointDefaultValues.AngleOFViewMaxText;
-            angleFrameH.Text = selectedPoint.AngelFrameH.HasValue ? selectedPoint.AngelFrameH.ToString() : ObservPointDefaultValues.AngleFrameHText;
-            angleFrameV.Text = selectedPoint.AngelFrameV.HasValue ? selectedPoint.AngelFrameV.ToString() : ObservPointDefaultValues.AngleFrameVText;
-            cameraRotationH.Text = selectedPoint.AngelCameraRotationH.HasValue ? selectedPoint.AngelCameraRotationH.ToString() : ObservPointDefaultValues.CameraRotationHText;
-            cameraRotationV.Text = selectedPoint.AngelCameraRotationV.HasValue ? selectedPoint.AngelCameraRotationV.ToString() : ObservPointDefaultValues.CameraRotationVText;
-            azimuthMainAxis.Text = selectedPoint.AzimuthMainAxis != null ? selectedPoint.AzimuthMainAxis.ToString() : ObservPointDefaultValues.AzimuthMainAxisText;
             txtMinDistance.Text = selectedPoint.InnerRadius.HasValue ? selectedPoint.InnerRadius.ToString() : ObservPointDefaultValues.DefaultRadiusText;
             txtMaxDistance.Text = selectedPoint.OuterRadius.HasValue ? selectedPoint.OuterRadius.ToString() : ObservPointDefaultValues.DefaultRadiusText;
 
+            //angleFrameH.Text = selectedPoint.AngelFrameH.HasValue ? selectedPoint.AngelFrameH.ToString() : ObservPointDefaultValues.AngleFrameHText;
+            //angleFrameV.Text = selectedPoint.AngelFrameV.HasValue ? selectedPoint.AngelFrameV.ToString() : ObservPointDefaultValues.AngleFrameVText;
+            //cameraRotationH.Text = selectedPoint.AngelCameraRotationH.HasValue ? selectedPoint.AngelCameraRotationH.ToString() : ObservPointDefaultValues.CameraRotationHText;
+            //cameraRotationV.Text = selectedPoint.AngelCameraRotationV.HasValue ? selectedPoint.AngelCameraRotationV.ToString() : ObservPointDefaultValues.CameraRotationVText;
+            //azimuthMainAxis.Text = selectedPoint.AzimuthMainAxis != null ? selectedPoint.AzimuthMainAxis.ToString() : ObservPointDefaultValues.AzimuthMainAxisText;
 
             observPointDate.Text = selectedPoint.Dto.Value.ToString(Helper.DateFormat);
             observPointCreator.Text = selectedPoint.Operator;
@@ -1761,7 +1831,7 @@ namespace MilSpace.Visibility
 
                     var removeLayers = _visibilitySessionsController.IsResultsLayerExist(resultId, ActiveView);
 
-                    if(removeLayers)
+                    if (removeLayers)
                     {
                         var removeLayersDialogResult = MessageBox.Show(
                         LocalizationContext.Instance.VisibilityResultLayersRemoveMessage,
@@ -1904,29 +1974,29 @@ namespace MilSpace.Visibility
 
         private void DockableWindowMilSpaceMVisibilitySt_Load(object sender, EventArgs e)
         {
-            ToolTip toolTip1 = new ToolTip();
-            toolTip1.AutoPopDelay = 5000;
-            toolTip1.InitialDelay = 1000;
-            toolTip1.ReshowDelay = 500;
-            toolTip1.ShowAlways = true;
+            ToolTip toolTip = new ToolTip();
+            toolTip.AutoPopDelay = 5000;
+            toolTip.InitialDelay = 1000;
+            toolTip.ReshowDelay = 500;
+            toolTip.ShowAlways = true;
 
             //foreach (Control ctrl in this.Controls)
             //{
             //    if (ctrl is System.Windows.Forms.Button && ctrl.Tag is string)
             //    {
-            //        ctrl.MouseHover += new EventHandler(delegate (Object o, EventArgs a)
-            //        {
-            //            var btn = (Control)o;
-            //            toolTip1.SetToolTip(btn, btn.Tag.ToString());
-            //        });
+            //        ctrl.MouseHover += new EventHandler(
+            //            delegate (Object o, EventArgs a)
+            //            {
+            //                var btn = (Control)o;
+            //                toolTip.SetToolTip(btn, btn.Tag.ToString());
+            //            });
             //    }
             //}
 
-
-            toolTip1.SetToolTip(this.tlbbAddObservObjLayer, this.tlbbAddObservObjLayer.Tag.ToString());
-            toolTip1.SetToolTip(this.btnAddLayerPS, this.btnAddLayerPS.Tag.ToString());
-            toolTip1.SetToolTip(this.buttonSaveOPoint, this.buttonSaveOPoint.Tag.ToString());
-            toolTip1.SetToolTip(this.btnSaveParamPS, this.btnSaveParamPS.Tag.ToString());
+            toolTip.SetToolTip(this.tlbbAddObservObjLayer, this.tlbbAddObservObjLayer.Tag.ToString());
+            toolTip.SetToolTip(this.btnAddLayerPS, this.btnAddLayerPS.Tag.ToString());
+            toolTip.SetToolTip(this.buttonSaveOPoint, this.buttonSaveOPoint.Tag.ToString());
+            toolTip.SetToolTip(this.btnSaveParamPS, this.btnSaveParamPS.Tag.ToString());
         }
     }
 }
