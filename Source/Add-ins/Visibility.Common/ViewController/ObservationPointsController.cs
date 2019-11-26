@@ -253,9 +253,10 @@ namespace MilSpace.Visibility.ViewController
                     calcParams.VisibilityCalculationResults, 
                     calcParams.TaskName,
                     calcParams.TaskName,
-                    calcParams.CalculationType);
+                    calcParams.CalculationType,
+                    mapDocument.ActivatedView.FocusMap);
 
-                if (calcTask.Finished != null)
+                if(calcTask.Finished != null)
                 {
                     var isLayerAbove = (calcParams.ResultLayerPosition == LayerPositionsEnum.Above);
 
@@ -604,5 +605,36 @@ namespace MilSpace.Visibility.ViewController
         {
             _previousPickedRasterLayer = raster;
         }
+
+        //private void TestPolygonFinding(ObservationPoint point, ObservationObject obj, IFeatureClass pointsFC, IFeatureClass objFC)
+        //{
+        //    try
+        //    {
+        //        var feature = pointsFC.GetFeature(point.Objectid);
+        //        IPoint pointGeom = feature.Shape as IPoint;
+
+        //        pointGeom.Project(mapDocument.ActivatedView.FocusMap.SpatialReference);
+
+        //        var featureObj = objFC.GetFeature(obj.ObjectId);
+        //        IPolygon objGeom = featureObj.Shape as IPolygon;
+
+        //        var area = EsriTools.GetCoverageArea(pointGeom, point.AzimuthStart.Value, point.AzimuthEnd.Value, point.InnerRadius.Value, point.OuterRadius.Value);
+        //        var area1 = EsriTools.GetCoverageArea(pointGeom, point.AzimuthStart.Value, point.AzimuthEnd.Value, point.InnerRadius.Value, point.OuterRadius.Value, objGeom);
+
+        //        IFeatureLayer test1Layer = new FeatureLayerClass();
+        //        test1Layer.Name = $"WithObj{DateTime.Now.ToShortTimeString()}";
+        //        test1Layer.FeatureClass = GdbAccess.Instance.GetTestFeature(area, $"WithObj");
+        //        mapDocument.AddLayer(test1Layer);
+
+        //        IFeatureLayer test2Layer = new FeatureLayerClass();
+        //        test2Layer.Name = $"WithoutObj{DateTime.Now.ToShortTimeString()}";
+        //        test2Layer.FeatureClass = GdbAccess.Instance.GetTestFeature(area1, $"WithoutObj");
+        //        mapDocument.AddLayer(test2Layer);
+        //    }
+        //    catch(Exception Ex)
+        //    {
+
+        //    }
+        //}
     }
 }

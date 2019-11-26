@@ -22,7 +22,9 @@ namespace MilSpace.DataAccess.DataTransfer
             { VisibilityCalculationResultsEnum.VisibilityObservStationClip , "_imgc"},
             { VisibilityCalculationResultsEnum.VisibilityObservStationClipSingle , "_imgcs"},
             { VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly , "_imgt"},
-            { VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle , "_imgts"}
+            { VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle , "_imgts"},
+            { VisibilityCalculationResultsEnum.VisibilityAreasPotential , "_pva_r" },
+            { VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle , "_pvas_r" }
 
         };
 
@@ -35,7 +37,9 @@ namespace MilSpace.DataAccess.DataTransfer
                             VisibilityCalculationResultsEnum.ObservationPoints,
                             VisibilityCalculationResultsEnum.VisibilityAreaPolygons,
                             VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly,
-                            VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle
+                            VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle,
+                            VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle,
+                            VisibilityCalculationResultsEnum.VisibilityAreasPotential
                         }
             },
             { VisibilityCalcTypeEnum.ObservationObjects, new VisibilityCalculationResultsEnum[]
@@ -46,6 +50,8 @@ namespace MilSpace.DataAccess.DataTransfer
                             VisibilityCalculationResultsEnum.ObservationPoints,
                             VisibilityCalculationResultsEnum.VisibilityAreaPolygons,
                             VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle,
+                            VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle,
+                            VisibilityCalculationResultsEnum.VisibilityAreasPotential
                         }
             }
         };
@@ -55,7 +61,9 @@ namespace MilSpace.DataAccess.DataTransfer
             VisibilityCalculationResultsEnum.ObservationObjects,
             VisibilityCalculationResultsEnum.VisibilityAreaPolygons,
             VisibilityCalculationResultsEnum.ObservationPointSingle,
-            VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle
+            VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle,
+            VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle,
+            VisibilityCalculationResultsEnum.VisibilityAreasPotential
         };
 
         internal static VisibilityCalculationResultsEnum[] RasterResults = {
@@ -84,7 +92,8 @@ namespace MilSpace.DataAccess.DataTransfer
             VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle,
             VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle,
             VisibilityCalculationResultsEnum.VisibilityObservStationClipSingle,
-            VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle
+            VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle,
+            VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle
         };
 
         public const VisibilityCalculationResultsEnum DefaultResultsSet = VisibilityCalculationResultsEnum.ObservationPoints | VisibilityCalculationResultsEnum.ObservationObjects | VisibilityCalculationResultsEnum.VisibilityAreaRaster;

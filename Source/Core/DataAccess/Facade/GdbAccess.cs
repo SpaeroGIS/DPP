@@ -865,5 +865,126 @@ namespace MilSpace.DataAccess.Facade
 
             pointFeature.Store();
         }
+
+        //public IGeometry GetGeometry(string featureClassName, string gdb, int objId)
+        //{
+        //    IWorkspaceFactory workspaceFactory = new FileGDBWorkspaceFactory();
+        //    var factory = workspaceFactory.OpenFromFile(gdb, 0);
+
+        //    var featureClass = OpenFeatureClass(factory, featureClassName);
+        //    var feature = featureClass.GetFeature(objId);
+
+        //    var geometry = feature.Shape;
+
+        //    Marshal.ReleaseComObject(workspaceFactory);
+
+        //    return geometry;
+        //}
+
+        private void GenerateCoverageAreasTempStorage(string newFeatureClassName)
+        {
+            IFeatureClassDescription fcDescription = new FeatureClassDescriptionClass();
+            IObjectClassDescription ocDescription = (IObjectClassDescription)fcDescription;
+            IFields fields = ocDescription.RequiredFields;
+
+            int shapeFieldIndex = fields.FindField(fcDescription.ShapeFieldName);
+
+            IField field = fields.get_Field(shapeFieldIndex);
+            IGeometryDef geometryDef = field.GeometryDef;
+            IGeometryDefEdit geometryDefEdit = (IGeometryDefEdit)geometryDef;
+            geometryDefEdit.HasZ_2 = false;
+            geometryDefEdit.GeometryType_2 = esriGeometryType.esriGeometryPolygon;
+            geometryDefEdit.SpatialReference_2 = ArcMapInstance.Document.FocusMap.SpatialReference;
+
+            IFieldsEdit fieldsEdit = (IFieldsEdit)fields;
+
+            IField pointIdField = new FieldClass();
+            IFieldEdit pointIdFieldEdit = (IFieldEdit)pointIdField;
+            pointIdFieldEdit.Name_2 = "ObservPointId";
+            pointIdFieldEdit.Type_2 = esriFieldType.esriFieldTypeInteger;
+            fieldsEdit.AddField(pointIdField);
+
+            IField objIdField = new FieldClass();
+            IFieldEdit objIdFieldEdit = (IFieldEdit)objIdField;
+            objIdFieldEdit.Name_2 = "ObservObjectId";
+            objIdFieldEdit.Type_2 = esriFieldType.esriFieldTypeInteger;
+            fieldsEdit.AddField(objIdFieldEdit);
+
+            IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)calcWorkspace;
+            workspaceEdit.StartEditing(true);
+            workspaceEdit.StartEditOperation();
+
+            IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)calcWorkspace;
+          
+            IFeatureClass featureClass = featureWorkspace.CreateFeatureClass(newFeatureClassName, fields,
+                    ocDescription.InstanceCLSID, ocDescription.ClassExtensionCLSID, esriFeatureType.esriFTSimple, "shape", "");
+
+            workspaceEdit.StopEditOperation();
+            workspaceEdit.StopEditing(true);
+        }
+
+        public IFeatureClass AddCoverageAreaFeature(IPolygon polygon, int pointId, int objId, string featureClassName)
+        {
+            IWorkspace2 wsp2 = calcWorkspace as IWorkspace2;
+
+            if(!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, featureClassName))
+            {
+                GenerateCoverageAreasTempStorage(featureClassName);
+            }
+
+            IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)calcWorkspace;
+            workspaceEdit.StartEditing(true);
+            workspaceEdit.StartEditOperation();
+
+            IFeatureClass featureClass = GetCalcProfileFeatureClass(featureClassName);
+            var GCS_WGS = Helper.GetBasePointSpatialReference();
+
+
+            var areaFeature = featureClass.CreateFeature();
+            areaFeature.Shape = polygon;
+
+            if(pointId != -1)
+            {
+                areaFeature.set_Value(featureClass.FindField("ObservPointId"), pointId);
+            }
+
+            if(objId != -1)
+            {
+                areaFeature.set_Value(featureClass.FindField("ObservObjectId"), objId);
+            }
+
+            areaFeature.Store();
+            workspaceEdit.StopEditOperation();
+            workspaceEdit.StopEditing(true);
+
+            return featureClass;
+        }
+
+        public void RemoveCoverageAreaTemporStorage(string name)
+        {
+            IFeatureWorkspaceManage wspManage = (IFeatureWorkspaceManage)calcWorkspace;
+            var datasets = calcWorkspace.Datasets[esriDatasetType.esriDTFeatureClass];
+            var currentDataset = datasets.Next();
+
+            while(currentDataset != null && !currentDataset.Name.EndsWith(name))
+            {
+                currentDataset = datasets.Next();
+            }
+
+            if(currentDataset != null)
+            {
+                if(wspManage.CanDelete(currentDataset.FullName))
+                {
+                    try
+                    {
+                        currentDataset.Delete();
+                    }
+                    catch(Exception ex)
+                    {
+                        logger.ErrorEx(ex.Message);
+                    }
+                }
+            }
+        }
     }
 }

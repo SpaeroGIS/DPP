@@ -164,7 +164,16 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             int index = -1;
 
             bool removeFullImageFromresult = false;
-            bool addVisibilityObservStationClip = false;
+
+            int[] objIds = null;
+            if(calcResults.HasFlag(VisibilityCalculationResultsEnum.ObservationObjects))
+            {
+                objIds = stationsFilteringIds;
+            }
+
+            CoverageTableManager coverageTableManager = new CoverageTableManager();
+
+            coverageTableManager.CalculateAreas(pointsFilteringIds, objIds, obserpPointsfeatureClass, obserpStationsfeatureClass);
 
             foreach (var curPoints in pointsIDs)
             {
@@ -297,6 +306,14 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                             removeFullImageFromresult = true;
                         }
                     }
+
+                    var visibilityPotentialAreaFCName = VisibilityTask.GetResultName(pointId > -1 ?
+                            VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle : VisibilityCalculationResultsEnum.VisibilityAreasPotential,
+                            outputSourceName, pointId);
+
+                    coverageTableManager.AddPotentialArea(visibilityPotentialAreaFCName, (curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints), curPoints.Value[0]);
+
+                    results.Add(visibilityPotentialAreaFCName);
                 }
             }
 

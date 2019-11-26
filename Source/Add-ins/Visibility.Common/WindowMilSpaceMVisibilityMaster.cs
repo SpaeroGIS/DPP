@@ -544,14 +544,14 @@ namespace MilSpace.Visibility
             if (_stepControl == VisibilityCalcTypeEnum.OpservationPoints)
             {
                 FinalResult.VisibilityCalculationResults = SumChkBox.Checked ?
-                    VisibilityCalculationResultsEnum.ObservationPoints | VisibilityCalculationResultsEnum.VisibilityAreaRaster :
+                    VisibilityCalculationResultsEnum.ObservationPoints | VisibilityCalculationResultsEnum.VisibilityAreaRaster | VisibilityCalculationResultsEnum.VisibilityAreasPotential :
                     VisibilityCalculationResultsEnum.None;
             }
             else if (_stepControl == VisibilityCalcTypeEnum.ObservationObjects)
             {
                 FinalResult.ObservObjectIDs = _observationObjects.Where(o => o.Check).Select(i => i.Id).ToArray();
                 FinalResult.VisibilityCalculationResults = (SumChkBox.Checked ?
-                                                    VisibilityCalculationResultsEnum.ObservationPoints | VisibilityCalculationResultsEnum.VisibilityAreaRaster :
+                                                    VisibilityCalculationResultsEnum.ObservationPoints | VisibilityCalculationResultsEnum.VisibilityAreaRaster | VisibilityCalculationResultsEnum.VisibilityAreasPotential :
                                                     VisibilityCalculationResultsEnum.None)
                                                     | VisibilityCalculationResultsEnum.ObservationObjects | VisibilityCalculationResultsEnum.VisibilityObservStationClip;
 
@@ -578,7 +578,7 @@ namespace MilSpace.Visibility
 
             if (checkBoxOP.Checked && (_observPointGuis != null && _observPointGuis.Count(p => p.Check) > 1))
             {
-                FinalResult.VisibilityCalculationResults |= VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle | VisibilityCalculationResultsEnum.ObservationPointSingle;
+                FinalResult.VisibilityCalculationResults |= VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle | VisibilityCalculationResultsEnum.ObservationPointSingle | VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle;
             }
         }
 
