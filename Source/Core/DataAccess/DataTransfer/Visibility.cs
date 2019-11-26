@@ -61,7 +61,7 @@ namespace MilSpace.DataAccess.DataTransfer
             VisibilityCalculationResultsEnum.ObservationObjects,
             VisibilityCalculationResultsEnum.VisibilityAreaPolygons,
             VisibilityCalculationResultsEnum.ObservationPointSingle,
-            VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle
+            VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle,
             VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle,
             VisibilityCalculationResultsEnum.VisibilityAreasPotential
         };
