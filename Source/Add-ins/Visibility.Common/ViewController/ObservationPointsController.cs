@@ -104,7 +104,11 @@ namespace MilSpace.Visibility.ViewController
 
             if (oldPoint.X != newPoint.X && oldPoint.Y != newPoint.Y)
             {
-                pointGeometry = new PointClass { X = (double)newPoint.X, Y = (double)newPoint.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
+                pointGeometry = new PointClass {
+                    X = (double)newPoint.X,
+                    Y = (double)newPoint.Y,
+                    SpatialReference = EsriTools.Wgs84Spatialreference
+                };
 
                 pointGeometry.Z = (double)newPoint.RelativeHeight;
                 pointGeometry.ZAware = true;
@@ -186,7 +190,11 @@ namespace MilSpace.Visibility.ViewController
         internal void AddPoint(string featureName, IActiveView activeView)
         {
             var point = CreatePointWithDefaultValues(activeView.Extent.Envelope);
-            var pointGeometry = new PointClass { X = (double)point.X, Y = (double)point.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
+            var pointGeometry = new PointClass {
+                X = (double)point.X,
+                Y = (double)point.Y,
+                SpatialReference = EsriTools.Wgs84Spatialreference
+            };
 
             pointGeometry.Z = (double)point.RelativeHeight;
             pointGeometry.ZAware = true;
@@ -196,7 +204,8 @@ namespace MilSpace.Visibility.ViewController
             GdbAccess.Instance.AddObservPoint(pointGeometry, point, featureClass);
 
             var updPoints = VisibilityZonesFacade.GetAllObservationPoints().ToList();
-            _observationPoints.Add(updPoints.First(observPoint => !_observationPoints.Exists(oldPoints => oldPoints.Objectid == observPoint.Objectid)));
+            _observationPoints.Add(updPoints.First(observPoint => 
+            !_observationPoints.Exists(oldPoints => oldPoints.Objectid == observPoint.Objectid)));
             view.AddRecord(_observationPoints.Last());
         }
 
@@ -238,7 +247,11 @@ namespace MilSpace.Visibility.ViewController
                 var calcTask = VisibilityManager.Generate(
                     observPoints,
                     calcParams.ObservPointIDs,
-                    observObjects, calcParams.ObservObjectIDs, calcParams.RasterLayerName, calcParams.VisibilityCalculationResults, calcParams.TaskName,
+                    observObjects, 
+                    calcParams.ObservObjectIDs, 
+                    calcParams.RasterLayerName, 
+                    calcParams.VisibilityCalculationResults, 
+                    calcParams.TaskName,
                     calcParams.TaskName,
                     calcParams.CalculationType);
 
@@ -248,8 +261,10 @@ namespace MilSpace.Visibility.ViewController
 
                     var datasets = GdbAccess.Instance.GetDatasetsFromCalcWorkspace(calcTask.ResultsInfo);
 
-                    EsriTools.AddVisibilityGroupLayer(datasets, calcTask.Name, calcTask.Id, calcTask.ReferencedGDB, calcParams.RelativeLayerName
-                                                        , isLayerAbove, calcParams.ResultLayerTransparency, mapDocument.ActiveView);
+                    EsriTools.AddVisibilityGroupLayer(
+                        datasets, calcTask.Name, calcTask.Id, calcTask.ReferencedGDB, 
+                        calcParams.RelativeLayerName, isLayerAbove, calcParams.ResultLayerTransparency, 
+                        mapDocument.ActiveView);
                 }
             }
             catch (Exception ex)

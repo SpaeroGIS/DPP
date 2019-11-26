@@ -777,9 +777,9 @@
             this.tlbCoordinates.AutoSize = false;
             this.tlbCoordinates.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
             this.tlbbGetCoord,
+            this.tlbbShowCoord,
             this.tlbbCopyCoord,
-            this.tlbbPasteCoord,
-            this.tlbbShowCoord});
+            this.tlbbPasteCoord});
             this.tlbCoordinates.ButtonSize = new System.Drawing.Size(16, 16);
             this.tlbCoordinates.Divider = false;
             this.tlbCoordinates.Dock = System.Windows.Forms.DockStyle.Left;
@@ -2072,7 +2072,6 @@
             this.panel15.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel15.Location = new System.Drawing.Point(0, 34);
             this.panel15.Name = "panel15";
-            this.panel15.Padding = new System.Windows.Forms.Padding(0, 0, 0, 4);
             this.panel15.Size = new System.Drawing.Size(312, 268);
             this.panel15.TabIndex = 73;
             // 
@@ -2093,7 +2092,7 @@
             this.dgvVisibilitySessions.RowHeadersVisible = false;
             this.dgvVisibilitySessions.RowHeadersWidth = 15;
             this.dgvVisibilitySessions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvVisibilitySessions.Size = new System.Drawing.Size(312, 204);
+            this.dgvVisibilitySessions.Size = new System.Drawing.Size(312, 208);
             this.dgvVisibilitySessions.TabIndex = 62;
             this.dgvVisibilitySessions.SelectionChanged += new System.EventHandler(this.DgvVisibilitySessions_SelectionChanged);
             // 
@@ -2101,7 +2100,7 @@
             // 
             this.panel41.Controls.Add(this.tlbVisibilitySessions);
             this.panel41.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel41.Location = new System.Drawing.Point(0, 232);
+            this.panel41.Location = new System.Drawing.Point(0, 236);
             this.panel41.Name = "panel41";
             this.panel41.Padding = new System.Windows.Forms.Padding(2);
             this.panel41.Size = new System.Drawing.Size(312, 32);
