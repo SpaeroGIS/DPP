@@ -1,5 +1,6 @@
 ﻿using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
+using MilSpace.Configurations;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.Facade;
 using MilSpace.Tools.SurfaceProfile;
@@ -13,7 +14,8 @@ namespace MilSpace.Tools
 {
     public class CoverageTableManager
     {
-        private  List<CoverageAreaData> _coverageAreaData = new List<CoverageAreaData>(); 
+        private  List<CoverageAreaData> _coverageAreaData = new List<CoverageAreaData>();
+        private string _gdb = MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection;
 
         public  void CalculateAreas(int[] observPointsIds, int[] observObjectsIds, IFeatureClass observPointFC, IFeatureClass observObjFC = null)
         {
@@ -96,6 +98,16 @@ namespace MilSpace.Tools
                 PointId = -1,
                 Polygon = commonArea
             });
+        }
+
+        public void AddRecordToCoverageTable(string tableName, int currPointId, int[] observObjectsIds, string visibilityAreasFCName)
+        {
+            IPolygon visibilityArea;
+
+            if(currPointId == -1)
+            {
+               //visibilityArea = EsriTools.GetCommonPolygonFromFeatureClass()
+            }
         }
     }
 }
