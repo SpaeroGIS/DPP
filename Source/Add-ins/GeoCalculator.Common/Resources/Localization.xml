@@ -16,10 +16,15 @@
 <MoveToProjectedCoordButton>Перемістити карту в точку с поточникми координатами</MoveToProjectedCoordButton>
 <ToolButton>Вимкнути взаємодію з картой</ToolButton>
 <WrongUtmFormatMessage>Невірний формат UTM</WrongUtmFormatMessage>
-<ErrorString>Помилка</ErrorString>
-<WarningString>Увага</WarningString>
-<WrongMgrsFormatMessage>Невірний формат MGRS</WrongMgrsFormatMessage>
-<WrongFormatMessage>Невірний формат</WrongFormatMessage>
+  
+<ErrorString>Геокалькулятор. Помилка</ErrorString>
+<WarningString>Геокалькулятор. Увага</WarningString>
+
+<WrongFormatMessageToFewParts>Не вдалося отримати обидві складові координати</WrongFormatMessageToFewParts>
+<MsgInvalidCoordinatesDD>Недійсні дані. Потрібні коордінати представлені у СК WGS-84, десяткові градуси</MsgInvalidCoordinatesDD>
+
+  <WrongMgrsFormatMessage>Невірний формат MGRS</WrongMgrsFormatMessage>
+<WrongFormatMessage>Невірний формат координат</WrongFormatMessage>
 <NoSelectedPointMessage>Потрібно вказати точку на карті!</NoSelectedPointMessage>
 <AltRightToMove>Alt+Вправо для руху</AltRightToMove>
 <ShowPointOnMap>Показати на карті</ShowPointOnMap>

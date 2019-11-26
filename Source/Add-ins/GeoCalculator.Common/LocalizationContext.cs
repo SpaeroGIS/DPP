@@ -14,7 +14,9 @@ namespace MilSpace.GeoCalculator
         public LocalizationContext()
         {         
             var localizationDoc = new XmlDocument();            
-            var localizationFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Resources\Localization.xml");
+            var localizationFilePath = Path.Combine(
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), 
+                @"Resources\Localization.xml");
             if (File.Exists(localizationFilePath))
             {
                 localizationDoc.Load(localizationFilePath);
@@ -60,7 +62,7 @@ namespace MilSpace.GeoCalculator
         public string NoSelectedPointError => FindLocalizedElement("NoSelectedPointMessage", "Please point somewhere on the map");
         public string GridCleanWarningMessage => FindLocalizedElement("GridCleanWarningMessage", "Next Operation Will Clear Points List. Proceed?");
 
-        private string FindLocalizedElement(string xmlNodeName, string defaultValue)
+        public string FindLocalizedElement(string xmlNodeName, string defaultValue)
         {
             return _root?.SelectSingleNode(xmlNodeName)?.InnerText ?? defaultValue;
         }

@@ -62,11 +62,13 @@ namespace MilSpace.Core
             return SimpleDataTypesEnum.Undefined;
         }
 
-
-        public static bool TryParceToDouble(this string numericStreing, out double result)
+        public static bool TryParceToDouble(this string numericString, out double result)
         {
-            numericStreing = numericStreing.Replace(".", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator).Replace(",", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
-            return double.TryParse(numericStreing, out result);
+            numericString = numericString
+                .Replace(".", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator)
+                .Replace(",", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+
+            return double.TryParse(numericString, out result);
         }
 
         public static string AutoEllipses(this string str, int length = 5)
