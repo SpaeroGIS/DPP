@@ -12,7 +12,6 @@ using MilSpace.Tools;
 using MilSpace.Visibility.DTO;
 using MilSpace.Visibility.Localization;
 using MilSpace.Visibility.ViewController;
-using MilSpace.Visibility.Localization;
 
 using System;
 using System.Collections.Generic;
@@ -39,6 +38,7 @@ namespace MilSpace.Visibility
 
         private bool _isDropDownItemChangedManualy = false;
         private bool _isFieldsChanged = false;
+        private bool _isObservObjectsFieldsChanged = false;
         private ObservationPoint selectedPointMEM = new ObservationPoint();
 
         public DockableWindowMilSpaceMVisibilitySt(object hook, ObservationPointsController controller)
@@ -1015,10 +1015,10 @@ namespace MilSpace.Visibility
 
             cmbAffiliationEdit.Enabled = cmbObservTypesEdit.Enabled = azimuthE.Enabled
                 = azimuthB.Enabled = xCoord.Enabled = yCoord.Enabled = angleOFViewMin.Enabled = angleOFViewMax.Enabled
-                = heightCurrent.Enabled = heightMin.Enabled 
-                = heightMax.Enabled = observPointName.Enabled = tlbCoordinates.Enabled 
+                = heightCurrent.Enabled = heightMin.Enabled
+                = heightMax.Enabled = observPointName.Enabled = tlbCoordinates.Enabled
                 = txtMaxDistance.Enabled = txtMinDistance.Enabled =
-                tlbbShowPoint.Enabled = tlbbRemovePoint.Enabled 
+                tlbbShowPoint.Enabled = tlbbRemovePoint.Enabled
                 = tlbbAddNewPoint.Enabled = (layerExists && !isAllDisabled);
 
             //= azimuthMainAxis.Enabled = cameraRotationH.Enabled = cameraRotationV.Enabled
@@ -2019,6 +2019,70 @@ namespace MilSpace.Visibility
 
 
             
+        }
+
+        private void tbObservObjects_CheckChanged(object sender, EventArgs e)
+        {
+
+            if (dgvObservObjects.SelectedRows.Count == 0) return;
+
+
+            var seletctedItem = dgvObservObjects.SelectedRows[0];
+            if (sender is TextBox control)
+            {
+                if (seletctedItem.DataBoundItem is ObservObjectGui sourceIten)
+                {
+                    if (control == tbObservObjGroup)
+                    {
+                        _isObservObjectsFieldsChanged = _isObservObjectsFieldsChanged || !sourceIten.Group.Equals(control.Text);
+                    }
+                    if (control == tbObservObjTitle)
+                    {
+                        _isObservObjectsFieldsChanged = _isObservObjectsFieldsChanged || !sourceIten.Title.Equals(control.Text);
+                    }
+                }
+            }
+        }
+
+
+        private void ObservationObjectChanged(object sender, EventArgs e)
+        {
+            if (_isObservObjectsFieldsChanged)
+            {
+                btnSaveParamPS.Enabled = true;
+            }
+        }
+
+        private void btnSaveParamPS_Click(object sender, EventArgs e)
+        {
+            var seletctedItem = dgvObservObjects.SelectedRows[0];
+            if (seletctedItem.DataBoundItem is ObservObjectGui sourceIten)
+            {
+
+                sourceIten.Title = tbObservObjTitle.Text;
+                sourceIten.Group = tbObservObjGroup.Text;
+                sourceIten.Affiliation = tbObservObjAffiliation.Text;
+
+                bool result = _observPointsController.SaveObservationObject(sourceIten);
+                if (!result)
+                {
+
+                    string sMsgText = LocalizationContext.Instance.FindLocalizedElement(
+                                        "MsgTextCannotSaveObservationstahtions",
+                                        "Параметри облаcті нагляду не були збережені./nБільш детпльна інформація знахолится у лог файлі.");
+                    MessageBox.Show(
+                        sMsgText,
+                        LocalizationContext.Instance.MsgBoxInfoHeader,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+
+                    return;
+                }
+
+                dgvObservObjects.RefreshEdit();
+                dgvObservObjects.Refresh();
+                btnSaveParamPS.Enabled = false;
+            }
         }
     }
 }

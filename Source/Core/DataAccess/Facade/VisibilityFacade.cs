@@ -107,6 +107,14 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
+        public static bool SaveObservationObject(ObservationObject observationObject)
+        {
+            using (var accessor = new VisibilityDataAccess())
+            {
+                return accessor.SaveObservationObject(observationObject);
+            }
+        }
+
         public static IEnumerable<ObservationObject> GetAllObservationObjects()
         {
             using (var accessor = new VisibilityDataAccess())

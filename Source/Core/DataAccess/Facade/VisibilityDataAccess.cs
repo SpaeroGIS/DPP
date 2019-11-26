@@ -446,6 +446,40 @@ namespace MilSpace.DataAccess.Facade
             return result;
         }
 
+        public bool SaveObservationObject(ObservationObject observObject)
+        {
+            bool result = true;
+            try
+            {
+                var bdObservObject = context.VisiblilityObservationObjects.FirstOrDefault(p => p.OBJECTID == observObject.ObjectId);
+                if (bdObservObject != null)
+                {
+                    bdObservObject.Update(observObject);
+                    if (Submit())
+                    {
+                        log.InfoEx($"Observation Point Row with ObjectId '{observObject.ObjectId}' was saved");
+                    }
+                }
+            }
+            catch (MilSpaceDataException ex)
+            {
+                log.WarnEx(ex.Message);
+                if (ex.InnerException != null)
+                {
+                    log.WarnEx(ex.InnerException.Message);
+                }
+
+                result = false;
+            }
+            catch (Exception ex)
+            {
+                log.WarnEx($"Unexpected exception:{ex.Message}");
+                result = false;
+            }
+            return result;
+
+        }
+
         public IEnumerable<ObservationObject> GetAllObservationObjects()
         {
             try
