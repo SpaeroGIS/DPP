@@ -13,6 +13,7 @@ using MilSpace.Core;
 using MilSpace.Tools.Exceptions;
 using System.Text.RegularExpressions;
 using MilSpace.Visibility.Localization;
+using MilSpace.Visibility.DTO;
 
 namespace MilSpace.Visibility.ViewController
 {
@@ -301,6 +302,22 @@ namespace MilSpace.Visibility.ViewController
         internal IEnumerable<ObservationObject> GetAllObservObjects()
         {
             return VisibilityZonesFacade.GetAllObservationObjects();
+        }
+
+        internal bool SaveObservationObject(ObservObjectGui bbservObjectGu)
+        {
+
+            var obj = _observationObjects.FirstOrDefault(o => o.Id == bbservObjectGu.Id);
+            if (obj == null)
+            {
+                return false;
+            }
+
+            obj.ObjectType = _observObjectsTypes.First(v => v.Value == bbservObjectGu.Affiliation).Key;
+            obj.Title = bbservObjectGu.Title;
+            obj.Group = bbservObjectGu.Group;
+
+            return VisibilityZonesFacade.SaveObservationObject(obj);
         }
 
 

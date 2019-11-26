@@ -1438,9 +1438,10 @@
             this.tbObservObjTitle.Dock = System.Windows.Forms.DockStyle.Left;
             this.tbObservObjTitle.Location = new System.Drawing.Point(104, 4);
             this.tbObservObjTitle.Name = "tbObservObjTitle";
-            this.tbObservObjTitle.ReadOnly = true;
             this.tbObservObjTitle.Size = new System.Drawing.Size(120, 20);
             this.tbObservObjTitle.TabIndex = 5;
+            this.tbObservObjTitle.TextChanged += new System.EventHandler(this.tbObservObjects_CheckChanged);
+            this.tbObservObjTitle.Leave += new System.EventHandler(this.ObservationObjectChanged);
             // 
             // label29
             // 
@@ -1498,9 +1499,10 @@
             this.tbObservObjGroup.Dock = System.Windows.Forms.DockStyle.Left;
             this.tbObservObjGroup.Location = new System.Drawing.Point(104, 4);
             this.tbObservObjGroup.Name = "tbObservObjGroup";
-            this.tbObservObjGroup.ReadOnly = true;
             this.tbObservObjGroup.Size = new System.Drawing.Size(120, 20);
             this.tbObservObjGroup.TabIndex = 5;
+            this.tbObservObjGroup.TextChanged += new System.EventHandler(this.tbObservObjects_CheckChanged);
+            this.tbObservObjGroup.Leave += new System.EventHandler(this.ObservationObjectChanged);
             // 
             // label1
             // 
@@ -1539,6 +1541,7 @@
             // btnSaveParamPS
             // 
             this.btnSaveParamPS.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSaveParamPS.Enabled = false;
             this.btnSaveParamPS.ImageIndex = 147;
             this.btnSaveParamPS.ImageList = this.imageList1;
             this.btnSaveParamPS.Location = new System.Drawing.Point(282, 4);
@@ -1547,6 +1550,7 @@
             this.btnSaveParamPS.TabIndex = 3;
             this.btnSaveParamPS.Tag = "Зберегти зміни";
             this.btnSaveParamPS.UseVisualStyleBackColor = true;
+            this.btnSaveParamPS.Click += new System.EventHandler(this.btnSaveParamPS_Click);
             // 
             // splitter2
             // 

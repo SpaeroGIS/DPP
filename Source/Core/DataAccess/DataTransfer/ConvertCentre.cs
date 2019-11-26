@@ -270,6 +270,14 @@ namespace MilSpace.DataAccess.DataTransfer
             visibilityResultsEntity.CalculationType = (int)visibility.CalculationType;
         }
 
+        internal static void Update(this VisiblilityObservationObjects dbObservationPoint, ObservationObject observationObject)
+        {
+            dbObservationPoint.sGroupOO = observationObject.Group;
+            dbObservationPoint.sTitleOO = observationObject.Title;
+            dbObservationPoint.saffiliation = observationObject.ObjectType.ToString();
+
+        }
+
         internal static void Update(this VisiblilityObservPoint dbObservationPoint, ObservationPoint observationPoint)
         {
             dbObservationPoint.saffiliation = observationPoint.Affiliation;
