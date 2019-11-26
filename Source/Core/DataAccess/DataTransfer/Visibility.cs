@@ -23,8 +23,8 @@ namespace MilSpace.DataAccess.DataTransfer
             { VisibilityCalculationResultsEnum.VisibilityObservStationClipSingle , "_imgcs"},
             { VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly , "_imgt"},
             { VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle , "_imgts"},
-            { VisibilityCalculationResultsEnum.VisibilityAreasPotential , "_va_p" },
-            { VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle , "_vas_p" }
+            { VisibilityCalculationResultsEnum.VisibilityAreasPotential , "_pva_r" },
+            { VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle , "_pvas_r" }
 
         };
 

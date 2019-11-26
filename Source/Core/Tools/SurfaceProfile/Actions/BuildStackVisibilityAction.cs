@@ -164,7 +164,6 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             int index = -1;
 
             bool removeFullImageFromresult = false;
-            bool addVisibilityObservStationClip = false;
 
             int[] objIds = null;
             if(calcResults.HasFlag(VisibilityCalculationResultsEnum.ObservationObjects))
