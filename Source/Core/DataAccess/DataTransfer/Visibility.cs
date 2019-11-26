@@ -37,7 +37,9 @@ namespace MilSpace.DataAccess.DataTransfer
                             VisibilityCalculationResultsEnum.ObservationPoints,
                             VisibilityCalculationResultsEnum.VisibilityAreaPolygons,
                             VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly,
-                            VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle
+                            VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle,
+                            VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle,
+                            VisibilityCalculationResultsEnum.VisibilityAreasPotential
                         }
             },
             { VisibilityCalcTypeEnum.ObservationObjects, new VisibilityCalculationResultsEnum[]
@@ -48,6 +50,8 @@ namespace MilSpace.DataAccess.DataTransfer
                             VisibilityCalculationResultsEnum.ObservationPoints,
                             VisibilityCalculationResultsEnum.ObservationPointSingle,
                             VisibilityCalculationResultsEnum.VisibilityAreaPolygons,
+                            VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle,
+                            VisibilityCalculationResultsEnum.VisibilityAreasPotential
                         }
             }
         };
@@ -57,6 +61,8 @@ namespace MilSpace.DataAccess.DataTransfer
             VisibilityCalculationResultsEnum.ObservationObjects,
             VisibilityCalculationResultsEnum.VisibilityAreaPolygons,
             VisibilityCalculationResultsEnum.ObservationPointSingle,
+            VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle,
+            VisibilityCalculationResultsEnum.VisibilityAreasPotential
         };
 
         internal static VisibilityCalculationResultsEnum[] RasterResults = {
@@ -84,7 +90,8 @@ namespace MilSpace.DataAccess.DataTransfer
             VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle,
             VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle,
             VisibilityCalculationResultsEnum.VisibilityObservStationClipSingle,
-            VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle
+            VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle,
+            VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle
         };
 
         public const VisibilityCalculationResultsEnum DefaultResultsSet = VisibilityCalculationResultsEnum.ObservationPoints | VisibilityCalculationResultsEnum.ObservationObjects | VisibilityCalculationResultsEnum.VisibilityAreaRaster;

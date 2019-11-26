@@ -31,6 +31,7 @@ namespace MilSpace.Tools
         public static readonly string ObservStationFeature = "MilSp_Visible_ObjectsObservation_R";
         public static IFeatureClass observStationFeatureClass;
         public static IFeatureClass observPointFeatureClass;
+        public static IMap CurrentMap;
 
         public delegate void SessionStartGenerationDelegate(bool isNewSessionAdded = false, string newSessionId = null);
         public static SessionStartGenerationDelegate OnGenerationStarted;
@@ -53,8 +54,10 @@ namespace MilSpace.Tools
             VisibilityCalculationResultsEnum culcResults,
             string taskName,
             string taskId,
-            VisibilityCalcTypeEnum calculationType)
+            VisibilityCalcTypeEnum calculationType,
+            IMap currentMap)
         {
+            CurrentMap = currentMap;
             //Target dataset name
             string nameOfTargetDataset = taskId;
 

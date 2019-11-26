@@ -948,6 +948,64 @@ namespace MilSpace.Core.Tools
             return coverageArea;
         }
 
+
+        public static IPolygon GetCommonPolygon(List<IPolygon> polygons)
+        {
+            if(polygons == null || polygons.Count == 0)
+            {
+                return null;
+            }
+
+            IGeometry geometryBag = new GeometryBagClass();
+            geometryBag.SpatialReference = polygons[0].SpatialReference;
+           
+            IGeometryCollection geometryCollection = geometryBag as IGeometryCollection;
+            foreach(var polygon in polygons)
+            {
+                object missing = Type.Missing;
+                geometryCollection.AddGeometry(polygon, ref missing, ref
+                    missing);
+            }
+           
+            ITopologicalOperator unionedPolygon = new PolygonClass();
+            unionedPolygon.ConstructUnion(geometryBag as IEnumGeometry);
+
+            return unionedPolygon as IPolygon;
+        }
+
+        public static IPolygon GetCommonPolygonFromFeatureClass(IFeatureClass featureClass)
+        {
+            if(featureClass == null)
+            {
+                return null;
+            }
+
+            IGeoDataset geoDataset = featureClass as IGeoDataset;
+            IGeometry geometryBag = new GeometryBagClass();
+            geometryBag.SpatialReference = geoDataset.SpatialReference;
+
+            IFeatureCursor featureCursor = featureClass.Search(null, false);
+
+            IGeometryCollection geometryCollection = geometryBag as IGeometryCollection;
+            IFeature currentFeature = featureCursor.NextFeature();
+
+            while(currentFeature != null)
+            {
+                object missing = Type.Missing;
+                geometryCollection.AddGeometry(currentFeature.Shape, ref missing, ref
+                    missing);
+
+                currentFeature = featureCursor.NextFeature();
+            }
+
+            ITopologicalOperator unionedPolygon = new PolygonClass();
+            unionedPolygon.ConstructUnion(geometryBag as IEnumGeometry);
+
+            Marshal.ReleaseComObject(featureCursor);
+
+            return unionedPolygon as IPolygon;
+        }
+
         private static IPoint GetPointByAzimuthAndLength(IPoint centerPoint, double azimuth, double distance)
         {
             double radian = (90 - azimuth) * (Math.PI / 180);

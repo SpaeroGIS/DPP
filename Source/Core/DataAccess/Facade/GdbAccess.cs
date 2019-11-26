@@ -881,10 +881,8 @@ namespace MilSpace.DataAccess.Facade
         //    return geometry;
         //}
 
-        private string GenerateTESTStorage(string name)
+        private void GenerateCoverageAreasTempStorage(string newFeatureClassName)
         {
-            string newFeatureClassName = $"TestArea{name}{Helper.GetTemporaryNameSuffix()}";
-
             IFeatureClassDescription fcDescription = new FeatureClassDescriptionClass();
             IObjectClassDescription ocDescription = (IObjectClassDescription)fcDescription;
             IFields fields = ocDescription.RequiredFields;
@@ -900,11 +898,17 @@ namespace MilSpace.DataAccess.Facade
 
             IFieldsEdit fieldsEdit = (IFieldsEdit)fields;
 
-            IField nameField = new FieldClass();
-            IFieldEdit nameFieldEdit = (IFieldEdit)nameField;
-            nameFieldEdit.Name_2 = "ID";
-            nameFieldEdit.Type_2 = esriFieldType.esriFieldTypeInteger;
-            fieldsEdit.AddField(nameField);
+            IField pointIdField = new FieldClass();
+            IFieldEdit pointIdFieldEdit = (IFieldEdit)pointIdField;
+            pointIdFieldEdit.Name_2 = "ObservPointId";
+            pointIdFieldEdit.Type_2 = esriFieldType.esriFieldTypeInteger;
+            fieldsEdit.AddField(pointIdField);
+
+            IField objIdField = new FieldClass();
+            IFieldEdit objIdFieldEdit = (IFieldEdit)objIdField;
+            objIdFieldEdit.Name_2 = "ObservObjectId";
+            objIdFieldEdit.Type_2 = esriFieldType.esriFieldTypeInteger;
+            fieldsEdit.AddField(objIdFieldEdit);
 
             IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)calcWorkspace;
             workspaceEdit.StartEditing(true);
@@ -917,30 +921,70 @@ namespace MilSpace.DataAccess.Facade
 
             workspaceEdit.StopEditOperation();
             workspaceEdit.StopEditing(true);
-
-            return newFeatureClassName;
         }
 
-        public IFeatureClass GetTestFeature(IPolygon polygon, string name)
+        public IFeatureClass AddCoverageAreaFeature(IPolygon polygon, int pointId, int objId, string featureClassName)
         {
-            string featureClassName = GenerateTESTStorage(name);
+            IWorkspace2 wsp2 = calcWorkspace as IWorkspace2;
+
+            if(!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, featureClassName))
+            {
+                GenerateCoverageAreasTempStorage(featureClassName);
+            }
 
             IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)calcWorkspace;
             workspaceEdit.StartEditing(true);
             workspaceEdit.StartEditOperation();
 
-            IFeatureClass calc = GetCalcProfileFeatureClass(featureClassName);
+            IFeatureClass featureClass = GetCalcProfileFeatureClass(featureClassName);
             var GCS_WGS = Helper.GetBasePointSpatialReference();
 
-            var testFeature = calc.CreateFeature();
-            testFeature.Shape = polygon;
 
-            testFeature.Store();
+            var areaFeature = featureClass.CreateFeature();
+            areaFeature.Shape = polygon;
 
+            if(pointId != -1)
+            {
+                areaFeature.set_Value(featureClass.FindField("ObservPointId"), pointId);
+            }
+
+            if(objId != -1)
+            {
+                areaFeature.set_Value(featureClass.FindField("ObservObjectId"), objId);
+            }
+
+            areaFeature.Store();
             workspaceEdit.StopEditOperation();
             workspaceEdit.StopEditing(true);
 
-            return calc;
+            return featureClass;
+        }
+
+        public void RemoveCoverageAreaTemporStorage(string name)
+        {
+            IFeatureWorkspaceManage wspManage = (IFeatureWorkspaceManage)calcWorkspace;
+            var datasets = calcWorkspace.Datasets[esriDatasetType.esriDTFeatureClass];
+            var currentDataset = datasets.Next();
+
+            while(currentDataset != null && !currentDataset.Name.EndsWith(name))
+            {
+                currentDataset = datasets.Next();
+            }
+
+            if(currentDataset != null)
+            {
+                if(wspManage.CanDelete(currentDataset.FullName))
+                {
+                    try
+                    {
+                        currentDataset.Delete();
+                    }
+                    catch(Exception ex)
+                    {
+                        logger.ErrorEx(ex.Message);
+                    }
+                }
+            }
         }
     }
 }

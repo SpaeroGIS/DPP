@@ -105,6 +105,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Core\Tools\CoverageTableManager.cs">
+      <Link>CoverageTableManager.cs</Link>
+    </Compile>
     <Compile Include="..\Tools\Exceptions\MilSpaceProfileLineNotFound.cs">
       <Link>Exceptions\MilSpaceProfileLineNotFound.cs</Link>
     </Compile>
@@ -137,6 +140,9 @@
     </Compile>
     <Compile Include="..\Tools\SurfaceProfile\Actions\VisibilityCalculationResult.cs">
       <Link>SurfaceProfile\Actions\VisibilityCalculationResult.cs</Link>
+    </Compile>
+    <Compile Include="..\Tools\SurfaceProfile\CoverageAreaData.cs">
+      <Link>SurfaceProfile\CoverageAreaData.cs</Link>
     </Compile>
     <Compile Include="..\Tools\SurfaceProfile\ProfileLibrary.cs">
       <Link>SurfaceProfile\ProfileLibrary.cs</Link>
