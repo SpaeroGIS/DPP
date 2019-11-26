@@ -36,8 +36,7 @@ namespace MilSpace.Tools
         public delegate void SessionStartGenerationDelegate(bool isNewSessionAdded = false, string newSessionId = null);
         public static SessionStartGenerationDelegate OnGenerationStarted;
 
-        private static Logger logger = Logger.GetLoggerEx("VisibilityManagerManager");
-
+        private static Logger logger = Logger.GetLoggerEx("MilSpace.Tools.VisibilityManagerManager");
 
         //Visibility dataset template 
         private const string VisibilityCalcFeatureClass = "VDSR";
@@ -61,8 +60,8 @@ namespace MilSpace.Tools
             //Target dataset name
             string nameOfTargetDataset = taskId;
 
-            logger.InfoEx("> Generate. Starting generation visiblility resuilt for session {2} using DEM {0} from observation points {1}.".InvariantFormat(sourceDem, obervationPoints, nameOfTargetDataset));
-
+            logger.InfoEx("> Generate. Starting generation Visiblility result {2} using DEM {0} from observation points {1}"
+                .InvariantFormat(sourceDem, obervationPoints, nameOfTargetDataset));
 
             var calcTask = new VisibilityTask
             {
@@ -80,7 +79,7 @@ namespace MilSpace.Tools
 
             if (calcTask == null)
             {
-                throw new MilSpaceVisibilityCalcFailedException("Cannot save visibility session.");
+                throw new MilSpaceVisibilityCalcFailedException("Cannot save visibility session");
             }
 
             var action = new ActionParam<string>()
@@ -91,16 +90,24 @@ namespace MilSpace.Tools
 
 
             var prm = new List<IActionParam>
-           {
+            {
                action,
-               new ActionParam<IFeatureClass>() { ParamName = ActionParameters.FeatureClass, Value = ObservationPointsFeatureClass},
-               new ActionParam<IFeatureClass>() { ParamName = ActionParameters.FeatureClassX, Value = ObservationStationsFeatureClass},
-               new ActionParam<int[]>() { ParamName = ActionParameters.FilteringPointsIds, Value = pointsToExport.ToArray()},
-               new ActionParam<int[]>() { ParamName = ActionParameters.FilteringStationsIds, Value = stationsToExport.ToArray()},
-               new ActionParam<string>() { ParamName = ActionParameters.ProfileSource, Value = sourceDem},
-               new ActionParam<VisibilityCalculationResultsEnum>() { ParamName = ActionParameters.Calculationresults, Value = culcResults},
-               new ActionParam<string>() { ParamName = ActionParameters.OutputSourceName, Value = nameOfTargetDataset},
-               new ActionParam<VisibilityTask>() { ParamName = ActionParameters.Session, Value = calcTask},
+               new ActionParam<IFeatureClass>()
+               { ParamName = ActionParameters.FeatureClass, Value = ObservationPointsFeatureClass},
+               new ActionParam<IFeatureClass>()
+               { ParamName = ActionParameters.FeatureClassX, Value = ObservationStationsFeatureClass},
+               new ActionParam<int[]>()
+               { ParamName = ActionParameters.FilteringPointsIds, Value = pointsToExport.ToArray()},
+               new ActionParam<int[]>()
+               { ParamName = ActionParameters.FilteringStationsIds, Value = stationsToExport.ToArray()},
+               new ActionParam<string>()
+               { ParamName = ActionParameters.ProfileSource, Value = sourceDem},
+               new ActionParam<VisibilityCalculationResultsEnum>()
+               { ParamName = ActionParameters.Calculationresults, Value = culcResults},
+               new ActionParam<string>()
+               { ParamName = ActionParameters.OutputSourceName, Value = nameOfTargetDataset},
+               new ActionParam<VisibilityTask>()
+               { ParamName = ActionParameters.Session, Value = calcTask},
             };
 
 

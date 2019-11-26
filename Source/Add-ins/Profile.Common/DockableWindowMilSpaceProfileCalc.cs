@@ -30,7 +30,7 @@ namespace MilSpace.Profile
         const int NINE = 57;
         const int NOT_FOUND = -1;
         private const string Degree = "°";
-        private static Logger logger = Logger.GetLoggerEx("SpaceProfileCalc GUI");
+        private static Logger logger = Logger.GetLoggerEx("MilSpace.Profile.DockableWindowMilSpaceProfileCalc");
 
         private static readonly Dictionary<ProfileSettingsTypeEnum, int[]> nodeDefinition = new Dictionary<ProfileSettingsTypeEnum, int[]>
         {
@@ -61,7 +61,6 @@ namespace MilSpace.Profile
             SetController(controller);
             controller.SetView(this);
             LocalizeStrings();
-
         }
 
         public DockableWindowMilSpaceProfileCalc(object hook, MilSpaceProfileCalsController controller)
@@ -194,8 +193,7 @@ namespace MilSpace.Profile
             }
             catch (Exception ex)
             {
-                logger.ErrorEx(ex.Message);
-                //TODO: log exception
+                logger.ErrorEx("RemoveTreeViewItem Exception:{0}", ex.Message);
                 return false;
             }
 
@@ -215,7 +213,8 @@ namespace MilSpace.Profile
 
             saveProfileAsShared.Enabled = (pr != null && pr.CreatedBy == Environment.UserName && !pr.Shared);
 
-            removeProfile.Enabled = addProfileToGraph.Enabled = toolPanOnMap.Enabled = toolBtnFlash.Enabled = treeViewselectedIds.ProfileSessionId > 0;
+            removeProfile.Enabled = addProfileToGraph.Enabled = toolPanOnMap.Enabled = toolBtnFlash.Enabled = 
+                treeViewselectedIds.ProfileSessionId > 0;
 
             var profileType = GetProfileTypeFromNode();
             setProfileSettingsToCalc.Enabled = 
@@ -260,7 +259,6 @@ namespace MilSpace.Profile
             lvProfileAttributes.Columns[1].Width = lvProfileAttributes.Width / 2 - 10;
         }
 
-
         private static void PopulateComboBox(ComboBox comboBox, IEnumerable<ILayer> layers)
         {
             comboBox.Items.AddRange(layers.Select(l => l.Name).ToArray());
@@ -268,7 +266,6 @@ namespace MilSpace.Profile
 
         private void SubscribeForEvents()
         {
-
             ArcMap.Events.OpenDocument += OnDocumentOpenFillDropdowns;
             ArcMap.Events.OpenDocument += controller.InitiateUserProfiles;
 
@@ -293,8 +290,6 @@ namespace MilSpace.Profile
         {
             this.controller = controller;
         }
-
-       
 
         /// <summary>
         /// Implementation class of the dockable window add-in. It is responsible for 
@@ -358,11 +353,10 @@ namespace MilSpace.Profile
         private void toolBar1_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
             ToolbarButtonClicked = e.Button;
-            switch (firstPointToolBar.Buttons.IndexOf(e.Button))
+
+            switch (ToolbarButtonClicked.Name)
             {
-
-                case 0:
-
+               case "toolBarButton8":
                     HandlePickCoordTool(e.Button);
 
                     if (ArcMap.Application.CurrentTool == null)
@@ -372,41 +366,53 @@ namespace MilSpace.Profile
                         MessageBox.Show(
                             message, 
                             "Profile Calc", 
-                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            MessageBoxButtons.OK, 
+                            MessageBoxIcon.Exclamation);
                         break;
                     }
                     activeButtton = ProfileSettingsPointButtonEnum.PointsFist;
                     break;
-                case 1:
+
+                case "toolBarButton55":
                     controller.FlashPoint(ProfileSettingsPointButtonEnum.PointsFist);
                     break;
-                case 2:
-                    
+
+                case "toolBarButton57":
+                    //if (txtFirstPointX.Focused) CopyTextToBuffer(txtFirstPointX.Text);
+                    Clipboard.Clear();
+                    string sCoord = $"{txtFirstPointX.Text} {txtFirstPointY.Text}";
+                    Clipboard.SetText(sCoord.Trim().Replace(",", "."));
+
+                    //CopyTextToBuffer(txtFirstPointY.Focused ? txtFirstPointY.Text : txtFirstPointX.Text);
                     break;
 
-                case 4:
+                case "toolBarButton58":
+                    var sclipboard = Clipboard.GetText();
+                    if (string.IsNullOrWhiteSpace(sclipboard)) return;
 
-                    if (txtFirstPointX.Focused)
+                    if (Regex.IsMatch(sclipboard, @"^([-]?[\d]{1,2}[\,|\.]\d+)[\;| ]([-]?[\d]{1,2}[\,|\.]\d+)$"))
                     {
-                        CopyTextToBuffer(txtFirstPointX.Text);
+                        string sCoords = sclipboard.Replace('.', ',');
+                        var coords = sCoords.Replace(' ', ';').Split(';');
+                        txtFirstPointX.Text = coords[0];
+                        txtFirstPointY.Text = coords[1];
                     }
-
-                    CopyTextToBuffer(txtFirstPointY.Focused ? txtFirstPointY.Text : txtFirstPointX.Text);
-
-                    break;
-
-                case 5:
-                    if (txtFirstPointX.Focused)
+                    else
                     {
-                        PasteTextToEditField(txtFirstPointX);
+                        //string sMsgText = LocalizationConstants.GetLocalization(
+                        //    "MsgInvalidCoordinatesDD",
+                        //    "недійсні дані \nПотрібні коордінати представлені у СК WGS-84, десяткові градуси");
+                        string sMsgText = "Недійсні дані. Потрібні коордінати у СК WGS-84, десяткові градуси.";
+
+                        MessageBox.Show(
+                            sMsgText + " (Отримано: " + sclipboard + ")",
+                            "Profile Calc",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
                     }
-
-                    PasteTextToEditField(txtFirstPointY.Focused ? txtFirstPointY : txtFirstPointX);
-
                     break;
 
-                case 7:
-
+                case "?":
                     txtFirstPointX.Clear();
                     txtFirstPointY.Clear();
                     controller.SetFirsPointForLineProfile(null, null);
@@ -434,116 +440,136 @@ namespace MilSpace.Profile
         private void secondPointToolbar_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
             ToolbarButtonClicked = e.Button;
-            switch (secondPointToolbar.Buttons.IndexOf(e.Button))
+            switch (ToolbarButtonClicked.Name)
+            //switch (secondPointToolbar.Buttons.IndexOf(e.Button))
             {
-                case 0:
+                case "toolBarButton61":
                     HandlePickCoordTool(e.Button);
-
                     if (ArcMap.Application.CurrentTool == null)
                     {
                         linePickCoordFirst.Pushed = false;
                         var message = LocalizationConstants.PickCoordinatesToolMessage;
-                        MessageBox.Show(message, "Profile Calc", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        MessageBox.Show(
+                            message, 
+                            "Profile Calc", 
+                            MessageBoxButtons.OK, 
+                            MessageBoxIcon.Exclamation);
                         break;
-
                     }
                     activeButtton = ProfileSettingsPointButtonEnum.PointsSecond;
-
                     break;
-                case 1:
+
+                case "toolBarButton2":
                     controller.FlashPoint(ProfileSettingsPointButtonEnum.PointsSecond);
                     break;
-                case 2:
+
+                case "toolBarButton3":
+                    Clipboard.Clear();
+                    string sCoord = $"{txtSecondPointX.Text} {txtSecondPointY.Text}";
+                    Clipboard.SetText(sCoord.Trim().Replace(",", "."));
                     break;
 
-                case 4:
+                case "toolBarButton4":
+                    var sclipboard = Clipboard.GetText();
+                    if (string.IsNullOrWhiteSpace(sclipboard)) return;
 
-                    if (txtSecondPointX.Focused)
+                    if (Regex.IsMatch(sclipboard, @"^([-]?[\d]{1,2}[\,|\.]\d+)[\;| ]([-]?[\d]{1,2}[\,|\.]\d+)$"))
                     {
-                        CopyTextToBuffer(txtSecondPointX.Text);
+                        string sCoords = sclipboard.Replace('.', ',');
+                        var coords = sCoords.Replace(' ', ';').Split(';');
+                        txtSecondPointX.Text = coords[0];
+                        txtSecondPointY.Text = coords[1];
                     }
-
-
-                    CopyTextToBuffer(txtSecondPointY.Focused ? txtSecondPointY.Text : txtSecondPointX.Text);
-
-                    break;
-
-                case 5:
-                    if (txtSecondPointX.Focused)
+                    else
                     {
-                        PasteTextToEditField(txtSecondPointX);
+                        //string sMsgText = LocalizationConstants.GetLocalization(
+                        //    "MsgInvalidCoordinatesDD",
+                        //    "недійсні дані \nПотрібні коордінати представлені у СК WGS-84, десяткові градуси");
+                        string sMsgText = "Недійсні дані. Потрібні коордінати у СК WGS-84, десяткові градуси.";
+
+                        MessageBox.Show(
+                            sMsgText + " (Отримано: " + sclipboard + ")",
+                            "Profile Calc",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
                     }
-
-
-                    PasteTextToEditField(txtSecondPointY.Focused ? txtSecondPointY : txtSecondPointX);
-
                     break;
 
-                case 7:
-
+                case "7":
                     txtSecondPointX.Clear();
                     txtSecondPointY.Clear();
                     controller.SetSecondfPointForLineProfile(null, null);
                     break;
-
             }
         }
 
         private void toolBar3_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
             ToolbarButtonClicked = e.Button;
-            switch (basePointToolbar.Buttons.IndexOf(e.Button))
+            switch (ToolbarButtonClicked.Name)
+            //switch (basePointToolbar.Buttons.IndexOf(e.Button))
             {
-
-                case 0:
-
+                case "toolBarButton16":
                     HandlePickCoordTool(e.Button);
-
                     if (ArcMap.Application.CurrentTool == null)
                     {
                         var message = LocalizationConstants.PickCoordinatesToolMessage;// $"Please add Pick Coordinates tool to any toolbar first.";
-                        MessageBox.Show(message, "Profile Calc", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        MessageBox.Show(
+                            message, 
+                            "Profile Calc", 
+                            MessageBoxButtons.OK, 
+                            MessageBoxIcon.Exclamation);
                         break;
-
                     }
                     activeButtton = ProfileSettingsPointButtonEnum.CenterFun;
-
                     break;
-                case 1:
 
+                case "toolBarButton17":
                     controller.FlashPoint(ProfileSettingsPointButtonEnum.CenterFun);
                     break;
 
+                case "toolBarButton19":
+                    Clipboard.Clear();
+                    string sCoord = $"{txtBasePointX.Text} {txtBasePointY.Text}";
+                    Clipboard.SetText(sCoord.Trim().Replace(",", "."));
 
-                case 3:
-
-                    if (txtBasePointX.Focused)
-                    {
-                        CopyTextToBuffer(txtBasePointX.Text);
-                    }
-
-
-                    CopyTextToBuffer(txtBasePointY.Focused ? txtBasePointY.Text : txtBasePointX.Text);
-
+                    //CopyTextToBuffer(txtBasePointY.Focused ? txtBasePointY.Text : txtBasePointX.Text);
                     break;
 
-                case 4:
-                    if (txtBasePointX.Focused)
+                case "toolBarButton20":
+                    //if (txtBasePointX.Focused) PasteTextToEditField(txtBasePointX);
+                    //PasteTextToEditField(txtBasePointY.Focused ? txtBasePointY : txtBasePointX);
+
+                    var sclipboard = Clipboard.GetText();
+                    if (string.IsNullOrWhiteSpace(sclipboard)) return;
+
+                    if (Regex.IsMatch(sclipboard, @"^([-]?[\d]{1,2}[\,|\.]\d+)[\;| ]([-]?[\d]{1,2}[\,|\.]\d+)$"))
                     {
-                        PasteTextToEditField(txtBasePointX);
+                        string sCoords = sclipboard.Replace('.', ',');
+                        var coords = sCoords.Replace(' ', ';').Split(';');
+                        txtBasePointX.Text = coords[0];
+                        txtBasePointY.Text = coords[1];
                     }
+                    else
+                    {
+                        //string sMsgText = LocalizationConstants.GetLocalization(
+                        //    "MsgInvalidCoordinatesDD",
+                        //    "недійсні дані \nПотрібні коордінати представлені у СК WGS-84, десяткові градуси");
+                        string sMsgText = "Недійсні дані. Потрібні коордінати у СК WGS-84, десяткові градуси.";
 
-                    PasteTextToEditField(txtBasePointY.Focused ? txtBasePointY : txtBasePointX);
-
+                        MessageBox.Show(
+                            sMsgText + " (Отримано: " + sclipboard + ")",
+                            "Profile Calc",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                    }
                     break;
 
-                case 6:
-
+                case "6":
                     txtBasePointX.Clear();
                     txtBasePointY.Clear();
                     controller.SetCenterPointForFunProfile(null, null);
                     break;
-
             }
         }
 
@@ -567,7 +593,9 @@ namespace MilSpace.Profile
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Please make sure X and Y values are valid and try again!");
+                MessageBox.Show(
+                    "Please make sure X and Y values are valid and try again!"
+                    );
                 throw;
             }
 
@@ -587,7 +615,8 @@ namespace MilSpace.Profile
             textBox.Text = text;
         }
 
-        public ProfileSettingsTypeEnum SelectedProfileSettingsType => controller.ProfileSettingsType[profileSettingsTab.SelectedIndex];
+        public ProfileSettingsTypeEnum SelectedProfileSettingsType => 
+            controller.ProfileSettingsType[profileSettingsTab.SelectedIndex];
 
         public IPoint LinePropertiesFirstPoint
         {
@@ -611,15 +640,25 @@ namespace MilSpace.Profile
 
         private static void SetPointValue(TextBox controlX, TextBox controlY, IPoint point)
         {
-
-            if (point != null)
+            logger.DebugEx("> SetPointValue. controlX.Text:{0} controlY.Text:{1}", controlX.Text, controlY.Text);
+            try
             {
-                controlX.Text = point.X.ToString("F5");
-                controlY.Text = point.Y.ToString("F5");
+                if (point != null)
+                {
+                    controlX.Text = point.X.ToString("F5");
+                    controlY.Text = point.Y.ToString("F5");
+                }
+                else
+                {
+                    controlX.Text = controlY.Text = string.Empty;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                controlX.Text = controlY.Text = string.Empty;
+                logger.DebugEx("> SetPointValue Exception ex.Message:{0}", ex.Message);
+                MessageBox.Show(
+                    "Set coordinates value Exception"
+                    );
             }
 
         }
@@ -727,7 +766,6 @@ namespace MilSpace.Profile
             ProfileLayers.GetAllLayers();
         }
 
-
         private void calcProfile_Click(object sender, EventArgs e)
         {
             var session = controller.GenerateProfile();
@@ -740,7 +778,11 @@ namespace MilSpace.Profile
             else
             {
                 //TODO log error
-                MessageBox.Show("Calculation error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    "Calculation error", 
+                    "Error", 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error);
             }
         }
 
@@ -772,10 +814,8 @@ namespace MilSpace.Profile
 
         private static bool CheckDouble(char charValue, TextBox textValue, bool justInt = false)
         {
-
-            return (((charValue == BACKSPACE) || ((charValue >= ZERO) && (charValue <= NINE))) || (justInt ||
-
-                  ((charValue == DECIMAL_POINT) && textValue.Text.IndexOf(".") == NOT_FOUND)));
+            return (((charValue == BACKSPACE) || ((charValue >= ZERO) && (charValue <= NINE))) 
+                || (justInt || ((charValue == DECIMAL_POINT) && textValue.Text.IndexOf(".") == NOT_FOUND)));
         }
 
         public ProfileSettingsTypeEnum GetProfileTypeFromNode()
@@ -933,7 +973,8 @@ namespace MilSpace.Profile
             MessageBox.Show(
                 "Значення повинно бути быльше за 0 та меньше 360", 
                 "MilSpace", 
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBoxButtons.OK, 
+                MessageBoxIcon.Information);
 
             athimuthControl.Focus();
         }
@@ -987,7 +1028,7 @@ namespace MilSpace.Profile
             profileTreeTabPage.Text = LocalizationConstants.PofileTreeTabPageText;
 
             sectionTab.Text = LocalizationConstants.SectionTabText;
-            loadTab.Text = LocalizationConstants.LoadTabText;
+            //loadTab.Text = LocalizationConstants.LoadTabText;
             primitiveTab.Text = LocalizationConstants.PrimitiveTabText;
             funTab.Text = LocalizationConstants.FunTabText;
 
@@ -1041,7 +1082,6 @@ namespace MilSpace.Profile
             profilesTreeView.Nodes["Primitives"].Text = LocalizationConstants.PrimitiveNodeText;
         }
 
-
         private void addProfileToGraph_Click(object sender, EventArgs e)
         {
             var node = profilesTreeView.SelectedNode;
@@ -1058,9 +1098,13 @@ namespace MilSpace.Profile
 
         private void removeProfile_Click(object sender, EventArgs e)
         {
-            string loalizedtext = LocalizationConstants.RemoveProfaileMessage.InvariantFormat(profilesTreeView.SelectedNode.Text);
-
-            if (MessageBox.Show(loalizedtext, "MilSpace", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            string loalizedtext =
+               LocalizationConstants.RemoveProfaileMessage.InvariantFormat(profilesTreeView.SelectedNode.Text);
+            if (MessageBox.Show(
+                loalizedtext, 
+                "MilSpace", 
+                MessageBoxButtons.YesNo, 
+                MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 if (!controller.RemoveProfilesFromUserSession())
                 {
@@ -1071,7 +1115,6 @@ namespace MilSpace.Profile
                 }
             }
         }
-
 
         private ProfileSession GetProfileFromList(IEnumerable<ProfileSession> listOfProfiles, string profileName)
         {
@@ -1230,13 +1273,18 @@ namespace MilSpace.Profile
                 MessageBox.Show(
                     LocalizationConstants.NotAllowedToShareMessage, 
                     "MilSpace", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error);
                 return;
             }
 
             if (!res.Value)
             {
-                MessageBox.Show(LocalizationConstants.ErrorOnShareProfileTextMessage, "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    LocalizationConstants.ErrorOnShareProfileTextMessage, 
+                    "MilSpace", 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error);
             }
 
             ChangeTreeViewToolbarState(null, null);
@@ -1245,12 +1293,21 @@ namespace MilSpace.Profile
 
         private void eraseProfile_Click(object sender, EventArgs e)
         {
-            string loalizedtext = LocalizationConstants.DeleteProfaileMessage.InvariantFormat(profilesTreeView.SelectedNode.Text);
-            if (MessageBox.Show(loalizedtext, "MilSpace", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            string loalizedtext = 
+                LocalizationConstants.DeleteProfaileMessage.InvariantFormat(profilesTreeView.SelectedNode.Text);
+            if (MessageBox.Show(
+                loalizedtext, 
+                "MilSpace", 
+                MessageBoxButtons.YesNo, 
+                MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 if (!controller.RemoveProfilesFromUserSession(true))
                 {
-                    MessageBox.Show(LocalizationConstants.ErrorOnShareProfileTextMessage, "MilSpace", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show(
+                        LocalizationConstants.ErrorOnShareProfileTextMessage, 
+                        "MilSpace", 
+                        MessageBoxButtons.OK, 
+                        MessageBoxIcon.Exclamation);
                 }
             }
         }
@@ -1327,7 +1384,12 @@ namespace MilSpace.Profile
 
             var av = ArcMap.Document.ActivatedView;
 
-            return new Point() { X = pointX, Y = pointY, SpatialReference = av.FocusMap.SpatialReference };
+            return new Point()
+            {
+                X = pointX,
+                Y = pointY,
+                SpatialReference = av.FocusMap.SpatialReference
+            };
         }
 
         private void addAvailableProfilesSets_Click(object sender, EventArgs e)

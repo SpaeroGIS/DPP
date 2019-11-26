@@ -1,6 +1,4 @@
 ﻿using ESRI.ArcGIS.Geodatabase;
-using MilSpace.Core;
-using MilSpace.Core.Actions.ActionResults;
 using MilSpace.Core.Actions.Base;
 using MilSpace.Core.Actions.Interfaces;
 using MilSpace.DataAccess.DataTransfer;
@@ -8,7 +6,6 @@ using MilSpace.DataAccess.Facade;
 using MilSpace.Tools.Exceptions;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using A = MilSpace.Core.Actions.Base;
 
@@ -167,6 +164,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             int index = -1;
 
             bool removeFullImageFromresult = false;
+            bool addVisibilityObservStationClip = false;
 
             int[] objIds = null;
             if(calcResults.HasFlag(VisibilityCalculationResultsEnum.ObservationObjects))
@@ -244,9 +242,11 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                     {
                         var inClipName = outImageName;
 
-                        var outClipName = VisibilityTask.GetResultName(
-                            pointId > -1 ? VisibilityCalculationResultsEnum.VisibilityObservStationClipSingle : VisibilityCalculationResultsEnum.VisibilityObservStationClip,
+                        var resultLype = pointId > -1 ? VisibilityCalculationResultsEnum.VisibilityObservStationClipSingle : VisibilityCalculationResultsEnum.VisibilityObservStationClip;
+
+                        var outClipName = VisibilityTask.GetResultName(resultLype,
                             outputSourceName, pointId);
+
                         if (!ProfileLibrary.ClipVisibilityZonesByAreas(inClipName, outClipName, oservStationsFeatureClassName, messages))
                         {
                             string errorMessage = $"The result {outClipName} was not generated";
@@ -258,6 +258,12 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                         else
                         {
                             results.Add(outClipName);
+
+
+                            if (!calcResults.HasFlag(resultLype))
+                            {
+                                calcResults |= resultLype;
+                            }
 
                             //Change to VisibilityAreaPolygonForObjects
                             visibilityArePolyFCName = VisibilityTask.GetResultName(pointId > -1 ?
@@ -321,6 +327,8 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                 { calcResults &= ~VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle; }
 
             }
+
+
 
             session.CalculatedResults = (int)calcResults;
             return messages;

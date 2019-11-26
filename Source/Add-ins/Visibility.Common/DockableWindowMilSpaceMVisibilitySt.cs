@@ -12,7 +12,6 @@ using MilSpace.Tools;
 using MilSpace.Visibility.DTO;
 using MilSpace.Visibility.Localization;
 using MilSpace.Visibility.ViewController;
-using MilSpace.Visibility.Localization;
 
 using System;
 using System.Collections.Generic;
@@ -39,8 +38,8 @@ namespace MilSpace.Visibility
 
         private bool _isDropDownItemChangedManualy = false;
         private bool _isFieldsChanged = false;
+        private bool _isObservObjectsFieldsChanged = false;
         private ObservationPoint selectedPointMEM = new ObservationPoint();
-
 
         public DockableWindowMilSpaceMVisibilitySt(object hook, ObservationPointsController controller)
         {
@@ -741,8 +740,7 @@ namespace MilSpace.Visibility
                     case "txtMinDistance":
                         double minValue;
                         string sMsgTextMinValue = LocalizationContext.Instance.FindLocalizedElement(
-                                                                                 "MsgValueLessThenZerro",
-                                                                                 "Значення бовинно бути більше нуля.");
+                                "MsgValueLessThenZerro", "Значення повинно бути більше нуля.");
                         if (!Helper.TryParceToDouble(txtMinDistance.Text, out minValue))
                         {
                             MessageBox.Show(
@@ -804,14 +802,15 @@ namespace MilSpace.Visibility
                                 LocalizationContext.Instance.MsgBoxErrorHeader,
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Error);
+
                             xCoord.Text = point.X.ToString();
 
                             return false;
                         }
                         else
                         {
-                            var x = Convert.ToDouble(xCoord.Text);
-                            var y = Convert.ToDouble(yCoord.Text);
+                            //var x = Convert.ToDouble(xCoord.Text);
+                            //var y = Convert.ToDouble(yCoord.Text);
                         }
 
                         return true;
@@ -835,8 +834,8 @@ namespace MilSpace.Visibility
                         }
                         else
                         {
-                            var x = Convert.ToDouble(xCoord.Text);
-                            var y = Convert.ToDouble(yCoord.Text);
+                            //var x = Convert.ToDouble(xCoord.Text);
+                            //var y = Convert.ToDouble(yCoord.Text);
                         }
 
                         return true;
@@ -1016,10 +1015,10 @@ namespace MilSpace.Visibility
 
             cmbAffiliationEdit.Enabled = cmbObservTypesEdit.Enabled = azimuthE.Enabled
                 = azimuthB.Enabled = xCoord.Enabled = yCoord.Enabled = angleOFViewMin.Enabled = angleOFViewMax.Enabled
-                = heightCurrent.Enabled = heightMin.Enabled 
-                = heightMax.Enabled = observPointName.Enabled = tlbCoordinates.Enabled 
+                = heightCurrent.Enabled = heightMin.Enabled
+                = heightMax.Enabled = observPointName.Enabled = tlbCoordinates.Enabled
                 = txtMaxDistance.Enabled = txtMinDistance.Enabled =
-                tlbbShowPoint.Enabled = tlbbRemovePoint.Enabled 
+                tlbbShowPoint.Enabled = tlbbRemovePoint.Enabled
                 = tlbbAddNewPoint.Enabled = (layerExists && !isAllDisabled);
 
             //= azimuthMainAxis.Enabled = cameraRotationH.Enabled = cameraRotationV.Enabled
@@ -1062,6 +1061,7 @@ namespace MilSpace.Visibility
         private void SavePoint()
         {
             var selectedPoint = _observPointsController.GetObservPointById(_selectedPointId);
+
             _observPointsController.UpdateObservPoint(
                 GetObservationPoint(),
                 VisibilityManager.ObservPointFeature,
@@ -1077,16 +1077,32 @@ namespace MilSpace.Visibility
 
         private ObservationPoint GetObservationPoint()
         {
+            var affiliationType = 
+                LocalizationContext.Instance.AffiliationTypes.First(v => v.Value.Equals(cmbAffiliationEdit.SelectedItem));
+            var mobilityType = 
+                LocalizationContext.Instance.MobilityTypes.First(v => v.Value.Equals(cmbObservTypesEdit.SelectedItem));
 
-            var affiliationType = LocalizationContext.Instance.AffiliationTypes.First(v => v.Value.Equals(cmbAffiliationEdit.SelectedItem));
-            var mobilityType = LocalizationContext.Instance.MobilityTypes.First(v => v.Value.Equals(cmbObservTypesEdit.SelectedItem));
-
-
-            return new ObservationPoint()
+            double xdd = 0;
+            double ydd = 0;
+            if (!Helper.TryParceToDouble(xCoord.Text, out xdd) || !Helper.TryParceToDouble(yCoord.Text, out ydd))
             {
-                X = Convert.ToDouble(xCoord.Text),
-                Y = Convert.ToDouble(yCoord.Text),
+                //string sMsgText = LocalizationContext.Instance.FindLocalizedElement(
+                //    "MsgInvalidCoordinatesDD", "недійсні дані \nПотрібні коордінати представлені у СК WGS-84, десяткові градуси");
+                //MessageBox.Show(
+                //    sMsgText,LocalizationContext.Instance.MsgBoxErrorHeader,MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //return null;
+                xdd = ydd = 25.2525252525;
+            }
+
+            ObservationPoint op = new ObservationPoint()
+            {
+                Title = observPointName.Text,
+                Type = mobilityType.Key.ToString(),
                 Affiliation = affiliationType.Key.ToString(),
+
+                X = xdd,
+                Y = ydd,
+
                 AngelMaxH = Convert.ToDouble(angleOFViewMax.Text),
                 AngelMinH = Convert.ToDouble(angleOFViewMin.Text),
                 //AngelCameraRotationH = Convert.ToDouble(cameraRotationH.Text),
@@ -1097,13 +1113,14 @@ namespace MilSpace.Visibility
                 AzimuthStart = Convert.ToDouble(azimuthB.Text),
                 AzimuthEnd = Convert.ToDouble(azimuthE.Text),
                 //AzimuthMainAxis = Convert.ToDouble(azimuthMainAxis.Text),
-                Dto = Convert.ToDateTime(observPointDate.Text),
-                Operator = observPointCreator.Text,
-                Title = observPointName.Text,
-                Type = mobilityType.Key.ToString(),
                 InnerRadius = Convert.ToDouble(txtMinDistance.Text),
                 OuterRadius = Convert.ToDouble(txtMaxDistance.Text),
-            };
+
+                Dto = Convert.ToDateTime(observPointDate.Text),
+                Operator = observPointCreator.Text,
+            }; 
+
+            return op;
         }
 
         private void UpdateFilter(DataGridViewRow row)
@@ -1528,7 +1545,8 @@ namespace MilSpace.Visibility
                     var documentBars = ArcMap.Application.Document.CommandBars;
                     var mapTool = documentBars.Find(mapToolID, false, false);
 
-                    if (ArcMap.Application.CurrentTool?.ID?.Value != null && ArcMap.Application.CurrentTool.ID.Value.Equals(mapTool.ID.Value))
+                    if (ArcMap.Application.CurrentTool?.ID?.Value != null 
+                        && ArcMap.Application.CurrentTool.ID.Value.Equals(mapTool.ID.Value))
                     {
                         ArcMap.Application.CurrentTool = null;
                     }
@@ -1536,29 +1554,30 @@ namespace MilSpace.Visibility
                     {
                         ArcMap.Application.CurrentTool = mapTool;
                     }
-
                     break;
 
                 case "tlbbCopyCoord":
-
                     Clipboard.Clear();
-                    Clipboard.SetText($"{xCoord.Text};{yCoord.Text}");
-
+                    string sCoord = $"{xCoord.Text} {yCoord.Text}";
+                    Clipboard.SetText(sCoord.Trim().Replace(",", "."));
                     break;
 
                 case "tlbbPasteCoord":
-
                     var clipboard = Clipboard.GetText();
                     if (string.IsNullOrWhiteSpace(clipboard)) return;
 
-                    if (Regex.IsMatch(clipboard, @"^([-]?[\d]{1,2}[\,|\.]\d+);([-]?[\d]{1,2}[\,|\.]\d+)$"))
+                    if (Regex.IsMatch(clipboard, @"^([-]?[\d]{1,2}[\,|\.]\d+)[\;| ]([-]?[\d]{1,2}[\,|\.]\d+)$"))
                     {
-                        clipboard.Replace('.', ',');
-                        var coords = clipboard.Split(';');
+                        string sCoords = clipboard.Replace('.', ',');
+                        var coords = sCoords.Replace(' ', ';').Split(';');
                         xCoord.Text = coords[0];
                         yCoord.Text = coords[1];
 
-                        _observPointsController.UpdateObservPoint(GetObservationPoint(), VisibilityManager.ObservPointFeature, ActiveView, _selectedPointId);
+                        _observPointsController.UpdateObservPoint(
+                            GetObservationPoint(), 
+                            VisibilityManager.ObservPointFeature, 
+                            ActiveView, 
+                            _selectedPointId);
                     }
                     else
                     {
@@ -1997,6 +2016,73 @@ namespace MilSpace.Visibility
             toolTip.SetToolTip(this.btnAddLayerPS, this.btnAddLayerPS.Tag.ToString());
             toolTip.SetToolTip(this.buttonSaveOPoint, this.buttonSaveOPoint.Tag.ToString());
             toolTip.SetToolTip(this.btnSaveParamPS, this.btnSaveParamPS.Tag.ToString());
+
+
+            
+        }
+
+        private void tbObservObjects_CheckChanged(object sender, EventArgs e)
+        {
+
+            if (dgvObservObjects.SelectedRows.Count == 0) return;
+
+
+            var seletctedItem = dgvObservObjects.SelectedRows[0];
+            if (sender is TextBox control)
+            {
+                if (seletctedItem.DataBoundItem is ObservObjectGui sourceIten)
+                {
+                    if (control == tbObservObjGroup)
+                    {
+                        _isObservObjectsFieldsChanged = _isObservObjectsFieldsChanged || !sourceIten.Group.Equals(control.Text);
+                    }
+                    if (control == tbObservObjTitle)
+                    {
+                        _isObservObjectsFieldsChanged = _isObservObjectsFieldsChanged || !sourceIten.Title.Equals(control.Text);
+                    }
+                }
+            }
+        }
+
+
+        private void ObservationObjectChanged(object sender, EventArgs e)
+        {
+            if (_isObservObjectsFieldsChanged)
+            {
+                btnSaveParamPS.Enabled = true;
+            }
+        }
+
+        private void btnSaveParamPS_Click(object sender, EventArgs e)
+        {
+            var seletctedItem = dgvObservObjects.SelectedRows[0];
+            if (seletctedItem.DataBoundItem is ObservObjectGui sourceIten)
+            {
+
+                sourceIten.Title = tbObservObjTitle.Text;
+                sourceIten.Group = tbObservObjGroup.Text;
+                sourceIten.Affiliation = tbObservObjAffiliation.Text;
+
+                bool result = _observPointsController.SaveObservationObject(sourceIten);
+                if (!result)
+                {
+
+                    string sMsgText = LocalizationContext.Instance.FindLocalizedElement(
+                                        "MsgTextCannotSaveObservationstahtions",
+                                        "Параметри облаcті нагляду не були збережені./nБільш детпльна інформація знахолится у лог файлі.");
+                    MessageBox.Show(
+                        sMsgText,
+                        LocalizationContext.Instance.MsgBoxInfoHeader,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+
+                    return;
+                }
+
+                dgvObservObjects.RefreshEdit();
+                dgvObservObjects.Refresh();
+                btnSaveParamPS.Enabled = false;
+            }
         }
     }
 }
