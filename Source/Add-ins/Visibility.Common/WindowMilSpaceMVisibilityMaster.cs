@@ -183,27 +183,20 @@ namespace MilSpace.Visibility
         }
         public void FillComboBoxes()
         {
-            var list = new List<string>();
-            list.AddRange(controller.GetObservationPointTypes().ToArray());
             cmbAffiliation.Items.Clear();
-
             cmbAffiliation.Items.Add(controller.GetAllAffiliationType());
-            cmbAffiliation.Items.AddRange(list.ToArray());
+            cmbAffiliation.Items.AddRange(controller.GetObservationPointTypes().ToArray());
             cmbAffiliation.SelectedItem = controller.GetAllAffiliationType();
 
-            list = new List<string>();
-            list.AddRange(controller.GetObservationObjectTypes().ToArray());
             cmbObservObject.Items.Clear();
 
-            cmbObservObject.Items.AddRange(list.ToArray());
+            cmbObservObject.Items.AddRange(controller.GetObservationObjectTypes().ToArray());
             cmbObservObject.Items.Add(controller.GetAllAffiliationType_for_objects());
 
             cmbObservObject.SelectedItem = _allValuesFilterText;
 
-            list = new List<string>();
             cmbType.Items.Clear();
-            list.AddRange(controller.GetObservationPointMobilityTypes().ToArray());
-            cmbType.Items.AddRange(list.ToArray());
+            cmbType.Items.AddRange(controller.GetObservationPointMobilityTypes().ToArray());
             cmbType.Items.Add(controller.GetAllMobilityType());
             cmbType.SelectedItem = controller.GetAllMobilityType();
 
