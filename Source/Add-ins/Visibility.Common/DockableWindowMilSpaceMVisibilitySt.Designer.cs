@@ -57,9 +57,9 @@
             this.panelCoordinateTools = new System.Windows.Forms.Panel();
             this.tlbCoordinates = new System.Windows.Forms.ToolBar();
             this.tlbbGetCoord = new System.Windows.Forms.ToolBarButton();
+            this.tlbbShowCoord = new System.Windows.Forms.ToolBarButton();
             this.tlbbCopyCoord = new System.Windows.Forms.ToolBarButton();
             this.tlbbPasteCoord = new System.Windows.Forms.ToolBarButton();
-            this.tlbbShowCoord = new System.Windows.Forms.ToolBarButton();
             this.panel18 = new System.Windows.Forms.Panel();
             this.panel10 = new System.Windows.Forms.Panel();
             this.yCoord = new System.Windows.Forms.TextBox();
@@ -116,7 +116,7 @@
             this.tbObservObjTitle = new System.Windows.Forms.TextBox();
             this.label29 = new System.Windows.Forms.Label();
             this.panel40 = new System.Windows.Forms.Panel();
-            this.tbObservObjAffiliation = new System.Windows.Forms.TextBox();
+            this.cmbObservObjAffiliation = new System.Windows.Forms.ComboBox();
             this.label31 = new System.Windows.Forms.Label();
             this.panel28 = new System.Windows.Forms.Panel();
             this.tbObservObjGroup = new System.Windows.Forms.TextBox();
@@ -800,6 +800,12 @@
             this.tlbbGetCoord.Name = "tlbbGetCoord";
             this.tlbbGetCoord.ToolTipText = "Получить координаты с карты";
             // 
+            // tlbbShowCoord
+            // 
+            this.tlbbShowCoord.ImageIndex = 68;
+            this.tlbbShowCoord.Name = "tlbbShowCoord";
+            this.tlbbShowCoord.ToolTipText = "Показать на карте";
+            // 
             // tlbbCopyCoord
             // 
             this.tlbbCopyCoord.ImageIndex = 52;
@@ -811,12 +817,6 @@
             this.tlbbPasteCoord.ImageKey = "Clipboard Paste.png";
             this.tlbbPasteCoord.Name = "tlbbPasteCoord";
             this.tlbbPasteCoord.ToolTipText = "Вставить";
-            // 
-            // tlbbShowCoord
-            // 
-            this.tlbbShowCoord.ImageIndex = 68;
-            this.tlbbShowCoord.Name = "tlbbShowCoord";
-            this.tlbbShowCoord.ToolTipText = "Показать на карте";
             // 
             // panel18
             // 
@@ -1455,7 +1455,7 @@
             // 
             // panel40
             // 
-            this.panel40.Controls.Add(this.tbObservObjAffiliation);
+            this.panel40.Controls.Add(this.cmbObservObjAffiliation);
             this.panel40.Controls.Add(this.label31);
             this.panel40.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel40.Location = new System.Drawing.Point(0, 62);
@@ -1464,14 +1464,17 @@
             this.panel40.Size = new System.Drawing.Size(312, 28);
             this.panel40.TabIndex = 46;
             // 
-            // tbObservObjAffiliation
+            // cmbObservObjAffiliation
             // 
-            this.tbObservObjAffiliation.Dock = System.Windows.Forms.DockStyle.Left;
-            this.tbObservObjAffiliation.Location = new System.Drawing.Point(104, 4);
-            this.tbObservObjAffiliation.Name = "tbObservObjAffiliation";
-            this.tbObservObjAffiliation.ReadOnly = true;
-            this.tbObservObjAffiliation.Size = new System.Drawing.Size(120, 20);
-            this.tbObservObjAffiliation.TabIndex = 5;
+            this.cmbObservObjAffiliation.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbObservObjAffiliation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbObservObjAffiliation.FormattingEnabled = true;
+            this.cmbObservObjAffiliation.Location = new System.Drawing.Point(104, 4);
+            this.cmbObservObjAffiliation.Name = "cmbObservObjAffiliation";
+            this.cmbObservObjAffiliation.Size = new System.Drawing.Size(120, 21);
+            this.cmbObservObjAffiliation.TabIndex = 6;
+            this.cmbObservObjAffiliation.SelectedIndexChanged += new System.EventHandler(this.tbObservObjects_CheckChanged);
+            this.cmbObservObjAffiliation.Leave += new System.EventHandler(this.ObservationObjectChanged);
             // 
             // label31
             // 
@@ -2556,7 +2559,6 @@
             this.panel31.ResumeLayout(false);
             this.panel31.PerformLayout();
             this.panel40.ResumeLayout(false);
-            this.panel40.PerformLayout();
             this.panel28.ResumeLayout(false);
             this.panel28.PerformLayout();
             this.panel3.ResumeLayout(false);
@@ -2687,7 +2689,6 @@
         private System.Windows.Forms.TextBox tbObservObjTitle;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Panel panel40;
-        private System.Windows.Forms.TextBox tbObservObjAffiliation;
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.Panel panel28;
         private System.Windows.Forms.TextBox tbObservObjGroup;
@@ -2793,5 +2794,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox observPointCreator;
         private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.ComboBox cmbObservObjAffiliation;
     }
 }
