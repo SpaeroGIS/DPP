@@ -1,5 +1,6 @@
 ﻿using MilSpace.Core.MilSpaceResourceManager;
 using System.Globalization;
+using System.IO;
 
 namespace MilSpace.Profile.Localization
 {
@@ -18,6 +19,8 @@ namespace MilSpace.Profile.Localization
         private static string PofileTreeTabPageTextKey = "tabPofileTreeTabPageText";
 
         private static string LayersForCalcTextKey = "lblLayersForCalcText";
+        private static string lblDEM_TextKey = "lblDEMTextKey";
+
         private static string DEMTextKey = "lblDEMText";
         private static string VegetationLayerTextKey = "lblVegetationLayerText";
         private static string BuildingsLayerTextKey = "lblBuildingsLayerText";
@@ -194,7 +197,9 @@ namespace MilSpace.Profile.Localization
         private LocalizationConstants()
         {
             //TODO: Define a method to change a culture info to localization
-            mngr = new MilSpaceResourceManager("SPPRD.Profile.Calc", CultureInfo.GetCultureInfo("uk-UA"));
+            string s = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            mngr = new MilSpaceResourceManager(s, "SPPRD.Profile.Calc", CultureInfo.GetCultureInfo("uk-UA"));
+            //mngr = new MilSpaceResourceManager("SPPRD.Profile.Calc", CultureInfo.GetCultureInfo("uk-UA"));
         }
 
         public static string ProfileCalcDocableWinCationText => instance.GetLocalization(ProfileCalcDocableWinCationKey, "Спостереження. Розрахунок профілю");
@@ -237,6 +242,9 @@ namespace MilSpace.Profile.Localization
         public static string ProfileTabPageText => Instance.GetLocalization(ProfileTabPageTextKey);
         public static string PofileTreeTabPageText => Instance.GetLocalization(PofileTreeTabPageTextKey);
         public static string LayersForCalcText => Instance.GetLocalization(LayersForCalcTextKey);
+
+        public static string lblDEM_Text => Instance.GetLocalization(lblDEM_TextKey, "Шар ЦМР/ЦММ");
+
         public static string DEMText => Instance.GetLocalization(DEMTextKey);
         public static string VegetationLayerText => Instance.GetLocalization(VegetationLayerTextKey);
         public static string BuildingsLayerText => Instance.GetLocalization(BuildingsLayerTextKey);

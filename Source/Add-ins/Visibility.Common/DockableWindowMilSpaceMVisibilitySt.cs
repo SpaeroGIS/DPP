@@ -1070,7 +1070,8 @@ namespace MilSpace.Visibility
                 );
         }
 
-        private void CreateNewPoint(ObservationPoint point)
+        //private void CreateNewPoint(ObservationPoint point)
+        private void CreateNewPoint()
         {
             _observPointsController.AddPoint(VisibilityManager.ObservPointFeature, ActiveView);
         }
@@ -1515,14 +1516,17 @@ namespace MilSpace.Visibility
             switch (e.Button.Name)
             {
                 case "tlbbAddNewPoint":
-                    CreateNewPoint(GetObservationPoint());
+                    CreateNewPoint();
                     break;
+
                 case "tlbbRemovePoint":
                     RemovePoint();
                     break;
+
                 case "tlbbShowPoint":
                     _observPointsController.ShowObservPoint(ActiveView, _selectedPointId);
                     break;
+
                 case "tlbbAddObserPointLayer":
                     _observPointsController.AddObservPointsLayer();
                     tlbbAddObserPointLayer.Enabled = false;

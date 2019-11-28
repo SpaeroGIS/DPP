@@ -30,6 +30,7 @@ namespace MilSpace.Profile
         const int NINE = 57;
         const int NOT_FOUND = -1;
         private const string Degree = "°";
+
         private static Logger logger = Logger.GetLoggerEx("MilSpace.Profile.DockableWindowMilSpaceProfileCalc");
 
         private static readonly Dictionary<ProfileSettingsTypeEnum, int[]> nodeDefinition = new Dictionary<ProfileSettingsTypeEnum, int[]>
@@ -417,7 +418,6 @@ namespace MilSpace.Profile
                     txtFirstPointY.Clear();
                     controller.SetFirsPointForLineProfile(null, null);
                     break;
-
             }
         }
 
@@ -1034,6 +1034,8 @@ namespace MilSpace.Profile
 
 
             //Labels
+            lblDEM.Text = LocalizationConstants.lblDEM_Text;
+
             lblLayersForCalc.Text = LocalizationConstants.LayersForCalcText;
             lblVegetationLayer.Text = LocalizationConstants.VegetationLayerText;
             lblBuildingsLayer.Text = LocalizationConstants.BuildingsLayerText;
@@ -1183,7 +1185,6 @@ namespace MilSpace.Profile
 
                 string lineDefinition = LocalizationConstants.TreeViewProfileText;
 
-
                 foreach (var line in profile.ProfileLines)
                 {
                     var azimuth = line.Azimuth.ToString("F0");
@@ -1203,8 +1204,6 @@ namespace MilSpace.Profile
                     childNode.SetAzimuth($"{azimuth}{Degree}");
 
                     logger.InfoEx($"Line {nodeName} was added to the tree");
-
-
                 }
                 parentNode.Nodes.Add(newNode);
             }

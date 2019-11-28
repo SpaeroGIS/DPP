@@ -57,9 +57,9 @@
             this.panelCoordinateTools = new System.Windows.Forms.Panel();
             this.tlbCoordinates = new System.Windows.Forms.ToolBar();
             this.tlbbGetCoord = new System.Windows.Forms.ToolBarButton();
+            this.tlbbShowCoord = new System.Windows.Forms.ToolBarButton();
             this.tlbbCopyCoord = new System.Windows.Forms.ToolBarButton();
             this.tlbbPasteCoord = new System.Windows.Forms.ToolBarButton();
-            this.tlbbShowCoord = new System.Windows.Forms.ToolBarButton();
             this.panel18 = new System.Windows.Forms.Panel();
             this.panel10 = new System.Windows.Forms.Panel();
             this.yCoord = new System.Windows.Forms.TextBox();
@@ -800,6 +800,12 @@
             this.tlbbGetCoord.Name = "tlbbGetCoord";
             this.tlbbGetCoord.ToolTipText = "Получить координаты с карты";
             // 
+            // tlbbShowCoord
+            // 
+            this.tlbbShowCoord.ImageIndex = 68;
+            this.tlbbShowCoord.Name = "tlbbShowCoord";
+            this.tlbbShowCoord.ToolTipText = "Показать на карте";
+            // 
             // tlbbCopyCoord
             // 
             this.tlbbCopyCoord.ImageIndex = 52;
@@ -811,12 +817,6 @@
             this.tlbbPasteCoord.ImageKey = "Clipboard Paste.png";
             this.tlbbPasteCoord.Name = "tlbbPasteCoord";
             this.tlbbPasteCoord.ToolTipText = "Вставить";
-            // 
-            // tlbbShowCoord
-            // 
-            this.tlbbShowCoord.ImageIndex = 68;
-            this.tlbbShowCoord.Name = "tlbbShowCoord";
-            this.tlbbShowCoord.ToolTipText = "Показать на карте";
             // 
             // panel18
             // 
