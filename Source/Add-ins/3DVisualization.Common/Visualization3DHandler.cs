@@ -12,6 +12,7 @@ using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Visualization3D.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace MilSpace.Visualization3D
@@ -163,8 +164,10 @@ namespace MilSpace.Visualization3D
 
             IWorkspaceFactory workspaceFactory = (IWorkspaceFactory)objFactory.Create(typeFactoryID);
             IWorkspace2 workspace = (IWorkspace2)workspaceFactory.OpenFromFile(info.GdbPath, 0);
-            
-            if (info.RessutType == VisibilityCalculationResultsEnum.VisibilityAreaRaster || info.RessutType == VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle)
+
+            var rastersTypes = VisibilityCalcResults.GetRasterResults();
+
+            if (rastersTypes.Any(type => type == info.RessutType))
             {
                 var rasterLayer = CreateRasterLayer(info.ResultName, workspace, objFactory, info.GdbPath);
                 if(rasterLayer != null)
