@@ -37,11 +37,13 @@ namespace MilSpace.Visibility.ViewController
         private static Dictionary<LayerPositionsEnum, string> _layerPositions = Enum.GetValues(typeof(LayerPositionsEnum)).Cast<LayerPositionsEnum>().ToDictionary(t => t, ts => ts.ToString());
 
         private IMxDocument mapDocument;
+        private IMxApplication application;
         private static Logger log = Logger.GetLoggerEx("MilSpace.Visibility.ViewController.ObservationPointsController");
 
-        public ObservationPointsController(IMxDocument mapDocument)
+        public ObservationPointsController(IMxDocument mapDocument, IMxApplication application)
         {
             this.mapDocument = mapDocument;
+            this.application = application;
             LocalizeDictionaries();
         }
 
@@ -313,7 +315,7 @@ namespace MilSpace.Visibility.ViewController
                         calcParams.RelativeLayerName, isLayerAbove, calcParams.ResultLayerTransparency,
                         mapDocument.ActiveView);
 
-                    EsriTools.AddTableToMap(tbls, VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.CoverageTable, calcTask.Name), calcTask.ReferencedGDB, mapDocument);
+                    EsriTools.AddTableToMap(tbls, VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.CoverageTable, calcTask.Name), calcTask.ReferencedGDB, mapDocument, application);
                 }
             }
             catch (Exception ex)

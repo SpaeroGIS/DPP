@@ -581,7 +581,7 @@ namespace MilSpace.Core.Tools
             mapLayers.DeleteLayer(layer);
         }
 
-        public static void AddTableToMap(ITableProperties tblProperties, string tableName, string gdb, IMxDocument mapDocument)
+        public static void AddTableToMap(ITableProperties tblProperties, string tableName, string gdb, IMxDocument mapDocument, IMxApplication application)
         {
             bool isTableExist = false;
             var enumProperties = tblProperties.IEnumTableProperties;
@@ -618,6 +618,11 @@ namespace MilSpace.Core.Tools
                     IStandaloneTableCollection tableCollection = mapDocument.FocusMap as IStandaloneTableCollection;
                     tableCollection.AddStandaloneTable(stndaloneTable);
                     mapDocument.UpdateContents();
+
+                    ITableWindow tabwindow = new TableWindow();
+                    tabwindow.Application = application;
+                    tabwindow.Table = table;
+                    tabwindow.Show(true);
                 }
             }
         }
