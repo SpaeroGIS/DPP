@@ -322,6 +322,11 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             var coverageTable = VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.CoverageTable, outputSourceName);
             coverageTableManager.SaveDataToCoverageTable(coverageTable);
             results.Add(coverageTable);
+            //Add Coverage table to Available results
+            if (!calcResults.HasFlag(VisibilityCalculationResultsEnum.CoverageTable))
+            {
+                calcResults |= VisibilityCalculationResultsEnum.CoverageTable;
+            }
 
             //Set real results to show
             if (removeFullImageFromresult)

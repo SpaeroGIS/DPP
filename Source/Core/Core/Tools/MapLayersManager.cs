@@ -161,7 +161,8 @@ namespace MilSpace.Core.Tools
 
         private IEnumerable<ILayer> GetFeatureLayers(IEnumerable<esriGeometryType> geomType)
         {
-            return GetAllLayers().Where(l => l != null && l is IFeatureLayer && geomType.Any(g => g == ((IFeatureLayer)l).FeatureClass.ShapeType));
+            return GetAllLayers().Where(l => l != null && l is IFeatureLayer  && ((IFeatureLayer)l).FeatureClass != null 
+            && geomType.Any(g => g == ((IFeatureLayer)l).FeatureClass.ShapeType));
         }
     }
 }
