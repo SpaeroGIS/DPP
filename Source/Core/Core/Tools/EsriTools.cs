@@ -949,7 +949,7 @@ namespace MilSpace.Core.Tools
         }
 
 
-        public static IPolygon GetCommonPolygon(List<IPolygon> polygons)
+        public static IPolygon GetTotalPolygon(List<IPolygon> polygons)
         {
             if(polygons == null || polygons.Count == 0)
             {
@@ -973,37 +973,46 @@ namespace MilSpace.Core.Tools
             return unionedPolygon as IPolygon;
         }
 
-        public static IPolygon GetCommonPolygonFromFeatureClass(IFeatureClass featureClass)
+        public static double GetTotalAreaFromFeatureClass(IFeatureClass featureClass, int gridCode = -1)
         {
             if(featureClass == null)
             {
-                return null;
+                return 0;
             }
+
+            double result = 0;
+            int gridCodeIndex = featureClass.FindField("gridcode");
+            int areaCodeIndex = featureClass.FindField("Shape_Area");
 
             IGeoDataset geoDataset = featureClass as IGeoDataset;
-            IGeometry geometryBag = new GeometryBagClass();
-            geometryBag.SpatialReference = geoDataset.SpatialReference;
-
+            
             IFeatureCursor featureCursor = featureClass.Search(null, false);
-
-            IGeometryCollection geometryCollection = geometryBag as IGeometryCollection;
             IFeature currentFeature = featureCursor.NextFeature();
 
-            while(currentFeature != null)
+            if(gridCode != -1)
             {
-                object missing = Type.Missing;
-                geometryCollection.AddGeometry(currentFeature.Shape, ref missing, ref
-                    missing);
+                while(currentFeature != null)
+                {
+                    if((int)currentFeature.Value[gridCodeIndex] == gridCode)
+                    {
+                        result += (double)currentFeature.Value[areaCodeIndex];
+                    }
 
-                currentFeature = featureCursor.NextFeature();
+                    currentFeature = featureCursor.NextFeature();
+                }
             }
-
-            ITopologicalOperator unionedPolygon = new PolygonClass();
-            unionedPolygon.ConstructUnion(geometryBag as IEnumGeometry);
-
+            else
+            {
+                while(currentFeature != null)
+                {
+                    result += (double)currentFeature.Value[areaCodeIndex];
+                    currentFeature = featureCursor.NextFeature();
+                }
+            }
+            
             Marshal.ReleaseComObject(featureCursor);
 
-            return unionedPolygon as IPolygon;
+            return result;
         }
 
         private static IPoint GetPointByAzimuthAndLength(IPoint centerPoint, double azimuth, double distance)

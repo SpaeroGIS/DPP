@@ -254,7 +254,7 @@ namespace MilSpace.Visibility.ViewController
                     calcParams.TaskName,
                     calcParams.TaskName,
                     calcParams.CalculationType,
-                    mapDocument.ActivatedView.FocusMap);
+                    mapDocument.ActiveView.FocusMap);
 
                 if(calcTask.Finished != null)
                 {

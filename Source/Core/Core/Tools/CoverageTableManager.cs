@@ -2,6 +2,7 @@
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Configurations;
 using MilSpace.Core.Tools;
+using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
 using MilSpace.Tools.SurfaceProfile;
 using System;
@@ -14,17 +15,25 @@ namespace MilSpace.Tools
 {
     public class CoverageTableManager
     {
-        private  List<CoverageAreaData> _coverageAreaData = new List<CoverageAreaData>();
+        private List<CoverageAreaData> _coverageAreaData = new List<CoverageAreaData>();
+        private List<CoverageAreaData> _coverageAreaByObjData = new List<CoverageAreaData>();
+        private List<CoverageTableRowModel> _coverageTableModel = new List<CoverageTableRowModel>();
+        private double _totalExpectedArea;
+        private double _totalVisibleArea;
+
         private string _gdb = MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection;
 
         public  void CalculateAreas(int[] observPointsIds, int[] observObjectsIds, IFeatureClass observPointFC, IFeatureClass observObjFC = null)
         {
             SetCoverageAreas(observPointsIds, observObjectsIds, observPointFC, observObjFC);
+            var totalExpectedPolygon = _coverageAreaData.First(area => area.PointId == -1).Polygon;
+            var totalExpectedPolygonArea = (IArea)totalExpectedPolygon;
+            _totalExpectedArea = totalExpectedPolygonArea.Area;
         }
 
-        public  void AddPotentialArea(string featureClassName, bool isCommon, int currPointId = 0)
+        public  void AddPotentialArea(string featureClassName, bool isTotal, int currPointId = 0)
         {
-            if(isCommon)
+            if(isTotal)
             {
                 currPointId = -1;
             }
@@ -35,7 +44,7 @@ namespace MilSpace.Tools
             {
                 foreach(var area in pointAreas)
                 {
-                    GdbAccess.Instance.AddCoverageAreaFeature(area.Polygon, area.PointId, area.ObjId, featureClassName);
+                    GdbAccess.Instance.AddCoverageAreaFeature(area.Polygon, area.PointId, featureClassName, _gdb);
                 }
             }
 
@@ -43,7 +52,7 @@ namespace MilSpace.Tools
 
         private  void SetCoverageAreas(int[] observPointsIds, int[] observObjectsIds, IFeatureClass observPointFC, IFeatureClass observObjFC)
         {
-            var observPoints = VisibilityZonesFacade.GetAllObservationPoints();
+            var observPoints = VisibilityZonesFacade.GetObservationPointByObjectIds(observPointsIds);
 
             foreach(var pointId in observPointsIds)
             {
@@ -60,54 +69,123 @@ namespace MilSpace.Tools
                         var obj = observObjFC.GetFeature(objId);
                         IPolygon objGeom = obj.Shape as IPolygon;
 
-                        var visibilityPolygon = EsriTools.GetCoverageArea(pointGeom, pointModel.AzimuthStart.Value, pointModel.AzimuthEnd.Value,
+                        var visibilityObjPolygon = EsriTools.GetCoverageArea(pointGeom, pointModel.AzimuthStart.Value, pointModel.AzimuthEnd.Value,
                                                                                 pointModel.InnerRadius.Value, pointModel.OuterRadius.Value, objGeom);
 
-                        if(!visibilityPolygon.IsEmpty)
+                        _coverageAreaByObjData.Add(new CoverageAreaData
                         {
-                            _coverageAreaData.Add(new CoverageAreaData
-                            {
-                                ObjId = objId,
-                                PointId = pointId,
-                                Polygon = visibilityPolygon
-                            });
-                        }
-                    }
-                }
-                else
-                {
-                    var visibilityPolygon = EsriTools.GetCoverageArea(pointGeom, pointModel.AzimuthStart.Value, pointModel.AzimuthEnd.Value,
-                                                                                pointModel.InnerRadius.Value, pointModel.OuterRadius.Value);
-
-                    if(!visibilityPolygon.IsEmpty)
-                    {
-                        _coverageAreaData.Add(new CoverageAreaData
-                        {
-                            ObjId = -1,
+                            ObjId = objId,
                             PointId = pointId,
-                            Polygon = visibilityPolygon
+                            Polygon = visibilityObjPolygon
                         });
                     }
                 }
+
+                var visibilityPolygon = EsriTools.GetCoverageArea(pointGeom, pointModel.AzimuthStart.Value, pointModel.AzimuthEnd.Value,
+                                                                            pointModel.InnerRadius.Value, pointModel.OuterRadius.Value);
+
+                _coverageAreaData.Add(new CoverageAreaData
+                {
+                    ObjId = -1,
+                    PointId = pointId,
+                    Polygon = visibilityPolygon
+                });
             }
             
-            var commonArea = EsriTools.GetCommonPolygon(_coverageAreaData.Select(area => { return area.Polygon; }).ToList());
+            var totalArea = EsriTools.GetTotalPolygon(_coverageAreaData.Select(area => { return area.Polygon; }).ToList());
             _coverageAreaData.Add(new CoverageAreaData
             {
                 ObjId = -1,
                 PointId = -1,
-                Polygon = commonArea
+                Polygon = totalArea
             });
         }
 
-        public void AddRecordToCoverageTable(string tableName, int currPointId, int[] observObjectsIds, string visibilityAreasFCName)
+        public void CalculateCoverageTableDataForPoint(int currPointId, string visibilityAreasFCName, int pointCount)
         {
-            IPolygon visibilityArea;
-
             if(currPointId == -1)
             {
-               //visibilityArea = EsriTools.GetCommonPolygonFromFeatureClass()
+                CalculateTotalValues(pointCount, visibilityAreasFCName);
+            }
+            else
+            {
+                var observPoint = VisibilityZonesFacade.GetObservationPointByObjectIds(new int[] { currPointId }).First();
+
+                if(_totalExpectedArea == 0)
+                {
+                    AddEmptyAreaRow(observPoint.Title, currPointId);
+                    return;
+                }
+
+                var visibilityPolygonsForPointFeatureClass = GdbAccess.Instance.GetFeatureClass(_gdb, visibilityAreasFCName);
+                var expectedPolygonArea = (IArea)_coverageAreaData.FirstOrDefault(area => area.PointId == currPointId).Polygon;
+                var visibleArea = EsriTools.GetTotalAreaFromFeatureClass(visibilityPolygonsForPointFeatureClass);
+
+                AddRowModel(observPoint.Title, currPointId, 1, expectedPolygonArea.Area, visibleArea);
             }
         }
+
+        public void SaveDataToCoverageTable(string tableName)
+        {
+            GdbAccess.Instance.FillVSCoverageTable(_coverageTableModel, tableName, _gdb);
+        }
+
+        private void CalculateTotalValues(int pointsCount, string visibilityAreasFCName)
+        {
+            string allTitle = "All";
+
+            if(_totalExpectedArea == 0)
+            {
+                AddEmptyAreaRow(allTitle, -1);
+                return;
+            }
+
+            var visibilityPolygonsFeatureClass = GdbAccess.Instance.GetFeatureClass(_gdb, visibilityAreasFCName);
+
+            _totalVisibleArea = EsriTools.GetTotalAreaFromFeatureClass(visibilityPolygonsFeatureClass);
+
+            AddRowModel(allTitle, -1, -1, _totalExpectedArea, _totalVisibleArea);
+            
+            for(int i = 1; i <= pointsCount; i++)
+            {
+                var areaByPointsSee = EsriTools.GetTotalAreaFromFeatureClass(visibilityPolygonsFeatureClass, i);
+
+                AddRowModel(allTitle, -1, i, _totalExpectedArea, areaByPointsSee);
+            }
+        }
+
+        private void AddEmptyAreaRow(string observPointTitle, int observPointId)
+        {
+            _coverageTableModel.Add(new CoverageTableRowModel
+            {
+                ObservPointName = observPointTitle,
+                ObservPointId = observPointId,
+                ExpectedArea = 0,
+                VisibilityArea = 0,
+                ToAllExpectedAreaPercent = 0,
+                ToAllVisibilityAreaPercent = 0,
+                ObservPointsSeeCount = 0
+            });
+        }
+
+        private void AddRowModel(string pointName, int pointId, int pointsCount, double expectedArea, double visibleArea)
+        {
+            _coverageTableModel.Add(new CoverageTableRowModel
+            {
+                ObservPointName = pointName,
+                ObservPointId = pointId,
+                ExpectedArea = expectedArea,
+                VisibilityArea = visibleArea,
+                ToAllExpectedAreaPercent = GetPercent(_totalExpectedArea, expectedArea),
+                ToAllVisibilityAreaPercent = GetPercent(_totalExpectedArea, visibleArea),
+                ObservPointsSeeCount = pointsCount
+            });
+        }
+
+        private int GetPercent(double totalArea, double pointArea)
+        {
+            return Convert.ToInt32(Math.Round((pointArea * 100) / totalArea));
+        }
+
     }
 }
