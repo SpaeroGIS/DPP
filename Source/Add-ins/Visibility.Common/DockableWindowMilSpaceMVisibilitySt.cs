@@ -1203,7 +1203,7 @@ namespace MilSpace.Visibility
 
         private void SetVisibilitySessionsController()
         {
-            var controller = new VisibilitySessionsController();
+            var controller = new VisibilitySessionsController(ArcMap.Document);
             controller.SetView(this);
             _visibilitySessionsController = controller;
         }
@@ -2008,33 +2008,16 @@ namespace MilSpace.Visibility
             toolTip.ReshowDelay = 500;
             toolTip.ShowAlways = true;
 
-            //foreach (Control ctrl in this.Controls)
-            //{
-            //    if (ctrl is System.Windows.Forms.Button && ctrl.Tag is string)
-            //    {
-            //        ctrl.MouseHover += new EventHandler(
-            //            delegate (Object o, EventArgs a)
-            //            {
-            //                var btn = (Control)o;
-            //                toolTip.SetToolTip(btn, btn.Tag.ToString());
-            //            });
-            //    }
-            //}
-
             toolTip.SetToolTip(this.tlbbAddObservObjLayer, this.tlbbAddObservObjLayer.Tag.ToString());
             toolTip.SetToolTip(this.btnAddLayerPS, this.btnAddLayerPS.Tag.ToString());
             toolTip.SetToolTip(this.buttonSaveOPoint, this.buttonSaveOPoint.Tag.ToString());
             toolTip.SetToolTip(this.btnSaveParamPS, this.btnSaveParamPS.Tag.ToString());
-
-
-
         }
 
         private void tbObservObjects_CheckChanged(object sender, EventArgs e)
         {
 
             if (dgvObservObjects.SelectedRows.Count == 0) return;
-
 
             var seletctedItem = dgvObservObjects.SelectedRows[0];
             if (seletctedItem.DataBoundItem is ObservObjectGui sourceIten)
