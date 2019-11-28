@@ -28,12 +28,13 @@ namespace MilSpace.GeoCalculator
         private Dictionary<string, PointModel> pointModels = new Dictionary<string, PointModel>();
         private LocalizationContext context;
         private readonly Dictionary<string, IPoint> ClickedPointsDictionary = new Dictionary<string, IPoint>();
-        //private static Logger log = new Logger;
+
+        private static Logger log = Logger.GetLoggerEx("MilSpace.GeoCalculator.DockableWindowGeoCalculator");
 
         //Current Projection Models
         private ProjectionsModel CurrentProjectionsModel = Constants.ProjectionsModels[0];        
 
-        public ISpatialReference FocusMapSpatialReference => ArcMap.Document.FocusMap.SpatialReference;
+        public ISpatialReference FocusMapSpatialReference => ArcMap.Document.ActiveView.FocusMap.SpatialReference;
 
         public DockableWindowGeoCalculator(object hook, IBusinessLogic businessLogic)
         {
@@ -139,23 +140,48 @@ namespace MilSpace.GeoCalculator
             try
             {
                 IPoint point = new PointClass();
-                point.PutCoords(double.Parse(XCoordinateTextBox.Text), double.Parse(YCoordinateTextBox.Text));
-                point.SpatialReference = FocusMapSpatialReference;
-                ProcessPointAsClicked(point, false);
-                var document = ArcMap.Document as IMxDocument;
-                var activeView = document?.ActiveView;
-                IEnvelope envelope = activeView?.Extent;
-                if (envelope != null)
+
+                double xCoordinate = 0;
+                double yCoordinate = 0;
+
+                if (Helper.TryParceToDouble(XCoordinateTextBox.Text, out xCoordinate)
+                    && Helper.TryParceToDouble(YCoordinateTextBox.Text, out yCoordinate))
                 {
-                    envelope.CenterAt(point);
-                    activeView.Extent = envelope;
-                    activeView.Refresh();
+                    point.PutCoords(xCoordinate, yCoordinate);
+                    //point.PutCoords(double.Parse(XCoordinateTextBox.Text), double.Parse(YCoordinateTextBox.Text));
+
+                    point.SpatialReference = FocusMapSpatialReference;
+
+                    ProcessPointAsClicked(point, false);
+
+                    var document = ArcMap.Document as IMxDocument;
+                    var activeView = document?.ActiveView;
+                    IEnvelope envelope = activeView?.Extent;
+                    if (envelope != null)
+                    {
+                        envelope.CenterAt(point);
+                        activeView.Extent = envelope;
+                        activeView.Refresh();
+                    }
+
                 }
+                else
+                {
+                    string ss = string.Format("XCoordinateTextBox.Text:{0} YCoordinateTextBox.Text:{1}\nxCoordinate:{2} yCoordinate:{3}",
+                        XCoordinateTextBox.Text, YCoordinateTextBox.Text, xCoordinate, yCoordinate);
+                    MessageBox.Show(
+                        context.WrongFormatMessage + "\n" + ss,
+                        context.ErrorString,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    log.DebugEx("MoveToTheProjectedCoordButton_Click " + context.WrongFormatMessage + ss);
+                }
+
             }
             catch
             {
                 MessageBox.Show(
-                    context.WrongFormatMessage, 
+                    context.WrongFormatMessage + " -> " + XCoordinateTextBox.Text + ";" + YCoordinateTextBox.Text, 
                     context.ErrorString, 
                     MessageBoxButtons.OK, 
                     MessageBoxIcon.Error);
@@ -863,10 +889,11 @@ namespace MilSpace.GeoCalculator
 
             if (column is DataGridViewImageColumn && column.Name == Constants.HighlightColumnName)
             {
-                ArcMapHelper.FlashGeometry(selectedPoint.Value, 350);
+                ArcMapHelper.FlashGeometry(selectedPoint.Value, 500);
                 ProjectPointAsync(selectedPoint.Value, true);                
             }
-            else if (column is DataGridViewImageColumn && column.Name == Constants.DeleteColumnName)
+            else 
+            if (column is DataGridViewImageColumn && column.Name == Constants.DeleteColumnName)
             {
                 grid.Rows.RemoveAt(e.RowIndex);
                 ArcMapHelper.RemoveGraphicsFromMap(new string[] { selectedPoint.Key });
@@ -886,6 +913,7 @@ namespace MilSpace.GeoCalculator
             else
             {
                 grid.Rows[e.RowIndex].Selected = true;
+                ArcMapHelper.FlashGeometry(selectedPoint.Value, 500);
                 ProjectPointAsync(selectedPoint.Value, true);
             }            
         }
@@ -900,9 +928,11 @@ namespace MilSpace.GeoCalculator
                 if (folderBrowserResult == DialogResult.OK)
                 {
                     if (chosenRadio == RadioButtonsValues.XML)
-                        await _businessLogic.SaveProjectionsToXmlFileAsync(pointModels.ToSortedPointModelsList(), saveFileDialog.FileName).ConfigureAwait(false);
+                        await _businessLogic.SaveProjectionsToXmlFileAsync(
+                            pointModels.ToSortedPointModelsList(), saveFileDialog.FileName).ConfigureAwait(false);
                     else if (chosenRadio == RadioButtonsValues.CSV)
-                        await _businessLogic.SaveProjectionsToCsvFileAsync(pointModels.ToSortedPointModelsList(), saveFileDialog.FileName).ConfigureAwait(false);
+                        await _businessLogic.SaveProjectionsToCsvFileAsync(
+                            pointModels.ToSortedPointModelsList(), saveFileDialog.FileName).ConfigureAwait(false);
                 }
             }
         }
@@ -911,7 +941,11 @@ namespace MilSpace.GeoCalculator
         {
             if (PointsGridView.Rows.Count > 0)
             {
-                var warningResult = MessageBox.Show(context.GridCleanWarningMessage, context.WarningString, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                var warningResult = MessageBox.Show(
+                    context.GridCleanWarningMessage, 
+                    context.WarningString, 
+                    MessageBoxButtons.YesNo, 
+                    MessageBoxIcon.Warning);
                 if (warningResult == DialogResult.No) return;
             }
 
@@ -1045,7 +1079,10 @@ namespace MilSpace.GeoCalculator
         }
 
         private void ProjectPointAsync(
-            IPoint inputPoint, bool fromUserInput = false, string pointGuid = null, int? pointNumber = null)
+            IPoint inputPoint, 
+            bool fromUserInput = false, 
+            string pointGuid = null, 
+            int? pointNumber = null)
         {
             lastProjectedPoint = new ExtendedPointModel();
 
@@ -1251,13 +1288,14 @@ namespace MilSpace.GeoCalculator
         private void ProcessPointAsClicked(IPoint point, bool projectPoint)
         {
             var pointGuid = AddPointToList(point);
-            var pointNumber = ClickedPointsDictionary.Count();
-
-            AddPointToGrid(point, pointNumber);
-
-            if (projectPoint)
+            if (pointGuid != null)
             {
-                ProjectPointAsync(point, false, pointGuid, pointNumber);
+                var pointNumber = ClickedPointsDictionary.Count();
+                AddPointToGrid(point, pointNumber);
+                if (projectPoint)
+                {
+                    ProjectPointAsync(point, false, pointGuid, pointNumber);
+                }
             }
         }
 
@@ -1269,24 +1307,50 @@ namespace MilSpace.GeoCalculator
                 pointModel.Latitude, 
                 coordinateSystem, 
                 createGeoCoordinateSystem);
+
             point.Project(FocusMapSpatialReference);
 
             var pointGuid = AddPointToList(point);
-            pointModels.Add(pointGuid, pointModel);
-
-            var pointNumber = ClickedPointsDictionary.Count();
-            AddPointToGrid(point, pointNumber);            
+            if (pointGuid != null)
+            {
+                pointModels.Add(pointGuid, pointModel);
+                var pointNumber = ClickedPointsDictionary.Count();
+                AddPointToGrid(point, pointNumber);
+            }
         }
 
         private string AddPointToList(IPoint point)
         {
+            log.DebugEx("> AddPointToList START. point.X:{0} point.Y:{1}", point.X, point.Y);
             if (point != null && !point.IsEmpty)
             {
-                var color = (IColor)new RgbColorClass() { Green = 255 };
-                var placedPoint = ArcMapHelper.AddGraphicToMap(point, color, true, esriSimpleMarkerStyle.esriSMSCircle, 7);
+                bool fExists = false;
+                foreach (var p in ClickedPointsDictionary)
+                {
+                    if ((Math.Abs(p.Value.X - point.X) < 1) && (Math.Abs(p.Value.Y - point.Y) < 1)) fExists = true;
+                }
 
-                ClickedPointsDictionary.Add(placedPoint.Key, placedPoint.Value);                
-                return placedPoint.Key;
+                if (!fExists)
+                {
+                    var color = (IColor)new RgbColorClass() { Green = 255 };
+
+                    log.DebugEx("AddPointToList. point.X:{0} point.Y:{1}", point.X, point.Y);
+
+                    var placedPoint = ArcMapHelper.AddGraphicToMap(
+                        point, 
+                        color, 
+                        true, 
+                        esriSimpleMarkerStyle.esriSMSCross, 
+                        16);
+
+                    log.DebugEx("AddPointToList. placedPoint.Value.X:{0} placedPoint.Value.Y:{1} placedPoint.Key:{2}"
+                        , placedPoint.Value.X, placedPoint.Value.Y, placedPoint.Key);
+
+                    ClickedPointsDictionary.Add(placedPoint.Key, point);
+                    //NIKOL ClickedPointsDictionary.Add(placedPoint.Key, placedPoint.Value);
+
+                    return placedPoint.Key;
+                }
             }
             return null;
         }        
@@ -1330,27 +1394,28 @@ namespace MilSpace.GeoCalculator
 
         private void AddPointToGrid(IPoint point, int pointNumber)
         {
-            var newRow = new DataGridViewRow();
-            newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = pointNumber });
-            newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = point.X.ToIntegerString() });
-            newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = point.Y.ToIntegerString() });
-            newRow.Cells.Add(new DataGridViewImageCell()
-            {
-                Value = new Bitmap(Image.FromFile(System.IO.Path.Combine(
-                    System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), 
-                    @"Images\LocatePoint.png")), 16, 16),
-                ToolTipText = context.ShowPointOnMapButton
-            });
-            newRow.Cells.Add(new DataGridViewImageCell()
-            {
-                Value = new Bitmap(Image.FromFile(System.IO.Path.Combine(
-                    System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), 
-                    @"Images\DeletePoint.png")), 16, 16),
-                ToolTipText = context.DeletePointButton
-            });
-            PointsGridView.Rows.Add(newRow);
-            PointsGridView.ClearSelection();
-            PointsGridView.Refresh();
+                var newRow = new DataGridViewRow();
+                newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = pointNumber });
+                newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = point.X.ToIntegerString() });
+                newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = point.Y.ToIntegerString() });
+                newRow.Cells.Add(new DataGridViewImageCell()
+                {
+                    Value = new Bitmap(Image.FromFile(System.IO.Path.Combine(
+                        System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                        @"Images\LocatePoint.png")), 16, 16),
+                    ToolTipText = context.ShowPointOnMapButton
+                });
+                newRow.Cells.Add(new DataGridViewImageCell()
+                {
+                    Value = new Bitmap(Image.FromFile(System.IO.Path.Combine(
+                        System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                        @"Images\DeletePoint.png")), 16, 16),
+                    ToolTipText = context.DeletePointButton
+                });
+
+                PointsGridView.Rows.Add(newRow);
+                PointsGridView.ClearSelection();
+                PointsGridView.Refresh();
         }
         #endregion        
     }

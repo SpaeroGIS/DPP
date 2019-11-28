@@ -64,11 +64,10 @@ namespace MilSpace.Core
 
         public static bool TryParceToDouble(this string numericString, out double result)
         {
-            numericString = numericString
-                .Replace(".", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator)
-                .Replace(",", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
-
-            return double.TryParse(numericString, out result);
+            string snumericString = numericString.Trim();
+            string snumericString2 = snumericString.Replace(".", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+            string snumericString3 = snumericString.Replace(",", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+            return double.TryParse(snumericString3, out result);
         }
 
         public static string AutoEllipses(this string str, int length = 5)

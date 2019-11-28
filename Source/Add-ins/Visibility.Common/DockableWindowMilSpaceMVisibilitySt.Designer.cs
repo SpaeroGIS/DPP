@@ -110,7 +110,7 @@
             this.tbObservObjDate = new System.Windows.Forms.TextBox();
             this.label39 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbObservObjCreator = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.panel31 = new System.Windows.Forms.Panel();
             this.tbObservObjTitle = new System.Windows.Forms.TextBox();
@@ -1394,7 +1394,7 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.tbObservObjCreator);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 118);
@@ -1403,14 +1403,14 @@
             this.panel1.Size = new System.Drawing.Size(312, 28);
             this.panel1.TabIndex = 48;
             // 
-            // textBox1
+            // tbObservObjCreator
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox1.Location = new System.Drawing.Point(104, 4);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(120, 20);
-            this.textBox1.TabIndex = 5;
+            this.tbObservObjCreator.Dock = System.Windows.Forms.DockStyle.Left;
+            this.tbObservObjCreator.Location = new System.Drawing.Point(104, 4);
+            this.tbObservObjCreator.Name = "tbObservObjCreator";
+            this.tbObservObjCreator.ReadOnly = true;
+            this.tbObservObjCreator.Size = new System.Drawing.Size(120, 20);
+            this.tbObservObjCreator.TabIndex = 5;
             // 
             // label5
             // 
@@ -1632,6 +1632,7 @@
             // 
             // toolBarButton31
             // 
+            this.toolBarButton31.Enabled = false;
             this.toolBarButton31.ImageKey = "Directions.png";
             this.toolBarButton31.Name = "toolBarButton31";
             this.toolBarButton31.ToolTipText = "Показати ОН на карті ";
@@ -1650,6 +1651,7 @@
             // 
             // toolBarButton34
             // 
+            this.toolBarButton34.Enabled = false;
             this.toolBarButton34.ImageKey = "Cancel.png";
             this.toolBarButton34.Name = "toolBarButton34";
             this.toolBarButton34.ToolTipText = "видилити ОН";
@@ -2685,7 +2687,7 @@
         private System.Windows.Forms.TextBox tbObservObjDate;
         private System.Windows.Forms.Label label39;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbObservObjCreator;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel31;
         private System.Windows.Forms.TextBox tbObservObjTitle;
@@ -2704,7 +2706,6 @@
         private System.Windows.Forms.ToolBarButton toolBarButton31;
         private System.Windows.Forms.ToolBarButton toolBarButton32;
         private System.Windows.Forms.ToolBarButton toolBarButton6;
-        private System.Windows.Forms.ToolBarButton toolBarButton34;
         private System.Windows.Forms.ToolBarButton toolBarButton7;
         private System.Windows.Forms.ToolBarButton toolBarButton29;
         private System.Windows.Forms.Panel chckObservObjColumnsVisibilityPanel;
@@ -2797,5 +2798,6 @@
         private System.Windows.Forms.TextBox observPointCreator;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.ComboBox cmbObservObjAffiliation;
+        private System.Windows.Forms.ToolBarButton toolBarButton34;
     }
 }

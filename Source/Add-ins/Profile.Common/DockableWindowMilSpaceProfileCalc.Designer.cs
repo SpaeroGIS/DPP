@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode23 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode24 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Графика");
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.profileTabPage = new System.Windows.Forms.TabPage();
             this.btnRefreshLayers = new System.Windows.Forms.Button();
@@ -682,9 +682,9 @@
             this.lblDEM.Location = new System.Drawing.Point(0, 34);
             this.lblDEM.Name = "lblDEM";
             this.lblDEM.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.lblDEM.Size = new System.Drawing.Size(93, 21);
+            this.lblDEM.Size = new System.Drawing.Size(89, 21);
             this.lblDEM.TabIndex = 8;
-            this.lblDEM.Text = "Слой ЦМР/ ЦММ";
+            this.lblDEM.Text = "Шар ЦМР/ ЦММ";
             // 
             // lblLayersForCalc
             // 
@@ -937,6 +937,7 @@
             this.toolBarButton58});
             this.firstPointToolBar.ButtonSize = new System.Drawing.Size(16, 16);
             this.firstPointToolBar.Dock = System.Windows.Forms.DockStyle.Left;
+            this.firstPointToolBar.DropDownArrows = true;
             this.firstPointToolBar.ImageList = this.imageList1;
             this.firstPointToolBar.Location = new System.Drawing.Point(148, 4);
             this.firstPointToolBar.Margin = new System.Windows.Forms.Padding(0);
@@ -1515,25 +1516,25 @@
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.Location = new System.Drawing.Point(0, 62);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode22.Checked = true;
-            treeNode22.ImageKey = "vector-path-line.png";
-            treeNode22.Name = "Points";
-            treeNode22.SelectedImageIndex = 205;
-            treeNode22.Text = "Отрезки";
-            treeNode23.Checked = true;
-            treeNode23.ImageKey = "Editing-Line-icon3.png";
-            treeNode23.Name = "Fun";
-            treeNode23.SelectedImageIndex = 208;
-            treeNode23.Text = "Веер";
-            treeNode24.Checked = true;
-            treeNode24.ImageKey = "vector-polygon.png";
-            treeNode24.Name = "Primitives";
-            treeNode24.SelectedImageIndex = 209;
-            treeNode24.Text = "Графика";
+            treeNode1.Checked = true;
+            treeNode1.ImageKey = "vector-path-line.png";
+            treeNode1.Name = "Points";
+            treeNode1.SelectedImageIndex = 205;
+            treeNode1.Text = "Отрезки";
+            treeNode2.Checked = true;
+            treeNode2.ImageKey = "Editing-Line-icon3.png";
+            treeNode2.Name = "Fun";
+            treeNode2.SelectedImageIndex = 208;
+            treeNode2.Text = "Веер";
+            treeNode3.Checked = true;
+            treeNode3.ImageKey = "vector-polygon.png";
+            treeNode3.Name = "Primitives";
+            treeNode3.SelectedImageIndex = 209;
+            treeNode3.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode22,
-            treeNode23,
-            treeNode24});
+            treeNode1,
+            treeNode2,
+            treeNode3});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(312, 269);
             this.profilesTreeView.TabIndex = 35;

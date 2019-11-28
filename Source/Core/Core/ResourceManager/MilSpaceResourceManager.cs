@@ -19,7 +19,13 @@ namespace MilSpace.Core.MilSpaceResourceManager
         {
             var pathToAssembly = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Localization");
             innerObject = ResourceManager.CreateFileBasedResourceManager(sourceName, $"{pathToAssembly}", null);
+            cultoreToLocalize = cultireInfo;
+        }
 
+        public MilSpaceResourceManager(string sPath, string sourceName, CultureInfo cultireInfo)
+        {
+            var pathToAssembly = Path.Combine(sPath, "Localization");
+            innerObject = ResourceManager.CreateFileBasedResourceManager(sourceName, $"{pathToAssembly}", null);
             cultoreToLocalize = cultireInfo;
         }
 

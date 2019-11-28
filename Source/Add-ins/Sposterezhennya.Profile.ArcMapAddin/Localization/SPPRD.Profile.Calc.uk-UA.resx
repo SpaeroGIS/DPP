@@ -612,4 +612,7 @@
   <data name="labelHeaderSessionProfiles" xml:space="preserve">
     <value>Профілі поточного сеансу</value>
   </data>
+  <data name="lblDEMTextKey" xml:space="preserve">
+    <value>Шар ЦМР/ЦММ</value>
+  </data>
 </root>

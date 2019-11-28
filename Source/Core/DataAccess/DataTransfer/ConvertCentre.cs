@@ -275,7 +275,7 @@ namespace MilSpace.DataAccess.DataTransfer
             dbObservationPoint.sGroupOO = observationObject.Group;
             dbObservationPoint.sTitleOO = observationObject.Title;
             dbObservationPoint.saffiliation = observationObject.ObjectType.ToString();
-
+            dbObservationPoint.idOO = observationObject.Id;
         }
 
         internal static void Update(this VisiblilityObservPoint dbObservationPoint, ObservationPoint observationPoint)
