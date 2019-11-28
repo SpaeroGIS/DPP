@@ -1078,9 +1078,9 @@ namespace MilSpace.Visibility
 
         private ObservationPoint GetObservationPoint()
         {
-            var affiliationType = 
+            var affiliationType =
                 LocalizationContext.Instance.AffiliationTypes.First(v => v.Value.Equals(cmbAffiliationEdit.SelectedItem));
-            var mobilityType = 
+            var mobilityType =
                 LocalizationContext.Instance.MobilityTypes.First(v => v.Value.Equals(cmbObservTypesEdit.SelectedItem));
 
             double xdd = 0;
@@ -1119,7 +1119,7 @@ namespace MilSpace.Visibility
 
                 Dto = Convert.ToDateTime(observPointDate.Text),
                 Operator = observPointCreator.Text,
-            }; 
+            };
 
             return op;
         }
@@ -1296,8 +1296,14 @@ namespace MilSpace.Visibility
         private void PopulateObservObjectsComboBoxes()
         {
             cmbObservObjAffiliationFilter.Items.Clear();
+            cmbObservObjAffiliation.Items.Clear();
+
             cmbObservObjAffiliationFilter.Items.AddRange(_observPointsController.GetObservationObjectTypes().ToArray());
             cmbObservObjAffiliationFilter.SelectedItem = _observPointsController.GetObservObjectsTypeString(ObservationObjectTypesEnum.All);
+
+
+            cmbObservObjAffiliation.Items.AddRange(_observPointsController.GetObservationObjectTypes(false).ToArray());
+            cmbObservObjAffiliation.SelectedItem = _observPointsController.GetObservObjectsTypeString(ObservationObjectTypesEnum.Enemy);
         }
 
         private void FilterObservObjects()
@@ -1334,7 +1340,7 @@ namespace MilSpace.Visibility
         {
             tbObservObjTitle.Text = observObject.Title;
             tbObservObjGroup.Text = observObject.Group;
-            tbObservObjAffiliation.Text = _observPointsController.GetObservObjectsTypeString(observObject.ObjectType);
+            cmbObservObjAffiliation.SelectedItem = _observPointsController.GetObservObjectsTypeString(observObject.ObjectType);
             tbObservObjDate.Text = observObject.DTO.ToString(Helper.DateFormatSmall);
         }
 
@@ -1342,7 +1348,7 @@ namespace MilSpace.Visibility
         {
             tbObservObjTitle.Text = string.Empty;
             tbObservObjGroup.Text = string.Empty;
-            tbObservObjAffiliation.Text = string.Empty;
+            //cmbObservObjAffiliation.Text = string.Empty;
             tbObservObjDate.Text = string.Empty;
         }
 
@@ -1549,7 +1555,7 @@ namespace MilSpace.Visibility
                     var documentBars = ArcMap.Application.Document.CommandBars;
                     var mapTool = documentBars.Find(mapToolID, false, false);
 
-                    if (ArcMap.Application.CurrentTool?.ID?.Value != null 
+                    if (ArcMap.Application.CurrentTool?.ID?.Value != null
                         && ArcMap.Application.CurrentTool.ID.Value.Equals(mapTool.ID.Value))
                     {
                         ArcMap.Application.CurrentTool = null;
@@ -1578,9 +1584,9 @@ namespace MilSpace.Visibility
                         yCoord.Text = coords[1];
 
                         _observPointsController.UpdateObservPoint(
-                            GetObservationPoint(), 
-                            VisibilityManager.ObservPointFeature, 
-                            ActiveView, 
+                            GetObservationPoint(),
+                            VisibilityManager.ObservPointFeature,
+                            ActiveView,
                             _selectedPointId);
                     }
                     else
@@ -2022,7 +2028,7 @@ namespace MilSpace.Visibility
             toolTip.SetToolTip(this.btnSaveParamPS, this.btnSaveParamPS.Tag.ToString());
 
 
-            
+
         }
 
         private void tbObservObjects_CheckChanged(object sender, EventArgs e)
@@ -2032,10 +2038,11 @@ namespace MilSpace.Visibility
 
 
             var seletctedItem = dgvObservObjects.SelectedRows[0];
-            if (sender is TextBox control)
+            if (seletctedItem.DataBoundItem is ObservObjectGui sourceIten)
             {
-                if (seletctedItem.DataBoundItem is ObservObjectGui sourceIten)
+                if (sender is TextBox control)
                 {
+
                     if (control == tbObservObjGroup)
                     {
                         _isObservObjectsFieldsChanged = _isObservObjectsFieldsChanged || !sourceIten.Group.Equals(control.Text);
@@ -2044,6 +2051,12 @@ namespace MilSpace.Visibility
                     {
                         _isObservObjectsFieldsChanged = _isObservObjectsFieldsChanged || !sourceIten.Title.Equals(control.Text);
                     }
+
+                }
+                if (sender is ComboBox comboControl)
+                {
+                    _isObservObjectsFieldsChanged = _isObservObjectsFieldsChanged ||
+                        !sourceIten.Affiliation.Equals(cmbObservObjAffiliation.Text); 
                 }
             }
         }
@@ -2065,7 +2078,7 @@ namespace MilSpace.Visibility
 
                 sourceIten.Title = tbObservObjTitle.Text;
                 sourceIten.Group = tbObservObjGroup.Text;
-                sourceIten.Affiliation = tbObservObjAffiliation.Text;
+                sourceIten.Affiliation = cmbObservObjAffiliation.Text;
 
                 bool result = _observPointsController.SaveObservationObject(sourceIten);
                 if (!result)
@@ -2085,8 +2098,13 @@ namespace MilSpace.Visibility
 
                 dgvObservObjects.RefreshEdit();
                 dgvObservObjects.Refresh();
-                btnSaveParamPS.Enabled = false;
+                _isObservObjectsFieldsChanged = btnSaveParamPS.Enabled = false;
             }
+        }
+
+        private void cmbObservObjAffiliation_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
