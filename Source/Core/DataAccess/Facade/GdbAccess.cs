@@ -675,10 +675,10 @@ namespace MilSpace.DataAccess.Facade
             }).Where(i => i != null).ToArray();
         }
 
-        private static bool IsDatasetExist(IWorkspace workspace, string featureClass, esriDatasetType datasetType)
+        private static bool IsDatasetExist(IWorkspace workspace, string datasetName, esriDatasetType datasetType)
         {
             IWorkspace2 wsp2 = (IWorkspace2)workspace;
-            return wsp2.NameExists[datasetType, featureClass];
+            return wsp2.NameExists[datasetType, datasetName];
         }
 
         public ILayer GetLayerFromWorkingWorkspace(string featureClassName)
