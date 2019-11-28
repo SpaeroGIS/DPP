@@ -101,7 +101,12 @@ namespace MilSpace.Visibility.ViewController
                 UpdateVisibilitySessionsList();
             }
 
-            var removedSession = _visibilitySessions.First(session => session.Id == id);
+            var removedSession = _visibilitySessions.FirstOrDefault(session => session.Id == id);
+
+            if(removedSession == null)
+            {
+                return false;
+            }
 
             var result = VisibilityZonesFacade.DeleteVisibilitySession(id);
 
