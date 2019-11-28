@@ -1346,6 +1346,7 @@ namespace MilSpace.Visibility
         {
             tbObservObjTitle.Text = observObject.Title;
             tbObservObjGroup.Text = observObject.Group;
+            tbObservObjCreator.Text = observObject.Creator;
             cmbObservObjAffiliation.SelectedItem = _observPointsController.GetObservObjectsTypeString(observObject.ObjectType);
             tbObservObjDate.Text = observObject.DTO.ToString(Helper.DateFormatSmall);
         }
@@ -1772,6 +1773,7 @@ namespace MilSpace.Visibility
 
         private void DgvObservObjects_SelectionChanged(object sender, EventArgs e)
         {
+            toolBarButton31.Enabled = toolBarButton34.Enabled = dgvObservObjects.SelectedRows.Count > 0;
             if (dgvObservObjects.SelectedRows.Count == 0)
             {
                 ClearObservObjectFields();
@@ -2090,7 +2092,7 @@ namespace MilSpace.Visibility
                 if (sender is ComboBox comboControl)
                 {
                     _isObservObjectsFieldsChanged = _isObservObjectsFieldsChanged ||
-                        !sourceIten.Affiliation.Equals(cmbObservObjAffiliation.Text); 
+                        !sourceIten.Affiliation.Equals(cmbObservObjAffiliation.Text);
                 }
             }
         }
@@ -2135,9 +2137,30 @@ namespace MilSpace.Visibility
             }
         }
 
-        private void cmbObservObjAffiliation_TextChanged(object sender, EventArgs e)
+        private void tbObservObjects_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
-
+            var obj = dgvObservObjects.SelectedRows[0].DataBoundItem as ObservObjectGui;
+            if (e.Button == toolBarButton31)
+            {
+                _observPointsController.FlashObservationObject(obj.Id);
+            }
+            else if (e.Button == toolBarButton34)
+            {
+                var sMsgText = LocalizationContext.Instance.FindLocalizedElement(
+                                        "MsgTextDeleteObservStation",
+                                        "Ви дійсно бадаэтет видалити обє'кт нагляду?");
+                var res = MessageBox.Show(
+                    sMsgText,
+                    LocalizationContext.Instance.MsgBoxInfoHeader,
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+                if (res == DialogResult.Yes)
+                    _observPointsController.DeleteObservationObject(obj.Id);
+            }
+            else if (e.Button == toolBarButton29)
+            {
+                _observPointsController.UpdateObservObjectsList();
+            }
         }
     }
 }

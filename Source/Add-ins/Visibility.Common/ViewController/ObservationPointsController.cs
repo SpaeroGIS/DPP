@@ -299,7 +299,7 @@ namespace MilSpace.Visibility.ViewController
                     calcParams.TaskName,
                     calcParams.TaskName,
                     calcParams.CalculationType,
-                    mapDocument.ActivatedView.FocusMap);
+                    mapDocument.ActiveView.FocusMap);
 
                 if (calcTask.Finished != null)
                 {
@@ -651,6 +651,36 @@ namespace MilSpace.Visibility.ViewController
             _previousPickedRasterLayer = raster;
         }
 
+        internal void DeleteObservationObject(string id)
+        {
+            var obj=  _observationObjects.FirstOrDefault(o => o.Id == id);
+            if (obj != null)
+            {
+                VisibilityZonesFacade.DeleteObservationObject(obj);
+                UpdateObservObjectsList();
+            }
+
+        }
+        internal void FlashObservationObject(string id)
+        {
+            var observObjects = GetObservatioStationFeatureClass(mapDocument.ActiveView);
+            // observObjects.Search()
+            var query = new QueryFilter();
+            query.WhereClause = $"[idOO] = '{id}'";
+
+            var objects = observObjects.Search(query, false);
+            var observObject = objects.NextFeature();
+            if (observObject != null)
+            {
+
+                EsriTools.PanToGeometry(mapDocument.ActiveView,
+                   observObject.Shape, true);
+                EsriTools.FlashGeometry(mapDocument.ActiveView.ScreenDisplay,
+                   new IGeometry[] { observObject.Shape });
+            }
+
+
+        }
         //private void TestPolygonFinding(ObservationPoint point, ObservationObject obj, IFeatureClass pointsFC, IFeatureClass objFC)
         //{
         //    try
