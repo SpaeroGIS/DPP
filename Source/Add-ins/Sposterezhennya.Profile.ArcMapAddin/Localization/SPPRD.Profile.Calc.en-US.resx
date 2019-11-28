@@ -606,4 +606,7 @@
   <data name="labelHeaderSessionProfiles" xml:space="preserve">
     <value>Сurrent session profiles</value>
   </data>
+  <data name="lblDEM_TextKey" xml:space="preserve">
+    <value>Layer DEM</value>
+  </data>
 </root>

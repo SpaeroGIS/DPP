@@ -1566,6 +1566,7 @@ namespace MilSpace.Visibility
             this.chkConvertToPolygon.TabIndex = 7;
             this.chkConvertToPolygon.Text = "конвертувати у полігони";
             this.chkConvertToPolygon.UseVisualStyleBackColor = true;
+            this.chkConvertToPolygon.Visible = false;
             // 
             // SumChkBox
             // 

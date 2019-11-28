@@ -17,6 +17,7 @@ namespace MilSpace.GeoCalculator
         /// Returns GUID
         /// </summary>
         /// <param name="geom">IGeometry</param>
+        /// 
         public static KeyValuePair<string, IPoint> AddGraphicToMap(
             IGeometry geom,
             IColor color,
@@ -24,18 +25,23 @@ namespace MilSpace.GeoCalculator
             esriSimpleMarkerStyle markerStyle = esriSimpleMarkerStyle.esriSMSCircle,
             int size = 5)
         {
+            string slog = "";
+                
             var emptyResult = new KeyValuePair<string, IPoint>();
+            var mxdoc = ArcMap.Application.Document as IMxDocument;
 
-            if ((geom == null) || (ArcMap.Document == null) || (ArcMap.Document.FocusMap == null)
-                || (ArcMap.Document.FocusMap.SpatialReference == null))
+            if ((geom == null) 
+                || (geom.GeometryType != esriGeometryType.esriGeometryPoint)
+                || (geom.SpatialReference == null)
+                //|| (ArcMap.Document == null) 
+                //|| (ArcMap.Document.FocusMap == null)
+                || (mxdoc == null)
+                )
                 return emptyResult;
 
-            IElement element = null;
+            //geom.Project(ArcMap.Document.FocusMap.SpatialReference);
 
-            geom.Project(ArcMap.Document.FocusMap.SpatialReference);
-
-            if (geom.GeometryType != esriGeometryType.esriGeometryPoint) return emptyResult;
-
+            slog = slog + "1:" + (geom as IPoint).X.ToString();
 
             var simpleMarkerSymbol = (ISimpleMarkerSymbol)new SimpleMarkerSymbol();
             simpleMarkerSymbol.Color = color;
@@ -46,28 +52,35 @@ namespace MilSpace.GeoCalculator
 
             var markerElement = (IMarkerElement)new MarkerElement();
             markerElement.Symbol = simpleMarkerSymbol;
+
+            IElement element = null;
             element = (IElement)markerElement;
-
-
             if (element == null)
                 return emptyResult;
-
             element.Geometry = geom;
+            element.Geometry.SpatialReference = mxdoc.FocusMap.SpatialReference;
 
-            var mxdoc = ArcMap.Application.Document as IMxDocument;
-            if (mxdoc == null)
-                return emptyResult;
+            slog = slog + " 2:" + (element.Geometry as IPoint).X.ToString();
 
             var av = (IActiveView)mxdoc.FocusMap;
-            var gc = (IGraphicsContainer)av;
+            var am = (IMap)mxdoc.FocusMap; //nikol
+            var gc = (IGraphicsContainer)am;
 
             // store guid
             var eprop = (IElementProperties)element;
             eprop.Name = Guid.NewGuid().ToString();
 
+            slog = slog + " 3:" + (element.Geometry as IPoint).X.ToString();
+
             gc.AddElement(element, 0);
 
+            slog = slog + " 4:" + (element.Geometry as IPoint).X.ToString();
+
             av.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
+
+            slog = slog + " 5:" + (element.Geometry as IPoint).X.ToString();
+
+            eprop.Name = eprop.Name + " -> " + slog;
 
             return new KeyValuePair<string, IPoint>(eprop.Name, element.Geometry as IPoint);
         }
@@ -94,7 +107,8 @@ namespace MilSpace.GeoCalculator
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
         }
 
-        public static void FlashGeometry(ESRI.ArcGIS.Geometry.IGeometry geometry,
+        public static void FlashGeometry(
+            ESRI.ArcGIS.Geometry.IGeometry geometry,
             System.Int32 delay)
         {
             var mxdoc = ArcMap.Application.Document as IMxDocument;
@@ -110,14 +124,17 @@ namespace MilSpace.GeoCalculator
             color.Red = 0;
             color.Blue = 0;
 
-            if ((geometry == null) || (color == null) || (display == null) || (envelope == null) || (delay < 0))
+            if ((geometry == null) 
+                || (geometry.GeometryType != ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPoint)
+                || (color == null) 
+                || (display == null) 
+                || (envelope == null) 
+                || (delay < 0))
             {
                 return;
             }
 
             display.StartDrawing(display.hDC, (System.Int16)ESRI.ArcGIS.Display.esriScreenCache.esriNoScreenCache); // Explicit Cast
-
-            if (geometry.GeometryType != ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPoint) return;
 
             //Set the flash geometry's symbol.
             ESRI.ArcGIS.Display.ISimpleMarkerSymbol simpleMarkerSymbol = new ESRI.ArcGIS.Display.SimpleMarkerSymbolClass();
@@ -140,6 +157,7 @@ namespace MilSpace.GeoCalculator
             display.DrawPoint(geometry);
             System.Threading.Thread.Sleep(delay);
             display.DrawPoint(geometry);
+
             display.FinishDrawing();
         }
 
