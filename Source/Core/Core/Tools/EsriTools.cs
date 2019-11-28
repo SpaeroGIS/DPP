@@ -41,7 +41,18 @@ namespace MilSpace.Core.Tools
 
                 return (ISymbol)simpleMarkerSymbol; }
             },
+              { esriGeometryType.esriGeometryPolygon, (rgbColor) => {
+                  //Set point props to the flash geometry
 
+                ISimpleFillSymbol simpleFillSymbol = new SimpleFillSymbolClass();
+                simpleFillSymbol.Color = rgbColor;
+
+                simpleFillSymbol.Style = esriSimpleFillStyle.esriSFSForwardDiagonal;
+
+
+
+                return (ISymbol)simpleFillSymbol; }
+            },
             { esriGeometryType.esriGeometryPolyline, (rgbColor) => {
                 //Define an arrow marker  
                 IArrowMarkerSymbol arrowMarkerSymbol = new ArrowMarkerSymbol();
@@ -94,6 +105,15 @@ namespace MilSpace.Core.Tools
                 for(int i=0; i < 4; i++ )
                     {
                         display.DrawPolyline(geometry);
+                    }
+                    return true;
+                }
+            },
+            { esriGeometryType.esriGeometryPolygon, (display, geometry) => {
+
+                for(int i=0; i < 4; i++ )
+                    {
+                        display.DrawPolygon(geometry);
                     }
                     return true;
                 }
@@ -443,7 +463,7 @@ namespace MilSpace.Core.Tools
             var layer = GetLayer(layerName, activeView.FocusMap);
             var envelope = layer.AreaOfInterest;
 
-            if(envelope != null)
+            if (envelope != null)
             {
                 activeView.Extent = layer.AreaOfInterest;
                 activeView.Refresh();
@@ -552,7 +572,7 @@ namespace MilSpace.Core.Tools
         {
             var layer = GetLayer(layerName, map);
 
-            if(layer == null)
+            if (layer == null)
             {
                 return;
             }
@@ -613,7 +633,7 @@ namespace MilSpace.Core.Tools
             int relativeLayerPosition = GetLayerIndex(relativeLayer, activeView);
             int groupLayerPosition = (isLayerAbove) ? relativeLayerPosition - 1 : relativeLayerPosition + 1;
 
-            layersToremove.ForEach( l=> mapLayers.DeleteLayer(l));
+            layersToremove.ForEach(l => mapLayers.DeleteLayer(l));
             mapLayers.InsertLayer(groupLayer, false, groupLayerPosition);
         }
 
@@ -834,7 +854,7 @@ namespace MilSpace.Core.Tools
         {
             IPolygon coverageArea;
 
-            if(azimuthB == 0 && azimuthE == 360)
+            if (azimuthB == 0 && azimuthE == 360)
             {
                 ICircularArc outArc = new CircularArcClass();
                 outArc.PutCoordsByAngle(point, 0, 2 * Math.PI, maxDistance);
@@ -844,7 +864,7 @@ namespace MilSpace.Core.Tools
                 outFullRing.AddSegment(segmentOut);
                 IRing outFullRingGeometry = outFullRing as IRing;
 
-                if(!outFullRingGeometry.IsExterior)
+                if (!outFullRingGeometry.IsExterior)
                 {
                     outFullRingGeometry.ReverseOrientation();
                 }
@@ -857,7 +877,7 @@ namespace MilSpace.Core.Tools
                 innerFullRing.AddSegment(segmentIn);
                 IRing innerFullRingGeometry = innerFullRing as IRing;
 
-                if(innerFullRingGeometry.IsExterior)
+                if (innerFullRingGeometry.IsExterior)
                 {
                     innerFullRingGeometry.ReverseOrientation();
                 }
@@ -900,7 +920,7 @@ namespace MilSpace.Core.Tools
 
                 IPolygon outPolygonGeometry = outRoundPolygon as IPolygon;
 
-                if(minDistance != 0)
+                if (minDistance != 0)
                 {
                     ISegmentCollection innerRing = new RingClass();
 
@@ -910,7 +930,7 @@ namespace MilSpace.Core.Tools
                     innerRing.AddSegment(rightLineSegIn);
 
                     ICircularArc invisibleCircularArc = new CircularArcClass();
-                    
+
                     invisibleCircularArc.PutCoords(point, pointFromInnerArc, pointToInnerArc, esriArcOrientation.esriArcClockwise);
 
                     ISegment innerRingSeg = (ISegment)invisibleCircularArc;
@@ -936,37 +956,37 @@ namespace MilSpace.Core.Tools
                     coverageArea = outPolygonGeometry;
                 }
             }
-            
-            if(observObject != null)
+
+            if (observObject != null)
             {
                 observObject.Project(point.SpatialReference);
                 var polygonGeometry = observObject as IGeometry;
                 ITopologicalOperator polygonTopoOp = coverageArea as ITopologicalOperator;
                 return polygonTopoOp.Intersect(polygonGeometry, esriGeometryDimension.esriGeometry2Dimension) as IPolygon;
             }
-           
+
             return coverageArea;
         }
 
 
         public static IPolygon GetCommonPolygon(List<IPolygon> polygons)
         {
-            if(polygons == null || polygons.Count == 0)
+            if (polygons == null || polygons.Count == 0)
             {
                 return null;
             }
 
             IGeometry geometryBag = new GeometryBagClass();
             geometryBag.SpatialReference = polygons[0].SpatialReference;
-           
+
             IGeometryCollection geometryCollection = geometryBag as IGeometryCollection;
-            foreach(var polygon in polygons)
+            foreach (var polygon in polygons)
             {
                 object missing = Type.Missing;
                 geometryCollection.AddGeometry(polygon, ref missing, ref
                     missing);
             }
-           
+
             ITopologicalOperator unionedPolygon = new PolygonClass();
             unionedPolygon.ConstructUnion(geometryBag as IEnumGeometry);
 
@@ -975,7 +995,7 @@ namespace MilSpace.Core.Tools
 
         public static IPolygon GetCommonPolygonFromFeatureClass(IFeatureClass featureClass)
         {
-            if(featureClass == null)
+            if (featureClass == null)
             {
                 return null;
             }
@@ -989,7 +1009,7 @@ namespace MilSpace.Core.Tools
             IGeometryCollection geometryCollection = geometryBag as IGeometryCollection;
             IFeature currentFeature = featureCursor.NextFeature();
 
-            while(currentFeature != null)
+            while (currentFeature != null)
             {
                 object missing = Type.Missing;
                 geometryCollection.AddGeometry(currentFeature.Shape, ref missing, ref

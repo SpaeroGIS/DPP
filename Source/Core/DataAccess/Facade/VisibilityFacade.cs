@@ -98,6 +98,15 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
+        public static bool DeleteObservationObject(ObservationObject observObject)
+        {
+            using(var accessor = new VisibilityDataAccess())
+            {
+                var res =  accessor.DeleteObservationObject(observObject);
+                return res;
+            }
+        }
+
         public static IEnumerable<VisibilityTask> GetFinishedVisibilityTasks()
         {
             using (var accessor = new VisibilityDataAccess())

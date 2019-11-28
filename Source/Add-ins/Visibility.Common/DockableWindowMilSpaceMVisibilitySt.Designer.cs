@@ -1628,6 +1628,7 @@
             this.tbObservObjects.ShowToolTips = true;
             this.tbObservObjects.Size = new System.Drawing.Size(308, 30);
             this.tbObservObjects.TabIndex = 40;
+            this.tbObservObjects.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.tbObservObjects_ButtonClick);
             // 
             // toolBarButton31
             // 
@@ -1640,6 +1641,7 @@
             this.toolBarButton32.ImageKey = "Light.png";
             this.toolBarButton32.Name = "toolBarButton32";
             this.toolBarButton32.ToolTipText = "Підсвітити ОН на карті";
+            this.toolBarButton32.Visible = false;
             // 
             // toolBarButton6
             // 
