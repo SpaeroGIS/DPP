@@ -306,11 +306,14 @@ namespace MilSpace.Visibility.ViewController
                     var isLayerAbove = (calcParams.ResultLayerPosition == LayerPositionsEnum.Above);
 
                     var datasets = GdbAccess.Instance.GetDatasetsFromCalcWorkspace(calcTask.ResultsInfo);
+                    var tbls = mapDocument.TableProperties;
 
                     EsriTools.AddVisibilityGroupLayer(
                         datasets, calcTask.Name, calcTask.Id, calcTask.ReferencedGDB,
                         calcParams.RelativeLayerName, isLayerAbove, calcParams.ResultLayerTransparency,
                         mapDocument.ActiveView);
+
+                    EsriTools.AddTableToMap(tbls, VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.CoverageTable, calcTask.Name), calcTask.ReferencedGDB, mapDocument);
                 }
             }
             catch (Exception ex)

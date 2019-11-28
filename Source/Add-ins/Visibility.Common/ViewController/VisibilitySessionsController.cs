@@ -236,7 +236,7 @@ namespace MilSpace.Visibility.ViewController
             var datasets = GdbAccess.Instance.GetDatasetsFromCalcWorkspace(selectedResults.ResultsInfo);
             EsriTools.AddVisibilityGroupLayer(datasets, selectedResults.Name, selectedResults.Id, selectedResults.ReferencedGDB, GetLastLayer(activeView),
                                                 true, 33, activeView);
-            
+            EsriTools.AddTableToMap(tbls, VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.CoverageTable, selectedResults.Name), selectedResults.ReferencedGDB, mapDocument);
         }
 
         internal void ZoomToLayer(string id, IActiveView activeView)

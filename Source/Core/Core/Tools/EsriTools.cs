@@ -581,6 +581,47 @@ namespace MilSpace.Core.Tools
             mapLayers.DeleteLayer(layer);
         }
 
+        public static void AddTableToMap(ITableProperties tblProperties, string tableName, string gdb, IMxDocument mapDocument)
+        {
+            bool isTableExist = false;
+            var enumProperties = tblProperties.IEnumTableProperties;
+            enumProperties.Reset();
+
+            ITableProperty3 tlbProperty3 = enumProperties.Next() as ITableProperty3;
+            while(tlbProperty3 != null)
+            {
+                if(tlbProperty3.StandaloneTable != null)
+                {
+                    if(tlbProperty3.StandaloneTable.Name.EndsWith(tableName))
+                    {
+                        isTableExist = true;
+                        break;
+                    }
+                }
+                tlbProperty3 = enumProperties.Next() as ITableProperty3;
+            }
+
+            if(!isTableExist)
+            {
+                IWorkspaceFactory workspaceFactory = new FileGDBWorkspaceFactory();
+                IWorkspace workspace = workspaceFactory.OpenFromFile(gdb, 0);
+                IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)workspace;
+                IWorkspace2 wsp2 = (IWorkspace2)workspace;
+
+                if(wsp2.NameExists[esriDatasetType.esriDTTable, tableName])
+                {
+                    ITable table = featureWorkspace.OpenTable(tableName);
+                    IStandaloneTable stndaloneTable = new StandaloneTable();
+                    stndaloneTable.Table = table;
+                    stndaloneTable.Name = tableName;
+
+                    IStandaloneTableCollection tableCollection = mapDocument.FocusMap as IStandaloneTableCollection;
+                    tableCollection.AddStandaloneTable(stndaloneTable);
+                    mapDocument.UpdateContents();
+                }
+            }
+        }
+
         public static void AddVisibilityGroupLayer(IEnumerable<IDataset> visibilityLayersNames, string sessionName, string calcRasterName, string gdb, string relativeLayerName,
                                                 bool isLayerAbove, short transparency, IActiveView activeView)
         {
