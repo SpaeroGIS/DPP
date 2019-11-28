@@ -41,6 +41,8 @@ namespace MilSpace.Visibility
         private bool _isObservObjectsFieldsChanged = false;
         private ObservationPoint selectedPointMEM = new ObservationPoint();
 
+        private static Logger log = Logger.GetLoggerEx("MilSpace.Visibility.DockableWindowMilSpaceMVisibilitySt");
+
         public DockableWindowMilSpaceMVisibilitySt(object hook, ObservationPointsController controller)
         {
             InitializeComponent();
@@ -295,11 +297,11 @@ namespace MilSpace.Visibility
 
                 var itemsToShow = observationObjects.Select(i => new ObservObjectGui
                 {
+                    ObjectID = i.ObjectId,
                     Title = i.Title,
                     Id = i.Id,
                     Affiliation = _observPointsController.GetObservObjectsTypeString(i.ObjectType),
                     Group = i.Group
-
                 }).ToList();
 
 
@@ -1070,7 +1072,8 @@ namespace MilSpace.Visibility
                 );
         }
 
-        private void CreateNewPoint(ObservationPoint point)
+        //private void CreateNewPoint(ObservationPoint point)
+        private void CreateNewPoint()
         {
             _observPointsController.AddPoint(VisibilityManager.ObservPointFeature, ActiveView);
         }
@@ -1271,13 +1274,17 @@ namespace MilSpace.Visibility
 
         private void SetObservObjectsTableView()
         {
+            dgvObservObjects.Columns["ObjectId"].Visible = false;
             dgvObservObjects.Columns["Id"].Visible = false;
+
             dgvObservObjects.Columns["Title"].HeaderText =
                 LocalizationContext.Instance.FindLocalizedElement("HeaderNameGridON", "Назва");
             dgvObservObjects.Columns["Title"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
             dgvObservObjects.Columns["Affiliation"].HeaderText =
                 LocalizationContext.Instance.FindLocalizedElement("HeaderAfilGridON", "Належність");
             dgvObservObjects.Columns["Affiliation"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+
             dgvObservObjects.Columns["Group"].HeaderText =
                 LocalizationContext.Instance.FindLocalizedElement("HeaderGroupGridON", "Група");
             dgvObservObjects.Columns["Group"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
@@ -1339,6 +1346,7 @@ namespace MilSpace.Visibility
         {
             tbObservObjTitle.Text = observObject.Title;
             tbObservObjGroup.Text = observObject.Group;
+            tbObservObjCreator.Text = observObject.Creator;
             cmbObservObjAffiliation.SelectedItem = _observPointsController.GetObservObjectsTypeString(observObject.ObjectType);
             tbObservObjDate.Text = observObject.DTO.ToString(Helper.DateFormatSmall);
         }
@@ -1521,14 +1529,17 @@ namespace MilSpace.Visibility
             switch (e.Button.Name)
             {
                 case "tlbbAddNewPoint":
-                    CreateNewPoint(GetObservationPoint());
+                    CreateNewPoint();
                     break;
+
                 case "tlbbRemovePoint":
                     RemovePoint();
                     break;
+
                 case "tlbbShowPoint":
                     _observPointsController.ShowObservPoint(ActiveView, _selectedPointId);
                     break;
+
                 case "tlbbAddObserPointLayer":
                     _observPointsController.AddObservPointsLayer();
                     tlbbAddObserPointLayer.Enabled = false;
@@ -1762,17 +1773,49 @@ namespace MilSpace.Visibility
 
         private void DgvObservObjects_SelectionChanged(object sender, EventArgs e)
         {
-            if (dgvObservObjects.SelectedRows.Count == 0 || dgvObservObjects.SelectedRows[0].Cells["Id"].Value == null)
+            toolBarButton31.Enabled = toolBarButton34.Enabled = dgvObservObjects.SelectedRows.Count > 0;
+            if (dgvObservObjects.SelectedRows.Count == 0)
             {
                 ClearObservObjectFields();
                 return;
             }
 
-            var selectedObject = _observPointsController.GetObservObjectById(dgvObservObjects.SelectedRows[0].Cells["Id"].Value.ToString());
-
-            if (selectedObject != null)
+            if (dgvObservObjects.SelectedRows[0].Cells["Id"].Value == null 
+                || dgvObservObjects.SelectedRows[0].Cells["Id"].Value.ToString() == string.Empty)
             {
-                FillObservObjectFields(selectedObject);
+                var selectedObjectOID =
+                    _observPointsController.GetObservObjectByOId(dgvObservObjects.SelectedRows[0].Cells["ObjectId"].Value.ToString());
+                if (selectedObjectOID != null)
+                {
+                    string sID = "ON" + DateTime.Now.ToString("yyyyMMddTHHmmss");
+                    dgvObservObjects.SelectedRows[0].Cells["Id"].Value = sID;
+                    var seletctedItem = dgvObservObjects.SelectedRows[0];
+                    if (seletctedItem.DataBoundItem is ObservObjectGui sourceItem)
+                    {
+                        sourceItem.Id = sID;
+                        bool result = _observPointsController.SaveObservationObject(sourceItem);
+                        if (!result)
+                        {
+                            string sMsgText = LocalizationContext.Instance.FindLocalizedElement(
+                                "MsgTextCannotSaveObservationstahtionsID", "Ідентіфікатор облаcті нагляду не було збережено");
+                            MessageBox.Show(
+                                sMsgText,
+                                LocalizationContext.Instance.MsgBoxInfoHeader,
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                            //return;
+                        }
+                        FillObservObjectFields(selectedObjectOID);
+                    }
+                }
+            }
+            else
+            {
+                var selectedObject = _observPointsController.GetObservObjectById(dgvObservObjects.SelectedRows[0].Cells["Id"].Value.ToString());
+                if (selectedObject != null)
+                {
+                    FillObservObjectFields(selectedObject);
+                }
             }
         }
 
@@ -2022,9 +2065,6 @@ namespace MilSpace.Visibility
             toolTip.SetToolTip(this.btnAddLayerPS, this.btnAddLayerPS.Tag.ToString());
             toolTip.SetToolTip(this.buttonSaveOPoint, this.buttonSaveOPoint.Tag.ToString());
             toolTip.SetToolTip(this.btnSaveParamPS, this.btnSaveParamPS.Tag.ToString());
-
-
-
         }
 
         private void tbObservObjects_CheckChanged(object sender, EventArgs e)
@@ -2069,14 +2109,13 @@ namespace MilSpace.Visibility
         private void btnSaveParamPS_Click(object sender, EventArgs e)
         {
             var seletctedItem = dgvObservObjects.SelectedRows[0];
-            if (seletctedItem.DataBoundItem is ObservObjectGui sourceIten)
+            if (seletctedItem.DataBoundItem is ObservObjectGui sourceItem)
             {
+                sourceItem.Title = tbObservObjTitle.Text;
+                sourceItem.Group = tbObservObjGroup.Text;
+                sourceItem.Affiliation = cmbObservObjAffiliation.Text;
 
-                sourceIten.Title = tbObservObjTitle.Text;
-                sourceIten.Group = tbObservObjGroup.Text;
-                sourceIten.Affiliation = cmbObservObjAffiliation.Text;
-
-                bool result = _observPointsController.SaveObservationObject(sourceIten);
+                bool result = _observPointsController.SaveObservationObject(sourceItem);
                 if (!result)
                 {
 
@@ -2096,11 +2135,6 @@ namespace MilSpace.Visibility
                 dgvObservObjects.Refresh();
                 _isObservObjectsFieldsChanged = btnSaveParamPS.Enabled = false;
             }
-        }
-
-        private void cmbObservObjAffiliation_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void tbObservObjects_ButtonClick(object sender, ToolBarButtonClickEventArgs e)

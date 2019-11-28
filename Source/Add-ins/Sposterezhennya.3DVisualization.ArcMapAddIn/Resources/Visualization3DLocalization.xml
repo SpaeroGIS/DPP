@@ -6,7 +6,7 @@
   <SurfaceLabel>Поверхня</SurfaceLabel>
   <PlantsLayerLabel>рослинність</PlantsLayerLabel>
   <HightLablel>Висота</HightLablel>
-  <BuildingsLayerLabel>будівелі</BuildingsLayerLabel>
+  <BuildingsLayerLabel>будівлі</BuildingsLayerLabel>
   <TransportLayerLabel>транспорт</TransportLayerLabel>
   <HydroLayerLabel>гідрографія</HydroLayerLabel>
   <ProfilesLabel>Профілі</ProfilesLabel>
