@@ -104,7 +104,8 @@ namespace MilSpace.Visibility.ViewController
 
             if (oldPoint.X != newPoint.X && oldPoint.Y != newPoint.Y)
             {
-                pointGeometry = new PointClass {
+                pointGeometry = new PointClass
+                {
                     X = (double)newPoint.X,
                     Y = (double)newPoint.Y,
                     SpatialReference = EsriTools.Wgs84Spatialreference
@@ -190,7 +191,8 @@ namespace MilSpace.Visibility.ViewController
         internal void AddPoint(string featureName, IActiveView activeView)
         {
             var point = CreatePointWithDefaultValues(activeView.Extent.Envelope);
-            var pointGeometry = new PointClass {
+            var pointGeometry = new PointClass
+            {
                 X = (double)point.X,
                 Y = (double)point.Y,
                 SpatialReference = EsriTools.Wgs84Spatialreference
@@ -204,7 +206,7 @@ namespace MilSpace.Visibility.ViewController
             GdbAccess.Instance.AddObservPoint(pointGeometry, point, featureClass);
 
             var updPoints = VisibilityZonesFacade.GetAllObservationPoints().ToList();
-            _observationPoints.Add(updPoints.First(observPoint => 
+            _observationPoints.Add(updPoints.First(observPoint =>
             !_observationPoints.Exists(oldPoints => oldPoints.Objectid == observPoint.Objectid)));
             view.AddRecord(_observationPoints.Last());
         }
@@ -247,24 +249,24 @@ namespace MilSpace.Visibility.ViewController
                 var calcTask = VisibilityManager.Generate(
                     observPoints,
                     calcParams.ObservPointIDs,
-                    observObjects, 
-                    calcParams.ObservObjectIDs, 
-                    calcParams.RasterLayerName, 
-                    calcParams.VisibilityCalculationResults, 
+                    observObjects,
+                    calcParams.ObservObjectIDs,
+                    calcParams.RasterLayerName,
+                    calcParams.VisibilityCalculationResults,
                     calcParams.TaskName,
                     calcParams.TaskName,
                     calcParams.CalculationType,
                     mapDocument.ActivatedView.FocusMap);
 
-                if(calcTask.Finished != null)
+                if (calcTask.Finished != null)
                 {
                     var isLayerAbove = (calcParams.ResultLayerPosition == LayerPositionsEnum.Above);
 
                     var datasets = GdbAccess.Instance.GetDatasetsFromCalcWorkspace(calcTask.ResultsInfo);
 
                     EsriTools.AddVisibilityGroupLayer(
-                        datasets, calcTask.Name, calcTask.Id, calcTask.ReferencedGDB, 
-                        calcParams.RelativeLayerName, isLayerAbove, calcParams.ResultLayerTransparency, 
+                        datasets, calcTask.Name, calcTask.Id, calcTask.ReferencedGDB,
+                        calcParams.RelativeLayerName, isLayerAbove, calcParams.ResultLayerTransparency,
                         mapDocument.ActiveView);
                 }
             }
@@ -379,13 +381,13 @@ namespace MilSpace.Visibility.ViewController
             return _mobilityTypes[type];
         }
 
-        public IEnumerable<string> GetObservationObjectTypes()
+        public IEnumerable<string> GetObservationObjectTypes(bool useUseAll = true)
         {
-            return _observObjectsTypes.Where(t => t.Key != ObservationObjectTypesEnum.Undefined).Select(t => t.Value);
+            return (useUseAll ? _observObjectsTypes : _observObjectsTypes.Where(t => t.Key != ObservationObjectTypesEnum.All)).Select(t => t.Value);
         }
         public string GetAllAffiliationType_for_objects()
         {
-            return _observObjectsTypes.First(t => t.Key == ObservationObjectTypesEnum.Undefined).Value;
+            return _observObjectsTypes[ObservationObjectTypesEnum.All];
         }
         public IEnumerable<string> GetObservationPointMobilityTypes()
         {
@@ -606,6 +608,36 @@ namespace MilSpace.Visibility.ViewController
             _previousPickedRasterLayer = raster;
         }
 
+        internal void DeleteObservationObject(string id)
+        {
+            var obj=  _observationObjects.FirstOrDefault(o => o.Id == id);
+            if (obj != null)
+            {
+                VisibilityZonesFacade.DeleteObservationObject(obj);
+                UpdateObservObjectsList();
+            }
+
+        }
+        internal void FlashObservationObject(string id)
+        {
+            var observObjects = GetObservatioStationFeatureClass(mapDocument.ActiveView);
+            // observObjects.Search()
+            var query = new QueryFilter();
+            query.WhereClause = $"[idOO] = '{id}'";
+
+            var objects = observObjects.Search(query, false);
+            var observObject = objects.NextFeature();
+            if (observObject != null)
+            {
+
+                EsriTools.PanToGeometry(mapDocument.ActiveView,
+                   observObject.Shape, true);
+                EsriTools.FlashGeometry(mapDocument.ActiveView.ScreenDisplay,
+                   new IGeometry[] { observObject.Shape });
+            }
+
+
+        }
         //private void TestPolygonFinding(ObservationPoint point, ObservationObject obj, IFeatureClass pointsFC, IFeatureClass objFC)
         //{
         //    try
