@@ -130,6 +130,31 @@ namespace MilSpace.Tools
             GdbAccess.Instance.FillVSCoverageTable(_coverageTableModel, tableName, _gdb);
         }
 
+        private void CalculateCoverageTableVADataForPoint(int currPointId, string visibilityAreasFCName, int pointCount)
+        {
+            if(currPointId == -1)
+            {
+                //todo totalVAValues
+                CalculateTotalValues(pointCount, visibilityAreasFCName);
+            }
+            else
+            {
+                var observPoint = VisibilityZonesFacade.GetObservationPointByObjectIds(new int[] { currPointId }).First();
+                var pointPolygons = _coverageAreaByObjData.Where(area => area.PointId == currPointId).ToList();
+
+                foreach(var polygon in pointPolygons)
+                {
+                    var obj = VisibilityZonesFacade.GetObservationObjectByObjectIds(new int[] { polygon.ObjId }).First();
+
+                    if(_totalExpectedArea == 0)
+                    {
+                        AddEmptyAreaRow(observPoint.Title, currPointId, polygon.ObjId, obj.Title);
+                        return;
+                    }
+                }
+            }
+        }
+
         private void CalculateTotalValues(int pointsCount, string visibilityAreasFCName)
         {
             string allTitle = "All";
@@ -154,14 +179,18 @@ namespace MilSpace.Tools
             }
         }
 
-        private void AddEmptyAreaRow(string observPointTitle, int observPointId)
+        private void AddEmptyAreaRow(string observPointTitle, int observPointId, int observObjId = -1, string observObjName = null)
         {
             _coverageTableModel.Add(new CoverageTableRowModel
             {
                 ObservPointName = observPointTitle,
                 ObservPointId = observPointId,
+                ObservObjId = observObjId,
+                ObservObjName = observObjName,
+                ObservObjArea = 0,
                 ExpectedArea = 0,
                 VisibilityArea = 0,
+                VisibilityPercent = 0,
                 ToAllExpectedAreaPercent = 0,
                 ToAllVisibilityAreaPercent = 0,
                 ObservPointsSeeCount = 0
@@ -176,6 +205,7 @@ namespace MilSpace.Tools
                 ObservPointId = pointId,
                 ExpectedArea = expectedArea,
                 VisibilityArea = visibleArea,
+                VisibilityPercent = GetPercent(expectedArea, visibleArea),
                 ToAllExpectedAreaPercent = GetPercent(_totalExpectedArea, expectedArea),
                 ToAllVisibilityAreaPercent = GetPercent(_totalExpectedArea, visibleArea),
                 ObservPointsSeeCount = pointsCount
