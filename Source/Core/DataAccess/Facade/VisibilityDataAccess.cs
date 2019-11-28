@@ -448,6 +448,7 @@ namespace MilSpace.DataAccess.Facade
 
         public bool SaveObservationObject(ObservationObject observObject)
         {
+            log.InfoEx($"SaveObservationObject START. observObject.ObjectId:{0}", observObject.ObjectId);
             bool result = true;
             try
             {
@@ -457,13 +458,13 @@ namespace MilSpace.DataAccess.Facade
                     bdObservObject.Update(observObject);
                     if (Submit())
                     {
-                        log.InfoEx($"Observation Point Row with ObjectId '{observObject.ObjectId}' was saved");
+                        log.InfoEx($"SaveObservationObject. Observation Point Row with ObjectId '{observObject.ObjectId}' was saved");
                     }
                 }
             }
             catch (MilSpaceDataException ex)
             {
-                log.WarnEx(ex.Message);
+                log.WarnEx("SaveObservationObject MilSpaceDataException:{0}", ex.Message);
                 if (ex.InnerException != null)
                 {
                     log.WarnEx(ex.InnerException.Message);
@@ -473,11 +474,11 @@ namespace MilSpace.DataAccess.Facade
             }
             catch (Exception ex)
             {
-                log.WarnEx($"Unexpected exception:{ex.Message}");
+                log.WarnEx($"SaveObservationObject Unexpected exception:{ex.Message}");
                 result = false;
             }
+            log.InfoEx($"SaveObservationObject END");
             return result;
-
         }
 
         public IEnumerable<ObservationObject> GetAllObservationObjects()

@@ -94,6 +94,10 @@ namespace MilSpace.Visibility.ViewController
         {
             return _observationObjects.FirstOrDefault(obj => obj.Id == id);
         }
+        internal ObservationObject GetObservObjectByOId(string oid)
+        {
+            return _observationObjects.FirstOrDefault(obj => obj.ObjectId.ToString() == oid);
+        }
 
         internal void UpdateObservPoint(ObservationPoint newPoint, string featureName, IActiveView activeView, int objId)
         {
@@ -363,8 +367,7 @@ namespace MilSpace.Visibility.ViewController
 
         internal bool SaveObservationObject(ObservObjectGui bbservObjectGu)
         {
-
-            var obj = _observationObjects.FirstOrDefault(o => o.Id == bbservObjectGu.Id);
+            var obj = _observationObjects.FirstOrDefault(o => o.Id == bbservObjectGu.Id || o.ObjectId == bbservObjectGu.ObjectID);
             if (obj == null)
             {
                 return false;
@@ -373,6 +376,7 @@ namespace MilSpace.Visibility.ViewController
             obj.ObjectType = _observObjectsTypes.First(v => v.Value == bbservObjectGu.Affiliation).Key;
             obj.Title = bbservObjectGu.Title;
             obj.Group = bbservObjectGu.Group;
+            obj.Id = bbservObjectGu.Id;
 
             return VisibilityZonesFacade.SaveObservationObject(obj);
         }
