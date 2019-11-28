@@ -89,10 +89,13 @@ namespace MilSpace.Visualization3D
             surface.PutRaster(rasterLayer.Raster, 0);
             var functionalSurface = (IFunctionalSurface)surface;
 
-            SetSurface3DProperties(preparedLayers[0], objFactory, functionalSurface);
-            SetFeatures3DProperties((IFeatureLayer)preparedLayers[LayerTypeEnum.LineFeature], objFactory, functionalSurface);
-            SetHightFeatures3DProperties((IFeatureLayer)preparedLayers[LayerTypeEnum.PointFeature], objFactory);
-            SetHightFeatures3DProperties((IFeatureLayer)preparedLayers[LayerTypeEnum.PolygonFeature], objFactory);
+            if(preparedLayers.Count > 1)
+            {
+                SetSurface3DProperties(preparedLayers[0], objFactory, functionalSurface);
+                SetFeatures3DProperties((IFeatureLayer)preparedLayers[LayerTypeEnum.LineFeature], objFactory, functionalSurface);
+                SetHightFeatures3DProperties((IFeatureLayer)preparedLayers[LayerTypeEnum.PointFeature], objFactory);
+                SetHightFeatures3DProperties((IFeatureLayer)preparedLayers[LayerTypeEnum.PolygonFeature], objFactory);
+            }
 
             foreach(var layer in preparedLayers)
             {
@@ -101,14 +104,17 @@ namespace MilSpace.Visualization3D
 
             document.UpdateContents();
 
-            document.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeography,
-                                               VisibilityColorsRender((IFeatureLayer)preparedLayers[LayerTypeEnum.LineFeature], objFactory), document.ActiveView.Extent);
+            if(preparedLayers.Count > 1)
+            {
+                document.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeography,
+                                                   VisibilityColorsRender((IFeatureLayer)preparedLayers[LayerTypeEnum.LineFeature], objFactory), document.ActiveView.Extent);
 
-            document.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeography,
-                                                  PointsRender((IFeatureLayer)preparedLayers[LayerTypeEnum.PointFeature], new RgbColor() { Red = 255, Blue = 24, Green = 198 }, objFactory), document.ActiveView.Extent);
+                document.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeography,
+                                                      PointsRender((IFeatureLayer)preparedLayers[LayerTypeEnum.PointFeature], new RgbColor() { Red = 255, Blue = 24, Green = 198 }, objFactory), document.ActiveView.Extent);
 
-            document.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeography,
-                                               VisibilityColorsRender((IFeatureLayer)preparedLayers[LayerTypeEnum.PolygonFeature], objFactory), document.ActiveView.Extent);
+                document.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeography,
+                                                   VisibilityColorsRender((IFeatureLayer)preparedLayers[LayerTypeEnum.PolygonFeature], objFactory), document.ActiveView.Extent);
+            }
 
             return functionalSurface;
         }
@@ -219,14 +225,19 @@ namespace MilSpace.Visualization3D
             IWorkspaceFactory workspaceFactory = (IWorkspaceFactory)objFactory.Create(typeFactoryID);
             IWorkspace2 workspace = (IWorkspace2)workspaceFactory.OpenFromFile(_profileGdb, 0);
 
-            preparedLayers.Add(LayerTypeEnum.LineFeature, CreateFeatureLayer(layers.Line3DLayer, workspace, objFactory));
-            preparedLayers.Add(LayerTypeEnum.PointFeature, CreateFeatureLayer(layers.Point3DLayer, workspace, objFactory));
-            var polygon3DLayer = CreateFeatureLayer(layers.Polygon3DLayer, workspace, objFactory);
+            if(!string.IsNullOrEmpty(layers.Line3DLayer))
+            {
+                preparedLayers.Add(LayerTypeEnum.LineFeature, CreateFeatureLayer(layers.Line3DLayer, workspace, objFactory));
+                preparedLayers.Add(LayerTypeEnum.PointFeature, CreateFeatureLayer(layers.Point3DLayer, workspace, objFactory));
 
-            var polygonLayerEffects = (ILayerEffects)polygon3DLayer;
-            polygonLayerEffects.Transparency = 50;
+                var polygon3DLayer = CreateFeatureLayer(layers.Polygon3DLayer, workspace, objFactory);
 
-            preparedLayers.Add(LayerTypeEnum.PolygonFeature, polygon3DLayer);
+
+                var polygonLayerEffects = (ILayerEffects)polygon3DLayer;
+                polygonLayerEffects.Transparency = 50;
+
+                preparedLayers.Add(LayerTypeEnum.PolygonFeature, polygon3DLayer);
+            }
 
             Marshal.ReleaseComObject(workspaceFactory);
 
