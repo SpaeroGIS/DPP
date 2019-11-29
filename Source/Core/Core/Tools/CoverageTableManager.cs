@@ -114,16 +114,16 @@ namespace MilSpace.Tools
             });
         }
 
-        public void CalculateCoverageTableDataForPoint(int currPointId, string visibilityAreasFCName, int pointCount)
+        public void CalculateCoverageTableDataForPoint(bool isTotal, string visibilityAreasFCName, int pointCount, int currPointId)
         {
 
             if(_calcType == VisibilityCalcTypeEnum.ObservationObjects)
             {
-                CalculateCoverageTableVADataForPoint(currPointId, visibilityAreasFCName, pointCount);
+                CalculateCoverageTableVADataForPoint(isTotal, currPointId, visibilityAreasFCName, pointCount);
             }
             else
             {
-                CalculateCoverageTableVSDataForPoint(currPointId, visibilityAreasFCName, pointCount);
+                CalculateCoverageTableVSDataForPoint(isTotal, currPointId, visibilityAreasFCName, pointCount);
             }
         }
 
@@ -139,13 +139,14 @@ namespace MilSpace.Tools
             }
         }
 
-        private void CalculateCoverageTableVSDataForPoint(int currPointId, string visibilityAreasFCName, int pointCount)
+        private void CalculateCoverageTableVSDataForPoint(bool isTotal, int currPointId, string visibilityAreasFCName, int pointCount)
         {
-            if(currPointId == -1)
+            if(isTotal)
             {
                 CalculateVSTotalValues(pointCount, visibilityAreasFCName);
             }
-            else
+
+            if(!isTotal || pointCount == 1)
             {
                 var observPoint = VisibilityZonesFacade.GetObservationPointByObjectIds(new int[] { currPointId }).First();
 
@@ -163,13 +164,14 @@ namespace MilSpace.Tools
             }
         }
 
-        private void CalculateCoverageTableVADataForPoint(int currPointId, string visibilityAreasFCName, int pointCount)
+        private void CalculateCoverageTableVADataForPoint(bool isTotal, int currPointId, string visibilityAreasFCName, int pointCount)
         {
-            if(currPointId == -1)
+            if(isTotal)
             {
                 CalculateVATotalValues(pointCount, visibilityAreasFCName);
             }
-            else
+            
+            if(!isTotal || pointCount == 1)
             {
                 var observPoint = VisibilityZonesFacade.GetObservationPointByObjectIds(new int[] { currPointId }).First();
 
@@ -245,7 +247,6 @@ namespace MilSpace.Tools
             for(int i = 1; i <= pointsCount; i++)
             {
                 var areaByPointsSee = EsriTools.GetTotalAreaFromFeatureClass(visibilityPolygonsFeatureClass, i);
-
                 AddVSRowModel(_allTitle, -1, i, _totalExpectedArea, areaByPointsSee);
             }
         }
@@ -274,8 +275,8 @@ namespace MilSpace.Tools
             {
                 ObservPointName = pointName,
                 ObservPointId = pointId,
-                ExpectedArea = Math.Round(expectedArea, 0),
-                VisibilityArea = Math.Round(visibleArea, 0),
+                ExpectedArea = Convert.ToInt32(Math.Round(expectedArea, 0)),
+                VisibilityArea = Convert.ToInt32(Math.Round(visibleArea, 0)),
                 VisibilityPercent = GetPercent(expectedArea, visibleArea),
                 ToAllExpectedAreaPercent = GetPercent(_totalExpectedArea, expectedArea),
                 ToAllVisibilityAreaPercent = GetPercent(_totalExpectedArea, visibleArea),
@@ -292,8 +293,8 @@ namespace MilSpace.Tools
                 ObservPointId = pointId,
                 ObservObjId = objId,
                 ObservObjName = objName,
-                ObservObjArea = Math.Round(objArea.Area, 0),
-                VisibilityArea = Math.Round(visibleArea, 0),
+                ObservObjArea = Convert.ToInt32(Math.Round(objArea.Area, 0)),
+                VisibilityArea = Convert.ToInt32(Math.Round(visibleArea, 0)),
                 VisibilityPercent = GetPercent(objArea.Area, visibleArea),
                 ObservPointsSeeCount = pointsCount
             });

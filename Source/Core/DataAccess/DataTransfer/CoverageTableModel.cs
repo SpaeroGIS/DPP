@@ -12,9 +12,9 @@ namespace MilSpace.DataAccess.DataTransfer
         public int ObservPointId { get; set; }
         public string ObservObjName { get; set; }
         public int ObservObjId { get; set; }
-        public double ObservObjArea { get; set; }
-        public double ExpectedArea { get; set; }
-        public double VisibilityArea { get; set; }
+        public int ObservObjArea { get; set; }
+        public int ExpectedArea { get; set; }
+        public int VisibilityArea { get; set; }
         public double VisibilityPercent { get; set; }
         public double ToAllExpectedAreaPercent { get; set; }
         public double ToAllVisibilityAreaPercent { get; set; }

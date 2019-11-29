@@ -1016,14 +1016,25 @@ namespace MilSpace.Core.Tools
 
         public static double GetObjVisibilityArea(IFeatureClass visibility, IPolygon observObject, int gridCode = -1)
         {
-            var visibilityPolygon = GetTotalPolygonFromFeatureClass(visibility, gridCode);
+            try
+            {
+                var visibilityPolygon = GetTotalPolygonFromFeatureClass(visibility, gridCode);
+                if(visibilityPolygon.IsEmpty)
+                {
+                    return 0;
+                }
 
-            var polygonGeometry = observObject as IGeometry;
-            ITopologicalOperator polygonTopoOp = visibilityPolygon as ITopologicalOperator;
-            var resultPolygon = polygonTopoOp.Intersect(polygonGeometry, esriGeometryDimension.esriGeometry2Dimension) as IPolygon;
-            var resultArea = (IArea)resultPolygon;
+                var polygonGeometry = observObject as IGeometry;
+                ITopologicalOperator polygonTopoOp = visibilityPolygon as ITopologicalOperator;
+                var resultPolygon = polygonTopoOp.Intersect(polygonGeometry, esriGeometryDimension.esriGeometry2Dimension) as IPolygon;
+                var resultArea = (IArea)resultPolygon;
 
-            return resultArea.Area;
+                return resultArea.Area;
+            }
+            catch(Exception ex)
+            {
+                return 0;
+            }
         }
 
         public static IPolygon GetTotalPolygon(List<IPolygon> polygons)

@@ -884,6 +884,7 @@ namespace MilSpace.DataAccess.Facade
             IFieldEdit2 fieldPointName = new FieldClass() as IFieldEdit2;
             fieldPointName.Name_2 = "TitleOP";
             fieldPointName.Type_2 = esriFieldType.esriFieldTypeString;
+            fieldPointName.AliasName_2 = "Назва ПС";
             fieldPointName.IsNullable_2 = true;
             fieldsEdit.AddField(fieldPointName);
 
@@ -891,41 +892,48 @@ namespace MilSpace.DataAccess.Facade
             fieldPointId.Name_2 = "IdOP";
             fieldPointId.Type_2 = esriFieldType.esriFieldTypeInteger;
             fieldPointId.IsNullable_2 = true;
+            fieldPointId.AliasName_2 = "Id ПС";
             fieldsEdit.AddField(fieldPointId);
 
             IFieldEdit2 fieldObjName = new FieldClass() as IFieldEdit2;
             fieldObjName.Name_2 = "TitleOO";
             fieldObjName.Type_2 = esriFieldType.esriFieldTypeString;
+            fieldObjName.AliasName_2 = "Назва ОС";
             fieldObjName.IsNullable_2 = true;
             fieldsEdit.AddField(fieldObjName);
 
             IFieldEdit2 fieldObjId = new FieldClass() as IFieldEdit2;
             fieldObjId.Name_2 = "IdOO";
             fieldObjId.Type_2 = esriFieldType.esriFieldTypeInteger;
+            fieldObjId.AliasName_2 = "Id ОС";
             fieldObjId.IsNullable_2 = true;
             fieldsEdit.AddField(fieldObjId);
 
             IFieldEdit2 fieldObjArea = new FieldClass() as IFieldEdit2;
             fieldObjArea.Name_2 = "AreaOO";
-            fieldObjArea.Type_2 = esriFieldType.esriFieldTypeDouble;
+            fieldObjArea.Type_2 = esriFieldType.esriFieldTypeInteger;
             fieldObjArea.IsNullable_2 = false;
+            fieldObjArea.AliasName_2 = "Площа ОС";
             fieldsEdit.AddField(fieldObjArea);
 
             IFieldEdit2 fieldVA = new FieldClass() as IFieldEdit2;
             fieldVA.Name_2 = "VisibilityArea";
-            fieldVA.Type_2 = esriFieldType.esriFieldTypeDouble;
+            fieldVA.Type_2 = esriFieldType.esriFieldTypeInteger;
+            fieldVA.AliasName_2 = "Площа видимості ОС";
             fieldVA.IsNullable_2 = false;
             fieldsEdit.AddField(fieldVA);
 
             IFieldEdit2 fieldVAPercent = new FieldClass() as IFieldEdit2;
-            fieldVAPercent.Name_2 = "PercentageVisibility";
+            fieldVAPercent.Name_2 = "VisibilityPercentage";
             fieldVAPercent.Type_2 = esriFieldType.esriFieldTypeDouble;
+            fieldVAPercent.AliasName_2 = "Процент видимості";
             fieldVAPercent.IsNullable_2 = false;
             fieldsEdit.AddField(fieldVAPercent);
             
             IFieldEdit2 fieldPointsSee = new FieldClass() as IFieldEdit2;
             fieldPointsSee.Name_2 = "OPSee";
             fieldPointsSee.Type_2 = esriFieldType.esriFieldTypeInteger;
+            fieldPointsSee.AliasName_2 = "К-ть спостережень";
             fieldPointsSee.IsNullable_2 = true;
             fieldsEdit.AddField(fieldPointsSee);
 
@@ -970,6 +978,7 @@ namespace MilSpace.DataAccess.Facade
             IFieldEdit2 fieldPointName = new FieldClass() as IFieldEdit2;
             fieldPointName.Name_2 = "TitleOP";
             fieldPointName.Type_2 = esriFieldType.esriFieldTypeString;
+            fieldPointName.AliasName_2 = "Назва ПС";
             fieldPointName.IsNullable_2 = true;
             fieldsEdit.AddField(fieldPointName);
 
@@ -977,41 +986,48 @@ namespace MilSpace.DataAccess.Facade
             fieldPointId.Name_2 = "IdOP";
             fieldPointId.Type_2 = esriFieldType.esriFieldTypeInteger;
             fieldPointId.IsNullable_2 = true;
+            fieldPointId.AliasName_2 = "Id ПС";
             fieldsEdit.AddField(fieldPointId);
 
             IFieldEdit2 fieldExpectedVA = new FieldClass() as IFieldEdit2;
             fieldExpectedVA.Name_2 = "ExpectedVisibilityArea";
-            fieldExpectedVA.Type_2 = esriFieldType.esriFieldTypeDouble;
+            fieldExpectedVA.Type_2 = esriFieldType.esriFieldTypeInteger;
+            fieldExpectedVA.AliasName_2 = "Площа зони покриття";
             fieldExpectedVA.IsNullable_2 = true;
             fieldsEdit.AddField(fieldExpectedVA);
 
             IFieldEdit2 fieldVA = new FieldClass() as IFieldEdit2;
             fieldVA.Name_2 = "VisibilityArea";
-            fieldVA.Type_2 = esriFieldType.esriFieldTypeDouble;
+            fieldVA.Type_2 = esriFieldType.esriFieldTypeInteger;
+            fieldVA.AliasName_2 = "Площа видимої зони";
             fieldVA.IsNullable_2 = false;
             fieldsEdit.AddField(fieldVA);
 
             IFieldEdit2 fieldVAPercent = new FieldClass() as IFieldEdit2;
-            fieldVAPercent.Name_2 = "PercentageVisibility";
+            fieldVAPercent.Name_2 = "VisibilityPercentage";
             fieldVAPercent.Type_2 = esriFieldType.esriFieldTypeDouble;
+            fieldVAPercent.AliasName_2 = "Процент видимості";
             fieldVAPercent.IsNullable_2 = false;
             fieldsEdit.AddField(fieldVAPercent);
 
             IFieldEdit2 fieldExpectedVAToAllPercent = new FieldClass() as IFieldEdit2;
-            fieldExpectedVAToAllPercent.Name_2 = "CurrentToAllExpectedVA";
+            fieldExpectedVAToAllPercent.Name_2 = "CurrentToAllExpectedVAPercentage";
             fieldExpectedVAToAllPercent.Type_2 = esriFieldType.esriFieldTypeDouble;
+            fieldExpectedVAToAllPercent.AliasName_2 = "Процент зони покриття ПС від загальної";
             fieldExpectedVAToAllPercent.IsNullable_2 = false;
             fieldsEdit.AddField(fieldExpectedVAToAllPercent);
 
             IFieldEdit2 fieldVAToAllPercent = new FieldClass() as IFieldEdit2;
-            fieldVAToAllPercent.Name_2 = "CurrentVAToAllExpectedVA";
+            fieldVAToAllPercent.Name_2 = "CurrentVAToAllExpectedVAPercentage";
             fieldVAToAllPercent.Type_2 = esriFieldType.esriFieldTypeDouble;
+            fieldVAToAllPercent.AliasName_2 = "Процент відношення видимої зони до загальної зони покриття";
             fieldVAToAllPercent.IsNullable_2 = false;
             fieldsEdit.AddField(fieldVAToAllPercent);
 
             IFieldEdit2 fieldPointsSee = new FieldClass() as IFieldEdit2;
             fieldPointsSee.Name_2 = "OPSee";
             fieldPointsSee.Type_2 = esriFieldType.esriFieldTypeInteger;
+            fieldPointsSee.AliasName_2 = "К-ть спостережень";
             fieldPointsSee.IsNullable_2 = true;
             fieldsEdit.AddField(fieldPointsSee);
 
@@ -1074,7 +1090,7 @@ namespace MilSpace.DataAccess.Facade
 
                 newRow.Value[table.FindField("AreaOO")] = row.ObservObjArea;
                 newRow.Value[table.FindField("VisibilityArea")] = row.VisibilityArea;
-                newRow.Value[table.FindField("PercentageVisibility")] = row.VisibilityPercent;
+                newRow.Value[table.FindField("VisibilityPercentage")] = row.VisibilityPercent;
                
                 if(row.ObservPointsSeeCount != -1)
                 {
@@ -1115,9 +1131,9 @@ namespace MilSpace.DataAccess.Facade
 
                 newRow.Value[table.FindField("ExpectedVisibilityArea")] = row.ExpectedArea;
                 newRow.Value[table.FindField("VisibilityArea")] = row.VisibilityArea;
-                newRow.Value[table.FindField("PercentageVisibility")] = row.VisibilityPercent;
-                newRow.Value[table.FindField("CurrentToAllExpectedVA")] = row.ToAllExpectedAreaPercent;
-                newRow.Value[table.FindField("CurrentVAToAllExpectedVA")] = row.ToAllVisibilityAreaPercent;
+                newRow.Value[table.FindField("VisibilityPercentage")] = row.VisibilityPercent;
+                newRow.Value[table.FindField("CurrentToAllExpectedVAPercentage")] = row.ToAllExpectedAreaPercent;
+                newRow.Value[table.FindField("CurrentVAToAllExpectedVAPercentage")] = row.ToAllVisibilityAreaPercent;
 
                 if(row.ObservPointsSeeCount != -1)
                 {
