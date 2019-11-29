@@ -485,7 +485,7 @@ namespace MilSpace.Visibility
 
             protected override IntPtr OnCreateChild()
             {
-                var controller = new ObservationPointsController(ArcMap.Document);
+                var controller = new ObservationPointsController(ArcMap.Document, ArcMap.ThisApplication);
 
                 m_windowUI = new DockableWindowMilSpaceMVisibilitySt(this.Hook, controller);
                 return m_windowUI.Handle;
@@ -1206,7 +1206,7 @@ namespace MilSpace.Visibility
 
         private void SetVisibilitySessionsController()
         {
-            var controller = new VisibilitySessionsController(ArcMap.Document);
+            var controller = new VisibilitySessionsController(ArcMap.Document, ArcMap.ThisApplication);
             controller.SetView(this);
             _visibilitySessionsController = controller;
         }

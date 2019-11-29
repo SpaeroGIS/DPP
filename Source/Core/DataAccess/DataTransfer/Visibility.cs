@@ -117,7 +117,7 @@ namespace MilSpace.DataAccess.DataTransfer
         {
             get
             {
-                if (summary == null)
+                if(summary == null)
                 {
                     summary = new VisibilityresultSummary(this);
                 }
@@ -148,6 +148,11 @@ namespace MilSpace.DataAccess.DataTransfer
         public static VisibilityCalculationResultsEnum GetResultTypeByName(string name)
         {
             return VisibilityResulSuffixes.FirstOrDefault(suff => name.EndsWith(suff.Value) && suff.Key != VisibilityCalculationResultsEnum.None).Key;
+        }
+
+        public static IEnumerable<VisibilityCalculationResultsEnum> GetRasterResults()
+        {
+            return RasterResults;
         }
 
         public IEnumerable<string> ValueableResults()

@@ -19,7 +19,7 @@ namespace MilSpace.Visibility
         private string _previousPickedRasterLayer;
         private VisibilityCalcTypeEnum _stepControl = VisibilityCalcTypeEnum.None;
         private const string _allValuesFilterText = "All";
-        private ObservationPointsController controller = new ObservationPointsController(ArcMap.Document);
+        private ObservationPointsController controller = new ObservationPointsController(ArcMap.Document, ArcMap.ThisApplication);
         private BindingList<CheckObservPointGui> _observPointGuis;
         private BindingList<CheckObservPointGui> _observationObjects;
         internal WizardResult FinalResult = new WizardResult();
@@ -537,14 +537,14 @@ namespace MilSpace.Visibility
             if (_stepControl == VisibilityCalcTypeEnum.OpservationPoints)
             {
                 FinalResult.VisibilityCalculationResults = SumChkBox.Checked ?
-                    VisibilityCalculationResultsEnum.ObservationPoints | VisibilityCalculationResultsEnum.VisibilityAreaRaster | VisibilityCalculationResultsEnum.VisibilityAreasPotential :
+                    VisibilityCalculationResultsEnum.ObservationPoints | VisibilityCalculationResultsEnum.VisibilityAreaRaster | VisibilityCalculationResultsEnum.VisibilityAreasPotential /*| VisibilityCalculationResultsEnum.CoverageTable*/ :
                     VisibilityCalculationResultsEnum.None;
             }
             else if (_stepControl == VisibilityCalcTypeEnum.ObservationObjects)
             {
                 FinalResult.ObservObjectIDs = _observationObjects.Where(o => o.Check).Select(i => i.Id).ToArray();
                 FinalResult.VisibilityCalculationResults = (SumChkBox.Checked ?
-                                                    VisibilityCalculationResultsEnum.ObservationPoints | VisibilityCalculationResultsEnum.VisibilityAreaRaster | VisibilityCalculationResultsEnum.VisibilityAreasPotential :
+                                                    VisibilityCalculationResultsEnum.ObservationPoints | VisibilityCalculationResultsEnum.VisibilityAreaRaster | VisibilityCalculationResultsEnum.VisibilityAreasPotential /*| VisibilityCalculationResultsEnum.CoverageTable*/ :
                                                     VisibilityCalculationResultsEnum.None)
                                                     | VisibilityCalculationResultsEnum.ObservationObjects | VisibilityCalculationResultsEnum.VisibilityObservStationClip;
 
