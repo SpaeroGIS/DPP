@@ -221,7 +221,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                             outputSourceName, pointId);
 
 
-                        if (!ProfileLibrary.ConvertTasterToPolygon(outImageName, visibilityArePolyFCName, out messages))
+                        if (!ProfileLibrary.ConvertRasterToPolygon(outImageName, visibilityArePolyFCName, out messages))
                         {
                             if (!messages.Any(m => m.StartsWith("ERROR 010151"))) // Observatioj areas dont intersect Visibility aresa
                             {
@@ -270,7 +270,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                             outputSourceName, pointId);
 
 
-                            if (!ProfileLibrary.ConvertTasterToPolygon(outClipName, visibilityArePolyFCName, out messages))
+                            if (!ProfileLibrary.ConvertRasterToPolygon(outClipName, visibilityArePolyFCName, out messages))
                             {
                                 if (!messages.Any(m => m.StartsWith("ERROR 010151"))) // Observatioj areas dont intersect Visibility aresa
                                 {

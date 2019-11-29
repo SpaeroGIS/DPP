@@ -234,6 +234,8 @@ namespace MilSpace.Visibility.ViewController
             var tbls = mapDocument.TableProperties;
 
             var datasets = GdbAccess.Instance.GetDatasetsFromCalcWorkspace(selectedResults.ResultsInfo);
+
+
             EsriTools.AddVisibilityGroupLayer(datasets, selectedResults.Name, selectedResults.Id, selectedResults.ReferencedGDB, GetLastLayer(activeView),
                                                 true, 33, activeView);
             

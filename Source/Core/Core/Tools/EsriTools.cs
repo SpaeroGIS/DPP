@@ -595,7 +595,13 @@ namespace MilSpace.Core.Tools
 
                 if (layerName is IFeatureClass feature)
                 {
-                    visibilityLayers.Add(GetFeatureLayer(feature));
+                    var lr = GetFeatureLayer(feature);
+                    if (layerName.Name.EndsWith("_va_r"))
+                    {
+                        AddVisibilityPolygonStyle(lr as IFeatureLayer);
+                    }
+
+                    visibilityLayers.Add(lr);
                 }
 
             }
@@ -1005,15 +1011,15 @@ namespace MilSpace.Core.Tools
             int areaCodeIndex = featureClass.FindField("Shape_Area");
 
             IGeoDataset geoDataset = featureClass as IGeoDataset;
-            
+
             IFeatureCursor featureCursor = featureClass.Search(null, false);
             IFeature currentFeature = featureCursor.NextFeature();
 
-            if(gridCode != -1)
+            if (gridCode != -1)
             {
-                while(currentFeature != null)
+                while (currentFeature != null)
                 {
-                    if((int)currentFeature.Value[gridCodeIndex] == gridCode)
+                    if ((int)currentFeature.Value[gridCodeIndex] == gridCode)
                     {
                         result += (double)currentFeature.Value[areaCodeIndex];
                     }
@@ -1023,13 +1029,13 @@ namespace MilSpace.Core.Tools
             }
             else
             {
-                while(currentFeature != null)
+                while (currentFeature != null)
                 {
                     result += (double)currentFeature.Value[areaCodeIndex];
                     currentFeature = featureCursor.NextFeature();
                 }
             }
-            
+
             Marshal.ReleaseComObject(featureCursor);
 
             return result;
@@ -1039,6 +1045,39 @@ namespace MilSpace.Core.Tools
         {
             double radian = (90 - azimuth) * (Math.PI / 180);
             return GetPointFromAngelAndDistance(centerPoint, radian, distance);
+        }
+
+        public static void AddVisibilityPolygonStyle(IFeatureLayer featureLayer)
+        {
+            ISimpleFillSymbol simpleFillSymbol = new SimpleFillSymbolClass();
+            simpleFillSymbol.Color = new RgbColor()
+            {
+                Transparency = 255
+            };
+
+            ICartographicLineSymbol outline = new CartographicLineSymbol
+            {
+                Width = 2,
+                Color = new RgbColor()
+                {
+                    Red = 100,
+                    Green = 100,
+                    Blue = 100
+                }
+            };
+
+            simpleFillSymbol.Outline = outline;
+
+            simpleFillSymbol.Style = esriSimpleFillStyle.esriSFSNull;
+
+            IGeoFeatureLayer geoFeatureLayer = (IGeoFeatureLayer)featureLayer;
+            ISimpleRenderer simpleRenderer = (ISimpleRenderer)geoFeatureLayer.Renderer;
+            //Create a new renderer
+            simpleRenderer = new SimpleRendererClass();
+            //Set its symbol from the styleGalleryItem
+            simpleRenderer.Symbol = (ISymbol)simpleFillSymbol;
+            //Set the renderer into the geoFeatureLayer
+            geoFeatureLayer.Renderer = (IFeatureRenderer)simpleRenderer;
         }
     }
 }
