@@ -1,6 +1,7 @@
 ﻿using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Configurations;
+using MilSpace.Core;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
@@ -22,6 +23,7 @@ namespace MilSpace.Tools
         private double _totalVisibleArea;
         private string _allTitle = "All";
         private VisibilityCalcTypeEnum _calcType;
+        private Logger _logger = Logger.GetLoggerEx("MilSpace.Tools.CoverageTableManager");
 
         private string _gdb = MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection;
 
@@ -65,25 +67,39 @@ namespace MilSpace.Tools
 
         private void SetObjPolygons(int[] observObjectsIds, IFeatureClass observObjFC)
         {
-            foreach(var objId in observObjectsIds)
+            try
             {
-                var obj = observObjFC.GetFeature(objId);
-                var objGeom = obj.Shape as IPolygon;
-                objGeom.Project(VisibilityManager.CurrentMap.SpatialReference);
+                foreach(var objId in observObjectsIds)
+                {
+                    var obj = observObjFC.GetFeature(objId);
+                    var objGeom = obj.Shape as IPolygon;
+                    objGeom.Project(VisibilityManager.CurrentMap.SpatialReference);
 
-                _objPolygons.Add(objId, objGeom);
+                    _objPolygons.Add(objId, objGeom);
 
-                var objArea = (IArea)objGeom;
+                    var objArea = (IArea)objGeom;
+                }
+
+                var totalObjArea = EsriTools.GetTotalPolygon(_objPolygons.Select(area => { return area.Value; }).ToList());
+
+                _objPolygons.Add(-1, totalObjArea);
             }
-
-            var totalObjArea = EsriTools.GetTotalPolygon(_objPolygons.Select(area => { return area.Value; }).ToList());
-
-            _objPolygons.Add(-1, totalObjArea);
+            catch(Exception ex)
+            {
+                _logger.ErrorEx(ex.Message);
+            }
         }
 
         private void SetCoverageAreas(int[] observPointsIds, IFeatureClass observPointFC)
         {
             var observPoints = VisibilityZonesFacade.GetObservationPointByObjectIds(observPointsIds);
+
+            if(observPoints == null || observPoints.Count() == 0)
+            {
+                _logger.ErrorEx($"Observation points are not found");
+                return;
+            }
+
             var observObjPolygons = new Dictionary<int, IPolygon>();
 
             foreach(var pointId in observPointsIds)
@@ -175,26 +191,39 @@ namespace MilSpace.Tools
             {
                 var observPoint = VisibilityZonesFacade.GetObservationPointByObjectIds(new int[] { currPointId }).First();
 
-                var totalObjArea = (IArea)_objPolygons[-1];
-                var visibilityPolygonsForPointFeatureClass = GdbAccess.Instance.GetFeatureClass(_gdb, visibilityAreasFCName);
-
-                foreach(var polygon in _objPolygons)
+                if(observPoint == null)
                 {
-                    if(polygon.Key == -1)
+                    _logger.ErrorEx($"Observation point with id {currPointId} is not found");
+                    return;
+                }
+
+                try
+                {
+                    var totalObjArea = (IArea)_objPolygons[-1];
+                    var visibilityPolygonsForPointFeatureClass = GdbAccess.Instance.GetFeatureClass(_gdb, visibilityAreasFCName);
+
+                    foreach(var polygon in _objPolygons)
                     {
-                        continue;
+                        if(polygon.Key == -1)
+                        {
+                            continue;
+                        }
+
+                        var obj = VisibilityZonesFacade.GetObservationObjectByObjectIds(new int[] { polygon.Key }).First();
+
+                        if(totalObjArea.Area == 0)
+                        {
+                            AddEmptyAreaRow(observPoint.Title, currPointId, polygon.Key, obj.Title);
+                            continue;
+                        }
+
+                        var visibilityArea = EsriTools.GetObjVisibilityArea(visibilityPolygonsForPointFeatureClass, polygon.Value);
+                        AddVARowModel(observPoint.Title, currPointId, obj.Title, polygon.Key, 1, visibilityArea);
                     }
-
-                    var obj = VisibilityZonesFacade.GetObservationObjectByObjectIds(new int[] { polygon.Key }).First();
-
-                    if(totalObjArea.Area == 0)
-                    {
-                        AddEmptyAreaRow(observPoint.Title, currPointId, polygon.Key, obj.Title);
-                        continue;
-                    }
-
-                    var visibilityArea = EsriTools.GetObjVisibilityArea(visibilityPolygonsForPointFeatureClass, polygon.Value);
-                    AddVARowModel(observPoint.Title, currPointId, obj.Title, polygon.Key, 1, visibilityArea);
+                }
+                catch(Exception ex)
+                {
+                    _logger.ErrorEx($"An error occured during calculation coverage table data for point \n {ex.Message}");
                 }
             }
         }
@@ -204,29 +233,48 @@ namespace MilSpace.Tools
             var totalObjArea = (IArea)_objPolygons[-1];
             var visibilityPolygonsForPointFeatureClass = GdbAccess.Instance.GetFeatureClass(_gdb, visibilityAreasFCName);
 
-            foreach(var polygon in _objPolygons)
+            try
             {
-                if(polygon.Key == -1)
+                foreach(var polygon in _objPolygons)
                 {
-                    continue;
+                    if(polygon.Key == -1)
+                    {
+                        continue;
+                    }
+
+                    var obj = VisibilityZonesFacade.GetObservationObjectByObjectIds(new int[] { polygon.Key }).First();
+                    if(obj == null)
+                    {
+                        _logger.ErrorEx($"Observation object with id {polygon.Key} is not found");
+                        return;
+                    }
+
+                    if(totalObjArea.Area == 0)
+                    {
+                        AddEmptyAreaRow(_allTitle, -1, polygon.Key, obj.Title, -1);
+                        continue;
+                    }
+
+                    var visibilityArea = EsriTools.GetObjVisibilityArea(visibilityPolygonsForPointFeatureClass, polygon.Value);
+                    AddVARowModel(_allTitle, -1, obj.Title, polygon.Key, -1, visibilityArea);
                 }
-
-                var obj = VisibilityZonesFacade.GetObservationObjectByObjectIds(new int[] { polygon.Key }).First();
-
-                if(totalObjArea.Area == 0)
-                {
-                    AddEmptyAreaRow(_allTitle, -1, polygon.Key, obj.Title, -1);
-                    continue;
-                }
-
-                var visibilityArea = EsriTools.GetObjVisibilityArea(visibilityPolygonsForPointFeatureClass, polygon.Value);
-                AddVARowModel(_allTitle, -1, obj.Title, polygon.Key, -1, visibilityArea);
+            }
+            catch(Exception ex)
+            {
+                _logger.ErrorEx($"An error occured during calculation coverage table data for objects \n {ex.Message}");
             }
 
-            for(int i = 1; i <= pointsCount; i++)
+            try
             {
-                var areaByPointsSee = EsriTools.GetObjVisibilityArea(visibilityPolygonsForPointFeatureClass, _objPolygons[-1], i);
-                AddVARowModel(_allTitle, -1, _allTitle, -1, i, areaByPointsSee);
+                for(int i = 1; i <= pointsCount; i++)
+                {
+                    var areaByPointsSee = EsriTools.GetObjVisibilityArea(visibilityPolygonsForPointFeatureClass, _objPolygons[-1], i);
+                    AddVARowModel(_allTitle, -1, _allTitle, -1, i, areaByPointsSee);
+                }
+            }
+            catch(Exception ex)
+            {
+                _logger.ErrorEx($"An error occured during calculation coverage table data for number of observations \n {ex.Message}");
             }
         }
 
@@ -238,16 +286,23 @@ namespace MilSpace.Tools
                 return;
             }
 
-            var visibilityPolygonsFeatureClass = GdbAccess.Instance.GetFeatureClass(_gdb, visibilityAreasFCName);
-
-            _totalVisibleArea = EsriTools.GetTotalAreaFromFeatureClass(visibilityPolygonsFeatureClass);
-
-            AddVSRowModel(_allTitle, -1, -1, _totalExpectedArea, _totalVisibleArea);
-            
-            for(int i = 1; i <= pointsCount; i++)
+            try
             {
-                var areaByPointsSee = EsriTools.GetTotalAreaFromFeatureClass(visibilityPolygonsFeatureClass, i);
-                AddVSRowModel(_allTitle, -1, i, _totalExpectedArea, areaByPointsSee);
+                var visibilityPolygonsFeatureClass = GdbAccess.Instance.GetFeatureClass(_gdb, visibilityAreasFCName);
+
+                _totalVisibleArea = EsriTools.GetTotalAreaFromFeatureClass(visibilityPolygonsFeatureClass);
+
+                AddVSRowModel(_allTitle, -1, -1, _totalExpectedArea, _totalVisibleArea);
+
+                for(int i = 1; i <= pointsCount; i++)
+                {
+                    var areaByPointsSee = EsriTools.GetTotalAreaFromFeatureClass(visibilityPolygonsFeatureClass, i);
+                    AddVSRowModel(_allTitle, -1, i, _totalExpectedArea, areaByPointsSee);
+                }
+            }
+             catch(Exception ex)
+            {
+                _logger.ErrorEx($"An error occured during calculation coverage table data for number of observations \n {ex.Message}");
             }
         }
 
