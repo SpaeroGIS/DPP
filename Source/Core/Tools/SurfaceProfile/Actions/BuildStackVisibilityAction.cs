@@ -313,7 +313,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
                     coverageTableManager.AddPotentialArea(visibilityPotentialAreaFCName, (curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints), curPoints.Value[0]);
                     var pointsCount = pointsFilteringIds.Where(id => id > -1).Count();
-                    coverageTableManager.CalculateCoverageTableDataForPoint(pointId > -1 ? curPoints.Value[0] : -1, visibilityArePolyFCName, pointsCount);
+                    coverageTableManager.CalculateCoverageTableDataForPoint((pointId == -1), visibilityArePolyFCName, pointsCount, curPoints.Value[0]);
 
                     results.Add(visibilityPotentialAreaFCName);
                 }
