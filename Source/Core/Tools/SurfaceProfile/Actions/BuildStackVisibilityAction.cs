@@ -313,7 +313,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
                     coverageTableManager.AddPotentialArea(visibilityPotentialAreaFCName, (curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints), curPoints.Value[0]);
                     var pointsCount = pointsFilteringIds.Where(id => id > -1).Count();
-                    coverageTableManager.CalculateCoverageTableDataForPoint(pointId > -1 ? curPoints.Value[0] : -1, visibilityArePolyFCName, pointsCount);
+                    coverageTableManager.CalculateCoverageTableDataForPoint((pointId == -1), visibilityArePolyFCName, pointsCount, curPoints.Value[0]);
 
                     results.Add(visibilityPotentialAreaFCName);
                 }
@@ -322,6 +322,11 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             var coverageTable = VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.CoverageTable, outputSourceName);
             coverageTableManager.SaveDataToCoverageTable(coverageTable);
             results.Add(coverageTable);
+            //Add Coverage table to Available results
+            if (!calcResults.HasFlag(VisibilityCalculationResultsEnum.CoverageTable))
+            {
+                calcResults |= VisibilityCalculationResultsEnum.CoverageTable;
+            }
 
             //Set real results to show
             if (removeFullImageFromresult)

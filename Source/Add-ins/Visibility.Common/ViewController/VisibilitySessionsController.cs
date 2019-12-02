@@ -1,4 +1,5 @@
-﻿using ESRI.ArcGIS.Carto;
+﻿using ESRI.ArcGIS.ArcMapUI;
+using ESRI.ArcGIS.Carto;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
@@ -17,10 +18,14 @@ namespace MilSpace.Visibility.ViewController
         private List<VisibilityCalcResults> _visibilityResults = new List<VisibilityCalcResults>();
         private static Dictionary<VisibilityTaskStateEnum, string> _states = null; //Enum.GetValues(typeof(VisibilityTaskStateEnum)).Cast<VisibilityTaskStateEnum>().ToDictionary(t => t, ts => ts.ToString());
         private static Dictionary<VisibilityCalcTypeEnum, string> _calcTypes = null;// Enum.GetValues(typeof(VisibilityCalcTypeEnum)).Cast<VisibilityCalcTypeEnum>().ToDictionary(t => t, ts => ts.ToString());
+        private IMxDocument mapDocument;
+        private IMxApplication application;
 
-        public VisibilitySessionsController()
+        public VisibilitySessionsController(IMxDocument mapDocument, IMxApplication application)
         {
             VisibilityManager.OnGenerationStarted += UpdateVisibilitySessionsList;
+            this.mapDocument = mapDocument;
+            this.application = application;
 
             _calcTypes = LocalizationContext.Instance.CalcTypeLocalisationShort;
             _states = LocalizationContext.Instance.CalculationStates;
@@ -53,17 +58,17 @@ namespace MilSpace.Visibility.ViewController
 
         internal string GetImgName(VisibilityCalculationResultsEnum resultType)
         {
-            if(resultType == VisibilityCalculationResultsEnum.ObservationPoints || resultType == VisibilityCalculationResultsEnum.ObservationPointSingle)
+            if (resultType == VisibilityCalculationResultsEnum.ObservationPoints || resultType == VisibilityCalculationResultsEnum.ObservationPointSingle)
             {
                 return "Flag.png";
             }
 
-            if(resultType == VisibilityCalculationResultsEnum.ObservationObjects)
+            if (resultType == VisibilityCalculationResultsEnum.ObservationObjects)
             {
                 return "Target.png";
             }
 
-            if(resultType == VisibilityCalculationResultsEnum.VisibilityAreaRaster || resultType == VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle
+            if (resultType == VisibilityCalculationResultsEnum.VisibilityAreaRaster || resultType == VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle
                 || resultType == VisibilityCalculationResultsEnum.VisibilityAreaPolygons || resultType == VisibilityCalculationResultsEnum.VisibilityObservStationClip)
             {
                 return "Dots Up.png";
@@ -96,21 +101,21 @@ namespace MilSpace.Visibility.ViewController
 
         internal bool RemoveSession(string id)
         {
-            if(_visibilitySessions.Count == 0)
+            if (_visibilitySessions.Count == 0)
             {
                 UpdateVisibilitySessionsList();
             }
 
             var removedSession = _visibilitySessions.FirstOrDefault(session => session.Id == id);
 
-            if(removedSession == null)
+            if (removedSession == null)
             {
                 return false;
             }
 
             var result = VisibilityZonesFacade.DeleteVisibilitySession(id);
 
-            if(result)
+            if (result)
             {
                 _visibilitySessions.Remove(removedSession);
                 _view.RemoveSessionFromList(id);
@@ -119,7 +124,7 @@ namespace MilSpace.Visibility.ViewController
             return result;
         }
 
-        
+
         internal VisibilityresultSummary GetSummaryResultById(string id)
         {
             var result = _visibilityResults.FirstOrDefault(res => res.Id == id);
@@ -137,25 +142,21 @@ namespace MilSpace.Visibility.ViewController
             var results = selectedResults.ValueableResults();
             var removingResult = true;
 
-            if(VisibilityZonesFacade.IsResultsBelongToUser(id))
+            if (VisibilityZonesFacade.IsResultsBelongToUser(id))
             {
-                foreach(var result in results)
+                foreach (var result in results)
                 {
-                    if(result != selectedResults.Id)
+                    if (result != selectedResults.Id && !EsriTools.RemoveDataSet(selectedResults.ReferencedGDB, result))
                     {
-                        if(!EsriTools.RemoveDataSet(selectedResults.ReferencedGDB, result))
-                        {
-                            return false;
-                        }
+                        return false;
                     }
                 }
 
                 removingResult = VisibilityZonesFacade.DeleteVisibilityResults(id);
 
-                if(removingResult)
+                if (removingResult)
                 {
                     RemoveSession(id);
-
                     EsriTools.RemoveLayer(selectedResults.Name, activeView.FocusMap);
                 }
             }
@@ -164,7 +165,7 @@ namespace MilSpace.Visibility.ViewController
                 VisibilityZonesFacade.DeleteVisibilityResultsFromUserSession(id);
             }
 
-            if(removingResult)
+            if (removingResult)
             {
                 _visibilityResults.Remove(selectedResults);
             }
@@ -176,7 +177,7 @@ namespace MilSpace.Visibility.ViewController
         {
             var selectedResults = _visibilityResults.First(res => res.Id == id);
 
-            if(removeLayers)
+            if (removeLayers)
             {
                 EsriTools.RemoveLayer(selectedResults.Name, activeView.FocusMap);
             }
@@ -204,9 +205,9 @@ namespace MilSpace.Visibility.ViewController
         {
             var res = true;
 
-            foreach(var result in results)
+            foreach (var result in results)
             {
-                if(!VisibilityZonesFacade.AddSharedVisibilityResultsToUserSession(result))
+                if (!VisibilityZonesFacade.AddSharedVisibilityResultsToUserSession(result))
                 {
                     res = false;
                 }
@@ -231,9 +232,13 @@ namespace MilSpace.Visibility.ViewController
         {
             var selectedResults = _visibilityResults.First(res => res.Id == id);
 
+            //It can be used for adding tables
+            var tbls = mapDocument.TableProperties;
+
             var datasets = GdbAccess.Instance.GetDatasetsFromCalcWorkspace(selectedResults.ResultsInfo);
             EsriTools.AddVisibilityGroupLayer(datasets, selectedResults.Name, selectedResults.Id, selectedResults.ReferencedGDB, GetLastLayer(activeView),
                                                 true, 33, activeView);
+            EsriTools.AddTableToMap(tbls, VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.CoverageTable, selectedResults.Name), selectedResults.ReferencedGDB, mapDocument, application);
         }
 
         internal void ZoomToLayer(string id, IActiveView activeView)
