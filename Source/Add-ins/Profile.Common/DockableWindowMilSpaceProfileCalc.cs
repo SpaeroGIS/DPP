@@ -768,22 +768,27 @@ namespace MilSpace.Profile
 
         private void calcProfile_Click(object sender, EventArgs e)
         {
+            logger.DebugEx("> calcProfile_Click START");
+
             var session = controller.GenerateProfile();
             if (session != null)
             {
+                logger.DebugEx("calcProfile_Click. session.SessionName:{0}", session.SessionName);
                 controller.AddProfileToList(session);
                 controller.CallGraphsHandle(session);
                 controller.SaveProfileSet(session);
             }
             else
             {
-                //TODO log error
+                logger.DebugEx("calcProfile_Click controller.GenerateProfile ERROR. Session is NULL");
                 MessageBox.Show(
-                    "Calculation error", 
-                    "Error", 
+                    "Calculation error. GenerateProfile return NULL", 
+                    "Модуль профілю. Error", 
                     MessageBoxButtons.OK, 
                     MessageBoxIcon.Error);
             }
+
+            logger.DebugEx("> calcProfile_Click END");
         }
 
         private void ChechDouble_KeyPress(object sender, KeyPressEventArgs e)

@@ -32,7 +32,7 @@ namespace MilSpace.Core
           { SimpleDataTypesEnum.Undefined , () =>{ return default(string);}}};
 
 
-        private static string milSpaceRegistriPath = @"SOFTWARE\WOW6432Node\MilSpace\";
+        private static string milSpaceRegistryPath = @"SOFTWARE\WOW6432Node\MilSpace\";
 
         public static bool Convert(SimpleDataTypesEnum typeTo, string value, out object result)
         {
@@ -157,7 +157,7 @@ namespace MilSpace.Core
             return vertices;
         }
 
-        public static string DateFormat => "yyyy-MM-dd H:mm";
+        public static string DateFormat => "yyyy-MM-dd HH:mm";
         public static string DateFormatSmall => "yyyy-MM-dd";
 
         public static double Azimuth(this ILine line)
@@ -179,7 +179,7 @@ namespace MilSpace.Core
 
         public static string GetRegistryValue(string registrypath)
         {
-            using (RegistryKey key = Registry.LocalMachine.OpenSubKey(milSpaceRegistriPath))
+            using (RegistryKey key = Registry.LocalMachine.OpenSubKey(milSpaceRegistryPath))
             {
                 if (key == null)
                 {

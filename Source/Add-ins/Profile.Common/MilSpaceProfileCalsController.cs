@@ -84,7 +84,7 @@ namespace MilSpace.Profile
 
         internal void OnDocumentsLoad()
         {
-            logger.InfoEx("Document loaded.");
+            logger.InfoEx("Document loaded");
 
             IActiveViewEvents_Event activeViewEvents = (IActiveViewEvents_Event)View.ActiveView.FocusMap;
             IActiveViewEvents_SelectionChangedEventHandler handler = new IActiveViewEvents_SelectionChangedEventHandler(OnMapSelectionChangedLocal);
@@ -278,35 +278,46 @@ namespace MilSpace.Profile
         /// <returns>Profile Session data</returns>
         internal ProfileSession GenerateProfile()
         {
+            logger.DebugEx($"> GenerateProfile START");
             string errorMessage;
             try
             {
-
                 ProfileManager manager = new ProfileManager();
+
+                logger.DebugEx($"GenerateProfile. new ProfileManager OK");
                 var profileSetting = profileSettings[View.SelectedProfileSettingsType];
                 var newProfileId = GenerateProfileId();
-                logger.InfoEx($"Profile {newProfileId}. Generation started");
+                logger.DebugEx($"GenerateProfile.Profile. ID:{newProfileId}");
                 var newProfileName = GenerateProfileName(newProfileId);
+                logger.DebugEx($"GenerateProfile.Profile. Name:{newProfileName}");
 
                 if (manager == null)
                 {
-                    logger.ErrorEx("Cannot find profile manager");
+                    logger.DebugEx("GenerateProfile. Cannot find profile manager");
                     throw new NullReferenceException("Cannot find profile manager");
                 }
 
                 if (profileSetting == null)
                 {
-                    logger.ErrorEx("Cannot find profile manager");
+                    logger.DebugEx("GenerateProfile. Cannot find profile manager");
                     throw new NullReferenceException("Cannot find profile manager");
                 }
 
-                logger.InfoEx($"Profile {newProfileId}. Generation starting..");
-                var session = manager.GenerateProfile(profileSetting.DemLayerName, profileSetting.ProfileLines, View.SelectedProfileSettingsType, newProfileId, newProfileName, View.ObserveHeight, profileSetting.AzimuthToStore);
-                logger.InfoEx($"Profile {newProfileId}. Generated");
+                logger.DebugEx($"GenerateProfile. Profile {newProfileId}. GenerateProfile CALL");
+                var session = manager.GenerateProfile(
+                    profileSetting.DemLayerName, 
+                    profileSetting.ProfileLines, 
+                    View.SelectedProfileSettingsType, 
+                    newProfileId, 
+                    newProfileName, 
+                    View.ObserveHeight, 
+                    profileSetting.AzimuthToStore);
+                logger.DebugEx($"GenerateProfile. Profile {newProfileId}. GenerateProfile RETURN");
 
                 if (session.DefinitionType == ProfileSettingsTypeEnum.Primitives)
                 {
-                    session.Segments = ProfileLinesConverter.GetSegmentsFromProfileLine(session.ProfileSurfaces, ArcMap.Document.FocusMap.SpatialReference);
+                    session.Segments =
+                        ProfileLinesConverter.GetSegmentsFromProfileLine(session.ProfileSurfaces, ArcMap.Document.FocusMap.SpatialReference);
                 }
                 else
                 {
@@ -315,28 +326,34 @@ namespace MilSpace.Profile
 
                 SetPeofileId();
                 SetProfileName();
+
+                logger.InfoEx($"> GenerateProfile END");
                 return session;
 
             }
             catch (MilSpaceCanotDeletePrifileCalcTable ex)
             {
                 //TODO Localize error message
+                logger.DebugEx($"GenerateProfile MilSpaceCanotDeletePrifileCalcTable. ex.Message:{0}", ex.Message);
                 errorMessage = ex.Message;
             }
             catch (MilSpaceDataException ex)
             {
                 //TODO Localize error message
+                logger.DebugEx($"GenerateProfile MilSpaceDataException. ex.Message:{0}", ex.Message);
                 errorMessage = ex.Message;
-
             }
             catch (Exception ex)
             {
-                //TODO log error
                 //TODO Localize error message
+                logger.DebugEx($"GenerateProfile Exception. ex.Message:{0}", ex.Message);
                 errorMessage = ex.Message;
             }
 
-            MessageBox.Show(errorMessage);
+            logger.InfoEx($"> GenerateProfile END with session IS NULL");
+            MessageBox.Show(
+                errorMessage
+                );
             return null;
         }
 

@@ -27,7 +27,6 @@ namespace MilSpace.Configurations
                     }
                     catch (Exception ex)
                     {
-
                         string r = ex.Message;
                     }
                 }
@@ -43,7 +42,8 @@ namespace MilSpace.Configurations
             {
                 if (pythonConfiguration == null)
                 {
-                    var pythonConfigurationSection = GetRootSectionGroup.Sections[PythonConfiguratuinSection.SectionName] as PythonConfiguratuinSection;
+                    var pythonConfigurationSection = 
+                        GetRootSectionGroup.Sections[PythonConfiguratuinSection.SectionName] as PythonConfiguratuinSection;
                     pythonConfiguration = new PythonConfiguration
                     {
                         PythonExecutable = pythonConfigurationSection.PythonExecutable,
@@ -56,7 +56,10 @@ namespace MilSpace.Configurations
         }
         public static string ConfigurationFileName
         {
-            get { return GetCurrentConfiguration().FilePath; }
+            get
+            {
+                return GetCurrentConfiguration().FilePath;
+            }
         }
     }
 }
