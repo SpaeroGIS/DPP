@@ -588,11 +588,11 @@ namespace MilSpace.Core.Tools
             enumProperties.Reset();
 
             ITableProperty3 tlbProperty3 = enumProperties.Next() as ITableProperty3;
-            while(tlbProperty3 != null)
+            while (tlbProperty3 != null)
             {
-                if(tlbProperty3.StandaloneTable != null)
+                if (tlbProperty3.StandaloneTable != null)
                 {
-                    if(tlbProperty3.StandaloneTable.Name.EndsWith(tableName))
+                    if (tlbProperty3.StandaloneTable.Name.EndsWith(tableName))
                     {
                         isTableExist = true;
                         break;
@@ -601,14 +601,14 @@ namespace MilSpace.Core.Tools
                 tlbProperty3 = enumProperties.Next() as ITableProperty3;
             }
 
-            if(!isTableExist)
+            if (!isTableExist)
             {
                 IWorkspaceFactory workspaceFactory = new FileGDBWorkspaceFactory();
                 IWorkspace workspace = workspaceFactory.OpenFromFile(gdb, 0);
                 IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)workspace;
                 IWorkspace2 wsp2 = (IWorkspace2)workspace;
 
-                if(wsp2.NameExists[esriDatasetType.esriDTTable, tableName])
+                if (wsp2.NameExists[esriDatasetType.esriDTTable, tableName])
                 {
                     ITable table = featureWorkspace.OpenTable(tableName);
                     IStandaloneTable stndaloneTable = new StandaloneTable();
@@ -627,7 +627,8 @@ namespace MilSpace.Core.Tools
             }
         }
 
-        public static void AddVisibilityGroupLayer(IEnumerable<IDataset> visibilityLayersNames, string sessionName, string calcRasterName, string gdb, string relativeLayerName,
+        public static void AddVisibilityGroupLayer(IEnumerable<IDataset> visibilityLayersNames, string sessionName,
+            string calcRasterName, string gdb, string relativeLayerName,
                                                 bool isLayerAbove, short transparency, IActiveView activeView)
         {
             var visibilityLayers = new List<ILayer>();
@@ -641,7 +642,9 @@ namespace MilSpace.Core.Tools
 
                 if(layerName is IFeatureClass feature)
                 {
-                    visibilityLayers.Add(GetFeatureLayer(feature));
+                    var lr = GetFeatureLayer(feature);
+
+                    visibilityLayers.Add(lr);
                 }
 
             }
@@ -1109,33 +1112,33 @@ namespace MilSpace.Core.Tools
                 int gridCodeIndex = featureClass.FindField("gridcode");
                 int areaCodeIndex = featureClass.FindField("Shape_Area");
 
-                IGeoDataset geoDataset = featureClass as IGeoDataset;
+            IGeoDataset geoDataset = featureClass as IGeoDataset;
 
-                IFeatureCursor featureCursor = featureClass.Search(null, false);
-                IFeature currentFeature = featureCursor.NextFeature();
+            IFeatureCursor featureCursor = featureClass.Search(null, false);
+            IFeature currentFeature = featureCursor.NextFeature();
 
-                if(gridCode != -1)
+            if (gridCode != -1)
+            {
+                while (currentFeature != null)
                 {
-                    while(currentFeature != null)
-                    {
-                        if((int)currentFeature.Value[gridCodeIndex] == gridCode)
-                        {
-                            result += (double)currentFeature.Value[areaCodeIndex];
-                        }
-
-                        currentFeature = featureCursor.NextFeature();
-                    }
-                }
-                else
-                {
-                    while(currentFeature != null)
+                    if ((int)currentFeature.Value[gridCodeIndex] == gridCode)
                     {
                         result += (double)currentFeature.Value[areaCodeIndex];
-                        currentFeature = featureCursor.NextFeature();
                     }
-                }
 
-                Marshal.ReleaseComObject(featureCursor);
+                    currentFeature = featureCursor.NextFeature();
+                }
+            }
+            else
+            {
+                while (currentFeature != null)
+                {
+                    result += (double)currentFeature.Value[areaCodeIndex];
+                    currentFeature = featureCursor.NextFeature();
+                }
+            }
+
+            Marshal.ReleaseComObject(featureCursor);
 
             }
             catch(Exception ex)
@@ -1149,7 +1152,7 @@ namespace MilSpace.Core.Tools
 
         public static IPolygon GetTotalPolygonFromFeatureClass(IFeatureClass featureClass, int gridCode = -1)
         {
-            if(featureClass == null)
+            if (featureClass == null)
             {
                 return null;
             }
@@ -1168,14 +1171,14 @@ namespace MilSpace.Core.Tools
                 IGeometryCollection geometryCollection = geometryBag as IGeometryCollection;
                 IFeature currentFeature = featureCursor.NextFeature();
 
-                while(currentFeature != null)
+            while (currentFeature != null)
+            {
+                if (gridCode == -1 || (int)currentFeature.Value[gridCodeIndex] == gridCode)
                 {
-                    if(gridCode == -1 || (int)currentFeature.Value[gridCodeIndex] == gridCode)
-                    {
-                        object missing = Type.Missing;
-                        geometryCollection.AddGeometry(currentFeature.Shape, ref missing, ref
-                            missing);
-                    }
+                    object missing = Type.Missing;
+                    geometryCollection.AddGeometry(currentFeature.Shape, ref missing, ref
+                        missing);
+                }
 
                     currentFeature = featureCursor.NextFeature();
                 }
@@ -1206,6 +1209,43 @@ namespace MilSpace.Core.Tools
         {
             double radian = (90 - azimuth) * (Math.PI / 180);
             return GetPointFromAngelAndDistance(centerPoint, radian, distance);
+        }
+
+        public static void SetFeatureLayerStyle(IFeatureLayer feaureLayer, ISymbol featureLayerSymbol)
+        {
+            if (feaureLayer == null)
+            {
+                return;
+            }
+
+            IGeoFeatureLayer geoFeatureLayer = (IGeoFeatureLayer)feaureLayer;
+            ISimpleRenderer simpleRenderer = (ISimpleRenderer)geoFeatureLayer.Renderer;
+            //Create a new renderer
+            simpleRenderer = new SimpleRendererClass();
+            //Set its symbol from the styleGalleryItem
+            simpleRenderer.Symbol = featureLayerSymbol;
+            //Set the renderer into the geoFeatureLayer
+            geoFeatureLayer.Renderer = (IFeatureRenderer)simpleRenderer;
+        }
+        public static void SetRasterLayerStyle(ILayer layer, ISymbol featureLayerSymbol)
+        {
+            if (layer == null)
+            {
+                return;
+            }
+
+
+            if (layer is IFeatureLayer feaureLayer)
+            {
+                IGeoFeatureLayer geoFeatureLayer = (IGeoFeatureLayer)feaureLayer;
+                ISimpleRenderer simpleRenderer = (ISimpleRenderer)geoFeatureLayer.Renderer;
+                //Create a new renderer
+                simpleRenderer = new SimpleRendererClass();
+                //Set its symbol from the styleGalleryItem
+                simpleRenderer.Symbol = featureLayerSymbol;
+                //Set the renderer into the geoFeatureLayer
+                geoFeatureLayer.Renderer = (IFeatureRenderer)simpleRenderer;
+            }
         }
     }
 }

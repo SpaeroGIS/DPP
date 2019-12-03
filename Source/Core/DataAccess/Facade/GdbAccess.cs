@@ -661,23 +661,29 @@ namespace MilSpace.DataAccess.Facade
             throw new NotImplementedException(type.ToString());
         }
 
+        public IDataset GetDatasetFromCalcWorkspace(VisibilityResultInfo visibilityResult)
+        {
+            if (visibilityResult.RessutType == VisibilityCalculationResultsEnum.CoverageTable)
+            {
+                return null;
+            }
+
+            if (IsDatasetExist(calcWorkspace, visibilityResult.ResultName, 
+                VisibilityTask.GetEsriDataTypeByVisibilityresyltType(visibilityResult.RessutType)))
+            {
+                return GetDataset(calcWorkspace, visibilityResult.ResultName, 
+                    VisibilityTask.GetEsriDataTypeByVisibilityresyltType(visibilityResult.RessutType));
+            }
+
+            return null;
+        }
+
         public IEnumerable<IDataset> GetDatasetsFromCalcWorkspace(IEnumerable<VisibilityResultInfo> visibilityResults)
         {
             var mapping = VisibilityTask.EsriDatatypeToResultMapping;
             return visibilityResults.Select(v =>
-            {
-                if(v.RessutType == VisibilityCalculationResultsEnum.CoverageTable)
-                {
-                    return null;
-                }
-
-                if (IsDatasetExist(calcWorkspace, v.ResultName, VisibilityTask.GetEsriDataTypeByVisibilityresyltType(v.RessutType)))
-                    {
-                    return GetDataset(calcWorkspace, v.ResultName, VisibilityTask.GetEsriDataTypeByVisibilityresyltType(v.RessutType));
-                }
-                return null;
-
-            }).Where(i => i != null).ToArray();
+                GetDatasetFromCalcWorkspace(v)).
+                Where(i => i != null).ToArray();
         }
 
         private static bool IsDatasetExist(IWorkspace workspace, string datasetName, esriDatasetType datasetType)
@@ -929,7 +935,7 @@ namespace MilSpace.DataAccess.Facade
             fieldVAPercent.AliasName_2 = "Процент видимості";
             fieldVAPercent.IsNullable_2 = false;
             fieldsEdit.AddField(fieldVAPercent);
-            
+
             IFieldEdit2 fieldPointsSee = new FieldClass() as IFieldEdit2;
             fieldPointsSee.Name_2 = "OPSee";
             fieldPointsSee.Type_2 = esriFieldType.esriFieldTypeInteger;
@@ -1212,13 +1218,13 @@ namespace MilSpace.DataAccess.Facade
             pointIdFieldEdit.Name_2 = "ObservPointId";
             pointIdFieldEdit.Type_2 = esriFieldType.esriFieldTypeInteger;
             fieldsEdit.AddField(pointIdField);
-            
+
             IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)workspace;
             workspaceEdit.StartEditing(true);
             workspaceEdit.StartEditOperation();
 
             IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)workspace;
-          
+
             IFeatureClass featureClass = featureWorkspace.CreateFeatureClass(newFeatureClassName, fields,
                     ocDescription.InstanceCLSID, ocDescription.ClassExtensionCLSID, esriFeatureType.esriFTSimple, "shape", "");
 
@@ -1244,7 +1250,7 @@ namespace MilSpace.DataAccess.Facade
 
             IWorkspace2 wsp2 = workspace as IWorkspace2;
 
-            if(!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, featureClassName))
+            if (!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, featureClassName))
             {
                 GenerateCoverageAreasTempStorage(featureClassName, gdb, workspace);
             }
@@ -1309,20 +1315,20 @@ namespace MilSpace.DataAccess.Facade
             var datasets = calcWorkspace.Datasets[esriDatasetType.esriDTFeatureClass];
             var currentDataset = datasets.Next();
 
-            while(currentDataset != null && !currentDataset.Name.EndsWith(name))
+            while (currentDataset != null && !currentDataset.Name.EndsWith(name))
             {
                 currentDataset = datasets.Next();
             }
 
-            if(currentDataset != null)
+            if (currentDataset != null)
             {
-                if(wspManage.CanDelete(currentDataset.FullName))
+                if (wspManage.CanDelete(currentDataset.FullName))
                 {
                     try
                     {
                         currentDataset.Delete();
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         logger.ErrorEx(ex.Message);
                     }
