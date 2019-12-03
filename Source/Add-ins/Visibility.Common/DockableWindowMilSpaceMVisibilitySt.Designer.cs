@@ -1128,6 +1128,7 @@
             this.dgvObservationPoints.Size = new System.Drawing.Size(312, 141);
             this.dgvObservationPoints.TabIndex = 11;
             this.dgvObservationPoints.TabStop = false;
+            this.dgvObservationPoints.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvObservationPoints_ColumnHeaderMouseClick);
             this.dgvObservationPoints.SelectionChanged += new System.EventHandler(this.DgvObservationPoints_SelectionChanged);
             // 
             // panel6

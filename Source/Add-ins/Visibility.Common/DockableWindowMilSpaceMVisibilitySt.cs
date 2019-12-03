@@ -277,26 +277,30 @@ namespace MilSpace.Visibility
 
         public void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints, VeluableObservPointFieldsEnum filter)
         {
-            dgvObservationPoints.Rows.Clear();
+            log.InfoEx("> FillObservationPointList START");
 
+            dgvObservationPoints.Rows.Clear();
             var selected = dgvObservationPoints.SelectedRows.Count > 0 ? dgvObservationPoints.SelectedRows[0].Index : 0;
             dgvObservationPoints.CurrentCell = null;
 
             if (observationPoints != null && observationPoints.Any())
             {
-                var ItemsToShow = observationPoints.Select(i => new ObservPointGui
-                {
-                    Title = i.Title,
-                    Type = LocalizationContext.Instance.MobilityTypes[i.ObservationPointMobilityType],
-                    Affiliation = LocalizationContext.Instance.AffiliationTypes[i.ObservationPointAffiliationType],
-                    Date = i.Dto.Value.ToString(Helper.DateFormatSmall),
-                    Id = i.Objectid
-                }).ToList();
+                var ItemsToShow = observationPoints.Select(
+                    op => new ObservPointGui
+                    {
+                        Title = op.Title,
+                        Type = LocalizationContext.Instance.MobilityTypes[op.ObservationPointMobilityType],
+                        Affiliation = LocalizationContext.Instance.AffiliationTypes[op.ObservationPointAffiliationType],
+                        Date = op.Dto.Value.ToString(Helper.DateFormatSmall),
+                        Id = op.Objectid
+                    }).OrderBy(l => l.Title).ToList();
 
                 _observPointGuis = new BindingList<ObservPointGui>(ItemsToShow);
                 dgvObservationPoints.DataSource = _observPointGuis;
+
                 SetDataGridView();
                 DisplaySelectedColumns(filter);
+
                 dgvObservationPoints.Update();
                 if (selected > dgvObservationPoints.Rows.Count - 1)
                 {
@@ -304,6 +308,13 @@ namespace MilSpace.Visibility
                 }
                 dgvObservationPoints.Rows[selected].Selected = true;
             }
+
+            log.InfoEx("> FillObservationPointList END");
+        }
+
+        private void dgvObservationPoints_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            //
         }
 
         public void FillObservationObjectsList(IEnumerable<ObservationObject> observationObjects)
@@ -319,7 +330,7 @@ namespace MilSpace.Visibility
                     Id = i.Id,
                     Affiliation = _observPointsController.GetObservObjectsTypeString(i.ObjectType),
                     Group = i.Group
-                }).ToList();
+                }).OrderBy(l => l.Title).ToList();
 
                 dgvObservObjects.CurrentCell = null;
                 _observObjectsGui.DataSource = itemsToShow;
@@ -603,15 +614,10 @@ namespace MilSpace.Visibility
             dgvObservationPoints.Columns["Affiliation"].HeaderText = LocalizationContext.Instance.AffiliationHeaderText;
             dgvObservationPoints.Columns["Date"].HeaderText = LocalizationContext.Instance.DateHeaderText;
 
-            //dgvObservationPoints.Columns["Title"].ValueType = 1;
-            //dgvObservationPoints.Columns["Type"].HeaderText = LocalizationContext.Instance.TypeHeaderText;
-            //dgvObservationPoints.Columns["Affiliation"].HeaderText = LocalizationContext.Instance.AffiliationHeaderText;
-            //dgvObservationPoints.Columns["Date"].HeaderText = LocalizationContext.Instance.DateHeaderText;
-
-            dgvObservationPoints.Columns["Title"].SortMode = DataGridViewColumnSortMode.Automatic;
-            dgvObservationPoints.Columns["Type"].SortMode = DataGridViewColumnSortMode.Automatic;
-            dgvObservationPoints.Columns["Affiliation"].SortMode = DataGridViewColumnSortMode.Automatic;
-            dgvObservationPoints.Columns["Date"].SortMode = DataGridViewColumnSortMode.Automatic;
+            //dgvObservationPoints.Columns["Title"].SortMode = DataGridViewColumnSortMode.Automatic;
+            //dgvObservationPoints.Columns["Type"].SortMode = DataGridViewColumnSortMode.Automatic;
+            //dgvObservationPoints.Columns["Affiliation"].SortMode = DataGridViewColumnSortMode.Automatic;
+            //dgvObservationPoints.Columns["Date"].SortMode = DataGridViewColumnSortMode.Automatic;
 
             dgvObservationPoints.Columns["Id"].Visible = false;
         }
@@ -2263,6 +2269,7 @@ namespace MilSpace.Visibility
                 _observPointsController.UpdateObservObjectsList();
             }
         }
+
     }
 }
 
