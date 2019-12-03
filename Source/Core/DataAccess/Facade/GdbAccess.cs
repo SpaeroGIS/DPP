@@ -661,18 +661,29 @@ namespace MilSpace.DataAccess.Facade
             throw new NotImplementedException(type.ToString());
         }
 
+        public IDataset GetDatasetFromCalcWorkspace(VisibilityResultInfo visibilityResult)
+        {
+            if (visibilityResult.RessutType == VisibilityCalculationResultsEnum.CoverageTable)
+            {
+                return null;
+            }
+
+            if (IsDatasetExist(calcWorkspace, visibilityResult.ResultName, 
+                VisibilityTask.GetEsriDataTypeByVisibilityresyltType(visibilityResult.RessutType)))
+            {
+                return GetDataset(calcWorkspace, visibilityResult.ResultName, 
+                    VisibilityTask.GetEsriDataTypeByVisibilityresyltType(visibilityResult.RessutType));
+            }
+
+            return null;
+        }
+
         public IEnumerable<IDataset> GetDatasetsFromCalcWorkspace(IEnumerable<VisibilityResultInfo> visibilityResults)
         {
             var mapping = VisibilityTask.EsriDatatypeToResultMapping;
             return visibilityResults.Select(v =>
-            {
-                if (IsDatasetExist(calcWorkspace, v.ResultName, VisibilityTask.GetEsriDataTypeByVisibilityresyltType(v.RessutType)))
-                    {
-                    return GetDataset(calcWorkspace, v.ResultName, VisibilityTask.GetEsriDataTypeByVisibilityresyltType(v.RessutType));
-                }
-                return null;
-
-            }).Where(i => i != null).ToArray();
+                GetDatasetFromCalcWorkspace(v)).
+                Where(i => i != null).ToArray();
         }
 
         private static bool IsDatasetExist(IWorkspace workspace, string datasetName, esriDatasetType datasetType)
@@ -866,6 +877,92 @@ namespace MilSpace.DataAccess.Facade
             pointFeature.Store();
         }
 
+        private ITable GenerateVACoverageTable(string tableName, string gdb)
+        {
+            ITable table;
+            IFieldsEdit fieldsEdit = new FieldsClass();
+
+            IFieldEdit2 fieldId = new FieldClass() as IFieldEdit2;
+            fieldId.Name_2 = "OBJECTID";
+            fieldId.Type_2 = esriFieldType.esriFieldTypeOID;
+            fieldsEdit.AddField(fieldId);
+
+            IFieldEdit2 fieldPointName = new FieldClass() as IFieldEdit2;
+            fieldPointName.Name_2 = "TitleOP";
+            fieldPointName.Type_2 = esriFieldType.esriFieldTypeString;
+            fieldPointName.IsNullable_2 = true;
+            fieldsEdit.AddField(fieldPointName);
+
+            IFieldEdit2 fieldPointId = new FieldClass() as IFieldEdit2;
+            fieldPointId.Name_2 = "IdOP";
+            fieldPointId.Type_2 = esriFieldType.esriFieldTypeInteger;
+            fieldPointId.IsNullable_2 = true;
+            fieldsEdit.AddField(fieldPointId);
+
+            IFieldEdit2 fieldObjName = new FieldClass() as IFieldEdit2;
+            fieldObjName.Name_2 = "TitleOO";
+            fieldObjName.Type_2 = esriFieldType.esriFieldTypeString;
+            fieldObjName.IsNullable_2 = true;
+            fieldsEdit.AddField(fieldObjName);
+
+            IFieldEdit2 fieldObjId = new FieldClass() as IFieldEdit2;
+            fieldObjId.Name_2 = "IdOO";
+            fieldObjId.Type_2 = esriFieldType.esriFieldTypeInteger;
+            fieldObjId.IsNullable_2 = true;
+            fieldsEdit.AddField(fieldObjId);
+
+            IFieldEdit2 fieldObjArea = new FieldClass() as IFieldEdit2;
+            fieldObjArea.Name_2 = "AreaOO";
+            fieldObjArea.Type_2 = esriFieldType.esriFieldTypeDouble;
+            fieldObjArea.IsNullable_2 = false;
+            fieldsEdit.AddField(fieldObjArea);
+
+            IFieldEdit2 fieldVA = new FieldClass() as IFieldEdit2;
+            fieldVA.Name_2 = "VisibilityArea";
+            fieldVA.Type_2 = esriFieldType.esriFieldTypeDouble;
+            fieldVA.IsNullable_2 = false;
+            fieldsEdit.AddField(fieldVA);
+
+            IFieldEdit2 fieldVAPercent = new FieldClass() as IFieldEdit2;
+            fieldVAPercent.Name_2 = "PercentageVisibility";
+            fieldVAPercent.Type_2 = esriFieldType.esriFieldTypeDouble;
+            fieldVAPercent.IsNullable_2 = false;
+            fieldsEdit.AddField(fieldVAPercent);
+
+            IFieldEdit2 fieldPointsSee = new FieldClass() as IFieldEdit2;
+            fieldPointsSee.Name_2 = "OPSee";
+            fieldPointsSee.Type_2 = esriFieldType.esriFieldTypeInteger;
+            fieldPointsSee.IsNullable_2 = true;
+            fieldsEdit.AddField(fieldPointsSee);
+
+            IWorkspaceFactory workspaceFactory = new FileGDBWorkspaceFactory();
+            var workspace = workspaceFactory.OpenFromFile(gdb, 0);
+
+            IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)workspace;
+            workspaceEdit.StartEditing(true);
+            workspaceEdit.StartEditOperation();
+
+            IWorkspace2 wsp2 = workspace as IWorkspace2;
+            IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)workspace;
+
+
+            if (!wsp2.get_NameExists(esriDatasetType.esriDTTable, tableName))
+            {
+                table = featureWorkspace.CreateTable(tableName, fieldsEdit, null, null, "");
+            }
+            else
+            {
+                table = featureWorkspace.OpenTable(tableName);
+            }
+
+            workspaceEdit.StopEditOperation();
+            workspaceEdit.StopEditing(true);
+
+            Marshal.ReleaseComObject(workspaceFactory);
+
+            return table;
+        }
+
         private ITable GenerateVSCoverageTable(string tableName, string gdb)
         {
             ITable table;
@@ -902,19 +999,19 @@ namespace MilSpace.DataAccess.Facade
 
             IFieldEdit2 fieldVAPercent = new FieldClass() as IFieldEdit2;
             fieldVAPercent.Name_2 = "PercentageVisibility";
-            fieldVAPercent.Type_2 = esriFieldType.esriFieldTypeInteger;
+            fieldVAPercent.Type_2 = esriFieldType.esriFieldTypeDouble;
             fieldVAPercent.IsNullable_2 = false;
             fieldsEdit.AddField(fieldVAPercent);
 
             IFieldEdit2 fieldExpectedVAToAllPercent = new FieldClass() as IFieldEdit2;
             fieldExpectedVAToAllPercent.Name_2 = "CurrentToAllExpectedVA";
-            fieldExpectedVAToAllPercent.Type_2 = esriFieldType.esriFieldTypeInteger;
+            fieldExpectedVAToAllPercent.Type_2 = esriFieldType.esriFieldTypeDouble;
             fieldExpectedVAToAllPercent.IsNullable_2 = false;
             fieldsEdit.AddField(fieldExpectedVAToAllPercent);
 
             IFieldEdit2 fieldVAToAllPercent = new FieldClass() as IFieldEdit2;
             fieldVAToAllPercent.Name_2 = "CurrentVAToAllExpectedVA";
-            fieldVAToAllPercent.Type_2 = esriFieldType.esriFieldTypeInteger;
+            fieldVAToAllPercent.Type_2 = esriFieldType.esriFieldTypeDouble;
             fieldVAToAllPercent.IsNullable_2 = false;
             fieldsEdit.AddField(fieldVAToAllPercent);
 
@@ -935,7 +1032,7 @@ namespace MilSpace.DataAccess.Facade
             IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)workspace;
 
 
-            if(!wsp2.get_NameExists(esriDatasetType.esriDTTable, tableName))
+            if (!wsp2.get_NameExists(esriDatasetType.esriDTTable, tableName))
             {
                 table = featureWorkspace.CreateTable(tableName, fieldsEdit, null, null, "");
             }
@@ -943,7 +1040,7 @@ namespace MilSpace.DataAccess.Facade
             {
                 table = featureWorkspace.OpenTable(tableName);
             }
-            
+
             workspaceEdit.StopEditOperation();
             workspaceEdit.StopEditing(true);
 
@@ -951,6 +1048,54 @@ namespace MilSpace.DataAccess.Facade
 
             return table;
         }
+
+        public void FillVACoverageTable(List<CoverageTableRowModel> tableModel, string tableName, string gdb)
+        {
+            IWorkspaceFactory workspaceFactory = new FileGDBWorkspaceFactory();
+            var workspace = workspaceFactory.OpenFromFile(gdb, 0);
+
+            IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)workspace;
+            workspaceEdit.StartEditing(true);
+            workspaceEdit.StartEditOperation();
+
+            var table = GenerateVACoverageTable(tableName, gdb);
+
+            foreach (var row in tableModel)
+            {
+                var newRow = table.CreateRow();
+
+                newRow.Value[table.FindField("TitleOp")] = row.ObservPointName;
+
+                if (row.ObservPointId != -1)
+                {
+                    newRow.Value[table.FindField("IdOP")] = row.ObservPointId;
+                }
+
+                newRow.Value[table.FindField("TitleOO")] = row.ObservObjName;
+
+                if (row.ObservObjId != -1)
+                {
+                    newRow.Value[table.FindField("IdOO")] = row.ObservObjId;
+                }
+
+                newRow.Value[table.FindField("AreaOO")] = row.ObservObjArea;
+                newRow.Value[table.FindField("VisibilityArea")] = row.VisibilityArea;
+                newRow.Value[table.FindField("PercentageVisibility")] = row.VisibilityPercent;
+
+                if (row.ObservPointsSeeCount != -1)
+                {
+                    newRow.Value[table.FindField("OPSee")] = row.ObservPointsSeeCount;
+                }
+
+                newRow.Store();
+            }
+
+            workspaceEdit.StopEditOperation();
+            workspaceEdit.StopEditing(true);
+
+            Marshal.ReleaseComObject(workspaceFactory);
+        }
+
 
         public void FillVSCoverageTable(List<CoverageTableRowModel> tableModel, string tableName, string gdb)
         {
@@ -963,13 +1108,13 @@ namespace MilSpace.DataAccess.Facade
 
             var table = GenerateVSCoverageTable(tableName, gdb);
 
-            foreach(var row in tableModel)
+            foreach (var row in tableModel)
             {
                 var newRow = table.CreateRow();
 
                 newRow.Value[table.FindField("TitleOp")] = row.ObservPointName;
 
-                if(row.ObservPointId != -1)
+                if (row.ObservPointId != -1)
                 {
                     newRow.Value[table.FindField("IdOP")] = row.ObservPointId;
                 }
@@ -980,7 +1125,7 @@ namespace MilSpace.DataAccess.Facade
                 newRow.Value[table.FindField("CurrentToAllExpectedVA")] = row.ToAllExpectedAreaPercent;
                 newRow.Value[table.FindField("CurrentVAToAllExpectedVA")] = row.ToAllVisibilityAreaPercent;
 
-                if(row.ObservPointsSeeCount != -1)
+                if (row.ObservPointsSeeCount != -1)
                 {
                     newRow.Value[table.FindField("OPSee")] = row.ObservPointsSeeCount;
                 }
@@ -1016,13 +1161,13 @@ namespace MilSpace.DataAccess.Facade
             pointIdFieldEdit.Name_2 = "ObservPointId";
             pointIdFieldEdit.Type_2 = esriFieldType.esriFieldTypeInteger;
             fieldsEdit.AddField(pointIdField);
-            
+
             IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)workspace;
             workspaceEdit.StartEditing(true);
             workspaceEdit.StartEditOperation();
 
             IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)workspace;
-          
+
             IFeatureClass featureClass = featureWorkspace.CreateFeatureClass(newFeatureClassName, fields,
                     ocDescription.InstanceCLSID, ocDescription.ClassExtensionCLSID, esriFeatureType.esriFTSimple, "shape", "");
 
@@ -1036,7 +1181,7 @@ namespace MilSpace.DataAccess.Facade
             var workspace = workspaceFactory.OpenFromFile(gdb, 0);
             IWorkspace2 wsp2 = workspace as IWorkspace2;
 
-            if(!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, featureClassName))
+            if (!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, featureClassName))
             {
                 GenerateCoverageAreasTempStorage(featureClassName, gdb, workspace);
             }
@@ -1050,11 +1195,11 @@ namespace MilSpace.DataAccess.Facade
             var areaFeature = featureClass.CreateFeature();
             areaFeature.Shape = polygon;
 
-            if(pointId != -1)
+            if (pointId != -1)
             {
                 areaFeature.set_Value(featureClass.FindField("ObservPointId"), pointId);
             }
-            
+
             areaFeature.Store();
             workspaceEdit.StopEditOperation();
             workspaceEdit.StopEditing(true);
@@ -1082,20 +1227,20 @@ namespace MilSpace.DataAccess.Facade
             var datasets = calcWorkspace.Datasets[esriDatasetType.esriDTFeatureClass];
             var currentDataset = datasets.Next();
 
-            while(currentDataset != null && !currentDataset.Name.EndsWith(name))
+            while (currentDataset != null && !currentDataset.Name.EndsWith(name))
             {
                 currentDataset = datasets.Next();
             }
 
-            if(currentDataset != null)
+            if (currentDataset != null)
             {
-                if(wspManage.CanDelete(currentDataset.FullName))
+                if (wspManage.CanDelete(currentDataset.FullName))
                 {
                     try
                     {
                         currentDataset.Delete();
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         logger.ErrorEx(ex.Message);
                     }

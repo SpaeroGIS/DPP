@@ -581,7 +581,54 @@ namespace MilSpace.Core.Tools
             mapLayers.DeleteLayer(layer);
         }
 
-        public static void AddVisibilityGroupLayer(IEnumerable<IDataset> visibilityLayersNames, string sessionName, string calcRasterName, string gdb, string relativeLayerName,
+        public static void AddTableToMap(ITableProperties tblProperties, string tableName, string gdb, IMxDocument mapDocument, IMxApplication application)
+        {
+            bool isTableExist = false;
+            var enumProperties = tblProperties.IEnumTableProperties;
+            enumProperties.Reset();
+
+            ITableProperty3 tlbProperty3 = enumProperties.Next() as ITableProperty3;
+            while (tlbProperty3 != null)
+            {
+                if (tlbProperty3.StandaloneTable != null)
+                {
+                    if (tlbProperty3.StandaloneTable.Name.EndsWith(tableName))
+                    {
+                        isTableExist = true;
+                        break;
+                    }
+                }
+                tlbProperty3 = enumProperties.Next() as ITableProperty3;
+            }
+
+            if (!isTableExist)
+            {
+                IWorkspaceFactory workspaceFactory = new FileGDBWorkspaceFactory();
+                IWorkspace workspace = workspaceFactory.OpenFromFile(gdb, 0);
+                IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)workspace;
+                IWorkspace2 wsp2 = (IWorkspace2)workspace;
+
+                if (wsp2.NameExists[esriDatasetType.esriDTTable, tableName])
+                {
+                    ITable table = featureWorkspace.OpenTable(tableName);
+                    IStandaloneTable stndaloneTable = new StandaloneTable();
+                    stndaloneTable.Table = table;
+                    stndaloneTable.Name = tableName;
+
+                    IStandaloneTableCollection tableCollection = mapDocument.FocusMap as IStandaloneTableCollection;
+                    tableCollection.AddStandaloneTable(stndaloneTable);
+                    mapDocument.UpdateContents();
+
+                    ITableWindow tabwindow = new TableWindow();
+                    tabwindow.Application = application;
+                    tabwindow.Table = table;
+                    tabwindow.Show(true);
+                }
+            }
+        }
+
+        public static void AddVisibilityGroupLayer(IEnumerable<IDataset> visibilityLayersNames, string sessionName,
+            string calcRasterName, string gdb, string relativeLayerName,
                                                 bool isLayerAbove, short transparency, IActiveView activeView)
         {
             var visibilityLayers = new List<ILayer>();
@@ -596,10 +643,6 @@ namespace MilSpace.Core.Tools
                 if (layerName is IFeatureClass feature)
                 {
                     var lr = GetFeatureLayer(feature);
-                    if (layerName.Name.EndsWith("_va_r"))
-                    {
-                        AddVisibilityPolygonStyle(lr as IFeatureLayer);
-                    }
 
                     visibilityLayers.Add(lr);
                 }
@@ -974,6 +1017,17 @@ namespace MilSpace.Core.Tools
             return coverageArea;
         }
 
+        public static double GetObjVisibilityArea(IFeatureClass visibility, IPolygon observObject, int gridCode = -1)
+        {
+            var visibilityPolygon = GetTotalPolygonFromFeatureClass(visibility, gridCode);
+
+            var polygonGeometry = observObject as IGeometry;
+            ITopologicalOperator polygonTopoOp = visibilityPolygon as ITopologicalOperator;
+            var resultPolygon = polygonTopoOp.Intersect(polygonGeometry, esriGeometryDimension.esriGeometry2Dimension) as IPolygon;
+            var resultArea = (IArea)resultPolygon;
+
+            return resultArea.Area;
+        }
 
         public static IPolygon GetTotalPolygon(List<IPolygon> polygons)
         {
@@ -1041,43 +1095,85 @@ namespace MilSpace.Core.Tools
             return result;
         }
 
+        public static IPolygon GetTotalPolygonFromFeatureClass(IFeatureClass featureClass, int gridCode = -1)
+        {
+            if (featureClass == null)
+            {
+                return null;
+            }
+
+            IGeoDataset geoDataset = featureClass as IGeoDataset;
+            IGeometry geometryBag = new GeometryBagClass();
+            geometryBag.SpatialReference = geoDataset.SpatialReference;
+
+            int gridCodeIndex = featureClass.FindField("gridcode");
+
+            IFeatureCursor featureCursor = featureClass.Search(null, false);
+
+            IGeometryCollection geometryCollection = geometryBag as IGeometryCollection;
+            IFeature currentFeature = featureCursor.NextFeature();
+
+            while (currentFeature != null)
+            {
+                if (gridCode == -1 || (int)currentFeature.Value[gridCodeIndex] == gridCode)
+                {
+                    object missing = Type.Missing;
+                    geometryCollection.AddGeometry(currentFeature.Shape, ref missing, ref
+                        missing);
+                }
+
+                currentFeature = featureCursor.NextFeature();
+            }
+
+            ITopologicalOperator unionedPolygon = new PolygonClass();
+            unionedPolygon.ConstructUnion(geometryBag as IEnumGeometry);
+
+            Marshal.ReleaseComObject(featureCursor);
+
+            return unionedPolygon as IPolygon;
+        }
+
         private static IPoint GetPointByAzimuthAndLength(IPoint centerPoint, double azimuth, double distance)
         {
             double radian = (90 - azimuth) * (Math.PI / 180);
             return GetPointFromAngelAndDistance(centerPoint, radian, distance);
         }
 
-        public static void AddVisibilityPolygonStyle(IFeatureLayer featureLayer)
+        public static void SetFeatureLayerStyle(IFeatureLayer feaureLayer, ISymbol featureLayerSymbol)
         {
-            ISimpleFillSymbol simpleFillSymbol = new SimpleFillSymbolClass();
-            simpleFillSymbol.Color = new RgbColor()
+            if (feaureLayer == null)
             {
-                Transparency = 255
-            };
+                return;
+            }
 
-            ICartographicLineSymbol outline = new CartographicLineSymbol
-            {
-                Width = 2,
-                Color = new RgbColor()
-                {
-                    Red = 100,
-                    Green = 100,
-                    Blue = 100
-                }
-            };
-
-            simpleFillSymbol.Outline = outline;
-
-            simpleFillSymbol.Style = esriSimpleFillStyle.esriSFSNull;
-
-            IGeoFeatureLayer geoFeatureLayer = (IGeoFeatureLayer)featureLayer;
+            IGeoFeatureLayer geoFeatureLayer = (IGeoFeatureLayer)feaureLayer;
             ISimpleRenderer simpleRenderer = (ISimpleRenderer)geoFeatureLayer.Renderer;
             //Create a new renderer
             simpleRenderer = new SimpleRendererClass();
             //Set its symbol from the styleGalleryItem
-            simpleRenderer.Symbol = (ISymbol)simpleFillSymbol;
+            simpleRenderer.Symbol = featureLayerSymbol;
             //Set the renderer into the geoFeatureLayer
             geoFeatureLayer.Renderer = (IFeatureRenderer)simpleRenderer;
+        }
+        public static void SetRasterLayerStyle(ILayer layer, ISymbol featureLayerSymbol)
+        {
+            if (layer == null)
+            {
+                return;
+            }
+
+
+            if (layer is IFeatureLayer feaureLayer)
+            {
+                IGeoFeatureLayer geoFeatureLayer = (IGeoFeatureLayer)feaureLayer;
+                ISimpleRenderer simpleRenderer = (ISimpleRenderer)geoFeatureLayer.Renderer;
+                //Create a new renderer
+                simpleRenderer = new SimpleRendererClass();
+                //Set its symbol from the styleGalleryItem
+                simpleRenderer.Symbol = featureLayerSymbol;
+                //Set the renderer into the geoFeatureLayer
+                geoFeatureLayer.Renderer = (IFeatureRenderer)simpleRenderer;
+            }
         }
     }
 }

@@ -70,9 +70,9 @@ namespace MilSpace.DataAccess.DataTransfer
 
         internal static VisibilityCalculationResultsEnum[] RasterResults = {
             VisibilityCalculationResultsEnum.VisibilityAreaRaster,
-            VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle,
             VisibilityCalculationResultsEnum.VisibilityObservStationClip,
             VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly,
+            VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle,
             VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle,
             VisibilityCalculationResultsEnum.VisibilityObservStationClipSingle
         };
@@ -117,7 +117,7 @@ namespace MilSpace.DataAccess.DataTransfer
         {
             get
             {
-                if (summary == null)
+                if(summary == null)
                 {
                     summary = new VisibilityresultSummary(this);
                 }
@@ -148,6 +148,11 @@ namespace MilSpace.DataAccess.DataTransfer
         public static VisibilityCalculationResultsEnum GetResultTypeByName(string name)
         {
             return VisibilityResulSuffixes.FirstOrDefault(suff => name.EndsWith(suff.Value) && suff.Key != VisibilityCalculationResultsEnum.None).Key;
+        }
+
+        public static IEnumerable<VisibilityCalculationResultsEnum> GetRasterResults()
+        {
+            return RasterResults;
         }
 
         public IEnumerable<string> ValueableResults()

@@ -19,11 +19,13 @@ namespace MilSpace.Visibility.ViewController
         private static Dictionary<VisibilityTaskStateEnum, string> _states = null; //Enum.GetValues(typeof(VisibilityTaskStateEnum)).Cast<VisibilityTaskStateEnum>().ToDictionary(t => t, ts => ts.ToString());
         private static Dictionary<VisibilityCalcTypeEnum, string> _calcTypes = null;// Enum.GetValues(typeof(VisibilityCalcTypeEnum)).Cast<VisibilityCalcTypeEnum>().ToDictionary(t => t, ts => ts.ToString());
         private IMxDocument mapDocument;
+        private IMxApplication application;
 
-        public VisibilitySessionsController(IMxDocument mapDocument)
+        public VisibilitySessionsController(IMxDocument mapDocument, IMxApplication application)
         {
             VisibilityManager.OnGenerationStarted += UpdateVisibilitySessionsList;
             this.mapDocument = mapDocument;
+            this.application = application;
 
             _calcTypes = LocalizationContext.Instance.CalcTypeLocalisationShort;
             _states = LocalizationContext.Instance.CalculationStates;
@@ -233,12 +235,16 @@ namespace MilSpace.Visibility.ViewController
             //It can be used for adding tables
             var tbls = mapDocument.TableProperties;
 
-            var datasets = GdbAccess.Instance.GetDatasetsFromCalcWorkspace(selectedResults.ResultsInfo);
+            //var datasets = GdbAccess.Instance.GetDatasetsFromCalcWorkspace(selectedResults.ResultsInfo);
 
 
-            EsriTools.AddVisibilityGroupLayer(datasets, selectedResults.Name, selectedResults.Id, selectedResults.ReferencedGDB, GetLastLayer(activeView),
-                                                true, 33, activeView);
-            
+            //EsriTools.AddVisibilityGroupLayer(datasets, selectedResults.Name, selectedResults.Id, selectedResults.ReferencedGDB, GetLastLayer(activeView),
+            //                                    true, 33, activeView);
+
+            ArcMapHelper.AddResultsToMapAsGroupLayer(selectedResults, activeView, null, true, 33);
+
+
+            EsriTools.AddTableToMap(tbls, VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.CoverageTable, selectedResults.Name), selectedResults.ReferencedGDB, mapDocument, application);
         }
 
         internal void ZoomToLayer(string id, IActiveView activeView)
