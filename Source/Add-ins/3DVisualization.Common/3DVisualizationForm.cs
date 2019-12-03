@@ -26,19 +26,17 @@ namespace MilSpace.Visualization3D
 
         public Visualization3DMainForm(object hook)
         {
-            log.DebugEx("> Visualization3DMainForm START");
+            log.DebugEx(">>> Visualization3DMainForm START <<<");
+
             InitializeComponent();
-            log.DebugEx("Visualization3DMainForm InitializeComponent() ok");
             LocalizeComponent();
-            log.DebugEx("Visualization3DMainForm LocalizeComponent() ok");
             SetSessionsListView();
-            log.DebugEx("Visualization3DMainForm SetSessionsListView() ok");
             SubscribeForArcMapEvents();
-            log.DebugEx("Visualization3DMainForm SubscribeForArcMapEvents() ok");
             OnDocumentOpenFillDropdowns();
-            log.DebugEx("Visualization3DMainForm OnDocumentOpenFillDropdowns() ok");
             this.Hook = hook;
+
             Helper.SetConfiguration();
+
             log.DebugEx("> Visualization3DMainForm END");
         }
 
@@ -84,7 +82,11 @@ namespace MilSpace.Visualization3D
         #region Private methods
         private void SubscribeForArcMapEvents()
         {
+            log.InfoEx("> SubscribeForArcMapEvents START");
+
             ArcMap.Events.OpenDocument += OnDocumentOpenFillDropdowns;
+
+            log.InfoEx("> SubscribeForArcMapEvents END");
         }
 
         private void SetSessionsListView()
@@ -95,6 +97,7 @@ namespace MilSpace.Visualization3D
 
         private void LocalizeComponent()
         {
+            log.InfoEx("> LocalizeComponent START");
             try
             {
                 context = new LocalizationContext();
@@ -122,17 +125,25 @@ namespace MilSpace.Visualization3D
 
                 //Buttons
                 this.GenerateButton.Text = context.GenerateButton;
+
+                log.InfoEx("> LocalizeComponent END");
             }
-            catch
+            catch (Exception ex)
             {
+                log.InfoEx("> LocalizeComponent Exception: {0}", ex.Message);
+
                 MessageBox.Show(
-                    "No Localization.xml found or there is an error during loading. Coordinates Converter window is not fully localized."
-                    );
+                    "No Localization.xml found or there is an error during loading. Coordinates Converter window is not fully localized.",
+                    "Module Visibility",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
 
         private void OnDocumentOpenFillDropdowns()
         {
+            log.InfoEx("> OnDocumentOpenFillDropdowns START");
+
             this.SurfaceComboBox.Items.Clear();
             this.TransportLayerComboBox.Items.Clear();
             this.HydroLayerComboBox.Items.Clear();
@@ -146,6 +157,8 @@ namespace MilSpace.Visualization3D
             PopulateComboBox(HydroLayerComboBox, mapLayerManager.PolygonLayers);
             PopulateComboBox(BuildingsLayerComboBox, mapLayerManager.PolygonLayers);
             PopulateComboBox(PlantsLayerComboBox, mapLayerManager.PolygonLayers);
+
+            log.InfoEx("> OnDocumentOpenFillDropdowns END");
         }
 
         private static void PopulateComboBox(ComboBox comboBox, IEnumerable<ILayer> layers)
@@ -333,7 +346,9 @@ namespace MilSpace.Visualization3D
             {
                 var charsCount = tbZFactor.Text.Count();
                 tbZFactor.Text =  (charsCount > 1)?  tbZFactor.Text.Remove(tbZFactor.Text.Count() - 1) : string.Empty;
-                MessageBox.Show("Enter a decimal number greater than 0");
+                MessageBox.Show(
+                    "Enter a decimal number greater than 0"
+                    );
             }
         }
 

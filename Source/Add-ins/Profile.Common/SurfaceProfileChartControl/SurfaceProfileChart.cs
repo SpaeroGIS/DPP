@@ -550,7 +550,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         private void SetTableView()
         {
-            var fontPixelSize = profilePropertiesTable.Font.Size * 1.25;
+            var fontPixelSize = profilePropertiesTable.Font.Size * 1.3;
 
             var twoPositionWidth = (int)Math.Round((fontPixelSize * 2 + 0.4), 0);
             var threePositionWidth = (int)Math.Round((fontPixelSize * 3), 0);

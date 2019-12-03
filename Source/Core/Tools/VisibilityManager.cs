@@ -36,13 +36,15 @@ namespace MilSpace.Tools
         public delegate void SessionStartGenerationDelegate(bool isNewSessionAdded = false, string newSessionId = null);
         public static SessionStartGenerationDelegate OnGenerationStarted;
 
-        private static Logger logger = Logger.GetLoggerEx("MilSpace.Tools.VisibilityManagerManager");
+        private static Logger logger = Logger.GetLoggerEx("MilSpace.Tools.VisibilityManager");
 
         //Visibility dataset template 
         private const string VisibilityCalcFeatureClass = "VDSR";
 
         public VisibilityManager()
-        { }
+        {
+            logger.InfoEx("> VisibilityManager Constructor");
+        }
 
         public static VisibilityTask Generate(
             IFeatureClass obervationPoints,
@@ -152,10 +154,14 @@ namespace MilSpace.Tools
 
         public static bool AddVisibilityPointLayer(IActiveView view)
         {
+            logger.InfoEx("> AddVisibilityPointLayer START");
             try
             {
                 var pointsLayer = GdbAccess.Instance.GetLayerFromWorkingWorkspace(ObservPointFeature);
                 view.FocusMap.AddLayer(pointsLayer);
+
+                logger.InfoEx("> AddVisibilityPointLayer END");
+                return true;
             }
             catch (MilSpaceDataException ex)
             {

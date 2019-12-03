@@ -58,14 +58,18 @@ namespace MilSpace.Profile
 
         public DockableWindowMilSpaceProfileCalc(MilSpaceProfileCalsController controller)
         {
+            logger.InfoEx(">>> DockableWindowMilSpaceProfileCalc(1) START <<<");
             this.Instance = this;
             SetController(controller);
             controller.SetView(this);
             LocalizeStrings();
+            logger.InfoEx("> DockableWindowMilSpaceProfileCalc(1) END");
         }
 
         public DockableWindowMilSpaceProfileCalc(object hook, MilSpaceProfileCalsController controller)
         {
+            logger.InfoEx(">>> DockableWindowMilSpaceProfileCalc(2) START <<<");
+
             InitializeComponent();
             SetController(controller);
             this.Hook = hook;
@@ -73,9 +77,11 @@ namespace MilSpace.Profile
             SubscribeForEvents();
             controller.SetView(this);
             LocalizeStrings();
+
             fanPickCoord = firstPointToolBar.Buttons[0];
             linePickCoordFirst = secondPointToolbar.Buttons[0];
             linePickCoordSecond = basePointToolbar.Buttons[0];
+            logger.InfoEx("> DockableWindowMilSpaceProfileCalc(2) END");
         }
 
         private void OnProfileSettingsChanged(ProfileSettingsEventArgs e)
@@ -150,11 +156,7 @@ namespace MilSpace.Profile
         /// <summary>
         /// Host object of the dockable window
         /// </summary>
-        private object Hook
-        {
-            get;
-            set;
-        }
+        private object Hook {  get; set; }
 
         protected override void OnLoad(EventArgs e)
         {
@@ -163,6 +165,8 @@ namespace MilSpace.Profile
 
         private void OnDocumentOpenFillDropdowns()
         {
+            logger.InfoEx("> OnDocumentOpenFillDropdowns START");
+
             cmbRasterLayers.Items.Clear();
             cmbRoadLayers.Items.Clear();
             cmbHydrographyLayer.Items.Clear();
@@ -182,6 +186,8 @@ namespace MilSpace.Profile
 
             layersToSelectLine.Items.AddRange(GetLayersForLineSelection.ToArray());
             layersToSelectLine.SelectedItem = layersToSelectLine.Items[0];
+
+            logger.InfoEx("> OnDocumentOpenFillDropdowns END");
         }
 
 
@@ -267,6 +273,8 @@ namespace MilSpace.Profile
 
         private void SubscribeForEvents()
         {
+            logger.InfoEx("> SubscribeForEvents (Module Profile) START");
+
             ArcMap.Events.OpenDocument += OnDocumentOpenFillDropdowns;
             ArcMap.Events.OpenDocument += controller.InitiateUserProfiles;
 
@@ -279,6 +287,8 @@ namespace MilSpace.Profile
 
             azimuth1.LostFocus += AzimuthCheck;
             azimuth2.LostFocus += AzimuthCheck;
+
+            logger.InfoEx("> SubscribeForEvents (Module Profile) END");
         }
 
         private void Controller_OnMapSelectionChanged(SelectedGraphicsArgs selectedLines)
@@ -976,8 +986,8 @@ namespace MilSpace.Profile
 
             //TODO - Localize message
             MessageBox.Show(
-                "Значення повинно бути быльше за 0 та меньше 360", 
-                "MilSpace", 
+                "Значення азимута задається в десяткових градусах і має бути більше або дорівнює 0 або менше або дорівнює 360", 
+                "Спостереження. Профіль", 
                 MessageBoxButtons.OK, 
                 MessageBoxIcon.Information);
 
@@ -1004,6 +1014,8 @@ namespace MilSpace.Profile
 
         private void LocalizeStrings()
         {
+            logger.InfoEx("> LocalizeStrings Profile START");
+
             //TODO: Set all localization srting here
 
             ToolTip toolTip = new ToolTip();
@@ -1087,6 +1099,8 @@ namespace MilSpace.Profile
             profilesTreeView.Nodes["Points"].Text = LocalizationConstants.PointsNodeText;
             profilesTreeView.Nodes["Fun"].Text = LocalizationConstants.FunNodeText;
             profilesTreeView.Nodes["Primitives"].Text = LocalizationConstants.PrimitiveNodeText;
+
+            logger.InfoEx("> LocalizeStrings Profile END");
         }
 
         private void addProfileToGraph_Click(object sender, EventArgs e)

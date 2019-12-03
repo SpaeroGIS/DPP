@@ -135,6 +135,7 @@
             this.GenerateTab.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.GenerateTab.Location = new System.Drawing.Point(0, 206);
             this.GenerateTab.Name = "GenerateTab";
+            this.GenerateTab.Padding = new System.Drawing.Point(0, 0);
             this.GenerateTab.SelectedIndex = 0;
             this.GenerateTab.Size = new System.Drawing.Size(322, 394);
             this.GenerateTab.TabIndex = 1001;
@@ -152,6 +153,7 @@
             // 
             // tableLayoutPanel2
             // 
+            this.tableLayoutPanel2.BackColor = System.Drawing.SystemColors.Window;
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Controls.Add(this.profilePanel, 0, 0);
@@ -457,6 +459,7 @@
             // 
             // panel5
             // 
+            this.panel5.BackColor = System.Drawing.SystemColors.Control;
             this.panel5.Controls.Add(this.lblProfiles);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(0, 0);
@@ -549,6 +552,7 @@
             // 
             // panel10
             // 
+            this.panel10.BackColor = System.Drawing.SystemColors.Control;
             this.panel10.Controls.Add(this.surfaceLabels);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel10.Location = new System.Drawing.Point(0, 0);

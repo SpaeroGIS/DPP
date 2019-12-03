@@ -139,11 +139,14 @@ namespace MilSpace.Core
 
         public static void SetConfiguration()
         {
+            Logger.Debug("> SetConfiguration START");
             if (string.IsNullOrWhiteSpace(MilSpaceConfiguration.ConfigurationFilePath))
             {
                 var configFile = new FileInfo(Assembly.GetExecutingAssembly().Location);
                 MilSpaceConfiguration.ConfigurationFilePath = configFile.DirectoryName;
             }
+            Logger.Debug("SetConfiguration. MilSpaceConfiguration.ConfigurationFilePath: " + MilSpaceConfiguration.ConfigurationFilePath);
+            Logger.Debug("> SetConfiguration END");
         }
 
         public static IEnumerable<IPoint> Vertices(this IPolyline polyline)

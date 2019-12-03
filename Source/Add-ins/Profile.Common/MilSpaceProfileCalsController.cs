@@ -31,7 +31,7 @@ namespace MilSpace.Profile
 
         private int profileId;
         GraphicsLayerManager graphicsLayerManager;
-        private Logger logger = Logger.GetLoggerEx("MilSpaceProfileCalsController");
+        private Logger logger = Logger.GetLoggerEx("MilSpace.Profile.MilSpaceProfileCalsController");
 
         public delegate void ProfileSettingsChangedDelegate(ProfileSettingsEventArgs e);
 
@@ -77,18 +77,22 @@ namespace MilSpace.Profile
 
         internal void SetView(IMilSpaceProfileView view)
         {
+            logger.InfoEx("> SetView START");
             View = view;
             SetPeofileId();
             SetProfileName();
+            logger.InfoEx("> SetView END");
         }
 
         internal void OnDocumentsLoad()
         {
-            logger.InfoEx("Document loaded");
+            logger.InfoEx("> OnDocumentsLoad START");
 
             IActiveViewEvents_Event activeViewEvents = (IActiveViewEvents_Event)View.ActiveView.FocusMap;
             IActiveViewEvents_SelectionChangedEventHandler handler = new IActiveViewEvents_SelectionChangedEventHandler(OnMapSelectionChangedLocal);
             activeViewEvents.SelectionChanged += handler;
+
+            logger.InfoEx("> OnDocumentsLoad END");
         }
 
         /// <summary>
@@ -548,17 +552,14 @@ namespace MilSpace.Profile
             }
         }
 
-
         internal void InitiateUserProfiles()
         {
-            MilSpaceProfileFacade.GetUserProfileSessions().ToList().ForEach(p =>
-               {
-                   p.ConvertLinesToEsriPolypile(View.ActiveView.FocusMap.SpatialReference);
-                   AddProfileToList(p);
-               }
-            );
-
+            logger.InfoEx("> InitiateUserProfiles START");
+            MilSpaceProfileFacade.GetUserProfileSessions()
+                .ToList()
+                .ForEach(p => {p.ConvertLinesToEsriPolypile(View.ActiveView.FocusMap.SpatialReference); AddProfileToList(p); });
             OnDocumentsLoad();
+            logger.InfoEx("> InitiateUserProfiles END");
         }
 
         internal void AddProfileToTab(int profileSessionId, int lineId)

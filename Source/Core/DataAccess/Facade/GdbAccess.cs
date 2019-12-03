@@ -733,7 +733,9 @@ namespace MilSpace.DataAccess.Facade
                     workingWorkspace = ConnectToSqlGDB();
                     if (workingWorkspace == null)
                     {
-                        throw new MilSpaceDataException(MilSpaceConfiguration.ConnectionProperty.WorkingGDBConnection, Core.DataAccess.DataOperationsEnum.Access);
+                        throw new MilSpaceDataException(
+                            MilSpaceConfiguration.ConnectionProperty.WorkingGDBConnection, 
+                            Core.DataAccess.DataOperationsEnum.Access);
                         //throw new MilSpaceVisibilityDataException("Cannot open working GDB");
                     }
                 }

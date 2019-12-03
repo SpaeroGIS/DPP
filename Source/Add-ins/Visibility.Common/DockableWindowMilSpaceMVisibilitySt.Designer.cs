@@ -1116,8 +1116,7 @@
             this.dgvObservationPoints.BackgroundColor = System.Drawing.SystemColors.Window;
             this.dgvObservationPoints.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvObservationPoints.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.RaisedHorizontal;
-            this.dgvObservationPoints.ColumnHeadersHeight = 22;
-            this.dgvObservationPoints.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dgvObservationPoints.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvObservationPoints.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvObservationPoints.Location = new System.Drawing.Point(0, 56);
             this.dgvObservationPoints.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
