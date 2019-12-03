@@ -70,9 +70,9 @@ namespace MilSpace.DataAccess.DataTransfer
 
         internal static VisibilityCalculationResultsEnum[] RasterResults = {
             VisibilityCalculationResultsEnum.VisibilityAreaRaster,
-            VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle,
             VisibilityCalculationResultsEnum.VisibilityObservStationClip,
             VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly,
+            VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle,
             VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle,
             VisibilityCalculationResultsEnum.VisibilityObservStationClipSingle
         };

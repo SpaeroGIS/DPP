@@ -112,7 +112,7 @@ namespace MilSpace.Tools.SurfaceProfile
             return RunTool(clipper, null, out messages);
         }
 
-        public static bool ConvertTasterToPolygon(string inRaster, string outPolygon, out IEnumerable<string> messages)
+        public static bool ConvertRasterToPolygon(string inRaster, string outPolygon, out IEnumerable<string> messages)
         {
             RasterToPolygon rasterToPolygon = new RasterToPolygon()
             {

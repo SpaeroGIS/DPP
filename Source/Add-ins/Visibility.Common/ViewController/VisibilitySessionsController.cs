@@ -235,9 +235,15 @@ namespace MilSpace.Visibility.ViewController
             //It can be used for adding tables
             var tbls = mapDocument.TableProperties;
 
-            var datasets = GdbAccess.Instance.GetDatasetsFromCalcWorkspace(selectedResults.ResultsInfo);
-            EsriTools.AddVisibilityGroupLayer(datasets, selectedResults.Name, selectedResults.Id, selectedResults.ReferencedGDB, GetLastLayer(activeView),
-                                                true, 33, activeView);
+            //var datasets = GdbAccess.Instance.GetDatasetsFromCalcWorkspace(selectedResults.ResultsInfo);
+
+
+            //EsriTools.AddVisibilityGroupLayer(datasets, selectedResults.Name, selectedResults.Id, selectedResults.ReferencedGDB, GetLastLayer(activeView),
+            //                                    true, 33, activeView);
+
+            ArcMapHelper.AddResultsToMapAsGroupLayer(selectedResults, activeView, null, true, 33);
+
+
             EsriTools.AddTableToMap(tbls, VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.CoverageTable, selectedResults.Name), selectedResults.ReferencedGDB, mapDocument, application);
         }
 
