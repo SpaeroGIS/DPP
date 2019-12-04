@@ -19,9 +19,9 @@ namespace MilSpace.Visibility
         static Logger logger = Logger.GetLoggerEx("Visibility Addin Helper");
 
 
-        private static Dictionary<VisibilityCalculationResultsEnum, Action<ILayer>> mapResultAction = new Dictionary<VisibilityCalculationResultsEnum, Action<ILayer>>
+        private static Dictionary<VisibilityCalculationResultsEnum, Action<ILayer, IColor, short>> mapResultAction = new Dictionary<VisibilityCalculationResultsEnum, Action<ILayer, IColor, short>>
         {
-            { VisibilityCalculationResultsEnum.VisibilityAreasPotential, (layer) => {
+            { VisibilityCalculationResultsEnum.VisibilityAreasPotential, (layer, fillColor, transparency) => {
 
                     ISimpleFillSymbol simpleFillSymbol = new SimpleFillSymbolClass();
                     simpleFillSymbol.Color = new RgbColor()
@@ -44,7 +44,7 @@ namespace MilSpace.Visibility
                     EsriTools.SetFeatureLayerStyle(layer as IFeatureLayer,  simpleFillSymbol as ISymbol);
                 }
             },
-            { VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle, (layer) => {
+            { VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle, (layer, fillColor, transparency) => {
 
                     ISimpleFillSymbol simpleFillSymbol = new SimpleFillSymbolClass();
                     simpleFillSymbol.Color = new RgbColor()
@@ -67,7 +67,7 @@ namespace MilSpace.Visibility
                     EsriTools.SetFeatureLayerStyle(layer as IFeatureLayer,  simpleFillSymbol as ISymbol);
                 }
             },
-            { VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly, (layer) => {
+            { VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly, (layer, fillColor, transparency) => {
 
                     if (layer is IRasterLayer rasterLayer )
                     {
@@ -106,7 +106,7 @@ namespace MilSpace.Visibility
                     }
                 }
             },
-            { VisibilityCalculationResultsEnum.VisibilityObservStationClip, (layer) => {
+            { VisibilityCalculationResultsEnum.VisibilityObservStationClip, (layer, fillColor, transparency) => {
 
                     if (layer is IRasterLayer rasterLayer )
                     {
@@ -134,7 +134,52 @@ namespace MilSpace.Visibility
 
                         };
                         ramp.Algorithm = esriColorRampAlgorithm.esriCIELabAlgorithm;
-                                    ramp.CreateRamp(out bOK);
+                    try
+                    {
+                        ramp.CreateRamp(out bOK);
+
+                        stretchRen.BandIndex = 0;
+                        stretchRen.ColorRamp = ramp;
+                        pRasRen.Update();
+                        rasterLayer.Renderer = (IRasterRenderer)stretchRen;
+                        }
+                    catch
+                    {
+
+                    }
+
+                    }
+                }
+            },
+            { VisibilityCalculationResultsEnum.VisibilityAreaRaster, (layer, fillColor, transparency) => {
+
+                    if (layer is IRasterLayer rasterLayer )
+                    {
+                         IRaster pRaster = default(IRaster);
+                        pRaster = rasterLayer.Raster;
+
+                        IRasterStretchColorRampRenderer stretchRen = default(IRasterStretchColorRampRenderer);
+                        stretchRen = new RasterStretchColorRampRenderer();
+                        IRasterRenderer pRasRen = default(IRasterRenderer);
+                        pRasRen = (IRasterRenderer)stretchRen;
+
+                        bool bOK;
+                        IAlgorithmicColorRamp ramp = new AlgorithmicColorRamp();
+                        ramp.FromColor = new RgbColor()
+                        {
+                            Red = 255,
+                            Green = 255,
+                            Blue = 115
+                        };
+                        ramp.ToColor =  new RgbColor()
+                        {
+                            Red = 115,
+                            Green = 38,
+                            Blue = 0
+
+                        };
+                        ramp.Algorithm = esriColorRampAlgorithm.esriCIELabAlgorithm;
+                        ramp.CreateRamp(out bOK);
 
                         stretchRen.BandIndex = 0;
                         stretchRen.ColorRamp = ramp;
@@ -144,42 +189,88 @@ namespace MilSpace.Visibility
                     }
                 }
             },
-            { VisibilityCalculationResultsEnum.VisibilityAreaRaster, (layer) => {
+            { VisibilityCalculationResultsEnum.VisibilityAreaPolygons, (layer, fillColor, transparency) => {
 
-                    if (layer is IRasterLayer rasterLayer )
+                    //if (layer is IFeatureLayer polygonLayer )
+                    //{
+                    //        IColorRampSymbol  colorRampSymbol = new ColorRampSymbol();
+                    //        IAlgorithmicColorRamp algColorRamp = new AlgorithmicColorRampClass();
+
+
+                    //        //Create the start and end colors
+                    //        IRgbColor startColor = new RgbColor()
+                    //        {
+                    //            Red = 255,
+                    //            Green = 255,
+                    //            Blue = 115
+                    //        };
+                    //        IRgbColor endColor = new RgbColor()
+                    //        {
+                    //            Red = 115,
+                    //            Green = 38,
+                    //            Blue = 0
+
+                    //        };
+                           
+                    //        //Set the Start and End Colors
+                    //        algColorRamp.ToColor = startColor;
+                    //        algColorRamp.FromColor = endColor;
+
+                    //        //Set the ramping Alglorithm 
+                    //        algColorRamp.Algorithm = esriColorRampAlgorithm.esriCIELabAlgorithm;
+
+                    //        //Set the size of the ramp (the number of colors to be derived)
+                    //        algColorRamp.Size = 255;
+
+
+                    //        //Create the ramp
+                    //        bool ok = true;
+                    //        algColorRamp.CreateRamp(out ok);
+
+
+                    //    if (ok)
+                    //        colorRampSymbol.ColorRamp =algColorRamp;
+
+                    ////ICartographicLineSymbol outline = new CartographicLineSymbol
+                    ////{
+                    ////    Width = 0.4,
+                    ////    Color = new RgbColor()
+                    ////    {
+                    ////        Red = 100,
+                    ////        Green = 100,
+                    ////        Blue = 100
+                    ////    }
+                    ////};
+
+                    ////colorRampSymbol.Outline = outline;
+                    //EsriTools.SetFeatureLayerStyle(layer as IFeatureLayer,  colorRampSymbol as ISymbol);
+                    //}
+                }
+            },
+            { VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle, (layer, fillColor, transparency) => {
+
+                    ISimpleFillSymbol simpleFillSymbol = new SimpleFillSymbolClass();
+                    simpleFillSymbol.Color = new RgbColor()
                     {
-                         IRaster pRaster = default(IRaster);
-                        pRaster = rasterLayer.Raster;
+                        Transparency = 33,
+                        Red = 255,
+                        Green = 255,
+                        Blue = 115
+                    };
 
-                        IRasterStretchColorRampRenderer stretchRen = default(IRasterStretchColorRampRenderer);
-                        stretchRen = new RasterStretchColorRampRenderer();
-                        IRasterRenderer pRasRen = default(IRasterRenderer);
-                        pRasRen = (IRasterRenderer)stretchRen;
-
-                        bool bOK;
-                        IAlgorithmicColorRamp ramp = new AlgorithmicColorRamp();
-                        ramp.FromColor = new RgbColor()
+                    ICartographicLineSymbol outline = new CartographicLineSymbol
+                    {
+                        Width = 2,
+                        Color = new RgbColor()
                         {
-                            Red = 255,
-                            Green = 255,
-                            Blue = 115
-                        };
-                        ramp.ToColor =  new RgbColor()
-                        {
-                            Red = 115,
-                            Green = 38,
-                            Blue = 0
+                            Red = 100,
+                            Green = 100,
+                            Blue = 100
+                        }
+                    };
 
-                        };
-                        ramp.Algorithm = esriColorRampAlgorithm.esriCIELabAlgorithm;
-                                    ramp.CreateRamp(out bOK);
-
-                        stretchRen.BandIndex = 0;
-                        stretchRen.ColorRamp = ramp;
-                        pRasRen.Update();
-                        rasterLayer.Renderer = (IRasterRenderer)stretchRen;
-
-                    }
+                    simpleFillSymbol.Outline = outline;
+                    EsriTools.SetFeatureLayerStyle(layer as IFeatureLayer,  simpleFillSymbol as ISymbol);
                 }
             }
         };
@@ -267,7 +358,7 @@ namespace MilSpace.Visibility
         };
 
         public static void AddResultsToMapAsGroupLayer(VisibilityCalcResults results, IActiveView activeView, string relativeLayerName,
-                                                bool isLayerAbove, short transparency)
+                                                bool isLayerAbove, short transparency, IColor color)
 
         {
             var visibilityLayers = new List<ILayer>();
@@ -292,7 +383,7 @@ namespace MilSpace.Visibility
 
                 if (mapResultAction.ContainsKey(ri.RessutType))
                 {
-                    mapResultAction[ri.RessutType](lr);
+                    mapResultAction[ri.RessutType](lr, color, transparency);
                 }
 
                 visibilityLayers.Add(lr);

@@ -668,16 +668,21 @@ namespace MilSpace.DataAccess.Facade
                 return null;
             }
 
-            if (IsDatasetExist(calcWorkspace, visibilityResult.ResultName, 
-                VisibilityTask.GetEsriDataTypeByVisibilityresyltType(visibilityResult.RessutType)))
+            return GetDatasetFromCalcWorkspace(visibilityResult.ResultName, visibilityResult.RessutType);
+        }
+
+        public IDataset GetDatasetFromCalcWorkspace(string dataSetName, VisibilityCalculationResultsEnum datasetType)
+        {
+
+            if (IsDatasetExist(calcWorkspace, dataSetName,
+                VisibilityTask.GetEsriDataTypeByVisibilityresyltType(datasetType)))
             {
-                return GetDataset(calcWorkspace, visibilityResult.ResultName, 
-                    VisibilityTask.GetEsriDataTypeByVisibilityresyltType(visibilityResult.RessutType));
+                return GetDataset(calcWorkspace, dataSetName,
+                    VisibilityTask.GetEsriDataTypeByVisibilityresyltType(datasetType));
             }
 
             return null;
         }
-
         public IEnumerable<IDataset> GetDatasetsFromCalcWorkspace(IEnumerable<VisibilityResultInfo> visibilityResults)
         {
             var mapping = VisibilityTask.EsriDatatypeToResultMapping;

@@ -1,6 +1,7 @@
 ﻿using ESRI.ArcGIS.Geodatabase;
 using MilSpace.Core.Actions.Base;
 using MilSpace.Core.Actions.Interfaces;
+using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
 using MilSpace.Tools.Exceptions;
@@ -166,7 +167,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             bool removeFullImageFromresult = false;
 
             int[] objIds = null;
-            if(calcResults.HasFlag(VisibilityCalculationResultsEnum.ObservationObjects))
+            if (calcResults.HasFlag(VisibilityCalculationResultsEnum.ObservationObjects))
             {
                 objIds = stationsFilteringIds;
             }
@@ -216,6 +217,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                     //ConvertToPolygon full visibility area
                     if (calcResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreaPolygons) && !calcResults.HasFlag(VisibilityCalculationResultsEnum.ObservationObjects))
                     {
+
                         visibilityArePolyFCName = VisibilityTask.GetResultName(pointId > -1 ?
                             VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle : VisibilityCalculationResultsEnum.VisibilityAreaPolygons,
                             outputSourceName, pointId);
@@ -246,6 +248,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                         var outClipName = VisibilityTask.GetResultName(resultLype,
                             outputSourceName, pointId);
 
+
                         if (!ProfileLibrary.ClipVisibilityZonesByAreas(inClipName, outClipName, oservStationsFeatureClassName, messages))
                         {
                             string errorMessage = $"The result {outClipName} was not generated";
@@ -258,21 +261,29 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                         {
                             results.Add(outClipName);
 
-
                             if (!calcResults.HasFlag(resultLype))
                             {
                                 calcResults |= resultLype;
                             }
 
                             //Change to VisibilityAreaPolygonForObjects
-                            visibilityArePolyFCName = VisibilityTask.GetResultName(pointId > -1 ?
-                            VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle : VisibilityCalculationResultsEnum.VisibilityAreaPolygons,
-                            outputSourceName, pointId);
 
+                            var curCulcRResult = pointId > -1 ?
+                            VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle : VisibilityCalculationResultsEnum.VisibilityAreaPolygons;
 
-                            if (!ProfileLibrary.ConvertRasterToPolygon(outClipName, visibilityArePolyFCName, out messages))
+                            visibilityArePolyFCName = VisibilityTask.GetResultName(curCulcRResult, outputSourceName, pointId);
+
+                            var rasterDataset = GdbAccess.Instance.GetDatasetFromCalcWorkspace(outClipName, VisibilityCalculationResultsEnum.VisibilityAreaRaster);
+                            bool isEmpty = EsriTools.IsRasterEmpty((IRasterDataset2)rasterDataset);
+
+                            if (isEmpty)
                             {
-                                if (!messages.Any(m => m.StartsWith("ERROR 010151"))) // Observatioj areas dont intersect Visibility aresa
+                                if (calcResults.HasFlag(curCulcRResult))
+                                { calcResults &= ~curCulcRResult; }
+                            } else
+                            {
+                                if (!ProfileLibrary.ConvertRasterToPolygon(outClipName, visibilityArePolyFCName, out messages) && 
+                                    (!messages.Any(m => m.StartsWith("ERROR 010151")))) // Observatioj areas dont intersect Visibility aresa
                                 {
                                     string errorMessage = $"The result {visibilityArePolyFCName} was not generated";
                                     result.Exception = new MilSpaceVisibilityCalcFailedException(errorMessage);
@@ -280,8 +291,8 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                                     logger.ErrorEx(errorMessage);
                                     return messages;
                                 }
+                                results.Add(visibilityArePolyFCName);
                             }
-                            results.Add(visibilityArePolyFCName);
                         }
                     }
                     else if (calcResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly) && !string.IsNullOrEmpty(visibilityArePolyFCName))
