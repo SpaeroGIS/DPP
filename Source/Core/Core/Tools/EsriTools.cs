@@ -1068,32 +1068,41 @@ namespace MilSpace.Core.Tools
 
         public static double GetObjVisibilityArea(IFeatureClass visibility, IPolygon observObject, int gridCode = -1)
         {
-            logger.InfoEx("> GetObjVisibilityArea START");
+            logger.InfoEx("> GetObjVisibilityArea START. FeatureClass visibility:{0}", visibility.AliasName);
 
             var visibilityPolygon = GetTotalPolygonFromFeatureClass(visibility, gridCode);
 
-            var ff = visibility.CreateFeature();
-            ff.Shape = visibilityPolygon;
-            ff.set_Value(visibility.FindField("id"), 525);
-            ff.set_Value(visibility.FindField("gridCode"), gridCode);
-            ff.Store();
-            logger.InfoEx("GetObjVisibilityArea save TEST Feature 1 OK ff.OID:{0} gridCode:{1}", ff.OID, gridCode);
-
-            var ff1 = visibility.CreateFeature();
-            ff1.Shape = observObject;
-            ff1.set_Value(visibility.FindField("id"), 526);
-            ff1.set_Value(visibility.FindField("gridCode"), gridCode);
-            ff1.Store();
-            logger.InfoEx("GetObjVisibilityArea save TEST Feature 2 OK ff.OID:{0} gridCode:{1}", ff1.OID, gridCode);
-
-            if (visibilityPolygon == null || visibilityPolygon.IsEmpty)
+            //for test only-------------------------------------------------------------
+            try
             {
-                logger.ErrorEx($"> GetObjVisibilityArea Error. Visibility polygon from {visibility} is empty");
-                return 0;
+                var ff = visibility.CreateFeature();
+                ff.Shape = visibilityPolygon;
+                ff.set_Value(visibility.FindField("id"), 525);
+                ff.set_Value(visibility.FindField("gridCode"), gridCode);
+                ff.Store();
+                logger.InfoEx("GetObjVisibilityArea save TEST Feature 1 OK ff.OID: {0} gridCode: {1}", ff.OID, gridCode);
+
+                var ff1 = visibility.CreateFeature();
+                ff1.Shape = observObject;
+                ff1.set_Value(visibility.FindField("id"), 5252);
+                ff1.set_Value(visibility.FindField("gridCode"), gridCode);
+                ff1.Store();
+                logger.InfoEx("GetObjVisibilityArea save TEST Feature 2 OK ff.OID: {0} gridCode: {1}", ff1.OID, gridCode);
             }
+            catch (Exception ex)
+            {
+                logger.ErrorEx($"GetObjVisibilityArea Exception: {ex.Message}");
+            }
+            //for test only end
 
             try
             {
+                if (visibilityPolygon == null || visibilityPolygon.IsEmpty)
+                {
+                    logger.ErrorEx($"> GetObjVisibilityArea Error. Visibility polygon from {visibility} is empty");
+                    return 0;
+                }
+
                 var polygonGeometry = observObject as IGeometry;
                 ITopologicalOperator polygonTopoOp = visibilityPolygon as ITopologicalOperator;
                 var resultPolygon = polygonTopoOp.Intersect(polygonGeometry, esriGeometryDimension.esriGeometry2Dimension) as IPolygon;

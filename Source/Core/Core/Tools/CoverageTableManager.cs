@@ -28,13 +28,13 @@ namespace MilSpace.Tools
 
         private string _gdb = MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection;
 
-        public  void CalculateAreas(
+        public void CalculateAreas(
             int[] observPointsIds, 
             int[] observObjectsIds, 
             IFeatureClass observPointFC, 
             IFeatureClass observObjFC = null)
         {
-            _logger.InfoEx("> CalculateAreas START. observPointFC:{0} observObjFC:{1}", observPointFC, observObjFC);
+            _logger.InfoEx("> CalculateAreas START. observPointFC:{0} observObjFC:{1}", observPointFC.AliasName, observObjFC.AliasName);
 
             if(observObjectsIds != null && observObjectsIds.Count() > 0 && observObjFC != null)
             {
