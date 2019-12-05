@@ -65,10 +65,6 @@ namespace MilSpace.Visibility.ViewController
             this.view = view;
         }
 
-        internal void OnCreateFeature(ESRI.ArcGIS.Geodatabase.IObject obj)
-        {
-            throw new NotImplementedException();
-        }
 
         internal string GetObservPointFeatureName()
         {
@@ -313,15 +309,8 @@ namespace MilSpace.Visibility.ViewController
                     ArcMapHelper.AddResultsToMapAsGroupLayer(calcTask, mapDocument.ActiveView, calcParams.RelativeLayerName, isLayerAbove, calcParams.ResultLayerTransparency
                         , null);
 
-
                     EsriTools.AddTableToMap(tbls, VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.CoverageTable, calcTask.Name), calcTask.ReferencedGDB, mapDocument, application);
 
-                    //EsriTools.AddVisibilityGroupLayer(
-                    //    datasets, calcTask.Name, calcTask.Id, calcTask.ReferencedGDB,
-                    //    calcParams.RelativeLayerName, isLayerAbove, calcParams.ResultLayerTransparency,
-                    //    mapDocument.ActiveView);
-
-                    //EsriTools.AddTableToMap(tbls, VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.CoverageTable, calcTask.Name), calcTask.ReferencedGDB, mapDocument, application);
                 }
             }
             catch (Exception ex)
@@ -696,35 +685,13 @@ namespace MilSpace.Visibility.ViewController
 
 
         }
-        //private void TestPolygonFinding(ObservationPoint point, ObservationObject obj, IFeatureClass pointsFC, IFeatureClass objFC)
-        //{
-        //    try
-        //    {
-        //        var feature = pointsFC.GetFeature(point.Objectid);
-        //        IPoint pointGeom = feature.Shape as IPoint;
 
-        //        pointGeom.Project(mapDocument.ActivatedView.FocusMap.SpatialReference);
+        #region ArcMap Eventts
+        internal void OnCreateFeature(ESRI.ArcGIS.Geodatabase.IObject obj)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
 
-        //        var featureObj = objFC.GetFeature(obj.ObjectId);
-        //        IPolygon objGeom = featureObj.Shape as IPolygon;
-
-        //        var area = EsriTools.GetCoverageArea(pointGeom, point.AzimuthStart.Value, point.AzimuthEnd.Value, point.InnerRadius.Value, point.OuterRadius.Value);
-        //        var area1 = EsriTools.GetCoverageArea(pointGeom, point.AzimuthStart.Value, point.AzimuthEnd.Value, point.InnerRadius.Value, point.OuterRadius.Value, objGeom);
-
-        //        IFeatureLayer test1Layer = new FeatureLayerClass();
-        //        test1Layer.Name = $"WithObj{DateTime.Now.ToShortTimeString()}";
-        //        test1Layer.FeatureClass = GdbAccess.Instance.GetTestFeature(area, $"WithObj");
-        //        mapDocument.AddLayer(test1Layer);
-
-        //        IFeatureLayer test2Layer = new FeatureLayerClass();
-        //        test2Layer.Name = $"WithoutObj{DateTime.Now.ToShortTimeString()}";
-        //        test2Layer.FeatureClass = GdbAccess.Instance.GetTestFeature(area1, $"WithoutObj");
-        //        mapDocument.AddLayer(test2Layer);
-        //    }
-        //    catch(Exception Ex)
-        //    {
-
-        //    }
-        //}
     }
 }

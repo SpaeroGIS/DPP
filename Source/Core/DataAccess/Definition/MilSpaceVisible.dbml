@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DNOEGDB" Class="MilSpaceVisibilityContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=.\sqlexpress;Initial Catalog=DNOEGDB;Integrated Security=True" SettingsObjectName="MilSpace.DataAccess.Properties.Settings" SettingsPropertyName="DNOEGDBConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.MilSp_Visible_ResultIOP" Member="MilSp_Visible_ResultIOPs">
     <Type Name="MilSp_Visible_ResultIOP">
       <Column Name="objectid" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -78,6 +77,7 @@
       <Column Name="ReferencedGDB" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="surface" Member="Surface" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="CalcType" Member="CalculationType" Type="System.Int32" DbType="Int" CanBeNull="false" />
+      <Column Name="sLog" Member="TaskLog" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.MILSP_VISIBLE_OBSERVPOINTS" Member="VisiblilityObservPoints" AccessModifier="Internal">
