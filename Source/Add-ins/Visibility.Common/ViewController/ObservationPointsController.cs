@@ -310,12 +310,18 @@ namespace MilSpace.Visibility.ViewController
                     var datasets = GdbAccess.Instance.GetDatasetsFromCalcWorkspace(calcTask.ResultsInfo);
                     var tbls = mapDocument.TableProperties;
 
-                    EsriTools.AddVisibilityGroupLayer(
-                        datasets, calcTask.Name, calcTask.Id, calcTask.ReferencedGDB,
-                        calcParams.RelativeLayerName, isLayerAbove, calcParams.ResultLayerTransparency,
-                        mapDocument.ActiveView);
+                    ArcMapHelper.AddResultsToMapAsGroupLayer(calcTask, mapDocument.ActiveView, calcParams.RelativeLayerName, isLayerAbove, calcParams.ResultLayerTransparency
+                        , null);
+
 
                     EsriTools.AddTableToMap(tbls, VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.CoverageTable, calcTask.Name), calcTask.ReferencedGDB, mapDocument, application);
+
+                    //EsriTools.AddVisibilityGroupLayer(
+                    //    datasets, calcTask.Name, calcTask.Id, calcTask.ReferencedGDB,
+                    //    calcParams.RelativeLayerName, isLayerAbove, calcParams.ResultLayerTransparency,
+                    //    mapDocument.ActiveView);
+
+                    //EsriTools.AddTableToMap(tbls, VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.CoverageTable, calcTask.Name), calcTask.ReferencedGDB, mapDocument, application);
                 }
             }
             catch (Exception ex)

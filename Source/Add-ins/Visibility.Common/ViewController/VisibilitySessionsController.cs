@@ -241,7 +241,7 @@ namespace MilSpace.Visibility.ViewController
             //EsriTools.AddVisibilityGroupLayer(datasets, selectedResults.Name, selectedResults.Id, selectedResults.ReferencedGDB, GetLastLayer(activeView),
             //                                    true, 33, activeView);
 
-            ArcMapHelper.AddResultsToMapAsGroupLayer(selectedResults, activeView, null, true, 33);
+            ArcMapHelper.AddResultsToMapAsGroupLayer(selectedResults, activeView, null, true, 33, null);
 
 
             EsriTools.AddTableToMap(tbls, VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.CoverageTable, selectedResults.Name), selectedResults.ReferencedGDB, mapDocument, application);
