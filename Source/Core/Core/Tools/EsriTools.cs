@@ -1,6 +1,7 @@
 ﻿using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.DataSourcesGDB;
+using ESRI.ArcGIS.DataSourcesRaster;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Geodatabase;
@@ -126,7 +127,7 @@ namespace MilSpace.Core.Tools
             {
                 geometry.Project(Wgs84Spatialreference);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 //ToDO: Loggig
             }
@@ -153,7 +154,7 @@ namespace MilSpace.Core.Tools
             {
                 geometry.Project(mapSpatialReference);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 //ToDO: Loggig
             }
@@ -163,7 +164,7 @@ namespace MilSpace.Core.Tools
         {
             get
             {
-                if(wgs84 == null)
+                if (wgs84 == null)
                 {
                     SpatialReferenceEnvironmentClass factory = new SpatialReferenceEnvironmentClass();
                     wgs84 = factory.CreateGeographicCoordinateSystem((int)esriSRGeoCSType.esriSRGeoCS_WGS1984);
@@ -182,7 +183,7 @@ namespace MilSpace.Core.Tools
             logger.InfoEx($"PanToGeometry. Projecting to {view.FocusMap.SpatialReference.Name}");
             geometry.Project(view.FocusMap.SpatialReference);
 
-            if(setCenterAt || !operation.Contains(geometry))
+            if (setCenterAt || !operation.Contains(geometry))
             {
                 ISegmentCollection poly = new PolygonClass();
                 IArea area = geometry.Envelope as IArea;
@@ -205,7 +206,7 @@ namespace MilSpace.Core.Tools
 
             geometries.ToList().ForEach(geometry =>
             {
-                if(symbolsToFlash.ContainsKey(geometry.GeometryType))
+                if (symbolsToFlash.ContainsKey(geometry.GeometryType))
                 {
                     var symbol = symbolsToFlash[geometry.GeometryType].Invoke(color);
                     display.SetSymbol(symbol);
@@ -229,7 +230,7 @@ namespace MilSpace.Core.Tools
         public static IEnumerable<IPolyline> CreatePolylinesFromPointAndAzimuths(
             IPoint centerPoint, double length, int count, double azimuth1, double azimuth2)
         {
-            if(centerPoint == null)
+            if (centerPoint == null)
             {
                 return null;
             }
@@ -242,9 +243,9 @@ namespace MilSpace.Core.Tools
             double sector;
             int devider = count;
             //Check if it is a circle
-            if((azimuth1 == 0 && azimuth2 == 360) || (azimuth2 == 0 && azimuth1 == 360) || (azimuth2 == azimuth1))
+            if ((azimuth1 == 0 && azimuth2 == 360) || (azimuth2 == 0 && azimuth1 == 360) || (azimuth2 == azimuth1))
             {
-                if(count == 2)
+                if (count == 2)
                 {
                     azimuth2 = azimuth1 + 180;
                 }
@@ -254,7 +255,7 @@ namespace MilSpace.Core.Tools
                 }
             }
 
-            if(azimuth1 > azimuth2) //clockwise
+            if (azimuth1 > azimuth2) //clockwise
             {
                 sector = (360 - azimuth1) + azimuth2;
             }
@@ -263,14 +264,14 @@ namespace MilSpace.Core.Tools
                 sector = azimuth2 - azimuth1;
             }
 
-            if(sector == 0)
+            if (sector == 0)
             {
                 sector = 360;
             }
 
             double step = sector / (devider - 1);
             List<IPolyline> result = new List<IPolyline>();
-            for(int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 double radian = (90 - (azimuth1 + (i * step))) * (Math.PI / 180);
                 IPoint outPoint = GetPointFromAngelAndDistance(centerPoint, radian, length);
@@ -306,7 +307,7 @@ namespace MilSpace.Core.Tools
         /// <returns>Esri poliline</returns>
         public static IPolyline CreatePolylineFromPoints(IPoint pointFrom, IPoint pointTo)
         {
-            if(pointFrom == null || pointTo == null)
+            if (pointFrom == null || pointTo == null)
             {
                 return null;
             }
@@ -325,7 +326,7 @@ namespace MilSpace.Core.Tools
 
             var result = trackLine as IPolyline;
 
-            if(pointFrom.SpatialReference != null && pointTo.SpatialReference != null && pointFrom.SpatialReference == pointTo.SpatialReference)
+            if (pointFrom.SpatialReference != null && pointTo.SpatialReference != null && pointFrom.SpatialReference == pointTo.SpatialReference)
             {
                 result.SpatialReference = pointFrom.SpatialReference;
             }
@@ -390,7 +391,7 @@ namespace MilSpace.Core.Tools
 
             WKSPointZ[] aWKSPoints = new WKSPointZ[points.PointCount];
 
-            for(int i = 0; i < aWKSPoints.Length; i++)
+            for (int i = 0; i < aWKSPoints.Length; i++)
             {
                 aWKSPoints[i] = PointToWKSPoint(points.Point[i]);
             }
@@ -413,7 +414,7 @@ namespace MilSpace.Core.Tools
             IGeometryCollection geometryCollection = new PolygonClass();
             ISegmentCollection ringSegColl1 = new RingClass();
 
-            foreach(var polyline in polylines)
+            foreach (var polyline in polylines)
             {
                 ILine line = new LineClass() { FromPoint = polyline.FromPoint, ToPoint = polyline.ToPoint, SpatialReference = polyline.SpatialReference };
                 var polylineSeg = (ISegment)line;
@@ -445,9 +446,9 @@ namespace MilSpace.Core.Tools
         public static ILayer GetLayer(string layerName, IMap map)
         {
             var layers = map.Layers;
-            var layer = map.Layer[0] as ILayer;
+            var layer = layers.Next();
 
-            while(layer != null && layer.Name != layerName)
+            while (layer != null && layer.Name != layerName)
             {
                 layer = layers.Next() as ILayer;
             }
@@ -460,7 +461,7 @@ namespace MilSpace.Core.Tools
             var layer = GetLayer(layerName, activeView.FocusMap);
             var envelope = layer.AreaOfInterest;
 
-            if(envelope != null)
+            if (envelope != null)
             {
                 activeView.Extent = layer.AreaOfInterest;
                 activeView.Refresh();
@@ -471,9 +472,9 @@ namespace MilSpace.Core.Tools
         {
             var imgLayers = new List<ILayer>();
 
-            for(int i = 0; i < map.LayerCount; i++)
+            for (int i = 0; i < map.LayerCount; i++)
             {
-                if(!(map.Layer[i] is IGroupLayer) && map.Layer[i].Name.Contains(layerName))
+                if (!(map.Layer[i] is IGroupLayer) && map.Layer[i].Name.Contains(layerName))
                 {
                     imgLayers.Add(map.Layer[i]);
                 }
@@ -484,11 +485,11 @@ namespace MilSpace.Core.Tools
 
         public static IEnumerable<int> GetSelectionByExtent(IFeatureClass featureClass, IActiveView activeView)
         {
-            if(featureClass == null)
+            if (featureClass == null)
             {
                 throw new NullReferenceException("Feature class cannot be null");
             }
-            if(activeView == null)
+            if (activeView == null)
             {
                 throw new NullReferenceException("Active View cannot be null");
             }
@@ -504,7 +505,7 @@ namespace MilSpace.Core.Tools
             IFeatureCursor cursor = featureClass.Search(spatialFilter, false);
             IFeature observPoint = null;
             var results = new List<int>();
-            while((observPoint = cursor.NextFeature()) != null)
+            while ((observPoint = cursor.NextFeature()) != null)
             {
                 results.Add(Convert.ToInt32(observPoint.get_Value(0)));
             }
@@ -517,7 +518,7 @@ namespace MilSpace.Core.Tools
 
         public static List<IPolyline> GetIntersections(IPolyline selectedLine, ILayer layer)
         {
-            if(layer != null && selectedLine != null)
+            if (layer != null && selectedLine != null)
             {
                 return GetIntersection(selectedLine, layer);
             }
@@ -535,21 +536,21 @@ namespace MilSpace.Core.Tools
             var datasets = workspace.Datasets[esriDatasetType.esriDTAny];
             var currentDataset = datasets.Next();
 
-            while(currentDataset != null && !currentDataset.Name.EndsWith(name))
+            while (currentDataset != null && !currentDataset.Name.EndsWith(name))
             {
                 currentDataset = datasets.Next();
             }
 
-            if(currentDataset != null)
+            if (currentDataset != null)
             {
-                if(wspManage.CanDelete(currentDataset.FullName))
+                if (wspManage.CanDelete(currentDataset.FullName))
                 {
                     try
                     {
                         currentDataset.Delete();
                         result = true;
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         logger.ErrorEx(ex.Message);
                     }
@@ -569,7 +570,7 @@ namespace MilSpace.Core.Tools
         {
             var layer = GetLayer(layerName, map);
 
-            if(layer == null)
+            if (layer == null)
             {
                 return;
             }
@@ -637,7 +638,7 @@ namespace MilSpace.Core.Tools
             var visibilityLayers = new List<ILayer>();
             foreach(var layerName in visibilityLayersNames)
             {
-                if(layerName is IRasterDataset raster)
+                if (layerName is IRasterDataset raster)
                 {
                     visibilityLayers.Add(GetRasterLayer(raster));
                 }
@@ -661,9 +662,9 @@ namespace MilSpace.Core.Tools
             { Name = sessionName };
 
             var layersToremove = new List<IRasterLayer>();
-            foreach(var layer in visibilityLayers)
+            foreach (var layer in visibilityLayers)
             {
-                if(layer is IRasterLayer raster)
+                if (layer is IRasterLayer raster)
                 {
                     var layerEffects = (ILayerEffects)layer;
                     layerEffects.Transparency = transparency;
@@ -688,10 +689,10 @@ namespace MilSpace.Core.Tools
 
         public static int GetLayerIndex(ILayer layer, IActiveView activeView)
         {
-            for(int index = 0; index < activeView.FocusMap.LayerCount; index++)
+            for (int index = 0; index < activeView.FocusMap.LayerCount; index++)
             {
                 ILayer layerAtIndex = activeView.FocusMap.get_Layer(index);
-                if(layerAtIndex == layer)
+                if (layerAtIndex == layer)
                     return index;
             }
             return -1;
@@ -725,7 +726,7 @@ namespace MilSpace.Core.Tools
             var highwayCursor = featureClass.Search(spatialFilter, false);
             var feature = highwayCursor.NextFeature();
 
-            while(feature != null)
+            while (feature != null)
             {
                 resultPolylines.AddRange(GetFeatureIntersection(feature, polyline));
                 feature = highwayCursor.NextFeature();
@@ -749,25 +750,25 @@ namespace MilSpace.Core.Tools
             var firstLinePointOnLayer = (IPoint)pTopo.Intersect(polyline.FromPoint, esriGeometryDimension.esriGeometry0Dimension);
             var lastLinePointOnLayer = (IPoint)pTopo.Intersect(polyline.ToPoint, esriGeometryDimension.esriGeometry0Dimension);
 
-            if(!result.IsEmpty)
+            if (!result.IsEmpty)
             {
                 multipoint = (Multipoint)result;
                 IPoint firstPoint = null;
                 IPoint lastPoint = null;
 
-                if(!firstLinePointOnLayer.IsEmpty)
+                if (!firstLinePointOnLayer.IsEmpty)
                 {
-                    if(firstLinePointOnLayer.Y > multipoint.Point[0].Y) { firstPoint = firstLinePointOnLayer; }
+                    if (firstLinePointOnLayer.Y > multipoint.Point[0].Y) { firstPoint = firstLinePointOnLayer; }
                     else { lastPoint = firstLinePointOnLayer; }
                 }
 
-                if(!lastLinePointOnLayer.IsEmpty)
+                if (!lastLinePointOnLayer.IsEmpty)
                 {
-                    if(lastLinePointOnLayer.Y > multipoint.Point[0].Y) { firstPoint = lastLinePointOnLayer; }
+                    if (lastLinePointOnLayer.Y > multipoint.Point[0].Y) { firstPoint = lastLinePointOnLayer; }
                     else { lastPoint = lastLinePointOnLayer; }
                 }
 
-                if(firstPoint != null)
+                if (firstPoint != null)
                 {
                     var buff = new Multipoint();
                     buff.AddPointCollection(multipoint);
@@ -777,23 +778,23 @@ namespace MilSpace.Core.Tools
                     multipoint.AddPointCollection(buff);
                 }
 
-                if(lastPoint != null) { multipoint.AddPoint(lastPoint); }
+                if (lastPoint != null) { multipoint.AddPoint(lastPoint); }
             }
 
-            if(result.IsEmpty && !firstLinePointOnLayer.IsEmpty)
+            if (result.IsEmpty && !firstLinePointOnLayer.IsEmpty)
             {
-                if(!firstLinePointOnLayer.IsEmpty) { multipoint.AddPoint((IPoint)firstLinePointOnLayer); }
-                if(!lastLinePointOnLayer.IsEmpty) { multipoint.AddPoint((IPoint)lastLinePointOnLayer); }
+                if (!firstLinePointOnLayer.IsEmpty) { multipoint.AddPoint((IPoint)firstLinePointOnLayer); }
+                if (!lastLinePointOnLayer.IsEmpty) { multipoint.AddPoint((IPoint)lastLinePointOnLayer); }
             }
 
-            if(multipoint.PointCount == 1)
+            if (multipoint.PointCount == 1)
             {
                 multipoint.Point[0].Project(polyline.SpatialReference);
                 resultPolylines.Add(CreatePolylineFromPoints(multipoint.Point[0], multipoint.Point[0]));
             }
-            else if(multipoint.PointCount > 0)
+            else if (multipoint.PointCount > 0)
             {
-                for(int i = 0; i < multipoint.PointCount - 1; i++)
+                for (int i = 0; i < multipoint.PointCount - 1; i++)
                 {
                     multipoint.Point[i].Project(polyline.SpatialReference);
                     multipoint.Point[i + 1].Project(polyline.SpatialReference);
@@ -818,9 +819,9 @@ namespace MilSpace.Core.Tools
             IGroupLayer groupLayer = new GroupLayerClass();
             groupLayer.Name = sessionName;
 
-            foreach(var layer in layers)
+            foreach (var layer in layers)
             {
-                if(layer is IRasterLayer)
+                if (layer is IRasterLayer)
                 {
                     var layerEffects = (ILayerEffects)layer;
                     layerEffects.Transparency = transparency;
@@ -833,9 +834,9 @@ namespace MilSpace.Core.Tools
             int groupLayerPosition = (isGroupLayerAbove) ? relativeLayerPosition - 1 : relativeLayerPosition + 1;
             mapLayers.InsertLayer(groupLayer, false, groupLayerPosition);
 
-            if(calcRasters != null)
+            if (calcRasters != null)
             {
-                foreach(var raster in calcRasters)
+                foreach (var raster in calcRasters)
                 {
                     var layerEffects = (ILayerEffects)raster;
                     layerEffects.Transparency = transparency;
@@ -857,20 +858,20 @@ namespace MilSpace.Core.Tools
             var datasets = workspace.Datasets[esriDatasetType.esriDTAny];
             var currentDataset = datasets.Next();
 
-            while(currentDataset != null && !currentDataset.Name.EndsWith(datasetName))
+            while (currentDataset != null && !currentDataset.Name.EndsWith(datasetName))
             {
                 currentDataset = datasets.Next();
             }
             Marshal.ReleaseComObject(workspaceFactory);
 
-            if(currentDataset != null)
+            if (currentDataset != null)
             {
-                if(currentDataset.Type == esriDatasetType.esriDTRasterDataset)
+                if (currentDataset.Type == esriDatasetType.esriDTRasterDataset)
                 {
                     return GetRasterLayer(currentDataset as IRasterDataset);
                 }
 
-                if(currentDataset.Type == esriDatasetType.esriDTFeatureClass)
+                if (currentDataset.Type == esriDatasetType.esriDTFeatureClass)
                 {
                     return GetFeatureLayer(currentDataset as IFeatureClass);
                 }
@@ -908,7 +909,7 @@ namespace MilSpace.Core.Tools
 
             IPolygon coverageArea;
 
-            if(azimuthB == 0 && azimuthE == 360)
+            if (azimuthB == 0 && azimuthE == 360)
             {
                 ICircularArc outArc = new CircularArcClass();
                 outArc.PutCoordsByAngle(point, 0, 2 * Math.PI, maxDistance);
@@ -1037,7 +1038,7 @@ namespace MilSpace.Core.Tools
                 //}
             }
 
-            if(observObject != null)
+            if (observObject != null)
             {
                 logger.InfoEx("GetCoverageArea. observObject IS NOT NULL");
                 try
@@ -1050,7 +1051,7 @@ namespace MilSpace.Core.Tools
                     logger.ErrorEx($"> GetCoverageArea END. polygonTopoOp.Intersect OK");
                     return ip;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     logger.ErrorEx($"> GetCoverageArea. Exception (2): {ex.Message}");
                     return null;
@@ -1101,7 +1102,7 @@ namespace MilSpace.Core.Tools
                 logger.InfoEx("> GetObjVisibilityArea END");
                 return resultArea.Area;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.ErrorEx($"> GetObjVisibilityArea Exception: {ex.Message}");
                 return 0;
@@ -1129,7 +1130,7 @@ namespace MilSpace.Core.Tools
                     object missing = Type.Missing;
                     geometryCollection.AddGeometry(polygon, ref missing, ref missing);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     logger.ErrorEx($"GetTotalPolygon. Exception (1): {0}", ex.Message);
                 }
@@ -1143,7 +1144,7 @@ namespace MilSpace.Core.Tools
                 logger.DebugEx("> GetTotalPolygon END");
                 return unionedPolygon as IPolygon;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.ErrorEx($"> GetTotalPolygon Exception (2): {ex.Message}");
                 return null;
@@ -1296,6 +1297,31 @@ namespace MilSpace.Core.Tools
                 //Set the renderer into the geoFeatureLayer
                 geoFeatureLayer.Renderer = (IFeatureRenderer)simpleRenderer;
             }
+        }
+
+        public static bool IsRasterEmpty(IRasterDataset2 rasterDataset)
+        {
+            if (rasterDataset ==  null)
+            {
+                return true;
+            }
+
+            IRaster2 inputRaster = (IRaster2)rasterDataset.CreateFullRaster();
+            IRasterBandCollection bands = (IRasterBandCollection)inputRaster;
+
+            if (bands.Count == 0)
+            {
+                return true;
+            }
+
+            //int i = 0;
+            //for (i = 0; i <=bands.Count ; i++)
+            IRasterBand rasterBand = bands.Item(0);
+            IRasterStatistics rs = rasterBand.Statistics;
+            var max = rs.Maximum;
+            var min = rs.Minimum;
+
+            return rs.Minimum == double.MinValue || rs.Maximum == double.MinValue;
         }
     }
 }

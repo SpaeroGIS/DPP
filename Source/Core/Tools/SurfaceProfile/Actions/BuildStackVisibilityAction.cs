@@ -1,6 +1,7 @@
 ﻿using ESRI.ArcGIS.Geodatabase;
 using MilSpace.Core.Actions.Base;
 using MilSpace.Core.Actions.Interfaces;
+using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
 using MilSpace.Tools.Exceptions;
@@ -170,7 +171,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             bool removeFullImageFromresult = false;
 
             int[] objIds = null;
-            if(calcResults.HasFlag(VisibilityCalculationResultsEnum.ObservationObjects))
+            if (calcResults.HasFlag(VisibilityCalculationResultsEnum.ObservationObjects))
             {
                 objIds = stationsFilteringIds;
             }
