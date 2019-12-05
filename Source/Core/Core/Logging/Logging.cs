@@ -60,7 +60,7 @@ namespace MilSpace.Core
                     {
 
                         FileInfo fi = new FileInfo(MilSpaceConfiguration.ConfigurationFileName);
-                            if (fi.Exists)
+                        if (fi.Exists)
                         {
                             XDocument xdoc = XDocument.Load(fi.FullName);
 
@@ -86,7 +86,6 @@ namespace MilSpace.Core
                     catch (Exception ex)
                     {
                         throw new ConfigurationException("Open configuration file error.", ex);
-
                     }
 
                     if (null != toConfig)

@@ -14,7 +14,7 @@ namespace MilSpace.DataAccess
         bool disposed;
         protected T context;
         protected readonly string connectionString;
-        protected Logger log;
+        protected Logger log = Logger.GetLoggerEx("MilSpace.DataAccess.DataAccessor");
 
         public DataAccessor() : this(null)
         {
@@ -27,7 +27,7 @@ namespace MilSpace.DataAccess
             {
                 patamsoContext.AddRange(contextParams);
             }
-            log = Logger.GetLoggerEx(GetType());
+            //log = Logger.GetLoggerEx(GetType());
             context = (T)Activator.CreateInstance(typeof(T), patamsoContext.ToArray());
         }
 
@@ -35,7 +35,7 @@ namespace MilSpace.DataAccess
         {
             try
             {
-                log.DebugEx("{0} Submit changes", GetType());
+                log.DebugEx("Submit. {0} Submit changes", GetType());
                 context.SubmitChanges(System.Data.Linq.ConflictMode.ContinueOnConflict);
             }
             catch (Exception ex)

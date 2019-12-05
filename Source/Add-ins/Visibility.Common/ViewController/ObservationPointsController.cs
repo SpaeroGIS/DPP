@@ -410,14 +410,14 @@ namespace MilSpace.Visibility.ViewController
             view.FillObservationObjectsList(_observationObjects);
         }
 
-        public void AddObservObjectsLayer()
+        public bool AddObservObjectsLayer()
         {
-            VisibilityManager.AddObservationObjectLayer(mapDocument.ActiveView);
+            return VisibilityManager.AddObservationObjectLayer(mapDocument.ActiveView);
         }
 
-        public void AddObservPointsLayer()
+        public bool AddObservPointsLayer()
         {
-            VisibilityManager.AddVisibilityPointLayer(mapDocument.ActiveView);
+            return VisibilityManager.AddVisibilityPointLayer(mapDocument.ActiveView);
         }
 
         public IEnumerable<string> GetObservationPointTypes()
@@ -563,29 +563,33 @@ namespace MilSpace.Visibility.ViewController
 
         private bool IsFeatureLayerExists(IActiveView view, string featureClass)
         {
-            log.DebugEx("> IsFeatureLayerExists START");
-
-            var pattern = @"^[A-Za-z0-9]+\.[A-Za-z0-9]+\." + featureClass + "$";
-            var layers = view.FocusMap.Layers;
-            var layer = layers.Next();
-
-            log.DebugEx("IsFeatureLayerExists featureClass:{0} pattern:{1}", featureClass, pattern);
+            log.DebugEx("> IsFeatureLayerExists START. featureClass:{0}", featureClass);
 
             try
             {
+                var pattern = @"^[A-Za-z0-9]+\.[A-Za-z0-9]+\." + featureClass + "$";
+                //log.DebugEx("IsFeatureLayerExists featureClass:{0} pattern:{1}", featureClass, pattern);
+
+                var layers = view.FocusMap.Layers;
+                var layer = layers.Next();
+
+                log.DebugEx("IsFeatureLayerExists. layers OK");
+
                 while (layer != null)
                 {
                     if (layer is IFeatureLayer fl
                         && fl.FeatureClass != null
-                        && (fl.FeatureClass.AliasName.Equals(featureClass, StringComparison.InvariantCultureIgnoreCase) || Regex.IsMatch(fl.FeatureClass.AliasName, pattern)))
+                        && (fl.FeatureClass.AliasName.Equals(featureClass, StringComparison.InvariantCultureIgnoreCase)
+                            || Regex.IsMatch(fl.FeatureClass.AliasName, pattern)
+                            ))
                     {
-                        log.DebugEx("> IsFeatureLayerExists END, FeatureLayerExists");
+                        log.DebugEx("> IsFeatureLayerExists END. FeatureLayerExists: {0}", fl.FeatureClass.AliasName);
                         return true;
                     }
 
                     layer = layers.Next();
                 }
-                log.DebugEx("> IsFeatureLayerExists END, NOT FeatureLayerExists");
+                log.DebugEx("> IsFeatureLayerExists END. NOT FeatureLayerExists");
                 return false;
             }
             catch (Exception ex)

@@ -371,7 +371,7 @@ namespace MilSpace.DataAccess.Facade
             try
             {
                 var result = context.VisiblilityObservPoints.Select(op => op.Get());
-                log.InfoEx($"Get all Observation point ({result.Count()}). user {Environment.UserName}");
+                log.InfoEx($"GetObservationPoints. Get all Observation point ({result.Count()}). user {Environment.UserName}");
                 return result;
             }
             catch (Exception ex)

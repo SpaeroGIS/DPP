@@ -37,236 +37,225 @@ namespace MilSpace.Tools
             string profileSource,
             IEnumerable<IPolyline> profileLines,
             ProfileSettingsTypeEnum profileSettingsTypeEnum,
-            int sessionId, string sessionName, double observHeight, string azimuthes)
+            int sessionId, 
+            string sessionName, 
+            double observHeight, 
+            string azimuthes)
         {
-            logger.InfoEx("Adding {1} lines to the temporary spatial source:{0}".InvariantFormat(profileSource, profileLines.Count()));
-
-            string profileSourceName = GdbAccess.Instance.AddProfileLinesToCalculation(profileLines);
-
-            logger.InfoEx("Temporary spatial source:{0}".InvariantFormat(profileSourceName));
-
-            var action = new ActionParam<string>()
-            {
-                ParamName = ActionParamNamesCore.Action,
-                Value = ActionsEnum.bsp.ToString()
-            };
-
-            string sdtnow = MilSpace.DataAccess.Helper.GetTemporaryNameSuffix();
-
-            var resuTable = $"{MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection}\\StackProfile{sdtnow}";
-
-            logger.InfoEx("Temporary profile source:{0}".InvariantFormat(resuTable));
-
-            var profileLineFeatureClass = GdbAccess.Instance.GetProfileLinesFeatureClass(profileSourceName);
-
-            logger.InfoEx("Temporary spatial source {0} was created".InvariantFormat(profileLineFeatureClass));
-
-            var prm = new List<IActionParam>
-            {
-                action,
-                new ActionParam<string>() { ParamName = ActionParameters.FeatureClass, Value = profileLineFeatureClass },
-                new ActionParam<string>() { ParamName = ActionParameters.ProfileSource, Value = profileSource },
-                new ActionParam<string>() { ParamName = ActionParameters.DataWorkSpace, Value = resuTable},
-                new ActionParam<string>() { ParamName = ActionParameters.OutputSourceName, Value = ""}
-            };
-
-
-            var procc = new ActionProcessor(prm);
-            var res = procc.Process<StringCollectionResult>();
-
-
-            if (res.Exception != null)
-            {
-
-                logger.ErrorEx("There was an error on calculation!");
-                throw res.Exception;
-            }
-
-
-
-            //Take the table and import the data
-            ISpatialReference currentSpatialreference = profileLines.First().SpatialReference;
-
+            logger.InfoEx("> GenerateProfile START. Adding {0}".InvariantFormat(profileLines.Count()));
             try
             {
-                string tempTableName = $"StackProfile{sdtnow}";
-                ITable profiletable = GdbAccess.Instance.GetProfileTable(tempTableName);
-                IFeatureClass lines = GdbAccess.Instance.GetCalcProfileFeatureClass(profileSourceName);
+                string profileSourceName = GdbAccess.Instance.AddProfileLinesToCalculation(profileLines);
 
-                IQueryFilter queryFilter = new QueryFilter()
+                logger.InfoEx("GenerateProfile. Spatial source:{0}".InvariantFormat(profileSourceName));
+
+                var action = new ActionParam<string>()
                 {
-                    WhereClause = WhereAllRecords
+                    ParamName = ActionParamNamesCore.Action,
+                    Value = ActionsEnum.bsp.ToString()
                 };
 
-                ICursor featureCursor = profiletable.Search(queryFilter, true);
-                IRow profileRow;
+                string sdtnow = MilSpace.DataAccess.Helper.GetTemporaryNameSuffix();
+                var resuTable = $"{MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection}\\StackProfile{sdtnow}";
 
-                int distanceFld = profiletable.FindField(FIRST_DIST_Field);
-                int zFld = profiletable.FindField(FIRST_Z_Field);
-                int idFld = profiletable.FindField(LINE_ID_Field);
+                logger.InfoEx("GenerateProfile. Temporary profile source:{0}".InvariantFormat(resuTable));
 
+                var profileLineFeatureClass = GdbAccess.Instance.GetProfileLinesFeatureClass(profileSourceName);
+                logger.InfoEx("GenerateProfile. Temporary spatial source {0} was created".InvariantFormat(profileLineFeatureClass));
 
-                List<ProfileSurface> profileSurfaces = new List<ProfileSurface>();
-
-                ProfileSession session = new ProfileSession()
+                var prm = new List<IActionParam>
                 {
-                    ProfileSurfaces = profileSurfaces.ToArray(),
-                    ProfileLines = GetProfileLines(lines).ToArray(),
-                    SessionId = sessionId,
-                    SessionName = sessionName,
-                    DefinitionType = profileSettingsTypeEnum,
-                    ObserverHeight = observHeight,
-                    SurfaceLayerName = profileSource,
-                    CreatedBy = Environment.UserName,
-                    CreatedOn = DateTime.Now,
-                    Shared = false,
-                    Azimuth = azimuthes
+                    action,
+                    new ActionParam<string>() { ParamName = ActionParameters.FeatureClass, Value = profileLineFeatureClass },
+                    new ActionParam<string>() { ParamName = ActionParameters.ProfileSource, Value = profileSource },
+                    new ActionParam<string>() { ParamName = ActionParameters.DataWorkSpace, Value = resuTable},
+                    new ActionParam<string>() { ParamName = ActionParameters.OutputSourceName, Value = ""}
                 };
 
+                var procc = new ActionProcessor(prm);
+                var res = procc.Process<StringCollectionResult>();
 
-                Dictionary<int, List<ProfileSurfacePoint>> surface = new Dictionary<int, List<ProfileSurfacePoint>>();
-
-                int curLine = -1;
-                IPolyline line = null;
-                IEnumerable<IPoint> verticesCache;
-                Dictionary<IPoint, ProfileSurfacePoint> mapProfilePointToVertex = new Dictionary<IPoint, ProfileSurfacePoint>();
-                Dictionary<IPoint, double> mapProfilePointToDistance = new Dictionary<IPoint, double>();
-                ProfileLine profileLine = null;
-                verticesCache = new IPoint[0];
-
-                int pointsCount = 0;
-
-                while ((profileRow = featureCursor.NextRow()) != null)
+                if (res.Exception != null)
                 {
-                    int lineId = Convert.ToInt32(profileRow.Value[idFld]);
+                    logger.ErrorEx("GenerateProfile. There was an error on calculation!");
+                    throw res.Exception;
+                }
 
-                    pointsCount++;
+                //Take the table and import the data
+                ISpatialReference currentSpatialreference = profileLines.First().SpatialReference;
+                try
+                {
+                    string tempTableName = $"StackProfile{sdtnow}";
+                    ITable profiletable = GdbAccess.Instance.GetProfileTable(tempTableName);
+                    IFeatureClass lines = GdbAccess.Instance.GetCalcProfileFeatureClass(profileSourceName);
 
-                    if (!session.ProfileLines.Any(l => l.Id == lineId))
+                    IQueryFilter queryFilter = new QueryFilter()
                     {
-                        throw new MilSpaceProfileLineNotFound(lineId, profileLineFeatureClass);
-                    }
-
-                    List<ProfileSurfacePoint> points;
-                    if (!surface.ContainsKey(lineId))
-                    {
-                        points = new List<ProfileSurfacePoint>();
-                        surface.Add(lineId, points);
-                    }
-                    else
-                    {
-                        points = surface[lineId];
-                    }
-
-                    if (curLine != lineId) // data for new line
-                    {
-                        curLine = lineId;
-                        profileLine = session.ProfileLines.FirstOrDefault(l => l.Id == lineId);
-
-                        line = lines.GetFeature(profileLine.Id).Shape as IPolyline;
-
-                        verticesCache = line.Vertices();
-
-                        mapProfilePointToVertex.ToList().ForEach(v =>
-                           {
-                               if (!v.Value.IsEmpty)
-                               {
-                                   v.Value.isVertex = true;
-                               }
-                           });
-
-                        mapProfilePointToVertex = verticesCache.ToDictionary(k => k, t => new ProfileSurfacePoint());
-                        mapProfilePointToDistance = verticesCache.ToDictionary(k => k, t => -1.0);
-                    }
-
-                    //Returns the point with Origin (Taken from firstPoint) Spatial reference
-                    //var profilePointSource = EsriTools.GetPointFromAngelAndDistance(firstPoint, profileLine.Angel, (double)profileRow.Value[distanceFld]);
-                    //var profilePoint = profilePointSource.CloneWithProjecting();
-
-                    // Try to define if this point is close to a vertex
-
-                    double distance = (double)profileRow.Value[distanceFld];
-
-                    ProfileSurfacePoint newSurface = new ProfileSurfacePoint
-                    {
-                        Distance = distance,
-                        Z = (double)profileRow.Value[zFld],
-                        //X = profilePoint.X,
-                        //Y = profilePoint.Y
+                        WhereClause = WhereAllRecords
                     };
 
+                    ICursor featureCursor = profiletable.Search(queryFilter, true);
+                    IRow profileRow;
 
+                    int distanceFld = profiletable.FindField(FIRST_DIST_Field);
+                    int zFld = profiletable.FindField(FIRST_Z_Field);
+                    int idFld = profiletable.FindField(LINE_ID_Field);
 
-                    IPoint point = new Point();
-                    line.QueryPoint(esriSegmentExtension.esriNoExtension, newSurface.Distance, false, point);
-                    IProximityOperator proximity = point as IProximityOperator;
-
-                    foreach (var vertx in verticesCache)
+                    List<ProfileSurface> profileSurfaces = new List<ProfileSurface>();
+                    ProfileSession session = new ProfileSession()
                     {
-                        var profilePoint = mapProfilePointToVertex[vertx];
-                        if (mapProfilePointToDistance[vertx] == 0)// profilePoint.isVertex)
-                            continue;
+                        ProfileSurfaces = profileSurfaces.ToArray(),
+                        ProfileLines = GetProfileLines(lines).ToArray(),
+                        SessionId = sessionId,
+                        SessionName = sessionName,
+                        DefinitionType = profileSettingsTypeEnum,
+                        ObserverHeight = observHeight,
+                        SurfaceLayerName = profileSource,
+                        CreatedBy = Environment.UserName,
+                        CreatedOn = DateTime.Now,
+                        Shared = false,
+                        Azimuth = azimuthes
+                    };
 
-                        double localDistance = proximity.ReturnDistance(vertx);
-                        if (mapProfilePointToDistance[vertx] == -1 || mapProfilePointToDistance[vertx] > localDistance)
+                    Dictionary<int, List<ProfileSurfacePoint>> surface = new Dictionary<int, List<ProfileSurfacePoint>>();
+
+                    int curLine = -1;
+                    IPolyline line = null;
+                    IEnumerable<IPoint> verticesCache;
+                    Dictionary<IPoint, ProfileSurfacePoint> mapProfilePointToVertex = new Dictionary<IPoint, ProfileSurfacePoint>();
+                    Dictionary<IPoint, double> mapProfilePointToDistance = new Dictionary<IPoint, double>();
+                    ProfileLine profileLine = null;
+                    verticesCache = new IPoint[0];
+
+                    int pointsCount = 0;
+
+                    while ((profileRow = featureCursor.NextRow()) != null)
+                    {
+                        int lineId = Convert.ToInt32(profileRow.Value[idFld]);
+                        pointsCount++;
+                        if (!session.ProfileLines.Any(l => l.Id == lineId))
                         {
-                            mapProfilePointToDistance[vertx] = localDistance;
-                            mapProfilePointToVertex[vertx] = newSurface;
-                            if (localDistance == 0)
+                            throw new MilSpaceProfileLineNotFound(lineId, profileLineFeatureClass);
+                        }
+
+                        List<ProfileSurfacePoint> points;
+                        if (!surface.ContainsKey(lineId))
+                        {
+                            points = new List<ProfileSurfacePoint>();
+                            surface.Add(lineId, points);
+                        }
+                        else
+                        {
+                            points = surface[lineId];
+                        }
+
+                        if (curLine != lineId) // data for new line
+                        {
+                            curLine = lineId;
+                            profileLine = session.ProfileLines.FirstOrDefault(l => l.Id == lineId);
+                            line = lines.GetFeature(profileLine.Id).Shape as IPolyline;
+                            verticesCache = line.Vertices();
+                            mapProfilePointToVertex.ToList().ForEach(v =>
+                               {
+                                   if (!v.Value.IsEmpty)
+                                   {
+                                       v.Value.isVertex = true;
+                                   }
+                               });
+
+                            mapProfilePointToVertex = verticesCache.ToDictionary(k => k, t => new ProfileSurfacePoint());
+                            mapProfilePointToDistance = verticesCache.ToDictionary(k => k, t => -1.0);
+                        }
+
+                        //Returns the point with Origin (Taken from firstPoint) Spatial reference
+                        //var profilePointSource = EsriTools.GetPointFromAngelAndDistance(firstPoint, profileLine.Angel, (double)profileRow.Value[distanceFld]);
+                        //var profilePoint = profilePointSource.CloneWithProjecting();
+
+                        // Try to define if this point is close to a vertex
+
+                        double distance = (double)profileRow.Value[distanceFld];
+
+                        ProfileSurfacePoint newSurface = new ProfileSurfacePoint
+                        {
+                            Distance = distance,
+                            Z = (double)profileRow.Value[zFld],
+                            //X = profilePoint.X,
+                            //Y = profilePoint.Y
+                        };
+
+                        IPoint point = new Point();
+                        line.QueryPoint(esriSegmentExtension.esriNoExtension, newSurface.Distance, false, point);
+                        IProximityOperator proximity = point as IProximityOperator;
+
+                        foreach (var vertx in verticesCache)
+                        {
+                            var profilePoint = mapProfilePointToVertex[vertx];
+                            if (mapProfilePointToDistance[vertx] == 0)// profilePoint.isVertex)
+                                continue;
+
+                            double localDistance = proximity.ReturnDistance(vertx);
+                            if (mapProfilePointToDistance[vertx] == -1 || mapProfilePointToDistance[vertx] > localDistance)
                             {
-                                newSurface.isVertex = true;
+                                mapProfilePointToDistance[vertx] = localDistance;
+                                mapProfilePointToVertex[vertx] = newSurface;
+                                if (localDistance == 0)
+                                {
+                                    newSurface.isVertex = true;
+                                }
                             }
                         }
+
+                        var projected = point.CloneWithProjecting();
+                        newSurface.X = projected.X;
+                        newSurface.Y = projected.Y;
+                        points.Add(newSurface);
                     }
 
-
-                    var projected = point.CloneWithProjecting();
-
-                    newSurface.X = projected.X;
-                    newSurface.Y = projected.Y;
-
-                    points.Add(newSurface);
-                }
-
-                mapProfilePointToVertex.ToList().ForEach(v =>
-                {
-                    if (!v.Value.IsEmpty)
+                    mapProfilePointToVertex.ToList().ForEach(v =>
                     {
-                        v.Value.isVertex = true;
+                        if (!v.Value.IsEmpty)
+                        {
+                            v.Value.isVertex = true;
+                        }
+                    });
+
+                    //Delete temp table form the GDB
+                    GdbAccess.Instance.DeleteTemporarSource(tempTableName, profileSourceName);
+
+                    Marshal.ReleaseComObject(featureCursor);
+
+                    //TODO: Clean memo using Marhsaling IRow
+
+                    session.ProfileSurfaces = surface.Select(r => new ProfileSurface
+                    {
+                        LineId = r.Key,
+                        ProfileSurfacePoints = r.Value.ToArray()
                     }
-                });
+                    ).ToArray();
 
-                //Delete temp table form the GDB
-                GdbAccess.Instance.DeleteTemporarSource(tempTableName, profileSourceName);
+                    return session;
 
-                Marshal.ReleaseComObject(featureCursor);
-
-                //TODO: Clean memo using Marhsaling IRow
-
-                session.ProfileSurfaces = surface.Select(r => new ProfileSurface
-                {
-                    LineId = r.Key,
-                    ProfileSurfacePoints = r.Value.ToArray()
                 }
-                ).ToArray();
-
-                return session;
-
-            }
-            catch (MilSpaceCanotDeletePrifileCalcTable ex)
-            {
-                //TODO: Log error
-                throw ex;
-            }
-            catch (MilSpaceDataException ex)
-            {
-                //TODO: Log error
-                throw ex;
+                catch (MilSpaceCanotDeletePrifileCalcTable ex)
+                {
+                    logger.DebugEx("GenerateProfile MilSpaceCanotDeletePrifileCalcTable. ex.Message: {0}", ex.Message);
+                    throw ex;
+                }
+                catch (MilSpaceDataException ex)
+                {
+                    logger.DebugEx("GenerateProfile MilSpaceDataException. ex.Message: {0}", ex.Message);
+                    throw ex;
+                }
+                catch (Exception ex)
+                {
+                    logger.DebugEx("GenerateProfile Exception. ex.Message: {0}", ex.Message);
+                    throw ex;
+                }
             }
             catch (Exception ex)
             {
-                //TODO: Log error
-                throw ex;
+                logger.DebugEx("> GenerateProfile Exception. ex.Message: {0}", ex.Message);
+                return null;
             }
 
         }

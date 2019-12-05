@@ -223,15 +223,15 @@ namespace MilSpace.Visibility
         {
             if (observationPoints != null && observationPoints.Any())
             {
-                var ItemsToShow = observationPoints.Select(t => new CheckObservPointGui
-                {
-                    Title = t.Title,
-                    Type = t.Type,
-                    Affiliation = t.Affiliation,
-                    Date = t.Dto.Value.ToShortDateString(),
-                    Id = t.Objectid
-
-                }).ToList();
+                var ItemsToShow = observationPoints.Select(
+                    t => new CheckObservPointGui
+                    {
+                        Title = t.Title,
+                        Type = t.Type,
+                        Affiliation = t.Affiliation,
+                        Date = t.Dto.Value.ToShortDateString(),
+                        Id = t.Objectid
+                    }).OrderBy(l => l.Title).ToList();
 
                 dvgCheckList.Rows.Clear();
                 dvgCheckList.CurrentCell = null;
@@ -257,7 +257,6 @@ namespace MilSpace.Visibility
                     Affiliation = t.Affiliation,
                     Date = t.Dto.Value.ToString(Helper.DateFormatSmall),
                     Id = t.Objectid
-
                 });
                 //Finding coincidence
                 var commonT = (_observPointGuis.Select(a => a.Id).Intersect(ItemsToShow.Select(b => b.Id))).ToList();
@@ -286,14 +285,15 @@ namespace MilSpace.Visibility
             try
             {
                 var All = controller.GetAllObservObjects();
-                var itemsToShow = All.Select(t => new CheckObservPointGui
-                {
-                    Title = t.Title,
-                    Affiliation = t.ObjectType.ToString(),
-                    Id = t.ObjectId,
-                    Type = t.Group,
-                    Date = t.DTO.ToString(Helper.DateFormatSmall)
-                });
+                var itemsToShow = All.Select(
+                    t => new CheckObservPointGui
+                    {
+                        Title = t.Title,
+                        Affiliation = t.ObjectType.ToString(),
+                        Id = t.ObjectId,
+                        Type = t.Group,
+                        Date = t.DTO.ToString(Helper.DateFormatSmall)
+                    }).OrderBy(l => l.Title);
 
                 dgvObjects.DataSource = null; //Clearing listbox
 
@@ -306,11 +306,8 @@ namespace MilSpace.Visibility
                 }
                 if (useCurrentExtent)
                 {
-                    var onCurrent = controller
-                                .GetObservObjectsOnCurrentMapExtent(ActiveView);
-
+                    var onCurrent = controller.GetObservObjectsOnCurrentMapExtent(ActiveView);
                     var commonO = (_observationObjects.Select(a => a.Id).Intersect(onCurrent.Select(b => b.ObjectId)));
-
                     foreach (CheckObservPointGui e in _observationObjects)
                     {
                         if (commonO.Contains(e.Id))
@@ -510,7 +507,9 @@ namespace MilSpace.Visibility
 
         private void cmbAffiliation_SelectedIndexChanged(object sender, EventArgs e)
         {
+
             FilterData(dvgCheckList, cmbAffiliation);
+
         }
         private void cmbObservObject_SelectedIndexChanged(object sender, EventArgs e)
         {

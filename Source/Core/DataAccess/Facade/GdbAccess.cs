@@ -24,20 +24,44 @@ namespace MilSpace.DataAccess.Facade
         private static IApplication application = null;
         private static string divider = "\\";
 
-
         private static readonly string profileCalcFeatureClass = "CalcProfile_L";
 
         private Logger logger = Logger.GetLoggerEx("GdbAccess");
 
         private GdbAccess()
         {
-            string calcGdb = MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection;
-            IWorkspaceFactory workspaceFactory = new FileGDBWorkspaceFactory();
-            logger.InfoEx($"Opening access to {calcGdb}.");
-            calcWorkspace = workspaceFactory.OpenFromFile(calcGdb, 0);
-            if (calcWorkspace == null)
+            logger.DebugEx($"> GdbAccess. START");
+            try
             {
-                logger.ErrorEx($"Cannot access to {calcGdb}.");
+                //Nikol 20191202
+                logger.DebugEx("GdbAccess. MilSpaceConfiguration.ConfigurationFileName: {0}",
+                    MilSpaceConfiguration.ConfigurationFileName);
+                //logger.DebugEx("GdbAccess. MilSpaceConfiguration.ConnectionProperty.WorkingDBConnection: {0}",
+                //    MilSpaceConfiguration.ConnectionProperty.WorkingDBConnection);
+                //logger.DebugEx("GdbAccess. MilSpaceConfiguration.ConnectionProperty.WorkingGDBConnection: {0}",
+                //    MilSpaceConfiguration.ConnectionProperty.WorkingGDBConnection);
+                //Nikol 20191202
+
+                logger.DebugEx("GdbAccess. MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection: {0}", 
+                    MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection);
+
+                string calcGdb = MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection;
+                logger.DebugEx($"GdbAccess. calcGdb: {0}", calcGdb);
+                IWorkspaceFactory workspaceFactory = new FileGDBWorkspaceFactory();
+                logger.DebugEx($"GdbAccess. Opening access to {calcGdb}");
+                calcWorkspace = workspaceFactory.OpenFromFile(calcGdb, 0);
+                if (calcWorkspace == null)
+                {
+                    logger.ErrorEx($"> GdbAccess END. Cannot access to {calcGdb}");
+                }
+                else
+                {
+                    logger.DebugEx($"> GdbAccess END. Access to {calcGdb}");
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorEx("> GdbAccess Exception. ex.Message: {0}", ex.Message);
             }
         }
 
@@ -53,43 +77,49 @@ namespace MilSpace.DataAccess.Facade
                     }
                     catch
                     {
-                        //TODO: Log error
+                        //
                     }
                 }
-
                 return instance;
             }
         }
+
         private static IWorkspace calcWorkspace = null;
         private static IWorkspace workingWorkspace = null;
 
         public string AddProfileLinesToCalculation(IEnumerable<IPolyline> profileLines)
         {
-            string featureClassName = GenerateTempProfileLinesStorage();
+            logger.DebugEx($"> AddProfileLinesToCalculation START");
+            try
+            {
+                string featureClassName = GenerateTempProfileLinesStorage();
 
-            IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)calcWorkspace;
-            workspaceEdit.StartEditing(true);
-            workspaceEdit.StartEditOperation();
+                IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)calcWorkspace;
+                workspaceEdit.StartEditing(true);
+                workspaceEdit.StartEditOperation();
 
+                IFeatureClass calc = GetCalcProfileFeatureClass(featureClassName);
+                var GCS_WGS = Helper.GetBasePointSpatialReference();
 
-            IFeatureClass calc = GetCalcProfileFeatureClass(featureClassName);
-            var GCS_WGS = Helper.GetBasePointSpatialReference();
+                profileLines.ToList().ForEach(
+                    l =>
+                    {
+                        var newLine = calc.CreateFeature();
+                        newLine.Shape = l;
+                        newLine.Store();
+                    });
 
+                workspaceEdit.StopEditOperation();
+                workspaceEdit.StopEditing(true);
 
-            profileLines.ToList().ForEach(
-                l =>
-                {
-                    var newLine = calc.CreateFeature();
-                    newLine.Shape = l;
-                    newLine.Store();
-                }
-                );
-
-
-            workspaceEdit.StopEditOperation();
-            workspaceEdit.StopEditing(true);
-
-            return featureClassName;
+                logger.DebugEx($"> AddProfileLinesToCalculation END. featureClassName:{0}", featureClassName);
+                return featureClassName;
+            }
+            catch (Exception ex)
+            {
+                logger.DebugEx($"> AddProfileLinesToCalculation Exception. {0}", ex.Message);
+                return "";
+            }
         }
 
         public VisibilityCalculationResultsEnum CheckVisibilityResult(string sessionName)
@@ -714,7 +744,9 @@ namespace MilSpace.DataAccess.Facade
                     workingWorkspace = ConnectToSqlGDB();
                     if (workingWorkspace == null)
                     {
-                        throw new MilSpaceDataException(MilSpaceConfiguration.ConnectionProperty.WorkingGDBConnection, Core.DataAccess.DataOperationsEnum.Access);
+                        throw new MilSpaceDataException(
+                            MilSpaceConfiguration.ConnectionProperty.WorkingGDBConnection, 
+                            Core.DataAccess.DataOperationsEnum.Access);
                         //throw new MilSpaceVisibilityDataException("Cannot open working GDB");
                     }
                 }

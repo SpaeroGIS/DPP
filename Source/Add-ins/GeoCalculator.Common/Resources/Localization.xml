@@ -19,11 +19,12 @@
   
 <ErrorString>Геокалькулятор. Помилка</ErrorString>
 <WarningString>Геокалькулятор. Увага</WarningString>
+<InfoString>Геокалькулятор. Інформація</InfoString>
 
 <WrongFormatMessageToFewParts>Не вдалося отримати обидві складові координати</WrongFormatMessageToFewParts>
 <MsgInvalidCoordinatesDD>Недійсні дані. Потрібні коордінати представлені у СК WGS-84, десяткові градуси</MsgInvalidCoordinatesDD>
 
-  <WrongMgrsFormatMessage>Невірний формат MGRS</WrongMgrsFormatMessage>
+ <WrongMgrsFormatMessage>Невірний формат MGRS</WrongMgrsFormatMessage>
 <WrongFormatMessage>Невірний формат координат</WrongFormatMessage>
 <NoSelectedPointMessage>Потрібно вказати точку на карті!</NoSelectedPointMessage>
 <AltRightToMove>Alt+Вправо для руху</AltRightToMove>
@@ -32,4 +33,5 @@
 <CopyCoordinateButton>Взяти координати в буфер обміну</CopyCoordinateButton>
 <PasteCoordinateButton>Вставити координати з буферу обміну</PasteCoordinateButton>
 <GridCleanWarningMessage>Список точок буде зкинуто. Продовжити?</GridCleanWarningMessage>
+  
 </CoordinatesConverter>

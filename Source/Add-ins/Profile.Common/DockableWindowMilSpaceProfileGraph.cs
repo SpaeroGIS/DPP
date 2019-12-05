@@ -69,7 +69,7 @@ namespace MilSpace.Profile
         {
             if (profilesTabControl.TabPages.Count > 0)
             {
-               var chart = (SurfaceProfileChart)profilesTabControl.SelectedTab.Controls["profileChart"];
+                var chart = (SurfaceProfileChart)profilesTabControl.SelectedTab.Controls["profileChart"];
                 controller.ClearProfileSelection(chart);
             }
 
@@ -81,18 +81,20 @@ namespace MilSpace.Profile
                 return;
             }
 
-            string title = $"Graph {profilesTabControl.TabPages.Count + 1}";
+            string sHeaderTab = $"Ãðàô³ê";
+            string title = sHeaderTab + $" {profilesTabControl.TabPages.Count + 1}";
             int i = 1;
 
             while (profilesTabControl.TabPages.ContainsKey(title))
             {
-                title = $"Graph {i + 1}";
+                title = sHeaderTab + $" {i + 1}";
                 i++;
             }
 
             tabPage = new TabPage(title);
             tabPage.Name = title;
             tabPage.Tag = sessionId;
+            tabPage.Padding = new Padding(0);
 
             profilesTabControl.TabPages.Add(tabPage);
 
