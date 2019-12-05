@@ -540,7 +540,7 @@ namespace MilSpace.Visibility.ViewController
 
         public IFeatureClass GetObservatioPointFeatureClass(IActiveView esriView)
         {
-            return GetFeatureClass(view.ObservationPointsFeatureClass, esriView);
+            return GetFeatureClass(_observPointFeature, esriView);
         }
         public IFeatureClass GetObservatioStationFeatureClass(IActiveView esriView)
         {
