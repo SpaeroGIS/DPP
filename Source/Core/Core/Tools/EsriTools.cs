@@ -17,7 +17,7 @@ namespace MilSpace.Core.Tools
 {
     public static class EsriTools
     {
-        private static Logger logger = Logger.GetLoggerEx("EsriTools");
+        private static Logger logger = Logger.GetLoggerEx("MilSpace.Core.Tools.EsriTools");
         private static ISpatialReference wgs84 = null;
         private static IRgbColor whiteColor = new RgbColor()
         {
@@ -150,7 +150,6 @@ namespace MilSpace.Core.Tools
 
         public static void ProjectToMapSpatialReference(IGeometry geometry, ISpatialReference mapSpatialReference)
         {
-
             try
             {
                 geometry.Project(mapSpatialReference);
@@ -160,7 +159,6 @@ namespace MilSpace.Core.Tools
                 //ToDO: Loggig
             }
         }
-
 
         public static ISpatialReference Wgs84Spatialreference
         {
@@ -182,7 +180,7 @@ namespace MilSpace.Core.Tools
             IEnvelope env = view.Extent;
 
             IRelationalOperator operation = env as IRelationalOperator;
-            logger.InfoEx($"Projeting to {view.FocusMap.SpatialReference.Name}");
+            logger.InfoEx($"PanToGeometry. Projecting to {view.FocusMap.SpatialReference.Name}");
             geometry.Project(view.FocusMap.SpatialReference);
 
             if (setCenterAt || !operation.Contains(geometry))
@@ -203,7 +201,7 @@ namespace MilSpace.Core.Tools
             color.Red = 255;
 
             short cacheId = display.AddCache();
-            logger.InfoEx("Statring drawing..");
+            logger.InfoEx("FlashGeometry. Statring drawing..");
             display.StartDrawing(display.hDC, cacheId);
 
             geometries.ToList().ForEach(geometry =>
@@ -217,7 +215,7 @@ namespace MilSpace.Core.Tools
                 else
                 { throw new KeyNotFoundException("{0} cannot be found in the Symbol dictionary".InvariantFormat(geometry.GeometryType)); }
             });
-            logger.InfoEx("Finishibng drawing..");
+            logger.InfoEx("FlashGeometry. Finishibng drawing..");
             display.FinishDrawing();
 
             tagRECT rect = new tagRECT();
@@ -225,18 +223,18 @@ namespace MilSpace.Core.Tools
             System.Threading.Thread.Sleep(300);
             display.Invalidate(rect: null, erase: true, cacheIndex: cacheId);
             display.RemoveCache(cacheId);
-            logger.InfoEx("Geometries flashed.");
 
+            logger.InfoEx("FlashGeometry. Geometries flashed.");
         }
 
-        public static IEnumerable<IPolyline> CreatePolylinesFromPointAndAzimuths(IPoint centerPoint, double length, int count, double azimuth1, double azimuth2)
+        public static IEnumerable<IPolyline> CreatePolylinesFromPointAndAzimuths(
+            IPoint centerPoint, double length, int count, double azimuth1, double azimuth2)
         {
             if (centerPoint == null)
             {
                 return null;
             }
-
-            if (count < 2)
+            if(count < 2)
             {
                 //TODO: Localize error message
                 throw new MilSpaceProfileLackOfParameterException("Line numbers", count);
@@ -272,7 +270,6 @@ namespace MilSpace.Core.Tools
             }
 
             double step = sector / (devider - 1);
-
             List<IPolyline> result = new List<IPolyline>();
             for (int i = 0; i < count; i++)
             {
@@ -628,31 +625,35 @@ namespace MilSpace.Core.Tools
             }
         }
 
-        public static void AddVisibilityGroupLayer(IEnumerable<IDataset> visibilityLayersNames, string sessionName,
-            string calcRasterName, string gdb, string relativeLayerName,
-                                                bool isLayerAbove, short transparency, IActiveView activeView)
+        public static void AddVisibilityGroupLayer(
+            IEnumerable<IDataset> visibilityLayersNames, 
+            string sessionName,
+            string calcRasterName, 
+            string gdb, 
+            string relativeLayerName,
+            bool isLayerAbove, 
+            short transparency, 
+            IActiveView activeView)
         {
             var visibilityLayers = new List<ILayer>();
-
-            foreach (var layerName in visibilityLayersNames)
+            foreach(var layerName in visibilityLayersNames)
             {
                 if (layerName is IRasterDataset raster)
                 {
                     visibilityLayers.Add(GetRasterLayer(raster));
                 }
-
-                if (layerName is IFeatureClass feature)
+                if(layerName is IFeatureClass feature)
                 {
                     var lr = GetFeatureLayer(feature);
 
                     visibilityLayers.Add(lr);
                 }
-
             }
 
             MapLayersManager layersManager = new MapLayersManager(activeView);
 
-            var relativeLayer = layersManager.FirstLevelLayers.FirstOrDefault(l => l.Name.Equals(relativeLayerName, StringComparison.InvariantCultureIgnoreCase));
+            var relativeLayer = 
+                layersManager.FirstLevelLayers.FirstOrDefault(l => l.Name.Equals(relativeLayerName, StringComparison.InvariantCultureIgnoreCase));
 
             //var relativeLayer = GetLayer(relativeLayerName, activeView.FocusMap);
             var calcRasters = GetVisibiltyImgLayers(calcRasterName, activeView.FocusMap);
@@ -668,14 +669,13 @@ namespace MilSpace.Core.Tools
                     var layerEffects = (ILayerEffects)layer;
                     layerEffects.Transparency = transparency;
 
-                    var existenLayer = layersManager.RasterLayers.FirstOrDefault(l => l.FilePath.Equals(raster.FilePath, StringComparison.InvariantCultureIgnoreCase));
-                    if (existenLayer != null && !layersToremove.Any(l => l.Equals(existenLayer)))
+                    var existenLayer = 
+                        layersManager.RasterLayers.FirstOrDefault(l => l.FilePath.Equals(raster.FilePath, StringComparison.InvariantCultureIgnoreCase));
+                    if(existenLayer != null && !layersToremove.Any(l => l.Equals(existenLayer)))
                     {
                         layersToremove.Add(existenLayer);
                     }
-
                 }
-
                 groupLayer.Add(layer);
             }
 
@@ -715,20 +715,15 @@ namespace MilSpace.Core.Tools
         private static List<IPolyline> GetIntersection(IPolyline polyline, ILayer layer)
         {
             var resultPolylines = new List<IPolyline>();
-
             var layerWehereDef = (layer as IFeatureLayerDefinition).DefinitionExpression;
-
             ISpatialFilter spatialFilter = new SpatialFilter
             {
                 Geometry = polyline,
                 SpatialRel = esriSpatialRelEnum.esriSpatialRelIntersects,
                 WhereClause = layerWehereDef
             };
-
             var featureClass = (layer as IFeatureLayer).FeatureClass;
-
             var highwayCursor = featureClass.Search(spatialFilter, false);
-
             var feature = highwayCursor.NextFeature();
 
             while (feature != null)
@@ -736,7 +731,6 @@ namespace MilSpace.Core.Tools
                 resultPolylines.AddRange(GetFeatureIntersection(feature, polyline));
                 feature = highwayCursor.NextFeature();
             }
-
             Marshal.ReleaseComObject(highwayCursor);
 
             return resultPolylines;
@@ -759,7 +753,6 @@ namespace MilSpace.Core.Tools
             if (!result.IsEmpty)
             {
                 multipoint = (Multipoint)result;
-
                 IPoint firstPoint = null;
                 IPoint lastPoint = null;
 
@@ -814,8 +807,14 @@ namespace MilSpace.Core.Tools
             return resultPolylines;
         }
 
-        private static void AddLayersToMapAsGroupLayer(IEnumerable<ILayer> layers, string sessionName, short transparency,
-                                                ILayer relativeLayer, bool isGroupLayerAbove, IActiveView activeView, IEnumerable<ILayer> calcRasters)
+        private static void AddLayersToMapAsGroupLayer(
+            IEnumerable<ILayer> layers, 
+            string sessionName, 
+            short transparency,
+            ILayer relativeLayer, 
+            bool isGroupLayerAbove, 
+            IActiveView activeView, 
+            IEnumerable<ILayer> calcRasters)
         {
             IGroupLayer groupLayer = new GroupLayerClass();
             groupLayer.Name = sessionName;
@@ -856,7 +855,6 @@ namespace MilSpace.Core.Tools
         {
             IWorkspaceFactory workspaceFactory = new FileGDBWorkspaceFactory();
             IWorkspace workspace = workspaceFactory.OpenFromFile(gdb, 0);
-
             var datasets = workspace.Datasets[esriDatasetType.esriDTAny];
             var currentDataset = datasets.Next();
 
@@ -864,7 +862,6 @@ namespace MilSpace.Core.Tools
             {
                 currentDataset = datasets.Next();
             }
-
             Marshal.ReleaseComObject(workspaceFactory);
 
             if (currentDataset != null)
@@ -879,7 +876,6 @@ namespace MilSpace.Core.Tools
                     return GetFeatureLayer(currentDataset as IFeatureClass);
                 }
             }
-
             return null;
         }
 
@@ -900,8 +896,17 @@ namespace MilSpace.Core.Tools
             return rasterLayer;
         }
 
-        public static IPolygon GetCoverageArea(IPoint point, double azimuthB, double azimuthE, double minDistance, double maxDistance, IPolygon observObject = null)
+        public static IPolygon GetCoverageArea(
+            IPoint point, 
+            double azimuthB, 
+            double azimuthE, 
+            double minDistance, 
+            double maxDistance, 
+            IPolygon observObject = null)
         {
+            logger.InfoEx("> GetCoverageArea START azimuthB:{0} azimuthE:{1} minDistance:{2} maxDistance:{3}", 
+                azimuthB, azimuthE, minDistance, maxDistance);
+
             IPolygon coverageArea;
 
             if (azimuthB == 0 && azimuthE == 360)
@@ -910,11 +915,9 @@ namespace MilSpace.Core.Tools
                 outArc.PutCoordsByAngle(point, 0, 2 * Math.PI, maxDistance);
                 ISegmentCollection outFullRing = new RingClass();
                 ISegment segmentOut = (ISegment)outArc;
-
                 outFullRing.AddSegment(segmentOut);
                 IRing outFullRingGeometry = outFullRing as IRing;
-
-                if (!outFullRingGeometry.IsExterior)
+                if(!outFullRingGeometry.IsExterior)
                 {
                     outFullRingGeometry.ReverseOrientation();
                 }
@@ -923,11 +926,9 @@ namespace MilSpace.Core.Tools
                 innerArc.PutCoordsByAngle(point, 0, 2 * Math.PI, minDistance);
                 ISegmentCollection innerFullRing = new RingClass();
                 ISegment segmentIn = (ISegment)innerArc;
-
                 innerFullRing.AddSegment(segmentIn);
                 IRing innerFullRingGeometry = innerFullRing as IRing;
-
-                if (innerFullRingGeometry.IsExterior)
+                if(innerFullRingGeometry.IsExterior)
                 {
                     innerFullRingGeometry.ReverseOrientation();
                 }
@@ -935,153 +936,212 @@ namespace MilSpace.Core.Tools
                 IGeometryCollection polygonRound = new PolygonClass();
                 polygonRound.AddGeometry(outFullRing as IGeometry);
                 polygonRound.AddGeometry(innerFullRing as IGeometry);
-
                 coverageArea = polygonRound as IPolygon;
             }
             else
             {
+                ISegmentCollection outRing = new RingClass();
+
                 var pointFromOutArc = GetPointByAzimuthAndLength(point, azimuthB, maxDistance);
                 var pointToOutArc = GetPointByAzimuthAndLength(point, azimuthE, maxDistance);
-
-                ICircularArc circularArc = new CircularArcClass();
-
-                circularArc.PutCoords(point, pointFromOutArc, pointToOutArc, esriArcOrientation.esriArcClockwise);
-
                 var pointFromInnerArc = GetPointByAzimuthAndLength(point, azimuthB, minDistance);
                 var pointToInnerArc = GetPointByAzimuthAndLength(point, azimuthE, minDistance);
 
-                ISegmentCollection outRing = new RingClass();
-
-                ILine rightLine = new LineClass() { FromPoint = pointFromInnerArc, ToPoint = pointFromOutArc, SpatialReference = point.SpatialReference };
+                ILine rightLine = new LineClass()
+                {
+                    FromPoint = pointFromInnerArc,
+                    ToPoint = pointFromOutArc,
+                    SpatialReference = point.SpatialReference
+                };
                 var rightLineSeg = (ISegment)rightLine;
-
                 outRing.AddSegment(rightLineSeg);
 
+                ICircularArc circularArc = new CircularArcClass();
+                circularArc.PutCoords(point, pointFromOutArc, pointToOutArc, esriArcOrientation.esriArcClockwise);
                 ISegment outArcSeg = (ISegment)circularArc;
                 outRing.AddSegment(outArcSeg);
 
-                ILine leftLine = new LineClass() { FromPoint = pointToOutArc, ToPoint = pointToInnerArc, SpatialReference = point.SpatialReference };
+                ILine leftLine = new LineClass()
+                {
+                    FromPoint = pointToOutArc,
+                    ToPoint = pointToInnerArc,
+                    SpatialReference = point.SpatialReference
+                };
                 var leftLineSeg = (ISegment)leftLine;
-
                 outRing.AddSegment(leftLineSeg);
 
+                if (minDistance > 0)
+                {
+                    ICircularArc circularArcI = new CircularArcClass();
+                    circularArcI.PutCoords(point, pointToInnerArc, pointFromInnerArc, esriArcOrientation.esriArcCounterClockwise);
+                    ISegment outArcSegI = (ISegment)circularArcI;
+                    outRing.AddSegment(outArcSegI);
+                }
+
                 IGeometryCollection outRoundPolygon = new PolygonClass();
+                //IGeometry g = outRing as IGeometry;
                 outRoundPolygon.AddGeometry(outRing as IGeometry);
 
-                IPolygon outPolygonGeometry = outRoundPolygon as IPolygon;
+                //IPolygon outPolygonGeometry = outRoundPolygon as IPolygon;
 
-                if (minDistance != 0)
-                {
-                    ISegmentCollection innerRing = new RingClass();
+                coverageArea = outRoundPolygon as IPolygon;
 
-                    ILine innerRightLine = new LineClass() { FromPoint = point, ToPoint = pointFromInnerArc, SpatialReference = point.SpatialReference };
-                    var rightLineSegIn = (ISegment)innerRightLine;
+                //if (minDistance > 0)
+                //{
+                //    ISegmentCollection innerRing = new RingClass();
 
-                    innerRing.AddSegment(rightLineSegIn);
+                //    ILine innerRightLine = new LineClass()
+                //    {
+                //        FromPoint = point,
+                //        ToPoint = pointFromInnerArc,
+                //        SpatialReference = point.SpatialReference
+                //    };
+                //    var rightLineSegIn = (ISegment)innerRightLine;
 
-                    ICircularArc invisibleCircularArc = new CircularArcClass();
+                //    innerRing.AddSegment(rightLineSegIn);
 
-                    invisibleCircularArc.PutCoords(point, pointFromInnerArc, pointToInnerArc, esriArcOrientation.esriArcClockwise);
+                //    ICircularArc invisibleCircularArc = new CircularArcClass();
+                //    invisibleCircularArc.PutCoords(point, pointFromInnerArc, pointToInnerArc, esriArcOrientation.esriArcClockwise);
 
-                    ISegment innerRingSeg = (ISegment)invisibleCircularArc;
-                    innerRing.AddSegment(innerRingSeg);
+                //    ISegment innerRingSeg = (ISegment)invisibleCircularArc;
+                //    innerRing.AddSegment(innerRingSeg);
 
-                    ILine innerLeftLine = new LineClass() { FromPoint = pointToInnerArc, ToPoint = point, SpatialReference = point.SpatialReference };
-                    var leftLineSegIn = (ISegment)innerLeftLine;
+                //    ILine innerLeftLine = new LineClass()
+                //    {
+                //        FromPoint = pointToInnerArc,
+                //        ToPoint = point,
+                //        SpatialReference = point.SpatialReference
+                //    };
+                //    var leftLineSegIn = (ISegment)innerLeftLine;
 
-                    innerRing.AddSegment(leftLineSegIn);
+                //    innerRing.AddSegment(leftLineSegIn);
 
-                    IGeometryCollection polygonIn = new PolygonClass();
-                    polygonIn.AddGeometry(innerRing as IGeometry);
+                //    IGeometryCollection polygonIn = new PolygonClass();
+                //    polygonIn.AddGeometry(innerRing as IGeometry);
 
-                    IPolygon innerPolygonGeometry = polygonIn as IPolygon;
-
-                    try
-                    {
-                        ITopologicalOperator arcTopoOp = outPolygonGeometry as ITopologicalOperator;
-
-                        var diff = arcTopoOp.Difference(innerPolygonGeometry);
-                        coverageArea = diff as IPolygon;
-                    }
-                    catch (Exception ex)
-                    {
-                        logger.ErrorEx($"Difference operation finished with error \n{ex.Message}");
-                        coverageArea = null;
-                    }
-                }
-                else
-                {
-                    coverageArea = outPolygonGeometry;
-                }
+                //    IPolygon innerPolygonGeometry = polygonIn as IPolygon;
+                //    try
+                //    {
+                //        ITopologicalOperator arcTopoOp = outPolygonGeometry as ITopologicalOperator;
+                //        var diff = arcTopoOp.Difference(innerPolygonGeometry);
+                //        coverageArea = diff as IPolygon;
+                //    }
+                //    catch(Exception ex)
+                //    {
+                //        logger.ErrorEx($"GetCoverageArea Exception (1): {ex.Message}");
+                //        coverageArea = null;
+                //    }
+                //}
+                //else
+                //{
+                //    coverageArea = outPolygonGeometry;
+                //}
             }
 
             if (observObject != null)
             {
+                logger.InfoEx("GetCoverageArea. observObject IS NOT NULL");
                 try
                 {
                     observObject.Project(point.SpatialReference);
                     var polygonGeometry = observObject as IGeometry;
                     ITopologicalOperator polygonTopoOp = coverageArea as ITopologicalOperator;
-                    return polygonTopoOp.Intersect(polygonGeometry, esriGeometryDimension.esriGeometry2Dimension) as IPolygon;
+                    IPolygon ip = polygonTopoOp.Intersect(polygonGeometry, esriGeometryDimension.esriGeometry2Dimension) as IPolygon;
+
+                    logger.ErrorEx($"> GetCoverageArea END. polygonTopoOp.Intersect OK");
+                    return ip;
                 }
                 catch (Exception ex)
                 {
-                    logger.ErrorEx($"Intersection operation finished with error \n{ex.Message}");
+                    logger.ErrorEx($"> GetCoverageArea. Exception (2): {ex.Message}");
+                    return null;
                 }
             }
+            else
+            {
+                logger.InfoEx("GetCoverageArea observObject. IS NULL");
+            }
 
+            logger.InfoEx("> GetCoverageArea END");
             return coverageArea;
         }
 
         public static double GetObjVisibilityArea(IFeatureClass visibility, IPolygon observObject, int gridCode = -1)
         {
+            logger.InfoEx("> GetObjVisibilityArea START. FeatureClass visibility:{0}", visibility.AliasName);
+
             var visibilityPolygon = GetTotalPolygonFromFeatureClass(visibility, gridCode);
-            if (visibilityPolygon.IsEmpty)
+
+            //for test only-------------------------------------------------------------
+            try
             {
-                logger.ErrorEx($"Visibility polygon from {visibility} is empty");
-                return 0;
+                var ff = visibility.CreateFeature();
+                ff.Shape = visibilityPolygon;
+                ff.set_Value(visibility.FindField("id"), 525);
+                ff.set_Value(visibility.FindField("gridCode"), gridCode);
+                ff.Store();
+                logger.InfoEx("GetObjVisibilityArea save TEST Feature 1 OK ff.OID: {0} gridCode: {1}", ff.OID, gridCode);
+
+                var ff1 = visibility.CreateFeature();
+                ff1.Shape = observObject;
+                ff1.set_Value(visibility.FindField("id"), 5252);
+                ff1.set_Value(visibility.FindField("gridCode"), gridCode);
+                ff1.Store();
+                logger.InfoEx("GetObjVisibilityArea save TEST Feature 2 OK ff.OID: {0} gridCode: {1}", ff1.OID, gridCode);
             }
+            catch (Exception ex)
+            {
+                logger.ErrorEx($"GetObjVisibilityArea Exception: {ex.Message}");
+            }
+            //for test only end
 
             try
             {
+                if (visibilityPolygon == null || visibilityPolygon.IsEmpty)
+                {
+                    logger.ErrorEx($"> GetObjVisibilityArea Error. Visibility polygon from {visibility} is empty");
+                    return 0;
+                }
+
                 var polygonGeometry = observObject as IGeometry;
                 ITopologicalOperator polygonTopoOp = visibilityPolygon as ITopologicalOperator;
                 var resultPolygon = polygonTopoOp.Intersect(polygonGeometry, esriGeometryDimension.esriGeometry2Dimension) as IPolygon;
                 var resultArea = (IArea)resultPolygon;
 
+                logger.InfoEx("> GetObjVisibilityArea END");
                 return resultArea.Area;
-
             }
             catch (Exception ex)
             {
-                logger.ErrorEx($"Intersection operation finished with error \n{ex.Message}");
+                logger.ErrorEx($"> GetObjVisibilityArea Exception: {ex.Message}");
                 return 0;
             }
         }
 
-
         public static IPolygon GetTotalPolygon(List<IPolygon> polygons)
         {
+            logger.DebugEx("> GetTotalPolygon START");
+
             if (polygons == null || polygons.Count == 0)
             {
+                logger.DebugEx("> GetTotalPolygon END. NULL poligons");
                 return null;
             }
 
             IGeometry geometryBag = new GeometryBagClass();
             geometryBag.SpatialReference = polygons[0].SpatialReference;
-
             IGeometryCollection geometryCollection = geometryBag as IGeometryCollection;
+
             foreach (var polygon in polygons)
             {
                 try
                 {
                     object missing = Type.Missing;
-                    geometryCollection.AddGeometry(polygon, ref missing, ref
-                        missing);
+                    geometryCollection.AddGeometry(polygon, ref missing, ref missing);
                 }
                 catch (Exception ex)
                 {
-                    logger.ErrorEx($"Polygon can not be added to geometry collection");
+                    logger.ErrorEx($"GetTotalPolygon. Exception (1): {0}", ex.Message);
                 }
             }
 
@@ -1090,28 +1150,32 @@ namespace MilSpace.Core.Tools
                 ITopologicalOperator unionedPolygon = new PolygonClass();
                 unionedPolygon.ConstructUnion(geometryBag as IEnumGeometry);
 
+                logger.DebugEx("> GetTotalPolygon END");
                 return unionedPolygon as IPolygon;
             }
             catch (Exception ex)
             {
-                logger.ErrorEx($"Union operation finished with error \n{ex.Message}");
+                logger.ErrorEx($"> GetTotalPolygon Exception (2): {ex.Message}");
                 return null;
             }
         }
 
         public static double GetTotalAreaFromFeatureClass(IFeatureClass featureClass, int gridCode = -1)
         {
+            logger.InfoEx($"> GetTotalAreaFromFeatureClass START");
+
             if (featureClass == null)
             {
+                logger.InfoEx("> GetTotalAreaFromFeatureClass END featureClass IS NULL: {0}", featureClass.AliasName);
                 return 0;
             }
 
             double result = 0;
-
             try
             {
                 int gridCodeIndex = featureClass.FindField("gridcode");
                 int areaCodeIndex = featureClass.FindField("Shape_Area");
+                logger.InfoEx("GetTotalAreaFromFeatureClass. gridCodeIndex:{0} areaCodeIndex:{1}", gridCodeIndex, areaCodeIndex);
 
                 IGeoDataset geoDataset = featureClass as IGeoDataset;
 
@@ -1126,7 +1190,6 @@ namespace MilSpace.Core.Tools
                         {
                             result += (double)currentFeature.Value[areaCodeIndex];
                         }
-
                         currentFeature = featureCursor.NextFeature();
                     }
                 }
@@ -1138,38 +1201,35 @@ namespace MilSpace.Core.Tools
                         currentFeature = featureCursor.NextFeature();
                     }
                 }
-
                 Marshal.ReleaseComObject(featureCursor);
-
             }
             catch (Exception ex)
             {
-                logger.ErrorEx(ex.Message);
+                logger.InfoEx("> GetTotalAreaFromFeatureClass Exception:{0}", ex.Message);
             }
 
+            logger.InfoEx("> GetTotalAreaFromFeatureClass END result:{0}", result);
             return result;
-
         }
 
         public static IPolygon GetTotalPolygonFromFeatureClass(IFeatureClass featureClass, int gridCode = -1)
         {
+            logger.InfoEx("> GetTotalPolygonFromFeatureClass START. gridCode:{0}", gridCode);
+
             if (featureClass == null)
             {
+                logger.InfoEx("> GetTotalPolygonFromFeatureClass END. featureClass IS NULL");
                 return null;
             }
 
             IGeometry geometryBag = new GeometryBagClass();
-
             try
             {
+                int gridCodeIndex = featureClass.FindField("gridcode");
                 IGeoDataset geoDataset = featureClass as IGeoDataset;
                 geometryBag.SpatialReference = geoDataset.SpatialReference;
-
-                int gridCodeIndex = featureClass.FindField("gridcode");
-
-                IFeatureCursor featureCursor = featureClass.Search(null, false);
-
                 IGeometryCollection geometryCollection = geometryBag as IGeometryCollection;
+                IFeatureCursor featureCursor = featureClass.Search(null, false);
                 IFeature currentFeature = featureCursor.NextFeature();
 
                 while (currentFeature != null)
@@ -1177,13 +1237,10 @@ namespace MilSpace.Core.Tools
                     if (gridCode == -1 || (int)currentFeature.Value[gridCodeIndex] == gridCode)
                     {
                         object missing = Type.Missing;
-                        geometryCollection.AddGeometry(currentFeature.Shape, ref missing, ref
-                            missing);
+                        geometryCollection.AddGeometry(currentFeature.Shape, ref missing, ref missing);
                     }
-
                     currentFeature = featureCursor.NextFeature();
                 }
-
                 Marshal.ReleaseComObject(featureCursor);
 
                 try
@@ -1191,17 +1248,19 @@ namespace MilSpace.Core.Tools
                     ITopologicalOperator unionedPolygon = new PolygonClass();
                     unionedPolygon.ConstructUnion(geometryBag as IEnumGeometry);
 
+                    logger.InfoEx("> GetTotalPolygonFromFeatureClass END");
+
                     return unionedPolygon as IPolygon;
                 }
                 catch (Exception ex)
                 {
-                    logger.ErrorEx($"Union operation finished with error \n{ex.Message}");
+                    logger.ErrorEx($"> GetTotalPolygonFromFeatureClass Exception (1): {ex.Message}");
                     return null;
                 }
             }
             catch (Exception ex)
             {
-                logger.ErrorEx(ex.Message);
+                logger.ErrorEx($"> GetTotalPolygonFromFeatureClass Exception (2): {ex.Message}");
                 return null;
             }
         }

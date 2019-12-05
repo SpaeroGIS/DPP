@@ -164,6 +164,7 @@ namespace MilSpace.DataAccess.Facade
 
         public string ExportObservationFeatureClass(IDataset sourceDataset, string nameOfTargetDataset, int[] filter)
         {
+            logger.DebugEx("> ExportObservationFeatureClass START. nameOfTargetDataset:{0}", nameOfTargetDataset);
 
             IWorkspace targetWorkspace = calcWorkspace;
 
@@ -193,8 +194,7 @@ namespace MilSpace.DataAccess.Facade
                 //create target dataset name
                 IFeatureClassName targetFeatureClassName = new FeatureClassNameClass();
 
-
-                IDatasetName targetDatasetName = (IDatasetName)targetFeatureClassName;
+                                IDatasetName targetDatasetName = (IDatasetName)targetFeatureClassName;
                 targetDatasetName.WorkspaceName = targetWorkspaceName;
                 targetDatasetName.Name = nameOfTargetDataset;
 
@@ -228,11 +228,11 @@ namespace MilSpace.DataAccess.Facade
                     var error = enumFieldError.Next();
                     while (error != null)
                     {
-                        logger.WarnEx($"Export error in the filed {targetFields.Field[error.FieldIndex].AliasName}");
+                        logger.WarnEx($"ExportObservationFeatureClass. Export error in the filed {targetFields.Field[error.FieldIndex].AliasName}");
                         if (!targetFields.Field[error.FieldIndex].AliasName.StartsWith("shape_ST", StringComparison.InvariantCultureIgnoreCase))
                         {
                             exportWithError = false;
-                            logger.ErrorEx("Export is not acceptable");
+                            logger.ErrorEx("ExportObservationFeatureClass ERROR. Export is not acceptable");
                         }
 
                         error = enumFieldError.Next();
@@ -247,12 +247,14 @@ namespace MilSpace.DataAccess.Facade
                     IEnumInvalidObject enumErrors =
                         fctofc.ConvertFeatureClass(sourceDatasetName, queryFilter, null, targetFeatureClassName, targetGeometryDef,
                         pSourceTab.Fields, "", 1000, 0);
+
+                    logger.DebugEx("> ExportObservationFeatureClass END. targetFeatureClassName:{0}", ((IDatasetName)targetFeatureClassName).Name);
                     return ((IDatasetName)targetFeatureClassName).Name;
                 }
             }
             catch (Exception exp)
             {
-                logger.ErrorEx(exp.ToString());
+                logger.DebugEx("ExportObservationFeatureClass Exception:{0}", exp.Message);
             }
             finally
             {
@@ -263,6 +265,7 @@ namespace MilSpace.DataAccess.Facade
                 }
             }
 
+            logger.DebugEx("> ExportObservationFeatureClass END. targetFeatureClassName NULL");
             return null;
         }
 
@@ -941,14 +944,14 @@ namespace MilSpace.DataAccess.Facade
             IFieldEdit2 fieldObjName = new FieldClass() as IFieldEdit2;
             fieldObjName.Name_2 = "TitleOO";
             fieldObjName.Type_2 = esriFieldType.esriFieldTypeString;
-            fieldObjName.AliasName_2 = "Назва ОС";
+            fieldObjName.AliasName_2 = "Назва ОН";
             fieldObjName.IsNullable_2 = true;
             fieldsEdit.AddField(fieldObjName);
 
             IFieldEdit2 fieldObjId = new FieldClass() as IFieldEdit2;
             fieldObjId.Name_2 = "IdOO";
             fieldObjId.Type_2 = esriFieldType.esriFieldTypeInteger;
-            fieldObjId.AliasName_2 = "Id ОС";
+            fieldObjId.AliasName_2 = "Id ОН";
             fieldObjId.IsNullable_2 = true;
             fieldsEdit.AddField(fieldObjId);
 
@@ -956,27 +959,27 @@ namespace MilSpace.DataAccess.Facade
             fieldObjArea.Name_2 = "AreaOO";
             fieldObjArea.Type_2 = esriFieldType.esriFieldTypeInteger;
             fieldObjArea.IsNullable_2 = false;
-            fieldObjArea.AliasName_2 = "Площа ОС";
+            fieldObjArea.AliasName_2 = "Площа ОН";
             fieldsEdit.AddField(fieldObjArea);
 
             IFieldEdit2 fieldVA = new FieldClass() as IFieldEdit2;
             fieldVA.Name_2 = "VisibilityArea";
             fieldVA.Type_2 = esriFieldType.esriFieldTypeInteger;
-            fieldVA.AliasName_2 = "Площа видимості ОС";
+            fieldVA.AliasName_2 = "Площа видимості ОН";
             fieldVA.IsNullable_2 = false;
             fieldsEdit.AddField(fieldVA);
 
             IFieldEdit2 fieldVAPercent = new FieldClass() as IFieldEdit2;
             fieldVAPercent.Name_2 = "VisibilityPercentage";
             fieldVAPercent.Type_2 = esriFieldType.esriFieldTypeDouble;
-            fieldVAPercent.AliasName_2 = "Процент видимості";
+            fieldVAPercent.AliasName_2 = "Відсоток видимості";
             fieldVAPercent.IsNullable_2 = false;
             fieldsEdit.AddField(fieldVAPercent);
 
             IFieldEdit2 fieldPointsSee = new FieldClass() as IFieldEdit2;
             fieldPointsSee.Name_2 = "OPSee";
             fieldPointsSee.Type_2 = esriFieldType.esriFieldTypeInteger;
-            fieldPointsSee.AliasName_2 = "К-ть спостережень";
+            fieldPointsSee.AliasName_2 = "Спостережень";
             fieldPointsSee.IsNullable_2 = true;
             fieldsEdit.AddField(fieldPointsSee);
 
@@ -1051,28 +1054,28 @@ namespace MilSpace.DataAccess.Facade
             IFieldEdit2 fieldVAPercent = new FieldClass() as IFieldEdit2;
             fieldVAPercent.Name_2 = "VisibilityPercentage";
             fieldVAPercent.Type_2 = esriFieldType.esriFieldTypeDouble;
-            fieldVAPercent.AliasName_2 = "Процент видимості";
+            fieldVAPercent.AliasName_2 = "Відсоток видимості";
             fieldVAPercent.IsNullable_2 = false;
             fieldsEdit.AddField(fieldVAPercent);
 
             IFieldEdit2 fieldExpectedVAToAllPercent = new FieldClass() as IFieldEdit2;
             fieldExpectedVAToAllPercent.Name_2 = "CurrentToAllExpectedVAPercentage";
             fieldExpectedVAToAllPercent.Type_2 = esriFieldType.esriFieldTypeDouble;
-            fieldExpectedVAToAllPercent.AliasName_2 = "Процент зони покриття ПС від загальної";
+            fieldExpectedVAToAllPercent.AliasName_2 = "Відсоток зони покриття ПС від загальної";
             fieldExpectedVAToAllPercent.IsNullable_2 = false;
             fieldsEdit.AddField(fieldExpectedVAToAllPercent);
 
             IFieldEdit2 fieldVAToAllPercent = new FieldClass() as IFieldEdit2;
             fieldVAToAllPercent.Name_2 = "CurrentVAToAllExpectedVAPercentage";
             fieldVAToAllPercent.Type_2 = esriFieldType.esriFieldTypeDouble;
-            fieldVAToAllPercent.AliasName_2 = "Процент відношення видимої зони до загальної зони покриття";
+            fieldVAToAllPercent.AliasName_2 = "Відсоток зони видимості до загальної зони покриття";
             fieldVAToAllPercent.IsNullable_2 = false;
             fieldsEdit.AddField(fieldVAToAllPercent);
 
             IFieldEdit2 fieldPointsSee = new FieldClass() as IFieldEdit2;
             fieldPointsSee.Name_2 = "OPSee";
             fieldPointsSee.Type_2 = esriFieldType.esriFieldTypeInteger;
-            fieldPointsSee.AliasName_2 = "К-ть спостережень";
+            fieldPointsSee.AliasName_2 = "спостережень";
             fieldPointsSee.IsNullable_2 = true;
             fieldsEdit.AddField(fieldPointsSee);
 
@@ -1108,6 +1111,8 @@ namespace MilSpace.DataAccess.Facade
 
         public void FillVACoverageTable(List<CoverageTableRowModel> tableModel, string tableName, string gdb)
         {
+            logger.DebugEx("> FillVACoverageTable START. gdb:{0} tableName:{1}", gdb, tableName);
+
             IWorkspaceFactory workspaceFactory = new FileGDBWorkspaceFactory();
             IWorkspace workspace;
 
@@ -1117,7 +1122,7 @@ namespace MilSpace.DataAccess.Facade
             }
             catch(Exception ex)
             {
-                logger.ErrorEx($"Cannot open GDB from {gdb} /n{ex.Message}");
+                logger.ErrorEx($"FillVACoverageTable. Cannot open GDB from {gdb} /n{ex.Message}");
                 Marshal.ReleaseComObject(workspaceFactory);
                 return;
             }
@@ -1125,7 +1130,6 @@ namespace MilSpace.DataAccess.Facade
             IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)workspace;
             workspaceEdit.StartEditing(true);
             workspaceEdit.StartEditOperation();
-
             var table = GenerateVACoverageTable(tableName, workspace);
 
             try
@@ -1133,21 +1137,17 @@ namespace MilSpace.DataAccess.Facade
                 foreach(var row in tableModel)
                 {
                     var newRow = table.CreateRow();
-
                     newRow.Value[table.FindField("TitleOp")] = row.ObservPointName;
-
                     if(row.ObservPointId != -1)
                     {
                         newRow.Value[table.FindField("IdOP")] = row.ObservPointId;
                     }
-
                     newRow.Value[table.FindField("TitleOO")] = row.ObservObjName;
 
                     if(row.ObservObjId != -1)
                     {
                         newRow.Value[table.FindField("IdOO")] = row.ObservObjId;
                     }
-
                     newRow.Value[table.FindField("AreaOO")] = row.ObservObjArea;
                     newRow.Value[table.FindField("VisibilityArea")] = row.VisibilityArea;
                     newRow.Value[table.FindField("VisibilityPercentage")] = row.VisibilityPercent;
@@ -1156,10 +1156,8 @@ namespace MilSpace.DataAccess.Facade
                     {
                         newRow.Value[table.FindField("OPSee")] = row.ObservPointsSeeCount;
                     }
-
                     newRow.Store();
                 }
-
                 workspaceEdit.StopEditOperation();
                 workspaceEdit.StopEditing(true);
 
@@ -1167,9 +1165,11 @@ namespace MilSpace.DataAccess.Facade
             }
             catch(Exception ex)
             {
-                logger.ErrorEx($"An error occured during table {tableName} filling/n{ex.Message}");
-
+                logger.ErrorEx($"> FillVACoverageTable Exception {ex.Message}");
+                return;
             }
+
+            logger.DebugEx("> FillVACoverageTable END");
         }
 
 

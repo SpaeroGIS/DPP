@@ -62,7 +62,7 @@ namespace MilSpace.Tools
             //Target dataset name
             string nameOfTargetDataset = taskId;
 
-            logger.InfoEx("> Generate. Starting generation Visiblility result {2} using DEM {0} from observation points {1}"
+            logger.InfoEx("> Generate START. Visiblility result {2} using DEM {0} from observation points {1}"
                 .InvariantFormat(sourceDem, obervationPoints, nameOfTargetDataset));
 
             var calcTask = new VisibilityTask
@@ -90,7 +90,6 @@ namespace MilSpace.Tools
                 Value = ActionsEnum.vblt.ToString()
             };
 
-
             var prm = new List<IActionParam>
             {
                action,
@@ -112,7 +111,6 @@ namespace MilSpace.Tools
                { ParamName = ActionParameters.Session, Value = calcTask},
             };
 
-
             var procc = new ActionProcessor(prm);
             VisibilityZonesFacade.StarthVisibilitySession(calcTask);
 
@@ -124,7 +122,7 @@ namespace MilSpace.Tools
                 foreach (var calcRes in res.Result.CalculationMessages)
                 {
                     //Here should be checked if the results match with session.CalculatedResults
-                    logger.InfoEx($"The result layer {calcRes} was successfully composed in {calcTask.ReferencedGDB}");
+                    //logger.InfoEx($"The result layer {calcRes} was successfully composed in {calcTask.ReferencedGDB}");
                 }
             }
 

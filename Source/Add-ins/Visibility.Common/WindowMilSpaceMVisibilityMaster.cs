@@ -208,6 +208,7 @@ namespace MilSpace.Visibility
             cmbPositions.Items.AddRange(controller.GetLayerPositions().ToArray());
             cmbPositions.SelectedItem = controller.GetDefaultLayerPosition();
         }
+
         public void PopulateComboBox()
         {
             imagesComboBox.DataSource = null;
@@ -532,21 +533,26 @@ namespace MilSpace.Visibility
                 TaskName = VisibilityManager.GenerateResultId(LocalizationContext.Instance.CalcTypeLocalisationShort[_stepControl])
             };
 
-
             if (_stepControl == VisibilityCalcTypeEnum.OpservationPoints)
             {
-                FinalResult.VisibilityCalculationResults = SumChkBox.Checked ?
-                    VisibilityCalculationResultsEnum.ObservationPoints | VisibilityCalculationResultsEnum.VisibilityAreaRaster | VisibilityCalculationResultsEnum.VisibilityAreasPotential /*| VisibilityCalculationResultsEnum.CoverageTable*/ :
-                    VisibilityCalculationResultsEnum.None;
+                FinalResult.VisibilityCalculationResults = 
+                    SumChkBox.Checked ?
+                    VisibilityCalculationResultsEnum.ObservationPoints 
+                    | VisibilityCalculationResultsEnum.VisibilityAreaRaster 
+                    | VisibilityCalculationResultsEnum.VisibilityAreasPotential /*| VisibilityCalculationResultsEnum.CoverageTable*/ 
+                    : VisibilityCalculationResultsEnum.None;
             }
             else if (_stepControl == VisibilityCalcTypeEnum.ObservationObjects)
             {
                 FinalResult.ObservObjectIDs = _observationObjects.Where(o => o.Check).Select(i => i.Id).ToArray();
-                FinalResult.VisibilityCalculationResults = (SumChkBox.Checked ?
-                                                    VisibilityCalculationResultsEnum.ObservationPoints | VisibilityCalculationResultsEnum.VisibilityAreaRaster | VisibilityCalculationResultsEnum.VisibilityAreasPotential /*| VisibilityCalculationResultsEnum.CoverageTable*/ :
-                                                    VisibilityCalculationResultsEnum.None)
-                                                    | VisibilityCalculationResultsEnum.ObservationObjects | VisibilityCalculationResultsEnum.VisibilityObservStationClip;
-
+                FinalResult.VisibilityCalculationResults = 
+                    (SumChkBox.Checked ?
+                    VisibilityCalculationResultsEnum.ObservationPoints 
+                    | VisibilityCalculationResultsEnum.VisibilityAreaRaster 
+                    | VisibilityCalculationResultsEnum.VisibilityAreasPotential /*| VisibilityCalculationResultsEnum.CoverageTable*/ 
+                    : VisibilityCalculationResultsEnum.None)
+                    | VisibilityCalculationResultsEnum.ObservationObjects 
+                    | VisibilityCalculationResultsEnum.VisibilityObservStationClip;
             }
 
             //Trim by real Area
@@ -700,7 +706,10 @@ namespace MilSpace.Visibility
             FirstTypePicked();
 
             StepsTabControl.SelectedTab.Enabled = false;
-            (StepsTabControl.TabPages[StepsTabControl.SelectedIndex + 1] as TabPage).Enabled = panel1.Enabled = chkTrimRaster.Enabled = chkTrimRaster.Checked = true;
+            (StepsTabControl.TabPages[StepsTabControl.SelectedIndex + 1] as TabPage).Enabled = 
+                panel1.Enabled = 
+                chkTrimRaster.Enabled = 
+                chkTrimRaster.Checked = true;
             StepsTabControl.SelectedIndex++;
         }
         private void tabControl_Selecting(object sender, TabControlCancelEventArgs e)

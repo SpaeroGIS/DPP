@@ -89,7 +89,8 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                 return;
             }
 
-            if (!(calcResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreaRaster) || calcResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle)))
+            if (!(calcResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreaRaster) 
+                || calcResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle)))
             {
                 string errorMessage = $"The values {VisibilityCalculationResultsEnum.ObservationPoints.ToString()} and {VisibilityCalculationResultsEnum.VisibilityAreaRaster.ToString()} must be in calculatuion results";
                 logger.WarnEx(errorMessage);
@@ -102,11 +103,16 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                 var messages = ProcessObservationPoint(results);
                 //Here is the place to extend handle the rest of results 
                 result.Result.CalculationMessages = results;
-                if (messages != null && messages.Any())
+
+                if (results != null && results.Count > 0)
                 {
-                    messages.ToList().ForEach(m => { if (result.Exception != null) logger.ErrorEx(m); else logger.InfoEx(m); });
+                    results.ForEach(r => {logger.InfoEx(r);});
                 }
 
+                if (messages != null && messages.Any())
+                {
+                    //messages.ToList().ForEach(m => {if (result.Exception != null) logger.ErrorEx(m); else logger.InfoEx(m);});
+                }
             }
             catch (Exception ex)
             {
@@ -114,10 +120,11 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             }
         }
 
-
         private IEnumerable<string> ProcessObservationPoint(List<string> results)
         {
+            logger.InfoEx("> ProcessObservationPoint START");
 
+            int iStepNum = 1;
             IEnumerable<string> messages = null;
 
             string oservStationsFeatureClassName = null;
@@ -126,16 +133,23 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             if (calcResults.HasFlag(VisibilityCalculationResultsEnum.ObservationObjects))
             {
                 oservStationsFeatureClassName = VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.ObservationObjects, outputSourceName);
-                var exportedFeatureClass = GdbAccess.Instance.ExportObservationFeatureClass(obserpStationsfeatureClass as IDataset, oservStationsFeatureClassName, stationsFilteringIds);
+                var exportedFeatureClass = GdbAccess.Instance.ExportObservationFeatureClass(
+                    obserpStationsfeatureClass as IDataset, 
+                    oservStationsFeatureClassName, 
+                    stationsFilteringIds);
                 if (!string.IsNullOrWhiteSpace(exportedFeatureClass))
                 {
-                    results.Add(exportedFeatureClass);
+                    results.Add(iStepNum.ToString() + ". " + "Створено: " + exportedFeatureClass);
+                    iStepNum++;
                 }
                 else
                 {
                     string errorMessage = $"The feature calss {oservStationsFeatureClassName} was not exported";
                     result.ErrorMessage = errorMessage;
-                    logger.ErrorEx(errorMessage);
+                    logger.ErrorEx("> ProcessObservationPoint ERROR ExportObservationFeatureClass (1). errorMessage:{0}", errorMessage);
+                    messages.Append(errorMessage);
+                    results.Add("Помилка: " + errorMessage);
+                    return messages;
                 }
             }
 
@@ -173,7 +187,6 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             }
 
             CoverageTableManager coverageTableManager = new CoverageTableManager();
-
             coverageTableManager.CalculateAreas(pointsFilteringIds, objIds, obserpPointsfeatureClass, obserpStationsfeatureClass);
 
             foreach (var curPoints in pointsIDs)
@@ -183,45 +196,61 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                 var pointId = curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints ? -1 : ++index;
                 var oservPointFeatureClassName = VisibilityTask.GetResultName(curPoints.Key, outputSourceName, pointId);
 
-                var exportedFeatureClass = GdbAccess.Instance.ExportObservationFeatureClass(obserpPointsfeatureClass as IDataset, oservPointFeatureClassName, curPoints.Value);
+                var exportedFeatureClass = GdbAccess.Instance.ExportObservationFeatureClass(
+                    obserpPointsfeatureClass as IDataset, 
+                    oservPointFeatureClassName, 
+                    curPoints.Value);
 
                 if (string.IsNullOrWhiteSpace(exportedFeatureClass))
                 {
                     string errorMessage = $"The feature calss {oservPointFeatureClassName} was not exported";
                     result.Exception = new MilSpaceVisibilityCalcFailedException(errorMessage);
                     result.ErrorMessage = errorMessage;
-                    logger.ErrorEx(errorMessage);
+                    logger.ErrorEx("> ProcessObservationPoint ERROR ExportObservationFeatureClass. errorMessage:{0}", errorMessage);
+                    results.Add("Помилка: " + errorMessage + " ПС: " + pointId.ToString());
                     return messages;
                 }
 
-                results.Add(exportedFeatureClass);
+                results.Add(iStepNum.ToString() + ". " + "Створено: " + exportedFeatureClass);
+                iStepNum++;
 
                 //Generate Visibility Raster
                 string featureClass = oservPointFeatureClassName;
-                string outImageName = VisibilityTask.GetResultName(curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints ?
-                        VisibilityCalculationResultsEnum.VisibilityAreaRaster : VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle, outputSourceName, pointId);
+                string outImageName = VisibilityTask.GetResultName(
+                    curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints ?
+                    VisibilityCalculationResultsEnum.VisibilityAreaRaster : 
+                    VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle, 
+                    outputSourceName, 
+                    pointId);
 
-                if (!ProfileLibrary.GenerateVisibilityData(rasterSource, featureClass, VisibilityAnalysisTypesEnum.Frequency, outImageName, messages))
+                if (!ProfileLibrary.GenerateVisibilityData(
+                    rasterSource, 
+                    featureClass, 
+                    VisibilityAnalysisTypesEnum.Frequency, 
+                    outImageName, 
+                    messages))
                 {
                     string errorMessage = $"The result {outImageName} was not generated";
                     result.Exception = new MilSpaceVisibilityCalcFailedException(errorMessage);
                     result.ErrorMessage = errorMessage;
-                    logger.ErrorEx(errorMessage);
+                    logger.ErrorEx("> ProcessObservationPoint ERROR ConvertRasterToPolygon. errorMessage:{0}", errorMessage);
+                    results.Add("Помилка: " + errorMessage + " ПС: " + pointId.ToString());
                     return messages;
                 }
                 else
                 {
-                    results.Add(outImageName);
+                    results.Add(iStepNum.ToString() + ". " + "Розраховано видимість:" + outImageName + " ПС: " + pointId.ToString());
+                    iStepNum++;
 
                     string visibilityArePolyFCName = null;
                     //ConvertToPolygon full visibility area
-                    if (calcResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreaPolygons) && !calcResults.HasFlag(VisibilityCalculationResultsEnum.ObservationObjects))
+                    if (calcResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreaPolygons) 
+                        && !calcResults.HasFlag(VisibilityCalculationResultsEnum.ObservationObjects))
                     {
-
-                        visibilityArePolyFCName = VisibilityTask.GetResultName(pointId > -1 ?
-                            VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle : VisibilityCalculationResultsEnum.VisibilityAreaPolygons,
-                            outputSourceName, pointId);
-
+                        visibilityArePolyFCName = 
+                            VisibilityTask.GetResultName(pointId > -1 ?
+                            VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle : 
+                            VisibilityCalculationResultsEnum.VisibilityAreaPolygons, outputSourceName, pointId);
 
                         if (!ProfileLibrary.ConvertRasterToPolygon(outImageName, visibilityArePolyFCName, out messages))
                         {
@@ -230,12 +259,13 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                                 string errorMessage = $"The result {visibilityArePolyFCName} was not generated";
                                 result.Exception = new MilSpaceVisibilityCalcFailedException(errorMessage);
                                 result.ErrorMessage = errorMessage;
-                                logger.ErrorEx(errorMessage);
+                                logger.ErrorEx("> ProcessObservationPoint ERROR ConvertRasterToPolygon. errorMessage:{0}", errorMessage);
+                                results.Add("Помилка: " + errorMessage + " ПС: " + pointId.ToString());
                                 return messages;
                             }
-
                         }
-                        results.Add(visibilityArePolyFCName);
+                        results.Add(iStepNum.ToString() + ". " + "Конвертовано у полігони: " + visibilityArePolyFCName + " ПС: " + pointId.ToString());
+                        iStepNum++;
                     }
 
                     //Clip 
@@ -243,23 +273,31 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                     {
                         var inClipName = outImageName;
 
-                        var resultLype = pointId > -1 ? VisibilityCalculationResultsEnum.VisibilityObservStationClipSingle : VisibilityCalculationResultsEnum.VisibilityObservStationClip;
+                        var resultLype = 
+                            pointId > -1 ? 
+                            VisibilityCalculationResultsEnum.VisibilityObservStationClipSingle : 
+                            VisibilityCalculationResultsEnum.VisibilityObservStationClip;
 
                         var outClipName = VisibilityTask.GetResultName(resultLype,
                             outputSourceName, pointId);
 
-
-                        if (!ProfileLibrary.ClipVisibilityZonesByAreas(inClipName, outClipName, oservStationsFeatureClassName, messages))
+                        if (!ProfileLibrary.ClipVisibilityZonesByAreas(
+                            inClipName, 
+                            outClipName, 
+                            oservStationsFeatureClassName, 
+                            messages))
                         {
                             string errorMessage = $"The result {outClipName} was not generated";
                             result.Exception = new MilSpaceVisibilityCalcFailedException(errorMessage);
                             result.ErrorMessage = errorMessage;
-                            logger.ErrorEx(errorMessage);
+                            logger.ErrorEx("> ProcessObservationPoint ERROR ClipVisibilityZonesByAreas. errorMessage:{0}", errorMessage);
+                            results.Add("Помилка: " + errorMessage + " ПС: " + pointId.ToString());
                             return messages;
                         }
                         else
                         {
-                            results.Add(outClipName);
+                            results.Add(iStepNum.ToString() + ". " + "Зона видимості зведена до дійсного розміру:" + outClipName + " ПС: " + pointId.ToString());
+                            iStepNum++;
 
                             if (!calcResults.HasFlag(resultLype))
                             {
@@ -267,72 +305,92 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                             }
 
                             //Change to VisibilityAreaPolygonForObjects
+                            visibilityArePolyFCName = 
+                                VisibilityTask.GetResultName(pointId > -1 ?
+                                VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle : 
+                                VisibilityCalculationResultsEnum.VisibilityAreaPolygons, outputSourceName, pointId);
 
-                            var curCulcRResult = pointId > -1 ?
-                            VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle : VisibilityCalculationResultsEnum.VisibilityAreaPolygons;
-
-                            visibilityArePolyFCName = VisibilityTask.GetResultName(curCulcRResult, outputSourceName, pointId);
-
-                            var rasterDataset = GdbAccess.Instance.GetDatasetFromCalcWorkspace(outClipName, VisibilityCalculationResultsEnum.VisibilityAreaRaster);
-                            bool isEmpty = EsriTools.IsRasterEmpty((IRasterDataset2)rasterDataset);
-
-                            if (isEmpty)
+                            if (!ProfileLibrary.ConvertRasterToPolygon(
+                                outClipName, 
+                                visibilityArePolyFCName, 
+                                out messages))
                             {
-                                if (calcResults.HasFlag(curCulcRResult))
-                                { calcResults &= ~curCulcRResult; }
-                            } else
-                            {
-                                if (!ProfileLibrary.ConvertRasterToPolygon(outClipName, visibilityArePolyFCName, out messages) && 
-                                    (!messages.Any(m => m.StartsWith("ERROR 010151")))) // Observatioj areas dont intersect Visibility aresa
+                                if (!messages.Any(m => m.StartsWith("ERROR 010151"))) // Observatioj areas dont intersect Visibility area
                                 {
                                     string errorMessage = $"The result {visibilityArePolyFCName} was not generated";
                                     result.Exception = new MilSpaceVisibilityCalcFailedException(errorMessage);
                                     result.ErrorMessage = errorMessage;
-                                    logger.ErrorEx(errorMessage);
+                                    logger.ErrorEx("> ProcessObservationPoint ERROR ConvertRasterToPolygon. errorMessage:{0}", errorMessage);
+                                    results.Add("Помилка: " + errorMessage + " ПС: " + pointId.ToString());
                                     return messages;
                                 }
-                                results.Add(visibilityArePolyFCName);
                             }
+                            results.Add(iStepNum.ToString() + ". " + "Конвертовано у полігони:" + visibilityArePolyFCName + " ПС: " + pointId.ToString());
+                            iStepNum++;
                         }
                     }
-                    else if (calcResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly) && !string.IsNullOrEmpty(visibilityArePolyFCName))
+                    else if (calcResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly) 
+                        && !string.IsNullOrEmpty(visibilityArePolyFCName))
                     {
                         //Clip visibility images to valuable extent
                         var inClipName = outImageName;
                         var outClipName = VisibilityTask.GetResultName(pointId > -1 ?
-                          VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle : VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly,
-                          outputSourceName, pointId);
+                          VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle : 
+                          VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly, outputSourceName, pointId);
 
-                        if (!ProfileLibrary.ClipVisibilityZonesByAreas(inClipName, outClipName, visibilityArePolyFCName, messages, "NONE"))
+                        if (!ProfileLibrary.ClipVisibilityZonesByAreas(
+                            inClipName, 
+                            outClipName, 
+                            visibilityArePolyFCName, 
+                            messages, 
+                            "NONE"))
                         {
                             string errorMessage = $"The result {outClipName} was not generated";
                             result.Exception = new MilSpaceVisibilityCalcFailedException(errorMessage);
                             result.ErrorMessage = errorMessage;
-                            logger.ErrorEx(errorMessage);
+                            logger.ErrorEx("> ProcessObservationPoint ERROR ClipVisibilityZonesByAreas. errorMessage:{0}", errorMessage);
+                            results.Add("Помилка: " + errorMessage + " ПС: " + pointId.ToString());
                             return messages;
                         }
                         else
                         {
-                            results.Add(outClipName);
+                            results.Add(iStepNum.ToString() + ". " + "Конвертовано у полігони:" + outClipName + " ПС: " + pointId.ToString());
+                            iStepNum++;
                             removeFullImageFromresult = true;
                         }
                     }
 
-                    var visibilityPotentialAreaFCName = VisibilityTask.GetResultName(pointId > -1 ?
-                            VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle : VisibilityCalculationResultsEnum.VisibilityAreasPotential,
-                            outputSourceName, pointId);
+                    var visibilityPotentialAreaFCName = 
+                        VisibilityTask.GetResultName(pointId > -1 ?
+                        VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle : 
+                        VisibilityCalculationResultsEnum.VisibilityAreasPotential, outputSourceName, pointId);
 
-                    coverageTableManager.AddPotentialArea(visibilityPotentialAreaFCName, (curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints), curPoints.Value[0]);
+                    coverageTableManager.AddPotentialArea(
+                        visibilityPotentialAreaFCName, 
+                        (curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints), 
+                        curPoints.Value[0]);
+
+                    results.Add(iStepNum.ToString() + ". " + "Розраховано потенційне покриття:" + visibilityPotentialAreaFCName + " ПС: " + pointId.ToString());
+                    iStepNum++;
+
                     var pointsCount = pointsFilteringIds.Where(id => id > -1).Count();
-                    coverageTableManager.CalculateCoverageTableDataForPoint((pointId == -1), visibilityArePolyFCName, pointsCount, curPoints.Value[0]);
+                    coverageTableManager.CalculateCoverageTableDataForPoint(
+                        (pointId == -1), 
+                        visibilityArePolyFCName, 
+                        pointsCount, 
+                        curPoints.Value[0]);
 
-                    results.Add(visibilityPotentialAreaFCName);
+                    results.Add(iStepNum.ToString() + ". " + "Сформовані записи таблиці покриття. для ПС: " + pointId.ToString());
+                    iStepNum++;
                 }
             }
 
             var coverageTable = VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.CoverageTable, outputSourceName);
             coverageTableManager.SaveDataToCoverageTable(coverageTable);
-            results.Add(coverageTable);
+
+            results.Add(iStepNum.ToString() + ". " + "Збережена загальна таблиця покриття: " + coverageTable);
+            iStepNum++;
+
             //Add Coverage table to Available results
             if (!calcResults.HasFlag(VisibilityCalculationResultsEnum.CoverageTable))
             {
@@ -346,12 +404,11 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                 { calcResults &= ~VisibilityCalculationResultsEnum.VisibilityAreaRaster; }
                 if (calcResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle))
                 { calcResults &= ~VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle; }
-
             }
 
-
-
             session.CalculatedResults = (int)calcResults;
+
+            logger.InfoEx("> ProcessObservationPoint END");
             return messages;
         }
     }
