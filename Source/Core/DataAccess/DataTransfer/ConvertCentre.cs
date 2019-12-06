@@ -180,6 +180,7 @@ namespace MilSpace.DataAccess.DataTransfer
             visibilitySessionEntity.Finished = visibilitySession.Finished;
             visibilitySessionEntity.CalculatedResults = visibilitySession.CalculatedResults;
             visibilitySessionEntity.ReferencedGDB = visibilitySession.ReferencedGDB;
+            visibilitySessionEntity.TaskLog = visibilitySession.TaskLog;
         }
 
         internal static MilSp_VisiblityResults Get(this VisibilityCalcResults visibilityResultsModel)

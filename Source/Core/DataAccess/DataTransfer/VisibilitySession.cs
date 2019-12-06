@@ -96,6 +96,6 @@ namespace MilSpace.DataAccess.DataTransfer
         {
             return this.ToVisibilityResults(shared);
         }
-        public string TaskLog { get; internal set; }
+        public string TaskLog { get; set; }
     }
 }
