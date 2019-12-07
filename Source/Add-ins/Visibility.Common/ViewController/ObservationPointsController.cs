@@ -14,6 +14,7 @@ using MilSpace.Tools.Exceptions;
 using System.Text.RegularExpressions;
 using MilSpace.Visibility.Localization;
 using MilSpace.Visibility.DTO;
+using ESRI.ArcGIS.Editor;
 
 namespace MilSpace.Visibility.ViewController
 {
@@ -336,7 +337,7 @@ namespace MilSpace.Visibility.ViewController
                 IEnumerable<int> visiblePoints = EsriTools.GetSelectionByExtent(observPoints, activeView);
                 if (visiblePoints != null)
                 {
-                    result = VisibilityZonesFacade.GetObservationPointByObjectIds(visiblePoints);
+                    result = VisibilityZonesFacade.GetObservationPointsByObjectIds(visiblePoints);
                 }
             }
 
@@ -527,7 +528,7 @@ namespace MilSpace.Visibility.ViewController
             return observstsLayersNames;
         }
 
-        public IFeatureClass GetObservatioPointFeatureClass(IActiveView esriView)
+        public IFeatureClass GetObservatioPointFeatureClass(IActiveView esriView = null)
         {
             return GetFeatureClass(_observPointFeature, esriView);
         }
@@ -595,25 +596,20 @@ namespace MilSpace.Visibility.ViewController
 
         private IFeatureClass GetFeatureClass(string featureClassName, IActiveView activeView)
         {
+            if (activeView == null)
+            {
+                activeView = mapDocument.ActivatedView;
+            }
+
             if (string.IsNullOrWhiteSpace(featureClassName))
             {
                 return null;
             }
 
-            var layers = activeView.FocusMap.Layers;
-            var layer = layers.Next();
+            MapLayersManager mlm = new MapLayersManager(activeView);
+            var fl = mlm.FindFeatureLayer(featureClassName);
 
-            while (layer != null)
-            {
-                if (layer is IFeatureLayer fl && fl.FeatureClass != null && fl.FeatureClass.AliasName.EndsWith(featureClassName, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    return fl.FeatureClass;
-                }
-
-                layer = layers.Next();
-            }
-
-            return null;
+            return fl?.FeatureClass;
         }
 
         private IFeatureLayer GetFeatureLayer(string featureClassName, IActiveView activeView)
@@ -657,7 +653,7 @@ namespace MilSpace.Visibility.ViewController
 
         internal void DeleteObservationObject(string id)
         {
-            var obj=  _observationObjects.FirstOrDefault(o => o.Id == id);
+            var obj = _observationObjects.FirstOrDefault(o => o.Id == id);
             if (obj != null)
             {
                 VisibilityZonesFacade.DeleteObservationObject(obj);
@@ -687,9 +683,45 @@ namespace MilSpace.Visibility.ViewController
         }
 
         #region ArcMap Eventts
+        internal void OnStartEditing()
+        {
+        }
+
+        internal void OnStopEditing(bool save)
+        {
+            var es = ArcMap.Editor.EditState;
+            if (save)
+            {
+                UpdateObservationPointsList();
+            }
+        }
+
+        internal void OnDeleteFeature(ESRI.ArcGIS.Geodatabase.IObject obj)
+        {
+       //     UpdateObservationPointsList();
+        }
+
         internal void OnCreateFeature(ESRI.ArcGIS.Geodatabase.IObject obj)
         {
-            throw new NotImplementedException();
+            if (obj.Class is IFeatureClass fcl)
+            {
+                if (fcl == GetObservatioPointFeatureClass())
+                {
+                    var fldTitleIndex = obj.Fields.FindField("TitleOP");
+                    var fldDtoIndex = obj.Fields.FindField("DTO");
+                    var fldXWgs = obj.Fields.FindField("XWGS");
+                    var fldYWgs = obj.Fields.FindField("YWGS");
+
+                    IGeometry g = fcl.GetFeature(obj.OID).ShapeCopy;
+                    IPoint p = g as IPoint;
+                    p.Project(EsriTools.Wgs84Spatialreference);
+
+                    obj.Value[fldTitleIndex] = LocalizationContext.Instance.DeafultObservationpointTitle;
+                    obj.Value[fldXWgs] = p.X;
+                    obj.Value[fldYWgs] = p.Y;
+                    log.InfoEx($"New observation point was added and name set to {LocalizationContext.Instance.DeafultObservationpointTitle}");
+                }
+            }
         }
         #endregion
 

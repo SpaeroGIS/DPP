@@ -76,7 +76,7 @@ namespace MilSpace.Tools
                 Surface = sourceDem
             };
 
-            calcTask = VisibilityZonesFacade.AddVisibilitySession(calcTask);
+            calcTask = VisibilityZonesFacade.AddVisibilityTask(calcTask);
             OnGenerationStarted.Invoke(true, calcTask.Id);
 
             if (calcTask == null)
@@ -132,7 +132,7 @@ namespace MilSpace.Tools
             }
             else
             {
-                VisibilityZonesFacade.FinishVisibilitySession(calcTask);
+                VisibilityZonesFacade.FinishVisibilityTask(calcTask);
                 VisibilityZonesFacade.AddVisibilityResults(calcTask.GetVisibilityResults(false));
             }
 
@@ -235,7 +235,7 @@ namespace MilSpace.Tools
 
                 if (res.Exception != null)
                 {
-                    VisibilityZonesFacade.FinishVisibilitySession(session);
+                    VisibilityZonesFacade.FinishVisibilityTask(session);
                     throw res.Exception;
                 }
 

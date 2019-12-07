@@ -18,6 +18,5 @@ namespace MilSpace.Visibility.ViewController
         IEnumerable<string> GetTypes { get; }
         IEnumerable<string> GetAffiliation { get; }
 
-
     }
 }

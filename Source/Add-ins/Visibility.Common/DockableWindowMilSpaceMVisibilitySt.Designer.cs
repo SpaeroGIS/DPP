@@ -155,6 +155,7 @@
             this.toolBarButton25 = new System.Windows.Forms.ToolBarButton();
             this.tbpSessions = new System.Windows.Forms.TabPage();
             this.panel14 = new System.Windows.Forms.Panel();
+            this.txtTaskLog = new System.Windows.Forms.TextBox();
             this.panel46 = new System.Windows.Forms.Panel();
             this.tbVisibilitySessionFinished = new System.Windows.Forms.TextBox();
             this.label45 = new System.Windows.Forms.Label();
@@ -216,7 +217,6 @@
             this.label12 = new System.Windows.Forms.Label();
             this.heightMin = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.txtTaskLog = new System.Windows.Forms.TextBox();
             this.mainTabControl.SuspendLayout();
             this.tbpPoints.SuspendLayout();
             this.panel7.SuspendLayout();
@@ -1884,6 +1884,20 @@
             this.panel14.Size = new System.Drawing.Size(312, 304);
             this.panel14.TabIndex = 72;
             // 
+            // txtTaskLog
+            // 
+            this.txtTaskLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTaskLog.BackColor = System.Drawing.SystemColors.Window;
+            this.txtTaskLog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtTaskLog.Location = new System.Drawing.Point(3, 176);
+            this.txtTaskLog.Multiline = true;
+            this.txtTaskLog.Name = "txtTaskLog";
+            this.txtTaskLog.ReadOnly = true;
+            this.txtTaskLog.Size = new System.Drawing.Size(305, 127);
+            this.txtTaskLog.TabIndex = 78;
+            // 
             // panel46
             // 
             this.panel46.Controls.Add(this.tbVisibilitySessionFinished);
@@ -2517,20 +2531,6 @@
             this.label9.Size = new System.Drawing.Size(183, 17);
             this.label9.TabIndex = 4;
             this.label9.Text = "высота над поверхностью, м, мин.";
-            // 
-            // txtTaskLog
-            // 
-            this.txtTaskLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtTaskLog.BackColor = System.Drawing.SystemColors.Window;
-            this.txtTaskLog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtTaskLog.Location = new System.Drawing.Point(3, 176);
-            this.txtTaskLog.Multiline = true;
-            this.txtTaskLog.Name = "txtTaskLog";
-            this.txtTaskLog.ReadOnly = true;
-            this.txtTaskLog.Size = new System.Drawing.Size(305, 127);
-            this.txtTaskLog.TabIndex = 78;
             // 
             // DockableWindowMilSpaceMVisibilitySt
             // 

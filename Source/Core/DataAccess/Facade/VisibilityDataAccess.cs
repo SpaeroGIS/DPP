@@ -225,7 +225,7 @@ namespace MilSpace.DataAccess.Facade
             {
                 if (!context.MilSp_VisibilityUserSessions.Any(r => r.userName == visibilityResults.UserName && r.visibilityResultId == visibilityResults.Id))
                 {
-                    var sessionValue = new MilSp_VisibilityUserSession { userName = visibilityResults.UserName, visibilityResultId = visibilityResults.Id};
+                    var sessionValue = new MilSp_VisibilityUserSession { userName = visibilityResults.UserName, visibilityResultId = visibilityResults.Id };
                     context.MilSp_VisibilityUserSessions.InsertOnSubmit(sessionValue);
                     Submit();
                 }
@@ -251,7 +251,7 @@ namespace MilSpace.DataAccess.Facade
 
                     Submit();
 
-                    if(!DeleteVisibilityResultsFromAllUsersSessions(id))
+                    if (!DeleteVisibilityResultsFromAllUsersSessions(id))
                     {
                         return false;
                     }
@@ -275,9 +275,9 @@ namespace MilSpace.DataAccess.Facade
             {
                 var resultEntity = context.MilSp_VisibilityUserSessions.Where(res => res.visibilityResultId.Trim() == id).ToArray();
 
-                if(resultEntity != null)
+                if (resultEntity != null)
                 {
-                    foreach(var entity in resultEntity)
+                    foreach (var entity in resultEntity)
                     {
                         context.MilSp_VisibilityUserSessions.DeleteOnSubmit(entity);
 
@@ -288,7 +288,7 @@ namespace MilSpace.DataAccess.Facade
 
                 log.WarnEx($"Visibility results not found");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 log.WarnEx($"Unexpected exception:{ex.Message}");
             }
@@ -302,7 +302,7 @@ namespace MilSpace.DataAccess.Facade
             {
                 var resultEntity = context.MilSp_VisibilityUserSessions.FirstOrDefault(res => res.visibilityResultId.Trim() == id && res.userName.Trim().Equals(Environment.UserName));
 
-                if(resultEntity != null)
+                if (resultEntity != null)
                 {
                     context.MilSp_VisibilityUserSessions.DeleteOnSubmit(resultEntity);
 
@@ -312,7 +312,7 @@ namespace MilSpace.DataAccess.Facade
 
                 log.WarnEx($"Visibility results not found");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 log.WarnEx($"Unexpected exception:{ex.Message}");
             }
@@ -326,14 +326,14 @@ namespace MilSpace.DataAccess.Facade
             {
                 var resultEntity = context.MilSp_VisiblityResults.FirstOrDefault(res => res.Id.Trim() == id);
 
-                if(resultEntity != null)
+                if (resultEntity != null)
                 {
                     return resultEntity.UserName.Trim().Equals(Environment.UserName);
                 }
 
                 log.WarnEx($"Visibility results not found");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 log.WarnEx($"Unexpected exception:{ex.Message}");
             }
@@ -355,7 +355,7 @@ namespace MilSpace.DataAccess.Facade
                 {
                     results = context.MilSp_VisiblityResults.Where(r => r.UserName.Trim().Equals(Environment.UserName) || r.shared);
                 }
-                        
+
                 return results.Select(s => s.Get());
             }
             catch (Exception ex)
@@ -370,7 +370,7 @@ namespace MilSpace.DataAccess.Facade
         {
             try
             {
-                var result = context.VisiblilityObservPoints.Select(op => op.Get());
+                var result = context.VisiblilityObservPoints.Select(op => op.Get()).ToArray();
                 log.InfoEx($"GetObservationPoints. Get all Observation point ({result.Count()}). user {Environment.UserName}");
                 return result;
             }
@@ -415,9 +415,31 @@ namespace MilSpace.DataAccess.Facade
 
         }
 
+        public ObservationPoint GetObservationPointByObjectId(int objectId)
+        {
+            try
+            {
+                //In case of performance issue reimplement it as context.ExecuteQuery with where clause OBJECTID == {ID1} OR OBJECTID == {ID2}.. 
+                return context.VisiblilityObservPoints.FirstOrDefault(op => op.OBJECTID == objectId)?.Get();
+            }
+            catch (MilSpaceDataException ex)
+            {
+                log.WarnEx(ex.Message);
+                if (ex.InnerException != null)
+                {
+                    log.WarnEx(ex.InnerException.Message);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                log.WarnEx($"Unexpected exception:{ex.Message}");
+            }
+            return null;
+        }
+
         public IEnumerable<ObservationPoint> GetObservationPointsByIds(IEnumerable<int> ids)
         {
-
             IEnumerable<ObservationPoint> result = null;
             if (ids != null || ids.Count() > 0)
             {
@@ -439,7 +461,6 @@ namespace MilSpace.DataAccess.Facade
                 catch (Exception ex)
                 {
                     log.WarnEx($"Unexpected exception:{ex.Message}");
-
                 }
             }
 

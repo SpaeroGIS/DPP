@@ -197,11 +197,6 @@ namespace MilSpace.Visibility
         {
             log.InfoEx("> SubscribeForEvents START");
 
-            IEditEvents_Event editEvent = (IEditEvents_Event)ArcMap.Editor;
-          
-            editEvent.OnCreateFeature += _observPointsController.OnCreateFeature;
-
-
 
             ArcMap.Events.OpenDocument += OnContentsChanged;
             ArcMap.Events.NewDocument += OnContentsChanged;
@@ -212,6 +207,14 @@ namespace MilSpace.Visibility
                 //activeViewEvent.SelectionChanged += OnContentsChanged;
                 activeViewEvent.ItemAdded += OnItemAdded;
                 activeViewEvent.ItemDeleted += OnItemDelete;
+                IEditEvents_Event editEvent = (IEditEvents_Event)ArcMap.Editor;
+
+                editEvent.OnStartEditing += _observPointsController.OnStartEditing;
+                editEvent.OnStopEditing += _observPointsController.OnStopEditing;
+
+
+                editEvent.OnCreateFeature += _observPointsController.OnCreateFeature;
+                editEvent.OnDeleteFeature += _observPointsController.OnDeleteFeature;
             };
 
             //ArcMap.Events.NewDocument += delegate ()
@@ -1119,10 +1122,10 @@ namespace MilSpace.Visibility
             var result = MessageBox.Show(
                 sMsgText,
                 LocalizationContext.Instance.MsgBoxInfoHeader,
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
 
-            if (result == DialogResult.OK)
+            if (result == DialogResult.Yes)
             {
                 var rowIndex = dgvObservationPoints.SelectedRows[0].Index;
 
