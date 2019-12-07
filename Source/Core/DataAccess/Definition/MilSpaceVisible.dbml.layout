@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11.75, 8.5" name="DataClasses1">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="DataClasses1">
   <DataContextMoniker Name="/MilSpaceVisibilityContext" />
   <nestedChildShapes>
     <classShape Id="62490a60-d5ff-406c-bcc9-b97ddb084a71" absoluteBounds="5.125, 4.5, 2, 3.3093082682291666">
@@ -38,10 +38,10 @@
         <elementListCompartment Id="0c539ab9-5889-4553-a3b5-229b59a13b1e" absoluteBounds="7.265, 2.21, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="6b5c3dc8-9f02-4376-8288-e0846df11b17" absoluteBounds="9.5, 1.125, 2, 2.9247054036458326">
+    <classShape Id="6b5c3dc8-9f02-4376-8288-e0846df11b17" absoluteBounds="7.5, 4.625, 2, 3.1170068359374996">
       <DataClassMoniker Name="/MilSpaceVisibilityContext/MilSp_VisibilityTask" />
       <nestedChildShapes>
-        <elementListCompartment Id="28b2597d-2160-40f8-88f4-6950a6092827" absoluteBounds="9.515, 1.5850000000000009, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="28b2597d-2160-40f8-88f4-6950a6092827" absoluteBounds="7.5150000000000006, 5.0850000000000009, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="a92555ba-8333-4a3a-a5ad-1f35bd0919bf" isExpanded="false" absoluteBounds="1, 0.875, 2, 0.45">
@@ -68,7 +68,7 @@
         <elementListCompartment Id="859d9c1e-27ad-4463-92de-9173a2a8992e" absoluteBounds="2.3899999999999997, 2.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(4.75 : 2.34699625651042); (4.375 : 2.34699625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(4.75 : 2.34699625651042); (4.375 : 2.34699625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/MilSpaceVisibilityContext/MilSp_VisiblityResults/MilSp_VisiblityResults_MilSp_VisibilityUserSession" />
       <nodes>
         <classShapeMoniker Id="c2b1ce63-f5e9-4a2b-be78-b110b23a41d3" />
