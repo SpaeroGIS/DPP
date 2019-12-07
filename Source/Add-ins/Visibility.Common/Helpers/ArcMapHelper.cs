@@ -260,7 +260,7 @@ namespace MilSpace.Visibility
 
                     ICartographicLineSymbol outline = new CartographicLineSymbol
                     {
-                        Width = 2,
+                        Width = 0.4,
                         Color = new RgbColor()
                         {
                             Red = 100,

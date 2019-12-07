@@ -16,6 +16,14 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
+        public static ObservationPoint GetObservationPoint(int objectId)
+        {
+            using (var accessor = new VisibilityDataAccess())
+            {
+                return accessor.GetObservationPointByObjectId(objectId);
+            }
+        }
+
         public static bool SaveObservationPoint(ObservationPoint observPoint)
         {
             using (var accessor = new VisibilityDataAccess())
@@ -25,7 +33,7 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
-        public static IEnumerable<ObservationPoint>  GetObservationPointByObjectIds(IEnumerable<int> ids)
+        public static IEnumerable<ObservationPoint>  GetObservationPointsByObjectIds(IEnumerable<int> ids)
         {
             using (var accessor = new VisibilityDataAccess())
             {
@@ -42,21 +50,21 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
-        public static VisibilityTask AddVisibilitySession(VisibilityTask visibilitySession)
+        public static VisibilityTask AddVisibilityTask(VisibilityTask visibilityTask)
         {
             using(var accessor = new VisibilityDataAccess())
             {
-                var res = accessor.AddVisibilityTask(visibilitySession);
+                var res = accessor.AddVisibilityTask(visibilityTask);
                 return res;
             }
         }
 
-        public static VisibilityTask FinishVisibilitySession(VisibilityTask visibilitySession)
+        public static VisibilityTask FinishVisibilityTask(VisibilityTask visibilityTask)
         {
             using (var accessor = new VisibilityDataAccess())
             {
-                visibilitySession.Finished = DateTime.Now;
-                var res = accessor.UpdateVisibilityTask(visibilitySession);
+                visibilityTask.Finished = DateTime.Now;
+                var res = accessor.UpdateVisibilityTask(visibilityTask);
                 return res;
             }
         }

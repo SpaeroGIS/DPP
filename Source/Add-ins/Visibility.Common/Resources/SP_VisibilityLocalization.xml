@@ -296,5 +296,7 @@
   <AffiliationHeaderText>Належність</AffiliationHeaderText>
   <DateHeaderText>Дата</DateHeaderText>
   <GroupHeaderText>Група</GroupHeaderText>
+
+  <NewObservationPointName>Нова точка нагляду</NewObservationPointName>
   
 </SP_Visibility>

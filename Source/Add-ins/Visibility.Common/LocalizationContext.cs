@@ -173,6 +173,8 @@ namespace MilSpace.Visibility.Localization
         public string YesWord => FindLocalizedElement("YesWord", "Yes");
         public string NoWord => FindLocalizedElement("NoWord", "No");
 
+        public string DeafultObservationpointTitle => FindLocalizedElement("NewObservationPointName", "New point");
+
         public string PlaceLayerAbove => FindLocalizedElement("PlaceLayerAbove", "Above");
         public string PlaceLayerBelow => FindLocalizedElement("PlaceLayerBelow", "Below");
 
