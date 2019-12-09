@@ -16,6 +16,29 @@ namespace MilSpace.Visibility
     public static class ArcMapHelper
     {
 
+
+        //    { VisibilityCalculationResultsEnum.VisibilityObservStationClip , "_imgc"},
+        //    { VisibilityCalculationResultsEnum.VisibilityObservStationClipSingle , "_imgcs"},
+        //    { VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly , "_imgt"},
+        //    { VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle , "_imgts"},
+
+        internal static Dictionary<VisibilityCalculationResultsEnum, bool> LayersSequence = new Dictionary<VisibilityCalculationResultsEnum, bool>
+
+        {
+            { VisibilityCalculationResultsEnum.ObservationPoints, true},
+            { VisibilityCalculationResultsEnum.VisibilityAreasPotential, true},
+            { VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle, true},
+            { VisibilityCalculationResultsEnum.ObservationObjects, false},
+            { VisibilityCalculationResultsEnum.VisibilityAreaPolygons, true},
+            { VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle, false},
+            { VisibilityCalculationResultsEnum.VisibilityAreaRaster, false},
+            { VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle , false},
+            { VisibilityCalculationResultsEnum.VisibilityObservStationClip , false},
+            { VisibilityCalculationResultsEnum.VisibilityObservStationClipSingle , false},
+            { VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly , false},
+            { VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle , false}
+        };
+
         static Logger logger = Logger.GetLoggerEx("Visibility Addin Helper");
 
 
@@ -364,31 +387,66 @@ namespace MilSpace.Visibility
             var visibilityLayers = new List<ILayer>();
             ILayer lr = null;
 
-            foreach (var ri in results.ResultsInfo)
+
+            foreach (var li in LayersSequence)
             {
-                var dataset = GdbAccess.Instance.GetDatasetFromCalcWorkspace(ri);
-                if (dataset == null)
+                if (results.ResultsInfo.Any(r => r.RessutType == li.Key))
                 {
-                    continue;
-                }
+                    foreach (var ri in results.ResultsInfo.Where(r => r.RessutType == li.Key))
+                    {
+                        var dataset = GdbAccess.Instance.GetDatasetFromCalcWorkspace(ri);
+                        if (dataset == null)
+                        {
+                            continue;
+                        }
 
-                if (dataset is IFeatureClass feature)
-                {
-                    lr = EsriTools.GetFeatureLayer(feature);
-                }
-                if (dataset is IRasterDataset raster)
-                {
-                    lr = EsriTools.GetRasterLayer(raster);
-                }
+                        if (dataset is IFeatureClass feature)
+                        {
+                            lr = EsriTools.GetFeatureLayer(feature);
+                        }
+                        if (dataset is IRasterDataset raster)
+                        {
+                            lr = EsriTools.GetRasterLayer(raster);
+                        }
 
-                if (mapResultAction.ContainsKey(ri.RessutType))
-                {
-                    mapResultAction[ri.RessutType](lr, color, transparency);
-                }
+                        lr.Visible = li.Value;
 
-                visibilityLayers.Add(lr);
+                        if (mapResultAction.ContainsKey(ri.RessutType))
+                        {
+                            mapResultAction[ri.RessutType](lr, color, transparency);
+                        }
+
+                        visibilityLayers.Add(lr);
+                    }
+                }
 
             }
+
+            //foreach (var ri in results.ResultsInfo)
+            //{
+            //    var dataset = GdbAccess.Instance.GetDatasetFromCalcWorkspace(ri);
+            //    if (dataset == null)
+            //    {
+            //        continue;
+            //    }
+
+            //    if (dataset is IFeatureClass feature)
+            //    {
+            //        lr = EsriTools.GetFeatureLayer(feature);
+            //    }
+            //    if (dataset is IRasterDataset raster)
+            //    {
+            //        lr = EsriTools.GetRasterLayer(raster);
+            //    }
+
+            //    if (mapResultAction.ContainsKey(ri.RessutType))
+            //    {
+            //        mapResultAction[ri.RessutType](lr, color, transparency);
+            //    }
+
+            //    visibilityLayers.Add(lr);
+
+            //}
 
             MapLayersManager layersManager = new MapLayersManager(activeView);
             //var relativeLayer = layersManager.FirstLevelLayers.FirstOrDefault(l => l.Name.Equals(relativeLayerName, StringComparison.InvariantCultureIgnoreCase));

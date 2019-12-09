@@ -1942,6 +1942,20 @@ namespace MilSpace.Visibility
 
         private void buttonSaveOPoint_Click(object sender, EventArgs e)
         {
+            if (_observPointsController.IsArcMapEditingStarted())
+            {
+
+                string sMsgText = LocalizationContext.Instance.FindLocalizedElement(
+                    "MsgCannotSaveObservationpoints",
+                    $"Для збереження властивостей пункту спостереження {Environment.NewLine} треба вимкнути режим редагування ArcMap.");
+
+                MessageBox.Show(
+                    sMsgText,
+                    LocalizationContext.Instance.MsgBoxQueryHeader,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation);
+                return;
+            }
             SavePoint();
         }
 

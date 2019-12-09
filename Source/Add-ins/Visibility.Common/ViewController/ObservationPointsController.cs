@@ -683,13 +683,18 @@ namespace MilSpace.Visibility.ViewController
         }
 
         #region ArcMap Eventts
+
+        internal bool IsArcMapEditingStarted()
+        {
+            return ArcMap.Editor.EditState == esriEditState.esriStateEditing;
+        }
+
         internal void OnStartEditing()
         {
         }
 
         internal void OnStopEditing(bool save)
         {
-            var es = ArcMap.Editor.EditState;
             if (save)
             {
                 UpdateObservationPointsList();
