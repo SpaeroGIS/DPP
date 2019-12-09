@@ -333,6 +333,7 @@ namespace MilSpace.Visibility
                 {
                     ObjectID = i.ObjectId,
                     Title = i.Title,
+                    Created = i.DTO,
                     Id = i.Id,
                     Affiliation = _observPointsController.GetObservObjectsTypeString(i.ObjectType),
                     Group = i.Group
@@ -1375,6 +1376,13 @@ namespace MilSpace.Visibility
                 LocalizationContext.Instance.FindLocalizedElement("HeaderNameGridON", "Назва");
             dgvObservObjects.Columns["Title"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
+            dgvObservObjects.Columns["Created"].HeaderText =
+                LocalizationContext.Instance.FindLocalizedElement("DateHeaderText", "Дата");
+            dgvObservObjects.Columns["Created"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            dgvObservObjects.Columns["Created"].ValueType = typeof(DateTime);
+            dgvObservObjects.Columns["Created"].DefaultCellStyle.Format = Helper.DateFormatSmall;
+
+
             dgvObservObjects.Columns["Affiliation"].HeaderText =
                 LocalizationContext.Instance.FindLocalizedElement("HeaderAfilGridON", "Належність");
             dgvObservObjects.Columns["Affiliation"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
@@ -1755,7 +1763,7 @@ namespace MilSpace.Visibility
                 return;
             }
 
-            SavePoint();
+          //  SavePoint();
         }
 
         private void Fields_TextChanged(object sender, EventArgs e)
