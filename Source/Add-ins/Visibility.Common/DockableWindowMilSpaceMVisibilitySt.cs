@@ -1763,7 +1763,7 @@ namespace MilSpace.Visibility
                 return;
             }
 
-            SavePoint();
+          //  SavePoint();
         }
 
         private void Fields_TextChanged(object sender, EventArgs e)
