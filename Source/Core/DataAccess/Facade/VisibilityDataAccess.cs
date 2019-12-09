@@ -223,9 +223,14 @@ namespace MilSpace.DataAccess.Facade
         {
             try
             {
-                if (!context.MilSp_VisibilityUserSessions.Any(r => r.userName == visibilityResults.UserName && r.visibilityResultId == visibilityResults.Id))
+                if (!context.MilSp_VisibilityUserSessions.Any(
+                    r => r.userName == visibilityResults.UserName && r.visibilityResultId == visibilityResults.Id))
                 {
-                    var sessionValue = new MilSp_VisibilityUserSession { userName = visibilityResults.UserName, visibilityResultId = visibilityResults.Id};
+                    var sessionValue = new MilSp_VisibilityUserSession
+                    {
+                        userName = visibilityResults.UserName,
+                        visibilityResultId = visibilityResults.Id
+                    };
                     context.MilSp_VisibilityUserSessions.InsertOnSubmit(sessionValue);
                     Submit();
                 }
@@ -300,7 +305,8 @@ namespace MilSpace.DataAccess.Facade
         {
             try
             {
-                var resultEntity = context.MilSp_VisibilityUserSessions.FirstOrDefault(res => res.visibilityResultId.Trim() == id && res.userName.Trim().Equals(Environment.UserName));
+                var resultEntity = context.MilSp_VisibilityUserSessions.FirstOrDefault(
+                    res => res.visibilityResultId.Trim() == id && res.userName.Trim().Equals(Environment.UserName));
 
                 if(resultEntity != null)
                 {

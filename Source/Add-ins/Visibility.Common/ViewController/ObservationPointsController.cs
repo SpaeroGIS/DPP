@@ -259,26 +259,28 @@ namespace MilSpace.Visibility.ViewController
         // TODO: Define the field in the View Interface to take sessionName, rasterLayerName and  visibilityCalculationResults
         internal bool CalculateVisibility(WizardResult calcParams)
         {
+            log.InfoEx("> CalculateVisibility START");
+
             var statusBar = ArcMap.Application.StatusBar;
             var animationProgressor = statusBar.ProgressAnimation;
+            int exx = 1;
 
             try
             {
                 MapLayersManager layersManager = new MapLayersManager(mapDocument.ActiveView);
-
+                exx++;
                 var demLayer = layersManager.RasterLayers.FirstOrDefault(l => l.Name.Equals(calcParams.RasterLayerName));
-
+                exx++;
                 if (demLayer == null)
                 {
                     throw new MilSpaceVisibilityCalcFailedException($"Cannot find DEM layer {calcParams.RasterLayerName }.");
                 }
-
                 calcParams.RasterLayerName = demLayer.FilePath;
-
+                exx++;
                 var observPoints = GetObservatioPointFeatureClass(mapDocument.ActiveView);
-
+                exx++;
                 var observObjects = GetObservatioStationFeatureClass(mapDocument.ActiveView);
-
+                exx++;
                 if (calcParams.ObservPointIDs == null) // Get points forn the current extent
                 {
                     calcParams.ObservPointIDs = EsriTools.GetSelectionByExtent(observPoints, mapDocument.ActiveView);
@@ -287,9 +289,11 @@ namespace MilSpace.Visibility.ViewController
                 {
                     calcParams.ObservObjectIDs = EsriTools.GetSelectionByExtent(observObjects, mapDocument.ActiveView);
                 }
-
+                exx++;
                 animationProgressor.Show();
                 animationProgressor.Play(0, 200);
+
+                exx++;
 
                 var calcTask = VisibilityManager.Generate(
                     observPoints,
@@ -303,6 +307,8 @@ namespace MilSpace.Visibility.ViewController
                     calcParams.CalculationType,
                     mapDocument.ActiveView.FocusMap);
 
+                exx++;
+
                 if (calcTask.Finished != null)
                 {
                     var isLayerAbove = (calcParams.ResultLayerPosition == LayerPositionsEnum.Above);
@@ -310,11 +316,23 @@ namespace MilSpace.Visibility.ViewController
                     var datasets = GdbAccess.Instance.GetDatasetsFromCalcWorkspace(calcTask.ResultsInfo);
                     var tbls = mapDocument.TableProperties;
 
-                    ArcMapHelper.AddResultsToMapAsGroupLayer(calcTask, mapDocument.ActiveView, calcParams.RelativeLayerName, isLayerAbove, calcParams.ResultLayerTransparency
+                    ArcMapHelper.AddResultsToMapAsGroupLayer(
+                        calcTask, 
+                        mapDocument.ActiveView, 
+                        calcParams.RelativeLayerName, 
+                        isLayerAbove, 
+                        calcParams.ResultLayerTransparency
                         , null);
 
+                    exx++;
 
-                    EsriTools.AddTableToMap(tbls, VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.CoverageTable, calcTask.Name), calcTask.ReferencedGDB, mapDocument, application);
+                    EsriTools.AddTableToMap(
+                        tbls, 
+                        VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.CoverageTable, calcTask.Name), 
+                        calcTask.ReferencedGDB, 
+                        mapDocument, 
+                        application);
+                    exx++;
 
                     //EsriTools.AddVisibilityGroupLayer(
                     //    datasets, calcTask.Name, calcTask.Id, calcTask.ReferencedGDB,
@@ -326,7 +344,7 @@ namespace MilSpace.Visibility.ViewController
             }
             catch (Exception ex)
             {
-                log.ErrorEx(ex.Message);
+                log.ErrorEx("> CalculateVisibility Exception. exx:{0} Exception:{1}", exx, ex.Message);
                 return false;
             }
             finally
@@ -334,6 +352,7 @@ namespace MilSpace.Visibility.ViewController
                 animationProgressor.Stop();
                 animationProgressor.Hide();
             }
+            log.InfoEx("> CalculateVisibility END");
             return true;
         }
 
@@ -687,14 +706,9 @@ namespace MilSpace.Visibility.ViewController
             var observObject = objects.NextFeature();
             if (observObject != null)
             {
-
-                EsriTools.PanToGeometry(mapDocument.ActiveView,
-                   observObject.Shape, true);
-                EsriTools.FlashGeometry(mapDocument.ActiveView.ScreenDisplay,
-                   new IGeometry[] { observObject.Shape });
+                EsriTools.PanToGeometry(mapDocument.ActiveView, observObject.Shape, true);
+                EsriTools.FlashGeometry(mapDocument.ActiveView.ScreenDisplay, new IGeometry[] { observObject.Shape });
             }
-
-
         }
         //private void TestPolygonFinding(ObservationPoint point, ObservationObject obj, IFeatureClass pointsFC, IFeatureClass objFC)
         //{

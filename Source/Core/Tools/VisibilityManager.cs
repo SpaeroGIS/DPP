@@ -58,12 +58,12 @@ namespace MilSpace.Tools
             VisibilityCalcTypeEnum calculationType,
             IMap currentMap)
         {
+            logger.InfoEx("> Generate START. Visiblility result {2} using DEM {0} from observation points {1}"
+                .InvariantFormat(sourceDem, obervationPoints, taskId));
+
             CurrentMap = currentMap;
             //Target dataset name
             string nameOfTargetDataset = taskId;
-
-            logger.InfoEx("> Generate START. Visiblility result {2} using DEM {0} from observation points {1}"
-                .InvariantFormat(sourceDem, obervationPoints, nameOfTargetDataset));
 
             var calcTask = new VisibilityTask
             {

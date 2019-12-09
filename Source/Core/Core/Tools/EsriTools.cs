@@ -745,7 +745,6 @@ namespace MilSpace.Core.Tools
             geometry.Project(polyline.SpatialReference);
 
             ITopologicalOperator pTopo = geometry as ITopologicalOperator;
-
             var result = pTopo.Intersect(polyline, esriGeometryDimension.esriGeometry0Dimension);
             var firstLinePointOnLayer = (IPoint)pTopo.Intersect(polyline.FromPoint, esriGeometryDimension.esriGeometry0Dimension);
             var lastLinePointOnLayer = (IPoint)pTopo.Intersect(polyline.ToPoint, esriGeometryDimension.esriGeometry0Dimension);
@@ -1044,6 +1043,7 @@ namespace MilSpace.Core.Tools
                 try
                 {
                     observObject.Project(point.SpatialReference);
+
                     var polygonGeometry = observObject as IGeometry;
                     ITopologicalOperator polygonTopoOp = coverageArea as ITopologicalOperator;
                     IPolygon ip = polygonTopoOp.Intersect(polygonGeometry, esriGeometryDimension.esriGeometry2Dimension) as IPolygon;
@@ -1068,31 +1068,31 @@ namespace MilSpace.Core.Tools
 
         public static double GetObjVisibilityArea(IFeatureClass visibility, IPolygon observObject, int gridCode = -1)
         {
-            logger.InfoEx("> GetObjVisibilityArea START. FeatureClass visibility:{0}", visibility.AliasName);
+            logger.InfoEx("> GetObjVisibilityArea START. FeatureClass visibility:{0} gridCode:{1}", visibility.AliasName, gridCode);
 
             var visibilityPolygon = GetTotalPolygonFromFeatureClass(visibility, gridCode);
 
             //for test only-------------------------------------------------------------
-            try
-            {
-                var ff = visibility.CreateFeature();
-                ff.Shape = visibilityPolygon;
-                ff.set_Value(visibility.FindField("id"), 525);
-                ff.set_Value(visibility.FindField("gridCode"), gridCode);
-                ff.Store();
-                logger.InfoEx("GetObjVisibilityArea save TEST Feature 1 OK ff.OID: {0} gridCode: {1}", ff.OID, gridCode);
+            //try
+            //{
+            //    var ff = visibility.CreateFeature();
+            //    ff.Shape = visibilityPolygon;
+            //    ff.set_Value(visibility.FindField("id"), 525);
+            //    ff.set_Value(visibility.FindField("gridCode"), gridCode);
+            //    ff.Store();
+            //    logger.InfoEx("GetObjVisibilityArea save TEST Feature 1 OK ff.OID: {0} gridCode: {1}", ff.OID, gridCode);
 
-                var ff1 = visibility.CreateFeature();
-                ff1.Shape = observObject;
-                ff1.set_Value(visibility.FindField("id"), 5252);
-                ff1.set_Value(visibility.FindField("gridCode"), gridCode);
-                ff1.Store();
-                logger.InfoEx("GetObjVisibilityArea save TEST Feature 2 OK ff.OID: {0} gridCode: {1}", ff1.OID, gridCode);
-            }
-            catch (Exception ex)
-            {
-                logger.ErrorEx($"GetObjVisibilityArea Exception: {ex.Message}");
-            }
+            //    var ff1 = visibility.CreateFeature();
+            //    ff1.Shape = observObject;
+            //    ff1.set_Value(visibility.FindField("id"), 5252);
+            //    ff1.set_Value(visibility.FindField("gridCode"), gridCode);
+            //    ff1.Store();
+            //    logger.InfoEx("GetObjVisibilityArea save TEST Feature 2 OK ff.OID: {0} gridCode: {1}", ff1.OID, gridCode);
+            //}
+            //catch (Exception ex)
+            //{
+            //    logger.ErrorEx($"GetObjVisibilityArea Exception: {ex.Message}");
+            //}
             //for test only end
 
             try
@@ -1104,9 +1104,13 @@ namespace MilSpace.Core.Tools
                 }
 
                 var polygonGeometry = observObject as IGeometry;
+                polygonGeometry.Project(visibilityPolygon.SpatialReference);
+
                 ITopologicalOperator polygonTopoOp = visibilityPolygon as ITopologicalOperator;
                 var resultPolygon = polygonTopoOp.Intersect(polygonGeometry, esriGeometryDimension.esriGeometry2Dimension) as IPolygon;
                 var resultArea = (IArea)resultPolygon;
+
+                //var resultArea = (IArea)visibilityPolygon;
 
                 logger.InfoEx("> GetObjVisibilityArea END");
                 return resultArea.Area;
@@ -1120,11 +1124,11 @@ namespace MilSpace.Core.Tools
 
         public static IPolygon GetTotalPolygon(List<IPolygon> polygons)
         {
-            logger.DebugEx("> GetTotalPolygon START");
+            logger.InfoEx("> GetTotalPolygon START");
 
             if (polygons == null || polygons.Count == 0)
             {
-                logger.DebugEx("> GetTotalPolygon END. NULL poligons");
+                logger.ErrorEx("> GetTotalPolygon END. NULL poligons");
                 return null;
             }
 
@@ -1150,7 +1154,7 @@ namespace MilSpace.Core.Tools
                 ITopologicalOperator unionedPolygon = new PolygonClass();
                 unionedPolygon.ConstructUnion(geometryBag as IEnumGeometry);
 
-                logger.DebugEx("> GetTotalPolygon END");
+                logger.InfoEx("> GetTotalPolygon END");
                 return unionedPolygon as IPolygon;
             }
             catch (Exception ex)

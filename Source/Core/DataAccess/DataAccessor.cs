@@ -35,12 +35,12 @@ namespace MilSpace.DataAccess
         {
             try
             {
-                log.DebugEx("Submit. {0} Submit changes", GetType());
+                log.DebugEx("> Submit. {0} Submit changes", GetType());
                 context.SubmitChanges(System.Data.Linq.ConflictMode.ContinueOnConflict);
             }
             catch (Exception ex)
             {
-                log.ErrorEx(ex.Message);
+                log.ErrorEx("> Submit Exception:{0}", ex.Message);
 
                 //TODO: Handle inserded or updated data
                 //context.GetChangeSet().Inserts;
@@ -49,6 +49,7 @@ namespace MilSpace.DataAccess
 
             return true;
         }
+
         public abstract string ConnectionString { get; }
 
         protected string GetTableName(Type T)
