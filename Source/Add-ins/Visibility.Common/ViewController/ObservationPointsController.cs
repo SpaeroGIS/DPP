@@ -736,7 +736,7 @@ namespace MilSpace.Visibility.ViewController
                     IPoint p = g as IPoint;
                     p.Project(EsriTools.Wgs84Spatialreference);
 
-                    obj.Value[fldTitleIndex] = LocalizationContext.Instance.DeafultObservationpointTitle;
+                    obj.Value[fldTitleIndex] =  LocalizationContext.Instance.DeafultObservationpointTitle.InvariantFormat(obj.OID);
                     obj.Value[fldXWgs] = p.X;
                     obj.Value[fldYWgs] = p.Y;
                     log.InfoEx($"New observation point was added and name set to {LocalizationContext.Instance.DeafultObservationpointTitle}");
