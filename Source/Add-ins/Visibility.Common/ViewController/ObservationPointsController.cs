@@ -314,20 +314,20 @@ namespace MilSpace.Visibility.ViewController
                     var tbls = mapDocument.TableProperties;
 
                     ArcMapHelper.AddResultsToMapAsGroupLayer(
-                        calcTask, 
-                        mapDocument.ActiveView, 
-                        calcParams.RelativeLayerName, 
-                        isLayerAbove, 
+                        calcTask,
+                        mapDocument.ActiveView,
+                        calcParams.RelativeLayerName,
+                        isLayerAbove,
                         calcParams.ResultLayerTransparency
                         , null);
 
                     exx++;
 
                     EsriTools.AddTableToMap(
-                        tbls, 
-                        VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.CoverageTable, calcTask.Name), 
-                        calcTask.ReferencedGDB, 
-                        mapDocument, 
+                        tbls,
+                        VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.CoverageTable, calcTask.Name),
+                        calcTask.ReferencedGDB,
+                        mapDocument,
                         application);
                     exx++;
 
@@ -698,13 +698,18 @@ namespace MilSpace.Visibility.ViewController
         }
 
         #region ArcMap Eventts
+
+        internal bool IsArcMapEditingStarted()
+        {
+            return ArcMap.Editor.EditState == esriEditState.esriStateEditing;
+        }
+
         internal void OnStartEditing()
         {
         }
 
         internal void OnStopEditing(bool save)
         {
-            var es = ArcMap.Editor.EditState;
             if (save)
             {
                 UpdateObservationPointsList();
@@ -713,7 +718,7 @@ namespace MilSpace.Visibility.ViewController
 
         internal void OnDeleteFeature(ESRI.ArcGIS.Geodatabase.IObject obj)
         {
-       //     UpdateObservationPointsList();
+            //     UpdateObservationPointsList();
         }
 
         internal void OnCreateFeature(ESRI.ArcGIS.Geodatabase.IObject obj)
@@ -726,12 +731,15 @@ namespace MilSpace.Visibility.ViewController
                     var fldDtoIndex = obj.Fields.FindField("DTO");
                     var fldXWgs = obj.Fields.FindField("XWGS");
                     var fldYWgs = obj.Fields.FindField("YWGS");
+                    var fldIdOP = obj.Fields.FindField("idOP");
+
 
                     IGeometry g = fcl.GetFeature(obj.OID).ShapeCopy;
                     IPoint p = g as IPoint;
                     p.Project(EsriTools.Wgs84Spatialreference);
 
-                    obj.Value[fldTitleIndex] = LocalizationContext.Instance.DeafultObservationpointTitle;
+                    obj.Value[fldIdOP] = $"OO{DataAccess.Helper.GetTemporaryNameSuffix()}";
+                    obj.Value[fldTitleIndex] = LocalizationContext.Instance.DeafultObservationpointTitle.InvariantFormat(obj.OID);
                     obj.Value[fldXWgs] = p.X;
                     obj.Value[fldYWgs] = p.Y;
                     log.InfoEx($"New observation point was added and name set to {LocalizationContext.Instance.DeafultObservationpointTitle}");
