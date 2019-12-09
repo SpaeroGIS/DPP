@@ -297,6 +297,7 @@
   <DateHeaderText>Дата</DateHeaderText>
   <GroupHeaderText>Група</GroupHeaderText>
 
-  <NewObservationPointName>Нова точка нагляду</NewObservationPointName>
-  
+  <NewObservationPointName>ПС-{0}</NewObservationPointName>
+  <NewObservationObjectName>ОН-{0}</NewObservationObjectName>
+
 </SP_Visibility>

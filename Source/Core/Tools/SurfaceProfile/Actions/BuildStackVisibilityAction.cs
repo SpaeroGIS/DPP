@@ -156,11 +156,15 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             }
 
             //Handle Observation Points
-            List<KeyValuePair<VisibilityCalculationResultsEnum, int[]>> pointsIDs = new List<KeyValuePair<VisibilityCalculationResultsEnum, int[]>>();
+            List<KeyValuePair<VisibilityCalculationResultsEnum, int[]>> pointsIDs = 
+                new List<KeyValuePair<VisibilityCalculationResultsEnum, int[]>>();
 
             if (calcResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreaRaster))
             {
-                pointsIDs.Add(new KeyValuePair<VisibilityCalculationResultsEnum, int[]>(VisibilityCalculationResultsEnum.ObservationPoints, pointsFilteringIds));
+                pointsIDs.Add(
+                    new KeyValuePair<VisibilityCalculationResultsEnum, int[]>(
+                        VisibilityCalculationResultsEnum.ObservationPoints, 
+                        pointsFilteringIds));
             }
 
             if (calcResults.HasFlag(VisibilityCalculationResultsEnum.ObservationPointSingle))
@@ -169,7 +173,10 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                 if (pointsFilteringIds.Length > 1)
                 {
                     pointsIDs.AddRange(
-                        pointsFilteringIds.Select(id => new KeyValuePair<VisibilityCalculationResultsEnum, int[]>(VisibilityCalculationResultsEnum.ObservationPointSingle, new int[] { id })).ToArray());
+                        pointsFilteringIds.Select(
+                            id => new KeyValuePair<VisibilityCalculationResultsEnum, int[]>(
+                                VisibilityCalculationResultsEnum.ObservationPointSingle, new int[] { id }))
+                                .ToArray());
                 }
                 else
                 {
@@ -179,9 +186,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             }
 
             int index = -1;
-
             bool removeFullImageFromresult = false;
-
             int[] objIds = null;
             if (calcResults.HasFlag(VisibilityCalculationResultsEnum.ObservationObjects))
             {
@@ -189,23 +194,28 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             }
 
             CoverageTableManager coverageTableManager = new CoverageTableManager();
-            coverageTableManager.CalculateAreas(pointsFilteringIds, objIds, obserpPointsfeatureClass, obserpStationsfeatureClass);
+            coverageTableManager.SetCalculateAreas(pointsFilteringIds, objIds, obserpPointsfeatureClass, obserpStationsfeatureClass);
 
             foreach (var curPoints in pointsIDs)
             {
                 //curPoints.Key is VisibilityCalculationresultsEnum.ObservationPoints or VisibilityCalculationresultsEnum.ObservationPointSingle
 
                 var pointId = curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints ? -1 : ++index;
-                var oservPointFeatureClassName = VisibilityTask.GetResultName(curPoints.Key, outputSourceName, pointId);
+                var observPointFeatureClassName = VisibilityTask.GetResultName(curPoints.Key, outputSourceName, pointId);
 
                 var exportedFeatureClass = GdbAccess.Instance.ExportObservationFeatureClass(
                     obserpPointsfeatureClass as IDataset, 
-                    oservPointFeatureClassName, 
+                    observPointFeatureClassName, 
                     curPoints.Value);
+
+                //var exportedFeatureClass1 = GdbAccess.Instance.ExportObservationFeatureClass(
+                //    obserpPointsfeatureClass as IDataset,
+                //    observPointFeatureClassName+"A",
+                //    curPoints.Value);
 
                 if (string.IsNullOrWhiteSpace(exportedFeatureClass))
                 {
-                    string errorMessage = $"The feature calss {oservPointFeatureClassName} was not exported";
+                    string errorMessage = $"The feature calss {observPointFeatureClassName} was not exported";
                     result.Exception = new MilSpaceVisibilityCalcFailedException(errorMessage);
                     result.ErrorMessage = errorMessage;
                     logger.ErrorEx("> ProcessObservationPoint ERROR ExportObservationFeatureClass. errorMessage:{0}", errorMessage);
@@ -217,7 +227,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                 iStepNum++;
 
                 //Generate Visibility Raster
-                string featureClass = oservPointFeatureClassName;
+                string featureClass = observPointFeatureClassName;
                 string outImageName = VisibilityTask.GetResultName(
                     curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints ?
                     VisibilityCalculationResultsEnum.VisibilityAreaRaster : 
@@ -368,8 +378,8 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                         VisibilityCalculationResultsEnum.VisibilityAreasPotential, outputSourceName, pointId);
 
                     coverageTableManager.AddPotentialArea(
-                        visibilityPotentialAreaFCName, 
-                        (curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints), 
+                        visibilityPotentialAreaFCName,
+                        (curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints),
                         curPoints.Value[0]);
 
                     results.Add(iStepNum.ToString() + ". " + "Розраховано потенційне покриття:" + visibilityPotentialAreaFCName + " ПС: " + pointId.ToString());
@@ -377,9 +387,9 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
                     var pointsCount = pointsFilteringIds.Where(id => id > -1).Count();
                     coverageTableManager.CalculateCoverageTableDataForPoint(
-                        (pointId == -1), 
-                        visibilityArePolyFCName, 
-                        pointsCount, 
+                        (pointId == -1),
+                        visibilityArePolyFCName,
+                        pointsCount,
                         curPoints.Value[0]);
 
                     results.Add(iStepNum.ToString() + ". " + "Сформовані записи таблиці покриття. для ПС: " + pointId.ToString());

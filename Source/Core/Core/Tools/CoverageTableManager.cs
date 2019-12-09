@@ -28,13 +28,13 @@ namespace MilSpace.Tools
 
         private string _gdb = MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection;
 
-        public void CalculateAreas(
+        public void SetCalculateAreas(
             int[] observPointsIds, 
             int[] observObjectsIds, 
             IFeatureClass observPointFC, 
             IFeatureClass observObjFC = null)
         {
-            _logger.InfoEx("> CalculateAreas START. observPointFC:{0} observObjFC:{1}", observPointFC.AliasName, observObjFC.AliasName);
+            _logger.InfoEx("> SetCalculateAreas START. observPointFC:{0} observObjFC:{1}", observPointFC.AliasName, observObjFC.AliasName);
 
             if(observObjectsIds != null && observObjectsIds.Count() > 0 && observObjFC != null)
             {
@@ -52,22 +52,37 @@ namespace MilSpace.Tools
             var totalExpectedPolygonArea = (IArea)totalExpectedPolygon;
             _totalExpectedArea = totalExpectedPolygonArea.Area;
 
-            _logger.InfoEx("> CalculateAreas END. calcType:{0} totalExpectedArea:{1}", _calcType.ToString(), _totalExpectedArea);
+            _logger.InfoEx("> SetCalculateAreas END. calcType:{0} totalExpectedArea:{1}", _calcType.ToString(), _totalExpectedArea);
         }
 
         public  void AddPotentialArea(string featureClassName, bool isTotal, int currPointId = 0)
         {
-            if(isTotal)
+            _logger.InfoEx("> AddPotentialArea START featureClassName:{0} isTotal:{1} currPointId:{2}", 
+                featureClassName, isTotal.ToString(), currPointId);
+            try
             {
-                currPointId = -1;
-            }
-            var pointAreas = _coverageAreaData.Where(area => area.PointId == currPointId);
-            if(pointAreas != null)
-            {
-                foreach(var area in pointAreas)
+                if (isTotal)
                 {
-                    GdbAccess.Instance.AddCoverageAreaFeature(area.Polygon, area.PointId, featureClassName, _gdb);
+                    currPointId = -1;
                 }
+                var pointAreas = _coverageAreaData.Where(area => area.PointId == currPointId);
+                //var ExpectedPolygon = _coverageAreaData.First(area => area.PointId == currPointId).Polygon;
+                if (pointAreas != null)
+                {
+                    foreach (var area in pointAreas)
+                    {
+                        GdbAccess.Instance.AddCoverageAreaFeature(
+                            area.Polygon, 
+                            area.PointId, 
+                            featureClassName,
+                            VisibilityManager.CurrentMap.SpatialReference);
+                    }
+                }
+                _logger.InfoEx("> AddPotentialArea END");
+            }
+            catch (Exception ex)
+            {
+                _logger.ErrorEx("> AddPotentialArea EXCEPTION. ex.Message:{0}", ex.Message);
             }
         }
 
@@ -214,7 +229,7 @@ namespace MilSpace.Tools
                 }
                 else
                 {
-                    _logger.ErrorEx("CalculateCoverageTableVADataForPoint. observPoint.Title: {0}", observPoint.Title);
+                    _logger.DebugEx("CalculateCoverageTableVADataForPoint. observPoint.Title: {0}", observPoint.Title);
                 }
 
                 try

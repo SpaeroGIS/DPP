@@ -26,7 +26,7 @@ namespace MilSpace.DataAccess.Facade
 
         private static readonly string profileCalcFeatureClass = "CalcProfile_L";
 
-        private Logger logger = Logger.GetLoggerEx("GdbAccess");
+        private static Logger logger = Logger.GetLoggerEx("MilSpace.DataAccess.Facade.GdbAccess");
 
         private GdbAccess()
         {
@@ -167,7 +167,6 @@ namespace MilSpace.DataAccess.Facade
             logger.DebugEx("> ExportObservationFeatureClass START. nameOfTargetDataset:{0}", nameOfTargetDataset);
 
             IWorkspace targetWorkspace = calcWorkspace;
-
             IWorkspaceEdit workspaceEdit = null;
             bool isBeingEdited = false;
             try
@@ -181,12 +180,12 @@ namespace MilSpace.DataAccess.Facade
                 IFeatureClassName sourceDatasetName = (IFeatureClassName)sourceDataset.FullName;
 
                 workspaceEdit = (IWorkspaceEdit)sourceDataset.Workspace;
-                isBeingEdited = workspaceEdit.IsBeingEdited();
-                if (!isBeingEdited)
-                {
-                    workspaceEdit.StartEditing(true);
-                    workspaceEdit.StartEditOperation();
-                }
+                //isBeingEdited = workspaceEdit.IsBeingEdited();
+                //if (!isBeingEdited)
+                //{
+                //    workspaceEdit.StartEditing(true);
+                //    workspaceEdit.StartEditOperation();
+                //}
 
                 //create target workspace name
                 IDataset targetWorkspaceDataset = (IDataset)targetWorkspace;
@@ -194,13 +193,15 @@ namespace MilSpace.DataAccess.Facade
                 //create target dataset name
                 IFeatureClassName targetFeatureClassName = new FeatureClassNameClass();
 
-                                IDatasetName targetDatasetName = (IDatasetName)targetFeatureClassName;
+                IDatasetName targetDatasetName = (IDatasetName)targetFeatureClassName;
                 targetDatasetName.WorkspaceName = targetWorkspaceName;
                 targetDatasetName.Name = nameOfTargetDataset;
 
                 // we want to convert all of the features
                 IQueryFilter queryFilter = new QueryFilterClass();
                 var whereClause = string.Join(" OR ", filter.Select(id => $"OBJECTID={id}").ToArray());
+                //string whereClause = "OBJECTID=10061 OR OBJECTID=10465";
+
                 queryFilter.WhereClause = whereClause;
                 //Validate the field names because you are converting between different workspace types.
                 IFieldChecker fieldChecker = new FieldCheckerClass();
@@ -234,7 +235,6 @@ namespace MilSpace.DataAccess.Facade
                             exportWithError = false;
                             logger.ErrorEx("ExportObservationFeatureClass ERROR. Export is not acceptable");
                         }
-
                         error = enumFieldError.Next();
                     }
                 }
@@ -244,11 +244,29 @@ namespace MilSpace.DataAccess.Facade
                     IFeatureDataConverter fctofc = new FeatureDataConverterClass();
 
                     //(IFeatureDatasetName)targetDataset.FullName
-                    IEnumInvalidObject enumErrors =
-                        fctofc.ConvertFeatureClass(sourceDatasetName, queryFilter, null, targetFeatureClassName, targetGeometryDef,
-                        pSourceTab.Fields, "", 1000, 0);
+                    IEnumInvalidObject enumErrors = fctofc.ConvertFeatureClass(
+                        sourceDatasetName, 
+                        queryFilter, 
+                        null, 
+                        targetFeatureClassName, 
+                        targetGeometryDef,
+                        pSourceTab.Fields, 
+                        "", 
+                        1000, 
+                        0);
 
-                    logger.DebugEx("> ExportObservationFeatureClass END. targetFeatureClassName:{0}", ((IDatasetName)targetFeatureClassName).Name);
+                    if (enumErrors != null)
+                    {
+                        var error = enumErrors.Next();
+                        while (error != null)
+                        {
+                            logger.WarnEx("ExportObservationFeatureClass. Export error in the featureID:{0} ErrorDescription{1}", 
+                                error.InvalidObjectID, error.ErrorDescription);
+                            error = enumErrors.Next();
+                        }
+                    }
+
+                    logger.DebugEx("> ExportObservationFeatureClass END. nameOfTargetDataset:{0}", ((IDatasetName)targetFeatureClassName).Name);
                     return ((IDatasetName)targetFeatureClassName).Name;
                 }
             }
@@ -258,11 +276,11 @@ namespace MilSpace.DataAccess.Facade
             }
             finally
             {
-                if (workspaceEdit != null && !isBeingEdited)
-                {
-                    workspaceEdit.StopEditOperation();
-                    workspaceEdit.StopEditing(false);
-                }
+                //if (workspaceEdit != null && !isBeingEdited)
+                //{
+                //    workspaceEdit.StopEditOperation();
+                //    workspaceEdit.StopEditing(false);
+                //}
             }
 
             logger.DebugEx("> ExportObservationFeatureClass END. targetFeatureClassName NULL");
@@ -603,23 +621,34 @@ namespace MilSpace.DataAccess.Facade
 
         private static IFeatureClass OpenFeatureClass(IWorkspace workspace, string featureClass)
         {
-            IWorkspace2 wsp2 = (IWorkspace2)workspace;
-            IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)workspace;
+            logger.InfoEx("> OpenFeatureClass START featureClass:{0} ", featureClass);
 
-            //if(!wsp2.NameExists[esriDatasetType.esriDTFeatureClass, featureClass])
-            //{
-            var datasetNames = workspace.DatasetNames[esriDatasetType.esriDTFeatureClass];
-            var featureName = datasetNames.Next().Name;
-
-            while (!featureName.EndsWith(featureClass))
+            try
             {
-                featureName = datasetNames.Next().Name;
+                IWorkspace2 wsp2 = (IWorkspace2)workspace;
+                IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)workspace;
+
+                //if(!wsp2.NameExists[esriDatasetType.esriDTFeatureClass, featureClass])
+                //{
+                var datasetNames = workspace.DatasetNames[esriDatasetType.esriDTFeatureClass];
+                var featureName = datasetNames.Next().Name;
+                while (!featureName.EndsWith(featureClass))
+                {
+                    featureName = datasetNames.Next().Name;
+                }
+
+                featureClass = featureName;
+                // }
+                IFeatureClass ifw = featureWorkspace.OpenFeatureClass(featureClass);
+
+                logger.InfoEx("> OpenFeatureClass END");
+                return ifw;
             }
-
-            featureClass = featureName;
-            // }
-
-            return featureWorkspace.OpenFeatureClass(featureClass);
+            catch (Exception ex)
+            {
+                logger.InfoEx("> OpenFeatureClass EXCEPTION:{0}", ex.Message);
+                return null;
+            }
         }
 
         internal bool CheckDatasetExistanceInCalcWorkspace(string dataSetName, esriDatasetType datasetType)
@@ -1173,6 +1202,8 @@ namespace MilSpace.DataAccess.Facade
 
         public void FillVSCoverageTable(List<CoverageTableRowModel> tableModel, string tableName, string gdb)
         {
+            logger.InfoEx("> FillVSCoverageTable START tableName:{0} gdb:{1}", tableName, gdb);
+
             IWorkspaceFactory workspaceFactory = new FileGDBWorkspaceFactory();
             IWorkspace workspace;
 
@@ -1180,9 +1211,9 @@ namespace MilSpace.DataAccess.Facade
             {
                 workspace = workspaceFactory.OpenFromFile(gdb, 0);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                logger.ErrorEx($"Cannot open GDB from {gdb} /n{ex.Message}");
+                logger.ErrorEx($"> FillVSCoverageTable ERROR. Cannot open GDB from {gdb} /n{ex.Message}");
                 Marshal.ReleaseComObject(workspaceFactory);
                 return;
             }
@@ -1195,13 +1226,13 @@ namespace MilSpace.DataAccess.Facade
 
             try
             {
-                foreach(var row in tableModel)
+                foreach (var row in tableModel)
                 {
                     var newRow = table.CreateRow();
 
                     newRow.Value[table.FindField("TitleOp")] = row.ObservPointName;
 
-                    if(row.ObservPointId != -1)
+                    if (row.ObservPointId != -1)
                     {
                         newRow.Value[table.FindField("IdOP")] = row.ObservPointId;
                     }
@@ -1212,7 +1243,7 @@ namespace MilSpace.DataAccess.Facade
                     newRow.Value[table.FindField("CurrentToAllExpectedVAPercentage")] = row.ToAllExpectedAreaPercent;
                     newRow.Value[table.FindField("CurrentVAToAllExpectedVAPercentage")] = row.ToAllVisibilityAreaPercent;
 
-                    if(row.ObservPointsSeeCount != -1)
+                    if (row.ObservPointsSeeCount != -1)
                     {
                         newRow.Value[table.FindField("OPSee")] = row.ObservPointsSeeCount;
                     }
@@ -1224,70 +1255,92 @@ namespace MilSpace.DataAccess.Facade
                 workspaceEdit.StopEditing(true);
 
                 Marshal.ReleaseComObject(workspaceFactory);
+                logger.InfoEx("> FillVSCoverageTable END");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                logger.ErrorEx($"An error occured during table {tableName} filling/n{ex.Message}");
+                logger.ErrorEx($"> FillVSCoverageTable EXCEPTION. An error occured during table {tableName} filling: {ex.Message}");
             }
-}
-
-        private void GenerateCoverageAreasTempStorage(string newFeatureClassName, string gdb, IWorkspace workspace)
-        {
-            IFeatureClassDescription fcDescription = new FeatureClassDescriptionClass();
-            IObjectClassDescription ocDescription = (IObjectClassDescription)fcDescription;
-            IFields fields = ocDescription.RequiredFields;
-
-            int shapeFieldIndex = fields.FindField(fcDescription.ShapeFieldName);
-
-            IField field = fields.get_Field(shapeFieldIndex);
-            IGeometryDef geometryDef = field.GeometryDef;
-            IGeometryDefEdit geometryDefEdit = (IGeometryDefEdit)geometryDef;
-            geometryDefEdit.HasZ_2 = false;
-            geometryDefEdit.GeometryType_2 = esriGeometryType.esriGeometryPolygon;
-            geometryDefEdit.SpatialReference_2 = ArcMapInstance.Document.FocusMap.SpatialReference;
-
-            IFieldsEdit fieldsEdit = (IFieldsEdit)fields;
-
-            IField pointIdField = new FieldClass();
-            IFieldEdit pointIdFieldEdit = (IFieldEdit)pointIdField;
-            pointIdFieldEdit.Name_2 = "ObservPointId";
-            pointIdFieldEdit.Type_2 = esriFieldType.esriFieldTypeInteger;
-            fieldsEdit.AddField(pointIdField);
-
-            IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)workspace;
-            workspaceEdit.StartEditing(true);
-            workspaceEdit.StartEditOperation();
-
-            IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)workspace;
-
-            IFeatureClass featureClass = featureWorkspace.CreateFeatureClass(newFeatureClassName, fields,
-                    ocDescription.InstanceCLSID, ocDescription.ClassExtensionCLSID, esriFeatureType.esriFTSimple, "shape", "");
-
-            workspaceEdit.StopEditOperation();
-            workspaceEdit.StopEditing(true);
         }
 
-        public IFeatureClass AddCoverageAreaFeature(IPolygon polygon, int pointId, string featureClassName, string gdb)
+        private void GenerateCoverageAreasTempStorage(string newFeatureClassName, IWorkspace workspace, ISpatialReference sr)
         {
-            IWorkspaceFactory workspaceFactory = new FileGDBWorkspaceFactory();
-            IWorkspace workspace;
-
+            logger.InfoEx("> GenerateCoverageAreasTempStorage START. newFeatureClassName:{0}", newFeatureClassName);
             try
             {
-                workspace = workspaceFactory.OpenFromFile(gdb, 0);
+                IFeatureClassDescription fcDescription = new FeatureClassDescriptionClass();
+                IObjectClassDescription ocDescription = (IObjectClassDescription)fcDescription;
+                IFields fields = ocDescription.RequiredFields;
+
+                int shapeFieldIndex = fields.FindField(fcDescription.ShapeFieldName);
+
+                IField field = fields.get_Field(shapeFieldIndex);
+                IGeometryDef geometryDef = field.GeometryDef;
+                IGeometryDefEdit geometryDefEdit = (IGeometryDefEdit)geometryDef;
+                geometryDefEdit.HasZ_2 = false;
+                geometryDefEdit.GeometryType_2 = esriGeometryType.esriGeometryPolygon;
+
+                //geometryDefEdit.SpatialReference_2 = VisibilityManager.CurrentMap.SpatialReference;
+                geometryDefEdit.SpatialReference_2 = sr;
+
+                IFieldsEdit fieldsEdit = (IFieldsEdit)fields;
+
+                IField pointIdField = new FieldClass();
+                IFieldEdit pointIdFieldEdit = (IFieldEdit)pointIdField;
+                pointIdFieldEdit.Name_2 = "ObservPointId";
+                pointIdFieldEdit.Type_2 = esriFieldType.esriFieldTypeInteger;
+                fieldsEdit.AddField(pointIdField);
+
+                IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)workspace;
+
+                workspaceEdit.StartEditing(true);
+                workspaceEdit.StartEditOperation();
+
+                IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)workspace;
+
+                IFeatureClass featureClass = featureWorkspace.CreateFeatureClass(
+                    newFeatureClassName,
+                    fields,
+                    ocDescription.InstanceCLSID,
+                    ocDescription.ClassExtensionCLSID,
+                    esriFeatureType.esriFTSimple,
+                    "shape",
+                    "");
+
+                workspaceEdit.StopEditOperation();
+                workspaceEdit.StopEditing(true);
+
+                logger.InfoEx("> GenerateCoverageAreasTempStorage END");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                logger.ErrorEx($"Cannot open GDB from {gdb} /n{ex.Message}");
+                logger.InfoEx("> GenerateCoverageAreasTempStorage EXCEPTION. ex.Message:{0}", ex.Message);
+            }
+        }
+
+        public IFeatureClass AddCoverageAreaFeature(IPolygon polygon, int pointId, string featureClassName, ISpatialReference sr)
+        {
+            logger.InfoEx("> AddCoverageAreaFeature START. featureClassName:{0} pointId:{1}", featureClassName, pointId);
+
+            IWorkspaceFactory workspaceFactory = new FileGDBWorkspaceFactory();
+            IWorkspace workspace;
+            try
+            {
+                //workspace = workspaceFactory.OpenFromFile(gdb, 0);
+                workspace = calcWorkspace;
+            }
+            catch (Exception ex)
+            {
                 Marshal.ReleaseComObject(workspaceFactory);
+
+                logger.ErrorEx($"> AddCoverageAreaFeature ERROR. Cannot open GDB: {ex.Message}");
                 return null;
             }
 
             IWorkspace2 wsp2 = workspace as IWorkspace2;
-
             if (!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, featureClassName))
             {
-                GenerateCoverageAreasTempStorage(featureClassName, gdb, workspace);
+                GenerateCoverageAreasTempStorage(featureClassName, workspace, sr);  //IPolygon polygon
             }
 
             IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)workspace;
@@ -1297,10 +1350,8 @@ namespace MilSpace.DataAccess.Facade
             try
             {
                 IFeatureClass featureClass = OpenFeatureClass(workspace, featureClassName);
-
                 var areaFeature = featureClass.CreateFeature();
                 areaFeature.Shape = polygon;
-
                 if(pointId != -1)
                 {
                     areaFeature.set_Value(featureClass.FindField("ObservPointId"), pointId);
@@ -1309,14 +1360,14 @@ namespace MilSpace.DataAccess.Facade
                 areaFeature.Store();
                 workspaceEdit.StopEditOperation();
                 workspaceEdit.StopEditing(true);
-
                 Marshal.ReleaseComObject(workspaceFactory);
 
+                logger.InfoEx("> AddCoverageAreaFeature END");
                 return featureClass;
             }
             catch(Exception ex)
             {
-                logger.ErrorEx($"An error occured during table {featureClassName} filling/n{ex.Message}");
+                logger.InfoEx("> AddCoverageAreaFeature Exception. ex.Message:{0}", ex.Message);
                 return null;
             }
         }
