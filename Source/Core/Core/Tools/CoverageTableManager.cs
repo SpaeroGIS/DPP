@@ -116,7 +116,7 @@ namespace MilSpace.Tools
         {
             _logger.DebugEx("> SetCoverageAreas START");
 
-            var observPoints = VisibilityZonesFacade.GetObservationPointByObjectIds(observPointsIds);
+            var observPoints = VisibilityZonesFacade.GetObservationPointsByObjectIds(observPointsIds);
 
             if(observPoints == null || observPoints.Count() == 0)
             {
@@ -194,7 +194,7 @@ namespace MilSpace.Tools
 
             if(!isTotal || pointCount == 1)
             {
-                var observPoint = VisibilityZonesFacade.GetObservationPointByObjectIds(new int[] { currPointId }).First();
+                var observPoint = VisibilityZonesFacade.GetObservationPointsByObjectIds(new int[] { currPointId }).First();
 
                 if(_totalExpectedArea == 0)
                 {
@@ -221,7 +221,7 @@ namespace MilSpace.Tools
             
             if(!isTotal || pointCount == 1)
             {
-                var observPoint = VisibilityZonesFacade.GetObservationPointByObjectIds(new int[] { currPointId }).First();
+                var observPoint = VisibilityZonesFacade.GetObservationPointsByObjectIds(new int[] { currPointId }).First();
                 if(observPoint == null)
                 {
                     _logger.ErrorEx($"> CalculateCoverageTableVADataForPoint END. Observation point with id {currPointId} is not found");

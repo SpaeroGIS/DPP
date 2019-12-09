@@ -940,8 +940,6 @@ namespace MilSpace.DataAccess.Facade
             pointFeature.set_Value(featureClass.FindField("AnglMaxH"), pointArgs.AngelMaxH);
             pointFeature.set_Value(featureClass.FindField("InnerRadius"), pointArgs.InnerRadius);
             pointFeature.set_Value(featureClass.FindField("OuterRadius"), pointArgs.OuterRadius);
-            pointFeature.set_Value(featureClass.FindField("dto"), pointArgs.Dto);
-            pointFeature.set_Value(featureClass.FindField("soper"), pointArgs.Operator);
 
             pointFeature.Store();
         }

@@ -14,6 +14,7 @@ using MilSpace.Tools.Exceptions;
 using System.Text.RegularExpressions;
 using MilSpace.Visibility.Localization;
 using MilSpace.Visibility.DTO;
+using ESRI.ArcGIS.Editor;
 
 namespace MilSpace.Visibility.ViewController
 {
@@ -65,10 +66,6 @@ namespace MilSpace.Visibility.ViewController
             this.view = view;
         }
 
-        internal void OnCreateFeature(ESRI.ArcGIS.Geodatabase.IObject obj)
-        {
-            throw new NotImplementedException();
-        }
 
         internal string GetObservPointFeatureName()
         {
@@ -334,12 +331,6 @@ namespace MilSpace.Visibility.ViewController
                         application);
                     exx++;
 
-                    //EsriTools.AddVisibilityGroupLayer(
-                    //    datasets, calcTask.Name, calcTask.Id, calcTask.ReferencedGDB,
-                    //    calcParams.RelativeLayerName, isLayerAbove, calcParams.ResultLayerTransparency,
-                    //    mapDocument.ActiveView);
-
-                    //EsriTools.AddTableToMap(tbls, VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.CoverageTable, calcTask.Name), calcTask.ReferencedGDB, mapDocument, application);
                 }
             }
             catch (Exception ex)
@@ -366,7 +357,7 @@ namespace MilSpace.Visibility.ViewController
                 IEnumerable<int> visiblePoints = EsriTools.GetSelectionByExtent(observPoints, activeView);
                 if (visiblePoints != null)
                 {
-                    result = VisibilityZonesFacade.GetObservationPointByObjectIds(visiblePoints);
+                    result = VisibilityZonesFacade.GetObservationPointsByObjectIds(visiblePoints);
                 }
             }
 
@@ -557,9 +548,9 @@ namespace MilSpace.Visibility.ViewController
             return observstsLayersNames;
         }
 
-        public IFeatureClass GetObservatioPointFeatureClass(IActiveView esriView)
+        public IFeatureClass GetObservatioPointFeatureClass(IActiveView esriView = null)
         {
-            return GetFeatureClass(view.ObservationPointsFeatureClass, esriView);
+            return GetFeatureClass(_observPointFeature, esriView);
         }
         public IFeatureClass GetObservatioStationFeatureClass(IActiveView esriView)
         {
@@ -625,25 +616,20 @@ namespace MilSpace.Visibility.ViewController
 
         private IFeatureClass GetFeatureClass(string featureClassName, IActiveView activeView)
         {
+            if (activeView == null)
+            {
+                activeView = mapDocument.ActivatedView;
+            }
+
             if (string.IsNullOrWhiteSpace(featureClassName))
             {
                 return null;
             }
 
-            var layers = activeView.FocusMap.Layers;
-            var layer = layers.Next();
+            MapLayersManager mlm = new MapLayersManager(activeView);
+            var fl = mlm.FindFeatureLayer(featureClassName);
 
-            while (layer != null)
-            {
-                if (layer is IFeatureLayer fl && fl.FeatureClass != null && fl.FeatureClass.AliasName.EndsWith(featureClassName, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    return fl.FeatureClass;
-                }
-
-                layer = layers.Next();
-            }
-
-            return null;
+            return fl?.FeatureClass;
         }
 
         private IFeatureLayer GetFeatureLayer(string featureClassName, IActiveView activeView)
@@ -687,7 +673,7 @@ namespace MilSpace.Visibility.ViewController
 
         internal void DeleteObservationObject(string id)
         {
-            var obj=  _observationObjects.FirstOrDefault(o => o.Id == id);
+            var obj = _observationObjects.FirstOrDefault(o => o.Id == id);
             if (obj != null)
             {
                 VisibilityZonesFacade.DeleteObservationObject(obj);
@@ -710,35 +696,49 @@ namespace MilSpace.Visibility.ViewController
                 EsriTools.FlashGeometry(mapDocument.ActiveView.ScreenDisplay, new IGeometry[] { observObject.Shape });
             }
         }
-        //private void TestPolygonFinding(ObservationPoint point, ObservationObject obj, IFeatureClass pointsFC, IFeatureClass objFC)
-        //{
-        //    try
-        //    {
-        //        var feature = pointsFC.GetFeature(point.Objectid);
-        //        IPoint pointGeom = feature.Shape as IPoint;
 
-        //        pointGeom.Project(mapDocument.ActivatedView.FocusMap.SpatialReference);
+        #region ArcMap Eventts
+        internal void OnStartEditing()
+        {
+        }
 
-        //        var featureObj = objFC.GetFeature(obj.ObjectId);
-        //        IPolygon objGeom = featureObj.Shape as IPolygon;
+        internal void OnStopEditing(bool save)
+        {
+            var es = ArcMap.Editor.EditState;
+            if (save)
+            {
+                UpdateObservationPointsList();
+            }
+        }
 
-        //        var area = EsriTools.GetCoverageArea(pointGeom, point.AzimuthStart.Value, point.AzimuthEnd.Value, point.InnerRadius.Value, point.OuterRadius.Value);
-        //        var area1 = EsriTools.GetCoverageArea(pointGeom, point.AzimuthStart.Value, point.AzimuthEnd.Value, point.InnerRadius.Value, point.OuterRadius.Value, objGeom);
+        internal void OnDeleteFeature(ESRI.ArcGIS.Geodatabase.IObject obj)
+        {
+       //     UpdateObservationPointsList();
+        }
 
-        //        IFeatureLayer test1Layer = new FeatureLayerClass();
-        //        test1Layer.Name = $"WithObj{DateTime.Now.ToShortTimeString()}";
-        //        test1Layer.FeatureClass = GdbAccess.Instance.GetTestFeature(area, $"WithObj");
-        //        mapDocument.AddLayer(test1Layer);
+        internal void OnCreateFeature(ESRI.ArcGIS.Geodatabase.IObject obj)
+        {
+            if (obj.Class is IFeatureClass fcl)
+            {
+                if (fcl == GetObservatioPointFeatureClass())
+                {
+                    var fldTitleIndex = obj.Fields.FindField("TitleOP");
+                    var fldDtoIndex = obj.Fields.FindField("DTO");
+                    var fldXWgs = obj.Fields.FindField("XWGS");
+                    var fldYWgs = obj.Fields.FindField("YWGS");
 
-        //        IFeatureLayer test2Layer = new FeatureLayerClass();
-        //        test2Layer.Name = $"WithoutObj{DateTime.Now.ToShortTimeString()}";
-        //        test2Layer.FeatureClass = GdbAccess.Instance.GetTestFeature(area1, $"WithoutObj");
-        //        mapDocument.AddLayer(test2Layer);
-        //    }
-        //    catch(Exception Ex)
-        //    {
+                    IGeometry g = fcl.GetFeature(obj.OID).ShapeCopy;
+                    IPoint p = g as IPoint;
+                    p.Project(EsriTools.Wgs84Spatialreference);
 
-        //    }
-        //}
+                    obj.Value[fldTitleIndex] = LocalizationContext.Instance.DeafultObservationpointTitle;
+                    obj.Value[fldXWgs] = p.X;
+                    obj.Value[fldYWgs] = p.Y;
+                    log.InfoEx($"New observation point was added and name set to {LocalizationContext.Instance.DeafultObservationpointTitle}");
+                }
+            }
+        }
+        #endregion
+
     }
 }

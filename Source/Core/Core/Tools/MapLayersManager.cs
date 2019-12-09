@@ -115,6 +115,9 @@ namespace MilSpace.Core.Tools
             }
         }
 
+
+        
+
         internal List<ILayer> GetAllFirstLevelLayers()
         {
             var layersToReturn = new List<ILayer>();
@@ -158,6 +161,14 @@ namespace MilSpace.Core.Tools
         public IEnumerable<ILayer> PolygonLayers => GetFeatureLayers(polygonTypes);
 
         public IEnumerable<ILayer> FirstLevelLayers => GetAllFirstLevelLayers();
+
+        public IFeatureLayer FindFeatureLayer(string layerNameOrAlias)
+        {
+
+            return GetAllLayers().FirstOrDefault(l => l != null && l is IFeatureLayer  && ((IFeatureLayer)l).FeatureClass != null
+            && ((IFeatureLayer)l).FeatureClass.AliasName.EndsWith(layerNameOrAlias, StringComparison.InvariantCultureIgnoreCase)) as IFeatureLayer;
+            
+        }
 
         public ILayer LastLayer
         {

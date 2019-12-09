@@ -104,6 +104,8 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                 //Here is the place to extend handle the rest of results 
                 result.Result.CalculationMessages = results;
 
+                result.Result.Session.TaskLog = string.Join(System.Environment.NewLine, results);
+
                 if (results != null && results.Count > 0)
                 {
                     results.ForEach(r => {logger.InfoEx(r);});

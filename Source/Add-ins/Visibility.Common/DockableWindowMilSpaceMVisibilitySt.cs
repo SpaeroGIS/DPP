@@ -197,8 +197,6 @@ namespace MilSpace.Visibility
         {
             log.InfoEx("> SubscribeForEvents START");
 
-            IEditEvents_Event editEvent = (IEditEvents_Event)ArcMap.Editor;
-            editEvent.OnCreateFeature += _observPointsController.OnCreateFeature;
 
             ArcMap.Events.OpenDocument += OnContentsChanged;
             ArcMap.Events.NewDocument += OnContentsChanged;
@@ -209,6 +207,14 @@ namespace MilSpace.Visibility
                 //activeViewEvent.SelectionChanged += OnContentsChanged;
                 activeViewEvent.ItemAdded += OnItemAdded;
                 activeViewEvent.ItemDeleted += OnItemDelete;
+                IEditEvents_Event editEvent = (IEditEvents_Event)ArcMap.Editor;
+
+                editEvent.OnStartEditing += _observPointsController.OnStartEditing;
+                editEvent.OnStopEditing += _observPointsController.OnStopEditing;
+
+
+                editEvent.OnCreateFeature += _observPointsController.OnCreateFeature;
+                editEvent.OnDeleteFeature += _observPointsController.OnDeleteFeature;
             };
 
             //ArcMap.Events.NewDocument += delegate ()
@@ -1116,10 +1122,10 @@ namespace MilSpace.Visibility
             var result = MessageBox.Show(
                 sMsgText,
                 LocalizationContext.Instance.MsgBoxInfoHeader,
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
 
-            if (result == DialogResult.OK)
+            if (result == DialogResult.Yes)
             {
                 var rowIndex = dgvObservationPoints.SelectedRows[0].Index;
 
@@ -1298,15 +1304,16 @@ namespace MilSpace.Visibility
             _visibilitySessionsController = controller;
         }
 
-        private void FillVisibilitySessionFields(VisibilityTask session)
+        private void FillVisibilitySessionFields(VisibilityTask task)
         {
-            tbVisibilitySessionName.Text = session.Name;
-            tbVisibilitySessionCreator.Text = session.UserName;
-            tbVisibilitySessionCreated.Text = session.Created.Value.ToString(Helper.DateFormat);
+            tbVisibilitySessionName.Text = task.Name;
+            tbVisibilitySessionCreator.Text = task.UserName;
+            tbVisibilitySessionCreated.Text = task.Created.Value.ToString(Helper.DateFormat);
             tbVisibilitySessionStarted.Text =
-                session.Started.HasValue ? session.Started.Value.ToString(Helper.DateFormat) : string.Empty;
+                task.Started.HasValue ? task.Started.Value.ToString(Helper.DateFormat) : string.Empty;
             tbVisibilitySessionFinished.Text =
-                session.Finished.HasValue ? session.Finished.Value.ToString(Helper.DateFormat) : string.Empty;
+                task.Finished.HasValue ? task.Finished.Value.ToString(Helper.DateFormat) : string.Empty;
+            txtTaskLog.Text = task.TaskLog;
 
             wizardTask.Enabled = _observPointsController.IsObservObjectsExists() && _observPointsController.IsObservPointsExists();
         }
@@ -1834,11 +1841,11 @@ namespace MilSpace.Visibility
             }
 
             var selectedSessionId = dgvVisibilitySessions.SelectedRows[0].Cells["Id"].Value.ToString();
-            var selectedSession = _visibilitySessionsController.GetSession(selectedSessionId);
+            var selectedTask = _visibilitySessionsController.GetCalcTask(selectedSessionId);
 
-            if (selectedSession != null)
+            if (selectedTask != null)
             {
-                FillVisibilitySessionFields(selectedSession);
+                FillVisibilitySessionFields(selectedTask);
             }
 
             tlbVisibilitySessions.Buttons["removeTask"].Enabled = true;

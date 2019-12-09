@@ -59,12 +59,6 @@ namespace MilSpace.DataAccess.Definition
     partial void DeleteMilSp_VisibilityUserSession(MilSp_VisibilityUserSession instance);
     #endregion
 		
-		public MilSpaceVisibilityContext() : 
-				base(global::MilSpace.DataAccess.Properties.Settings.Default.DNOEGDBConnectionString1, mappingSource)
-		{
-			OnCreated();
-		}
-		
 		public MilSpaceVisibilityContext(string connection) : 
 				base(connection, mappingSource)
 		{
@@ -1306,6 +1300,8 @@ namespace MilSpace.DataAccess.Definition
 		
 		private int _CalculationType;
 		
+		private string _TaskLog;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1332,6 +1328,8 @@ namespace MilSpace.DataAccess.Definition
     partial void OnSurfaceChanged();
     partial void OnCalculationTypeChanging(int value);
     partial void OnCalculationTypeChanged();
+    partial void OnTaskLogChanging(string value);
+    partial void OnTaskLogChanged();
     #endregion
 		
 		public MilSp_VisibilityTask()
@@ -1555,6 +1553,26 @@ namespace MilSpace.DataAccess.Definition
 					this._CalculationType = value;
 					this.SendPropertyChanged("CalculationType");
 					this.OnCalculationTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="sLog", Storage="_TaskLog", DbType="NVarChar(MAX)")]
+		public string TaskLog
+		{
+			get
+			{
+				return this._TaskLog;
+			}
+			set
+			{
+				if ((this._TaskLog != value))
+				{
+					this.OnTaskLogChanging(value);
+					this.SendPropertyChanging();
+					this._TaskLog = value;
+					this.SendPropertyChanged("TaskLog");
+					this.OnTaskLogChanged();
 				}
 			}
 		}

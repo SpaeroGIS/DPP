@@ -14,7 +14,7 @@ namespace MilSpace.Visibility.ViewController
     public class VisibilitySessionsController
     {
         private IObservationPointsView _view;
-        private List<VisibilityTask> _visibilitySessions = new List<VisibilityTask>();
+        private List<VisibilityTask> _calculationTasks = new List<VisibilityTask>();
         private List<VisibilityCalcResults> _visibilityResults = new List<VisibilityCalcResults>();
         private static Dictionary<VisibilityTaskStateEnum, string> _states = null; //Enum.GetValues(typeof(VisibilityTaskStateEnum)).Cast<VisibilityTaskStateEnum>().ToDictionary(t => t, ts => ts.ToString());
         private static Dictionary<VisibilityCalcTypeEnum, string> _calcTypes = null;// Enum.GetValues(typeof(VisibilityCalcTypeEnum)).Cast<VisibilityCalcTypeEnum>().ToDictionary(t => t, ts => ts.ToString());
@@ -79,8 +79,8 @@ namespace MilSpace.Visibility.ViewController
 
         internal void UpdateVisibilitySessionsList(bool isNewSessionAdded = false, string newSessionName = null)
         {
-            _visibilitySessions = VisibilityZonesFacade.GetAllVisibilityTasks(true).ToList();
-            _view.FillVisibilitySessionsList(_visibilitySessions, isNewSessionAdded, newSessionName);
+            _calculationTasks = VisibilityZonesFacade.GetAllVisibilityTasks(true).ToList();
+            _view.FillVisibilitySessionsList(_calculationTasks, isNewSessionAdded, newSessionName);
         }
         internal void UpdateVisibilityResultsTree(bool isNewSessionAdded = false)
         {
@@ -89,24 +89,24 @@ namespace MilSpace.Visibility.ViewController
             _view.FillVisibilityResultsTree(_visibilityResults);
         }
 
-        internal VisibilityTask GetSession(string id)
+        internal VisibilityTask GetCalcTask(string id)
         {
-            return _visibilitySessions.FirstOrDefault(session => session.Id == id);
+            return _calculationTasks.FirstOrDefault(session => session.Id == id);
         }
 
         internal Dictionary<VisibilityCalcTypeEnum, string> GetCalcTypes() => _calcTypes;
         internal IEnumerable<VisibilityCalcResults> GetAllResults() => _visibilityResults;
 
-        public IEnumerable<VisibilityTask> GetAllSessions() => _visibilitySessions;
+        public IEnumerable<VisibilityTask> GetAllSessions() => _calculationTasks;
 
         internal bool RemoveSession(string id)
         {
-            if (_visibilitySessions.Count == 0)
+            if (_calculationTasks.Count == 0)
             {
                 UpdateVisibilitySessionsList();
             }
 
-            var removedSession = _visibilitySessions.FirstOrDefault(session => session.Id == id);
+            var removedSession = _calculationTasks.FirstOrDefault(session => session.Id == id);
 
             if (removedSession == null)
             {
@@ -117,7 +117,7 @@ namespace MilSpace.Visibility.ViewController
 
             if (result)
             {
-                _visibilitySessions.Remove(removedSession);
+                _calculationTasks.Remove(removedSession);
                 _view.RemoveSessionFromList(id);
             }
 

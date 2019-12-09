@@ -155,6 +155,7 @@
             this.toolBarButton25 = new System.Windows.Forms.ToolBarButton();
             this.tbpSessions = new System.Windows.Forms.TabPage();
             this.panel14 = new System.Windows.Forms.Panel();
+            this.txtTaskLog = new System.Windows.Forms.TextBox();
             this.panel46 = new System.Windows.Forms.Panel();
             this.tbVisibilitySessionFinished = new System.Windows.Forms.TextBox();
             this.label45 = new System.Windows.Forms.Label();
@@ -1879,6 +1880,7 @@
             // 
             // panel14
             // 
+            this.panel14.Controls.Add(this.txtTaskLog);
             this.panel14.Controls.Add(this.panel46);
             this.panel14.Controls.Add(this.panel45);
             this.panel14.Controls.Add(this.panel44);
@@ -1891,6 +1893,20 @@
             this.panel14.Padding = new System.Windows.Forms.Padding(0, 0, 0, 10);
             this.panel14.Size = new System.Drawing.Size(312, 304);
             this.panel14.TabIndex = 72;
+            // 
+            // txtTaskLog
+            // 
+            this.txtTaskLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTaskLog.BackColor = System.Drawing.SystemColors.Window;
+            this.txtTaskLog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtTaskLog.Location = new System.Drawing.Point(3, 176);
+            this.txtTaskLog.Multiline = true;
+            this.txtTaskLog.Name = "txtTaskLog";
+            this.txtTaskLog.ReadOnly = true;
+            this.txtTaskLog.Size = new System.Drawing.Size(305, 127);
+            this.txtTaskLog.TabIndex = 78;
             // 
             // panel46
             // 
@@ -2590,6 +2606,7 @@
             this.panel27.ResumeLayout(false);
             this.tbpSessions.ResumeLayout(false);
             this.panel14.ResumeLayout(false);
+            this.panel14.PerformLayout();
             this.panel46.ResumeLayout(false);
             this.panel46.PerformLayout();
             this.panel45.ResumeLayout(false);
@@ -2815,5 +2832,6 @@
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.ComboBox cmbObservObjAffiliation;
         private System.Windows.Forms.ToolBarButton toolBarButton34;
+        private System.Windows.Forms.TextBox txtTaskLog;
     }
 }
