@@ -133,7 +133,7 @@ namespace MilSpace.Visibility
                 this.label45.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label45_Text", "час закінчення");
                 this.label44.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label44_Text", "час старту");
                 this.label43.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label43_Text", "час створення");
-                this.label42.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label42_Text", "користувач");
+                this.label42.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label42_Text", "оператор");
                 this.label46.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label46_Text", "назва");
                 this.label40.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label40_Text", "Інформація про завдання");
                 this.wizardTask.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_wizardTask_ToolTipText", "сформувати завдання на розрахунок");

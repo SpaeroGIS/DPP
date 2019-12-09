@@ -141,7 +141,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                     stationsFilteringIds);
                 if (!string.IsNullOrWhiteSpace(exportedFeatureClass))
                 {
-                    results.Add(iStepNum.ToString() + ". " + "Створено: " + exportedFeatureClass);
+                    results.Add(iStepNum.ToString() + ". " + "Створено копію ОН для розрахунку: " + exportedFeatureClass);
                     iStepNum++;
                 }
                 else
@@ -223,7 +223,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                     return messages;
                 }
 
-                results.Add(iStepNum.ToString() + ". " + "Створено: " + exportedFeatureClass);
+                results.Add(iStepNum.ToString() + ". " + "Створено копію ПС для розрахунку: " + exportedFeatureClass);
                 iStepNum++;
 
                 //Generate Visibility Raster
