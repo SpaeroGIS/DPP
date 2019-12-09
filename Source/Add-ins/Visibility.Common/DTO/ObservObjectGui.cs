@@ -9,7 +9,8 @@ namespace MilSpace.Visibility.DTO
         public string Id { get; set; }
         public string Title { get; set; }
         public string Group { get; set; }
-        public DateTime Created { get; set; }
         public string Affiliation { get; set; }
+        public DateTime Created { get; set; }
+
     }
 }
