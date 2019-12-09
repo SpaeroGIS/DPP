@@ -134,7 +134,7 @@ namespace MilSpace.Core
 
         public static string InvariantFormat(this string format, params object[] args)
         {
-            return string.Format(CultureInfo.InvariantCulture, format, args);
+            return (format.Contains("{") && format.Contains("}")) ? string.Format(CultureInfo.InvariantCulture, format, args) : format;
         }
 
         public static void SetConfiguration()
