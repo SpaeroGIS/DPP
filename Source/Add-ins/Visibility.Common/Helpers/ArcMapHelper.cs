@@ -1,6 +1,8 @@
 ﻿using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.DataSourcesRaster;
 using ESRI.ArcGIS.Display;
+using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core;
@@ -94,38 +96,27 @@ namespace MilSpace.Visibility
 
                     if (layer is IRasterLayer rasterLayer )
                     {
-                         IRaster pRaster = default(IRaster);
-                        pRaster = rasterLayer.Raster;
-
-                        IRasterStretchColorRampRenderer stretchRen = default(IRasterStretchColorRampRenderer);
-                        stretchRen = new RasterStretchColorRampRenderer();
-                        IRasterRenderer pRasRen = default(IRasterRenderer);
-                        pRasRen = (IRasterRenderer)stretchRen;
-
-                        bool bOK;
-                        IAlgorithmicColorRamp ramp = new AlgorithmicColorRamp();
-                        ramp.FromColor = new RgbColor()
+                        logger.InfoEx($"Setting unique values for remdering \"{rasterLayer.Name}\" ");
+                        try
                         {
-                            Red = 255,
-                            Green = 255,
-                            Blue = 115
-                        };
-                        ramp.ToColor =  new RgbColor()
+                            var render = EsriTools.GetCalclResultRender(rasterLayer.Raster, "Value");
+                            if (render == null)
+                            {
+                                logger.ErrorEx($"The raster \"{rasterLayer.Name}\" doesn't have a table");
+                            }
+
+                            rasterLayer.Renderer = render;
+                            logger.InfoEx($"Unique values for remdering \"{rasterLayer.Name}\" was set");
+                        }
+                        catch (KeyNotFoundException ex)
                         {
-                            Red = 115,
-                            Green = 38,
-                            Blue = 0
-
-                        };
-                        ramp.Size = 255;
-                        ramp.Algorithm = esriColorRampAlgorithm.esriCIELabAlgorithm;
-                        ramp.CreateRamp(out bOK);
-
-                        stretchRen.BandIndex = 0;
-                        stretchRen.ColorRamp = ramp;
-                        pRasRen.Update();
-                        rasterLayer.Renderer = (IRasterRenderer)stretchRen;
-
+                            logger.ErrorEx($"The field \"Value\" was not found in the raster table");
+                            logger.ErrorEx(ex.Message);
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.ErrorEx(ex.Message);
+                        }
                     }
                 }
             },
@@ -133,141 +124,158 @@ namespace MilSpace.Visibility
 
                     if (layer is IRasterLayer rasterLayer )
                     {
-                         IRaster pRaster = default(IRaster);
-                        pRaster = rasterLayer.Raster;
-
-                        IRasterStretchColorRampRenderer stretchRen = default(IRasterStretchColorRampRenderer);
-                        stretchRen = new RasterStretchColorRampRenderer();
-                        IRasterRenderer pRasRen = default(IRasterRenderer);
-                        pRasRen = (IRasterRenderer)stretchRen;
-
-                        bool bOK;
-                        IAlgorithmicColorRamp ramp = new AlgorithmicColorRamp();
-                        ramp.FromColor = new RgbColor()
+                         logger.InfoEx($"Setting unique values for remdering \"{rasterLayer.Name}\" ");
+                        try
                         {
-                            Red = 255,
-                            Green = 255,
-                            Blue = 115
-                        };
-                        ramp.ToColor =  new RgbColor()
-                        {
-                            Red = 115,
-                            Green = 38,
-                            Blue = 0
+                            var render = EsriTools.GetCalclResultRender(rasterLayer.Raster, "Value");
+                            if (render == null)
+                            {
+                                logger.ErrorEx($"The raster \"{rasterLayer.Name}\" doesn't have a table");
+                            }
 
-                        };
-                        ramp.Algorithm = esriColorRampAlgorithm.esriCIELabAlgorithm;
-                    try
-                    {
-                        ramp.CreateRamp(out bOK);
-
-                        stretchRen.BandIndex = 0;
-                        stretchRen.ColorRamp = ramp;
-                        pRasRen.Update();
-                        rasterLayer.Renderer = (IRasterRenderer)stretchRen;
+                            rasterLayer.Renderer = render;
+                            logger.InfoEx($"Unique values for remdering \"{rasterLayer.Name}\" was set");
                         }
-                    catch
-                    {
-
-                    }
-
+                        catch (KeyNotFoundException ex)
+                        {
+                            logger.ErrorEx($"The field \"Value\" was not found in the raster table");
+                            logger.ErrorEx(ex.Message);
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.ErrorEx(ex.Message);
+                        }
                     }
                 }
             },
             { VisibilityCalculationResultsEnum.VisibilityAreaRaster, (layer, fillColor, transparency) => {
 
-                    if (layer is IRasterLayer rasterLayer )
+                  if (layer is IRasterLayer rasterLayer )
                     {
-                         IRaster pRaster = default(IRaster);
-                        pRaster = rasterLayer.Raster;
+                        logger.InfoEx($"Setting unique values for remdering \"{rasterLayer.Name}\" ");
+                        try
+                        {
+                            var render = EsriTools.GetCalclResultRender(rasterLayer.Raster, "Value");
+                            if (render == null)
+                            {
+                                logger.ErrorEx($"The raster \"{rasterLayer.Name}\" doesn't have a table");
+                            }
 
-                        IRasterStretchColorRampRenderer stretchRen = default(IRasterStretchColorRampRenderer);
-                        stretchRen = new RasterStretchColorRampRenderer();
-                        IRasterRenderer pRasRen = default(IRasterRenderer);
-                        pRasRen = (IRasterRenderer)stretchRen;
+                            rasterLayer.Renderer = render;
+                            logger.InfoEx($"Unique values for remdering \"{rasterLayer.Name}\" was set");
+                        }
+                        catch (KeyNotFoundException ex)
+                        {
+                            logger.ErrorEx($"The field \"Value\" was not found in the raster table");
+                            logger.ErrorEx(ex.Message);
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.ErrorEx(ex.Message);
+                        }
+                    }
+                }
+            },
+            { VisibilityCalculationResultsEnum.VisibilityAreaPolygons, (layer, fillColor, transparency) => {
 
-                        bool bOK;
-                        IAlgorithmicColorRamp ramp = new AlgorithmicColorRamp();
-                        ramp.FromColor = new RgbColor()
+                    if (layer is IFeatureLayer polygonLayer )
+                    {
+
+                        string valuesField = "gridcode";
+
+                        var attrTable = polygonLayer.FeatureClass as ITable;
+                        var fld = attrTable.FindField(valuesField);
+
+                        var filter = new QueryFilter();
+                        filter.SubFields = valuesField;
+                        IQueryFilterDefinition2 filterDefinition = (IQueryFilterDefinition2)filter;
+
+                        filterDefinition.PostfixClause = $"ORDER BY {valuesField}";
+                        filterDefinition.PrefixClause = $"DISTINCT  {valuesField}";
+                        var uniwuevaluesr = attrTable.Search(filter, false);
+
+                        var row =uniwuevaluesr.NextRow();
+                        List<int> ids = new List<int>();
+                        
+                        while (row != null)
+                        {
+                            ids.Add((int)row.Value[fld]);
+                            row =uniwuevaluesr.NextRow();
+                        }
+
+
+                        IAlgorithmicColorRamp algColorRamp = new AlgorithmicColorRampClass();
+
+                        //Create the start and end colors
+                        IRgbColor startColor = new RgbColor()
                         {
                             Red = 255,
                             Green = 255,
                             Blue = 115
                         };
-                        ramp.ToColor =  new RgbColor()
+                        IRgbColor endColor = new RgbColor()
                         {
                             Red = 115,
                             Green = 38,
                             Blue = 0
 
                         };
-                        ramp.Algorithm = esriColorRampAlgorithm.esriCIELabAlgorithm;
-                        ramp.CreateRamp(out bOK);
-
-                        stretchRen.BandIndex = 0;
-                        stretchRen.ColorRamp = ramp;
-                        pRasRen.Update();
-                        rasterLayer.Renderer = (IRasterRenderer)stretchRen;
-
-                    }
-                }
-            },
-            { VisibilityCalculationResultsEnum.VisibilityAreaPolygons, (layer, fillColor, transparency) => {
-
-                    //if (layer is IFeatureLayer polygonLayer )
-                    //{
-                    //        IColorRampSymbol  colorRampSymbol = new ColorRampSymbol();
-                    //        IAlgorithmicColorRamp algColorRamp = new AlgorithmicColorRampClass();
-
-
-                    //        //Create the start and end colors
-                    //        IRgbColor startColor = new RgbColor()
-                    //        {
-                    //            Red = 255,
-                    //            Green = 255,
-                    //            Blue = 115
-                    //        };
-                    //        IRgbColor endColor = new RgbColor()
-                    //        {
-                    //            Red = 115,
-                    //            Green = 38,
-                    //            Blue = 0
-
-                    //        };
                            
-                    //        //Set the Start and End Colors
-                    //        algColorRamp.ToColor = startColor;
-                    //        algColorRamp.FromColor = endColor;
+                        //Set the Start and End Colors
+                        algColorRamp.ToColor = endColor;
+                        algColorRamp.FromColor = startColor;
 
-                    //        //Set the ramping Alglorithm 
-                    //        algColorRamp.Algorithm = esriColorRampAlgorithm.esriCIELabAlgorithm;
+                        //Set the ramping Alglorithm 
+                        algColorRamp.Algorithm = esriColorRampAlgorithm.esriCIELabAlgorithm;
 
-                    //        //Set the size of the ramp (the number of colors to be derived)
-                    //        algColorRamp.Size = 255;
-
-
-                    //        //Create the ramp
-                    //        bool ok = true;
-                    //        algColorRamp.CreateRamp(out ok);
+                        //Set the size of the ramp (the number of colors to be derived)
+                        algColorRamp.Size = ids.Count;
 
 
-                    //    if (ok)
-                    //        colorRampSymbol.ColorRamp =algColorRamp;
+                        //Create the ramp
+                        bool ok = true;
+                        algColorRamp.CreateRamp(out ok);
 
-                    ////ICartographicLineSymbol outline = new CartographicLineSymbol
-                    ////{
-                    ////    Width = 0.4,
-                    ////    Color = new RgbColor()
-                    ////    {
-                    ////        Red = 100,
-                    ////        Green = 100,
-                    ////        Blue = 100
-                    ////    }
-                    ////};
+                        if (ok)
+                        {
+                            IUniqueValueRenderer uniqueRen = new UniqueValueRenderer();
+                            uniqueRen.FieldCount = 1;
+                            uniqueRen.Field[0]=valuesField;
 
-                    ////colorRampSymbol.Outline = outline;
-                    //EsriTools.SetFeatureLayerStyle(layer as IFeatureLayer,  colorRampSymbol as ISymbol);
-                    //}
+
+                            var fldIndex = uniwuevaluesr.FindField(valuesField);
+                            if (fldIndex < 0)
+                            {
+                                throw new KeyNotFoundException(valuesField);
+                            }
+
+                            int valueClass = 0;
+                        
+                            foreach(var uniqueValue in ids)
+                            {
+                                var classValue = uniqueValue;
+                                ISimpleFillSymbol simpleFillSymbol = new SimpleFillSymbol();
+                                simpleFillSymbol.Color = algColorRamp.Color[valueClass++];
+                                simpleFillSymbol.Outline = new CartographicLineSymbol
+                                {
+                                    Width = 0.4,
+                                    Color = new RgbColor()
+                                    {
+                                        Red = 100,
+                                        Green = 100,
+                                        Blue = 100
+                                    }
+                                };
+
+                                uniqueRen.AddValue($"{classValue}", string.Empty, simpleFillSymbol as ISymbol);
+                                uniqueRen.Label[$"{classValue}"] = $"{classValue}";
+                                uniqueRen.Symbol[$"{classValue}"] = simpleFillSymbol as ISymbol;
+                            //, $"{classValue}", simpleFillSymbol as ISymbol);
+                            }
+                            IGeoFeatureLayer geoFeatureLayer = (IGeoFeatureLayer)polygonLayer;
+                            geoFeatureLayer.Renderer = (IFeatureRenderer)uniqueRen;
+                        }
+                    }
                 }
             },
             { VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle, (layer, fillColor, transparency) => {
