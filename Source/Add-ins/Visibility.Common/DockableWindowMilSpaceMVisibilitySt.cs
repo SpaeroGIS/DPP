@@ -133,7 +133,7 @@ namespace MilSpace.Visibility
                 this.label45.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label45_Text", "час закінчення");
                 this.label44.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label44_Text", "час старту");
                 this.label43.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label43_Text", "час створення");
-                this.label42.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label42_Text", "користувач");
+                this.label42.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label42_Text", "оператор");
                 this.label46.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label46_Text", "назва");
                 this.label40.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label40_Text", "Інформація про завдання");
                 this.wizardTask.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_wizardTask_ToolTipText", "сформувати завдання на розрахунок");
@@ -1261,6 +1261,7 @@ namespace MilSpace.Visibility
 
             xCoord.Text = selectedPoint.X.HasValue ? selectedPoint.X.Value.ToString("F5") : centerPoint.X.ToString("F5");
             yCoord.Text = selectedPoint.Y.HasValue ? selectedPoint.Y.Value.ToString("F5") : centerPoint.Y.ToString("F5");
+
             azimuthB.Text = 
                 selectedPoint.AzimuthStart.HasValue ? 
                 selectedPoint.AzimuthStart.ToString() : 
@@ -1326,7 +1327,8 @@ namespace MilSpace.Visibility
                 task.Finished.HasValue ? task.Finished.Value.ToString(Helper.DateFormat) : string.Empty;
             txtTaskLog.Text = task.TaskLog;
 
-            wizardTask.Enabled = _observPointsController.IsObservObjectsExists() && _observPointsController.IsObservPointsExists();
+            //wizardTask.Enabled = _observPointsController.IsObservObjectsExists() && _observPointsController.IsObservPointsExists();
+            wizardTask.Enabled = _observPointsController.IsObservPointsExists();
         }
 
         private void PopulateVisibilityComboBoxes()
@@ -1937,16 +1939,25 @@ namespace MilSpace.Visibility
         private void tbObservObjects_ButtonClick(object sender, EventArgs e)
         {
             log.DebugEx("> tbObservObjects START");
-            if (_observPointsController.AddObservObjectsLayer())
+
+            if (!_observPointsController.IsObservObjectsExists())
             {
-                log.DebugEx("tbObservObjects. _observPointsController.AddObservObjectsLayer OK");
-                //_observPointsController.UpdateObservObjectsList();
-                //tlbbAddObservObjLayer.Enabled = false;
+                if (_observPointsController.AddObservObjectsLayer())
+                {
+                    log.DebugEx("tbObservObjects. _observPointsController.AddObservObjectsLayer OK");
+                    _observPointsController.UpdateObservObjectsList();
+                    //tlbbAddObservObjLayer.Enabled = false;
+                }
+                else
+                {
+                    log.DebugEx("tbObservObjects. _observPointsController.AddObservObjectsLayer NOK");
+                    //tlbbAddObservObjLayer.Enabled = true;
+                }
             }
             else
             {
-                log.DebugEx("tbObservObjects. _observPointsController.AddObservObjectsLayer NOK");
-                //tlbbAddObservObjLayer.Enabled = true;
+                log.DebugEx("tbObservObjects. _observPointsController.UpdateObservObjectsList");
+                _observPointsController.UpdateObservObjectsList();
             }
             log.DebugEx("> tbObservObjects END");
         }
@@ -2285,16 +2296,17 @@ namespace MilSpace.Visibility
 
         private void tbObservObjects_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
-            var obj = dgvObservObjects.SelectedRows[0].DataBoundItem as ObservObjectGui;
-            if (e.Button == toolBarButton31)
+            if (e.Button == toolBarButton31 && dgvObservObjects.RowCount > 0)
             {
+                var obj = dgvObservObjects.SelectedRows[0].DataBoundItem as ObservObjectGui;
                 _observPointsController.FlashObservationObject(obj.Id);
             }
-            else if (e.Button == toolBarButton34)
+            else if (e.Button == toolBarButton34 && dgvObservObjects.RowCount > 0)
             {
+                var obj = dgvObservObjects.SelectedRows[0].DataBoundItem as ObservObjectGui;
                 var sMsgText = LocalizationContext.Instance.FindLocalizedElement(
                                         "MsgTextDeleteObservStation",
-                                        "Ви дійсно бадаэтет видалити обє'кт нагляду?");
+                                        "Ви дійсно бажаэте видалити об'єкт нагляду?");
                 var res = MessageBox.Show(
                     sMsgText,
                     LocalizationContext.Instance.MsgBoxInfoHeader,
