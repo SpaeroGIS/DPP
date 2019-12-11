@@ -413,6 +413,7 @@ namespace MilSpace.Visibility
                     {
                         Id = session.Id,
                         Name = session.Name,
+                        Created = session.Created.Value,
                         State = state
                     });
                 }
@@ -621,12 +622,22 @@ namespace MilSpace.Visibility
             dgvObservationPoints.Columns["Affiliation"].HeaderText = LocalizationContext.Instance.AffiliationHeaderText;
             dgvObservationPoints.Columns["Date"].HeaderText = LocalizationContext.Instance.DateHeaderText;
 
+            dgvObservationPoints.ColumnHeaderMouseClick += DgvObservationPoints_ColumnHeaderMouseClick;
+
             //dgvObservationPoints.Columns["Title"].SortMode = DataGridViewColumnSortMode.Automatic;
             //dgvObservationPoints.Columns["Type"].SortMode = DataGridViewColumnSortMode.Automatic;
             //dgvObservationPoints.Columns["Affiliation"].SortMode = DataGridViewColumnSortMode.Automatic;
             //dgvObservationPoints.Columns["Date"].SortMode = DataGridViewColumnSortMode.Automatic;
 
             dgvObservationPoints.Columns["Id"].Visible = false;
+        }
+
+        private void DgvObservationPoints_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.ColumnIndex == 0)
+            {
+            }
+
         }
 
         private void DisplaySelectedColumns(VeluableObservPointFieldsEnum filter)
@@ -1273,12 +1284,6 @@ namespace MilSpace.Visibility
             txtMinDistance.Text = selectedPoint.InnerRadius.HasValue ? selectedPoint.InnerRadius.ToString() : ObservPointDefaultValues.DefaultRadiusText;
             txtMaxDistance.Text = selectedPoint.OuterRadius.HasValue ? selectedPoint.OuterRadius.ToString() : ObservPointDefaultValues.DefaultRadiusText;
 
-            //angleFrameH.Text = selectedPoint.AngelFrameH.HasValue ? selectedPoint.AngelFrameH.ToString() : ObservPointDefaultValues.AngleFrameHText;
-            //angleFrameV.Text = selectedPoint.AngelFrameV.HasValue ? selectedPoint.AngelFrameV.ToString() : ObservPointDefaultValues.AngleFrameVText;
-            //cameraRotationH.Text = selectedPoint.AngelCameraRotationH.HasValue ? selectedPoint.AngelCameraRotationH.ToString() : ObservPointDefaultValues.CameraRotationHText;
-            //cameraRotationV.Text = selectedPoint.AngelCameraRotationV.HasValue ? selectedPoint.AngelCameraRotationV.ToString() : ObservPointDefaultValues.CameraRotationVText;
-            //azimuthMainAxis.Text = selectedPoint.AzimuthMainAxis != null ? selectedPoint.AzimuthMainAxis.ToString() : ObservPointDefaultValues.AzimuthMainAxisText;
-
             observPointDate.Text = selectedPoint.Dto.Value.ToString(Helper.DateFormat);
             observPointCreator.Text = selectedPoint.Operator;
         }
@@ -1293,6 +1298,11 @@ namespace MilSpace.Visibility
             dgvVisibilitySessions.Columns["Name"].HeaderText =
                 LocalizationContext.Instance.FindLocalizedElement("HeaderNameGridSessionResult", "Назва");
             dgvVisibilitySessions.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvVisibilitySessions.Columns["Created"].HeaderText =
+                LocalizationContext.Instance.FindLocalizedElement("HeaderCreatedGridSessionResult", "Строрено");
+            dgvVisibilitySessions.Columns["Created"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            dgvVisibilitySessions.Columns["Created"].ValueType = typeof(DateTime);
+            dgvVisibilitySessions.Columns["Created"].DefaultCellStyle.Format = Helper.DateFormatSmall;
             dgvVisibilitySessions.Columns["State"].HeaderText =
                 LocalizationContext.Instance.FindLocalizedElement("HeaderStateGridSessionResult", "Стан");
             dgvVisibilitySessions.Columns["State"].Width = 100;

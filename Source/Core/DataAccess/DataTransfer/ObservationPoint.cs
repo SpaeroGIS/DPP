@@ -12,6 +12,14 @@ namespace MilSpace.DataAccess.DataTransfer
         Date = 4
     }
 
+    public enum VeluableObservPointSortFieldsEnum : byte
+    {
+        Name = 0,
+        Type = 1,
+        Affiliation = 2,
+        Date = 4
+    }
+
     public class ObservationPoint
     {
 

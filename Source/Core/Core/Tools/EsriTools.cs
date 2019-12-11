@@ -159,8 +159,105 @@ namespace MilSpace.Core.Tools
                 //ToDO: Loggig
             }
         }
+        public static IFeatureRenderer GetCalclResultRender(IFeatureLayer polygonLayer, string valuesField, IColor fromColor = null, IColor toColor = null)
+        {
+            var attrTable = polygonLayer.FeatureClass as ITable;
+            var fld = attrTable.FindField(valuesField);
 
-        public static IRasterRenderer GetCalclResultRender(IRaster raster, string valuesField = "Value")
+            var filter = new QueryFilter();
+            filter.SubFields = valuesField;
+            IQueryFilterDefinition2 filterDefinition = (IQueryFilterDefinition2)filter;
+
+            filterDefinition.PostfixClause = $"ORDER BY {valuesField}";
+            filterDefinition.PrefixClause = $"DISTINCT  {valuesField}";
+            var uniwuevaluesr = attrTable.Search(filter, false);
+
+            var row = uniwuevaluesr.NextRow();
+            List<int> ids = new List<int>();
+
+            while (row != null)
+            {
+                ids.Add((int)row.Value[fld]);
+                row = uniwuevaluesr.NextRow();
+            }
+
+            //Create the start and end colors
+            IColor startColor = fromColor != null ? fromColor : new RgbColor()
+            {
+                Transparency = 33,
+                Red = 255,
+                Green = 255,
+                Blue = 115
+            };
+            IColor endColor = toColor != null? toColor : new RgbColor()
+            {
+                Red = 115,
+                Green = 38,
+                Blue = 0
+            };
+
+            IAlgorithmicColorRamp algColorRamp = ids.Count > 1 ? new AlgorithmicColorRampClass() : null;
+            bool ok = true;
+            if (algColorRamp != null)
+            {
+                //Set the Start and End Colors
+                algColorRamp.ToColor = endColor;
+                algColorRamp.FromColor = startColor;
+
+                //Set the ramping Alglorithm 
+                algColorRamp.Algorithm = esriColorRampAlgorithm.esriCIELabAlgorithm;
+
+                //Set the size of the ramp (the number of colors to be derived)
+                algColorRamp.Size = ids.Count;
+
+                //Create the ramp
+                algColorRamp.CreateRamp(out ok);
+            }
+
+            if (ok)
+            {
+                IUniqueValueRenderer uniqueRen = new UniqueValueRenderer();
+                uniqueRen.FieldCount = 1;
+                uniqueRen.Field[0] = valuesField;
+
+
+                var fldIndex = uniwuevaluesr.FindField(valuesField);
+                if (fldIndex < 0)
+                {
+                    throw new KeyNotFoundException(valuesField);
+                }
+
+                int valueClass = 0;
+
+                foreach (var uniqueValue in ids)
+                {
+                    var classValue = uniqueValue;
+                    ISimpleFillSymbol simpleFillSymbol = new SimpleFillSymbol();
+
+                    simpleFillSymbol.Color = algColorRamp == null ? startColor : algColorRamp.Color[valueClass++];
+
+                    simpleFillSymbol.Outline = new CartographicLineSymbol
+                    {
+                        Width = 0.4,
+                        Color = new RgbColor()
+                        {
+                            Red = 100,
+                            Green = 100,
+                            Blue = 100
+                        }
+                    };
+
+                    uniqueRen.AddValue($"{classValue}", string.Empty, simpleFillSymbol as ISymbol);
+                    uniqueRen.Label[$"{classValue}"] = $"{classValue}";
+                    uniqueRen.Symbol[$"{classValue}"] = simpleFillSymbol as ISymbol;
+                }
+                IGeoFeatureLayer geoFeatureLayer = (IGeoFeatureLayer)polygonLayer;
+                return (IFeatureRenderer)uniqueRen;
+            }
+
+            return null;
+        }
+        public static IRasterRenderer GetCalclResultRender(IRaster raster, string valuesField = "Value", RgbColor fromColor = null, RgbColor toColor = null)
         {
             var bandCollection = raster as IRasterBandCollection;
             var band = bandCollection.Item(0);
@@ -178,24 +275,40 @@ namespace MilSpace.Core.Tools
                 filterDefinition.PostfixClause = $"ORDER BY {valuesField}";
                 var uniwuevaluesr = attrTable.Search(filter, false);
 
-                bool bOK;
+                bool bOK = true;
                 IAlgorithmicColorRamp ramp = new AlgorithmicColorRamp();
-                ramp.FromColor = new RgbColor()
-                {
-                    Red = 255,
-                    Green = 255,
-                    Blue = 115
-                };
-                ramp.ToColor = new RgbColor()
-                {
-                    Red = 115,
-                    Green = 38,
-                    Blue = 0
 
-                };
-                ramp.Size = cntRows;
-                ramp.Algorithm = esriColorRampAlgorithm.esriCIELabAlgorithm;
-                ramp.CreateRamp(out bOK);
+                if (fromColor == null)
+                {
+                    fromColor = new RgbColor()
+                    {
+                        Red = 255,
+                        Green = 255,
+                        Blue = 115
+                    };
+                }
+                if (toColor == null)
+                {
+                    toColor = new RgbColor()
+                    {
+                        Red = 115,
+                        Green = 38,
+                        Blue = 0
+                    };
+                }
+
+                if (cntRows > 1)
+                {
+                    ramp.FromColor = fromColor;
+                    ramp.ToColor = toColor;
+                    ramp.Size = cntRows;
+                    ramp.Algorithm = esriColorRampAlgorithm.esriCIELabAlgorithm;
+                    ramp.CreateRamp(out bOK);
+                }
+                else
+                {
+                    ramp = null;
+                }
 
                 //rasterLayer.Renderer = (IRasterRenderer)stretchRen;
                 IRasterUniqueValueRenderer uniqueRen = new RasterUniqueValueRenderer();
@@ -218,7 +331,7 @@ namespace MilSpace.Core.Tools
                     uniqueRen.AddValue(0, valueClass, classValue);
                     uniqueRen.Label[0, valueClass] = $"{classValue}";
                     var fillSymbol = new SimpleFillSymbol();
-                    fillSymbol.Color = ramp.Color[valueClass];
+                    fillSymbol.Color = ramp == null ? fromColor : ramp.Color[valueClass];
                     uniqueRen.Symbol[0, valueClass++] = fillSymbol as ISymbol;
                     row = uniwuevaluesr.NextRow();
                 }
@@ -302,7 +415,7 @@ namespace MilSpace.Core.Tools
             {
                 return null;
             }
-            if(count < 2)
+            if (count < 2)
             {
                 //TODO: Localize error message
                 throw new MilSpaceProfileLackOfParameterException("Line numbers", count);
@@ -694,23 +807,23 @@ namespace MilSpace.Core.Tools
         }
 
         public static void AddVisibilityGroupLayer(
-            IEnumerable<IDataset> visibilityLayersNames, 
+            IEnumerable<IDataset> visibilityLayersNames,
             string sessionName,
-            string calcRasterName, 
-            string gdb, 
+            string calcRasterName,
+            string gdb,
             string relativeLayerName,
-            bool isLayerAbove, 
-            short transparency, 
+            bool isLayerAbove,
+            short transparency,
             IActiveView activeView)
         {
             var visibilityLayers = new List<ILayer>();
-            foreach(var layerName in visibilityLayersNames)
+            foreach (var layerName in visibilityLayersNames)
             {
                 if (layerName is IRasterDataset raster)
                 {
                     visibilityLayers.Add(GetRasterLayer(raster));
                 }
-                if(layerName is IFeatureClass feature)
+                if (layerName is IFeatureClass feature)
                 {
                     var lr = GetFeatureLayer(feature);
 
@@ -720,7 +833,7 @@ namespace MilSpace.Core.Tools
 
             MapLayersManager layersManager = new MapLayersManager(activeView);
 
-            var relativeLayer = 
+            var relativeLayer =
                 layersManager.FirstLevelLayers.FirstOrDefault(l => l.Name.Equals(relativeLayerName, StringComparison.InvariantCultureIgnoreCase));
 
             //var relativeLayer = GetLayer(relativeLayerName, activeView.FocusMap);
@@ -737,9 +850,9 @@ namespace MilSpace.Core.Tools
                     var layerEffects = (ILayerEffects)layer;
                     layerEffects.Transparency = transparency;
 
-                    var existenLayer = 
+                    var existenLayer =
                         layersManager.RasterLayers.FirstOrDefault(l => l.FilePath.Equals(raster.FilePath, StringComparison.InvariantCultureIgnoreCase));
-                    if(existenLayer != null && !layersToremove.Any(l => l.Equals(existenLayer)))
+                    if (existenLayer != null && !layersToremove.Any(l => l.Equals(existenLayer)))
                     {
                         layersToremove.Add(existenLayer);
                     }
@@ -875,12 +988,12 @@ namespace MilSpace.Core.Tools
         }
 
         private static void AddLayersToMapAsGroupLayer(
-            IEnumerable<ILayer> layers, 
-            string sessionName, 
+            IEnumerable<ILayer> layers,
+            string sessionName,
             short transparency,
-            ILayer relativeLayer, 
-            bool isGroupLayerAbove, 
-            IActiveView activeView, 
+            ILayer relativeLayer,
+            bool isGroupLayerAbove,
+            IActiveView activeView,
             IEnumerable<ILayer> calcRasters)
         {
             IGroupLayer groupLayer = new GroupLayerClass();
@@ -964,14 +1077,14 @@ namespace MilSpace.Core.Tools
         }
 
         public static IPolygon GetCoverageArea(
-            IPoint point, 
-            double azimuthB, 
-            double azimuthE, 
-            double minDistance, 
-            double maxDistance, 
+            IPoint point,
+            double azimuthB,
+            double azimuthE,
+            double minDistance,
+            double maxDistance,
             IPolygon observObject = null)
         {
-            logger.InfoEx("> GetCoverageArea START azimuthB:{0} azimuthE:{1} minDistance:{2} maxDistance:{3}", 
+            logger.InfoEx("> GetCoverageArea START azimuthB:{0} azimuthE:{1} minDistance:{2} maxDistance:{3}",
                 azimuthB, azimuthE, minDistance, maxDistance);
 
             IPolygon coverageArea;
@@ -984,7 +1097,7 @@ namespace MilSpace.Core.Tools
                 ISegment segmentOut = (ISegment)outArc;
                 outFullRing.AddSegment(segmentOut);
                 IRing outFullRingGeometry = outFullRing as IRing;
-                if(!outFullRingGeometry.IsExterior)
+                if (!outFullRingGeometry.IsExterior)
                 {
                     outFullRingGeometry.ReverseOrientation();
                 }
@@ -995,7 +1108,7 @@ namespace MilSpace.Core.Tools
                 ISegment segmentIn = (ISegment)innerArc;
                 innerFullRing.AddSegment(segmentIn);
                 IRing innerFullRingGeometry = innerFullRing as IRing;
-                if(innerFullRingGeometry.IsExterior)
+                if (innerFullRingGeometry.IsExterior)
                 {
                     innerFullRingGeometry.ReverseOrientation();
                 }
@@ -1382,7 +1495,7 @@ namespace MilSpace.Core.Tools
 
         public static bool IsRasterEmpty(IRasterDataset2 rasterDataset)
         {
-            if (rasterDataset ==  null)
+            if (rasterDataset == null)
             {
                 return true;
             }
