@@ -160,6 +160,74 @@ namespace MilSpace.Core.Tools
             }
         }
 
+        public static IRasterRenderer GetCalclResultRender(IRaster raster, string valuesField = "Value")
+        {
+            var bandCollection = raster as IRasterBandCollection;
+            var band = bandCollection.Item(0);
+            bool hasTable;
+            band.HasTable(out hasTable);
+            if (hasTable)
+            {
+                var attrTable = band.AttributeTable;
+                var filter = new QueryFilter();
+                filter.SubFields = valuesField;
+                IQueryFilterDefinition2 filterDefinition = (IQueryFilterDefinition2)filter;
+
+                filterDefinition.PrefixClause = $"DISTINCT {valuesField}";
+                int cntRows = attrTable.RowCount(filter);
+                filterDefinition.PostfixClause = $"ORDER BY {valuesField}";
+                var uniwuevaluesr = attrTable.Search(filter, false);
+
+                bool bOK;
+                IAlgorithmicColorRamp ramp = new AlgorithmicColorRamp();
+                ramp.FromColor = new RgbColor()
+                {
+                    Red = 255,
+                    Green = 255,
+                    Blue = 115
+                };
+                ramp.ToColor = new RgbColor()
+                {
+                    Red = 115,
+                    Green = 38,
+                    Blue = 0
+
+                };
+                ramp.Size = cntRows;
+                ramp.Algorithm = esriColorRampAlgorithm.esriCIELabAlgorithm;
+                ramp.CreateRamp(out bOK);
+
+                //rasterLayer.Renderer = (IRasterRenderer)stretchRen;
+                IRasterUniqueValueRenderer uniqueRen = new RasterUniqueValueRenderer();
+                uniqueRen.HeadingCount = 1;
+                uniqueRen.Heading[0] = "All Data Values";
+                uniqueRen.ClassCount[0] = cntRows;
+                uniqueRen.Field = valuesField;
+
+                var row = uniwuevaluesr.NextRow();
+                var fldIndex = uniwuevaluesr.FindField(valuesField);
+                if (fldIndex < 0)
+                {
+                    throw new KeyNotFoundException(valuesField);
+                }
+
+                int valueClass = 0;
+                while (row != null)
+                {
+                    var classValue = row.Value[fldIndex];
+                    uniqueRen.AddValue(0, valueClass, classValue);
+                    uniqueRen.Label[0, valueClass] = $"{classValue}";
+                    var fillSymbol = new SimpleFillSymbol();
+                    fillSymbol.Color = ramp.Color[valueClass];
+                    uniqueRen.Symbol[0, valueClass++] = fillSymbol as ISymbol;
+                    row = uniwuevaluesr.NextRow();
+                }
+                return (IRasterRenderer)uniqueRen;
+            }
+
+            return null;
+        }
+
         public static ISpatialReference Wgs84Spatialreference
         {
             get
