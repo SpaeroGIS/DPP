@@ -128,6 +128,7 @@ namespace MilSpace.Tools
 
             if (res.Exception != null)
             {
+                VisibilityZonesFacade.UpdateVisibilityTask(calcTask);
                 throw res.Exception;
             }
             else

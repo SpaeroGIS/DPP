@@ -96,7 +96,7 @@ namespace MilSpace.Visibility
 
                     if (layer is IRasterLayer rasterLayer )
                     {
-                        logger.InfoEx($"Setting unique values for remdering \"{rasterLayer.Name}\" ");
+                        logger.InfoEx($"Setting unique values for renderring \"{rasterLayer.Name}\" ");
                         try
                         {
                             var render = EsriTools.GetCalclResultRender(rasterLayer.Raster, "Value");
@@ -106,7 +106,7 @@ namespace MilSpace.Visibility
                             }
 
                             rasterLayer.Renderer = render;
-                            logger.InfoEx($"Unique values for remdering \"{rasterLayer.Name}\" was set");
+                            logger.InfoEx($"Unique values for renderring \"{rasterLayer.Name}\" was set");
                         }
                         catch (KeyNotFoundException ex)
                         {
@@ -124,7 +124,7 @@ namespace MilSpace.Visibility
 
                     if (layer is IRasterLayer rasterLayer )
                     {
-                         logger.InfoEx($"Setting unique values for remdering \"{rasterLayer.Name}\" ");
+                         logger.InfoEx($"Setting unique values for renderring \"{rasterLayer.Name}\" ");
                         try
                         {
                             var render = EsriTools.GetCalclResultRender(rasterLayer.Raster, "Value");
@@ -134,7 +134,7 @@ namespace MilSpace.Visibility
                             }
 
                             rasterLayer.Renderer = render;
-                            logger.InfoEx($"Unique values for remdering \"{rasterLayer.Name}\" was set");
+                            logger.InfoEx($"Unique values for renderring \"{rasterLayer.Name}\" was set");
                         }
                         catch (KeyNotFoundException ex)
                         {
@@ -152,7 +152,7 @@ namespace MilSpace.Visibility
 
                   if (layer is IRasterLayer rasterLayer )
                     {
-                        logger.InfoEx($"Setting unique values for remdering \"{rasterLayer.Name}\" ");
+                        logger.InfoEx($"Setting unique values for renderring \"{rasterLayer.Name}\" ");
                         try
                         {
                             var render = EsriTools.GetCalclResultRender(rasterLayer.Raster, "Value");
@@ -162,7 +162,35 @@ namespace MilSpace.Visibility
                             }
 
                             rasterLayer.Renderer = render;
-                            logger.InfoEx($"Unique values for remdering \"{rasterLayer.Name}\" was set");
+                            logger.InfoEx($"Unique values for renderring \"{rasterLayer.Name}\" was set");
+                        }
+                        catch (KeyNotFoundException ex)
+                        {
+                            logger.ErrorEx($"The field \"Value\" was not found in the raster table");
+                            logger.ErrorEx(ex.Message);
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.ErrorEx(ex.Message);
+                        }
+                    }
+                }
+            },
+            { VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle, (layer, fillColor, transparency) => {
+
+                  if (layer is IRasterLayer rasterLayer )
+                    {
+                        logger.InfoEx($"Setting unique values for renderring \"{rasterLayer.Name}\" ");
+                        try
+                        {
+                            var render = EsriTools.GetCalclResultRender(rasterLayer.Raster, "Value");
+                            if (render == null)
+                            {
+                                logger.ErrorEx($"The raster \"{rasterLayer.Name}\" doesn't have a table");
+                            }
+
+                            rasterLayer.Renderer = render;
+                            logger.InfoEx($"Unique values for renderring \"{rasterLayer.Name}\" was set");
                         }
                         catch (KeyNotFoundException ex)
                         {
@@ -180,100 +208,27 @@ namespace MilSpace.Visibility
 
                     if (layer is IFeatureLayer polygonLayer )
                     {
-
-                        string valuesField = "gridcode";
-
-                        var attrTable = polygonLayer.FeatureClass as ITable;
-                        var fld = attrTable.FindField(valuesField);
-
-                        var filter = new QueryFilter();
-                        filter.SubFields = valuesField;
-                        IQueryFilterDefinition2 filterDefinition = (IQueryFilterDefinition2)filter;
-
-                        filterDefinition.PostfixClause = $"ORDER BY {valuesField}";
-                        filterDefinition.PrefixClause = $"DISTINCT  {valuesField}";
-                        var uniwuevaluesr = attrTable.Search(filter, false);
-
-                        var row =uniwuevaluesr.NextRow();
-                        List<int> ids = new List<int>();
-                        
-                        while (row != null)
+                        logger.InfoEx($"Setting unique values for renderring \"{polygonLayer.Name}\" ");
+                        try
                         {
-                            ids.Add((int)row.Value[fld]);
-                            row =uniwuevaluesr.NextRow();
-                        }
-
-
-                        IAlgorithmicColorRamp algColorRamp = new AlgorithmicColorRampClass();
-
-                        //Create the start and end colors
-                        IRgbColor startColor = new RgbColor()
-                        {
-                            Red = 255,
-                            Green = 255,
-                            Blue = 115
-                        };
-                        IRgbColor endColor = new RgbColor()
-                        {
-                            Red = 115,
-                            Green = 38,
-                            Blue = 0
-
-                        };
-                           
-                        //Set the Start and End Colors
-                        algColorRamp.ToColor = endColor;
-                        algColorRamp.FromColor = startColor;
-
-                        //Set the ramping Alglorithm 
-                        algColorRamp.Algorithm = esriColorRampAlgorithm.esriCIELabAlgorithm;
-
-                        //Set the size of the ramp (the number of colors to be derived)
-                        algColorRamp.Size = ids.Count;
-
-
-                        //Create the ramp
-                        bool ok = true;
-                        algColorRamp.CreateRamp(out ok);
-
-                        if (ok)
-                        {
-                            IUniqueValueRenderer uniqueRen = new UniqueValueRenderer();
-                            uniqueRen.FieldCount = 1;
-                            uniqueRen.Field[0]=valuesField;
-
-
-                            var fldIndex = uniwuevaluesr.FindField(valuesField);
-                            if (fldIndex < 0)
+                            var render = EsriTools.GetCalclResultRender(polygonLayer, "gridcode");
+                            if (render == null)
                             {
-                                throw new KeyNotFoundException(valuesField);
+                                logger.ErrorEx($"The raster \"{polygonLayer.Name}\" doesn't have a table");
                             }
 
-                            int valueClass = 0;
-                        
-                            foreach(var uniqueValue in ids)
-                            {
-                                var classValue = uniqueValue;
-                                ISimpleFillSymbol simpleFillSymbol = new SimpleFillSymbol();
-                                simpleFillSymbol.Color = algColorRamp.Color[valueClass++];
-                                simpleFillSymbol.Outline = new CartographicLineSymbol
-                                {
-                                    Width = 0.4,
-                                    Color = new RgbColor()
-                                    {
-                                        Red = 100,
-                                        Green = 100,
-                                        Blue = 100
-                                    }
-                                };
-
-                                uniqueRen.AddValue($"{classValue}", string.Empty, simpleFillSymbol as ISymbol);
-                                uniqueRen.Label[$"{classValue}"] = $"{classValue}";
-                                uniqueRen.Symbol[$"{classValue}"] = simpleFillSymbol as ISymbol;
-                            //, $"{classValue}", simpleFillSymbol as ISymbol);
-                            }
                             IGeoFeatureLayer geoFeatureLayer = (IGeoFeatureLayer)polygonLayer;
-                            geoFeatureLayer.Renderer = (IFeatureRenderer)uniqueRen;
+                            geoFeatureLayer.Renderer = render;
+                            logger.InfoEx($"Unique values for renderring \"{polygonLayer.Name}\" was set");
+                        }
+                        catch (KeyNotFoundException ex)
+                        {
+                            logger.ErrorEx($"The field \"Value\" was not found in the raster table");
+                            logger.ErrorEx(ex.Message);
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.ErrorEx(ex.Message);
                         }
                     }
                 }
@@ -283,7 +238,6 @@ namespace MilSpace.Visibility
                     ISimpleFillSymbol simpleFillSymbol = new SimpleFillSymbolClass();
                     simpleFillSymbol.Color = new RgbColor()
                     {
-                        Transparency = 33,
                         Red = 255,
                         Green = 255,
                         Blue = 115
@@ -425,46 +379,17 @@ namespace MilSpace.Visibility
                             }
                             lr.Visible = li.Value;
 
-                            if (mapResultAction.ContainsKey(ri.RessutType))
-                            {
-                                mapResultAction[ri.RessutType](lr, color, transparency);
-                            }
-                            visibilityLayers.Add(lr);
+                        if (mapResultAction.ContainsKey(ri.RessutType))
+                        {
+                            mapResultAction[ri.RessutType](lr, color, transparency);
                         }
+
+                        visibilityLayers.Add(lr);
                     }
                 }
+            }
 
-                //foreach (var ri in results.ResultsInfo)
-                //{
-                //    var dataset = GdbAccess.Instance.GetDatasetFromCalcWorkspace(ri);
-                //    if (dataset == null)
-                //    {
-                //        continue;
-                //    }
-
-                //    if (dataset is IFeatureClass feature)
-                //    {
-                //        lr = EsriTools.GetFeatureLayer(feature);
-                //    }
-                //    if (dataset is IRasterDataset raster)
-                //    {
-                //        lr = EsriTools.GetRasterLayer(raster);
-                //    }
-
-                //    if (mapResultAction.ContainsKey(ri.RessutType))
-                //    {
-                //        mapResultAction[ri.RessutType](lr, color, transparency);
-                //    }
-
-                //    visibilityLayers.Add(lr);
-
-                //}
-
-                MapLayersManager layersManager = new MapLayersManager(activeView);
-                //var relativeLayer = layersManager.FirstLevelLayers.FirstOrDefault(l => l.Name.Equals(relativeLayerName, StringComparison.InvariantCultureIgnoreCase));
-
-                ////var relativeLayer = GetLayer(relativeLayerName, activeView.FocusMap);
-                //var calcRasters = EsriTools.GetVisibiltyImgLayers(calcRasterName, activeView.FocusMap);
+            MapLayersManager layersManager = new MapLayersManager(activeView);
 
                 IGroupLayer groupLayer = new GroupLayerClass { Name = results.Name };
 

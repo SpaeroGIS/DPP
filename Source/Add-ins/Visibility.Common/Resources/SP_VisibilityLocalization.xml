@@ -300,4 +300,6 @@
   <NewObservationPointName>ПС-{0}</NewObservationPointName>
   <NewObservationObjectName>ОН-{0}</NewObservationObjectName>
 
+  <HeaderCreatedGridSessionResult>Створено</HeaderCreatedGridSessionResult>
+
 </SP_Visibility>

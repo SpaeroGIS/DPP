@@ -745,6 +745,7 @@ namespace MilSpace.Visibility.ViewController
                     var fldXWgs = obj.Fields.FindField("XWGS");
                     var fldYWgs = obj.Fields.FindField("YWGS");
                     var fldIdOP = obj.Fields.FindField("idOP");
+                    var fldHRel = obj.Fields.FindField("HRel");
 
                     IGeometry g = fcl.GetFeature(obj.OID).ShapeCopy;
                     IPoint p = g as IPoint;
@@ -755,6 +756,7 @@ namespace MilSpace.Visibility.ViewController
                     obj.Value[fldTitleIndex] = LocalizationContext.Instance.DeafultObservationpointTitle.InvariantFormat(obj.OID);
                     obj.Value[fldXWgs] = p.X;
                     obj.Value[fldYWgs] = p.Y;
+                    obj.Value[fldHRel] = 2500;
 
                     log.InfoEx("OnCreateFeature. New observation point was added wiht objectid:{0} idOP:{1} Title {2}",
                         obj.OID, sidOP, LocalizationContext.Instance.DeafultObservationpointTitle.InvariantFormat(obj.OID));

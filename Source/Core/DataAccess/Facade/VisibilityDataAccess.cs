@@ -114,7 +114,7 @@ namespace MilSpace.DataAccess.Facade
             try
             {
                 var sessions = finished ? context.MilSp_VisibilityTasks.Where(s => s.Finished.HasValue) : context.MilSp_VisibilityTasks;
-                return sessions.Select(s => s.Get());
+                return sessions.OrderByDescending(t => t.Name).Select(s => s.Get());
             }
             catch (Exception ex)
             {
@@ -128,7 +128,7 @@ namespace MilSpace.DataAccess.Facade
         {
             try
             {
-                var sessions = context.MilSp_VisibilityTasks.Where(s => s.UserName.Equals(Environment.UserName));
+                var sessions = context.MilSp_VisibilityTasks.Where(s => s.UserName.Equals(Environment.UserName)).OrderByDescending(t => t.Name);
                 return sessions.Select(s => s.Get());
             }
             catch (Exception ex)

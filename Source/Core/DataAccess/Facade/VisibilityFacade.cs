@@ -29,11 +29,11 @@ namespace MilSpace.DataAccess.Facade
             using (var accessor = new VisibilityDataAccess())
             {
                 var res = accessor.SaveObservationPoint(observPoint);
-                return res;                
+                return res;
             }
         }
 
-        public static IEnumerable<ObservationPoint>  GetObservationPointsByObjectIds(IEnumerable<int> ids)
+        public static IEnumerable<ObservationPoint> GetObservationPointsByObjectIds(IEnumerable<int> ids)
         {
             using (var accessor = new VisibilityDataAccess())
             {
@@ -52,7 +52,7 @@ namespace MilSpace.DataAccess.Facade
 
         public static VisibilityTask AddVisibilityTask(VisibilityTask visibilityTask)
         {
-            using(var accessor = new VisibilityDataAccess())
+            using (var accessor = new VisibilityDataAccess())
             {
                 var res = accessor.AddVisibilityTask(visibilityTask);
                 return res;
@@ -79,18 +79,18 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
-        public static VisibilityTask UpdateVisibilitySession(VisibilityTask visibilitySession)
+        public static VisibilityTask UpdateVisibilityTask(VisibilityTask visibilityTask)
         {
-            using(var accessor = new VisibilityDataAccess())
+            using (var accessor = new VisibilityDataAccess())
             {
-                var res = accessor.UpdateVisibilityTask(visibilitySession);
+                var res = accessor.UpdateVisibilityTask(visibilityTask);
                 return res;
             }
         }
 
         public static bool DeleteVisibilitySession(string id)
         {
-            using(var accessor = new VisibilityDataAccess())
+            using (var accessor = new VisibilityDataAccess())
             {
                 var res = accessor.DeleteVisibilityTask(id);
                 return res;
@@ -99,18 +99,18 @@ namespace MilSpace.DataAccess.Facade
 
         public static IEnumerable<VisibilityTask> GetAllVisibilityTasks(bool forCurrentUser = false)
         {
-            using(var accessor = new VisibilityDataAccess())
+            using (var accessor = new VisibilityDataAccess())
             {
-                var res =  forCurrentUser ? accessor.GetUserVisibilityTasks() : accessor.GetAllVisibilityTasks();
+                var res = forCurrentUser ? accessor.GetUserVisibilityTasks() : accessor.GetAllVisibilityTasks();
                 return res.ToArray();
             }
         }
 
         public static bool DeleteObservationObject(ObservationObject observObject)
         {
-            using(var accessor = new VisibilityDataAccess())
+            using (var accessor = new VisibilityDataAccess())
             {
-                var res =  accessor.DeleteObservationObject(observObject);
+                var res = accessor.DeleteObservationObject(observObject);
                 return res;
             }
         }
@@ -155,13 +155,13 @@ namespace MilSpace.DataAccess.Facade
 
         public static IEnumerable<string> GetCalculatedObserObjectsName(string resultId)
         {
-            var calcObservObjectsFeatureClass =  VisibilityCalcResults.GetResultName(VisibilityCalculationResultsEnum.ObservationObjects, resultId);
+            var calcObservObjectsFeatureClass = VisibilityCalcResults.GetResultName(VisibilityCalculationResultsEnum.ObservationObjects, resultId);
             return GdbAccess.Instance.GetCalcEntityNamesFromFeatureClass(calcObservObjectsFeatureClass, "sTitleOO");
         }
 
         public static VisibilityCalcResults AddVisibilityResults(VisibilityCalcResults visibilityResults)
         {
-            using(var accessor = new VisibilityDataAccess())
+            using (var accessor = new VisibilityDataAccess())
             {
                 var res = accessor.AddVisibilityResults(visibilityResults);
                 return res;
@@ -170,7 +170,7 @@ namespace MilSpace.DataAccess.Facade
 
         public static bool AddSharedVisibilityResultsToUserSession(VisibilityCalcResults visibilityResults)
         {
-            using(var accessor = new VisibilityDataAccess())
+            using (var accessor = new VisibilityDataAccess())
             {
                 var res = accessor.AddShareddResultsToUserSession(visibilityResults);
                 return res;
@@ -179,7 +179,7 @@ namespace MilSpace.DataAccess.Facade
 
         public static VisibilityCalcResults UpdateVisibilityResults(VisibilityCalcResults visibilityResults)
         {
-            using(var accessor = new VisibilityDataAccess())
+            using (var accessor = new VisibilityDataAccess())
             {
                 var res = accessor.UpdateVisibilityResults(visibilityResults);
                 return res;
@@ -188,7 +188,7 @@ namespace MilSpace.DataAccess.Facade
 
         public static bool DeleteVisibilityResults(string id)
         {
-            using(var accessor = new VisibilityDataAccess())
+            using (var accessor = new VisibilityDataAccess())
             {
                 var res = accessor.DeleteVisibilityResults(id);
                 return res;
@@ -197,7 +197,7 @@ namespace MilSpace.DataAccess.Facade
 
         public static bool DeleteVisibilityResultsFromUserSession(string id)
         {
-            using(var accessor = new VisibilityDataAccess())
+            using (var accessor = new VisibilityDataAccess())
             {
                 var res = accessor.DeleteVisibilityResultsFromUserSession(id);
                 return res;
@@ -206,7 +206,7 @@ namespace MilSpace.DataAccess.Facade
 
         public static bool IsResultsBelongToUser(string id)
         {
-            using(var accessor = new VisibilityDataAccess())
+            using (var accessor = new VisibilityDataAccess())
             {
                 var res = accessor.IsResultsBelongToUser(id);
                 return res;
@@ -215,7 +215,7 @@ namespace MilSpace.DataAccess.Facade
 
         public static IEnumerable<VisibilityCalcResults> GetAllVisibilityResults(bool forCurrentUser = false)
         {
-            using(var accessor = new VisibilityDataAccess())
+            using (var accessor = new VisibilityDataAccess())
             {
                 var res = accessor.GetAllVisibilityResults(forCurrentUser);
                 return res.ToArray();
