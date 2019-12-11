@@ -162,6 +162,29 @@ namespace MilSpace.Visibility.ViewController
             EsriTools.FlashGeometry(activeView.ScreenDisplay, new IGeometry[] { pointGeometry });
         }
 
+        internal IEnumerable<ObservPointGui> SortObservationPoints(IEnumerable<ObservPointGui> source, VeluableObservPointSortFieldsEnum sortBy, bool sortDireaction)
+        {
+            if (sortBy == VeluableObservPointSortFieldsEnum.Name)
+            {
+                return sortDireaction ? source.OrderBy(p => p.Title) : source.OrderByDescending(p => p.Title);
+            }
+            if (sortBy == VeluableObservPointSortFieldsEnum.Date)
+            {
+                return sortDireaction ? source.OrderBy(p => p.Date) : source.OrderByDescending(p => p.Date);
+            }
+            if (sortBy == VeluableObservPointSortFieldsEnum.Affiliation)
+            {
+                return sortDireaction ? source.OrderBy(p => p.Affiliation) : source.OrderByDescending(p => p.Affiliation);
+            }
+            if (sortBy == VeluableObservPointSortFieldsEnum.Type)
+            {
+                return sortDireaction ? source.OrderBy(p => p.Type) : source.OrderByDescending(p => p.Type);
+            }
+
+            return source.ToArray();
+        }
+
+
         internal IEnumerable<ObservationPoint> GetAllObservationPoints()
         {
             return VisibilityZonesFacade.GetAllObservationPoints();

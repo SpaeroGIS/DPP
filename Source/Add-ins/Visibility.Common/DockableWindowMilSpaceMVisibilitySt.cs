@@ -32,7 +32,8 @@ namespace MilSpace.Visibility
         private ObservationPointsController _observPointsController;
         private VisibilitySessionsController _visibilitySessionsController;
 
-        private BindingList<ObservPointGui> _observPointGuis = new BindingList<ObservPointGui>();
+        private bool observatioPointsSordDirection = true;
+
         private BindingList<VisibilitySessionGui> _visibilitySessionsGui = new BindingList<VisibilitySessionGui>();
         private BindingSource _observObjectsGui = new BindingSource();
 
@@ -43,7 +44,8 @@ namespace MilSpace.Visibility
 
         private int _selectedPointId => Convert.ToInt32(dgvObservationPoints.SelectedRows[0].Cells["Id"].Value);
         //private bool IsPointFieldsEnabled => _observPointsController.IsObservPointsExists();
-        private bool IsPointFieldsEnabled = false;
+        private bool IsPointFieldsEnabled = true;
+        private VeluableObservPointSortFieldsEnum currentSorting = VeluableObservPointSortFieldsEnum.Name;
 
         private static Logger log = Logger.GetLoggerEx("MilSpace.Visibility.DockableWindowMilSpaceMVisibilitySt");
 
@@ -299,10 +301,9 @@ namespace MilSpace.Visibility
                         Affiliation = LocalizationContext.Instance.AffiliationTypes[op.ObservationPointAffiliationType],
                         Date = op.Dto.Value.ToString(Helper.DateFormatSmall),
                         Id = op.Objectid
-                    }).OrderBy(l => l.Title).ToList();
+                    }).OrderBy(l => l.Title).ToArray();
 
-                _observPointGuis = new BindingList<ObservPointGui>(ItemsToShow);
-                dgvObservationPoints.DataSource = _observPointGuis;
+                dgvObservationPoints.DataSource = ItemsToShow;// _observPointGuis01;
 
                 SetDataGridView();
                 DisplaySelectedColumns(filter);
@@ -352,8 +353,8 @@ namespace MilSpace.Visibility
         public void ChangeRecord(int id, ObservationPoint observationPoint)
         {
             var rowIndex = dgvObservationPoints.SelectedRows[0].Index;
-            var pointGui = _observPointGuis.FirstOrDefault(point => point.Id == id);
-
+            var source = dgvObservationPoints.DataSource as ObservPointGui[];
+            var pointGui = source.FirstOrDefault(point => point.Id == id);
 
             pointGui.Title = observationPoint.Title;
             pointGui.Type = LocalizationContext.Instance.MobilityTypes[observationPoint.ObservationPointMobilityType];
@@ -367,7 +368,9 @@ namespace MilSpace.Visibility
 
         public void AddRecord(ObservationPoint observationPoint)
         {
-            _observPointGuis.Add(new ObservPointGui
+            var source = dgvObservationPoints.DataSource as ObservPointGui[];
+            var sourceList = new List<ObservPointGui>(source);
+            sourceList.Add(new ObservPointGui
             {
                 Title = observationPoint.Title,
                 Type = observationPoint.Type,
@@ -376,6 +379,7 @@ namespace MilSpace.Visibility
                 Id = observationPoint.Objectid
             });
 
+            dgvObservationPoints.DataSource = sourceList.ToArray();
             dgvObservationPoints.Refresh();
             FilterData();
 
@@ -624,20 +628,34 @@ namespace MilSpace.Visibility
 
             dgvObservationPoints.ColumnHeaderMouseClick += DgvObservationPoints_ColumnHeaderMouseClick;
 
-            //dgvObservationPoints.Columns["Title"].SortMode = DataGridViewColumnSortMode.Automatic;
-            //dgvObservationPoints.Columns["Type"].SortMode = DataGridViewColumnSortMode.Automatic;
-            //dgvObservationPoints.Columns["Affiliation"].SortMode = DataGridViewColumnSortMode.Automatic;
-            //dgvObservationPoints.Columns["Date"].SortMode = DataGridViewColumnSortMode.Automatic;
-
             dgvObservationPoints.Columns["Id"].Visible = false;
         }
 
         private void DgvObservationPoints_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.ColumnIndex == 0)
-            {
-            }
 
+            VeluableObservPointSortFieldsEnum sortColumn = VeluableObservPointSortFieldsEnum.Name;
+            if (e.ColumnIndex == 2)
+            {
+                sortColumn = VeluableObservPointSortFieldsEnum.Type;
+            }
+            else if (e.ColumnIndex == 3)
+            {
+                sortColumn = VeluableObservPointSortFieldsEnum.Affiliation;
+            }
+            else if (e.ColumnIndex == 4)
+            {
+                sortColumn = VeluableObservPointSortFieldsEnum.Date;
+            }
+            observatioPointsSordDirection = !observatioPointsSordDirection;
+
+            var source = dgvObservationPoints.DataSource as ObservPointGui[];
+            currentSorting = sortColumn;
+
+            var sorted = _observPointsController.SortObservationPoints(source.ToArray(), sortColumn, observatioPointsSordDirection);
+            dgvObservationPoints.DataSource = sorted.ToArray();
+            FilterData();
+            dgvObservationPoints.Refresh();
         }
 
         private void DisplaySelectedColumns(VeluableObservPointFieldsEnum filter)
@@ -677,17 +695,17 @@ namespace MilSpace.Visibility
             }
 
         }
-
+      
         private void CheckRowForFilter(DataGridViewRow row)
         {
-            if (cmbAffiliation.SelectedItem != null 
+            if (cmbAffiliation.SelectedItem != null
                 && cmbAffiliation.SelectedItem.ToString() != _observPointsController.GetAllAffiliationType())
             {
                 row.Visible = (row.Cells["Affiliation"].Value.ToString() == cmbAffiliation.SelectedItem.ToString());
                 if (!row.Visible) return;
             }
 
-            if (cmbObservPointType.SelectedItem != null 
+            if (cmbObservPointType.SelectedItem != null
                 && cmbObservPointType.SelectedItem.ToString() != _observPointsController.GetAllMobilityType())
             {
                 row.Visible = (row.Cells["Type"].Value.ToString() == cmbObservPointType.SelectedItem.ToString());
@@ -1089,29 +1107,29 @@ namespace MilSpace.Visibility
 
         private void EnableObservPointsControls(bool isAllDisabled = false)
         {
-            log.DebugEx("> EnableObservPointsControls START. isAllDisabled:{0} IsPointFieldsEnabled:{1}", 
+            log.DebugEx("> EnableObservPointsControls START. isAllDisabled:{0} IsPointFieldsEnabled:{1}",
                 isAllDisabled.ToString(), IsPointFieldsEnabled.ToString());
 
             bool layerExists = IsPointFieldsEnabled;
 
-            cmbAffiliationEdit.Enabled = 
-                cmbObservTypesEdit.Enabled = 
-                azimuthE.Enabled = 
-                azimuthB.Enabled = 
-                xCoord.Enabled = 
-                yCoord.Enabled = 
-                angleOFViewMin.Enabled = 
-                angleOFViewMax.Enabled = 
-                heightCurrent.Enabled = 
-                heightMin.Enabled = 
-                heightMax.Enabled = 
-                observPointName.Enabled = 
-                tlbCoordinates.Enabled = 
-                txtMaxDistance.Enabled = 
+            cmbAffiliationEdit.Enabled =
+                cmbObservTypesEdit.Enabled =
+                azimuthE.Enabled =
+                azimuthB.Enabled =
+                xCoord.Enabled =
+                yCoord.Enabled =
+                angleOFViewMin.Enabled =
+                angleOFViewMax.Enabled =
+                heightCurrent.Enabled =
+                heightMin.Enabled =
+                heightMax.Enabled =
+                observPointName.Enabled =
+                tlbCoordinates.Enabled =
+                txtMaxDistance.Enabled =
                 txtMinDistance.Enabled =
-                tlbbShowPoint.Enabled = 
-                tlbbRemovePoint.Enabled = 
-                tlbbAddNewPoint.Enabled = 
+                tlbbShowPoint.Enabled =
+                tlbbRemovePoint.Enabled =
+                tlbbAddNewPoint.Enabled =
                 (layerExists && !isAllDisabled);
 
             //= azimuthMainAxis.Enabled = cameraRotationH.Enabled = cameraRotationV.Enabled
@@ -1142,7 +1160,11 @@ namespace MilSpace.Visibility
                 var rowIndex = dgvObservationPoints.SelectedRows[0].Index;
 
                 _observPointsController.RemoveObservPoint(VisibilityManager.ObservPointFeature, ActiveView, _selectedPointId);
-                _observPointGuis.Remove(_observPointGuis.First(point => point.Id == _selectedPointId));
+                var source = dgvObservationPoints.DataSource as ObservPointGui[];
+                var sourceList = new List<ObservPointGui>(source);
+                sourceList.Remove(sourceList.First(point => point.Id == _selectedPointId));
+
+                dgvObservationPoints.DataSource = sourceList.ToArray();
 
                 if (rowIndex < dgvObservationPoints.RowCount)
                 {
@@ -1250,9 +1272,9 @@ namespace MilSpace.Visibility
         {
             _isDropDownItemChangedManualy = false;
 
-            cmbObservTypesEdit.SelectedItem = 
+            cmbObservTypesEdit.SelectedItem =
                 _observPointsController.GetObservationPointMobilityTypeLocalized(selectedPoint.ObservationPointMobilityType);
-            cmbAffiliationEdit.SelectedItem = 
+            cmbAffiliationEdit.SelectedItem =
                 _observPointsController.GetObservationPointTypeLocalized(selectedPoint.ObservationPointAffiliationType);
 
             _isDropDownItemChangedManualy = true;
@@ -1262,24 +1284,24 @@ namespace MilSpace.Visibility
             xCoord.Text = selectedPoint.X.HasValue ? selectedPoint.X.Value.ToString("F5") : centerPoint.X.ToString("F5");
             yCoord.Text = selectedPoint.Y.HasValue ? selectedPoint.Y.Value.ToString("F5") : centerPoint.Y.ToString("F5");
 
-            azimuthB.Text = 
-                selectedPoint.AzimuthStart.HasValue ? 
-                selectedPoint.AzimuthStart.ToString() : 
+            azimuthB.Text =
+                selectedPoint.AzimuthStart.HasValue ?
+                selectedPoint.AzimuthStart.ToString() :
                 ObservPointDefaultValues.AzimuthBText;
-            azimuthE.Text = 
-                selectedPoint.AzimuthEnd.HasValue ? 
-                selectedPoint.AzimuthEnd.ToString() : 
+            azimuthE.Text =
+                selectedPoint.AzimuthEnd.HasValue ?
+                selectedPoint.AzimuthEnd.ToString() :
                 ObservPointDefaultValues.AzimuthEText;
-            heightCurrent.Text = 
-                selectedPoint.RelativeHeight.HasValue ? 
-                selectedPoint.RelativeHeight.ToString() : 
+            heightCurrent.Text =
+                selectedPoint.RelativeHeight.HasValue ?
+                selectedPoint.RelativeHeight.ToString() :
                 ObservPointDefaultValues.RelativeHeightText;
             heightMin.Text = selectedPoint.AvailableHeightLover.ToString();
             heightMax.Text = selectedPoint.AvailableHeightUpper.ToString();
             observPointName.Text = selectedPoint.Title;
-            angleOFViewMin.Text = 
-                selectedPoint.AngelMinH.HasValue ? 
-                selectedPoint.AngelMinH.ToString() : 
+            angleOFViewMin.Text =
+                selectedPoint.AngelMinH.HasValue ?
+                selectedPoint.AngelMinH.ToString() :
                 ObservPointDefaultValues.AngleOFViewMinText;
             angleOFViewMax.Text = selectedPoint.AngelMaxH.HasValue ? selectedPoint.AngelMaxH.ToString() : ObservPointDefaultValues.AngleOFViewMaxText;
             txtMinDistance.Text = selectedPoint.InnerRadius.HasValue ? selectedPoint.InnerRadius.ToString() : ObservPointDefaultValues.DefaultRadiusText;
@@ -1775,7 +1797,7 @@ namespace MilSpace.Visibility
                 return;
             }
 
-          //  SavePoint();
+            //  SavePoint();
         }
 
         private void Fields_TextChanged(object sender, EventArgs e)
@@ -1897,7 +1919,7 @@ namespace MilSpace.Visibility
                 return;
             }
 
-            if (dgvObservObjects.SelectedRows[0].Cells["Id"].Value == null 
+            if (dgvObservObjects.SelectedRows[0].Cells["Id"].Value == null
                 || dgvObservObjects.SelectedRows[0].Cells["Id"].Value.ToString() == string.Empty)
             {
                 var selectedObjectOID =
