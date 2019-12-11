@@ -175,21 +175,24 @@ namespace MilSpace.Tools
 
         public static bool AddObservationObjectLayer(IActiveView view)
         {
+            logger.InfoEx("> AddObservationObjectLayer START");
             try
             {
                 var objLayer = GdbAccess.Instance.GetLayerFromWorkingWorkspace(ObservStationFeature);
                 view.FocusMap.AddLayer(objLayer);
+                logger.InfoEx("> AddObservationObjectLayer END");
+                return true;
             }
             catch (MilSpaceDataException ex)
             {
                 logger.ErrorEx("> AddObservationObjectLayer Exception: {0}", ex.Message);
+                return false;
             }
             catch (Exception ex)
             {
                 logger.ErrorEx("> AddObservationObjectLayer Exception 2: {0}", ex.Message);
+                return false;
             }
-
-            return false;
         }
 
         public static IFeatureClass ObservationPointsFeatureClass

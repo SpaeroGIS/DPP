@@ -41,10 +41,10 @@ namespace MilSpace.Visibility
             { VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle , false}
         };
 
-        static Logger logger = Logger.GetLoggerEx("Visibility Addin Helper");
+        static Logger logger = Logger.GetLoggerEx("MilSpace.Visibility.ArcMapHelper");
 
-
-        private static Dictionary<VisibilityCalculationResultsEnum, Action<ILayer, IColor, short>> mapResultAction = new Dictionary<VisibilityCalculationResultsEnum, Action<ILayer, IColor, short>>
+        private static Dictionary<VisibilityCalculationResultsEnum, Action<ILayer, IColor, short>> mapResultAction = 
+            new Dictionary<VisibilityCalculationResultsEnum, Action<ILayer, IColor, short>>
         {
             { VisibilityCalculationResultsEnum.VisibilityAreasPotential, (layer, fillColor, transparency) => {
 
@@ -388,121 +388,130 @@ namespace MilSpace.Visibility
             }
         };
 
-        public static void AddResultsToMapAsGroupLayer(VisibilityCalcResults results, IActiveView activeView, string relativeLayerName,
-                                                bool isLayerAbove, short transparency, IColor color)
-
+        public static void AddResultsToMapAsGroupLayer(
+            VisibilityCalcResults results, 
+            IActiveView activeView, 
+            string relativeLayerName,
+            bool isLayerAbove, 
+            short transparency, 
+            IColor color)
         {
-            var visibilityLayers = new List<ILayer>();
-            ILayer lr = null;
+            logger.InfoEx("> AddResultsToMapAsGroupLayer START");
 
-
-            foreach (var li in LayersSequence)
+            try
             {
-                if (results.ResultsInfo.Any(r => r.RessutType == li.Key))
+                var visibilityLayers = new List<ILayer>();
+                ILayer lr = null;
+
+                foreach (var li in LayersSequence)
                 {
-                    foreach (var ri in results.ResultsInfo.Where(r => r.RessutType == li.Key))
+                    if (results.ResultsInfo.Any(r => r.RessutType == li.Key))
                     {
-                        var dataset = GdbAccess.Instance.GetDatasetFromCalcWorkspace(ri);
-                        if (dataset == null)
+                        foreach (var ri in results.ResultsInfo.Where(r => r.RessutType == li.Key))
                         {
-                            continue;
-                        }
+                            var dataset = GdbAccess.Instance.GetDatasetFromCalcWorkspace(ri);
+                            if (dataset == null)
+                            {
+                                continue;
+                            }
 
-                        if (dataset is IFeatureClass feature)
-                        {
-                            lr = EsriTools.GetFeatureLayer(feature);
-                        }
-                        if (dataset is IRasterDataset raster)
-                        {
-                            lr = EsriTools.GetRasterLayer(raster);
-                        }
+                            if (dataset is IFeatureClass feature)
+                            {
+                                lr = EsriTools.GetFeatureLayer(feature);
+                            }
+                            else if (dataset is IRasterDataset raster)
+                            {
+                                lr = EsriTools.GetRasterLayer(raster);
+                            }
+                            lr.Visible = li.Value;
 
-                        lr.Visible = li.Value;
-
-                        if (mapResultAction.ContainsKey(ri.RessutType))
-                        {
-                            mapResultAction[ri.RessutType](lr, color, transparency);
+                            if (mapResultAction.ContainsKey(ri.RessutType))
+                            {
+                                mapResultAction[ri.RessutType](lr, color, transparency);
+                            }
+                            visibilityLayers.Add(lr);
                         }
-
-                        visibilityLayers.Add(lr);
                     }
                 }
 
-            }
+                //foreach (var ri in results.ResultsInfo)
+                //{
+                //    var dataset = GdbAccess.Instance.GetDatasetFromCalcWorkspace(ri);
+                //    if (dataset == null)
+                //    {
+                //        continue;
+                //    }
 
-            //foreach (var ri in results.ResultsInfo)
-            //{
-            //    var dataset = GdbAccess.Instance.GetDatasetFromCalcWorkspace(ri);
-            //    if (dataset == null)
-            //    {
-            //        continue;
-            //    }
+                //    if (dataset is IFeatureClass feature)
+                //    {
+                //        lr = EsriTools.GetFeatureLayer(feature);
+                //    }
+                //    if (dataset is IRasterDataset raster)
+                //    {
+                //        lr = EsriTools.GetRasterLayer(raster);
+                //    }
 
-            //    if (dataset is IFeatureClass feature)
-            //    {
-            //        lr = EsriTools.GetFeatureLayer(feature);
-            //    }
-            //    if (dataset is IRasterDataset raster)
-            //    {
-            //        lr = EsriTools.GetRasterLayer(raster);
-            //    }
+                //    if (mapResultAction.ContainsKey(ri.RessutType))
+                //    {
+                //        mapResultAction[ri.RessutType](lr, color, transparency);
+                //    }
 
-            //    if (mapResultAction.ContainsKey(ri.RessutType))
-            //    {
-            //        mapResultAction[ri.RessutType](lr, color, transparency);
-            //    }
+                //    visibilityLayers.Add(lr);
 
-            //    visibilityLayers.Add(lr);
+                //}
 
-            //}
+                MapLayersManager layersManager = new MapLayersManager(activeView);
+                //var relativeLayer = layersManager.FirstLevelLayers.FirstOrDefault(l => l.Name.Equals(relativeLayerName, StringComparison.InvariantCultureIgnoreCase));
 
-            MapLayersManager layersManager = new MapLayersManager(activeView);
-            //var relativeLayer = layersManager.FirstLevelLayers.FirstOrDefault(l => l.Name.Equals(relativeLayerName, StringComparison.InvariantCultureIgnoreCase));
+                ////var relativeLayer = GetLayer(relativeLayerName, activeView.FocusMap);
+                //var calcRasters = EsriTools.GetVisibiltyImgLayers(calcRasterName, activeView.FocusMap);
 
-            ////var relativeLayer = GetLayer(relativeLayerName, activeView.FocusMap);
-            //var calcRasters = EsriTools.GetVisibiltyImgLayers(calcRasterName, activeView.FocusMap);
+                IGroupLayer groupLayer = new GroupLayerClass { Name = results.Name };
 
-            IGroupLayer groupLayer = new GroupLayerClass
-            { Name = results.Name };
-
-            var layersToremove = new List<IRasterLayer>();
-            foreach (var layer in visibilityLayers)
-            {
-                if (layer is IRasterLayer raster)
+                var layersToremove = new List<IRasterLayer>();
+                foreach (var layer in visibilityLayers)
                 {
-                    var layerEffects = (ILayerEffects)layer;
-                    layerEffects.Transparency = transparency;
-
-                    var existenLayer = layersManager.RasterLayers.FirstOrDefault(l => l.FilePath.Equals(raster.FilePath, StringComparison.InvariantCultureIgnoreCase));
-                    if (existenLayer != null && !layersToremove.Any(l => l.Equals(existenLayer)))
+                    if (layer is IRasterLayer raster)
                     {
-                        layersToremove.Add(existenLayer);
-                    }
+                        var layerEffects = (ILayerEffects)layer;
+                        layerEffects.Transparency = transparency;
 
+                        var existenLayer = 
+                            layersManager.RasterLayers.FirstOrDefault(l => l.FilePath.Equals(raster.FilePath, StringComparison.InvariantCultureIgnoreCase));
+                        if (existenLayer != null && !layersToremove.Any(l => l.Equals(existenLayer)))
+                        {
+                            layersToremove.Add(existenLayer);
+                        }
+                    }
+                    groupLayer.Add(layer);
+                }
+                relativeLayerName = 
+                    string.IsNullOrWhiteSpace(relativeLayerName) ? 
+                    (layersManager.LastLayer == null ? string.Empty : layersManager.LastLayer.Name) : 
+                    relativeLayerName;
+
+                if (!layersManager.InserLayer(groupLayer, relativeLayerName, isLayerAbove))
+                {
+                    logger.InfoEx("> AddResultsToMapAsGroupLayer END. Cannot add groupped layer {0}", results.Name);
+                }
+                else
+                {
+                    logger.InfoEx("> AddResultsToMapAsGroupLayer END. The groupped layer {0} was added", results.Name);
                 }
 
-                groupLayer.Add(layer);
+                //var mapLayers = activeView.FocusMap as IMapLayers2;
+                //int relativeLayerPosition = GetLayerIndex(relativeLayer, activeView);
+                //int groupLayerPosition = (isLayerAbove) ? relativeLayerPosition - 1 : relativeLayerPosition + 1;
+                //layersToremove.ForEach(l => mapLayers.DeleteLayer(l));
+                //mapLayers.InsertLayer(groupLayer, false, groupLayerPosition);
+
             }
-
-            relativeLayerName = string.IsNullOrWhiteSpace(relativeLayerName) ? (layersManager.LastLayer == null ? string.Empty : layersManager.LastLayer.Name) : relativeLayerName;
-
-            if (!layersManager.InserLayer(groupLayer, relativeLayerName, isLayerAbove))
+            catch (Exception ex)
             {
-                logger.ErrorEx($"Cannot add groupped layer {results.Name} near the layer {relativeLayerName}");
-            }
-            else
-            {
-                logger.InfoEx($"The groupped layer {results.Name} was added near the layer {relativeLayerName}");
+                logger.InfoEx("> AddResultsToMapAsGroupLayer EXCEPTION. Message:{0}", ex.Message);
             }
 
-            //var mapLayers = activeView.FocusMap as IMapLayers2;
-            //int relativeLayerPosition = GetLayerIndex(relativeLayer, activeView);
-            //int groupLayerPosition = (isLayerAbove) ? relativeLayerPosition - 1 : relativeLayerPosition + 1;
+        }    
 
-
-
-            //layersToremove.ForEach(l => mapLayers.DeleteLayer(l));
-            //mapLayers.InsertLayer(groupLayer, false, groupLayerPosition);
-        }
     }
 }

@@ -145,7 +145,12 @@ namespace MilSpace.Visibility.ViewController
         internal void ShowObservPoint(IActiveView activeView, int id)
         {
             var point = GetObservPointById(id);
-            var pointGeometry = new PointClass { X = (double)point.X, Y = (double)point.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
+            var pointGeometry = new PointClass
+            {
+                X = (double)point.X,
+                Y = (double)point.Y,
+                SpatialReference = EsriTools.Wgs84Spatialreference
+            };
 
             pointGeometry.Project(activeView.FocusMap.SpatialReference);
 
@@ -502,7 +507,8 @@ namespace MilSpace.Visibility.ViewController
             var obserPointsLayersNames = new List<string>();
             manager.PointLayers.ToList().ForEach(layer =>
             {
-                if (layer is IFeatureLayer fl && fl.FeatureClass.AliasName.Equals(GetObservPointFeatureName(), StringComparison.InvariantCultureIgnoreCase))
+                if (layer is IFeatureLayer fl 
+                    && fl.FeatureClass.AliasName.Equals(GetObservPointFeatureName(), StringComparison.InvariantCultureIgnoreCase))
                 {
                     obserPointsLayersNames.Add(layer.Name);
                 }
@@ -539,7 +545,8 @@ namespace MilSpace.Visibility.ViewController
             //TODO: Use getting layers from a Helper to obtain all feature classes which can be inside a CompositeLayer also filter by Point type
             manager.PolygonLayers.ToList().ForEach(layer =>
             {
-                if (layer is IFeatureLayer fl && fl.FeatureClass.AliasName.EndsWith(GetObservObjectFeatureName(), StringComparison.InvariantCultureIgnoreCase))
+                if (layer is IFeatureLayer fl 
+                   && fl.FeatureClass.AliasName.EndsWith(GetObservObjectFeatureName(), StringComparison.InvariantCultureIgnoreCase))
                 {
                     observstsLayersNames.Add(layer.Name);
                 }
@@ -706,23 +713,29 @@ namespace MilSpace.Visibility.ViewController
 
         internal void OnStartEditing()
         {
+            log.InfoEx("> OnStartEditing Event");
         }
 
         internal void OnStopEditing(bool save)
         {
+            log.InfoEx("> OnStopEditing Event START");
             if (save)
             {
                 UpdateObservationPointsList();
             }
+            log.InfoEx("> OnStopEditing Event END");
         }
 
         internal void OnDeleteFeature(ESRI.ArcGIS.Geodatabase.IObject obj)
         {
+            log.InfoEx("> OnDeleteFeature Event");
             //     UpdateObservationPointsList();
         }
 
         internal void OnCreateFeature(ESRI.ArcGIS.Geodatabase.IObject obj)
         {
+            log.InfoEx("> OnCreateFeature Event START");
+
             if (obj.Class is IFeatureClass fcl)
             {
                 if (fcl == GetObservatioPointFeatureClass())
@@ -733,18 +746,21 @@ namespace MilSpace.Visibility.ViewController
                     var fldYWgs = obj.Fields.FindField("YWGS");
                     var fldIdOP = obj.Fields.FindField("idOP");
 
-
                     IGeometry g = fcl.GetFeature(obj.OID).ShapeCopy;
                     IPoint p = g as IPoint;
                     p.Project(EsriTools.Wgs84Spatialreference);
 
-                    obj.Value[fldIdOP] = $"OO{DataAccess.Helper.GetTemporaryNameSuffix()}";
+                    var sidOP = $"OP{DataAccess.Helper.GetTemporaryNameSuffix()}";
+                    obj.Value[fldIdOP] = sidOP;
                     obj.Value[fldTitleIndex] = LocalizationContext.Instance.DeafultObservationpointTitle.InvariantFormat(obj.OID);
                     obj.Value[fldXWgs] = p.X;
                     obj.Value[fldYWgs] = p.Y;
-                    log.InfoEx($"New observation point was added and name set to {LocalizationContext.Instance.DeafultObservationpointTitle}");
+
+                    log.InfoEx("OnCreateFeature. New observation point was added wiht objectid:{0} idOP:{1} Title {2}",
+                        obj.OID, sidOP, LocalizationContext.Instance.DeafultObservationpointTitle.InvariantFormat(obj.OID));
                 }
             }
+            log.InfoEx("> OnCreateFeature Event END");
         }
         #endregion
 
