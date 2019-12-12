@@ -325,8 +325,6 @@ namespace MilSpace.Visibility
         {
             if (observationObjects.Any())
             {
-                dgvObservObjects.Rows.Clear();
-
                 var itemsToShow = observationObjects.Select(i => new ObservObjectGui
                 {
                     ObjectID = i.ObjectId,
