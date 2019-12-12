@@ -288,7 +288,6 @@ namespace MilSpace.Visibility
         {
             log.InfoEx("> FillObservationPointList START");
 
-            dgvObservationPoints.Rows.Clear();
             var selected = dgvObservationPoints.SelectedRows.Count > 0 ? dgvObservationPoints.SelectedRows[0].Index : 0;
             dgvObservationPoints.CurrentCell = null;
 
@@ -610,7 +609,7 @@ namespace MilSpace.Visibility
 
         private void ClearObservPointsData()
         {
-            dgvObservationPoints.Rows.Clear();
+            dgvObservationPoints.DataSource = null;
             SetDefaultValues();
         }
 

@@ -18,7 +18,8 @@ namespace MilSpace.Visibility
     {
         private string _previousPickedRasterLayer;
         private VisibilityCalcTypeEnum _stepControl = VisibilityCalcTypeEnum.None;
-        private const string _allValuesFilterText = "All";
+        private string _allValuesFilterText = "All";
+        private string _allValuesMobility = "All";
         private ObservationPointsController controller = new ObservationPointsController(ArcMap.Document, ArcMap.ThisApplication);
         private BindingList<CheckObservPointGui> _observPointGuis;
         private BindingList<CheckObservPointGui> _observationObjects;
@@ -49,16 +50,16 @@ namespace MilSpace.Visibility
             try
             {
                 this.Text = LocalizationContext.Instance.WindowCaptionMaster;
-                this.PreviousStepButton.Text = 
+                this.PreviousStepButton.Text =
                     LocalizationContext.Instance.FindLocalizedElement("this.PreviousStepButton.Text", "< Попередній");
-                this.NextStepButton.Text = 
+                this.NextStepButton.Text =
                     LocalizationContext.Instance.FindLocalizedElement("WinM.NextStepButton.Text", "Наступний >");
                 this.stepOne.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.stepOne.Text", "Крок 1");
-                this.label50.Text = 
+                this.label50.Text =
                     LocalizationContext.Instance.FindLocalizedElement("WinM.label50.Text", "Аналіз результатів спостереження \r\nАналіз результатів спостереження з відомими параметрами (наприклад - аерофотозйомки) з точки зору розташування кадрів на місцевості і забезпечення видимості");
                 this.button4.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.button4.Text", "Обрати >");
                 this.label45.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label45.Text", "4 (VP)");
-                this.label49.Text = 
+                this.label49.Text =
                     LocalizationContext.Instance.FindLocalizedElement("WinM.label49.Text", "Визначення параметрів пунктів спостереження (ПC) \r\nПошук параметрів ПC для спостереження заданих об\'ектів спостереження (ОC) (параметри апаратури, висота над поверхнею, напрямки і кути огляду)");
                 this.button2.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.button2.Text", "Обрати >");
                 this.label33.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label33.Text", "3 (VO)");
@@ -183,6 +184,9 @@ namespace MilSpace.Visibility
         }
         public void FillComboBoxes()
         {
+            _allValuesFilterText = controller.GetAllAffiliationType();
+            _allValuesMobility = controller.GetAllMobilityType();
+
             cmbAffiliation.Items.Clear();
             cmbAffiliation.Items.Add(controller.GetAllAffiliationType());
             cmbAffiliation.Items.AddRange(controller.GetObservationPointTypes().ToArray());
@@ -228,11 +232,12 @@ namespace MilSpace.Visibility
                     t => new CheckObservPointGui
                     {
                         Title = t.Title,
-                        Type = t.Type,
-                        Affiliation = t.Affiliation,
+                        Type = LocalizationContext.Instance.MobilityTypes[t.ObservationPointMobilityType],
+                        Affiliation = LocalizationContext.Instance.AffiliationTypes[t.ObservationPointAffiliationType],
                         Date = t.Dto.Value.ToShortDateString(),
                         Id = t.Objectid
                     }).OrderBy(l => l.Title).ToList();
+
 
                 dvgCheckList.Rows.Clear();
                 dvgCheckList.CurrentCell = null;
@@ -254,11 +259,12 @@ namespace MilSpace.Visibility
                 var ItemsToShow = observationPoints.Select(t => new CheckObservPointGui
                 {
                     Title = t.Title,
-                    Type = t.Type,
-                    Affiliation = t.Affiliation,
+                    Type = LocalizationContext.Instance.MobilityTypes[t.ObservationPointMobilityType],
+                    Affiliation = LocalizationContext.Instance.AffiliationTypes[t.ObservationPointAffiliationType],
                     Date = t.Dto.Value.ToString(Helper.DateFormatSmall),
                     Id = t.Objectid
                 });
+
                 //Finding coincidence
                 var commonT = (_observPointGuis.Select(a => a.Id).Intersect(ItemsToShow.Select(b => b.Id))).ToList();
 
@@ -290,11 +296,12 @@ namespace MilSpace.Visibility
                     t => new CheckObservPointGui
                     {
                         Title = t.Title,
-                        Affiliation = t.ObjectType.ToString(),
+                        Affiliation = controller.GetObservObjectsTypeString(t.ObjectType),
                         Id = t.ObjectId,
                         Type = t.Group,
                         Date = t.DTO.ToString(Helper.DateFormatSmall)
                     }).OrderBy(l => l.Title);
+
 
                 dgvObjects.DataSource = null; //Clearing listbox
 
@@ -465,7 +472,33 @@ namespace MilSpace.Visibility
             }
         }
 
-        private void FilterData(DataGridView Grid, ComboBox combo)
+        private  void FilterPointsData()
+        {
+
+            if (dvgCheckList.Rows.Count == 0)
+            {
+                return;
+            }
+
+            dvgCheckList.CurrentCell = null;
+
+            var mobilityValue = cmbType.SelectedItem.ToString();
+            var affiliationValue = cmbAffiliation.SelectedItem.ToString();
+
+            foreach (DataGridViewRow row in dvgCheckList.Rows)
+            {
+                bool allowVisibleType = (mobilityValue == _allValuesMobility) || row.Cells["Type"].Value.Equals(mobilityValue);
+                bool allowVisibleAffiliation = (affiliationValue == _allValuesFilterText) || row.Cells["Affiliation"].Value.Equals(affiliationValue);
+                row.Visible = allowVisibleType && allowVisibleAffiliation;
+            }
+
+            if (dvgCheckList.FirstDisplayedScrollingRowIndex != -1)
+            {
+                dvgCheckList.Rows[dvgCheckList.FirstDisplayedScrollingRowIndex].Selected = true;
+            }
+        }
+
+        private void FilterData(DataGridView Grid, ComboBox combo, string column, string allValues)
         {
             if (Grid.Rows.Count == 0)
             {
@@ -476,7 +509,7 @@ namespace MilSpace.Visibility
 
             foreach (DataGridViewRow row in Grid.Rows)
             {
-                CheckRowForFilter(row, combo);
+                CheckRowForFilter(row, combo, column, allValues);
             }
 
             if (Grid.FirstDisplayedScrollingRowIndex != -1)
@@ -485,36 +518,28 @@ namespace MilSpace.Visibility
             }
         }
 
-        private void CheckRowForFilter(DataGridViewRow row, ComboBox combo)
+        private void CheckRowForFilter(DataGridViewRow row, ComboBox combo, string column, string allValues)
         {
-            if (combo.SelectedItem != null && combo.SelectedItem.ToString() != _allValuesFilterText)
+            if (combo.SelectedItem != null && combo.SelectedItem.ToString() != allValues)
             {
-                row.Visible = (row.Cells["Affiliation"].Value.ToString() == combo.SelectedItem.ToString());
+                row.Visible = (row.Cells[column].Value.ToString() == combo.SelectedItem.ToString());
                 if (!row.Visible) return;
-            }
-
-            if (row.Cells["Type"].Value != null && cmbType.SelectedItem != null && cmbType.SelectedItem.ToString() != _allValuesFilterText)
-            {
-                row.Visible = (row.Cells["Type"].Value.ToString() == cmbType.SelectedItem.ToString());
-                return;
             }
 
             row.Visible = true;
         }
         private void cmbType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            FilterData(dvgCheckList, cmbAffiliation);
+            FilterPointsData();
         }
 
         private void cmbAffiliation_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-            FilterData(dvgCheckList, cmbAffiliation);
-
+            FilterPointsData();
         }
         private void cmbObservObject_SelectedIndexChanged(object sender, EventArgs e)
         {
-            FilterData(dgvObjects, cmbObservObject);
+            FilterData(dgvObjects, cmbObservObject, "Affiliation", _allValuesFilterText);
         }
 
         private void AssemblyWizardResult()
@@ -535,23 +560,23 @@ namespace MilSpace.Visibility
 
             if (_stepControl == VisibilityCalcTypeEnum.OpservationPoints)
             {
-                FinalResult.VisibilityCalculationResults = 
+                FinalResult.VisibilityCalculationResults =
                     SumChkBox.Checked ?
-                    VisibilityCalculationResultsEnum.ObservationPoints 
-                    | VisibilityCalculationResultsEnum.VisibilityAreaRaster 
-                    | VisibilityCalculationResultsEnum.VisibilityAreasPotential /*| VisibilityCalculationResultsEnum.CoverageTable*/ 
+                    VisibilityCalculationResultsEnum.ObservationPoints
+                    | VisibilityCalculationResultsEnum.VisibilityAreaRaster
+                    | VisibilityCalculationResultsEnum.VisibilityAreasPotential /*| VisibilityCalculationResultsEnum.CoverageTable*/
                     : VisibilityCalculationResultsEnum.None;
             }
             else if (_stepControl == VisibilityCalcTypeEnum.ObservationObjects)
             {
                 FinalResult.ObservObjectIDs = _observationObjects.Where(o => o.Check).Select(i => i.Id).ToArray();
-                FinalResult.VisibilityCalculationResults = 
+                FinalResult.VisibilityCalculationResults =
                     (SumChkBox.Checked ?
-                    VisibilityCalculationResultsEnum.ObservationPoints 
-                    | VisibilityCalculationResultsEnum.VisibilityAreaRaster 
-                    | VisibilityCalculationResultsEnum.VisibilityAreasPotential /*| VisibilityCalculationResultsEnum.CoverageTable*/ 
+                    VisibilityCalculationResultsEnum.ObservationPoints
+                    | VisibilityCalculationResultsEnum.VisibilityAreaRaster
+                    | VisibilityCalculationResultsEnum.VisibilityAreasPotential /*| VisibilityCalculationResultsEnum.CoverageTable*/
                     : VisibilityCalculationResultsEnum.None)
-                    | VisibilityCalculationResultsEnum.ObservationObjects 
+                    | VisibilityCalculationResultsEnum.ObservationObjects
                     | VisibilityCalculationResultsEnum.VisibilityObservStationClip;
             }
 
@@ -582,32 +607,32 @@ namespace MilSpace.Visibility
 
         public void SummaryInfo()
         {
-            lblCalcType.Text = 
+            lblCalcType.Text =
                 LocalizationContext.Instance.CalcTypeLocalisation[FinalResult.CalculationType];
-            lblTaskName.Text = 
+            lblTaskName.Text =
                 FinalResult.TaskName;
-            lblDEMName.Text = 
+            lblDEMName.Text =
                 FinalResult.RasterLayerName;
-            lblObservObjectsSingle.Text = 
+            lblObservObjectsSingle.Text =
                 checkBoxOP.Checked ? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord;
 
-            lblObservObjectsAll.Text = 
+            lblObservObjectsAll.Text =
                 SumChkBox.Checked ? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord;
 
-            lblReferencedLayerName.Text = 
+            lblReferencedLayerName.Text =
                 cmbPositions.SelectedItem.ToString() + " " + cmbMapLayers.SelectedItem.ToString();
 
-            var selectedObservPoints = 
+            var selectedObservPoints =
                 _observPointGuis != null ? _observPointGuis.Where(p => p.Check).Select(o => o.Title).ToArray() : null;
-            var selectedObservObjects = 
+            var selectedObservObjects =
                 _observationObjects != null ? _observationObjects.Where(p => p.Check).Select(o => o.Title).ToArray() : null;
 
-            lblObservPointsSummary.Text = 
+            lblObservPointsSummary.Text =
                 selectedObservPoints == null ? string.Empty : $"{selectedObservPoints.Length} - {string.Join("; ", selectedObservPoints)}";
-            lblObservObjectsSummary.Text = 
+            lblObservObjectsSummary.Text =
                 selectedObservObjects == null ? string.Empty : $"{selectedObservObjects.Length} - {string.Join("; ", selectedObservObjects)}";
 
-            lblTrimCalcresults.Text = 
+            lblTrimCalcresults.Text =
                 !chkTrimRaster.Enabled ? string.Empty : (chkTrimRaster.Checked ? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord);
         }
 
@@ -631,16 +656,16 @@ namespace MilSpace.Visibility
 
             if (StepsTabControl.SelectedIndex == StepsTabControl.TabCount - 1)
             {
-                if (!FinalResult.VisibilityCalculationResults.HasFlag(VisibilityCalculationResultsEnum.ObservationPoints) 
+                if (!FinalResult.VisibilityCalculationResults.HasFlag(VisibilityCalculationResultsEnum.ObservationPoints)
                     && !FinalResult.VisibilityCalculationResults.HasFlag(VisibilityCalculationResultsEnum.ObservationPointSingle)
                     )
                 {
                     MessageBox.Show(
                         LocalizationContext.Instance.FindLocalizedElement(
-                            "WinMWarningNoSourceForCalculation", 
+                            "WinMWarningNoSourceForCalculation",
                             "The is no results sources for calculating. Please, select source!"),
-                        LocalizationContext.Instance.MsgBoxWarningHeader, 
-                        MessageBoxButtons.OK, 
+                        LocalizationContext.Instance.MsgBoxWarningHeader,
+                        MessageBoxButtons.OK,
                         MessageBoxIcon.Warning);
                 }
 
@@ -650,8 +675,8 @@ namespace MilSpace.Visibility
                         LocalizationContext.Instance.FindLocalizedElement(
                             "WinMWarningNoRasterLayrSelected",
                             "The Raster layer must be selected!"),
-                        LocalizationContext.Instance.MsgBoxWarningHeader, 
-                        MessageBoxButtons.OK, 
+                        LocalizationContext.Instance.MsgBoxWarningHeader,
+                        MessageBoxButtons.OK,
                         MessageBoxIcon.Warning);
                     return;
                 }
@@ -706,9 +731,9 @@ namespace MilSpace.Visibility
             FirstTypePicked();
 
             StepsTabControl.SelectedTab.Enabled = false;
-            (StepsTabControl.TabPages[StepsTabControl.SelectedIndex + 1] as TabPage).Enabled = 
-                panel1.Enabled = 
-                chkTrimRaster.Enabled = 
+            (StepsTabControl.TabPages[StepsTabControl.SelectedIndex + 1] as TabPage).Enabled =
+                panel1.Enabled =
+                chkTrimRaster.Enabled =
                 chkTrimRaster.Checked = true;
             StepsTabControl.SelectedIndex++;
         }
@@ -748,7 +773,7 @@ namespace MilSpace.Visibility
             {
                 MessageBox.Show(
                         LocalizationContext.Instance.FindLocalizedElement(
-                            "WinMErrorValueOutRange",  $"Invalid data.\nInsert the value in the range from 0 to 100"),
+                            "WinMErrorValueOutRange", $"Invalid data.\nInsert the value in the range from 0 to 100"),
                         LocalizationContext.Instance.MsgBoxWarningHeader,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
