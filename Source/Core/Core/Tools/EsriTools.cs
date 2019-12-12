@@ -556,10 +556,16 @@ namespace MilSpace.Core.Tools
         public static IPoint GetObserverPoint(IPoint firstPoint, double observerHeight, ISpatialReference spatialReference)
         {
             ProjectToMapSpatialReference(firstPoint, spatialReference);
-            var point = new Point() { X = firstPoint.X, Y = firstPoint.Y, Z = firstPoint.Z + observerHeight, SpatialReference = spatialReference } as IPoint;
+            var point = new Point()
+            {
+                X = firstPoint.X,
+                Y = firstPoint.Y,
+                Z = firstPoint.Z + observerHeight,
+                SpatialReference = spatialReference
+            } as IPoint;
+
             var geometry = point as IGeometry;
             IZAware zAware = geometry as IZAware;
-
             zAware.ZAware = true;
 
             return point;

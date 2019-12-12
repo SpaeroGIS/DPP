@@ -98,10 +98,33 @@ namespace MilSpace.Visibility.ViewController
             return _observationObjects.FirstOrDefault(obj => obj.ObjectId.ToString() == oid);
         }
 
-        internal void UpdateObservPoint(ObservationPoint newPoint, string featureName, IActiveView activeView, int objId)
+        internal IPoint GetIPointObservPoint(int objId)
+        {
+            try
+            {
+                IFeatureClass observPointFC = GetObservatioPointFeatureClass(mapDocument.ActiveView);
+                if (observPointFC != null)
+                {
+                    var point = observPointFC.GetFeature(objId);
+                    if (point != null)
+                    {
+                        IPoint pointGeom = point.Shape as IPoint;
+                        return pointGeom;
+                    }
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            return null;
+        }
+
+            internal void UpdateObservPoint(ObservationPoint newPoint, string featureName, IActiveView activeView, int objId)
         {
             var isCoordChanges = false;
             var oldPoint = GetObservPointById(objId);
+
             var featureClass = GetFeatureClass(featureName, activeView);
             PointClass pointGeometry;
 
@@ -145,20 +168,37 @@ namespace MilSpace.Visibility.ViewController
         internal void ShowObservPoint(IActiveView activeView, int id)
         {
             var point = GetObservPointById(id);
-            var pointGeometry = new PointClass
-            {
-                X = (double)point.X,
-                Y = (double)point.Y,
-                SpatialReference = EsriTools.Wgs84Spatialreference
-            };
+            var pointGeometry = new PointClass();
 
+            if (point.X == null || point.Y == null)
+            {
+                IPoint p = GetIPointObservPoint(id);
+                if (p != null)
+                {
+                    pointGeometry.X = (double)p.X;
+                    pointGeometry.Y = (double)p.Y;
+                    pointGeometry.SpatialReference = p.SpatialReference;
+                }
+                else
+                {
+                    var pc = GetEnvelopeCenterPoint(activeView.Extent.Envelope); 
+                    pointGeometry.X = (double)pc.X;
+                    pointGeometry.Y = (double)pc.Y;
+                    pointGeometry.SpatialReference = activeView.FocusMap.SpatialReference;
+                }
+            }
+            else
+            {
+                pointGeometry.X = (double)point.X;
+                pointGeometry.Y = (double)point.Y;
+                pointGeometry.SpatialReference = EsriTools.Wgs84Spatialreference;
+            }
             pointGeometry.Project(activeView.FocusMap.SpatialReference);
 
             if (!IsPointOnExtent(activeView.Extent, pointGeometry))
             {
                 EsriTools.PanToGeometry(activeView, pointGeometry, true);
             }
-
             EsriTools.FlashGeometry(activeView.ScreenDisplay, new IGeometry[] { pointGeometry });
         }
 
