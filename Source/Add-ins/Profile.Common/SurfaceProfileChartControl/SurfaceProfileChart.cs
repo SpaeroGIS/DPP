@@ -559,21 +559,19 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             profilePropertiesTable.Columns["ProfileNumberCol"].Width = twoPositionWidth;
             profilePropertiesTable.Columns["AzimuthCol"].Width = fourPoristionWidth;
-
+            profilePropertiesTable.Columns["ObserverHeightCol"].Width = fourPoristionWidth;
             profilePropertiesTable.Columns["ProfileLengthCol"].Width = fivePoristionWidth;
 
-            profilePropertiesTable.Columns["ObserverHeightCol"].Width = fourPoristionWidth;
             profilePropertiesTable.Columns["MinHeightCol"].Width = fourPoristionWidth;
             profilePropertiesTable.Columns["MaxHeightCol"].Width = fourPoristionWidth;
-            profilePropertiesTable.Columns["HeightDifferenceCol"].Width = fourPoristionWidth;
+            profilePropertiesTable.Columns["HeightDifferenceCol"].Width = threePositionWidth;
 
             profilePropertiesTable.Columns["DescendingAngleCol"].Width = twoPositionWidth;
             profilePropertiesTable.Columns["AscendingAngleCol"].Width = twoPositionWidth;
 
-            profilePropertiesTable.Columns["VisiblePercentCol"].Width = threePositionWidth;
+            profilePropertiesTable.Columns["VisiblePercentCol"].Width = twoPositionWidth;
 
             var tableWidth = 0;
-
             foreach(DataGridViewColumn column in profilePropertiesTable.Columns)
             {
                 tableWidth += column.Width;
