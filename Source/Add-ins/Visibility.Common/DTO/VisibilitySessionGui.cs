@@ -2,7 +2,15 @@
 
 namespace MilSpace.Visibility.DTO
 {
-    internal class VisibilitySessionGui
+
+    internal enum VeluableTaskSortFieldsEnum : byte
+    {
+        Title,
+        State,
+        Created
+
+    }
+    internal class VisibilityTasknGui
     {
         public string Id { get; set; }
         public string Name { get; set; }
