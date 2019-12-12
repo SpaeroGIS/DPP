@@ -982,11 +982,11 @@ namespace MilSpace.Visibility
             // 
             // cmbAffiliation
             // 
-            this.cmbAffiliation.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbAffiliation.Dock = System.Windows.Forms.DockStyle.Right;
             this.cmbAffiliation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbAffiliation.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cmbAffiliation.FormattingEnabled = true;
-            this.cmbAffiliation.Location = new System.Drawing.Point(308, 3);
+            this.cmbAffiliation.Location = new System.Drawing.Point(311, 3);
             this.cmbAffiliation.Name = "cmbAffiliation";
             this.cmbAffiliation.Size = new System.Drawing.Size(127, 24);
             this.cmbAffiliation.TabIndex = 4;
