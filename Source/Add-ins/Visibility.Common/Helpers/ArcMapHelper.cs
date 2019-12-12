@@ -398,9 +398,6 @@ namespace MilSpace.Visibility
                 {
                     if (layer is IRasterLayer raster)
                     {
-                        var layerEffects = (ILayerEffects)layer;
-                        layerEffects.Transparency = transparency;
-
                         var existenLayer = 
                             layersManager.RasterLayers.FirstOrDefault(l => l.FilePath.Equals(raster.FilePath, StringComparison.InvariantCultureIgnoreCase));
                         if (existenLayer != null && !layersToremove.Any(l => l.Equals(existenLayer)))
@@ -408,6 +405,8 @@ namespace MilSpace.Visibility
                             layersToremove.Add(existenLayer);
                         }
                     }
+                    var layerEffects = (ILayerEffects)layer;
+                    layerEffects.Transparency = transparency;
                     groupLayer.Add(layer);
                 }
                 relativeLayerName = 

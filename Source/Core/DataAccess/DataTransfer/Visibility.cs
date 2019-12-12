@@ -117,7 +117,7 @@ namespace MilSpace.DataAccess.DataTransfer
         {
             get
             {
-                if(summary == null)
+                if (summary == null)
                 {
                     summary = new VisibilityresultSummary(this);
                 }
@@ -178,18 +178,22 @@ namespace MilSpace.DataAccess.DataTransfer
                 allResulrs = new List<string>();
                 VisibilityCalculationResultsEnum calculatedResults = (VisibilityCalculationResultsEnum)CalculatedResults;
 
+                int pointsCount = Summary.ObservationPoints.Count();
+
                 foreach (var result in VisibilityResulSuffixes)
                 {
                     if (calculatedResults.HasFlag(result.Key) && resultsToShow.Any(r => r.Equals(result.Key)))
                     {
                         if (ResultsRelatedToSingle.Any(v => result.Key == v))
                         {
-                            int index = 0;
-                            string resultBName = GetResultName(result.Key, Id, index);
-                            while (VisibilityZonesFacade.CheckVisibilityResultEistance(resultBName, result.Key))
+                            //int index = pointsCount - 1;
+                            for (int index = 0; index < pointsCount; index++)
                             {
-                                allResulrs.Add(resultBName);
-                                resultBName = GetResultName(result.Key, Id, ++index);
+                                string resultBName = GetResultName(result.Key, Id, index);
+                                if (VisibilityZonesFacade.CheckVisibilityResultEistance(resultBName, result.Key))
+                                {
+                                    allResulrs.Add(resultBName);
+                                }
                             }
                         }
                         else
