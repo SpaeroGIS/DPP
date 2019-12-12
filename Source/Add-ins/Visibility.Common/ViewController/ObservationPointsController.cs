@@ -162,6 +162,24 @@ namespace MilSpace.Visibility.ViewController
             EsriTools.FlashGeometry(activeView.ScreenDisplay, new IGeometry[] { pointGeometry });
         }
 
+        internal IEnumerable<VisibilityTasknGui> SortTasks(IEnumerable<VisibilityTasknGui> source, VeluableTaskSortFieldsEnum sortBy, bool sortDireaction)
+        {
+            if (sortBy == VeluableTaskSortFieldsEnum.Created)
+            {
+                return sortDireaction ? source.OrderBy(p => p.Created) : source.OrderByDescending(p => p.Created);
+            }
+            if (sortBy == VeluableTaskSortFieldsEnum.State)
+            {
+                return sortDireaction ? source.OrderBy(p => p.State) : source.OrderByDescending(p => p.State);
+            }
+            if (sortBy == VeluableTaskSortFieldsEnum.Title)
+            {
+                return sortDireaction ? source.OrderBy(p => p.Name) : source.OrderByDescending(p => p.Name);
+            }
+            
+            return source;
+        }
+
         internal IEnumerable<ObservObjectGui> SortObservationObjects(IEnumerable<ObservObjectGui> source, VeluableObservObjectSortFieldsEnum sortBy, bool sortDireaction)
         {
             if (sortBy == VeluableObservObjectSortFieldsEnum.Affiliation)

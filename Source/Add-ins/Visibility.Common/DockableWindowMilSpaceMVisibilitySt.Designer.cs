@@ -2157,6 +2157,7 @@
             this.dgvVisibilitySessions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvVisibilitySessions.Size = new System.Drawing.Size(312, 208);
             this.dgvVisibilitySessions.TabIndex = 62;
+            this.dgvVisibilitySessions.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvVisibilitySessions_ColumnHeaderMouseClick);
             this.dgvVisibilitySessions.SelectionChanged += new System.EventHandler(this.DgvVisibilitySessions_SelectionChanged);
             // 
             // panel41

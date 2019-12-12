@@ -34,9 +34,8 @@ namespace MilSpace.Visibility
 
         private bool observatioPointsSordDirection = true;
         private bool observatioObjectsSordDirection = true;
-
-        private BindingList<VisibilitySessionGui> _visibilitySessionsGui = new BindingList<VisibilitySessionGui>();
-        private BindingSource _observObjectsGui = new BindingSource();
+        private bool tasksSordDirection = false;
+        private List<VisibilityTasknGui> _visibilitySessionsGui = new List<VisibilityTasknGui>();
 
         private bool _isDropDownItemChangedManualy = false;
         private bool _isFieldsChanged = false;
@@ -391,8 +390,8 @@ namespace MilSpace.Visibility
         {
             if (visibilitySessions.Any())
             {
-                dgvVisibilitySessions.Rows.Clear();
-                _visibilitySessionsGui = new BindingList<VisibilitySessionGui>();
+       //         dgvVisibilitySessions.Rows.Clear();
+                _visibilitySessionsGui = new List<VisibilityTasknGui>();
 
                 foreach (var session in visibilitySessions)
                 {
@@ -411,7 +410,7 @@ namespace MilSpace.Visibility
                         state = _visibilitySessionsController.GetStringForStateType(VisibilityTaskStateEnum.Finished);
                     }
 
-                    _visibilitySessionsGui.Add(new VisibilitySessionGui
+                    _visibilitySessionsGui.Add(new VisibilityTasknGui
                     {
                         Id = session.Id,
                         Name = session.Name,
@@ -463,7 +462,10 @@ namespace MilSpace.Visibility
 
         public void RemoveSessionFromList(string id)
         {
+
             _visibilitySessionsGui.Remove(_visibilitySessionsGui.First(session => session.Id == id));
+
+            dgvVisibilitySessions.Refresh();
 
             if (cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilityTaskStateEnum.All))
             {
@@ -1329,6 +1331,29 @@ namespace MilSpace.Visibility
             dgvVisibilitySessions.Columns["State"].Width = 100;
         }
 
+        private void dgvVisibilitySessions_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            VeluableTaskSortFieldsEnum sortColumn = VeluableTaskSortFieldsEnum.Title;
+            //TBD: Create dictionary to get this values
+            if (e.ColumnIndex == 2)
+            {
+                sortColumn = VeluableTaskSortFieldsEnum.Created;
+            }
+            if (e.ColumnIndex == 3)
+            {
+                sortColumn = VeluableTaskSortFieldsEnum.State;
+            }
+
+            tasksSordDirection = !tasksSordDirection;
+
+            var source = dgvVisibilitySessions.DataSource as List<VisibilityTasknGui>;
+            
+            var sorted = _observPointsController.SortTasks(source, sortColumn, tasksSordDirection);
+            dgvVisibilitySessions.DataSource = sorted.ToList();
+            FilterVisibilityList();
+            dgvVisibilitySessions.Refresh();
+        }
+
         private void SetVisibilitySessionsController()
         {
             var controller = new VisibilitySessionsController(ArcMap.Document, ArcMap.ThisApplication);
@@ -1436,7 +1461,7 @@ namespace MilSpace.Visibility
                 sortColumn = VeluableObservObjectSortFieldsEnum.Title;
             }else if (e.ColumnIndex == 3)
             {
-                sortColumn = VeluableObservObjectSortFieldsEnum.Date;
+                sortColumn = VeluableObservObjectSortFieldsEnum.Group;
             }
             else if (e.ColumnIndex == 4)
             {
@@ -1444,7 +1469,7 @@ namespace MilSpace.Visibility
             }
             else if (e.ColumnIndex == 5)
             {
-                sortColumn = VeluableObservObjectSortFieldsEnum.Group;
+                sortColumn = VeluableObservObjectSortFieldsEnum.Date;
             }
 
             observatioObjectsSordDirection = !observatioObjectsSordDirection;
@@ -1452,7 +1477,7 @@ namespace MilSpace.Visibility
             var source = dgvObservObjects.DataSource as ObservObjectGui[];
             curObservObjectSorting = sortColumn;
 
-            var sorted = _observPointsController.SortObservationObjects(source.ToArray(), sortColumn, observatioPointsSordDirection);
+            var sorted = _observPointsController.SortObservationObjects(source.ToArray(), sortColumn, observatioObjectsSordDirection);
             dgvObservObjects.DataSource = sorted.ToArray();
             CmbObservObjAffiliationFilter_SelectedIndexChanged(dgvObservObjects, null);
             dgvObservObjects.Refresh();
@@ -2372,7 +2397,6 @@ namespace MilSpace.Visibility
                 _observPointsController.UpdateObservObjectsList();
             }
         }
-
     }
 }
 

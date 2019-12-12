@@ -1,5 +1,4 @@
-﻿using MilSpace.DataAccess.DataTransfer;
-using System;
+﻿using System;
 
 namespace MilSpace.Visibility.DTO
 {
