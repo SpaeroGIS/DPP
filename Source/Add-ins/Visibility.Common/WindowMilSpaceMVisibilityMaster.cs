@@ -220,7 +220,7 @@ namespace MilSpace.Visibility
             }
         }
 
-        public void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints, VeluableObservPointFieldsEnum filter)
+        public void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints, ValuableObservPointFieldsEnum filter)
         {
             if (observationPoints != null && observationPoints.Any())
             {
@@ -441,24 +441,24 @@ namespace MilSpace.Visibility
             dvgCheckList.DataSource = _observPointGuis;
             dvgCheckList.Refresh();
         }
-        public VeluableObservPointFieldsEnum GetFilter
+        public ValuableObservPointFieldsEnum GetFilter
         {
             get
             {
-                var result = VeluableObservPointFieldsEnum.All;
+                var result = ValuableObservPointFieldsEnum.All;
 
                 if (checkAffiliation.Checked)
                 {
-                    result = result | VeluableObservPointFieldsEnum.Affiliation;
+                    result = result | ValuableObservPointFieldsEnum.Affiliation;
                 }
                 if (checkDate.Checked)
                 {
-                    result = result | VeluableObservPointFieldsEnum.Date;
+                    result = result | ValuableObservPointFieldsEnum.Date;
                 }
 
                 if (checkType.Checked)
                 {
-                    result = result | VeluableObservPointFieldsEnum.Type;
+                    result = result | ValuableObservPointFieldsEnum.Type;
                 }
 
                 return result;

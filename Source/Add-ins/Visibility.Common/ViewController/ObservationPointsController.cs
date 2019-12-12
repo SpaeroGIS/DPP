@@ -162,21 +162,47 @@ namespace MilSpace.Visibility.ViewController
             EsriTools.FlashGeometry(activeView.ScreenDisplay, new IGeometry[] { pointGeometry });
         }
 
-        internal IEnumerable<ObservPointGui> SortObservationPoints(IEnumerable<ObservPointGui> source, VeluableObservPointSortFieldsEnum sortBy, bool sortDireaction)
+        internal IEnumerable<ObservObjectGui> SortObservationObjects(IEnumerable<ObservObjectGui> source, VeluableObservObjectSortFieldsEnum sortBy, bool sortDireaction)
         {
-            if (sortBy == VeluableObservPointSortFieldsEnum.Name)
-            {
-                return sortDireaction ? source.OrderBy(p => p.Title) : source.OrderByDescending(p => p.Title);
-            }
-            if (sortBy == VeluableObservPointSortFieldsEnum.Date)
-            {
-                return sortDireaction ? source.OrderBy(p => p.Date) : source.OrderByDescending(p => p.Date);
-            }
-            if (sortBy == VeluableObservPointSortFieldsEnum.Affiliation)
+            if (sortBy == VeluableObservObjectSortFieldsEnum.Affiliation)
             {
                 return sortDireaction ? source.OrderBy(p => p.Affiliation) : source.OrderByDescending(p => p.Affiliation);
             }
-            if (sortBy == VeluableObservPointSortFieldsEnum.Type)
+            if (sortBy == VeluableObservObjectSortFieldsEnum.Date)
+            {
+                return sortDireaction ? source.OrderBy(p => p.Created) : source.OrderByDescending(p => p.Created);
+            }
+            if (sortBy == VeluableObservObjectSortFieldsEnum.Group)
+            {
+                return sortDireaction ? source.OrderBy(p => p.Group) : source.OrderByDescending(p => p.Group);
+            }
+            if (sortBy == VeluableObservObjectSortFieldsEnum.Title)
+            {
+                return sortDireaction ? source.OrderBy(p => p.Title) : source.OrderByDescending(p => p.Title);
+            }
+            if (sortBy == VeluableObservObjectSortFieldsEnum.Id)
+            {
+                return sortDireaction ? source.OrderBy(p => p.Id) : source.OrderByDescending(p => p.Id);
+            }
+
+            return source;
+        }
+
+        internal IEnumerable<ObservPointGui> SortObservationPoints(IEnumerable<ObservPointGui> source, ValuableObservPointSortFieldsEnum sortBy, bool sortDireaction)
+        {
+            if (sortBy == ValuableObservPointSortFieldsEnum.Name)
+            {
+                return sortDireaction ? source.OrderBy(p => p.Title) : source.OrderByDescending(p => p.Title);
+            }
+            if (sortBy == ValuableObservPointSortFieldsEnum.Date)
+            {
+                return sortDireaction ? source.OrderBy(p => p.Date) : source.OrderByDescending(p => p.Date);
+            }
+            if (sortBy == ValuableObservPointSortFieldsEnum.Affiliation)
+            {
+                return sortDireaction ? source.OrderBy(p => p.Affiliation) : source.OrderByDescending(p => p.Affiliation);
+            }
+            if (sortBy == ValuableObservPointSortFieldsEnum.Type)
             {
                 return sortDireaction ? source.OrderBy(p => p.Type) : source.OrderByDescending(p => p.Type);
             }

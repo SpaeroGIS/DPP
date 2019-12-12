@@ -33,6 +33,7 @@ namespace MilSpace.Visibility
         private VisibilitySessionsController _visibilitySessionsController;
 
         private bool observatioPointsSordDirection = true;
+        private bool observatioObjectsSordDirection = true;
 
         private BindingList<VisibilitySessionGui> _visibilitySessionsGui = new BindingList<VisibilitySessionGui>();
         private BindingSource _observObjectsGui = new BindingSource();
@@ -45,7 +46,8 @@ namespace MilSpace.Visibility
         private int _selectedPointId => Convert.ToInt32(dgvObservationPoints.SelectedRows[0].Cells["Id"].Value);
         //private bool IsPointFieldsEnabled => _observPointsController.IsObservPointsExists();
         private bool IsPointFieldsEnabled = true;
-        private VeluableObservPointSortFieldsEnum currentSorting = VeluableObservPointSortFieldsEnum.Name;
+        private ValuableObservPointSortFieldsEnum curObservPointsSorting = ValuableObservPointSortFieldsEnum.Name;
+        private VeluableObservObjectSortFieldsEnum curObservObjectSorting = VeluableObservObjectSortFieldsEnum.Title;
 
         private static Logger log = Logger.GetLoggerEx("MilSpace.Visibility.DockableWindowMilSpaceMVisibilitySt");
 
@@ -242,24 +244,24 @@ namespace MilSpace.Visibility
 
         #region
 
-        public VeluableObservPointFieldsEnum GetFilter
+        public ValuableObservPointFieldsEnum GetFilter
         {
             get
             {
-                var result = VeluableObservPointFieldsEnum.All;
+                var result = ValuableObservPointFieldsEnum.All;
 
                 if (chckFilterAffiliation.Checked)
                 {
-                    result = result | VeluableObservPointFieldsEnum.Affiliation;
+                    result = result | ValuableObservPointFieldsEnum.Affiliation;
                 }
                 if (chckFilterDate.Checked)
                 {
-                    result = result | VeluableObservPointFieldsEnum.Date;
+                    result = result | ValuableObservPointFieldsEnum.Date;
                 }
 
                 if (chckFilterType.Checked)
                 {
-                    result = result | VeluableObservPointFieldsEnum.Type;
+                    result = result | ValuableObservPointFieldsEnum.Type;
                 }
 
                 return result;
@@ -283,7 +285,7 @@ namespace MilSpace.Visibility
             }
         }
 
-        public void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints, VeluableObservPointFieldsEnum filter)
+        public void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints, ValuableObservPointFieldsEnum filter)
         {
             log.InfoEx("> FillObservationPointList START");
 
@@ -319,10 +321,7 @@ namespace MilSpace.Visibility
             log.InfoEx("> FillObservationPointList END");
         }
 
-        private void dgvObservationPoints_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            //
-        }
+       
 
         public void FillObservationObjectsList(IEnumerable<ObservationObject> observationObjects)
         {
@@ -338,11 +337,10 @@ namespace MilSpace.Visibility
                     Id = i.Id,
                     Affiliation = _observPointsController.GetObservObjectsTypeString(i.ObjectType),
                     Group = i.Group
-                }).OrderBy(l => l.Title).ToList();
+                }).OrderBy(l => l.Title).ToArray();
 
                 dgvObservObjects.CurrentCell = null;
-                _observObjectsGui.DataSource = itemsToShow;
-                dgvObservObjects.DataSource = _observObjectsGui;
+                dgvObservObjects.DataSource = itemsToShow;
 
                 SetObservObjectsTableView();
                 DisplayObservObjectsSelectedColumns();
@@ -634,23 +632,23 @@ namespace MilSpace.Visibility
         private void DgvObservationPoints_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
 
-            VeluableObservPointSortFieldsEnum sortColumn = VeluableObservPointSortFieldsEnum.Name;
+            ValuableObservPointSortFieldsEnum sortColumn = ValuableObservPointSortFieldsEnum.Name;
             if (e.ColumnIndex == 2)
             {
-                sortColumn = VeluableObservPointSortFieldsEnum.Type;
+                sortColumn = ValuableObservPointSortFieldsEnum.Type;
             }
             else if (e.ColumnIndex == 3)
             {
-                sortColumn = VeluableObservPointSortFieldsEnum.Affiliation;
+                sortColumn = ValuableObservPointSortFieldsEnum.Affiliation;
             }
             else if (e.ColumnIndex == 4)
             {
-                sortColumn = VeluableObservPointSortFieldsEnum.Date;
+                sortColumn = ValuableObservPointSortFieldsEnum.Date;
             }
             observatioPointsSordDirection = !observatioPointsSordDirection;
 
             var source = dgvObservationPoints.DataSource as ObservPointGui[];
-            currentSorting = sortColumn;
+            curObservPointsSorting = sortColumn;
 
             var sorted = _observPointsController.SortObservationPoints(source.ToArray(), sortColumn, observatioPointsSordDirection);
             dgvObservationPoints.DataSource = sorted.ToArray();
@@ -658,7 +656,7 @@ namespace MilSpace.Visibility
             dgvObservationPoints.Refresh();
         }
 
-        private void DisplaySelectedColumns(VeluableObservPointFieldsEnum filter)
+        private void DisplaySelectedColumns(ValuableObservPointFieldsEnum filter)
         {
             dgvObservationPoints.Columns["Affiliation"].Visible = chckFilterAffiliation.Checked;
             dgvObservationPoints.Columns["Type"].Visible = chckFilterType.Checked;
@@ -1416,7 +1414,6 @@ namespace MilSpace.Visibility
             dgvObservObjects.Columns["Created"].ValueType = typeof(DateTime);
             dgvObservObjects.Columns["Created"].DefaultCellStyle.Format = Helper.DateFormatSmall;
 
-
             dgvObservObjects.Columns["Affiliation"].HeaderText =
                 LocalizationContext.Instance.FindLocalizedElement("HeaderAfilGridON", "Належність");
             dgvObservObjects.Columns["Affiliation"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
@@ -1426,6 +1423,39 @@ namespace MilSpace.Visibility
             dgvObservObjects.Columns["Group"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
 
             dgvObservObjects.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            dgvObservObjects.ColumnHeaderMouseClick += dgvObservationObjects_ColumnHeaderMouseClick;
+        }
+
+        private void dgvObservationObjects_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            VeluableObservObjectSortFieldsEnum sortColumn = VeluableObservObjectSortFieldsEnum.Id; 
+            //TBD: cahnge it to Dictionary
+            if (e.ColumnIndex == 2)
+            {
+                sortColumn = VeluableObservObjectSortFieldsEnum.Title;
+            }else if (e.ColumnIndex == 3)
+            {
+                sortColumn = VeluableObservObjectSortFieldsEnum.Date;
+            }
+            else if (e.ColumnIndex == 4)
+            {
+                sortColumn = VeluableObservObjectSortFieldsEnum.Affiliation;
+            }
+            else if (e.ColumnIndex == 5)
+            {
+                sortColumn = VeluableObservObjectSortFieldsEnum.Group;
+            }
+
+            observatioObjectsSordDirection = !observatioObjectsSordDirection;
+
+            var source = dgvObservObjects.DataSource as ObservObjectGui[];
+            curObservObjectSorting = sortColumn;
+
+            var sorted = _observPointsController.SortObservationObjects(source.ToArray(), sortColumn, observatioPointsSordDirection);
+            dgvObservObjects.DataSource = sorted.ToArray();
+            CmbObservObjAffiliationFilter_SelectedIndexChanged(dgvObservObjects, null);
+            dgvObservObjects.Refresh();
         }
 
         private void DisplayObservObjectsSelectedColumns()
