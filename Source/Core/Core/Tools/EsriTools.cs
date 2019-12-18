@@ -156,7 +156,7 @@ namespace MilSpace.Core.Tools
             }
             catch (Exception ex)
             {
-                //ToDO: Loggig
+                logger.ErrorEx(ex.Message);
             }
         }
         public static IFeatureRenderer GetCalclResultRender(IFeatureLayer polygonLayer, string valuesField, IColor fromColor = null, IColor toColor = null)

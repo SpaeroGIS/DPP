@@ -1,14 +1,11 @@
-﻿using ESRI.ArcGIS.ArcMapUI;
-using ESRI.ArcGIS.Carto;
-using ESRI.ArcGIS.DataSourcesRaster;
+﻿using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Display;
-using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Geodatabase;
-using ESRI.ArcGIS.Geometry;
 using MilSpace.Core;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
+using stdole;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,10 +16,6 @@ namespace MilSpace.Visibility
     {
 
 
-        //    { VisibilityCalculationResultsEnum.VisibilityObservStationClip , "_imgc"},
-        //    { VisibilityCalculationResultsEnum.VisibilityObservStationClipSingle , "_imgcs"},
-        //    { VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly , "_imgt"},
-        //    { VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle , "_imgts"},
 
         internal static Dictionary<VisibilityCalculationResultsEnum, bool> LayersSequence = new Dictionary<VisibilityCalculationResultsEnum, bool>
 
@@ -43,9 +36,71 @@ namespace MilSpace.Visibility
 
         static Logger logger = Logger.GetLoggerEx("MilSpace.Visibility.ArcMapHelper");
 
-        private static Dictionary<VisibilityCalculationResultsEnum, Action<ILayer, IColor, short>> mapResultAction = 
+        private static Dictionary<VisibilityCalculationResultsEnum, Action<ILayer, IColor, short>> mapResultAction =
             new Dictionary<VisibilityCalculationResultsEnum, Action<ILayer, IColor, short>>
         {
+                { VisibilityCalculationResultsEnum.ObservationPoints, (layer, fillColor, transparency) => {
+
+                 // This example creates a multiLayerMarkerSymbol 
+                // that looks like a red circle with a black dropshadow. 
+
+
+                    // define the necessary variables 
+                    IMultiLayerMarkerSymbol multiLayermrkSym = new MultiLayerMarkerSymbol();
+                    ICharacterMarkerSymbol charMrkSym1 = new CharacterMarkerSymbol();
+                    ICharacterMarkerSymbol charMrkSym2 = new CharacterMarkerSymbol();
+
+
+                    IRgbColor foreColor = new RgbColor();
+                    IRgbColor backColor = new RgbColor();
+
+                    //    stdole.IFontDisp tFont = ESRI.ArcGIS.ADF.Connection.Local.Converter.ToStdFont(new Font("ESRI Default Marker", 18));
+
+                    IFontDisp tFont = (IFontDisp)(new StdFont());
+
+
+                    // Create a reference to the font that contains the circle glyphs 
+                    tFont.Name = "ESRI Default Marker";
+                    tFont.Size =  18;
+
+
+    // Create the red and black colors 
+                    foreColor.Red = 0;
+                    foreColor.Green = 0;
+                    foreColor.Blue = 0;
+                    backColor.Red = 0;
+                    backColor.Green = 255;
+                    backColor.Blue = 0;
+
+
+                    // Create the Markers 
+                    charMrkSym1.Angle = 0;
+                    charMrkSym1.CharacterIndex = 49;
+                    charMrkSym1.Color = foreColor;
+                    charMrkSym1.Font = tFont;
+                    charMrkSym1.Size = 18;
+                    charMrkSym1.XOffset = 0;
+                    charMrkSym1.YOffset = 0;
+
+                    charMrkSym2.Angle = 0;
+                    charMrkSym2.CharacterIndex = 36;
+                    charMrkSym2.Color = backColor;
+                    charMrkSym2.Font = tFont;
+                    charMrkSym2.Size = 18;
+                    charMrkSym2.XOffset = 0;
+                    charMrkSym2.YOffset = 0;
+
+
+                    // Add the symbols in the order of bottommost to topmost 
+                    multiLayermrkSym.AddLayer(charMrkSym2);
+                    multiLayermrkSym.AddLayer(charMrkSym1);
+                    multiLayermrkSym.Angle = 0;
+                    multiLayermrkSym.Size = 18;
+                    multiLayermrkSym.XOffset = 0;
+                    multiLayermrkSym.YOffset = 0;
+                    EsriTools.SetFeatureLayerStyle(layer as IFeatureLayer,  multiLayermrkSym as ISymbol);
+                }
+            },
             { VisibilityCalculationResultsEnum.VisibilityAreasPotential, (layer, fillColor, transparency) => {
 
                     ISimpleFillSymbol simpleFillSymbol = new SimpleFillSymbolClass();
@@ -343,11 +398,11 @@ namespace MilSpace.Visibility
         };
 
         public static void AddResultsToMapAsGroupLayer(
-            VisibilityCalcResults results, 
-            IActiveView activeView, 
+            VisibilityCalcResults results,
+            IActiveView activeView,
             string relativeLayerName,
-            bool isLayerAbove, 
-            short transparency, 
+            bool isLayerAbove,
+            short transparency,
             IColor color)
         {
             logger.InfoEx("> AddResultsToMapAsGroupLayer START");
@@ -379,17 +434,17 @@ namespace MilSpace.Visibility
                             }
                             lr.Visible = li.Value;
 
-                        if (mapResultAction.ContainsKey(ri.RessutType))
-                        {
-                            mapResultAction[ri.RessutType](lr, color, transparency);
-                        }
+                            if (mapResultAction.ContainsKey(ri.RessutType))
+                            {
+                                mapResultAction[ri.RessutType](lr, color, transparency);
+                            }
 
-                        visibilityLayers.Add(lr);
+                            visibilityLayers.Add(lr);
+                        }
                     }
                 }
-            }
 
-            MapLayersManager layersManager = new MapLayersManager(activeView);
+                MapLayersManager layersManager = new MapLayersManager(activeView);
 
                 IGroupLayer groupLayer = new GroupLayerClass { Name = results.Name };
 
@@ -398,7 +453,7 @@ namespace MilSpace.Visibility
                 {
                     if (layer is IRasterLayer raster)
                     {
-                        var existenLayer = 
+                        var existenLayer =
                             layersManager.RasterLayers.FirstOrDefault(l => l.FilePath.Equals(raster.FilePath, StringComparison.InvariantCultureIgnoreCase));
                         if (existenLayer != null && !layersToremove.Any(l => l.Equals(existenLayer)))
                         {
@@ -409,9 +464,9 @@ namespace MilSpace.Visibility
                     layerEffects.Transparency = transparency;
                     groupLayer.Add(layer);
                 }
-                relativeLayerName = 
-                    string.IsNullOrWhiteSpace(relativeLayerName) ? 
-                    (layersManager.LastLayer == null ? string.Empty : layersManager.LastLayer.Name) : 
+                relativeLayerName =
+                    string.IsNullOrWhiteSpace(relativeLayerName) ?
+                    (layersManager.LastLayer == null ? string.Empty : layersManager.LastLayer.Name) :
                     relativeLayerName;
 
                 if (!layersManager.InserLayer(groupLayer, relativeLayerName, isLayerAbove))
@@ -435,7 +490,7 @@ namespace MilSpace.Visibility
                 logger.InfoEx("> AddResultsToMapAsGroupLayer EXCEPTION. Message:{0}", ex.Message);
             }
 
-        }    
+        }
 
     }
 }
