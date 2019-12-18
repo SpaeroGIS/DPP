@@ -250,7 +250,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                 }
                 else
                 {
-                    results.Add(iStepNum.ToString() + ". " + "Розраховано видимість:" + outImageName + " ПС: " + pointId.ToString());
+                    results.Add(iStepNum.ToString() + ". " + "Розраховано видимість: " + outImageName + " ПС: " + pointId.ToString());
                     iStepNum++;
 
                     string visibilityArePolyFCName = null;
@@ -313,7 +313,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                         }
                         else
                         {
-                            results.Add(iStepNum.ToString() + ". " + "Зона видимості зведена до дійсного розміру:" + outClipName + " ПС: " + pointId.ToString());
+                            results.Add(iStepNum.ToString() + ". " + "Зона видимості зведена до дійсного розміру: " + outClipName + " ПС: " + pointId.ToString());
                             iStepNum++;
 
                             if (!calcResults.HasFlag(resultLype))
@@ -322,8 +322,10 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                             }
 
                             //Change to VisibilityAreaPolygonForObjects
-                            var curCulcRResult = pointId > -1 ?
-                            VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle : VisibilityCalculationResultsEnum.VisibilityAreaPolygons;
+                            var curCulcRResult = 
+                                pointId > -1 ?
+                                VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle : 
+                                VisibilityCalculationResultsEnum.VisibilityAreaPolygons;
 
                             visibilityArePolyFCName =
                                 VisibilityTask.GetResultName(pointId > -1 ?
@@ -332,7 +334,8 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
                             visibilityArePolyFCName = VisibilityTask.GetResultName(curCulcRResult, outputSourceName, pointId);
 
-                            var rasterDataset = GdbAccess.Instance.GetDatasetFromCalcWorkspace(outClipName, VisibilityCalculationResultsEnum.VisibilityAreaRaster);
+                            var rasterDataset = GdbAccess.Instance.GetDatasetFromCalcWorkspace(
+                                outClipName, VisibilityCalculationResultsEnum.VisibilityAreaRaster);
                             bool isEmpty = EsriTools.IsRasterEmpty((IRasterDataset2)rasterDataset);
 
                             if (isEmpty)
@@ -341,14 +344,11 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                                 {
                                     calcResults &= ~curCulcRResult;
                                 }
-                                results.Add(iStepNum.ToString() + ". " + "Видимисть выдсутня. Полігони не було сформовано:" + visibilityArePolyFCName + " ПС: " + pointId.ToString());
+                                results.Add(iStepNum.ToString() + ". " + "Видимість відсутня. Полігони не було сформовано: " + visibilityArePolyFCName + " ПС: " + pointId.ToString());
                             }
                             else
                             {
-                                if (!ProfileLibrary.ConvertRasterToPolygon(
-                                outClipName,
-                                visibilityArePolyFCName,
-                                out messages))
+                                if (!ProfileLibrary.ConvertRasterToPolygon(outClipName, visibilityArePolyFCName, out messages))
                                 {
                                     if (!messages.Any(m => m.StartsWith("ERROR 010151"))) // Observatioj areas dont intersect Visibility area
                                     {
@@ -359,11 +359,11 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                                         results.Add("Помилка: " + errorMessage + " ПС: " + pointId.ToString());
                                         return messages;
                                     }
-                                    results.Add(iStepNum.ToString() + ". " + "Видимисть выдсутня. Полігони не було сформовано:" + visibilityArePolyFCName + " ПС: " + pointId.ToString());
+                                    results.Add(iStepNum.ToString() + ". " + "Видимість відсутня. Полігони не було сформовано: " + visibilityArePolyFCName + " ПС: " + pointId.ToString());
                                 }
                                 else
                                 {
-                                    results.Add(iStepNum.ToString() + ". " + "Конвертовано у полігони:" + visibilityArePolyFCName + " ПС: " + pointId.ToString());
+                                    results.Add(iStepNum.ToString() + ". " + "Конвертовано у полігони: " + visibilityArePolyFCName + " ПС: " + pointId.ToString());
                                 }
                             }
                             iStepNum++;
@@ -394,7 +394,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                         }
                         else
                         {
-                            results.Add(iStepNum.ToString() + ". " + "Конвертовано у полігони:" + outClipName + " ПС: " + pointId.ToString());
+                            results.Add(iStepNum.ToString() + ". " + "Зона видимості зведена до дійсного розміру: " + outClipName + " ПС: " + pointId.ToString());
                             iStepNum++;
                             removeFullImageFromresult = true;
                         }
@@ -410,7 +410,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                         (curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints),
                         curPoints.Value[0]);
 
-                    results.Add(iStepNum.ToString() + ". " + "Розраховано потенційне покриття:" + visibilityPotentialAreaFCName + " ПС: " + pointId.ToString());
+                    results.Add(iStepNum.ToString() + ". " + "Розраховано потенційне покриття: " + visibilityPotentialAreaFCName + " ПС: " + pointId.ToString());
                     iStepNum++;
 
                     var pointsCount = pointsFilteringIds.Where(id => id > -1).Count();

@@ -1275,10 +1275,21 @@ namespace MilSpace.Visibility
 
             _isDropDownItemChangedManualy = true;
 
+            var FCPoint = _observPointsController.GetIPointObservPoint(selectedPoint.Objectid);
             var centerPoint = _observPointsController.GetEnvelopeCenterPoint(ArcMap.Document.ActiveView.Extent);
 
-            xCoord.Text = selectedPoint.X.HasValue ? selectedPoint.X.Value.ToString("F5") : centerPoint.X.ToString("F5");
-            yCoord.Text = selectedPoint.Y.HasValue ? selectedPoint.Y.Value.ToString("F5") : centerPoint.Y.ToString("F5");
+            xCoord.Text = 
+                selectedPoint.X.HasValue ? 
+                selectedPoint.X.Value.ToString("F5") :
+                FCPoint != null ?
+                FCPoint.X.ToString("F5") :
+                centerPoint.X.ToString("F5");
+            yCoord.Text = 
+                selectedPoint.Y.HasValue ? 
+                selectedPoint.Y.Value.ToString("F5") :
+                FCPoint != null ?
+                FCPoint.Y.ToString("F5") :
+                centerPoint.Y.ToString("F5");
 
             azimuthB.Text =
                 selectedPoint.AzimuthStart.HasValue ?
@@ -1299,9 +1310,18 @@ namespace MilSpace.Visibility
                 selectedPoint.AngelMinH.HasValue ?
                 selectedPoint.AngelMinH.ToString() :
                 ObservPointDefaultValues.AngleOFViewMinText;
-            angleOFViewMax.Text = selectedPoint.AngelMaxH.HasValue ? selectedPoint.AngelMaxH.ToString() : ObservPointDefaultValues.AngleOFViewMaxText;
-            txtMinDistance.Text = selectedPoint.InnerRadius.HasValue ? selectedPoint.InnerRadius.ToString() : ObservPointDefaultValues.DefaultRadiusText;
-            txtMaxDistance.Text = selectedPoint.OuterRadius.HasValue ? selectedPoint.OuterRadius.ToString() : ObservPointDefaultValues.DefaultRadiusText;
+            angleOFViewMax.Text = 
+                selectedPoint.AngelMaxH.HasValue ? 
+                selectedPoint.AngelMaxH.ToString() : 
+                ObservPointDefaultValues.AngleOFViewMaxText;
+            txtMinDistance.Text = 
+                selectedPoint.InnerRadius.HasValue ? 
+                selectedPoint.InnerRadius.ToString() : 
+                ObservPointDefaultValues.DefaultRadiusText;
+            txtMaxDistance.Text = 
+                selectedPoint.OuterRadius.HasValue ? 
+                selectedPoint.OuterRadius.ToString() : 
+                ObservPointDefaultValues.DefaultRadiusText;
 
             observPointDate.Text = selectedPoint.Dto.Value.ToString(Helper.DateFormat);
             observPointCreator.Text = selectedPoint.Operator;
@@ -1568,7 +1588,7 @@ namespace MilSpace.Visibility
             //addNewObjectPanel.Enabled = isObservObjectsExist;
             cmbObservObjAffiliationFilter.Enabled = isObservObjectsExist;
             chckObservObjColumnsVisibilityPanel.Enabled = isObservObjectsExist;
-            tlbbAddObservObjLayer.Enabled = !isObservObjectsExist;
+            //tlbbAddObservObjLayer.Enabled = !isObservObjectsExist;
 
         }
         #endregion
