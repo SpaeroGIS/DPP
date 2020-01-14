@@ -38,11 +38,14 @@ namespace MilSpace.GeoCalculator
 
         public DockableWindowGeoCalculator(object hook, IBusinessLogic businessLogic)
         {
+            log.InfoEx(">>> DockableWindowGeoCalculator (Constructor) START <<<");
             InitializeComponent();
             this.Hook = hook;
             _businessLogic = businessLogic ?? throw new ArgumentNullException(nameof(businessLogic));           
 
             LocalizeComponents();
+
+            log.InfoEx("> DockableWindowGeoCalculator (Constructor) END");
         }
 
         /// <summary>

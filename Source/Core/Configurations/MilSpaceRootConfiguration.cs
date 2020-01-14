@@ -11,27 +11,34 @@ namespace MilSpace.Configurations
 {
     public abstract class MilSpaceRootConfiguration
     {
-        private static string rootSectionNane = "milspace";
+        private static string rootSectionName = "Milspace";
         private const string registryPathToConfigTemplate = @"SOFTWARE\WOW6432Node\{0}\";
         private static string registryPathToConfig;
-        private static readonly string configurationFileName = $"{typeof(MilSpaceRootConfiguration).Assembly.GetName().Name}.config";
+
+        //Nikol 20191202
+        //private static readonly string configurationFileName = $"{typeof(MilSpaceRootConfiguration).Assembly.GetName().Name}.config";
+        private static readonly string configurationFileName = $"MilSpace.Configurations.config";
         private static string configurationFilePath;
 
         private static Configuration currentConfig = null;
 
         static MilSpaceRootConfiguration()
         {
-            string sypplayingName = typeof(MilSpaceRootConfiguration).Assembly.GetName().Name;
+            //Nikol 20191202
+            //string sypplayingName = typeof(MilSpaceRootConfiguration).Assembly.GetName().Name;
+            //int pointPosition = sypplayingName.IndexOf('.');
+            //rootSectionName = sypplayingName.Substring(0, pointPosition == 0 ? sypplayingName.Length : pointPosition ).ToLower();
+            //Nikol 20191202 END
 
-            int pointPosition = sypplayingName.IndexOf('.');
-            rootSectionNane = sypplayingName.Substring(0, pointPosition == 0 ? sypplayingName.Length : pointPosition ).ToLower();
-            registryPathToConfig = string.Format(registryPathToConfigTemplate, rootSectionNane);
+            registryPathToConfig = string.Format(registryPathToConfigTemplate, rootSectionName);
         }
-
 
         public static string ConfigurationFilePath
         {
-            get { return configurationFilePath; }
+            get
+            {
+                return configurationFilePath;
+            }
             set
             {
 
@@ -63,7 +70,8 @@ namespace MilSpace.Configurations
                 }
                 else
                 {
-                    if (Assembly.GetEntryAssembly() == null || Assembly.GetEntryAssembly().EntryPoint == null) // If the entry point in DLL (it was called from an external programm)
+                    if (Assembly.GetEntryAssembly() == null 
+                        || Assembly.GetEntryAssembly().EntryPoint == null) // If the entry point in DLL (it was called from an external programm)
                     {
 
                         var registryConfiguration = GetConfigurationPathFromRegistry();
@@ -104,7 +112,7 @@ namespace MilSpace.Configurations
             get
             {
                 var c = GetCurrentConfiguration();
-                return c.GetSectionGroup(rootSectionNane);
+                return c.GetSectionGroup(rootSectionName);
             }
         }
 

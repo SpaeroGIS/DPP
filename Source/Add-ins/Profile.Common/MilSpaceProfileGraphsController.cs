@@ -178,7 +178,8 @@ namespace MilSpace.Profile
             _surfaceProfileChartController.ProfileSessionsHeightsChange += InvokeOnSessionsHeightsChanged;
 
             _surfaceProfileChartController.SetSession(profileSession);
-            SurfaceProfileChart surfaceProfileChart = _surfaceProfileChartController.CreateProfileChart(profileSession.ObserverHeight);
+            SurfaceProfileChart surfaceProfileChart = 
+                _surfaceProfileChartController.CreateProfileChart(profileSession.ObserverHeight);
 
             View.AddNewTab(surfaceProfileChart, profileSession.SessionId);
         }

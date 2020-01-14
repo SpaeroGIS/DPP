@@ -33,7 +33,7 @@ namespace MilSpace.Configurations.Base
         /// </summary>
         internal const string TaskTablePrefix = "taskTablePrefix";
 
-        /// <summary>
+        /// <summary>temporaryGDB
         /// Defines the section where the main connection is defined 
         /// </summary>
         
@@ -41,7 +41,7 @@ namespace MilSpace.Configurations.Base
 
         internal const string WorkingGDBConnectionSection = "workingGDB";
         internal const string WorkingDBConnectionSection = "workingDB";
-        internal const string TemporaryGDBConnectionSection = "temporatyGDB";
+        internal const string TemporaryGDBConnectionSection = "temporaryGDB";
 
 
         /// <summary>

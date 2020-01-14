@@ -1,7 +1,11 @@
-﻿using ESRI.ArcGIS.ArcMapUI;
-using ESRI.ArcGIS.Carto;
+﻿using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Display;
-using ESRI.ArcGIS.Geometry;
+using ESRI.ArcGIS.Geodatabase;
+using MilSpace.Core;
+using MilSpace.Core.Tools;
+using MilSpace.DataAccess.DataTransfer;
+using MilSpace.DataAccess.Facade;
+using stdole;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,216 +14,483 @@ namespace MilSpace.Visibility
 {
     public static class ArcMapHelper
     {
-        /// <summary>
-        /// Adds a graphic element to the map graphics container
-        /// Returns GUID
-        /// </summary>
-        /// <param name="geom">IGeometry</param>
-        public static KeyValuePair<string, IPoint> AddGraphicToMap(
-            IGeometry geom,
-            IColor color,
-            bool IsTempGraphic = false,
-            esriSimpleMarkerStyle markerStyle = esriSimpleMarkerStyle.esriSMSCircle,
-            int size = 5)
+
+
+
+        internal static Dictionary<VisibilityCalculationResultsEnum, bool> LayersSequence = new Dictionary<VisibilityCalculationResultsEnum, bool>
+
         {
-            var emptyResult = new KeyValuePair<string, IPoint>();
+            { VisibilityCalculationResultsEnum.ObservationPoints, true},
+            { VisibilityCalculationResultsEnum.VisibilityAreasPotential, true},
+            { VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle, true},
+            { VisibilityCalculationResultsEnum.ObservationObjects, false},
+            { VisibilityCalculationResultsEnum.VisibilityAreaPolygons, true},
+            { VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle, false},
+            { VisibilityCalculationResultsEnum.VisibilityAreaRaster, false},
+            { VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle , false},
+            { VisibilityCalculationResultsEnum.VisibilityObservStationClip , false},
+            { VisibilityCalculationResultsEnum.VisibilityObservStationClipSingle , false},
+            { VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly , false},
+            { VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle , false}
+        };
 
-            if ((geom == null) || (ArcMap.Document == null) || (ArcMap.Document.FocusMap == null)
-                || (ArcMap.Document.FocusMap.SpatialReference == null))
-                return emptyResult;
+        static Logger logger = Logger.GetLoggerEx("MilSpace.Visibility.ArcMapHelper");
 
-            IElement element = null;
-
-            geom.Project(ArcMap.Document.FocusMap.SpatialReference);
-
-            if (geom.GeometryType != esriGeometryType.esriGeometryPoint) return emptyResult;
-
-
-            var simpleMarkerSymbol = (ISimpleMarkerSymbol)new SimpleMarkerSymbol();
-            simpleMarkerSymbol.Color = color;
-            simpleMarkerSymbol.Outline = false;
-            simpleMarkerSymbol.OutlineColor = color;
-            simpleMarkerSymbol.Size = size;
-            simpleMarkerSymbol.Style = markerStyle;
-
-            var markerElement = (IMarkerElement)new MarkerElement();
-            markerElement.Symbol = simpleMarkerSymbol;
-            element = (IElement)markerElement;
-
-
-            if (element == null)
-                return emptyResult;
-
-            element.Geometry = geom;
-
-            var mxdoc = ArcMap.Application.Document as IMxDocument;
-            if (mxdoc == null)
-                return emptyResult;
-
-            var av = (IActiveView)mxdoc.FocusMap;
-            var gc = (IGraphicsContainer)av;
-
-            // store guid
-            var eprop = (IElementProperties)element;
-            eprop.Name = Guid.NewGuid().ToString();
-
-            gc.AddElement(element, 0);
-
-            av.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
-
-            return new KeyValuePair<string, IPoint>(eprop.Name, element.Geometry as IPoint);
-        }
-
-        public static void RemoveGraphicsFromMap(string[] pointIds)
+        private static Dictionary<VisibilityCalculationResultsEnum, Action<ILayer, IColor, short>> mapResultAction =
+            new Dictionary<VisibilityCalculationResultsEnum, Action<ILayer, IColor, short>>
         {
-            var activeView = (ArcMap.Application.Document as IMxDocument)?.FocusMap as IActiveView;
+                { VisibilityCalculationResultsEnum.ObservationPoints, (layer, fillColor, transparency) => {
 
-            var graphicsContainer = activeView?.GraphicsContainer;
-            if (graphicsContainer == null)
-                return;
+                 // This example creates a multiLayerMarkerSymbol 
+                // that looks like a red circle with a black dropshadow. 
 
-            graphicsContainer.Reset();
-            var element = graphicsContainer.Next();
-            
-            while (element != null)
-            {
-                if (pointIds.Any(pointId => pointId.Equals((element as IElementProperties)?.Name)))
-                {
-                    graphicsContainer.DeleteElement(element);
+
+                    // define the necessary variables 
+                    IMultiLayerMarkerSymbol multiLayermrkSym = new MultiLayerMarkerSymbol();
+                    ICharacterMarkerSymbol charMrkSym1 = new CharacterMarkerSymbol();
+                    ICharacterMarkerSymbol charMrkSym2 = new CharacterMarkerSymbol();
+
+
+                    IRgbColor foreColor = new RgbColor();
+                    IRgbColor backColor = new RgbColor();
+
+                    //    stdole.IFontDisp tFont = ESRI.ArcGIS.ADF.Connection.Local.Converter.ToStdFont(new Font("ESRI Default Marker", 18));
+
+                    IFontDisp tFont = (IFontDisp)(new StdFont());
+
+
+                    // Create a reference to the font that contains the circle glyphs 
+                    tFont.Name = "ESRI Default Marker";
+                    tFont.Size =  18;
+
+
+    // Create the red and black colors 
+                    foreColor.Red = 0;
+                    foreColor.Green = 0;
+                    foreColor.Blue = 0;
+                    backColor.Red = 0;
+                    backColor.Green = 255;
+                    backColor.Blue = 0;
+
+
+                    // Create the Markers 
+                    charMrkSym1.Angle = 0;
+                    charMrkSym1.CharacterIndex = 49;
+                    charMrkSym1.Color = foreColor;
+                    charMrkSym1.Font = tFont;
+                    charMrkSym1.Size = 18;
+                    charMrkSym1.XOffset = 0;
+                    charMrkSym1.YOffset = 0;
+
+                    charMrkSym2.Angle = 0;
+                    charMrkSym2.CharacterIndex = 36;
+                    charMrkSym2.Color = backColor;
+                    charMrkSym2.Font = tFont;
+                    charMrkSym2.Size = 18;
+                    charMrkSym2.XOffset = 0;
+                    charMrkSym2.YOffset = 0;
+
+
+                    // Add the symbols in the order of bottommost to topmost 
+                    multiLayermrkSym.AddLayer(charMrkSym2);
+                    multiLayermrkSym.AddLayer(charMrkSym1);
+                    multiLayermrkSym.Angle = 0;
+                    multiLayermrkSym.Size = 18;
+                    multiLayermrkSym.XOffset = 0;
+                    multiLayermrkSym.YOffset = 0;
+                    EsriTools.SetFeatureLayerStyle(layer as IFeatureLayer,  multiLayermrkSym as ISymbol);
                 }
-                element = graphicsContainer.Next();
+            },
+            { VisibilityCalculationResultsEnum.VisibilityAreasPotential, (layer, fillColor, transparency) => {
+
+                    ISimpleFillSymbol simpleFillSymbol = new SimpleFillSymbolClass();
+                    simpleFillSymbol.Color = new RgbColor()
+                    {
+                        Transparency = 0
+                    };
+
+                    ICartographicLineSymbol outline = new CartographicLineSymbol
+                    {
+                        Width = 2,
+                        Color = new RgbColor()
+                        {
+                            Red = 100,
+                            Green = 100,
+                            Blue = 100
+                        }
+                    };
+
+                    simpleFillSymbol.Outline = outline;
+                    EsriTools.SetFeatureLayerStyle(layer as IFeatureLayer,  simpleFillSymbol as ISymbol);
+                }
+            },
+            { VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle, (layer, fillColor, transparency) => {
+
+                    ISimpleFillSymbol simpleFillSymbol = new SimpleFillSymbolClass();
+                    simpleFillSymbol.Color = new RgbColor()
+                    {
+                        Transparency = 0
+                    };
+
+                    ICartographicLineSymbol outline = new CartographicLineSymbol
+                    {
+                        Width = 0.4,
+                        Color = new RgbColor()
+                        {
+                            Red = 100,
+                            Green = 100,
+                            Blue = 100
+                        }
+                    };
+
+                    simpleFillSymbol.Outline = outline;
+                    EsriTools.SetFeatureLayerStyle(layer as IFeatureLayer,  simpleFillSymbol as ISymbol);
+                }
+            },
+            { VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly, (layer, fillColor, transparency) => {
+
+                    if (layer is IRasterLayer rasterLayer )
+                    {
+                        logger.InfoEx($"Setting unique values for renderring \"{rasterLayer.Name}\" ");
+                        try
+                        {
+                            var render = EsriTools.GetCalclResultRender(rasterLayer.Raster, "Value");
+                            if (render == null)
+                            {
+                                logger.ErrorEx($"The raster \"{rasterLayer.Name}\" doesn't have a table");
+                            }
+
+                            rasterLayer.Renderer = render;
+                            logger.InfoEx($"Unique values for renderring \"{rasterLayer.Name}\" was set");
+                        }
+                        catch (KeyNotFoundException ex)
+                        {
+                            logger.ErrorEx($"The field \"Value\" was not found in the raster table");
+                            logger.ErrorEx(ex.Message);
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.ErrorEx(ex.Message);
+                        }
+                    }
+                }
+            },
+            { VisibilityCalculationResultsEnum.VisibilityObservStationClip, (layer, fillColor, transparency) => {
+
+                    if (layer is IRasterLayer rasterLayer )
+                    {
+                         logger.InfoEx($"Setting unique values for renderring \"{rasterLayer.Name}\" ");
+                        try
+                        {
+                            var render = EsriTools.GetCalclResultRender(rasterLayer.Raster, "Value");
+                            if (render == null)
+                            {
+                                logger.ErrorEx($"The raster \"{rasterLayer.Name}\" doesn't have a table");
+                            }
+
+                            rasterLayer.Renderer = render;
+                            logger.InfoEx($"Unique values for renderring \"{rasterLayer.Name}\" was set");
+                        }
+                        catch (KeyNotFoundException ex)
+                        {
+                            logger.ErrorEx($"The field \"Value\" was not found in the raster table");
+                            logger.ErrorEx(ex.Message);
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.ErrorEx(ex.Message);
+                        }
+                    }
+                }
+            },
+            { VisibilityCalculationResultsEnum.VisibilityAreaRaster, (layer, fillColor, transparency) => {
+
+                  if (layer is IRasterLayer rasterLayer )
+                    {
+                        logger.InfoEx($"Setting unique values for renderring \"{rasterLayer.Name}\" ");
+                        try
+                        {
+                            var render = EsriTools.GetCalclResultRender(rasterLayer.Raster, "Value");
+                            if (render == null)
+                            {
+                                logger.ErrorEx($"The raster \"{rasterLayer.Name}\" doesn't have a table");
+                            }
+
+                            rasterLayer.Renderer = render;
+                            logger.InfoEx($"Unique values for renderring \"{rasterLayer.Name}\" was set");
+                        }
+                        catch (KeyNotFoundException ex)
+                        {
+                            logger.ErrorEx($"The field \"Value\" was not found in the raster table");
+                            logger.ErrorEx(ex.Message);
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.ErrorEx(ex.Message);
+                        }
+                    }
+                }
+            },
+            { VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle, (layer, fillColor, transparency) => {
+
+                  if (layer is IRasterLayer rasterLayer )
+                    {
+                        logger.InfoEx($"Setting unique values for renderring \"{rasterLayer.Name}\" ");
+                        try
+                        {
+                            var render = EsriTools.GetCalclResultRender(rasterLayer.Raster, "Value");
+                            if (render == null)
+                            {
+                                logger.ErrorEx($"The raster \"{rasterLayer.Name}\" doesn't have a table");
+                            }
+
+                            rasterLayer.Renderer = render;
+                            logger.InfoEx($"Unique values for renderring \"{rasterLayer.Name}\" was set");
+                        }
+                        catch (KeyNotFoundException ex)
+                        {
+                            logger.ErrorEx($"The field \"Value\" was not found in the raster table");
+                            logger.ErrorEx(ex.Message);
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.ErrorEx(ex.Message);
+                        }
+                    }
+                }
+            },
+            { VisibilityCalculationResultsEnum.VisibilityAreaPolygons, (layer, fillColor, transparency) => {
+
+                    if (layer is IFeatureLayer polygonLayer )
+                    {
+                        logger.InfoEx($"Setting unique values for renderring \"{polygonLayer.Name}\" ");
+                        try
+                        {
+                            var render = EsriTools.GetCalclResultRender(polygonLayer, "gridcode");
+                            if (render == null)
+                            {
+                                logger.ErrorEx($"The raster \"{polygonLayer.Name}\" doesn't have a table");
+                            }
+
+                            IGeoFeatureLayer geoFeatureLayer = (IGeoFeatureLayer)polygonLayer;
+                            geoFeatureLayer.Renderer = render;
+                            logger.InfoEx($"Unique values for renderring \"{polygonLayer.Name}\" was set");
+                        }
+                        catch (KeyNotFoundException ex)
+                        {
+                            logger.ErrorEx($"The field \"Value\" was not found in the raster table");
+                            logger.ErrorEx(ex.Message);
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.ErrorEx(ex.Message);
+                        }
+                    }
+                }
+            },
+            { VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle, (layer, fillColor, transparency) => {
+
+                    ISimpleFillSymbol simpleFillSymbol = new SimpleFillSymbolClass();
+                    simpleFillSymbol.Color = new RgbColor()
+                    {
+                        Red = 255,
+                        Green = 255,
+                        Blue = 115
+                    };
+
+                    ICartographicLineSymbol outline = new CartographicLineSymbol
+                    {
+                        Width = 0.4,
+                        Color = new RgbColor()
+                        {
+                            Red = 100,
+                            Green = 100,
+                            Blue = 100
+                        }
+                    };
+
+                    simpleFillSymbol.Outline = outline;
+                    EsriTools.SetFeatureLayerStyle(layer as IFeatureLayer,  simpleFillSymbol as ISymbol);
+                }
             }
-            activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
-        }
+        };
 
-        public static void FlashGeometry(ESRI.ArcGIS.Geometry.IGeometry geometry,
-            System.Int32 delay)
+        private static Dictionary<VisibilityCalculationResultsEnum, Func<ILayer, ISymbol>> mapResultSympols = new Dictionary<VisibilityCalculationResultsEnum, Func<ILayer, ISymbol>>
         {
-            var mxdoc = ArcMap.Application.Document as IMxDocument;
-            if (mxdoc == null)
-                return;
+            { VisibilityCalculationResultsEnum.VisibilityAreasPotential, (layer) => {
 
-            var av = (IActiveView)mxdoc.FocusMap;
-            var display = av.ScreenDisplay;
-            var envelope = av.Extent.Envelope;
+                    ISimpleFillSymbol simpleFillSymbol = new SimpleFillSymbolClass();
+                    simpleFillSymbol.Color = new RgbColor()
+                    {
+                        Transparency = 0
+                    };
 
-            IRgbColor color = new RgbColorClass();
-            color.Green = 255;
-            color.Red = 0;
-            color.Blue = 0;
+                    ICartographicLineSymbol outline = new CartographicLineSymbol
+                    {
+                        Width = 2,
+                        Color = new RgbColor()
+                        {
+                            Red = 100,
+                            Green = 100,
+                            Blue = 100
+                        }
+                    };
 
-            if ((geometry == null) || (color == null) || (display == null) || (envelope == null) || (delay < 0))
-            {
-                return;
+                    simpleFillSymbol.Outline = outline;
+                    return (ISymbol)simpleFillSymbol;
+                }
+            },
+            { VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle, (layer) => {
+
+                    ISimpleFillSymbol simpleFillSymbol = new SimpleFillSymbolClass();
+
+
+
+                    simpleFillSymbol.Color = new RgbColor()
+                    {
+                        Transparency = 0
+                    };
+
+                    ICartographicLineSymbol outline = new CartographicLineSymbol
+                    {
+                        Width = 0.4,
+                        Color = new RgbColor()
+                        {
+                            Red = 100,
+                            Green = 100,
+                            Blue = 100
+                        }
+                    };
+
+                    simpleFillSymbol.Outline = outline;
+                        return (ISymbol)simpleFillSymbol;
+                }
+            },
+            { VisibilityCalculationResultsEnum.VisibilityAreaRaster, (layer) => {
+
+
+                IRasterStretchColorRampRenderer stretchRen = default(IRasterStretchColorRampRenderer);
+                stretchRen = new RasterStretchColorRampRenderer();
+                IRasterRenderer pRasRen = default(IRasterRenderer);
+                pRasRen = (IRasterRenderer)stretchRen;
+
+                bool bOK;
+                IAlgorithmicColorRamp ramp = new AlgorithmicColorRamp();
+                ramp.FromColor = new RgbColor()
+                {
+                    Red = 255,
+                    Green = 255,
+                    Blue = 115
+                };
+                ramp.ToColor =  new RgbColor()
+                {
+                    Red = 115,
+                    Green = 38,
+                    Blue = 0
+
+                };
+                ramp.Algorithm = esriColorRampAlgorithm.esriCIELabAlgorithm;
+                            ramp.CreateRamp(out bOK);
+
+                        return null;
+                }
             }
+        };
 
-            display.StartDrawing(display.hDC, (System.Int16)ESRI.ArcGIS.Display.esriScreenCache.esriNoScreenCache); // Explicit Cast
-
-            if (geometry.GeometryType != ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPoint) return;
-
-            //Set the flash geometry's symbol.
-            ESRI.ArcGIS.Display.ISimpleMarkerSymbol simpleMarkerSymbol = new ESRI.ArcGIS.Display.SimpleMarkerSymbolClass();
-            simpleMarkerSymbol.Style = ESRI.ArcGIS.Display.esriSimpleMarkerStyle.esriSMSCircle;
-            simpleMarkerSymbol.Size = 12;
-            simpleMarkerSymbol.Color = color;
-            ESRI.ArcGIS.Display.ISymbol markerSymbol = (ESRI.ArcGIS.Display.ISymbol)simpleMarkerSymbol;
-            markerSymbol.ROP2 = ESRI.ArcGIS.Display.esriRasterOpCode.esriROPNotXOrPen;
-
-            ESRI.ArcGIS.Display.ISimpleLineSymbol simpleLineSymbol = new ESRI.ArcGIS.Display.SimpleLineSymbolClass();
-            simpleLineSymbol.Width = 1;
-            simpleLineSymbol.Color = color;
-            ESRI.ArcGIS.Display.ISymbol lineSymbol = (ESRI.ArcGIS.Display.ISymbol)simpleLineSymbol;
-            lineSymbol.ROP2 = ESRI.ArcGIS.Display.esriRasterOpCode.esriROPNotXOrPen;
-
-            DrawCrossHair(geometry, display, envelope, markerSymbol, lineSymbol);
-
-            //Flash the input point geometry.
-            display.SetSymbol(markerSymbol);
-            display.DrawPoint(geometry);
-            System.Threading.Thread.Sleep(delay);
-            display.DrawPoint(geometry);
-            display.FinishDrawing();
-        }
-
-        private static void DrawCrossHair(
-            ESRI.ArcGIS.Geometry.IGeometry geometry,
-            ESRI.ArcGIS.Display.IDisplay display,
-            IEnvelope extent,
-            ISymbol markerSymbol,
-            ISymbol lineSymbol)
+        public static void AddResultsToMapAsGroupLayer(
+            VisibilityCalcResults results,
+            IActiveView activeView,
+            string relativeLayerName,
+            bool isLayerAbove,
+            short transparency,
+            IColor color)
         {
+            logger.InfoEx("> AddResultsToMapAsGroupLayer START");
+
             try
             {
-                var point = geometry as IPoint;
+                var visibilityLayers = new List<ILayer>();
+                ILayer lr = null;
 
-                if ((point == null) || (display == null) || (extent == null) || (markerSymbol == null) ||
-                    (lineSymbol == null) || (ArcMap.Application == null))
-                    return;
-
-                var numSegments = 10;
-
-                var latitudeMid = point.Y;//envelope.YMin + ((envelope.YMax - envelope.YMin) / 2);
-                var longitudeMid = point.X;
-                var leftLongSegment = (point.X - extent.XMin) / numSegments;
-                var rightLongSegment = (extent.XMax - point.X) / numSegments;
-                var topLatSegment = (extent.YMax - point.Y) / numSegments;
-                var bottomLatSegment = (point.Y - extent.YMin) / numSegments;
-                var fromLeftLong = extent.XMin;
-                var fromRightLong = extent.XMax;
-                var fromTopLat = extent.YMax;
-                var fromBottomLat = extent.YMin;
-                var av = (ArcMap.Application.Document as IMxDocument).ActiveView;
-                if (av == null)
-                    return;
-
-                var leftPolyline = new PolylineClass();
-                var rightPolyline = new PolylineClass();
-                var topPolyline = new PolylineClass();
-                var bottomPolyline = new PolylineClass();
-
-                leftPolyline.SpatialReference = geometry.SpatialReference;
-                rightPolyline.SpatialReference = geometry.SpatialReference;
-                topPolyline.SpatialReference = geometry.SpatialReference;
-                bottomPolyline.SpatialReference = geometry.SpatialReference;
-
-                var leftPC = (IPointCollection)leftPolyline;
-                var rightPC = (IPointCollection)rightPolyline;
-                var topPC = (IPointCollection)topPolyline;
-                var bottomPC = (IPointCollection)bottomPolyline;
-
-                leftPC.AddPoint(new PointClass() { X = fromLeftLong, Y = latitudeMid });
-                rightPC.AddPoint(new PointClass() { X = fromRightLong, Y = latitudeMid });
-                topPC.AddPoint(new PointClass() { X = longitudeMid, Y = fromTopLat });
-                bottomPC.AddPoint(new PointClass() { X = longitudeMid, Y = fromBottomLat });
-
-                for (int x = 1; x <= numSegments; x++)
+                foreach (var li in LayersSequence)
                 {
-                    //Flash the input polygon geometry.
-                    display.SetSymbol(markerSymbol);
-                    display.SetSymbol(lineSymbol);
+                    if (results.ResultsInfo.Any(r => r.RessutType == li.Key))
+                    {
+                        foreach (var ri in results.ResultsInfo.Where(r => r.RessutType == li.Key))
+                        {
+                            var dataset = GdbAccess.Instance.GetDatasetFromCalcWorkspace(ri);
+                            if (dataset == null)
+                            {
+                                continue;
+                            }
 
-                    leftPC.AddPoint(new PointClass() { X = fromLeftLong + leftLongSegment * x, Y = latitudeMid });
-                    rightPC.AddPoint(new PointClass() { X = fromRightLong - rightLongSegment * x, Y = latitudeMid });
-                    topPC.AddPoint(new PointClass() { X = longitudeMid, Y = fromTopLat - topLatSegment * x });
-                    bottomPC.AddPoint(new PointClass() { X = longitudeMid, Y = fromBottomLat + bottomLatSegment * x });
+                            if (dataset is IFeatureClass feature)
+                            {
+                                lr = EsriTools.GetFeatureLayer(feature);
+                            }
+                            else if (dataset is IRasterDataset raster)
+                            {
+                                lr = EsriTools.GetRasterLayer(raster);
+                            }
+                            lr.Visible = li.Value;
 
-                    // draw
-                    display.DrawPolyline(leftPolyline);
-                    display.DrawPolyline(rightPolyline);
-                    display.DrawPolyline(topPolyline);
-                    display.DrawPolyline(bottomPolyline);
+                            if (mapResultAction.ContainsKey(ri.RessutType))
+                            {
+                                mapResultAction[ri.RessutType](lr, color, transparency);
+                            }
 
-                    System.Threading.Thread.Sleep(15);
-                    display.FinishDrawing();
-                    av.PartialRefresh(esriViewDrawPhase.esriViewForeground, null, null);
-                    System.Windows.Forms.Application.DoEvents();
-                    display.StartDrawing(display.hDC, (System.Int16)ESRI.ArcGIS.Display.esriScreenCache.esriNoScreenCache); // Explicit Cast
+                            visibilityLayers.Add(lr);
+                        }
+                    }
                 }
+
+                MapLayersManager layersManager = new MapLayersManager(activeView);
+
+                IGroupLayer groupLayer = new GroupLayerClass { Name = results.Name };
+
+                var layersToremove = new List<IRasterLayer>();
+                foreach (var layer in visibilityLayers)
+                {
+                    if (layer is IRasterLayer raster)
+                    {
+                        var existenLayer =
+                            layersManager.RasterLayers.FirstOrDefault(l => l.FilePath.Equals(raster.FilePath, StringComparison.InvariantCultureIgnoreCase));
+                        if (existenLayer != null && !layersToremove.Any(l => l.Equals(existenLayer)))
+                        {
+                            layersToremove.Add(existenLayer);
+                        }
+                    }
+                    var layerEffects = (ILayerEffects)layer;
+                    layerEffects.Transparency = transparency;
+                    groupLayer.Add(layer);
+                }
+                relativeLayerName =
+                    string.IsNullOrWhiteSpace(relativeLayerName) ?
+                    (layersManager.LastLayer == null ? string.Empty : layersManager.LastLayer.Name) :
+                    relativeLayerName;
+
+                if (!layersManager.InserLayer(groupLayer, relativeLayerName, isLayerAbove))
+                {
+                    logger.InfoEx("> AddResultsToMapAsGroupLayer END. Cannot add groupped layer {0}", results.Name);
+                }
+                else
+                {
+                    logger.InfoEx("> AddResultsToMapAsGroupLayer END. The groupped layer {0} was added", results.Name);
+                }
+
+                //var mapLayers = activeView.FocusMap as IMapLayers2;
+                //int relativeLayerPosition = GetLayerIndex(relativeLayer, activeView);
+                //int groupLayerPosition = (isLayerAbove) ? relativeLayerPosition - 1 : relativeLayerPosition + 1;
+                //layersToremove.ForEach(l => mapLayers.DeleteLayer(l));
+                //mapLayers.InsertLayer(groupLayer, false, groupLayerPosition);
+
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine(ex.Message);
+                logger.InfoEx("> AddResultsToMapAsGroupLayer EXCEPTION. Message:{0}", ex.Message);
             }
+
         }
+
     }
 }

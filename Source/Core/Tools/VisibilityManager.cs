@@ -36,13 +36,15 @@ namespace MilSpace.Tools
         public delegate void SessionStartGenerationDelegate(bool isNewSessionAdded = false, string newSessionId = null);
         public static SessionStartGenerationDelegate OnGenerationStarted;
 
-        private static Logger logger = Logger.GetLoggerEx("MilSpace.Tools.VisibilityManagerManager");
+        private static Logger logger = Logger.GetLoggerEx("MilSpace.Tools.VisibilityManager");
 
         //Visibility dataset template 
         private const string VisibilityCalcFeatureClass = "VDSR";
 
         public VisibilityManager()
-        { }
+        {
+            logger.InfoEx("> VisibilityManager Constructor");
+        }
 
         public static VisibilityTask Generate(
             IFeatureClass obervationPoints,
@@ -56,12 +58,12 @@ namespace MilSpace.Tools
             VisibilityCalcTypeEnum calculationType,
             IMap currentMap)
         {
+            logger.InfoEx("> Generate START. Visiblility result {2} using DEM {0} from observation points {1}"
+                .InvariantFormat(sourceDem, obervationPoints, taskId));
+
             CurrentMap = currentMap;
             //Target dataset name
             string nameOfTargetDataset = taskId;
-
-            logger.InfoEx("> Generate. Starting generation Visiblility result {2} using DEM {0} from observation points {1}"
-                .InvariantFormat(sourceDem, obervationPoints, nameOfTargetDataset));
 
             var calcTask = new VisibilityTask
             {
@@ -74,7 +76,7 @@ namespace MilSpace.Tools
                 Surface = sourceDem
             };
 
-            calcTask = VisibilityZonesFacade.AddVisibilitySession(calcTask);
+            calcTask = VisibilityZonesFacade.AddVisibilityTask(calcTask);
             OnGenerationStarted.Invoke(true, calcTask.Id);
 
             if (calcTask == null)
@@ -87,7 +89,6 @@ namespace MilSpace.Tools
                 ParamName = ActionParamNamesCore.Action,
                 Value = ActionsEnum.vblt.ToString()
             };
-
 
             var prm = new List<IActionParam>
             {
@@ -110,7 +111,6 @@ namespace MilSpace.Tools
                { ParamName = ActionParameters.Session, Value = calcTask},
             };
 
-
             var procc = new ActionProcessor(prm);
             VisibilityZonesFacade.StarthVisibilitySession(calcTask);
 
@@ -122,17 +122,18 @@ namespace MilSpace.Tools
                 foreach (var calcRes in res.Result.CalculationMessages)
                 {
                     //Here should be checked if the results match with session.CalculatedResults
-                    logger.InfoEx($"The result layer {calcRes} was successfully composed in {calcTask.ReferencedGDB}");
+                    //logger.InfoEx($"The result layer {calcRes} was successfully composed in {calcTask.ReferencedGDB}");
                 }
             }
 
             if (res.Exception != null)
             {
+                VisibilityZonesFacade.UpdateVisibilityTask(calcTask);
                 throw res.Exception;
             }
             else
             {
-                VisibilityZonesFacade.FinishVisibilitySession(calcTask);
+                VisibilityZonesFacade.FinishVisibilityTask(calcTask);
                 VisibilityZonesFacade.AddVisibilityResults(calcTask.GetVisibilityResults(false));
             }
 
@@ -152,10 +153,14 @@ namespace MilSpace.Tools
 
         public static bool AddVisibilityPointLayer(IActiveView view)
         {
+            logger.InfoEx("> AddVisibilityPointLayer START");
             try
             {
                 var pointsLayer = GdbAccess.Instance.GetLayerFromWorkingWorkspace(ObservPointFeature);
                 view.FocusMap.AddLayer(pointsLayer);
+
+                logger.InfoEx("> AddVisibilityPointLayer END");
+                return true;
             }
             catch (MilSpaceDataException ex)
             {
@@ -171,21 +176,24 @@ namespace MilSpace.Tools
 
         public static bool AddObservationObjectLayer(IActiveView view)
         {
+            logger.InfoEx("> AddObservationObjectLayer START");
             try
             {
                 var objLayer = GdbAccess.Instance.GetLayerFromWorkingWorkspace(ObservStationFeature);
                 view.FocusMap.AddLayer(objLayer);
+                logger.InfoEx("> AddObservationObjectLayer END");
+                return true;
             }
             catch (MilSpaceDataException ex)
             {
                 logger.ErrorEx("> AddObservationObjectLayer Exception: {0}", ex.Message);
+                return false;
             }
             catch (Exception ex)
             {
                 logger.ErrorEx("> AddObservationObjectLayer Exception 2: {0}", ex.Message);
+                return false;
             }
-
-            return false;
         }
 
         public static IFeatureClass ObservationPointsFeatureClass
@@ -231,7 +239,7 @@ namespace MilSpace.Tools
 
                 if (res.Exception != null)
                 {
-                    VisibilityZonesFacade.FinishVisibilitySession(session);
+                    VisibilityZonesFacade.FinishVisibilityTask(session);
                     throw res.Exception;
                 }
 

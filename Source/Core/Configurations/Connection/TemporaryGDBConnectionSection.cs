@@ -11,8 +11,6 @@ namespace MilSpace.Configurations
     {
         internal static string SectionName = ConfigElementNames.TemporaryGDBConnectionSection;
 
-
-
         [ConfigurationProperty(ConfigElementNames.ConnectionString, IsKey = true, IsRequired = true)]
         public string ConnectionString
         {

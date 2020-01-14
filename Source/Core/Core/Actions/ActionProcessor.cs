@@ -61,9 +61,9 @@ namespace MilSpace.Core.Actions
                 if (curParams.Count() > 0)
                 {
                     prms = curParams.Where(x => !String.IsNullOrEmpty(context.Request.Params[x]))
-                                    .Select(p => new ActionParam<string>() { ParamName = p, Value = context.Request.Params[p] }).Cast<IActionParam>();
-
-
+                                    .Select(p => new ActionParam<string>()
+                                    { ParamName = p, Value = context.Request.Params[p] })
+                                    .Cast<IActionParam>();
 
                     this.prosessingActionParams.AddRange(prms);
                 }
@@ -90,7 +90,12 @@ namespace MilSpace.Core.Actions
                 curParams = this.usedParameters.Where(p => args.Any(a => a.StartsWith(string.Format(templateArgs, p))));
                 if (curParams.Count() > 0)
                 {
-                    prms = curParams.Select(p => new ActionParam<string>() { ParamName = p, Value = GetParamValue(p, args.First(a => a.StartsWith(string.Format(templateArgs, p)))) }).Cast<IActionParam>();
+                    prms = curParams.Select(p => new ActionParam<string>()
+                    {
+                        ParamName = p,
+                        Value = GetParamValue(p, args.First(a => a.StartsWith(string.Format(templateArgs, p))))
+                    })
+                    .Cast<IActionParam>();
                     this.prosessingActionParams.AddRange(prms);
                 }
 

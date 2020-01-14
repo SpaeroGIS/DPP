@@ -884,6 +884,7 @@ namespace MilSpace.Visibility
             this.dvgCheckList.AllowUserToResizeRows = false;
             this.dvgCheckList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
             this.dvgCheckList.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.dvgCheckList.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dvgCheckList.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.dvgCheckList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dvgCheckList.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -981,11 +982,11 @@ namespace MilSpace.Visibility
             // 
             // cmbAffiliation
             // 
-            this.cmbAffiliation.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbAffiliation.Dock = System.Windows.Forms.DockStyle.Right;
             this.cmbAffiliation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbAffiliation.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cmbAffiliation.FormattingEnabled = true;
-            this.cmbAffiliation.Location = new System.Drawing.Point(308, 3);
+            this.cmbAffiliation.Location = new System.Drawing.Point(311, 3);
             this.cmbAffiliation.Name = "cmbAffiliation";
             this.cmbAffiliation.Size = new System.Drawing.Size(127, 24);
             this.cmbAffiliation.TabIndex = 4;
@@ -1079,6 +1080,7 @@ namespace MilSpace.Visibility
             this.checkBox4.Size = new System.Drawing.Size(15, 14);
             this.checkBox4.TabIndex = 24;
             this.checkBox4.UseVisualStyleBackColor = true;
+            this.checkBox4.CheckedChanged += new System.EventHandler(this.Select_All);
             // 
             // dgvObjects
             // 
@@ -1088,6 +1090,7 @@ namespace MilSpace.Visibility
             this.dgvObjects.AllowUserToResizeRows = false;
             this.dgvObjects.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
             this.dgvObjects.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.dgvObjects.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvObjects.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvObjects.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvObjects.Location = new System.Drawing.Point(0, 0);

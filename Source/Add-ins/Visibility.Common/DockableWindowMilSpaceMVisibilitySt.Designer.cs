@@ -36,6 +36,12 @@
             this.panel7 = new System.Windows.Forms.Panel();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.panelNikol = new System.Windows.Forms.Panel();
+            this.observPointCreator = new System.Windows.Forms.TextBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.panelDataAndUser = new System.Windows.Forms.Panel();
+            this.observPointDate = new System.Windows.Forms.TextBox();
+            this.label27 = new System.Windows.Forms.Label();
             this.panelRelativeHeight = new System.Windows.Forms.Panel();
             this.heightCurrent = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
@@ -71,12 +77,6 @@
             this.panel13 = new System.Windows.Forms.Panel();
             this.cmbObservTypesEdit = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.panelNikol = new System.Windows.Forms.Panel();
-            this.observPointCreator = new System.Windows.Forms.TextBox();
-            this.label24 = new System.Windows.Forms.Label();
-            this.panelDataAndUser = new System.Windows.Forms.Panel();
-            this.observPointDate = new System.Windows.Forms.TextBox();
-            this.label27 = new System.Windows.Forms.Label();
             this.panelObservPointName = new System.Windows.Forms.Panel();
             this.observPointName = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
@@ -106,21 +106,21 @@
             this.btnAddLayerPS = new System.Windows.Forms.Button();
             this.tbpObservObjects = new System.Windows.Forms.TabPage();
             this.panel30 = new System.Windows.Forms.Panel();
-            this.panel58 = new System.Windows.Forms.Panel();
-            this.tbObservObjDate = new System.Windows.Forms.TextBox();
-            this.label39 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tbObservObjCreator = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.panel31 = new System.Windows.Forms.Panel();
-            this.tbObservObjTitle = new System.Windows.Forms.TextBox();
-            this.label29 = new System.Windows.Forms.Label();
-            this.panel40 = new System.Windows.Forms.Panel();
-            this.cmbObservObjAffiliation = new System.Windows.Forms.ComboBox();
-            this.label31 = new System.Windows.Forms.Label();
+            this.panel58 = new System.Windows.Forms.Panel();
+            this.tbObservObjDate = new System.Windows.Forms.TextBox();
+            this.label39 = new System.Windows.Forms.Label();
             this.panel28 = new System.Windows.Forms.Panel();
             this.tbObservObjGroup = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.panel40 = new System.Windows.Forms.Panel();
+            this.cmbObservObjAffiliation = new System.Windows.Forms.ComboBox();
+            this.label31 = new System.Windows.Forms.Label();
+            this.panel31 = new System.Windows.Forms.Panel();
+            this.tbObservObjTitle = new System.Windows.Forms.TextBox();
+            this.label29 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.btnSaveParamPS = new System.Windows.Forms.Button();
@@ -155,18 +155,21 @@
             this.toolBarButton25 = new System.Windows.Forms.ToolBarButton();
             this.tbpSessions = new System.Windows.Forms.TabPage();
             this.panel14 = new System.Windows.Forms.Panel();
+            this.txtTaskLog = new System.Windows.Forms.TextBox();
+            this.panel19 = new System.Windows.Forms.Panel();
+            this.label6 = new System.Windows.Forms.Label();
             this.panel46 = new System.Windows.Forms.Panel();
             this.tbVisibilitySessionFinished = new System.Windows.Forms.TextBox();
             this.label45 = new System.Windows.Forms.Label();
             this.panel45 = new System.Windows.Forms.Panel();
             this.tbVisibilitySessionStarted = new System.Windows.Forms.TextBox();
             this.label44 = new System.Windows.Forms.Label();
-            this.panel44 = new System.Windows.Forms.Panel();
-            this.tbVisibilitySessionCreated = new System.Windows.Forms.TextBox();
-            this.label43 = new System.Windows.Forms.Label();
             this.panel43 = new System.Windows.Forms.Panel();
             this.tbVisibilitySessionCreator = new System.Windows.Forms.TextBox();
             this.label42 = new System.Windows.Forms.Label();
+            this.panel44 = new System.Windows.Forms.Panel();
+            this.tbVisibilitySessionCreated = new System.Windows.Forms.TextBox();
+            this.label43 = new System.Windows.Forms.Label();
             this.panel47 = new System.Windows.Forms.Panel();
             this.tbVisibilitySessionName = new System.Windows.Forms.TextBox();
             this.label46 = new System.Windows.Forms.Label();
@@ -221,6 +224,8 @@
             this.panel7.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.tabPage5.SuspendLayout();
+            this.panelNikol.SuspendLayout();
+            this.panelDataAndUser.SuspendLayout();
             this.panelRelativeHeight.SuspendLayout();
             this.panelRadiuses.SuspendLayout();
             this.panelSignAngelVert.SuspendLayout();
@@ -229,8 +234,6 @@
             this.panel10.SuspendLayout();
             this.panel12.SuspendLayout();
             this.panel13.SuspendLayout();
-            this.panelNikol.SuspendLayout();
-            this.panelDataAndUser.SuspendLayout();
             this.panelObservPointName.SuspendLayout();
             this.panel9.SuspendLayout();
             this.panel16.SuspendLayout();
@@ -241,11 +244,11 @@
             this.panelPointsHeader.SuspendLayout();
             this.tbpObservObjects.SuspendLayout();
             this.panel30.SuspendLayout();
-            this.panel58.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.panel31.SuspendLayout();
-            this.panel40.SuspendLayout();
+            this.panel58.SuspendLayout();
             this.panel28.SuspendLayout();
+            this.panel40.SuspendLayout();
+            this.panel31.SuspendLayout();
             this.panel3.SuspendLayout();
             this._panelGridON.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvObservObjects)).BeginInit();
@@ -255,10 +258,11 @@
             this.panel27.SuspendLayout();
             this.tbpSessions.SuspendLayout();
             this.panel14.SuspendLayout();
+            this.panel19.SuspendLayout();
             this.panel46.SuspendLayout();
             this.panel45.SuspendLayout();
-            this.panel44.SuspendLayout();
             this.panel43.SuspendLayout();
+            this.panel44.SuspendLayout();
             this.panel47.SuspendLayout();
             this.panel42.SuspendLayout();
             this.panel15.SuspendLayout();
@@ -497,6 +501,7 @@
             this.mainTabControl.ItemSize = new System.Drawing.Size(80, 22);
             this.mainTabControl.Location = new System.Drawing.Point(0, 0);
             this.mainTabControl.Name = "mainTabControl";
+            this.mainTabControl.Padding = new System.Drawing.Point(0, 0);
             this.mainTabControl.SelectedIndex = 0;
             this.mainTabControl.Size = new System.Drawing.Size(320, 640);
             this.mainTabControl.TabIndex = 2;
@@ -541,6 +546,8 @@
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.panelNikol);
+            this.tabPage5.Controls.Add(this.panelDataAndUser);
             this.tabPage5.Controls.Add(this.panelRelativeHeight);
             this.tabPage5.Controls.Add(this.panelRadiuses);
             this.tabPage5.Controls.Add(this.panelSignAngelVert);
@@ -549,8 +556,6 @@
             this.tabPage5.Controls.Add(this.panel10);
             this.tabPage5.Controls.Add(this.panel12);
             this.tabPage5.Controls.Add(this.panel13);
-            this.tabPage5.Controls.Add(this.panelNikol);
-            this.tabPage5.Controls.Add(this.panelDataAndUser);
             this.tabPage5.Controls.Add(this.panelObservPointName);
             this.tabPage5.ImageIndex = 137;
             this.tabPage5.Location = new System.Drawing.Point(4, 4);
@@ -560,12 +565,82 @@
             this.tabPage5.Text = "Базові";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
+            // panelNikol
+            // 
+            this.panelNikol.BackColor = System.Drawing.Color.Transparent;
+            this.panelNikol.Controls.Add(this.observPointCreator);
+            this.panelNikol.Controls.Add(this.label24);
+            this.panelNikol.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelNikol.Location = new System.Drawing.Point(0, 240);
+            this.panelNikol.Name = "panelNikol";
+            this.panelNikol.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.panelNikol.Size = new System.Drawing.Size(304, 24);
+            this.panelNikol.TabIndex = 41;
+            // 
+            // observPointCreator
+            // 
+            this.observPointCreator.BackColor = System.Drawing.SystemColors.Window;
+            this.observPointCreator.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.observPointCreator.Dock = System.Windows.Forms.DockStyle.Left;
+            this.observPointCreator.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.observPointCreator.Location = new System.Drawing.Point(104, 4);
+            this.observPointCreator.Name = "observPointCreator";
+            this.observPointCreator.ReadOnly = true;
+            this.observPointCreator.Size = new System.Drawing.Size(180, 13);
+            this.observPointCreator.TabIndex = 11;
+            this.observPointCreator.Text = "vnikolaev";
+            this.observPointCreator.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label24
+            // 
+            this.label24.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label24.Location = new System.Drawing.Point(4, 4);
+            this.label24.Name = "label24";
+            this.label24.Padding = new System.Windows.Forms.Padding(0, 0, 0, 4);
+            this.label24.Size = new System.Drawing.Size(100, 20);
+            this.label24.TabIndex = 10;
+            this.label24.Text = "Оператор";
+            // 
+            // panelDataAndUser
+            // 
+            this.panelDataAndUser.Controls.Add(this.observPointDate);
+            this.panelDataAndUser.Controls.Add(this.label27);
+            this.panelDataAndUser.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelDataAndUser.Location = new System.Drawing.Point(0, 216);
+            this.panelDataAndUser.Name = "panelDataAndUser";
+            this.panelDataAndUser.Padding = new System.Windows.Forms.Padding(4, 4, 4, 0);
+            this.panelDataAndUser.Size = new System.Drawing.Size(304, 24);
+            this.panelDataAndUser.TabIndex = 34;
+            // 
+            // observPointDate
+            // 
+            this.observPointDate.BackColor = System.Drawing.SystemColors.Window;
+            this.observPointDate.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.observPointDate.Dock = System.Windows.Forms.DockStyle.Left;
+            this.observPointDate.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.observPointDate.Location = new System.Drawing.Point(104, 4);
+            this.observPointDate.Name = "observPointDate";
+            this.observPointDate.ReadOnly = true;
+            this.observPointDate.Size = new System.Drawing.Size(180, 13);
+            this.observPointDate.TabIndex = 5;
+            this.observPointDate.Text = "2018-11-30";
+            this.observPointDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label27
+            // 
+            this.label27.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label27.Location = new System.Drawing.Point(4, 4);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(100, 20);
+            this.label27.TabIndex = 4;
+            this.label27.Text = "Дата";
+            // 
             // panelRelativeHeight
             // 
             this.panelRelativeHeight.Controls.Add(this.heightCurrent);
             this.panelRelativeHeight.Controls.Add(this.label19);
             this.panelRelativeHeight.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelRelativeHeight.Location = new System.Drawing.Point(0, 240);
+            this.panelRelativeHeight.Location = new System.Drawing.Point(0, 192);
             this.panelRelativeHeight.Name = "panelRelativeHeight";
             this.panelRelativeHeight.Padding = new System.Windows.Forms.Padding(4, 2, 0, 0);
             this.panelRelativeHeight.Size = new System.Drawing.Size(304, 24);
@@ -599,7 +674,7 @@
             this.panelRadiuses.Controls.Add(this.txtMinDistance);
             this.panelRadiuses.Controls.Add(this.lblMaxDistance);
             this.panelRadiuses.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelRadiuses.Location = new System.Drawing.Point(0, 216);
+            this.panelRadiuses.Location = new System.Drawing.Point(0, 168);
             this.panelRadiuses.Name = "panelRadiuses";
             this.panelRadiuses.Padding = new System.Windows.Forms.Padding(4, 2, 4, 0);
             this.panelRadiuses.Size = new System.Drawing.Size(304, 24);
@@ -655,7 +730,7 @@
             this.panelSignAngelVert.Controls.Add(this.angleOFViewMin);
             this.panelSignAngelVert.Controls.Add(this.label18);
             this.panelSignAngelVert.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelSignAngelVert.Location = new System.Drawing.Point(0, 192);
+            this.panelSignAngelVert.Location = new System.Drawing.Point(0, 144);
             this.panelSignAngelVert.Name = "panelSignAngelVert";
             this.panelSignAngelVert.Padding = new System.Windows.Forms.Padding(4, 2, 4, 0);
             this.panelSignAngelVert.Size = new System.Drawing.Size(304, 24);
@@ -711,7 +786,7 @@
             this.panelAzimuth.Controls.Add(this.azimuthB);
             this.panelAzimuth.Controls.Add(this.label14);
             this.panelAzimuth.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelAzimuth.Location = new System.Drawing.Point(0, 168);
+            this.panelAzimuth.Location = new System.Drawing.Point(0, 120);
             this.panelAzimuth.Name = "panelAzimuth";
             this.panelAzimuth.Padding = new System.Windows.Forms.Padding(4, 2, 4, 0);
             this.panelAzimuth.Size = new System.Drawing.Size(304, 24);
@@ -766,7 +841,7 @@
             this.panelCoordinateTools.Controls.Add(this.tlbCoordinates);
             this.panelCoordinateTools.Controls.Add(this.panel18);
             this.panelCoordinateTools.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelCoordinateTools.Location = new System.Drawing.Point(0, 144);
+            this.panelCoordinateTools.Location = new System.Drawing.Point(0, 96);
             this.panelCoordinateTools.Name = "panelCoordinateTools";
             this.panelCoordinateTools.Size = new System.Drawing.Size(304, 24);
             this.panelCoordinateTools.TabIndex = 43;
@@ -832,7 +907,7 @@
             this.panel10.Controls.Add(this.xCoord);
             this.panel10.Controls.Add(this.label8);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel10.Location = new System.Drawing.Point(0, 120);
+            this.panel10.Location = new System.Drawing.Point(0, 72);
             this.panel10.Name = "panel10";
             this.panel10.Padding = new System.Windows.Forms.Padding(4, 2, 0, 0);
             this.panel10.Size = new System.Drawing.Size(304, 24);
@@ -879,7 +954,7 @@
             this.panel12.Controls.Add(this.cmbAffiliationEdit);
             this.panel12.Controls.Add(this.label10);
             this.panel12.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel12.Location = new System.Drawing.Point(0, 96);
+            this.panel12.Location = new System.Drawing.Point(0, 48);
             this.panel12.Name = "panel12";
             this.panel12.Padding = new System.Windows.Forms.Padding(4, 1, 0, 0);
             this.panel12.Size = new System.Drawing.Size(304, 24);
@@ -916,7 +991,7 @@
             this.panel13.Controls.Add(this.cmbObservTypesEdit);
             this.panel13.Controls.Add(this.label11);
             this.panel13.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel13.Location = new System.Drawing.Point(0, 72);
+            this.panel13.Location = new System.Drawing.Point(0, 24);
             this.panel13.Name = "panel13";
             this.panel13.Padding = new System.Windows.Forms.Padding(4, 1, 4, 0);
             this.panel13.Size = new System.Drawing.Size(304, 24);
@@ -942,75 +1017,6 @@
             this.label11.Size = new System.Drawing.Size(100, 23);
             this.label11.TabIndex = 1;
             this.label11.Text = "Тип";
-            // 
-            // panelNikol
-            // 
-            this.panelNikol.BackColor = System.Drawing.Color.Transparent;
-            this.panelNikol.Controls.Add(this.observPointCreator);
-            this.panelNikol.Controls.Add(this.label24);
-            this.panelNikol.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelNikol.Location = new System.Drawing.Point(0, 48);
-            this.panelNikol.Name = "panelNikol";
-            this.panelNikol.Padding = new System.Windows.Forms.Padding(4, 2, 0, 0);
-            this.panelNikol.Size = new System.Drawing.Size(304, 24);
-            this.panelNikol.TabIndex = 41;
-            // 
-            // observPointCreator
-            // 
-            this.observPointCreator.BackColor = System.Drawing.SystemColors.Window;
-            this.observPointCreator.Dock = System.Windows.Forms.DockStyle.Left;
-            this.observPointCreator.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.observPointCreator.Location = new System.Drawing.Point(104, 2);
-            this.observPointCreator.Name = "observPointCreator";
-            this.observPointCreator.ReadOnly = true;
-            this.observPointCreator.Size = new System.Drawing.Size(180, 20);
-            this.observPointCreator.TabIndex = 11;
-            this.observPointCreator.Text = "vnikolaev";
-            this.observPointCreator.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label24
-            // 
-            this.label24.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label24.Location = new System.Drawing.Point(4, 2);
-            this.label24.Name = "label24";
-            this.label24.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.label24.Size = new System.Drawing.Size(100, 22);
-            this.label24.TabIndex = 10;
-            this.label24.Text = "Оператор";
-            // 
-            // panelDataAndUser
-            // 
-            this.panelDataAndUser.Controls.Add(this.observPointDate);
-            this.panelDataAndUser.Controls.Add(this.label27);
-            this.panelDataAndUser.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelDataAndUser.Location = new System.Drawing.Point(0, 24);
-            this.panelDataAndUser.Name = "panelDataAndUser";
-            this.panelDataAndUser.Padding = new System.Windows.Forms.Padding(4, 2, 4, 0);
-            this.panelDataAndUser.Size = new System.Drawing.Size(304, 24);
-            this.panelDataAndUser.TabIndex = 34;
-            // 
-            // observPointDate
-            // 
-            this.observPointDate.BackColor = System.Drawing.SystemColors.Window;
-            this.observPointDate.Dock = System.Windows.Forms.DockStyle.Left;
-            this.observPointDate.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.observPointDate.Location = new System.Drawing.Point(104, 2);
-            this.observPointDate.Name = "observPointDate";
-            this.observPointDate.ReadOnly = true;
-            this.observPointDate.Size = new System.Drawing.Size(180, 20);
-            this.observPointDate.TabIndex = 5;
-            this.observPointDate.Text = "2018-11-30";
-            this.observPointDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label27
-            // 
-            this.label27.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label27.Location = new System.Drawing.Point(4, 2);
-            this.label27.Name = "label27";
-            this.label27.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-            this.label27.Size = new System.Drawing.Size(100, 22);
-            this.label27.TabIndex = 4;
-            this.label27.Text = "Дата";
             // 
             // panelObservPointName
             // 
@@ -1116,8 +1122,7 @@
             this.dgvObservationPoints.BackgroundColor = System.Drawing.SystemColors.Window;
             this.dgvObservationPoints.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvObservationPoints.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.RaisedHorizontal;
-            this.dgvObservationPoints.ColumnHeadersHeight = 22;
-            this.dgvObservationPoints.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dgvObservationPoints.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvObservationPoints.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvObservationPoints.Location = new System.Drawing.Point(0, 56);
             this.dgvObservationPoints.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
@@ -1350,11 +1355,11 @@
             // 
             // panel30
             // 
-            this.panel30.Controls.Add(this.panel58);
             this.panel30.Controls.Add(this.panel1);
-            this.panel30.Controls.Add(this.panel31);
-            this.panel30.Controls.Add(this.panel40);
+            this.panel30.Controls.Add(this.panel58);
             this.panel30.Controls.Add(this.panel28);
+            this.panel30.Controls.Add(this.panel40);
+            this.panel30.Controls.Add(this.panel31);
             this.panel30.Controls.Add(this.panel3);
             this.panel30.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel30.Location = new System.Drawing.Point(0, 334);
@@ -1362,96 +1367,102 @@
             this.panel30.Size = new System.Drawing.Size(312, 276);
             this.panel30.TabIndex = 61;
             // 
-            // panel58
-            // 
-            this.panel58.Controls.Add(this.tbObservObjDate);
-            this.panel58.Controls.Add(this.label39);
-            this.panel58.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel58.Location = new System.Drawing.Point(0, 146);
-            this.panel58.Name = "panel58";
-            this.panel58.Padding = new System.Windows.Forms.Padding(4);
-            this.panel58.Size = new System.Drawing.Size(312, 28);
-            this.panel58.TabIndex = 49;
-            // 
-            // tbObservObjDate
-            // 
-            this.tbObservObjDate.Dock = System.Windows.Forms.DockStyle.Left;
-            this.tbObservObjDate.Location = new System.Drawing.Point(104, 4);
-            this.tbObservObjDate.Name = "tbObservObjDate";
-            this.tbObservObjDate.ReadOnly = true;
-            this.tbObservObjDate.Size = new System.Drawing.Size(120, 20);
-            this.tbObservObjDate.TabIndex = 5;
-            // 
-            // label39
-            // 
-            this.label39.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label39.Location = new System.Drawing.Point(4, 4);
-            this.label39.Name = "label39";
-            this.label39.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-            this.label39.Size = new System.Drawing.Size(100, 20);
-            this.label39.TabIndex = 4;
-            this.label39.Text = "дата створення";
-            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.tbObservObjCreator);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 118);
+            this.panel1.Location = new System.Drawing.Point(0, 146);
             this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(4);
+            this.panel1.Padding = new System.Windows.Forms.Padding(4, 6, 4, 4);
             this.panel1.Size = new System.Drawing.Size(312, 28);
             this.panel1.TabIndex = 48;
             // 
             // tbObservObjCreator
             // 
+            this.tbObservObjCreator.BackColor = System.Drawing.SystemColors.Window;
+            this.tbObservObjCreator.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbObservObjCreator.Dock = System.Windows.Forms.DockStyle.Left;
-            this.tbObservObjCreator.Location = new System.Drawing.Point(104, 4);
+            this.tbObservObjCreator.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.tbObservObjCreator.Location = new System.Drawing.Point(104, 6);
             this.tbObservObjCreator.Name = "tbObservObjCreator";
             this.tbObservObjCreator.ReadOnly = true;
-            this.tbObservObjCreator.Size = new System.Drawing.Size(120, 20);
+            this.tbObservObjCreator.Size = new System.Drawing.Size(180, 13);
             this.tbObservObjCreator.TabIndex = 5;
+            this.tbObservObjCreator.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label5
             // 
             this.label5.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label5.Location = new System.Drawing.Point(4, 4);
+            this.label5.Location = new System.Drawing.Point(4, 6);
             this.label5.Name = "label5";
-            this.label5.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-            this.label5.Size = new System.Drawing.Size(100, 20);
+            this.label5.Size = new System.Drawing.Size(100, 18);
             this.label5.TabIndex = 4;
             this.label5.Text = "оператор";
             // 
-            // panel31
+            // panel58
             // 
-            this.panel31.Controls.Add(this.tbObservObjTitle);
-            this.panel31.Controls.Add(this.label29);
-            this.panel31.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel31.Location = new System.Drawing.Point(0, 90);
-            this.panel31.Name = "panel31";
-            this.panel31.Padding = new System.Windows.Forms.Padding(4);
-            this.panel31.Size = new System.Drawing.Size(312, 28);
-            this.panel31.TabIndex = 44;
+            this.panel58.Controls.Add(this.tbObservObjDate);
+            this.panel58.Controls.Add(this.label39);
+            this.panel58.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel58.Location = new System.Drawing.Point(0, 118);
+            this.panel58.Name = "panel58";
+            this.panel58.Padding = new System.Windows.Forms.Padding(4, 6, 4, 4);
+            this.panel58.Size = new System.Drawing.Size(312, 28);
+            this.panel58.TabIndex = 49;
             // 
-            // tbObservObjTitle
+            // tbObservObjDate
             // 
-            this.tbObservObjTitle.Dock = System.Windows.Forms.DockStyle.Left;
-            this.tbObservObjTitle.Location = new System.Drawing.Point(104, 4);
-            this.tbObservObjTitle.Name = "tbObservObjTitle";
-            this.tbObservObjTitle.Size = new System.Drawing.Size(120, 20);
-            this.tbObservObjTitle.TabIndex = 5;
-            this.tbObservObjTitle.TextChanged += new System.EventHandler(this.tbObservObjects_CheckChanged);
-            this.tbObservObjTitle.Leave += new System.EventHandler(this.ObservationObjectChanged);
+            this.tbObservObjDate.BackColor = System.Drawing.SystemColors.Window;
+            this.tbObservObjDate.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbObservObjDate.Dock = System.Windows.Forms.DockStyle.Left;
+            this.tbObservObjDate.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.tbObservObjDate.Location = new System.Drawing.Point(104, 6);
+            this.tbObservObjDate.Name = "tbObservObjDate";
+            this.tbObservObjDate.ReadOnly = true;
+            this.tbObservObjDate.Size = new System.Drawing.Size(180, 13);
+            this.tbObservObjDate.TabIndex = 5;
+            this.tbObservObjDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // label29
+            // label39
             // 
-            this.label29.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label29.Location = new System.Drawing.Point(4, 4);
-            this.label29.Name = "label29";
-            this.label29.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-            this.label29.Size = new System.Drawing.Size(100, 20);
-            this.label29.TabIndex = 4;
-            this.label29.Text = "назва";
+            this.label39.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label39.Location = new System.Drawing.Point(4, 6);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(100, 18);
+            this.label39.TabIndex = 4;
+            this.label39.Text = "дата створення";
+            // 
+            // panel28
+            // 
+            this.panel28.Controls.Add(this.tbObservObjGroup);
+            this.panel28.Controls.Add(this.label1);
+            this.panel28.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel28.Location = new System.Drawing.Point(0, 90);
+            this.panel28.Name = "panel28";
+            this.panel28.Padding = new System.Windows.Forms.Padding(4);
+            this.panel28.Size = new System.Drawing.Size(312, 28);
+            this.panel28.TabIndex = 47;
+            // 
+            // tbObservObjGroup
+            // 
+            this.tbObservObjGroup.Dock = System.Windows.Forms.DockStyle.Left;
+            this.tbObservObjGroup.Location = new System.Drawing.Point(104, 4);
+            this.tbObservObjGroup.Name = "tbObservObjGroup";
+            this.tbObservObjGroup.Size = new System.Drawing.Size(180, 20);
+            this.tbObservObjGroup.TabIndex = 5;
+            this.tbObservObjGroup.TextChanged += new System.EventHandler(this.tbObservObjects_CheckChanged);
+            this.tbObservObjGroup.Leave += new System.EventHandler(this.ObservationObjectChanged);
+            // 
+            // label1
+            // 
+            this.label1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label1.Location = new System.Drawing.Point(4, 4);
+            this.label1.Name = "label1";
+            this.label1.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.label1.Size = new System.Drawing.Size(100, 20);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "група";
             // 
             // panel40
             // 
@@ -1471,7 +1482,7 @@
             this.cmbObservObjAffiliation.FormattingEnabled = true;
             this.cmbObservObjAffiliation.Location = new System.Drawing.Point(104, 4);
             this.cmbObservObjAffiliation.Name = "cmbObservObjAffiliation";
-            this.cmbObservObjAffiliation.Size = new System.Drawing.Size(120, 21);
+            this.cmbObservObjAffiliation.Size = new System.Drawing.Size(180, 21);
             this.cmbObservObjAffiliation.TabIndex = 6;
             this.cmbObservObjAffiliation.SelectedIndexChanged += new System.EventHandler(this.tbObservObjects_CheckChanged);
             this.cmbObservObjAffiliation.Leave += new System.EventHandler(this.ObservationObjectChanged);
@@ -1486,36 +1497,36 @@
             this.label31.TabIndex = 4;
             this.label31.Text = "належність";
             // 
-            // panel28
+            // panel31
             // 
-            this.panel28.Controls.Add(this.tbObservObjGroup);
-            this.panel28.Controls.Add(this.label1);
-            this.panel28.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel28.Location = new System.Drawing.Point(0, 34);
-            this.panel28.Name = "panel28";
-            this.panel28.Padding = new System.Windows.Forms.Padding(4);
-            this.panel28.Size = new System.Drawing.Size(312, 28);
-            this.panel28.TabIndex = 47;
+            this.panel31.Controls.Add(this.tbObservObjTitle);
+            this.panel31.Controls.Add(this.label29);
+            this.panel31.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel31.Location = new System.Drawing.Point(0, 34);
+            this.panel31.Name = "panel31";
+            this.panel31.Padding = new System.Windows.Forms.Padding(4);
+            this.panel31.Size = new System.Drawing.Size(312, 28);
+            this.panel31.TabIndex = 44;
             // 
-            // tbObservObjGroup
+            // tbObservObjTitle
             // 
-            this.tbObservObjGroup.Dock = System.Windows.Forms.DockStyle.Left;
-            this.tbObservObjGroup.Location = new System.Drawing.Point(104, 4);
-            this.tbObservObjGroup.Name = "tbObservObjGroup";
-            this.tbObservObjGroup.Size = new System.Drawing.Size(120, 20);
-            this.tbObservObjGroup.TabIndex = 5;
-            this.tbObservObjGroup.TextChanged += new System.EventHandler(this.tbObservObjects_CheckChanged);
-            this.tbObservObjGroup.Leave += new System.EventHandler(this.ObservationObjectChanged);
+            this.tbObservObjTitle.Dock = System.Windows.Forms.DockStyle.Left;
+            this.tbObservObjTitle.Location = new System.Drawing.Point(104, 4);
+            this.tbObservObjTitle.Name = "tbObservObjTitle";
+            this.tbObservObjTitle.Size = new System.Drawing.Size(180, 20);
+            this.tbObservObjTitle.TabIndex = 5;
+            this.tbObservObjTitle.TextChanged += new System.EventHandler(this.tbObservObjects_CheckChanged);
+            this.tbObservObjTitle.Leave += new System.EventHandler(this.ObservationObjectChanged);
             // 
-            // label1
+            // label29
             // 
-            this.label1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label1.Location = new System.Drawing.Point(4, 4);
-            this.label1.Name = "label1";
-            this.label1.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-            this.label1.Size = new System.Drawing.Size(100, 20);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "група";
+            this.label29.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label29.Location = new System.Drawing.Point(4, 4);
+            this.label29.Name = "label29";
+            this.label29.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.label29.Size = new System.Drawing.Size(100, 20);
+            this.label29.TabIndex = 4;
+            this.label29.Text = "назва";
             // 
             // panel3
             // 
@@ -1567,6 +1578,7 @@
             // 
             // _panelGridON
             // 
+            this._panelGridON.BackColor = System.Drawing.Color.Transparent;
             this._panelGridON.Controls.Add(this.dgvObservObjects);
             this._panelGridON.Controls.Add(this.panel29);
             this._panelGridON.Controls.Add(this.chckObservObjColumnsVisibilityPanel);
@@ -1723,6 +1735,7 @@
             // 
             // panel26
             // 
+            this.panel26.BackColor = System.Drawing.Color.Transparent;
             this.panel26.Controls.Add(this.cmbObservObjAffiliationFilter);
             this.panel26.Controls.Add(this.label28);
             this.panel26.Dock = System.Windows.Forms.DockStyle.Top;
@@ -1734,6 +1747,7 @@
             // 
             // cmbObservObjAffiliationFilter
             // 
+            this.cmbObservObjAffiliationFilter.BackColor = System.Drawing.SystemColors.Window;
             this.cmbObservObjAffiliationFilter.Dock = System.Windows.Forms.DockStyle.Left;
             this.cmbObservObjAffiliationFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbObservObjAffiliationFilter.FormattingEnabled = true;
@@ -1869,47 +1883,84 @@
             // 
             // panel14
             // 
+            this.panel14.Controls.Add(this.txtTaskLog);
+            this.panel14.Controls.Add(this.panel19);
             this.panel14.Controls.Add(this.panel46);
             this.panel14.Controls.Add(this.panel45);
-            this.panel14.Controls.Add(this.panel44);
             this.panel14.Controls.Add(this.panel43);
+            this.panel14.Controls.Add(this.panel44);
             this.panel14.Controls.Add(this.panel47);
             this.panel14.Controls.Add(this.panel42);
             this.panel14.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel14.Location = new System.Drawing.Point(0, 306);
             this.panel14.Name = "panel14";
-            this.panel14.Padding = new System.Windows.Forms.Padding(0, 0, 0, 10);
+            this.panel14.Padding = new System.Windows.Forms.Padding(0, 0, 0, 2);
             this.panel14.Size = new System.Drawing.Size(312, 304);
             this.panel14.TabIndex = 72;
+            // 
+            // txtTaskLog
+            // 
+            this.txtTaskLog.BackColor = System.Drawing.SystemColors.Window;
+            this.txtTaskLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtTaskLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtTaskLog.Location = new System.Drawing.Point(0, 185);
+            this.txtTaskLog.Multiline = true;
+            this.txtTaskLog.Name = "txtTaskLog";
+            this.txtTaskLog.ReadOnly = true;
+            this.txtTaskLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtTaskLog.Size = new System.Drawing.Size(312, 117);
+            this.txtTaskLog.TabIndex = 78;
+            // 
+            // panel19
+            // 
+            this.panel19.BackColor = System.Drawing.SystemColors.Control;
+            this.panel19.Controls.Add(this.label6);
+            this.panel19.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel19.Location = new System.Drawing.Point(0, 159);
+            this.panel19.Name = "panel19";
+            this.panel19.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.panel19.Size = new System.Drawing.Size(312, 26);
+            this.panel19.TabIndex = 79;
+            // 
+            // label6
+            // 
+            this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label6.Location = new System.Drawing.Point(4, 4);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(308, 22);
+            this.label6.TabIndex = 4;
+            this.label6.Text = "журнал виконання";
             // 
             // panel46
             // 
             this.panel46.Controls.Add(this.tbVisibilitySessionFinished);
             this.panel46.Controls.Add(this.label45);
             this.panel46.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel46.Location = new System.Drawing.Point(0, 146);
+            this.panel46.Location = new System.Drawing.Point(0, 134);
             this.panel46.Name = "panel46";
-            this.panel46.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
-            this.panel46.Size = new System.Drawing.Size(312, 28);
+            this.panel46.Padding = new System.Windows.Forms.Padding(4, 6, 0, 0);
+            this.panel46.Size = new System.Drawing.Size(312, 25);
             this.panel46.TabIndex = 76;
             // 
             // tbVisibilitySessionFinished
             // 
+            this.tbVisibilitySessionFinished.BackColor = System.Drawing.SystemColors.Window;
+            this.tbVisibilitySessionFinished.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbVisibilitySessionFinished.Dock = System.Windows.Forms.DockStyle.Left;
-            this.tbVisibilitySessionFinished.Location = new System.Drawing.Point(104, 4);
+            this.tbVisibilitySessionFinished.Location = new System.Drawing.Point(104, 6);
             this.tbVisibilitySessionFinished.Name = "tbVisibilitySessionFinished";
             this.tbVisibilitySessionFinished.ReadOnly = true;
-            this.tbVisibilitySessionFinished.Size = new System.Drawing.Size(110, 20);
+            this.tbVisibilitySessionFinished.Size = new System.Drawing.Size(110, 13);
             this.tbVisibilitySessionFinished.TabIndex = 5;
             this.tbVisibilitySessionFinished.Text = "2018-11-30 11:45:18";
             // 
             // label45
             // 
             this.label45.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label45.Location = new System.Drawing.Point(4, 4);
+            this.label45.Location = new System.Drawing.Point(4, 6);
             this.label45.Name = "label45";
-            this.label45.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-            this.label45.Size = new System.Drawing.Size(100, 24);
+            this.label45.Size = new System.Drawing.Size(100, 19);
             this.label45.TabIndex = 4;
             this.label45.Text = "час закінчення";
             // 
@@ -1918,93 +1969,96 @@
             this.panel45.Controls.Add(this.tbVisibilitySessionStarted);
             this.panel45.Controls.Add(this.label44);
             this.panel45.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel45.Location = new System.Drawing.Point(0, 118);
+            this.panel45.Location = new System.Drawing.Point(0, 109);
             this.panel45.Name = "panel45";
-            this.panel45.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
-            this.panel45.Size = new System.Drawing.Size(312, 28);
+            this.panel45.Padding = new System.Windows.Forms.Padding(4, 6, 0, 0);
+            this.panel45.Size = new System.Drawing.Size(312, 25);
             this.panel45.TabIndex = 75;
             // 
             // tbVisibilitySessionStarted
             // 
+            this.tbVisibilitySessionStarted.BackColor = System.Drawing.SystemColors.Window;
+            this.tbVisibilitySessionStarted.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbVisibilitySessionStarted.Dock = System.Windows.Forms.DockStyle.Left;
-            this.tbVisibilitySessionStarted.Location = new System.Drawing.Point(104, 4);
+            this.tbVisibilitySessionStarted.Location = new System.Drawing.Point(104, 6);
             this.tbVisibilitySessionStarted.Name = "tbVisibilitySessionStarted";
             this.tbVisibilitySessionStarted.ReadOnly = true;
-            this.tbVisibilitySessionStarted.Size = new System.Drawing.Size(110, 20);
+            this.tbVisibilitySessionStarted.Size = new System.Drawing.Size(110, 13);
             this.tbVisibilitySessionStarted.TabIndex = 5;
             this.tbVisibilitySessionStarted.Text = "2018-11-30 11:45:18";
             // 
             // label44
             // 
             this.label44.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label44.Location = new System.Drawing.Point(4, 4);
+            this.label44.Location = new System.Drawing.Point(4, 6);
             this.label44.Name = "label44";
-            this.label44.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-            this.label44.Size = new System.Drawing.Size(100, 24);
+            this.label44.Size = new System.Drawing.Size(100, 19);
             this.label44.TabIndex = 4;
             this.label44.Text = "час старту";
-            // 
-            // panel44
-            // 
-            this.panel44.Controls.Add(this.tbVisibilitySessionCreated);
-            this.panel44.Controls.Add(this.label43);
-            this.panel44.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel44.Location = new System.Drawing.Point(0, 90);
-            this.panel44.Name = "panel44";
-            this.panel44.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
-            this.panel44.Size = new System.Drawing.Size(312, 28);
-            this.panel44.TabIndex = 74;
-            // 
-            // tbVisibilitySessionCreated
-            // 
-            this.tbVisibilitySessionCreated.Dock = System.Windows.Forms.DockStyle.Left;
-            this.tbVisibilitySessionCreated.Location = new System.Drawing.Point(104, 4);
-            this.tbVisibilitySessionCreated.Name = "tbVisibilitySessionCreated";
-            this.tbVisibilitySessionCreated.ReadOnly = true;
-            this.tbVisibilitySessionCreated.Size = new System.Drawing.Size(110, 20);
-            this.tbVisibilitySessionCreated.TabIndex = 5;
-            this.tbVisibilitySessionCreated.Text = "2018-11-30 11:45:18";
-            // 
-            // label43
-            // 
-            this.label43.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label43.Location = new System.Drawing.Point(4, 4);
-            this.label43.Name = "label43";
-            this.label43.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-            this.label43.Size = new System.Drawing.Size(100, 24);
-            this.label43.TabIndex = 4;
-            this.label43.Text = "час створення";
             // 
             // panel43
             // 
             this.panel43.Controls.Add(this.tbVisibilitySessionCreator);
             this.panel43.Controls.Add(this.label42);
             this.panel43.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel43.Location = new System.Drawing.Point(0, 62);
+            this.panel43.Location = new System.Drawing.Point(0, 84);
             this.panel43.Name = "panel43";
-            this.panel43.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
-            this.panel43.Size = new System.Drawing.Size(312, 28);
+            this.panel43.Padding = new System.Windows.Forms.Padding(4, 6, 0, 0);
+            this.panel43.Size = new System.Drawing.Size(312, 25);
             this.panel43.TabIndex = 73;
             // 
             // tbVisibilitySessionCreator
             // 
+            this.tbVisibilitySessionCreator.BackColor = System.Drawing.SystemColors.Window;
+            this.tbVisibilitySessionCreator.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbVisibilitySessionCreator.Dock = System.Windows.Forms.DockStyle.Left;
-            this.tbVisibilitySessionCreator.Location = new System.Drawing.Point(104, 4);
+            this.tbVisibilitySessionCreator.Location = new System.Drawing.Point(104, 6);
             this.tbVisibilitySessionCreator.Name = "tbVisibilitySessionCreator";
             this.tbVisibilitySessionCreator.ReadOnly = true;
-            this.tbVisibilitySessionCreator.Size = new System.Drawing.Size(110, 20);
+            this.tbVisibilitySessionCreator.Size = new System.Drawing.Size(110, 13);
             this.tbVisibilitySessionCreator.TabIndex = 5;
             this.tbVisibilitySessionCreator.Text = "vnikolaev";
             // 
             // label42
             // 
             this.label42.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label42.Location = new System.Drawing.Point(4, 4);
+            this.label42.Location = new System.Drawing.Point(4, 6);
             this.label42.Name = "label42";
-            this.label42.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-            this.label42.Size = new System.Drawing.Size(100, 24);
+            this.label42.Size = new System.Drawing.Size(100, 19);
             this.label42.TabIndex = 4;
-            this.label42.Text = "користувач";
+            this.label42.Text = "оператор";
+            // 
+            // panel44
+            // 
+            this.panel44.Controls.Add(this.tbVisibilitySessionCreated);
+            this.panel44.Controls.Add(this.label43);
+            this.panel44.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel44.Location = new System.Drawing.Point(0, 59);
+            this.panel44.Name = "panel44";
+            this.panel44.Padding = new System.Windows.Forms.Padding(4, 6, 0, 0);
+            this.panel44.Size = new System.Drawing.Size(312, 25);
+            this.panel44.TabIndex = 74;
+            // 
+            // tbVisibilitySessionCreated
+            // 
+            this.tbVisibilitySessionCreated.BackColor = System.Drawing.SystemColors.Window;
+            this.tbVisibilitySessionCreated.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbVisibilitySessionCreated.Dock = System.Windows.Forms.DockStyle.Left;
+            this.tbVisibilitySessionCreated.Location = new System.Drawing.Point(104, 6);
+            this.tbVisibilitySessionCreated.Name = "tbVisibilitySessionCreated";
+            this.tbVisibilitySessionCreated.ReadOnly = true;
+            this.tbVisibilitySessionCreated.Size = new System.Drawing.Size(110, 13);
+            this.tbVisibilitySessionCreated.TabIndex = 5;
+            this.tbVisibilitySessionCreated.Text = "2018-11-30 11:45:18";
+            // 
+            // label43
+            // 
+            this.label43.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label43.Location = new System.Drawing.Point(4, 6);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(100, 19);
+            this.label43.TabIndex = 4;
+            this.label43.Text = "час створення";
             // 
             // panel47
             // 
@@ -2013,27 +2067,28 @@
             this.panel47.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel47.Location = new System.Drawing.Point(0, 34);
             this.panel47.Name = "panel47";
-            this.panel47.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
-            this.panel47.Size = new System.Drawing.Size(312, 28);
+            this.panel47.Padding = new System.Windows.Forms.Padding(4, 6, 0, 0);
+            this.panel47.Size = new System.Drawing.Size(312, 25);
             this.panel47.TabIndex = 72;
             // 
             // tbVisibilitySessionName
             // 
+            this.tbVisibilitySessionName.BackColor = System.Drawing.SystemColors.Window;
+            this.tbVisibilitySessionName.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbVisibilitySessionName.Dock = System.Windows.Forms.DockStyle.Left;
-            this.tbVisibilitySessionName.Location = new System.Drawing.Point(104, 4);
+            this.tbVisibilitySessionName.Location = new System.Drawing.Point(104, 6);
             this.tbVisibilitySessionName.Name = "tbVisibilitySessionName";
             this.tbVisibilitySessionName.ReadOnly = true;
-            this.tbVisibilitySessionName.Size = new System.Drawing.Size(180, 20);
+            this.tbVisibilitySessionName.Size = new System.Drawing.Size(180, 13);
             this.tbVisibilitySessionName.TabIndex = 5;
             this.tbVisibilitySessionName.Text = "VIS1_20181113134511_vnikolaev";
             // 
             // label46
             // 
             this.label46.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label46.Location = new System.Drawing.Point(4, 4);
+            this.label46.Location = new System.Drawing.Point(4, 6);
             this.label46.Name = "label46";
-            this.label46.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-            this.label46.Size = new System.Drawing.Size(100, 24);
+            this.label46.Size = new System.Drawing.Size(100, 19);
             this.label46.TabIndex = 4;
             this.label46.Text = "назва";
             // 
@@ -2101,6 +2156,7 @@
             this.dgvVisibilitySessions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvVisibilitySessions.Size = new System.Drawing.Size(312, 208);
             this.dgvVisibilitySessions.TabIndex = 62;
+            this.dgvVisibilitySessions.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvVisibilitySessions_ColumnHeaderMouseClick);
             this.dgvVisibilitySessions.SelectionChanged += new System.EventHandler(this.DgvVisibilitySessions_SelectionChanged);
             // 
             // panel41
@@ -2518,6 +2574,7 @@
             // 
             // DockableWindowMilSpaceMVisibilitySt
             // 
+            this.BackColor = System.Drawing.SystemColors.Window;
             this.Controls.Add(this.mainTabControl);
             this.Name = "DockableWindowMilSpaceMVisibilitySt";
             this.Size = new System.Drawing.Size(320, 640);
@@ -2527,6 +2584,10 @@
             this.panel7.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
+            this.panelNikol.ResumeLayout(false);
+            this.panelNikol.PerformLayout();
+            this.panelDataAndUser.ResumeLayout(false);
+            this.panelDataAndUser.PerformLayout();
             this.panelRelativeHeight.ResumeLayout(false);
             this.panelRelativeHeight.PerformLayout();
             this.panelRadiuses.ResumeLayout(false);
@@ -2540,10 +2601,6 @@
             this.panel10.PerformLayout();
             this.panel12.ResumeLayout(false);
             this.panel13.ResumeLayout(false);
-            this.panelNikol.ResumeLayout(false);
-            this.panelNikol.PerformLayout();
-            this.panelDataAndUser.ResumeLayout(false);
-            this.panelDataAndUser.PerformLayout();
             this.panelObservPointName.ResumeLayout(false);
             this.panelObservPointName.PerformLayout();
             this.panel9.ResumeLayout(false);
@@ -2556,15 +2613,15 @@
             this.tbpObservObjects.ResumeLayout(false);
             this.tbpObservObjects.PerformLayout();
             this.panel30.ResumeLayout(false);
-            this.panel58.ResumeLayout(false);
-            this.panel58.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.panel31.ResumeLayout(false);
-            this.panel31.PerformLayout();
-            this.panel40.ResumeLayout(false);
+            this.panel58.ResumeLayout(false);
+            this.panel58.PerformLayout();
             this.panel28.ResumeLayout(false);
             this.panel28.PerformLayout();
+            this.panel40.ResumeLayout(false);
+            this.panel31.ResumeLayout(false);
+            this.panel31.PerformLayout();
             this.panel3.ResumeLayout(false);
             this._panelGridON.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvObservObjects)).EndInit();
@@ -2574,14 +2631,16 @@
             this.panel27.ResumeLayout(false);
             this.tbpSessions.ResumeLayout(false);
             this.panel14.ResumeLayout(false);
+            this.panel14.PerformLayout();
+            this.panel19.ResumeLayout(false);
             this.panel46.ResumeLayout(false);
             this.panel46.PerformLayout();
             this.panel45.ResumeLayout(false);
             this.panel45.PerformLayout();
-            this.panel44.ResumeLayout(false);
-            this.panel44.PerformLayout();
             this.panel43.ResumeLayout(false);
             this.panel43.PerformLayout();
+            this.panel44.ResumeLayout(false);
+            this.panel44.PerformLayout();
             this.panel47.ResumeLayout(false);
             this.panel47.PerformLayout();
             this.panel42.ResumeLayout(false);
@@ -2799,5 +2858,8 @@
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.ComboBox cmbObservObjAffiliation;
         private System.Windows.Forms.ToolBarButton toolBarButton34;
+        private System.Windows.Forms.TextBox txtTaskLog;
+        private System.Windows.Forms.Panel panel19;
+        private System.Windows.Forms.Label label6;
     }
 }

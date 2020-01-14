@@ -31,7 +31,7 @@ namespace MilSpace.Profile
 
         private int profileId;
         GraphicsLayerManager graphicsLayerManager;
-        private Logger logger = Logger.GetLoggerEx("MilSpaceProfileCalsController");
+        private Logger logger = Logger.GetLoggerEx("MilSpace.Profile.MilSpaceProfileCalsController");
 
         public delegate void ProfileSettingsChangedDelegate(ProfileSettingsEventArgs e);
 
@@ -77,18 +77,22 @@ namespace MilSpace.Profile
 
         internal void SetView(IMilSpaceProfileView view)
         {
+            logger.InfoEx("> SetView START");
             View = view;
             SetPeofileId();
             SetProfileName();
+            logger.InfoEx("> SetView END");
         }
 
         internal void OnDocumentsLoad()
         {
-            logger.InfoEx("Document loaded.");
+            logger.InfoEx("> OnDocumentsLoad START");
 
             IActiveViewEvents_Event activeViewEvents = (IActiveViewEvents_Event)View.ActiveView.FocusMap;
             IActiveViewEvents_SelectionChangedEventHandler handler = new IActiveViewEvents_SelectionChangedEventHandler(OnMapSelectionChangedLocal);
             activeViewEvents.SelectionChanged += handler;
+
+            logger.InfoEx("> OnDocumentsLoad END");
         }
 
         /// <summary>
@@ -278,35 +282,46 @@ namespace MilSpace.Profile
         /// <returns>Profile Session data</returns>
         internal ProfileSession GenerateProfile()
         {
+            logger.DebugEx($"> GenerateProfile START");
             string errorMessage;
             try
             {
-
                 ProfileManager manager = new ProfileManager();
+
+                logger.DebugEx($"GenerateProfile. new ProfileManager OK");
                 var profileSetting = profileSettings[View.SelectedProfileSettingsType];
                 var newProfileId = GenerateProfileId();
-                logger.InfoEx($"Profile {newProfileId}. Generation started");
+                logger.DebugEx($"GenerateProfile.Profile. ID:{newProfileId}");
                 var newProfileName = GenerateProfileName(newProfileId);
+                logger.DebugEx($"GenerateProfile.Profile. Name:{newProfileName}");
 
                 if (manager == null)
                 {
-                    logger.ErrorEx("Cannot find profile manager");
+                    logger.DebugEx("GenerateProfile. Cannot find profile manager");
                     throw new NullReferenceException("Cannot find profile manager");
                 }
 
                 if (profileSetting == null)
                 {
-                    logger.ErrorEx("Cannot find profile manager");
+                    logger.DebugEx("GenerateProfile. Cannot find profile manager");
                     throw new NullReferenceException("Cannot find profile manager");
                 }
 
-                logger.InfoEx($"Profile {newProfileId}. Generation starting..");
-                var session = manager.GenerateProfile(profileSetting.DemLayerName, profileSetting.ProfileLines, View.SelectedProfileSettingsType, newProfileId, newProfileName, View.ObserveHeight, profileSetting.AzimuthToStore);
-                logger.InfoEx($"Profile {newProfileId}. Generated");
+                logger.DebugEx($"GenerateProfile. Profile {newProfileId}. GenerateProfile CALL");
+                var session = manager.GenerateProfile(
+                    profileSetting.DemLayerName, 
+                    profileSetting.ProfileLines, 
+                    View.SelectedProfileSettingsType, 
+                    newProfileId, 
+                    newProfileName, 
+                    View.ObserveHeight, 
+                    profileSetting.AzimuthToStore);
+                logger.DebugEx($"GenerateProfile. Profile {newProfileId}. GenerateProfile RETURN");
 
                 if (session.DefinitionType == ProfileSettingsTypeEnum.Primitives)
                 {
-                    session.Segments = ProfileLinesConverter.GetSegmentsFromProfileLine(session.ProfileSurfaces, ArcMap.Document.FocusMap.SpatialReference);
+                    session.Segments =
+                        ProfileLinesConverter.GetSegmentsFromProfileLine(session.ProfileSurfaces, ArcMap.Document.FocusMap.SpatialReference);
                 }
                 else
                 {
@@ -315,28 +330,34 @@ namespace MilSpace.Profile
 
                 SetPeofileId();
                 SetProfileName();
+
+                logger.InfoEx($"> GenerateProfile END");
                 return session;
 
             }
             catch (MilSpaceCanotDeletePrifileCalcTable ex)
             {
                 //TODO Localize error message
+                logger.DebugEx($"GenerateProfile MilSpaceCanotDeletePrifileCalcTable. ex.Message:{0}", ex.Message);
                 errorMessage = ex.Message;
             }
             catch (MilSpaceDataException ex)
             {
                 //TODO Localize error message
+                logger.DebugEx($"GenerateProfile MilSpaceDataException. ex.Message:{0}", ex.Message);
                 errorMessage = ex.Message;
-
             }
             catch (Exception ex)
             {
-                //TODO log error
                 //TODO Localize error message
+                logger.DebugEx($"GenerateProfile Exception. ex.Message:{0}", ex.Message);
                 errorMessage = ex.Message;
             }
 
-            MessageBox.Show(errorMessage);
+            logger.InfoEx($"> GenerateProfile END with session IS NULL");
+            MessageBox.Show(
+                errorMessage
+                );
             return null;
         }
 
@@ -531,17 +552,14 @@ namespace MilSpace.Profile
             }
         }
 
-
         internal void InitiateUserProfiles()
         {
-            MilSpaceProfileFacade.GetUserProfileSessions().ToList().ForEach(p =>
-               {
-                   p.ConvertLinesToEsriPolypile(View.ActiveView.FocusMap.SpatialReference);
-                   AddProfileToList(p);
-               }
-            );
-
+            logger.InfoEx("> InitiateUserProfiles START");
+            MilSpaceProfileFacade.GetUserProfileSessions()
+                .ToList()
+                .ForEach(p => {p.ConvertLinesToEsriPolypile(View.ActiveView.FocusMap.SpatialReference); AddProfileToList(p); });
             OnDocumentsLoad();
+            logger.InfoEx("> InitiateUserProfiles END");
         }
 
         internal void AddProfileToTab(int profileSessionId, int lineId)

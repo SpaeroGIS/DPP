@@ -123,7 +123,7 @@
   <MainW_label45_Text>час закінчення</MainW_label45_Text>
   <MainW_label44_Text>час старту</MainW_label44_Text>
   <MainW_label43_Text>час створення</MainW_label43_Text>
-  <MainW_label42_Text>користувач</MainW_label42_Text>
+  <MainW_label42_Text>оператор</MainW_label42_Text>
   <MainW_label46_Text>назва</MainW_label46_Text>
   <MainW_label40_Text>Інформація про завдання</MainW_label40_Text>
   <MainW_wizardTask_ToolTipText>сформувати завдання на розрахунок</MainW_wizardTask_ToolTipText>
@@ -296,5 +296,10 @@
   <AffiliationHeaderText>Належність</AffiliationHeaderText>
   <DateHeaderText>Дата</DateHeaderText>
   <GroupHeaderText>Група</GroupHeaderText>
-  
+
+  <NewObservationPointName>ПС-{0}</NewObservationPointName>
+  <NewObservationObjectName>ОН-{0}</NewObservationObjectName>
+
+  <HeaderCreatedGridSessionResult>Створено</HeaderCreatedGridSessionResult>
+
 </SP_Visibility>

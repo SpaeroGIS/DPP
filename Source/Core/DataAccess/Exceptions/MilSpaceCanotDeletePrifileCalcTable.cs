@@ -5,7 +5,7 @@ namespace MilSpace.DataAccess.Exceptions
 {
     public class MilSpaceCanotDeletePrifileCalcTable : MilSpaceException
     {
-        private static string messageTempleate = "The temporary table {0} cannot be deleterd fron {1} ";
+        private static string messageTempleate = "The temporary table {0} cannot be deleterd from {1} ";
 
         public MilSpaceCanotDeletePrifileCalcTable(string tableName, string sourceGdb) : base()
         {

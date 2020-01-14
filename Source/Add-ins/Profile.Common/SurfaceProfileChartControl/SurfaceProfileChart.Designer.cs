@@ -68,16 +68,6 @@
             this.changeAllObserversHeightsButton = new System.Windows.Forms.Button();
             this.propertiesSplitContainer = new System.Windows.Forms.SplitContainer();
             this.profilePropertiesTable = new System.Windows.Forms.DataGridView();
-            this.profileNamePanel = new System.Windows.Forms.Panel();
-            this.profileNameLabel = new System.Windows.Forms.Label();
-            this.propertiesSettingsPanel = new System.Windows.Forms.Panel();
-            this.observerHeightTextBox = new System.Windows.Forms.TextBox();
-            this.observerHeightLabel = new System.Windows.Forms.Label();
-            this.visibleLineColorButton = new System.Windows.Forms.Button();
-            this.invisibleLineColorButton = new System.Windows.Forms.Button();
-            this.invisibleLineColorLabel = new System.Windows.Forms.Label();
-            this.visibleLineColorLabel = new System.Windows.Forms.Label();
-            this.propertiesPanel = new System.Windows.Forms.Panel();
             this.IsVisibleCol = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.ProfileNumberCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AzimuthCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -89,6 +79,16 @@
             this.DescendingAngleCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AscendingAngleCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.VisiblePercentCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.propertiesSettingsPanel = new System.Windows.Forms.Panel();
+            this.observerHeightTextBox = new System.Windows.Forms.TextBox();
+            this.observerHeightLabel = new System.Windows.Forms.Label();
+            this.visibleLineColorButton = new System.Windows.Forms.Button();
+            this.invisibleLineColorButton = new System.Windows.Forms.Button();
+            this.invisibleLineColorLabel = new System.Windows.Forms.Label();
+            this.visibleLineColorLabel = new System.Windows.Forms.Label();
+            this.profileNamePanel = new System.Windows.Forms.Panel();
+            this.profileNameLabel = new System.Windows.Forms.Label();
+            this.propertiesPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.profileChart)).BeginInit();
             this.contextMenuStrip.SuspendLayout();
             this.graphPanel.SuspendLayout();
@@ -97,8 +97,8 @@
             this.propertiesSplitContainer.Panel2.SuspendLayout();
             this.propertiesSplitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.profilePropertiesTable)).BeginInit();
-            this.profileNamePanel.SuspendLayout();
             this.propertiesSettingsPanel.SuspendLayout();
+            this.profileNamePanel.SuspendLayout();
             this.propertiesPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -113,10 +113,10 @@
             chartArea1.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             chartArea1.Name = "Default";
             this.profileChart.ChartAreas.Add(chartArea1);
-            this.profileChart.Dock = System.Windows.Forms.DockStyle.Top;
+            this.profileChart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.profileChart.Location = new System.Drawing.Point(0, 0);
             this.profileChart.Name = "profileChart";
-            this.profileChart.Size = new System.Drawing.Size(498, 300);
+            this.profileChart.Size = new System.Drawing.Size(560, 302);
             this.profileChart.TabIndex = 0;
             this.profileChart.Text = "chart1";
             this.profileChart.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ProfileChart_MouseDoubleClick);
@@ -143,6 +143,7 @@
             // 
             // graphToolBar
             // 
+            this.graphToolBar.Appearance = System.Windows.Forms.ToolBarAppearance.Flat;
             this.graphToolBar.AutoSize = false;
             this.graphToolBar.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
             this.leftGraphPaddingToolBarSpr,
@@ -172,7 +173,7 @@
             this.graphToolBar.Location = new System.Drawing.Point(0, 302);
             this.graphToolBar.Name = "graphToolBar";
             this.graphToolBar.ShowToolTips = true;
-            this.graphToolBar.Size = new System.Drawing.Size(498, 25);
+            this.graphToolBar.Size = new System.Drawing.Size(560, 25);
             this.graphToolBar.TabIndex = 50;
             this.graphToolBar.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.GraphToolBar_ButtonClick);
             // 
@@ -511,24 +512,24 @@
             // 
             this.graphPanel.Controls.Add(this.profileChart);
             this.graphPanel.Controls.Add(this.graphToolBar);
-            this.graphPanel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.graphPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.graphPanel.Location = new System.Drawing.Point(0, 0);
             this.graphPanel.Name = "graphPanel";
-            this.graphPanel.Size = new System.Drawing.Size(498, 327);
+            this.graphPanel.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
+            this.graphPanel.Size = new System.Drawing.Size(564, 327);
             this.graphPanel.TabIndex = 51;
             // 
             // profileDetailsListView
             // 
-            this.profileDetailsListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.profileDetailsListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.profileDetailsListView.ContextMenuStrip = this.contextMenuStrip;
+            this.profileDetailsListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.profileDetailsListView.FullRowSelect = true;
             this.profileDetailsListView.HideSelection = false;
-            this.profileDetailsListView.Location = new System.Drawing.Point(0, 40);
+            this.profileDetailsListView.Location = new System.Drawing.Point(0, 46);
             this.profileDetailsListView.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.profileDetailsListView.Name = "profileDetailsListView";
-            this.profileDetailsListView.Size = new System.Drawing.Size(366, 133);
+            this.profileDetailsListView.Size = new System.Drawing.Size(380, 142);
             this.profileDetailsListView.TabIndex = 50;
             this.toolTip.SetToolTip(this.profileDetailsListView, "Чтобы скопировать выделенную строку нажмите правую кнопку мыши");
             this.profileDetailsListView.UseCompatibleStateImageBehavior = false;
@@ -547,9 +548,10 @@
             // 
             // propertiesSplitContainer
             // 
+            this.propertiesSplitContainer.BackColor = System.Drawing.SystemColors.ControlDark;
             this.propertiesSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertiesSplitContainer.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.propertiesSplitContainer.Location = new System.Drawing.Point(4, 0);
+            this.propertiesSplitContainer.Location = new System.Drawing.Point(0, 0);
             this.propertiesSplitContainer.Name = "propertiesSplitContainer";
             this.propertiesSplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -561,14 +563,14 @@
             // 
             // propertiesSplitContainer.Panel2
             // 
-            this.propertiesSplitContainer.Panel2.Controls.Add(this.profileNamePanel);
-            this.propertiesSplitContainer.Panel2.Controls.Add(this.propertiesSettingsPanel);
             this.propertiesSplitContainer.Panel2.Controls.Add(this.profileDetailsListView);
+            this.propertiesSplitContainer.Panel2.Controls.Add(this.propertiesSettingsPanel);
+            this.propertiesSplitContainer.Panel2.Controls.Add(this.profileNamePanel);
             this.propertiesSplitContainer.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.propertiesSplitContainer.Panel2MinSize = 0;
+            this.propertiesSplitContainer.Panel2MinSize = 80;
             this.propertiesSplitContainer.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.propertiesSplitContainer.Size = new System.Drawing.Size(366, 303);
-            this.propertiesSplitContainer.SplitterDistance = 126;
+            this.propertiesSplitContainer.Size = new System.Drawing.Size(380, 327);
+            this.propertiesSplitContainer.SplitterDistance = 135;
             this.propertiesSplitContainer.TabIndex = 53;
             this.propertiesSplitContainer.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.PropertiesSplitContainer_SplitterMoved);
             // 
@@ -577,7 +579,7 @@
             this.profilePropertiesTable.AllowUserToAddRows = false;
             this.profilePropertiesTable.AllowUserToDeleteRows = false;
             this.profilePropertiesTable.AllowUserToResizeRows = false;
-            this.profilePropertiesTable.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.profilePropertiesTable.BackgroundColor = System.Drawing.SystemColors.Window;
             this.profilePropertiesTable.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.profilePropertiesTable.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.RaisedHorizontal;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -609,7 +611,7 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.profilePropertiesTable.DefaultCellStyle = dataGridViewCellStyle3;
-            this.profilePropertiesTable.Dock = System.Windows.Forms.DockStyle.Top;
+            this.profilePropertiesTable.Dock = System.Windows.Forms.DockStyle.Fill;
             this.profilePropertiesTable.Location = new System.Drawing.Point(0, 0);
             this.profilePropertiesTable.MultiSelect = false;
             this.profilePropertiesTable.Name = "profilePropertiesTable";
@@ -626,7 +628,7 @@
             dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
             this.profilePropertiesTable.RowsDefaultCellStyle = dataGridViewCellStyle5;
             this.profilePropertiesTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.profilePropertiesTable.Size = new System.Drawing.Size(366, 127);
+            this.profilePropertiesTable.Size = new System.Drawing.Size(380, 135);
             this.profilePropertiesTable.TabIndex = 1;
             this.profilePropertiesTable.TabStop = false;
             this.profilePropertiesTable.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.ProfilePropertiesTable_CellValueChanged);
@@ -634,118 +636,6 @@
             this.profilePropertiesTable.CurrentCellDirtyStateChanged += new System.EventHandler(this.ProfilePropertiesTable_CurrentCellDirtyStateChanged);
             this.profilePropertiesTable.SelectionChanged += new System.EventHandler(this.ProfilePropertiesTable_SelectionChanged);
             this.profilePropertiesTable.Resize += new System.EventHandler(this.ProfilePropertiesTable_Resize);
-            // 
-            // profileNamePanel
-            // 
-            this.profileNamePanel.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.profileNamePanel.Controls.Add(this.profileNameLabel);
-            this.profileNamePanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.profileNamePanel.Location = new System.Drawing.Point(0, 0);
-            this.profileNamePanel.Name = "profileNamePanel";
-            this.profileNamePanel.Padding = new System.Windows.Forms.Padding(0, 1, 0, 1);
-            this.profileNamePanel.Size = new System.Drawing.Size(366, 15);
-            this.profileNamePanel.TabIndex = 61;
-            // 
-            // profileNameLabel
-            // 
-            this.profileNameLabel.AutoSize = true;
-            this.profileNameLabel.BackColor = System.Drawing.Color.Transparent;
-            this.profileNameLabel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.profileNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.profileNameLabel.Location = new System.Drawing.Point(0, 1);
-            this.profileNameLabel.Name = "profileNameLabel";
-            this.profileNameLabel.Size = new System.Drawing.Size(0, 13);
-            this.profileNameLabel.TabIndex = 60;
-            // 
-            // propertiesSettingsPanel
-            // 
-            this.propertiesSettingsPanel.Controls.Add(this.changeAllObserversHeightsButton);
-            this.propertiesSettingsPanel.Controls.Add(this.observerHeightTextBox);
-            this.propertiesSettingsPanel.Controls.Add(this.observerHeightLabel);
-            this.propertiesSettingsPanel.Controls.Add(this.visibleLineColorButton);
-            this.propertiesSettingsPanel.Controls.Add(this.invisibleLineColorButton);
-            this.propertiesSettingsPanel.Controls.Add(this.invisibleLineColorLabel);
-            this.propertiesSettingsPanel.Controls.Add(this.visibleLineColorLabel);
-            this.propertiesSettingsPanel.Location = new System.Drawing.Point(0, 15);
-            this.propertiesSettingsPanel.Name = "propertiesSettingsPanel";
-            this.propertiesSettingsPanel.Padding = new System.Windows.Forms.Padding(2);
-            this.propertiesSettingsPanel.Size = new System.Drawing.Size(354, 25);
-            this.propertiesSettingsPanel.TabIndex = 52;
-            // 
-            // observerHeightTextBox
-            // 
-            this.observerHeightTextBox.Location = new System.Drawing.Point(117, 2);
-            this.observerHeightTextBox.Name = "observerHeightTextBox";
-            this.observerHeightTextBox.Size = new System.Drawing.Size(50, 20);
-            this.observerHeightTextBox.TabIndex = 39;
-            this.observerHeightTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ObserverHeightTextBox_KeyDown);
-            this.observerHeightTextBox.Leave += new System.EventHandler(this.ObserverHeightTextBox_Leave);
-            // 
-            // observerHeightLabel
-            // 
-            this.observerHeightLabel.AutoSize = true;
-            this.observerHeightLabel.Location = new System.Drawing.Point(0, 5);
-            this.observerHeightLabel.Name = "observerHeightLabel";
-            this.observerHeightLabel.Size = new System.Drawing.Size(119, 13);
-            this.observerHeightLabel.TabIndex = 38;
-            this.observerHeightLabel.Text = "Пункт наблюдения (м)";
-            // 
-            // visibleLineColorButton
-            // 
-            this.visibleLineColorButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.visibleLineColorButton.BackColor = System.Drawing.SystemColors.Control;
-            this.visibleLineColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control;
-            this.visibleLineColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.visibleLineColorButton.Location = new System.Drawing.Point(200, 9);
-            this.visibleLineColorButton.Name = "visibleLineColorButton";
-            this.visibleLineColorButton.Size = new System.Drawing.Size(25, 8);
-            this.visibleLineColorButton.TabIndex = 47;
-            this.visibleLineColorButton.UseVisualStyleBackColor = false;
-            this.visibleLineColorButton.Click += new System.EventHandler(this.VisibleLineColorButton_Click);
-            // 
-            // invisibleLineColorButton
-            // 
-            this.invisibleLineColorButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.invisibleLineColorButton.BackColor = System.Drawing.SystemColors.Control;
-            this.invisibleLineColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control;
-            this.invisibleLineColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.invisibleLineColorButton.Location = new System.Drawing.Point(276, 9);
-            this.invisibleLineColorButton.Name = "invisibleLineColorButton";
-            this.invisibleLineColorButton.Size = new System.Drawing.Size(25, 8);
-            this.invisibleLineColorButton.TabIndex = 48;
-            this.invisibleLineColorButton.UseVisualStyleBackColor = false;
-            this.invisibleLineColorButton.Click += new System.EventHandler(this.InvisibleLineColorButton_Click);
-            // 
-            // invisibleLineColorLabel
-            // 
-            this.invisibleLineColorLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.invisibleLineColorLabel.AutoSize = true;
-            this.invisibleLineColorLabel.Location = new System.Drawing.Point(302, 6);
-            this.invisibleLineColorLabel.Name = "invisibleLineColorLabel";
-            this.invisibleLineColorLabel.Size = new System.Drawing.Size(52, 13);
-            this.invisibleLineColorLabel.TabIndex = 44;
-            this.invisibleLineColorLabel.Text = "не видно";
-            // 
-            // visibleLineColorLabel
-            // 
-            this.visibleLineColorLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.visibleLineColorLabel.AutoSize = true;
-            this.visibleLineColorLabel.Location = new System.Drawing.Point(226, 6);
-            this.visibleLineColorLabel.Name = "visibleLineColorLabel";
-            this.visibleLineColorLabel.Size = new System.Drawing.Size(37, 13);
-            this.visibleLineColorLabel.TabIndex = 45;
-            this.visibleLineColorLabel.Text = "видно";
-            // 
-            // propertiesPanel
-            // 
-            this.propertiesPanel.BackColor = System.Drawing.SystemColors.Control;
-            this.propertiesPanel.Controls.Add(this.propertiesSplitContainer);
-            this.propertiesPanel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.propertiesPanel.Location = new System.Drawing.Point(570, 0);
-            this.propertiesPanel.Name = "propertiesPanel";
-            this.propertiesPanel.Padding = new System.Windows.Forms.Padding(4, 0, 4, 24);
-            this.propertiesPanel.Size = new System.Drawing.Size(374, 327);
-            this.propertiesPanel.TabIndex = 49;
             // 
             // IsVisibleCol
             // 
@@ -850,6 +740,119 @@
             this.VisiblePercentCol.ToolTipText = "Процент видимых участков";
             this.VisiblePercentCol.Width = 28;
             // 
+            // propertiesSettingsPanel
+            // 
+            this.propertiesSettingsPanel.BackColor = System.Drawing.SystemColors.Window;
+            this.propertiesSettingsPanel.Controls.Add(this.changeAllObserversHeightsButton);
+            this.propertiesSettingsPanel.Controls.Add(this.observerHeightTextBox);
+            this.propertiesSettingsPanel.Controls.Add(this.observerHeightLabel);
+            this.propertiesSettingsPanel.Controls.Add(this.visibleLineColorButton);
+            this.propertiesSettingsPanel.Controls.Add(this.invisibleLineColorButton);
+            this.propertiesSettingsPanel.Controls.Add(this.invisibleLineColorLabel);
+            this.propertiesSettingsPanel.Controls.Add(this.visibleLineColorLabel);
+            this.propertiesSettingsPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.propertiesSettingsPanel.Location = new System.Drawing.Point(0, 20);
+            this.propertiesSettingsPanel.Name = "propertiesSettingsPanel";
+            this.propertiesSettingsPanel.Padding = new System.Windows.Forms.Padding(2);
+            this.propertiesSettingsPanel.Size = new System.Drawing.Size(380, 26);
+            this.propertiesSettingsPanel.TabIndex = 52;
+            // 
+            // observerHeightTextBox
+            // 
+            this.observerHeightTextBox.Location = new System.Drawing.Point(117, 2);
+            this.observerHeightTextBox.Name = "observerHeightTextBox";
+            this.observerHeightTextBox.Size = new System.Drawing.Size(50, 20);
+            this.observerHeightTextBox.TabIndex = 39;
+            this.observerHeightTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ObserverHeightTextBox_KeyDown);
+            this.observerHeightTextBox.Leave += new System.EventHandler(this.ObserverHeightTextBox_Leave);
+            // 
+            // observerHeightLabel
+            // 
+            this.observerHeightLabel.AutoSize = true;
+            this.observerHeightLabel.Location = new System.Drawing.Point(0, 5);
+            this.observerHeightLabel.Name = "observerHeightLabel";
+            this.observerHeightLabel.Size = new System.Drawing.Size(119, 13);
+            this.observerHeightLabel.TabIndex = 38;
+            this.observerHeightLabel.Text = "Пункт наблюдения (м)";
+            // 
+            // visibleLineColorButton
+            // 
+            this.visibleLineColorButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.visibleLineColorButton.BackColor = System.Drawing.SystemColors.Control;
+            this.visibleLineColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control;
+            this.visibleLineColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.visibleLineColorButton.Location = new System.Drawing.Point(226, 9);
+            this.visibleLineColorButton.Name = "visibleLineColorButton";
+            this.visibleLineColorButton.Size = new System.Drawing.Size(25, 8);
+            this.visibleLineColorButton.TabIndex = 47;
+            this.visibleLineColorButton.UseVisualStyleBackColor = false;
+            this.visibleLineColorButton.Click += new System.EventHandler(this.VisibleLineColorButton_Click);
+            // 
+            // invisibleLineColorButton
+            // 
+            this.invisibleLineColorButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.invisibleLineColorButton.BackColor = System.Drawing.SystemColors.Control;
+            this.invisibleLineColorButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control;
+            this.invisibleLineColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.invisibleLineColorButton.Location = new System.Drawing.Point(302, 9);
+            this.invisibleLineColorButton.Name = "invisibleLineColorButton";
+            this.invisibleLineColorButton.Size = new System.Drawing.Size(25, 8);
+            this.invisibleLineColorButton.TabIndex = 48;
+            this.invisibleLineColorButton.UseVisualStyleBackColor = false;
+            this.invisibleLineColorButton.Click += new System.EventHandler(this.InvisibleLineColorButton_Click);
+            // 
+            // invisibleLineColorLabel
+            // 
+            this.invisibleLineColorLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.invisibleLineColorLabel.AutoSize = true;
+            this.invisibleLineColorLabel.Location = new System.Drawing.Point(328, 6);
+            this.invisibleLineColorLabel.Name = "invisibleLineColorLabel";
+            this.invisibleLineColorLabel.Size = new System.Drawing.Size(52, 13);
+            this.invisibleLineColorLabel.TabIndex = 44;
+            this.invisibleLineColorLabel.Text = "не видно";
+            // 
+            // visibleLineColorLabel
+            // 
+            this.visibleLineColorLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.visibleLineColorLabel.AutoSize = true;
+            this.visibleLineColorLabel.Location = new System.Drawing.Point(252, 6);
+            this.visibleLineColorLabel.Name = "visibleLineColorLabel";
+            this.visibleLineColorLabel.Size = new System.Drawing.Size(37, 13);
+            this.visibleLineColorLabel.TabIndex = 45;
+            this.visibleLineColorLabel.Text = "видно";
+            // 
+            // profileNamePanel
+            // 
+            this.profileNamePanel.BackColor = System.Drawing.SystemColors.Control;
+            this.profileNamePanel.Controls.Add(this.profileNameLabel);
+            this.profileNamePanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.profileNamePanel.Location = new System.Drawing.Point(0, 0);
+            this.profileNamePanel.Name = "profileNamePanel";
+            this.profileNamePanel.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
+            this.profileNamePanel.Size = new System.Drawing.Size(380, 20);
+            this.profileNamePanel.TabIndex = 61;
+            // 
+            // profileNameLabel
+            // 
+            this.profileNameLabel.BackColor = System.Drawing.Color.Transparent;
+            this.profileNameLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.profileNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.profileNameLabel.Location = new System.Drawing.Point(4, 1);
+            this.profileNameLabel.Name = "profileNameLabel";
+            this.profileNameLabel.Size = new System.Drawing.Size(376, 18);
+            this.profileNameLabel.TabIndex = 60;
+            this.profileNameLabel.Text = "profileNameLabel";
+            // 
+            // propertiesPanel
+            // 
+            this.propertiesPanel.BackColor = System.Drawing.SystemColors.Control;
+            this.propertiesPanel.Controls.Add(this.propertiesSplitContainer);
+            this.propertiesPanel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.propertiesPanel.Location = new System.Drawing.Point(564, 0);
+            this.propertiesPanel.Name = "propertiesPanel";
+            this.propertiesPanel.Size = new System.Drawing.Size(380, 327);
+            this.propertiesPanel.TabIndex = 49;
+            // 
             // SurfaceProfileChart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -869,10 +872,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.propertiesSplitContainer)).EndInit();
             this.propertiesSplitContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.profilePropertiesTable)).EndInit();
-            this.profileNamePanel.ResumeLayout(false);
-            this.profileNamePanel.PerformLayout();
             this.propertiesSettingsPanel.ResumeLayout(false);
             this.propertiesSettingsPanel.PerformLayout();
+            this.profileNamePanel.ResumeLayout(false);
             this.propertiesPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 

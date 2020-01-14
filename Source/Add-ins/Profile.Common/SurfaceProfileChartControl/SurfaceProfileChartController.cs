@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MilSpace.Core;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using ESRI.ArcGIS.Display;
@@ -19,6 +20,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         private ProfileSession _profileSession;
         private MilSpaceProfileGraphsController _graphsController;
         private double _defaultObserverHeight;
+
+        private static Logger log = Logger.GetLoggerEx("SurfaceProfileChartController");
 
         private List<int> _sessionsIds = new List<int>(); 
         private List<ProfileSurfacePoint> _extremePoints = new List<ProfileSurfacePoint>();
@@ -178,8 +181,10 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             }
         }
 
-        internal void AddInvisibleZones(List<Color> visibleColors, List<Color> invisibleColors,
-                                            ProfileSurface[] profileSurfaces = null)
+        internal void AddInvisibleZones(
+            List<Color> visibleColors, 
+            List<Color> invisibleColors,
+            ProfileSurface[] profileSurfaces = null)
         {
             var i = 0;
 
@@ -197,134 +202,164 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
             foreach(var profileSessionProfileLine in profileSurfaces)
             {
-                var observerHeight = _surfaceProfileChart.ProfilesProperties
-                                                         .First(property => property.LineId == profileSessionProfileLine.LineId)
-                                                         .ObserverHeight;
+                var observerHeight = 
+                    _surfaceProfileChart.ProfilesProperties
+                    .First(property => property.LineId == profileSessionProfileLine.LineId)
+                    .ObserverHeight;
 
-                AddInvisibleZone(observerHeight, profileSessionProfileLine,
-                                         visibleColors[i], invisibleColors[i], false, linesIds);
+                AddInvisibleZone(
+                    observerHeight, 
+                    profileSessionProfileLine,
+                    visibleColors[i], 
+                    invisibleColors[i], 
+                    false, 
+                    linesIds);
                 i++;
             }
         }
 
-        internal void AddInvisibleZone(double observerHeight, ProfileSurface profileSurface,
-                                        Color visibleColor, Color invisibleColor, bool update = true,
-                                        List<int> linesIds = null)
+        internal void AddInvisibleZone(
+            double observerHeight, 
+            ProfileSurface profileSurface,
+            Color visibleColor, 
+            Color invisibleColor, 
+            bool update = true,
+            List<int> linesIds = null)
         {
-            var invisibleSurface = new ProfileSurface();
-            var invisibleSurfacePoints = new List<ProfileSurfacePoint>();
-            var groupedLinesSegments = new List<ProfileLine>();
-            var isPrimitive = true;
-            var surfaceSegments = GetLineSegments(profileSurface.LineId);
+            log.DebugEx("> AddInvisibleZone START");
 
-            if(surfaceSegments == null)
+            int exx = 0;
+            try
             {
-                surfaceSegments = new List<ProfileSurface> { profileSurface };
-                isPrimitive = false;
-            }
+                var invisibleSurface = new ProfileSurface();
+                var invisibleSurfacePoints = new List<ProfileSurfacePoint>();
+                var groupedLinesSegments = new List<ProfileLine>();
+                var isPrimitive = true;
 
-            foreach(var segment in surfaceSegments)
-            {
-                var firstPointDistance = segment.ProfileSurfacePoints[0].Distance;
-                var sightLineKoef = 0.0;
-                var isInvisibleZone = false;
-                var observerFullHeight = observerHeight + segment.ProfileSurfacePoints[0].Z;
-                var invisibleSurfaceSegment = new ProfileSurface();
-                var invisiblePoints = new List<ProfileSurfacePoint>();
-
-                invisibleSurfaceSegment.LineId = profileSurface.LineId;
-
-                for(var i = 0; i < segment.ProfileSurfacePoints.Length; i++)
+                var surfaceSegments = GetLineSegments(profileSurface.LineId);
+                if (surfaceSegments == null)
                 {
-                    var currPoint = segment.ProfileSurfacePoints[i];
-                    if (!isInvisibleZone)
-                    {
+                    surfaceSegments = new List<ProfileSurface> { profileSurface };
+                    isPrimitive = false;
+                }
+                exx++;
 
-                        if(i < segment.ProfileSurfacePoints.Length - 1)
+                foreach (var segment in surfaceSegments)
+                {
+                    var firstPointDistance = segment.ProfileSurfacePoints[0].Distance;
+                    var sightLineKoef = 0.0;
+                    var isInvisibleZone = false;
+                    var observerFullHeight = observerHeight + segment.ProfileSurfacePoints[0].Z;
+                    var invisibleSurfaceSegment = new ProfileSurface();
+                    var invisiblePoints = new List<ProfileSurfacePoint>();
+
+                    invisibleSurfaceSegment.LineId = profileSurface.LineId;
+
+                    for (var i = 0; i < segment.ProfileSurfacePoints.Length; i++)
+                    {
+                        var currPoint = segment.ProfileSurfacePoints[i];
+                        if (!isInvisibleZone)
                         {
-                            if(CalcAngleOfVisibility(observerFullHeight, segment.ProfileSurfacePoints[i],
-                                segment.ProfileSurfacePoints[i + 1], firstPointDistance) < 0)
+                            if (i < segment.ProfileSurfacePoints.Length - 1)
                             {
-                                var firstInvisiblePoint = segment.ProfileSurfacePoints[i + 1];
-
-                                if(!invisiblePoints.Exists(point => point == firstInvisiblePoint))
+                                if (CalcAngleOfVisibility(
+                                    observerFullHeight,
+                                    segment.ProfileSurfacePoints[i],
+                                    segment.ProfileSurfacePoints[i + 1],
+                                    firstPointDistance) < 0)
                                 {
-                                    invisiblePoints.Add(firstInvisiblePoint);
-                                }
+                                    var firstInvisiblePoint = segment.ProfileSurfacePoints[i + 1];
+                                    if (!invisiblePoints.Exists(point => point == firstInvisiblePoint))
+                                    {
+                                        invisiblePoints.Add(firstInvisiblePoint);
+                                    }
 
-                                isInvisibleZone = true;
-                                sightLineKoef = (firstInvisiblePoint.Z - observerFullHeight) / (firstInvisiblePoint.Distance - firstPointDistance);
-                                i++;
+                                    isInvisibleZone = true;
+                                    sightLineKoef = (firstInvisiblePoint.Z - observerFullHeight) / 
+                                                    (firstInvisiblePoint.Distance - firstPointDistance);
+                                    i++;
+                                }
                             }
-                        }
-                    }
-                    else
-                    {
-                        if(FindY(observerFullHeight, sightLineKoef, segment.ProfileSurfacePoints[i].Distance - firstPointDistance)
-                            < segment.ProfileSurfacePoints[i].Z)
-                        {
-                            isInvisibleZone = false;
-                            invisiblePoints.Add(segment.ProfileSurfacePoints[i]);
-                            segment.ProfileSurfacePoints[i + 1].Visible = true;
-                            i++;
                         }
                         else
                         {
-                            invisiblePoints.Add(segment.ProfileSurfacePoints[i]);
+                            if (FindY(observerFullHeight, sightLineKoef, segment.ProfileSurfacePoints[i].Distance - firstPointDistance)
+                                < segment.ProfileSurfacePoints[i].Z)
+                            {
+                                isInvisibleZone = false;
+                                invisiblePoints.Add(segment.ProfileSurfacePoints[i]);
+                                segment.ProfileSurfacePoints[i + 1].Visible = true;
+                                i++;
+                            }
+                            else
+                            {
+                                invisiblePoints.Add(segment.ProfileSurfacePoints[i]);
+                            }
                         }
+                        currPoint.Visible = !isInvisibleZone;
                     }
 
-                    currPoint.Visible = !isInvisibleZone;
+                    invisibleSurfaceSegment.ProfileSurfacePoints = invisiblePoints.ToArray();
+                    groupedLinesSegments.AddRange(GetLines(segment, invisibleSurfaceSegment, _profileSession.SessionId));
+
+                    invisibleSurfacePoints.AddRange(invisiblePoints);
                 }
+                exx++;
 
-                invisibleSurfaceSegment.ProfileSurfacePoints = invisiblePoints.ToArray();
-                groupedLinesSegments.AddRange(GetLines(segment, invisibleSurfaceSegment, _profileSession.SessionId));
+                invisibleSurface.ProfileSurfacePoints = invisibleSurfacePoints.ToArray();
+                invisibleSurface.LineId = profileSurface.LineId;
 
-                invisibleSurfacePoints.AddRange(invisiblePoints);
-            }
+                _surfaceProfileChart.AddInvisibleLine(invisibleSurface);
+                CalcProfilesVisiblePercents(invisibleSurface, profileSurface);
 
-            invisibleSurface.ProfileSurfacePoints = invisibleSurfacePoints.ToArray();
-            invisibleSurface.LineId = profileSurface.LineId;
-
-            _surfaceProfileChart.AddInvisibleLine(invisibleSurface);
-            CalcProfilesVisiblePercents(invisibleSurface, profileSurface);
-
-            var profileLines = new GroupedLines
-            {
-                LineId = profileSurface.LineId,
-                Lines = groupedLinesSegments,
-                VisibleColor = ColorToEsriRgb(visibleColor),
-                InvisibleColor = ColorToEsriRgb(invisibleColor)
-            };
-
-            profileLines.Polylines = ProfileLinesConverter
-                                        .ConvertLineToEsriPolyline(profileLines.Lines,
-                                                                     ArcMap.Document.FocusMap.SpatialReference);
-            if(isPrimitive)
-            {
-                var spatialReference = _profileSession.ProfileLines.First(line => line.Id == profileLines.LineId).SpatialReference;
-                profileLines.Vertices = surfaceSegments.Select(surface =>
+                var profileLines = new GroupedLines
                 {
-                    var point = surface.ProfileSurfacePoints.First();
+                    LineId = profileSurface.LineId,
+                    Lines = groupedLinesSegments,
+                    VisibleColor = ColorToEsriRgb(visibleColor),
+                    InvisibleColor = ColorToEsriRgb(invisibleColor)
+                };
 
-                    return new ProfilePoint { X = point.X, Y = point.Y, SpatialReference = spatialReference };
+                profileLines.Polylines =
+                    ProfileLinesConverter.ConvertLineToEsriPolyline(profileLines.Lines, ArcMap.Document.FocusMap.SpatialReference);
+                exx++;
+
+                if (isPrimitive)
+                {
+                    var spatialReference = _profileSession.ProfileLines.First(line => line.Id == profileLines.LineId).SpatialReference;
+                    profileLines.Vertices = surfaceSegments.Select(surface =>
+                    {
+                        var point = surface.ProfileSurfacePoints.First();
+                        return new ProfilePoint
+                        {
+                            X = point.X,
+                            Y = point.Y,
+                            SpatialReference = spatialReference
+                        };
+                    }).ToList();
+
+                    profileLines.IsPrimitive = true;
                 }
-                ).ToList();
+                exx++;
 
-                profileLines.IsPrimitive = true;
+                if (_profileSession.Segments.Count < profileSurface.LineId - 1)
+                {
+                    _profileSession.Segments.Add(profileLines);
+                }
+                else
+                {
+                    profileLines.IsSelected = _profileSession.Segments[profileSurface.LineId - 1].IsSelected;
+                    _profileSession.Segments[profileSurface.LineId - 1] = profileLines;
+                }
+
+                InvisibleZonesChanged?.Invoke(profileLines, _profileSession.SessionId, update, linesIds);
+
+                log.DebugEx("> AddInvisibleZone END");
             }
-
-            if(_profileSession.Segments.Count < profileSurface.LineId - 1)
+            catch (Exception ex)
             {
-                _profileSession.Segments.Add(profileLines);
+                log.DebugEx("> AddInvisibleZone Exception exx: {0}, ex.Message: {1}", exx, ex.Message);
             }
-            else
-            {
-                profileLines.IsSelected = _profileSession.Segments[profileSurface.LineId - 1].IsSelected;
-                _profileSession.Segments[profileSurface.LineId - 1] = profileLines;
-            }
-
-            InvisibleZonesChanged?.Invoke(profileLines, _profileSession.SessionId, update, linesIds);
         }
 
         internal void SetProfilesProperties()
@@ -609,7 +644,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                                 intersections += $"no";
                                 break;
                         }
-
                     }
                 }
 
@@ -617,7 +651,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 {
                     intersections = "no";
                 }
-
                     pointsPropertiesText.AppendLine($"{vertex};{visible};{intersections}");
             }
 
@@ -763,7 +796,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
                         preparedIntersectionLines.Add(line);
                     }
-
                     continue;
                 }
 
@@ -1048,7 +1080,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         private static double CalcAngleOfDeviation(ProfileSurfacePoint leftPoint, ProfileSurfacePoint rightPoint)
         {
             var angle = Math.Atan(Math.Abs(rightPoint.Z - leftPoint.Z) / (rightPoint.Distance - leftPoint.Distance));
-
             angle = RadiansToDegrees(angle);
 
             return (rightPoint.Z < leftPoint.Z) ? angle * (-1) : angle;

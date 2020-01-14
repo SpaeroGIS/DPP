@@ -4,9 +4,17 @@ using System.Collections.Generic;
 namespace MilSpace.DataAccess.DataTransfer
 {
     [Flags]
-    public enum VeluableObservPointFieldsEnum : byte
+    public enum ValuableObservPointFieldsEnum : byte
     {
         All = 0,
+        Type = 1,
+        Affiliation = 2,
+        Date = 4
+    }
+
+    public enum ValuableObservPointSortFieldsEnum : byte
+    {
+        Name = 0,
         Type = 1,
         Affiliation = 2,
         Date = 4
@@ -148,21 +156,21 @@ namespace MilSpace.DataAccess.DataTransfer
         /// </summary>
         public string Operator;
 
-        public string GetItemValue(VeluableObservPointFieldsEnum filter)
+        public string GetItemValue(ValuableObservPointFieldsEnum filter)
         {
             var values = new List<string>();
 
             values.Add(Title);
 
-            if ((filter & VeluableObservPointFieldsEnum.Affiliation) == VeluableObservPointFieldsEnum.Affiliation)
+            if ((filter & ValuableObservPointFieldsEnum.Affiliation) == ValuableObservPointFieldsEnum.Affiliation)
             {
                 values.Add(Affiliation);
             }
-            if ((filter & VeluableObservPointFieldsEnum.Type) == VeluableObservPointFieldsEnum.Type)
+            if ((filter & ValuableObservPointFieldsEnum.Type) == ValuableObservPointFieldsEnum.Type)
             {
                 values.Add(Type);
             }
-            if ((filter & VeluableObservPointFieldsEnum.Date) == VeluableObservPointFieldsEnum.Date)
+            if ((filter & ValuableObservPointFieldsEnum.Date) == ValuableObservPointFieldsEnum.Date)
             {
                 values.Add(Dto?.ToString("dd-MM-yyyy"));
             }
