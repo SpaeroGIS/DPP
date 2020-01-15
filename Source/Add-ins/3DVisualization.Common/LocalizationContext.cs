@@ -64,6 +64,13 @@ namespace MilSpace.Visualization3D
         public string LabelProfileTreeHeader => FindLocalizedElement("LabelProfileTreeHeader", "Profiles for Visualization");
         public string ButtonAddSessionProfileTree => FindLocalizedElement("ButtonAddSessionProfileTree", "Add");
 
+        //ToolTip
+        public string ButtonUpdateToolTip => FindLocalizedElement("ButtonUpdateToolTip", "Update data layers");
+        public string ButtonAddSurfaceToolTip => FindLocalizedElement("ButtonAddSurfaceToolTip", "Add surfaces");
+        public string ButtonRemoveSurfaceToolTip => FindLocalizedElement("ButtonRemoveSurfaceToolTip", "Remove selected surfaces");
+        public string ButtonAddProfileToolTip => FindLocalizedElement("ButtonAddProfileToolTip", "Add profiles");
+        public string ButtonRemoveProfileToolTip => FindLocalizedElement("ButtonRemoveProfileToolTip", "Remove selected profiles");
+
         private string FindLocalizedElement(string xmlNodeName, string defaultValue)
         {
             return _root?.SelectSingleNode(xmlNodeName)?.InnerText ?? defaultValue;

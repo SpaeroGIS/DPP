@@ -10,8 +10,8 @@
 <UtmLabel>UTM:</UtmLabel>
 <SaveButton>Зберегти в файл</SaveButton>
 <OpenFileButton>Відкрити файл</OpenFileButton>
-<CopyButton>Зкопіювати</CopyButton>
-<ClearGridButton>Зкинути список точок</ClearGridButton>
+<CopyButton>Cкопіювати</CopyButton>
+<ClearGridButton>Cкинути список точок</ClearGridButton>
 <MoveToCenterButton>Центр карты</MoveToCenterButton>
 <MoveToProjectedCoordButton>Перемістити карту в точку с поточникми координатами</MoveToProjectedCoordButton>
 <ToolButton>Вимкнути взаємодію з картой</ToolButton>
@@ -32,6 +32,6 @@
 <DeletePoint>Видалити</DeletePoint>
 <CopyCoordinateButton>Взяти координати в буфер обміну</CopyCoordinateButton>
 <PasteCoordinateButton>Вставити координати з буферу обміну</PasteCoordinateButton>
-<GridCleanWarningMessage>Список точок буде зкинуто. Продовжити?</GridCleanWarningMessage>
+<GridCleanWarningMessage>Список точок буде cкинуто. Продовжити?</GridCleanWarningMessage>
   
 </CoordinatesConverter>

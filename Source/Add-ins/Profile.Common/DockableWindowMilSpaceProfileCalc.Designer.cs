@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Графика");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Графика");
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.profileTabPage = new System.Windows.Forms.TabPage();
             this.btnRefreshLayers = new System.Windows.Forms.Button();
@@ -1516,25 +1516,25 @@
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.Location = new System.Drawing.Point(0, 62);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode1.Checked = true;
-            treeNode1.ImageKey = "vector-path-line.png";
-            treeNode1.Name = "Points";
-            treeNode1.SelectedImageIndex = 205;
-            treeNode1.Text = "Отрезки";
-            treeNode2.Checked = true;
-            treeNode2.ImageKey = "Editing-Line-icon3.png";
-            treeNode2.Name = "Fun";
-            treeNode2.SelectedImageIndex = 208;
-            treeNode2.Text = "Веер";
-            treeNode3.Checked = true;
-            treeNode3.ImageKey = "vector-polygon.png";
-            treeNode3.Name = "Primitives";
-            treeNode3.SelectedImageIndex = 209;
-            treeNode3.Text = "Графика";
+            treeNode4.Checked = true;
+            treeNode4.ImageKey = "vector-path-line.png";
+            treeNode4.Name = "Points";
+            treeNode4.SelectedImageIndex = 205;
+            treeNode4.Text = "Отрезки";
+            treeNode5.Checked = true;
+            treeNode5.ImageKey = "Editing-Line-icon3.png";
+            treeNode5.Name = "Fun";
+            treeNode5.SelectedImageIndex = 208;
+            treeNode5.Text = "Веер";
+            treeNode6.Checked = true;
+            treeNode6.ImageKey = "vector-polygon.png";
+            treeNode6.Name = "Primitives";
+            treeNode6.SelectedImageIndex = 209;
+            treeNode6.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
+            treeNode4,
+            treeNode5,
+            treeNode6});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(312, 269);
             this.profilesTreeView.TabIndex = 35;
@@ -1578,6 +1578,7 @@
             // toolPanOnMap
             // 
             this.toolPanOnMap.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolPanOnMap.Enabled = false;
             this.toolPanOnMap.Image = ((System.Drawing.Image)(resources.GetObject("toolPanOnMap.Image")));
             this.toolPanOnMap.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolPanOnMap.Name = "toolPanOnMap";
@@ -1589,6 +1590,7 @@
             // toolBtnFlash
             // 
             this.toolBtnFlash.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolBtnFlash.Enabled = false;
             this.toolBtnFlash.Image = ((System.Drawing.Image)(resources.GetObject("toolBtnFlash.Image")));
             this.toolBtnFlash.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolBtnFlash.Name = "toolBtnFlash";
@@ -1605,6 +1607,7 @@
             // setProfileSettingsToCalc
             // 
             this.setProfileSettingsToCalc.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.setProfileSettingsToCalc.Enabled = false;
             this.setProfileSettingsToCalc.Image = ((System.Drawing.Image)(resources.GetObject("setProfileSettingsToCalc.Image")));
             this.setProfileSettingsToCalc.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.setProfileSettingsToCalc.Name = "setProfileSettingsToCalc";
@@ -1630,6 +1633,7 @@
             // addProfileToGraph
             // 
             this.addProfileToGraph.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.addProfileToGraph.Enabled = false;
             this.addProfileToGraph.Image = ((System.Drawing.Image)(resources.GetObject("addProfileToGraph.Image")));
             this.addProfileToGraph.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.addProfileToGraph.Name = "addProfileToGraph";
@@ -1665,6 +1669,7 @@
             // removeProfile
             // 
             this.removeProfile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.removeProfile.Enabled = false;
             this.removeProfile.Image = ((System.Drawing.Image)(resources.GetObject("removeProfile.Image")));
             this.removeProfile.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.removeProfile.Name = "removeProfile";
@@ -1676,6 +1681,7 @@
             // saveProfileAsShared
             // 
             this.saveProfileAsShared.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.saveProfileAsShared.Enabled = false;
             this.saveProfileAsShared.Image = ((System.Drawing.Image)(resources.GetObject("saveProfileAsShared.Image")));
             this.saveProfileAsShared.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.saveProfileAsShared.Name = "saveProfileAsShared";
@@ -1687,6 +1693,7 @@
             // eraseProfile
             // 
             this.eraseProfile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.eraseProfile.Enabled = false;
             this.eraseProfile.Image = ((System.Drawing.Image)(resources.GetObject("eraseProfile.Image")));
             this.eraseProfile.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.eraseProfile.Name = "eraseProfile";
