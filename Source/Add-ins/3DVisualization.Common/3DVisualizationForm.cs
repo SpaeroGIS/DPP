@@ -125,6 +125,11 @@ namespace MilSpace.Visualization3D
 
                 //Buttons
                 this.GenerateButton.Text = context.GenerateButton;
+                toolTip.SetToolTip(btnRefreshLayers, context.ButtonUpdateToolTip);
+                this.AddSurface.ToolTipText = context.ButtonAddSurfaceToolTip;
+                this.RemoveSurface.ToolTipText = context.ButtonRemoveSurfaceToolTip;
+                this.AddProfile.ToolTipText = context.ButtonAddProfileToolTip;
+                this.RemoveProfile.ToolTipText = context.ButtonRemoveProfileToolTip;
 
                 log.InfoEx("> LocalizeComponent END");
             }

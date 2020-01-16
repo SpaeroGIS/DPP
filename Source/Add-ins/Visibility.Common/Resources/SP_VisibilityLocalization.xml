@@ -104,8 +104,8 @@
   <MainW_label4_Text>Характеристики ОН</MainW_label4_Text>
   <MainW_toolBarButton31_ToolTipText>Показати ОН на карті </MainW_toolBarButton31_ToolTipText>
   <MainW_toolBarButton32_ToolTipText>Підсвітити ОН на карті</MainW_toolBarButton32_ToolTipText>
-  <MainW_toolBarButton34_ToolTipText>видилити ОН</MainW_toolBarButton34_ToolTipText>
-  <MainW_toolBarButton29_ToolTipText>поновити список ОН</MainW_toolBarButton29_ToolTipText>
+  <MainW_toolBarButton34_ToolTipText>Видалити ОН</MainW_toolBarButton34_ToolTipText>
+  <MainW_toolBarButton29_ToolTipText>Поновити список ОН</MainW_toolBarButton29_ToolTipText>
   <MainW_chckObservObjAffiliation_Text>належність</MainW_chckObservObjAffiliation_Text>
   <MainW_chckObservObjGroup_Text>група</MainW_chckObservObjGroup_Text>
   <MainW_chckObservObjTitle_Text>назва</MainW_chckObservObjTitle_Text>
@@ -126,18 +126,20 @@
   <MainW_label42_Text>оператор</MainW_label42_Text>
   <MainW_label46_Text>назва</MainW_label46_Text>
   <MainW_label40_Text>Інформація про завдання</MainW_label40_Text>
-  <MainW_wizardTask_ToolTipText>сформувати завдання на розрахунок</MainW_wizardTask_ToolTipText>
-  <MainW_removeTask_ToolTipText>видалити інформацію про завдання</MainW_removeTask_ToolTipText>
+  <MainW_wizardTask_ToolTipText>Сформувати завдання на розрахунок</MainW_wizardTask_ToolTipText>
+  <MainW_removeTask_ToolTipText>Видалити інформацію про завдання</MainW_removeTask_ToolTipText>
   <MainW_label38_Text>стан</MainW_label38_Text>
   <MainW_label36_Text>Завдання для розрахунків</MainW_label36_Text>
   <MainW_tbpVisibilityAreas_Text>ОВ</MainW_tbpVisibilityAreas_Text>
   <MainW_tbpVisibilityAreas_ToolTipText>Області видимості (результати розрахунків)</MainW_tbpVisibilityAreas_ToolTipText>
   <MainW_labelHeaderVisibilityInfo_Text>Інформація про результат</MainW_labelHeaderVisibilityInfo_Text>
   <MainW_tlbbZoomToResultRaster_ToolTipText>Показати на карті</MainW_tlbbZoomToResultRaster_ToolTipText>
+  <MainW_tlbbViewResultOnMap_ToolTipText>Додати результати до карти</MainW_tlbbViewResultOnMap_ToolTipText>
   <MainW_tlbbViewParamOnMap_ToolTipText>Показати параметри на карті</MainW_tlbbViewParamOnMap_ToolTipText>
+  <MainW_tlbbShare_ToolTipText>Встановити доступ для всіх користувачів</MainW_tlbbShare_ToolTipText>
   <MainW_tlbbAddFromDB_ToolTipText>Додати</MainW_tlbbAddFromDB_ToolTipText>
-  <MainW_tlbbFullDelete_ToolTipText>видалити звідусіль</MainW_tlbbFullDelete_ToolTipText>
-  <MainW_toolBarButtonRemoveFromSeanse_ToolTipText>видалити з сеансу роботи</MainW_toolBarButtonRemoveFromSeanse_ToolTipText>
+  <MainW_tlbbFullDelete_ToolTipText>Видалити звідусіль</MainW_tlbbFullDelete_ToolTipText>
+  <MainW_toolBarButtonRemoveFromSeanse_ToolTipText>Видалити з сеансу роботи</MainW_toolBarButtonRemoveFromSeanse_ToolTipText>
   <MainW_tlbbUpdate_ToolTipText>Поновити</MainW_tlbbUpdate_ToolTipText>
   <MainW_labelHeaderVisibilityResult_Text>Cписок результатів</MainW_labelHeaderVisibilityResult_Text>
   <MainW_richTextBox1_Text>при выборе мобильного типа углы нелоступны, высоты недоступны, координаты недоступны, при добавлении дата и время автоматом</MainW_richTextBox1_Text>
@@ -145,9 +147,9 @@
   <MainW_label9_Text>висота над поверхнею (м) мін</MainW_label9_Text>
   <MainW_lblLayer_Text>Пункти спостереження (ПС)</MainW_lblLayer_Text>
 
-  <MainW_btnAddLayerPS_Tag>додати шар ПС до карти</MainW_btnAddLayerPS_Tag>
+  <MainW_btnAddLayerPS_Tag>Додати шар ПС до карти</MainW_btnAddLayerPS_Tag>
   <MainW_btnSaveParamPS_Tag>Зберегти зміни</MainW_btnSaveParamPS_Tag>
-  <MainW_buttonSaveOPoint_Tag>зберегти параметри ПС</MainW_buttonSaveOPoint_Tag>
+  <MainW_buttonSaveOPoint_Tag>Зберегти параметри ПС</MainW_buttonSaveOPoint_Tag>
   <MainW_tlbbAddObservObjLayer_Tag>Додати шар ОН до карти</MainW_tlbbAddObservObjLayer_Tag>
 
   <!-- ######################################################################### -->

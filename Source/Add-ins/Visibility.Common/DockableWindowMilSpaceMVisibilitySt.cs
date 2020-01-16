@@ -115,8 +115,8 @@ namespace MilSpace.Visibility
                 this.btnSaveParamPS.Tag = LocalizationContext.Instance.FindLocalizedElement("MainW_btnSaveParamPS_Tag", "Зберегти зміни");
                 this.toolBarButton31.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_toolBarButton31_ToolTipText", "Показати ОН на карті ");
                 this.toolBarButton32.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_toolBarButton32_ToolTipText", "Підсвітити ОН на карті");
-                this.toolBarButton34.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_toolBarButton34_ToolTipText", "видилити ОН");
-                this.toolBarButton29.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_toolBarButton29_ToolTipText", "поновити список ОН");
+                this.toolBarButton34.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_toolBarButton34_ToolTipText", "Виділити ОН");
+                this.toolBarButton29.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_toolBarButton29_ToolTipText", "Поновити список ОН");
                 this.chckObservObjAffiliation.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_chckObservObjAffiliation_Text", "належність");
                 this.chckObservObjGroup.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_chckObservObjGroup_Text", "група");
                 this.chckObservObjTitle.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_chckObservObjTitle_Text", "назва");
@@ -138,18 +138,20 @@ namespace MilSpace.Visibility
                 this.label42.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label42_Text", "оператор");
                 this.label46.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label46_Text", "назва");
                 this.label40.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label40_Text", "Інформація про завдання");
-                this.wizardTask.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_wizardTask_ToolTipText", "сформувати завдання на розрахунок");
-                this.removeTask.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_removeTask_ToolTipText", "видалити інформацію про завдання");
+                this.wizardTask.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_wizardTask_ToolTipText", "Сформувати завдання на розрахунок");
+                this.removeTask.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_removeTask_ToolTipText", "Видалити інформацію про завдання");
                 this.label38.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label38_Text", "стан");
                 this.lblCalcTasksHeader.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label36_Text", "Завдання для розрахунків");
                 this.tbpVisibilityAreas.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_tbpVisibilityAreas_Text", "ОВ");
                 this.tbpVisibilityAreas.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tbpVisibilityAreas_ToolTipText", "Області видимості (результати розрахунків)");
                 this.labelHeaderVisibilityInfo.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_labelHeaderVisibilityInfo_Text", "Інформація про результат");
                 this.tlbbZoomToResultRaster.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbZoomToResultRaster_ToolTipText", "Показати");
+                this.toolBarButtonViewOnMap.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbViewResultOnMap_ToolTipText", "Додати результати до карти");
+                this.tlbbShare.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbShare_ToolTipText", "Встановити доступ для всіх користувачів");
                 this.tlbbViewParamOnMap.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbViewParamOnMap_ToolTipText", "Показати параметри на карті");
                 this.tlbbAddFromDB.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbAddFromDB_ToolTipText", "Додати");
-                this.tlbbFullDelete.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbFullDelete_ToolTipText", "видалити звідусіль");
-                this.toolBarButtonRemoveFromSeanse.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_toolBarButtonRemoveFromSeanse_ToolTipText", "видалити з сеансу роботи");
+                this.tlbbFullDelete.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbFullDelete_ToolTipText", "Видалити звідусіль");
+                this.toolBarButtonRemoveFromSeanse.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_toolBarButtonRemoveFromSeanse_ToolTipText", "Видалити з сеансу роботи");
                 this.tlbbUpdate.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbUpdate_ToolTipText", "Поновити");
                 this.lblHeaderVisibilityResult.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_labelHeaderVisibilityResult_Text", "Список результатів");
                 this.richTextBox1.Text = LocalizationContext.Instance.FindLocalizedElement(
@@ -414,40 +416,40 @@ namespace MilSpace.Visibility
                         State = state
                     });
                 }
+                
+                    dgvVisibilitySessions.CurrentCell = null;
+                    dgvVisibilitySessions.DataSource = _visibilitySessionsGui;
+                    SetVisibilitySessionsTableView();
 
-                dgvVisibilitySessions.CurrentCell = null;
-                dgvVisibilitySessions.DataSource = _visibilitySessionsGui;
-                SetVisibilitySessionsTableView();
+                    var lastRow = dgvVisibilitySessions.Rows[dgvVisibilitySessions.RowCount - 1];
 
-                var lastRow = dgvVisibilitySessions.Rows[dgvVisibilitySessions.RowCount - 1];
-
-                if (cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilityTaskStateEnum.All))
-                {
-                    FilterVisibilityList();
-                }
-                else
-                {
-                    dgvVisibilitySessions.Rows[0].Selected = true;
-                }
-
-                if (isNewSessionAdded && !String.IsNullOrEmpty(newTaskId))
-                {
-                    var newRow = dgvVisibilitySessions.Rows[0];
-
-                    foreach (DataGridViewRow row in dgvVisibilitySessions.Rows)
+                    if(cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilityTaskStateEnum.All))
                     {
-                        if (row.Cells["Id"].Value.Equals(newTaskId))
+                        FilterVisibilityList();
+                    }
+                    else
+                    {
+                        dgvVisibilitySessions.Rows[0].Selected = true;
+                    }
+
+                    if(isNewSessionAdded && !String.IsNullOrEmpty(newTaskId))
+                    {
+                        var newRow = dgvVisibilitySessions.Rows[0];
+
+                        foreach(DataGridViewRow row in dgvVisibilitySessions.Rows)
                         {
-                            newRow = row;
+                            if(row.Cells["Id"].Value.Equals(newTaskId))
+                            {
+                                newRow = row;
+                            }
+                        }
+
+                        if(newRow.Visible)
+                        {
+                            newRow.Selected = true;
+                            dgvVisibilitySessions.CurrentCell = newRow.Cells[1];
                         }
                     }
-
-                    if (newRow.Visible)
-                    {
-                        newRow.Selected = true;
-                        dgvVisibilitySessions.CurrentCell = newRow.Cells[1];
-                    }
-                }
             }
         }
 

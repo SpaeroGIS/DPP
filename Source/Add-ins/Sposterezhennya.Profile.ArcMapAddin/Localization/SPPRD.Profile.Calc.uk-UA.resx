@@ -511,7 +511,7 @@
     <value>Відкрити вікно графіків</value>
   </data>
   <data name="hintRemoveProfileText" xml:space="preserve">
-    <value>Зкинути профіль з сесії</value>
+    <value>Cкинути профіль з сесії</value>
   </data>
   <data name="hintSaveProfileAsSharedText" xml:space="preserve">
     <value>Надати спільний доступ до профілю</value>
@@ -538,7 +538,7 @@
     <value>Ви не можете дозволити спільний доступ для цього профілю.</value>
   </data>
   <data name="msgRemoveProfaileText" xml:space="preserve">
-    <value>Ви дійсно бажаєти зкинути профіль  "{0}" з сесії?</value>
+    <value>Ви дійсно бажаєти cкинути профіль  "{0}" з сесії?</value>
   </data>
   <data name="txtTreeViewProfileText" xml:space="preserve">
     <value>Профіль:</value>
@@ -592,10 +592,10 @@
     <value>Спостереження. Розрахунок профілю</value>
   </data>
   <data name="btnCopyCoordToolTip" xml:space="preserve">
-    <value>Копіювати координату</value>
+    <value>Копіювати координати</value>
   </data>
   <data name="btnPasteCoordToolTip" xml:space="preserve">
-    <value>Вставити координату</value>
+    <value>Вставити координати</value>
   </data>
   <data name="btnShowCoordToolTip" xml:space="preserve">
     <value>Показати координати на карті</value>
