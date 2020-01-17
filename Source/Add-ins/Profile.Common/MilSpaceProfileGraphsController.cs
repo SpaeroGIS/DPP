@@ -83,8 +83,12 @@ namespace MilSpace.Profile
             var av = ArcMap.Document.ActivatedView;
             point.Project(av.FocusMap.SpatialReference);
 
-            EsriTools.PanToGeometry(ArcMap.Document.ActivatedView, point);
-            EsriTools.FlashGeometry(av.ScreenDisplay, new IGeometry[] { point });
+            if(!EsriTools.IsPointOnExtent(ArcMap.Document.ActivatedView.Extent, point))
+            {
+                EsriTools.PanToGeometry(View.ActiveView, point);
+            }
+
+            EsriTools.FlashGeometry(point, 500, ArcMap.Application);
         }
 
         private void InvokeInvisibleZonesChanged(GroupedLines profileLines, int sessionId, bool update,
