@@ -195,11 +195,12 @@ namespace MilSpace.Visibility.ViewController
             }
             pointGeometry.Project(activeView.FocusMap.SpatialReference);
 
-            if (!IsPointOnExtent(activeView.Extent, pointGeometry))
+            if(!IsPointOnExtent(activeView.Extent, pointGeometry))
             {
                 EsriTools.PanToGeometry(activeView, pointGeometry, true);
+
             }
-            EsriTools.FlashGeometry(activeView.ScreenDisplay, new IGeometry[] { pointGeometry });
+            EsriTools.FlashGeometry(pointGeometry, 500, ArcMap.Application);
         }
 
         internal IEnumerable<VisibilityTasknGui> SortTasks(IEnumerable<VisibilityTasknGui> source, VeluableTaskSortFieldsEnum sortBy, bool sortDireaction)

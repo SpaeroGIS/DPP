@@ -170,10 +170,12 @@ namespace MilSpace.Profile
 
         internal void FlashPoint(ProfileSettingsPointButtonEnum pointType)
         {
-            EsriTools.PanToGeometry(View.ActiveView, pointsToShow[pointType]);
+            if(!EsriTools.IsPointOnExtent(ArcMap.Document.ActivatedView.Extent, pointsToShow[pointType]))
+            {
+                EsriTools.PanToGeometry(View.ActiveView, pointsToShow[pointType]);
+            }
 
-            EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, new IGeometry[] { pointsToShow[pointType] });
-          //  View.ActiveView.Refresh();
+            EsriTools.FlashGeometry(pointsToShow[pointType], 500, ArcMap.Application);
         }
 
         internal IEnumerable<IPolyline> GetProfileLines()

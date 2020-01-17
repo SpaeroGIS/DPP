@@ -16,7 +16,6 @@ namespace MilSpace.Visibility
     {
 
 
-
         internal static Dictionary<VisibilityCalculationResultsEnum, bool> LayersSequence = new Dictionary<VisibilityCalculationResultsEnum, bool>
 
         {
