@@ -32,19 +32,19 @@ namespace MilSpace.Core.Tools
                 result.Add(fLayer);
             }
 
-            if (layer is ICompositeLayer cLayer)
-            {
+            //if (layer is ICompositeLayer cLayer)
+            //{
 
-                for (int j = 0; j < cLayer.Count; j++)
+            //    for (int j = 0; j < cLayer.Count; j++)
 
-                {
-                    if ((layer is IRasterLayer cRastreLayer))
-                    {
-                        result.Add(cRastreLayer);
-                    }
-                }
+            //    {
+            //        if ((layer is IRasterLayer cRastreLayer))
+            //        {
+            //            result.Add(cRastreLayer);
+            //        }
+            //    }
 
-            }
+            //}
 
             return result;
         }
@@ -67,24 +67,24 @@ namespace MilSpace.Core.Tools
                     result.Add(fLayer);
                 }
             }
-            if (layer is ICompositeLayer cLayer)
-            {
-                for (int j = 0; j < cLayer.Count; j++)
-                {
-                    var curLauer = cLayer.Layer[j];
-                    if ((curLauer is IFeatureLayer cfeatureLayer))
-                    {
-                        result.Add(cfeatureLayer);
-                    }
+            //if (layer is ICompositeLayer cLayer)
+            //{
+            //    for (int j = 0; j < cLayer.Count; j++)
+            //    {
+            //        var curLauer = cLayer.Layer[j];
+            //        if ((curLauer is IFeatureLayer cfeatureLayer))
+            //        {
+            //            result.Add(cfeatureLayer);
+            //        }
 
-                    if (curLauer is ICompositeLayer ccLayer)
-                    {
-                        // Here can be check by Tag in the Layer description
-                        result.AddRange(GetFeatureLayers(curLauer as ILayer));
-                    }
-                }
+            //        if (curLauer is ICompositeLayer ccLayer)
+            //        {
+            //            // Here can be check by Tag in the Layer description
+            //            result.AddRange(GetFeatureLayers(curLauer as ILayer));
+            //        }
+            //    }
 
-            }
+            //}
 
             return result;
         }

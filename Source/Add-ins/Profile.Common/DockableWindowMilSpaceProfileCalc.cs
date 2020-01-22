@@ -392,7 +392,13 @@ namespace MilSpace.Profile
                     //if (txtFirstPointX.Focused) CopyTextToBuffer(txtFirstPointX.Text);
                     Clipboard.Clear();
                     string sCoord = $"{txtFirstPointX.Text} {txtFirstPointY.Text}";
-                    Clipboard.SetText(sCoord.Trim().Replace(",", "."));
+
+                    if(String.IsNullOrEmpty(sCoord) || String.IsNullOrEmpty(sCoord.Trim()))
+                    {
+                        break;
+                    }
+
+                    Clipboard.SetText(sCoord.Replace(",", "."));
 
                     //CopyTextToBuffer(txtFirstPointY.Focused ? txtFirstPointY.Text : txtFirstPointX.Text);
                     break;
@@ -404,9 +410,12 @@ namespace MilSpace.Profile
                     if (Regex.IsMatch(sclipboard, @"^([-]?[\d]{1,2}[\,|\.]\d+)[\;| ]([-]?[\d]{1,2}[\,|\.]\d+)$"))
                     {
                         string sCoords = sclipboard.Replace('.', ',');
-                        var coords = sCoords.Replace(' ', ';').Split(';');
-                        txtFirstPointX.Text = coords[0];
-                        txtFirstPointY.Text = coords[1];
+                        var coords = sCoords.Replace(' ', ';');
+                        var point = GetPointFromRowValue(coords);
+                        point.SpatialReference = EsriTools.Wgs84Spatialreference;
+                        var pointOnMap = new PointClass { X = point.X, Y = point.Y, Z = point.Z, SpatialReference = point.SpatialReference };
+                        pointOnMap.Project(ArcMap.Document.ActiveView.FocusMap.SpatialReference);
+                        controller.SetFirsPointForLineProfile(point, pointOnMap);
                     }
                     else
                     {
@@ -476,7 +485,13 @@ namespace MilSpace.Profile
                 case "toolBarButton3":
                     Clipboard.Clear();
                     string sCoord = $"{txtSecondPointX.Text} {txtSecondPointY.Text}";
-                    Clipboard.SetText(sCoord.Trim().Replace(",", "."));
+
+                    if(String.IsNullOrEmpty(sCoord) || String.IsNullOrEmpty(sCoord.Trim()))
+                    {
+                        break;
+                    }
+
+                    Clipboard.SetText(sCoord.Replace(",", "."));
                     break;
 
                 case "toolBarButton4":
@@ -486,9 +501,12 @@ namespace MilSpace.Profile
                     if (Regex.IsMatch(sclipboard, @"^([-]?[\d]{1,2}[\,|\.]\d+)[\;| ]([-]?[\d]{1,2}[\,|\.]\d+)$"))
                     {
                         string sCoords = sclipboard.Replace('.', ',');
-                        var coords = sCoords.Replace(' ', ';').Split(';');
-                        txtSecondPointX.Text = coords[0];
-                        txtSecondPointY.Text = coords[1];
+                        var coords = sCoords.Replace(' ', ';');
+                        var point = GetPointFromRowValue(coords);
+                        point.SpatialReference = EsriTools.Wgs84Spatialreference;
+                        var pointOnMap = new PointClass { X = point.X, Y = point.Y, Z = point.Z, SpatialReference = point.SpatialReference };
+                        pointOnMap.Project(ArcMap.Document.ActiveView.FocusMap.SpatialReference);
+                        controller.SetSecondfPointForLineProfile(point, pointOnMap);
                     }
                     else
                     {
@@ -541,7 +559,13 @@ namespace MilSpace.Profile
                 case "toolBarButton19":
                     Clipboard.Clear();
                     string sCoord = $"{txtBasePointX.Text} {txtBasePointY.Text}";
-                    Clipboard.SetText(sCoord.Trim().Replace(",", "."));
+
+                    if(String.IsNullOrEmpty(sCoord) || String.IsNullOrEmpty(sCoord.Trim()))
+                    {
+                        break;
+                    }
+
+                    Clipboard.SetText(sCoord.Replace(",", "."));
 
                     //CopyTextToBuffer(txtBasePointY.Focused ? txtBasePointY.Text : txtBasePointX.Text);
                     break;
@@ -556,9 +580,12 @@ namespace MilSpace.Profile
                     if (Regex.IsMatch(sclipboard, @"^([-]?[\d]{1,2}[\,|\.]\d+)[\;| ]([-]?[\d]{1,2}[\,|\.]\d+)$"))
                     {
                         string sCoords = sclipboard.Replace('.', ',');
-                        var coords = sCoords.Replace(' ', ';').Split(';');
-                        txtBasePointX.Text = coords[0];
-                        txtBasePointY.Text = coords[1];
+                        var coords = sCoords.Replace(' ', ';');
+                        var point = GetPointFromRowValue(coords);
+                        point.SpatialReference = EsriTools.Wgs84Spatialreference;
+                        var pointOnMap = new PointClass { X = point.X, Y = point.Y, Z = point.Z, SpatialReference = point.SpatialReference };
+                        pointOnMap.Project(ArcMap.Document.ActiveView.FocusMap.SpatialReference);
+                        controller.SetCenterPointForFunProfile(point, pointOnMap);
                     }
                     else
                     {

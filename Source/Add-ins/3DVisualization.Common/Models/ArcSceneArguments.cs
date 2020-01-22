@@ -11,7 +11,7 @@ namespace MilSpace.Visualization3D.Models
         internal string Line3DLayer { get; set; }
         internal string Point3DLayer { get; set; }
         internal string Polygon3DLayer { get; set; }
-        internal List<ILayer> AdditionalLayers { get; set; }
+        internal Dictionary<ILayer, double> AdditionalLayers { get; set; }
         internal List<VisibilityResultInfo> VisibilityResultsInfo { get; set; }
     }
 }

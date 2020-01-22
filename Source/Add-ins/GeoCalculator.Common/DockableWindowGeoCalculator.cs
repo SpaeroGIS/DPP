@@ -251,6 +251,9 @@ namespace MilSpace.GeoCalculator
         #region Paste Buttons Click
         private void CurrentCoordsPasteButton_Click(object sender, EventArgs e)
         {
+            double prevValueX = Double.Parse(XCoordinateTextBox.Text);
+            double prevValueY = Double.Parse(YCoordinateTextBox.Text);
+
             var clipboard = Clipboard.GetText();
             if (string.IsNullOrWhiteSpace(clipboard)) return;
 
@@ -277,20 +280,27 @@ namespace MilSpace.GeoCalculator
                         MessageBoxIcon.Error);
                 else
                 {
-                    var point = new PointClass();
-                    point.PutCoords(xCoordinate, yCoordinate);
-                    point.SpatialReference = FocusMapSpatialReference;
-                    ProjectPointAsync(point, true);
+                    SetCurrentValues(xCoordinate, yCoordinate);
                 }
             }
-            catch
+            catch(Exception ex)
             {
                 MessageBox.Show(
                     context.WrongFormatMessage, 
                     context.ErrorString, 
                     MessageBoxButtons.OK, 
                     MessageBoxIcon.Error);
+
+                SetCurrentValues(prevValueX, prevValueY);
             }
+        }
+
+        private void SetCurrentValues(double x, double y)
+        {
+            var point = new PointClass();
+            point.PutCoords(x, y);
+            point.SpatialReference = FocusMapSpatialReference;
+            ProjectPointAsync(point, true);
         }
 
         private void WgsGeoPasteButton_Click(object sender, EventArgs e)
@@ -300,7 +310,7 @@ namespace MilSpace.GeoCalculator
 
             try
             {
-                if (!Regex.IsMatch(clipboard, @"^([-]?[\d]{1,2}[\,|\.]\d+)[\;| ]([-]?[\d]{1,2}[\,|\.]\d+)$"))
+                if (!Regex.IsMatch(clipboard, @"^([-]?[\d]{1,2}[\,|\.]\d+)[\;|\s]([-]?[\d]{1,2}[\,|\.]\d+)$"))
                 {
                     string sMsgText = context.FindLocalizedElement(
                         "MsgInvalidCoordinatesDD", 
@@ -335,7 +345,7 @@ namespace MilSpace.GeoCalculator
                     //|| !stringParts[1].ToDoubleInvariantCulture(out double yCoordinate))
 
                     MessageBox.Show(
-                        context.WrongFormatMessage + " WGS DD -> " + stringParts,
+                        context.WrongFormatMessage + " WGS DD -> " + stringParts[0] + ' ' + stringParts[1],
                         context.ErrorString, 
                         MessageBoxButtons.OK, 
                         MessageBoxIcon.Error);

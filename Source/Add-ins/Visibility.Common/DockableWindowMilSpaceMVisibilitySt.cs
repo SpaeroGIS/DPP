@@ -15,6 +15,7 @@ using MilSpace.Visibility.ViewController;
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -34,7 +35,7 @@ namespace MilSpace.Visibility
         private bool observatioPointsSordDirection = true;
         private bool observatioObjectsSordDirection = true;
         private bool tasksSordDirection = false;
-        private List<VisibilityTasknGui> _visibilitySessionsGui = new List<VisibilityTasknGui>();
+        private BindingList<VisibilityTasknGui> _visibilitySessionsGui = new BindingList<VisibilityTasknGui>();
 
         private bool _isDropDownItemChangedManualy = false;
         private bool _isFieldsChanged = false;
@@ -389,7 +390,7 @@ namespace MilSpace.Visibility
             if (visibilitySessions.Any())
             {
        //         dgvVisibilitySessions.Rows.Clear();
-                _visibilitySessionsGui = new List<VisibilityTasknGui>();
+                _visibilitySessionsGui = new BindingList<VisibilityTasknGui>();
 
                 foreach (var session in visibilitySessions)
                 {
@@ -462,8 +463,6 @@ namespace MilSpace.Visibility
         {
 
             _visibilitySessionsGui.Remove(_visibilitySessionsGui.First(session => session.Id == id));
-
-            dgvVisibilitySessions.Refresh();
 
             if (cmbStateFilter.SelectedItem.ToString() != _visibilitySessionsController.GetStringForStateType(VisibilityTaskStateEnum.All))
             {
@@ -568,9 +567,8 @@ namespace MilSpace.Visibility
 
             resultPoint.Project(EsriTools.Wgs84Spatialreference);
 
-            xCoord.Text = resultPoint.X.ToString();
-            yCoord.Text = resultPoint.Y.ToString();
-            SavePoint();
+            xCoord.Text = Math.Round(resultPoint.X, 5).ToString();
+            yCoord.Text = Math.Round(resultPoint.Y, 5).ToString();
         }
 
         internal void ArcMap_OnMouseMove(int x, int y)

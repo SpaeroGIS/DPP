@@ -170,6 +170,11 @@ namespace MilSpace.Profile
 
         internal void FlashPoint(ProfileSettingsPointButtonEnum pointType)
         {
+            if(pointsToShow[pointType] == null)
+            {
+                return;
+            }
+
             if(!EsriTools.IsPointOnExtent(ArcMap.Document.ActivatedView.Extent, pointsToShow[pointType]))
             {
                 EsriTools.PanToGeometry(View.ActiveView, pointsToShow[pointType]);
