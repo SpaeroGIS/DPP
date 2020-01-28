@@ -1,6 +1,5 @@
 ﻿using ESRI.ArcGIS.Geometry;
 using MilSpace.DataAccess.DataTransfer;
-using MilSpace.Profile.Localization;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -38,28 +37,28 @@ namespace MilSpace.Profile.ModalWindows
                 {
                     Name = "NameCol",
                     Width = (int)(lvProfilesSets.Width * 0.32),
-                    Text = LocalizationConstants.ProfilesSetsNameColHeader
+                    Text = LocalizationContext.Instance.FindLocalizedElement("LvProfilesSetsNameColHeader", "Назва профілю")
                 });
             lvProfilesSets.Columns.Add(
                 new ColumnHeader
                 {
                     Name = "CreatorCol",
                     Width = (int)(lvProfilesSets.Width * 0.25),
-                    Text = LocalizationConstants.ProfilesSetsCreatorColHeader
+                    Text = LocalizationContext.Instance.FindLocalizedElement("LvProfilesSetsCreatorColHeader", "Автор")
                 });
             lvProfilesSets.Columns.Add(
                 new ColumnHeader
                 {
                     Name = "DateCol",
                     Width = (int)(lvProfilesSets.Width * 0.15),
-                    Text = LocalizationConstants.ProfilesSetsDateColHeader
+                    Text = LocalizationContext.Instance.FindLocalizedElement("LvProfilesSetsDateColHeader", "Дата")
                 });
             lvProfilesSets.Columns.Add(
                 new ColumnHeader
                 {
                     Name = "TypeCol",
                     Width = (int)(lvProfilesSets.Width * 0.12),
-                    Text = LocalizationConstants.ProfilesSetsTypeColHeader
+                    Text = LocalizationContext.Instance.FindLocalizedElement("LvProfilesSetsTypeColHeader", "Тип")
                 });
 
             var occupiedSpace = 0;
@@ -76,7 +75,7 @@ namespace MilSpace.Profile.ModalWindows
                 {
                     Name = "IsSharedCol",
                     Width = colSize,
-                    Text = LocalizationConstants.ProfilesSetsSharedColHeader
+                    Text = LocalizationContext.Instance.FindLocalizedElement("LvProfilesSetsSharedColHeader", "Спільний")
                 });
 
             lvProfilesSets.View = View.Details;
@@ -88,7 +87,7 @@ namespace MilSpace.Profile.ModalWindows
 
             var types = _controller.GetGraphDisplayTypes();
 
-            cmbGraphType.Items.Add(LocalizationConstants.GraphTypeText);
+            cmbGraphType.Items.Add(LocalizationContext.Instance.FindLocalizedElement("CmbGraphTypeText", "Усі типи"));
 
             foreach(var type in types)
             {
@@ -98,8 +97,8 @@ namespace MilSpace.Profile.ModalWindows
 
         private void SetTextDefaultValues()
         {
-            txtName.Text = LocalizationConstants.NamePlaceholder;
-            txtCreator.Text = LocalizationConstants.CreatorPlaceholder;
+            txtName.Text = LocalizationContext.Instance.NamePlaceholder;
+            txtCreator.Text = LocalizationContext.Instance.CreatorPlaceholder;
 
             txtCreator.ForeColor = Color.DimGray;
             txtName.ForeColor = Color.DimGray;
@@ -158,19 +157,19 @@ namespace MilSpace.Profile.ModalWindows
 
         private void LocalizeControls()
         {
-            this.Text = LocalizationConstants.ProfilesSetsTitle; 
+            this.Text = LocalizationContext.Instance.FindLocalizedElement("ModalProfilesSetsTitle", "Додати доступні набори профілів"); 
 
-            gbFilters.Text = LocalizationConstants.FiltersTitle;
+            gbFilters.Text = LocalizationContext.Instance.FindLocalizedElement("GbFiltersTitle", "Фільтри");
 
-            lblDateText.Text = LocalizationConstants.CreationDateText;
-            lblFrom.Text = LocalizationConstants.FromText;
-            lblTo.Text = LocalizationConstants.ToText;
+            lblDateText.Text = LocalizationContext.Instance.FindLocalizedElement("LblCreationDateText", "Дата створення:");
+            lblFrom.Text = LocalizationContext.Instance.FindLocalizedElement("LblFromText", "з");
+            lblTo.Text = LocalizationContext.Instance.FindLocalizedElement("LblToText", "до");
 
-            btnFilter.Text = LocalizationConstants.FilterText;
-            btnOk.Text = LocalizationConstants.AddToSessionText;
-            btnCancel.Text = LocalizationConstants.CloseText;
-            btnReset.Text = LocalizationConstants.ResetText;
-            Text = LocalizationConstants.SavedProfilesModalWindowText;
+            btnFilter.Text = LocalizationContext.Instance.FindLocalizedElement("BtnFilterText", "Фільтрувати");
+            btnOk.Text = LocalizationContext.Instance.FindLocalizedElement("BtnAddToSessionText", "Додати до сесії");
+            btnCancel.Text = LocalizationContext.Instance.FindLocalizedElement("BtnCloseText", "Закрити");
+            btnReset.Text = LocalizationContext.Instance.FindLocalizedElement("BtnResetText", "Скинути");
+            Text = LocalizationContext.Instance.FindLocalizedElement("FrmSavedProfilesModalWindowText", "Додати профілі до сесії");
         }
 
         private void BtnFilter_Click(object sender, EventArgs e)
@@ -178,12 +177,12 @@ namespace MilSpace.Profile.ModalWindows
             var allSetsInListView = _controller.GetAllAccessibleProfilesSets();
             var filteredFields = allSetsInListView;
 
-            if(txtName.Text != LocalizationConstants.NamePlaceholder && !string.IsNullOrWhiteSpace(txtName.Text))
+            if(txtName.Text != LocalizationContext.Instance.NamePlaceholder && !string.IsNullOrWhiteSpace(txtName.Text))
             {
                 filteredFields = _controller.FilterByName(txtName.Text, filteredFields);
             }
 
-            if(txtCreator.Text != LocalizationConstants.CreatorPlaceholder && !string.IsNullOrWhiteSpace(txtCreator.Text))
+            if(txtCreator.Text != LocalizationContext.Instance.CreatorPlaceholder && !string.IsNullOrWhiteSpace(txtCreator.Text))
             {
                 filteredFields = _controller.FilterByCreator(txtCreator.Text, filteredFields);
             }
@@ -193,7 +192,7 @@ namespace MilSpace.Profile.ModalWindows
                 filteredFields = _controller.FilterByDate(fromDate.Value, toDate.Value, filteredFields);
             }
 
-            if(cmbGraphType.SelectedItem.ToString() != LocalizationConstants.GraphTypeText)
+            if(cmbGraphType.SelectedItem.ToString() != LocalizationContext.Instance.FindLocalizedElement("CmbGraphTypeText", "Усі типи"))
             {
                 var types = _controller.GetGraphTypes();
 
@@ -214,7 +213,7 @@ namespace MilSpace.Profile.ModalWindows
 
         private void TxtName_Enter(object sender, EventArgs e)
         {
-            ChangePlaceholderHandler(txtName, LocalizationConstants.NamePlaceholder, true);
+            ChangePlaceholderHandler(txtName, LocalizationContext.Instance.NamePlaceholder, true);
         }
 
         private void ChangePlaceholderHandler(TextBox textBox, string placeHolderText, bool isEnter)
@@ -239,17 +238,17 @@ namespace MilSpace.Profile.ModalWindows
 
         private void TxtCreator_Enter(object sender, EventArgs e)
         {
-            ChangePlaceholderHandler(txtCreator, LocalizationConstants.CreatorPlaceholder, true);
+            ChangePlaceholderHandler(txtCreator, LocalizationContext.Instance.CreatorPlaceholder, true);
         }
 
         private void TxtName_Leave(object sender, EventArgs e)
         {
-            ChangePlaceholderHandler(txtName, LocalizationConstants.NamePlaceholder, false);
+            ChangePlaceholderHandler(txtName, LocalizationContext.Instance.NamePlaceholder, false);
         }
 
         private void TxtCreator_Leave(object sender, EventArgs e)
         {
-            ChangePlaceholderHandler(txtCreator, LocalizationConstants.CreatorPlaceholder, false);
+            ChangePlaceholderHandler(txtCreator, LocalizationContext.Instance.CreatorPlaceholder, false);
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)

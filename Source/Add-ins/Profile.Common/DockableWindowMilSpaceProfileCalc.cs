@@ -6,7 +6,6 @@ using MilSpace.Core;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Profile.DTO;
-using MilSpace.Profile.Localization;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -331,7 +330,7 @@ namespace MilSpace.Profile
                 UID dockWinID = new UIDClass();
                 dockWinID.Value = ThisAddIn.IDs.DockableWindowMilSpaceProfileCalc;
                 IDockableWindow dockWindow = ArcMap.DockableWindowManager.GetDockableWindow(dockWinID);
-                dockWindow.Caption = LocalizationConstants.ProfileCalcDocableWinCationText;
+                dockWindow.Caption = LocalizationContext.Instance.FindLocalizedElement("LblProfileDocableWinCaption", "Спостереження. Розрахунок профілю");
                 return dockWindow;
             }
 
@@ -373,7 +372,7 @@ namespace MilSpace.Profile
                     if (ArcMap.Application.CurrentTool == null)
                     {
                         linePickCoordFirst.Pushed = false;
-                        var message = LocalizationConstants.PickCoordinatesToolMessage;
+                        var message = LocalizationContext.Instance.FindLocalizedElement("MsgPickCoordinatesToolText", "Будь ласка, увімкніть інструмент для виділення точки");
                         MessageBox.Show(
                             message, 
                             "Profile Calc", 
@@ -419,7 +418,7 @@ namespace MilSpace.Profile
                     }
                     else
                     {
-                        //string sMsgText = LocalizationConstants.GetLocalization(
+                        //string sMsgText = LocalizationContext.Instance.FindLocalizedElement.GetLocalization(
                         //    "MsgInvalidCoordinatesDD",
                         //    "недійсні дані \nПотрібні коордінати представлені у СК WGS-84, десяткові градуси");
                         string sMsgText = "Недійсні дані. Потрібні коордінати у СК WGS-84, десяткові градуси.";
@@ -467,7 +466,7 @@ namespace MilSpace.Profile
                     if (ArcMap.Application.CurrentTool == null)
                     {
                         linePickCoordFirst.Pushed = false;
-                        var message = LocalizationConstants.PickCoordinatesToolMessage;
+                        var message = LocalizationContext.Instance.FindLocalizedElement("MsgPickCoordinatesToolText", "Будь ласка, увімкніть інструмент для виділення точки");
                         MessageBox.Show(
                             message, 
                             "Profile Calc", 
@@ -510,7 +509,7 @@ namespace MilSpace.Profile
                     }
                     else
                     {
-                        //string sMsgText = LocalizationConstants.GetLocalization(
+                        //string sMsgText = LocalizationContext.Instance.FindLocalizedElement.GetLocalization(
                         //    "MsgInvalidCoordinatesDD",
                         //    "недійсні дані \nПотрібні коордінати представлені у СК WGS-84, десяткові градуси");
                         string sMsgText = "Недійсні дані. Потрібні коордінати у СК WGS-84, десяткові градуси.";
@@ -541,7 +540,7 @@ namespace MilSpace.Profile
                     HandlePickCoordTool(e.Button);
                     if (ArcMap.Application.CurrentTool == null)
                     {
-                        var message = LocalizationConstants.PickCoordinatesToolMessage;// $"Please add Pick Coordinates tool to any toolbar first.";
+                        var message = LocalizationContext.Instance.FindLocalizedElement("MsgPickCoordinatesToolText", "Будь ласка, увімкніть інструмент для виділення точки");// $"Please add Pick Coordinates tool to any toolbar first.";
                         MessageBox.Show(
                             message, 
                             "Profile Calc", 
@@ -589,7 +588,7 @@ namespace MilSpace.Profile
                     }
                     else
                     {
-                        //string sMsgText = LocalizationConstants.GetLocalization(
+                        //string sMsgText = LocalizationContext.Instance.FindLocalizedElement.GetLocalization(
                         //    "MsgInvalidCoordinatesDD",
                         //    "недійсні дані \nПотрібні коордінати представлені у СК WGS-84, десяткові градуси");
                         string sMsgText = "Недійсні дані. Потрібні коордінати у СК WGS-84, десяткові градуси.";
@@ -1046,86 +1045,86 @@ namespace MilSpace.Profile
             //TODO: Set all localization srting here
 
             ToolTip toolTip = new ToolTip();
-            toolTip.SetToolTip(this.btnRefreshLayers, LocalizationConstants.RefreshButtonToolTip);
+            toolTip.SetToolTip(this.btnRefreshLayers, LocalizationContext.Instance.FindLocalizedElement("BtnRefreshLayersToolTip", "Оновити шари даних"));
 
-            firstPointToolBar.Buttons["toolBarButton8"].ToolTipText = LocalizationConstants.TakeCoordToolTip;
-            firstPointToolBar.Buttons["toolBarButton55"].ToolTipText = LocalizationConstants.ShowCoordToolTip;
-            firstPointToolBar.Buttons["toolBarButton57"].ToolTipText = LocalizationConstants.CopyCoordToolTip;
-            firstPointToolBar.Buttons["toolBarButton58"].ToolTipText = LocalizationConstants.PasteCoordToolTip;
+            firstPointToolBar.Buttons["toolBarButton8"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnTakeCoordToolTip", "Взяти координати з карти");
+            firstPointToolBar.Buttons["toolBarButton55"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnShowCoordToolTip", "Показати координати на карті");
+            firstPointToolBar.Buttons["toolBarButton57"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnCopyCoordToolTip", "Копіювати координати");
+            firstPointToolBar.Buttons["toolBarButton58"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnPasteCoordToolTip", "Вставити координати");
 
-            secondPointToolbar.Buttons["toolBarButton61"].ToolTipText = LocalizationConstants.TakeCoordToolTip;
-            secondPointToolbar.Buttons["toolBarButton2"].ToolTipText = LocalizationConstants.ShowCoordToolTip;
-            secondPointToolbar.Buttons["toolBarButton3"].ToolTipText = LocalizationConstants.CopyCoordToolTip;
-            secondPointToolbar.Buttons["toolBarButton4"].ToolTipText = LocalizationConstants.PasteCoordToolTip;
+            secondPointToolbar.Buttons["toolBarButton61"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnTakeCoordToolTip", "Взяти координати з карти");
+            secondPointToolbar.Buttons["toolBarButton2"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnShowCoordToolTip", "Показати координати на карті");
+            secondPointToolbar.Buttons["toolBarButton3"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnCopyCoordToolTip", "Копіювати координати");
+            secondPointToolbar.Buttons["toolBarButton4"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnPasteCoordToolTip", "Вставити координати");
 
-            basePointToolbar.Buttons["toolBarButton16"].ToolTipText = LocalizationConstants.TakeCoordToolTip;
-            basePointToolbar.Buttons["toolBarButton17"].ToolTipText = LocalizationConstants.ShowCoordToolTip;
-            basePointToolbar.Buttons["toolBarButton19"].ToolTipText = LocalizationConstants.CopyCoordToolTip;
-            basePointToolbar.Buttons["toolBarButton20"].ToolTipText = LocalizationConstants.PasteCoordToolTip;
+            basePointToolbar.Buttons["toolBarButton16"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnTakeCoordToolTip", "Взяти координати з карти");
+            basePointToolbar.Buttons["toolBarButton17"].ToolTipText =  LocalizationContext.Instance.FindLocalizedElement("BtnShowCoordToolTip", "Показати координати на карті");
+            basePointToolbar.Buttons["toolBarButton19"].ToolTipText =  LocalizationContext.Instance.FindLocalizedElement("BtnCopyCoordToolTip", "Копіювати координати");
+            basePointToolbar.Buttons["toolBarButton20"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnPasteCoordToolTip", "Вставити координати");
 
-            addAvailableProfilesSets.ToolTipText = LocalizationConstants.AddAvailableProfilesSetsToolTip;
-            lblSelectedPrimitives.Text = LocalizationConstants.SelectedPrimitivesText;
-            lblCommonLength.Text = LocalizationConstants.CommonLengthText;
+            addAvailableProfilesSets.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnAddAvailableProfilesSetsToolTip", "Додати доступні набори профілів");
+            lblSelectedPrimitives.Text = LocalizationContext.Instance.FindLocalizedElement("LblSelectedPrimitivesText", "Вибрані об'єкти:");
+            lblCommonLength.Text = LocalizationContext.Instance.FindLocalizedElement("LblCommonLengthText", "Довжина вибраних об'єктів:");
 
             //Profile Tabs
-            profileTabPage.Text = LocalizationConstants.ProfileTabPageText;
-            profileTreeTabPage.Text = LocalizationConstants.PofileTreeTabPageText;
+            profileTabPage.Text = LocalizationContext.Instance.FindLocalizedElement("TabProfileTabPageText", "Параметри профілю");
+            profileTreeTabPage.Text = LocalizationContext.Instance.FindLocalizedElement("TabPofileTreeTabPageText", "Профілі в роботі");
 
-            sectionTab.Text = LocalizationConstants.SectionTabText;
-            //loadTab.Text = LocalizationConstants.LoadTabText;
-            primitiveTab.Text = LocalizationConstants.PrimitiveTabText;
-            funTab.Text = LocalizationConstants.FunTabText;
+            sectionTab.Text = LocalizationContext.Instance.FindLocalizedElement("TabSectionTabText", "Відрізки");
+            //loadTab.Text = LocalizationContext.Instance.FindLocalizedElement.LoadTabText;
+            primitiveTab.Text = LocalizationContext.Instance.FindLocalizedElement("TabPrimitiveTabText", "Графіка");
+            funTab.Text = LocalizationContext.Instance.FindLocalizedElement("TabFunTabText", "\"Віяло\"");
 
 
             //Labels
-            lblDEM.Text = LocalizationConstants.lblDEM_Text;
+            lblDEM.Text = LocalizationContext.Instance.FindLocalizedElement("LblDEMTextKey", "Шар ЦМР/ЦММ");
 
-            lblLayersForCalc.Text = LocalizationConstants.LayersForCalcText;
-            lblVegetationLayer.Text = LocalizationConstants.VegetationLayerText;
-            lblBuildingsLayer.Text = LocalizationConstants.BuildingsLayerText;
-            lblRoadsLayer.Text = LocalizationConstants.RoadsLayerText;
-            lblHydrographyLayer.Text = LocalizationConstants.HydrographyLayerText;
-            lblPointOfViewLayer.Text = LocalizationConstants.PointOfViewLayerText;
-            lblSetPeofileProperties.Text = LocalizationConstants.SetProfilePropertiesText;
-            lblProfileName.Text = LocalizationConstants.ProfileNameText;
+            lblLayersForCalc.Text = LocalizationContext.Instance.FindLocalizedElement("LblLayersForCalcText", "Шари для розрахунків");
+            lblVegetationLayer.Text = LocalizationContext.Instance.FindLocalizedElement("LblVegetationLayerText", "рослинність");
+            lblBuildingsLayer.Text = LocalizationContext.Instance.FindLocalizedElement("LblBuildingsLayerText", "забудова");
+            lblRoadsLayer.Text = LocalizationContext.Instance.FindLocalizedElement("LblRoadsLayerText", "транспорт");
+            lblHydrographyLayer.Text = LocalizationContext.Instance.FindLocalizedElement("LblHydrographyLayerText", "гідрографія");
+            lblPointOfViewLayer.Text = LocalizationContext.Instance.FindLocalizedElement("LblPointOfViewLayerText", "Шар точок спостереження");
+            lblSetPeofileProperties.Text = LocalizationContext.Instance.FindLocalizedElement("LblSetProfilePropertiesText", "Задати профіль");
+            lblProfileName.Text = LocalizationContext.Instance.FindLocalizedElement("LblProfileNameText", "Ім'я профілю");
 
-            calcProfile.Text = LocalizationConstants.СalcProfileText;
-            lblLineFirstPoint.Text = LocalizationConstants.LineFirstPointText;
-            lblLineSecondPoint.Text = LocalizationConstants.LinewSecondPointText;
+            calcProfile.Text = LocalizationContext.Instance.FindLocalizedElement("BtnСalcProfileText", "Розрахувати");
+            lblLineFirstPoint.Text = LocalizationContext.Instance.FindLocalizedElement("LblLineFirstPointText", "Перша точка (довгота / широта)");
+            lblLineSecondPoint.Text = LocalizationContext.Instance.FindLocalizedElement("LblLineSecondPointText", "Друга точка (довгота / широта)");
 
-            lblHeightOfViewFirst.Text = LocalizationConstants.HeightOfViewFirstText;
-            lblHeightOfViewSecond.Text = LocalizationConstants.HeightOfViewSecondText;
-            lblDimensionSecond.Text = LocalizationConstants.DimensionSecondText;
-            lblDimensionFirst.Text = LocalizationConstants.DimensionFirstText;
-            lblFunBasePoint.Text = LocalizationConstants.FunBasePointText;
-            lblHeightOfViewFunBaseText.Text = LocalizationConstants.HeightOfViewFunBaseText;
-            lblFunParameters.Text = LocalizationConstants.FunParametersText;
-            lblFunDistance.Text = LocalizationConstants.FunDistanceText;
-            lblFunCount.Text = LocalizationConstants.FunCountText;
+            lblHeightOfViewFirst.Text = LocalizationContext.Instance.FindLocalizedElement("LblHeightOfViewText", "Висота точки спостереження");
+            lblHeightOfViewSecond.Text = LocalizationContext.Instance.FindLocalizedElement("LblHeightOfViewText", "Висота точки спостереження");
+            lblDimensionSecond.Text = LocalizationContext.Instance.FindLocalizedElement("LblDimensionSecondText", "м");
+            lblDimensionFirst.Text = LocalizationContext.Instance.FindLocalizedElement("LblDimensionFirstText", "м");
+            lblFunBasePoint.Text = LocalizationContext.Instance.FindLocalizedElement("LblFunBasePointText", " точка (довгота / широта)");
+            lblHeightOfViewFunBaseText.Text = LocalizationContext.Instance.FindLocalizedElement("LblHeightOfViewText", "Висота точки спостереження");
+            lblFunParameters.Text = LocalizationContext.Instance.FindLocalizedElement("LblFunParametersText", "Параметри");
+            lblFunDistance.Text = LocalizationContext.Instance.FindLocalizedElement("LblFunDistanceText", "Відстань");
+            lblFunCount.Text = LocalizationContext.Instance.FindLocalizedElement("LblFunCountText", "Кількість");
 
-            lblFunAzimuth1.Text = LocalizationConstants.FunAzimuth1Text;
-            lblFunAzimuth2.Text = LocalizationConstants.FunAzimuth2Text;
+            lblFunAzimuth1.Text = LocalizationContext.Instance.FindLocalizedElement("LblFunAzimuth1Text", "Азимут 1");
+            lblFunAzimuth2.Text = LocalizationContext.Instance.FindLocalizedElement("LblFunAzimuth2Text", "Азимут 2");
 
-            lblHeightOfViewGraphics.Text = LocalizationConstants.HeightOfViewGraphicsText;
-            lblPrimitivesLayerToSelect.Text = LocalizationConstants.PrimitivesLayerToSelectText;
-            lblAboutSelected.Text = LocalizationConstants.AboutSelectedText;
+            lblHeightOfViewGraphics.Text = LocalizationContext.Instance.FindLocalizedElement("LblHeightOfViewText", "Висота точки спостереження");
+            lblPrimitivesLayerToSelect.Text = LocalizationContext.Instance.FindLocalizedElement("LblPrimitivesLayerToSelectText", "Шари для вибору об'єктів");
+            lblAboutSelected.Text = LocalizationContext.Instance.FindLocalizedElement("LblAboutSelectedText", "Інформація про обране");
 
-            lblProfileList.Text = LocalizationConstants.ProfileListText;
+            lblProfileList.Text = LocalizationContext.Instance.FindLocalizedElement("LblProfileListText", "Профілі в роботі");
 
-            toolPanOnMap.ToolTipText = LocalizationConstants.ToolPanOnMapToolTip;
-            toolBtnFlash.ToolTipText = LocalizationConstants.ToolBtnShowOnMapToolTip;
-            setProfileSettingsToCalc.ToolTipText = LocalizationConstants.ToolSetProfileSettingsToCalcToolTip;
-            addProfileToExistingGraph.ToolTipText = LocalizationConstants.ToolAddProfileToExistingGraphToolTip;
-            addProfileToGraph.ToolTipText = LocalizationConstants.ToolAddProfileToGraphToolTip;
-            openGraphWindow.ToolTipText = LocalizationConstants.ToolOpenGraphWindowToolTip;
-            removeProfile.ToolTipText = LocalizationConstants.ToolRemoveProfileToolTip;
-            saveProfileAsShared.ToolTipText = LocalizationConstants.ToolSaveProfileAsSharedToolTip;
-            eraseProfile.ToolTipText = LocalizationConstants.ToolEraseProfileToolTip;
-            clearExtraGraphic.ToolTipText = LocalizationConstants.ToolClearExtraGraphicToolTip;
+            toolPanOnMap.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintToolBtnPanOnMapText", "Переміститись  на карті");
+            toolBtnFlash.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintToolBtnShowOnMapText", "Показати на карті");
+            setProfileSettingsToCalc.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintToolSetProfileSettingsToCalcText", "Скопіювати параметри профілю");
+            addProfileToExistingGraph.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintAddProfileToExistingGraphText", "Додати профіль на графік");
+            addProfileToGraph.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintAddProfileToGraphText", "Відкрити графік профілю");
+            openGraphWindow.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintOpenGraphWindowText", "Відкрити вікно графіків");
+            removeProfile.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintRemoveProfileText", "Cкинути профіль з сесії");
+            saveProfileAsShared.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintSaveProfileAsSharedText", "Надати спільний доступ до профілю");
+            eraseProfile.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintEraseProfileText", "Видалити профіль");
+            clearExtraGraphic.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintClearExtraGraphicText", "Очистити графіку на карті");
 
-            profilesTreeView.Nodes["Points"].Text = LocalizationConstants.PointsNodeText;
-            profilesTreeView.Nodes["Fun"].Text = LocalizationConstants.FunNodeText;
-            profilesTreeView.Nodes["Primitives"].Text = LocalizationConstants.PrimitiveNodeText;
+            profilesTreeView.Nodes["Points"].Text = LocalizationContext.Instance.FindLocalizedElement("TvProfilesPointsNodeText", "Відрізки");
+            profilesTreeView.Nodes["Fun"].Text = LocalizationContext.Instance.FindLocalizedElement("TvProfilesFunNodeText", "\"Віяло\"");
+            profilesTreeView.Nodes["Primitives"].Text = LocalizationContext.Instance.FindLocalizedElement("TvProfilesPritiveNodeText", "Графіка");
 
             logger.InfoEx("> LocalizeStrings Profile END");
         }
@@ -1147,10 +1146,11 @@ namespace MilSpace.Profile
         private void removeProfile_Click(object sender, EventArgs e)
         {
             string loalizedtext =
-               LocalizationConstants.RemoveProfaileMessage.InvariantFormat(profilesTreeView.SelectedNode.Text);
+               LocalizationContext.Instance.FindLocalizedElement("MsgRemoveProfaileText", $"Ви дійсно бажаєти cкинути профіль  \"{0}\" з сесії?")
+               .InvariantFormat(profilesTreeView.SelectedNode.Text);
             if (MessageBox.Show(
                 loalizedtext, 
-                "MilSpace", 
+                LocalizationContext.Instance.MessageBoxTitle, 
                 MessageBoxButtons.YesNo, 
                 MessageBoxIcon.Question) == DialogResult.Yes)
             {
@@ -1158,7 +1158,7 @@ namespace MilSpace.Profile
                 {
                     MessageBox.Show(
                         "There was an error. Look at the log file for more detail", 
-                        "MilSpace", 
+                        LocalizationContext.Instance.MessageBoxTitle, 
                         MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
@@ -1229,7 +1229,7 @@ namespace MilSpace.Profile
 
                 logger.InfoEx($"Profile  {profile.SessionName} added to the tree");
 
-                string lineDefinition = LocalizationConstants.TreeViewProfileText;
+                string lineDefinition = LocalizationContext.Instance.FindLocalizedElement("TxtTreeViewProfileText", "Профіль:");
 
                 foreach (var line in profile.ProfileLines)
                 {
@@ -1285,16 +1285,16 @@ namespace MilSpace.Profile
             switch (profileType)
             {
                 case ProfileSettingsTypeEnum.Points:
-                    return LocalizationConstants.SectionTabText;
+                    return LocalizationContext.Instance.FindLocalizedElement("TabSectionTabText", "Відрізки");
 
                 case ProfileSettingsTypeEnum.Fun:
-                    return LocalizationConstants.FunTabText;
+                    return LocalizationContext.Instance.FindLocalizedElement("TabFunTabText", "\"Віяло\"");
 
                 case ProfileSettingsTypeEnum.Primitives:
-                    return LocalizationConstants.PrimitiveTabText;
+                    return LocalizationContext.Instance.FindLocalizedElement("TabPrimitiveTabText", "Графіка");
 
                 case ProfileSettingsTypeEnum.Load:
-                    return LocalizationConstants.LoadTabText;
+                    return LocalizationContext.Instance.FindLocalizedElement("TabLoadTabText", "Завантажити");
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(profileType), profileType, null);
@@ -1316,8 +1316,8 @@ namespace MilSpace.Profile
             if (!res.HasValue)
             {
                 MessageBox.Show(
-                    LocalizationConstants.NotAllowedToShareMessage, 
-                    "MilSpace", 
+                    LocalizationContext.Instance.FindLocalizedElement("MsgNotAllowedToShareText", "Ви не можете дозволити спільний доступ для цього профілю."), 
+                    LocalizationContext.Instance.MessageBoxTitle, 
                     MessageBoxButtons.OK, 
                     MessageBoxIcon.Error);
                 return;
@@ -1326,8 +1326,8 @@ namespace MilSpace.Profile
             if (!res.Value)
             {
                 MessageBox.Show(
-                    LocalizationConstants.ErrorOnShareProfileTextMessage, 
-                    "MilSpace", 
+                    LocalizationContext.Instance.ErrorHappendText, 
+                    LocalizationContext.Instance.MessageBoxTitle, 
                     MessageBoxButtons.OK, 
                     MessageBoxIcon.Error);
             }
@@ -1339,18 +1339,19 @@ namespace MilSpace.Profile
         private void eraseProfile_Click(object sender, EventArgs e)
         {
             string loalizedtext = 
-                LocalizationConstants.DeleteProfaileMessage.InvariantFormat(profilesTreeView.SelectedNode.Text);
+                LocalizationContext.Instance.FindLocalizedElement("MsgDeleteProfaileText", $"Ви дійсно бажаєти видалити профіль  \"{0}\"?")
+                .InvariantFormat(profilesTreeView.SelectedNode.Text);
             if (MessageBox.Show(
                 loalizedtext, 
-                "MilSpace", 
+                LocalizationContext.Instance.MessageBoxTitle, 
                 MessageBoxButtons.YesNo, 
                 MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 if (!controller.RemoveProfilesFromUserSession(true))
                 {
                     MessageBox.Show(
-                        LocalizationConstants.ErrorOnShareProfileTextMessage, 
-                        "MilSpace", 
+                       LocalizationContext.Instance.ErrorHappendText,
+                        LocalizationContext.Instance.MessageBoxTitle, 
                         MessageBoxButtons.OK, 
                         MessageBoxIcon.Exclamation);
                 }

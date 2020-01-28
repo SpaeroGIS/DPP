@@ -9,7 +9,6 @@ using MilSpace.DataAccess.DataTransfer;
 using System.Text.RegularExpressions;
 using System.Text;
 using System.IO;
-using MilSpace.Profile.Localization;
 
 namespace MilSpace.Profile.SurfaceProfileChartControl
 {
@@ -113,7 +112,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 var profileSurface = profileSession.ProfileSurfaces.First(surface => surface.LineId == line.Id);
                 AddSerie(profileSurface);
             }
-            profileNameLabel.Text = $"{LocalizationConstants.SelectedProfileNameText} {profileSession.SessionName}";
+            profileNameLabel.Text = $"{LocalizationContext.Instance.FindLocalizedElement("LblSelectedProfileNameText", "Профіль:")} {profileSession.SessionName}";
             profileNameLabel.Tag = profileSession.SessionId;
         }
 
@@ -254,61 +253,61 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         private void LocalizeControls()
         {
-            observerHeightLabel.Text = LocalizationConstants.ObserverHeightText;
-            visibleLineColorLabel.Text = LocalizationConstants.VisibleLineColorText;
-            invisibleLineColorLabel.Text = LocalizationConstants.InvisibleLineColorText;
+            observerHeightLabel.Text = LocalizationContext.Instance.FindLocalizedElement("LblObserverHeightText", "Пункт спостереження (м)");
+            visibleLineColorLabel.Text = LocalizationContext.Instance.FindLocalizedElement("LblVisibleLineColorText", "видимі");
+            invisibleLineColorLabel.Text = LocalizationContext.Instance.FindLocalizedElement("LblInvisibleLineColorText", "невидимі");
 
-            copyStripMenuItem.Text = LocalizationConstants.CopyStripMenuItemText;
-            toolTip.SetToolTip(profileDetailsListView, LocalizationConstants.ProfileDetailsToolTip);
-            toolTip.SetToolTip(changeAllObserversHeightsButton, LocalizationConstants.ChangeAllObserversHeightsToolTip);
+            copyStripMenuItem.Text = LocalizationContext.Instance.FindLocalizedElement("CopyStripMenuItemText", "Скопіювати");
+            toolTip.SetToolTip(profileDetailsListView, LocalizationContext.Instance.FindLocalizedElement("LvProfileDetailsToolTip", "Щоб скопіювати рядки натисніть праву клавішу миші"));
+            toolTip.SetToolTip(changeAllObserversHeightsButton, LocalizationContext.Instance.FindLocalizedElement("BtnChangeAllObserversHeightsToolTip", "Змінити висоту всіх пунктів спостереження"));
 
-            graphToolBar.Buttons["displayProfileSignatureGraphToolBarBtn"].ToolTipText = LocalizationConstants.DisplayProfileSignatureToolTip;
-            graphToolBar.Buttons["deleteSelectedProfileGraphToolBarBtn"].ToolTipText = LocalizationConstants.DeleteSelectedProfileToolTip;
-            graphToolBar.Buttons["addProfileGraphToolBarButton"].ToolTipText = LocalizationConstants.AddProfileGraphToolTip;
-            graphToolBar.Buttons["panToSelectedProfileGraphToolBarBtn"].ToolTipText = LocalizationConstants.PanToSelectedProfileToolTip;
-            graphToolBar.Buttons["panGraphToolBarBtn"].ToolTipText = LocalizationConstants.PanToProfilesSetToolTip;
-            graphToolBar.Buttons["showAllProfilesGraphToolBarBtn"].ToolTipText = LocalizationConstants.ShowAllProfilesToolTip;
-            graphToolBar.Buttons["observerHeightIgnoreGraphToolBarBtn"].ToolTipText = LocalizationConstants.ObserverHeightIgnoreToolTip;
-            graphToolBar.Buttons["zoomInGraphToolBarBtn"].ToolTipText = LocalizationConstants.ZoomInToolTip;
-            graphToolBar.Buttons["zoomOutGraphToolBarBtn"].ToolTipText = LocalizationConstants.ZoomOutToolTip;
-            graphToolBar.Buttons["addPageGraphToolBarBtn"].ToolTipText = LocalizationConstants.AddPageToolTip;
-            graphToolBar.Buttons["deletePageGraphToolBarBtn"].ToolTipText = LocalizationConstants.DeletePageToolTip;
-            graphToolBar.Buttons["saveGraphToolBarBtn"].ToolTipText = LocalizationConstants.SaveToolTip;
-            graphToolBar.Buttons["updateIntersectionsLinesGraphToolBarBtn"].ToolTipText = LocalizationConstants.UpdateIntersectionsLinesToolTip;
+            graphToolBar.Buttons["displayProfileSignatureGraphToolBarBtn"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("GraphTbBtnDisplayProfileSignatureToolTip", "Відобразити підписи номерів профілів на графіку");
+            graphToolBar.Buttons["deleteSelectedProfileGraphToolBarBtn"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("GraphTbBtnDeleteSelectedProfileToolTip", "Видалити обраний профіль з графіка");
+            graphToolBar.Buttons["addProfileGraphToolBarButton"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("GraphTbBtnAddProfileGraphToolTip", "Додати профіль на графік");
+            graphToolBar.Buttons["panToSelectedProfileGraphToolBarBtn"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("GraphTbBtnPanToSelectedProfileToolTip", "Позиціонування на обраний профіль");
+            graphToolBar.Buttons["panGraphToolBarBtn"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("GraphTbBtnPanToProfilesSetToolTip", "Позиціонування на набір профілів");
+            graphToolBar.Buttons["showAllProfilesGraphToolBarBtn"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("GraphTbBtnShowAllProfilesToolTip", "Показати всі профілі");
+            graphToolBar.Buttons["observerHeightIgnoreGraphToolBarBtn"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("GraphTbBtnObserverHeightIgnoreToolTip", "Враховувати/ігнорувати висоту пункту спостереження при масштабуванні");
+            graphToolBar.Buttons["zoomInGraphToolBarBtn"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("GraphTbBtnZoomInToolTip", "Збільшити масштаб");
+            graphToolBar.Buttons["zoomOutGraphToolBarBtn"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("GraphTbBtnZoomOutToolTip", "Зменшити масштаб");
+            graphToolBar.Buttons["addPageGraphToolBarBtn"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("GraphTbBtnAddPageToolTip", "Додати нову вкладку для графіка");
+            graphToolBar.Buttons["deletePageGraphToolBarBtn"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("GraphTbBtnDeletePageToolTip", "Видалити вкладку");
+            graphToolBar.Buttons["saveGraphToolBarBtn"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("GraphTbBtnSaveToolTip", "Зберегти дані");
+            graphToolBar.Buttons["updateIntersectionsLinesGraphToolBarBtn"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("GraphTbBtnUpdateIntersectionsLinesToolTip", "Розрахувати лінії перетину з шарами");
 
             //profilePropertiesTable
-            profilePropertiesTable.Columns["IsVisibleCol"].ToolTipText = LocalizationConstants.ProfilePropertiesIsVisibleColToolTip;
-            profilePropertiesTable.Columns["IsVisibleCol"].HeaderText = LocalizationConstants.ProfilePropertiesIsVisibleColHeader;  
+            profilePropertiesTable.Columns["IsVisibleCol"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("DgvProfilePropertiesIsVisibleColToolTip", "Показати/сховати профіль");
+            profilePropertiesTable.Columns["IsVisibleCol"].HeaderText = LocalizationContext.Instance.FindLocalizedElement("DgvProfilePropertiesIsVisibleColHeader", "ВД");  
 
-            profilePropertiesTable.Columns["ProfileNumberCol"].ToolTipText = LocalizationConstants.ProfilePropertiesProfileNumberColToolTip;
-            profilePropertiesTable.Columns["ProfileNumberCol"].HeaderText = LocalizationConstants.ProfilePropertiesProfileNumberColHeader;
+            profilePropertiesTable.Columns["ProfileNumberCol"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("DgvProfilePropertiesProfileNumberColToolTip", "Номер профіля");
+            profilePropertiesTable.Columns["ProfileNumberCol"].HeaderText = LocalizationContext.Instance.FindLocalizedElement("DgvProfilePropertiesProfileNumberColHeader", "Н");
 
-            profilePropertiesTable.Columns["AzimuthCol"].ToolTipText = LocalizationConstants.ProfilePropertiesAzimuthColToolTip;
-            profilePropertiesTable.Columns["AzimuthCol"].HeaderText = LocalizationConstants.ProfilePropertiesAzimuthColHeader;
+            profilePropertiesTable.Columns["AzimuthCol"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("DgvProfilePropertiesAzimuthColToolTip", "Азимут");
+            profilePropertiesTable.Columns["AzimuthCol"].HeaderText = LocalizationContext.Instance.FindLocalizedElement("DgvProfilePropertiesAzimuthColHeader", "АЗ");
 
-            profilePropertiesTable.Columns["ObserverHeightCol"].ToolTipText = LocalizationConstants.ProfilePropertiesObserverHeightColToolTip;
-            profilePropertiesTable.Columns["ObserverHeightCol"].HeaderText = LocalizationConstants.ProfilePropertiesObserverHeightColHeader;
+            profilePropertiesTable.Columns["ObserverHeightCol"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("DgvProfilePropertiesObserverHeightColToolTip", "Висота пункту спостереження (м)");
+            profilePropertiesTable.Columns["ObserverHeightCol"].HeaderText = LocalizationContext.Instance.FindLocalizedElement("DgvProfilePropertiesObserverHeightColHeader", "В");
 
-            profilePropertiesTable.Columns["ProfileLengthCol"].ToolTipText = LocalizationConstants.ProfilePropertiesProfileLengthColToolTip;
-            profilePropertiesTable.Columns["ProfileLengthCol"].HeaderText = LocalizationConstants.ProfilePropertiesProfileLengthColHeader;
+            profilePropertiesTable.Columns["ProfileLengthCol"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("DgvProfilePropertiesProfileLengthColToolTip", "Довжина профіля (м)");
+            profilePropertiesTable.Columns["ProfileLengthCol"].HeaderText = LocalizationContext.Instance.FindLocalizedElement("DgvProfilePropertiesProfileLengthColHeader", "Д");
 
-            profilePropertiesTable.Columns["MinHeightCol"].ToolTipText = LocalizationConstants.ProfilePropertiesMinHeightColToolTip;
-            profilePropertiesTable.Columns["MinHeightCol"].HeaderText = LocalizationConstants.ProfilePropertiesMinHeightColHeader;
+            profilePropertiesTable.Columns["MinHeightCol"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("DgvProfilePropertiesMinHeightColToolTip", "Мінімальна висота (м)");
+            profilePropertiesTable.Columns["MinHeightCol"].HeaderText = LocalizationContext.Instance.FindLocalizedElement("DgvProfilePropertiesMinHeightColHeader", "МнВ");
 
-            profilePropertiesTable.Columns["MaxHeightCol"].ToolTipText = LocalizationConstants.ProfilePropertiesMaxHeightColToolTip;
-            profilePropertiesTable.Columns["MaxHeightCol"].HeaderText = LocalizationConstants.ProfilePropertiesMaxHeightColHeader;
+            profilePropertiesTable.Columns["MaxHeightCol"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("DgvProfilePropertiesMaxHeightColToolTip", "Максимальна висота (м)");
+            profilePropertiesTable.Columns["MaxHeightCol"].HeaderText = LocalizationContext.Instance.FindLocalizedElement("DgvProfilePropertiesMaxHeightColHeader", "МкВ");
 
-            profilePropertiesTable.Columns["HeightDifferenceCol"].ToolTipText = LocalizationConstants.ProfilePropertiesHeightDifferenceColToolTip;
-            profilePropertiesTable.Columns["HeightDifferenceCol"].HeaderText = LocalizationConstants.ProfilePropertiesHeightDifferenceColHeader;
+            profilePropertiesTable.Columns["HeightDifferenceCol"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("DgvProfilePropertiesHeightDifferenceColToolTip", "Різниця висот (м)");
+            profilePropertiesTable.Columns["HeightDifferenceCol"].HeaderText = LocalizationContext.Instance.FindLocalizedElement("DgvProfilePropertiesHeightDifferenceColHeader", "РВ");
 
-            profilePropertiesTable.Columns["DescendingAngleCol"].ToolTipText = LocalizationConstants.ProfilePropertiesDescendingAngleColToolTip;
-            profilePropertiesTable.Columns["DescendingAngleCol"].HeaderText = LocalizationConstants.ProfilePropertiesDescendingAngleColHeader;
+            profilePropertiesTable.Columns["DescendingAngleCol"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("DgvProfilePropertiesDescendingAngleColToolTip", "Максимальний кут спуску (градуси)");
+            profilePropertiesTable.Columns["DescendingAngleCol"].HeaderText = LocalizationContext.Instance.FindLocalizedElement("DgvProfilePropertiesDescendingAngleColHeader", "КС");
 
-            profilePropertiesTable.Columns["AscendingAngleCol"].ToolTipText = LocalizationConstants.ProfilePropertiesAscendingAngleColToolTip;
-            profilePropertiesTable.Columns["AscendingAngleCol"].HeaderText = LocalizationConstants.ProfilePropertiesAscendingAngleColHeader;
+            profilePropertiesTable.Columns["AscendingAngleCol"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("DgvProfilePropertiesAscendingAngleColToolTip", "Максимальний кут підйому (градуси)");
+            profilePropertiesTable.Columns["AscendingAngleCol"].HeaderText = LocalizationContext.Instance.FindLocalizedElement("DgvProfilePropertiesAscendingAngleColHeader", "КП");
 
-            profilePropertiesTable.Columns["VisiblePercentCol"].ToolTipText = LocalizationConstants.ProfilePropertiesVisiblePercentColToolTip;
-            profilePropertiesTable.Columns["VisiblePercentCol"].HeaderText = LocalizationConstants.ProfilePropertiesVisiblePercentColHeader;
+            profilePropertiesTable.Columns["VisiblePercentCol"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("DgvProfilePropertiesVisiblePercentColToolTip", "Відсоток видимих зон");
+            profilePropertiesTable.Columns["VisiblePercentCol"].HeaderText = LocalizationContext.Instance.FindLocalizedElement("DgvProfilePropertiesVisiblePercentColHeader", "ВВ");
         }
 
         private void CreateExtremePointsSerie(int lineId)
@@ -369,32 +368,32 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             var session = _controller.GetProfileSessionForLine(SelectedLineId);
 
             var sharedText = session.Shared ? 
-                LocalizationConstants.ProfilesSetSharedText : 
-                LocalizationConstants.ProfilesSetNotSharedText;
+                LocalizationContext.Instance.FindLocalizedElement("ProfilesSetSharedText", "Спільний") : 
+                LocalizationContext.Instance.FindLocalizedElement("ProfilesSetNotSharedText", "Приватний");
 
              profileDetailsListView.Items.Clear();
 
-            profileDetailsListView.Items.Add(CreateNewItem(LocalizationConstants.ProfileDetailsStateText, $"{sharedText}"));
+            profileDetailsListView.Items.Add(CreateNewItem(LocalizationContext.Instance.FindLocalizedElement("LvProfileDetailsStateText", "Стан:"), $"{sharedText}"));
             profileDetailsListView.Items.Add(
-                CreateNewItem(LocalizationConstants.ProfileDetailsEndPointsText,
+                CreateNewItem(LocalizationContext.Instance.FindLocalizedElement("LvProfileDetailsEndPointsText", "Початок - кінець"),
                 $"{Math.Round(surface.ProfileSurfacePoints[0].X, 5)};"
                 + $"{Math.Round(surface.ProfileSurfacePoints[0].Y, 5)}"
                 + $" - {Math.Round(surface.ProfileSurfacePoints.Last().X, 5)};"
                 + $"{Math.Round(surface.ProfileSurfacePoints.Last().Y, 5)}"));
             profileDetailsListView.Items.Add(
-                CreateNewItem(LocalizationConstants.ProfileDetailsAzimuthText,
+                CreateNewItem(LocalizationContext.Instance.FindLocalizedElement("LvProfileDetailsAzimuthText", "Азимут:"),
                 property.Azimuth == double.MinValue ? "" : $"{Math.Round(property.Azimuth, 1)}"));
             profileDetailsListView.Items.Add(
-                CreateNewItem(LocalizationConstants.ProfileDetailsLengthText,
+                CreateNewItem(LocalizationContext.Instance.FindLocalizedElement("LvProfileDetailsLengthText", "Довжина:"),
                 $"{Math.Round(property.PathLength, 0)}"));
             profileDetailsListView.Items.Add(
-                CreateNewItem(LocalizationConstants.ProfileDetailsHeightText,
+                CreateNewItem(LocalizationContext.Instance.FindLocalizedElement("LvProfileDetailsHeightText", "Висота (м):"),
                 $"{Math.Round(property.MinHeight, 0)}" + $"-{Math.Round(property.MaxHeight, 0)}"));
             profileDetailsListView.Items.Add(
-                CreateNewItem(LocalizationConstants.ProfileDetailsAnglesText,
+                CreateNewItem(LocalizationContext.Instance.FindLocalizedElement("LvProfileDetailsAnglesText", "Кути:"),
                 $"{Math.Round(property.MaxAngle, 1)}" + $"-{Math.Round(property.MinAngle, 1)}"));
             profileDetailsListView.Items.Add(
-                CreateNewItem(LocalizationConstants.ProfileDetailsVisibilityText,
+                CreateNewItem(LocalizationContext.Instance.FindLocalizedElement("LvProfileDetailsVisibilityText", "Видимі зони (%):"),
                 $"{Math.Round(property.VisiblePercent, 2)}"));
             profileDetailsListView.Items.Add(CreateNewItem($"{session.CreatedBy}", $"{session.CreatedOn}"));
         }
@@ -1125,8 +1124,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                     if(SelectedLineId != -1)
                     {
                         DialogResult deleteProfileResult =
-                                        MessageBox.Show(LocalizationConstants.RemovingProfileMessage, LocalizationConstants.MessageBoxTitle,
-                                                                                        MessageBoxButtons.OKCancel);
+                                        MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgRemovingProfileText", "Ви дійсно хочете видалити профіль?"),
+                                        LocalizationContext.Instance.MessageBoxTitle, MessageBoxButtons.OKCancel);
 
                         if(deleteProfileResult == DialogResult.OK)
                         {
@@ -1234,7 +1233,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 case "deletePageGraphToolBarBtn":
 
                     DialogResult deleteTabResult =
-                                    MessageBox.Show(LocalizationConstants.RemovingTabMessage, LocalizationConstants.MessageBoxTitle, MessageBoxButtons.OKCancel);
+                                    MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgRemovingTabText", "Ви дійсно хочете видалити вкладку?"),
+                                        LocalizationContext.Instance.MessageBoxTitle, MessageBoxButtons.OKCancel);
 
                     if(deleteTabResult == DialogResult.OK)
                     {
@@ -1499,8 +1499,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
                 if(Directory.Exists(path))
                 {
-                    DialogResult result = MessageBox.Show(String.Format(LocalizationConstants.FolderAlreadyExistMessage, $"{profileName}_{SelectedLineId}"),
-                                                          LocalizationConstants.MessageBoxTitle, MessageBoxButtons.OKCancel);
+                    DialogResult result = MessageBox.Show(String.Format(LocalizationContext.Instance.FindLocalizedElement("MsgFolderAlreadyExistText", $"Каталог \"{0}\" вже існує \n Ви дійсно хочете оновити дані?"), $"{profileName}_{SelectedLineId}"),
+                                                            LocalizationContext.Instance.MessageBoxTitle, MessageBoxButtons.OKCancel);
 
                     if(result != DialogResult.OK)
                     {

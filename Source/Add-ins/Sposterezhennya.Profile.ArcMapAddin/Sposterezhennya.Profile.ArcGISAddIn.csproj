@@ -192,8 +192,9 @@
     <Compile Include="..\Profile.Common\LineIntersections.cs">
       <Link>LineIntersections.cs</Link>
     </Compile>
-    <Compile Include="..\Profile.Common\Localization\LocalizationConstants.cs">
-      <Link>Localization\LocalizationConstants.cs</Link>
+    <Compile Include="..\Profile.Common\LocalizationContext.cs">
+      <Link>LocalizationContext.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="..\Profile.Common\MilSpace3DSolutionOpen.cs">
       <Link>MilSpace3DSolutionOpen.cs</Link>
@@ -350,6 +351,10 @@
     <AddInContent Include="Images\Poll.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AddInContent>
+    <Content Include="..\Profile.Common\Resources\SP_ProfileLocalization.xml">
+      <Link>Resources\SP_ProfileLocalization.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Localization\SPPRD.Profile.Calc.en-US.resources">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
