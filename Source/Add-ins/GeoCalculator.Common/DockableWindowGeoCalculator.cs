@@ -1030,8 +1030,7 @@ namespace MilSpace.GeoCalculator
         internal void ArcMap_OnMouseMove(int x, int y)
         {
             var currentPoint = _businessLogic.GetSelectedPoint(x, y);
-            XCoordinateTextBox.Text = currentPoint.X.ToIntegerString();
-            YCoordinateTextBox.Text = currentPoint.Y.ToIntegerString();
+            ProjectPointAsync(currentPoint, true);
         }
         #endregion        
 
