@@ -117,6 +117,9 @@
     <Compile Include="..\DataAccess\DataAccessor.cs">
       <Link>DataAccessor.cs</Link>
     </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\CoordinateSystemsEnum.cs">
+      <Link>DataTransfer\CoordinateSystemsEnum.cs</Link>
+    </Compile>
     <Compile Include="..\DataAccess\DataTransfer\CoverageTableModel.cs">
       <Link>DataTransfer\CoverageTableModel.cs</Link>
     </Compile>

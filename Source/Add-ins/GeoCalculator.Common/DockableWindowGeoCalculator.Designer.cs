@@ -110,6 +110,7 @@
             this.CopyGridPointButton = new System.Windows.Forms.ToolStripButton();
             this.SaveGridPointsButton = new System.Windows.Forms.ToolStripButton();
             this.OpenFileGridButton = new System.Windows.Forms.ToolStripButton();
+            this.cmbCoordSystem = new System.Windows.Forms.ToolStripComboBox();
             this.PointsGridView = new System.Windows.Forms.DataGridView();
             this.NumberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.XCoordColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -866,7 +867,8 @@
             this.toolStripSeparator3,
             this.CopyGridPointButton,
             this.SaveGridPointsButton,
-            this.OpenFileGridButton});
+            this.OpenFileGridButton,
+            this.cmbCoordSystem});
             this.GridToolStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.GridToolStrip.Location = new System.Drawing.Point(0, 419);
             this.GridToolStrip.Name = "GridToolStrip";
@@ -922,6 +924,13 @@
             this.OpenFileGridButton.Name = "OpenFileGridButton";
             this.OpenFileGridButton.Size = new System.Drawing.Size(23, 20);
             this.OpenFileGridButton.Click += new System.EventHandler(this.OpenFileGridButton_Click);
+            // 
+            // cmbCoordSystem
+            // 
+            this.cmbCoordSystem.Name = "cmbCoordSystem";
+            this.cmbCoordSystem.Size = new System.Drawing.Size(120, 23);
+            this.cmbCoordSystem.Text = "WGS84";
+            this.cmbCoordSystem.SelectedIndexChanged += new System.EventHandler(this.CmbCoordSystem_SelectedIndexChanged);
             // 
             // PointsGridView
             // 
@@ -1160,5 +1169,6 @@
         private System.Windows.Forms.ToolStripButton MoveToTheProjectedCoordButton;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.ToolStripButton OpenFileGridButton;
+        private System.Windows.Forms.ToolStripComboBox cmbCoordSystem;
     }
 }
