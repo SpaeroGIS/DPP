@@ -10,7 +10,6 @@ using MilSpace.DataAccess.Exceptions;
 using MilSpace.DataAccess.Facade;
 using MilSpace.Profile.DTO;
 using MilSpace.Profile.ModalWindows;
-using MilSpace.Profile.Localization;
 using MilSpace.Tools;
 using MilSpace.Tools.GraphicsLayer;
 using System;
@@ -27,7 +26,7 @@ namespace MilSpace.Profile
     public class MilSpaceProfileCalsController
     {
         //TODO: Localize
-        private static readonly string graphiclayerTitle = LocalizationConstants.GraphicsLayerValue;
+        private static readonly string graphiclayerTitle = LocalizationContext.Instance.FindLocalizedElement("TxtGraphicsLayerValue", "графічні об'єкти");
 
         private int profileId;
         GraphicsLayerManager graphicsLayerManager;
@@ -43,7 +42,7 @@ namespace MilSpace.Profile
 
         private static ProfileSettingsTypeEnum[] profileSettingsType = Enum.GetValues(typeof(ProfileSettingsTypeEnum)).Cast<ProfileSettingsTypeEnum>().ToArray();
 
-        private readonly string NewProfilePrefix = LocalizationConstants.NewProfileNameValue;
+        private readonly string NewProfilePrefix = LocalizationContext.Instance.FindLocalizedElement("TxtNewProfileNameValue", "Новий профіль");
 
         List<ProfileSession> _workingProfiles = new List<ProfileSession>();
 
@@ -170,6 +169,11 @@ namespace MilSpace.Profile
 
         internal void FlashPoint(ProfileSettingsPointButtonEnum pointType)
         {
+            if(pointsToShow[pointType] == null)
+            {
+                return;
+            }
+
             if(!EsriTools.IsPointOnExtent(ArcMap.Document.ActivatedView.Extent, pointsToShow[pointType]))
             {
                 EsriTools.PanToGeometry(View.ActiveView, pointsToShow[pointType]);
@@ -644,7 +648,7 @@ namespace MilSpace.Profile
             bool res = MilSpaceProfileFacade.SaveProfileSession(profileSet);
             if (!res)
             {
-                MessageBox.Show(LocalizationConstants.ErrorOnDataAccessTextMessage, Properties.Resources.AddinMessageBoxHeader, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(LocalizationContext.Instance.ErrorHappendText, Properties.Resources.AddinMessageBoxHeader, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             return res;

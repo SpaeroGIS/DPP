@@ -171,24 +171,50 @@ namespace MilSpace.Visualization3D
             comboBox.Items.AddRange(layers.Select(l => l.Name).ToArray());
         }
 
-        private List<ILayer> GetAdditionalLayers()
+        private Dictionary<ILayer, double> GetAdditionalLayers()
         {
-            var selectedLayers = new object[4];
-            selectedLayers[0] = TransportLayerComboBox.SelectedItem;
-            selectedLayers[1] = BuildingsLayerComboBox.SelectedItem;
-            selectedLayers[2] = PlantsLayerComboBox.SelectedItem;
-            selectedLayers[3] = HydroLayerComboBox.SelectedItem;
+            var selectedLayers = new Dictionary<object, string>();
+            if(TransportLayerComboBox.SelectedItem != null)
+            {
+                selectedLayers.Add(TransportLayerComboBox.SelectedItem, TransportHightTextBox.Text);
+            }
 
-            var additionalLayers = new List<ILayer>();
+            if(BuildingsLayerComboBox.SelectedItem != null)
+            {
+                selectedLayers.Add(BuildingsLayerComboBox.SelectedItem, BuildingsHight.Text);
+            }
+
+            if(PlantsLayerComboBox.SelectedItem != null)
+            {
+                selectedLayers.Add(PlantsLayerComboBox.SelectedItem, PlantsTextBox.Text);
+            }
+
+            if(HydroLayerComboBox.SelectedItem != null)
+            {
+                selectedLayers.Add(HydroLayerComboBox.SelectedItem, HydroHightTextBox.Text);
+            }
+
+            var additionalLayers = new Dictionary<ILayer, double>();
 
             var mapLayerManager = new MapLayersManager(ArcMap.Document.ActiveView);
             var polygonLayers = mapLayerManager.PolygonLayers.ToArray();
 
             foreach (var selectedLayer in selectedLayers)
             {
-                if(selectedLayer != null)
+                double layerHeight;
+
+                if(String.IsNullOrEmpty(selectedLayer.Value) || !Double.TryParse(selectedLayer.Value, out double height))
                 {
-                    additionalLayers.Add(polygonLayers.First(layer => layer.Name == selectedLayer.ToString()));
+                    layerHeight = 0;
+                }
+                else
+                {
+                    layerHeight = height;
+                }
+
+                if(selectedLayer.Key != null)
+                {
+                    additionalLayers.Add(polygonLayers.First(layer => layer.Name == selectedLayer.Key.ToString()),  layerHeight);
                 }
             }
 

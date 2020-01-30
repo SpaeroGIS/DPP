@@ -1,5 +1,4 @@
-﻿using MilSpace.Profile.Localization;
-using System.Data;
+﻿using System.Data;
 using System.Windows.Forms;
 
 namespace MilSpace.Profile
@@ -11,21 +10,21 @@ namespace MilSpace.Profile
         private const string ValueColumnName = "Value";
 
         #region AttributeNames
-        private static readonly string profileName = LocalizationConstants.AttrProfileNameText;
-        private static readonly string profileId = LocalizationConstants.AttrProfileIdText;
-        private static readonly string profileType = LocalizationConstants.AttrProfileTypeText;
-        private static readonly string firstPoint = LocalizationConstants.AttrProfileStartPointText;
-        private static readonly string secondPoint = LocalizationConstants.AttrProfileEndPointText;
-        private static readonly string firstPointHeight = LocalizationConstants.AttrProfilePointOfViewText;
-        private static readonly string lineDistance = LocalizationConstants.AttrProfileDistanceText;
-        private static readonly string linesCount = LocalizationConstants.AttrProfileCountText;
-        private static readonly string basePoint = LocalizationConstants.AttrProfileBasePointText;
-        private static readonly string azimuth = LocalizationConstants.AttrProfileAzimuthText;
-        private static readonly string azimuth1 = LocalizationConstants.AttrProfileAzimuth1Text;
-        private static readonly string azimuth2 = LocalizationConstants.AttrProfileAzimuth2Text;
-        private static readonly string creatorName = LocalizationConstants.AttrProfileCreatorText;
-        private static readonly string date = LocalizationConstants.AttrProfileDateText;
-        private static readonly string toPoint = LocalizationConstants.AttrProfileEndPointText;
+        private static readonly string profileName = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfileNameText", "Назва:");
+        private static readonly string profileId = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfileIdText", "Ідентифікатор:");
+        private static readonly string profileType = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfileTypeText", "Тип:");
+        private static readonly string firstPoint = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfileStartPointText", "Початок в точці:");
+        private static readonly string secondPoint = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfileEndPointText", "Кінець в точці:");
+        private static readonly string firstPointHeight = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfilePointOfViewText", "Точка спостереження:");
+        private static readonly string lineDistance = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfileDistanceText", "Відстань:");
+        private static readonly string linesCount = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfileCountText", "Кількість ліній:");
+        private static readonly string basePoint = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfileBasePointText", "Базова точка (довгота / широта):");
+        private static readonly string azimuth = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfileAzimuthText", "Азимут:");
+        private static readonly string azimuth1 = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfileAzimuth1Text", "Азимут 1:");
+        private static readonly string azimuth2 = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfileAzimuth2Text", "Азимут 2:");
+        private static readonly string creatorName = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfileCreatorText", "Автор:");
+        private static readonly string date = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfileDateText", "Дата:");
+        private static readonly string toPoint = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfileEndPointText", "Кінець в точці:");
 
 
         #endregion

@@ -7,7 +7,9 @@
 <Wgs1984Label>WGS84</Wgs1984Label>
 <Ukraine2000Label>УСК2000</Ukraine2000Label>
 <MgrsLabel>MGRS:</MgrsLabel>
+<MgrsName>MGRS</MgrsName>
 <UtmLabel>UTM:</UtmLabel>
+<UtmName>WGS84 UTM Zone 35N</UtmName>
 <SaveButton>Зберегти в файл</SaveButton>
 <OpenFileButton>Відкрити файл</OpenFileButton>
 <CopyButton>Cкопіювати</CopyButton>
