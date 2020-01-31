@@ -4,6 +4,7 @@ using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core;
+using MilSpace.Core.ModulesInteraction;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.GeoCalculator.BusinessLogic;
 using MilSpace.GeoCalculator.BusinessLogic.Extensions;
@@ -11,6 +12,7 @@ using MilSpace.GeoCalculator.BusinessLogic.Interfaces;
 using MilSpace.GeoCalculator.BusinessLogic.Models;
 using MilSpace.GeoCalculator.BusinessLogic.ReferenceData;
 using MilSpace.GeoCalculator.Enums;
+using MilSpace.GeoCalculator.Interaction;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -22,32 +24,39 @@ using System.Windows.Forms;
 
 namespace MilSpace.GeoCalculator
 {
-    public partial class DockableWindowGeoCalculator : UserControl
+    public partial class DockableWindowGeoCalculator : UserControl, IGeoCalculatorView
     {
-        private readonly IBusinessLogic _businessLogic;        
+        private readonly IBusinessLogic _businessLogic;
         private ExtendedPointModel lastProjectedPoint;
         private Dictionary<string, PointModel> pointModels = new Dictionary<string, PointModel>();
         private Dictionary<CoordinateSystemsEnum, string> _coordinateSystems = new Dictionary<CoordinateSystemsEnum, string>();
         private LocalizationContext context;
         private readonly Dictionary<string, IPoint> ClickedPointsDictionary = new Dictionary<string, IPoint>();
+        private GeoCalculatorController controller;
 
         private static Logger log = Logger.GetLoggerEx("MilSpace.GeoCalculator.DockableWindowGeoCalculator");
 
         //Current Projection Models
-        private ProjectionsModel CurrentProjectionsModel = Constants.ProjectionsModels[0];        
+        private ProjectionsModel CurrentProjectionsModel = Constants.ProjectionsModels[0];
 
         public ISpatialReference FocusMapSpatialReference => ArcMap.Document.ActiveView.FocusMap.SpatialReference;
 
-        public DockableWindowGeoCalculator(object hook, IBusinessLogic businessLogic)
+        public DockableWindowGeoCalculator(object hook, IBusinessLogic businessLogic, GeoCalculatorController controller)
         {
             log.InfoEx(">>> DockableWindowGeoCalculator (Constructor) START <<<");
             InitializeComponent();
+            SetController(controller);
             this.Hook = hook;
-            _businessLogic = businessLogic ?? throw new ArgumentNullException(nameof(businessLogic));           
+            _businessLogic = businessLogic ?? throw new ArgumentNullException(nameof(businessLogic));
 
             LocalizeComponents();
 
             log.InfoEx("> DockableWindowGeoCalculator (Constructor) END");
+        }
+
+        public void SetController(GeoCalculatorController controller)
+        {
+            this.controller = controller;
         }
 
         /// <summary>
@@ -80,9 +89,12 @@ namespace MilSpace.GeoCalculator
             {
                 if (this.Hook is IApplication arcMap)
                 {
+                    GeoCalculatorController = new GeoCalculatorController();
+                    ModuleInteraction.Instance.RegisterModuleInteraction<IGeocalculatorInteraction>(new GeoCalculatorInteraction(GeoCalculatorController));
+
                     m_windowUI = new DockableWindowGeoCalculator(
-                        this.Hook, 
-                        new MilSpace.GeoCalculator.BusinessLogic.BusinessLogic(arcMap, new DataImportExport()));
+                        this.Hook,
+                        new MilSpace.GeoCalculator.BusinessLogic.BusinessLogic(arcMap, new DataImportExport()), GeoCalculatorController);
                     return m_windowUI.Handle;
                 }
                 else return IntPtr.Zero;
@@ -95,6 +107,8 @@ namespace MilSpace.GeoCalculator
 
                 base.Dispose(disposing);
             }
+
+            internal GeoCalculatorController GeoCalculatorController { get; private set; }
 
         }
         #endregion
@@ -110,7 +124,7 @@ namespace MilSpace.GeoCalculator
             var documentBars = ArcMap.Application.Document.CommandBars;
             var mapTool = documentBars.Find(mapToolID, false, false);
 
-            if (ArcMap.Application.CurrentTool?.ID?.Value != null 
+            if (ArcMap.Application.CurrentTool?.ID?.Value != null
                 && ArcMap.Application.CurrentTool.ID.Value.Equals(mapTool.ID.Value))
             {
                 ArcMap.Application.CurrentTool = null;
@@ -127,9 +141,9 @@ namespace MilSpace.GeoCalculator
         {
             if (lastProjectedPoint == null)
                 MessageBox.Show(
-                    context.NoSelectedPointError, 
-                    context.ErrorString, 
-                    MessageBoxButtons.OK, 
+                    context.NoSelectedPointError,
+                    context.ErrorString,
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             else _businessLogic.CopyCoordinatesToClipboard(lastProjectedPoint);
         }
@@ -185,9 +199,9 @@ namespace MilSpace.GeoCalculator
             catch
             {
                 MessageBox.Show(
-                    context.WrongFormatMessage + " -> " + XCoordinateTextBox.Text + ";" + YCoordinateTextBox.Text, 
-                    context.ErrorString, 
-                    MessageBoxButtons.OK, 
+                    context.WrongFormatMessage + " -> " + XCoordinateTextBox.Text + ";" + YCoordinateTextBox.Text,
+                    context.ErrorString,
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
         }
@@ -265,9 +279,9 @@ namespace MilSpace.GeoCalculator
                 if (stringParts.Length != 2)
                 {
                     MessageBox.Show(
-                        context.WrongFormatMessage, 
-                        context.ErrorString, 
-                        MessageBoxButtons.OK, 
+                        context.WrongFormatMessage,
+                        context.ErrorString,
+                        MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     return;
                 }
@@ -275,21 +289,21 @@ namespace MilSpace.GeoCalculator
                 if (!stringParts.First().ToDoubleInvariantCulture(out double xCoordinate) ||
                     !stringParts.Last().ToDoubleInvariantCulture(out double yCoordinate))
                     MessageBox.Show(
-                        context.WrongFormatMessage, 
-                        context.ErrorString, 
-                        MessageBoxButtons.OK, 
+                        context.WrongFormatMessage,
+                        context.ErrorString,
+                        MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 else
                 {
                     SetCurrentValues(xCoordinate, yCoordinate);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(
-                    context.WrongFormatMessage, 
-                    context.ErrorString, 
-                    MessageBoxButtons.OK, 
+                    context.WrongFormatMessage,
+                    context.ErrorString,
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
 
                 SetCurrentValues(prevValueX, prevValueY);
@@ -314,7 +328,7 @@ namespace MilSpace.GeoCalculator
                 if (!Regex.IsMatch(clipboard, @"^([-]?[\d]{1,2}[\,|\.]\d+)[\;|\s]([-]?[\d]{1,2}[\,|\.]\d+)$"))
                 {
                     string sMsgText = context.FindLocalizedElement(
-                        "MsgInvalidCoordinatesDD", 
+                        "MsgInvalidCoordinatesDD",
                         "Недійсні дані. Потрібні коордінати представлені у десяткових градусах");
                     MessageBox.Show(
                         sMsgText + " -> " + clipboard,
@@ -331,15 +345,15 @@ namespace MilSpace.GeoCalculator
                 {
                     MessageBox.Show(
                         context.FindLocalizedElement(
-                            "WrongFormatMessageToFewParts", "Не вдалося отримати обидві складові координати") 
+                            "WrongFormatMessageToFewParts", "Не вдалося отримати обидві складові координати")
                             + " -> " + stringParts,
-                        context.ErrorString, 
-                        MessageBoxButtons.OK, 
+                        context.ErrorString,
+                        MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     return;
                 }
 
-                if (!Helper.TryParceToDouble(stringParts[0], out double xCoordinate) 
+                if (!Helper.TryParceToDouble(stringParts[0], out double xCoordinate)
                     || !Helper.TryParceToDouble(stringParts[1], out double yCoordinate))
 
                     //if (!stringParts[0].ToDoubleInvariantCulture(out double xCoordinate) 
@@ -347,8 +361,8 @@ namespace MilSpace.GeoCalculator
 
                     MessageBox.Show(
                         context.WrongFormatMessage + " WGS DD -> " + stringParts[0] + ' ' + stringParts[1],
-                        context.ErrorString, 
-                        MessageBoxButtons.OK, 
+                        context.ErrorString,
+                        MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 else
                 {
@@ -359,9 +373,9 @@ namespace MilSpace.GeoCalculator
             catch
             {
                 MessageBox.Show(
-                    context.WrongFormatMessage, 
-                    context.ErrorString, 
-                    MessageBoxButtons.OK, 
+                    context.WrongFormatMessage,
+                    context.ErrorString,
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
         }
@@ -378,9 +392,9 @@ namespace MilSpace.GeoCalculator
                 if (stringParts.Length != 2)
                 {
                     MessageBox.Show(
-                        context.WrongFormatMessage + " -> " + clipboard, 
-                        context.ErrorString, 
-                        MessageBoxButtons.OK, 
+                        context.WrongFormatMessage + " -> " + clipboard,
+                        context.ErrorString,
+                        MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     return;
                 }
@@ -388,9 +402,9 @@ namespace MilSpace.GeoCalculator
                 if (!stringParts.First().ToDoubleInvariantCulture(out double xCoordinate) ||
                     !stringParts.Last().ToDoubleInvariantCulture(out double yCoordinate))
                     MessageBox.Show(
-                        context.WrongFormatMessage, 
-                        context.ErrorString, 
-                        MessageBoxButtons.OK, 
+                        context.WrongFormatMessage,
+                        context.ErrorString,
+                        MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 else
                 {
@@ -401,9 +415,9 @@ namespace MilSpace.GeoCalculator
             catch
             {
                 MessageBox.Show(
-                    context.WrongFormatMessage, 
-                    context.ErrorString, 
-                    MessageBoxButtons.OK, 
+                    context.WrongFormatMessage,
+                    context.ErrorString,
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
         }
@@ -434,14 +448,14 @@ namespace MilSpace.GeoCalculator
                 if (stringParts.Length < 2)
                 {
                     MessageBox.Show(
-                        context.WrongFormatMessage, 
-                        context.ErrorString, 
-                        MessageBoxButtons.OK, 
+                        context.WrongFormatMessage,
+                        context.ErrorString,
+                        MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     return;
                 }
 
-                if (pulkovoDMSXTextBox.Text == stringParts[0] 
+                if (pulkovoDMSXTextBox.Text == stringParts[0]
                     && pulkovoDMSYTextBox.Text == stringParts[1])
                     return;
 
@@ -452,9 +466,9 @@ namespace MilSpace.GeoCalculator
                     //!stringParts.Last().ToDoubleInvariantCulture(out double yCoordinate))
 
                     MessageBox.Show(
-                        context.WrongFormatMessage + " -> " + clipboard, 
-                        context.ErrorString, 
-                        MessageBoxButtons.OK, 
+                        context.WrongFormatMessage + " -> " + clipboard,
+                        context.ErrorString,
+                        MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 else
                 {
@@ -465,9 +479,9 @@ namespace MilSpace.GeoCalculator
             catch
             {
                 MessageBox.Show(
-                    context.WrongFormatMessage, 
-                    context.ErrorString, 
-                    MessageBoxButtons.OK, 
+                    context.WrongFormatMessage,
+                    context.ErrorString,
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
         }
@@ -484,23 +498,23 @@ namespace MilSpace.GeoCalculator
                 if (stringParts.Length != 2)
                 {
                     MessageBox.Show(
-                        context.WrongFormatMessage + " -> " + clipboard, 
-                        context.ErrorString, 
-                        MessageBoxButtons.OK, 
+                        context.WrongFormatMessage + " -> " + clipboard,
+                        context.ErrorString,
+                        MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     return;
                 }
 
-                if (PulkovoXCoordinateTextBox.Text == stringParts.First() 
+                if (PulkovoXCoordinateTextBox.Text == stringParts.First()
                     && PulkovoYCoordinateTextBox.Text == stringParts.Last())
                     return;
 
                 if (!stringParts.First().ToDoubleInvariantCulture(out double xCoordinate) ||
                     !stringParts.Last().ToDoubleInvariantCulture(out double yCoordinate))
                     MessageBox.Show(
-                        context.WrongFormatMessage + " -> " + clipboard, 
-                        context.ErrorString, 
-                        MessageBoxButtons.OK, 
+                        context.WrongFormatMessage + " -> " + clipboard,
+                        context.ErrorString,
+                        MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 else
                 {
@@ -540,9 +554,9 @@ namespace MilSpace.GeoCalculator
                 if (stringParts.Length < 2)
                 {
                     MessageBox.Show(
-                        context.WrongFormatMessage, 
-                        context.ErrorString, 
-                        MessageBoxButtons.OK, 
+                        context.WrongFormatMessage,
+                        context.ErrorString,
+                        MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     return;
                 }
@@ -556,9 +570,9 @@ namespace MilSpace.GeoCalculator
                     //!stringParts.Last().ToDoubleInvariantCulture(out double yCoordinate))
 
                     MessageBox.Show(
-                        context.WrongFormatMessage + " -> " + clipboard, 
-                        context.ErrorString, 
-                        MessageBoxButtons.OK, 
+                        context.WrongFormatMessage + " -> " + clipboard,
+                        context.ErrorString,
+                        MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 else
                 {
@@ -569,9 +583,9 @@ namespace MilSpace.GeoCalculator
             catch
             {
                 MessageBox.Show(
-                    context.WrongFormatMessage, 
-                    context.ErrorString, 
-                    MessageBoxButtons.OK, 
+                    context.WrongFormatMessage,
+                    context.ErrorString,
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
         }
@@ -588,23 +602,23 @@ namespace MilSpace.GeoCalculator
                 if (stringParts.Length != 2)
                 {
                     MessageBox.Show(
-                        context.WrongFormatMessage, 
-                        context.ErrorString, 
-                        MessageBoxButtons.OK, 
+                        context.WrongFormatMessage,
+                        context.ErrorString,
+                        MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     return;
                 }
 
-                if (UkraineXCoordinateTextBox.Text == stringParts.First() 
+                if (UkraineXCoordinateTextBox.Text == stringParts.First()
                     && UkraineYCoordinateTextBox.Text == stringParts.Last())
                     return;
 
                 if (!stringParts.First().ToDoubleInvariantCulture(out double xCoordinate) ||
                     !stringParts.Last().ToDoubleInvariantCulture(out double yCoordinate))
                     MessageBox.Show(
-                        context.WrongFormatMessage, 
-                        context.ErrorString, 
-                        MessageBoxButtons.OK, 
+                        context.WrongFormatMessage,
+                        context.ErrorString,
+                        MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 else
                 {
@@ -616,9 +630,9 @@ namespace MilSpace.GeoCalculator
             catch
             {
                 MessageBox.Show(
-                    context.WrongFormatMessage, 
-                    context.ErrorString, 
-                    MessageBoxButtons.OK, 
+                    context.WrongFormatMessage,
+                    context.ErrorString,
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
         }
@@ -636,14 +650,14 @@ namespace MilSpace.GeoCalculator
             catch
             {
                 MessageBox.Show(
-                    context.WrongMgrsFormatMessage, 
-                    context.ErrorString, 
-                    MessageBoxButtons.OK, 
+                    context.WrongMgrsFormatMessage,
+                    context.ErrorString,
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
         }
         #endregion
-        
+
         #region DoubleClick Events
         private void MgrsNotationTextBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
@@ -904,9 +918,9 @@ namespace MilSpace.GeoCalculator
             if (column is DataGridViewImageColumn && column.Name == Constants.HighlightColumnName)
             {
                 ArcMapHelper.FlashGeometry(selectedPoint.Value, 500);
-                ProjectPointAsync(selectedPoint.Value, true);                
+                ProjectPointAsync(selectedPoint.Value, true);
             }
-            else 
+            else
             if (column is DataGridViewImageColumn && column.Name == Constants.DeleteColumnName)
             {
                 grid.Rows.RemoveAt(e.RowIndex);
@@ -929,7 +943,7 @@ namespace MilSpace.GeoCalculator
                 grid.Rows[e.RowIndex].Selected = true;
                 ArcMapHelper.FlashGeometry(selectedPoint.Value, 500);
                 ProjectPointAsync(selectedPoint.Value, true);
-            }            
+            }
         }
 
         private async void SaveGridPointsButton_Click(object sender, EventArgs e)
@@ -956,9 +970,9 @@ namespace MilSpace.GeoCalculator
             if (PointsGridView.Rows.Count > 0)
             {
                 var warningResult = MessageBox.Show(
-                    context.GridCleanWarningMessage, 
-                    context.WarningString, 
-                    MessageBoxButtons.YesNo, 
+                    context.GridCleanWarningMessage,
+                    context.WarningString,
+                    MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning);
                 if (warningResult == DialogResult.No) return;
             }
@@ -996,7 +1010,7 @@ namespace MilSpace.GeoCalculator
         {
             if (pointModels == null || !pointModels.Any()) MessageBox.Show(context.NoSelectedPointError, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
-            {                
+            {
                 _businessLogic.CopyCoordinatesToClipboard(pointModels.ToSortedPointModelsList());
             }
         }
@@ -1105,9 +1119,9 @@ namespace MilSpace.GeoCalculator
         }
 
         private void ProjectPointAsync(
-            IPoint inputPoint, 
-            bool fromUserInput = false, 
-            string pointGuid = null, 
+            IPoint inputPoint,
+            bool fromUserInput = false,
+            string pointGuid = null,
             int? pointNumber = null)
         {
             lastProjectedPoint = new ExtendedPointModel();
@@ -1126,15 +1140,15 @@ namespace MilSpace.GeoCalculator
 
             ManageWgsCoordinates(wgsDD, lastProjectedPoint);
 
-            ManagePulkovoCoordinates(inputPoint, pulkovoDD, lastProjectedPoint);   
+            ManagePulkovoCoordinates(inputPoint, pulkovoDD, lastProjectedPoint);
 
-            ManageUkraineCoordinates(inputPoint, ukraineDD, lastProjectedPoint); 
+            ManageUkraineCoordinates(inputPoint, ukraineDD, lastProjectedPoint);
 
             var guid = pointGuid ?? Guid.NewGuid().ToString();
 
             if (!fromUserInput && !string.IsNullOrWhiteSpace(guid))
                 pointModels.Add(
-                    guid, 
+                    guid,
                     new PointModel
                     {
                         Number = pointNumber,
@@ -1155,7 +1169,7 @@ namespace MilSpace.GeoCalculator
             else
             {
                 ukrainePoint = _businessLogic.ProjectPoint(ukraineDD, CurrentProjectionsModel.Ukraine2000Projection);
-            }            
+            }
             UkraineXCoordinateTextBox.Text = ukrainePoint.X.ToIntegerString();
             UkraineYCoordinateTextBox.Text = ukrainePoint.Y.ToIntegerString();
             lastProjectedPoint.UkraineXCoord = ukrainePoint.X.ToInteger();
@@ -1174,7 +1188,7 @@ namespace MilSpace.GeoCalculator
             else
             {
                 pulkovoPoint = _businessLogic.ProjectPoint(pulkovoDD, CurrentProjectionsModel.Pulkovo1942Projection);
-            }            
+            }
             PulkovoXCoordinateTextBox.Text = pulkovoPoint.X.ToIntegerString();
             PulkovoYCoordinateTextBox.Text = pulkovoPoint.Y.ToIntegerString();
             lastProjectedPoint.PulkovoXCoord = pulkovoPoint.X.ToInteger();
@@ -1208,7 +1222,7 @@ namespace MilSpace.GeoCalculator
                 ukraineDD = _businessLogic.ProjectWgsToUrkaine2000WithGeoTransformation(
                     wgsDD, Constants.UkraineGeoModel, esriTransformDirection.esriTransformForward);
             }
-            
+
             ukraineDMSXTextBox.Text = ukraineDD.X.ToRoundedString();
             ukraineDMSYTextBox.Text = ukraineDD.Y.ToRoundedString();
             lastProjectedPoint.UkraineXCoordDD = ukraineDD.X.ToRoundedDouble();
@@ -1232,7 +1246,7 @@ namespace MilSpace.GeoCalculator
                 pulkovoDD = _businessLogic.ProjectWgsToPulkovoWithGeoTransformation(
                     wgsDD, Constants.PulkovoGeoModel, esriTransformDirection.esriTransformForward);
             }
-            
+
             pulkovoDMSXTextBox.Text = pulkovoDD.X.ToRoundedString();
             pulkovoDMSYTextBox.Text = pulkovoDD.Y.ToRoundedString();
             lastProjectedPoint.PulkovoXCoordDD = pulkovoDD.X.ToRoundedDouble();
@@ -1248,12 +1262,12 @@ namespace MilSpace.GeoCalculator
             if (ukraineDMSXTextBox.Modified || ukraineDMSYTextBox.Modified)
             {
                 wgsDD = _businessLogic.ProjectWgsToUrkaine2000WithGeoTransformation(
-                    inputPoint, Constants.WgsGeoModel, esriTransformDirection.esriTransformReverse);                
+                    inputPoint, Constants.WgsGeoModel, esriTransformDirection.esriTransformReverse);
             }
             else if (pulkovoDMSXTextBox.Modified || pulkovoDMSYTextBox.Modified)
             {
                 wgsDD = _businessLogic.ProjectWgsToPulkovoWithGeoTransformation(
-                    inputPoint, Constants.WgsGeoModel, esriTransformDirection.esriTransformReverse);                
+                    inputPoint, Constants.WgsGeoModel, esriTransformDirection.esriTransformReverse);
             }
             else
             {
@@ -1302,9 +1316,9 @@ namespace MilSpace.GeoCalculator
                 CurrentProjectionsModel = Constants.ProjectionsModels.First();
             else
                 if (newIndex >= Constants.ProjectionsModels.Count - 1)
-                    CurrentProjectionsModel = Constants.ProjectionsModels.Last();
-                else
-                    CurrentProjectionsModel = Constants.ProjectionsModels[newIndex];
+                CurrentProjectionsModel = Constants.ProjectionsModels.Last();
+            else
+                CurrentProjectionsModel = Constants.ProjectionsModels[newIndex];
 
             this.wgsProjectedLabel.Text = CurrentProjectionsModel.WGS84Projection.Name;
             this.PulkovoProjectedLabel.Text = CurrentProjectionsModel.Pulkovo1942Projection.Name;
@@ -1320,7 +1334,7 @@ namespace MilSpace.GeoCalculator
 
                 AddPointToGrid(point, pointNumber);
                 if (projectPoint)
-                { 
+                {
                     ProjectPointAsync(point, false, pointGuid, pointNumber);
                 }
             }
@@ -1330,9 +1344,9 @@ namespace MilSpace.GeoCalculator
             PointModel pointModel, CoordinateSystemModel coordinateSystem, bool createGeoCoordinateSystem)
         {
             var point = _businessLogic.CreatePoint(
-                pointModel.Longitude, 
-                pointModel.Latitude, 
-                coordinateSystem, 
+                pointModel.Longitude,
+                pointModel.Latitude,
+                coordinateSystem,
                 createGeoCoordinateSystem);
 
             point.Project(FocusMapSpatialReference);
@@ -1365,10 +1379,10 @@ namespace MilSpace.GeoCalculator
                     log.DebugEx("AddPointToList. point.X:{0} point.Y:{1}", point.X, point.Y);
 
                     var placedPoint = ArcMapHelper.AddGraphicToMap(
-                        point, 
-                        color, 
-                        true, 
-                        esriSimpleMarkerStyle.esriSMSCross, 
+                        point,
+                        color,
+                        true,
+                        esriSimpleMarkerStyle.esriSMSCross,
                         16);
 
                     log.DebugEx("AddPointToList. placedPoint.Value.X:{0} placedPoint.Value.Y:{1} placedPoint.Key:{2}"
@@ -1381,7 +1395,7 @@ namespace MilSpace.GeoCalculator
                 }
             }
             return null;
-        }        
+        }
 
         private RadioButtonsValues ShowExportForm()
         {
@@ -1427,7 +1441,7 @@ namespace MilSpace.GeoCalculator
 
             var wgsPoint = _businessLogic.ConvertToWgsMeters(pointCopy);
 
-            if(cmbCoordSystem.SelectedItem.ToString() == _coordinateSystems[CoordinateSystemsEnum.MGRS])
+            if (cmbCoordSystem.SelectedItem.ToString() == _coordinateSystems[CoordinateSystemsEnum.MGRS])
             {
                 var coords = GetMgrsPointCoords(wgsPoint);
                 AddPointStringToGrid(pointNumber, coords);
@@ -1444,9 +1458,9 @@ namespace MilSpace.GeoCalculator
         {
             var newRow = new DataGridViewRow();
             newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = pointNumber });
-            newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = x});
+            newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = x });
 
-            if(y != null)
+            if (y != null)
             {
                 newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = y });
                 PointsGridView.Columns["YCoordColumn"].Visible = true;
@@ -1485,7 +1499,7 @@ namespace MilSpace.GeoCalculator
 
             PointsGridView.Rows.Clear();
 
-            foreach(var point in points)
+            foreach (var point in points)
             {
                 AddPointToGrid(point, i);
                 i++;
@@ -1494,40 +1508,40 @@ namespace MilSpace.GeoCalculator
 
         private IPoint ProjectWgsPointToSelectedCoordinateSystem(IPoint point)
         {
-            var pointCopy = new PointClass {SpatialReference = point.SpatialReference };
+            var pointCopy = new PointClass { SpatialReference = point.SpatialReference };
             pointCopy.PutCoords(point.X, point.Y);
 
-            if(cmbCoordSystem.SelectedItem.ToString() != _coordinateSystems[CoordinateSystemsEnum.WGS84])
+            if (cmbCoordSystem.SelectedItem.ToString() != _coordinateSystems[CoordinateSystemsEnum.WGS84])
             {
-                if(cmbCoordSystem.SelectedItem.ToString() == _coordinateSystems[CoordinateSystemsEnum.MapSystem])
+                if (cmbCoordSystem.SelectedItem.ToString() == _coordinateSystems[CoordinateSystemsEnum.MapSystem])
                 {
                     pointCopy.Project(FocusMapSpatialReference);
                     return pointCopy;
                 }
 
-                if(cmbCoordSystem.SelectedItem.ToString() == _coordinateSystems[CoordinateSystemsEnum.SK42])
+                if (cmbCoordSystem.SelectedItem.ToString() == _coordinateSystems[CoordinateSystemsEnum.SK42])
                 {
                     return _businessLogic.ProjectWgsToPulkovoWithGeoTransformation(pointCopy, Constants.PulkovoGeoModel, esriTransformDirection.esriTransformForward);
                 }
-               
-                if(cmbCoordSystem.SelectedItem.ToString() == _coordinateSystems[CoordinateSystemsEnum.Ukraine2000])
+
+                if (cmbCoordSystem.SelectedItem.ToString() == _coordinateSystems[CoordinateSystemsEnum.Ukraine2000])
                 {
                     return _businessLogic.ProjectWgsToUrkaine2000WithGeoTransformation(
                     pointCopy, Constants.UkraineGeoModel, esriTransformDirection.esriTransformForward);
                 }
 
-                if(cmbCoordSystem.SelectedItem.ToString() == _coordinateSystems[CoordinateSystemsEnum.WGS84UTM])
+                if (cmbCoordSystem.SelectedItem.ToString() == _coordinateSystems[CoordinateSystemsEnum.WGS84UTM])
                 {
                     return _businessLogic.ProjectPoint(pointCopy, CurrentProjectionsModel.WGS84Projection);
                 }
 
-                if(cmbCoordSystem.SelectedItem.ToString() == _coordinateSystems[CoordinateSystemsEnum.Pulkovo42Projected])
+                if (cmbCoordSystem.SelectedItem.ToString() == _coordinateSystems[CoordinateSystemsEnum.Pulkovo42Projected])
                 {
                     var sk42Point = _businessLogic.ProjectWgsToPulkovoWithGeoTransformation(pointCopy, Constants.PulkovoGeoModel, esriTransformDirection.esriTransformForward);
                     return _businessLogic.ProjectPoint(sk42Point, CurrentProjectionsModel.Pulkovo1942Projection);
                 }
 
-                if(cmbCoordSystem.SelectedItem.ToString() == _coordinateSystems[CoordinateSystemsEnum.UkraineProjected])
+                if (cmbCoordSystem.SelectedItem.ToString() == _coordinateSystems[CoordinateSystemsEnum.UkraineProjected])
                 {
                     var ukrainePoint = _businessLogic.ProjectWgsToUrkaine2000WithGeoTransformation(
                     pointCopy, Constants.UkraineGeoModel, esriTransformDirection.esriTransformForward);
@@ -1540,10 +1554,10 @@ namespace MilSpace.GeoCalculator
 
         private string[] GetCoordsFormattedStrings(IPoint point)
         {
-           if(point.X >= 1000)
-           {
+            if (point.X >= 1000)
+            {
                 return new string[2] { point.X.ToIntegerString(), point.Y.ToIntegerString() };
-           }
+            }
 
             return new string[2] { point.X.ToRoundedString(), point.Y.ToRoundedString() };
         }

@@ -1,5 +1,6 @@
 ﻿using ESRI.ArcGIS.Geometry;
 using MilSpace.DataAccess.DataTransfer;
+using MilSpace.Profile.Localization;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

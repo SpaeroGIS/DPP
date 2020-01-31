@@ -9,9 +9,9 @@ namespace MilSpace.Profile.Interaction
 {
     public class ProfileInteraction : IProfileInteraction
     {
-        private MilSpaceProfileCalsController _controller;
+        private MilSpaceProfileCalcsController _controller;
 
-        internal ProfileInteraction(MilSpaceProfileCalsController controller)
+        internal ProfileInteraction(MilSpaceProfileCalcsController controller)
         {
             _controller = controller;
         }
