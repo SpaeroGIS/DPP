@@ -897,6 +897,11 @@ namespace MilSpace.GeoCalculator
         #region DataGridView Events
         private void PointsGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if(e.RowIndex == -1)
+            {
+                return;
+            }
+
             var grid = (DataGridView)sender;
             var column = grid.Columns[e.ColumnIndex];
             var selectedPoint = ClickedPointsDictionary.ElementAt(e.RowIndex);
@@ -1318,7 +1323,7 @@ namespace MilSpace.GeoCalculator
             {
                 var pointNumber = ClickedPointsDictionary.Count();
 
-                AddPointToGrid(point, pointNumber);
+                AddPointToGrid(point, pointNumber, pointGuid);
                 if (projectPoint)
                 { 
                     ProjectPointAsync(point, false, pointGuid, pointNumber);
@@ -1343,7 +1348,7 @@ namespace MilSpace.GeoCalculator
                 pointModels.Add(pointGuid, pointModel);
                 var pointNumber = ClickedPointsDictionary.Count();
 
-                AddPointToGrid(point, pointNumber);
+                AddPointToGrid(point, pointNumber, pointGuid);
             }
         }
 
@@ -1420,7 +1425,7 @@ namespace MilSpace.GeoCalculator
             }
         }
 
-        private void AddPointToGrid(IPoint point, int pointNumber)
+        private void AddPointToGrid(IPoint point, int pointNumber, string key)
         {
             var pointCopy = new PointClass { SpatialReference = point.SpatialReference };
             pointCopy.PutCoords(point.X, point.Y);
@@ -1430,19 +1435,21 @@ namespace MilSpace.GeoCalculator
             if(cmbCoordSystem.SelectedItem.ToString() == _coordinateSystems[CoordinateSystemsEnum.MGRS])
             {
                 var coords = GetMgrsPointCoords(wgsPoint);
-                AddPointStringToGrid(pointNumber, coords);
+                AddPointStringToGrid(pointNumber, key, coords);
             }
             else
             {
                 var projectedPoint = ProjectWgsPointToSelectedCoordinateSystem(wgsPoint);
                 var coords = GetCoordsFormattedStrings(projectedPoint);
-                AddPointStringToGrid(pointNumber, coords[0], coords[1]);
+                AddPointStringToGrid(pointNumber, key, coords[0], coords[1]);
             }
         }
 
-        private void AddPointStringToGrid(int pointNumber, string x, string y = null)
+        private void AddPointStringToGrid(int pointNumber, string key, string x, string y = null)
         {
             var newRow = new DataGridViewRow();
+            newRow.Tag = key;
+
             newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = pointNumber });
             newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = x});
 
@@ -1481,14 +1488,21 @@ namespace MilSpace.GeoCalculator
         private void CmbCoordSystem_SelectedIndexChanged(object sender, EventArgs e)
         {
             var points = ClickedPointsDictionary.Values.ToArray();
-            var i = 0;
+            DataGridViewRow[] rows = new DataGridViewRow[PointsGridView.RowCount];
+            PointsGridView.Rows.CopyTo(rows, 0);
 
             PointsGridView.Rows.Clear();
 
-            foreach(var point in points)
+            foreach(DataGridViewRow row in rows)
             {
-                AddPointToGrid(point, i);
-                i++;
+                if(row.Tag == null)
+                {
+                    continue;
+                }
+
+                var pointGuid = row.Tag.ToString();
+                var point = ClickedPointsDictionary[pointGuid];
+                AddPointToGrid(point, (int)row.Cells[0].Value, pointGuid);
             }
         }
 
@@ -1552,6 +1566,152 @@ namespace MilSpace.GeoCalculator
         private string GetMgrsPointCoords(IPoint point)
         {
             return (_businessLogic.ConvertToMgrs(point))?.ToSeparatedMgrs();
+        }
+
+        private void UpPointMoveButton_Click(object sender, EventArgs e)
+        {
+            if(PointsGridView.SelectedRows == null || PointsGridView.SelectedRows.Count == 0)
+            {
+                return;
+            }
+
+            DataGridViewRow[] selectedRows = new DataGridViewRow[PointsGridView.SelectedRows.Count];
+            PointsGridView.SelectedRows.CopyTo(selectedRows, 0);
+            var orderedRows = selectedRows.OrderBy(row => row.Index).ToArray();
+
+            if(orderedRows.First().Index == 0)
+            {
+                return;
+            }
+
+            var selectedRowIndex = orderedRows[0].Index;
+            var insertIndex = selectedRowIndex - 1;
+
+            if(insertIndex <= 0)
+            {
+                insertIndex = 0;
+            }
+
+            MoveSelectedRows(orderedRows, selectedRowIndex, insertIndex, true);
+        }
+
+        private void DownPointMoveButton_Click(object sender, EventArgs e)
+        {
+            if(PointsGridView.SelectedRows == null || PointsGridView.SelectedRows.Count == 0)
+            {
+                return;
+            }
+
+            DataGridViewRow[] selectedRows = new DataGridViewRow[PointsGridView.SelectedRows.Count];
+            PointsGridView.SelectedRows.CopyTo(selectedRows, 0);
+            var orderedRows = selectedRows.OrderBy(row => row.Index).ToArray();
+
+            if(orderedRows.Last().Index == PointsGridView.RowCount - 1)
+            {
+                return;
+            }
+
+            var selectedRowIndex = orderedRows[0].Index;
+            var insertIndex = selectedRowIndex + orderedRows.Count();
+
+            if(insertIndex >= PointsGridView.RowCount)
+            {
+                insertIndex = PointsGridView.RowCount - 1;
+            }
+
+            MoveSelectedRows(orderedRows, selectedRowIndex, insertIndex, false);
+        }
+
+        private void PointsGridView_SelectionChanged(object sender, EventArgs e)
+        {
+            if(PointsGridView.SelectedRows.Count > 1)
+            {
+                DataGridViewRow[] selectedRows = new DataGridViewRow[PointsGridView.SelectedRows.Count];
+                PointsGridView.SelectedRows.CopyTo(selectedRows, 0);
+                var orderedRows = selectedRows.OrderBy(row => row.Index).ToArray();
+
+                for(int i = orderedRows[0].Index + 1; i < orderedRows[orderedRows.Count() - 1].Index; i++)
+                {
+                    PointsGridView.Rows[i].Selected = true;
+                }
+            }
+        }
+
+        private void UpToFirstStripItem_Click(object sender, EventArgs e)
+        {
+            if(PointsGridView.SelectedRows == null || PointsGridView.SelectedRows.Count == 0)
+            {
+                return;
+            }
+
+            DataGridViewRow[] selectedRows = new DataGridViewRow[PointsGridView.SelectedRows.Count];
+            PointsGridView.SelectedRows.CopyTo(selectedRows, 0);
+            var orderedRows = selectedRows.OrderBy(row => row.Index).ToArray();
+
+            if(orderedRows.First().Index == 0)
+            {
+                return;
+            }
+            
+            MoveSelectedRows(orderedRows, orderedRows[0].Index, 0, true);
+        }
+
+      
+        private void ToDownStripItem_Click(object sender, EventArgs e)
+        {
+            if(PointsGridView.SelectedRows == null || PointsGridView.SelectedRows.Count == 0)
+            {
+                return;
+            }
+
+            DataGridViewRow[] selectedRows = new DataGridViewRow[PointsGridView.SelectedRows.Count];
+            PointsGridView.SelectedRows.CopyTo(selectedRows, 0);
+            var orderedRows = selectedRows.OrderBy(row => row.Index).ToArray();
+
+            if(orderedRows.Last().Index == PointsGridView.RowCount - 1)
+            {
+                return;
+            }
+
+            MoveSelectedRows(orderedRows, orderedRows[0].Index, PointsGridView.RowCount - 1, false);
+        }
+
+        private void MoveSelectedRows(DataGridViewRow[] orderedRows, int selectedRowIndex, int insertIndex, bool toUp)
+        {
+            foreach(DataGridViewRow row in orderedRows)
+            {
+                var values = new object[PointsGridView.ColumnCount];
+                var i = 0;
+
+                foreach(DataGridViewCell cell in row.Cells)
+                {
+                    values[i] = cell.Value;
+                    i++;
+                }
+
+                PointsGridView.Rows.RemoveAt(selectedRowIndex);
+                PointsGridView.Rows.Insert(insertIndex, values);
+                PointsGridView.Rows[insertIndex].Tag = row.Tag;
+
+                if(toUp)
+                {
+                    selectedRowIndex++;
+                    insertIndex++;
+                }
+            }
+
+            PointsGridView.ClearSelection();
+
+            for(int i = 0; i < orderedRows.Count(); i++)
+            {
+                var index = toUp ? insertIndex - i - 1 : insertIndex - i;
+                PointsGridView.Rows[index].Selected = true;
+            }
+        }
+
+        private void RenumberButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

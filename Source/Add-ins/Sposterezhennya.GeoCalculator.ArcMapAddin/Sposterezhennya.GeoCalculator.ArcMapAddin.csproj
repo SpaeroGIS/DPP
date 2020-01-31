@@ -191,6 +191,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AddInContent>
     <Content Include="Images\Write.png" />
+    <None Include="Resources\Ok.png" />
+    <None Include="Resources\Arrow2 Up.png" />
+    <None Include="Resources\Arrow2 Down.png" />
+    <None Include="Resources\ArcMapAddin.png" />
+    <None Include="Resources\Up.Image.bmp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\MilSpace.Configurations\MilSpace.Configurations.csproj">

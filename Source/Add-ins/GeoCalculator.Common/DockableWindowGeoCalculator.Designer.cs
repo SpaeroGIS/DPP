@@ -30,10 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowGeoCalculator));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.mgrsToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.utmToolTip = new System.Windows.Forms.ToolTip(this.components);
@@ -110,14 +110,19 @@
             this.CopyGridPointButton = new System.Windows.Forms.ToolStripButton();
             this.SaveGridPointsButton = new System.Windows.Forms.ToolStripButton();
             this.OpenFileGridButton = new System.Windows.Forms.ToolStripButton();
+            this.upPointMoveButton = new System.Windows.Forms.ToolStripSplitButton();
+            this.upToFirstStripItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.downPointMoveButton = new System.Windows.Forms.ToolStripSplitButton();
+            this.toDownStripItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.renumberButton = new System.Windows.Forms.ToolStripButton();
             this.cmbCoordSystem = new System.Windows.Forms.ToolStripComboBox();
             this.PointsGridView = new System.Windows.Forms.DataGridView();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.NumberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.XCoordColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.YCoordColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.HighlightColumn = new System.Windows.Forms.DataGridViewImageColumn();
             this.DeleteColumn = new System.Windows.Forms.DataGridViewImageColumn();
-            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.TitlePanel.SuspendLayout();
             this.GeneralToolStrip.SuspendLayout();
             this.CurrentCoordinatesPanel.SuspendLayout();
@@ -151,7 +156,7 @@
             this.TitlePanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.TitlePanel.Location = new System.Drawing.Point(0, 0);
             this.TitlePanel.Name = "TitlePanel";
-            this.TitlePanel.Size = new System.Drawing.Size(235, 35);
+            this.TitlePanel.Size = new System.Drawing.Size(346, 35);
             this.TitlePanel.TabIndex = 49;
             // 
             // TitleLabel
@@ -180,7 +185,7 @@
             this.GeneralToolStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.GeneralToolStrip.Location = new System.Drawing.Point(0, 35);
             this.GeneralToolStrip.Name = "GeneralToolStrip";
-            this.GeneralToolStrip.Size = new System.Drawing.Size(235, 24);
+            this.GeneralToolStrip.Size = new System.Drawing.Size(346, 24);
             this.GeneralToolStrip.TabIndex = 50;
             this.GeneralToolStrip.Text = "toolStrip1";
             // 
@@ -251,7 +256,7 @@
             this.CurrentCoordinatesPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.CurrentCoordinatesPanel.Location = new System.Drawing.Point(0, 59);
             this.CurrentCoordinatesPanel.Name = "CurrentCoordinatesPanel";
-            this.CurrentCoordinatesPanel.Size = new System.Drawing.Size(235, 50);
+            this.CurrentCoordinatesPanel.Size = new System.Drawing.Size(346, 50);
             this.CurrentCoordinatesPanel.TabIndex = 51;
             // 
             // toolStrip1
@@ -330,7 +335,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 109);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(235, 92);
+            this.panel1.Size = new System.Drawing.Size(346, 92);
             this.panel1.TabIndex = 52;
             // 
             // toolStrip3
@@ -472,7 +477,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 201);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(235, 92);
+            this.panel2.Size = new System.Drawing.Size(346, 92);
             this.panel2.TabIndex = 53;
             // 
             // toolStrip5
@@ -614,7 +619,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(0, 293);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(235, 92);
+            this.panel3.Size = new System.Drawing.Size(346, 92);
             this.panel3.TabIndex = 54;
             // 
             // toolStrip7
@@ -754,7 +759,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(0, 385);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(235, 34);
+            this.panel4.Size = new System.Drawing.Size(346, 34);
             this.panel4.TabIndex = 55;
             // 
             // toolStrip9
@@ -868,11 +873,14 @@
             this.CopyGridPointButton,
             this.SaveGridPointsButton,
             this.OpenFileGridButton,
-            this.cmbCoordSystem});
+            this.cmbCoordSystem,
+            this.upPointMoveButton,
+            this.downPointMoveButton,
+            this.renumberButton});
             this.GridToolStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.GridToolStrip.Location = new System.Drawing.Point(0, 419);
             this.GridToolStrip.Name = "GridToolStrip";
-            this.GridToolStrip.Size = new System.Drawing.Size(235, 28);
+            this.GridToolStrip.Size = new System.Drawing.Size(346, 28);
             this.GridToolStrip.TabIndex = 56;
             this.GridToolStrip.Text = "toolStrip2";
             // 
@@ -925,6 +933,54 @@
             this.OpenFileGridButton.Size = new System.Drawing.Size(23, 20);
             this.OpenFileGridButton.Click += new System.EventHandler(this.OpenFileGridButton_Click);
             // 
+            // upPointMoveButton
+            // 
+            this.upPointMoveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.upPointMoveButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.upToFirstStripItem});
+            this.upPointMoveButton.Image = ((System.Drawing.Image)(resources.GetObject("upPointMoveButton.Image")));
+            this.upPointMoveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.upPointMoveButton.Name = "upPointMoveButton";
+            this.upPointMoveButton.Size = new System.Drawing.Size(32, 20);
+            this.upPointMoveButton.Text = "toolStripButton1";
+            this.upPointMoveButton.ButtonClick += new System.EventHandler(this.UpPointMoveButton_Click);
+            // 
+            // upToFirstStripItem
+            // 
+            this.upToFirstStripItem.Name = "upToFirstStripItem";
+            this.upToFirstStripItem.Size = new System.Drawing.Size(120, 22);
+            this.upToFirstStripItem.Text = "To begin";
+            this.upToFirstStripItem.Click += new System.EventHandler(this.UpToFirstStripItem_Click);
+            // 
+            // downPointMoveButton
+            // 
+            this.downPointMoveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.downPointMoveButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toDownStripItem});
+            this.downPointMoveButton.Image = ((System.Drawing.Image)(resources.GetObject("downPointMoveButton.Image")));
+            this.downPointMoveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.downPointMoveButton.Name = "downPointMoveButton";
+            this.downPointMoveButton.Size = new System.Drawing.Size(32, 20);
+            this.downPointMoveButton.Text = "В конец";
+            this.downPointMoveButton.Click += new System.EventHandler(this.DownPointMoveButton_Click);
+            // 
+            // toDownStripItem
+            // 
+            this.toDownStripItem.Name = "toDownStripItem";
+            this.toDownStripItem.Size = new System.Drawing.Size(180, 22);
+            this.toDownStripItem.Text = "To end";
+            this.toDownStripItem.Click += new System.EventHandler(this.ToDownStripItem_Click);
+            // 
+            // renumberButton
+            // 
+            this.renumberButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.renumberButton.Image = ((System.Drawing.Image)(resources.GetObject("renumberButton.Image")));
+            this.renumberButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.renumberButton.Name = "renumberButton";
+            this.renumberButton.Size = new System.Drawing.Size(23, 20);
+            this.renumberButton.Text = "toolStripButton1";
+            this.renumberButton.Click += new System.EventHandler(this.RenumberButton_Click);
+            // 
             // cmbCoordSystem
             // 
             this.cmbCoordSystem.Name = "cmbCoordSystem";
@@ -942,23 +998,21 @@
             this.PointsGridView.BackgroundColor = System.Drawing.SystemColors.Window;
             this.PointsGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.PointsGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            this.PointsGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.PointsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.PointsGridView.ColumnHeadersVisible = false;
             this.PointsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.NumberColumn,
             this.XCoordColumn,
             this.YCoordColumn,
             this.HighlightColumn,
             this.DeleteColumn});
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.PointsGridView.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.PointsGridView.DefaultCellStyle = dataGridViewCellStyle8;
             this.PointsGridView.Dock = System.Windows.Forms.DockStyle.Top;
             this.PointsGridView.GridColor = System.Drawing.SystemColors.Window;
             this.PointsGridView.Location = new System.Drawing.Point(0, 447);
@@ -966,31 +1020,36 @@
             this.PointsGridView.ReadOnly = true;
             this.PointsGridView.RowHeadersVisible = false;
             this.PointsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.PointsGridView.Size = new System.Drawing.Size(235, 186);
+            this.PointsGridView.Size = new System.Drawing.Size(346, 186);
             this.PointsGridView.TabIndex = 57;
             this.PointsGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.PointsGridView_CellContentClick);
+            this.PointsGridView.SelectionChanged += new System.EventHandler(this.PointsGridView_SelectionChanged);
+            // 
+            // openFileDialog
+            // 
+            this.openFileDialog.Filter = "XML|*.xml|CSV|*.csv";
             // 
             // NumberColumn
             // 
             this.NumberColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            this.NumberColumn.DefaultCellStyle = dataGridViewCellStyle1;
-            this.NumberColumn.HeaderText = "";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            this.NumberColumn.DefaultCellStyle = dataGridViewCellStyle5;
+            this.NumberColumn.HeaderText = "N";
             this.NumberColumn.Name = "NumberColumn";
             this.NumberColumn.ReadOnly = true;
-            this.NumberColumn.Width = 5;
+            this.NumberColumn.Width = 40;
             // 
             // XCoordColumn
             // 
             this.XCoordColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
-            this.XCoordColumn.DefaultCellStyle = dataGridViewCellStyle2;
-            this.XCoordColumn.HeaderText = "";
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.White;
+            this.XCoordColumn.DefaultCellStyle = dataGridViewCellStyle6;
+            this.XCoordColumn.HeaderText = "Longitude";
             this.XCoordColumn.Name = "XCoordColumn";
             this.XCoordColumn.ReadOnly = true;
             this.XCoordColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -999,12 +1058,12 @@
             // YCoordColumn
             // 
             this.YCoordColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
-            this.YCoordColumn.DefaultCellStyle = dataGridViewCellStyle3;
-            this.YCoordColumn.HeaderText = "";
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.White;
+            this.YCoordColumn.DefaultCellStyle = dataGridViewCellStyle7;
+            this.YCoordColumn.HeaderText = "Latitude";
             this.YCoordColumn.Name = "YCoordColumn";
             this.YCoordColumn.ReadOnly = true;
             this.YCoordColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -1028,10 +1087,6 @@
             this.DeleteColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.DeleteColumn.Width = 5;
             // 
-            // openFileDialog
-            // 
-            this.openFileDialog.Filter = "XML|*.xml|CSV|*.csv";
-            // 
             // DockableWindowGeoCalculator
             // 
             this.Controls.Add(this.PointsGridView);
@@ -1044,7 +1099,7 @@
             this.Controls.Add(this.GeneralToolStrip);
             this.Controls.Add(this.TitlePanel);
             this.Name = "DockableWindowGeoCalculator";
-            this.Size = new System.Drawing.Size(235, 628);
+            this.Size = new System.Drawing.Size(346, 628);
             this.TitlePanel.ResumeLayout(false);
             this.TitlePanel.PerformLayout();
             this.GeneralToolStrip.ResumeLayout(false);
@@ -1160,15 +1215,20 @@
         private System.Windows.Forms.ToolStripButton UkraineGeoPasteButton;
         private System.Windows.Forms.ToolStripButton UkraineProjPasteButton;
         private System.Windows.Forms.ToolStripButton MgrsPasteButton;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NumberColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn XCoordColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn YCoordColumn;
-        private System.Windows.Forms.DataGridViewImageColumn HighlightColumn;
-        private System.Windows.Forms.DataGridViewImageColumn DeleteColumn;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton MoveToTheProjectedCoordButton;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.ToolStripButton OpenFileGridButton;
         private System.Windows.Forms.ToolStripComboBox cmbCoordSystem;
+        private System.Windows.Forms.ToolStripButton renumberButton;
+        private System.Windows.Forms.ToolStripSplitButton upPointMoveButton;
+        private System.Windows.Forms.ToolStripMenuItem upToFirstStripItem;
+        private System.Windows.Forms.ToolStripSplitButton downPointMoveButton;
+        private System.Windows.Forms.ToolStripMenuItem toDownStripItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NumberColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn XCoordColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn YCoordColumn;
+        private System.Windows.Forms.DataGridViewImageColumn HighlightColumn;
+        private System.Windows.Forms.DataGridViewImageColumn DeleteColumn;
     }
 }
