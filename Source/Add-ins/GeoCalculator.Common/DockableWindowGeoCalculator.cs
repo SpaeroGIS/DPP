@@ -1711,7 +1711,18 @@ namespace MilSpace.GeoCalculator
 
         private void RenumberButton_Click(object sender, EventArgs e)
         {
+            var i = 1;
 
+            foreach(DataGridViewRow row in PointsGridView.Rows)
+            {
+                if(row.Index == -1)
+                {
+                    continue;
+                }
+
+                row.Cells[0].Value = i;
+                i++;
+            }
         }
     }
 }
