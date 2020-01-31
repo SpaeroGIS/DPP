@@ -46,7 +46,7 @@ namespace MilSpace.Profile
         internal event GetProfileSessionByIdDelegate GetProfileSessionById;
         internal event PanToSelectedProfileDelegate PanToSelectedProfile;
         internal event PanToSelectedProfilesSetDelegate PanToSelectedProfilesSet;
-        internal event ChangeSessionsHeightsDelegate OnSessionsHeightsChanged; 
+        internal event ChangeSessionsHeightsDelegate OnSessionsHeightsChanged;
 
         internal DockableWindowMilSpaceProfileGraph View { get; private set; }
 
@@ -57,7 +57,7 @@ namespace MilSpace.Profile
 
         internal MilSpaceProfileGraphsController()
         {
-            
+
         }
 
         internal GraphicsLayerManager GraphicsLayerManager
@@ -93,7 +93,7 @@ namespace MilSpace.Profile
             ProfileRedrawn?.Invoke(profileLines, sessionId, update, linesIds);
         }
 
-       
+
         private void InvokeProfileRemoved(int sessionId, int lineId)
         {
             ProfileRemoved?.Invoke(sessionId, lineId);
@@ -102,7 +102,7 @@ namespace MilSpace.Profile
         internal void ClearProfileSelection(SurfaceProfileChart chart)
         {
             SetChart(chart);
-            _surfaceProfileChartController.InvokeSelectedProfile(-1);
+            SurfaceProfileChartController.InvokeSelectedProfile(-1);
         }
 
         internal void InvokeSelectedProfileChanged(GroupedLines oldSelectedLines, GroupedLines newSelectedLines, int profileId)
@@ -137,7 +137,7 @@ namespace MilSpace.Profile
 
         internal void SetIntersections(List<IntersectionsInLayer> intersectionsLines, int lineId)
         {
-            _surfaceProfileChartController.SetIntersectionLines(intersectionsLines, lineId);
+            SurfaceProfileChartController.SetIntersectionLines(intersectionsLines, lineId);
         }
 
         internal string GetProfileNameById(int id)
@@ -163,23 +163,15 @@ namespace MilSpace.Profile
                 Docablewindow.Show(true);
             }
         }
-        
+
         internal bool IsWindowVisible => Docablewindow.IsVisible();
 
         internal void AddSession(ProfileSession profileSession)
         {
-            _surfaceProfileChartController = new SurfaceProfileChartController();
 
-            _surfaceProfileChartController.OnProfileGraphClicked += OnProfileGraphClicked;
-            _surfaceProfileChartController.InvisibleZonesChanged += InvokeInvisibleZonesChanged;
-            _surfaceProfileChartController.ProfileRemoved += InvokeProfileRemoved;
-            _surfaceProfileChartController.SelectedProfileChanged += InvokeSelectedProfileChanged;
-            _surfaceProfileChartController.IntersectionLinesDrawing += InvokeIntersectionLinesDrawing;
-            _surfaceProfileChartController.ProfileSessionsHeightsChange += InvokeOnSessionsHeightsChanged;
-
-            _surfaceProfileChartController.SetSession(profileSession);
-            SurfaceProfileChart surfaceProfileChart = 
-                _surfaceProfileChartController.CreateProfileChart(profileSession.ObserverHeight);
+            SurfaceProfileChartController.SetSession(profileSession);
+            SurfaceProfileChart surfaceProfileChart =
+                SurfaceProfileChartController.CreateProfileChart(profileSession.ObserverHeight);
 
             View.AddNewTab(surfaceProfileChart, profileSession.SessionId);
         }
@@ -187,12 +179,12 @@ namespace MilSpace.Profile
         internal void AddProfileToTab(ProfileLine profileLine, ProfileSurface profileSurface, bool isOneLineProfile)
         {
             View.SetCurrentChart();
-            _surfaceProfileChartController.AddLineToGraph(profileLine, profileSurface, isOneLineProfile);
+            SurfaceProfileChartController.AddLineToGraph(profileLine, profileSurface, isOneLineProfile);
         }
 
         internal void SetChart(SurfaceProfileChart currentChart)
         {
-            _surfaceProfileChartController = _surfaceProfileChartController.GetCurrentController(currentChart, this);
+            _surfaceProfileChartController = SurfaceProfileChartController.GetCurrentController(currentChart, this);
         }
 
         internal void RemoveTab()
@@ -210,6 +202,30 @@ namespace MilSpace.Profile
             CreateEmptyGraph?.Invoke();
         }
 
+        internal SurfaceProfileChartController SurfaceProfileChartController
+        {
+            get
+            {
+                if (_surfaceProfileChartController == null)
+                {
+                    InitializeSurfaceProfileChartController();
+                }
+                return _surfaceProfileChartController;
+            }
+        }
+
+        private void InitializeSurfaceProfileChartController()
+        {
+            _surfaceProfileChartController = new SurfaceProfileChartController();
+
+            _surfaceProfileChartController.OnProfileGraphClicked += OnProfileGraphClicked;
+            _surfaceProfileChartController.InvisibleZonesChanged += InvokeInvisibleZonesChanged;
+            _surfaceProfileChartController.ProfileRemoved += InvokeProfileRemoved;
+            _surfaceProfileChartController.SelectedProfileChanged += InvokeSelectedProfileChanged;
+            _surfaceProfileChartController.IntersectionLinesDrawing += InvokeIntersectionLinesDrawing;
+            _surfaceProfileChartController.ProfileSessionsHeightsChange += InvokeOnSessionsHeightsChanged;
+        }
+
         private IDockableWindow Docablewindow
         {
             get
@@ -224,5 +240,5 @@ namespace MilSpace.Profile
                 return dockableWindow;
             }
         }
-}
+    }
 }

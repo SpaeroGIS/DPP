@@ -3,9 +3,11 @@ using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core;
+using MilSpace.Core.ModulesInteraction;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Profile.DTO;
+using MilSpace.Profile.Interaction;
 using MilSpace.Profile.Localization;
 using System;
 using System.Collections.Generic;
@@ -49,7 +51,7 @@ namespace MilSpace.Profile
         List<ProfileSession> _fanProfiles = new List<ProfileSession>();
         List<ProfileSession> _graphicProfiles = new List<ProfileSession>();
 
-        Dictionary<ProfileSettingsTypeEnum, List<ProfileSession>> profileLists = 
+        Dictionary<ProfileSettingsTypeEnum, List<ProfileSession>> profileLists =
             new Dictionary<ProfileSettingsTypeEnum, List<ProfileSession>>
         {
             {ProfileSettingsTypeEnum.Points, new List<ProfileSession>() }
@@ -156,7 +158,7 @@ namespace MilSpace.Profile
         /// <summary>
         /// Host object of the dockable window
         /// </summary>
-        private object Hook {  get; set; }
+        private object Hook { get; set; }
 
         protected override void OnLoad(EventArgs e)
         {
@@ -220,11 +222,11 @@ namespace MilSpace.Profile
 
             saveProfileAsShared.Enabled = (pr != null && pr.CreatedBy == Environment.UserName && !pr.Shared);
 
-            removeProfile.Enabled = addProfileToGraph.Enabled = toolPanOnMap.Enabled = toolBtnFlash.Enabled = 
+            removeProfile.Enabled = addProfileToGraph.Enabled = toolPanOnMap.Enabled = toolBtnFlash.Enabled =
                 treeViewselectedIds.ProfileSessionId > 0;
 
             var profileType = GetProfileTypeFromNode();
-            setProfileSettingsToCalc.Enabled = 
+            setProfileSettingsToCalc.Enabled =
                 (addProfileToGraph.Enabled &&
                 (profileType == ProfileSettingsTypeEnum.Points || profileType == ProfileSettingsTypeEnum.Fun));
 
@@ -320,6 +322,7 @@ namespace MilSpace.Profile
             protected override IntPtr OnCreateChild()
             {
                 controller = new MilSpaceProfileCalsController();
+                ModuleInteraction.Instance.RegisterModuleInteraction<IProfileInteraction>(new ProfileInteraction(controller));
 
                 m_windowUI = new DockableWindowMilSpaceProfileCalc(this.Hook, controller);
                 AtivateDocableWindow();
@@ -367,7 +370,7 @@ namespace MilSpace.Profile
 
             switch (ToolbarButtonClicked.Name)
             {
-               case "toolBarButton8":
+                case "toolBarButton8":
                     HandlePickCoordTool(e.Button);
 
                     if (ArcMap.Application.CurrentTool == null)
@@ -375,9 +378,9 @@ namespace MilSpace.Profile
                         linePickCoordFirst.Pushed = false;
                         var message = LocalizationConstants.PickCoordinatesToolMessage;
                         MessageBox.Show(
-                            message, 
-                            "Profile Calc", 
-                            MessageBoxButtons.OK, 
+                            message,
+                            "Profile Calc",
+                            MessageBoxButtons.OK,
                             MessageBoxIcon.Exclamation);
                         break;
                     }
@@ -460,9 +463,9 @@ namespace MilSpace.Profile
                         linePickCoordFirst.Pushed = false;
                         var message = LocalizationConstants.PickCoordinatesToolMessage;
                         MessageBox.Show(
-                            message, 
-                            "Profile Calc", 
-                            MessageBoxButtons.OK, 
+                            message,
+                            "Profile Calc",
+                            MessageBoxButtons.OK,
                             MessageBoxIcon.Exclamation);
                         break;
                     }
@@ -525,9 +528,9 @@ namespace MilSpace.Profile
                     {
                         var message = LocalizationConstants.PickCoordinatesToolMessage;// $"Please add Pick Coordinates tool to any toolbar first.";
                         MessageBox.Show(
-                            message, 
-                            "Profile Calc", 
-                            MessageBoxButtons.OK, 
+                            message,
+                            "Profile Calc",
+                            MessageBoxButtons.OK,
                             MessageBoxIcon.Exclamation);
                         break;
                     }
@@ -625,7 +628,7 @@ namespace MilSpace.Profile
             textBox.Text = text;
         }
 
-        public ProfileSettingsTypeEnum SelectedProfileSettingsType => 
+        public ProfileSettingsTypeEnum SelectedProfileSettingsType =>
             controller.ProfileSettingsType[profileSettingsTab.SelectedIndex];
 
         public IPoint LinePropertiesFirstPoint
@@ -792,9 +795,9 @@ namespace MilSpace.Profile
             {
                 logger.DebugEx("calcProfile_Click controller.GenerateProfile ERROR. Session is NULL");
                 MessageBox.Show(
-                    "Calculation error. GenerateProfile return NULL", 
-                    "Модуль профілю. Error", 
-                    MessageBoxButtons.OK, 
+                    "Calculation error. GenerateProfile return NULL",
+                    "Модуль профілю. Error",
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
 
@@ -829,7 +832,7 @@ namespace MilSpace.Profile
 
         private static bool CheckDouble(char charValue, TextBox textValue, bool justInt = false)
         {
-            return (((charValue == BACKSPACE) || ((charValue >= ZERO) && (charValue <= NINE))) 
+            return (((charValue == BACKSPACE) || ((charValue >= ZERO) && (charValue <= NINE)))
                 || (justInt || ((charValue == DECIMAL_POINT) && textValue.Text.IndexOf(".") == NOT_FOUND)));
         }
 
@@ -867,19 +870,19 @@ namespace MilSpace.Profile
 
         public void ChangeSessionHeightInNode(int sessionId, double height, ProfileSettingsTypeEnum type)
         {
-            if(type == ProfileSettingsTypeEnum.Points)
+            if (type == ProfileSettingsTypeEnum.Points)
             {
                 ChangeSessionHeigth(profilesTreeView.Nodes["Points"].Nodes, sessionId, height);
                 return;
             }
 
-            if(type == ProfileSettingsTypeEnum.Fun)
+            if (type == ProfileSettingsTypeEnum.Fun)
             {
                 ChangeSessionHeigth(profilesTreeView.Nodes["Fun"].Nodes, sessionId, height);
                 return;
             }
 
-            if(type == ProfileSettingsTypeEnum.Primitives)
+            if (type == ProfileSettingsTypeEnum.Primitives)
             {
                 ChangeSessionHeigth(profilesTreeView.Nodes["Primitives"].Nodes, sessionId, height);
                 return;
@@ -888,7 +891,7 @@ namespace MilSpace.Profile
 
         private void ChangeSessionHeigth(TreeNodeCollection nodes, int id, double height)
         {
-            foreach(TreeNode node in nodes)
+            foreach (TreeNode node in nodes)
             {
                 if ((int)node.Tag == id)
                 {
@@ -986,9 +989,9 @@ namespace MilSpace.Profile
 
             //TODO - Localize message
             MessageBox.Show(
-                "Значення азимута задається в десяткових градусах і має бути більше або дорівнює 0 або менше або дорівнює 360", 
-                "Спостереження. Профіль", 
-                MessageBoxButtons.OK, 
+                "Значення азимута задається в десяткових градусах і має бути більше або дорівнює 0 або менше або дорівнює 360",
+                "Спостереження. Профіль",
+                MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
 
             athimuthControl.Focus();
@@ -1122,16 +1125,16 @@ namespace MilSpace.Profile
             string loalizedtext =
                LocalizationConstants.RemoveProfaileMessage.InvariantFormat(profilesTreeView.SelectedNode.Text);
             if (MessageBox.Show(
-                loalizedtext, 
-                "MilSpace", 
-                MessageBoxButtons.YesNo, 
+                loalizedtext,
+                "MilSpace",
+                MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 if (!controller.RemoveProfilesFromUserSession())
                 {
                     MessageBox.Show(
-                        "There was an error. Look at the log file for more detail", 
-                        "MilSpace", 
+                        "There was an error. Look at the log file for more detail",
+                        "MilSpace",
                         MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
@@ -1289,9 +1292,9 @@ namespace MilSpace.Profile
             if (!res.HasValue)
             {
                 MessageBox.Show(
-                    LocalizationConstants.NotAllowedToShareMessage, 
-                    "MilSpace", 
-                    MessageBoxButtons.OK, 
+                    LocalizationConstants.NotAllowedToShareMessage,
+                    "MilSpace",
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 return;
             }
@@ -1299,9 +1302,9 @@ namespace MilSpace.Profile
             if (!res.Value)
             {
                 MessageBox.Show(
-                    LocalizationConstants.ErrorOnShareProfileTextMessage, 
-                    "MilSpace", 
-                    MessageBoxButtons.OK, 
+                    LocalizationConstants.ErrorOnShareProfileTextMessage,
+                    "MilSpace",
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
 
@@ -1311,20 +1314,20 @@ namespace MilSpace.Profile
 
         private void eraseProfile_Click(object sender, EventArgs e)
         {
-            string loalizedtext = 
+            string loalizedtext =
                 LocalizationConstants.DeleteProfaileMessage.InvariantFormat(profilesTreeView.SelectedNode.Text);
             if (MessageBox.Show(
-                loalizedtext, 
-                "MilSpace", 
-                MessageBoxButtons.YesNo, 
+                loalizedtext,
+                "MilSpace",
+                MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 if (!controller.RemoveProfilesFromUserSession(true))
                 {
                     MessageBox.Show(
-                        LocalizationConstants.ErrorOnShareProfileTextMessage, 
-                        "MilSpace", 
-                        MessageBoxButtons.OK, 
+                        LocalizationConstants.ErrorOnShareProfileTextMessage,
+                        "MilSpace",
+                        MessageBoxButtons.OK,
                         MessageBoxIcon.Exclamation);
                 }
             }
@@ -1347,14 +1350,14 @@ namespace MilSpace.Profile
         {
             var node = profilesTreeView.SelectedNode;
 
-            if(!(node is ProfileTreeNode)) return;
+            if (!(node is ProfileTreeNode)) return;
 
             ProfileTreeNode profileNode = (ProfileTreeNode)node;
             var profileType = GetProfileTypeFromNode();
             var rows = profileNode.Attributes.Rows;
 
 
-            if(profileType == ProfileSettingsTypeEnum.Points)
+            if (profileType == ProfileSettingsTypeEnum.Points)
             {
                 profileSettingsTab.SelectTab(0);
 
@@ -1371,7 +1374,7 @@ namespace MilSpace.Profile
                 txtFirstHeight.Text = rows.Find(AttributeKeys.SectionFirstPointHeight)[AttributeKeys.ValueColumnName].ToString();
                 txtSecondHeight.Text = rows.Find(AttributeKeys.SectionSecondPointHeight)[AttributeKeys.ValueColumnName].ToString();
             }
-            if(profileType == ProfileSettingsTypeEnum.Fun)
+            if (profileType == ProfileSettingsTypeEnum.Fun)
             {
                 profileSettingsTab.SelectTab(1);
 

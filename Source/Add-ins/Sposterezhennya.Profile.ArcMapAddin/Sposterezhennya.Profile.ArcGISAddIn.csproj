@@ -262,6 +262,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Config.esriaddinx</DependentUpon>
     </Compile>
+    <Compile Include="..\Profile.Common\Interaction\ProfileInteraction.cs">
+      <Link>Interaction\ProfileInteraction.cs</Link>
+    </Compile>
     <Compile Include="Resources\MilSpace.Profile.Calc.Designer.cs">
       <DependentUpon>MilSpace.Profile.Calc.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -406,6 +409,9 @@
       <Project>{cbd5675b-f382-497d-98cc-70539ed658b9}</Project>
       <Name>MilSpace.Tools</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interaction\" />
   </ItemGroup>
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>

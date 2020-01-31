@@ -6,6 +6,7 @@ using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geometry;
 
 using MilSpace.Core;
+using MilSpace.Core.ModulesInteraction;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Tools;
@@ -218,14 +219,6 @@ namespace MilSpace.Visibility
                 editEvent.OnCreateFeature += _observPointsController.OnCreateFeature;
                 editEvent.OnDeleteFeature += _observPointsController.OnDeleteFeature;
             };
-
-            //ArcMap.Events.NewDocument += delegate ()
-            //{
-            //    IActiveViewEvents_Event activeViewEvent = (IActiveViewEvents_Event)ActiveView;
-            //    //activeViewEvent.SelectionChanged += OnContentsChanged;
-            //    //activeViewEvent.ItemAdded += OnItemAdded;
-            //    //OnContentsChanged();
-            //};
 
             log.InfoEx("> SubscribeForEvents END");
         }

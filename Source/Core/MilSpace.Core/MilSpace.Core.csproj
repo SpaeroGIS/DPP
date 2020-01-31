@@ -246,6 +246,24 @@
     <Compile Include="..\Core\Tools\MapLayersManager.cs">
       <Link>Tools\MapLayersManager.cs</Link>
     </Compile>
+    <Compile Include="..\Core\ModulesInteraction\I3DVisualizationInteraction.cs" >
+      <Link>ModulesInteraction\I3DVisualizationInteraction.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\ModulesInteraction\IGeocalculatorInteraction.cs">
+      <Link>ModulesInteraction\IGeocalculatorInteraction.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\ModulesInteraction\IProfileInteraction.cs" >
+      <Link>ModulesInteraction\IProfileInteraction.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\ModulesInteraction\IVisibilityInteraction.cs" >
+      <Link>ModulesInteraction\IVisibilityInteraction.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\ModulesInteraction\ModuleInteraction.cs" >
+      <Link>ModulesInteraction\ModuleInteraction.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\ModulesInteraction\ModulesEnum.cs" >
+      <Link>ModulesInteraction\ModulesEnum.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\Core\ResourceManager\MilSpaceResourceManager.cs">
       <Link>ResourceManager\MilSpaceResourceManager.cs</Link>
@@ -274,6 +292,8 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ModulesInteraction\Exception\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
