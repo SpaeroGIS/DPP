@@ -9,6 +9,7 @@ using MilSpace.DataAccess.DataTransfer;
 using System.Text.RegularExpressions;
 using System.Text;
 using System.IO;
+using MilSpace.Profile.Localization;
 
 namespace MilSpace.Profile.SurfaceProfileChartControl
 {

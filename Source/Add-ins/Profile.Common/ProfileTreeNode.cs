@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using MilSpace.Profile.Localization;
+using System.Data;
 using System.Windows.Forms;
 
 namespace MilSpace.Profile

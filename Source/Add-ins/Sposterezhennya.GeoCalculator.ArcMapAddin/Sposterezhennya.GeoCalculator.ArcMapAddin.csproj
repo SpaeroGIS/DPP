@@ -114,6 +114,15 @@
     <Compile Include="DockableWindowGeoCalculatorComSettings.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="..\GeoCalculator.Common\GeoCalculatorController.cs" >
+      <Link>GeoCalculatorController.cs</Link>
+    </Compile>
+    <Compile Include="..\GeoCalculator.Common\IGeoCalculatorView.cs" >
+      <Link>IGeoCalculatorView.cs</Link>
+    </Compile>
+    <Compile Include="..\GeoCalculator.Common\Interaction\GeoCalculatorInteraction.cs" >
+      <Link>Interaction\GeoCalculatorInteraction.cs</Link>
+    </Compile>
     <Compile Include="MapInteropToolComSettings.cs" />
     <Compile Include="Config.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -214,6 +223,7 @@
       <Name>SPPRD.GeoCalculator.BusinessLogic</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>
     <AddInTargetProduct>Desktop</AddInTargetProduct>

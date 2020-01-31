@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Xml;
-namespace MilSpace.Profile
+namespace MilSpace.Profile.Localization
 {
     public class LocalizationContext
     {

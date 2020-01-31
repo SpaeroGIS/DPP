@@ -46,7 +46,7 @@ namespace MilSpace.Profile
 
         private TreeViewSelectedProfileIds treeViewselectedIds; //= new TreeViewSelectedProfileIds();
 
-        MilSpaceProfileCalsController controller;
+        MilSpaceProfileCalcsController controller;
 
         List<ProfileSession> _fanProfiles = new List<ProfileSession>();
         List<ProfileSession> _graphicProfiles = new List<ProfileSession>();
@@ -58,7 +58,7 @@ namespace MilSpace.Profile
 
         };
 
-        public DockableWindowMilSpaceProfileCalc(MilSpaceProfileCalsController controller)
+        public DockableWindowMilSpaceProfileCalc(MilSpaceProfileCalcsController controller)
         {
             logger.InfoEx(">>> DockableWindowMilSpaceProfileCalc(1) START <<<");
             this.Instance = this;
@@ -68,7 +68,7 @@ namespace MilSpace.Profile
             logger.InfoEx("> DockableWindowMilSpaceProfileCalc(1) END");
         }
 
-        public DockableWindowMilSpaceProfileCalc(object hook, MilSpaceProfileCalsController controller)
+        public DockableWindowMilSpaceProfileCalc(object hook, MilSpaceProfileCalcsController controller)
         {
             logger.InfoEx(">>> DockableWindowMilSpaceProfileCalc(2) START <<<");
 
@@ -95,7 +95,7 @@ namespace MilSpace.Profile
 
         public ISpatialReference MapSpatialreverence => ArcMap.Document.FocusMap.SpatialReference;
 
-        public MilSpaceProfileCalsController Controller => controller;
+        public MilSpaceProfileCalcsController Controller => controller;
 
         public ProfileSettingsPointButtonEnum ActiveButton => activeButtton;
 
@@ -299,7 +299,7 @@ namespace MilSpace.Profile
             lblCommonLengthValue.Text = selectedLines.FullLength.ToString("F2");
         }
 
-        public void SetController(MilSpaceProfileCalsController controller)
+        public void SetController(MilSpaceProfileCalcsController controller)
         {
             this.controller = controller;
         }
@@ -311,8 +311,6 @@ namespace MilSpace.Profile
         public class AddinImpl : ESRI.ArcGIS.Desktop.AddIns.DockableWindow
         {
             private DockableWindowMilSpaceProfileCalc m_windowUI;
-            MilSpaceProfileCalsController controller;
-
 
             public AddinImpl()
             {
@@ -321,10 +319,10 @@ namespace MilSpace.Profile
 
             protected override IntPtr OnCreateChild()
             {
-                controller = new MilSpaceProfileCalsController();
-                ModuleInteraction.Instance.RegisterModuleInteraction<IProfileInteraction>(new ProfileInteraction(controller));
+                MilSpaceProfileCalsController = new MilSpaceProfileCalcsController();
+                ModuleInteraction.Instance.RegisterModuleInteraction<IProfileInteraction>(new ProfileInteraction(MilSpaceProfileCalsController));
 
-                m_windowUI = new DockableWindowMilSpaceProfileCalc(this.Hook, controller);
+                m_windowUI = new DockableWindowMilSpaceProfileCalc(this.Hook, MilSpaceProfileCalsController);
                 AtivateDocableWindow();
                 return m_windowUI.Handle;
             }
@@ -349,7 +347,7 @@ namespace MilSpace.Profile
             internal DockableWindowMilSpaceProfileCalc DockableWindowUI => m_windowUI;
 
 
-            internal MilSpaceProfileCalsController MilSpaceProfileCalsController => controller;
+            internal MilSpaceProfileCalcsController MilSpaceProfileCalsController { get; private set; }
 
         }
 
