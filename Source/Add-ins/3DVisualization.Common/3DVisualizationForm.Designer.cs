@@ -71,12 +71,12 @@
             this.TransportLayerComboBox = new System.Windows.Forms.ComboBox();
             this.TransportLayerLabel = new System.Windows.Forms.Label();
             this.panel14 = new System.Windows.Forms.Panel();
-            this.BuildingsHightComboBox = new System.Windows.Forms.ComboBox();
+            this.BuildingsTexBox = new System.Windows.Forms.TextBox();
             this.BuildingsHight = new System.Windows.Forms.Label();
             this.BuildingsLayerComboBox = new System.Windows.Forms.ComboBox();
             this.BuildingsLayerLabel = new System.Windows.Forms.Label();
             this.panel13 = new System.Windows.Forms.Panel();
-            this.PlantsHightComboBox = new System.Windows.Forms.ComboBox();
+            this.PlantsTextBox = new System.Windows.Forms.TextBox();
             this.PlantsHightLablel = new System.Windows.Forms.Label();
             this.PlantsLayerComboBox = new System.Windows.Forms.ComboBox();
             this.PlantsLayerLabel = new System.Windows.Forms.Label();
@@ -86,6 +86,7 @@
             this.panel11 = new System.Windows.Forms.Panel();
             this.btnRefreshLayers = new System.Windows.Forms.Button();
             this.lbl3DProfiles = new System.Windows.Forms.Label();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.basePanel.SuspendLayout();
             this.GenerateTab.SuspendLayout();
             this.ProfilesTabPage.SuspendLayout();
@@ -664,7 +665,7 @@
             // 
             this.HydroHightTextBox.Dock = System.Windows.Forms.DockStyle.Left;
             this.HydroHightTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.HydroHightTextBox.Location = new System.Drawing.Point(252, 4);
+            this.HydroHightTextBox.Location = new System.Drawing.Point(254, 4);
             this.HydroHightTextBox.Name = "HydroHightTextBox";
             this.HydroHightTextBox.Size = new System.Drawing.Size(60, 20);
             this.HydroHightTextBox.TabIndex = 62;
@@ -675,8 +676,8 @@
             this.HydroHightLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.HydroHightLabel.Location = new System.Drawing.Point(208, 4);
             this.HydroHightLabel.Name = "HydroHightLabel";
-            this.HydroHightLabel.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
-            this.HydroHightLabel.Size = new System.Drawing.Size(44, 20);
+            this.HydroHightLabel.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.HydroHightLabel.Size = new System.Drawing.Size(46, 20);
             this.HydroHightLabel.TabIndex = 61;
             this.HydroHightLabel.Text = "Hight";
             this.HydroHightLabel.Click += new System.EventHandler(this.HydroHightLabel_Click);
@@ -719,7 +720,7 @@
             // 
             this.TransportHightTextBox.Dock = System.Windows.Forms.DockStyle.Left;
             this.TransportHightTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.TransportHightTextBox.Location = new System.Drawing.Point(252, 4);
+            this.TransportHightTextBox.Location = new System.Drawing.Point(254, 4);
             this.TransportHightTextBox.Name = "TransportHightTextBox";
             this.TransportHightTextBox.Size = new System.Drawing.Size(60, 20);
             this.TransportHightTextBox.TabIndex = 60;
@@ -730,10 +731,10 @@
             this.TransportHightLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.TransportHightLabel.Location = new System.Drawing.Point(208, 4);
             this.TransportHightLabel.Name = "TransportHightLabel";
-            this.TransportHightLabel.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
-            this.TransportHightLabel.Size = new System.Drawing.Size(44, 20);
+            this.TransportHightLabel.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.TransportHightLabel.Size = new System.Drawing.Size(46, 20);
             this.TransportHightLabel.TabIndex = 59;
-            this.TransportHightLabel.Text = "Hight";
+            this.TransportHightLabel.Text = "висота";
             // 
             // TransportLayerComboBox
             // 
@@ -758,7 +759,7 @@
             // panel14
             // 
             this.panel14.BackColor = System.Drawing.SystemColors.Window;
-            this.panel14.Controls.Add(this.BuildingsHightComboBox);
+            this.panel14.Controls.Add(this.BuildingsTexBox);
             this.panel14.Controls.Add(this.BuildingsHight);
             this.panel14.Controls.Add(this.BuildingsLayerComboBox);
             this.panel14.Controls.Add(this.BuildingsLayerLabel);
@@ -769,25 +770,23 @@
             this.panel14.Size = new System.Drawing.Size(322, 28);
             this.panel14.TabIndex = 73;
             // 
-            // BuildingsHightComboBox
+            // BuildingsTexBox
             // 
-            this.BuildingsHightComboBox.Dock = System.Windows.Forms.DockStyle.Left;
-            this.BuildingsHightComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.BuildingsHightComboBox.FormattingEnabled = true;
-            this.BuildingsHightComboBox.Location = new System.Drawing.Point(254, 4);
-            this.BuildingsHightComboBox.Name = "BuildingsHightComboBox";
-            this.BuildingsHightComboBox.Size = new System.Drawing.Size(60, 21);
-            this.BuildingsHightComboBox.TabIndex = 58;
+            this.BuildingsTexBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.BuildingsTexBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.BuildingsTexBox.Location = new System.Drawing.Point(254, 4);
+            this.BuildingsTexBox.Name = "BuildingsTexBox";
+            this.BuildingsTexBox.Size = new System.Drawing.Size(60, 20);
+            this.BuildingsTexBox.TabIndex = 61;
             // 
             // BuildingsHight
             // 
-            this.BuildingsHight.AutoSize = true;
             this.BuildingsHight.Dock = System.Windows.Forms.DockStyle.Left;
             this.BuildingsHight.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.BuildingsHight.Location = new System.Drawing.Point(208, 4);
             this.BuildingsHight.Name = "BuildingsHight";
             this.BuildingsHight.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
-            this.BuildingsHight.Size = new System.Drawing.Size(46, 15);
+            this.BuildingsHight.Size = new System.Drawing.Size(46, 20);
             this.BuildingsHight.TabIndex = 54;
             this.BuildingsHight.Text = "высота";
             // 
@@ -814,7 +813,7 @@
             // panel13
             // 
             this.panel13.BackColor = System.Drawing.SystemColors.Window;
-            this.panel13.Controls.Add(this.PlantsHightComboBox);
+            this.panel13.Controls.Add(this.PlantsTextBox);
             this.panel13.Controls.Add(this.PlantsHightLablel);
             this.panel13.Controls.Add(this.PlantsLayerComboBox);
             this.panel13.Controls.Add(this.PlantsLayerLabel);
@@ -825,25 +824,23 @@
             this.panel13.Size = new System.Drawing.Size(322, 28);
             this.panel13.TabIndex = 72;
             // 
-            // PlantsHightComboBox
+            // PlantsTextBox
             // 
-            this.PlantsHightComboBox.Dock = System.Windows.Forms.DockStyle.Left;
-            this.PlantsHightComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.PlantsHightComboBox.FormattingEnabled = true;
-            this.PlantsHightComboBox.Location = new System.Drawing.Point(254, 4);
-            this.PlantsHightComboBox.Name = "PlantsHightComboBox";
-            this.PlantsHightComboBox.Size = new System.Drawing.Size(60, 21);
-            this.PlantsHightComboBox.TabIndex = 56;
+            this.PlantsTextBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.PlantsTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.PlantsTextBox.Location = new System.Drawing.Point(254, 4);
+            this.PlantsTextBox.Name = "PlantsTextBox";
+            this.PlantsTextBox.Size = new System.Drawing.Size(60, 20);
+            this.PlantsTextBox.TabIndex = 61;
             // 
             // PlantsHightLablel
             // 
-            this.PlantsHightLablel.AutoSize = true;
             this.PlantsHightLablel.Dock = System.Windows.Forms.DockStyle.Left;
             this.PlantsHightLablel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.PlantsHightLablel.Location = new System.Drawing.Point(208, 4);
             this.PlantsHightLablel.Name = "PlantsHightLablel";
             this.PlantsHightLablel.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
-            this.PlantsHightLablel.Size = new System.Drawing.Size(46, 15);
+            this.PlantsHightLablel.Size = new System.Drawing.Size(46, 20);
             this.PlantsHightLablel.TabIndex = 53;
             this.PlantsHightLablel.Text = "высота";
             // 
@@ -984,12 +981,10 @@
         private System.Windows.Forms.Label lbl3DProfiles;
         private System.Windows.Forms.Button btnRefreshLayers;
         private System.Windows.Forms.Panel panel14;
-        private System.Windows.Forms.ComboBox BuildingsHightComboBox;
         private System.Windows.Forms.Label BuildingsHight;
         private System.Windows.Forms.ComboBox BuildingsLayerComboBox;
         private System.Windows.Forms.Label BuildingsLayerLabel;
         private System.Windows.Forms.Panel panel13;
-        private System.Windows.Forms.ComboBox PlantsHightComboBox;
         private System.Windows.Forms.Label PlantsHightLablel;
         private System.Windows.Forms.ComboBox PlantsLayerComboBox;
         private System.Windows.Forms.Label PlantsLayerLabel;
@@ -1031,5 +1026,8 @@
         private System.Windows.Forms.Button GenerateButton;
         private System.Windows.Forms.TabPage GenerateImageTab;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.TextBox BuildingsTexBox;
+        private System.Windows.Forms.TextBox PlantsTextBox;
     }
 }

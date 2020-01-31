@@ -52,7 +52,7 @@ namespace MilSpace.Visualization3D
 
                 var baseSurface = AddBaseLayers(layers, objFactory, document);
                 AddVisibilityLayers(layers.VisibilityResultsInfo, objFactory, document, baseSurface);
-                AddExtraLayers(layers.AdditionalLayers, objFactory, document);
+                AddExtraLayers(layers.AdditionalLayers, objFactory, document, baseSurface);
             }
             catch(Exception ex) { }
 
@@ -99,7 +99,14 @@ namespace MilSpace.Visualization3D
 
             foreach(var layer in preparedLayers)
             {
-                document.AddLayer(layer.Value);
+                try
+                {
+                    document.AddLayer(layer.Value);
+                }
+                catch(Exception ex)
+                {
+                    //todo add log
+                }
             }
 
             document.UpdateContents();
@@ -119,13 +126,22 @@ namespace MilSpace.Visualization3D
             return functionalSurface;
         }
 
-        private static void AddExtraLayers(IEnumerable<ILayer> additionalLayers, IObjectFactory objFactory, IBasicDocument document)
+        private static void AddExtraLayers(Dictionary<ILayer, double> additionalLayers, IObjectFactory objFactory,
+                                            IBasicDocument document, IFunctionalSurface surface)
         {
             foreach(var extraLayer in additionalLayers)
             {
-                var featureLayer = CreateLayerCopy((IFeatureLayer)extraLayer, objFactory);
+                var featureLayer = CreateLayerCopy((IFeatureLayer)extraLayer.Key, objFactory);
+                SetFeatures3DProperties(featureLayer, objFactory, surface, extraLayer.Value);
 
-                document.AddLayer(featureLayer);
+                try
+                {
+                    document.AddLayer(featureLayer);
+                }
+                catch(Exception ex)
+                {
+                    //todo add log
+                }
             }
 
             document.UpdateContents();
@@ -143,7 +159,14 @@ namespace MilSpace.Visualization3D
                 {
                     layers.Add(layer.Key, layer.Value);
 
-                    document.AddLayer(layer.Key);
+                    try
+                    {
+                        document.AddLayer(layer.Key);
+                    }
+                    catch(Exception ex)
+                    {
+                        //todo add log
+                    }
                 }
             }
 
@@ -299,9 +322,19 @@ namespace MilSpace.Visualization3D
             layerDefinition.DefinitionExpression = arcMapLayerDefinition.DefinitionExpression;
 
             IGeoFeatureLayer geoArcMapLayer = layer as IGeoFeatureLayer;
+
             IGeoFeatureLayer geoFL = featureLayer as IGeoFeatureLayer;
             geoFL.Renderer = geoArcMapLayer.Renderer;
 
+            //var objCopy = (IObjectCopy)objFactory.Create("esriSystem.ObjectCopy");
+
+            //IGeoFeatureLayer geoFL = featureLayer as IGeoFeatureLayer;
+            //var renderer = geoFL.Renderer as object;
+
+            //var rendererCopyObj = objCopy.Copy(geoArcMapLayer.Renderer);
+
+            ////geoFL.Renderer = rendererCopyObj as IFeatureRenderer;
+            //objCopy.Overwrite(geoArcMapLayer.Renderer, ref rendererCopyObj);
             Marshal.ReleaseComObject(workspaceFactory);
 
             return geoFL;
@@ -373,13 +406,13 @@ namespace MilSpace.Visualization3D
         }
 
 
-        private static void SetFeatures3DProperties(IFeatureLayer layer, IObjectFactory objFactory, IFunctionalSurface surface)
+        private static void SetFeatures3DProperties(IFeatureLayer layer, IObjectFactory objFactory, IFunctionalSurface surface, double height = double.NaN)
         {
             var properties3D = (I3DProperties)objFactory.Create("esrianalyst3d.Feature3DProperties");
             properties3D.BaseOption = esriBaseOption.esriBaseSurface;
             properties3D.BaseSurface = surface;
-            properties3D.ZFactor = zFactor;
-            properties3D.OffsetExpressionString = "3";
+            properties3D.ZFactor =  zFactor ;
+            properties3D.OffsetExpressionString = (height == double.NaN) ? "3" : height.ToString();
 
             ILayerExtensions layerExtensions = (ILayerExtensions)layer;
             layerExtensions.AddExtension(properties3D);

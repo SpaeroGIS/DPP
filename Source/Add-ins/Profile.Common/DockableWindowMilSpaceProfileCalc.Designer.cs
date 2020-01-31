@@ -1578,6 +1578,7 @@
             // toolPanOnMap
             // 
             this.toolPanOnMap.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolPanOnMap.Enabled = false;
             this.toolPanOnMap.Image = ((System.Drawing.Image)(resources.GetObject("toolPanOnMap.Image")));
             this.toolPanOnMap.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolPanOnMap.Name = "toolPanOnMap";
@@ -1589,6 +1590,7 @@
             // toolBtnFlash
             // 
             this.toolBtnFlash.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolBtnFlash.Enabled = false;
             this.toolBtnFlash.Image = ((System.Drawing.Image)(resources.GetObject("toolBtnFlash.Image")));
             this.toolBtnFlash.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolBtnFlash.Name = "toolBtnFlash";
@@ -1605,6 +1607,7 @@
             // setProfileSettingsToCalc
             // 
             this.setProfileSettingsToCalc.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.setProfileSettingsToCalc.Enabled = false;
             this.setProfileSettingsToCalc.Image = ((System.Drawing.Image)(resources.GetObject("setProfileSettingsToCalc.Image")));
             this.setProfileSettingsToCalc.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.setProfileSettingsToCalc.Name = "setProfileSettingsToCalc";
@@ -1630,6 +1633,7 @@
             // addProfileToGraph
             // 
             this.addProfileToGraph.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.addProfileToGraph.Enabled = false;
             this.addProfileToGraph.Image = ((System.Drawing.Image)(resources.GetObject("addProfileToGraph.Image")));
             this.addProfileToGraph.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.addProfileToGraph.Name = "addProfileToGraph";
@@ -1665,6 +1669,7 @@
             // removeProfile
             // 
             this.removeProfile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.removeProfile.Enabled = false;
             this.removeProfile.Image = ((System.Drawing.Image)(resources.GetObject("removeProfile.Image")));
             this.removeProfile.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.removeProfile.Name = "removeProfile";
@@ -1676,6 +1681,7 @@
             // saveProfileAsShared
             // 
             this.saveProfileAsShared.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.saveProfileAsShared.Enabled = false;
             this.saveProfileAsShared.Image = ((System.Drawing.Image)(resources.GetObject("saveProfileAsShared.Image")));
             this.saveProfileAsShared.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.saveProfileAsShared.Name = "saveProfileAsShared";
@@ -1687,6 +1693,7 @@
             // eraseProfile
             // 
             this.eraseProfile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.eraseProfile.Enabled = false;
             this.eraseProfile.Image = ((System.Drawing.Image)(resources.GetObject("eraseProfile.Image")));
             this.eraseProfile.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.eraseProfile.Name = "eraseProfile";

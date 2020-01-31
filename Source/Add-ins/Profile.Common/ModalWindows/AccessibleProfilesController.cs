@@ -1,7 +1,6 @@
 ﻿using ESRI.ArcGIS.Geometry;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
-using MilSpace.Profile.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,9 +69,9 @@ namespace MilSpace.Profile.ModalWindows
         {
             if(_typesDisplayValues == null || _typesDisplayValues.Count == 0)
             {
-                _typesDisplayValues.Add(ProfileSettingsTypeEnum.Points, LocalizationConstants.PointsTypeText);
-                _typesDisplayValues.Add(ProfileSettingsTypeEnum.Fun, LocalizationConstants.FunTypeText);
-                _typesDisplayValues.Add(ProfileSettingsTypeEnum.Primitives, LocalizationConstants.PrimitiveTypeText);
+                _typesDisplayValues.Add(ProfileSettingsTypeEnum.Points, LocalizationContext.Instance.PointsTypeText);
+                _typesDisplayValues.Add(ProfileSettingsTypeEnum.Fun, LocalizationContext.Instance.FunTypeText);
+                _typesDisplayValues.Add(ProfileSettingsTypeEnum.Primitives, LocalizationContext.Instance.PrimitiveTypeText);
             }
 
             return _typesDisplayValues;
@@ -82,9 +81,9 @@ namespace MilSpace.Profile.ModalWindows
         {
             if(_typesValues == null || _typesValues.Count == 0)
             {
-                _typesValues.Add(LocalizationConstants.PointsTypeText, ProfileSettingsTypeEnum.Points);
-                _typesValues.Add(LocalizationConstants.FunTypeText, ProfileSettingsTypeEnum.Fun);
-                _typesValues.Add(LocalizationConstants.PrimitiveTypeText, ProfileSettingsTypeEnum.Primitives);
+                _typesValues.Add(LocalizationContext.Instance.PointsTypeText, ProfileSettingsTypeEnum.Points);
+                _typesValues.Add(LocalizationContext.Instance.FunTypeText, ProfileSettingsTypeEnum.Fun);
+                _typesValues.Add(LocalizationContext.Instance.PrimitiveTypeText, ProfileSettingsTypeEnum.Primitives);
             }
 
             return _typesValues;

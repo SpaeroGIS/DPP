@@ -36,6 +36,8 @@ namespace MilSpace.GeoCalculator
         public string UkraineLabel => FindLocalizedElement("Ukraine2000Label", "Ukraine2000");
         public string MgrsLabel => FindLocalizedElement("MgrsLabel", "MGRS Representation");
         public string UtmLabel => FindLocalizedElement("UtmLabel", "UTM Representation");
+        public string MgrsName=> FindLocalizedElement("MgrsName", "MGRS Representation");
+        public string UtmName => FindLocalizedElement("UtmName", "UTM Representation");
 
         //Buttons
         public string CopyButton => FindLocalizedElement("CopyButton", "Copy");

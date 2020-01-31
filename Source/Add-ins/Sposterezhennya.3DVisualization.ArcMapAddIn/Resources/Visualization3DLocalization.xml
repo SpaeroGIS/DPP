@@ -28,4 +28,10 @@
   <LabelProfileTreeHeader>Профілі для візуалізації</LabelProfileTreeHeader>
   <ButtonAddSessionProfileTree>Додати</ButtonAddSessionProfileTree>
 
+  <ButtonUpdateToolTip>Оновити шари даних</ButtonUpdateToolTip>
+  <ButtonAddSurfaceToolTip>Додати поверхні</ButtonAddSurfaceToolTip>
+  <ButtonRemoveSurfaceToolTip>Видалити обрані поверхні</ButtonRemoveSurfaceToolTip>
+  <ButtonAddProfileToolTip>Додати профілі</ButtonAddProfileToolTip>
+  <ButtonRemoveProfileToolTip>Видалити обрані профілі</ButtonRemoveProfileToolTip>
+
 </Visualization3D>

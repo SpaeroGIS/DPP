@@ -1,5 +1,4 @@
-﻿using MilSpace.Profile.Localization;
-using System;
+﻿using System;
 using System.Windows.Forms;
 
 namespace MilSpace.Profile.ModalWindows
@@ -29,14 +28,14 @@ namespace MilSpace.Profile.ModalWindows
 
         private void LocalizeControls()
         {
-            this.Text = LocalizationConstants.ProfilesTreeModalTitle;
+            this.Text = LocalizationContext.Instance.FindLocalizedElement("ModalProfilesTreeModalTitle", "Дерево профілів");
 
-            profilesTreeView.Nodes["Points"].Text = LocalizationConstants.PointsNodeText;
-            profilesTreeView.Nodes["Fun"].Text = LocalizationConstants.FunNodeText;
-            profilesTreeView.Nodes["Primitives"].Text = LocalizationConstants.PrimitiveNodeText;
+            profilesTreeView.Nodes["Points"].Text = LocalizationContext.Instance.PointsTypeText;
+            profilesTreeView.Nodes["Fun"].Text = LocalizationContext.Instance.FunTypeText;
+            profilesTreeView.Nodes["Primitives"].Text = LocalizationContext.Instance.PrimitiveTypeText;
 
-            cancelButton.Text = LocalizationConstants.CancelText;
-            okButton.Text = LocalizationConstants.OkText;
+            cancelButton.Text = LocalizationContext.Instance.FindLocalizedElement("BtnCancelText", "Відмінити");
+            okButton.Text = LocalizationContext.Instance.FindLocalizedElement("BtnOkText", "OK");
         }
 
         private void CopyChildren(TreeNode parent, TreeNode original)

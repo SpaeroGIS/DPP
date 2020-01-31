@@ -10,7 +10,6 @@ using MilSpace.DataAccess;
 using System.Text;
 using System.Globalization;
 using System.Windows.Forms;
-using MilSpace.Profile.Localization;
 
 namespace MilSpace.Profile.SurfaceProfileChartControl
 {
@@ -560,7 +559,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         {
             var profilePropertiesText = new StringBuilder();
 
-            var header = LocalizationConstants.DataExportProfilePropertiesHeader;
+            var header = LocalizationContext.Instance.FindLocalizedElement("DataExportProfilePropertiesHeader", "Номер; Назва профілю; Зовнішній; Стан; Точка початку; Точка кінцю; Азимут; Пункт спостереження; Довжина; Макс. висота; Різниця висот; Мін. висота; Макс. кут підйому; Макс. кут спуску; Процент видимих зон");
             profilePropertiesText.AppendLine(header);
 
             foreach(var line in _profileSession.ProfileLines)
@@ -575,7 +574,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 var isExternal = (line.SessionId != _profileSession.SessionId);
 
                 var isExternalText = (isExternal) ? "yes" : "no";
-                var stateText = (GetProfileSharedForLine(line.Id)) ? LocalizationConstants.ProfilesSetSharedText : LocalizationConstants.ProfilesSetNotSharedText;
+                var stateText = (GetProfileSharedForLine(line.Id)) ? LocalizationContext.Instance.FindLocalizedElement("ProfilesSetSharedText", "Спільний") : LocalizationContext.Instance.FindLocalizedElement("ProfilesSetNotSharedText", "Приватний");
 
                 var properties = $"{profileProperty.LineId};{GetProfileName(line.Id)};{isExternalText};{stateText};X = {ConvertDoubleToExportString(5, line.PointFrom.X)} Y = {ConvertDoubleToExportString(5, line.PointFrom.Y)} ;" +
                                  $"X = {ConvertDoubleToExportString(5, line.PointTo.X)} Y = {ConvertDoubleToExportString(5, line.PointTo.Y)};{ConvertDoubleToExportString(1, profileProperty.Azimuth)};{ConvertDoubleToExportString(1, profileProperty.ObserverHeight)};" +
@@ -598,7 +597,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 return String.Empty;
             }
 
-            var header = LocalizationConstants.DataExportPointsPropertiesHeader;
+            var header = LocalizationContext.Instance.FindLocalizedElement("DataExportPointsPropertiesHeader", "Номер; X; Y; Z; Відстань; Точка перегину; Видима; Перетини");
             var trueText = "yes";
             var falseText = "no";
 
@@ -976,13 +975,13 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             {
                 if(profileLine == null)
                 {
-                    throw new ArgumentException(LocalizationConstants.LineNotFoundErrorMessage);
+                    throw new ArgumentException(LocalizationContext.Instance.FindLocalizedElement("MsgLineNotFoundErrorText", "Лінію не знайдено"));
                 }
 
             }
             catch(ArgumentException ex)
             {
-                MessageBox.Show(ex.Message, LocalizationConstants.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, LocalizationContext.Instance.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 

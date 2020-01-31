@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SP_ProfileLocalization xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <BtnAddAvailableProfilesSetsToolTip>Додати доступні набори профілів</BtnAddAvailableProfilesSetsToolTip>
+  <BtnChangeAllObserversHeightsToolTip>Змінити висоту всіх пунктів спостереження</BtnChangeAllObserversHeightsToolTip>
+  <BtnCopyCoordToolTip>Копіювати координати</BtnCopyCoordToolTip>
+  <BtnPasteCoordToolTip>Вставити координати</BtnPasteCoordToolTip>
+  <BtnRefreshLayersToolTip>Оновити шари даних</BtnRefreshLayersToolTip>
+  <BtnShowCoordToolTip>Показати координати на карті</BtnShowCoordToolTip>
+  <BtnTakeCoordToolTip>Взяти координати з карти</BtnTakeCoordToolTip>
+  <DgvProfilePropertiesAscendingAngleColToolTip>Максимальний кут підйому (градуси)</DgvProfilePropertiesAscendingAngleColToolTip>
+  <DgvProfilePropertiesAzimuthColToolTip>Азимут</DgvProfilePropertiesAzimuthColToolTip>
+  <DgvProfilePropertiesDescendingAngleColToolTip>Максимальний кут спуску (градуси)</DgvProfilePropertiesDescendingAngleColToolTip>
+  <DgvProfilePropertiesHeightDifferenceColToolTip>Різниця висот (м)</DgvProfilePropertiesHeightDifferenceColToolTip>
+  <DgvProfilePropertiesIsVisibleColToolTip>Показати/сховати профіль</DgvProfilePropertiesIsVisibleColToolTip>
+  <DgvProfilePropertiesMaxHeightColToolTip>Максимальна висота (м)</DgvProfilePropertiesMaxHeightColToolTip>
+  <DgvProfilePropertiesMinHeightColToolTip>Мінімальна висота (м)</DgvProfilePropertiesMinHeightColToolTip>
+  <DgvProfilePropertiesObserverHeightColToolTip>Висота пункту спостереження (м)</DgvProfilePropertiesObserverHeightColToolTip>
+  <DgvProfilePropertiesProfileLengthColToolTip>Довжина профіля (м)</DgvProfilePropertiesProfileLengthColToolTip>
+  <DgvProfilePropertiesProfileNumberColToolTip>Номер профіля</DgvProfilePropertiesProfileNumberColToolTip>
+  <DgvProfilePropertiesVisiblePercentColToolTip>Відсоток видимих зон</DgvProfilePropertiesVisiblePercentColToolTip>
+  <GraphTbBtnAddPageToolTip>Додати нову вкладку для графіка</GraphTbBtnAddPageToolTip>
+  <GraphTbBtnAddProfileGraphToolTip>Додати профіль на графік</GraphTbBtnAddProfileGraphToolTip>
+  <GraphTbBtnDeletePageToolTip>Видалити вкладку</GraphTbBtnDeletePageToolTip>
+  <GraphTbBtnDeleteSelectedProfileToolTip>Видалити обраний профіль з графіка</GraphTbBtnDeleteSelectedProfileToolTip>
+  <GraphTbBtnDisplayProfileSignatureToolTip>Відобразити підписи номерів профілів на графіку</GraphTbBtnDisplayProfileSignatureToolTip>
+  <GraphTbBtnObserverHeightIgnoreToolTip>Враховувати/ігнорувати висоту пункту спостереження при масштабуванні</GraphTbBtnObserverHeightIgnoreToolTip>
+  <GraphTbBtnPanToProfilesSetToolTip>Позиціонування на набір профілів</GraphTbBtnPanToProfilesSetToolTip>
+  <GraphTbBtnPanToSelectedProfileToolTip>Позиціонування на обраний профіль</GraphTbBtnPanToSelectedProfileToolTip>
+  <GraphTbBtnSaveToolTip>Зберегти дані</GraphTbBtnSaveToolTip>
+  <GraphTbBtnShowAllProfilesToolTip>Показати всі профілі</GraphTbBtnShowAllProfilesToolTip>
+  <GraphTbBtnUpdateIntersectionsLinesToolTip>Розрахувати лінії перетину з шарами</GraphTbBtnUpdateIntersectionsLinesToolTip>
+  <GraphTbBtnZoomInToolTip>Збільшити масштаб</GraphTbBtnZoomInToolTip>
+  <GraphTbBtnZoomOutToolTip>Зменшити масштаб</GraphTbBtnZoomOutToolTip>
+  <LvProfileDetailsToolTip>Щоб скопіювати рядки натисніть праву клавішу миші</LvProfileDetailsToolTip>
+  
+  <HintAddProfileToExistingGraphText>Додати профіль на графік</HintAddProfileToExistingGraphText>
+  <HintAddProfileToGraphText>Відкрити графік профілю</HintAddProfileToGraphText>
+  <HintClearExtraGraphicText>Очистити графіку на карті</HintClearExtraGraphicText>
+  <HintEraseProfileText>Видалити профіль</HintEraseProfileText>
+  <HintOpenGraphWindowText>Відкрити вікно графіків</HintOpenGraphWindowText>
+  <HintRemoveProfileText>Cкинути профіль з сесії</HintRemoveProfileText>
+  <HintSaveProfileAsSharedText>Надати спільний доступ до профілю</HintSaveProfileAsSharedText>
+  <HintToolBtnPanOnMapText>Переміститись  на карті</HintToolBtnPanOnMapText>
+  <HintToolBtnShowOnMapText>Показати на карті</HintToolBtnShowOnMapText>
+  <HintToolSetProfileSettingsToCalcText>Скопіювати параметри профілю</HintToolSetProfileSettingsToCalcText>
+
+  <BtnAddToSessionText>Додати до сесії</BtnAddToSessionText>
+  <BtnCancelText>Відмінити</BtnCancelText>
+  <BtnСalcProfileText>Розрахувати</BtnСalcProfileText>
+  <BtnAddProfilesTo3DText>Додати</BtnAddProfilesTo3DText>
+  <BtnCloseText>Закрити</BtnCloseText>
+  <BtnResetText>Скинути</BtnResetText>
+  <BtnFilterText>Фільтрувати</BtnFilterText>
+  <BtnOkText>OK</BtnOkText>
+  <CmbGraphTypeText>Усі типи</CmbGraphTypeText>
+  <CopyStripMenuItemText>Скопіювати</CopyStripMenuItemText>
+  <FrmSavedProfilesModalWindowText>Додати профілі до сесії</FrmSavedProfilesModalWindowText>
+  <FunTypeText>"Віяло"</FunTypeText>
+  <LblHeaderSessionProfilesText>Профілі поточного сеансу</LblHeaderSessionProfilesText>
+  <LblAboutSelectedText>Інформація про обране</LblAboutSelectedText>
+  <LblBuildingsLayerText>забудова</LblBuildingsLayerText>
+  <LblCommonLengthText>Довжина вибраних об'єктів:</LblCommonLengthText>
+  <LblCreationDateText>Дата створення:</LblCreationDateText>
+  <LblDEMText>ЦМР/ ЦММ</LblDEMText>
+  <LblDEMTextKey>Шар ЦМР/ЦММ</LblDEMTextKey>
+  <LblDimensionFirstText>м</LblDimensionFirstText>
+  <LblDimensionSecondText>м</LblDimensionSecondText>
+  <LblFromText>з</LblFromText>
+  <LblFunAzimuth1Text>Азимут 1</LblFunAzimuth1Text>
+  <LblFunAzimuth2Text>Азимут 2</LblFunAzimuth2Text>
+  <LblFunBasePointText>Базова точка (довгота / широта)</LblFunBasePointText>
+  <LblFunCountText>Кількість</LblFunCountText>
+  <LblFunDistanceText>Відстань</LblFunDistanceText>
+  <LblFunParametersText>Параметри</LblFunParametersText>
+  <LblHeightOfViewText>Висота точки спостереження</LblHeightOfViewText>
+  <LblHydrographyLayerText>гідрографія</LblHydrographyLayerText>
+  <LblInvisibleLineColorText>невидимі</LblInvisibleLineColorText>
+  <LblLayersForCalcText>Шари для розрахунків</LblLayersForCalcText>
+  <LblLineFirstPointText>Перша точка (довгота / широта)</LblLineFirstPointText>
+  <LblLineSecondPointText>Друга точка (довгота / широта)</LblLineSecondPointText>
+  <LblObserverHeightText>Пункт спостереження (м)</LblObserverHeightText>
+  <LblPointOfViewLayerText>Шар точок спостереження</LblPointOfViewLayerText>
+  <LblPrimitivesLayerToSelectText>Шари для вибору об'єктів</LblPrimitivesLayerToSelectText>
+  <LblProfileDocableWinCaption>Спостереження. Розрахунок профілю</LblProfileDocableWinCaption>
+  <LblProfileListText>Профілі в роботі</LblProfileListText>
+  <LblProfileNameText>Ім'я профілю</LblProfileNameText>
+  <LblRoadsLayerText>транспорт</LblRoadsLayerText>
+  <LblSelectedPrimitivesText>Вибрані об'єкти:</LblSelectedPrimitivesText>
+  <LblSelectedProfileNameText>Профіль:</LblSelectedProfileNameText>
+  <LblSetProfilePropertiesText>Задати профіль</LblSetProfilePropertiesText>
+  <LblToText>до</LblToText>
+  <LblVegetationLayerText>рослинність</LblVegetationLayerText>
+  <LblVisibleLineColorText>видимі</LblVisibleLineColorText>
+  <LblZFactorText>Z-фактор</LblZFactorText>
+  <LvProfileDetailsAnglesText>Кути:</LvProfileDetailsAnglesText>
+  <LvProfileDetailsAzimuthText>Азимут:</LvProfileDetailsAzimuthText>
+  <LvProfileDetailsEndPointsText>Початок - кінець</LvProfileDetailsEndPointsText>
+  <LvProfileDetailsHeightText>Висота (м):</LvProfileDetailsHeightText>
+  <LvProfileDetailsLengthText>Довжина:</LvProfileDetailsLengthText>
+  <LvProfileDetailsStateText>Стан:</LvProfileDetailsStateText>
+  <LvProfileDetailsVisibilityText>Видимі зони (%):</LvProfileDetailsVisibilityText>
+  <PointsTypeText>Відрізки</PointsTypeText>
+  <PrimitiveTypeText>Графіка</PrimitiveTypeText>
+  <ProfilesSetNotSharedText>Приватний</ProfilesSetNotSharedText>
+  <ProfilesSetSharedText>Спільний</ProfilesSetSharedText>
+  <TabFunTabText>"Віяло"</TabFunTabText>
+  <TabGraphTitle>Графік</TabGraphTitle>
+  <TabLoadTabText>Завантажити</TabLoadTabText>
+  <TabPofileTreeTabPageText>Профілі в роботі</TabPofileTreeTabPageText>
+  <TabPrimitiveTabText>Графіка</TabPrimitiveTabText>
+  <TabProfileTabPageText>Параметри профілю</TabProfileTabPageText>
+  <TabSectionTabText>Відрізки</TabSectionTabText>
+  <TvProfilesFunNodeText>"Віяло"</TvProfilesFunNodeText>
+  <TvProfilesPointsNodeText>Відрізки</TvProfilesPointsNodeText>
+  <TvProfilesPritiveNodeText>Графіка</TvProfilesPritiveNodeText>
+  <TxtAttrProfileAzimuth1Text>Азимут 1:</TxtAttrProfileAzimuth1Text>
+  <TxtAttrProfileAzimuth2Text>Азимут 2:</TxtAttrProfileAzimuth2Text>
+  <TxtAttrProfileAzimuthText>Азимут:</TxtAttrProfileAzimuthText>
+  <TxtAttrProfileBasePointText>Базова точка (довгота / широта):</TxtAttrProfileBasePointText>
+  <TxtAttrProfileCountText>Кількість ліній:</TxtAttrProfileCountText>
+  <TxtAttrProfileCreatorText>Автор:</TxtAttrProfileCreatorText>
+  <TxtAttrProfileDateText>Дата:</TxtAttrProfileDateText>
+  <TxtAttrProfileDistanceText>Відстань:</TxtAttrProfileDistanceText>
+  <TxtAttrProfileEndPointText>Кінець в точці:</TxtAttrProfileEndPointText>
+  <TxtAttrProfileIdText>Ідентифікатор:</TxtAttrProfileIdText>
+  <TxtAttrProfileNameText>Назва:</TxtAttrProfileNameText>
+  <TxtAttrProfilePointOfViewText>Точка спостереження:</TxtAttrProfilePointOfViewText>
+  <TxtAttrProfileStartPointText>Початок в точці:</TxtAttrProfileStartPointText>
+  <TxtAttrProfileTypeText>Тип:</TxtAttrProfileTypeText>
+  <TxtTreeViewProfileText>Профіль:</TxtTreeViewProfileText>
+
+  <MsgLineNotFoundErrorText>Лінію не знайдено</MsgLineNotFoundErrorText>
+  <MsgFolderAlreadyExistText>Каталог  "{0}"  вже існує \n Ви дійсно хочете оновити дані?</MsgFolderAlreadyExistText>
+  <MsgRemovingProfileText>Ви дійсно хочете видалити профіль?</MsgRemovingProfileText>
+  <MsgRemovingTabText>Ви дійсно хочете видалити вкладку?</MsgRemovingTabText>
+  <MsgDeleteProfaileText>Ви дійсно бажаєти видалити профіль  "{0}"?</MsgDeleteProfaileText>
+  <MsgErrorHappenedText>Виникла помилка /n Більш детальна інформація знаходиться у журналі</MsgErrorHappenedText>
+  <MsgNotAllowedToShareText>Ви не можете дозволити спільний доступ для цього профілю.</MsgNotAllowedToShareText>
+  <MsgRemoveProfaileText>Ви дійсно бажаєти cкинути профіль  "{0}" з сесії?</MsgRemoveProfaileText>
+  <MsgPickCoordinatesToolText>Будь ласка, увімкніть інструмент для виділення точки</MsgPickCoordinatesToolText>
+
+  <DataExportPointsPropertiesHeader>Номер; X; Y; Z; Відстань; Точка перегину; Видима; Перетини</DataExportPointsPropertiesHeader>
+  <DataExportProfilePropertiesHeader>Номер; Назва профілю; Зовнішній; Стан; Точка початку; Точка кінцю; Азимут; Пункт спостереження; Довжина; Макс. висота; Різниця висот; Мін. висота; Макс. кут підйому; Макс. кут спуску; Процент видимих зон</DataExportProfilePropertiesHeader>
+  <DgvProfilePropertiesAscendingAngleColHeader>КП</DgvProfilePropertiesAscendingAngleColHeader>
+  <DgvProfilePropertiesAzimuthColHeader>АЗ</DgvProfilePropertiesAzimuthColHeader>
+  <DgvProfilePropertiesDescendingAngleColHeader>КС</DgvProfilePropertiesDescendingAngleColHeader>
+  <DgvProfilePropertiesHeightDifferenceColHeader>РВ</DgvProfilePropertiesHeightDifferenceColHeader>
+  <DgvProfilePropertiesIsVisibleColHeader>ВД</DgvProfilePropertiesIsVisibleColHeader>
+  <DgvProfilePropertiesMaxHeightColHeader>МкВ</DgvProfilePropertiesMaxHeightColHeader>
+  <DgvProfilePropertiesMinHeightColHeader>МнВ</DgvProfilePropertiesMinHeightColHeader>
+  <DgvProfilePropertiesObserverHeightColHeader>В</DgvProfilePropertiesObserverHeightColHeader>
+  <DgvProfilePropertiesProfileLengthColHeader>Д</DgvProfilePropertiesProfileLengthColHeader>
+  <DgvProfilePropertiesProfileNumberColHeader>Н</DgvProfilePropertiesProfileNumberColHeader>
+  <DgvProfilePropertiesVisiblePercentColHeader>ВВ</DgvProfilePropertiesVisiblePercentColHeader>
+  <LvProfilesSetsCreatorColHeader>Автор</LvProfilesSetsCreatorColHeader>
+  <LvProfilesSetsDateColHeader>Дата</LvProfilesSetsDateColHeader>
+  <LvProfilesSetsNameColHeader>Назва профілю</LvProfilesSetsNameColHeader>
+  <LvProfilesSetsSharedColHeader>Спільний</LvProfilesSetsSharedColHeader>
+  <LvProfilesSetsTypeColHeader>Тип</LvProfilesSetsTypeColHeader>
+  <TxtProfileCalcHeader>Профіль</TxtProfileCalcHeader>
+
+  <GbFiltersTitle>Фільтри</GbFiltersTitle>
+  <MessageBoxTitle>Спостереження</MessageBoxTitle>
+  <ModalProfilesSetsTitle>Додати доступні набори профілів</ModalProfilesSetsTitle>
+  <ModalProfilesTreeModalTitle>Дерево профілів</ModalProfilesTreeModalTitle>
+
+  <FbdSelectFolderDescription>Виберіть папку для збереження даних</FbdSelectFolderDescription>
+  <TxtCreatorPlaceholder>Автор</TxtCreatorPlaceholder>
+  <TxtNamePlaceholder>Назва профілю</TxtNamePlaceholder>
+  <TxtGraphicsLayerValue>графічні об'єкти</TxtGraphicsLayerValue>
+  <TxtNewProfileNameValue>Новий профіль</TxtNewProfileNameValue>
+  
+</SP_ProfileLocalization>
