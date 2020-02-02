@@ -75,6 +75,17 @@ namespace MilSpace.GeoCalculator
 
             gc.AddElement(element, 0);
 
+            //ITextElement textElement = new TextElementClass();
+            //textElement.Text = "2";
+            //var textSymbol = new TextSymbol();
+            //textSymbol.Color = color;
+            //textElement.Symbol = textSymbol;
+            //IElement textElementEl = (IElement)textElement;
+            ////Set the TextElement's geometry
+            //textElementEl.Geometry = geom;
+
+            //gc.AddElement(textElementEl, 0);
+
             slog = slog + " 4:" + (element.Geometry as IPoint).X.ToString();
 
             av.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
@@ -108,6 +119,28 @@ namespace MilSpace.GeoCalculator
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
         }
 
+        public static void RemoveAllLineFromMap(string line)
+        {
+            var activeView = (ArcMap.Application.Document as IMxDocument)?.FocusMap as IActiveView;
+
+            var graphicsContainer = activeView?.GraphicsContainer;
+            if(graphicsContainer == null)
+                return;
+
+            graphicsContainer.Reset();
+            var element = graphicsContainer.Next();
+
+            while(element != null)
+            {
+                if((element as IElementProperties).Name.StartsWith(line))
+                {
+                    graphicsContainer.DeleteElement(element);
+                }
+                element = graphicsContainer.Next();
+            }
+            activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
+        }
+
         public static void FlashGeometry(
             ESRI.ArcGIS.Geometry.IGeometry geometry,
             System.Int32 delay)
@@ -117,6 +150,42 @@ namespace MilSpace.GeoCalculator
                 EsriTools.PanToGeometry(ArcMap.Document.ActiveView, geometry, true);
             }
             EsriTools.FlashGeometry(geometry, delay, ArcMap.Application);
+        }
+
+        public static void AddLineToMap(IPoint[] points, string name, string fromPointGuid)
+        {
+            RemoveGraphicsFromMap(new string[] { name });
+
+            for(int i = 0; i < points.Length - 1; i++)
+            {
+                AddLineSegmentToMap(points[i], points[i + 1], name, fromPointGuid);
+            }
+        }
+
+        public static void AddLineSegmentToMap(IPoint pointFrom, IPoint pointTo, string name, string fromPointGuid)
+        {
+            var color = (IColor)new RgbColorClass() { Green = 255 };
+            var polyline = EsriTools.CreatePolylineFromPoints(pointFrom, pointTo);
+            var lineElement = new LineElementClass();
+
+            ICartographicLineSymbol cartographicLineSymbol = new CartographicLineSymbolClass();
+            cartographicLineSymbol.Color = color;
+            cartographicLineSymbol.Width = 3;
+
+            lineElement.Symbol = cartographicLineSymbol;
+
+            IElement elem = (IElement)lineElement;
+            elem.Geometry = polyline;
+
+            var segmentName = name + "_" + fromPointGuid; 
+            var eprop = (IElementProperties)elem;
+            eprop.Name = segmentName;
+
+            var mxdoc = ArcMap.Application.Document as IMxDocument;
+            var map = (IMap)mxdoc.FocusMap;
+            var gc = (IGraphicsContainer)map;
+
+            gc.AddElement(elem, 0);
         }
     }
 }

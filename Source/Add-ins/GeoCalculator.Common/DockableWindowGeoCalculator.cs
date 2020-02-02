@@ -24,7 +24,8 @@ namespace MilSpace.GeoCalculator
 {
     public partial class DockableWindowGeoCalculator : UserControl
     {
-        private readonly IBusinessLogic _businessLogic;        
+        private readonly IBusinessLogic _businessLogic;
+        private const string _lineName = "GeoCalcLineGeometry";
         private ExtendedPointModel lastProjectedPoint;
         private Dictionary<string, PointModel> pointModels = new Dictionary<string, PointModel>();
         private Dictionary<CoordinateSystemsEnum, string> _coordinateSystems = new Dictionary<CoordinateSystemsEnum, string>();
@@ -914,13 +915,22 @@ namespace MilSpace.GeoCalculator
             else 
             if (column is DataGridViewImageColumn && column.Name == Constants.DeleteColumnName)
             {
+                var prevPointGuid = PointsGridView.Rows[e.RowIndex - 1].Tag.ToString();
+                var nextPointGuid = PointsGridView.Rows[e.RowIndex + 1].Tag.ToString();
+
                 grid.Rows.RemoveAt(e.RowIndex);
                 ArcMapHelper.RemoveGraphicsFromMap(new string[] { selectedPoint.Key });
+
+                var linesToRemove = new string[] { $"{_lineName}_{selectedPoint.Key}", $"{_lineName}_{prevPointGuid}" };
+
+                ArcMapHelper.RemoveGraphicsFromMap(linesToRemove);
+                ArcMapHelper.AddLineSegmentToMap(ClickedPointsDictionary[prevPointGuid], ClickedPointsDictionary[nextPointGuid], _lineName, prevPointGuid);
+
                 ClickedPointsDictionary.Remove(selectedPoint.Key);
 
                 pointModels.Remove(selectedPoint.Key);
 
-                SynchronizePointNumbers(e.RowIndex + 1);
+                //SynchronizePointNumbers(e.RowIndex + 1);
 
                 //Refresh Numbers column cells values
                 for (int i = 0; i < grid.Rows.Count; i++)
@@ -1375,6 +1385,12 @@ namespace MilSpace.GeoCalculator
                         true, 
                         esriSimpleMarkerStyle.esriSMSCross, 
                         16);
+
+                    if(PointsGridView.RowCount > 0)
+                    {
+                        var fromPointGuid = PointsGridView.Rows[PointsGridView.RowCount - 1].Tag.ToString();
+                        ArcMapHelper.AddLineSegmentToMap(ClickedPointsDictionary[fromPointGuid], point, _lineName, fromPointGuid);
+                    }
 
                     log.DebugEx("AddPointToList. placedPoint.Value.X:{0} placedPoint.Value.Y:{1} placedPoint.Key:{2}"
                         , placedPoint.Value.X, placedPoint.Value.Y, placedPoint.Key);
