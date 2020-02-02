@@ -905,7 +905,7 @@ namespace MilSpace.GeoCalculator
 
             var grid = (DataGridView)sender;
             var column = grid.Columns[e.ColumnIndex];
-            var selectedPoint = ClickedPointsDictionary.ElementAt(e.RowIndex);
+            var selectedPoint = ClickedPointsDictionary.First(point => point.Key == PointsGridView.Rows[e.RowIndex].Tag.ToString());
 
             if (column is DataGridViewImageColumn && column.Name == Constants.HighlightColumnName)
             {
@@ -1723,6 +1723,8 @@ namespace MilSpace.GeoCalculator
                 var index = toUp ? insertIndex - i - 1 : insertIndex - i;
                 PointsGridView.Rows[index].Selected = true;
             }
+
+            RedrawLine();
         }
 
         private void RenumberButton_Click(object sender, EventArgs e)
@@ -1739,6 +1741,26 @@ namespace MilSpace.GeoCalculator
                 row.Cells[0].Value = i;
                 i++;
             }
+        }
+
+        private void RedrawLine()
+        {
+            ArcMapHelper.RemoveAllLineFromMap(_lineName);
+            var orderedPoints = new Dictionary<string, IPoint>();
+
+            foreach(DataGridViewRow row in PointsGridView.Rows)
+            {
+                if(row.Tag == null)
+                {
+                    continue;
+                }
+
+                var pointGuid = row.Tag.ToString();
+                var pointPair = ClickedPointsDictionary.First(point => point.Key == pointGuid);
+                orderedPoints.Add(pointPair.Key, pointPair.Value);
+            }
+
+            ArcMapHelper.AddLineToMap(orderedPoints, _lineName);
         }
     }
 }

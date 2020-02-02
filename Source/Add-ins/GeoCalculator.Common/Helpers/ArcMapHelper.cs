@@ -152,13 +152,19 @@ namespace MilSpace.GeoCalculator
             EsriTools.FlashGeometry(geometry, delay, ArcMap.Application);
         }
 
-        public static void AddLineToMap(IPoint[] points, string name, string fromPointGuid)
+        public static void AddLineToMap(Dictionary<string, IPoint> points, string name)
         {
-            RemoveGraphicsFromMap(new string[] { name });
+            var prevPoint = points.First();
 
-            for(int i = 0; i < points.Length - 1; i++)
+            foreach(var point in points)
             {
-                AddLineSegmentToMap(points[i], points[i + 1], name, fromPointGuid);
+                if(point.Key == points.First().Key)
+                {
+                    continue;
+                }
+
+                AddLineSegmentToMap(prevPoint.Value, point.Value, name, prevPoint.Key);
+                prevPoint = point;
             }
         }
 
