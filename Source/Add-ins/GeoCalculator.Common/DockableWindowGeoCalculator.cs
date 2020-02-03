@@ -923,9 +923,8 @@ namespace MilSpace.GeoCalculator
 
                 if(chkShowLine.Checked)
                 {
-                    ArcMapHelper.RemoveGraphicsFromMap(new string[] { selectedPoint.Key });
-
-                    var linesToRemove = new string[] { $"{_lineName}_{selectedPoint.Key}", $"{_lineName}_{prevPointGuid}" };
+                    ArcMapHelper.RemovePoint(selectedPoint.Key);
+                    var linesToRemove = new string[] { $"{_lineName}_{prevPointGuid}" };
 
                     ArcMapHelper.RemoveGraphicsFromMap(linesToRemove);
                     ArcMapHelper.AddLineSegmentToMap(ClickedPointsDictionary[prevPointGuid], ClickedPointsDictionary[nextPointGuid], _lineName, prevPointGuid);
@@ -1029,7 +1028,7 @@ namespace MilSpace.GeoCalculator
                 grid.Rows.Clear();
                 foreach (var point in ClickedPointsDictionary)
                 {
-                    ArcMapHelper.RemoveGraphicsFromMap(new string[] { point.Key });
+                    ArcMapHelper.RemovePoint(point.Key);
                 }
 
                 ClickedPointsDictionary?.Clear();
@@ -1065,6 +1064,10 @@ namespace MilSpace.GeoCalculator
                 this.MgrsNotationLabel.Text = context.MgrsLabel;
                 this.UTMNotationLabel.Text = context.UtmLabel;
 
+                this.NumberColumn.HeaderText = context.FindLocalizedElement("NumColHeader", "N");
+                this.XCoordColumn.HeaderText = context.FindLocalizedElement("XCoordColHeader", "Довгота");
+                this.YCoordColumn.HeaderText = context.FindLocalizedElement("YCoordColHeader", "Широта");
+
                 //TODO:Localize the next Labels and add config here
                 this.wgsProjectedLabel.Text = CurrentProjectionsModel.WGS84Projection.Name;
                 this.WgsGeoLabel.Text = context.WgsLabel;
@@ -1072,6 +1075,11 @@ namespace MilSpace.GeoCalculator
                 this.PulkovoGeoLabel.Text = context.PulkovoLabel;
                 this.UkraineProjectedLabel.Text = CurrentProjectionsModel.Ukraine2000Projection.Name;
                 this.UkraineGeoLabel.Text = context.UkraineLabel;
+                this.toolsLabel.Text = context.FindLocalizedElement("ToolBarTitle", "Список точок");
+                this.coordLabel.Text = context.FindLocalizedElement("CoordsSystemsLabel", "СК:");
+                this.graphicLabel.Text = context.FindLocalizedElement("GraphicToolAreaTitle", "Робота з графікою");
+                this.chkShowLine.Text = context.FindLocalizedElement("ShowLineCheckText", "Показати лінію на карті");
+                this.chkShowNumbers.Text = context.FindLocalizedElement("ShowNumbersCheckText", "Нумерувати точки на карті");
                 this.mgrsToolTip.SetToolTip(this.MgrsNotationTextBox, context.AltRightToMove);
                 this.utmToolTip.SetToolTip(this.UTMNotationTextBox, context.AltRightToMove);
 
@@ -1102,6 +1110,12 @@ namespace MilSpace.GeoCalculator
                 this.UkraineGeoPasteButton.ToolTipText = context.PasteCoordinateButton;
                 this.UkraineProjPasteButton.ToolTipText = context.PasteCoordinateButton;
                 this.MgrsPasteButton.ToolTipText = context.PasteCoordinateButton;
+                this.upPointMoveButton.ToolTipText = context.FindLocalizedElement("MoveUpButtonToolTip", "Перемістити виділені точки по списку вгору");
+                this.downPointMoveButton.ToolTipText = context.FindLocalizedElement("MoveDownButtonTitle", "Помістити у початок");
+                this.upToFirstStripItem.Text = context.FindLocalizedElement("MoveToFirstButtonToolTip", "Перемістити виділені точки по списку вниз");
+                this.toDownStripItem.Text = context.FindLocalizedElement("MoveToLastButtonTitle", "Помістити у кінець");
+                this.renumberButton.ToolTipText = context.FindLocalizedElement("RenumberButtonToolTip", "Обновити нумерацію точок");
+                this.panToLineButton.ToolTipText = context.FindLocalizedElement("PanToLineButtonToolTip", "Показати лінію на карті");
 
                 _coordinateSystems.Add(CoordinateSystemsEnum.MapSystem, context.CurrentMapLabel);
                 _coordinateSystems.Add(CoordinateSystemsEnum.WGS84, context.WgsLabel);
@@ -1481,11 +1495,13 @@ namespace MilSpace.GeoCalculator
             {
                 newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = y });
                 PointsGridView.Columns["YCoordColumn"].Visible = true;
+                PointsGridView.Columns["XCoordColumn"].HeaderText = context.FindLocalizedElement("XCoordColHeader", "Довгота");
             }
             else
             {
                 newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = string.Empty });
                 PointsGridView.Columns["YCoordColumn"].Visible = false;
+                PointsGridView.Columns["XCoordColumn"].HeaderText = context.FindLocalizedElement("CoordsColHeader", "Координати");
             }
 
             newRow.Cells.Add(new DataGridViewImageCell()

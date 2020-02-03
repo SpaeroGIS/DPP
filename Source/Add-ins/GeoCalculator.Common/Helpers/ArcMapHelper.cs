@@ -80,12 +80,6 @@ namespace MilSpace.GeoCalculator
 
             gc.AddElement(element, 0);
 
-            if(showNums)
-            {
-                var point = geom as IPoint;
-                DrawText(point, number, eprop.Name, textName);
-            }
-
             slog = slog + " 4:" + (element.Geometry as IPoint).X.ToString();
 
             av.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
@@ -93,6 +87,12 @@ namespace MilSpace.GeoCalculator
             slog = slog + " 5:" + (element.Geometry as IPoint).X.ToString();
 
             eprop.Name = eprop.Name + " -> " + slog;
+
+            if(showNums)
+            {
+                var point = geom as IPoint;
+                DrawText(point, number, eprop.Name, textName);
+            }
 
             return new KeyValuePair<string, IPoint>(eprop.Name, element.Geometry as IPoint);
         }
@@ -133,6 +133,28 @@ namespace MilSpace.GeoCalculator
             while(element != null)
             {
                 if((element as IElementProperties).Name.StartsWith(name))
+                {
+                    graphicsContainer.DeleteElement(element);
+                }
+                element = graphicsContainer.Next();
+            }
+            activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
+        }
+
+        public static void RemovePoint(string name)
+        {
+            var activeView = (ArcMap.Application.Document as IMxDocument)?.FocusMap as IActiveView;
+
+            var graphicsContainer = activeView?.GraphicsContainer;
+            if(graphicsContainer == null)
+                return;
+
+            graphicsContainer.Reset();
+            var element = graphicsContainer.Next();
+
+            while(element != null)
+            {
+                if((element as IElementProperties).Name.EndsWith(name))
                 {
                     graphicsContainer.DeleteElement(element);
                 }

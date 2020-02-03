@@ -1,39 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CoordinatesConverter xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-<WindowCaption>Калькулятор координат</WindowCaption>
-<SaveAs>Зберегти як</SaveAs>
-<CurrentMapLabel>Карта</CurrentMapLabel>
-<Pulkovo1942Label>СК42</Pulkovo1942Label>
-<Wgs1984Label>WGS84</Wgs1984Label>
-<Ukraine2000Label>УСК2000</Ukraine2000Label>
-<MgrsLabel>MGRS:</MgrsLabel>
-<MgrsName>MGRS</MgrsName>
-<UtmLabel>UTM:</UtmLabel>
-<UtmName>WGS84 UTM Zone 35N</UtmName>
-<SaveButton>Зберегти в файл</SaveButton>
-<OpenFileButton>Відкрити файл</OpenFileButton>
-<CopyButton>Cкопіювати</CopyButton>
-<ClearGridButton>Cкинути список точок</ClearGridButton>
-<MoveToCenterButton>Центр карты</MoveToCenterButton>
-<MoveToProjectedCoordButton>Перемістити карту в точку с поточникми координатами</MoveToProjectedCoordButton>
-<ToolButton>Вимкнути взаємодію з картой</ToolButton>
-<WrongUtmFormatMessage>Невірний формат UTM</WrongUtmFormatMessage>
-  
-<ErrorString>Геокалькулятор. Помилка</ErrorString>
-<WarningString>Геокалькулятор. Увага</WarningString>
-<InfoString>Геокалькулятор. Інформація</InfoString>
+  <WindowCaption>Калькулятор координат</WindowCaption>
+  <SaveAs>Зберегти як</SaveAs>
+  <CurrentMapLabel>Карта</CurrentMapLabel>
+  <Pulkovo1942Label>СК42</Pulkovo1942Label>
+  <Wgs1984Label>WGS84</Wgs1984Label>
+  <Ukraine2000Label>УСК2000</Ukraine2000Label>
+  <MgrsLabel>MGRS:</MgrsLabel>
+  <MgrsName>MGRS</MgrsName>
+  <UtmLabel>UTM:</UtmLabel>
+  <UtmName>WGS84 UTM Zone 35N</UtmName>
+  <SaveButton>Зберегти в файл</SaveButton>
+  <OpenFileButton>Відкрити файл</OpenFileButton>
+  <CopyButton>Cкопіювати</CopyButton>
+  <ClearGridButton>Cкинути список точок</ClearGridButton>
+  <MoveToCenterButton>Центр карты</MoveToCenterButton>
+  <MoveToProjectedCoordButton>Перемістити карту в точку с поточникми координатами</MoveToProjectedCoordButton>
+  <ToolButton>Вимкнути взаємодію з картой</ToolButton>
+  <WrongUtmFormatMessage>Невірний формат UTM</WrongUtmFormatMessage>
+    
+  <ErrorString>Геокалькулятор. Помилка</ErrorString>
+  <WarningString>Геокалькулятор. Увага</WarningString>
+  <InfoString>Геокалькулятор. Інформація</InfoString>
 
-<WrongFormatMessageToFewParts>Не вдалося отримати обидві складові координати</WrongFormatMessageToFewParts>
-<MsgInvalidCoordinatesDD>Недійсні дані. Потрібні коордінати представлені у СК WGS-84, десяткові градуси</MsgInvalidCoordinatesDD>
+  <WrongFormatMessageToFewParts>Не вдалося отримати обидві складові координати</WrongFormatMessageToFewParts>
+  <MsgInvalidCoordinatesDD>Недійсні дані. Потрібні коордінати представлені у СК WGS-84, десяткові градуси</MsgInvalidCoordinatesDD>
 
- <WrongMgrsFormatMessage>Невірний формат MGRS</WrongMgrsFormatMessage>
-<WrongFormatMessage>Невірний формат координат</WrongFormatMessage>
-<NoSelectedPointMessage>Потрібно вказати точку на карті!</NoSelectedPointMessage>
-<AltRightToMove>Alt+Вправо для руху</AltRightToMove>
-<ShowPointOnMap>Показати на карті</ShowPointOnMap>
-<DeletePoint>Видалити</DeletePoint>
-<CopyCoordinateButton>Взяти координати в буфер обміну</CopyCoordinateButton>
-<PasteCoordinateButton>Вставити координати з буферу обміну</PasteCoordinateButton>
-<GridCleanWarningMessage>Список точок буде cкинуто. Продовжити?</GridCleanWarningMessage>
-  
+  <WrongMgrsFormatMessage>Невірний формат MGRS</WrongMgrsFormatMessage>
+  <WrongFormatMessage>Невірний формат координат</WrongFormatMessage>
+  <NoSelectedPointMessage>Потрібно вказати точку на карті!</NoSelectedPointMessage>
+  <AltRightToMove>Alt+Вправо для руху</AltRightToMove>
+  <ShowPointOnMap>Показати на карті</ShowPointOnMap>
+  <DeletePoint>Видалити</DeletePoint>
+  <CopyCoordinateButton>Взяти координати в буфер обміну</CopyCoordinateButton>
+  <PasteCoordinateButton>Вставити координати з буферу обміну</PasteCoordinateButton>
+  <GridCleanWarningMessage>Список точок буде cкинуто. Продовжити?</GridCleanWarningMessage>
+  <ToolBarTitle>Список точок</ToolBarTitle>
+  <MoveUpButtonToolTip>Перемістити виділені точки по списку вгору</MoveUpButtonToolTip>
+  <MoveToFirstButtonToolTip>Помістити у початок</MoveToFirstButtonToolTip>
+  <MoveDownButtonTitle>Перемістити виділені точки по списку вниз</MoveDownButtonTitle>
+  <MoveToLastButtonTitle>Помістити у кінець</MoveToLastButtonTitle>
+  <RenumberButtonToolTip>Обновити нумерацію точок</RenumberButtonToolTip>
+  <PanToLineButtonToolTip>Показати лінію на карті</PanToLineButtonToolTip>
+  <CoordsSystemsLabel>СК:</CoordsSystemsLabel>
+  <GraphicToolAreaTitle>Робота з графікою</GraphicToolAreaTitle>
+  <ShowLineCheckText>Показати лінію на карті</ShowLineCheckText>
+  <ShowNumbersCheckText>Нумерувати точки на карті</ShowNumbersCheckText>
+
+  <NumColHeader>N</NumColHeader>
+  <XCoordColHeader>Довгота</XCoordColHeader>
+  <YCoordColHeader>Широта</YCoordColHeader>
+  <CoordsColHeader>Координати</CoordsColHeader>
 </CoordinatesConverter>
