@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MilSpace.Profile.Localization;
+using System;
 using System.Windows.Forms;
 
 namespace MilSpace.Profile.ModalWindows

@@ -10,7 +10,7 @@ namespace MilSpace.Profile
     public interface IMilSpaceProfileView
     {
 
-        void SetController(MilSpaceProfileCalsController controller);
+        void SetController(MilSpaceProfileCalcsController controller);
 
         ProfileSettingsTypeEnum SelectedProfileSettingsType { get; }
 
@@ -46,7 +46,7 @@ namespace MilSpace.Profile
 
         double ObserveHeight { get; }
 
-        MilSpaceProfileCalsController Controller { get; }
+        MilSpaceProfileCalcsController Controller { get; }
 
         bool AllowToProfileCalc { get; }
 

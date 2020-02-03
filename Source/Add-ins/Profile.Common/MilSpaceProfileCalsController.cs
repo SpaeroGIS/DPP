@@ -9,6 +9,7 @@ using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Exceptions;
 using MilSpace.DataAccess.Facade;
 using MilSpace.Profile.DTO;
+using MilSpace.Profile.Localization;
 using MilSpace.Profile.ModalWindows;
 using MilSpace.Tools;
 using MilSpace.Tools.GraphicsLayer;
@@ -23,7 +24,7 @@ namespace MilSpace.Profile
     /// <summary>
     /// MilSpace Profile Calcs Controller
     /// </summary>
-    public class MilSpaceProfileCalsController
+    public class MilSpaceProfileCalcsController
     {
         //TODO: Localize
         private static readonly string graphiclayerTitle = LocalizationContext.Instance.FindLocalizedElement("TxtGraphicsLayerValue", "графічні об'єкти");
@@ -72,7 +73,7 @@ namespace MilSpace.Profile
         private ProfileSettingsTypeEnum ProfileType => View.SelectedProfileSettingsType;
 
 
-        internal MilSpaceProfileCalsController() { }
+        internal MilSpaceProfileCalcsController() { }
 
         internal void SetView(IMilSpaceProfileView view)
         {

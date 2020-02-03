@@ -10,6 +10,7 @@ using MilSpace.DataAccess;
 using System.Text;
 using System.Globalization;
 using System.Windows.Forms;
+using MilSpace.Profile.Localization;
 
 namespace MilSpace.Profile.SurfaceProfileChartControl
 {

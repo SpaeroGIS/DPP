@@ -1,6 +1,7 @@
 ﻿using ESRI.ArcGIS.Geometry;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
+using MilSpace.Profile.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
