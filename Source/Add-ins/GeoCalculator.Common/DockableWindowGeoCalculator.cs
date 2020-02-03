@@ -26,6 +26,7 @@ namespace MilSpace.GeoCalculator
     {
         private readonly IBusinessLogic _businessLogic;
         private const string _lineName = "GeoCalcLineGeometry";
+        private const string _textName = "text_";
         private ExtendedPointModel lastProjectedPoint;
         private Dictionary<string, PointModel> pointModels = new Dictionary<string, PointModel>();
         private Dictionary<CoordinateSystemsEnum, string> _coordinateSystems = new Dictionary<CoordinateSystemsEnum, string>();
@@ -1385,7 +1386,10 @@ namespace MilSpace.GeoCalculator
 
                     var placedPoint = ArcMapHelper.AddGraphicToMap(
                         point, 
-                        color, 
+                        color,
+                        PointsGridView.RowCount + 1,
+                        chkShowNumbers.Checked,
+                        _textName,
                         true, 
                         esriSimpleMarkerStyle.esriSMSCross, 
                         16);
@@ -1745,6 +1749,8 @@ namespace MilSpace.GeoCalculator
                 row.Cells[0].Value = i;
                 i++;
             }
+
+            RedrawText();
         }
 
         private void RedrawLine()
@@ -1754,7 +1760,7 @@ namespace MilSpace.GeoCalculator
                 return;
             }
 
-            ArcMapHelper.RemoveAllLineFromMap(_lineName);
+            ArcMapHelper.RemoveAllGeometryFromMap(_lineName);
             DrawLine();
         }
 
@@ -1777,6 +1783,32 @@ namespace MilSpace.GeoCalculator
             ArcMapHelper.AddLineToMap(orderedPoints, _lineName);
         }
 
+        private void RedrawText()
+        {
+            if(!chkShowNumbers.Checked)
+            {
+                return;
+            }
+
+            ArcMapHelper.RemoveAllGeometryFromMap(_textName);
+            DrawText();
+        }
+
+        private void DrawText()
+        {
+            foreach(DataGridViewRow row in PointsGridView.Rows)
+            {
+                if(row.Tag == null)
+                {
+                    continue;
+                }
+
+                var pointGuid = row.Tag.ToString();
+                var pointGeom = ClickedPointsDictionary.First(point => point.Key == pointGuid).Value;
+                ArcMapHelper.DrawText(pointGeom, (int)row.Cells[0].Value, row.Tag.ToString(), _textName);
+            }
+        }
+
         private void PanToLineButton_Click(object sender, EventArgs e)
         {
             var orderedPoints = new List<IPoint>();
@@ -1796,6 +1828,8 @@ namespace MilSpace.GeoCalculator
             ArcMapHelper.FlashLine(orderedPoints);
         }
 
+       
+
         private void ChkShowLine_CheckedChanged(object sender, EventArgs e)
         {
             if(PointsGridView.RowCount == 0)
@@ -1809,8 +1843,30 @@ namespace MilSpace.GeoCalculator
             }
             else
             {
-                ArcMapHelper.RemoveAllLineFromMap(_lineName);
+                ArcMapHelper.RemoveAllGeometryFromMap(_lineName);
             }
+        }
+
+        private void ChkShowNumbers_CheckedChanged(object sender, EventArgs e)
+        {
+            if(PointsGridView.RowCount == 0)
+            {
+                return;
+            }
+
+            if(chkShowNumbers.Checked)
+            {
+                DrawText();
+            }
+            else
+            {
+                ArcMapHelper.RemoveAllGeometryFromMap(_textName);
+            }
+        }
+
+        private void PointsGridView_Sorted(object sender, EventArgs e)
+        {
+            RedrawLine();
         }
     }
 }

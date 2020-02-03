@@ -1,6 +1,8 @@
 ﻿using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Display;
+using ESRI.ArcGIS.Editor;
+using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Tools;
 using System;
@@ -22,6 +24,9 @@ namespace MilSpace.GeoCalculator
         public static KeyValuePair<string, IPoint> AddGraphicToMap(
             IGeometry geom,
             IColor color,
+            int number,
+            bool showNums,
+            string textName,
             bool IsTempGraphic = false,
             esriSimpleMarkerStyle markerStyle = esriSimpleMarkerStyle.esriSMSCircle,
             int size = 5)
@@ -75,16 +80,11 @@ namespace MilSpace.GeoCalculator
 
             gc.AddElement(element, 0);
 
-            //ITextElement textElement = new TextElementClass();
-            //textElement.Text = "2";
-            //var textSymbol = new TextSymbol();
-            //textSymbol.Color = color;
-            //textElement.Symbol = textSymbol;
-            //IElement textElementEl = (IElement)textElement;
-            ////Set the TextElement's geometry
-            //textElementEl.Geometry = geom;
-
-            //gc.AddElement(textElementEl, 0);
+            if(showNums)
+            {
+                var point = geom as IPoint;
+                DrawText(point, number, eprop.Name, textName);
+            }
 
             slog = slog + " 4:" + (element.Geometry as IPoint).X.ToString();
 
@@ -119,7 +119,7 @@ namespace MilSpace.GeoCalculator
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
         }
 
-        public static void RemoveAllLineFromMap(string line)
+        public static void RemoveAllGeometryFromMap(string name)
         {
             var activeView = (ArcMap.Application.Document as IMxDocument)?.FocusMap as IActiveView;
 
@@ -132,7 +132,7 @@ namespace MilSpace.GeoCalculator
 
             while(element != null)
             {
-                if((element as IElementProperties).Name.StartsWith(line))
+                if((element as IElementProperties).Name.StartsWith(name))
                 {
                     graphicsContainer.DeleteElement(element);
                 }
@@ -228,6 +228,63 @@ namespace MilSpace.GeoCalculator
                 EsriTools.PanToGeometry(activeView, polyline);
                 EsriTools.FlashGeometry(activeView.ScreenDisplay, new IGeometry[] { polyline });
             }
+        }
+
+        public static void DrawText(IPoint point, int number, string pointGuid, string textName)
+        {
+            var activeView = (ArcMap.Application.Document as IMxDocument)?.FocusMap as IActiveView;
+            var units = GetLengthInMapUnits(activeView, 5);
+            var textPoint = new Point() { X = point.X + units, Y = point.Y + units, SpatialReference = point.SpatialReference };
+
+            var textColor = (IColor)new RgbColorClass() { Red = 255 };
+
+            ITextElement textElement = new TextElementClass();
+            textElement.Text = number.ToString();
+            var textSymbol = new TextSymbol();
+            textSymbol.Color = textColor;
+            textElement.Symbol = textSymbol;
+            IElement textElementEl = (IElement)textElement;
+            textElementEl.Geometry = textPoint;
+
+            var textPropr = (IElementProperties)textElementEl;
+            textPropr.Name = textName + pointGuid;
+
+            var map = (IMap)activeView.FocusMap;
+            var gc = (IGraphicsContainer)map;
+
+            gc.AddElement(textElementEl, 0);
+            activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
+        }
+
+        private static double GetLengthInMapUnits(ESRI.ArcGIS.Carto.IActiveView activeView, double mm)
+        {
+            if(activeView == null)
+            {
+                return -1;
+            }
+            
+            IScreenDisplay screenDisplay = activeView.ScreenDisplay;
+            IDisplayTransformation displayTransformation = screenDisplay.DisplayTransformation;
+            var dpi = displayTransformation.Resolution;
+            var inches = mm / 25.4;
+
+            tagRECT deviceRect = displayTransformation.get_DeviceFrame();
+            int pixelExtent = (deviceRect.right - deviceRect.left);
+
+            var pixels = dpi * inches;
+            IDistanceConverter distanceConverter = new DistanceConverter();
+
+            IEnvelope envelope = displayTransformation.VisibleBounds;
+            double realWorldDisplayExtent = envelope.Width;
+
+            if(pixelExtent == 0)
+            {
+                return -1;
+            }
+
+            var sizeOfOnePixel = (realWorldDisplayExtent / pixelExtent);
+
+            return (pixels * sizeOfOnePixel);
         }
     }
 }
