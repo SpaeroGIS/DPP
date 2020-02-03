@@ -154,6 +154,7 @@ namespace MilSpace.GeoCalculator
 
         public static void AddLineToMap(Dictionary<string, IPoint> points, string name)
         {
+            var activeView = (ArcMap.Application.Document as IMxDocument)?.FocusMap as IActiveView;
             var prevPoint = points.First();
 
             foreach(var point in points)
@@ -166,6 +167,8 @@ namespace MilSpace.GeoCalculator
                 AddLineSegmentToMap(prevPoint.Value, point.Value, name, prevPoint.Key);
                 prevPoint = point;
             }
+
+            activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
         }
 
         public static void AddLineSegmentToMap(IPoint pointFrom, IPoint pointTo, string name, string fromPointGuid)
@@ -190,8 +193,41 @@ namespace MilSpace.GeoCalculator
             var mxdoc = ArcMap.Application.Document as IMxDocument;
             var map = (IMap)mxdoc.FocusMap;
             var gc = (IGraphicsContainer)map;
-
+            
             gc.AddElement(elem, 0);
+        }
+
+        public static void FlashLine(IEnumerable<IPoint> points)
+        {
+            var activeView = (ArcMap.Application.Document as IMxDocument)?.FocusMap as IActiveView;
+            IGeometryBridge2 pGeoBrg = new GeometryEnvironment() as IGeometryBridge2;
+
+            IPointCollection4 pPointColl = new PolylineClass();
+            var aWKSPointBuffer = new IPoint[points.Count()];
+            
+            var i = 0;
+            foreach(var point in points)
+            {
+                aWKSPointBuffer[i] = point;
+                i++;
+            }
+            pGeoBrg.SetPoints(pPointColl, ref aWKSPointBuffer);
+
+            var polyline = pPointColl as IPolyline;
+
+            IGeometryCollection theGeomColl = new GeometryBagClass();
+            theGeomColl.AddGeometry(polyline);
+
+            ITopologicalOperator theTopoOp = new PolylineClass();
+            theTopoOp.ConstructUnion((IEnumGeometry)theGeomColl);
+
+            IGeometry flashGeometry = theTopoOp as IGeometry;
+
+            if(flashGeometry != null)
+            {
+                EsriTools.PanToGeometry(activeView, polyline);
+                EsriTools.FlashGeometry(activeView.ScreenDisplay, new IGeometry[] { polyline });
+            }
         }
     }
 }

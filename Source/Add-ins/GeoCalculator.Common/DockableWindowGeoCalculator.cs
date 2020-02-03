@@ -919,12 +919,16 @@ namespace MilSpace.GeoCalculator
                 var nextPointGuid = PointsGridView.Rows[e.RowIndex + 1].Tag.ToString();
 
                 grid.Rows.RemoveAt(e.RowIndex);
-                ArcMapHelper.RemoveGraphicsFromMap(new string[] { selectedPoint.Key });
 
-                var linesToRemove = new string[] { $"{_lineName}_{selectedPoint.Key}", $"{_lineName}_{prevPointGuid}" };
+                if(chkShowLine.Checked)
+                {
+                    ArcMapHelper.RemoveGraphicsFromMap(new string[] { selectedPoint.Key });
 
-                ArcMapHelper.RemoveGraphicsFromMap(linesToRemove);
-                ArcMapHelper.AddLineSegmentToMap(ClickedPointsDictionary[prevPointGuid], ClickedPointsDictionary[nextPointGuid], _lineName, prevPointGuid);
+                    var linesToRemove = new string[] { $"{_lineName}_{selectedPoint.Key}", $"{_lineName}_{prevPointGuid}" };
+
+                    ArcMapHelper.RemoveGraphicsFromMap(linesToRemove);
+                    ArcMapHelper.AddLineSegmentToMap(ClickedPointsDictionary[prevPointGuid], ClickedPointsDictionary[nextPointGuid], _lineName, prevPointGuid);
+                }
 
                 ClickedPointsDictionary.Remove(selectedPoint.Key);
 
@@ -1328,7 +1332,7 @@ namespace MilSpace.GeoCalculator
 
         private void ProcessPointAsClicked(IPoint point, bool projectPoint)
         {
-            var pointGuid = AddPointToList(point);
+            var pointGuid = AddPointToList(point, chkShowLine.Checked);
             if (pointGuid != null)
             {
                 var pointNumber = ClickedPointsDictionary.Count();
@@ -1352,7 +1356,7 @@ namespace MilSpace.GeoCalculator
 
             point.Project(FocusMapSpatialReference);
 
-            var pointGuid = AddPointToList(point);
+            var pointGuid = AddPointToList(point, chkShowLine.Checked);
             if (pointGuid != null)
             {
                 pointModels.Add(pointGuid, pointModel);
@@ -1362,7 +1366,7 @@ namespace MilSpace.GeoCalculator
             }
         }
 
-        private string AddPointToList(IPoint point)
+        private string AddPointToList(IPoint point, bool drawLine)
         {
             log.DebugEx("> AddPointToList START. point.X:{0} point.Y:{1}", point.X, point.Y);
             if (point != null && !point.IsEmpty)
@@ -1386,7 +1390,7 @@ namespace MilSpace.GeoCalculator
                         esriSimpleMarkerStyle.esriSMSCross, 
                         16);
 
-                    if(PointsGridView.RowCount > 0)
+                    if(drawLine == true && PointsGridView.RowCount > 0)
                     {
                         var fromPointGuid = PointsGridView.Rows[PointsGridView.RowCount - 1].Tag.ToString();
                         ArcMapHelper.AddLineSegmentToMap(ClickedPointsDictionary[fromPointGuid], point, _lineName, fromPointGuid);
@@ -1745,7 +1749,17 @@ namespace MilSpace.GeoCalculator
 
         private void RedrawLine()
         {
+            if(!chkShowLine.Checked)
+            {
+                return;
+            }
+
             ArcMapHelper.RemoveAllLineFromMap(_lineName);
+            DrawLine();
+        }
+
+        private void DrawLine()
+        {
             var orderedPoints = new Dictionary<string, IPoint>();
 
             foreach(DataGridViewRow row in PointsGridView.Rows)
@@ -1761,6 +1775,42 @@ namespace MilSpace.GeoCalculator
             }
 
             ArcMapHelper.AddLineToMap(orderedPoints, _lineName);
+        }
+
+        private void PanToLineButton_Click(object sender, EventArgs e)
+        {
+            var orderedPoints = new List<IPoint>();
+
+            foreach(DataGridViewRow row in PointsGridView.Rows)
+            {
+                if(row.Tag == null)
+                {
+                    continue;
+                }
+
+                var pointGuid = row.Tag.ToString();
+                var pointGeom = ClickedPointsDictionary.First(point => point.Key == pointGuid).Value;
+                orderedPoints.Add(pointGeom);
+            }
+
+            ArcMapHelper.FlashLine(orderedPoints);
+        }
+
+        private void ChkShowLine_CheckedChanged(object sender, EventArgs e)
+        {
+            if(PointsGridView.RowCount == 0)
+            {
+                return;
+            }
+
+            if(chkShowLine.Checked)
+            {
+                DrawLine();
+            }
+            else
+            {
+                ArcMapHelper.RemoveAllLineFromMap(_lineName);
+            }
         }
     }
 }
