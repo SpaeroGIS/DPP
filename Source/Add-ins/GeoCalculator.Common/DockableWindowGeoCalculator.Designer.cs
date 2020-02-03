@@ -30,10 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowGeoCalculator));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.mgrsToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.utmToolTip = new System.Windows.Forms.ToolTip(this.components);
@@ -104,7 +104,6 @@
             this.UTMNotationTextBox = new System.Windows.Forms.TextBox();
             this.UTMNotationLabel = new System.Windows.Forms.Label();
             this.GridToolStrip = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.ClearGridButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.CopyGridPointButton = new System.Windows.Forms.ToolStripButton();
@@ -115,14 +114,24 @@
             this.downPointMoveButton = new System.Windows.Forms.ToolStripSplitButton();
             this.toDownStripItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renumberButton = new System.Windows.Forms.ToolStripButton();
-            this.cmbCoordSystem = new System.Windows.Forms.ToolStripComboBox();
+            this.panToLineButton = new System.Windows.Forms.ToolStripButton();
             this.PointsGridView = new System.Windows.Forms.DataGridView();
-            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.NumberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.XCoordColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.YCoordColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.HighlightColumn = new System.Windows.Forms.DataGridViewImageColumn();
             this.DeleteColumn = new System.Windows.Forms.DataGridViewImageColumn();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.checkBoxesPanel = new System.Windows.Forms.Panel();
+            this.chkShowNumbers = new System.Windows.Forms.CheckBox();
+            this.chkShowLine = new System.Windows.Forms.CheckBox();
+            this.toolBoxTitlePanel = new System.Windows.Forms.Panel();
+            this.toolsLabel = new System.Windows.Forms.Label();
+            this.comboPanel = new System.Windows.Forms.Panel();
+            this.cmbCoordSystem = new System.Windows.Forms.ComboBox();
+            this.coordLabel = new System.Windows.Forms.Label();
+            this.graphicTitlePanel = new System.Windows.Forms.Panel();
+            this.graphicLabel = new System.Windows.Forms.Label();
             this.TitlePanel.SuspendLayout();
             this.GeneralToolStrip.SuspendLayout();
             this.CurrentCoordinatesPanel.SuspendLayout();
@@ -141,6 +150,10 @@
             this.toolStrip8.SuspendLayout();
             this.GridToolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PointsGridView)).BeginInit();
+            this.checkBoxesPanel.SuspendLayout();
+            this.toolBoxTitlePanel.SuspendLayout();
+            this.comboPanel.SuspendLayout();
+            this.graphicTitlePanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // saveFileDialog
@@ -156,7 +169,7 @@
             this.TitlePanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.TitlePanel.Location = new System.Drawing.Point(0, 0);
             this.TitlePanel.Name = "TitlePanel";
-            this.TitlePanel.Size = new System.Drawing.Size(346, 35);
+            this.TitlePanel.Size = new System.Drawing.Size(251, 35);
             this.TitlePanel.TabIndex = 49;
             // 
             // TitleLabel
@@ -185,7 +198,7 @@
             this.GeneralToolStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.GeneralToolStrip.Location = new System.Drawing.Point(0, 35);
             this.GeneralToolStrip.Name = "GeneralToolStrip";
-            this.GeneralToolStrip.Size = new System.Drawing.Size(346, 24);
+            this.GeneralToolStrip.Size = new System.Drawing.Size(251, 24);
             this.GeneralToolStrip.TabIndex = 50;
             this.GeneralToolStrip.Text = "toolStrip1";
             // 
@@ -256,7 +269,7 @@
             this.CurrentCoordinatesPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.CurrentCoordinatesPanel.Location = new System.Drawing.Point(0, 59);
             this.CurrentCoordinatesPanel.Name = "CurrentCoordinatesPanel";
-            this.CurrentCoordinatesPanel.Size = new System.Drawing.Size(346, 50);
+            this.CurrentCoordinatesPanel.Size = new System.Drawing.Size(251, 50);
             this.CurrentCoordinatesPanel.TabIndex = 51;
             // 
             // toolStrip1
@@ -335,7 +348,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 109);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(346, 92);
+            this.panel1.Size = new System.Drawing.Size(251, 92);
             this.panel1.TabIndex = 52;
             // 
             // toolStrip3
@@ -477,7 +490,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 201);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(346, 92);
+            this.panel2.Size = new System.Drawing.Size(251, 92);
             this.panel2.TabIndex = 53;
             // 
             // toolStrip5
@@ -619,7 +632,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(0, 293);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(346, 92);
+            this.panel3.Size = new System.Drawing.Size(251, 92);
             this.panel3.TabIndex = 54;
             // 
             // toolStrip7
@@ -759,7 +772,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(0, 385);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(346, 34);
+            this.panel4.Size = new System.Drawing.Size(251, 34);
             this.panel4.TabIndex = 55;
             // 
             // toolStrip9
@@ -867,29 +880,21 @@
             this.GridToolStrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.GridToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.GridToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel2,
             this.ClearGridButton,
             this.toolStripSeparator3,
             this.CopyGridPointButton,
             this.SaveGridPointsButton,
             this.OpenFileGridButton,
-            this.cmbCoordSystem,
             this.upPointMoveButton,
             this.downPointMoveButton,
-            this.renumberButton});
+            this.renumberButton,
+            this.panToLineButton});
             this.GridToolStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.GridToolStrip.Location = new System.Drawing.Point(0, 419);
+            this.GridToolStrip.Location = new System.Drawing.Point(0, 442);
             this.GridToolStrip.Name = "GridToolStrip";
-            this.GridToolStrip.Size = new System.Drawing.Size(346, 28);
+            this.GridToolStrip.Size = new System.Drawing.Size(251, 28);
             this.GridToolStrip.TabIndex = 56;
             this.GridToolStrip.Text = "toolStrip2";
-            // 
-            // toolStripLabel2
-            // 
-            this.toolStripLabel2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(14, 21);
-            this.toolStripLabel2.Text = " ";
             // 
             // ClearGridButton
             // 
@@ -948,7 +953,7 @@
             // upToFirstStripItem
             // 
             this.upToFirstStripItem.Name = "upToFirstStripItem";
-            this.upToFirstStripItem.Size = new System.Drawing.Size(120, 22);
+            this.upToFirstStripItem.Size = new System.Drawing.Size(180, 22);
             this.upToFirstStripItem.Text = "To begin";
             this.upToFirstStripItem.Click += new System.EventHandler(this.UpToFirstStripItem_Click);
             // 
@@ -981,12 +986,15 @@
             this.renumberButton.Text = "toolStripButton1";
             this.renumberButton.Click += new System.EventHandler(this.RenumberButton_Click);
             // 
-            // cmbCoordSystem
+            // panToLineButton
             // 
-            this.cmbCoordSystem.Name = "cmbCoordSystem";
-            this.cmbCoordSystem.Size = new System.Drawing.Size(120, 23);
-            this.cmbCoordSystem.Text = "WGS84";
-            this.cmbCoordSystem.SelectedIndexChanged += new System.EventHandler(this.CmbCoordSystem_SelectedIndexChanged);
+            this.panToLineButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.panToLineButton.Image = ((System.Drawing.Image)(resources.GetObject("panToLineButton.Image")));
+            this.panToLineButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.panToLineButton.Name = "panToLineButton";
+            this.panToLineButton.Size = new System.Drawing.Size(23, 20);
+            this.panToLineButton.Text = "toolStripButton1";
+            this.panToLineButton.Click += new System.EventHandler(this.PanToLineButton_Click);
             // 
             // PointsGridView
             // 
@@ -1005,37 +1013,34 @@
             this.YCoordColumn,
             this.HighlightColumn,
             this.DeleteColumn});
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.PointsGridView.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.PointsGridView.DefaultCellStyle = dataGridViewCellStyle12;
             this.PointsGridView.Dock = System.Windows.Forms.DockStyle.Top;
             this.PointsGridView.GridColor = System.Drawing.SystemColors.Window;
-            this.PointsGridView.Location = new System.Drawing.Point(0, 447);
+            this.PointsGridView.Location = new System.Drawing.Point(0, 503);
             this.PointsGridView.Name = "PointsGridView";
             this.PointsGridView.ReadOnly = true;
             this.PointsGridView.RowHeadersVisible = false;
             this.PointsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.PointsGridView.Size = new System.Drawing.Size(346, 186);
+            this.PointsGridView.Size = new System.Drawing.Size(251, 169);
             this.PointsGridView.TabIndex = 57;
             this.PointsGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.PointsGridView_CellContentClick);
             this.PointsGridView.SelectionChanged += new System.EventHandler(this.PointsGridView_SelectionChanged);
-            // 
-            // openFileDialog
-            // 
-            this.openFileDialog.Filter = "XML|*.xml|CSV|*.csv";
+            this.PointsGridView.Sorted += new System.EventHandler(this.PointsGridView_Sorted);
             // 
             // NumberColumn
             // 
             this.NumberColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            this.NumberColumn.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            this.NumberColumn.DefaultCellStyle = dataGridViewCellStyle9;
             this.NumberColumn.HeaderText = "N";
             this.NumberColumn.Name = "NumberColumn";
             this.NumberColumn.ReadOnly = true;
@@ -1044,11 +1049,11 @@
             // XCoordColumn
             // 
             this.XCoordColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.White;
-            this.XCoordColumn.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.White;
+            this.XCoordColumn.DefaultCellStyle = dataGridViewCellStyle10;
             this.XCoordColumn.HeaderText = "Longitude";
             this.XCoordColumn.Name = "XCoordColumn";
             this.XCoordColumn.ReadOnly = true;
@@ -1058,11 +1063,11 @@
             // YCoordColumn
             // 
             this.YCoordColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.White;
-            this.YCoordColumn.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.White;
+            this.YCoordColumn.DefaultCellStyle = dataGridViewCellStyle11;
             this.YCoordColumn.HeaderText = "Latitude";
             this.YCoordColumn.Name = "YCoordColumn";
             this.YCoordColumn.ReadOnly = true;
@@ -1087,10 +1092,130 @@
             this.DeleteColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.DeleteColumn.Width = 5;
             // 
+            // openFileDialog
+            // 
+            this.openFileDialog.Filter = "XML|*.xml|CSV|*.csv";
+            // 
+            // checkBoxesPanel
+            // 
+            this.checkBoxesPanel.Controls.Add(this.chkShowNumbers);
+            this.checkBoxesPanel.Controls.Add(this.chkShowLine);
+            this.checkBoxesPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.checkBoxesPanel.Location = new System.Drawing.Point(0, 695);
+            this.checkBoxesPanel.Name = "checkBoxesPanel";
+            this.checkBoxesPanel.Padding = new System.Windows.Forms.Padding(14, 6, 0, 6);
+            this.checkBoxesPanel.Size = new System.Drawing.Size(251, 45);
+            this.checkBoxesPanel.TabIndex = 60;
+            // 
+            // chkShowNumbers
+            // 
+            this.chkShowNumbers.AutoSize = true;
+            this.chkShowNumbers.Checked = true;
+            this.chkShowNumbers.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkShowNumbers.Dock = System.Windows.Forms.DockStyle.Top;
+            this.chkShowNumbers.Location = new System.Drawing.Point(14, 23);
+            this.chkShowNumbers.Name = "chkShowNumbers";
+            this.chkShowNumbers.Size = new System.Drawing.Size(237, 17);
+            this.chkShowNumbers.TabIndex = 1;
+            this.chkShowNumbers.Text = "Show numbers";
+            this.chkShowNumbers.UseVisualStyleBackColor = true;
+            this.chkShowNumbers.CheckedChanged += new System.EventHandler(this.ChkShowNumbers_CheckedChanged);
+            // 
+            // chkShowLine
+            // 
+            this.chkShowLine.AutoSize = true;
+            this.chkShowLine.Checked = true;
+            this.chkShowLine.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkShowLine.Dock = System.Windows.Forms.DockStyle.Top;
+            this.chkShowLine.Location = new System.Drawing.Point(14, 6);
+            this.chkShowLine.Name = "chkShowLine";
+            this.chkShowLine.Size = new System.Drawing.Size(237, 17);
+            this.chkShowLine.TabIndex = 0;
+            this.chkShowLine.Text = "Show line";
+            this.chkShowLine.UseVisualStyleBackColor = true;
+            this.chkShowLine.CheckedChanged += new System.EventHandler(this.ChkShowLine_CheckedChanged);
+            // 
+            // toolBoxTitlePanel
+            // 
+            this.toolBoxTitlePanel.Controls.Add(this.toolsLabel);
+            this.toolBoxTitlePanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.toolBoxTitlePanel.Location = new System.Drawing.Point(0, 419);
+            this.toolBoxTitlePanel.Name = "toolBoxTitlePanel";
+            this.toolBoxTitlePanel.Padding = new System.Windows.Forms.Padding(14, 3, 0, 4);
+            this.toolBoxTitlePanel.Size = new System.Drawing.Size(251, 23);
+            this.toolBoxTitlePanel.TabIndex = 60;
+            // 
+            // toolsLabel
+            // 
+            this.toolsLabel.AutoSize = true;
+            this.toolsLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.toolsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.toolsLabel.Location = new System.Drawing.Point(14, 3);
+            this.toolsLabel.Name = "toolsLabel";
+            this.toolsLabel.Size = new System.Drawing.Size(52, 18);
+            this.toolsLabel.TabIndex = 0;
+            this.toolsLabel.Text = "label1";
+            // 
+            // comboPanel
+            // 
+            this.comboPanel.Controls.Add(this.coordLabel);
+            this.comboPanel.Controls.Add(this.cmbCoordSystem);
+            this.comboPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.comboPanel.Location = new System.Drawing.Point(0, 470);
+            this.comboPanel.Name = "comboPanel";
+            this.comboPanel.Padding = new System.Windows.Forms.Padding(14, 6, 25, 3);
+            this.comboPanel.Size = new System.Drawing.Size(251, 33);
+            this.comboPanel.TabIndex = 61;
+            // 
+            // cmbCoordSystem
+            // 
+            this.cmbCoordSystem.Dock = System.Windows.Forms.DockStyle.Right;
+            this.cmbCoordSystem.FormattingEnabled = true;
+            this.cmbCoordSystem.Location = new System.Drawing.Point(77, 6);
+            this.cmbCoordSystem.Name = "cmbCoordSystem";
+            this.cmbCoordSystem.Size = new System.Drawing.Size(149, 21);
+            this.cmbCoordSystem.TabIndex = 0;
+            this.cmbCoordSystem.SelectedIndexChanged += new System.EventHandler(this.CmbCoordSystem_SelectedIndexChanged);
+            // 
+            // coordLabel
+            // 
+            this.coordLabel.AutoSize = true;
+            this.coordLabel.Location = new System.Drawing.Point(17, 9);
+            this.coordLabel.Name = "coordLabel";
+            this.coordLabel.Size = new System.Drawing.Size(35, 13);
+            this.coordLabel.TabIndex = 1;
+            this.coordLabel.Text = "label1";
+            // 
+            // graphicTitlePanel
+            // 
+            this.graphicTitlePanel.Controls.Add(this.graphicLabel);
+            this.graphicTitlePanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.graphicTitlePanel.Location = new System.Drawing.Point(0, 672);
+            this.graphicTitlePanel.Name = "graphicTitlePanel";
+            this.graphicTitlePanel.Padding = new System.Windows.Forms.Padding(14, 3, 0, 4);
+            this.graphicTitlePanel.Size = new System.Drawing.Size(251, 23);
+            this.graphicTitlePanel.TabIndex = 61;
+            // 
+            // graphicLabel
+            // 
+            this.graphicLabel.AutoSize = true;
+            this.graphicLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.graphicLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.graphicLabel.Location = new System.Drawing.Point(14, 3);
+            this.graphicLabel.Name = "graphicLabel";
+            this.graphicLabel.Size = new System.Drawing.Size(52, 18);
+            this.graphicLabel.TabIndex = 0;
+            this.graphicLabel.Text = "label1";
+            // 
             // DockableWindowGeoCalculator
             // 
+            this.AutoScroll = true;
+            this.Controls.Add(this.checkBoxesPanel);
+            this.Controls.Add(this.graphicTitlePanel);
             this.Controls.Add(this.PointsGridView);
+            this.Controls.Add(this.comboPanel);
             this.Controls.Add(this.GridToolStrip);
+            this.Controls.Add(this.toolBoxTitlePanel);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
@@ -1099,7 +1224,7 @@
             this.Controls.Add(this.GeneralToolStrip);
             this.Controls.Add(this.TitlePanel);
             this.Name = "DockableWindowGeoCalculator";
-            this.Size = new System.Drawing.Size(346, 628);
+            this.Size = new System.Drawing.Size(251, 749);
             this.TitlePanel.ResumeLayout(false);
             this.TitlePanel.PerformLayout();
             this.GeneralToolStrip.ResumeLayout(false);
@@ -1135,6 +1260,14 @@
             this.GridToolStrip.ResumeLayout(false);
             this.GridToolStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PointsGridView)).EndInit();
+            this.checkBoxesPanel.ResumeLayout(false);
+            this.checkBoxesPanel.PerformLayout();
+            this.toolBoxTitlePanel.ResumeLayout(false);
+            this.toolBoxTitlePanel.PerformLayout();
+            this.comboPanel.ResumeLayout(false);
+            this.comboPanel.PerformLayout();
+            this.graphicTitlePanel.ResumeLayout(false);
+            this.graphicTitlePanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1207,7 +1340,6 @@
         private System.Windows.Forms.ToolStripButton UtmCopyButton;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripButton CurrentCoordsPasteButton;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripButton WgsGeoPasteButton;
         private System.Windows.Forms.ToolStripButton WgsProjPasteButton;
         private System.Windows.Forms.ToolStripButton PulkovoGeoPasteButton;
@@ -1219,7 +1351,6 @@
         private System.Windows.Forms.ToolStripButton MoveToTheProjectedCoordButton;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.ToolStripButton OpenFileGridButton;
-        private System.Windows.Forms.ToolStripComboBox cmbCoordSystem;
         private System.Windows.Forms.ToolStripButton renumberButton;
         private System.Windows.Forms.ToolStripSplitButton upPointMoveButton;
         private System.Windows.Forms.ToolStripMenuItem upToFirstStripItem;
@@ -1230,5 +1361,16 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn YCoordColumn;
         private System.Windows.Forms.DataGridViewImageColumn HighlightColumn;
         private System.Windows.Forms.DataGridViewImageColumn DeleteColumn;
+        private System.Windows.Forms.ToolStripButton panToLineButton;
+        private System.Windows.Forms.Panel checkBoxesPanel;
+        private System.Windows.Forms.CheckBox chkShowNumbers;
+        private System.Windows.Forms.CheckBox chkShowLine;
+        private System.Windows.Forms.Panel toolBoxTitlePanel;
+        private System.Windows.Forms.Label toolsLabel;
+        private System.Windows.Forms.Panel comboPanel;
+        private System.Windows.Forms.Label coordLabel;
+        private System.Windows.Forms.ComboBox cmbCoordSystem;
+        private System.Windows.Forms.Panel graphicTitlePanel;
+        private System.Windows.Forms.Label graphicLabel;
     }
 }
