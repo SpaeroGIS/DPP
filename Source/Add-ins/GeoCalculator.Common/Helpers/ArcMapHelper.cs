@@ -3,6 +3,7 @@ using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.Editor;
 using ESRI.ArcGIS.esriSystem;
+using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Tools;
 using System;
@@ -276,6 +277,17 @@ namespace MilSpace.GeoCalculator
 
             gc.AddElement(textElementEl, 0);
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
+        }
+
+        public static void AddFeatureClassToMap(IFeatureClass featureClass)
+        {
+            var map = (ArcMap.Application.Document as IMxDocument)?.FocusMap;
+
+            var featureLayer = new FeatureLayer();
+            featureLayer.FeatureClass = featureClass;
+            featureLayer.Name = featureClass.AliasName;
+
+            map.AddLayer(featureLayer);
         }
 
         private static double GetLengthInMapUnits(ESRI.ArcGIS.Carto.IActiveView activeView, double mm)

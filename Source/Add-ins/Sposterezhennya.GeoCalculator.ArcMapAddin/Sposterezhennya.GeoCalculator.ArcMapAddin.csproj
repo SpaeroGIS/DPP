@@ -57,6 +57,9 @@
     <Reference Include="ESRI.ArcGIS.Framework">
       <Private>False</Private>
     </Reference>
+    <Reference Include="ESRI.ArcGIS.Geodatabase, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="ESRI.ArcGIS.Geometry, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
@@ -114,13 +117,13 @@
     <Compile Include="DockableWindowGeoCalculatorComSettings.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="..\GeoCalculator.Common\GeoCalculatorController.cs" >
+    <Compile Include="..\GeoCalculator.Common\GeoCalculatorController.cs">
       <Link>GeoCalculatorController.cs</Link>
     </Compile>
-    <Compile Include="..\GeoCalculator.Common\IGeoCalculatorView.cs" >
+    <Compile Include="..\GeoCalculator.Common\IGeoCalculatorView.cs">
       <Link>IGeoCalculatorView.cs</Link>
     </Compile>
-    <Compile Include="..\GeoCalculator.Common\Interaction\GeoCalculatorInteraction.cs" >
+    <Compile Include="..\GeoCalculator.Common\Interaction\GeoCalculatorInteraction.cs">
       <Link>Interaction\GeoCalculatorInteraction.cs</Link>
     </Compile>
     <Compile Include="MapInteropToolComSettings.cs" />

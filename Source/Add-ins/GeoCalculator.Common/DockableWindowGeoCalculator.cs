@@ -5,6 +5,7 @@ using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core;
 using MilSpace.Core.ModulesInteraction;
+using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.GeoCalculator.BusinessLogic;
 using MilSpace.GeoCalculator.BusinessLogic.Extensions;
@@ -971,6 +972,13 @@ namespace MilSpace.GeoCalculator
             else
             {
                 var chosenRadio = ShowExportForm();
+
+                if(chosenRadio == RadioButtonsValues.Layer)
+                {
+                    ExportToLayer();
+                    return;
+                }
+
                 var folderBrowserResult = saveFileDialog.ShowDialog();
                 if (folderBrowserResult == DialogResult.OK)
                 {
@@ -1447,18 +1455,25 @@ namespace MilSpace.GeoCalculator
                 Text = context.SaveAs
             };
 
-            if (exportForm.ShowDialog(this) == DialogResult.OK)
+            if(exportForm.ShowDialog(this) == DialogResult.OK)
             {
-                if (exportForm.ChosenRadioButton == Enums.RadioButtonsValues.XML)
+                if(exportForm.ChosenRadioButton == Enums.RadioButtonsValues.Layer)
+                {
+                    return exportForm.ChosenRadioButton;
+                }
+
+                if(exportForm.ChosenRadioButton == Enums.RadioButtonsValues.XML)
                 {
                     saveFileDialog.Filter = "XML Files (*.xml)|*.xml";
                     saveFileDialog.DefaultExt = "xml";
                 }
-                else if (exportForm.ChosenRadioButton == Enums.RadioButtonsValues.CSV)
+
+                else if(exportForm.ChosenRadioButton == Enums.RadioButtonsValues.CSV)
                 {
                     saveFileDialog.Filter = "CSV Files (*.csv)|*.csv";
                     saveFileDialog.DefaultExt = "csv";
                 }
+
                 saveFileDialog.AddExtension = true;
             }
             return exportForm.ChosenRadioButton;
@@ -1897,6 +1912,27 @@ namespace MilSpace.GeoCalculator
         private void PointsGridView_Sorted(object sender, EventArgs e)
         {
             RedrawLine();
+        }
+
+        private void ExportToLayer()
+        {
+            var orderedPoints = new Dictionary<int, IPoint>();
+
+            foreach(DataGridViewRow row in PointsGridView.Rows)
+            {
+                if(row.Tag == null)
+                {
+                    continue;
+                }
+
+                var pointGuid = row.Tag.ToString();
+                var pointGeom = ClickedPointsDictionary.First(point => point.Key == pointGuid).Value;
+                var pointCopy = pointGeom.CloneWithProjecting();
+
+                orderedPoints.Add((int)row.Cells[0].Value, pointCopy);
+            }
+
+            controller.ExportToLayer(orderedPoints);
         }
     }
 }
