@@ -86,6 +86,14 @@
     <Compile Include="..\GeoCalculator.Common\ButtonGeoCalculator.cs">
       <Link>ButtonGeoCalculator.cs</Link>
     </Compile>
+    <Compile Include="..\GeoCalculator.Common\ChooseLayerForImportForm.cs">
+      <Link>ChooseLayerForImportForm.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\GeoCalculator.Common\ChooseLayerForImportForm.designer.cs">
+      <Link>ChooseLayerForImportForm.designer.cs</Link>
+      <DependentUpon>ChooseLayerForImportForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="..\GeoCalculator.Common\DockableWindowGeoCalculator.cs">
       <Link>DockableWindowGeoCalculator.cs</Link>
       <SubType>UserControl</SubType>
@@ -164,6 +172,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="..\GeoCalculator.Common\ChooseLayerForImportForm.resx">
+      <Link>ChooseLayerForImportForm.resx</Link>
+      <DependentUpon>ChooseLayerForImportForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="..\GeoCalculator.Common\DockableWindowGeoCalculator.resx">
       <Link>DockableWindowGeoCalculator.resx</Link>
       <DependentUpon>DockableWindowGeoCalculator.cs</DependentUpon>
@@ -181,6 +193,7 @@
     <Content Include="..\GeoCalculator.Common\Resources\Localization.xml">
       <Link>Resources\Localization.xml</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Images\Background.bmp" />
     <Content Include="Images\Center.png" />

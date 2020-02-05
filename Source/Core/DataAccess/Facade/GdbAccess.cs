@@ -1314,12 +1314,12 @@ namespace MilSpace.DataAccess.Facade
             }
             catch (Exception ex)
             {
-                logger.InfoEx("> GenerateCoverageAreasTempStorage EXCEPTION. ex.Message:{0}", ex.Message);
+                logger.ErrorEx("> GenerateCoverageAreasTempStorage EXCEPTION. ex.Message:{0}", ex.Message);
             }
         }
 
 
-        public IFeatureClass AddCalcPointsFeature(Dictionary<int, IPoint> points, string featureClassName, ISpatialReference sr)
+        public IFeatureClass AddCalcPointsFeature(IEnumerable<IPoint> points, string featureClassName, ISpatialReference sr)
         {
             logger.InfoEx("> AddCalcPointsFeature START. featureClassName:{0}", featureClassName);
 
@@ -1350,14 +1350,16 @@ namespace MilSpace.DataAccess.Facade
             try
             {
                 IFeatureClass featureClass = OpenFeatureClass(workspace, featureClassName);
+                int i = 1;
 
                 foreach(var point in points)
                 {
                     var areaFeature = featureClass.CreateFeature();
-                    areaFeature.Shape = point.Value;
-                    areaFeature.set_Value(featureClass.FindField("PointNumber"), point.Key);
+                    areaFeature.Shape = point;
+                    areaFeature.set_Value(featureClass.FindField("PointNumber"), i);
 
                     areaFeature.Store();
+                    i++;
                 }
                 workspaceEdit.StopEditOperation();
                 workspaceEdit.StopEditing(true);
@@ -1368,7 +1370,7 @@ namespace MilSpace.DataAccess.Facade
             }
             catch(Exception ex)
             {
-                logger.InfoEx("> AddCalcPointsFeature Exception. ex.Message:{0}", ex.Message);
+                logger.ErrorEx("> AddCalcPointsFeature Exception. ex.Message:{0}", ex.Message);
                 return null;
             }
         }
@@ -1423,7 +1425,7 @@ namespace MilSpace.DataAccess.Facade
             }
             catch(Exception ex)
             {
-                logger.InfoEx("> GenerateCalcPointsTempStorage EXCEPTION. ex.Message:{0}", ex.Message);
+                logger.ErrorEx("> GenerateCalcPointsTempStorage EXCEPTION. ex.Message:{0}", ex.Message);
             }
         }
 
@@ -1476,7 +1478,7 @@ namespace MilSpace.DataAccess.Facade
             }
             catch(Exception ex)
             {
-                logger.InfoEx("> AddCoverageAreaFeature Exception. ex.Message:{0}", ex.Message);
+                logger.ErrorEx("> AddCoverageAreaFeature Exception. ex.Message:{0}", ex.Message);
                 return null;
             }
         }

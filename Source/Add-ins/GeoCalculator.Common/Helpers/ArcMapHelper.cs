@@ -290,7 +290,62 @@ namespace MilSpace.GeoCalculator
             map.AddLayer(featureLayer);
         }
 
-        private static double GetLengthInMapUnits(ESRI.ArcGIS.Carto.IActiveView activeView, double mm)
+        public static List<string> GetFeatureLayers()
+        {
+            var result = new List<string>();
+            var map = (ArcMap.Application.Document as IMxDocument)?.FocusMap;
+            var layers = map.Layers;
+
+            var layer = layers.Next();
+
+            while(layer != null)
+            {
+                if(layer is IFeatureLayer fLayer && !layer.Name.StartsWith($"GCP_{ DateTime.Now.ToString("yyyyMMdd")}"))
+                {
+                    var featureLayer = fLayer;
+                    var featureClass = featureLayer.FeatureClass;
+
+                    if(featureClass != null &&
+                        ((featureClass.ShapeType == esriGeometryType.esriGeometryLine) ||
+                        (featureClass.ShapeType == esriGeometryType.esriGeometryPolyline) ||
+                        (featureClass.ShapeType == esriGeometryType.esriGeometryPoint) ||
+                        (featureClass.ShapeType == esriGeometryType.esriGeometryPolygon)))
+                    {
+                        result.Add(fLayer.Name);
+                    }
+                }
+
+                layer = layers.Next();
+            }
+
+            return result;
+        }
+
+        public static ILayer GetLayer(string layerName)
+        {
+            var map = (ArcMap.Application.Document as IMxDocument)?.FocusMap;
+            var layers = map.Layers;
+            var layer = layers.Next();
+
+            while(layer != null && layer.Name != layerName)
+            {
+                layer = layers.Next() as ILayer;
+            }
+
+            return layer;
+        }
+
+        public static double GetMetresInMapUnits(double metres)
+        {
+            var focusMap = (ArcMap.Application.Document as IMxDocument)?.FocusMap;
+            var spatialReference = focusMap.SpatialReference;
+
+            IDistanceConverter distanceConverter = new DistanceConverter();
+
+            return distanceConverter.GetValue($"{metres}m", spatialReference);
+        }
+
+        private static double GetLengthInMapUnits(IActiveView activeView, double mm)
         {
             if(activeView == null)
             {

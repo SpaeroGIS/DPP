@@ -1092,10 +1092,6 @@
             this.DeleteColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.DeleteColumn.Width = 5;
             // 
-            // openFileDialog
-            // 
-            this.openFileDialog.Filter = "XML|*.xml|CSV|*.csv";
-            // 
             // checkBoxesPanel
             // 
             this.checkBoxesPanel.Controls.Add(this.chkShowNumbers);

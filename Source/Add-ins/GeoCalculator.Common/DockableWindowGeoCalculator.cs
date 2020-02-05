@@ -33,7 +33,7 @@ namespace MilSpace.GeoCalculator
         private ExtendedPointModel lastProjectedPoint;
         private Dictionary<string, PointModel> pointModels = new Dictionary<string, PointModel>();
         private Dictionary<CoordinateSystemsEnum, string> _coordinateSystems = new Dictionary<CoordinateSystemsEnum, string>();
-        private LocalizationContext context;
+        private LocalizationContext _context;
         private readonly Dictionary<string, IPoint> ClickedPointsDictionary = new Dictionary<string, IPoint>();
         private GeoCalculatorController controller;
 
@@ -60,6 +60,18 @@ namespace MilSpace.GeoCalculator
         public void SetController(GeoCalculatorController controller)
         {
             this.controller = controller;
+            controller.SetView(this);
+        }
+
+        public void AddPointsToGrid(IEnumerable<IPoint> points)
+        {
+            foreach(var point in points)
+            {
+                point.Project(FocusMapSpatialReference);
+                ProcessPointAsClicked(point, true, true);
+            }
+
+            RedrawLine();
         }
 
         /// <summary>
@@ -144,8 +156,8 @@ namespace MilSpace.GeoCalculator
         {
             if (lastProjectedPoint == null)
                 MessageBox.Show(
-                    context.NoSelectedPointError,
-                    context.ErrorString,
+                    _context.NoSelectedPointError,
+                    _context.ErrorString,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             else _businessLogic.CopyCoordinatesToClipboard(lastProjectedPoint);
@@ -191,19 +203,19 @@ namespace MilSpace.GeoCalculator
                     string ss = string.Format("XCoordinateTextBox.Text:{0} YCoordinateTextBox.Text:{1}\nxCoordinate:{2} yCoordinate:{3}",
                         XCoordinateTextBox.Text, YCoordinateTextBox.Text, xCoordinate, yCoordinate);
                     MessageBox.Show(
-                        context.WrongFormatMessage + "\n" + ss,
-                        context.ErrorString,
+                        _context.WrongFormatMessage + "\n" + ss,
+                        _context.ErrorString,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
-                    log.DebugEx("MoveToTheProjectedCoordButton_Click " + context.WrongFormatMessage + ss);
+                    log.DebugEx("MoveToTheProjectedCoordButton_Click " + _context.WrongFormatMessage + ss);
                 }
 
             }
             catch
             {
                 MessageBox.Show(
-                    context.WrongFormatMessage + " -> " + XCoordinateTextBox.Text + ";" + YCoordinateTextBox.Text,
-                    context.ErrorString,
+                    _context.WrongFormatMessage + " -> " + XCoordinateTextBox.Text + ";" + YCoordinateTextBox.Text,
+                    _context.ErrorString,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
@@ -282,8 +294,8 @@ namespace MilSpace.GeoCalculator
                 if (stringParts.Length != 2)
                 {
                     MessageBox.Show(
-                        context.WrongFormatMessage,
-                        context.ErrorString,
+                        _context.WrongFormatMessage,
+                        _context.ErrorString,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     return;
@@ -292,8 +304,8 @@ namespace MilSpace.GeoCalculator
                 if (!stringParts.First().ToDoubleInvariantCulture(out double xCoordinate) ||
                     !stringParts.Last().ToDoubleInvariantCulture(out double yCoordinate))
                     MessageBox.Show(
-                        context.WrongFormatMessage,
-                        context.ErrorString,
+                        _context.WrongFormatMessage,
+                        _context.ErrorString,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 else
@@ -304,8 +316,8 @@ namespace MilSpace.GeoCalculator
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    context.WrongFormatMessage,
-                    context.ErrorString,
+                    _context.WrongFormatMessage,
+                    _context.ErrorString,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
 
@@ -330,12 +342,12 @@ namespace MilSpace.GeoCalculator
             {
                 if (!Regex.IsMatch(clipboard, @"^([-]?[\d]{1,2}[\,|\.]\d+)[\;|\s]([-]?[\d]{1,2}[\,|\.]\d+)$"))
                 {
-                    string sMsgText = context.FindLocalizedElement(
+                    string sMsgText = _context.FindLocalizedElement(
                         "MsgInvalidCoordinatesDD",
                         "Недійсні дані. Потрібні коордінати представлені у десяткових градусах");
                     MessageBox.Show(
                         sMsgText + " -> " + clipboard,
-                        context.ErrorString,
+                        _context.ErrorString,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     return;
@@ -347,10 +359,10 @@ namespace MilSpace.GeoCalculator
                 if (stringParts.Length < 1)
                 {
                     MessageBox.Show(
-                        context.FindLocalizedElement(
+                        _context.FindLocalizedElement(
                             "WrongFormatMessageToFewParts", "Не вдалося отримати обидві складові координати")
                             + " -> " + stringParts,
-                        context.ErrorString,
+                        _context.ErrorString,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     return;
@@ -363,8 +375,8 @@ namespace MilSpace.GeoCalculator
                     //|| !stringParts[1].ToDoubleInvariantCulture(out double yCoordinate))
 
                     MessageBox.Show(
-                        context.WrongFormatMessage + " WGS DD -> " + stringParts[0] + ' ' + stringParts[1],
-                        context.ErrorString,
+                        _context.WrongFormatMessage + " WGS DD -> " + stringParts[0] + ' ' + stringParts[1],
+                        _context.ErrorString,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 else
@@ -376,8 +388,8 @@ namespace MilSpace.GeoCalculator
             catch
             {
                 MessageBox.Show(
-                    context.WrongFormatMessage,
-                    context.ErrorString,
+                    _context.WrongFormatMessage,
+                    _context.ErrorString,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
@@ -395,8 +407,8 @@ namespace MilSpace.GeoCalculator
                 if (stringParts.Length != 2)
                 {
                     MessageBox.Show(
-                        context.WrongFormatMessage + " -> " + clipboard,
-                        context.ErrorString,
+                        _context.WrongFormatMessage + " -> " + clipboard,
+                        _context.ErrorString,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     return;
@@ -405,8 +417,8 @@ namespace MilSpace.GeoCalculator
                 if (!stringParts.First().ToDoubleInvariantCulture(out double xCoordinate) ||
                     !stringParts.Last().ToDoubleInvariantCulture(out double yCoordinate))
                     MessageBox.Show(
-                        context.WrongFormatMessage,
-                        context.ErrorString,
+                        _context.WrongFormatMessage,
+                        _context.ErrorString,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 else
@@ -418,8 +430,8 @@ namespace MilSpace.GeoCalculator
             catch
             {
                 MessageBox.Show(
-                    context.WrongFormatMessage,
-                    context.ErrorString,
+                    _context.WrongFormatMessage,
+                    _context.ErrorString,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
@@ -434,12 +446,12 @@ namespace MilSpace.GeoCalculator
             {
                 if (!Regex.IsMatch(clipboard, @"^([-]?[\d]{1,2}[\,|\.]\d+)[\;| ]([-]?[\d]{1,2}[\,|\.]\d+)$"))
                 {
-                    string sMsgText = context.FindLocalizedElement(
+                    string sMsgText = _context.FindLocalizedElement(
                         "MsgInvalidCoordinatesDD",
                         "Недійсні дані. Потрібні коордінати представлені у десяткових градусах");
                     MessageBox.Show(
                         sMsgText + " -> " + clipboard,
-                        context.ErrorString,
+                        _context.ErrorString,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     return;
@@ -451,8 +463,8 @@ namespace MilSpace.GeoCalculator
                 if (stringParts.Length < 2)
                 {
                     MessageBox.Show(
-                        context.WrongFormatMessage,
-                        context.ErrorString,
+                        _context.WrongFormatMessage,
+                        _context.ErrorString,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     return;
@@ -469,8 +481,8 @@ namespace MilSpace.GeoCalculator
                     //!stringParts.Last().ToDoubleInvariantCulture(out double yCoordinate))
 
                     MessageBox.Show(
-                        context.WrongFormatMessage + " -> " + clipboard,
-                        context.ErrorString,
+                        _context.WrongFormatMessage + " -> " + clipboard,
+                        _context.ErrorString,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 else
@@ -482,8 +494,8 @@ namespace MilSpace.GeoCalculator
             catch
             {
                 MessageBox.Show(
-                    context.WrongFormatMessage,
-                    context.ErrorString,
+                    _context.WrongFormatMessage,
+                    _context.ErrorString,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
@@ -501,8 +513,8 @@ namespace MilSpace.GeoCalculator
                 if (stringParts.Length != 2)
                 {
                     MessageBox.Show(
-                        context.WrongFormatMessage + " -> " + clipboard,
-                        context.ErrorString,
+                        _context.WrongFormatMessage + " -> " + clipboard,
+                        _context.ErrorString,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     return;
@@ -515,8 +527,8 @@ namespace MilSpace.GeoCalculator
                 if (!stringParts.First().ToDoubleInvariantCulture(out double xCoordinate) ||
                     !stringParts.Last().ToDoubleInvariantCulture(out double yCoordinate))
                     MessageBox.Show(
-                        context.WrongFormatMessage + " -> " + clipboard,
-                        context.ErrorString,
+                        _context.WrongFormatMessage + " -> " + clipboard,
+                        _context.ErrorString,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 else
@@ -528,7 +540,7 @@ namespace MilSpace.GeoCalculator
             }
             catch
             {
-                MessageBox.Show(context.WrongFormatMessage, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(_context.WrongFormatMessage, _context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -541,12 +553,12 @@ namespace MilSpace.GeoCalculator
             {
                 if (!Regex.IsMatch(clipboard, @"^([-]?[\d]{1,2}[\,|\.]\d+)[\;| ]([-]?[\d]{1,2}[\,|\.]\d+)$"))
                 {
-                    string sMsgText = context.FindLocalizedElement(
+                    string sMsgText = _context.FindLocalizedElement(
                         "MsgInvalidCoordinatesDD",
                         "Недійсні дані. Потрібні коордінати представлені у десяткових градусах");
                     MessageBox.Show(
                         sMsgText + " -> " + clipboard,
-                        context.ErrorString,
+                        _context.ErrorString,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     return;
@@ -557,8 +569,8 @@ namespace MilSpace.GeoCalculator
                 if (stringParts.Length < 2)
                 {
                     MessageBox.Show(
-                        context.WrongFormatMessage,
-                        context.ErrorString,
+                        _context.WrongFormatMessage,
+                        _context.ErrorString,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     return;
@@ -573,8 +585,8 @@ namespace MilSpace.GeoCalculator
                     //!stringParts.Last().ToDoubleInvariantCulture(out double yCoordinate))
 
                     MessageBox.Show(
-                        context.WrongFormatMessage + " -> " + clipboard,
-                        context.ErrorString,
+                        _context.WrongFormatMessage + " -> " + clipboard,
+                        _context.ErrorString,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 else
@@ -586,8 +598,8 @@ namespace MilSpace.GeoCalculator
             catch
             {
                 MessageBox.Show(
-                    context.WrongFormatMessage,
-                    context.ErrorString,
+                    _context.WrongFormatMessage,
+                    _context.ErrorString,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
@@ -605,8 +617,8 @@ namespace MilSpace.GeoCalculator
                 if (stringParts.Length != 2)
                 {
                     MessageBox.Show(
-                        context.WrongFormatMessage,
-                        context.ErrorString,
+                        _context.WrongFormatMessage,
+                        _context.ErrorString,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     return;
@@ -619,8 +631,8 @@ namespace MilSpace.GeoCalculator
                 if (!stringParts.First().ToDoubleInvariantCulture(out double xCoordinate) ||
                     !stringParts.Last().ToDoubleInvariantCulture(out double yCoordinate))
                     MessageBox.Show(
-                        context.WrongFormatMessage,
-                        context.ErrorString,
+                        _context.WrongFormatMessage,
+                        _context.ErrorString,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 else
@@ -633,8 +645,8 @@ namespace MilSpace.GeoCalculator
             catch
             {
                 MessageBox.Show(
-                    context.WrongFormatMessage,
-                    context.ErrorString,
+                    _context.WrongFormatMessage,
+                    _context.ErrorString,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
@@ -653,8 +665,8 @@ namespace MilSpace.GeoCalculator
             catch
             {
                 MessageBox.Show(
-                    context.WrongMgrsFormatMessage,
-                    context.ErrorString,
+                    _context.WrongMgrsFormatMessage,
+                    _context.ErrorString,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
@@ -695,7 +707,7 @@ namespace MilSpace.GeoCalculator
             }
             catch
             {
-                MessageBox.Show(context.WrongFormatMessage, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(_context.WrongFormatMessage, _context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -713,7 +725,7 @@ namespace MilSpace.GeoCalculator
             }
             catch
             {
-                MessageBox.Show(context.WrongFormatMessage, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(_context.WrongFormatMessage, _context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -733,7 +745,7 @@ namespace MilSpace.GeoCalculator
             }
             catch
             {
-                MessageBox.Show(context.WrongFormatMessage, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(_context.WrongFormatMessage, _context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -754,7 +766,7 @@ namespace MilSpace.GeoCalculator
             }
             catch
             {
-                MessageBox.Show(context.WrongFormatMessage, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(_context.WrongFormatMessage, _context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -772,7 +784,7 @@ namespace MilSpace.GeoCalculator
             }
             catch
             {
-                MessageBox.Show(context.WrongFormatMessage, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(_context.WrongFormatMessage, _context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -792,7 +804,7 @@ namespace MilSpace.GeoCalculator
             }
             catch
             {
-                MessageBox.Show(context.WrongFormatMessage, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(_context.WrongFormatMessage, _context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -812,7 +824,7 @@ namespace MilSpace.GeoCalculator
             }
             catch
             {
-                MessageBox.Show(context.WrongFormatMessage, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(_context.WrongFormatMessage, _context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -830,7 +842,7 @@ namespace MilSpace.GeoCalculator
             }
             catch
             {
-                MessageBox.Show(context.WrongMgrsFormatMessage, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(_context.WrongMgrsFormatMessage, _context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             if (e.Alt && e.KeyCode == Keys.Right)
@@ -873,7 +885,7 @@ namespace MilSpace.GeoCalculator
             }
             catch
             {
-                MessageBox.Show(context.WrongUtmFormatMessage, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(_context.WrongUtmFormatMessage, _context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             if (e.Alt && e.KeyCode == Keys.Right)
@@ -931,8 +943,8 @@ namespace MilSpace.GeoCalculator
             else
             if (column is DataGridViewImageColumn && column.Name == Constants.DeleteColumnName)
             {
-                var prevPointGuid = PointsGridView.Rows[e.RowIndex - 1].Tag.ToString();
-                var nextPointGuid = PointsGridView.Rows[e.RowIndex + 1].Tag.ToString();
+                var prevPointGuid = (e.RowIndex == 0) ? PointsGridView.Rows[e.RowIndex].Tag.ToString() : PointsGridView.Rows[e.RowIndex - 1].Tag.ToString();
+                var nextPointGuid = (e.RowIndex == PointsGridView.RowCount - 1) ? PointsGridView.Rows[e.RowIndex].Tag.ToString() : PointsGridView.Rows[e.RowIndex + 1].Tag.ToString();
 
                 grid.Rows.RemoveAt(e.RowIndex);
 
@@ -942,7 +954,11 @@ namespace MilSpace.GeoCalculator
                     var linesToRemove = new string[] { $"{_lineName}_{prevPointGuid}" };
 
                     ArcMapHelper.RemoveGraphicsFromMap(linesToRemove);
-                    ArcMapHelper.AddLineSegmentToMap(ClickedPointsDictionary[prevPointGuid], ClickedPointsDictionary[nextPointGuid], _lineName, prevPointGuid);
+
+                    if(e.RowIndex > 0 && e.RowIndex < PointsGridView.RowCount - 1)
+                    {
+                        ArcMapHelper.AddLineSegmentToMap(ClickedPointsDictionary[prevPointGuid], ClickedPointsDictionary[nextPointGuid], _lineName, prevPointGuid);
+                    }
                 }
 
                 ClickedPointsDictionary.Remove(selectedPoint.Key);
@@ -952,11 +968,11 @@ namespace MilSpace.GeoCalculator
                 //SynchronizePointNumbers(e.RowIndex + 1);
 
                 //Refresh Numbers column cells values
-                for (int i = 0; i < grid.Rows.Count; i++)
-                {
-                    grid[Constants.NumberColumnName, i].Value = i + 1;
-                }
-                grid.Refresh();
+                //for (int i = 0; i < grid.Rows.Count; i++)
+                //{
+                //    grid[Constants.NumberColumnName, i].Value = i + 1;
+                //}
+                //grid.Refresh();
             }
             else
             {
@@ -968,7 +984,7 @@ namespace MilSpace.GeoCalculator
 
         private async void SaveGridPointsButton_Click(object sender, EventArgs e)
         {
-            if (pointModels == null || !pointModels.Any()) MessageBox.Show(context.NoSelectedPointError, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (pointModels == null || !pointModels.Any()) MessageBox.Show(_context.NoSelectedPointError, _context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
                 var chosenRadio = ShowExportForm();
@@ -994,48 +1010,65 @@ namespace MilSpace.GeoCalculator
 
         private async void OpenFileGridButton_Click(object sender, EventArgs e)
         {
-            if (PointsGridView.Rows.Count > 0)
-            {
-                var warningResult = MessageBox.Show(
-                    context.GridCleanWarningMessage,
-                    context.WarningString,
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Warning);
-                if (warningResult == DialogResult.No) return;
-            }
+            //if (PointsGridView.Rows.Count > 0)
+            //{
+            //    var warningResult = MessageBox.Show(
+            //        context.GridCleanWarningMessage,
+            //        context.WarningString,
+            //        MessageBoxButtons.YesNo,
+            //        MessageBoxIcon.Warning);
+            //    if (warningResult == DialogResult.No) return;
+            //}
 
-            var openFileDialogResult = openFileDialog.ShowDialog();
-            var fileName = openFileDialog.FileName;
-            var pointsList = new List<PointModel>();
-            if (openFileDialogResult == DialogResult.OK && !string.IsNullOrWhiteSpace(fileName))
+            var chosenRadio = ShowExportForm();
+
+            if(chosenRadio != RadioButtonsValues.Layer)
             {
-                try
+                var filter = chosenRadio == RadioButtonsValues.CSV ? "CSV|(*.csv)" : "XML|(*.xml)";
+                openFileDialog.Filter = filter;
+                var openFileDialogResult = openFileDialog.ShowDialog();
+                var fileName = openFileDialog.FileName;
+                var pointsList = new List<PointModel>();
+                if(openFileDialogResult == DialogResult.OK && !string.IsNullOrWhiteSpace(fileName))
                 {
-                    if (System.IO.Path.GetExtension(fileName).Equals(Constants.CSV))
-                        pointsList = await _businessLogic.ImportProjectionsFromCsvAsync(fileName);
-                    else if (System.IO.Path.GetExtension(fileName).Equals(Constants.XML))
-                        pointsList = await _businessLogic.ImportProjectionsFromXmlAsync(fileName);
-
-                    ClearGridButton_Click(sender, e);
-
-                    if (pointsList != null && pointsList.Any())
+                    try
                     {
-                        foreach (var pointModel in pointsList)
+                        if(System.IO.Path.GetExtension(fileName).Equals(Constants.CSV))
+                            pointsList = await _businessLogic.ImportProjectionsFromCsvAsync(fileName);
+                        else if(System.IO.Path.GetExtension(fileName).Equals(Constants.XML))
+                            pointsList = await _businessLogic.ImportProjectionsFromXmlAsync(fileName);
+
+                        //ClearGridButton_Click(sender, e);
+
+                        if(pointsList != null && pointsList.Any())
                         {
-                            ProcessPointAsClicked(pointModel, Constants.WgsGeoModel, true);
+                            foreach(var pointModel in pointsList)
+                            {
+                                ProcessPointAsClicked(pointModel, Constants.WgsGeoModel, true);
+                            }
                         }
                     }
+                    catch
+                    {
+                        MessageBox.Show(_context.WrongFormatMessage, _context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                catch
+            }
+            else
+            {
+                var chooseLayerForm = new ChooseLayerForImportForm();
+                var result = chooseLayerForm.ShowDialog();
+
+                if(result == DialogResult.OK)
                 {
-                    MessageBox.Show(context.WrongFormatMessage, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    controller.ImportFromLayer(chooseLayerForm.SelectedLayer);
                 }
             }
         }
 
         private void CopyGridPointButton_Click(object sender, EventArgs e)
         {
-            if (pointModels == null || !pointModels.Any()) MessageBox.Show(context.NoSelectedPointError, context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (pointModels == null || !pointModels.Any()) MessageBox.Show(_context.NoSelectedPointError, _context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
                 _businessLogic.CopyCoordinatesToClipboard(pointModels.ToSortedPointModelsList());
@@ -1080,73 +1113,73 @@ namespace MilSpace.GeoCalculator
         {
             try
             {
-                context = new LocalizationContext();
-                this.TitleLabel.Text = context.CoordinatesConverterWindowCaption;
-                this.CurrentMapLabel.Text = context.CurrentMapLabel;
-                this.MgrsNotationLabel.Text = context.MgrsLabel;
-                this.UTMNotationLabel.Text = context.UtmLabel;
+                _context = new LocalizationContext();
+                this.TitleLabel.Text = _context.CoordinatesConverterWindowCaption;
+                this.CurrentMapLabel.Text = _context.CurrentMapLabel;
+                this.MgrsNotationLabel.Text = _context.MgrsLabel;
+                this.UTMNotationLabel.Text = _context.UtmLabel;
 
-                this.NumberColumn.HeaderText = context.FindLocalizedElement("NumColHeader", "N");
-                this.XCoordColumn.HeaderText = context.FindLocalizedElement("XCoordColHeader", "Довгота");
-                this.YCoordColumn.HeaderText = context.FindLocalizedElement("YCoordColHeader", "Широта");
+                this.NumberColumn.HeaderText = _context.FindLocalizedElement("NumColHeader", "N");
+                this.XCoordColumn.HeaderText = _context.FindLocalizedElement("XCoordColHeader", "Довгота");
+                this.YCoordColumn.HeaderText = _context.FindLocalizedElement("YCoordColHeader", "Широта");
 
                 //TODO:Localize the next Labels and add config here
                 this.wgsProjectedLabel.Text = CurrentProjectionsModel.WGS84Projection.Name;
-                this.WgsGeoLabel.Text = context.WgsLabel;
+                this.WgsGeoLabel.Text = _context.WgsLabel;
                 this.PulkovoProjectedLabel.Text = CurrentProjectionsModel.Pulkovo1942Projection.Name;
-                this.PulkovoGeoLabel.Text = context.PulkovoLabel;
+                this.PulkovoGeoLabel.Text = _context.PulkovoLabel;
                 this.UkraineProjectedLabel.Text = CurrentProjectionsModel.Ukraine2000Projection.Name;
-                this.UkraineGeoLabel.Text = context.UkraineLabel;
-                this.toolsLabel.Text = context.FindLocalizedElement("ToolBarTitle", "Список точок");
-                this.coordLabel.Text = context.FindLocalizedElement("CoordsSystemsLabel", "СК:");
-                this.graphicLabel.Text = context.FindLocalizedElement("GraphicToolAreaTitle", "Робота з графікою");
-                this.chkShowLine.Text = context.FindLocalizedElement("ShowLineCheckText", "Показати лінію на карті");
-                this.chkShowNumbers.Text = context.FindLocalizedElement("ShowNumbersCheckText", "Нумерувати точки на карті");
-                this.mgrsToolTip.SetToolTip(this.MgrsNotationTextBox, context.AltRightToMove);
-                this.utmToolTip.SetToolTip(this.UTMNotationTextBox, context.AltRightToMove);
+                this.UkraineGeoLabel.Text = _context.UkraineLabel;
+                this.toolsLabel.Text = _context.FindLocalizedElement("ToolBarTitle", "Список точок");
+                this.coordLabel.Text = _context.FindLocalizedElement("CoordsSystemsLabel", "СК:");
+                this.graphicLabel.Text = _context.FindLocalizedElement("GraphicToolAreaTitle", "Робота з графікою");
+                this.chkShowLine.Text = _context.FindLocalizedElement("ShowLineCheckText", "Показати лінію на карті");
+                this.chkShowNumbers.Text = _context.FindLocalizedElement("ShowNumbersCheckText", "Нумерувати точки на карті");
+                this.mgrsToolTip.SetToolTip(this.MgrsNotationTextBox, _context.AltRightToMove);
+                this.utmToolTip.SetToolTip(this.UTMNotationTextBox, _context.AltRightToMove);
 
                 //Tool Tips
-                this.MapPointToolButton.ToolTipText = context.ToolButton;
-                this.MoveToCenterButton.ToolTipText = context.MoveToCenterButton;
-                this.MoveToTheProjectedCoordButton.ToolTipText = context.MoveToProjectedCoordButton;
-                this.CopyButton.ToolTipText = context.CopyButton;
-                this.ClearGridButton.ToolTipText = context.ClearGridButton;
-                this.SaveGridPointsButton.ToolTipText = context.SaveButton;
-                this.CopyGridPointButton.ToolTipText = context.CopyButton;
-                this.OpenFileGridButton.ToolTipText = context.OpenFileButton;
-                this.PointsGridView.Columns[Constants.HighlightColumnName].ToolTipText = context.ShowPointOnMapButton;
-                this.PointsGridView.Columns[Constants.DeleteColumnName].ToolTipText = context.DeletePointButton;
-                this.CurrentCoordsCopyButton.ToolTipText = context.CopyCoordinateButton;
-                this.WgsGeoCopyButton.ToolTipText = context.CopyCoordinateButton;
-                this.WgsProjCopyButton.ToolTipText = context.CopyCoordinateButton;
-                this.PulkovoGeoCopyButton.ToolTipText = context.CopyCoordinateButton;
-                this.PulkovoProjCopyButton.ToolTipText = context.CopyCoordinateButton;
-                this.UkraineGeoCopyButton.ToolTipText = context.CopyCoordinateButton;
-                this.UkraineProjCopyButton.ToolTipText = context.CopyCoordinateButton;
-                this.MgrsCopyButton.ToolTipText = context.CopyCoordinateButton;
-                this.CurrentCoordsPasteButton.ToolTipText = context.PasteCoordinateButton;
-                this.WgsGeoPasteButton.ToolTipText = context.PasteCoordinateButton;
-                this.WgsProjPasteButton.ToolTipText = context.PasteCoordinateButton;
-                this.PulkovoGeoPasteButton.ToolTipText = context.PasteCoordinateButton;
-                this.PulkovoProjPasteButton.ToolTipText = context.PasteCoordinateButton;
-                this.UkraineGeoPasteButton.ToolTipText = context.PasteCoordinateButton;
-                this.UkraineProjPasteButton.ToolTipText = context.PasteCoordinateButton;
-                this.MgrsPasteButton.ToolTipText = context.PasteCoordinateButton;
-                this.upPointMoveButton.ToolTipText = context.FindLocalizedElement("MoveUpButtonToolTip", "Перемістити виділені точки по списку вгору");
-                this.downPointMoveButton.ToolTipText = context.FindLocalizedElement("MoveDownButtonTitle", "Помістити у початок");
-                this.upToFirstStripItem.Text = context.FindLocalizedElement("MoveToFirstButtonToolTip", "Перемістити виділені точки по списку вниз");
-                this.toDownStripItem.Text = context.FindLocalizedElement("MoveToLastButtonTitle", "Помістити у кінець");
-                this.renumberButton.ToolTipText = context.FindLocalizedElement("RenumberButtonToolTip", "Обновити нумерацію точок");
-                this.panToLineButton.ToolTipText = context.FindLocalizedElement("PanToLineButtonToolTip", "Показати лінію на карті");
+                this.MapPointToolButton.ToolTipText = _context.ToolButton;
+                this.MoveToCenterButton.ToolTipText = _context.MoveToCenterButton;
+                this.MoveToTheProjectedCoordButton.ToolTipText = _context.MoveToProjectedCoordButton;
+                this.CopyButton.ToolTipText = _context.CopyButton;
+                this.ClearGridButton.ToolTipText = _context.ClearGridButton;
+                this.SaveGridPointsButton.ToolTipText = _context.SaveButton;
+                this.CopyGridPointButton.ToolTipText = _context.CopyButton;
+                this.OpenFileGridButton.ToolTipText = _context.OpenFileButton;
+                this.PointsGridView.Columns[Constants.HighlightColumnName].ToolTipText = _context.ShowPointOnMapButton;
+                this.PointsGridView.Columns[Constants.DeleteColumnName].ToolTipText = _context.DeletePointButton;
+                this.CurrentCoordsCopyButton.ToolTipText = _context.CopyCoordinateButton;
+                this.WgsGeoCopyButton.ToolTipText = _context.CopyCoordinateButton;
+                this.WgsProjCopyButton.ToolTipText = _context.CopyCoordinateButton;
+                this.PulkovoGeoCopyButton.ToolTipText = _context.CopyCoordinateButton;
+                this.PulkovoProjCopyButton.ToolTipText = _context.CopyCoordinateButton;
+                this.UkraineGeoCopyButton.ToolTipText = _context.CopyCoordinateButton;
+                this.UkraineProjCopyButton.ToolTipText = _context.CopyCoordinateButton;
+                this.MgrsCopyButton.ToolTipText = _context.CopyCoordinateButton;
+                this.CurrentCoordsPasteButton.ToolTipText = _context.PasteCoordinateButton;
+                this.WgsGeoPasteButton.ToolTipText = _context.PasteCoordinateButton;
+                this.WgsProjPasteButton.ToolTipText = _context.PasteCoordinateButton;
+                this.PulkovoGeoPasteButton.ToolTipText = _context.PasteCoordinateButton;
+                this.PulkovoProjPasteButton.ToolTipText = _context.PasteCoordinateButton;
+                this.UkraineGeoPasteButton.ToolTipText = _context.PasteCoordinateButton;
+                this.UkraineProjPasteButton.ToolTipText = _context.PasteCoordinateButton;
+                this.MgrsPasteButton.ToolTipText = _context.PasteCoordinateButton;
+                this.upPointMoveButton.ToolTipText = _context.FindLocalizedElement("MoveUpButtonToolTip", "Перемістити виділені точки по списку вгору");
+                this.downPointMoveButton.ToolTipText = _context.FindLocalizedElement("MoveDownButtonTitle", "Помістити у початок");
+                this.upToFirstStripItem.Text = _context.FindLocalizedElement("MoveToFirstButtonToolTip", "Перемістити виділені точки по списку вниз");
+                this.toDownStripItem.Text = _context.FindLocalizedElement("MoveToLastButtonTitle", "Помістити у кінець");
+                this.renumberButton.ToolTipText = _context.FindLocalizedElement("RenumberButtonToolTip", "Обновити нумерацію точок");
+                this.panToLineButton.ToolTipText = _context.FindLocalizedElement("PanToLineButtonToolTip", "Показати лінію на карті");
 
-                _coordinateSystems.Add(CoordinateSystemsEnum.MapSystem, context.CurrentMapLabel);
-                _coordinateSystems.Add(CoordinateSystemsEnum.WGS84, context.WgsLabel);
-                _coordinateSystems.Add(CoordinateSystemsEnum.WGS84UTM, context.UtmName);
-                _coordinateSystems.Add(CoordinateSystemsEnum.SK42, context.PulkovoLabel);
+                _coordinateSystems.Add(CoordinateSystemsEnum.MapSystem, _context.CurrentMapLabel);
+                _coordinateSystems.Add(CoordinateSystemsEnum.WGS84, _context.WgsLabel);
+                _coordinateSystems.Add(CoordinateSystemsEnum.WGS84UTM, _context.UtmName);
+                _coordinateSystems.Add(CoordinateSystemsEnum.SK42, _context.PulkovoLabel);
                 _coordinateSystems.Add(CoordinateSystemsEnum.Pulkovo42Projected, CurrentProjectionsModel.Pulkovo1942Projection.Name);
-                _coordinateSystems.Add(CoordinateSystemsEnum.Ukraine2000, context.UkraineLabel);
+                _coordinateSystems.Add(CoordinateSystemsEnum.Ukraine2000, _context.UkraineLabel);
                 _coordinateSystems.Add(CoordinateSystemsEnum.UkraineProjected, CurrentProjectionsModel.Ukraine2000Projection.Name);
-                _coordinateSystems.Add(CoordinateSystemsEnum.MGRS, context.MgrsName);
+                _coordinateSystems.Add(CoordinateSystemsEnum.MGRS, _context.MgrsName);
 
                 cmbCoordSystem.Items.Clear();
                 cmbCoordSystem.Items.AddRange(_coordinateSystems.Values.ToArray());
@@ -1367,9 +1400,10 @@ namespace MilSpace.GeoCalculator
             this.UkraineProjectedLabel.Text = CurrentProjectionsModel.Ukraine2000Projection.Name;
         }
 
-        private void ProcessPointAsClicked(IPoint point, bool projectPoint)
+        private void ProcessPointAsClicked(IPoint point, bool projectPoint, bool forbidLineDrawing = false)
         {
-            var pointGuid = AddPointToList(point, chkShowLine.Checked);
+            var drawLine = forbidLineDrawing ? true : chkShowLine.Checked;
+            var pointGuid = AddPointToList(point, drawLine);
             if (pointGuid != null)
             {
                 var pointNumber = ClickedPointsDictionary.Count();
@@ -1411,7 +1445,8 @@ namespace MilSpace.GeoCalculator
                 bool fExists = false;
                 foreach (var p in ClickedPointsDictionary)
                 {
-                    if ((Math.Abs(p.Value.X - point.X) < 1) && (Math.Abs(p.Value.Y - point.Y) < 1)) fExists = true;
+                    var metre = ArcMapHelper.GetMetresInMapUnits(1);
+                    if ((Math.Abs(p.Value.X - point.X) < metre) && (Math.Abs(p.Value.Y - point.Y) < metre)) fExists = true;
                 }
 
                 if (!fExists)
@@ -1452,7 +1487,7 @@ namespace MilSpace.GeoCalculator
         {
             var exportForm = new ExportForm
             {
-                Text = context.SaveAs
+                Text = _context.SaveAs
             };
 
             if(exportForm.ShowDialog(this) == DialogResult.OK)
@@ -1524,13 +1559,13 @@ namespace MilSpace.GeoCalculator
             {
                 newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = y });
                 PointsGridView.Columns["YCoordColumn"].Visible = true;
-                PointsGridView.Columns["XCoordColumn"].HeaderText = context.FindLocalizedElement("XCoordColHeader", "Довгота");
+                PointsGridView.Columns["XCoordColumn"].HeaderText = _context.FindLocalizedElement("XCoordColHeader", "Довгота");
             }
             else
             {
                 newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = string.Empty });
                 PointsGridView.Columns["YCoordColumn"].Visible = false;
-                PointsGridView.Columns["XCoordColumn"].HeaderText = context.FindLocalizedElement("CoordsColHeader", "Координати");
+                PointsGridView.Columns["XCoordColumn"].HeaderText = _context.FindLocalizedElement("CoordsColHeader", "Координати");
             }
 
             newRow.Cells.Add(new DataGridViewImageCell()
@@ -1538,14 +1573,14 @@ namespace MilSpace.GeoCalculator
                 Value = new Bitmap(Image.FromFile(System.IO.Path.Combine(
                     System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
                     @"Images\LocatePoint.png")), 16, 16),
-                ToolTipText = context.ShowPointOnMapButton
+                ToolTipText = _context.ShowPointOnMapButton
             });
             newRow.Cells.Add(new DataGridViewImageCell()
             {
                 Value = new Bitmap(Image.FromFile(System.IO.Path.Combine(
                     System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
                     @"Images\DeletePoint.png")), 16, 16),
-                ToolTipText = context.DeletePointButton
+                ToolTipText = _context.DeletePointButton
             });
 
             PointsGridView.Rows.Add(newRow);
@@ -1916,7 +1951,8 @@ namespace MilSpace.GeoCalculator
 
         private void ExportToLayer()
         {
-            var orderedPoints = new Dictionary<int, IPoint>();
+            var points = new Dictionary<int, IPoint>();
+            var orderedPoints = new List<IPoint>();
 
             foreach(DataGridViewRow row in PointsGridView.Rows)
             {
@@ -1929,7 +1965,12 @@ namespace MilSpace.GeoCalculator
                 var pointGeom = ClickedPointsDictionary.First(point => point.Key == pointGuid).Value;
                 var pointCopy = pointGeom.CloneWithProjecting();
 
-                orderedPoints.Add((int)row.Cells[0].Value, pointCopy);
+                points.Add((int)row.Cells[0].Value, pointCopy);
+            }
+
+            for(int i = 1; i <= points.Count; i++)
+            {
+                orderedPoints.Add(points[i]);
             }
 
             controller.ExportToLayer(orderedPoints);

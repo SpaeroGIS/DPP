@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ESRI.ArcGIS.Geometry;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,5 +10,6 @@ namespace MilSpace.GeoCalculator
     public interface IGeoCalculatorView
     {
         void SetController(GeoCalculatorController controller);
+        void AddPointsToGrid(IEnumerable<IPoint> points);
     }
 }
