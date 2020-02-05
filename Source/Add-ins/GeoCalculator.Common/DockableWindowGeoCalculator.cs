@@ -987,7 +987,7 @@ namespace MilSpace.GeoCalculator
             if (pointModels == null || !pointModels.Any()) MessageBox.Show(_context.NoSelectedPointError, _context.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
-                var chosenRadio = ShowExportForm();
+                var chosenRadio = ShowExportForm(true);
 
                 if(chosenRadio == RadioButtonsValues.Layer)
                 {
@@ -1010,17 +1010,7 @@ namespace MilSpace.GeoCalculator
 
         private async void OpenFileGridButton_Click(object sender, EventArgs e)
         {
-            //if (PointsGridView.Rows.Count > 0)
-            //{
-            //    var warningResult = MessageBox.Show(
-            //        context.GridCleanWarningMessage,
-            //        context.WarningString,
-            //        MessageBoxButtons.YesNo,
-            //        MessageBoxIcon.Warning);
-            //    if (warningResult == DialogResult.No) return;
-            //}
-
-            var chosenRadio = ShowExportForm();
+            var chosenRadio = ShowExportForm(false);
 
             if(chosenRadio != RadioButtonsValues.Layer)
             {
@@ -1483,11 +1473,11 @@ namespace MilSpace.GeoCalculator
             return null;
         }
 
-        private RadioButtonsValues ShowExportForm()
+        private RadioButtonsValues ShowExportForm(bool isExport)
         {
             var exportForm = new ExportForm
             {
-                Text = _context.SaveAs
+                Text = isExport? _context.SaveAs : _context.FindLocalizedElement("ImportTitle", "Імпорт з")
             };
 
             if(exportForm.ShowDialog(this) == DialogResult.OK)

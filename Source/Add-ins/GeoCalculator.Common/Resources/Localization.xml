@@ -2,6 +2,8 @@
 <CoordinatesConverter xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <WindowCaption>Калькулятор координат</WindowCaption>
   <SaveAs>Зберегти як</SaveAs>
+  <ImportTitle>Імпорт з</ImportTitle>
+  <ChooseLayerWindowCaption>Обрати шар</ChooseLayerWindowCaption>
   <CurrentMapLabel>Карта</CurrentMapLabel>
   <Pulkovo1942Label>СК42</Pulkovo1942Label>
   <Wgs1984Label>WGS84</Wgs1984Label>
@@ -34,6 +36,7 @@
   <AltRightToMove>Alt+Вправо для руху</AltRightToMove>
   <ShowPointOnMap>Показати на карті</ShowPointOnMap>
   <DeletePoint>Видалити</DeletePoint>
+  <ChooseButton>Обрати</ChooseButton>
   <CopyCoordinateButton>Взяти координати в буфер обміну</CopyCoordinateButton>
   <PasteCoordinateButton>Вставити координати з буферу обміну</PasteCoordinateButton>
   <ToolBarTitle>Список точок</ToolBarTitle>
@@ -45,8 +48,10 @@
   <PanToLineButtonToolTip>Показати лінію на карті</PanToLineButtonToolTip>
   <CoordsSystemsLabel>СК:</CoordsSystemsLabel>
   <GraphicToolAreaTitle>Робота з графікою</GraphicToolAreaTitle>
+  <LayersListLabel>Шари</LayersListLabel>
   <ShowLineCheckText>Показати лінію на карті</ShowLineCheckText>
   <ShowNumbersCheckText>Нумерувати точки на карті</ShowNumbersCheckText>
+  <FromLayerRadioText>Шар</FromLayerRadioText>
 
   <NumColHeader>N</NumColHeader>
   <XCoordColHeader>Довгота</XCoordColHeader>

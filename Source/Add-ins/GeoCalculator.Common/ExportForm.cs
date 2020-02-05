@@ -13,12 +13,19 @@ namespace MilSpace.GeoCalculator
 {
     public partial class ExportForm : Form
     {
+        private LocalizationContext _context = new LocalizationContext();
         public RadioButtonsValues ChosenRadioButton;
 
         public ExportForm()
         {
             InitializeComponent();
             SetField();
+            LocalizeString();
+        }
+
+        private void LocalizeString()
+        {
+            LayerRadio.Text = _context.FindLocalizedElement("FromLayerRadioText", "Шар");
         }
 
         private void SetField()

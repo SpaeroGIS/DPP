@@ -12,12 +12,21 @@ namespace MilSpace.GeoCalculator
 {
     public partial class ChooseLayerForImportForm : Form
     {
+        private LocalizationContext _context = new LocalizationContext();
         public string SelectedLayer => lbLayers.SelectedItem.ToString();
 
         public ChooseLayerForImportForm()
         {
             InitializeComponent();
             InitializeLayersList();
+            LocalizeString();
+        }
+
+        private void LocalizeString()
+        {
+            lblTitle.Text = _context.FindLocalizedElement("LayersListLabel", "Шари");
+            btnOk.Text = _context.FindLocalizedElement("ChooseButton", "Обрати");
+            this.Text = _context.FindLocalizedElement("ChooseLayerWindowCaption", "Обрати шар");
         }
 
         private void InitializeLayersList()
@@ -32,11 +41,6 @@ namespace MilSpace.GeoCalculator
             }
 
             lbLayers.SetSelected(0, true);
-        }
-
-        private void LbLayers_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
