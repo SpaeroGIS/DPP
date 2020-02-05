@@ -1014,7 +1014,7 @@ namespace MilSpace.GeoCalculator
 
             if(chosenRadio != RadioButtonsValues.Layer)
             {
-                var filter = chosenRadio == RadioButtonsValues.CSV ? "CSV|(*.csv)" : "XML|(*.xml)";
+                var filter = chosenRadio == RadioButtonsValues.CSV ? "CSV|*.csv" : "XML|*.xml";
                 openFileDialog.Filter = filter;
                 var openFileDialogResult = openFileDialog.ShowDialog();
                 var fileName = openFileDialog.FileName;
@@ -1415,8 +1415,6 @@ namespace MilSpace.GeoCalculator
                 coordinateSystem,
                 createGeoCoordinateSystem);
 
-            point.Project(FocusMapSpatialReference);
-
             var pointGuid = AddPointToList(point, chkShowLine.Checked);
             if (pointGuid != null)
             {
@@ -1436,7 +1434,10 @@ namespace MilSpace.GeoCalculator
                 foreach (var p in ClickedPointsDictionary)
                 {
                     var metre = ArcMapHelper.GetMetresInMapUnits(1);
-                    if ((Math.Abs(p.Value.X - point.X) < metre) && (Math.Abs(p.Value.Y - point.Y) < metre)) fExists = true;
+                    if((Math.Abs(p.Value.X - point.X) < metre) && (Math.Abs(p.Value.Y - point.Y) < metre))
+                    {
+                        fExists = true;
+                    }
                 }
 
                 if (!fExists)
