@@ -370,5 +370,29 @@ namespace MilSpace.DataAccess.DataTransfer
                 sTitleOO = observObject.Title?.Trim()
             };
         }
+
+        internal static GeoCalcPoint Get(this GeoCalcSessionPoint sessionPoint)
+        {
+            return new GeoCalcPoint
+            {
+                PointNumber = sessionPoint.PointNumber,
+                X = sessionPoint.X,
+                Y = sessionPoint.Y,
+                UserName = sessionPoint.userName,
+                Id = sessionPoint.id
+            };
+        }
+
+        internal static GeoCalcSessionPoint Get(this GeoCalcPoint sessionPoint)
+        {
+            return new GeoCalcSessionPoint
+            {
+                PointNumber = sessionPoint.PointNumber,
+                X = sessionPoint.X,
+                Y = sessionPoint.Y,
+                userName = sessionPoint.UserName,
+                id = sessionPoint.Id
+            };
+        }
     }
 }

@@ -105,6 +105,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -247,22 +248,22 @@
     <Compile Include="..\Core\Tools\MapLayersManager.cs">
       <Link>Tools\MapLayersManager.cs</Link>
     </Compile>
-    <Compile Include="..\Core\ModulesInteraction\I3DVisualizationInteraction.cs" >
+    <Compile Include="..\Core\ModulesInteraction\I3DVisualizationInteraction.cs">
       <Link>ModulesInteraction\I3DVisualizationInteraction.cs</Link>
     </Compile>
     <Compile Include="..\Core\ModulesInteraction\IGeocalculatorInteraction.cs">
       <Link>ModulesInteraction\IGeocalculatorInteraction.cs</Link>
     </Compile>
-    <Compile Include="..\Core\ModulesInteraction\IProfileInteraction.cs" >
+    <Compile Include="..\Core\ModulesInteraction\IProfileInteraction.cs">
       <Link>ModulesInteraction\IProfileInteraction.cs</Link>
     </Compile>
-    <Compile Include="..\Core\ModulesInteraction\IVisibilityInteraction.cs" >
+    <Compile Include="..\Core\ModulesInteraction\IVisibilityInteraction.cs">
       <Link>ModulesInteraction\IVisibilityInteraction.cs</Link>
     </Compile>
-    <Compile Include="..\Core\ModulesInteraction\ModuleInteraction.cs" >
+    <Compile Include="..\Core\ModulesInteraction\ModuleInteraction.cs">
       <Link>ModulesInteraction\ModuleInteraction.cs</Link>
     </Compile>
-    <Compile Include="..\Core\ModulesInteraction\ModulesEnum.cs" >
+    <Compile Include="..\Core\ModulesInteraction\ModulesEnum.cs">
       <Link>ModulesInteraction\ModulesEnum.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -291,7 +292,9 @@
     <None Include="MilSpaceAppDataSet.xss">
       <DependentUpon>MilSpaceAppDataSet.xsd</DependentUpon>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ModulesInteraction\Exception\" />
