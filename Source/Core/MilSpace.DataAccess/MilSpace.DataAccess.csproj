@@ -171,6 +171,10 @@
     <Compile Include="..\DataAccess\DataTransfer\WizardResult.cs">
       <Link>DataTransfer\WizardResult.cs</Link>
     </Compile>
+    <Compile Include="..\DataAccess\Definition\MilSpaceGeoCalc.cs">
+      <Link>Definition\MilSpaceGeoCalc.cs</Link>
+      <DependentUpon>MilSpaceGeoCalc.dbml</DependentUpon>
+    </Compile>
     <Compile Include="..\DataAccess\Definition\MilSpaceVisible.cs">
       <Link>Definition\MilSpaceVisible.cs</Link>
       <DependentUpon>MilSpaceVisible.dbml</DependentUpon>
@@ -180,6 +184,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MilSpaceVisible.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="..\DataAccess\Definition\MilSpaceGeoCalc.designer.cs">
+      <Link>Definition\MilSpaceGeoCalc.designer.cs</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MilSpaceGeoCalc.dbml</DependentUpon>
     </Compile>
     <Compile Include="..\DataAccess\Definition\MilSpaceStorage.designer.cs">
       <Link>Definition\MilSpaceStorage.designer.cs</Link>
@@ -208,6 +218,9 @@
     <Compile Include="..\DataAccess\Facade\GdbAccess.cs">
       <Link>Facade\GdbAccess.cs</Link>
     </Compile>
+    <Compile Include="..\DataAccess\Facade\GeoCalculatiorFacade.cs">
+      <Link>Facade\GeoCalculatiorFacade.cs</Link>
+    </Compile>
     <Compile Include="..\DataAccess\Facade\MilSpaceProfileFacade.cs">
       <Link>Facade\MilSpaceProfileFacade.cs</Link>
     </Compile>
@@ -232,6 +245,12 @@
     <Compile Include="..\DataAccess\DataTransfer\VisibilityresultSummary.cs">
       <Link>DataTransfer\VisibilityresultSummary.cs</Link>
     </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\GeoCalcPoint.cs">
+      <Link>DataTransfer\GeoCalcPoint.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\Facade\GeoCalculatorDataAccess.cs">
+      <Link>Facade\GeoCalculatorDataAccess.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\DataAccess\Properties\Settings.Designer.cs">
       <Link>Properties\Settings.Designer.cs</Link>
@@ -241,7 +260,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\DataAccess\Definition\MilSpaceGeoCalc.dbml.layout">
+      <Link>Definition\MilSpaceGeoCalc.dbml.layout</Link>
+      <DependentUpon>MilSpaceGeoCalc.dbml</DependentUpon>
+    </None>
     <None Include="app.config" />
+    <None Include="..\DataAccess\Definition\MilSpaceGeoCalc.dbml">
+      <Link>Definition\MilSpaceGeoCalc.dbml</Link>
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>MilSpaceGeoCalc.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
     <None Include="..\DataAccess\Definition\MilSpaceVisible.dbml">
       <Link>Definition\MilSpaceVisible.dbml</Link>
       <Generator>MSLinqToSQLGenerator</Generator>
