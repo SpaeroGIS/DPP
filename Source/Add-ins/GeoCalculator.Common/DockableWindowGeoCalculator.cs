@@ -27,6 +27,8 @@ namespace MilSpace.GeoCalculator
     public partial class DockableWindowGeoCalculator : UserControl, IGeoCalculatorView
     {
         private readonly IBusinessLogic _businessLogic;
+        private const string _lineName = "GeoCalcLineGeometry";
+        private const string _textName = "text_";
         private ExtendedPointModel lastProjectedPoint;
         private Dictionary<string, PointModel> pointModels = new Dictionary<string, PointModel>();
         private Dictionary<CoordinateSystemsEnum, string> _coordinateSystems = new Dictionary<CoordinateSystemsEnum, string>();
@@ -911,9 +913,14 @@ namespace MilSpace.GeoCalculator
         #region DataGridView Events
         private void PointsGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if(e.RowIndex == -1)
+            {
+                return;
+            }
+
             var grid = (DataGridView)sender;
             var column = grid.Columns[e.ColumnIndex];
-            var selectedPoint = ClickedPointsDictionary.ElementAt(e.RowIndex);
+            var selectedPoint = ClickedPointsDictionary.First(point => point.Key == PointsGridView.Rows[e.RowIndex].Tag.ToString());
 
             if (column is DataGridViewImageColumn && column.Name == Constants.HighlightColumnName)
             {
@@ -923,13 +930,25 @@ namespace MilSpace.GeoCalculator
             else
             if (column is DataGridViewImageColumn && column.Name == Constants.DeleteColumnName)
             {
+                var prevPointGuid = PointsGridView.Rows[e.RowIndex - 1].Tag.ToString();
+                var nextPointGuid = PointsGridView.Rows[e.RowIndex + 1].Tag.ToString();
+
                 grid.Rows.RemoveAt(e.RowIndex);
-                ArcMapHelper.RemoveGraphicsFromMap(new string[] { selectedPoint.Key });
+
+                if(chkShowLine.Checked)
+                {
+                    ArcMapHelper.RemovePoint(selectedPoint.Key);
+                    var linesToRemove = new string[] { $"{_lineName}_{prevPointGuid}" };
+
+                    ArcMapHelper.RemoveGraphicsFromMap(linesToRemove);
+                    ArcMapHelper.AddLineSegmentToMap(ClickedPointsDictionary[prevPointGuid], ClickedPointsDictionary[nextPointGuid], _lineName, prevPointGuid);
+                }
+
                 ClickedPointsDictionary.Remove(selectedPoint.Key);
 
                 pointModels.Remove(selectedPoint.Key);
 
-                SynchronizePointNumbers(e.RowIndex + 1);
+                //SynchronizePointNumbers(e.RowIndex + 1);
 
                 //Refresh Numbers column cells values
                 for (int i = 0; i < grid.Rows.Count; i++)
@@ -1023,7 +1042,7 @@ namespace MilSpace.GeoCalculator
                 grid.Rows.Clear();
                 foreach (var point in ClickedPointsDictionary)
                 {
-                    ArcMapHelper.RemoveGraphicsFromMap(new string[] { point.Key });
+                    ArcMapHelper.RemovePoint(point.Key);
                 }
 
                 ClickedPointsDictionary?.Clear();
@@ -1059,6 +1078,10 @@ namespace MilSpace.GeoCalculator
                 this.MgrsNotationLabel.Text = context.MgrsLabel;
                 this.UTMNotationLabel.Text = context.UtmLabel;
 
+                this.NumberColumn.HeaderText = context.FindLocalizedElement("NumColHeader", "N");
+                this.XCoordColumn.HeaderText = context.FindLocalizedElement("XCoordColHeader", "Довгота");
+                this.YCoordColumn.HeaderText = context.FindLocalizedElement("YCoordColHeader", "Широта");
+
                 //TODO:Localize the next Labels and add config here
                 this.wgsProjectedLabel.Text = CurrentProjectionsModel.WGS84Projection.Name;
                 this.WgsGeoLabel.Text = context.WgsLabel;
@@ -1066,6 +1089,11 @@ namespace MilSpace.GeoCalculator
                 this.PulkovoGeoLabel.Text = context.PulkovoLabel;
                 this.UkraineProjectedLabel.Text = CurrentProjectionsModel.Ukraine2000Projection.Name;
                 this.UkraineGeoLabel.Text = context.UkraineLabel;
+                this.toolsLabel.Text = context.FindLocalizedElement("ToolBarTitle", "Список точок");
+                this.coordLabel.Text = context.FindLocalizedElement("CoordsSystemsLabel", "СК:");
+                this.graphicLabel.Text = context.FindLocalizedElement("GraphicToolAreaTitle", "Робота з графікою");
+                this.chkShowLine.Text = context.FindLocalizedElement("ShowLineCheckText", "Показати лінію на карті");
+                this.chkShowNumbers.Text = context.FindLocalizedElement("ShowNumbersCheckText", "Нумерувати точки на карті");
                 this.mgrsToolTip.SetToolTip(this.MgrsNotationTextBox, context.AltRightToMove);
                 this.utmToolTip.SetToolTip(this.UTMNotationTextBox, context.AltRightToMove);
 
@@ -1096,6 +1124,12 @@ namespace MilSpace.GeoCalculator
                 this.UkraineGeoPasteButton.ToolTipText = context.PasteCoordinateButton;
                 this.UkraineProjPasteButton.ToolTipText = context.PasteCoordinateButton;
                 this.MgrsPasteButton.ToolTipText = context.PasteCoordinateButton;
+                this.upPointMoveButton.ToolTipText = context.FindLocalizedElement("MoveUpButtonToolTip", "Перемістити виділені точки по списку вгору");
+                this.downPointMoveButton.ToolTipText = context.FindLocalizedElement("MoveDownButtonTitle", "Помістити у початок");
+                this.upToFirstStripItem.Text = context.FindLocalizedElement("MoveToFirstButtonToolTip", "Перемістити виділені точки по списку вниз");
+                this.toDownStripItem.Text = context.FindLocalizedElement("MoveToLastButtonTitle", "Помістити у кінець");
+                this.renumberButton.ToolTipText = context.FindLocalizedElement("RenumberButtonToolTip", "Обновити нумерацію точок");
+                this.panToLineButton.ToolTipText = context.FindLocalizedElement("PanToLineButtonToolTip", "Показати лінію на карті");
 
                 _coordinateSystems.Add(CoordinateSystemsEnum.MapSystem, context.CurrentMapLabel);
                 _coordinateSystems.Add(CoordinateSystemsEnum.WGS84, context.WgsLabel);
@@ -1327,12 +1361,12 @@ namespace MilSpace.GeoCalculator
 
         private void ProcessPointAsClicked(IPoint point, bool projectPoint)
         {
-            var pointGuid = AddPointToList(point);
+            var pointGuid = AddPointToList(point, chkShowLine.Checked);
             if (pointGuid != null)
             {
                 var pointNumber = ClickedPointsDictionary.Count();
 
-                AddPointToGrid(point, pointNumber);
+                AddPointToGrid(point, pointNumber, pointGuid);
                 if (projectPoint)
                 {
                     ProjectPointAsync(point, false, pointGuid, pointNumber);
@@ -1351,17 +1385,17 @@ namespace MilSpace.GeoCalculator
 
             point.Project(FocusMapSpatialReference);
 
-            var pointGuid = AddPointToList(point);
+            var pointGuid = AddPointToList(point, chkShowLine.Checked);
             if (pointGuid != null)
             {
                 pointModels.Add(pointGuid, pointModel);
                 var pointNumber = ClickedPointsDictionary.Count();
 
-                AddPointToGrid(point, pointNumber);
+                AddPointToGrid(point, pointNumber, pointGuid);
             }
         }
 
-        private string AddPointToList(IPoint point)
+        private string AddPointToList(IPoint point, bool drawLine)
         {
             log.DebugEx("> AddPointToList START. point.X:{0} point.Y:{1}", point.X, point.Y);
             if (point != null && !point.IsEmpty)
@@ -1379,11 +1413,20 @@ namespace MilSpace.GeoCalculator
                     log.DebugEx("AddPointToList. point.X:{0} point.Y:{1}", point.X, point.Y);
 
                     var placedPoint = ArcMapHelper.AddGraphicToMap(
-                        point,
+                        point, 
                         color,
-                        true,
-                        esriSimpleMarkerStyle.esriSMSCross,
+                        PointsGridView.RowCount + 1,
+                        chkShowNumbers.Checked,
+                        _textName,
+                        true, 
+                        esriSimpleMarkerStyle.esriSMSCross, 
                         16);
+
+                    if(drawLine == true && PointsGridView.RowCount > 0)
+                    {
+                        var fromPointGuid = PointsGridView.Rows[PointsGridView.RowCount - 1].Tag.ToString();
+                        ArcMapHelper.AddLineSegmentToMap(ClickedPointsDictionary[fromPointGuid], point, _lineName, fromPointGuid);
+                    }
 
                     log.DebugEx("AddPointToList. placedPoint.Value.X:{0} placedPoint.Value.Y:{1} placedPoint.Key:{2}"
                         , placedPoint.Value.X, placedPoint.Value.Y, placedPoint.Key);
@@ -1434,7 +1477,7 @@ namespace MilSpace.GeoCalculator
             }
         }
 
-        private void AddPointToGrid(IPoint point, int pointNumber)
+        private void AddPointToGrid(IPoint point, int pointNumber, string key)
         {
             var pointCopy = new PointClass { SpatialReference = point.SpatialReference };
             pointCopy.PutCoords(point.X, point.Y);
@@ -1444,19 +1487,21 @@ namespace MilSpace.GeoCalculator
             if (cmbCoordSystem.SelectedItem.ToString() == _coordinateSystems[CoordinateSystemsEnum.MGRS])
             {
                 var coords = GetMgrsPointCoords(wgsPoint);
-                AddPointStringToGrid(pointNumber, coords);
+                AddPointStringToGrid(pointNumber, key, coords);
             }
             else
             {
                 var projectedPoint = ProjectWgsPointToSelectedCoordinateSystem(wgsPoint);
                 var coords = GetCoordsFormattedStrings(projectedPoint);
-                AddPointStringToGrid(pointNumber, coords[0], coords[1]);
+                AddPointStringToGrid(pointNumber, key, coords[0], coords[1]);
             }
         }
 
-        private void AddPointStringToGrid(int pointNumber, string x, string y = null)
+        private void AddPointStringToGrid(int pointNumber, string key, string x, string y = null)
         {
             var newRow = new DataGridViewRow();
+            newRow.Tag = key;
+
             newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = pointNumber });
             newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = x });
 
@@ -1464,11 +1509,13 @@ namespace MilSpace.GeoCalculator
             {
                 newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = y });
                 PointsGridView.Columns["YCoordColumn"].Visible = true;
+                PointsGridView.Columns["XCoordColumn"].HeaderText = context.FindLocalizedElement("XCoordColHeader", "Довгота");
             }
             else
             {
                 newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = string.Empty });
                 PointsGridView.Columns["YCoordColumn"].Visible = false;
+                PointsGridView.Columns["XCoordColumn"].HeaderText = context.FindLocalizedElement("CoordsColHeader", "Координати");
             }
 
             newRow.Cells.Add(new DataGridViewImageCell()
@@ -1495,14 +1542,21 @@ namespace MilSpace.GeoCalculator
         private void CmbCoordSystem_SelectedIndexChanged(object sender, EventArgs e)
         {
             var points = ClickedPointsDictionary.Values.ToArray();
-            var i = 0;
+            DataGridViewRow[] rows = new DataGridViewRow[PointsGridView.RowCount];
+            PointsGridView.Rows.CopyTo(rows, 0);
 
             PointsGridView.Rows.Clear();
 
-            foreach (var point in points)
+            foreach(DataGridViewRow row in rows)
             {
-                AddPointToGrid(point, i);
-                i++;
+                if(row.Tag == null)
+                {
+                    continue;
+                }
+
+                var pointGuid = row.Tag.ToString();
+                var point = ClickedPointsDictionary[pointGuid];
+                AddPointToGrid(point, (int)row.Cells[0].Value, pointGuid);
             }
         }
 
@@ -1566,6 +1620,283 @@ namespace MilSpace.GeoCalculator
         private string GetMgrsPointCoords(IPoint point)
         {
             return (_businessLogic.ConvertToMgrs(point))?.ToSeparatedMgrs();
+        }
+
+        private void UpPointMoveButton_Click(object sender, EventArgs e)
+        {
+            if(PointsGridView.SelectedRows == null || PointsGridView.SelectedRows.Count == 0)
+            {
+                return;
+            }
+
+            DataGridViewRow[] selectedRows = new DataGridViewRow[PointsGridView.SelectedRows.Count];
+            PointsGridView.SelectedRows.CopyTo(selectedRows, 0);
+            var orderedRows = selectedRows.OrderBy(row => row.Index).ToArray();
+
+            if(orderedRows.First().Index == 0)
+            {
+                return;
+            }
+
+            var selectedRowIndex = orderedRows[0].Index;
+            var insertIndex = selectedRowIndex - 1;
+
+            if(insertIndex <= 0)
+            {
+                insertIndex = 0;
+            }
+
+            MoveSelectedRows(orderedRows, selectedRowIndex, insertIndex, true);
+        }
+
+        private void DownPointMoveButton_Click(object sender, EventArgs e)
+        {
+            if(PointsGridView.SelectedRows == null || PointsGridView.SelectedRows.Count == 0)
+            {
+                return;
+            }
+
+            DataGridViewRow[] selectedRows = new DataGridViewRow[PointsGridView.SelectedRows.Count];
+            PointsGridView.SelectedRows.CopyTo(selectedRows, 0);
+            var orderedRows = selectedRows.OrderBy(row => row.Index).ToArray();
+
+            if(orderedRows.Last().Index == PointsGridView.RowCount - 1)
+            {
+                return;
+            }
+
+            var selectedRowIndex = orderedRows[0].Index;
+            var insertIndex = selectedRowIndex + orderedRows.Count();
+
+            if(insertIndex >= PointsGridView.RowCount)
+            {
+                insertIndex = PointsGridView.RowCount - 1;
+            }
+
+            MoveSelectedRows(orderedRows, selectedRowIndex, insertIndex, false);
+        }
+
+        private void PointsGridView_SelectionChanged(object sender, EventArgs e)
+        {
+            if(PointsGridView.SelectedRows.Count > 1)
+            {
+                DataGridViewRow[] selectedRows = new DataGridViewRow[PointsGridView.SelectedRows.Count];
+                PointsGridView.SelectedRows.CopyTo(selectedRows, 0);
+                var orderedRows = selectedRows.OrderBy(row => row.Index).ToArray();
+
+                for(int i = orderedRows[0].Index + 1; i < orderedRows[orderedRows.Count() - 1].Index; i++)
+                {
+                    PointsGridView.Rows[i].Selected = true;
+                }
+            }
+        }
+
+        private void UpToFirstStripItem_Click(object sender, EventArgs e)
+        {
+            if(PointsGridView.SelectedRows == null || PointsGridView.SelectedRows.Count == 0)
+            {
+                return;
+            }
+
+            DataGridViewRow[] selectedRows = new DataGridViewRow[PointsGridView.SelectedRows.Count];
+            PointsGridView.SelectedRows.CopyTo(selectedRows, 0);
+            var orderedRows = selectedRows.OrderBy(row => row.Index).ToArray();
+
+            if(orderedRows.First().Index == 0)
+            {
+                return;
+            }
+            
+            MoveSelectedRows(orderedRows, orderedRows[0].Index, 0, true);
+        }
+
+      
+        private void ToDownStripItem_Click(object sender, EventArgs e)
+        {
+            if(PointsGridView.SelectedRows == null || PointsGridView.SelectedRows.Count == 0)
+            {
+                return;
+            }
+
+            DataGridViewRow[] selectedRows = new DataGridViewRow[PointsGridView.SelectedRows.Count];
+            PointsGridView.SelectedRows.CopyTo(selectedRows, 0);
+            var orderedRows = selectedRows.OrderBy(row => row.Index).ToArray();
+
+            if(orderedRows.Last().Index == PointsGridView.RowCount - 1)
+            {
+                return;
+            }
+
+            MoveSelectedRows(orderedRows, orderedRows[0].Index, PointsGridView.RowCount - 1, false);
+        }
+
+        private void MoveSelectedRows(DataGridViewRow[] orderedRows, int selectedRowIndex, int insertIndex, bool toUp)
+        {
+            foreach(DataGridViewRow row in orderedRows)
+            {
+                var values = new object[PointsGridView.ColumnCount];
+                var i = 0;
+
+                foreach(DataGridViewCell cell in row.Cells)
+                {
+                    values[i] = cell.Value;
+                    i++;
+                }
+
+                PointsGridView.Rows.RemoveAt(selectedRowIndex);
+                PointsGridView.Rows.Insert(insertIndex, values);
+                PointsGridView.Rows[insertIndex].Tag = row.Tag;
+
+                if(toUp)
+                {
+                    selectedRowIndex++;
+                    insertIndex++;
+                }
+            }
+
+            PointsGridView.ClearSelection();
+
+            for(int i = 0; i < orderedRows.Count(); i++)
+            {
+                var index = toUp ? insertIndex - i - 1 : insertIndex - i;
+                PointsGridView.Rows[index].Selected = true;
+            }
+
+            RedrawLine();
+        }
+
+        private void RenumberButton_Click(object sender, EventArgs e)
+        {
+            var i = 1;
+
+            foreach(DataGridViewRow row in PointsGridView.Rows)
+            {
+                if(row.Index == -1)
+                {
+                    continue;
+                }
+
+                row.Cells[0].Value = i;
+                i++;
+            }
+
+            RedrawText();
+        }
+
+        private void RedrawLine()
+        {
+            if(!chkShowLine.Checked)
+            {
+                return;
+            }
+
+            ArcMapHelper.RemoveAllGeometryFromMap(_lineName);
+            DrawLine();
+        }
+
+        private void DrawLine()
+        {
+            var orderedPoints = new Dictionary<string, IPoint>();
+
+            foreach(DataGridViewRow row in PointsGridView.Rows)
+            {
+                if(row.Tag == null)
+                {
+                    continue;
+                }
+
+                var pointGuid = row.Tag.ToString();
+                var pointPair = ClickedPointsDictionary.First(point => point.Key == pointGuid);
+                orderedPoints.Add(pointPair.Key, pointPair.Value);
+            }
+
+            ArcMapHelper.AddLineToMap(orderedPoints, _lineName);
+        }
+
+        private void RedrawText()
+        {
+            if(!chkShowNumbers.Checked)
+            {
+                return;
+            }
+
+            ArcMapHelper.RemoveAllGeometryFromMap(_textName);
+            DrawText();
+        }
+
+        private void DrawText()
+        {
+            foreach(DataGridViewRow row in PointsGridView.Rows)
+            {
+                if(row.Tag == null)
+                {
+                    continue;
+                }
+
+                var pointGuid = row.Tag.ToString();
+                var pointGeom = ClickedPointsDictionary.First(point => point.Key == pointGuid).Value;
+                ArcMapHelper.DrawText(pointGeom, (int)row.Cells[0].Value, row.Tag.ToString(), _textName);
+            }
+        }
+
+        private void PanToLineButton_Click(object sender, EventArgs e)
+        {
+            var orderedPoints = new List<IPoint>();
+
+            foreach(DataGridViewRow row in PointsGridView.Rows)
+            {
+                if(row.Tag == null)
+                {
+                    continue;
+                }
+
+                var pointGuid = row.Tag.ToString();
+                var pointGeom = ClickedPointsDictionary.First(point => point.Key == pointGuid).Value;
+                orderedPoints.Add(pointGeom);
+            }
+
+            ArcMapHelper.FlashLine(orderedPoints);
+        }
+
+       
+
+        private void ChkShowLine_CheckedChanged(object sender, EventArgs e)
+        {
+            if(PointsGridView.RowCount == 0)
+            {
+                return;
+            }
+
+            if(chkShowLine.Checked)
+            {
+                DrawLine();
+            }
+            else
+            {
+                ArcMapHelper.RemoveAllGeometryFromMap(_lineName);
+            }
+        }
+
+        private void ChkShowNumbers_CheckedChanged(object sender, EventArgs e)
+        {
+            if(PointsGridView.RowCount == 0)
+            {
+                return;
+            }
+
+            if(chkShowNumbers.Checked)
+            {
+                DrawText();
+            }
+            else
+            {
+                ArcMapHelper.RemoveAllGeometryFromMap(_textName);
+            }
+        }
+
+        private void PointsGridView_Sorted(object sender, EventArgs e)
+        {
+            RedrawLine();
         }
     }
 }
