@@ -53,8 +53,6 @@ namespace MilSpace.GeoCalculator
             IQueryFilter queryFilter = new QueryFilter();
             queryFilter.WhereClause = "OBJECTID > 0";
 
-           
-
             IFeatureCursor featureCursor = featureClass.Search(queryFilter, true);
             IFeature feature = featureCursor.NextFeature();
 

@@ -322,18 +322,18 @@ namespace MilSpace.GeoCalculator.BusinessLogic
             await _dataImportExport.ExportProjectionsToCsvAsync(pointModels, path);
         }
 
-        public async Task<List<PointModel>> ImportProjectionsFromXmlAsync(string path)
+        public Task<List<PointModel>> ImportProjectionsFromXmlAsync(string path)
         {
-            if (string.IsNullOrWhiteSpace(path)) return null;
+            if (string.IsNullOrWhiteSpace(path)) return Task.FromResult<List<PointModel>>(null);
 
-            return await _dataImportExport.ImportProjectionsFromXmlAsync(path);
+            return _dataImportExport.ImportProjectionsFromXmlAsync(path);
         }
 
-        public async Task<List<PointModel>> ImportProjectionsFromCsvAsync(string path)
+        public Task<List<PointModel>> ImportProjectionsFromCsvAsync(string path)
         {
-            if (string.IsNullOrWhiteSpace(path)) return null;
+            if (string.IsNullOrWhiteSpace(path)) return Task.FromResult<List<PointModel>>(null);
 
-            return await _dataImportExport.ImportProjectionsFromCsvAsync(path);
+            return _dataImportExport.ImportProjectionsFromCsvAsync(path);
         }
 
         private Tuple<IGeoTransformation, esriTransformDirection> GetPredefinedTransformation(SpatialReferenceEnvironmentClass spatialReferenceFactory, ISpatialReference fromSpatialReference, ISpatialReference toSpatialReference)

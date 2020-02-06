@@ -1000,10 +1000,10 @@ namespace MilSpace.GeoCalculator
                 {
                     if (chosenRadio == RadioButtonsValues.XML)
                         await _businessLogic.SaveProjectionsToXmlFileAsync(
-                            pointModels.ToSortedPointModelsList(), saveFileDialog.FileName).ConfigureAwait(false);
+                            pointModels.ToSortedPointModelsList(), saveFileDialog.FileName);
                     else if (chosenRadio == RadioButtonsValues.CSV)
                         await _businessLogic.SaveProjectionsToCsvFileAsync(
-                            pointModels.ToSortedPointModelsList(), saveFileDialog.FileName).ConfigureAwait(false);
+                            pointModels.ToSortedPointModelsList(), saveFileDialog.FileName);
                 }
             }
         }
@@ -1024,9 +1024,9 @@ namespace MilSpace.GeoCalculator
                     try
                     {
                         if(System.IO.Path.GetExtension(fileName).Equals(Constants.CSV))
-                            pointsList = await _businessLogic.ImportProjectionsFromCsvAsync(fileName);
+                            pointsList = await _businessLogic.ImportProjectionsFromCsvAsync(fileName).ConfigureAwait(true);
                         else if(System.IO.Path.GetExtension(fileName).Equals(Constants.XML))
-                            pointsList = await _businessLogic.ImportProjectionsFromXmlAsync(fileName);
+                            pointsList = await _businessLogic.ImportProjectionsFromXmlAsync(fileName).ConfigureAwait(true);
 
                         //ClearGridButton_Click(sender, e);
 
@@ -1414,6 +1414,8 @@ namespace MilSpace.GeoCalculator
                 pointModel.Latitude,
                 coordinateSystem,
                 createGeoCoordinateSystem);
+
+            EsriTools.ProjectToMapSpatialReference(point, FocusMapSpatialReference);
 
             var pointGuid = AddPointToList(point, chkShowLine.Checked);
             if (pointGuid != null)
