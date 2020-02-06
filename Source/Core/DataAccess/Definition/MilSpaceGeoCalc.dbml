@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DNOEGDB" Class="MilSpaceGeoCalcContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.\SQLEXPRESS;Initial Catalog=DNOEGDB;Integrated Security=True" SettingsObjectName="MilSpace.DataAccess.Properties.Settings" SettingsPropertyName="DNOEGDBConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.MILSP_GEOCALCULATOR_USER_SESSION" Member="GeoCalcSessionPoints">
+    <Type Name="GeoCalcSessionPoint">
+      <Column Name="id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PointNumber" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="X" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="Y" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="userName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+</Database>
