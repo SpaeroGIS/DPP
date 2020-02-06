@@ -8,6 +8,7 @@ using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Profile.DTO;
 using MilSpace.Profile.Interaction;
+using MilSpace.Profile.Localization;
 using System;
 using System.Collections.Generic;
 using System.Data;
