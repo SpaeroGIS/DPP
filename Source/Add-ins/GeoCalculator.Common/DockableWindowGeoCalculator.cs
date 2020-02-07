@@ -1839,6 +1839,11 @@ namespace MilSpace.GeoCalculator
 
         private void DrawLine()
         {
+            if(!chkShowLine.Checked)
+            {
+                return;
+            }
+
             var orderedPoints = new Dictionary<string, IPoint>();
 
             foreach(DataGridViewRow row in PointsGridView.Rows)
@@ -1967,6 +1972,46 @@ namespace MilSpace.GeoCalculator
             }
 
             controller.ExportToLayer(orderedPoints);
+        }
+
+        private void BtnRefreshGraphic_Click(object sender, EventArgs e)
+        {
+            if(PointsGridView.RowCount == 0)
+            {
+                return;
+            }
+
+            foreach(var point in ClickedPointsDictionary)
+            {
+                ArcMapHelper.RemovePoint(point.Key);
+            }
+
+            var orderedPoints = new List<IPoint>();
+
+            foreach(DataGridViewRow row in PointsGridView.Rows)
+            {
+                if(row.Tag == null)
+                {
+                    continue;
+                }
+
+                var pointGuid = row.Tag.ToString();
+                var pointGeom = ClickedPointsDictionary.First(point => point.Key == pointGuid).Value;
+
+                var color = (IColor)new RgbColorClass() { Green = 255 };
+
+                var placedPoint = ArcMapHelper.AddGraphicToMap(
+                    pointGeom,
+                    color,
+                    (int)row.Cells[0].Value,
+                    chkShowNumbers.Checked,
+                    _textName,
+                    true,
+                    esriSimpleMarkerStyle.esriSMSCross,
+                    16);
+            }
+
+            DrawLine();
         }
     }
 }
