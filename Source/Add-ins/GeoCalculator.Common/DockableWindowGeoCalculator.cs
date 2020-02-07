@@ -74,6 +74,18 @@ namespace MilSpace.GeoCalculator
             RedrawLine();
         }
 
+        public void AddPointsToGrid(IEnumerable<GeoCalcPoint> points)
+        {
+            PointsGridView.Rows.Clear();
+            foreach(var point in points)
+            {
+                ArcMapHelper.RemovePoint(point.Id.ToString());
+                ProcessPointAsClicked(point, Constants.WgsGeoModel, true);
+            }
+
+            DrawLine();
+        }
+
         /// <summary>
         /// Host object of the dockable window
         /// </summary>
@@ -1096,6 +1108,30 @@ namespace MilSpace.GeoCalculator
             var currentPoint = _businessLogic.GetSelectedPoint(x, y);
             ProjectPointAsync(currentPoint, true);
         }
+
+        private void OnOpenDocument()
+        {
+            controller.FillPointsListFromDB();
+        }
+
+        //internal void OnApplicationClosedHandler()
+        //{
+        //    var points = new GeoCalcPoint[PointsGridView.RowCount];
+        //    int i = 0;
+
+        //    foreach(DataGridViewRow row in PointsGridView.Rows)
+        //    {
+        //        if(row.Tag == null)
+        //        {
+        //            continue;
+        //        }
+
+        //        points[i] = GetGeoCalcPoint(row.Tag.ToString(), (int)row.Cells[0].Value);
+        //        i++;
+        //    }
+
+        //    controller.SaveAllPointsToDB(points);
+        //}
         #endregion        
 
         #region Private methods
@@ -1161,6 +1197,7 @@ namespace MilSpace.GeoCalculator
                 this.toDownStripItem.Text = _context.FindLocalizedElement("MoveToLastButtonTitle", "Помістити у кінець");
                 this.renumberButton.ToolTipText = _context.FindLocalizedElement("RenumberButtonToolTip", "Обновити нумерацію точок");
                 this.panToLineButton.ToolTipText = _context.FindLocalizedElement("PanToLineButtonToolTip", "Показати лінію на карті");
+                this.toolTip.SetToolTip(btnRefreshGraphic, _context.FindLocalizedElement("RefreshGraphicButtonToolTip", "Оновити графіку"));
 
                 _coordinateSystems.Add(CoordinateSystemsEnum.MapSystem, _context.CurrentMapLabel);
                 _coordinateSystems.Add(CoordinateSystemsEnum.WGS84, _context.WgsLabel);
@@ -1427,7 +1464,28 @@ namespace MilSpace.GeoCalculator
             }
         }
 
-        private string AddPointToList(IPoint point, bool drawLine)
+        private void ProcessPointAsClicked(
+            GeoCalcPoint geoPoint, CoordinateSystemModel coordinateSystem, bool createGeoCoordinateSystem)
+        {
+            var point = _businessLogic.CreatePoint(
+                geoPoint.X,
+                geoPoint.Y,
+                coordinateSystem,
+                createGeoCoordinateSystem);
+
+            EsriTools.ProjectToMapSpatialReference(point, FocusMapSpatialReference);
+
+            var pointGuid = AddPointToList(point, chkShowLine.Checked, geoPoint.Id.ToString(), geoPoint.PointNumber);
+            if(pointGuid != null)
+            {
+                var pointModel = new PointModel { Latitude = geoPoint.Y, Longitude = geoPoint.X, Number = geoPoint.PointNumber };
+                pointModels.Add(pointGuid, pointModel);
+
+                AddPointToGrid(point, geoPoint.PointNumber, pointGuid);
+            }
+        }
+
+        private string AddPointToList(IPoint point, bool drawLine, string guid = null, int pointNumber = -1)
         {
             log.DebugEx("> AddPointToList START. point.X:{0} point.Y:{1}", point.X, point.Y);
             if (point != null && !point.IsEmpty)
@@ -1448,13 +1506,15 @@ namespace MilSpace.GeoCalculator
 
                     log.DebugEx("AddPointToList. point.X:{0} point.Y:{1}", point.X, point.Y);
 
+                    var pointNum = (pointNumber == -1) ? PointsGridView.RowCount + 1 : pointNumber;
+
                     var placedPoint = ArcMapHelper.AddGraphicToMap(
                         point, 
                         color,
-                        PointsGridView.RowCount + 1,
+                        pointNum,
                         chkShowNumbers.Checked,
                         _textName,
-                        true, 
+                        guid, 
                         esriSimpleMarkerStyle.esriSMSCross, 
                         16);
 
@@ -1580,6 +1640,25 @@ namespace MilSpace.GeoCalculator
             PointsGridView.ClearSelection();
             PointsGridView.Refresh();
         }
+
+        
+
+        private GeoCalcPoint GetGeoCalcPoint(string pointGuid, int number)
+        {
+            try
+            {
+                var pointInMap = ClickedPointsDictionary[pointGuid];
+                var point = pointInMap.CloneWithProjecting();
+
+                return new GeoCalcPoint { Id = Guid.Parse(pointGuid), PointNumber = Convert.ToInt16(number), UserName = Environment.UserName, X = point.X, Y = point.Y };
+            }
+            catch(Exception ex)
+            {
+                log.WarnEx($"Unable to cast point to GeoCalcPoint. Exception: {ex.Message}");
+                return null;
+            }
+        }
+
         #endregion
 
         private void CmbCoordSystem_SelectedIndexChanged(object sender, EventArgs e)
@@ -1839,7 +1918,7 @@ namespace MilSpace.GeoCalculator
 
         private void DrawLine()
         {
-            if(!chkShowLine.Checked)
+            if(!chkShowLine.Checked || PointsGridView.RowCount == 0)
             {
                 return;
             }
@@ -2006,12 +2085,17 @@ namespace MilSpace.GeoCalculator
                     (int)row.Cells[0].Value,
                     chkShowNumbers.Checked,
                     _textName,
-                    true,
+                    pointGuid,
                     esriSimpleMarkerStyle.esriSMSCross,
                     16);
             }
 
             DrawLine();
+        }
+
+        private void DockableWindowGeoCalculator_Load(object sender, EventArgs e)
+        {
+            ArcMap.Events.OpenDocument += OnOpenDocument;
         }
     }
 }

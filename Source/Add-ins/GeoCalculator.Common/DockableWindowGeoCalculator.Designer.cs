@@ -134,6 +134,7 @@
             this.graphicLabel = new System.Windows.Forms.Label();
             this.btnRefreshGraphic = new System.Windows.Forms.Button();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.TitlePanel.SuspendLayout();
             this.GeneralToolStrip.SuspendLayout();
             this.CurrentCoordinatesPanel.SuspendLayout();
@@ -1453,6 +1454,7 @@
             this.Controls.Add(this.TitlePanel);
             this.Name = "DockableWindowGeoCalculator";
             this.Size = new System.Drawing.Size(251, 749);
+            this.Load += new System.EventHandler(this.DockableWindowGeoCalculator_Load);
             this.TitlePanel.ResumeLayout(false);
             this.TitlePanel.PerformLayout();
             this.GeneralToolStrip.ResumeLayout(false);
@@ -1602,5 +1604,6 @@
         private System.Windows.Forms.Label graphicLabel;
         private System.Windows.Forms.Button btnRefreshGraphic;
         private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }

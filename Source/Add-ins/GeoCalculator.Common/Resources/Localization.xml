@@ -46,6 +46,7 @@
   <MoveToLastButtonTitle>Помістити у кінець</MoveToLastButtonTitle>
   <RenumberButtonToolTip>Обновити нумерацію точок</RenumberButtonToolTip>
   <PanToLineButtonToolTip>Показати лінію на карті</PanToLineButtonToolTip>
+  <RefreshGraphicButtonToolTip>Оновити графіку</RefreshGraphicButtonToolTip>
   <CoordsSystemsLabel>СК:</CoordsSystemsLabel>
   <GraphicToolAreaTitle>Робота з графікою</GraphicToolAreaTitle>
   <LayersListLabel>Шари</LayersListLabel>

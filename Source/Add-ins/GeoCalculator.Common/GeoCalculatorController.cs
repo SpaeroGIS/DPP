@@ -3,6 +3,7 @@ using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core;
 using MilSpace.Core.Tools;
+using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
 using System;
 using System.Collections.Generic;
@@ -105,6 +106,27 @@ namespace MilSpace.GeoCalculator
             View.AddPointsToGrid(points);
 
             _log.DebugEx("> ImportFromLayer END.");
+        }
+
+        internal void FillPointsListFromDB()
+        {
+            _log.DebugEx("> FillPointsListFromDB START.");
+
+            var points = GeoCalculatiorFacade.GetUserSessionPoints();
+
+            View.AddPointsToGrid(points);
+
+            _log.DebugEx("> FillPointsListFromDB END.");
+        }
+
+        internal void SaveAllPointsToDB(IEnumerable<GeoCalcPoint> points)
+        {
+
+            _log.DebugEx("> SaveAllPointsToDB START.");
+
+            GeoCalculatiorFacade.SaveUserSessionPoints(points);
+
+            _log.DebugEx("> SaveAllPointsToDB END.");
         }
     }
 }

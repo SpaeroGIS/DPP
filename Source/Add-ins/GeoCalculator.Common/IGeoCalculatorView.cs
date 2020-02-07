@@ -1,4 +1,5 @@
 ﻿using ESRI.ArcGIS.Geometry;
+using MilSpace.DataAccess.DataTransfer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace MilSpace.GeoCalculator
     {
         void SetController(GeoCalculatorController controller);
         void AddPointsToGrid(IEnumerable<IPoint> points);
+        void AddPointsToGrid(IEnumerable<GeoCalcPoint> points);
     }
 }

@@ -28,7 +28,7 @@ namespace MilSpace.GeoCalculator
             int number,
             bool showNums,
             string textName,
-            bool IsTempGraphic = false,
+            string guid = null,
             esriSimpleMarkerStyle markerStyle = esriSimpleMarkerStyle.esriSMSCircle,
             int size = 5)
         {
@@ -40,13 +40,10 @@ namespace MilSpace.GeoCalculator
             if ((geom == null) 
                 || (geom.GeometryType != esriGeometryType.esriGeometryPoint)
                 || (geom.SpatialReference == null)
-                //|| (ArcMap.Document == null) 
-                //|| (ArcMap.Document.FocusMap == null)
                 || (mxdoc == null)
                 )
                 return emptyResult;
 
-            //geom.Project(ArcMap.Document.FocusMap.SpatialReference);
 
             slog = slog + "1:" + (geom as IPoint).X.ToString();
 
@@ -75,7 +72,6 @@ namespace MilSpace.GeoCalculator
 
             // store guid
             var eprop = (IElementProperties)element;
-            eprop.Name = Guid.NewGuid().ToString();
 
             slog = slog + " 3:" + (element.Geometry as IPoint).X.ToString();
 
@@ -87,7 +83,8 @@ namespace MilSpace.GeoCalculator
 
             slog = slog + " 5:" + (element.Geometry as IPoint).X.ToString();
 
-            eprop.Name = eprop.Name + " -> " + slog;
+            var newGuid = Guid.NewGuid().ToString(); //+ " -> " + slog;
+            eprop.Name = (String.IsNullOrEmpty(guid)) ? newGuid : guid;
 
             if(showNums)
             {
