@@ -17,7 +17,7 @@ namespace MilSpace.DataAccess.Facade
         {
             try
             {
-                var sessions = context.GeoCalcSessionPoints.Where(s => s.userName.Equals(Environment.UserName)).OrderByDescending(t => t.PointNumber);
+                var sessions = context.GeoCalcSessionPoints.Where(s => s.userName.Equals(Environment.UserName)).OrderBy(t => t.PointNumber);
                 return sessions.Select(s => s.Get());
             }
             catch (Exception ex)
