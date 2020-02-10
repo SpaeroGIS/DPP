@@ -71,7 +71,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic
             {
                 while (!reader.EndOfStream)
                 {
-                    var line = await reader.ReadLineAsync();
+                    var line = await reader.ReadLineAsync().ConfigureAwait(true);
                     var values = line.Split(';');
 
                     if (int.TryParse(values[0], out int number) &&
@@ -83,17 +83,14 @@ namespace MilSpace.GeoCalculator.BusinessLogic
             return result;
         }
 
-        public async Task<List<PointModel>> ImportProjectionsFromXmlAsync(string path)
+        public Task<List<PointModel>> ImportProjectionsFromXmlAsync(string path)
         {
             var xmlSerializer = new XmlSerializer(typeof(PointModelsList));
-            return await Task.Run(() =>
+            using(var streamReader = File.OpenRead(path))
             {
-                using (var streamReader = File.OpenRead(path))
-                {                    
-                    var pointModelList = xmlSerializer.Deserialize(streamReader);
-                    return (pointModelList as PointModelsList)?.PointList;                   
-                }
-            });
+                var pointModelList = xmlSerializer.Deserialize(streamReader);
+                return Task.FromResult((pointModelList as PointModelsList)?.PointList);
+            }
         }
 
         public string GetStringRepresentationOfProjections(List<PointModel> pointModels)

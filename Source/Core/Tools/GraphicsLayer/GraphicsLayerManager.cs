@@ -1,5 +1,7 @@
 ﻿using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Display;
+using ESRI.ArcGIS.Editor;
+using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core;
@@ -20,10 +22,12 @@ namespace MilSpace.Tools.GraphicsLayer
 
         private List<GraphicElement> milSpaceCalculatingGraphics = new List<GraphicElement>();
         private List<GraphicElement> milSpaceSessionGraphics = new List<GraphicElement>();
+        private List<GraphicElement> milSpaceGeoCalcGraphics = new List<GraphicElement>();
         private static Dictionary<MilSpaceGraphicsTypeEnum, Func<IRgbColor>> grapchucsTypeColors = new Dictionary<MilSpaceGraphicsTypeEnum, Func<IRgbColor>>
         {
             { MilSpaceGraphicsTypeEnum.Calculating, () =>  new RgbColor(){ Red = 255,Green = 0, Blue = 0} },
-            { MilSpaceGraphicsTypeEnum.Session, () =>  new RgbColor(){ Red = 0,Green = 255, Blue = 0} }
+            { MilSpaceGraphicsTypeEnum.Session, () =>  new RgbColor(){ Red = 0,Green = 255, Blue = 0} },
+            { MilSpaceGraphicsTypeEnum.GeoCalculator, () =>  new RgbColor(){ Red = 0,Green = 255, Blue = 0} }
         };
 
         private Dictionary<MilSpaceGraphicsTypeEnum, List<GraphicElement>> allGraphics = new Dictionary<MilSpaceGraphicsTypeEnum, List<GraphicElement>>();
@@ -36,6 +40,7 @@ namespace MilSpace.Tools.GraphicsLayer
             graphics = activeView.GraphicsContainer;
             allGraphics.Add(MilSpaceGraphicsTypeEnum.Calculating, milSpaceCalculatingGraphics);
             allGraphics.Add(MilSpaceGraphicsTypeEnum.Session, milSpaceSessionGraphics);
+            allGraphics.Add(MilSpaceGraphicsTypeEnum.GeoCalculator, milSpaceGeoCalcGraphics);
 
         }
 
@@ -411,14 +416,15 @@ namespace MilSpace.Tools.GraphicsLayer
 
             logger.InfoEx($"AddPolyline {graphicElement.ProfileId} Element {graphicElement.ElementId}");
 
-            IPolyline profileLine = graphicElement.Source;
+            IPolyline profileLine = graphicElement.Source as IPolyline;
             ILineElement lineElement = new LineElementClass();
 
             var curList = allGraphics[graphicsType];
 
             bool exists = curList.Any(ge => ge.ProfileId == graphicElement.ProfileId
                                            && ge.ElementId == graphicElement.ElementId
-                                           && ge.LineId == graphicElement.LineId);
+                                           && ge.LineId == graphicElement.LineId
+                                           && ge.Name == graphicElement.Name);
 
 
             
@@ -480,6 +486,15 @@ namespace MilSpace.Tools.GraphicsLayer
 
             if (!exists)
             {
+                logger.InfoEx($"Adding element to cache..");
+                curList.Add(graphicElement);
+                logger.InfoEx($"Element added to cache.");
+            }
+
+            if(exists && persist)
+            {
+                curList.Remove(graphicElement);
+
                 logger.InfoEx($"Adding element to cache..");
                 curList.Add(graphicElement);
                 logger.InfoEx($"Element added to cache.");
@@ -569,7 +584,6 @@ namespace MilSpace.Tools.GraphicsLayer
         public void ClearMapFromOldGraphics()
         {
             var actualGraphics = new List<GraphicElement>(milSpaceSessionGraphics);
-            actualGraphics.AddRange(milSpaceCalculatingGraphics);
 
             graphics.Reset();
             IElement ge = graphics.Next();
@@ -593,6 +607,202 @@ namespace MilSpace.Tools.GraphicsLayer
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
         }
 
+        public KeyValuePair<string, IPoint> AddGraphicToMap(
+            IGeometry geom,
+            IColor color,
+            int number,
+            bool showNums,
+            string textName,
+            string guid = null,
+            esriSimpleMarkerStyle markerStyle = esriSimpleMarkerStyle.esriSMSCircle,
+            int size = 5)
+        {
+            var emptyResult = new KeyValuePair<string, IPoint>();
+
+            if((geom == null)
+                || (geom.GeometryType != esriGeometryType.esriGeometryPoint)
+                || (geom.SpatialReference == null)
+                )
+                return emptyResult;
+
+            var simpleMarkerSymbol = (ISimpleMarkerSymbol)new SimpleMarkerSymbol();
+            simpleMarkerSymbol.Color = color;
+            simpleMarkerSymbol.Outline = false;
+            simpleMarkerSymbol.OutlineColor = color;
+            simpleMarkerSymbol.Size = size;
+            simpleMarkerSymbol.Style = markerStyle;
+
+            var markerElement = (IMarkerElement)new MarkerElement();
+            markerElement.Symbol = simpleMarkerSymbol;
+
+            IElement element = null;
+            element = (IElement)markerElement;
+            if(element == null)
+                return emptyResult;
+            element.Geometry = geom;
+            element.Geometry.SpatialReference = activeView.FocusMap.SpatialReference;
+
+            var eprop = (IElementProperties)element;
+            var newGuid = Guid.NewGuid().ToString();
+            eprop.Name = (String.IsNullOrEmpty(guid)) ? newGuid : guid;
+
+            var ge = new GraphicElement() { Source = geom, Name = eprop.Name, Element = element };
+
+            if(allGraphics[MilSpaceGraphicsTypeEnum.GeoCalculator].Exists(el => el.Name == eprop.Name))
+            {
+                DeleteGraphicsElement(ge, true, true);
+            }
+
+            graphics.AddElement(element, 0);
+            allGraphics[MilSpaceGraphicsTypeEnum.GeoCalculator].Add(ge);
+
+            activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
+
+            if(showNums)
+            {
+                var point = geom as IPoint;
+                DrawText(point, number, eprop.Name, textName);
+            }
+
+            allGraphics[MilSpaceGraphicsTypeEnum.GeoCalculator].Add(ge);
+
+            return new KeyValuePair<string, IPoint>(eprop.Name, element.Geometry as IPoint);
+        }
+
+
+        public void DrawText(IPoint point, int number, string pointGuid, string textName)
+        {
+            var units = GetLengthInMapUnits(activeView, 5);
+            var textPoint = new Point() { X = point.X + units, Y = point.Y + units, SpatialReference = point.SpatialReference };
+
+            var textColor = (IColor)new RgbColorClass() { Red = 255 };
+
+            ITextElement textElement = new TextElementClass();
+            textElement.Text = number.ToString();
+            var textSymbol = new TextSymbol();
+            textSymbol.Color = textColor;
+            textElement.Symbol = textSymbol;
+            IElement textElementEl = (IElement)textElement;
+            textElementEl.Geometry = textPoint;
+
+            var textPropr = (IElementProperties)textElementEl;
+            textPropr.Name = textName + pointGuid;
+            
+            var ge = new GraphicElement() { Source = textPoint, Name = textPropr.Name, Element = textElementEl };
+
+            if(allGraphics[MilSpaceGraphicsTypeEnum.GeoCalculator].Exists(el => el.Name == textPropr.Name))
+            {
+                DeleteGraphicsElement(ge, true, true);
+            }
+
+            allGraphics[MilSpaceGraphicsTypeEnum.GeoCalculator].Add(ge);
+
+            graphics.AddElement(textElementEl, 0);
+
+
+            activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
+        }
+
+        public  void AddLineToMap(Dictionary<string, IPoint> points, string name)
+        {
+            var prevPoint = points.First();
+
+            foreach(var point in points)
+            {
+                if(point.Key == points.First().Key)
+                {
+                    continue;
+                }
+
+                AddLineSegmentToMap(prevPoint.Value, point.Value, name, prevPoint.Key);
+                prevPoint = point;
+            }
+
+            activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
+        }
+
+        public  void AddLineSegmentToMap(IPoint pointFrom, IPoint pointTo, string name, string fromPointGuid)
+        {
+            var color = (IRgbColor)new RgbColorClass() { Green = 255 };
+            var polyline = EsriTools.CreatePolylineFromPoints(pointFrom, pointTo);
+            var segmentName = name + "_" + fromPointGuid;
+            var ge = new GraphicElement() { Source = polyline, Name = segmentName};
+            AddPolyline(ge, MilSpaceGraphicsTypeEnum.GeoCalculator, color, LineType.Line, true, true);
+        }
+
+
+        private static double GetLengthInMapUnits(IActiveView activeView, double mm)
+        {
+            if(activeView == null)
+            {
+                return -1;
+            }
+
+            IScreenDisplay screenDisplay = activeView.ScreenDisplay;
+            IDisplayTransformation displayTransformation = screenDisplay.DisplayTransformation;
+            var dpi = displayTransformation.Resolution;
+            var inches = mm / 25.4;
+
+            tagRECT deviceRect = displayTransformation.get_DeviceFrame();
+            int pixelExtent = (deviceRect.right - deviceRect.left);
+
+            var pixels = dpi * inches;
+            IDistanceConverter distanceConverter = new DistanceConverter();
+
+            IEnvelope envelope = displayTransformation.VisibleBounds;
+            double realWorldDisplayExtent = envelope.Width;
+
+            if(pixelExtent == 0)
+            {
+                return -1;
+            }
+
+            var sizeOfOnePixel = (realWorldDisplayExtent / pixelExtent);
+
+            return (pixels * sizeOfOnePixel);
+        }
+
+        public void RemoveGraphicsFromMap(string[] pointIds)
+        {
+            foreach(var pointId in pointIds)
+            {
+                var elements = allGraphics[MilSpaceGraphicsTypeEnum.GeoCalculator].Where(el => el.Name.Equals(pointId));
+                var geomCopyList = new List<GraphicElement>(elements);
+
+                foreach(var geom in geomCopyList)
+                {
+                    DeleteGraphicsElement(geom, false, true);
+                }
+            }
+
+            activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
+        }
+
+        public void RemoveAllGeometryFromMap(string name)
+        {
+            var geometry = allGraphics[MilSpaceGraphicsTypeEnum.GeoCalculator].Where(el => el.Name.StartsWith(name));
+            var geomCopyList = new List<GraphicElement>(geometry);
+
+            foreach(var geom in geomCopyList)
+            {
+                DeleteGraphicsElement(geom, false, true);
+            }
+
+            activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
+        }
+
+        public void RemovePoint(string name)
+        {
+            var geometry = allGraphics[MilSpaceGraphicsTypeEnum.GeoCalculator].Where(el => el.Name.EndsWith(name));
+            var geomCopyList = new List<GraphicElement>(geometry);
+
+            foreach(var geom in geomCopyList)
+            {
+                DeleteGraphicsElement(geom, false, true);
+            }
+
+            activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
+        }
 
         private bool CheckElementOnGraphics(GraphicElement milSpaceElement)
         {
@@ -623,7 +833,7 @@ namespace MilSpace.Tools.GraphicsLayer
             return result;
         }
 
-        private void DeleteGraphicsElement(GraphicElement milSpaceElement, bool doRefresh = false)
+        private void DeleteGraphicsElement(GraphicElement milSpaceElement, bool doRefresh = false, bool removeFromList = false)
         {
             if (CheckElementOnGraphics(milSpaceElement))
             {
@@ -631,6 +841,11 @@ namespace MilSpace.Tools.GraphicsLayer
                 if (doRefresh)
                 {
                     activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
+                }
+
+                if(removeFromList)
+                {
+                    allGraphics[MilSpaceGraphicsTypeEnum.GeoCalculator].Remove(milSpaceElement);
                 }
             }
         }

@@ -394,5 +394,12 @@ namespace MilSpace.DataAccess.DataTransfer
                 id = sessionPoint.Id
             };
         }
+
+        internal static void Update(this GeoCalcSessionPoint pointEntity, GeoCalcPoint point)
+        {
+            pointEntity.PointNumber = point.PointNumber;
+            pointEntity.X = point.X;
+            pointEntity.Y = point.Y;
+        }
     }
 }

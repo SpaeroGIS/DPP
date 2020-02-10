@@ -14,6 +14,7 @@ namespace MilSpace.Tools.GraphicsLayer
         public int ProfileId;
         public int ElementId;
         public int LineId;
-        public IPolyline Source;
+        public string Name;
+        public IGeometry Source;
     }
 }

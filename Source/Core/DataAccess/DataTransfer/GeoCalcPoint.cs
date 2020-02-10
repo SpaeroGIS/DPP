@@ -2,12 +2,10 @@
 
 namespace MilSpace.DataAccess.DataTransfer
 {
-    public class GeoCalcPoint
+    public class GeoCalcPoint : ProfilePoint
     {
         public Guid Id;
         public short PointNumber;
-        public double X;
-        public double Y;
         public string UserName;
     }
 }

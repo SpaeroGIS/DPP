@@ -9,6 +9,7 @@ namespace MilSpace.GeoCalculator.Enums
     public enum RadioButtonsValues
     {
         XML = 1,
-        CSV = 2
+        CSV = 2,
+        Layer = 4
     }
 }
