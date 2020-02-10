@@ -1052,6 +1052,19 @@ namespace MilSpace.Profile
             return res;
         }
 
+        internal double GetDefaultSecondYCoord(IPoint firstPoint)
+        {
+            var firstPointCopy = new PointClass { X = firstPoint.X, Y = firstPoint.Y, Z = firstPoint.Z, SpatialReference = firstPoint.SpatialReference };
+            firstPointCopy.Project(ArcMap.Document.ActiveView.FocusMap.SpatialReference);
+
+            var y = firstPointCopy.Y - EsriTools.GetExtentHeightInMapUnits(ArcMap.Document.ActiveView.Extent, 0.1);
+            var secondPoint = new PointClass { X = firstPointCopy.X, Y = y, Z = firstPointCopy.Z, SpatialReference = ArcMap.Document.ActiveView.FocusMap.SpatialReference };
+            secondPoint.Project(firstPoint.SpatialReference);
+
+            return secondPoint.Y;
+        }
+
+
         private void OnMapSelectionChangedLocal()
         {
             if (View.SelectedProfileSettingsType != ProfileSettingsTypeEnum.Primitives)

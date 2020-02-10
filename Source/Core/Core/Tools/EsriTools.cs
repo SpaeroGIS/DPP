@@ -1671,5 +1671,11 @@ namespace MilSpace.Core.Tools
 
             return false;
         }
+
+        public static double GetExtentHeightInMapUnits(IEnvelope envelope, double extentHeight)
+        {
+            return envelope.Height*0.1;
+
+        }
     }
 }

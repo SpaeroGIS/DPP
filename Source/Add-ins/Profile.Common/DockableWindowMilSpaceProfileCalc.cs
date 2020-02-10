@@ -661,6 +661,16 @@ namespace MilSpace.Profile
             set
             {
                 SetPointValue(txtFirstPointX, txtFirstPointY, value);
+
+                if(String.IsNullOrEmpty(txtSecondPointX.Text) && String.IsNullOrEmpty(txtSecondPointY.Text))
+                {
+                    var newPoint = new PointClass { X = value.X, Y = controller.GetDefaultSecondYCoord(value), Z = value.Z, SpatialReference = value.SpatialReference };
+                    var pointCopy = new PointClass { X = newPoint.X, Y = newPoint.Y, Z = newPoint.Z, SpatialReference = newPoint.SpatialReference };
+
+                    pointCopy.Project(ArcMap.Document.ActiveView.FocusMap.SpatialReference);
+
+                    controller.SetSecondfPointForLineProfile(newPoint, pointCopy);
+                }
             }
         }
 
@@ -672,6 +682,16 @@ namespace MilSpace.Profile
             set
             {
                 SetPointValue(txtSecondPointX, txtSecondPointY, value);
+
+                if(String.IsNullOrEmpty(txtFirstPointX.Text) && String.IsNullOrEmpty(txtFirstPointY.Text))
+                {
+                    var newPoint = new PointClass { X = value.X, Y = controller.GetDefaultSecondYCoord(value) };
+                    var pointCopy = new PointClass { X = newPoint.X, Y = newPoint.Y, Z = newPoint.Z, SpatialReference = newPoint.SpatialReference };
+
+                    pointCopy.Project(ArcMap.Document.ActiveView.FocusMap.SpatialReference);
+
+                    controller.SetFirsPointForLineProfile(newPoint, pointCopy);
+                }
             }
         }
 
