@@ -39,6 +39,7 @@ namespace MilSpace.GeoCalculator
         //private List<GeoCalcPoint> _geoCalcPoints = new List<GeoCalcPoint>();
         private GeoCalculatorController controller;
         private GraphicsLayerManager _graphicsLayerManager;
+        private int maxNum = 0;
 
         private static Logger log = Logger.GetLoggerEx("MilSpace.GeoCalculator.DockableWindowGeoCalculator");
 
@@ -948,6 +949,7 @@ namespace MilSpace.GeoCalculator
 
             var grid = (DataGridView)sender;
             var column = grid.Columns[e.ColumnIndex];
+            var num = (int)grid.Rows[e.RowIndex].Cells[0].Value;
             var selectedPoint = ClickedPointsDictionary.First(point => point.Key == PointsGridView.Rows[e.RowIndex].Tag.ToString());
 
             if (column is DataGridViewImageColumn && column.Name == Constants.HighlightColumnName)
@@ -979,7 +981,12 @@ namespace MilSpace.GeoCalculator
                 ClickedPointsDictionary.Remove(selectedPoint.Key);
 
                 pointModels.Remove(selectedPoint.Key);
+                controller.RemovePoint(selectedPoint.Key);
 
+                if(num == maxNum)
+                {
+                    maxNum--;
+                }
                 //SynchronizePointNumbers(e.RowIndex + 1);
 
                 //Refresh Numbers column cells values
@@ -1025,6 +1032,7 @@ namespace MilSpace.GeoCalculator
 
         private async void OpenFileGridButton_Click(object sender, EventArgs e)
         {
+            var startCount = PointsGridView.RowCount;
             var chosenRadio = ShowExportForm(false);
 
             if(chosenRadio != RadioButtonsValues.Layer)
@@ -1069,6 +1077,23 @@ namespace MilSpace.GeoCalculator
                     controller.ImportFromLayer(chooseLayerForm.SelectedLayer);
                 }
             }
+
+            var points = new List<GeoCalcPoint>();
+            int startIndex = (startCount == 0) ? startCount : startCount - 1;
+
+            for(int i = startIndex; i < PointsGridView.RowCount; i++)
+            {
+                var row = PointsGridView.Rows[i];
+
+                if(row == null)
+                {
+                    continue;
+                }
+
+                points.Add(GetGeoCalcPoint(row.Tag.ToString(), (int)row.Cells[0].Value));
+            }
+
+            controller.UpdatePoints(points);
         }
 
         private void CopyGridPointButton_Click(object sender, EventArgs e)
@@ -1095,6 +1120,9 @@ namespace MilSpace.GeoCalculator
                 pointModels?.Clear();
             }
             grid.Refresh();
+
+            controller.ClearSession();
+            maxNum = 0;
         }
         #endregion
         #endregion
@@ -1104,6 +1132,9 @@ namespace MilSpace.GeoCalculator
         {
             var clickedPoint = _businessLogic.GetSelectedPoint(x, y);
             ProcessPointAsClicked(clickedPoint, true);
+
+            var lastRow = PointsGridView.Rows[PointsGridView.RowCount - 1];
+            controller.UpdatePoints(new List<GeoCalcPoint> { GetGeoCalcPoint(lastRow.Tag.ToString(), (int)lastRow.Cells[0].Value) });
         }
 
         internal void ArcMap_OnMouseMove(int x, int y)
@@ -1435,12 +1466,21 @@ namespace MilSpace.GeoCalculator
         {
             var drawLine = forbidLineDrawing ? true : chkShowLine.Checked;
             var pointGuid = AddPointToList(point, drawLine);
-            if (pointGuid != null)
-            {
-                var pointNumber = ClickedPointsDictionary.Count();
 
+            if(pointGuid != null)
+            {
+                if(maxNum < PointsGridView.RowCount)
+                {
+                    maxNum = PointsGridView.RowCount + 1;
+                }
+                else
+                {
+                    maxNum++;
+                }
+
+                var pointNumber = maxNum;
                 AddPointToGrid(point, pointNumber, pointGuid);
-                if (projectPoint)
+                if(projectPoint)
                 {
                     ProjectPointAsync(point, false, pointGuid, pointNumber);
                 }
@@ -1462,7 +1502,16 @@ namespace MilSpace.GeoCalculator
             if (pointGuid != null)
             {
                 pointModels.Add(pointGuid, pointModel);
-                var pointNumber = ClickedPointsDictionary.Count();
+                if(maxNum < PointsGridView.RowCount)
+                {
+                    maxNum = PointsGridView.RowCount + 1;
+                }
+                else
+                {
+                    maxNum++;
+                }
+
+                var pointNumber = maxNum;
 
                 AddPointToGrid(point, pointNumber, pointGuid);
             }
@@ -1533,7 +1582,6 @@ namespace MilSpace.GeoCalculator
 
                     ClickedPointsDictionary.Add(placedPoint.Key, point);
                     //NIKOL ClickedPointsDictionary.Add(placedPoint.Key, placedPoint.Value);
-
                     return placedPoint.Key;
                 }
             }
@@ -1893,6 +1941,19 @@ namespace MilSpace.GeoCalculator
                 i++;
             }
 
+            var points = new List<GeoCalcPoint>();
+
+            foreach(DataGridViewRow row in PointsGridView.Rows)
+            {
+                if(row == null)
+                {
+                    continue;
+                }
+
+                points.Add(GetGeoCalcPoint(row.Tag.ToString(), (int)row.Cells[0].Value));
+            }
+
+            controller.UpdatePoints(points);
             RedrawText();
         }
 

@@ -128,5 +128,41 @@ namespace MilSpace.GeoCalculator
 
             _log.DebugEx("> SaveAllPointsToDB END.");
         }
+
+        internal void UpdatePoints(IEnumerable<GeoCalcPoint> points)
+        {
+            _log.DebugEx("> UpdatePoints START.");
+
+            GeoCalculatiorFacade.UpdateUserSessionPoints(points);
+
+            _log.DebugEx("> UpdatePoints END.");
+        }
+
+        internal void RemovePoint(string id)
+        {
+            _log.DebugEx("> RemovePoint START.");
+
+            var isParsed = Guid.TryParse(id, out Guid guid);
+
+            if(isParsed)
+            {
+                GeoCalculatiorFacade.DeleteUserSessionPoint(guid);
+            }
+            else
+            {
+                _log.WarnEx($"> RemovePoint Exception: Cannot convert string value {id} to guid.");
+            }
+
+            _log.DebugEx("> RemovePoint END.");
+        }
+
+        internal void ClearSession()
+        {
+            _log.DebugEx("> ClearSession START.");
+
+            GeoCalculatiorFacade.ClearUserSessionPoints();
+
+            _log.DebugEx("> ClearSession END.");
+        }
     }
 }
