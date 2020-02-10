@@ -33,13 +33,14 @@
             this.XmlFileRadio = new System.Windows.Forms.RadioButton();
             this.CsvFileRadio = new System.Windows.Forms.RadioButton();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.LayerRadio = new System.Windows.Forms.RadioButton();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // OkButton
             // 
             this.OkButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.OkButton.Location = new System.Drawing.Point(13, 59);
+            this.OkButton.Location = new System.Drawing.Point(12, 82);
             this.OkButton.Name = "OkButton";
             this.OkButton.Size = new System.Drawing.Size(95, 23);
             this.OkButton.TabIndex = 0;
@@ -74,18 +75,31 @@
             // 
             this.panel1.AutoSize = true;
             this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel1.Controls.Add(this.LayerRadio);
             this.panel1.Controls.Add(this.XmlFileRadio);
             this.panel1.Controls.Add(this.CsvFileRadio);
             this.panel1.Location = new System.Drawing.Point(12, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(50, 43);
+            this.panel1.Size = new System.Drawing.Size(88, 64);
             this.panel1.TabIndex = 3;
+            // 
+            // LayerRadio
+            // 
+            this.LayerRadio.AutoSize = true;
+            this.LayerRadio.Location = new System.Drawing.Point(0, 44);
+            this.LayerRadio.Name = "LayerRadio";
+            this.LayerRadio.Size = new System.Drawing.Size(85, 17);
+            this.LayerRadio.TabIndex = 3;
+            this.LayerRadio.TabStop = true;
+            this.LayerRadio.Text = "radioButton1";
+            this.LayerRadio.UseVisualStyleBackColor = true;
+            this.LayerRadio.CheckedChanged += new System.EventHandler(this.LayerRadio_CheckedChanged);
             // 
             // ExportForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(120, 96);
+            this.ClientSize = new System.Drawing.Size(127, 114);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.OkButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -108,5 +122,6 @@
         private System.Windows.Forms.RadioButton XmlFileRadio;
         private System.Windows.Forms.RadioButton CsvFileRadio;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.RadioButton LayerRadio;
     }
 }

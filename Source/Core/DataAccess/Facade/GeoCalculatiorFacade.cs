@@ -20,7 +20,31 @@ namespace MilSpace.DataAccess.Facade
         {
             using (var accessor = new GeoCalculatorDataAccess())
             {
-                throw new NotImplementedException(); 
+                accessor.SaveUserPoints(points);
+            }
+        }
+
+        public static void UpdateUserSessionPoints(IEnumerable<GeoCalcPoint> points)
+        {
+            using(var accessor = new GeoCalculatorDataAccess())
+            {
+                accessor.UpdateUserPoints(points);
+            }
+        }
+
+        public static void DeleteUserSessionPoint(Guid pointId)
+        {
+            using(var accessor = new GeoCalculatorDataAccess())
+            {
+                accessor.DeleteUserPoint(pointId);
+            }
+        }
+
+        public static void ClearUserSessionPoints()
+        {
+            using(var accessor = new GeoCalculatorDataAccess())
+            {
+                accessor.ClearUserPoints();
             }
         }
     }

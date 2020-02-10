@@ -13,17 +13,25 @@ namespace MilSpace.GeoCalculator
 {
     public partial class ExportForm : Form
     {
+        private LocalizationContext _context = new LocalizationContext();
         public RadioButtonsValues ChosenRadioButton;
 
         public ExportForm()
         {
             InitializeComponent();
             SetField();
+            LocalizeString();
+        }
+
+        private void LocalizeString()
+        {
+            LayerRadio.Text = _context.FindLocalizedElement("FromLayerRadioText", "Шар");
         }
 
         private void SetField()
         {
-            ChosenRadioButton = XmlFileRadio.Checked ? RadioButtonsValues.XML : RadioButtonsValues.CSV;
+           XmlFileRadio.Checked = true;
+           ChosenRadioButton =RadioButtonsValues.XML;
         }
 
         private void XmlFileRadion_CheckedChanged(object sender, EventArgs e)
@@ -34,6 +42,11 @@ namespace MilSpace.GeoCalculator
         private void CsvFileRadio_CheckedChanged(object sender, EventArgs e)
         {
             if (CsvFileRadio.Checked) ChosenRadioButton = RadioButtonsValues.CSV;
-        }        
+        }
+
+        private void LayerRadio_CheckedChanged(object sender, EventArgs e)
+        {
+            if (LayerRadio.Checked) ChosenRadioButton = RadioButtonsValues.Layer;
+        }
     }
 }

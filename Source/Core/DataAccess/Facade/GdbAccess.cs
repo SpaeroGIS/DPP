@@ -1314,7 +1314,118 @@ namespace MilSpace.DataAccess.Facade
             }
             catch (Exception ex)
             {
-                logger.InfoEx("> GenerateCoverageAreasTempStorage EXCEPTION. ex.Message:{0}", ex.Message);
+                logger.ErrorEx("> GenerateCoverageAreasTempStorage EXCEPTION. ex.Message:{0}", ex.Message);
+            }
+        }
+
+
+        public IFeatureClass AddCalcPointsFeature(IEnumerable<IPoint> points, string featureClassName, ISpatialReference sr)
+        {
+            logger.InfoEx("> AddCalcPointsFeature START. featureClassName:{0}", featureClassName);
+
+            IWorkspaceFactory workspaceFactory = new FileGDBWorkspaceFactory();
+            IWorkspace workspace;
+            try
+            {
+                workspace = calcWorkspace;
+            }
+            catch(Exception ex)
+            {
+                Marshal.ReleaseComObject(workspaceFactory);
+
+                logger.ErrorEx($"> AddCalcPointsFeature ERROR. Cannot open GDB: {ex.Message}");
+                return null;
+            }
+
+            IWorkspace2 wsp2 = workspace as IWorkspace2;
+            if(!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, featureClassName))
+            {
+                GenerateCalcPointsTempStorage(featureClassName, workspace, sr); 
+            }
+
+            IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)workspace;
+            workspaceEdit.StartEditing(true);
+            workspaceEdit.StartEditOperation();
+
+            try
+            {
+                IFeatureClass featureClass = OpenFeatureClass(workspace, featureClassName);
+                int i = 1;
+
+                foreach(var point in points)
+                {
+                    var areaFeature = featureClass.CreateFeature();
+                    areaFeature.Shape = point;
+                    areaFeature.set_Value(featureClass.FindField("PointNumber"), i);
+
+                    areaFeature.Store();
+                    i++;
+                }
+                workspaceEdit.StopEditOperation();
+                workspaceEdit.StopEditing(true);
+                Marshal.ReleaseComObject(workspaceFactory);
+
+                logger.InfoEx("> AddCalcPointsFeature END");
+                return featureClass;
+            }
+            catch(Exception ex)
+            {
+                logger.ErrorEx("> AddCalcPointsFeature Exception. ex.Message:{0}", ex.Message);
+                return null;
+            }
+        }
+
+        private void GenerateCalcPointsTempStorage(string newFeatureClassName, IWorkspace workspace, ISpatialReference sr)
+        {
+            logger.InfoEx("> GenerateCalcPointsTempStorage START. newFeatureClassName:{0}", newFeatureClassName);
+            try
+            {
+                IFeatureClassDescription fcDescription = new FeatureClassDescriptionClass();
+                IObjectClassDescription ocDescription = (IObjectClassDescription)fcDescription;
+                IFields fields = ocDescription.RequiredFields;
+
+                int shapeFieldIndex = fields.FindField(fcDescription.ShapeFieldName);
+
+                IField field = fields.get_Field(shapeFieldIndex);
+                IGeometryDef geometryDef = field.GeometryDef;
+                IGeometryDefEdit geometryDefEdit = (IGeometryDefEdit)geometryDef;
+                geometryDefEdit.HasZ_2 = false;
+                geometryDefEdit.GeometryType_2 = esriGeometryType.esriGeometryPoint;
+
+                geometryDefEdit.SpatialReference_2 = sr;
+
+                IFieldsEdit fieldsEdit = (IFieldsEdit)fields;
+
+                IField pointNumField = new FieldClass();
+                IFieldEdit pointNumFieldEdit = (IFieldEdit)pointNumField;
+                pointNumFieldEdit.Name_2 = "PointNumber";
+                pointNumFieldEdit.Type_2 = esriFieldType.esriFieldTypeInteger;
+                fieldsEdit.AddField(pointNumField);
+
+                IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)workspace;
+
+                workspaceEdit.StartEditing(true);
+                workspaceEdit.StartEditOperation();
+
+                IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)workspace;
+
+                IFeatureClass featureClass = featureWorkspace.CreateFeatureClass(
+                    newFeatureClassName,
+                    fields,
+                    ocDescription.InstanceCLSID,
+                    ocDescription.ClassExtensionCLSID,
+                    esriFeatureType.esriFTSimple,
+                    "shape",
+                    "");
+
+                workspaceEdit.StopEditOperation();
+                workspaceEdit.StopEditing(true);
+
+                logger.InfoEx("> GenerateCalcPointsTempStorage END");
+            }
+            catch(Exception ex)
+            {
+                logger.ErrorEx("> GenerateCalcPointsTempStorage EXCEPTION. ex.Message:{0}", ex.Message);
             }
         }
 
@@ -1367,7 +1478,7 @@ namespace MilSpace.DataAccess.Facade
             }
             catch(Exception ex)
             {
-                logger.InfoEx("> AddCoverageAreaFeature Exception. ex.Message:{0}", ex.Message);
+                logger.ErrorEx("> AddCoverageAreaFeature Exception. ex.Message:{0}", ex.Message);
                 return null;
             }
         }

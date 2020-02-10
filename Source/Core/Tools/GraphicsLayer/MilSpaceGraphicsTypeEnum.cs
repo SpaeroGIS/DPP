@@ -9,6 +9,7 @@ namespace MilSpace.Tools.GraphicsLayer
     public enum MilSpaceGraphicsTypeEnum  
     {
         Calculating,
-        Session
+        Session,
+        GeoCalculator
     }
 }

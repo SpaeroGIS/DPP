@@ -17,7 +17,7 @@ namespace MilSpace.DataAccess.Facade
         {
             try
             {
-                var sessions = context.GeoCalcSessionPoints.Where(s => s.userName.Equals(Environment.UserName)).OrderByDescending(t => t.PointNumber);
+                var sessions = context.GeoCalcSessionPoints.Where(s => s.userName.Equals(Environment.UserName)).OrderBy(t => t.PointNumber);
                 return sessions.Select(s => s.Get());
             }
             catch (Exception ex)
@@ -26,6 +26,93 @@ namespace MilSpace.DataAccess.Facade
             }
 
             return null;
+        }
+
+        public void UpdateUserPoints(IEnumerable<GeoCalcPoint> points)
+        {
+            foreach(var point in points)
+            {
+                try
+                {
+                    var pointEntity = context.GeoCalcSessionPoints.FirstOrDefault(entity => entity.id == point.Id);
+
+                    if(pointEntity != null)
+                    {
+                        pointEntity.Update(point);
+                        Submit();
+
+                        log.InfoEx($"GeoCalcPoint {point.Id} was successfully updated");
+                    }
+                    else
+                    {
+                        pointEntity = point.Get();
+                        context.GeoCalcSessionPoints.InsertOnSubmit(pointEntity);
+                        Submit();
+
+                        log.InfoEx($"GeoCalcPoint {point.Id} was successfully added");
+                    }
+                }
+                catch(Exception ex)
+                {
+                    log.WarnEx($"Unexpected exception:{ex.Message}");
+                }
+            }
+        }
+
+        public void SaveUserPoints(IEnumerable<GeoCalcPoint> points)
+        {
+            try
+            {
+                ClearUserPoints();
+
+                context.GeoCalcSessionPoints.InsertAllOnSubmit(points.Select(point => point.Get()));
+                Submit();
+
+                log.WarnEx("GeoCalcPoints was successfully saved");
+            }
+            catch(Exception ex)
+            {
+                log.WarnEx($"Unexpected exception:{ex.Message}");
+            }
+        }
+
+        public void DeleteUserPoint(Guid id)
+        {
+            try
+            {
+                var pointEntity = context.GeoCalcSessionPoints.FirstOrDefault(entity => entity.id == id);
+
+                if(pointEntity == null)
+                {
+                    log.WarnEx($"GeoCalc point with id {id} was not found");
+                    return;
+                }
+
+                context.GeoCalcSessionPoints.DeleteOnSubmit(pointEntity);
+                Submit();
+
+                log.InfoEx($"GeoCalcPoint {id} was removed");
+            }
+            catch(Exception ex)
+            {
+                log.WarnEx($"Unexpected exception:{ex.Message}");
+            }
+        }
+
+        public void ClearUserPoints()
+        {
+            try
+            {
+                var userPoints = context.GeoCalcSessionPoints.Where(s => s.userName.Equals(Environment.UserName)).ToArray();
+                context.GeoCalcSessionPoints.DeleteAllOnSubmit(userPoints);
+                Submit();
+
+                log.InfoEx($"User session was cleared");
+            }
+            catch(Exception ex)
+            {
+                log.WarnEx($"Unexpected exception:{ex.Message}");
+            }
         }
     }
 }

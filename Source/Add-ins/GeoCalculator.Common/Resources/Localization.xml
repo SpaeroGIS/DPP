@@ -2,6 +2,8 @@
 <CoordinatesConverter xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <WindowCaption>Калькулятор координат</WindowCaption>
   <SaveAs>Зберегти як</SaveAs>
+  <ImportTitle>Імпорт з</ImportTitle>
+  <ChooseLayerWindowCaption>Обрати шар</ChooseLayerWindowCaption>
   <CurrentMapLabel>Карта</CurrentMapLabel>
   <Pulkovo1942Label>СК42</Pulkovo1942Label>
   <Wgs1984Label>WGS84</Wgs1984Label>
@@ -25,16 +27,18 @@
 
   <WrongFormatMessageToFewParts>Не вдалося отримати обидві складові координати</WrongFormatMessageToFewParts>
   <MsgInvalidCoordinatesDD>Недійсні дані. Потрібні коордінати представлені у СК WGS-84, десяткові градуси</MsgInvalidCoordinatesDD>
-
   <WrongMgrsFormatMessage>Невірний формат MGRS</WrongMgrsFormatMessage>
   <WrongFormatMessage>Невірний формат координат</WrongFormatMessage>
   <NoSelectedPointMessage>Потрібно вказати точку на карті!</NoSelectedPointMessage>
+  <GridCleanWarningMessage>Список точок буде cкинуто. Продовжити?</GridCleanWarningMessage>
+  <BigFeatureClassMessage>Отримано {0} точок. Імпорт такого об'єму може зайняти багато часу.\nВи бажаєте продовжити?</BigFeatureClassMessage>
+
   <AltRightToMove>Alt+Вправо для руху</AltRightToMove>
   <ShowPointOnMap>Показати на карті</ShowPointOnMap>
   <DeletePoint>Видалити</DeletePoint>
+  <ChooseButton>Обрати</ChooseButton>
   <CopyCoordinateButton>Взяти координати в буфер обміну</CopyCoordinateButton>
   <PasteCoordinateButton>Вставити координати з буферу обміну</PasteCoordinateButton>
-  <GridCleanWarningMessage>Список точок буде cкинуто. Продовжити?</GridCleanWarningMessage>
   <ToolBarTitle>Список точок</ToolBarTitle>
   <MoveUpButtonToolTip>Перемістити виділені точки по списку вгору</MoveUpButtonToolTip>
   <MoveToFirstButtonToolTip>Помістити у початок</MoveToFirstButtonToolTip>
@@ -42,13 +46,17 @@
   <MoveToLastButtonTitle>Помістити у кінець</MoveToLastButtonTitle>
   <RenumberButtonToolTip>Обновити нумерацію точок</RenumberButtonToolTip>
   <PanToLineButtonToolTip>Показати лінію на карті</PanToLineButtonToolTip>
+  <RefreshGraphicButtonToolTip>Оновити графіку</RefreshGraphicButtonToolTip>
   <CoordsSystemsLabel>СК:</CoordsSystemsLabel>
   <GraphicToolAreaTitle>Робота з графікою</GraphicToolAreaTitle>
+  <LayersListLabel>Шари</LayersListLabel>
   <ShowLineCheckText>Показати лінію на карті</ShowLineCheckText>
   <ShowNumbersCheckText>Нумерувати точки на карті</ShowNumbersCheckText>
+  <FromLayerRadioText>Шар</FromLayerRadioText>
 
   <NumColHeader>N</NumColHeader>
   <XCoordColHeader>Довгота</XCoordColHeader>
   <YCoordColHeader>Широта</YCoordColHeader>
   <CoordsColHeader>Координати</CoordsColHeader>
+  
 </CoordinatesConverter>
