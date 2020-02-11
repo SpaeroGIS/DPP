@@ -77,8 +77,8 @@
             this.secondPointInfoPanel = new System.Windows.Forms.Panel();
             this.lblSecondPointInfo = new System.Windows.Forms.Label();
             this.SecondPointGettingWayPanel = new System.Windows.Forms.Panel();
-            this.btnChooseSecondPointGettingWay = new System.Windows.Forms.Button();
-            this.cmbSecondPointGettingWay = new System.Windows.Forms.ComboBox();
+            this.btnChooseSecondPointAssignmentMethod = new System.Windows.Forms.Button();
+            this.cmbSecondPointAssignmentMethod = new System.Windows.Forms.ComboBox();
             this.lblSecondPointGettingWay = new System.Windows.Forms.Label();
             this.secondPointTitlePanel = new System.Windows.Forms.Panel();
             this.lblLineSecondPoint = new System.Windows.Forms.Label();
@@ -99,8 +99,8 @@
             this.firstPointInfoPanel = new System.Windows.Forms.Panel();
             this.lblFirstPointInfo = new System.Windows.Forms.Label();
             this.pointGettingWayPanel = new System.Windows.Forms.Panel();
-            this.btnChooseFirstPointGettingWay = new System.Windows.Forms.Button();
-            this.cmbFirstPointGettingWay = new System.Windows.Forms.ComboBox();
+            this.btnChooseFirstPointAssignmentMethod = new System.Windows.Forms.Button();
+            this.cmbFirstPointAssignmentMethod = new System.Windows.Forms.ComboBox();
             this.lblFirstlPointGettingWay = new System.Windows.Forms.Label();
             this.firstPointTitlePanel = new System.Windows.Forms.Panel();
             this.lblLineFirstPoint = new System.Windows.Forms.Label();
@@ -849,6 +849,7 @@
             this.txtSecondPointZ.Location = new System.Drawing.Point(130, 2);
             this.txtSecondPointZ.Margin = new System.Windows.Forms.Padding(0);
             this.txtSecondPointZ.Name = "txtSecondPointZ";
+            this.txtSecondPointZ.ReadOnly = true;
             this.txtSecondPointZ.Size = new System.Drawing.Size(60, 20);
             this.txtSecondPointZ.TabIndex = 29;
             this.txtSecondPointZ.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -906,6 +907,7 @@
             this.txtSecondPointY.Location = new System.Drawing.Point(66, 2);
             this.txtSecondPointY.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
             this.txtSecondPointY.Name = "txtSecondPointY";
+            this.txtSecondPointY.ReadOnly = true;
             this.txtSecondPointY.Size = new System.Drawing.Size(60, 20);
             this.txtSecondPointY.TabIndex = 1;
             this.txtSecondPointY.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -914,6 +916,7 @@
             // 
             this.txtSecondPointX.Location = new System.Drawing.Point(2, 2);
             this.txtSecondPointX.Name = "txtSecondPointX";
+            this.txtSecondPointX.ReadOnly = true;
             this.txtSecondPointX.Size = new System.Drawing.Size(60, 20);
             this.txtSecondPointX.TabIndex = 0;
             this.txtSecondPointX.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -939,8 +942,8 @@
             // 
             // SecondPointGettingWayPanel
             // 
-            this.SecondPointGettingWayPanel.Controls.Add(this.btnChooseSecondPointGettingWay);
-            this.SecondPointGettingWayPanel.Controls.Add(this.cmbSecondPointGettingWay);
+            this.SecondPointGettingWayPanel.Controls.Add(this.btnChooseSecondPointAssignmentMethod);
+            this.SecondPointGettingWayPanel.Controls.Add(this.cmbSecondPointAssignmentMethod);
             this.SecondPointGettingWayPanel.Controls.Add(this.lblSecondPointGettingWay);
             this.SecondPointGettingWayPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.SecondPointGettingWayPanel.Location = new System.Drawing.Point(0, 171);
@@ -948,22 +951,24 @@
             this.SecondPointGettingWayPanel.Size = new System.Drawing.Size(287, 40);
             this.SecondPointGettingWayPanel.TabIndex = 49;
             // 
-            // btnChooseSecondPointGettingWay
+            // btnChooseSecondPointAssignmentMethod
             // 
-            this.btnChooseSecondPointGettingWay.Location = new System.Drawing.Point(189, 14);
-            this.btnChooseSecondPointGettingWay.Name = "btnChooseSecondPointGettingWay";
-            this.btnChooseSecondPointGettingWay.Size = new System.Drawing.Size(83, 23);
-            this.btnChooseSecondPointGettingWay.TabIndex = 47;
-            this.btnChooseSecondPointGettingWay.Text = "Выбрать";
-            this.btnChooseSecondPointGettingWay.UseVisualStyleBackColor = true;
+            this.btnChooseSecondPointAssignmentMethod.Location = new System.Drawing.Point(189, 14);
+            this.btnChooseSecondPointAssignmentMethod.Name = "btnChooseSecondPointAssignmentMethod";
+            this.btnChooseSecondPointAssignmentMethod.Size = new System.Drawing.Size(83, 23);
+            this.btnChooseSecondPointAssignmentMethod.TabIndex = 47;
+            this.btnChooseSecondPointAssignmentMethod.Text = "Выбрать";
+            this.btnChooseSecondPointAssignmentMethod.UseVisualStyleBackColor = true;
+            this.btnChooseSecondPointAssignmentMethod.Click += new System.EventHandler(this.BtnChooseSecondPointAssignmentMethod_Click);
             // 
-            // cmbSecondPointGettingWay
+            // cmbSecondPointAssignmentMethod
             // 
-            this.cmbSecondPointGettingWay.FormattingEnabled = true;
-            this.cmbSecondPointGettingWay.Location = new System.Drawing.Point(3, 16);
-            this.cmbSecondPointGettingWay.Name = "cmbSecondPointGettingWay";
-            this.cmbSecondPointGettingWay.Size = new System.Drawing.Size(161, 21);
-            this.cmbSecondPointGettingWay.TabIndex = 46;
+            this.cmbSecondPointAssignmentMethod.FormattingEnabled = true;
+            this.cmbSecondPointAssignmentMethod.Location = new System.Drawing.Point(3, 16);
+            this.cmbSecondPointAssignmentMethod.Name = "cmbSecondPointAssignmentMethod";
+            this.cmbSecondPointAssignmentMethod.Size = new System.Drawing.Size(161, 21);
+            this.cmbSecondPointAssignmentMethod.TabIndex = 46;
+            this.cmbSecondPointAssignmentMethod.SelectedIndexChanged += new System.EventHandler(this.CmbSecondPointAssignmentMethod_SelectedIndexChanged);
             // 
             // lblSecondPointGettingWay
             // 
@@ -1065,6 +1070,7 @@
             this.txtFirstPointZ.Location = new System.Drawing.Point(130, 2);
             this.txtFirstPointZ.Margin = new System.Windows.Forms.Padding(0);
             this.txtFirstPointZ.Name = "txtFirstPointZ";
+            this.txtFirstPointZ.ReadOnly = true;
             this.txtFirstPointZ.Size = new System.Drawing.Size(60, 20);
             this.txtFirstPointZ.TabIndex = 28;
             this.txtFirstPointZ.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -1123,6 +1129,7 @@
             this.txtFirstPointY.Location = new System.Drawing.Point(66, 2);
             this.txtFirstPointY.Margin = new System.Windows.Forms.Padding(0);
             this.txtFirstPointY.Name = "txtFirstPointY";
+            this.txtFirstPointY.ReadOnly = true;
             this.txtFirstPointY.Size = new System.Drawing.Size(60, 20);
             this.txtFirstPointY.TabIndex = 2;
             this.txtFirstPointY.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -1132,6 +1139,7 @@
             this.txtFirstPointX.Location = new System.Drawing.Point(2, 2);
             this.txtFirstPointX.Margin = new System.Windows.Forms.Padding(3, 7, 3, 3);
             this.txtFirstPointX.Name = "txtFirstPointX";
+            this.txtFirstPointX.ReadOnly = true;
             this.txtFirstPointX.Size = new System.Drawing.Size(60, 20);
             this.txtFirstPointX.TabIndex = 0;
             this.txtFirstPointX.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -1157,8 +1165,8 @@
             // 
             // pointGettingWayPanel
             // 
-            this.pointGettingWayPanel.Controls.Add(this.btnChooseFirstPointGettingWay);
-            this.pointGettingWayPanel.Controls.Add(this.cmbFirstPointGettingWay);
+            this.pointGettingWayPanel.Controls.Add(this.btnChooseFirstPointAssignmentMethod);
+            this.pointGettingWayPanel.Controls.Add(this.cmbFirstPointAssignmentMethod);
             this.pointGettingWayPanel.Controls.Add(this.lblFirstlPointGettingWay);
             this.pointGettingWayPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.pointGettingWayPanel.Location = new System.Drawing.Point(0, 28);
@@ -1166,22 +1174,24 @@
             this.pointGettingWayPanel.Size = new System.Drawing.Size(287, 40);
             this.pointGettingWayPanel.TabIndex = 45;
             // 
-            // btnChooseFirstPointGettingWay
+            // btnChooseFirstPointAssignmentMethod
             // 
-            this.btnChooseFirstPointGettingWay.Location = new System.Drawing.Point(189, 14);
-            this.btnChooseFirstPointGettingWay.Name = "btnChooseFirstPointGettingWay";
-            this.btnChooseFirstPointGettingWay.Size = new System.Drawing.Size(83, 23);
-            this.btnChooseFirstPointGettingWay.TabIndex = 47;
-            this.btnChooseFirstPointGettingWay.Text = "Выбрать";
-            this.btnChooseFirstPointGettingWay.UseVisualStyleBackColor = true;
+            this.btnChooseFirstPointAssignmentMethod.Location = new System.Drawing.Point(189, 14);
+            this.btnChooseFirstPointAssignmentMethod.Name = "btnChooseFirstPointAssignmentMethod";
+            this.btnChooseFirstPointAssignmentMethod.Size = new System.Drawing.Size(83, 23);
+            this.btnChooseFirstPointAssignmentMethod.TabIndex = 47;
+            this.btnChooseFirstPointAssignmentMethod.Text = "Выбрать";
+            this.btnChooseFirstPointAssignmentMethod.UseVisualStyleBackColor = true;
+            this.btnChooseFirstPointAssignmentMethod.Click += new System.EventHandler(this.BtnChooseFirstPointAssignmentMethod_Click);
             // 
-            // cmbFirstPointGettingWay
+            // cmbFirstPointAssignmentMethod
             // 
-            this.cmbFirstPointGettingWay.FormattingEnabled = true;
-            this.cmbFirstPointGettingWay.Location = new System.Drawing.Point(3, 16);
-            this.cmbFirstPointGettingWay.Name = "cmbFirstPointGettingWay";
-            this.cmbFirstPointGettingWay.Size = new System.Drawing.Size(161, 21);
-            this.cmbFirstPointGettingWay.TabIndex = 46;
+            this.cmbFirstPointAssignmentMethod.FormattingEnabled = true;
+            this.cmbFirstPointAssignmentMethod.Location = new System.Drawing.Point(3, 16);
+            this.cmbFirstPointAssignmentMethod.Name = "cmbFirstPointAssignmentMethod";
+            this.cmbFirstPointAssignmentMethod.Size = new System.Drawing.Size(161, 21);
+            this.cmbFirstPointAssignmentMethod.TabIndex = 46;
+            this.cmbFirstPointAssignmentMethod.SelectedIndexChanged += new System.EventHandler(this.CmbFirstPointAssignmentMethod_SelectedIndexChanged);
             // 
             // lblFirstlPointGettingWay
             // 
@@ -2146,8 +2156,8 @@
         private System.Windows.Forms.Panel pointGettingWayPanel;
         private System.Windows.Forms.Label lblFirstlPointGettingWay;
         private System.Windows.Forms.Panel firstPointTitlePanel;
-        private System.Windows.Forms.ComboBox cmbFirstPointGettingWay;
-        private System.Windows.Forms.Button btnChooseFirstPointGettingWay;
+        private System.Windows.Forms.ComboBox cmbFirstPointAssignmentMethod;
+        private System.Windows.Forms.Button btnChooseFirstPointAssignmentMethod;
         private System.Windows.Forms.Panel firstPointInfoPanel;
         private System.Windows.Forms.Label lblFirstPointInfo;
         internal System.Windows.Forms.TextBox txtFirstPointZ;
@@ -2157,8 +2167,8 @@
         private System.Windows.Forms.Panel secondPointInfoPanel;
         private System.Windows.Forms.Label lblSecondPointInfo;
         private System.Windows.Forms.Panel SecondPointGettingWayPanel;
-        private System.Windows.Forms.Button btnChooseSecondPointGettingWay;
-        private System.Windows.Forms.ComboBox cmbSecondPointGettingWay;
+        private System.Windows.Forms.Button btnChooseSecondPointAssignmentMethod;
+        private System.Windows.Forms.ComboBox cmbSecondPointAssignmentMethod;
         private System.Windows.Forms.Label lblSecondPointGettingWay;
         private System.Windows.Forms.Panel infoPanel;
         private System.Windows.Forms.Label lblProfileInfo;

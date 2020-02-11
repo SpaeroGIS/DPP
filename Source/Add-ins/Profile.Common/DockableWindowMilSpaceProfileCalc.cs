@@ -1151,12 +1151,20 @@ namespace MilSpace.Profile
             eraseProfile.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintEraseProfileText", "Видалити профіль");
             clearExtraGraphic.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintClearExtraGraphicText", "Очистити графіку на карті");
 
-            btnChooseFirstPointGettingWay.Text = LocalizationContext.Instance.FindLocalizedElement("BtnChooseText", "Обрати");
-            btnChooseSecondPointGettingWay.Text = LocalizationContext.Instance.FindLocalizedElement("BtnChooseText", "Обрати");
+            btnChooseFirstPointAssignmentMethod.Text = LocalizationContext.Instance.FindLocalizedElement("BtnChooseText", "Обрати");
+            btnChooseSecondPointAssignmentMethod.Text = LocalizationContext.Instance.FindLocalizedElement("BtnChooseText", "Обрати");
 
             profilesTreeView.Nodes["Points"].Text = LocalizationContext.Instance.FindLocalizedElement("TvProfilesPointsNodeText", "Відрізки");
             profilesTreeView.Nodes["Fun"].Text = LocalizationContext.Instance.FindLocalizedElement("TvProfilesFunNodeText", "\"Віяло\"");
             profilesTreeView.Nodes["Primitives"].Text = LocalizationContext.Instance.FindLocalizedElement("TvProfilesPritiveNodeText", "Графіка");
+
+            var mapItem = LocalizationContext.Instance.AssignmentMethodFromMapItem;
+
+            cmbFirstPointAssignmentMethod.Items.AddRange(controller.GetAssignmentMethodsStrings());
+            cmbFirstPointAssignmentMethod.SelectedItem = mapItem;
+
+            cmbSecondPointAssignmentMethod.Items.AddRange(controller.GetAssignmentMethodsStrings());
+            cmbSecondPointAssignmentMethod.SelectedItem = mapItem;
 
             logger.InfoEx("> LocalizeStrings Profile END");
         }
@@ -1478,6 +1486,26 @@ namespace MilSpace.Profile
         private void toolBarSelectedPrimitives_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
 
+        }
+
+        private void CmbFirstPointAssignmentMethod_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnChooseFirstPointAssignmentMethod.Enabled = !cmbFirstPointAssignmentMethod.SelectedItem.Equals(LocalizationContext.Instance.AssignmentMethodFromMapItem);
+        }
+
+        private void CmbSecondPointAssignmentMethod_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnChooseSecondPointAssignmentMethod.Enabled = !cmbSecondPointAssignmentMethod.SelectedItem.Equals(LocalizationContext.Instance.AssignmentMethodFromMapItem);
+        }
+
+        private void BtnChooseSecondPointAssignmentMethod_Click(object sender, EventArgs e)
+        {
+            controller.SetPointBySelectedMethod(controller.GetMethodByString(cmbSecondPointAssignmentMethod.Text), false);
+        }
+
+        private void BtnChooseFirstPointAssignmentMethod_Click(object sender, EventArgs e)
+        {
+            controller.SetPointBySelectedMethod(controller.GetMethodByString(cmbFirstPointAssignmentMethod.Text), true);
         }
     }
 }

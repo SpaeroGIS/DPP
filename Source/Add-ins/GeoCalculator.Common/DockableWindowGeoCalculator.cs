@@ -90,6 +90,26 @@ namespace MilSpace.GeoCalculator
             DrawLine();
         }
 
+        public Dictionary<int, IPoint> GetPointsList()
+        {
+            var points = new Dictionary<int, IPoint>();
+
+            foreach(DataGridViewRow row in PointsGridView.Rows)
+            {
+                if(row == null)
+                {
+                    continue;
+                }
+
+                var point = ClickedPointsDictionary[row.Tag.ToString()];
+                var pointCopy = point.CloneWithProjecting();
+
+                points.Add((int)row.Cells[0].Value, pointCopy);
+            }
+
+            return points;
+        }
+
         /// <summary>
         /// Host object of the dockable window
         /// </summary>

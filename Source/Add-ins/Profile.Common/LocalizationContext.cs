@@ -36,6 +36,7 @@ namespace MilSpace.Profile.Localization
         internal string PrimitiveTypeText => FindLocalizedElement("PrimitiveTypeText", "Графіка");
         internal string MessageBoxTitle => FindLocalizedElement("MessageBoxTitle", "Спостереження");
         internal string ErrorHappendText => FindLocalizedElement("MsgErrorHappenedText", "Виникла помилка /n Більш детальна інформація знаходиться у журналі");
+        internal string AssignmentMethodFromMapItem => LocalizationContext.Instance.FindLocalizedElement("CmbAssignmentMethodFromMapTypeText", "Мапа");
 
 
         internal bool HasLocalizedElement(string xmlNodeName)

@@ -56,6 +56,10 @@
   <BtnOkText>OK</BtnOkText>
   <BtnChooseText>Обрати</BtnChooseText>
   <CmbGraphTypeText>Усі типи</CmbGraphTypeText>
+  <CmbAssignmentMethodGeoCalcTypeText>Геокалькулятор</CmbAssignmentMethodGeoCalcTypeText>
+  <CmbAssignmentMethodFromMapTypeText>Мапа</CmbAssignmentMethodFromMapTypeText>
+  <CmbAssignmentMethodObservPointsTypeText>Шар пунктів спостереження</CmbAssignmentMethodObservPointsTypeText>
+  <CmbAssignmentMethodPointsLayerTypeText>Точковий шар</CmbAssignmentMethodPointsLayerTypeText>
   <CopyStripMenuItemText>Скопіювати</CopyStripMenuItemText>
   <FrmSavedProfilesModalWindowText>Додати профілі до сесії</FrmSavedProfilesModalWindowText>
   <FunTypeText>"Віяло"</FunTypeText>
@@ -145,6 +149,7 @@
   <MsgNotAllowedToShareText>Ви не можете дозволити спільний доступ для цього профілю.</MsgNotAllowedToShareText>
   <MsgRemoveProfaileText>Ви дійсно бажаєти cкинути профіль  "{0}" з сесії?</MsgRemoveProfaileText>
   <MsgPickCoordinatesToolText>Будь ласка, увімкніть інструмент для виділення точки</MsgPickCoordinatesToolText>
+  <MsgGeoCalcModuleDoesntExists>Модуль Геокалькулятор не було підключено</MsgGeoCalcModuleDoesntExists>
 
   <DataExportPointsPropertiesHeader>Номер; X; Y; Z; Відстань; Точка перегину; Видима; Перетини</DataExportPointsPropertiesHeader>
   <DataExportProfilePropertiesHeader>Номер; Назва профілю; Зовнішній; Стан; Точка початку; Точка кінцю; Азимут; Пункт спостереження; Довжина; Макс. висота; Різниця висот; Мін. висота; Макс. кут підйому; Макс. кут спуску; Процент видимих зон</DataExportProfilePropertiesHeader>

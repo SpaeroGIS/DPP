@@ -142,11 +142,15 @@ namespace MilSpace.Core.Tools
         /// <returns>Point projected to Wgs84 SC</returns>
         public static IPoint CloneWithProjecting(this IPoint point)
         {
-
             var clonedPoint = new Point() { X = point.X, Y = point.Y, Z = point.Z, SpatialReference = point.SpatialReference };
             ProjectToWgs84(clonedPoint);
 
             return clonedPoint;
+        }
+
+        public static IPoint ClonePoint(this IPoint point)
+        {
+            return new Point() { X = point.X, Y = point.Y, Z = point.Z, SpatialReference = point.SpatialReference };
         }
 
         public static void ProjectToMapSpatialReference(IGeometry geometry, ISpatialReference mapSpatialReference)
