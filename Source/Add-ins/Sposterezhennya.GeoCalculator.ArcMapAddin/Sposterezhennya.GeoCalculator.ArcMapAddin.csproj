@@ -208,6 +208,7 @@
     </Content>
     <Content Include="Images\MoveToCoordinate.png" />
     <Content Include="Images\OpenFile.png" />
+    <Content Include="Images\Refresh20x20.png" />
     <Content Include="Images\Save.png" />
     <AddInContent Include="Images\SaveIco.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
