@@ -5,13 +5,17 @@
   <ImportTitle>Імпорт з</ImportTitle>
   <ChooseLayerWindowCaption>Обрати шар</ChooseLayerWindowCaption>
   <CurrentMapLabel>Карта</CurrentMapLabel>
-  <Pulkovo1942Label>СК42</Pulkovo1942Label>
-  <Wgs1984Label>WGS84</Wgs1984Label>
-  <Ukraine2000Label>УСК2000</Ukraine2000Label>
-  <MgrsLabel>MGRS:</MgrsLabel>
+  
+  <Pulkovo1942Label>Дгр</Pulkovo1942Label>
+  <Wgs1984Label>Дгр</Wgs1984Label>
+  <Ukraine2000Label>Дгр</Ukraine2000Label>
+  
+  <MgrsLabel>MGRS</MgrsLabel>
   <MgrsName>MGRS</MgrsName>
-  <UtmLabel>UTM:</UtmLabel>
-  <UtmName>WGS84 UTM Zone 35N</UtmName>
+  
+  <UtmLabel>UTM</UtmLabel>
+  <UtmName>UTM Zone 35N</UtmName>
+  
   <SaveButton>Зберегти в файл</SaveButton>
   <OpenFileButton>Відкрити файл</OpenFileButton>
   <CopyButton>Cкопіювати</CopyButton>
