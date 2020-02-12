@@ -273,6 +273,9 @@
     <Compile Include="..\Core\Tools\EsriTools.cs">
       <Link>Tools\EsriTools.cs</Link>
     </Compile>
+    <Compile Include="..\Core\Tools\EsriToolsExtentions.cs" >
+      <Link>Tools\EsriToolsExtentions.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MilSpace.Configurations\MilSpace.Configurations.csproj">
