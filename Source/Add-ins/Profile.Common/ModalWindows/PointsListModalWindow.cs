@@ -1,4 +1,5 @@
 ﻿using ESRI.ArcGIS.Geometry;
+using MilSpace.Profile.Localization;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,12 +17,12 @@ namespace MilSpace.Profile.ModalWindows
         public IPoint SelectedPoint;
         private Dictionary<int, IPoint> _points = new Dictionary<int, IPoint>();
 
-        public PointsListModalWindow(Dictionary<int, IPoint> points, string layer)
+        public PointsListModalWindow(Dictionary<int, IPoint> points)
         {
             InitializeComponent();
             InitializeListView(points);
 
-            lblLayer.Text = layer;
+            lblLayer.Text = LocalizationContext.Instance.FindLocalizedElement("LblGetPointsFromGeoCalculator", "Список точок модулю Геокалькулятор");
             _points = points;
         }
 
@@ -29,22 +30,23 @@ namespace MilSpace.Profile.ModalWindows
         {
             lvPoints.View = View.Details;
 
-            lvPoints.Columns.Add("Number", (int)(lvPoints.Width * 0.3));
-            lvPoints.Columns.Add("X", (int)(lvPoints.Width * 0.3));
-            lvPoints.Columns.Add("Y", (lvPoints.Width - (lvPoints.Columns[0].Width + lvPoints.Columns[1].Width)- 25));
-
-            lvPoints.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-
+           
             lvPoints.Items.Clear();
 
             foreach(var point in points)
             {
                 var item = new ListViewItem(point.Key.ToString());
-                item.SubItems.Add(point.Value.X.ToString());
-                item.SubItems.Add(point.Value.Y.ToString());
+                item.SubItems.Add(Math.Round(point.Value.X, 5).ToString());
+                item.SubItems.Add(Math.Round(point.Value.Y, 5).ToString());
 
                 lvPoints.Items.Add(item);
             }
+
+            lvPoints.Columns.Add(LocalizationContext.Instance.FindLocalizedElement("LvPointsFromGeoCalculatorNumberHeader", "Номер"), -2, HorizontalAlignment.Center);
+            lvPoints.Columns.Add("X", -2, HorizontalAlignment.Center);
+            lvPoints.Columns.Add("Y", -2, HorizontalAlignment.Center);
+
+            lvPoints.HeaderStyle = ColumnHeaderStyle.Nonclickable;
         }
 
         private void BtnChoosePoint_Click(object sender, EventArgs e)

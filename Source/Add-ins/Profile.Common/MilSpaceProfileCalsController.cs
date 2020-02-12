@@ -1152,7 +1152,7 @@ namespace MilSpace.Profile
                 return null;
             }
 
-            var pointsWindow = new PointsListModalWindow(points, _assignmentMethods[AssignmentMethodsEnum.GeoCalculator]);
+            var pointsWindow = new PointsListModalWindow(points);
             var result = pointsWindow.ShowDialog();
 
             if(result == DialogResult.OK)
