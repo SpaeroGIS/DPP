@@ -1,4 +1,5 @@
-﻿using MilSpace.Core.ModulesInteraction;
+﻿using MilSpace.Core;
+using MilSpace.Core.ModulesInteraction;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,11 @@ namespace MilSpace.GeoCalculator.Interaction
     public class GeoCalculatorInteraction : IGeocalculatorInteraction
     {
         GeoCalculatorController _controller;
+        private static Logger _log = Logger.GetLoggerEx("MilSpace.GeoCalculator.GeoCalculatorInteraction");
 
         internal GeoCalculatorInteraction(GeoCalculatorController controller)
         {
             _controller = controller;
         }
-    }
+  }
 }

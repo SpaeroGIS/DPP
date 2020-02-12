@@ -1,14 +1,11 @@
-﻿using System;
-using System.Globalization;
-using ESRI.ArcGIS.Carto;
-using ESRI.ArcGIS.Desktop.AddIns;
-using ESRI.ArcGIS.Display;
+﻿using ESRI.ArcGIS.Desktop.AddIns;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Profile.DTO;
-using static MilSpace.Profile.DockableWindowMilSpaceProfileCalc;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace MilSpace.Profile
 {
@@ -37,13 +34,30 @@ namespace MilSpace.Profile
             var point = screenDisplay.DisplayTransformation.ToMapPoint(arg.X, arg.Y);
             var pointToSave = screenDisplay.DisplayTransformation.ToMapPoint(arg.X, arg.Y);
 
-            point.SpatialReference = mxdDoc.FocusMap.SpatialReference;
-
-            pointToSave.SpatialReference = mxdDoc.FocusMap.SpatialReference;
+            point.SpatialReference = pointToSave.SpatialReference = mxdDoc.FocusMap.SpatialReference;
 
             EsriTools.ProjectToWgs84(point);
 
             var winImpl = AddIn.FromID<DockableWindowMilSpaceProfileCalc.AddinImpl>(ThisAddIn.IDs.DockableWindowMilSpaceProfileCalc);
+
+            var dem = winImpl.MilSpaceProfileCalsController.View.DemLayerName;
+
+            MapLayersManager mngr = new MapLayersManager(mxdDoc.ActiveView);
+
+            //Set Z value using selected DEM
+            var rl = mngr.RasterLayers.FirstOrDefault(l => l.Name == dem);
+
+            if (rl != null)
+            {
+                point.AddZCoordinate(rl.Raster);
+                pointToSave.AddZCoordinate(rl.Raster);
+            }
+            else
+            {
+                //TODO: Localize the message box
+                MessageBox.Show("Please, choose a DEM layer to take Z valur from there", "Unlocalized text", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
 
             if (winImpl.MilSpaceProfileCalsController.View.ActiveButton == ProfileSettingsPointButtonEnum.PointsFist)
             {

@@ -581,7 +581,7 @@ namespace MilSpace.Core.Tools
 
             for (int i = 0; i < aWKSPoints.Length; i++)
             {
-                aWKSPoints[i] = PointToWKSPoint(points.Point[i]);
+                aWKSPoints[i] = points.Point[i].WKSPointZ();
             }
 
             geometryBridge2.SetWKSPointZs(pointCollection4, ref aWKSPoints);
@@ -885,19 +885,9 @@ namespace MilSpace.Core.Tools
             }
             return -1;
         }
-
-        private static IPoint ConstructPoint3D(double x, double y, double z)
+        public static void IdentifyPixelValue(IRaster raster, double xMap, double yMap)
         {
-            IPoint point = new PointClass();
-            point.PutCoords(x, y);
-            point.Z = z;
-
-            return point;
-        }
-
-        private static WKSPointZ PointToWKSPoint(IPoint point)
-        {
-            return new WKSPointZ { X = point.X, Y = point.Y, Z = point.Z };
+           
         }
 
         private static List<IPolyline> GetIntersection(IPolyline polyline, ILayer layer)
