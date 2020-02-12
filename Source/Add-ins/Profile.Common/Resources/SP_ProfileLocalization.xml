@@ -8,6 +8,7 @@
   <BtnRefreshLayersToolTip>Оновити шари даних</BtnRefreshLayersToolTip>
   <BtnShowCoordToolTip>Показати координати на карті</BtnShowCoordToolTip>
   <BtnTakeCoordToolTip>Взяти координати з карти</BtnTakeCoordToolTip>
+  <BtnReverseToolTip>Змінити напрямок профілю</BtnReverseToolTip>
   <DgvProfilePropertiesAscendingAngleColToolTip>Максимальний кут підйому (градуси)</DgvProfilePropertiesAscendingAngleColToolTip>
   <DgvProfilePropertiesAzimuthColToolTip>Азимут</DgvProfilePropertiesAzimuthColToolTip>
   <DgvProfilePropertiesDescendingAngleColToolTip>Максимальний кут спуску (градуси)</DgvProfilePropertiesDescendingAngleColToolTip>
@@ -53,7 +54,12 @@
   <BtnResetText>Скинути</BtnResetText>
   <BtnFilterText>Фільтрувати</BtnFilterText>
   <BtnOkText>OK</BtnOkText>
+  <BtnChooseText>Обрати</BtnChooseText>
   <CmbGraphTypeText>Усі типи</CmbGraphTypeText>
+  <CmbAssignmentMethodGeoCalcTypeText>Геокалькулятор</CmbAssignmentMethodGeoCalcTypeText>
+  <CmbAssignmentMethodFromMapTypeText>Мапа</CmbAssignmentMethodFromMapTypeText>
+  <CmbAssignmentMethodObservPointsTypeText>Шар пунктів спостереження</CmbAssignmentMethodObservPointsTypeText>
+  <CmbAssignmentMethodPointsLayerTypeText>Точковий шар</CmbAssignmentMethodPointsLayerTypeText>
   <CopyStripMenuItemText>Скопіювати</CopyStripMenuItemText>
   <FrmSavedProfilesModalWindowText>Додати профілі до сесії</FrmSavedProfilesModalWindowText>
   <FunTypeText>"Віяло"</FunTypeText>
@@ -73,12 +79,12 @@
   <LblFunCountText>Кількість</LblFunCountText>
   <LblFunDistanceText>Відстань</LblFunDistanceText>
   <LblFunParametersText>Параметри</LblFunParametersText>
-  <LblHeightOfViewText>Висота точки спостереження</LblHeightOfViewText>
+  <LblHeightOfViewText>Висота</LblHeightOfViewText>
   <LblHydrographyLayerText>гідрографія</LblHydrographyLayerText>
   <LblInvisibleLineColorText>невидимі</LblInvisibleLineColorText>
   <LblLayersForCalcText>Шари для розрахунків</LblLayersForCalcText>
-  <LblLineFirstPointText>Перша точка (довгота / широта)</LblLineFirstPointText>
-  <LblLineSecondPointText>Друга точка (довгота / широта)</LblLineSecondPointText>
+  <LblLineFirstPointText>Перша точка</LblLineFirstPointText>
+  <LblLineSecondPointText>Друга точка</LblLineSecondPointText>
   <LblObserverHeightText>Пункт спостереження (м)</LblObserverHeightText>
   <LblPointOfViewLayerText>Шар точок спостереження</LblPointOfViewLayerText>
   <LblPrimitivesLayerToSelectText>Шари для вибору об'єктів</LblPrimitivesLayerToSelectText>
@@ -93,6 +99,10 @@
   <LblVegetationLayerText>рослинність</LblVegetationLayerText>
   <LblVisibleLineColorText>видимі</LblVisibleLineColorText>
   <LblZFactorText>Z-фактор</LblZFactorText>
+  <LblAssignmentMethodText>Спосіб призначення</LblAssignmentMethodText>
+  <LblProfileInfoText>Параметри відрізку</LblProfileInfoText>
+  <LblLengthInfoText>Довжина:</LblLengthInfoText>
+  <LblAzimuthInfoText>Азимут:</LblAzimuthInfoText>
   <LvProfileDetailsAnglesText>Кути:</LvProfileDetailsAnglesText>
   <LvProfileDetailsAzimuthText>Азимут:</LvProfileDetailsAzimuthText>
   <LvProfileDetailsEndPointsText>Початок - кінець</LvProfileDetailsEndPointsText>
@@ -139,6 +149,7 @@
   <MsgNotAllowedToShareText>Ви не можете дозволити спільний доступ для цього профілю.</MsgNotAllowedToShareText>
   <MsgRemoveProfaileText>Ви дійсно бажаєти cкинути профіль  "{0}" з сесії?</MsgRemoveProfaileText>
   <MsgPickCoordinatesToolText>Будь ласка, увімкніть інструмент для виділення точки</MsgPickCoordinatesToolText>
+  <MsgGeoCalcModuleDoesntExists>Модуль Геокалькулятор не було підключено</MsgGeoCalcModuleDoesntExists>
 
   <DataExportPointsPropertiesHeader>Номер; X; Y; Z; Відстань; Точка перегину; Видима; Перетини</DataExportPointsPropertiesHeader>
   <DataExportProfilePropertiesHeader>Номер; Назва профілю; Зовнішній; Стан; Точка початку; Точка кінцю; Азимут; Пункт спостереження; Довжина; Макс. висота; Різниця висот; Мін. висота; Макс. кут підйому; Макс. кут спуску; Процент видимих зон</DataExportProfilePropertiesHeader>

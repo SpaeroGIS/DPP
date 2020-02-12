@@ -174,6 +174,9 @@
     <Compile Include="..\Profile.Common\Exceptions\ProfileSessionNotCreated.cs">
       <Link>Exceptions\ProfileSessionNotCreated.cs</Link>
     </Compile>
+    <Compile Include="..\Profile.Common\Helpers\AssignmentMethodsEnum.cs">
+      <Link>Helpers\AssignmentMethodsEnum.cs</Link>
+    </Compile>
     <Compile Include="..\Profile.Common\Helpers\ProfileLinesConverter.cs">
       <Link>Helpers\ProfileLinesConverter.cs</Link>
     </Compile>
@@ -215,6 +218,14 @@
     <Compile Include="..\Profile.Common\ModalWindows\AccessibleProfilesModalWindow.designer.cs">
       <Link>ModalWindows\AccessibleProfilesModalWindow.designer.cs</Link>
       <DependentUpon>AccessibleProfilesModalWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\Profile.Common\ModalWindows\PointsListModalWindow.cs">
+      <Link>ModalWindows\PointsListModalWindow.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\Profile.Common\ModalWindows\PointsListModalWindow.designer.cs">
+      <Link>ModalWindows\PointsListModalWindow.designer.cs</Link>
+      <DependentUpon>PointsListModalWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="..\Profile.Common\ModalWindows\ProfilesTreeModalWindow.cs">
       <Link>ModalWindows\ProfilesTreeModalWindow.cs</Link>
@@ -343,6 +354,10 @@
       <Link>ModalWindows\AccessibleProfilesModalWindow.resx</Link>
       <DependentUpon>AccessibleProfilesModalWindow.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="..\Profile.Common\ModalWindows\PointsListModalWindow.resx">
+      <Link>ModalWindows\PointsListModalWindow.resx</Link>
+      <DependentUpon>PointsListModalWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="..\Profile.Common\ModalWindows\ProfilesTreeModalWindow.resx">
       <Link>ModalWindows\ProfilesTreeModalWindow.resx</Link>
       <DependentUpon>ProfilesTreeModalWindow.cs</DependentUpon>
@@ -415,9 +430,7 @@
       <Name>MilSpace.Tools</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interaction\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>
     <AddInTargetProduct>Desktop</AddInTargetProduct>

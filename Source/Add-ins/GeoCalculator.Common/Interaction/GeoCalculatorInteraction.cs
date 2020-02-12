@@ -1,4 +1,5 @@
-﻿using MilSpace.Core.ModulesInteraction;
+﻿using ESRI.ArcGIS.Geometry;
+using MilSpace.Core.ModulesInteraction;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,11 @@ namespace MilSpace.GeoCalculator.Interaction
         internal GeoCalculatorInteraction(GeoCalculatorController controller)
         {
             _controller = controller;
+        }
+
+        public Dictionary<int, IPoint> GetPoints()
+        {
+           return _controller.GetPointsList();
         }
     }
 }

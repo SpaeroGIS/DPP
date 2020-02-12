@@ -3,12 +3,14 @@ using ESRI.ArcGIS.Desktop.AddIns;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core;
 using MilSpace.Core.Exceptions;
+using MilSpace.Core.ModulesInteraction;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Exceptions;
 using MilSpace.DataAccess.Facade;
 using MilSpace.Profile.DTO;
+using MilSpace.Profile.Helpers;
 using MilSpace.Profile.Localization;
 using MilSpace.Profile.ModalWindows;
 using MilSpace.Tools;
@@ -66,6 +68,14 @@ namespace MilSpace.Profile
             {ProfileSettingsTypeEnum.Fun, null},
             {ProfileSettingsTypeEnum.Primitives, null},
             {ProfileSettingsTypeEnum.Load, null}
+        };
+
+        private Dictionary<AssignmentMethodsEnum, string> _assignmentMethods = new Dictionary<AssignmentMethodsEnum, string>()
+        {
+            { AssignmentMethodsEnum.FromMap, LocalizationContext.Instance.FindLocalizedElement("CmbAssignmentMethodFromMapTypeText", "Мапа") },
+            { AssignmentMethodsEnum.GeoCalculator, LocalizationContext.Instance.FindLocalizedElement("CmbAssignmentMethodGeoCalcTypeText", "ГеоКалькулятор") },
+            { AssignmentMethodsEnum.ObservationPoints, LocalizationContext.Instance.FindLocalizedElement("CmbAssignmentMethodObservPointsTypeText", "Шар пунктів спостереження") },
+            { AssignmentMethodsEnum.PointsLayers, LocalizationContext.Instance.FindLocalizedElement("CmbAssignmentMethodPointsLayerTypeText", "Точковий шар") }
         };
 
         internal Dictionary<ProfileSettingsTypeEnum, ProfileSettings> ProfileSettings => profileSettings;
@@ -1050,6 +1060,107 @@ namespace MilSpace.Profile
             //res.AddRange(ProfileLayers.LineLayers.Select(l => l.Name));
 
             return res;
+        }
+
+        internal double GetDefaultSecondYCoord(IPoint firstPoint)
+        {
+            var firstPointCopy = new PointClass { X = firstPoint.X, Y = firstPoint.Y, Z = firstPoint.Z, SpatialReference = firstPoint.SpatialReference };
+            firstPointCopy.Project(ArcMap.Document.ActiveView.FocusMap.SpatialReference);
+
+            var y = firstPointCopy.Y - EsriTools.GetExtentHeightInMapUnits(ArcMap.Document.ActiveView.Extent, 0.1);
+            var secondPoint = new PointClass { X = firstPointCopy.X, Y = y, Z = firstPointCopy.Z, SpatialReference = ArcMap.Document.ActiveView.FocusMap.SpatialReference };
+            secondPoint.Project(firstPoint.SpatialReference);
+
+            return secondPoint.Y;
+        }
+
+        internal string[] GetAssignmentMethodsStrings()
+        {
+            return _assignmentMethods.Values.ToArray();
+        }
+
+        internal AssignmentMethodsEnum GetMethodByString(string methodString)
+        {
+            return _assignmentMethods.FirstOrDefault(method => method.Value == methodString).Key;
+        }
+
+        internal void SetPointBySelectedMethod(AssignmentMethodsEnum method, bool isFirstPoint)
+        {
+            IPoint point = null;
+
+            switch(method)
+            {
+                case AssignmentMethodsEnum.GeoCalculator:
+
+                    point = GetPointFromGeoCalculator();
+
+                    break;
+
+                case AssignmentMethodsEnum.ObservationPoints:
+
+
+                    break;
+
+
+                case AssignmentMethodsEnum.PointsLayers:
+
+
+
+                    break;
+
+            }
+
+            if(point == null)
+            {
+                return;
+            }
+
+            var pointToMapSpatial = point.ClonePoint();
+            pointToMapSpatial.Project(ArcMap.Document.ActivatedView.FocusMap.SpatialReference);
+
+            if(isFirstPoint)
+            {
+                SetFirsPointForLineProfile(point, pointToMapSpatial);
+            }
+            else
+            {
+                SetSecondfPointForLineProfile(point, pointToMapSpatial);
+            }
+        }
+
+        private IPoint GetPointFromGeoCalculator()
+        {
+            Dictionary<int, IPoint> points;
+
+            var geoModule = ModuleInteraction.Instance.GetModuleInteraction<IGeocalculatorInteraction>(out bool changes);
+
+            if(!changes && geoModule == null)
+            {
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgGeoCalcModuleDoesntExists", "Модуль Геокалькулятор не було підключено"), LocalizationContext.Instance.MessageBoxTitle);
+                logger.ErrorEx($"> GetPointFromGeoCalculator Exception: {LocalizationContext.Instance.FindLocalizedElement("MsgGeoCalcModuleDoesntExists", "Модуль Геокалькулятор не було підключено")}");
+                return null;
+            }
+
+            try
+            {
+                points = geoModule.GetPoints();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(LocalizationContext.Instance.ErrorHappendText, LocalizationContext.Instance.MessageBoxTitle);
+                logger.ErrorEx($"> GetPointFromGeoCalculator Exception: {ex.Message}");
+                return null;
+            }
+
+            var pointsWindow = new PointsListModalWindow(points, _assignmentMethods[AssignmentMethodsEnum.GeoCalculator]);
+            var result = pointsWindow.ShowDialog();
+
+            if(result == DialogResult.OK)
+            {
+                return pointsWindow.SelectedPoint;
+            }
+
+            return null;
         }
 
         private void OnMapSelectionChangedLocal()
