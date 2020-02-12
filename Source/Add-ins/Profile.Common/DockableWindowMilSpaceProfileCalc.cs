@@ -174,7 +174,7 @@ namespace MilSpace.Profile
             cmbHydrographyLayer.Items.Clear();
             cmbBuildings.Items.Clear();
             cmbVegetationLayer.Items.Clear();
-            cmbPointLayers.Items.Clear();
+            //cmbPointLayers.Items.Clear();
             layersToSelectLine.Items.Clear();
 
             MapLayersManager mlmngr = new MapLayersManager(ActiveView);
@@ -184,7 +184,7 @@ namespace MilSpace.Profile
             PopulateComboBox(cmbHydrographyLayer, mlmngr.PolygonLayers);
             PopulateComboBox(cmbBuildings, mlmngr.PolygonLayers);
             PopulateComboBox(cmbVegetationLayer, mlmngr.PolygonLayers);
-            PopulateComboBox(cmbPointLayers, mlmngr.PointLayers);
+            //PopulateComboBox(cmbPointLayers, mlmngr.PointLayers);
 
             layersToSelectLine.Items.AddRange(GetLayersForLineSelection.ToArray());
             layersToSelectLine.SelectedItem = layersToSelectLine.Items[0];
@@ -661,6 +661,16 @@ namespace MilSpace.Profile
             set
             {
                 SetPointValue(txtFirstPointX, txtFirstPointY, value);
+
+                if(String.IsNullOrEmpty(txtSecondPointX.Text) && String.IsNullOrEmpty(txtSecondPointY.Text))
+                {
+                    var newPoint = new PointClass { X = value.X, Y = controller.GetDefaultSecondYCoord(value), Z = value.Z, SpatialReference = value.SpatialReference };
+                    var pointCopy = new PointClass { X = newPoint.X, Y = newPoint.Y, Z = newPoint.Z, SpatialReference = newPoint.SpatialReference };
+
+                    pointCopy.Project(ArcMap.Document.ActiveView.FocusMap.SpatialReference);
+
+                    controller.SetSecondfPointForLineProfile(newPoint, pointCopy);
+                }
             }
         }
 
@@ -672,6 +682,16 @@ namespace MilSpace.Profile
             set
             {
                 SetPointValue(txtSecondPointX, txtSecondPointY, value);
+
+                if(String.IsNullOrEmpty(txtFirstPointX.Text) && String.IsNullOrEmpty(txtFirstPointY.Text))
+                {
+                    var newPoint = new PointClass { X = value.X, Y = controller.GetDefaultSecondYCoord(value) };
+                    var pointCopy = new PointClass { X = newPoint.X, Y = newPoint.Y, Z = newPoint.Z, SpatialReference = newPoint.SpatialReference };
+
+                    pointCopy.Project(ArcMap.Document.ActiveView.FocusMap.SpatialReference);
+
+                    controller.SetFirsPointForLineProfile(newPoint, pointCopy);
+                }
             }
         }
 
@@ -1048,6 +1068,8 @@ namespace MilSpace.Profile
 
             ToolTip toolTip = new ToolTip();
             toolTip.SetToolTip(this.btnRefreshLayers, LocalizationContext.Instance.FindLocalizedElement("BtnRefreshLayersToolTip", "Оновити шари даних"));
+            toolTip.SetToolTip(reverseButton, LocalizationContext.Instance.FindLocalizedElement("BtnReverseToolTip", "Змінити напрямок профілю"));
+            toolTip.SetToolTip(reverseSecondPointButton, LocalizationContext.Instance.FindLocalizedElement("BtnReverseToolTip", "Змінити напрямок профілю"));
 
             firstPointToolBar.Buttons["toolBarButton8"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnTakeCoordToolTip", "Взяти координати з карти");
             firstPointToolBar.Buttons["toolBarButton55"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnShowCoordToolTip", "Показати координати на карті");
@@ -1079,14 +1101,14 @@ namespace MilSpace.Profile
 
 
             //Labels
-            lblDEM.Text = LocalizationContext.Instance.FindLocalizedElement("LblDEMTextKey", "Шар ЦМР/ЦММ");
+            lblDEM.Text = LocalizationContext.Instance.FindLocalizedElement("LblDEMText", "ЦМР/ЦММ");
 
             lblLayersForCalc.Text = LocalizationContext.Instance.FindLocalizedElement("LblLayersForCalcText", "Шари для розрахунків");
             lblVegetationLayer.Text = LocalizationContext.Instance.FindLocalizedElement("LblVegetationLayerText", "рослинність");
             lblBuildingsLayer.Text = LocalizationContext.Instance.FindLocalizedElement("LblBuildingsLayerText", "забудова");
             lblRoadsLayer.Text = LocalizationContext.Instance.FindLocalizedElement("LblRoadsLayerText", "транспорт");
             lblHydrographyLayer.Text = LocalizationContext.Instance.FindLocalizedElement("LblHydrographyLayerText", "гідрографія");
-            lblPointOfViewLayer.Text = LocalizationContext.Instance.FindLocalizedElement("LblPointOfViewLayerText", "Шар точок спостереження");
+           // lblPointOfViewLayer.Text = LocalizationContext.Instance.FindLocalizedElement("LblPointOfViewLayerText", "Шар точок спостереження");
             lblSetPeofileProperties.Text = LocalizationContext.Instance.FindLocalizedElement("LblSetProfilePropertiesText", "Задати профіль");
             lblProfileName.Text = LocalizationContext.Instance.FindLocalizedElement("LblProfileNameText", "Ім'я профілю");
 
@@ -1094,12 +1116,12 @@ namespace MilSpace.Profile
             lblLineFirstPoint.Text = LocalizationContext.Instance.FindLocalizedElement("LblLineFirstPointText", "Перша точка (довгота / широта)");
             lblLineSecondPoint.Text = LocalizationContext.Instance.FindLocalizedElement("LblLineSecondPointText", "Друга точка (довгота / широта)");
 
-            lblHeightOfViewFirst.Text = LocalizationContext.Instance.FindLocalizedElement("LblHeightOfViewText", "Висота точки спостереження");
-            lblHeightOfViewSecond.Text = LocalizationContext.Instance.FindLocalizedElement("LblHeightOfViewText", "Висота точки спостереження");
+            lblHeightOfViewFirst.Text = LocalizationContext.Instance.FindLocalizedElement("LblHeightOfViewText", "Висота");
+            lblHeightOfViewSecond.Text = LocalizationContext.Instance.FindLocalizedElement("LblHeightOfViewText", "Висота");
             lblDimensionSecond.Text = LocalizationContext.Instance.FindLocalizedElement("LblDimensionSecondText", "м");
             lblDimensionFirst.Text = LocalizationContext.Instance.FindLocalizedElement("LblDimensionFirstText", "м");
             lblFunBasePoint.Text = LocalizationContext.Instance.FindLocalizedElement("LblFunBasePointText", " точка (довгота / широта)");
-            lblHeightOfViewFunBaseText.Text = LocalizationContext.Instance.FindLocalizedElement("LblHeightOfViewText", "Висота точки спостереження");
+            lblHeightOfViewFunBaseText.Text = LocalizationContext.Instance.FindLocalizedElement("LblHeightOfViewText", "Висота");
             lblFunParameters.Text = LocalizationContext.Instance.FindLocalizedElement("LblFunParametersText", "Параметри");
             lblFunDistance.Text = LocalizationContext.Instance.FindLocalizedElement("LblFunDistanceText", "Відстань");
             lblFunCount.Text = LocalizationContext.Instance.FindLocalizedElement("LblFunCountText", "Кількість");
@@ -1112,6 +1134,11 @@ namespace MilSpace.Profile
             lblAboutSelected.Text = LocalizationContext.Instance.FindLocalizedElement("LblAboutSelectedText", "Інформація про обране");
 
             lblProfileList.Text = LocalizationContext.Instance.FindLocalizedElement("LblProfileListText", "Профілі в роботі");
+            lblFirstlPointGettingWay.Text = LocalizationContext.Instance.FindLocalizedElement("LblAssignmentMethodText", "Спосіб призначення");
+            lblSecondPointGettingWay.Text = LocalizationContext.Instance.FindLocalizedElement("LblAssignmentMethodText", "Спосіб призначення");
+            lblProfileInfo.Text = LocalizationContext.Instance.FindLocalizedElement("LblProfileInfoText", "Параметри відрізку");
+            lblLengthInfo.Text = LocalizationContext.Instance.FindLocalizedElement("LblLengthInfoText", "Довжина:");
+            lblAzimuthInfo.Text = LocalizationContext.Instance.FindLocalizedElement("LblAzimuthInfoText", "Азимут:");
 
             toolPanOnMap.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintToolBtnPanOnMapText", "Переміститись  на карті");
             toolBtnFlash.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintToolBtnShowOnMapText", "Показати на карті");
@@ -1124,9 +1151,20 @@ namespace MilSpace.Profile
             eraseProfile.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintEraseProfileText", "Видалити профіль");
             clearExtraGraphic.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintClearExtraGraphicText", "Очистити графіку на карті");
 
+            btnChooseFirstPointAssignmentMethod.Text = LocalizationContext.Instance.FindLocalizedElement("BtnChooseText", "Обрати");
+            btnChooseSecondPointAssignmentMethod.Text = LocalizationContext.Instance.FindLocalizedElement("BtnChooseText", "Обрати");
+
             profilesTreeView.Nodes["Points"].Text = LocalizationContext.Instance.FindLocalizedElement("TvProfilesPointsNodeText", "Відрізки");
             profilesTreeView.Nodes["Fun"].Text = LocalizationContext.Instance.FindLocalizedElement("TvProfilesFunNodeText", "\"Віяло\"");
             profilesTreeView.Nodes["Primitives"].Text = LocalizationContext.Instance.FindLocalizedElement("TvProfilesPritiveNodeText", "Графіка");
+
+            var mapItem = LocalizationContext.Instance.AssignmentMethodFromMapItem;
+
+            cmbFirstPointAssignmentMethod.Items.AddRange(controller.GetAssignmentMethodsStrings());
+            cmbFirstPointAssignmentMethod.SelectedItem = mapItem;
+
+            cmbSecondPointAssignmentMethod.Items.AddRange(controller.GetAssignmentMethodsStrings());
+            cmbSecondPointAssignmentMethod.SelectedItem = mapItem;
 
             logger.InfoEx("> LocalizeStrings Profile END");
         }
@@ -1448,6 +1486,26 @@ namespace MilSpace.Profile
         private void toolBarSelectedPrimitives_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
 
+        }
+
+        private void CmbFirstPointAssignmentMethod_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnChooseFirstPointAssignmentMethod.Enabled = !cmbFirstPointAssignmentMethod.SelectedItem.Equals(LocalizationContext.Instance.AssignmentMethodFromMapItem);
+        }
+
+        private void CmbSecondPointAssignmentMethod_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnChooseSecondPointAssignmentMethod.Enabled = !cmbSecondPointAssignmentMethod.SelectedItem.Equals(LocalizationContext.Instance.AssignmentMethodFromMapItem);
+        }
+
+        private void BtnChooseSecondPointAssignmentMethod_Click(object sender, EventArgs e)
+        {
+            controller.SetPointBySelectedMethod(controller.GetMethodByString(cmbSecondPointAssignmentMethod.Text), false);
+        }
+
+        private void BtnChooseFirstPointAssignmentMethod_Click(object sender, EventArgs e)
+        {
+            controller.SetPointBySelectedMethod(controller.GetMethodByString(cmbFirstPointAssignmentMethod.Text), true);
         }
     }
 }

@@ -142,11 +142,15 @@ namespace MilSpace.Core.Tools
         /// <returns>Point projected to Wgs84 SC</returns>
         public static IPoint CloneWithProjecting(this IPoint point)
         {
-
             var clonedPoint = new Point() { X = point.X, Y = point.Y, Z = point.Z, SpatialReference = point.SpatialReference };
             ProjectToWgs84(clonedPoint);
 
             return clonedPoint;
+        }
+
+        public static IPoint ClonePoint(this IPoint point)
+        {
+            return new Point() { X = point.X, Y = point.Y, Z = point.Z, SpatialReference = point.SpatialReference };
         }
 
         public static void ProjectToMapSpatialReference(IGeometry geometry, ISpatialReference mapSpatialReference)
@@ -581,7 +585,7 @@ namespace MilSpace.Core.Tools
 
             for (int i = 0; i < aWKSPoints.Length; i++)
             {
-                aWKSPoints[i] = PointToWKSPoint(points.Point[i]);
+                aWKSPoints[i] = points.Point[i].WKSPointZ();
             }
 
             geometryBridge2.SetWKSPointZs(pointCollection4, ref aWKSPoints);
@@ -885,19 +889,9 @@ namespace MilSpace.Core.Tools
             }
             return -1;
         }
-
-        private static IPoint ConstructPoint3D(double x, double y, double z)
+        public static void IdentifyPixelValue(IRaster raster, double xMap, double yMap)
         {
-            IPoint point = new PointClass();
-            point.PutCoords(x, y);
-            point.Z = z;
-
-            return point;
-        }
-
-        private static WKSPointZ PointToWKSPoint(IPoint point)
-        {
-            return new WKSPointZ { X = point.X, Y = point.Y, Z = point.Z };
+           
         }
 
         private static List<IPolyline> GetIntersection(IPolyline polyline, ILayer layer)
@@ -1670,6 +1664,12 @@ namespace MilSpace.Core.Tools
             }
 
             return false;
+        }
+
+        public static double GetExtentHeightInMapUnits(IEnvelope envelope, double extentHeight)
+        {
+            return envelope.Height*0.1;
+
         }
     }
 }

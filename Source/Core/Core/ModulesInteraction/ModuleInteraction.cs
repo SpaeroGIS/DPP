@@ -58,7 +58,7 @@ namespace MilSpace.Core.ModulesInteraction
             return;
         }
 
-        public T GetModulInteraction<T>(out bool change )
+        public T GetModuleInteraction<T>(out bool change )
         {
             change = false;
             if (moduleregistration.ContainsKey(typeof(T)))

@@ -7,6 +7,7 @@ namespace MilSpace.DataAccess.DataTransfer
     {
         public double X;
         public double Y;
+        public double Z;
         [XmlIgnore]
         public ISpatialReference SpatialReference;
     }

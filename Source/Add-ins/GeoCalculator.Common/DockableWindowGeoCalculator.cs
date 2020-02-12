@@ -90,6 +90,26 @@ namespace MilSpace.GeoCalculator
             DrawLine();
         }
 
+        public Dictionary<int, IPoint> GetPointsList()
+        {
+            var points = new Dictionary<int, IPoint>();
+
+            foreach(DataGridViewRow row in PointsGridView.Rows)
+            {
+                if(row == null)
+                {
+                    continue;
+                }
+
+                var point = ClickedPointsDictionary[row.Tag.ToString()];
+                var pointCopy = point.CloneWithProjecting();
+
+                points.Add((int)row.Cells[0].Value, pointCopy);
+            }
+
+            return points;
+        }
+
         /// <summary>
         /// Host object of the dockable window
         /// </summary>
@@ -1186,7 +1206,7 @@ namespace MilSpace.GeoCalculator
 
                 //TODO:Localize the next Labels and add config here
                 this.wgsProjectedLabel.Text = CurrentProjectionsModel.WGS84Projection.Name;
-                this.WgsGeoLabel.Text = _context.WgsLabel;
+                this.wgsGeoLabel.Text = _context.WgsLabel;
                 this.PulkovoProjectedLabel.Text = CurrentProjectionsModel.Pulkovo1942Projection.Name;
                 this.PulkovoGeoLabel.Text = _context.PulkovoLabel;
                 this.UkraineProjectedLabel.Text = CurrentProjectionsModel.Ukraine2000Projection.Name;
@@ -1233,19 +1253,8 @@ namespace MilSpace.GeoCalculator
                 this.renumberButton.ToolTipText = _context.FindLocalizedElement("RenumberButtonToolTip", "Обновити нумерацію точок");
                 this.panToLineButton.ToolTipText = _context.FindLocalizedElement("PanToLineButtonToolTip", "Показати лінію на карті");
                 this.toolTip.SetToolTip(btnRefreshGraphic, _context.FindLocalizedElement("RefreshGraphicButtonToolTip", "Оновити графіку"));
-
-                _coordinateSystems.Add(CoordinateSystemsEnum.MapSystem, _context.CurrentMapLabel);
-                _coordinateSystems.Add(CoordinateSystemsEnum.WGS84, _context.WgsLabel);
-                _coordinateSystems.Add(CoordinateSystemsEnum.WGS84UTM, _context.UtmName);
-                _coordinateSystems.Add(CoordinateSystemsEnum.SK42, _context.PulkovoLabel);
-                _coordinateSystems.Add(CoordinateSystemsEnum.Pulkovo42Projected, CurrentProjectionsModel.Pulkovo1942Projection.Name);
-                _coordinateSystems.Add(CoordinateSystemsEnum.Ukraine2000, _context.UkraineLabel);
-                _coordinateSystems.Add(CoordinateSystemsEnum.UkraineProjected, CurrentProjectionsModel.Ukraine2000Projection.Name);
-                _coordinateSystems.Add(CoordinateSystemsEnum.MGRS, _context.MgrsName);
-
-                cmbCoordSystem.Items.Clear();
-                cmbCoordSystem.Items.AddRange(_coordinateSystems.Values.ToArray());
-                cmbCoordSystem.SelectedItem = _coordinateSystems[CoordinateSystemsEnum.WGS84];
+                
+                SetSCComboBoxItems();
             }
             catch
             {
@@ -1253,6 +1262,29 @@ namespace MilSpace.GeoCalculator
                     "No Localization.xml found or there is an error during loading. Coordinates Converter window is not fully localized."
                     );
             }
+        }
+
+        private void SetCoordSystems()
+        {
+            _coordinateSystems.Clear();
+
+            _coordinateSystems.Add(CoordinateSystemsEnum.MapSystem, _context.CurrentMapLabel);
+            _coordinateSystems.Add(CoordinateSystemsEnum.WGS84, $"{ _context.WgsTitleText} {_context.WgsLabel}");
+            _coordinateSystems.Add(CoordinateSystemsEnum.WGS84UTM, $"{ _context.WgsTitleText} {CurrentProjectionsModel.WGS84Projection.Name}");
+            _coordinateSystems.Add(CoordinateSystemsEnum.SK42, $"{_context.PulkovoTitleText} {_context.PulkovoLabel}");
+            _coordinateSystems.Add(CoordinateSystemsEnum.Pulkovo42Projected, $"{_context.PulkovoTitleText} {CurrentProjectionsModel.Pulkovo1942Projection.Name}");
+            _coordinateSystems.Add(CoordinateSystemsEnum.Ukraine2000, $"{_context.UkraineTitleText} {_context.UkraineLabel}");
+            _coordinateSystems.Add(CoordinateSystemsEnum.UkraineProjected, $"{_context.PulkovoTitleText} {CurrentProjectionsModel.Ukraine2000Projection.Name}");
+            _coordinateSystems.Add(CoordinateSystemsEnum.MGRS, _context.MgrsName);
+        }
+
+        private void SetSCComboBoxItems()
+        {
+            SetCoordSystems();
+
+            cmbCoordSystem.Items.Clear();
+            cmbCoordSystem.Items.AddRange(_coordinateSystems.Values.ToArray());
+            cmbCoordSystem.SelectedItem = _coordinateSystems[CoordinateSystemsEnum.WGS84];
         }
 
         private void ProjectPointAsync(
@@ -1440,6 +1472,8 @@ namespace MilSpace.GeoCalculator
 
         private void ManageProjectedCoordinateSystems(double longitudeValue)
         {
+            var currentModelWgs = CurrentProjectionsModel.WGS84Projection.Name;
+
             var offset = longitudeValue - CurrentProjectionsModel.WGS84Projection.FalseOriginX;
             var currentIndex = Constants.ProjectionsModels.IndexOf(CurrentProjectionsModel);
 
@@ -1457,9 +1491,14 @@ namespace MilSpace.GeoCalculator
             else
                 CurrentProjectionsModel = Constants.ProjectionsModels[newIndex];
 
-            this.wgsProjectedLabel.Text = CurrentProjectionsModel.WGS84Projection.Name;
-            this.PulkovoProjectedLabel.Text = CurrentProjectionsModel.Pulkovo1942Projection.Name;
-            this.UkraineProjectedLabel.Text = CurrentProjectionsModel.Ukraine2000Projection.Name;
+            if(!currentModelWgs.Equals(CurrentProjectionsModel.WGS84Projection.Name))
+            {
+                this.wgsProjectedLabel.Text = CurrentProjectionsModel.WGS84Projection.Name;
+                this.PulkovoProjectedLabel.Text = CurrentProjectionsModel.Pulkovo1942Projection.Name;
+                this.UkraineProjectedLabel.Text = CurrentProjectionsModel.Ukraine2000Projection.Name;
+
+                SetSCComboBoxItems();
+            }
         }
 
         private void ProcessPointAsClicked(IPoint point, bool projectPoint, bool forbidLineDrawing = false)
