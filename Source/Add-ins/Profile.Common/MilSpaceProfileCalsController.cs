@@ -1149,8 +1149,8 @@ namespace MilSpace.Profile
 
             if(!changes && geoModule == null)
             {
-                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgGeoCalcModuleDoesntExists", "Модуль Геокалькулятор не було підключено"), LocalizationContext.Instance.MessageBoxTitle);
-                logger.ErrorEx($"> GetPointFromGeoCalculator Exception: {LocalizationContext.Instance.FindLocalizedElement("MsgGeoCalcModuleDoesntExists", "Модуль Геокалькулятор не було підключено")}");
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgGeoCalcModuleDoesntExists", "Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним"), LocalizationContext.Instance.MessageBoxTitle);
+                logger.ErrorEx($"> GetPointFromGeoCalculator Exception: {LocalizationContext.Instance.FindLocalizedElement("MsgGeoCalcModuleDoesntExists", "Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним")}");
                 return null;
             }
 
@@ -1175,6 +1175,11 @@ namespace MilSpace.Profile
 
             return null;
         }
+
+        //private IPoint GetPointFromObservationPoints()
+        //{
+
+        //}
 
         private void OnMapSelectionChangedLocal()
         {
