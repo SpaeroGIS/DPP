@@ -31,9 +31,12 @@ namespace MilSpace.GeoCalculator
         //Labels
         public string CurrentMapLabel => FindLocalizedElement("CurrentMapLabel", "Current Map Coordinates");
         public string ProjectionsGroup => FindLocalizedElement("ProjectionsGroup", "Projections");
-        public string PulkovoLabel => FindLocalizedElement("Pulkovo1942Label", "Pulkovo1942");
-        public string WgsLabel => FindLocalizedElement("Wgs1984Label", "WGS1984");
-        public string UkraineLabel => FindLocalizedElement("Ukraine2000Label", "Ukraine2000");
+        public string WgsTitleText => FindLocalizedElement("Wgs1984TitleLabel", "WGS84");
+        public string PulkovoTitleText => FindLocalizedElement("Pulkovo1942TitleLabel", "Pulkovo 1942");
+        public string UkraineTitleText => FindLocalizedElement("Ukraine2000TitleLabel", "Ukraine 2000");
+        public string PulkovoLabel => FindLocalizedElement("Pulkovo1942Label", "Дгр");
+        public string WgsLabel => FindLocalizedElement("Wgs1984Label", "Дгр");
+        public string UkraineLabel => FindLocalizedElement("Ukraine2000Label", "Дгр");
         public string MgrsLabel => FindLocalizedElement("MgrsLabel", "MGRS Representation");
         public string UtmLabel => FindLocalizedElement("UtmLabel", "UTM Representation");
         public string MgrsName=> FindLocalizedElement("MgrsName", "MGRS Representation");

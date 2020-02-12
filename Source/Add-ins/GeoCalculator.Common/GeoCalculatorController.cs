@@ -164,5 +164,10 @@ namespace MilSpace.GeoCalculator
 
             _log.DebugEx("> ClearSession END.");
         }
+
+        internal Dictionary<int, IPoint> GetPointsList()
+        {
+            return View.GetPointsList();
+        }
     }
 }
