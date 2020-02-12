@@ -1,9 +1,7 @@
-﻿using MilSpace.Core.ModulesInteraction;
-using System;
+﻿using ESRI.ArcGIS.Geometry;
+using MilSpace.Core;
+using MilSpace.Core.ModulesInteraction;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MilSpace.GeoCalculator.Interaction
 {
