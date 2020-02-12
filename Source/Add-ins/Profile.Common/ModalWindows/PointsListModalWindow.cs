@@ -49,7 +49,10 @@ namespace MilSpace.Profile.ModalWindows
 
         private void BtnChoosePoint_Click(object sender, EventArgs e)
         {
-            SelectedPoint = _points[Convert.ToInt32(lvPoints.SelectedItems[0].Text)];
+            if(lvPoints.SelectedItems.Count > 0)
+            {
+                SelectedPoint = _points[Convert.ToInt32(lvPoints.SelectedItems[0].Text)];
+            }
         }
     }
 }

@@ -79,6 +79,8 @@
             // lvPoints
             // 
             this.lvPoints.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvPoints.FullRowSelect = true;
+            this.lvPoints.GridLines = true;
             this.lvPoints.HideSelection = false;
             this.lvPoints.Location = new System.Drawing.Point(0, 28);
             this.lvPoints.MultiSelect = false;

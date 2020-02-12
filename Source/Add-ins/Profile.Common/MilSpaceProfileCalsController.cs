@@ -1131,13 +1131,24 @@ namespace MilSpace.Profile
         private IPoint GetPointFromGeoCalculator()
         {
             Dictionary<int, IPoint> points;
-            try
-            {
-                 points = ModuleInteraction.Instance.GetModilInteraction<IGeocalculatorInteraction>(out bool changes).GetPoints();
-            }
-            catch
+
+            var geoModule = ModuleInteraction.Instance.GetModuleInteraction<IGeocalculatorInteraction>(out bool changes);
+
+            if(!changes && geoModule == null)
             {
                 MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgGeoCalcModuleDoesntExists", "Модуль Геокалькулятор не було підключено"), LocalizationContext.Instance.MessageBoxTitle);
+                logger.ErrorEx($"> GetPointFromGeoCalculator Exception: {LocalizationContext.Instance.FindLocalizedElement("MsgGeoCalcModuleDoesntExists", "Модуль Геокалькулятор не було підключено")}");
+                return null;
+            }
+
+            try
+            {
+                points = geoModule.GetPoints();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(LocalizationContext.Instance.ErrorHappendText, LocalizationContext.Instance.MessageBoxTitle);
+                logger.ErrorEx($"> GetPointFromGeoCalculator Exception: {ex.Message}");
                 return null;
             }
 
