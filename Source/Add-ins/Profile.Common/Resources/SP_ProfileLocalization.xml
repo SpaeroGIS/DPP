@@ -70,6 +70,7 @@
   <LblCreationDateText>Дата створення:</LblCreationDateText>
   <LblDEMText>ЦМР/ ЦММ</LblDEMText>
   <LblDEMTextKey>Шар ЦМР/ЦММ</LblDEMTextKey>
+  <LblDimensionText>м</LblDimensionText>
   <LblDimensionFirstText>м</LblDimensionFirstText>
   <LblDimensionSecondText>м</LblDimensionSecondText>
   <LblFromText>з</LblFromText>
@@ -103,6 +104,7 @@
   <LblProfileInfoText>Параметри відрізку</LblProfileInfoText>
   <LblLengthInfoText>Довжина:</LblLengthInfoText>
   <LblAzimuthInfoText>Азимут:</LblAzimuthInfoText>
+  <LblGetPointsFromGeoCalculator>Список точок модулю Геокалькулятор</LblGetPointsFromGeoCalculator>
   <LvProfileDetailsAnglesText>Кути:</LvProfileDetailsAnglesText>
   <LvProfileDetailsAzimuthText>Азимут:</LvProfileDetailsAzimuthText>
   <LvProfileDetailsEndPointsText>Початок - кінець</LvProfileDetailsEndPointsText>
@@ -170,6 +172,7 @@
   <LvProfilesSetsSharedColHeader>Спільний</LvProfilesSetsSharedColHeader>
   <LvProfilesSetsTypeColHeader>Тип</LvProfilesSetsTypeColHeader>
   <TxtProfileCalcHeader>Профіль</TxtProfileCalcHeader>
+  <LvPointsFromGeoCalculatorNumberHeader>Номер</LvPointsFromGeoCalculatorNumberHeader>
 
   <GbFiltersTitle>Фільтри</GbFiltersTitle>
   <MessageBoxTitle>Спостереження</MessageBoxTitle>

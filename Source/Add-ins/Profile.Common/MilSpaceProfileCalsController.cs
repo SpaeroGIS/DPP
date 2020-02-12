@@ -246,6 +246,14 @@ namespace MilSpace.Profile
                     profileLines.Add(line);
                 }
 
+                ILine ln = new Line()
+                {
+                    FromPoint = line.FromPoint,
+                    ToPoint = line.ToPoint,
+                    SpatialReference = line.SpatialReference
+                };
+
+                View.SetProifileLineInfo(line.Length, ln.Azimuth());
             }
 
             if (View.SelectedProfileSettingsType == ProfileSettingsTypeEnum.Fun)
@@ -309,7 +317,7 @@ namespace MilSpace.Profile
                 var profileSetting = profileSettings[View.SelectedProfileSettingsType];
                 var newProfileId = GenerateProfileId();
                 logger.DebugEx($"GenerateProfile.Profile. ID:{newProfileId}");
-                var newProfileName = GenerateProfileName(newProfileId);
+                var newProfileName = GenerateProfileName();
                 logger.DebugEx($"GenerateProfile.Profile. Name:{newProfileName}");
 
                 if (manager == null)
@@ -766,7 +774,7 @@ namespace MilSpace.Profile
 
         private void SetProfileName()
         {
-            View.ProfileName = $"{NewProfilePrefix} {profileId}";
+            View.ProfileName = $"{NewProfilePrefix} {GenerateProfileNameSuffix()}";
         }
 
         private ProfileSession GetProfileSessionById(int profileId)
@@ -783,10 +791,10 @@ namespace MilSpace.Profile
         }
 
 
-        private string GenerateProfileName(int id)
+        private string GenerateProfileName()
         {
             if (!string.IsNullOrWhiteSpace(View.ProfileName)) return View.ProfileName;
-            var result = $"{NewProfilePrefix} {id}";
+            var result = $"{NewProfilePrefix} {GenerateProfileNameSuffix()}";
             return result;
 
         }
@@ -794,6 +802,11 @@ namespace MilSpace.Profile
         private int GenerateProfileId()
         {
             return (int)(DateTime.Now.ToOADate() * 10000);
+        }
+
+        private string GenerateProfileNameSuffix()
+        {
+            return DataAccess.Helper.GetTemporaryNameSuffix();
         }
 
         private IPoint GetEnvelopeCenterPoint(IEnvelope envelope)
@@ -1027,7 +1040,7 @@ namespace MilSpace.Profile
             {
                 DefinitionType = ProfileSettingsTypeEnum.Composed,
                 SessionId = newProfileId,
-                SessionName = GenerateProfileName(newProfileId),
+                SessionName = GenerateProfileName(),
                 ObserverHeight = 0,
                 SurfaceLayerName = View.DemLayerName,
                 CreatedBy = Environment.UserName,
@@ -1152,7 +1165,7 @@ namespace MilSpace.Profile
                 return null;
             }
 
-            var pointsWindow = new PointsListModalWindow(points, _assignmentMethods[AssignmentMethodsEnum.GeoCalculator]);
+            var pointsWindow = new PointsListModalWindow(points);
             var result = pointsWindow.ShowDialog();
 
             if(result == DialogResult.OK)

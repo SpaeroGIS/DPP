@@ -934,6 +934,12 @@ namespace MilSpace.Profile
             }
         }
 
+        public void SetProifileLineInfo(double length, double azimuth)
+        {
+            lblAzimuthInfo.Text = $"{LocalizationContext.Instance.AzimuthInfoText} {Math.Round(azimuth).ToString()}";
+            lblLengthInfo.Text = $"{LocalizationContext.Instance.LengthInfoText} {Math.Round(length).ToString()} {LocalizationContext.Instance.DimensionText}";
+        }
+
         private void ChangeSessionHeigth(TreeNodeCollection nodes, int id, double height)
         {
             foreach (TreeNode node in nodes)
@@ -1137,8 +1143,8 @@ namespace MilSpace.Profile
             lblFirstlPointGettingWay.Text = LocalizationContext.Instance.FindLocalizedElement("LblAssignmentMethodText", "Спосіб призначення");
             lblSecondPointGettingWay.Text = LocalizationContext.Instance.FindLocalizedElement("LblAssignmentMethodText", "Спосіб призначення");
             lblProfileInfo.Text = LocalizationContext.Instance.FindLocalizedElement("LblProfileInfoText", "Параметри відрізку");
-            lblLengthInfo.Text = LocalizationContext.Instance.FindLocalizedElement("LblLengthInfoText", "Довжина:");
-            lblAzimuthInfo.Text = LocalizationContext.Instance.FindLocalizedElement("LblAzimuthInfoText", "Азимут:");
+            lblLengthInfo.Text = LocalizationContext.Instance.LengthInfoText;
+            lblAzimuthInfo.Text = LocalizationContext.Instance.AzimuthInfoText;
 
             toolPanOnMap.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintToolBtnPanOnMapText", "Переміститись  на карті");
             toolBtnFlash.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintToolBtnShowOnMapText", "Показати на карті");

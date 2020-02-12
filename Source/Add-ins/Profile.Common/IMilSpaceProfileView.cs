@@ -73,7 +73,9 @@ namespace MilSpace.Profile
         bool AddNodeToTreeView(ProfileSession profile);
 
         ProfileSession GetProfileFromList(string profileName, ProfileSettingsTypeEnum profileSettingsType);
-                
+        void SetProifileLineInfo(double length, double azimuth);
+
+
         List<string> GetLayers();
 
         ProfileSettingsTypeEnum GetProfileTypeFromNode();
