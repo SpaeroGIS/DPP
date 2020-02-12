@@ -70,6 +70,7 @@
   <LblCreationDateText>Дата створення:</LblCreationDateText>
   <LblDEMText>ЦМР/ ЦММ</LblDEMText>
   <LblDEMTextKey>Шар ЦМР/ЦММ</LblDEMTextKey>
+  <LblDimensionText>м</LblDimensionText>
   <LblDimensionFirstText>м</LblDimensionFirstText>
   <LblDimensionSecondText>м</LblDimensionSecondText>
   <LblFromText>з</LblFromText>
