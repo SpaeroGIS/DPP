@@ -107,7 +107,7 @@ namespace MilSpace.Core.Tools
         {
             return GetAllLayers().FirstOrDefault(layer => layer.Name.Equals(layerName));
         }
-
+        
         public List<string> GetFeatureLayerFields(IFeatureLayer layer)
         {
             var fieldsNames = new List<string>();
@@ -154,7 +154,6 @@ namespace MilSpace.Core.Tools
 
         public IFeatureLayer FindFeatureLayer(string layerNameOrAlias)
         {
-
             return GetAllLayers().FirstOrDefault(l => l != null && l is IFeatureLayer  && ((IFeatureLayer)l).FeatureClass != null
             && ((IFeatureLayer)l).FeatureClass.AliasName.EndsWith(layerNameOrAlias, StringComparison.InvariantCultureIgnoreCase)) as IFeatureLayer;
             

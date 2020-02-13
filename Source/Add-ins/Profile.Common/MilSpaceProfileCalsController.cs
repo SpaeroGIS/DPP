@@ -30,6 +30,7 @@ namespace MilSpace.Profile
     {
         //TODO: Localize
         private static readonly string graphiclayerTitle = LocalizationContext.Instance.FindLocalizedElement("TxtGraphicsLayerValue", "графічні об'єкти");
+        private MapLayersManager _mapLayersManager;
 
         private int profileId;
         GraphicsLayerManager graphicsLayerManager;
@@ -101,6 +102,7 @@ namespace MilSpace.Profile
             IActiveViewEvents_Event activeViewEvents = (IActiveViewEvents_Event)View.ActiveView.FocusMap;
             IActiveViewEvents_SelectionChangedEventHandler handler = new IActiveViewEvents_SelectionChangedEventHandler(OnMapSelectionChangedLocal);
             activeViewEvents.SelectionChanged += handler;
+            _mapLayersManager = new MapLayersManager(ArcMap.Document.ActiveView);
 
             logger.InfoEx("> OnDocumentsLoad END");
         }
@@ -1111,6 +1113,7 @@ namespace MilSpace.Profile
 
                 case AssignmentMethodsEnum.ObservationPoints:
 
+                    point = GetPointFromObservationPoints();
 
                     break;
 
@@ -1149,8 +1152,8 @@ namespace MilSpace.Profile
 
             if(!changes && geoModule == null)
             {
-                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgGeoCalcModuleDoesntExists", "Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним"), LocalizationContext.Instance.MessageBoxTitle);
-                logger.ErrorEx($"> GetPointFromGeoCalculator Exception: {LocalizationContext.Instance.FindLocalizedElement("MsgGeoCalcModuleDoesntExists", "Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним")}");
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgGeoCalcModuleDoesnotExistText", "Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним"), LocalizationContext.Instance.MessageBoxTitle);
+                logger.ErrorEx($"> GetPointFromGeoCalculator Exception: {LocalizationContext.Instance.FindLocalizedElement("MsgGeoCalcModuleDoesnotExistText", "Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним")}");
                 return null;
             }
 
@@ -1176,10 +1179,27 @@ namespace MilSpace.Profile
             return null;
         }
 
-        //private IPoint GetPointFromObservationPoints()
-        //{
+        private IPoint GetPointFromObservationPoints()
+        {
+            var observPointsLayer = _mapLayersManager.FindFeatureLayer("MilSp_Visible_ObservPoints");
 
-        //}
+            if(observPointsLayer == null)
+            {
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgObservPointsLayerDoesnotExistText", "У проекті відсутній шар точок спостереження \nБудь ласка додайте шар, щоб мати можливість отримати точки"),
+                                LocalizationContext.Instance.MessageBoxTitle);
+                return null;
+            }
+
+            ObservationPointsListModalWindow observPointsModal = new ObservationPointsListModalWindow(observPointsLayer as IFeatureLayer);
+            var result = observPointsModal.ShowDialog();
+
+            if(result == DialogResult.OK)
+            {
+                return observPointsModal.SelectedPoint;
+            }
+
+            return null;
+        }
 
         private IPoint GetPointFromPointLayers()
         {

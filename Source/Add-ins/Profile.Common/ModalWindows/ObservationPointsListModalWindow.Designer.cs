@@ -46,7 +46,7 @@
             // 
             this.panel1.Controls.Add(this.btnChoosePoint);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 322);
+            this.panel1.Location = new System.Drawing.Point(0, 323);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(257, 28);
             this.panel1.TabIndex = 4;
@@ -55,7 +55,7 @@
             // 
             this.btnChoosePoint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnChoosePoint.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnChoosePoint.Location = new System.Drawing.Point(179, 2);
+            this.btnChoosePoint.Location = new System.Drawing.Point(179, 3);
             this.btnChoosePoint.Name = "btnChoosePoint";
             this.btnChoosePoint.Size = new System.Drawing.Size(75, 23);
             this.btnChoosePoint.TabIndex = 0;
@@ -84,6 +84,10 @@
             // 
             // dgvPoints
             // 
+            this.dgvPoints.AllowUserToAddRows = false;
+            this.dgvPoints.AllowUserToDeleteRows = false;
+            this.dgvPoints.AllowUserToResizeColumns = false;
+            this.dgvPoints.AllowUserToResizeRows = false;
             this.dgvPoints.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvPoints.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPoints.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -98,7 +102,7 @@
             this.dgvPoints.ReadOnly = true;
             this.dgvPoints.RowHeadersVisible = false;
             this.dgvPoints.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPoints.Size = new System.Drawing.Size(257, 294);
+            this.dgvPoints.Size = new System.Drawing.Size(257, 295);
             this.dgvPoints.TabIndex = 5;
             // 
             // IdCol
@@ -136,7 +140,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(257, 350);
+            this.ClientSize = new System.Drawing.Size(257, 351);
             this.Controls.Add(this.dgvPoints);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.titlePanel);

@@ -153,8 +153,9 @@
   <MsgNotAllowedToShareText>Ви не можете дозволити спільний доступ для цього профілю.</MsgNotAllowedToShareText>
   <MsgRemoveProfaileText>Ви дійсно бажаєти cкинути профіль  "{0}" з сесії?</MsgRemoveProfaileText>
   <MsgPickCoordinatesToolText>Будь ласка, увімкніть інструмент для виділення точки</MsgPickCoordinatesToolText>
-  <MsgGeoCalcModuleDoesntExists>Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</MsgGeoCalcModuleDoesntExists>
+  <MsgGeoCalcModuleDoesnotExistText>Модуль Геокалькулятор не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</MsgGeoCalcModuleDoesnotExistText>
   <MsgCannotFindObjIdText>У шарі відсутнє поле OBJECTID</MsgCannotFindObjIdText>
+  <MsgObservPointsLayerDoesnotExistText>У проекті відсутній шар точок спостереження. Будь ласка додайте шар, щоб мати можливість отримати точки</MsgObservPointsLayerDoesnotExistText>
 
   <DataExportPointsPropertiesHeader>Номер; X; Y; Z; Відстань; Точка перегину; Видима; Перетини</DataExportPointsPropertiesHeader>
   <DataExportProfilePropertiesHeader>Номер; Назва профілю; Зовнішній; Стан; Точка початку; Точка кінцю; Азимут; Пункт спостереження; Довжина; Макс. висота; Різниця висот; Мін. висота; Макс. кут підйому; Макс. кут спуску; Процент видимих зон</DataExportProfilePropertiesHeader>
@@ -169,6 +170,8 @@
   <DgvProfilePropertiesProfileLengthColHeader>Д</DgvProfilePropertiesProfileLengthColHeader>
   <DgvProfilePropertiesProfileNumberColHeader>Н</DgvProfilePropertiesProfileNumberColHeader>
   <DgvProfilePropertiesVisiblePercentColHeader>ВВ</DgvProfilePropertiesVisiblePercentColHeader>
+  <DgvObservPointsIdHeader>Ідентифікатор</DgvObservPointsIdHeader>
+  <DgvObservPointsTitleHeader>Назва</DgvObservPointsTitleHeader>
   <LvProfilesSetsCreatorColHeader>Автор</LvProfilesSetsCreatorColHeader>
   <LvProfilesSetsDateColHeader>Дата</LvProfilesSetsDateColHeader>
   <LvProfilesSetsNameColHeader>Назва профілю</LvProfilesSetsNameColHeader>
@@ -183,6 +186,7 @@
   <ModalProfilesTreeModalTitle>Дерево профілів</ModalProfilesTreeModalTitle>
   <ModalPointsListTitle>Вибір точки зі списку точок Геокалькулятора</ModalPointsListTitle>
   <ModalPointsFromLayerTitle>Вибір точки з точкового шару</ModalPointsFromLayerTitle>
+  <ModalObservPointsTitle>Вибір точки з шару точок спостереження</ModalObservPointsTitle>
 
   <FbdSelectFolderDescription>Виберіть папку для збереження даних</FbdSelectFolderDescription>
   <TxtCreatorPlaceholder>Автор</TxtCreatorPlaceholder>

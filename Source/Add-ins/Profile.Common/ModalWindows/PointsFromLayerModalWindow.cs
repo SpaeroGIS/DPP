@@ -3,17 +3,12 @@ using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core;
 using MilSpace.Core.Tools;
-using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Profile.Localization;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MilSpace.Profile.ModalWindows
@@ -21,7 +16,7 @@ namespace MilSpace.Profile.ModalWindows
     public partial class PointsFromLayerModalWindow : Form
     {
         private MapLayersManager _mapLayersManager = new MapLayersManager(ArcMap.Document.ActiveView);
-        private static Logger _log = Logger.GetLoggerEx("MilSpace.Profile.ModalWindows.PointsFromLayerModalWindow");
+        private Logger _log = Logger.GetLoggerEx("MilSpace.Profile.ModalWindows.PointsFromLayerModalWindow");
         private List<FromLayerPointModel> _points; 
         public IPoint SelectedPoint;
 
@@ -129,7 +124,7 @@ namespace MilSpace.Profile.ModalWindows
                             displayedField = feature.Value[selectedFieldIndex].ToString();
                         }
 
-                        _points.Add(new FromLayerPointModel { Point = point, ObjId = id, DisplayedField = displayedField });
+                        _points.Add(new FromLayerPointModel { Point = pointCopy, ObjId = id, DisplayedField = displayedField });
                     }
                     else
                     {
@@ -150,7 +145,7 @@ namespace MilSpace.Profile.ModalWindows
             }
             catch(Exception ex)
             {
-                _log.ErrorEx($"> ImportFromLayer Exception. ex.Message:{ex.Message}");
+                _log.ErrorEx($"> FillPointsGrid Exception. ex.Message:{ex.Message}");
             }
             finally
             {
