@@ -16,7 +16,7 @@ namespace MilSpace.Profile.ModalWindows
     {
         private List<FromLayerPointModel> _points = new List<FromLayerPointModel>();
         private Logger _log = Logger.GetLoggerEx("MilSpace.Profile.ModalWindows.ObservationPointsListModalWindow");
-        public IPoint SelectedPoint; 
+        internal FromLayerPointModel SelectedPoint;
 
         public ObservationPointsListModalWindow(IFeatureLayer observPointsLayer)
         {
@@ -108,7 +108,7 @@ namespace MilSpace.Profile.ModalWindows
         {
             if(dgvPoints.SelectedRows.Count > 0)
             {
-                SelectedPoint = _points.First(p => p.ObjId == (int)dgvPoints.SelectedRows[0].Cells["IdCol"].Value).Point;
+                SelectedPoint = _points.First(p => p.ObjId == (int)dgvPoints.SelectedRows[0].Cells["IdCol"].Value);
             }
         }
     }

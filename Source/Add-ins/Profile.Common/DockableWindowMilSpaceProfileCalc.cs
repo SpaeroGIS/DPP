@@ -940,6 +940,18 @@ namespace MilSpace.Profile
             lblLengthInfo.Text = $"{LocalizationContext.Instance.LengthInfoText} {Math.Round(length).ToString()} {LocalizationContext.Instance.DimensionText}";
         }
 
+        public void SetPointInfo(bool isFirstPoint, string text)
+        {
+            if(isFirstPoint)
+            {
+                lblFirstPointInfo.Text = text;
+            }
+            else
+            {
+                lblSecondPointInfo.Text = text;
+            }
+        }
+
         private void ChangeSessionHeigth(TreeNodeCollection nodes, int id, double height)
         {
             foreach (TreeNode node in nodes)
@@ -1145,6 +1157,9 @@ namespace MilSpace.Profile
             lblProfileInfo.Text = LocalizationContext.Instance.FindLocalizedElement("LblProfileInfoText", "Параметри відрізку");
             lblLengthInfo.Text = LocalizationContext.Instance.LengthInfoText;
             lblAzimuthInfo.Text = LocalizationContext.Instance.AzimuthInfoText;
+
+            lblFirstPointInfo.Text = string.Empty;
+            lblSecondPointInfo.Text = string.Empty;
 
             toolPanOnMap.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintToolBtnPanOnMapText", "Переміститись  на карті");
             toolBtnFlash.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintToolBtnShowOnMapText", "Показати на карті");
@@ -1496,12 +1511,28 @@ namespace MilSpace.Profile
 
         private void CmbFirstPointAssignmentMethod_SelectedIndexChanged(object sender, EventArgs e)
         {
-            btnChooseFirstPointAssignmentMethod.Enabled = !cmbFirstPointAssignmentMethod.SelectedItem.Equals(LocalizationContext.Instance.AssignmentMethodFromMapItem);
+            if(cmbFirstPointAssignmentMethod.SelectedItem.Equals(LocalizationContext.Instance.AssignmentMethodFromMapItem))
+            {
+                btnChooseFirstPointAssignmentMethod.Enabled = false;
+                SetPointInfo(true, string.Empty);
+            }
+            else
+            {
+                btnChooseFirstPointAssignmentMethod.Enabled = true;
+            }
         }
 
         private void CmbSecondPointAssignmentMethod_SelectedIndexChanged(object sender, EventArgs e)
         {
-            btnChooseSecondPointAssignmentMethod.Enabled = !cmbSecondPointAssignmentMethod.SelectedItem.Equals(LocalizationContext.Instance.AssignmentMethodFromMapItem);
+            if(cmbSecondPointAssignmentMethod.SelectedItem.Equals(LocalizationContext.Instance.AssignmentMethodFromMapItem))
+            {
+                btnChooseSecondPointAssignmentMethod.Enabled = false;
+                SetPointInfo(false, string.Empty);
+            }
+            else
+            {
+                btnChooseSecondPointAssignmentMethod.Enabled = true;
+            }
         }
 
         private void BtnChooseSecondPointAssignmentMethod_Click(object sender, EventArgs e)

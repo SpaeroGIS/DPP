@@ -74,6 +74,7 @@ namespace MilSpace.Profile
 
         ProfileSession GetProfileFromList(string profileName, ProfileSettingsTypeEnum profileSettingsType);
         void SetProifileLineInfo(double length, double azimuth);
+        void SetPointInfo(bool isFirstPoint, string text);
 
 
         List<string> GetLayers();

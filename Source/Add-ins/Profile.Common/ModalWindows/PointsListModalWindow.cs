@@ -14,7 +14,7 @@ namespace MilSpace.Profile.ModalWindows
 {
     public partial class PointsListModalWindow : Form
     {
-        public IPoint SelectedPoint;
+        internal FromLayerPointModel SelectedPoint;
         private Dictionary<int, IPoint> _points = new Dictionary<int, IPoint>();
 
         public PointsListModalWindow(Dictionary<int, IPoint> points)
@@ -54,7 +54,8 @@ namespace MilSpace.Profile.ModalWindows
         {
             if(lvPoints.SelectedItems.Count > 0)
             {
-                SelectedPoint = _points[Convert.ToInt32(lvPoints.SelectedItems[0].Text)];
+                var pair = _points.First(point => point.Key == Convert.ToInt32(lvPoints.SelectedItems[0].Text));
+                SelectedPoint = new FromLayerPointModel { Point = pair.Value, ObjId = pair.Key };
             }
         }
     }

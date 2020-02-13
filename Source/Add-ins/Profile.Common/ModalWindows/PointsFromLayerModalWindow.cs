@@ -18,7 +18,8 @@ namespace MilSpace.Profile.ModalWindows
         private MapLayersManager _mapLayersManager = new MapLayersManager(ArcMap.Document.ActiveView);
         private Logger _log = Logger.GetLoggerEx("MilSpace.Profile.ModalWindows.PointsFromLayerModalWindow");
         private List<FromLayerPointModel> _points; 
-        public IPoint SelectedPoint;
+        internal FromLayerPointModel SelectedPoint;
+        internal string LayerName;
 
         public PointsFromLayerModalWindow()
         {
@@ -176,7 +177,8 @@ namespace MilSpace.Profile.ModalWindows
         {
             if(dgvPoints.SelectedRows.Count > 0)
             {
-                SelectedPoint = _points.First(point => point.ObjId == (int)dgvPoints.SelectedRows[0].Cells["IdCol"].Value).Point;
+                SelectedPoint = _points.First(point => point.ObjId == (int)dgvPoints.SelectedRows[0].Cells["IdCol"].Value);
+                LayerName = lblLayer.Text;
             }
         }
     }
