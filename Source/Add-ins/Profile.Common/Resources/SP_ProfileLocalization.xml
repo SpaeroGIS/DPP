@@ -105,6 +105,8 @@
   <LblLengthInfoText>Довжина:</LblLengthInfoText>
   <LblAzimuthInfoText>Азимут:</LblAzimuthInfoText>
   <LblGetPointsFromGeoCalculator>Список точок модулю Геокалькулятор</LblGetPointsFromGeoCalculator>
+  <LblLayersText>Шар</LblLayersText>
+  <LblFieldsText>Поле</LblFieldsText>
   <LvProfileDetailsAnglesText>Кути:</LvProfileDetailsAnglesText>
   <LvProfileDetailsAzimuthText>Азимут:</LvProfileDetailsAzimuthText>
   <LvProfileDetailsEndPointsText>Початок - кінець</LvProfileDetailsEndPointsText>
@@ -152,6 +154,7 @@
   <MsgRemoveProfaileText>Ви дійсно бажаєти cкинути профіль  "{0}" з сесії?</MsgRemoveProfaileText>
   <MsgPickCoordinatesToolText>Будь ласка, увімкніть інструмент для виділення точки</MsgPickCoordinatesToolText>
   <MsgGeoCalcModuleDoesntExists>Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</MsgGeoCalcModuleDoesntExists>
+  <MsgCannotFindObjIdText>У шарі відсутнє поле OBJECTID</MsgCannotFindObjIdText>
 
   <DataExportPointsPropertiesHeader>Номер; X; Y; Z; Відстань; Точка перегину; Видима; Перетини</DataExportPointsPropertiesHeader>
   <DataExportProfilePropertiesHeader>Номер; Назва профілю; Зовнішній; Стан; Точка початку; Точка кінцю; Азимут; Пункт спостереження; Довжина; Макс. висота; Різниця висот; Мін. висота; Макс. кут підйому; Макс. кут спуску; Процент видимих зон</DataExportProfilePropertiesHeader>
@@ -178,7 +181,8 @@
   <MessageBoxTitle>Спостереження</MessageBoxTitle>
   <ModalProfilesSetsTitle>Додати доступні набори профілів</ModalProfilesSetsTitle>
   <ModalProfilesTreeModalTitle>Дерево профілів</ModalProfilesTreeModalTitle>
-  <ModalPointsListTitle>Список точок Геокалькулятора</ModalPointsListTitle>
+  <ModalPointsListTitle>Вибір точки зі списку точок Геокалькулятора</ModalPointsListTitle>
+  <ModalPointsFromLayerTitle>Вибір точки з точкового шару</ModalPointsFromLayerTitle>
 
   <FbdSelectFolderDescription>Виберіть папку для збереження даних</FbdSelectFolderDescription>
   <TxtCreatorPlaceholder>Автор</TxtCreatorPlaceholder>

@@ -1117,7 +1117,7 @@ namespace MilSpace.Profile
 
                 case AssignmentMethodsEnum.PointsLayers:
 
-
+                    point = GetPointFromPointLayers();
 
                     break;
 
@@ -1128,7 +1128,7 @@ namespace MilSpace.Profile
                 return;
             }
 
-            var pointToMapSpatial = point.ClonePoint();
+            var pointToMapSpatial = point.Clone();
             pointToMapSpatial.Project(ArcMap.Document.ActivatedView.FocusMap.SpatialReference);
 
             if(isFirstPoint)
@@ -1180,6 +1180,19 @@ namespace MilSpace.Profile
         //{
 
         //}
+
+        private IPoint GetPointFromPointLayers()
+        {
+            PointsFromLayerModalWindow pointsFromLayerModal = new PointsFromLayerModalWindow();
+            var result = pointsFromLayerModal.ShowDialog();
+
+            if(result == DialogResult.OK)
+            {
+                return pointsFromLayerModal.SelectedPoint;
+            }
+
+            return null;
+        }
 
         private void OnMapSelectionChangedLocal()
         {

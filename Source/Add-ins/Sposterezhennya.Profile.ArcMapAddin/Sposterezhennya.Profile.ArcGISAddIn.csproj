@@ -219,6 +219,9 @@
       <Link>ModalWindows\AccessibleProfilesModalWindow.designer.cs</Link>
       <DependentUpon>AccessibleProfilesModalWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\Profile.Common\ModalWindows\FromLayerPointModel.cs">
+      <Link>ModalWindows\FromLayerPointModel.cs</Link>
+    </Compile>
     <Compile Include="..\Profile.Common\ModalWindows\ObservationPointsListModalWindow.cs">
       <Link>ModalWindows\ObservationPointsListModalWindow.cs</Link>
       <SubType>Form</SubType>
@@ -226,6 +229,14 @@
     <Compile Include="..\Profile.Common\ModalWindows\ObservationPointsListModalWindow.designer.cs">
       <Link>ModalWindows\ObservationPointsListModalWindow.designer.cs</Link>
       <DependentUpon>ObservationPointsListModalWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\Profile.Common\ModalWindows\PointsFromLayerModalWindow.cs">
+      <Link>ModalWindows\PointsFromLayerModalWindow.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\Profile.Common\ModalWindows\PointsFromLayerModalWindow.designer.cs">
+      <Link>ModalWindows\PointsFromLayerModalWindow.designer.cs</Link>
+      <DependentUpon>PointsFromLayerModalWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="..\Profile.Common\ModalWindows\PointsListModalWindow.cs">
       <Link>ModalWindows\PointsListModalWindow.cs</Link>
@@ -366,6 +377,10 @@
       <Link>ModalWindows\ObservationPointsListModalWindow.resx</Link>
       <DependentUpon>ObservationPointsListModalWindow.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="..\Profile.Common\ModalWindows\PointsFromLayerModalWindow.resx">
+      <Link>ModalWindows\PointsFromLayerModalWindow.resx</Link>
+      <DependentUpon>PointsFromLayerModalWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="..\Profile.Common\ModalWindows\PointsListModalWindow.resx">
       <Link>ModalWindows\PointsListModalWindow.resx</Link>
       <DependentUpon>PointsListModalWindow.cs</DependentUpon>
@@ -384,6 +399,7 @@
     <Content Include="..\Profile.Common\Resources\SP_ProfileLocalization.xml">
       <Link>Resources\SP_ProfileLocalization.xml</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Localization\SPPRD.Profile.Calc.en-US.resources">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

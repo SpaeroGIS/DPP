@@ -53,6 +53,7 @@
             // 
             // btnChoosePoint
             // 
+            this.btnChoosePoint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnChoosePoint.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnChoosePoint.Location = new System.Drawing.Point(179, 2);
             this.btnChoosePoint.Name = "btnChoosePoint";
