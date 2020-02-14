@@ -2,6 +2,7 @@
 using ESRI.ArcGIS.Geometry;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Profile.DTO;
+using MilSpace.Profile.Helpers;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -74,7 +75,7 @@ namespace MilSpace.Profile
 
         ProfileSession GetProfileFromList(string profileName, ProfileSettingsTypeEnum profileSettingsType);
         void SetProifileLineInfo(double length, double azimuth);
-        void SetPointInfo(bool isFirstPoint, string text);
+        void SetPointInfo(PointTypesEnum pointType, string text);
 
 
         List<string> GetLayers();

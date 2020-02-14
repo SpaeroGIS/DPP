@@ -76,7 +76,7 @@
   <LblFromText>з</LblFromText>
   <LblFunAzimuth1Text>Азимут 1</LblFunAzimuth1Text>
   <LblFunAzimuth2Text>Азимут 2</LblFunAzimuth2Text>
-  <LblFunBasePointText>Базова точка (довгота / широта)</LblFunBasePointText>
+  <LblFunBasePointText>Базова точка</LblFunBasePointText>
   <LblFunCountText>Кількість</LblFunCountText>
   <LblFunDistanceText>Відстань</LblFunDistanceText>
   <LblFunParametersText>Параметри</LblFunParametersText>

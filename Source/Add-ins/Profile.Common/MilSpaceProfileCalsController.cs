@@ -246,16 +246,16 @@ namespace MilSpace.Profile
                 if (line != null)
                 {
                     profileLines.Add(line);
+
+                    ILine ln = new Line()
+                    {
+                        FromPoint = line.FromPoint,
+                        ToPoint = line.ToPoint,
+                        SpatialReference = line.SpatialReference
+                    };
+
+                    View.SetProifileLineInfo(line.Length, ln.Azimuth());
                 }
-
-                ILine ln = new Line()
-                {
-                    FromPoint = line.FromPoint,
-                    ToPoint = line.ToPoint,
-                    SpatialReference = line.SpatialReference
-                };
-
-                View.SetProifileLineInfo(line.Length, ln.Azimuth());
             }
 
             if (View.SelectedProfileSettingsType == ProfileSettingsTypeEnum.Fun)
@@ -1099,7 +1099,7 @@ namespace MilSpace.Profile
             return _assignmentMethods.FirstOrDefault(method => method.Value == methodString).Key;
         }
 
-        internal void SetPointBySelectedMethod(AssignmentMethodsEnum method, bool isFirstPoint)
+        internal void SetPointBySelectedMethod(AssignmentMethodsEnum method, PointTypesEnum pointType)
         {
             IPoint point = null;
 
@@ -1107,20 +1107,20 @@ namespace MilSpace.Profile
             {
                 case AssignmentMethodsEnum.GeoCalculator:
 
-                    point = GetPointFromGeoCalculator(isFirstPoint);
+                    point = GetPointFromGeoCalculator(pointType);
 
                     break;
 
                 case AssignmentMethodsEnum.ObservationPoints:
 
-                    point = GetPointFromObservationPoints(isFirstPoint);
+                    point = GetPointFromObservationPoints(pointType);
 
                     break;
 
 
                 case AssignmentMethodsEnum.PointsLayers:
 
-                    point = GetPointFromPointLayers(isFirstPoint);
+                    point = GetPointFromPointLayers(pointType);
 
                     break;
 
@@ -1134,17 +1134,21 @@ namespace MilSpace.Profile
             var pointToMapSpatial = point.Clone();
             pointToMapSpatial.Project(ArcMap.Document.ActivatedView.FocusMap.SpatialReference);
 
-            if(isFirstPoint)
+            if(pointType == PointTypesEnum.FromPoint)
             {
                 SetFirsPointForLineProfile(point, pointToMapSpatial);
             }
-            else
+            else if(pointType == PointTypesEnum.ToPoint)
             {
                 SetSecondfPointForLineProfile(point, pointToMapSpatial);
             }
+            else
+            {
+                SetCenterPointForFunProfile(point, pointToMapSpatial);
+            }
         }
 
-        private IPoint GetPointFromGeoCalculator(bool isFirstPoint)
+        private IPoint GetPointFromGeoCalculator(PointTypesEnum pointType)
         {
             Dictionary<int, IPoint> points;
 
@@ -1173,7 +1177,7 @@ namespace MilSpace.Profile
 
             if(result == DialogResult.OK)
             {
-                View.SetPointInfo(isFirstPoint, $"{LocalizationContext.Instance.FindLocalizedElement("CmbAssignmentMethodGeoCalcTypeText", "Геокалькулятор")};" +
+                View.SetPointInfo(pointType, $"{LocalizationContext.Instance.FindLocalizedElement("CmbAssignmentMethodGeoCalcTypeText", "Геокалькулятор")};" +
                                                 $" {pointsWindow.SelectedPoint.ObjId}");
 
                 return pointsWindow.SelectedPoint.Point;
@@ -1182,7 +1186,7 @@ namespace MilSpace.Profile
             return null;
         }
 
-        private IPoint GetPointFromObservationPoints(bool isFirstPoint)
+        private IPoint GetPointFromObservationPoints(PointTypesEnum pointType)
         {
             var observPointsLayer = _mapLayersManager.FindFeatureLayer("MilSp_Visible_ObservPoints");
 
@@ -1198,21 +1202,21 @@ namespace MilSpace.Profile
 
             if(result == DialogResult.OK)
             {
-                View.SetPointInfo(isFirstPoint, $"{observPointsLayer.Name}; {observPointsModal.SelectedPoint.ObjId}");
+                View.SetPointInfo(pointType, $"{observPointsLayer.Name}; {observPointsModal.SelectedPoint.ObjId}");
                 return observPointsModal.SelectedPoint.Point;
             }
 
             return null;
         }
 
-        private IPoint GetPointFromPointLayers(bool isFirstPoint)
+        private IPoint GetPointFromPointLayers(PointTypesEnum pointType)
         {
             PointsFromLayerModalWindow pointsFromLayerModal = new PointsFromLayerModalWindow();
             var result = pointsFromLayerModal.ShowDialog();
 
             if(result == DialogResult.OK)
             {
-                View.SetPointInfo(isFirstPoint, $"{pointsFromLayerModal.LayerName}; {pointsFromLayerModal.SelectedPoint.ObjId}");
+                View.SetPointInfo(pointType, $"{pointsFromLayerModal.LayerName}; {pointsFromLayerModal.SelectedPoint.ObjId}");
                 return pointsFromLayerModal.SelectedPoint.Point;
             }
 

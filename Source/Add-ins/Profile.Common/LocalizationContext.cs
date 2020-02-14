@@ -38,6 +38,7 @@ namespace MilSpace.Profile.Localization
         internal string AzimuthInfoText => FindLocalizedElement("LblAzimuthInfoText", "Азимут:");
         internal string LengthInfoText => FindLocalizedElement("LblLengthInfoText", "Довжина:");
         internal string DimensionText => FindLocalizedElement("LblDimensionText", "м");
+        internal string ChooseText => FindLocalizedElement("BtnChooseText", "Обрати");
         internal string ErrorHappendText => FindLocalizedElement("MsgErrorHappenedText", "Виникла помилка /n Більш детальна інформація знаходиться у журналі");
         internal string AssignmentMethodFromMapItem => LocalizationContext.Instance.FindLocalizedElement("CmbAssignmentMethodFromMapTypeText", "Мапа");
 

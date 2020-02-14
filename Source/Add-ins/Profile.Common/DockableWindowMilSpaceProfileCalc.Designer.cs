@@ -117,10 +117,12 @@
             this.profileLength = new System.Windows.Forms.TextBox();
             this.lblFunDistance = new System.Windows.Forms.Label();
             this.lblFunParameters = new System.Windows.Forms.Label();
-            this.panel10 = new System.Windows.Forms.Panel();
-            this.lblHeightOfViewFunBaseText = new System.Windows.Forms.Label();
-            this.txtObserverHeight = new System.Windows.Forms.TextBox();
+            this.centerHeightPanel = new System.Windows.Forms.Panel();
+            this.lblDimentionCenter = new System.Windows.Forms.Label();
+            this.txtCenterPointHeight = new System.Windows.Forms.TextBox();
+            this.lblCenterPointHeight = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
+            this.txtCenterPointZ = new System.Windows.Forms.TextBox();
             this.basePointToolbar = new System.Windows.Forms.ToolBar();
             this.toolBarButton16 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton17 = new System.Windows.Forms.ToolBarButton();
@@ -128,6 +130,12 @@
             this.toolBarButton20 = new System.Windows.Forms.ToolBarButton();
             this.txtBasePointY = new System.Windows.Forms.TextBox();
             this.txtBasePointX = new System.Windows.Forms.TextBox();
+            this.centerPointInfoPanel = new System.Windows.Forms.Panel();
+            this.lblCenterPointInfo = new System.Windows.Forms.Label();
+            this.centerPointComboPanel = new System.Windows.Forms.Panel();
+            this.btnCenterPointAssignmantMethod = new System.Windows.Forms.Button();
+            this.cmbCenterPointAssignmentMethod = new System.Windows.Forms.ComboBox();
+            this.lblCenterPointAssignmentMethod = new System.Windows.Forms.Label();
             this.lblFunBasePoint = new System.Windows.Forms.Label();
             this.primitiveTab = new System.Windows.Forms.TabPage();
             this.lblAboutSelected = new System.Windows.Forms.Label();
@@ -188,8 +196,10 @@
             this.funTab.SuspendLayout();
             this.panel9.SuspendLayout();
             this.panel8.SuspendLayout();
-            this.panel10.SuspendLayout();
+            this.centerHeightPanel.SuspendLayout();
             this.panel7.SuspendLayout();
+            this.centerPointInfoPanel.SuspendLayout();
+            this.centerPointComboPanel.SuspendLayout();
             this.primitiveTab.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel13.SuspendLayout();
@@ -1238,8 +1248,10 @@
             this.funTab.Controls.Add(this.panel9);
             this.funTab.Controls.Add(this.panel8);
             this.funTab.Controls.Add(this.lblFunParameters);
-            this.funTab.Controls.Add(this.panel10);
+            this.funTab.Controls.Add(this.centerHeightPanel);
             this.funTab.Controls.Add(this.panel7);
+            this.funTab.Controls.Add(this.centerPointInfoPanel);
+            this.funTab.Controls.Add(this.centerPointComboPanel);
             this.funTab.Controls.Add(this.lblFunBasePoint);
             this.funTab.ImageKey = "Editing-Line-icon3.png";
             this.funTab.Location = new System.Drawing.Point(4, 24);
@@ -1256,7 +1268,7 @@
             this.panel9.Controls.Add(this.azimuth1);
             this.panel9.Controls.Add(this.lblFunAzimuth1);
             this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel9.Location = new System.Drawing.Point(0, 132);
+            this.panel9.Location = new System.Drawing.Point(0, 191);
             this.panel9.Margin = new System.Windows.Forms.Padding(3, 4, 3, 3);
             this.panel9.Name = "panel9";
             this.panel9.Padding = new System.Windows.Forms.Padding(8, 4, 0, 0);
@@ -1316,7 +1328,7 @@
             this.panel8.Controls.Add(this.profileLength);
             this.panel8.Controls.Add(this.lblFunDistance);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel8.Location = new System.Drawing.Point(0, 104);
+            this.panel8.Location = new System.Drawing.Point(0, 163);
             this.panel8.Name = "panel8";
             this.panel8.Padding = new System.Windows.Forms.Padding(8, 4, 0, 0);
             this.panel8.Size = new System.Drawing.Size(304, 28);
@@ -1375,59 +1387,77 @@
             this.lblFunParameters.AutoSize = true;
             this.lblFunParameters.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblFunParameters.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblFunParameters.Location = new System.Drawing.Point(0, 81);
+            this.lblFunParameters.Location = new System.Drawing.Point(0, 140);
             this.lblFunParameters.Name = "lblFunParameters";
             this.lblFunParameters.Padding = new System.Windows.Forms.Padding(0, 2, 0, 4);
             this.lblFunParameters.Size = new System.Drawing.Size(82, 23);
             this.lblFunParameters.TabIndex = 24;
             this.lblFunParameters.Text = "параметры";
             // 
-            // panel10
+            // centerHeightPanel
             // 
-            this.panel10.Controls.Add(this.lblHeightOfViewFunBaseText);
-            this.panel10.Controls.Add(this.txtObserverHeight);
-            this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel10.Location = new System.Drawing.Point(0, 53);
-            this.panel10.Name = "panel10";
-            this.panel10.Padding = new System.Windows.Forms.Padding(8, 4, 0, 0);
-            this.panel10.Size = new System.Drawing.Size(304, 28);
-            this.panel10.TabIndex = 20;
+            this.centerHeightPanel.Controls.Add(this.lblDimentionCenter);
+            this.centerHeightPanel.Controls.Add(this.txtCenterPointHeight);
+            this.centerHeightPanel.Controls.Add(this.lblCenterPointHeight);
+            this.centerHeightPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.centerHeightPanel.Location = new System.Drawing.Point(0, 112);
+            this.centerHeightPanel.Name = "centerHeightPanel";
+            this.centerHeightPanel.Padding = new System.Windows.Forms.Padding(8, 4, 0, 0);
+            this.centerHeightPanel.Size = new System.Drawing.Size(304, 28);
+            this.centerHeightPanel.TabIndex = 27;
             // 
-            // lblHeightOfViewFunBaseText
+            // lblDimentionCenter
             // 
-            this.lblHeightOfViewFunBaseText.AutoSize = true;
-            this.lblHeightOfViewFunBaseText.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblHeightOfViewFunBaseText.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.lblHeightOfViewFunBaseText.Location = new System.Drawing.Point(78, 4);
-            this.lblHeightOfViewFunBaseText.Name = "lblHeightOfViewFunBaseText";
-            this.lblHeightOfViewFunBaseText.Padding = new System.Windows.Forms.Padding(0, 2, 0, 4);
-            this.lblHeightOfViewFunBaseText.Size = new System.Drawing.Size(157, 19);
-            this.lblHeightOfViewFunBaseText.TabIndex = 22;
-            this.lblHeightOfViewFunBaseText.Text = "высота над поверхностью (м)";
+            this.lblDimentionCenter.AutoSize = true;
+            this.lblDimentionCenter.Location = new System.Drawing.Point(140, 4);
+            this.lblDimentionCenter.Name = "lblDimentionCenter";
+            this.lblDimentionCenter.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.lblDimentionCenter.Size = new System.Drawing.Size(15, 17);
+            this.lblDimentionCenter.TabIndex = 1;
+            this.lblDimentionCenter.Text = "м";
             // 
-            // txtObserverHeight
+            // txtCenterPointHeight
             // 
-            this.txtObserverHeight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtObserverHeight.Dock = System.Windows.Forms.DockStyle.Left;
-            this.txtObserverHeight.Location = new System.Drawing.Point(8, 4);
-            this.txtObserverHeight.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
-            this.txtObserverHeight.Name = "txtObserverHeight";
-            this.txtObserverHeight.Size = new System.Drawing.Size(70, 20);
-            this.txtObserverHeight.TabIndex = 6;
-            this.txtObserverHeight.Text = "25";
-            this.txtObserverHeight.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtCenterPointHeight.Location = new System.Drawing.Point(70, 4);
+            this.txtCenterPointHeight.Name = "txtCenterPointHeight";
+            this.txtCenterPointHeight.Size = new System.Drawing.Size(70, 20);
+            this.txtCenterPointHeight.TabIndex = 0;
+            this.txtCenterPointHeight.Text = "25";
+            this.txtCenterPointHeight.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lblCenterPointHeight
+            // 
+            this.lblCenterPointHeight.AutoSize = true;
+            this.lblCenterPointHeight.Location = new System.Drawing.Point(2, 3);
+            this.lblCenterPointHeight.Name = "lblCenterPointHeight";
+            this.lblCenterPointHeight.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.lblCenterPointHeight.Size = new System.Drawing.Size(44, 21);
+            this.lblCenterPointHeight.TabIndex = 25;
+            this.lblCenterPointHeight.Text = "высота";
             // 
             // panel7
             // 
+            this.panel7.Controls.Add(this.txtCenterPointZ);
             this.panel7.Controls.Add(this.basePointToolbar);
             this.panel7.Controls.Add(this.txtBasePointY);
             this.panel7.Controls.Add(this.txtBasePointX);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel7.Location = new System.Drawing.Point(0, 25);
+            this.panel7.Location = new System.Drawing.Point(0, 88);
             this.panel7.Name = "panel7";
-            this.panel7.Padding = new System.Windows.Forms.Padding(8, 4, 0, 0);
-            this.panel7.Size = new System.Drawing.Size(304, 28);
+            this.panel7.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
+            this.panel7.Size = new System.Drawing.Size(304, 24);
             this.panel7.TabIndex = 13;
+            // 
+            // txtCenterPointZ
+            // 
+            this.txtCenterPointZ.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtCenterPointZ.Location = new System.Drawing.Point(129, 2);
+            this.txtCenterPointZ.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
+            this.txtCenterPointZ.Name = "txtCenterPointZ";
+            this.txtCenterPointZ.ReadOnly = true;
+            this.txtCenterPointZ.Size = new System.Drawing.Size(60, 20);
+            this.txtCenterPointZ.TabIndex = 29;
+            this.txtCenterPointZ.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // basePointToolbar
             // 
@@ -1439,10 +1469,10 @@
             this.toolBarButton19,
             this.toolBarButton20});
             this.basePointToolbar.ButtonSize = new System.Drawing.Size(18, 18);
-            this.basePointToolbar.Dock = System.Windows.Forms.DockStyle.Left;
+            this.basePointToolbar.Dock = System.Windows.Forms.DockStyle.Right;
             this.basePointToolbar.DropDownArrows = true;
             this.basePointToolbar.ImageList = this.imageList1;
-            this.basePointToolbar.Location = new System.Drawing.Point(148, 4);
+            this.basePointToolbar.Location = new System.Drawing.Point(208, 0);
             this.basePointToolbar.Name = "basePointToolbar";
             this.basePointToolbar.ShowToolTips = true;
             this.basePointToolbar.Size = new System.Drawing.Size(96, 24);
@@ -1478,23 +1508,81 @@
             // txtBasePointY
             // 
             this.txtBasePointY.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtBasePointY.Dock = System.Windows.Forms.DockStyle.Left;
-            this.txtBasePointY.Location = new System.Drawing.Point(78, 4);
+            this.txtBasePointY.Location = new System.Drawing.Point(66, 2);
             this.txtBasePointY.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
             this.txtBasePointY.Name = "txtBasePointY";
-            this.txtBasePointY.Size = new System.Drawing.Size(70, 20);
+            this.txtBasePointY.ReadOnly = true;
+            this.txtBasePointY.Size = new System.Drawing.Size(60, 20);
             this.txtBasePointY.TabIndex = 1;
             this.txtBasePointY.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txtBasePointX
             // 
             this.txtBasePointX.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtBasePointX.Dock = System.Windows.Forms.DockStyle.Left;
-            this.txtBasePointX.Location = new System.Drawing.Point(8, 4);
+            this.txtBasePointX.Location = new System.Drawing.Point(3, 2);
             this.txtBasePointX.Name = "txtBasePointX";
-            this.txtBasePointX.Size = new System.Drawing.Size(70, 20);
+            this.txtBasePointX.ReadOnly = true;
+            this.txtBasePointX.Size = new System.Drawing.Size(60, 20);
             this.txtBasePointX.TabIndex = 0;
             this.txtBasePointX.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // centerPointInfoPanel
+            // 
+            this.centerPointInfoPanel.Controls.Add(this.lblCenterPointInfo);
+            this.centerPointInfoPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.centerPointInfoPanel.Location = new System.Drawing.Point(0, 65);
+            this.centerPointInfoPanel.Name = "centerPointInfoPanel";
+            this.centerPointInfoPanel.Size = new System.Drawing.Size(304, 23);
+            this.centerPointInfoPanel.TabIndex = 49;
+            // 
+            // lblCenterPointInfo
+            // 
+            this.lblCenterPointInfo.AutoSize = true;
+            this.lblCenterPointInfo.ForeColor = System.Drawing.Color.Gray;
+            this.lblCenterPointInfo.Location = new System.Drawing.Point(2, 6);
+            this.lblCenterPointInfo.Name = "lblCenterPointInfo";
+            this.lblCenterPointInfo.Size = new System.Drawing.Size(172, 13);
+            this.lblCenterPointInfo.TabIndex = 0;
+            this.lblCenterPointInfo.Text = "Информация о выбранной точке";
+            // 
+            // centerPointComboPanel
+            // 
+            this.centerPointComboPanel.Controls.Add(this.btnCenterPointAssignmantMethod);
+            this.centerPointComboPanel.Controls.Add(this.cmbCenterPointAssignmentMethod);
+            this.centerPointComboPanel.Controls.Add(this.lblCenterPointAssignmentMethod);
+            this.centerPointComboPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.centerPointComboPanel.Location = new System.Drawing.Point(0, 25);
+            this.centerPointComboPanel.Name = "centerPointComboPanel";
+            this.centerPointComboPanel.Size = new System.Drawing.Size(304, 40);
+            this.centerPointComboPanel.TabIndex = 47;
+            // 
+            // btnCenterPointAssignmantMethod
+            // 
+            this.btnCenterPointAssignmantMethod.Location = new System.Drawing.Point(185, 14);
+            this.btnCenterPointAssignmantMethod.Name = "btnCenterPointAssignmantMethod";
+            this.btnCenterPointAssignmantMethod.Size = new System.Drawing.Size(83, 23);
+            this.btnCenterPointAssignmantMethod.TabIndex = 47;
+            this.btnCenterPointAssignmantMethod.Text = "Выбрать";
+            this.btnCenterPointAssignmantMethod.UseVisualStyleBackColor = true;
+            this.btnCenterPointAssignmantMethod.Click += new System.EventHandler(this.BtnCenterPointAssignmantMethod_Click);
+            // 
+            // cmbCenterPointAssignmentMethod
+            // 
+            this.cmbCenterPointAssignmentMethod.FormattingEnabled = true;
+            this.cmbCenterPointAssignmentMethod.Location = new System.Drawing.Point(3, 16);
+            this.cmbCenterPointAssignmentMethod.Name = "cmbCenterPointAssignmentMethod";
+            this.cmbCenterPointAssignmentMethod.Size = new System.Drawing.Size(161, 21);
+            this.cmbCenterPointAssignmentMethod.TabIndex = 46;
+            this.cmbCenterPointAssignmentMethod.SelectedIndexChanged += new System.EventHandler(this.CmbCenterPointAssignmentMethod_SelectedIndexChanged);
+            // 
+            // lblCenterPointAssignmentMethod
+            // 
+            this.lblCenterPointAssignmentMethod.AutoSize = true;
+            this.lblCenterPointAssignmentMethod.Location = new System.Drawing.Point(2, 3);
+            this.lblCenterPointAssignmentMethod.Name = "lblCenterPointAssignmentMethod";
+            this.lblCenterPointAssignmentMethod.Size = new System.Drawing.Size(106, 13);
+            this.lblCenterPointAssignmentMethod.TabIndex = 45;
+            this.lblCenterPointAssignmentMethod.Text = "Способ назначения";
             // 
             // lblFunBasePoint
             // 
@@ -2007,10 +2095,14 @@
             this.panel9.PerformLayout();
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
-            this.panel10.ResumeLayout(false);
-            this.panel10.PerformLayout();
+            this.centerHeightPanel.ResumeLayout(false);
+            this.centerHeightPanel.PerformLayout();
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
+            this.centerPointInfoPanel.ResumeLayout(false);
+            this.centerPointInfoPanel.PerformLayout();
+            this.centerPointComboPanel.ResumeLayout(false);
+            this.centerPointComboPanel.PerformLayout();
             this.primitiveTab.ResumeLayout(false);
             this.primitiveTab.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -2063,9 +2155,6 @@
         private System.Windows.Forms.TextBox profileLength;
         private System.Windows.Forms.Label lblFunDistance;
         private System.Windows.Forms.Label lblFunParameters;
-        private System.Windows.Forms.Panel panel10;
-        private System.Windows.Forms.Label lblHeightOfViewFunBaseText;
-        private System.Windows.Forms.TextBox txtObserverHeight;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.ToolBar basePointToolbar;
         private System.Windows.Forms.ToolBarButton toolBarButton17;
@@ -2174,5 +2263,16 @@
         private System.Windows.Forms.Label lblProfileInfo;
         private System.Windows.Forms.Label lblAzimuthInfo;
         private System.Windows.Forms.Label lblLengthInfo;
+        internal System.Windows.Forms.TextBox txtCenterPointZ;
+        private System.Windows.Forms.Panel centerPointInfoPanel;
+        private System.Windows.Forms.Label lblCenterPointInfo;
+        private System.Windows.Forms.Panel centerPointComboPanel;
+        private System.Windows.Forms.Button btnCenterPointAssignmantMethod;
+        private System.Windows.Forms.ComboBox cmbCenterPointAssignmentMethod;
+        private System.Windows.Forms.Label lblCenterPointAssignmentMethod;
+        private System.Windows.Forms.Panel centerHeightPanel;
+        private System.Windows.Forms.Label lblDimentionCenter;
+        private System.Windows.Forms.TextBox txtCenterPointHeight;
+        private System.Windows.Forms.Label lblCenterPointHeight;
     }
 }

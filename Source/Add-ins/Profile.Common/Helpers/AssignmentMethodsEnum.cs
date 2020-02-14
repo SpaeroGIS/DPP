@@ -7,4 +7,11 @@
         ObservationPoints,
         PointsLayers
     }
+
+    public enum PointTypesEnum
+    {
+        FromPoint,
+        ToPoint,
+        CenterPoint
+    }
 }
