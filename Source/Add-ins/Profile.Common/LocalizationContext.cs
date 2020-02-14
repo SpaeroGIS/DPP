@@ -42,6 +42,7 @@ namespace MilSpace.Profile.Localization
         internal string ErrorHappendText => FindLocalizedElement("MsgErrorHappenedText", "Виникла помилка /n Більш детальна інформація знаходиться у журналі");
         internal string ReturnPointValueText => FindLocalizedElement("BtnReturnPointValueToolTip", "Повернутися до дійсного значення точки");
         internal string AssignmentMethodFromMapItem => FindLocalizedElement("CmbAssignmentMethodFromMapTypeText", "Мапа");
+        internal string DemLayerNotChosenText => FindLocalizedElement("MsgDemLayerNotChosen", "Будь ласка оберіть шар ЦМР/ЦММ, щоб отримати Z координату");
 
         internal bool HasLocalizedElement(string xmlNodeName)
         {

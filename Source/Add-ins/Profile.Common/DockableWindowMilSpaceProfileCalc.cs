@@ -692,7 +692,7 @@ namespace MilSpace.Profile
         {
             set
             {
-                SetPointValue(txtFirstPointX, txtFirstPointY, value);
+                SetPointValue(txtFirstPointX, txtFirstPointY, txtFirstPointZ, value);
 
                 if(String.IsNullOrEmpty(txtSecondPointX.Text) && String.IsNullOrEmpty(txtSecondPointY.Text))
                 {
@@ -713,7 +713,7 @@ namespace MilSpace.Profile
         {
             set
             {
-                SetPointValue(txtSecondPointX, txtSecondPointY, value);
+                SetPointValue(txtSecondPointX, txtSecondPointY, txtSecondPointZ, value);
 
                 if(String.IsNullOrEmpty(txtFirstPointX.Text) && String.IsNullOrEmpty(txtFirstPointY.Text))
                 {
@@ -728,7 +728,7 @@ namespace MilSpace.Profile
         }
 
 
-        private static void SetPointValue(TextBox controlX, TextBox controlY, IPoint point)
+        private static void SetPointValue(TextBox controlX, TextBox controlY, TextBox controlZ, IPoint point)
         {
             logger.DebugEx("> SetPointValue. controlX.Text:{0} controlY.Text:{1}", controlX.Text, controlY.Text);
             try
@@ -737,10 +737,11 @@ namespace MilSpace.Profile
                 {
                     controlX.Text = point.X.ToString("F5");
                     controlY.Text = point.Y.ToString("F5");
+                    controlZ.Text = point.Z.ToString("F5");
                 }
                 else
                 {
-                    controlX.Text = controlY.Text = string.Empty;
+                    controlX.Text = controlY.Text = controlZ.Text = string.Empty;
                 }
             }
             catch (Exception ex)
@@ -760,7 +761,7 @@ namespace MilSpace.Profile
         {
             set
             {
-                SetPointValue(txtBasePointX, txtBasePointY, value);
+                SetPointValue(txtBasePointX, txtBasePointY, txtCenterPointZ, value);
             }
         }
 

@@ -157,6 +157,7 @@
   <MsgGeoCalcModuleDoesnotExistText>Модуль Геокалькулятор не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</MsgGeoCalcModuleDoesnotExistText>
   <MsgCannotFindObjIdText>У шарі відсутнє поле OBJECTID</MsgCannotFindObjIdText>
   <MsgObservPointsLayerDoesnotExistText>У проекті відсутній шар точок спостереження. Будь ласка додайте шар, щоб мати можливість отримати точки</MsgObservPointsLayerDoesnotExistText>
+  <MsgDemLayerNotChosen>Будь ласка оберіть шар ЦМР/ЦММ, щоб отримати Z координату</MsgDemLayerNotChosen>
 
   <DataExportPointsPropertiesHeader>Номер; X; Y; Z; Відстань; Точка перегину; Видима; Перетини</DataExportPointsPropertiesHeader>
   <DataExportProfilePropertiesHeader>Номер; Назва профілю; Зовнішній; Стан; Точка початку; Точка кінцю; Азимут; Пункт спостереження; Довжина; Макс. висота; Різниця висот; Мін. висота; Макс. кут підйому; Макс. кут спуску; Процент видимих зон</DataExportProfilePropertiesHeader>

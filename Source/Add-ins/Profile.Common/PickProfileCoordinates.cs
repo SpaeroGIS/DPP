@@ -4,6 +4,7 @@ using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Profile.DTO;
+using MilSpace.Profile.Localization;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -54,8 +55,7 @@ namespace MilSpace.Profile
             }
             else
             {
-                //TODO: Localize the message box
-                MessageBox.Show("Please, choose a DEM layer to take Z valur from there", "Unlocalized text", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show(LocalizationContext.Instance.DemLayerNotChosenText, LocalizationContext.Instance.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 

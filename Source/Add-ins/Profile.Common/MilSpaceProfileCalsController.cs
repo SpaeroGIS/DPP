@@ -1108,6 +1108,13 @@ namespace MilSpace.Profile
 
         internal void SetPointBySelectedMethod(AssignmentMethodsEnum method, ProfileSettingsPointButtonEnum pointType)
         {
+            var rl = _mapLayersManager.RasterLayers.FirstOrDefault(l => l.Name == View.DemLayerName);
+
+            if(rl == null || String.IsNullOrEmpty(View.DemLayerName))
+            {
+                MessageBox.Show(LocalizationContext.Instance.DemLayerNotChosenText, LocalizationContext.Instance.MessageBoxTitle);
+            }
+
             IPoint point = null;
 
             switch(method)
@@ -1137,6 +1144,8 @@ namespace MilSpace.Profile
             {
                 return;
             }
+
+            point.AddZCoordinate(rl.Raster);
 
             var pointToMapSpatial = point.Clone();
             pointToMapSpatial.Project(ArcMap.Document.ActivatedView.FocusMap.SpatialReference);
