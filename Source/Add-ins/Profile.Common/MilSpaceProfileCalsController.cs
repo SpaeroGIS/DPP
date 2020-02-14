@@ -60,6 +60,13 @@ namespace MilSpace.Profile
             {ProfileSettingsPointButtonEnum.PointsSecond, null}
         };
 
+        private Dictionary<ProfileSettingsPointButtonEnum, IPoint> startPoints = new Dictionary<ProfileSettingsPointButtonEnum, IPoint>()
+        {
+            {ProfileSettingsPointButtonEnum.CenterFun, null},
+            {ProfileSettingsPointButtonEnum.PointsFist, null},
+            {ProfileSettingsPointButtonEnum.PointsSecond, null}
+        };
+
         private IEnumerable<IPolyline> selectedOnMapLines;
 
 
@@ -1099,7 +1106,7 @@ namespace MilSpace.Profile
             return _assignmentMethods.FirstOrDefault(method => method.Value == methodString).Key;
         }
 
-        internal void SetPointBySelectedMethod(AssignmentMethodsEnum method, PointTypesEnum pointType)
+        internal void SetPointBySelectedMethod(AssignmentMethodsEnum method, ProfileSettingsPointButtonEnum pointType)
         {
             IPoint point = null;
 
@@ -1134,11 +1141,11 @@ namespace MilSpace.Profile
             var pointToMapSpatial = point.Clone();
             pointToMapSpatial.Project(ArcMap.Document.ActivatedView.FocusMap.SpatialReference);
 
-            if(pointType == PointTypesEnum.FromPoint)
+            if(pointType == ProfileSettingsPointButtonEnum.PointsFist)
             {
                 SetFirsPointForLineProfile(point, pointToMapSpatial);
             }
-            else if(pointType == PointTypesEnum.ToPoint)
+            else if(pointType == ProfileSettingsPointButtonEnum.PointsSecond)
             {
                 SetSecondfPointForLineProfile(point, pointToMapSpatial);
             }
@@ -1146,9 +1153,17 @@ namespace MilSpace.Profile
             {
                 SetCenterPointForFunProfile(point, pointToMapSpatial);
             }
+
+            startPoints[pointType] = point;
+            View.SetReturnButtonEnable(pointType, true);
         }
 
-        private IPoint GetPointFromGeoCalculator(PointTypesEnum pointType)
+        internal IPoint GetStartPointValue(ProfileSettingsPointButtonEnum pointType)
+        {
+            return startPoints[pointType];
+        }
+
+        private IPoint GetPointFromGeoCalculator(ProfileSettingsPointButtonEnum pointType)
         {
             Dictionary<int, IPoint> points;
 
@@ -1186,7 +1201,7 @@ namespace MilSpace.Profile
             return null;
         }
 
-        private IPoint GetPointFromObservationPoints(PointTypesEnum pointType)
+        private IPoint GetPointFromObservationPoints(ProfileSettingsPointButtonEnum pointType)
         {
             var observPointsLayer = _mapLayersManager.FindFeatureLayer("MilSp_Visible_ObservPoints");
 
@@ -1209,7 +1224,7 @@ namespace MilSpace.Profile
             return null;
         }
 
-        private IPoint GetPointFromPointLayers(PointTypesEnum pointType)
+        private IPoint GetPointFromPointLayers(ProfileSettingsPointButtonEnum pointType)
         {
             PointsFromLayerModalWindow pointsFromLayerModal = new PointsFromLayerModalWindow();
             var result = pointsFromLayerModal.ShowDialog();
@@ -1222,7 +1237,7 @@ namespace MilSpace.Profile
 
             return null;
         }
-
+        
         private void OnMapSelectionChangedLocal()
         {
             if (View.SelectedProfileSettingsType != ProfileSettingsTypeEnum.Primitives)

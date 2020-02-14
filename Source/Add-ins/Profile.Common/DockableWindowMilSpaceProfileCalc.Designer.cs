@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Графика");
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.profileTabPage = new System.Windows.Forms.TabPage();
             this.btnRefreshLayers = new System.Windows.Forms.Button();
@@ -175,6 +175,9 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.clearExtraGraphic = new System.Windows.Forms.ToolStripButton();
             this.lblProfileList = new System.Windows.Forms.Label();
+            this.tlbbReturnPoint = new System.Windows.Forms.ToolBarButton();
+            this.tlbbReturnToPoint = new System.Windows.Forms.ToolBarButton();
+            this.tlbbReturnCenterPoint = new System.Windows.Forms.ToolBarButton();
             this.tabControl1.SuspendLayout();
             this.profileTabPage.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -220,7 +223,7 @@
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(320, 650);
+            this.tabControl1.Size = new System.Drawing.Size(343, 650);
             this.tabControl1.TabIndex = 1;
             // 
             // profileTabPage
@@ -242,7 +245,7 @@
             this.profileTabPage.ImageKey = "Dots.png";
             this.profileTabPage.Location = new System.Drawing.Point(4, 26);
             this.profileTabPage.Name = "profileTabPage";
-            this.profileTabPage.Size = new System.Drawing.Size(312, 620);
+            this.profileTabPage.Size = new System.Drawing.Size(335, 620);
             this.profileTabPage.TabIndex = 0;
             this.profileTabPage.Text = "Параметры профиля";
             // 
@@ -251,7 +254,7 @@
             this.btnRefreshLayers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRefreshLayers.ImageKey = "Refresh20x20.png";
             this.btnRefreshLayers.ImageList = this.imageList1;
-            this.btnRefreshLayers.Location = new System.Drawing.Point(287, 0);
+            this.btnRefreshLayers.Location = new System.Drawing.Point(310, 0);
             this.btnRefreshLayers.Name = "btnRefreshLayers";
             this.btnRefreshLayers.Size = new System.Drawing.Size(25, 25);
             this.btnRefreshLayers.TabIndex = 43;
@@ -490,7 +493,7 @@
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 53.7037F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 46.2963F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(309, 27);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(332, 27);
             this.tableLayoutPanel4.TabIndex = 43;
             // 
             // cmbRasterLayers
@@ -499,9 +502,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbRasterLayers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbRasterLayers.Location = new System.Drawing.Point(101, 3);
+            this.cmbRasterLayers.Location = new System.Drawing.Point(108, 3);
             this.cmbRasterLayers.Name = "cmbRasterLayers";
-            this.cmbRasterLayers.Size = new System.Drawing.Size(205, 21);
+            this.cmbRasterLayers.Size = new System.Drawing.Size(221, 21);
             this.cmbRasterLayers.TabIndex = 9;
             this.cmbRasterLayers.SelectedIndexChanged += new System.EventHandler(this.cmbRasterLayers_SelectedIndexChanged);
             // 
@@ -514,7 +517,7 @@
             this.lblDEM.Location = new System.Drawing.Point(3, 0);
             this.lblDEM.Name = "lblDEM";
             this.lblDEM.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            this.lblDEM.Size = new System.Drawing.Size(92, 27);
+            this.lblDEM.Size = new System.Drawing.Size(99, 27);
             this.lblDEM.TabIndex = 8;
             this.lblDEM.Text = "Шар ЦМР/ ЦММ";
             // 
@@ -535,7 +538,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(309, 54);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(332, 54);
             this.tableLayoutPanel1.TabIndex = 36;
             // 
             // cmbBuildings
@@ -545,9 +548,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbBuildings.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBuildings.FormattingEnabled = true;
-            this.cmbBuildings.Location = new System.Drawing.Point(100, 30);
+            this.cmbBuildings.Location = new System.Drawing.Point(108, 30);
             this.cmbBuildings.Name = "cmbBuildings";
-            this.cmbBuildings.Size = new System.Drawing.Size(206, 21);
+            this.cmbBuildings.Size = new System.Drawing.Size(221, 21);
             this.cmbBuildings.TabIndex = 42;
             // 
             // cmbVegetationLayer
@@ -557,9 +560,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbVegetationLayer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbVegetationLayer.FormattingEnabled = true;
-            this.cmbVegetationLayer.Location = new System.Drawing.Point(100, 3);
+            this.cmbVegetationLayer.Location = new System.Drawing.Point(108, 3);
             this.cmbVegetationLayer.Name = "cmbVegetationLayer";
-            this.cmbVegetationLayer.Size = new System.Drawing.Size(206, 21);
+            this.cmbVegetationLayer.Size = new System.Drawing.Size(221, 21);
             this.cmbVegetationLayer.TabIndex = 40;
             // 
             // lblVegetationLayer
@@ -587,7 +590,7 @@
             this.calcProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.calcProfile.Enabled = false;
             this.calcProfile.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.calcProfile.Location = new System.Drawing.Point(122, 580);
+            this.calcProfile.Location = new System.Drawing.Point(145, 580);
             this.calcProfile.Name = "calcProfile";
             this.calcProfile.Size = new System.Drawing.Size(183, 37);
             this.calcProfile.TabIndex = 27;
@@ -650,7 +653,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 53.7037F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 46.2963F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(309, 54);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(332, 54);
             this.tableLayoutPanel2.TabIndex = 41;
             // 
             // cmbHydrographyLayer
@@ -662,9 +665,9 @@
             "Указанием отрезка на карте",
             "От \"базовой\" точки",
             "Выбором графики"});
-            this.cmbHydrographyLayer.Location = new System.Drawing.Point(101, 31);
+            this.cmbHydrographyLayer.Location = new System.Drawing.Point(108, 31);
             this.cmbHydrographyLayer.Name = "cmbHydrographyLayer";
-            this.cmbHydrographyLayer.Size = new System.Drawing.Size(205, 21);
+            this.cmbHydrographyLayer.Size = new System.Drawing.Size(221, 21);
             this.cmbHydrographyLayer.TabIndex = 38;
             // 
             // lblRoadsLayer
@@ -689,9 +692,9 @@
             "Указанием отрезка на карте",
             "От \"базовой\" точки",
             "Выбором графики"});
-            this.cmbRoadLayers.Location = new System.Drawing.Point(101, 3);
+            this.cmbRoadLayers.Location = new System.Drawing.Point(108, 3);
             this.cmbRoadLayers.Name = "cmbRoadLayers";
-            this.cmbRoadLayers.Size = new System.Drawing.Size(205, 21);
+            this.cmbRoadLayers.Size = new System.Drawing.Size(221, 21);
             this.cmbRoadLayers.TabIndex = 41;
             // 
             // lblHydrographyLayer
@@ -702,7 +705,7 @@
             this.lblHydrographyLayer.Location = new System.Drawing.Point(3, 32);
             this.lblHydrographyLayer.Name = "lblHydrographyLayer";
             this.lblHydrographyLayer.Padding = new System.Windows.Forms.Padding(0, 4, 0, 5);
-            this.lblHydrographyLayer.Size = new System.Drawing.Size(92, 22);
+            this.lblHydrographyLayer.Size = new System.Drawing.Size(99, 22);
             this.lblHydrographyLayer.TabIndex = 42;
             this.lblHydrographyLayer.Text = "гидрография";
             // 
@@ -734,7 +737,7 @@
             this.profileSettingsTab.Name = "profileSettingsTab";
             this.profileSettingsTab.Padding = new System.Drawing.Point(0, 0);
             this.profileSettingsTab.SelectedIndex = 0;
-            this.profileSettingsTab.Size = new System.Drawing.Size(312, 316);
+            this.profileSettingsTab.Size = new System.Drawing.Size(335, 316);
             this.profileSettingsTab.TabIndex = 6;
             this.profileSettingsTab.SelectedIndexChanged += new System.EventHandler(this.profileSettingsTab_SelectedIndexChanged);
             // 
@@ -756,7 +759,7 @@
             this.sectionTab.ImageKey = "vector-path-line.png";
             this.sectionTab.Location = new System.Drawing.Point(4, 24);
             this.sectionTab.Name = "sectionTab";
-            this.sectionTab.Size = new System.Drawing.Size(304, 288);
+            this.sectionTab.Size = new System.Drawing.Size(327, 288);
             this.sectionTab.TabIndex = 0;
             this.sectionTab.Text = "Отрезком";
             this.sectionTab.UseVisualStyleBackColor = true;
@@ -769,7 +772,7 @@
             this.infoPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.infoPanel.Location = new System.Drawing.Point(0, 286);
             this.infoPanel.Name = "infoPanel";
-            this.infoPanel.Size = new System.Drawing.Size(287, 75);
+            this.infoPanel.Size = new System.Drawing.Size(310, 75);
             this.infoPanel.TabIndex = 44;
             // 
             // lblAzimuthInfo
@@ -809,7 +812,7 @@
             this.panel16.Location = new System.Drawing.Point(0, 258);
             this.panel16.Name = "panel16";
             this.panel16.Padding = new System.Windows.Forms.Padding(8, 4, 0, 0);
-            this.panel16.Size = new System.Drawing.Size(287, 28);
+            this.panel16.Size = new System.Drawing.Size(310, 28);
             this.panel16.TabIndex = 30;
             // 
             // lblDimensionSecond
@@ -851,7 +854,7 @@
             this.panel5.Location = new System.Drawing.Point(0, 234);
             this.panel5.Name = "panel5";
             this.panel5.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.panel5.Size = new System.Drawing.Size(287, 24);
+            this.panel5.Size = new System.Drawing.Size(310, 24);
             this.panel5.TabIndex = 28;
             // 
             // txtSecondPointZ
@@ -872,7 +875,8 @@
             this.toolBarButton61,
             this.toolBarButton2,
             this.toolBarButton3,
-            this.toolBarButton4});
+            this.toolBarButton4,
+            this.tlbbReturnToPoint});
             this.secondPointToolbar.ButtonSize = new System.Drawing.Size(16, 16);
             this.secondPointToolbar.Divider = false;
             this.secondPointToolbar.Dock = System.Windows.Forms.DockStyle.Right;
@@ -882,7 +886,7 @@
             this.secondPointToolbar.Name = "secondPointToolbar";
             this.secondPointToolbar.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.secondPointToolbar.ShowToolTips = true;
-            this.secondPointToolbar.Size = new System.Drawing.Size(92, 24);
+            this.secondPointToolbar.Size = new System.Drawing.Size(115, 24);
             this.secondPointToolbar.TabIndex = 28;
             this.secondPointToolbar.Wrappable = false;
             this.secondPointToolbar.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.secondPointToolbar_ButtonClick);
@@ -937,7 +941,7 @@
             this.secondPointInfoPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.secondPointInfoPanel.Location = new System.Drawing.Point(0, 211);
             this.secondPointInfoPanel.Name = "secondPointInfoPanel";
-            this.secondPointInfoPanel.Size = new System.Drawing.Size(287, 23);
+            this.secondPointInfoPanel.Size = new System.Drawing.Size(310, 23);
             this.secondPointInfoPanel.TabIndex = 50;
             // 
             // lblSecondPointInfo
@@ -958,7 +962,7 @@
             this.SecondPointGettingWayPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.SecondPointGettingWayPanel.Location = new System.Drawing.Point(0, 171);
             this.SecondPointGettingWayPanel.Name = "SecondPointGettingWayPanel";
-            this.SecondPointGettingWayPanel.Size = new System.Drawing.Size(287, 40);
+            this.SecondPointGettingWayPanel.Size = new System.Drawing.Size(310, 40);
             this.SecondPointGettingWayPanel.TabIndex = 49;
             // 
             // btnChooseSecondPointAssignmentMethod
@@ -996,7 +1000,7 @@
             this.secondPointTitlePanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.secondPointTitlePanel.Location = new System.Drawing.Point(0, 143);
             this.secondPointTitlePanel.Name = "secondPointTitlePanel";
-            this.secondPointTitlePanel.Size = new System.Drawing.Size(287, 28);
+            this.secondPointTitlePanel.Size = new System.Drawing.Size(310, 28);
             this.secondPointTitlePanel.TabIndex = 45;
             // 
             // lblLineSecondPoint
@@ -1029,7 +1033,7 @@
             this.panel17.Location = new System.Drawing.Point(0, 115);
             this.panel17.Name = "panel17";
             this.panel17.Padding = new System.Windows.Forms.Padding(8, 4, 0, 0);
-            this.panel17.Size = new System.Drawing.Size(287, 28);
+            this.panel17.Size = new System.Drawing.Size(310, 28);
             this.panel17.TabIndex = 26;
             // 
             // lblDimensionFirst
@@ -1072,7 +1076,7 @@
             this.panel4.Margin = new System.Windows.Forms.Padding(2);
             this.panel4.Name = "panel4";
             this.panel4.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.panel4.Size = new System.Drawing.Size(287, 24);
+            this.panel4.Size = new System.Drawing.Size(310, 24);
             this.panel4.TabIndex = 11;
             // 
             // txtFirstPointZ
@@ -1093,7 +1097,8 @@
             this.toolBarButton8,
             this.toolBarButton55,
             this.toolBarButton57,
-            this.toolBarButton58});
+            this.toolBarButton58,
+            this.tlbbReturnPoint});
             this.firstPointToolBar.ButtonSize = new System.Drawing.Size(16, 16);
             this.firstPointToolBar.Divider = false;
             this.firstPointToolBar.Dock = System.Windows.Forms.DockStyle.Right;
@@ -1104,7 +1109,7 @@
             this.firstPointToolBar.Name = "firstPointToolBar";
             this.firstPointToolBar.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.firstPointToolBar.ShowToolTips = true;
-            this.firstPointToolBar.Size = new System.Drawing.Size(92, 24);
+            this.firstPointToolBar.Size = new System.Drawing.Size(115, 24);
             this.firstPointToolBar.TabIndex = 27;
             this.firstPointToolBar.Wrappable = false;
             this.firstPointToolBar.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.toolBar1_ButtonClick);
@@ -1160,7 +1165,7 @@
             this.firstPointInfoPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.firstPointInfoPanel.Location = new System.Drawing.Point(0, 68);
             this.firstPointInfoPanel.Name = "firstPointInfoPanel";
-            this.firstPointInfoPanel.Size = new System.Drawing.Size(287, 23);
+            this.firstPointInfoPanel.Size = new System.Drawing.Size(310, 23);
             this.firstPointInfoPanel.TabIndex = 48;
             // 
             // lblFirstPointInfo
@@ -1181,7 +1186,7 @@
             this.pointGettingWayPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.pointGettingWayPanel.Location = new System.Drawing.Point(0, 28);
             this.pointGettingWayPanel.Name = "pointGettingWayPanel";
-            this.pointGettingWayPanel.Size = new System.Drawing.Size(287, 40);
+            this.pointGettingWayPanel.Size = new System.Drawing.Size(310, 40);
             this.pointGettingWayPanel.TabIndex = 45;
             // 
             // btnChooseFirstPointAssignmentMethod
@@ -1219,7 +1224,7 @@
             this.firstPointTitlePanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.firstPointTitlePanel.Location = new System.Drawing.Point(0, 0);
             this.firstPointTitlePanel.Name = "firstPointTitlePanel";
-            this.firstPointTitlePanel.Size = new System.Drawing.Size(287, 28);
+            this.firstPointTitlePanel.Size = new System.Drawing.Size(310, 28);
             this.firstPointTitlePanel.TabIndex = 11;
             // 
             // lblLineFirstPoint
@@ -1256,7 +1261,7 @@
             this.funTab.ImageKey = "Editing-Line-icon3.png";
             this.funTab.Location = new System.Drawing.Point(4, 24);
             this.funTab.Name = "funTab";
-            this.funTab.Size = new System.Drawing.Size(304, 288);
+            this.funTab.Size = new System.Drawing.Size(327, 288);
             this.funTab.TabIndex = 1;
             this.funTab.Text = "\"Веером\"";
             this.funTab.UseVisualStyleBackColor = true;
@@ -1272,7 +1277,7 @@
             this.panel9.Margin = new System.Windows.Forms.Padding(3, 4, 3, 3);
             this.panel9.Name = "panel9";
             this.panel9.Padding = new System.Windows.Forms.Padding(8, 4, 0, 0);
-            this.panel9.Size = new System.Drawing.Size(304, 28);
+            this.panel9.Size = new System.Drawing.Size(327, 28);
             this.panel9.TabIndex = 26;
             // 
             // azimuth2
@@ -1331,7 +1336,7 @@
             this.panel8.Location = new System.Drawing.Point(0, 163);
             this.panel8.Name = "panel8";
             this.panel8.Padding = new System.Windows.Forms.Padding(8, 4, 0, 0);
-            this.panel8.Size = new System.Drawing.Size(304, 28);
+            this.panel8.Size = new System.Drawing.Size(327, 28);
             this.panel8.TabIndex = 25;
             // 
             // funLinesCount
@@ -1403,7 +1408,7 @@
             this.centerHeightPanel.Location = new System.Drawing.Point(0, 112);
             this.centerHeightPanel.Name = "centerHeightPanel";
             this.centerHeightPanel.Padding = new System.Windows.Forms.Padding(8, 4, 0, 0);
-            this.centerHeightPanel.Size = new System.Drawing.Size(304, 28);
+            this.centerHeightPanel.Size = new System.Drawing.Size(327, 28);
             this.centerHeightPanel.TabIndex = 27;
             // 
             // lblDimentionCenter
@@ -1445,7 +1450,7 @@
             this.panel7.Location = new System.Drawing.Point(0, 88);
             this.panel7.Name = "panel7";
             this.panel7.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.panel7.Size = new System.Drawing.Size(304, 24);
+            this.panel7.Size = new System.Drawing.Size(327, 24);
             this.panel7.TabIndex = 13;
             // 
             // txtCenterPointZ
@@ -1467,15 +1472,17 @@
             this.toolBarButton16,
             this.toolBarButton17,
             this.toolBarButton19,
-            this.toolBarButton20});
+            this.toolBarButton20,
+            this.tlbbReturnCenterPoint});
             this.basePointToolbar.ButtonSize = new System.Drawing.Size(18, 18);
+            this.basePointToolbar.Divider = false;
             this.basePointToolbar.Dock = System.Windows.Forms.DockStyle.Right;
             this.basePointToolbar.DropDownArrows = true;
             this.basePointToolbar.ImageList = this.imageList1;
-            this.basePointToolbar.Location = new System.Drawing.Point(208, 0);
+            this.basePointToolbar.Location = new System.Drawing.Point(212, 0);
             this.basePointToolbar.Name = "basePointToolbar";
             this.basePointToolbar.ShowToolTips = true;
-            this.basePointToolbar.Size = new System.Drawing.Size(96, 24);
+            this.basePointToolbar.Size = new System.Drawing.Size(115, 24);
             this.basePointToolbar.TabIndex = 28;
             this.basePointToolbar.Wrappable = false;
             this.basePointToolbar.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.toolBar3_ButtonClick);
@@ -1532,7 +1539,7 @@
             this.centerPointInfoPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.centerPointInfoPanel.Location = new System.Drawing.Point(0, 65);
             this.centerPointInfoPanel.Name = "centerPointInfoPanel";
-            this.centerPointInfoPanel.Size = new System.Drawing.Size(304, 23);
+            this.centerPointInfoPanel.Size = new System.Drawing.Size(327, 23);
             this.centerPointInfoPanel.TabIndex = 49;
             // 
             // lblCenterPointInfo
@@ -1553,7 +1560,7 @@
             this.centerPointComboPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.centerPointComboPanel.Location = new System.Drawing.Point(0, 25);
             this.centerPointComboPanel.Name = "centerPointComboPanel";
-            this.centerPointComboPanel.Size = new System.Drawing.Size(304, 40);
+            this.centerPointComboPanel.Size = new System.Drawing.Size(327, 40);
             this.centerPointComboPanel.TabIndex = 47;
             // 
             // btnCenterPointAssignmantMethod
@@ -1833,25 +1840,25 @@
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.Location = new System.Drawing.Point(0, 62);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode1.Checked = true;
-            treeNode1.ImageKey = "vector-path-line.png";
-            treeNode1.Name = "Points";
-            treeNode1.SelectedImageIndex = 205;
-            treeNode1.Text = "Отрезки";
-            treeNode2.Checked = true;
-            treeNode2.ImageKey = "Editing-Line-icon3.png";
-            treeNode2.Name = "Fun";
-            treeNode2.SelectedImageIndex = 208;
-            treeNode2.Text = "Веер";
-            treeNode3.Checked = true;
-            treeNode3.ImageKey = "vector-polygon.png";
-            treeNode3.Name = "Primitives";
-            treeNode3.SelectedImageIndex = 209;
-            treeNode3.Text = "Графика";
+            treeNode10.Checked = true;
+            treeNode10.ImageKey = "vector-path-line.png";
+            treeNode10.Name = "Points";
+            treeNode10.SelectedImageIndex = 205;
+            treeNode10.Text = "Отрезки";
+            treeNode11.Checked = true;
+            treeNode11.ImageKey = "Editing-Line-icon3.png";
+            treeNode11.Name = "Fun";
+            treeNode11.SelectedImageIndex = 208;
+            treeNode11.Text = "Веер";
+            treeNode12.Checked = true;
+            treeNode12.ImageKey = "vector-polygon.png";
+            treeNode12.Name = "Primitives";
+            treeNode12.SelectedImageIndex = 209;
+            treeNode12.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
+            treeNode10,
+            treeNode11,
+            treeNode12});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(312, 269);
             this.profilesTreeView.TabIndex = 35;
@@ -2047,6 +2054,24 @@
             this.lblProfileList.TabIndex = 1;
             this.lblProfileList.Text = "Список профилей";
             // 
+            // tlbbReturnPoint
+            // 
+            this.tlbbReturnPoint.Enabled = false;
+            this.tlbbReturnPoint.ImageKey = "Loop.png";
+            this.tlbbReturnPoint.Name = "tlbbReturnPoint";
+            // 
+            // tlbbReturnToPoint
+            // 
+            this.tlbbReturnToPoint.Enabled = false;
+            this.tlbbReturnToPoint.ImageKey = "Loop.png";
+            this.tlbbReturnToPoint.Name = "tlbbReturnToPoint";
+            // 
+            // tlbbReturnCenterPoint
+            // 
+            this.tlbbReturnCenterPoint.Enabled = false;
+            this.tlbbReturnCenterPoint.ImageKey = "Loop.png";
+            this.tlbbReturnCenterPoint.Name = "tlbbReturnCenterPoint";
+            // 
             // DockableWindowMilSpaceProfileCalc
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2055,7 +2080,7 @@
             this.DoubleBuffered = true;
             this.MinimumSize = new System.Drawing.Size(300, 650);
             this.Name = "DockableWindowMilSpaceProfileCalc";
-            this.Size = new System.Drawing.Size(320, 650);
+            this.Size = new System.Drawing.Size(343, 650);
             this.tabControl1.ResumeLayout(false);
             this.profileTabPage.ResumeLayout(false);
             this.profileTabPage.PerformLayout();
@@ -2274,5 +2299,8 @@
         private System.Windows.Forms.Label lblDimentionCenter;
         private System.Windows.Forms.TextBox txtCenterPointHeight;
         private System.Windows.Forms.Label lblCenterPointHeight;
+        private System.Windows.Forms.ToolBarButton tlbbReturnToPoint;
+        private System.Windows.Forms.ToolBarButton tlbbReturnPoint;
+        private System.Windows.Forms.ToolBarButton tlbbReturnCenterPoint;
     }
 }

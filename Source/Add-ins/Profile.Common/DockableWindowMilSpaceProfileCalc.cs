@@ -7,7 +7,6 @@ using MilSpace.Core.ModulesInteraction;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Profile.DTO;
-using MilSpace.Profile.Helpers;
 using MilSpace.Profile.Interaction;
 using MilSpace.Profile.Localization;
 using System;
@@ -434,6 +433,16 @@ namespace MilSpace.Profile
                     }
                     break;
 
+                case "tlbbReturnPoint":
+
+                    var startPoint = controller.GetStartPointValue(ProfileSettingsPointButtonEnum.PointsFist);
+                    var pointToMapSpatial = startPoint.Clone();
+                    pointToMapSpatial.Project(ActiveView.FocusMap.SpatialReference);
+
+                    controller.SetFirsPointForLineProfile(startPoint, pointToMapSpatial);
+
+                    break;
+
                 case "?":
                     txtFirstPointX.Clear();
                     txtFirstPointY.Clear();
@@ -525,6 +534,17 @@ namespace MilSpace.Profile
                     }
                     break;
 
+
+                case "tlbbReturnToPoint":
+
+                    var startPoint = controller.GetStartPointValue(ProfileSettingsPointButtonEnum.PointsSecond);
+                    var pointToMapSpatial = startPoint.Clone();
+                    pointToMapSpatial.Project(ActiveView.FocusMap.SpatialReference);
+
+                    controller.SetSecondfPointForLineProfile(startPoint, pointToMapSpatial);
+
+                    break;
+
                 case "7":
                     txtSecondPointX.Clear();
                     txtSecondPointY.Clear();
@@ -602,6 +622,17 @@ namespace MilSpace.Profile
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Error);
                     }
+                    break;
+
+                case "tlbbReturnCenterPoint":
+
+                    var startPoint = controller.GetStartPointValue(ProfileSettingsPointButtonEnum.CenterFun);
+                    var pointToMapSpatial = startPoint.Clone();
+                    pointToMapSpatial.Project(ActiveView.FocusMap.SpatialReference);
+
+                    controller.SetCenterPointForFunProfile(startPoint, pointToMapSpatial);
+
+
                     break;
 
                 case "6":
@@ -941,19 +972,35 @@ namespace MilSpace.Profile
             lblLengthInfo.Text = $"{LocalizationContext.Instance.LengthInfoText} {Math.Round(length).ToString()} {LocalizationContext.Instance.DimensionText}";
         }
 
-        public void SetPointInfo(PointTypesEnum pointType, string text)
+        public void SetPointInfo(ProfileSettingsPointButtonEnum pointType, string text)
         {
-            if(pointType == PointTypesEnum.FromPoint)
+            if(pointType == ProfileSettingsPointButtonEnum.PointsFist)
             {
                 lblFirstPointInfo.Text = text;
             }
-            else if(pointType == PointTypesEnum.ToPoint)
+            else if(pointType == ProfileSettingsPointButtonEnum.PointsSecond)
             {
                 lblSecondPointInfo.Text = text;
             }
             else
             {
                 lblCenterPointInfo.Text = text;
+            }
+        }
+
+        public void SetReturnButtonEnable(ProfileSettingsPointButtonEnum pointType, bool enabled)
+        {
+            if(pointType == ProfileSettingsPointButtonEnum.PointsFist)
+            {
+                firstPointToolBar.Buttons["tlbbReturnPoint"].Enabled = enabled;
+            }
+            else if(pointType == ProfileSettingsPointButtonEnum.PointsSecond)
+            {
+                secondPointToolbar.Buttons["tlbbReturnToPoint"].Enabled = enabled;
+            }
+            else
+            {
+                basePointToolbar.Buttons["tlbbReturnCenterPoint"].Enabled = enabled;
             }
         }
 
@@ -1098,16 +1145,19 @@ namespace MilSpace.Profile
             firstPointToolBar.Buttons["toolBarButton55"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnShowCoordToolTip", "Показати координати на карті");
             firstPointToolBar.Buttons["toolBarButton57"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnCopyCoordToolTip", "Копіювати координати");
             firstPointToolBar.Buttons["toolBarButton58"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnPasteCoordToolTip", "Вставити координати");
+            firstPointToolBar.Buttons["tlbbReturnPoint"].ToolTipText = LocalizationContext.Instance.ReturnPointValueText;
 
             secondPointToolbar.Buttons["toolBarButton61"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnTakeCoordToolTip", "Взяти координати з карти");
             secondPointToolbar.Buttons["toolBarButton2"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnShowCoordToolTip", "Показати координати на карті");
             secondPointToolbar.Buttons["toolBarButton3"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnCopyCoordToolTip", "Копіювати координати");
             secondPointToolbar.Buttons["toolBarButton4"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnPasteCoordToolTip", "Вставити координати");
+            secondPointToolbar.Buttons["tlbbReturnToPoint"].ToolTipText = LocalizationContext.Instance.ReturnPointValueText;
 
             basePointToolbar.Buttons["toolBarButton16"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnTakeCoordToolTip", "Взяти координати з карти");
             basePointToolbar.Buttons["toolBarButton17"].ToolTipText =  LocalizationContext.Instance.FindLocalizedElement("BtnShowCoordToolTip", "Показати координати на карті");
             basePointToolbar.Buttons["toolBarButton19"].ToolTipText =  LocalizationContext.Instance.FindLocalizedElement("BtnCopyCoordToolTip", "Копіювати координати");
             basePointToolbar.Buttons["toolBarButton20"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnPasteCoordToolTip", "Вставити координати");
+            basePointToolbar.Buttons["tlbbReturnCenterPoint"].ToolTipText = LocalizationContext.Instance.ReturnPointValueText;
 
             addAvailableProfilesSets.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnAddAvailableProfilesSetsToolTip", "Додати доступні набори профілів");
             lblSelectedPrimitives.Text = LocalizationContext.Instance.FindLocalizedElement("LblSelectedPrimitivesText", "Вибрані об'єкти:");
@@ -1525,7 +1575,8 @@ namespace MilSpace.Profile
             if(cmbFirstPointAssignmentMethod.SelectedItem.Equals(LocalizationContext.Instance.AssignmentMethodFromMapItem))
             {
                 btnChooseFirstPointAssignmentMethod.Enabled = false;
-                SetPointInfo(PointTypesEnum.FromPoint, string.Empty);
+                SetPointInfo(ProfileSettingsPointButtonEnum.PointsFist, string.Empty);
+                SetReturnButtonEnable(ProfileSettingsPointButtonEnum.PointsFist, false);
             }
             else
             {
@@ -1538,7 +1589,8 @@ namespace MilSpace.Profile
             if(cmbSecondPointAssignmentMethod.SelectedItem.Equals(LocalizationContext.Instance.AssignmentMethodFromMapItem))
             {
                 btnChooseSecondPointAssignmentMethod.Enabled = false;
-                SetPointInfo(PointTypesEnum.ToPoint, string.Empty);
+                SetPointInfo(ProfileSettingsPointButtonEnum.PointsSecond, string.Empty);
+                SetReturnButtonEnable(ProfileSettingsPointButtonEnum.PointsSecond, false);
             }
             else
             {
@@ -1551,7 +1603,8 @@ namespace MilSpace.Profile
             if(cmbCenterPointAssignmentMethod.SelectedItem.Equals(LocalizationContext.Instance.AssignmentMethodFromMapItem))
             {
                 btnCenterPointAssignmantMethod.Enabled = false;
-                SetPointInfo(PointTypesEnum.CenterPoint, string.Empty);
+                SetPointInfo(ProfileSettingsPointButtonEnum.CenterFun, string.Empty);
+                SetReturnButtonEnable(ProfileSettingsPointButtonEnum.CenterFun, false);
             }
             else
             {
@@ -1561,17 +1614,17 @@ namespace MilSpace.Profile
 
         private void BtnChooseSecondPointAssignmentMethod_Click(object sender, EventArgs e)
         {
-            controller.SetPointBySelectedMethod(controller.GetMethodByString(cmbSecondPointAssignmentMethod.Text), PointTypesEnum.ToPoint);
+            controller.SetPointBySelectedMethod(controller.GetMethodByString(cmbSecondPointAssignmentMethod.Text), ProfileSettingsPointButtonEnum.PointsSecond);
         }
 
         private void BtnChooseFirstPointAssignmentMethod_Click(object sender, EventArgs e)
         {
-            controller.SetPointBySelectedMethod(controller.GetMethodByString(cmbFirstPointAssignmentMethod.Text), PointTypesEnum.FromPoint);
+            controller.SetPointBySelectedMethod(controller.GetMethodByString(cmbFirstPointAssignmentMethod.Text), ProfileSettingsPointButtonEnum.PointsFist);
         }
 
         private void BtnCenterPointAssignmantMethod_Click(object sender, EventArgs e)
         {
-            controller.SetPointBySelectedMethod(controller.GetMethodByString(cmbCenterPointAssignmentMethod.Text), PointTypesEnum.CenterPoint);
+            controller.SetPointBySelectedMethod(controller.GetMethodByString(cmbCenterPointAssignmentMethod.Text), ProfileSettingsPointButtonEnum.CenterFun);
         }
     }
 }

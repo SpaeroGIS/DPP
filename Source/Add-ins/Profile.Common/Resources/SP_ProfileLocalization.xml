@@ -9,6 +9,7 @@
   <BtnShowCoordToolTip>Показати координати на карті</BtnShowCoordToolTip>
   <BtnTakeCoordToolTip>Взяти координати з карти</BtnTakeCoordToolTip>
   <BtnReverseToolTip>Змінити напрямок профілю</BtnReverseToolTip>
+  <BtnReturnPointValueToolTip>Повернутися до дійсного значення точки</BtnReturnPointValueToolTip>
   <DgvProfilePropertiesAscendingAngleColToolTip>Максимальний кут підйому (градуси)</DgvProfilePropertiesAscendingAngleColToolTip>
   <DgvProfilePropertiesAzimuthColToolTip>Азимут</DgvProfilePropertiesAzimuthColToolTip>
   <DgvProfilePropertiesDescendingAngleColToolTip>Максимальний кут спуску (градуси)</DgvProfilePropertiesDescendingAngleColToolTip>
