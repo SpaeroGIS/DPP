@@ -138,20 +138,11 @@ namespace MilSpace.GeoCalculator
             _log.DebugEx("> UpdatePoints END.");
         }
 
-        internal void RemovePoint(string id)
+        internal void RemovePoint(Guid id)
         {
             _log.DebugEx("> RemovePoint START.");
 
-            var isParsed = Guid.TryParse(id, out Guid guid);
-
-            if(isParsed)
-            {
-                GeoCalculatiorFacade.DeleteUserSessionPoint(guid);
-            }
-            else
-            {
-                _log.WarnEx($"> RemovePoint Exception: Cannot convert string value {id} to guid.");
-            }
+            GeoCalculatiorFacade.DeleteUserSessionPoint(id);
 
             _log.DebugEx("> RemovePoint END.");
         }

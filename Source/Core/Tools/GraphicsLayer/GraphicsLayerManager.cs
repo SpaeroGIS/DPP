@@ -607,7 +607,7 @@ namespace MilSpace.Tools.GraphicsLayer
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
         }
 
-        public KeyValuePair<string, IPoint> AddGraphicToMap(
+        public KeyValuePair<Guid, IPoint> AddGraphicToMap(
             IGeometry geom,
             IColor color,
             int number,
@@ -617,7 +617,7 @@ namespace MilSpace.Tools.GraphicsLayer
             esriSimpleMarkerStyle markerStyle = esriSimpleMarkerStyle.esriSMSCircle,
             int size = 5)
         {
-            var emptyResult = new KeyValuePair<string, IPoint>();
+            var emptyResult = new KeyValuePair<Guid, IPoint>();
 
             if((geom == null)
                 || (geom.GeometryType != esriGeometryType.esriGeometryPoint)
@@ -666,7 +666,7 @@ namespace MilSpace.Tools.GraphicsLayer
 
             allGraphics[MilSpaceGraphicsTypeEnum.GeoCalculator].Add(ge);
 
-            return new KeyValuePair<string, IPoint>(eprop.Name, element.Geometry as IPoint);
+            return new KeyValuePair<Guid, IPoint>(Guid.Parse(eprop.Name), element.Geometry as IPoint);
         }
 
 
@@ -703,7 +703,7 @@ namespace MilSpace.Tools.GraphicsLayer
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
         }
 
-        public  void AddLineToMap(Dictionary<string, IPoint> points, string name)
+        public  void AddLineToMap(Dictionary<Guid, IPoint> points, string name)
         {
             var prevPoint = points.First();
 
@@ -714,7 +714,7 @@ namespace MilSpace.Tools.GraphicsLayer
                     continue;
                 }
 
-                AddLineSegmentToMap(prevPoint.Value, point.Value, name, prevPoint.Key);
+                AddLineSegmentToMap(prevPoint.Value, point.Value, name, prevPoint.Key.ToString());
                 prevPoint = point;
             }
 

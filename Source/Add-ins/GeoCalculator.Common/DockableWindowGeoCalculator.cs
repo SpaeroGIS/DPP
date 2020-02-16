@@ -32,10 +32,10 @@ namespace MilSpace.GeoCalculator
         private const string _lineName = "GeoCalcLineGeometry";
         private const string _textName = "text_";
         private ExtendedPointModel lastProjectedPoint;
-        private Dictionary<string, PointModel> pointModels = new Dictionary<string, PointModel>();
+        private Dictionary<Guid, PointModel> pointModels = new Dictionary<Guid, PointModel>();
         private Dictionary<CoordinateSystemsEnum, string> _coordinateSystems = new Dictionary<CoordinateSystemsEnum, string>();
         private LocalizationContext _context;
-        private readonly Dictionary<string, IPoint> ClickedPointsDictionary = new Dictionary<string, IPoint>();
+        private readonly Dictionary<Guid, IPoint> ClickedPointsDictionary = new Dictionary<Guid, IPoint>();
         //private List<GeoCalcPoint> _geoCalcPoints = new List<GeoCalcPoint>();
         private GeoCalculatorController controller;
         private GraphicsLayerManager _graphicsLayerManager;
@@ -101,7 +101,7 @@ namespace MilSpace.GeoCalculator
                     continue;
                 }
 
-                var point = ClickedPointsDictionary[row.Tag.ToString()];
+                var point = ClickedPointsDictionary[(Guid)row.Tag];
                 var pointCopy = point.CloneWithProjecting();
 
                 points.Add((int)row.Cells[0].Value, pointCopy);
@@ -970,7 +970,7 @@ namespace MilSpace.GeoCalculator
             var grid = (DataGridView)sender;
             var column = grid.Columns[e.ColumnIndex];
             var num = (int)grid.Rows[e.RowIndex].Cells[0].Value;
-            var selectedPoint = ClickedPointsDictionary.First(point => point.Key == PointsGridView.Rows[e.RowIndex].Tag.ToString());
+            var selectedPoint = ClickedPointsDictionary.First(point => point.Key == (Guid)PointsGridView.Rows[e.RowIndex].Tag);
 
             if (column is DataGridViewImageColumn && column.Name == Constants.HighlightColumnName)
             {
@@ -980,21 +980,21 @@ namespace MilSpace.GeoCalculator
             else
             if (column is DataGridViewImageColumn && column.Name == Constants.DeleteColumnName)
             {
-                var prevPointGuid = (e.RowIndex == 0) ? PointsGridView.Rows[e.RowIndex].Tag.ToString() : PointsGridView.Rows[e.RowIndex - 1].Tag.ToString();
-                var nextPointGuid = (e.RowIndex == PointsGridView.RowCount - 1) ? PointsGridView.Rows[e.RowIndex].Tag.ToString() : PointsGridView.Rows[e.RowIndex + 1].Tag.ToString();
+                var prevPointGuid = (e.RowIndex == 0) ? (Guid)PointsGridView.Rows[e.RowIndex].Tag : (Guid)PointsGridView.Rows[e.RowIndex - 1].Tag;
+                var nextPointGuid = (e.RowIndex == PointsGridView.RowCount - 1) ? (Guid)PointsGridView.Rows[e.RowIndex].Tag : (Guid)PointsGridView.Rows[e.RowIndex + 1].Tag;
 
                 grid.Rows.RemoveAt(e.RowIndex);
 
                 if(chkShowLine.Checked)
                 {
-                    _graphicsLayerManager.RemovePoint(selectedPoint.Key);
+                    _graphicsLayerManager.RemovePoint(selectedPoint.Key.ToString());
                     var linesToRemove = new string[] { $"{_lineName}_{prevPointGuid}" };
 
                     _graphicsLayerManager.RemoveGraphicsFromMap(linesToRemove);
 
                     if(e.RowIndex > 0 && e.RowIndex < PointsGridView.RowCount)
                     {
-                        _graphicsLayerManager.AddLineSegmentToMap(ClickedPointsDictionary[prevPointGuid], ClickedPointsDictionary[nextPointGuid], _lineName, prevPointGuid);
+                        _graphicsLayerManager.AddLineSegmentToMap(ClickedPointsDictionary[prevPointGuid], ClickedPointsDictionary[nextPointGuid], _lineName, prevPointGuid.ToString());
                     }
                 }
 
@@ -1110,7 +1110,7 @@ namespace MilSpace.GeoCalculator
                     continue;
                 }
 
-                points.Add(GetGeoCalcPoint(row.Tag.ToString(), (int)row.Cells[0].Value));
+                points.Add(GetGeoCalcPoint((Guid)row.Tag, (int)row.Cells[0].Value));
             }
 
             controller.UpdatePoints(points);
@@ -1133,7 +1133,7 @@ namespace MilSpace.GeoCalculator
                 grid.Rows.Clear();
                 foreach (var point in ClickedPointsDictionary)
                 {
-                    _graphicsLayerManager.RemovePoint(point.Key);
+                    _graphicsLayerManager.RemovePoint(point.Key.ToString());
                 }
 
                 ClickedPointsDictionary?.Clear();
@@ -1154,7 +1154,7 @@ namespace MilSpace.GeoCalculator
             ProcessPointAsClicked(clickedPoint, true);
 
             var lastRow = PointsGridView.Rows[PointsGridView.RowCount - 1];
-            controller.UpdatePoints(new List<GeoCalcPoint> { GetGeoCalcPoint(lastRow.Tag.ToString(), (int)lastRow.Cells[0].Value) });
+            controller.UpdatePoints(new List<GeoCalcPoint> { GetGeoCalcPoint((Guid)lastRow.Tag, (int)lastRow.Cells[0].Value) });
         }
 
         internal void ArcMap_OnMouseMove(int x, int y)
@@ -1317,7 +1317,7 @@ namespace MilSpace.GeoCalculator
 
             if (!fromUserInput && !string.IsNullOrWhiteSpace(guid))
                 pointModels.Add(
-                    guid,
+                    Guid.Parse(pointGuid),
                     new PointModel
                     {
                         Number = pointNumber,
@@ -1506,7 +1506,7 @@ namespace MilSpace.GeoCalculator
             var drawLine = forbidLineDrawing ? true : chkShowLine.Checked;
             var pointGuid = AddPointToList(point, drawLine);
 
-            if(pointGuid != null)
+            if(pointGuid != Guid.Empty)
             {
                 if(maxNum < PointsGridView.RowCount)
                 {
@@ -1521,7 +1521,7 @@ namespace MilSpace.GeoCalculator
                 AddPointToGrid(point, pointNumber, pointGuid);
                 if(projectPoint)
                 {
-                    ProjectPointAsync(point, false, pointGuid, pointNumber);
+                    ProjectPointAsync(point, false, pointGuid.ToString(), pointNumber);
                 }
             }
         }
@@ -1538,7 +1538,7 @@ namespace MilSpace.GeoCalculator
             EsriTools.ProjectToMapSpatialReference(point, FocusMapSpatialReference);
 
             var pointGuid = AddPointToList(point, chkShowLine.Checked);
-            if (pointGuid != null)
+            if (pointGuid != Guid.Empty)
             {
                 pointModels.Add(pointGuid, pointModel);
                 if(maxNum < PointsGridView.RowCount)
@@ -1568,7 +1568,7 @@ namespace MilSpace.GeoCalculator
             EsriTools.ProjectToMapSpatialReference(point, FocusMapSpatialReference);
 
             var pointGuid = AddPointToList(point, chkShowLine.Checked, geoPoint.Id.ToString(), geoPoint.PointNumber);
-            if(pointGuid != null)
+            if(pointGuid != Guid.Empty)
             {
                 var pointModel = new PointModel { Latitude = geoPoint.Y, Longitude = geoPoint.X, Number = geoPoint.PointNumber };
                 pointModels.Add(pointGuid, pointModel);
@@ -1577,7 +1577,7 @@ namespace MilSpace.GeoCalculator
             }
         }
 
-        private string AddPointToList(IPoint point, bool drawLine, string guid = null, int pointNumber = -1)
+        private Guid AddPointToList(IPoint point, bool drawLine, string guid = null, int pointNumber = -1)
         {
             log.DebugEx("> AddPointToList START. point.X:{0} point.Y:{1}", point.X, point.Y);
             if (point != null && !point.IsEmpty)
@@ -1612,8 +1612,8 @@ namespace MilSpace.GeoCalculator
 
                     if(drawLine == true && PointsGridView.RowCount > 0)
                     {
-                        var fromPointGuid = PointsGridView.Rows[PointsGridView.RowCount - 1].Tag.ToString();
-                        _graphicsLayerManager.AddLineSegmentToMap(ClickedPointsDictionary[fromPointGuid], point, _lineName, fromPointGuid);
+                        var fromPointGuid = (Guid)PointsGridView.Rows[PointsGridView.RowCount - 1].Tag;
+                        _graphicsLayerManager.AddLineSegmentToMap(ClickedPointsDictionary[fromPointGuid], point, _lineName, fromPointGuid.ToString());
                     }
 
                     log.DebugEx("AddPointToList. placedPoint.Value.X:{0} placedPoint.Value.Y:{1} placedPoint.Key:{2}"
@@ -1624,7 +1624,7 @@ namespace MilSpace.GeoCalculator
                     return placedPoint.Key;
                 }
             }
-            return null;
+            return Guid.Empty;
         }
 
         private RadioButtonsValues ShowExportForm(bool isExport)
@@ -1658,7 +1658,7 @@ namespace MilSpace.GeoCalculator
             return exportForm.ChosenRadioButton;
         }
         
-        private void AddPointToGrid(IPoint point, int pointNumber, string key)
+        private void AddPointToGrid(IPoint point, int pointNumber, Guid key)
         {
             var pointCopy = new PointClass { SpatialReference = point.SpatialReference };
             pointCopy.PutCoords(point.X, point.Y);
@@ -1678,7 +1678,7 @@ namespace MilSpace.GeoCalculator
             }
         }
 
-        private void AddPointStringToGrid(int pointNumber, string key, string x, string y = null)
+        private void AddPointStringToGrid(int pointNumber, Guid key, string x, string y = null)
         {
             var newRow = new DataGridViewRow();
             newRow.Tag = key;
@@ -1721,14 +1721,14 @@ namespace MilSpace.GeoCalculator
 
         
 
-        private GeoCalcPoint GetGeoCalcPoint(string pointGuid, int number)
+        private GeoCalcPoint GetGeoCalcPoint(Guid pointGuid, int number)
         {
             try
             {
                 var pointInMap = ClickedPointsDictionary[pointGuid];
                 var point = pointInMap.CloneWithProjecting();
 
-                return new GeoCalcPoint { Id = Guid.Parse(pointGuid), PointNumber = Convert.ToInt16(number), UserName = Environment.UserName, X = point.X, Y = point.Y };
+                return new GeoCalcPoint { Id = pointGuid, PointNumber = Convert.ToInt16(number), UserName = Environment.UserName, X = point.X, Y = point.Y };
             }
             catch(Exception ex)
             {
@@ -1754,7 +1754,7 @@ namespace MilSpace.GeoCalculator
                     continue;
                 }
 
-                var pointGuid = row.Tag.ToString();
+                var pointGuid = (Guid)row.Tag;
                 var point = ClickedPointsDictionary[pointGuid];
                 AddPointToGrid(point, (int)row.Cells[0].Value, pointGuid);
             }
@@ -1989,7 +1989,7 @@ namespace MilSpace.GeoCalculator
                     continue;
                 }
 
-                points.Add(GetGeoCalcPoint(row.Tag.ToString(), (int)row.Cells[0].Value));
+                points.Add(GetGeoCalcPoint((Guid)row.Tag, (int)row.Cells[0].Value));
             }
 
             controller.UpdatePoints(points);
@@ -2014,7 +2014,7 @@ namespace MilSpace.GeoCalculator
                 return;
             }
 
-            var orderedPoints = new Dictionary<string, IPoint>();
+            var orderedPoints = new Dictionary<Guid, IPoint>();
 
             foreach(DataGridViewRow row in PointsGridView.Rows)
             {
@@ -2023,7 +2023,7 @@ namespace MilSpace.GeoCalculator
                     continue;
                 }
 
-                var pointGuid = row.Tag.ToString();
+                var pointGuid = (Guid)row.Tag;
                 var pointPair = ClickedPointsDictionary.First(point => point.Key == pointGuid);
                 orderedPoints.Add(pointPair.Key, pointPair.Value);
             }
@@ -2051,7 +2051,7 @@ namespace MilSpace.GeoCalculator
                     continue;
                 }
 
-                var pointGuid = row.Tag.ToString();
+                var pointGuid = (Guid)row.Tag;
                 var pointGeom = ClickedPointsDictionary.First(point => point.Key == pointGuid).Value;
                 _graphicsLayerManager.DrawText(pointGeom, (int)row.Cells[0].Value, row.Tag.ToString(), _textName);
             }
@@ -2068,7 +2068,7 @@ namespace MilSpace.GeoCalculator
                     continue;
                 }
 
-                var pointGuid = row.Tag.ToString();
+                var pointGuid = (Guid)row.Tag;
                 var pointGeom = ClickedPointsDictionary.First(point => point.Key == pointGuid).Value;
                 orderedPoints.Add(pointGeom);
             }
@@ -2129,7 +2129,7 @@ namespace MilSpace.GeoCalculator
                     continue;
                 }
 
-                var pointGuid = row.Tag.ToString();
+                var pointGuid = (Guid)row.Tag;
                 var pointGeom = ClickedPointsDictionary.First(point => point.Key == pointGuid).Value;
                 var pointCopy = pointGeom.CloneWithProjecting();
 
@@ -2153,7 +2153,7 @@ namespace MilSpace.GeoCalculator
 
             foreach(var point in ClickedPointsDictionary)
             {
-                _graphicsLayerManager.RemovePoint(point.Key);
+                _graphicsLayerManager.RemovePoint(point.Key.ToString());
             }
 
             var orderedPoints = new List<IPoint>();
@@ -2165,7 +2165,7 @@ namespace MilSpace.GeoCalculator
                     continue;
                 }
 
-                var pointGuid = row.Tag.ToString();
+                var pointGuid = (Guid)row.Tag;
                 var pointGeom = ClickedPointsDictionary.First(point => point.Key == pointGuid).Value;
 
                 var color = (IColor)new RgbColorClass() { Green = 255 };
@@ -2176,7 +2176,7 @@ namespace MilSpace.GeoCalculator
                     (int)row.Cells[0].Value,
                     chkShowNumbers.Checked,
                     _textName,
-                    pointGuid,
+                    pointGuid.ToString(),
                     esriSimpleMarkerStyle.esriSMSCross,
                     16);
             }
