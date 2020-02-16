@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Графика");
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.profileTabPage = new System.Windows.Forms.TabPage();
             this.btnRefreshLayers = new System.Windows.Forms.Button();
@@ -72,6 +72,7 @@
             this.toolBarButton2 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton3 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton4 = new System.Windows.Forms.ToolBarButton();
+            this.tlbbReturnToPoint = new System.Windows.Forms.ToolBarButton();
             this.txtSecondPointY = new System.Windows.Forms.TextBox();
             this.txtSecondPointX = new System.Windows.Forms.TextBox();
             this.secondPointInfoPanel = new System.Windows.Forms.Panel();
@@ -94,6 +95,7 @@
             this.toolBarButton55 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton57 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton58 = new System.Windows.Forms.ToolBarButton();
+            this.tlbbReturnPoint = new System.Windows.Forms.ToolBarButton();
             this.txtFirstPointY = new System.Windows.Forms.TextBox();
             this.txtFirstPointX = new System.Windows.Forms.TextBox();
             this.firstPointInfoPanel = new System.Windows.Forms.Panel();
@@ -128,6 +130,7 @@
             this.toolBarButton17 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton19 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton20 = new System.Windows.Forms.ToolBarButton();
+            this.tlbbReturnCenterPoint = new System.Windows.Forms.ToolBarButton();
             this.txtBasePointY = new System.Windows.Forms.TextBox();
             this.txtBasePointX = new System.Windows.Forms.TextBox();
             this.centerPointInfoPanel = new System.Windows.Forms.Panel();
@@ -175,9 +178,6 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.clearExtraGraphic = new System.Windows.Forms.ToolStripButton();
             this.lblProfileList = new System.Windows.Forms.Label();
-            this.tlbbReturnPoint = new System.Windows.Forms.ToolBarButton();
-            this.tlbbReturnToPoint = new System.Windows.Forms.ToolBarButton();
-            this.tlbbReturnCenterPoint = new System.Windows.Forms.ToolBarButton();
             this.tabControl1.SuspendLayout();
             this.profileTabPage.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -916,6 +916,12 @@
             this.toolBarButton4.Name = "toolBarButton4";
             this.toolBarButton4.ToolTipText = "взяти з буферу обміну";
             // 
+            // tlbbReturnToPoint
+            // 
+            this.tlbbReturnToPoint.Enabled = false;
+            this.tlbbReturnToPoint.ImageKey = "Loop.png";
+            this.tlbbReturnToPoint.Name = "tlbbReturnToPoint";
+            // 
             // txtSecondPointY
             // 
             this.txtSecondPointY.Location = new System.Drawing.Point(66, 2);
@@ -1023,6 +1029,7 @@
             this.reverseSecondPointButton.Size = new System.Drawing.Size(23, 23);
             this.reverseSecondPointButton.TabIndex = 44;
             this.reverseSecondPointButton.UseVisualStyleBackColor = true;
+            this.reverseSecondPointButton.Click += new System.EventHandler(this.BtnFlipPoints_Click);
             // 
             // panel17
             // 
@@ -1139,6 +1146,12 @@
             this.toolBarButton58.Name = "toolBarButton58";
             this.toolBarButton58.ToolTipText = "взяти з буферу обміну";
             // 
+            // tlbbReturnPoint
+            // 
+            this.tlbbReturnPoint.Enabled = false;
+            this.tlbbReturnPoint.ImageKey = "Loop.png";
+            this.tlbbReturnPoint.Name = "tlbbReturnPoint";
+            // 
             // txtFirstPointY
             // 
             this.txtFirstPointY.Location = new System.Drawing.Point(66, 2);
@@ -1247,6 +1260,7 @@
             this.reverseButton.Size = new System.Drawing.Size(23, 23);
             this.reverseButton.TabIndex = 44;
             this.reverseButton.UseVisualStyleBackColor = true;
+            this.reverseButton.Click += new System.EventHandler(this.BtnFlipPoints_Click);
             // 
             // funTab
             // 
@@ -1512,6 +1526,12 @@
             this.toolBarButton20.Name = "toolBarButton20";
             this.toolBarButton20.ToolTipText = "взяти з буферу обміну";
             // 
+            // tlbbReturnCenterPoint
+            // 
+            this.tlbbReturnCenterPoint.Enabled = false;
+            this.tlbbReturnCenterPoint.ImageKey = "Loop.png";
+            this.tlbbReturnCenterPoint.Name = "tlbbReturnCenterPoint";
+            // 
             // txtBasePointY
             // 
             this.txtBasePointY.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -1616,7 +1636,7 @@
             this.primitiveTab.Location = new System.Drawing.Point(4, 24);
             this.primitiveTab.Margin = new System.Windows.Forms.Padding(0);
             this.primitiveTab.Name = "primitiveTab";
-            this.primitiveTab.Size = new System.Drawing.Size(304, 288);
+            this.primitiveTab.Size = new System.Drawing.Size(327, 288);
             this.primitiveTab.TabIndex = 2;
             this.primitiveTab.Text = "Примитивом";
             this.primitiveTab.UseVisualStyleBackColor = true;
@@ -1642,7 +1662,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 53);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(8, 4, 0, 0);
-            this.panel1.Size = new System.Drawing.Size(304, 28);
+            this.panel1.Size = new System.Drawing.Size(327, 28);
             this.panel1.TabIndex = 45;
             // 
             // lblHeightOfViewGraphics
@@ -1680,7 +1700,7 @@
             this.toolBarSelectedPrimitives.Location = new System.Drawing.Point(0, 260);
             this.toolBarSelectedPrimitives.Name = "toolBarSelectedPrimitives";
             this.toolBarSelectedPrimitives.ShowToolTips = true;
-            this.toolBarSelectedPrimitives.Size = new System.Drawing.Size(304, 28);
+            this.toolBarSelectedPrimitives.Size = new System.Drawing.Size(327, 28);
             this.toolBarSelectedPrimitives.TabIndex = 27;
             this.toolBarSelectedPrimitives.Visible = false;
             this.toolBarSelectedPrimitives.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.toolBarSelectedPrimitives_ButtonClick);
@@ -1698,7 +1718,7 @@
             this.panel13.Location = new System.Drawing.Point(0, 25);
             this.panel13.Name = "panel13";
             this.panel13.Padding = new System.Windows.Forms.Padding(8, 4, 8, 0);
-            this.panel13.Size = new System.Drawing.Size(304, 28);
+            this.panel13.Size = new System.Drawing.Size(327, 28);
             this.panel13.TabIndex = 17;
             // 
             // layersToSelectLine
@@ -1739,7 +1759,7 @@
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(227, 56);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(250, 56);
             this.tableLayoutPanel3.TabIndex = 46;
             // 
             // lblCommonLengthValue
@@ -1750,7 +1770,7 @@
             this.lblCommonLengthValue.Location = new System.Drawing.Point(119, 26);
             this.lblCommonLengthValue.Name = "lblCommonLengthValue";
             this.lblCommonLengthValue.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.lblCommonLengthValue.Size = new System.Drawing.Size(105, 21);
+            this.lblCommonLengthValue.Size = new System.Drawing.Size(128, 21);
             this.lblCommonLengthValue.TabIndex = 62;
             this.lblCommonLengthValue.Text = "0";
             // 
@@ -1762,7 +1782,7 @@
             this.lblSelectedPrimitivesValue.Location = new System.Drawing.Point(119, 0);
             this.lblSelectedPrimitivesValue.Name = "lblSelectedPrimitivesValue";
             this.lblSelectedPrimitivesValue.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.lblSelectedPrimitivesValue.Size = new System.Drawing.Size(105, 21);
+            this.lblSelectedPrimitivesValue.Size = new System.Drawing.Size(128, 21);
             this.lblSelectedPrimitivesValue.TabIndex = 61;
             this.lblSelectedPrimitivesValue.Text = "0";
             // 
@@ -1799,7 +1819,7 @@
             this.profileTreeTabPage.ImageKey = "Table.png";
             this.profileTreeTabPage.Location = new System.Drawing.Point(4, 26);
             this.profileTreeTabPage.Name = "profileTreeTabPage";
-            this.profileTreeTabPage.Size = new System.Drawing.Size(312, 620);
+            this.profileTreeTabPage.Size = new System.Drawing.Size(335, 620);
             this.profileTreeTabPage.TabIndex = 1;
             this.profileTreeTabPage.Text = "Список профилей";
             this.profileTreeTabPage.UseVisualStyleBackColor = true;
@@ -1840,25 +1860,25 @@
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.Location = new System.Drawing.Point(0, 62);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode10.Checked = true;
-            treeNode10.ImageKey = "vector-path-line.png";
-            treeNode10.Name = "Points";
-            treeNode10.SelectedImageIndex = 205;
-            treeNode10.Text = "Отрезки";
-            treeNode11.Checked = true;
-            treeNode11.ImageKey = "Editing-Line-icon3.png";
-            treeNode11.Name = "Fun";
-            treeNode11.SelectedImageIndex = 208;
-            treeNode11.Text = "Веер";
-            treeNode12.Checked = true;
-            treeNode12.ImageKey = "vector-polygon.png";
-            treeNode12.Name = "Primitives";
-            treeNode12.SelectedImageIndex = 209;
-            treeNode12.Text = "Графика";
+            treeNode1.Checked = true;
+            treeNode1.ImageKey = "vector-path-line.png";
+            treeNode1.Name = "Points";
+            treeNode1.SelectedImageIndex = 205;
+            treeNode1.Text = "Отрезки";
+            treeNode2.Checked = true;
+            treeNode2.ImageKey = "Editing-Line-icon3.png";
+            treeNode2.Name = "Fun";
+            treeNode2.SelectedImageIndex = 208;
+            treeNode2.Text = "Веер";
+            treeNode3.Checked = true;
+            treeNode3.ImageKey = "vector-polygon.png";
+            treeNode3.Name = "Primitives";
+            treeNode3.SelectedImageIndex = 209;
+            treeNode3.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode10,
-            treeNode11,
-            treeNode12});
+            treeNode1,
+            treeNode2,
+            treeNode3});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(312, 269);
             this.profilesTreeView.TabIndex = 35;
@@ -1870,7 +1890,7 @@
             this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel6.Location = new System.Drawing.Point(0, 32);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(312, 30);
+            this.panel6.Size = new System.Drawing.Size(335, 30);
             this.panel6.TabIndex = 34;
             // 
             // profilesToolStrip
@@ -1895,7 +1915,7 @@
             this.clearExtraGraphic});
             this.profilesToolStrip.Location = new System.Drawing.Point(0, 0);
             this.profilesToolStrip.Name = "profilesToolStrip";
-            this.profilesToolStrip.Size = new System.Drawing.Size(312, 30);
+            this.profilesToolStrip.Size = new System.Drawing.Size(335, 30);
             this.profilesToolStrip.TabIndex = 37;
             this.profilesToolStrip.Text = "toolStrip1";
             // 
@@ -2053,24 +2073,6 @@
             this.lblProfileList.Size = new System.Drawing.Size(161, 32);
             this.lblProfileList.TabIndex = 1;
             this.lblProfileList.Text = "Список профилей";
-            // 
-            // tlbbReturnPoint
-            // 
-            this.tlbbReturnPoint.Enabled = false;
-            this.tlbbReturnPoint.ImageKey = "Loop.png";
-            this.tlbbReturnPoint.Name = "tlbbReturnPoint";
-            // 
-            // tlbbReturnToPoint
-            // 
-            this.tlbbReturnToPoint.Enabled = false;
-            this.tlbbReturnToPoint.ImageKey = "Loop.png";
-            this.tlbbReturnToPoint.Name = "tlbbReturnToPoint";
-            // 
-            // tlbbReturnCenterPoint
-            // 
-            this.tlbbReturnCenterPoint.Enabled = false;
-            this.tlbbReturnCenterPoint.ImageKey = "Loop.png";
-            this.tlbbReturnCenterPoint.Name = "tlbbReturnCenterPoint";
             // 
             // DockableWindowMilSpaceProfileCalc
             // 

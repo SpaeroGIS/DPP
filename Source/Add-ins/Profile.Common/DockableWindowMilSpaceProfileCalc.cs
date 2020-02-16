@@ -1627,5 +1627,10 @@ namespace MilSpace.Profile
         {
             controller.SetPointBySelectedMethod(controller.GetMethodByString(cmbCenterPointAssignmentMethod.Text), ProfileSettingsPointButtonEnum.CenterFun);
         }
+
+        private void BtnFlipPoints_Click(object sender, EventArgs e)
+        {
+            controller.FlipPoints();
+        }
     }
 }

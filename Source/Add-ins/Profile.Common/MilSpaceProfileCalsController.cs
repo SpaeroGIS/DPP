@@ -1172,6 +1172,32 @@ namespace MilSpace.Profile
             return startPoints[pointType];
         }
 
+        internal void FlipPoints()
+        {
+            var secondPoint = pointsToShow[ProfileSettingsPointButtonEnum.PointsSecond].Clone();
+
+            if(pointsToShow[ProfileSettingsPointButtonEnum.PointsFist] == null)
+            {
+                SetSecondfPointForLineProfile(null, null);
+            }
+            else
+            {
+                var firstPoint = pointsToShow[ProfileSettingsPointButtonEnum.PointsFist].CloneWithProjecting();
+                SetSecondfPointForLineProfile(firstPoint, pointsToShow[ProfileSettingsPointButtonEnum.PointsFist]);
+            }
+
+            if(secondPoint == null)
+            {
+                SetFirsPointForLineProfile(null, null);
+            }
+            else
+            {
+                var secondPointToWgs = secondPoint.CloneWithProjecting();
+                SetFirsPointForLineProfile(secondPointToWgs, secondPoint);
+            }
+               
+        }
+
         private IPoint GetPointFromGeoCalculator(ProfileSettingsPointButtonEnum pointType)
         {
             Dictionary<int, IPoint> points;
