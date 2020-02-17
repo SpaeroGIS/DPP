@@ -20,6 +20,7 @@ namespace MilSpace.Profile.ModalWindows
             InitializeListView(points);
 
             lblLayer.Text = LocalizationContext.Instance.FindLocalizedElement("LblGetPointsFromGeoCalculator", "Список точок модулю Геокалькулятор");
+            btnChoosePoint.Text = LocalizationContext.Instance.ChooseText;
             this.Text = LocalizationContext.Instance.FindLocalizedElement("ModalPointsListTitle", "Список точок Геокалькулятора");
             _points = points;
         }

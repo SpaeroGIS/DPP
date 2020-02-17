@@ -28,6 +28,7 @@ namespace MilSpace.Profile.ModalWindows
             btnChoosePoint.Text = LocalizationContext.Instance.FindLocalizedElement("BtnChooseText", "Обрати");
             dgvPoints.Columns["IdCol"].HeaderText = LocalizationContext.Instance.FindLocalizedElement("DgvObservPointsIdHeader", "Ідентифікатор");
             dgvPoints.Columns["TitleCol"].HeaderText = LocalizationContext.Instance.FindLocalizedElement("DgvObservPointsTitleHeader", "Назва");
+            lblLayer.Text = LocalizationContext.Instance.FindLocalizedElement("ObservPointsTypeText", "Пункти спостереження");
         }
 
         private void FillPointsGrid()
