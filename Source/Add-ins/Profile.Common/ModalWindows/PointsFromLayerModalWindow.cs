@@ -1,23 +1,17 @@
-﻿using ESRI.ArcGIS.Carto;
-using ESRI.ArcGIS.Geodatabase;
-using ESRI.ArcGIS.Geometry;
-using MilSpace.Core;
-using MilSpace.Core.Tools;
+﻿using MilSpace.Core;
+using MilSpace.Core.DataAccess;
 using MilSpace.Profile.Localization;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace MilSpace.Profile.ModalWindows
 {
     public partial class PointsFromLayerModalWindow : Form
     {
-        private MapLayersManager _mapLayersManager = new MapLayersManager(ArcMap.Document.ActiveView);
-        private Logger _log = Logger.GetLoggerEx("MilSpace.Profile.ModalWindows.PointsFromLayerModalWindow");
-        private List<FromLayerPointModel> _points; 
+        private PointsFromLayerController _controller = new PointsFromLayerController();
+        private List<FromLayerPointModel> _points;
         internal FromLayerPointModel SelectedPoint;
         internal string LayerName;
 
@@ -39,28 +33,15 @@ namespace MilSpace.Profile.ModalWindows
 
         private void PopulateLayerComboBox()
         {
-            var layers = _mapLayersManager.PointLayers.Where(layer => !layer.Name.Equals("MilSp_Visible_ObservPoints"));
-
             cmbLayers.Items.Clear();
-            cmbLayers.Items.AddRange(layers.Select(l => l.Name).ToArray());
+            cmbLayers.Items.AddRange(_controller.GetPointLayers());
         }
 
         private void PopulateFieldsComboBox(string layerName)
         {
-            var fields = new List<string>();
+            var fields = _controller.GetLayerFields(layerName);
 
-            try
-            {
-                var layer = _mapLayersManager.GetLayer(layerName);
-                fields = _mapLayersManager.GetFeatureLayerFields(layer as IFeatureLayer);
-            }
-            catch(Exception ex)
-            {
-                _log.ErrorEx($"> PopulateFieldsComboBox. Exception: {ex}");
-                return;
-            }
-
-            if(fields.Count == 0)
+            if(fields == null || fields.Count() == 0)
             {
                 cmbFields.Enabled = false;
                 FillPointsGrid();
@@ -69,88 +50,23 @@ namespace MilSpace.Profile.ModalWindows
 
             cmbFields.Items.Clear();
             cmbFields.Enabled = true;
-            cmbFields.Items.AddRange(fields.ToArray());
+            cmbFields.Items.AddRange(fields);
         }
 
         private void FillPointsGrid(string selectedField = null)
         {
-            var layer = _mapLayersManager.GetLayer(cmbLayers.SelectedItem.ToString()) as IFeatureLayer;
-            _points = new List<FromLayerPointModel>();
-
-            var featureClass = layer.FeatureClass;
-            var idFieldIndex = featureClass.FindField("OBJECTID");
-            var selectedFieldIndex = (selectedField != null) ? featureClass.FindField(selectedField) : -2;
-
-            if(idFieldIndex == -1)
+            _points = _controller.GetPoints(cmbLayers.SelectedItem.ToString(), selectedField);
+            if(_points == null)
             {
-                _log.WarnEx($"> FillPointsGrid. Warning: Cannot find fild \"OBJECTID\" in featureClass {featureClass.AliasName}");
-                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgCannotFindObjIdText", "У шарі відсутнє поле OBJECTID"),
-                                    LocalizationContext.Instance.MessageBoxTitle);
-
                 return;
             }
 
-            if(selectedFieldIndex == -1)
+            dgvPoints.Rows.Clear();
+            dgvPoints.Columns["DisplayFieldCol"].Visible = selectedField != null;
+
+            foreach(var point in _points)
             {
-                _log.WarnEx($"> FillPointsGrid. Warning: Cannot find fild {selectedField} in featureClass {featureClass.AliasName}");
-            }
-
-            IQueryFilter queryFilter = new QueryFilter();
-            queryFilter.WhereClause = "OBJECTID > 0";
-
-            IFeatureCursor featureCursor = featureClass.Search(queryFilter, true);
-            IFeature feature = featureCursor.NextFeature();
-            try
-            {
-                while(feature != null)
-                {
-                    var shape = feature.Shape;
-
-                    if(featureClass.ShapeType == esriGeometryType.esriGeometryPoint)
-                    {
-                        var point = shape as IPoint;
-                        var pointCopy = point.Clone();
-                        pointCopy.Project(EsriTools.Wgs84Spatialreference);
-
-                        int id = -1;
-                        string displayedField = string.Empty;
-
-                        if(idFieldIndex >= 0)
-                        {
-                            id = (int)feature.Value[idFieldIndex];
-                        }
-
-                        if(selectedFieldIndex >= 0)
-                        {
-                            displayedField = feature.Value[selectedFieldIndex].ToString();
-                        }
-
-                        _points.Add(new FromLayerPointModel { Point = pointCopy, ObjId = id, DisplayedField = displayedField });
-                    }
-                    else
-                    {
-                        _log.ErrorEx($"> FillPointsGrid. Exception: Layer {cmbLayers.SelectedItem.ToString()} doesn`t have a feature class with type esriGeometryPoint");
-                    }
-
-                    feature = featureCursor.NextFeature();
-                }
-
-                dgvPoints.Rows.Clear();
-                dgvPoints.Columns["DisplayFieldCol"].Visible = selectedField != null;
-
-                foreach(var point in _points)
-                {
-                    dgvPoints.Rows.Add(point.ObjId, point.DisplayedField, Math.Round(point.Point.X, 5), Math.Round(point.Point.Y, 5));
-                }
-
-            }
-            catch(Exception ex)
-            {
-                _log.ErrorEx($"> FillPointsGrid Exception. ex.Message:{ex.Message}");
-            }
-            finally
-            {
-                Marshal.ReleaseComObject(featureCursor);
+                dgvPoints.Rows.Add(point.ObjId, point.DisplayedField, point.Point.X.ToFormattedString(), point.Point.Y.ToFormattedString());
             }
         }
 

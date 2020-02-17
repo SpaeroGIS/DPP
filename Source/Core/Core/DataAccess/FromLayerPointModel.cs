@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MilSpace.Profile.ModalWindows
+namespace MilSpace.Core.DataAccess
 {
-    internal class FromLayerPointModel
+    public class FromLayerPointModel
     {
         public IPoint Point;
         public int ObjId;

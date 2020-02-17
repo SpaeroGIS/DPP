@@ -119,6 +119,7 @@
   <PrimitiveTypeText>Графіка</PrimitiveTypeText>
   <ProfilesSetNotSharedText>Приватний</ProfilesSetNotSharedText>
   <ProfilesSetSharedText>Спільний</ProfilesSetSharedText>
+  <ObservPointsTypeText>Пункти спостереження</ObservPointsTypeText>
   <TabFunTabText>"Віяло"</TabFunTabText>
   <TabGraphTitle>Графік</TabGraphTitle>
   <TabLoadTabText>Завантажити</TabLoadTabText>
@@ -154,7 +155,8 @@
   <MsgNotAllowedToShareText>Ви не можете дозволити спільний доступ для цього профілю.</MsgNotAllowedToShareText>
   <MsgRemoveProfaileText>Ви дійсно бажаєти cкинути профіль  "{0}" з сесії?</MsgRemoveProfaileText>
   <MsgPickCoordinatesToolText>Будь ласка, увімкніть інструмент для виділення точки</MsgPickCoordinatesToolText>
-  <MsgGeoCalcModuleDoesnotExistText>Модуль Геокалькулятор не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</MsgGeoCalcModuleDoesnotExistText>
+  <MsgGeoCalcModuleDoesnotExistText>Модуль "Геокалькулятор" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</MsgGeoCalcModuleDoesnotExistText>
+  <MsgObservPointscModuleDoesnotExistText>Модуль "Видимість" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</MsgObservPointscModuleDoesnotExistText>
   <MsgCannotFindObjIdText>У шарі відсутнє поле OBJECTID</MsgCannotFindObjIdText>
   <MsgObservPointsLayerDoesnotExistText>У проекті відсутній шар точок спостереження. Будь ласка додайте шар, щоб мати можливість отримати точки</MsgObservPointsLayerDoesnotExistText>
   <MsgDemLayerNotChosen>Будь ласка оберіть шар ЦМР/ЦММ, щоб отримати Z координату</MsgDemLayerNotChosen>

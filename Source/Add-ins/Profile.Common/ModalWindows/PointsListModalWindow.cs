@@ -1,13 +1,10 @@
 ﻿using ESRI.ArcGIS.Geometry;
+using MilSpace.Core;
+using MilSpace.Core.DataAccess;
 using MilSpace.Profile.Localization;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MilSpace.Profile.ModalWindows
@@ -37,8 +34,8 @@ namespace MilSpace.Profile.ModalWindows
             foreach(var point in points)
             {
                 var item = new ListViewItem(point.Key.ToString());
-                item.SubItems.Add(Math.Round(point.Value.X, 5).ToString());
-                item.SubItems.Add(Math.Round(point.Value.Y, 5).ToString());
+                item.SubItems.Add(point.Value.X.ToFormattedString());
+                item.SubItems.Add(point.Value.Y.ToFormattedString());
 
                 lvPoints.Items.Add(item);
             }

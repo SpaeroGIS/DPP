@@ -2,6 +2,7 @@
 using ESRI.ArcGIS.Desktop.AddIns;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core;
+using MilSpace.Core.DataAccess;
 using MilSpace.Core.Exceptions;
 using MilSpace.Core.ModulesInteraction;
 using MilSpace.Core.Tools;
@@ -1113,6 +1114,7 @@ namespace MilSpace.Profile
             if(rl == null || String.IsNullOrEmpty(View.DemLayerName))
             {
                 MessageBox.Show(LocalizationContext.Instance.DemLayerNotChosenText, LocalizationContext.Instance.MessageBoxTitle);
+                return;
             }
 
             IPoint point = null;
@@ -1238,21 +1240,46 @@ namespace MilSpace.Profile
 
         private IPoint GetPointFromObservationPoints(ProfileSettingsPointButtonEnum pointType)
         {
-            var observPointsLayer = _mapLayersManager.FindFeatureLayer("MilSp_Visible_ObservPoints");
+            var visibilityModule = ModuleInteraction.Instance.GetModuleInteraction<IVisibilityInteraction>(out bool changes);
+            var points = new List<FromLayerPointModel>();
 
-            if(observPointsLayer == null)
+            if(!changes && visibilityModule == null)
             {
-                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgObservPointsLayerDoesnotExistText", "У проекті відсутній шар точок спостереження \nБудь ласка додайте шар, щоб мати можливість отримати точки"),
-                                LocalizationContext.Instance.MessageBoxTitle);
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgObservPointscModuleDoesnotExistText", "Модуль \"Видимість\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним"), LocalizationContext.Instance.MessageBoxTitle);
+                logger.ErrorEx($"> GetPointFromObservationPoints Exception: {LocalizationContext.Instance.FindLocalizedElement("MsgObservPointscModuleDoesnotExistText", "Модуль \"Видимість\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним")}");
                 return null;
             }
 
-            ObservationPointsListModalWindow observPointsModal = new ObservationPointsListModalWindow(observPointsLayer as IFeatureLayer);
+            try
+            {
+                points = visibilityModule.GetObservationPoints();
+
+                if(points == null)
+                {
+                    MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgObservPointsLayerDoesnotExistText", "У проекті відсутній шар точок спостереження \nБудь ласка додайте шар, щоб мати можливість отримати точки"),
+                                LocalizationContext.Instance.MessageBoxTitle);
+                    return null;
+                }
+            }
+            catch(MissingFieldException)
+            {
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgCannotFindObjIdText", "У шарі відсутнє поле OBJECTID"),
+                                   LocalizationContext.Instance.MessageBoxTitle);
+                return null;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(LocalizationContext.Instance.ErrorHappendText, LocalizationContext.Instance.MessageBoxTitle);
+                logger.ErrorEx($"> GetPointFromObservationPoints Exception: {ex.Message}");
+                return null;
+            }
+            
+            ObservationPointsListModalWindow observPointsModal = new ObservationPointsListModalWindow(points);
             var result = observPointsModal.ShowDialog();
 
             if(result == DialogResult.OK)
             {
-                View.SetPointInfo(pointType, $"{observPointsLayer.Name}; {observPointsModal.SelectedPoint.ObjId}");
+                View.SetPointInfo(pointType, $"{LocalizationContext.Instance.FindLocalizedElement("ObservPointsTypeText", "Пункти спостереження")}; {observPointsModal.SelectedPoint.ObjId}");
                 return observPointsModal.SelectedPoint.Point;
             }
 

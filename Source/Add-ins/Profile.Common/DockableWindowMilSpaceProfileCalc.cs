@@ -735,9 +735,9 @@ namespace MilSpace.Profile
             {
                 if (point != null)
                 {
-                    controlX.Text = point.X.ToString("F5");
-                    controlY.Text = point.Y.ToString("F5");
-                    controlZ.Text = point.Z.ToString("F5");
+                    controlX.Text = point.X.ToFormattedString();
+                    controlY.Text = point.Y.ToFormattedString();
+                    controlZ.Text = point.Z.ToFormattedString();
                 }
                 else
                 {
@@ -993,15 +993,15 @@ namespace MilSpace.Profile
         {
             if(pointType == ProfileSettingsPointButtonEnum.PointsFist)
             {
-                firstPointToolBar.Buttons["tlbbReturnPoint"].Enabled = enabled;
+                tlbbReturnPoint.Enabled = enabled;
             }
             else if(pointType == ProfileSettingsPointButtonEnum.PointsSecond)
             {
-                secondPointToolbar.Buttons["tlbbReturnToPoint"].Enabled = enabled;
+                tlbbReturnToPoint.Enabled = enabled;
             }
             else
             {
-                basePointToolbar.Buttons["tlbbReturnCenterPoint"].Enabled = enabled;
+                tlbbReturnCenterPoint.Enabled = enabled;
             }
         }
 
@@ -1314,10 +1314,10 @@ namespace MilSpace.Profile
                 newNode.SetProfileType(ConvertProfileTypeToString(profile.DefinitionType));
                 if (profile.DefinitionType == ProfileSettingsTypeEnum.Points)
                 {
-                    var firstX = profile.ProfileLines.First().Line.FromPoint.X.ToString("F5");
-                    var firstY = profile.ProfileLines.First().Line.FromPoint.Y.ToString("F5");
-                    var secondX = profile.ProfileLines.First().Line.ToPoint.X.ToString("F5");
-                    var secondY = profile.ProfileLines.First().Line.ToPoint.Y.ToString("F5");
+                    var firstX = profile.ProfileLines.First().Line.FromPoint.X.ToFormattedString();
+                    var firstY = profile.ProfileLines.First().Line.FromPoint.Y.ToFormattedString();
+                    var secondX = profile.ProfileLines.First().Line.ToPoint.X.ToFormattedString();
+                    var secondY = profile.ProfileLines.First().Line.ToPoint.Y.ToFormattedString();
                     var lineDistance = profile.ProfileLines.First().Line.Length.ToString("F5");
 
                     newNode.SetBasePoint($"X= {firstX}; Y= {firstY};");
@@ -1329,8 +1329,8 @@ namespace MilSpace.Profile
                 }
                 else if (profile.DefinitionType == ProfileSettingsTypeEnum.Fun)
                 {
-                    var basePointX = profile.ProfileLines.First().Line.FromPoint.X.ToString("F5");
-                    var basePointY = profile.ProfileLines.First().Line.FromPoint.Y.ToString("F5");
+                    var basePointX = profile.ProfileLines.First().Line.FromPoint.X.ToFormattedString();
+                    var basePointY = profile.ProfileLines.First().Line.FromPoint.Y.ToFormattedString();
                     var lineDistance = profile.ProfileLines.First().Line.Length.ToString("F5");
                     var linesCount = profile.ProfileLines.Length.ToString();
 

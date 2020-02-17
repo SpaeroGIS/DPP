@@ -219,9 +219,6 @@
       <Link>ModalWindows\AccessibleProfilesModalWindow.designer.cs</Link>
       <DependentUpon>AccessibleProfilesModalWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="..\Profile.Common\ModalWindows\FromLayerPointModel.cs">
-      <Link>ModalWindows\FromLayerPointModel.cs</Link>
-    </Compile>
     <Compile Include="..\Profile.Common\ModalWindows\ObservationPointsListModalWindow.cs">
       <Link>ModalWindows\ObservationPointsListModalWindow.cs</Link>
       <SubType>Form</SubType>
@@ -229,6 +226,9 @@
     <Compile Include="..\Profile.Common\ModalWindows\ObservationPointsListModalWindow.designer.cs">
       <Link>ModalWindows\ObservationPointsListModalWindow.designer.cs</Link>
       <DependentUpon>ObservationPointsListModalWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\Profile.Common\ModalWindows\PointsFromLayerController.cs">
+      <Link>ModalWindows\PointsFromLayerController.cs</Link>
     </Compile>
     <Compile Include="..\Profile.Common\ModalWindows\PointsFromLayerModalWindow.cs">
       <Link>ModalWindows\PointsFromLayerModalWindow.cs</Link>
