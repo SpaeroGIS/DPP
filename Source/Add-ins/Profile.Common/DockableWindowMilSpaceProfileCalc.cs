@@ -1209,15 +1209,21 @@ namespace MilSpace.Profile
             lblAboutSelected.Text = LocalizationContext.Instance.FindLocalizedElement("LblAboutSelectedText", "Інформація про обране");
 
             lblProfileList.Text = LocalizationContext.Instance.FindLocalizedElement("LblProfileListText", "Профілі в роботі");
-            lblFirstlPointGettingWay.Text = LocalizationContext.Instance.FindLocalizedElement("LblAssignmentMethodText", "Спосіб призначення");
-            lblSecondPointGettingWay.Text = LocalizationContext.Instance.FindLocalizedElement("LblAssignmentMethodText", "Спосіб призначення");
+            lblFirstlPointGettingWay.Text = LocalizationContext.Instance.AssignmentMethodText;
+            lblSecondPointGettingWay.Text = LocalizationContext.Instance.AssignmentMethodText;
+            lblCenterPointAssignmentMethod.Text = LocalizationContext.Instance.AssignmentMethodText;
+            lblTargetObjAssignmentMethod.Text = LocalizationContext.Instance.AssignmentMethodText;
             lblProfileInfo.Text = LocalizationContext.Instance.FindLocalizedElement("LblProfileInfoText", "Параметри відрізку");
             lblLengthInfo.Text = LocalizationContext.Instance.LengthInfoText;
             lblAzimuthInfo.Text = LocalizationContext.Instance.AzimuthInfoText;
+            lblTargetObj.Text = LocalizationContext.Instance.FindLocalizedElement("LblTargetObjText", "Цільовий об'єкт");
+
 
             lblFirstPointInfo.Text = string.Empty;
             lblSecondPointInfo.Text = string.Empty;
             lblCenterPointInfo.Text = string.Empty;
+            lblTargetObjInfo.Text = string.Empty;
+
 
             toolPanOnMap.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintToolBtnPanOnMapText", "Переміститись  на карті");
             toolBtnFlash.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintToolBtnShowOnMapText", "Показати на карті");
@@ -1233,6 +1239,7 @@ namespace MilSpace.Profile
             btnChooseFirstPointAssignmentMethod.Text = LocalizationContext.Instance.ChooseText;
             btnChooseSecondPointAssignmentMethod.Text = LocalizationContext.Instance.ChooseText;
             btnCenterPointAssignmantMethod.Text = LocalizationContext.Instance.ChooseText;
+            btnTargetObjAssignmentMethod.Text = LocalizationContext.Instance.ChooseText;
 
             profilesTreeView.Nodes["Points"].Text = LocalizationContext.Instance.FindLocalizedElement("TvProfilesPointsNodeText", "Відрізки");
             profilesTreeView.Nodes["Fun"].Text = LocalizationContext.Instance.FindLocalizedElement("TvProfilesFunNodeText", "\"Віяло\"");
@@ -1248,6 +1255,12 @@ namespace MilSpace.Profile
 
             cmbCenterPointAssignmentMethod.Items.AddRange(controller.GetAssignmentMethodsStrings());
             cmbCenterPointAssignmentMethod.SelectedItem = mapItem;
+
+            cmbTargetObjAssignmentMethod.Items.AddRange(controller.GetTargetAssignmentMethodsStrings());
+            cmbTargetObjAssignmentMethod.SelectedItem = LocalizationContext.Instance.TargetAssignmentMethodInSector;
+
+            cmbTargetObjCreation.Items.AddRange(controller.GetToPointsCreationMethodsString());
+            cmbTargetObjCreation.SelectedItem = LocalizationContext.Instance.ToPointsCreationMethodAzimuthsLines;
 
             logger.InfoEx("> LocalizeStrings Profile END");
         }

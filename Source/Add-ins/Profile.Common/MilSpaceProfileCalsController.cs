@@ -84,7 +84,24 @@ namespace MilSpace.Profile
             { AssignmentMethodsEnum.FromMap, LocalizationContext.Instance.FindLocalizedElement("CmbAssignmentMethodFromMapTypeText", "Мапа") },
             { AssignmentMethodsEnum.GeoCalculator, LocalizationContext.Instance.FindLocalizedElement("CmbAssignmentMethodGeoCalcTypeText", "ГеоКалькулятор") },
             { AssignmentMethodsEnum.ObservationPoints, LocalizationContext.Instance.FindLocalizedElement("CmbAssignmentMethodObservPointsTypeText", "Шар пунктів спостереження") },
-            { AssignmentMethodsEnum.PointsLayers, LocalizationContext.Instance.FindLocalizedElement("CmbAssignmentMethodPointsLayerTypeText", "Точковий шар") }
+            { AssignmentMethodsEnum.FeatureLayers, LocalizationContext.Instance.FindLocalizedElement("CmbAssignmentMethodPointsLayerTypeText", "Точковий шар") }
+        };
+
+        private Dictionary<AssignmentMethodsEnum, string> _targetAssignmentMethods = new Dictionary<AssignmentMethodsEnum, string>()
+        {
+            { AssignmentMethodsEnum.Sector, LocalizationContext.Instance.FindLocalizedElement("CmbTargetAssignmentMethodInSectorText","У вказаному секторі")},
+            { AssignmentMethodsEnum.GeoCalculator, LocalizationContext.Instance.FindLocalizedElement("CmbTargetAssignmentMethodGeoCalcText", "ГеоКалькулятор") },
+            { AssignmentMethodsEnum.ObservationObjects, LocalizationContext.Instance.FindLocalizedElement("CmbTargetAssignmentMethodFeatureLayerText", "Векторний шар") },
+            { AssignmentMethodsEnum.ObservationPoints, LocalizationContext.Instance.FindLocalizedElement("CmbTargetAssignmentMethodObservPointsText", "Шар пунктів спостереження") },
+            { AssignmentMethodsEnum.FeatureLayers, LocalizationContext.Instance.FindLocalizedElement("CmbTargetAssignmentMethodObservObjText", "Шар об'єктів спостереження") },
+            { AssignmentMethodsEnum.SelectedGraphic, LocalizationContext.Instance.FindLocalizedElement("CmbTargetAssignmentMethodSelectedGraphicText", "Обрана графіка") }
+        };
+
+        private Dictionary<ToPointsCreationMethodsEnum, string> _toPointsCreationMethods = new Dictionary<ToPointsCreationMethodsEnum, string>()
+        {
+            { ToPointsCreationMethodsEnum.AzimuthsCenter, LocalizationContext.Instance.FindLocalizedElement("CmbToPointsCreationMethodCenterText", "Азмимути (мін і макс), центр") },
+            { ToPointsCreationMethodsEnum.AzimuthsLines, LocalizationContext.Instance.FindLocalizedElement("CmbToPointsCreationMethodLineNumberText", "К-ть ліній від мін до макс азимуту") },
+            { ToPointsCreationMethodsEnum.ToVertices, LocalizationContext.Instance.FindLocalizedElement("CmbToPointsCreationMethodToVerticesText", "До вершин") },
         };
 
         internal Dictionary<ProfileSettingsTypeEnum, ProfileSettings> ProfileSettings => profileSettings;
@@ -1102,9 +1119,29 @@ namespace MilSpace.Profile
             return _assignmentMethods.Values.ToArray();
         }
 
+        internal string[] GetTargetAssignmentMethodsStrings()
+        {
+            return _targetAssignmentMethods.Values.ToArray();
+        }
+
+        internal string[] GetToPointsCreationMethodsString()
+        {
+            return _toPointsCreationMethods.Values.ToArray();
+        }
+
         internal AssignmentMethodsEnum GetMethodByString(string methodString)
         {
             return _assignmentMethods.FirstOrDefault(method => method.Value == methodString).Key;
+        }
+
+        internal AssignmentMethodsEnum GetTargetAssignmentMethodByString(string methodString)
+        {
+            return _targetAssignmentMethods.FirstOrDefault(method => method.Value == methodString).Key;
+        }
+
+        internal ToPointsCreationMethodsEnum GetCreationMethodByString(string methodString)
+        {
+            return _toPointsCreationMethods.FirstOrDefault(method => method.Value == methodString).Key;
         }
 
         internal void SetPointBySelectedMethod(AssignmentMethodsEnum method, ProfileSettingsPointButtonEnum pointType)
@@ -1134,7 +1171,7 @@ namespace MilSpace.Profile
                     break;
 
 
-                case AssignmentMethodsEnum.PointsLayers:
+                case AssignmentMethodsEnum.FeatureLayers:
 
                     point = GetPointFromPointLayers(pointType);
 

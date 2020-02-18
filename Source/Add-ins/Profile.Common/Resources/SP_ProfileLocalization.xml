@@ -61,6 +61,15 @@
   <CmbAssignmentMethodFromMapTypeText>Мапа</CmbAssignmentMethodFromMapTypeText>
   <CmbAssignmentMethodObservPointsTypeText>Шар пунктів спостереження</CmbAssignmentMethodObservPointsTypeText>
   <CmbAssignmentMethodPointsLayerTypeText>Точковий шар</CmbAssignmentMethodPointsLayerTypeText>
+  <CmbTargetAssignmentMethodInSectorText>У вказаному секторі</CmbTargetAssignmentMethodInSectorText>
+  <CmbTargetAssignmentMethodObservPointsText>Шар пунктів спостереження</CmbTargetAssignmentMethodObservPointsText>
+  <CmbTargetAssignmentMethodObservObjText>Шар об'єктів спостереження</CmbTargetAssignmentMethodObservObjText>
+  <CmbTargetAssignmentMethodFeatureLayerText>Векторний шар</CmbTargetAssignmentMethodFeatureLayerText>
+  <CmbTargetAssignmentMethodSelectedGraphicText>Обрана графіка</CmbTargetAssignmentMethodSelectedGraphicText>
+  <CmbTargetAssignmentMethodGeoCalcText>Геокалькулятор</CmbTargetAssignmentMethodGeoCalcText>
+  <CmbToPointsCreationMethodCenterText>Азмимути (мін і макс), центр</CmbToPointsCreationMethodCenterText>
+  <CmbToPointsCreationMethodLineNumberText>К-ть ліній від мін до макс азимуту</CmbToPointsCreationMethodLineNumberText>
+  <CmbToPointsCreationMethodToVerticesText>До вершин</CmbToPointsCreationMethodToVerticesText>
   <CopyStripMenuItemText>Скопіювати</CopyStripMenuItemText>
   <FrmSavedProfilesModalWindowText>Додати профілі до сесії</FrmSavedProfilesModalWindowText>
   <FunTypeText>"Віяло"</FunTypeText>
@@ -108,6 +117,8 @@
   <LblGetPointsFromGeoCalculator>Список точок модулю Геокалькулятор</LblGetPointsFromGeoCalculator>
   <LblLayersText>Шар</LblLayersText>
   <LblFieldsText>Поле</LblFieldsText>
+  <LblTargetObjText>Цільовий об'єкт</LblTargetObjText>
+  <LblFunParametersText>Правило створення та параметри</LblFunParametersText>
   <LvProfileDetailsAnglesText>Кути:</LvProfileDetailsAnglesText>
   <LvProfileDetailsAzimuthText>Азимут:</LvProfileDetailsAzimuthText>
   <LvProfileDetailsEndPointsText>Початок - кінець</LvProfileDetailsEndPointsText>

@@ -5,6 +5,16 @@
         FromMap,
         GeoCalculator,
         ObservationPoints,
-        PointsLayers
+        FeatureLayers,
+        Sector,
+        ObservationObjects,
+        SelectedGraphic
+    }
+
+    enum ToPointsCreationMethodsEnum
+    {
+        AzimuthsCenter,
+        AzimuthsLines,
+        ToVertices
     }
 }
