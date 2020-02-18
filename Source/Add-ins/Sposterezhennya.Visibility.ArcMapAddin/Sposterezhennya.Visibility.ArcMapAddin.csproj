@@ -148,6 +148,9 @@
     <Compile Include="..\Visibility.Common\Helpers\ArcMapHelper.cs">
       <Link>Helpers\ArcMapHelper.cs</Link>
     </Compile>
+    <Compile Include="..\Visibility.Common\Interaction\VisibilityInteraction.cs">
+      <Link>Interaction\VisibilityInteraction.cs</Link>
+    </Compile>
     <Compile Include="..\Visibility.Common\LocalizationContext.cs">
       <Link>LocalizationContext.cs</Link>
     </Compile>

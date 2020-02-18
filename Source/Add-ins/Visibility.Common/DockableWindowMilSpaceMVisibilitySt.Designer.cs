@@ -28,8 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceMVisibilitySt));
-            this.imageList1 = new System.Windows.Forms.ImageList();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.tbpPoints = new System.Windows.Forms.TabPage();
             this.panel7 = new System.Windows.Forms.Panel();

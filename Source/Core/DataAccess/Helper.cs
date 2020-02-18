@@ -31,6 +31,6 @@ namespace MilSpace.DataAccess
 
             return new Point() { X = point.X, Y = point.Y, SpatialReference = spatial };
         }
-
+        
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MilSpace.Core.DataAccess;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace MilSpace.Core.ModulesInteraction
 {
     public interface IVisibilityInteraction
     {
+        List<FromLayerPointModel> GetObservationPoints();
     }
 }

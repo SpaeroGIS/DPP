@@ -9,7 +9,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic.Extensions
 {
     public static class CollectionsExtension
     {
-        public static List<PointModel> ToSortedPointModelsList(this IDictionary<string, PointModel> pointModelDictionary)
+        public static List<PointModel> ToSortedPointModelsList(this IDictionary<Guid, PointModel> pointModelDictionary)
         {
             return pointModelDictionary.Values.OrderBy(value => value.Number).ToList();
         }

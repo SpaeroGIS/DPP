@@ -55,7 +55,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             _profileSession = profileSession;
             _sessionsIds.Add(profileSession.SessionId);
 
-            if(_profileSession.ProfileLines != null && _profileSession.ProfileLines.Length > 0)
+            if(_profileSession.ProfileLines != null && _profileSession.ProfileLines.Length > 0 && _profileSession.ProfileSurfaces.Length == _profileSession.ProfileLines.Length)
             {
                 for(int i = 0; i < _profileSession.ProfileLines.Length; i++)
                 {

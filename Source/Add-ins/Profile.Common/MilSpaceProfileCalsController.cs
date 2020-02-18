@@ -2,6 +2,7 @@
 using ESRI.ArcGIS.Desktop.AddIns;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core;
+using MilSpace.Core.DataAccess;
 using MilSpace.Core.Exceptions;
 using MilSpace.Core.ModulesInteraction;
 using MilSpace.Core.Tools;
@@ -30,6 +31,7 @@ namespace MilSpace.Profile
     {
         //TODO: Localize
         private static readonly string graphiclayerTitle = LocalizationContext.Instance.FindLocalizedElement("TxtGraphicsLayerValue", "графічні об'єкти");
+        private MapLayersManager _mapLayersManager;
 
         private int profileId;
         GraphicsLayerManager graphicsLayerManager;
@@ -53,6 +55,13 @@ namespace MilSpace.Profile
 
         private Dictionary<ProfileSettingsPointButtonEnum, IPoint> pointsToShow = new Dictionary<ProfileSettingsPointButtonEnum, IPoint>()
 
+        {
+            {ProfileSettingsPointButtonEnum.CenterFun, null},
+            {ProfileSettingsPointButtonEnum.PointsFist, null},
+            {ProfileSettingsPointButtonEnum.PointsSecond, null}
+        };
+
+        private Dictionary<ProfileSettingsPointButtonEnum, IPoint> startPoints = new Dictionary<ProfileSettingsPointButtonEnum, IPoint>()
         {
             {ProfileSettingsPointButtonEnum.CenterFun, null},
             {ProfileSettingsPointButtonEnum.PointsFist, null},
@@ -101,6 +110,7 @@ namespace MilSpace.Profile
             IActiveViewEvents_Event activeViewEvents = (IActiveViewEvents_Event)View.ActiveView.FocusMap;
             IActiveViewEvents_SelectionChangedEventHandler handler = new IActiveViewEvents_SelectionChangedEventHandler(OnMapSelectionChangedLocal);
             activeViewEvents.SelectionChanged += handler;
+            _mapLayersManager = new MapLayersManager(ArcMap.Document.ActiveView);
 
             logger.InfoEx("> OnDocumentsLoad END");
         }
@@ -244,8 +254,16 @@ namespace MilSpace.Profile
                 if (line != null)
                 {
                     profileLines.Add(line);
-                }
 
+                    ILine ln = new Line()
+                    {
+                        FromPoint = line.FromPoint,
+                        ToPoint = line.ToPoint,
+                        SpatialReference = line.SpatialReference
+                    };
+
+                    View.SetProifileLineInfo(line.Length, ln.Azimuth());
+                }
             }
 
             if (View.SelectedProfileSettingsType == ProfileSettingsTypeEnum.Fun)
@@ -309,7 +327,7 @@ namespace MilSpace.Profile
                 var profileSetting = profileSettings[View.SelectedProfileSettingsType];
                 var newProfileId = GenerateProfileId();
                 logger.DebugEx($"GenerateProfile.Profile. ID:{newProfileId}");
-                var newProfileName = GenerateProfileName(newProfileId);
+                var newProfileName = GenerateProfileName();
                 logger.DebugEx($"GenerateProfile.Profile. Name:{newProfileName}");
 
                 if (manager == null)
@@ -766,7 +784,7 @@ namespace MilSpace.Profile
 
         private void SetProfileName()
         {
-            View.ProfileName = $"{NewProfilePrefix} {profileId}";
+            View.ProfileName = $"{NewProfilePrefix} {GenerateProfileNameSuffix()}";
         }
 
         private ProfileSession GetProfileSessionById(int profileId)
@@ -783,10 +801,10 @@ namespace MilSpace.Profile
         }
 
 
-        private string GenerateProfileName(int id)
+        private string GenerateProfileName()
         {
             if (!string.IsNullOrWhiteSpace(View.ProfileName)) return View.ProfileName;
-            var result = $"{NewProfilePrefix} {id}";
+            var result = $"{NewProfilePrefix} {GenerateProfileNameSuffix()}";
             return result;
 
         }
@@ -794,6 +812,11 @@ namespace MilSpace.Profile
         private int GenerateProfileId()
         {
             return (int)(DateTime.Now.ToOADate() * 10000);
+        }
+
+        private string GenerateProfileNameSuffix()
+        {
+            return DataAccess.Helper.GetTemporaryNameSuffix();
         }
 
         private IPoint GetEnvelopeCenterPoint(IEnvelope envelope)
@@ -1027,7 +1050,7 @@ namespace MilSpace.Profile
             {
                 DefinitionType = ProfileSettingsTypeEnum.Composed,
                 SessionId = newProfileId,
-                SessionName = GenerateProfileName(newProfileId),
+                SessionName = GenerateProfileName(),
                 ObserverHeight = 0,
                 SurfaceLayerName = View.DemLayerName,
                 CreatedBy = Environment.UserName,
@@ -1084,27 +1107,36 @@ namespace MilSpace.Profile
             return _assignmentMethods.FirstOrDefault(method => method.Value == methodString).Key;
         }
 
-        internal void SetPointBySelectedMethod(AssignmentMethodsEnum method, bool isFirstPoint)
+        internal void SetPointBySelectedMethod(AssignmentMethodsEnum method, ProfileSettingsPointButtonEnum pointType)
         {
+            var rl = _mapLayersManager.RasterLayers.FirstOrDefault(l => l.Name == View.DemLayerName);
+
+            if(rl == null || String.IsNullOrEmpty(View.DemLayerName))
+            {
+                MessageBox.Show(LocalizationContext.Instance.DemLayerNotChosenText, LocalizationContext.Instance.MessageBoxTitle);
+                return;
+            }
+
             IPoint point = null;
 
             switch(method)
             {
                 case AssignmentMethodsEnum.GeoCalculator:
 
-                    point = GetPointFromGeoCalculator();
+                    point = GetPointFromGeoCalculator(pointType);
 
                     break;
 
                 case AssignmentMethodsEnum.ObservationPoints:
 
+                    point = GetPointFromObservationPoints(pointType);
 
                     break;
 
 
                 case AssignmentMethodsEnum.PointsLayers:
 
-
+                    point = GetPointFromPointLayers(pointType);
 
                     break;
 
@@ -1115,20 +1147,60 @@ namespace MilSpace.Profile
                 return;
             }
 
-            var pointToMapSpatial = point.ClonePoint();
+            point.AddZCoordinate(rl.Raster);
+
+            var pointToMapSpatial = point.Clone();
             pointToMapSpatial.Project(ArcMap.Document.ActivatedView.FocusMap.SpatialReference);
 
-            if(isFirstPoint)
+            if(pointType == ProfileSettingsPointButtonEnum.PointsFist)
             {
                 SetFirsPointForLineProfile(point, pointToMapSpatial);
             }
-            else
+            else if(pointType == ProfileSettingsPointButtonEnum.PointsSecond)
             {
                 SetSecondfPointForLineProfile(point, pointToMapSpatial);
             }
+            else
+            {
+                SetCenterPointForFunProfile(point, pointToMapSpatial);
+            }
+
+            startPoints[pointType] = point;
+            View.SetReturnButtonEnable(pointType, true);
         }
 
-        private IPoint GetPointFromGeoCalculator()
+        internal IPoint GetStartPointValue(ProfileSettingsPointButtonEnum pointType)
+        {
+            return startPoints[pointType];
+        }
+
+        internal void FlipPoints()
+        {
+            var secondPoint = pointsToShow[ProfileSettingsPointButtonEnum.PointsSecond].Clone();
+
+            if(pointsToShow[ProfileSettingsPointButtonEnum.PointsFist] == null)
+            {
+                SetSecondfPointForLineProfile(null, null);
+            }
+            else
+            {
+                var firstPoint = pointsToShow[ProfileSettingsPointButtonEnum.PointsFist].CloneWithProjecting();
+                SetSecondfPointForLineProfile(firstPoint, pointsToShow[ProfileSettingsPointButtonEnum.PointsFist]);
+            }
+
+            if(secondPoint == null)
+            {
+                SetFirsPointForLineProfile(null, null);
+            }
+            else
+            {
+                var secondPointToWgs = secondPoint.CloneWithProjecting();
+                SetFirsPointForLineProfile(secondPointToWgs, secondPoint);
+            }
+               
+        }
+
+        private IPoint GetPointFromGeoCalculator(ProfileSettingsPointButtonEnum pointType)
         {
             Dictionary<int, IPoint> points;
 
@@ -1136,8 +1208,8 @@ namespace MilSpace.Profile
 
             if(!changes && geoModule == null)
             {
-                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgGeoCalcModuleDoesntExists", "Модуль Геокалькулятор не було підключено"), LocalizationContext.Instance.MessageBoxTitle);
-                logger.ErrorEx($"> GetPointFromGeoCalculator Exception: {LocalizationContext.Instance.FindLocalizedElement("MsgGeoCalcModuleDoesntExists", "Модуль Геокалькулятор не було підключено")}");
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgGeoCalcModuleDoesnotExistText", "Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним"), LocalizationContext.Instance.MessageBoxTitle);
+                logger.ErrorEx($"> GetPointFromGeoCalculator Exception: {LocalizationContext.Instance.FindLocalizedElement("MsgGeoCalcModuleDoesnotExistText", "Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним")}");
                 return null;
             }
 
@@ -1152,17 +1224,82 @@ namespace MilSpace.Profile
                 return null;
             }
 
-            var pointsWindow = new PointsListModalWindow(points, _assignmentMethods[AssignmentMethodsEnum.GeoCalculator]);
+            var pointsWindow = new PointsListModalWindow(points);
             var result = pointsWindow.ShowDialog();
 
             if(result == DialogResult.OK)
             {
-                return pointsWindow.SelectedPoint;
+                View.SetPointInfo(pointType, $"{LocalizationContext.Instance.FindLocalizedElement("CmbAssignmentMethodGeoCalcTypeText", "Геокалькулятор")};" +
+                                                $" {pointsWindow.SelectedPoint.ObjId}");
+
+                return pointsWindow.SelectedPoint.Point;
             }
 
             return null;
         }
 
+        private IPoint GetPointFromObservationPoints(ProfileSettingsPointButtonEnum pointType)
+        {
+            var visibilityModule = ModuleInteraction.Instance.GetModuleInteraction<IVisibilityInteraction>(out bool changes);
+            var points = new List<FromLayerPointModel>();
+
+            if(!changes && visibilityModule == null)
+            {
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgObservPointscModuleDoesnotExistText", "Модуль \"Видимість\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним"), LocalizationContext.Instance.MessageBoxTitle);
+                logger.ErrorEx($"> GetPointFromObservationPoints Exception: {LocalizationContext.Instance.FindLocalizedElement("MsgObservPointscModuleDoesnotExistText", "Модуль \"Видимість\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним")}");
+                return null;
+            }
+
+            try
+            {
+                points = visibilityModule.GetObservationPoints();
+
+                if(points == null)
+                {
+                    MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgObservPointsLayerDoesnotExistText", "У проекті відсутній шар точок спостереження \nБудь ласка додайте шар, щоб мати можливість отримати точки"),
+                                LocalizationContext.Instance.MessageBoxTitle);
+                    return null;
+                }
+            }
+            catch(MissingFieldException)
+            {
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgCannotFindObjIdText", "У шарі відсутнє поле OBJECTID"),
+                                   LocalizationContext.Instance.MessageBoxTitle);
+                return null;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(LocalizationContext.Instance.ErrorHappendText, LocalizationContext.Instance.MessageBoxTitle);
+                logger.ErrorEx($"> GetPointFromObservationPoints Exception: {ex.Message}");
+                return null;
+            }
+            
+            ObservationPointsListModalWindow observPointsModal = new ObservationPointsListModalWindow(points);
+            var result = observPointsModal.ShowDialog();
+
+            if(result == DialogResult.OK)
+            {
+                View.SetPointInfo(pointType, $"{LocalizationContext.Instance.FindLocalizedElement("ObservPointsTypeText", "Пункти спостереження")}; {observPointsModal.SelectedPoint.ObjId}");
+                return observPointsModal.SelectedPoint.Point;
+            }
+
+            return null;
+        }
+
+        private IPoint GetPointFromPointLayers(ProfileSettingsPointButtonEnum pointType)
+        {
+            PointsFromLayerModalWindow pointsFromLayerModal = new PointsFromLayerModalWindow();
+            var result = pointsFromLayerModal.ShowDialog();
+
+            if(result == DialogResult.OK)
+            {
+                View.SetPointInfo(pointType, $"{pointsFromLayerModal.LayerName}; {pointsFromLayerModal.SelectedPoint.ObjId}");
+                return pointsFromLayerModal.SelectedPoint.Point;
+            }
+
+            return null;
+        }
+        
         private void OnMapSelectionChangedLocal()
         {
             if (View.SelectedProfileSettingsType != ProfileSettingsTypeEnum.Primitives)

@@ -148,7 +148,7 @@ namespace MilSpace.Core.Tools
             return clonedPoint;
         }
 
-        public static IPoint ClonePoint(this IPoint point)
+        public static IPoint Clone(this IPoint point)
         {
             return new Point() { X = point.X, Y = point.Y, Z = point.Z, SpatialReference = point.SpatialReference };
         }
