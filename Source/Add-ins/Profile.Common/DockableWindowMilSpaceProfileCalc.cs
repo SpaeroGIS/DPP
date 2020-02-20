@@ -433,6 +433,16 @@ namespace MilSpace.Profile
                     }
                     break;
 
+                case "tlbbReturnPoint":
+
+                    var startPoint = controller.GetStartPointValue(ProfileSettingsPointButtonEnum.PointsFist);
+                    var pointToMapSpatial = startPoint.Clone();
+                    pointToMapSpatial.Project(ActiveView.FocusMap.SpatialReference);
+
+                    controller.SetFirsPointForLineProfile(startPoint, pointToMapSpatial);
+
+                    break;
+
                 case "?":
                     txtFirstPointX.Clear();
                     txtFirstPointY.Clear();
@@ -524,6 +534,17 @@ namespace MilSpace.Profile
                     }
                     break;
 
+
+                case "tlbbReturnToPoint":
+
+                    var startPoint = controller.GetStartPointValue(ProfileSettingsPointButtonEnum.PointsSecond);
+                    var pointToMapSpatial = startPoint.Clone();
+                    pointToMapSpatial.Project(ActiveView.FocusMap.SpatialReference);
+
+                    controller.SetSecondfPointForLineProfile(startPoint, pointToMapSpatial);
+
+                    break;
+
                 case "7":
                     txtSecondPointX.Clear();
                     txtSecondPointY.Clear();
@@ -603,6 +624,17 @@ namespace MilSpace.Profile
                     }
                     break;
 
+                case "tlbbReturnCenterPoint":
+
+                    var startPoint = controller.GetStartPointValue(ProfileSettingsPointButtonEnum.CenterFun);
+                    var pointToMapSpatial = startPoint.Clone();
+                    pointToMapSpatial.Project(ActiveView.FocusMap.SpatialReference);
+
+                    controller.SetCenterPointForFunProfile(startPoint, pointToMapSpatial);
+
+
+                    break;
+
                 case "6":
                     txtBasePointX.Clear();
                     txtBasePointY.Clear();
@@ -660,7 +692,7 @@ namespace MilSpace.Profile
         {
             set
             {
-                SetPointValue(txtFirstPointX, txtFirstPointY, value);
+                SetPointValue(txtFirstPointX, txtFirstPointY, txtFirstPointZ, value);
 
                 if(String.IsNullOrEmpty(txtSecondPointX.Text) && String.IsNullOrEmpty(txtSecondPointY.Text))
                 {
@@ -681,7 +713,7 @@ namespace MilSpace.Profile
         {
             set
             {
-                SetPointValue(txtSecondPointX, txtSecondPointY, value);
+                SetPointValue(txtSecondPointX, txtSecondPointY, txtSecondPointZ, value);
 
                 if(String.IsNullOrEmpty(txtFirstPointX.Text) && String.IsNullOrEmpty(txtFirstPointY.Text))
                 {
@@ -696,19 +728,20 @@ namespace MilSpace.Profile
         }
 
 
-        private static void SetPointValue(TextBox controlX, TextBox controlY, IPoint point)
+        private static void SetPointValue(TextBox controlX, TextBox controlY, TextBox controlZ, IPoint point)
         {
             logger.DebugEx("> SetPointValue. controlX.Text:{0} controlY.Text:{1}", controlX.Text, controlY.Text);
             try
             {
                 if (point != null)
                 {
-                    controlX.Text = point.X.ToString("F5");
-                    controlY.Text = point.Y.ToString("F5");
+                    controlX.Text = point.X.ToFormattedString();
+                    controlY.Text = point.Y.ToFormattedString();
+                    controlZ.Text = point.Z.ToFormattedString();
                 }
                 else
                 {
-                    controlX.Text = controlY.Text = string.Empty;
+                    controlX.Text = controlY.Text = controlZ.Text = string.Empty;
                 }
             }
             catch (Exception ex)
@@ -728,7 +761,7 @@ namespace MilSpace.Profile
         {
             set
             {
-                SetPointValue(txtBasePointX, txtBasePointY, value);
+                SetPointValue(txtBasePointX, txtBasePointY, txtCenterPointZ, value);
             }
         }
 
@@ -772,7 +805,7 @@ namespace MilSpace.Profile
 
         public int SectionHeightFirst => TryParseHeight(txtFirstHeight);
         public int SectionHeightSecond => TryParseHeight(txtSecondHeight);
-        public int FanHeight => TryParseHeight(txtObserverHeight);
+        public int FanHeight => TryParseHeight(txtCenterPointHeight);
         public int SelectionHeight => TryParseHeight(observerHeightSelection);
 
         private int TryParseHeight(TextBox heightTextBox)
@@ -934,6 +967,44 @@ namespace MilSpace.Profile
             }
         }
 
+        public void SetProifileLineInfo(double length, double azimuth)
+        {
+            lblAzimuthInfo.Text = $"{LocalizationContext.Instance.AzimuthInfoText} {Math.Round(azimuth).ToString()}";
+            lblLengthInfo.Text = $"{LocalizationContext.Instance.LengthInfoText} {Math.Round(length).ToString()} {LocalizationContext.Instance.DimensionText}";
+        }
+
+        public void SetPointInfo(ProfileSettingsPointButtonEnum pointType, string text)
+        {
+            if(pointType == ProfileSettingsPointButtonEnum.PointsFist)
+            {
+                lblFirstPointInfo.Text = text;
+            }
+            else if(pointType == ProfileSettingsPointButtonEnum.PointsSecond)
+            {
+                lblSecondPointInfo.Text = text;
+            }
+            else
+            {
+                lblCenterPointInfo.Text = text;
+            }
+        }
+
+        public void SetReturnButtonEnable(ProfileSettingsPointButtonEnum pointType, bool enabled)
+        {
+            if(pointType == ProfileSettingsPointButtonEnum.PointsFist)
+            {
+                tlbbReturnPoint.Enabled = enabled;
+            }
+            else if(pointType == ProfileSettingsPointButtonEnum.PointsSecond)
+            {
+                tlbbReturnToPoint.Enabled = enabled;
+            }
+            else
+            {
+                tlbbReturnCenterPoint.Enabled = enabled;
+            }
+        }
+
         private void ChangeSessionHeigth(TreeNodeCollection nodes, int id, double height)
         {
             foreach (TreeNode node in nodes)
@@ -1075,16 +1146,19 @@ namespace MilSpace.Profile
             firstPointToolBar.Buttons["toolBarButton55"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnShowCoordToolTip", "Показати координати на карті");
             firstPointToolBar.Buttons["toolBarButton57"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnCopyCoordToolTip", "Копіювати координати");
             firstPointToolBar.Buttons["toolBarButton58"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnPasteCoordToolTip", "Вставити координати");
+            firstPointToolBar.Buttons["tlbbReturnPoint"].ToolTipText = LocalizationContext.Instance.ReturnPointValueText;
 
             secondPointToolbar.Buttons["toolBarButton61"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnTakeCoordToolTip", "Взяти координати з карти");
             secondPointToolbar.Buttons["toolBarButton2"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnShowCoordToolTip", "Показати координати на карті");
             secondPointToolbar.Buttons["toolBarButton3"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnCopyCoordToolTip", "Копіювати координати");
             secondPointToolbar.Buttons["toolBarButton4"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnPasteCoordToolTip", "Вставити координати");
+            secondPointToolbar.Buttons["tlbbReturnToPoint"].ToolTipText = LocalizationContext.Instance.ReturnPointValueText;
 
             basePointToolbar.Buttons["toolBarButton16"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnTakeCoordToolTip", "Взяти координати з карти");
             basePointToolbar.Buttons["toolBarButton17"].ToolTipText =  LocalizationContext.Instance.FindLocalizedElement("BtnShowCoordToolTip", "Показати координати на карті");
             basePointToolbar.Buttons["toolBarButton19"].ToolTipText =  LocalizationContext.Instance.FindLocalizedElement("BtnCopyCoordToolTip", "Копіювати координати");
             basePointToolbar.Buttons["toolBarButton20"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnPasteCoordToolTip", "Вставити координати");
+            basePointToolbar.Buttons["tlbbReturnCenterPoint"].ToolTipText = LocalizationContext.Instance.ReturnPointValueText;
 
             addAvailableProfilesSets.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnAddAvailableProfilesSetsToolTip", "Додати доступні набори профілів");
             lblSelectedPrimitives.Text = LocalizationContext.Instance.FindLocalizedElement("LblSelectedPrimitivesText", "Вибрані об'єкти:");
@@ -1120,8 +1194,9 @@ namespace MilSpace.Profile
             lblHeightOfViewSecond.Text = LocalizationContext.Instance.FindLocalizedElement("LblHeightOfViewText", "Висота");
             lblDimensionSecond.Text = LocalizationContext.Instance.FindLocalizedElement("LblDimensionSecondText", "м");
             lblDimensionFirst.Text = LocalizationContext.Instance.FindLocalizedElement("LblDimensionFirstText", "м");
-            lblFunBasePoint.Text = LocalizationContext.Instance.FindLocalizedElement("LblFunBasePointText", " точка (довгота / широта)");
-            lblHeightOfViewFunBaseText.Text = LocalizationContext.Instance.FindLocalizedElement("LblHeightOfViewText", "Висота");
+            lblDimentionCenter.Text = LocalizationContext.Instance.DimensionText;
+            lblFunBasePoint.Text = LocalizationContext.Instance.FindLocalizedElement("LblFunBasePointText", "Базова точка");
+            lblCenterPointHeight.Text = LocalizationContext.Instance.FindLocalizedElement("LblHeightOfViewText", "Висота");
             lblFunParameters.Text = LocalizationContext.Instance.FindLocalizedElement("LblFunParametersText", "Параметри");
             lblFunDistance.Text = LocalizationContext.Instance.FindLocalizedElement("LblFunDistanceText", "Відстань");
             lblFunCount.Text = LocalizationContext.Instance.FindLocalizedElement("LblFunCountText", "Кількість");
@@ -1137,8 +1212,12 @@ namespace MilSpace.Profile
             lblFirstlPointGettingWay.Text = LocalizationContext.Instance.FindLocalizedElement("LblAssignmentMethodText", "Спосіб призначення");
             lblSecondPointGettingWay.Text = LocalizationContext.Instance.FindLocalizedElement("LblAssignmentMethodText", "Спосіб призначення");
             lblProfileInfo.Text = LocalizationContext.Instance.FindLocalizedElement("LblProfileInfoText", "Параметри відрізку");
-            lblLengthInfo.Text = LocalizationContext.Instance.FindLocalizedElement("LblLengthInfoText", "Довжина:");
-            lblAzimuthInfo.Text = LocalizationContext.Instance.FindLocalizedElement("LblAzimuthInfoText", "Азимут:");
+            lblLengthInfo.Text = LocalizationContext.Instance.LengthInfoText;
+            lblAzimuthInfo.Text = LocalizationContext.Instance.AzimuthInfoText;
+
+            lblFirstPointInfo.Text = string.Empty;
+            lblSecondPointInfo.Text = string.Empty;
+            lblCenterPointInfo.Text = string.Empty;
 
             toolPanOnMap.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintToolBtnPanOnMapText", "Переміститись  на карті");
             toolBtnFlash.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintToolBtnShowOnMapText", "Показати на карті");
@@ -1151,8 +1230,9 @@ namespace MilSpace.Profile
             eraseProfile.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintEraseProfileText", "Видалити профіль");
             clearExtraGraphic.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintClearExtraGraphicText", "Очистити графіку на карті");
 
-            btnChooseFirstPointAssignmentMethod.Text = LocalizationContext.Instance.FindLocalizedElement("BtnChooseText", "Обрати");
-            btnChooseSecondPointAssignmentMethod.Text = LocalizationContext.Instance.FindLocalizedElement("BtnChooseText", "Обрати");
+            btnChooseFirstPointAssignmentMethod.Text = LocalizationContext.Instance.ChooseText;
+            btnChooseSecondPointAssignmentMethod.Text = LocalizationContext.Instance.ChooseText;
+            btnCenterPointAssignmantMethod.Text = LocalizationContext.Instance.ChooseText;
 
             profilesTreeView.Nodes["Points"].Text = LocalizationContext.Instance.FindLocalizedElement("TvProfilesPointsNodeText", "Відрізки");
             profilesTreeView.Nodes["Fun"].Text = LocalizationContext.Instance.FindLocalizedElement("TvProfilesFunNodeText", "\"Віяло\"");
@@ -1165,6 +1245,9 @@ namespace MilSpace.Profile
 
             cmbSecondPointAssignmentMethod.Items.AddRange(controller.GetAssignmentMethodsStrings());
             cmbSecondPointAssignmentMethod.SelectedItem = mapItem;
+
+            cmbCenterPointAssignmentMethod.Items.AddRange(controller.GetAssignmentMethodsStrings());
+            cmbCenterPointAssignmentMethod.SelectedItem = mapItem;
 
             logger.InfoEx("> LocalizeStrings Profile END");
         }
@@ -1231,10 +1314,10 @@ namespace MilSpace.Profile
                 newNode.SetProfileType(ConvertProfileTypeToString(profile.DefinitionType));
                 if (profile.DefinitionType == ProfileSettingsTypeEnum.Points)
                 {
-                    var firstX = profile.ProfileLines.First().Line.FromPoint.X.ToString("F5");
-                    var firstY = profile.ProfileLines.First().Line.FromPoint.Y.ToString("F5");
-                    var secondX = profile.ProfileLines.First().Line.ToPoint.X.ToString("F5");
-                    var secondY = profile.ProfileLines.First().Line.ToPoint.Y.ToString("F5");
+                    var firstX = profile.ProfileLines.First().Line.FromPoint.X.ToFormattedString();
+                    var firstY = profile.ProfileLines.First().Line.FromPoint.Y.ToFormattedString();
+                    var secondX = profile.ProfileLines.First().Line.ToPoint.X.ToFormattedString();
+                    var secondY = profile.ProfileLines.First().Line.ToPoint.Y.ToFormattedString();
                     var lineDistance = profile.ProfileLines.First().Line.Length.ToString("F5");
 
                     newNode.SetBasePoint($"X= {firstX}; Y= {firstY};");
@@ -1246,8 +1329,8 @@ namespace MilSpace.Profile
                 }
                 else if (profile.DefinitionType == ProfileSettingsTypeEnum.Fun)
                 {
-                    var basePointX = profile.ProfileLines.First().Line.FromPoint.X.ToString("F5");
-                    var basePointY = profile.ProfileLines.First().Line.FromPoint.Y.ToString("F5");
+                    var basePointX = profile.ProfileLines.First().Line.FromPoint.X.ToFormattedString();
+                    var basePointY = profile.ProfileLines.First().Line.FromPoint.Y.ToFormattedString();
                     var lineDistance = profile.ProfileLines.First().Line.Length.ToString("F5");
                     var linesCount = profile.ProfileLines.Length.ToString();
 
@@ -1448,7 +1531,7 @@ namespace MilSpace.Profile
                 var basePoint = GetPointFromRowValue(baseValue);
                 controller.SetCenterPointForFunProfile(basePoint.CloneWithProjecting(), basePoint);
 
-                txtObserverHeight.Text = rows.Find(AttributeKeys.SectionFirstPointHeight)[AttributeKeys.ValueColumnName].ToString();
+                txtCenterPointHeight.Text = rows.Find(AttributeKeys.SectionFirstPointHeight)[AttributeKeys.ValueColumnName].ToString();
 
                 var length = rows.Find(AttributeKeys.LineDistance)[AttributeKeys.ValueColumnName].ToString();
                 profileLength.Text = length.Split(',')[0];
@@ -1490,22 +1573,64 @@ namespace MilSpace.Profile
 
         private void CmbFirstPointAssignmentMethod_SelectedIndexChanged(object sender, EventArgs e)
         {
-            btnChooseFirstPointAssignmentMethod.Enabled = !cmbFirstPointAssignmentMethod.SelectedItem.Equals(LocalizationContext.Instance.AssignmentMethodFromMapItem);
+            if(cmbFirstPointAssignmentMethod.SelectedItem.Equals(LocalizationContext.Instance.AssignmentMethodFromMapItem))
+            {
+                btnChooseFirstPointAssignmentMethod.Enabled = false;
+                SetPointInfo(ProfileSettingsPointButtonEnum.PointsFist, string.Empty);
+                SetReturnButtonEnable(ProfileSettingsPointButtonEnum.PointsFist, false);
+            }
+            else
+            {
+                btnChooseFirstPointAssignmentMethod.Enabled = true;
+            }
         }
 
         private void CmbSecondPointAssignmentMethod_SelectedIndexChanged(object sender, EventArgs e)
         {
-            btnChooseSecondPointAssignmentMethod.Enabled = !cmbSecondPointAssignmentMethod.SelectedItem.Equals(LocalizationContext.Instance.AssignmentMethodFromMapItem);
+            if(cmbSecondPointAssignmentMethod.SelectedItem.Equals(LocalizationContext.Instance.AssignmentMethodFromMapItem))
+            {
+                btnChooseSecondPointAssignmentMethod.Enabled = false;
+                SetPointInfo(ProfileSettingsPointButtonEnum.PointsSecond, string.Empty);
+                SetReturnButtonEnable(ProfileSettingsPointButtonEnum.PointsSecond, false);
+            }
+            else
+            {
+                btnChooseSecondPointAssignmentMethod.Enabled = true;
+            }
+        }
+
+        private void CmbCenterPointAssignmentMethod_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(cmbCenterPointAssignmentMethod.SelectedItem.Equals(LocalizationContext.Instance.AssignmentMethodFromMapItem))
+            {
+                btnCenterPointAssignmantMethod.Enabled = false;
+                SetPointInfo(ProfileSettingsPointButtonEnum.CenterFun, string.Empty);
+                SetReturnButtonEnable(ProfileSettingsPointButtonEnum.CenterFun, false);
+            }
+            else
+            {
+                btnCenterPointAssignmantMethod.Enabled = true;
+            }
         }
 
         private void BtnChooseSecondPointAssignmentMethod_Click(object sender, EventArgs e)
         {
-            controller.SetPointBySelectedMethod(controller.GetMethodByString(cmbSecondPointAssignmentMethod.Text), false);
+            controller.SetPointBySelectedMethod(controller.GetMethodByString(cmbSecondPointAssignmentMethod.Text), ProfileSettingsPointButtonEnum.PointsSecond);
         }
 
         private void BtnChooseFirstPointAssignmentMethod_Click(object sender, EventArgs e)
         {
-            controller.SetPointBySelectedMethod(controller.GetMethodByString(cmbFirstPointAssignmentMethod.Text), true);
+            controller.SetPointBySelectedMethod(controller.GetMethodByString(cmbFirstPointAssignmentMethod.Text), ProfileSettingsPointButtonEnum.PointsFist);
+        }
+
+        private void BtnCenterPointAssignmantMethod_Click(object sender, EventArgs e)
+        {
+            controller.SetPointBySelectedMethod(controller.GetMethodByString(cmbCenterPointAssignmentMethod.Text), ProfileSettingsPointButtonEnum.CenterFun);
+        }
+
+        private void BtnFlipPoints_Click(object sender, EventArgs e)
+        {
+            controller.FlipPoints();
         }
     }
 }

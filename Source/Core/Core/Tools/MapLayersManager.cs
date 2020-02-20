@@ -32,20 +32,6 @@ namespace MilSpace.Core.Tools
                 result.Add(fLayer);
             }
 
-            //if (layer is ICompositeLayer cLayer)
-            //{
-
-            //    for (int j = 0; j < cLayer.Count; j++)
-
-            //    {
-            //        if ((layer is IRasterLayer cRastreLayer))
-            //        {
-            //            result.Add(cRastreLayer);
-            //        }
-            //    }
-
-            //}
-
             return result;
         }
 
@@ -67,25 +53,7 @@ namespace MilSpace.Core.Tools
                     result.Add(fLayer);
                 }
             }
-            //if (layer is ICompositeLayer cLayer)
-            //{
-            //    for (int j = 0; j < cLayer.Count; j++)
-            //    {
-            //        var curLauer = cLayer.Layer[j];
-            //        if ((curLauer is IFeatureLayer cfeatureLayer))
-            //        {
-            //            result.Add(cfeatureLayer);
-            //        }
-
-            //        if (curLauer is ICompositeLayer ccLayer)
-            //        {
-            //            // Here can be check by Tag in the Layer description
-            //            result.AddRange(GetFeatureLayers(curLauer as ILayer));
-            //        }
-            //    }
-
-            //}
-
+           
             return result;
         }
 
@@ -116,8 +84,6 @@ namespace MilSpace.Core.Tools
         }
 
 
-        
-
         internal List<ILayer> GetAllFirstLevelLayers()
         {
             var layersToReturn = new List<ILayer>();
@@ -136,6 +102,30 @@ namespace MilSpace.Core.Tools
             }
         }
 
+
+        public ILayer GetLayer(string layerName)
+        {
+            return GetAllLayers().FirstOrDefault(layer => layer.Name.Equals(layerName));
+        }
+        
+        public List<string> GetFeatureLayerFields(IFeatureLayer layer)
+        {
+            var fieldsNames = new List<string>();
+
+            var featureClass = layer.FeatureClass;
+            var fields = featureClass.Fields;
+
+            for(int i = 0; i < fields.FieldCount; i++)
+            {
+                if(!fields.Field[i].Name.Equals(featureClass.ShapeFieldName) && !(fields.Field[i].Name.Equals("OBJECTID")))
+                {
+                    fieldsNames.Add(fields.Field[i].AliasName);
+                }
+            }
+
+            return fieldsNames;
+        }
+
         public string GetLayerAliasByFeatureClass(string featureClassName)
         {
             string result = null;
@@ -151,7 +141,7 @@ namespace MilSpace.Core.Tools
             }
             return result;
         }
-
+        
         public IEnumerable<IRasterLayer> RasterLayers => Layers.Where(layer => layer is IRasterLayer).Cast<IRasterLayer>();
 
         public IEnumerable<ILayer> PointLayers => GetFeatureLayers(pointTypes);
@@ -164,7 +154,6 @@ namespace MilSpace.Core.Tools
 
         public IFeatureLayer FindFeatureLayer(string layerNameOrAlias)
         {
-
             return GetAllLayers().FirstOrDefault(l => l != null && l is IFeatureLayer  && ((IFeatureLayer)l).FeatureClass != null
             && ((IFeatureLayer)l).FeatureClass.AliasName.EndsWith(layerNameOrAlias, StringComparison.InvariantCultureIgnoreCase)) as IFeatureLayer;
             

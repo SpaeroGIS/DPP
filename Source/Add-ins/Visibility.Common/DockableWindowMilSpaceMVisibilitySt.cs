@@ -11,6 +11,7 @@ using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Tools;
 using MilSpace.Visibility.DTO;
+using MilSpace.Visibility.Interaction;
 using MilSpace.Visibility.Localization;
 using MilSpace.Visibility.ViewController;
 
@@ -296,9 +297,10 @@ namespace MilSpace.Visibility
                         Affiliation = LocalizationContext.Instance.AffiliationTypes[op.ObservationPointAffiliationType],
                         Date = op.Dto.Value.ToString(Helper.DateFormatSmall),
                         Id = op.Objectid
-                    }).OrderBy(l => l.Title).ToArray();
+                    }).OrderBy(l => l.Title).ToList();
 
-                dgvObservationPoints.DataSource = ItemsToShow;// _observPointGuis01;
+                var itemsToShowBindingList = new BindingList<ObservPointGui>(ItemsToShow);
+                dgvObservationPoints.DataSource = itemsToShowBindingList;// _observPointGuis01;
 
                 SetDataGridView();
                 DisplaySelectedColumns(filter);
@@ -328,10 +330,12 @@ namespace MilSpace.Visibility
                     Id = i.Id,
                     Affiliation = _observPointsController.GetObservObjectsTypeString(i.ObjectType),
                     Group = i.Group
-                }).OrderBy(l => l.Title).ToArray();
+                }).OrderBy(l => l.Title).ToList();
+
+                var itemsToShowBindingList = new BindingList<ObservObjectGui>(itemsToShow);
 
                 dgvObservObjects.CurrentCell = null;
-                dgvObservObjects.DataSource = itemsToShow;
+                dgvObservObjects.DataSource = itemsToShowBindingList;
 
                 SetObservObjectsTableView();
                 DisplayObservObjectsSelectedColumns();
@@ -533,10 +537,16 @@ namespace MilSpace.Visibility
 
             protected override IntPtr OnCreateChild()
             {
-                var controller = new ObservationPointsController(ArcMap.Document, ArcMap.ThisApplication);
+                if(this.Hook is IApplication arcMap)
+                {
+                    var controller = new ObservationPointsController(ArcMap.Document, ArcMap.ThisApplication);
+                    ModuleInteraction.Instance.RegisterModuleInteraction<IVisibilityInteraction>(new VisibilityInteraction(controller));
 
-                m_windowUI = new DockableWindowMilSpaceMVisibilitySt(this.Hook, controller);
-                return m_windowUI.Handle;
+                    m_windowUI = new DockableWindowMilSpaceMVisibilitySt(this.Hook, controller);
+                    return m_windowUI.Handle;
+                }
+                else return IntPtr.Zero;
+                
             }
 
             protected override void Dispose(bool disposing)

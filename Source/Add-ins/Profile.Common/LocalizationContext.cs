@@ -35,9 +35,14 @@ namespace MilSpace.Profile.Localization
         internal string FunTypeText => FindLocalizedElement("FunTypeText", "\"Віяло\"");
         internal string PrimitiveTypeText => FindLocalizedElement("PrimitiveTypeText", "Графіка");
         internal string MessageBoxTitle => FindLocalizedElement("MessageBoxTitle", "Спостереження");
+        internal string AzimuthInfoText => FindLocalizedElement("LblAzimuthInfoText", "Азимут:");
+        internal string LengthInfoText => FindLocalizedElement("LblLengthInfoText", "Довжина:");
+        internal string DimensionText => FindLocalizedElement("LblDimensionText", "м");
+        internal string ChooseText => FindLocalizedElement("BtnChooseText", "Обрати");
         internal string ErrorHappendText => FindLocalizedElement("MsgErrorHappenedText", "Виникла помилка /n Більш детальна інформація знаходиться у журналі");
-        internal string AssignmentMethodFromMapItem => LocalizationContext.Instance.FindLocalizedElement("CmbAssignmentMethodFromMapTypeText", "Мапа");
-
+        internal string ReturnPointValueText => FindLocalizedElement("BtnReturnPointValueToolTip", "Повернутися до дійсного значення точки");
+        internal string AssignmentMethodFromMapItem => FindLocalizedElement("CmbAssignmentMethodFromMapTypeText", "Мапа");
+        internal string DemLayerNotChosenText => FindLocalizedElement("MsgDemLayerNotChosen", "Будь ласка оберіть шар ЦМР/ЦММ, щоб отримати Z координату");
 
         internal bool HasLocalizedElement(string xmlNodeName)
         {

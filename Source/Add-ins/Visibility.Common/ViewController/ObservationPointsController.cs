@@ -15,6 +15,8 @@ using System.Text.RegularExpressions;
 using MilSpace.Visibility.Localization;
 using MilSpace.Visibility.DTO;
 using ESRI.ArcGIS.Editor;
+using MilSpace.Core.DataAccess;
+using System.Runtime.InteropServices;
 
 namespace MilSpace.Visibility.ViewController
 {
@@ -812,6 +814,75 @@ namespace MilSpace.Visibility.ViewController
             }
         }
 
+        internal List<FromLayerPointModel> GetObservationPointsFromModule()
+        {
+            if(!IsObservPointsExists())
+            {
+                return null;
+            }
+
+            var points = new List<FromLayerPointModel>();
+
+            var featureClass = GetObservatioPointFeatureClass();
+            var idFieldIndex = featureClass.FindField("OBJECTID");
+            var titleFieldIndex = featureClass.FindField("TitleOp");
+
+            if(idFieldIndex == -1)
+            {
+                log.WarnEx($"> GetObservationPointsFromModule. Warning: Cannot find fild \"OBJECTID\" in featureClass {featureClass.AliasName}");
+                throw new MissingFieldException();
+            }
+
+            if(titleFieldIndex == -1)
+            {
+                log.WarnEx($"> GetObservationPointsFromModule. Warning: Cannot find fildTitleOp in featureClass {featureClass.AliasName}");
+            }
+
+            IQueryFilter queryFilter = new QueryFilter();
+            queryFilter.WhereClause = "OBJECTID > 0";
+
+            IFeatureCursor featureCursor = featureClass.Search(queryFilter, true);
+            IFeature feature = featureCursor.NextFeature();
+            try
+            {
+                while(feature != null)
+                {
+                    var shape = feature.Shape;
+
+                    var point = shape as IPoint;
+                    var pointCopy = point.Clone();
+                    pointCopy.Project(EsriTools.Wgs84Spatialreference);
+
+                    int id = -1;
+                    string titleField = string.Empty;
+
+                    if(idFieldIndex >= 0)
+                    {
+                        id = (int)feature.Value[idFieldIndex];
+                    }
+
+                    if(titleFieldIndex >= 0)
+                    {
+                        titleField = feature.Value[titleFieldIndex].ToString();
+                    }
+
+                    points.Add(new FromLayerPointModel { Point = pointCopy, ObjId = id, DisplayedField = titleField });
+
+                    feature = featureCursor.NextFeature();
+                }
+            }
+            catch(Exception ex)
+            {
+                log.ErrorEx($"> GetObservationPointsFromModule Exception. ex.Message:{ex.Message}");
+            }
+            finally
+            {
+                Marshal.ReleaseComObject(featureCursor);
+            }
+
+            return points;
+        }
+        
         #region ArcMap Eventts
 
         internal bool IsArcMapEditingStarted()

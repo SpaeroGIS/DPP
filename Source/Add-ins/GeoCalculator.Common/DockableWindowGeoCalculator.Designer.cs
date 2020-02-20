@@ -114,6 +114,9 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.MgrsNotationTextBox = new System.Windows.Forms.TextBox();
             this.UTMNotationTextBox = new System.Windows.Forms.TextBox();
+            this.toolStrip9 = new System.Windows.Forms.ToolStrip();
+            this.MgrsCopyButton = new System.Windows.Forms.ToolStripButton();
+            this.MgrsPasteButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip8 = new System.Windows.Forms.ToolStrip();
             this.UtmCopyButton = new System.Windows.Forms.ToolStripButton();
             this.MgrsNotationLabel = new System.Windows.Forms.Label();
@@ -156,19 +159,6 @@
             this.btnRefreshGraphic = new System.Windows.Forms.Button();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.printToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
-            this.cutToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.copyToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.pasteToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
-            this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.MgrsCopyButton = new System.Windows.Forms.ToolStripButton();
-            this.MgrsPasteButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStrip9 = new System.Windows.Forms.ToolStrip();
             this.TitlePanel.SuspendLayout();
             this.GeneralToolStrip.SuspendLayout();
             this.CurrentCoordinatesPanel.SuspendLayout();
@@ -191,6 +181,7 @@
             this.toolStrip7.SuspendLayout();
             this.panel17.SuspendLayout();
             this.panel4.SuspendLayout();
+            this.toolStrip9.SuspendLayout();
             this.toolStrip8.SuspendLayout();
             this.GridToolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PointsGridView)).BeginInit();
@@ -198,7 +189,6 @@
             this.toolBoxTitlePanel.SuspendLayout();
             this.comboPanel.SuspendLayout();
             this.graphicTitlePanel.SuspendLayout();
-            this.toolStrip9.SuspendLayout();
             this.SuspendLayout();
             // 
             // saveFileDialog
@@ -1064,6 +1054,7 @@
             // 
             // UTMNotationTextBox
             // 
+            this.UTMNotationTextBox.BackColor = System.Drawing.SystemColors.Window;
             this.UTMNotationTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.UTMNotationTextBox.Location = new System.Drawing.Point(93, 5);
             this.UTMNotationTextBox.Name = "UTMNotationTextBox";
@@ -1073,27 +1064,52 @@
             this.UTMNotationTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UTMNotationTextBox_KeyDown);
             this.UTMNotationTextBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.UTMNotationTextBox_MouseDoubleClick);
             // 
+            // toolStrip9
+            // 
+            this.toolStrip9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.toolStrip9.Dock = System.Windows.Forms.DockStyle.Right;
+            this.toolStrip9.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip9.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MgrsCopyButton,
+            this.MgrsPasteButton});
+            this.toolStrip9.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.toolStrip9.Location = new System.Drawing.Point(243, 4);
+            this.toolStrip9.Name = "toolStrip9";
+            this.toolStrip9.Padding = new System.Windows.Forms.Padding(2, 0, 1, 0);
+            this.toolStrip9.Size = new System.Drawing.Size(49, 22);
+            this.toolStrip9.TabIndex = 59;
+            this.toolStrip9.Text = "toolStrip2";
+            // 
+            // MgrsCopyButton
+            // 
+            this.MgrsCopyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.MgrsCopyButton.Image = ((System.Drawing.Image)(resources.GetObject("MgrsCopyButton.Image")));
+            this.MgrsCopyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.MgrsCopyButton.Name = "MgrsCopyButton";
+            this.MgrsCopyButton.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
+            this.MgrsCopyButton.Size = new System.Drawing.Size(23, 20);
+            this.MgrsCopyButton.Click += new System.EventHandler(this.MgrsCopyButton_Click);
+            // 
+            // MgrsPasteButton
+            // 
+            this.MgrsPasteButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.MgrsPasteButton.Image = ((System.Drawing.Image)(resources.GetObject("MgrsPasteButton.Image")));
+            this.MgrsPasteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.MgrsPasteButton.Name = "MgrsPasteButton";
+            this.MgrsPasteButton.Size = new System.Drawing.Size(23, 20);
+            this.MgrsPasteButton.Click += new System.EventHandler(this.MgrsPasteButton_Click);
+            // 
             // toolStrip8
             // 
             this.toolStrip8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.toolStrip8.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip8.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip8.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.UtmCopyButton,
-            this.newToolStripButton,
-            this.openToolStripButton,
-            this.saveToolStripButton,
-            this.printToolStripButton,
-            this.toolStripSeparator,
-            this.cutToolStripButton,
-            this.copyToolStripButton,
-            this.pasteToolStripButton,
-            this.toolStripSeparator10,
-            this.helpToolStripButton});
+            this.UtmCopyButton});
             this.toolStrip8.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.toolStrip8.Location = new System.Drawing.Point(240, 7);
             this.toolStrip8.Name = "toolStrip8";
-            this.toolStrip8.Size = new System.Drawing.Size(197, 23);
+            this.toolStrip8.Size = new System.Drawing.Size(1, 0);
             this.toolStrip8.TabIndex = 58;
             this.toolStrip8.Text = "toolStrip2";
             // 
@@ -1734,123 +1750,6 @@
             this.imageList1.Images.SetKeyName(211, "Download.png");
             this.imageList1.Images.SetKeyName(212, "Refresh20x20.png");
             // 
-            // newToolStripButton
-            // 
-            this.newToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.newToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("newToolStripButton.Image")));
-            this.newToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.newToolStripButton.Name = "newToolStripButton";
-            this.newToolStripButton.Size = new System.Drawing.Size(23, 20);
-            this.newToolStripButton.Text = "&New";
-            // 
-            // openToolStripButton
-            // 
-            this.openToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.openToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("openToolStripButton.Image")));
-            this.openToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.openToolStripButton.Name = "openToolStripButton";
-            this.openToolStripButton.Size = new System.Drawing.Size(23, 20);
-            this.openToolStripButton.Text = "&Open";
-            // 
-            // saveToolStripButton
-            // 
-            this.saveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.saveToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripButton.Image")));
-            this.saveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.saveToolStripButton.Name = "saveToolStripButton";
-            this.saveToolStripButton.Size = new System.Drawing.Size(23, 20);
-            this.saveToolStripButton.Text = "&Save";
-            // 
-            // printToolStripButton
-            // 
-            this.printToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.printToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("printToolStripButton.Image")));
-            this.printToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.printToolStripButton.Name = "printToolStripButton";
-            this.printToolStripButton.Size = new System.Drawing.Size(23, 20);
-            this.printToolStripButton.Text = "&Print";
-            // 
-            // toolStripSeparator
-            // 
-            this.toolStripSeparator.Name = "toolStripSeparator";
-            this.toolStripSeparator.Size = new System.Drawing.Size(6, 23);
-            // 
-            // cutToolStripButton
-            // 
-            this.cutToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.cutToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("cutToolStripButton.Image")));
-            this.cutToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.cutToolStripButton.Name = "cutToolStripButton";
-            this.cutToolStripButton.Size = new System.Drawing.Size(23, 20);
-            this.cutToolStripButton.Text = "C&ut";
-            // 
-            // copyToolStripButton
-            // 
-            this.copyToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.copyToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("copyToolStripButton.Image")));
-            this.copyToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.copyToolStripButton.Name = "copyToolStripButton";
-            this.copyToolStripButton.Size = new System.Drawing.Size(23, 20);
-            this.copyToolStripButton.Text = "&Copy";
-            // 
-            // pasteToolStripButton
-            // 
-            this.pasteToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.pasteToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteToolStripButton.Image")));
-            this.pasteToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.pasteToolStripButton.Name = "pasteToolStripButton";
-            this.pasteToolStripButton.Size = new System.Drawing.Size(23, 20);
-            this.pasteToolStripButton.Text = "&Paste";
-            // 
-            // toolStripSeparator10
-            // 
-            this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(6, 23);
-            // 
-            // helpToolStripButton
-            // 
-            this.helpToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.helpToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("helpToolStripButton.Image")));
-            this.helpToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.helpToolStripButton.Name = "helpToolStripButton";
-            this.helpToolStripButton.Size = new System.Drawing.Size(23, 20);
-            this.helpToolStripButton.Text = "He&lp";
-            // 
-            // MgrsCopyButton
-            // 
-            this.MgrsCopyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.MgrsCopyButton.Image = ((System.Drawing.Image)(resources.GetObject("MgrsCopyButton.Image")));
-            this.MgrsCopyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.MgrsCopyButton.Name = "MgrsCopyButton";
-            this.MgrsCopyButton.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
-            this.MgrsCopyButton.Size = new System.Drawing.Size(23, 20);
-            this.MgrsCopyButton.Click += new System.EventHandler(this.MgrsCopyButton_Click);
-            // 
-            // MgrsPasteButton
-            // 
-            this.MgrsPasteButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.MgrsPasteButton.Image = ((System.Drawing.Image)(resources.GetObject("MgrsPasteButton.Image")));
-            this.MgrsPasteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.MgrsPasteButton.Name = "MgrsPasteButton";
-            this.MgrsPasteButton.Size = new System.Drawing.Size(23, 20);
-            this.MgrsPasteButton.Click += new System.EventHandler(this.MgrsPasteButton_Click);
-            // 
-            // toolStrip9
-            // 
-            this.toolStrip9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.toolStrip9.Dock = System.Windows.Forms.DockStyle.Right;
-            this.toolStrip9.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip9.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MgrsCopyButton,
-            this.MgrsPasteButton});
-            this.toolStrip9.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.toolStrip9.Location = new System.Drawing.Point(243, 4);
-            this.toolStrip9.Name = "toolStrip9";
-            this.toolStrip9.Padding = new System.Windows.Forms.Padding(2, 0, 1, 0);
-            this.toolStrip9.Size = new System.Drawing.Size(49, 22);
-            this.toolStrip9.TabIndex = 59;
-            this.toolStrip9.Text = "toolStrip2";
-            // 
             // DockableWindowGeoCalculator
             // 
             this.AutoScroll = true;
@@ -1912,6 +1811,8 @@
             this.panel17.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
+            this.toolStrip9.ResumeLayout(false);
+            this.toolStrip9.PerformLayout();
             this.toolStrip8.ResumeLayout(false);
             this.toolStrip8.PerformLayout();
             this.GridToolStrip.ResumeLayout(false);
@@ -1924,8 +1825,6 @@
             this.comboPanel.ResumeLayout(false);
             this.graphicTitlePanel.ResumeLayout(false);
             this.graphicTitlePanel.PerformLayout();
-            this.toolStrip9.ResumeLayout(false);
-            this.toolStrip9.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1992,6 +1891,8 @@
         private System.Windows.Forms.ToolStripButton UkraineGeoCopyButton;
         private System.Windows.Forms.ToolStrip toolStrip6;
         private System.Windows.Forms.ToolStripButton UkraineProjCopyButton;
+        private System.Windows.Forms.ToolStrip toolStrip9;
+        private System.Windows.Forms.ToolStripButton MgrsCopyButton;
         private System.Windows.Forms.ToolStrip toolStrip8;
         private System.Windows.Forms.ToolStripButton UtmCopyButton;
         private System.Windows.Forms.ToolStripButton CurrentCoordsPasteButton;
@@ -2001,6 +1902,7 @@
         private System.Windows.Forms.ToolStripButton PulkovoProjPasteButton;
         private System.Windows.Forms.ToolStripButton UkraineGeoPasteButton;
         private System.Windows.Forms.ToolStripButton UkraineProjPasteButton;
+        private System.Windows.Forms.ToolStripButton MgrsPasteButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton MoveToTheProjectedCoordButton;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
@@ -2054,18 +1956,5 @@
         private System.Windows.Forms.Panel panel18;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
-        private System.Windows.Forms.ToolStripButton newToolStripButton;
-        private System.Windows.Forms.ToolStripButton openToolStripButton;
-        private System.Windows.Forms.ToolStripButton saveToolStripButton;
-        private System.Windows.Forms.ToolStripButton printToolStripButton;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
-        private System.Windows.Forms.ToolStripButton cutToolStripButton;
-        private System.Windows.Forms.ToolStripButton copyToolStripButton;
-        private System.Windows.Forms.ToolStripButton pasteToolStripButton;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
-        private System.Windows.Forms.ToolStripButton helpToolStripButton;
-        private System.Windows.Forms.ToolStrip toolStrip9;
-        private System.Windows.Forms.ToolStripButton MgrsCopyButton;
-        private System.Windows.Forms.ToolStripButton MgrsPasteButton;
     }
 }

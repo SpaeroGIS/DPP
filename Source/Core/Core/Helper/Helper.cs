@@ -202,5 +202,16 @@ namespace MilSpace.Core
                 return val.ToString();
             }
         }
+
+        public static string ToFormattedString(this double pointCoord)
+        {
+            if(Double.IsNaN(pointCoord))
+            {
+                return string.Empty;
+            }
+
+            var pointString = pointCoord.ToString("F5");
+            return pointString.Replace(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator, ".");
+        }
     }
 }
