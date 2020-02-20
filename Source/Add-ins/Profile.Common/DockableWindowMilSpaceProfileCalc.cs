@@ -1632,5 +1632,10 @@ namespace MilSpace.Profile
         {
             controller.FlipPoints();
         }
+
+        private void lblSetPeofileProperties_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

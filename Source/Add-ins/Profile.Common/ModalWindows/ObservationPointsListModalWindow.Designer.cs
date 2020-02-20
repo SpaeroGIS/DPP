@@ -69,16 +69,16 @@
             this.titlePanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.titlePanel.Location = new System.Drawing.Point(0, 0);
             this.titlePanel.Name = "titlePanel";
-            this.titlePanel.Size = new System.Drawing.Size(257, 28);
+            this.titlePanel.Size = new System.Drawing.Size(257, 33);
             this.titlePanel.TabIndex = 3;
             // 
             // lblLayer
             // 
             this.lblLayer.AutoSize = true;
-            this.lblLayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblLayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.lblLayer.Location = new System.Drawing.Point(3, 6);
             this.lblLayer.Name = "lblLayer";
-            this.lblLayer.Size = new System.Drawing.Size(41, 17);
+            this.lblLayer.Size = new System.Drawing.Size(52, 20);
             this.lblLayer.TabIndex = 0;
             this.lblLayer.Text = "Слой";
             // 
@@ -96,13 +96,13 @@
             this.XCol,
             this.YCol});
             this.dgvPoints.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvPoints.Location = new System.Drawing.Point(0, 28);
+            this.dgvPoints.Location = new System.Drawing.Point(0, 33);
             this.dgvPoints.MultiSelect = false;
             this.dgvPoints.Name = "dgvPoints";
             this.dgvPoints.ReadOnly = true;
             this.dgvPoints.RowHeadersVisible = false;
             this.dgvPoints.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPoints.Size = new System.Drawing.Size(257, 295);
+            this.dgvPoints.Size = new System.Drawing.Size(257, 290);
             this.dgvPoints.TabIndex = 5;
             // 
             // IdCol
@@ -144,6 +144,8 @@
             this.Controls.Add(this.dgvPoints);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.titlePanel);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ObservationPointsListModalWindow";
             this.Text = "ObservationPointsListModalWindow";
             this.panel1.ResumeLayout(false);
