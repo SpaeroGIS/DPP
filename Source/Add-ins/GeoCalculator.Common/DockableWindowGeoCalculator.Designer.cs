@@ -48,78 +48,75 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.CopyButton = new System.Windows.Forms.ToolStripButton();
             this.CurrentCoordinatesPanel = new System.Windows.Forms.Panel();
+            this.XCoordinateTextBox = new System.Windows.Forms.TextBox();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.YCoordinateTextBox = new System.Windows.Forms.TextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.CurrentCoordsCopyButton = new System.Windows.Forms.ToolStripButton();
             this.CurrentCoordsPasteButton = new System.Windows.Forms.ToolStripButton();
-            this.YCoordinateTextBox = new System.Windows.Forms.TextBox();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.XCoordinateTextBox = new System.Windows.Forms.TextBox();
             this.CurrentMapLabel = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel8 = new System.Windows.Forms.Panel();
+            this.WgsXCoordinateTextBox = new System.Windows.Forms.TextBox();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.WgsYCoordinateTextBox = new System.Windows.Forms.TextBox();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.WgsProjCopyButton = new System.Windows.Forms.ToolStripButton();
             this.WgsProjPasteButton = new System.Windows.Forms.ToolStripButton();
-            this.WgsYCoordinateTextBox = new System.Windows.Forms.TextBox();
-            this.panel9 = new System.Windows.Forms.Panel();
-            this.WgsXCoordinateTextBox = new System.Windows.Forms.TextBox();
             this.wgsProjectedLabel = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.wgsDMSXTextBox = new System.Windows.Forms.TextBox();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.wgsDMSYTextBox = new System.Windows.Forms.TextBox();
             this.toolStrip3 = new System.Windows.Forms.ToolStrip();
             this.WgsGeoCopyButton = new System.Windows.Forms.ToolStripButton();
             this.WgsGeoPasteButton = new System.Windows.Forms.ToolStripButton();
-            this.wgsDMSYTextBox = new System.Windows.Forms.TextBox();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.wgsDMSXTextBox = new System.Windows.Forms.TextBox();
             this.wgsGeoLabel = new System.Windows.Forms.Label();
             this.wgsLabel = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel10 = new System.Windows.Forms.Panel();
+            this.PulkovoXCoordinateTextBox = new System.Windows.Forms.TextBox();
+            this.panel14 = new System.Windows.Forms.Panel();
+            this.PulkovoYCoordinateTextBox = new System.Windows.Forms.TextBox();
             this.toolStrip4 = new System.Windows.Forms.ToolStrip();
             this.PulkovoProjCopyButton = new System.Windows.Forms.ToolStripButton();
             this.PulkovoProjPasteButton = new System.Windows.Forms.ToolStripButton();
-            this.PulkovoYCoordinateTextBox = new System.Windows.Forms.TextBox();
-            this.panel14 = new System.Windows.Forms.Panel();
-            this.PulkovoXCoordinateTextBox = new System.Windows.Forms.TextBox();
             this.PulkovoProjectedLabel = new System.Windows.Forms.Label();
             this.panel11 = new System.Windows.Forms.Panel();
+            this.pulkovoDMSXTextBox = new System.Windows.Forms.TextBox();
+            this.panel13 = new System.Windows.Forms.Panel();
+            this.pulkovoDMSYTextBox = new System.Windows.Forms.TextBox();
             this.toolStrip5 = new System.Windows.Forms.ToolStrip();
             this.PulkovoGeoCopyButton = new System.Windows.Forms.ToolStripButton();
             this.PulkovoGeoPasteButton = new System.Windows.Forms.ToolStripButton();
-            this.pulkovoDMSYTextBox = new System.Windows.Forms.TextBox();
-            this.panel13 = new System.Windows.Forms.Panel();
-            this.pulkovoDMSXTextBox = new System.Windows.Forms.TextBox();
             this.PulkovoGeoLabel = new System.Windows.Forms.Label();
             this.panel12 = new System.Windows.Forms.Panel();
             this.pulkovoLabel = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel15 = new System.Windows.Forms.Panel();
+            this.UkraineXCoordinateTextBox = new System.Windows.Forms.TextBox();
+            this.panel19 = new System.Windows.Forms.Panel();
+            this.UkraineYCoordinateTextBox = new System.Windows.Forms.TextBox();
             this.toolStrip6 = new System.Windows.Forms.ToolStrip();
             this.UkraineProjCopyButton = new System.Windows.Forms.ToolStripButton();
             this.UkraineProjPasteButton = new System.Windows.Forms.ToolStripButton();
-            this.UkraineYCoordinateTextBox = new System.Windows.Forms.TextBox();
-            this.panel19 = new System.Windows.Forms.Panel();
-            this.UkraineXCoordinateTextBox = new System.Windows.Forms.TextBox();
             this.UkraineProjectedLabel = new System.Windows.Forms.Label();
             this.panel16 = new System.Windows.Forms.Panel();
-            this.toolStrip7 = new System.Windows.Forms.ToolStrip();
-            this.UkraineGeoCopyButton = new System.Windows.Forms.ToolStripButton();
-            this.UkraineGeoPasteButton = new System.Windows.Forms.ToolStripButton();
             this.ukraineDMSYTextBox = new System.Windows.Forms.TextBox();
             this.panel18 = new System.Windows.Forms.Panel();
             this.ukraineDMSXTextBox = new System.Windows.Forms.TextBox();
+            this.toolStrip7 = new System.Windows.Forms.ToolStrip();
+            this.UkraineGeoCopyButton = new System.Windows.Forms.ToolStripButton();
+            this.UkraineGeoPasteButton = new System.Windows.Forms.ToolStripButton();
             this.UkraineGeoLabel = new System.Windows.Forms.Label();
             this.panel17 = new System.Windows.Forms.Panel();
             this.ukraineLabel = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.toolStrip9 = new System.Windows.Forms.ToolStrip();
-            this.MgrsCopyButton = new System.Windows.Forms.ToolStripButton();
-            this.MgrsPasteButton = new System.Windows.Forms.ToolStripButton();
+            this.MgrsNotationTextBox = new System.Windows.Forms.TextBox();
+            this.UTMNotationTextBox = new System.Windows.Forms.TextBox();
             this.toolStrip8 = new System.Windows.Forms.ToolStrip();
             this.UtmCopyButton = new System.Windows.Forms.ToolStripButton();
-            this.MgrsNotationTextBox = new System.Windows.Forms.TextBox();
             this.MgrsNotationLabel = new System.Windows.Forms.Label();
-            this.UTMNotationTextBox = new System.Windows.Forms.TextBox();
             this.UTMNotationLabel = new System.Windows.Forms.Label();
             this.GridToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
@@ -159,6 +156,19 @@
             this.btnRefreshGraphic = new System.Windows.Forms.Button();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.printToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.cutToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.copyToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.pasteToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.MgrsCopyButton = new System.Windows.Forms.ToolStripButton();
+            this.MgrsPasteButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStrip9 = new System.Windows.Forms.ToolStrip();
             this.TitlePanel.SuspendLayout();
             this.GeneralToolStrip.SuspendLayout();
             this.CurrentCoordinatesPanel.SuspendLayout();
@@ -181,7 +191,6 @@
             this.toolStrip7.SuspendLayout();
             this.panel17.SuspendLayout();
             this.panel4.SuspendLayout();
-            this.toolStrip9.SuspendLayout();
             this.toolStrip8.SuspendLayout();
             this.GridToolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PointsGridView)).BeginInit();
@@ -189,6 +198,7 @@
             this.toolBoxTitlePanel.SuspendLayout();
             this.comboPanel.SuspendLayout();
             this.graphicTitlePanel.SuspendLayout();
+            this.toolStrip9.SuspendLayout();
             this.SuspendLayout();
             // 
             // saveFileDialog
@@ -312,6 +322,39 @@
             this.CurrentCoordinatesPanel.Size = new System.Drawing.Size(300, 30);
             this.CurrentCoordinatesPanel.TabIndex = 51;
             // 
+            // XCoordinateTextBox
+            // 
+            this.XCoordinateTextBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.XCoordinateTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.XCoordinateTextBox.Location = new System.Drawing.Point(103, 4);
+            this.XCoordinateTextBox.Name = "XCoordinateTextBox";
+            this.XCoordinateTextBox.Size = new System.Drawing.Size(68, 21);
+            this.XCoordinateTextBox.TabIndex = 5;
+            this.XCoordinateTextBox.Text = "036.12345";
+            this.XCoordinateTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
+            this.XCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.XCoordinateTextBox_KeyDown);
+            // 
+            // panel5
+            // 
+            this.panel5.BackColor = System.Drawing.Color.Transparent;
+            this.panel5.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel5.Location = new System.Drawing.Point(171, 4);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(4, 22);
+            this.panel5.TabIndex = 58;
+            // 
+            // YCoordinateTextBox
+            // 
+            this.YCoordinateTextBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.YCoordinateTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.YCoordinateTextBox.Location = new System.Drawing.Point(175, 4);
+            this.YCoordinateTextBox.Name = "YCoordinateTextBox";
+            this.YCoordinateTextBox.Size = new System.Drawing.Size(68, 21);
+            this.YCoordinateTextBox.TabIndex = 7;
+            this.YCoordinateTextBox.Text = "050.12345";
+            this.YCoordinateTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
+            this.YCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.XCoordinateTextBox_KeyDown);
+            // 
             // toolStrip1
             // 
             this.toolStrip1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
@@ -345,39 +388,6 @@
             this.CurrentCoordsPasteButton.Name = "CurrentCoordsPasteButton";
             this.CurrentCoordsPasteButton.Size = new System.Drawing.Size(23, 20);
             this.CurrentCoordsPasteButton.Click += new System.EventHandler(this.CurrentCoordsPasteButton_Click);
-            // 
-            // YCoordinateTextBox
-            // 
-            this.YCoordinateTextBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.YCoordinateTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.YCoordinateTextBox.Location = new System.Drawing.Point(175, 4);
-            this.YCoordinateTextBox.Name = "YCoordinateTextBox";
-            this.YCoordinateTextBox.Size = new System.Drawing.Size(68, 21);
-            this.YCoordinateTextBox.TabIndex = 7;
-            this.YCoordinateTextBox.Text = "050.12345";
-            this.YCoordinateTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
-            this.YCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.XCoordinateTextBox_KeyDown);
-            // 
-            // panel5
-            // 
-            this.panel5.BackColor = System.Drawing.Color.Transparent;
-            this.panel5.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel5.Location = new System.Drawing.Point(171, 4);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(4, 22);
-            this.panel5.TabIndex = 58;
-            // 
-            // XCoordinateTextBox
-            // 
-            this.XCoordinateTextBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.XCoordinateTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.XCoordinateTextBox.Location = new System.Drawing.Point(103, 4);
-            this.XCoordinateTextBox.Name = "XCoordinateTextBox";
-            this.XCoordinateTextBox.Size = new System.Drawing.Size(68, 21);
-            this.XCoordinateTextBox.TabIndex = 5;
-            this.XCoordinateTextBox.Text = "036.12345";
-            this.XCoordinateTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
-            this.XCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.XCoordinateTextBox_KeyDown);
             // 
             // CurrentMapLabel
             // 
@@ -418,6 +428,36 @@
             this.panel8.Size = new System.Drawing.Size(300, 30);
             this.panel8.TabIndex = 62;
             // 
+            // WgsXCoordinateTextBox
+            // 
+            this.WgsXCoordinateTextBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.WgsXCoordinateTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.WgsXCoordinateTextBox.Location = new System.Drawing.Point(103, 4);
+            this.WgsXCoordinateTextBox.Name = "WgsXCoordinateTextBox";
+            this.WgsXCoordinateTextBox.Size = new System.Drawing.Size(68, 21);
+            this.WgsXCoordinateTextBox.TabIndex = 2;
+            this.WgsXCoordinateTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
+            this.WgsXCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WgsXCoordinateTextBox_KeyDown);
+            // 
+            // panel9
+            // 
+            this.panel9.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel9.Location = new System.Drawing.Point(171, 4);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(4, 22);
+            this.panel9.TabIndex = 59;
+            // 
+            // WgsYCoordinateTextBox
+            // 
+            this.WgsYCoordinateTextBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.WgsYCoordinateTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.WgsYCoordinateTextBox.Location = new System.Drawing.Point(175, 4);
+            this.WgsYCoordinateTextBox.Name = "WgsYCoordinateTextBox";
+            this.WgsYCoordinateTextBox.Size = new System.Drawing.Size(68, 21);
+            this.WgsYCoordinateTextBox.TabIndex = 3;
+            this.WgsYCoordinateTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
+            this.WgsYCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WgsXCoordinateTextBox_KeyDown);
+            // 
             // toolStrip2
             // 
             this.toolStrip2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
@@ -452,36 +492,6 @@
             this.WgsProjPasteButton.Size = new System.Drawing.Size(23, 20);
             this.WgsProjPasteButton.Click += new System.EventHandler(this.WgsProjPasteButton_Click);
             // 
-            // WgsYCoordinateTextBox
-            // 
-            this.WgsYCoordinateTextBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.WgsYCoordinateTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.WgsYCoordinateTextBox.Location = new System.Drawing.Point(175, 4);
-            this.WgsYCoordinateTextBox.Name = "WgsYCoordinateTextBox";
-            this.WgsYCoordinateTextBox.Size = new System.Drawing.Size(68, 21);
-            this.WgsYCoordinateTextBox.TabIndex = 3;
-            this.WgsYCoordinateTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
-            this.WgsYCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WgsXCoordinateTextBox_KeyDown);
-            // 
-            // panel9
-            // 
-            this.panel9.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel9.Location = new System.Drawing.Point(171, 4);
-            this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(4, 22);
-            this.panel9.TabIndex = 59;
-            // 
-            // WgsXCoordinateTextBox
-            // 
-            this.WgsXCoordinateTextBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.WgsXCoordinateTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.WgsXCoordinateTextBox.Location = new System.Drawing.Point(103, 4);
-            this.WgsXCoordinateTextBox.Name = "WgsXCoordinateTextBox";
-            this.WgsXCoordinateTextBox.Size = new System.Drawing.Size(68, 21);
-            this.WgsXCoordinateTextBox.TabIndex = 2;
-            this.WgsXCoordinateTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
-            this.WgsXCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WgsXCoordinateTextBox_KeyDown);
-            // 
             // wgsProjectedLabel
             // 
             this.wgsProjectedLabel.AutoSize = true;
@@ -507,6 +517,36 @@
             this.panel6.Padding = new System.Windows.Forms.Padding(4, 4, 8, 4);
             this.panel6.Size = new System.Drawing.Size(300, 30);
             this.panel6.TabIndex = 60;
+            // 
+            // wgsDMSXTextBox
+            // 
+            this.wgsDMSXTextBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.wgsDMSXTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.wgsDMSXTextBox.Location = new System.Drawing.Point(103, 4);
+            this.wgsDMSXTextBox.Name = "wgsDMSXTextBox";
+            this.wgsDMSXTextBox.Size = new System.Drawing.Size(68, 21);
+            this.wgsDMSXTextBox.TabIndex = 25;
+            this.wgsDMSXTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
+            this.wgsDMSXTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WgsDMSXTextBox_KeyDown);
+            // 
+            // panel7
+            // 
+            this.panel7.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel7.Location = new System.Drawing.Point(171, 4);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(4, 22);
+            this.panel7.TabIndex = 60;
+            // 
+            // wgsDMSYTextBox
+            // 
+            this.wgsDMSYTextBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.wgsDMSYTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.wgsDMSYTextBox.Location = new System.Drawing.Point(175, 4);
+            this.wgsDMSYTextBox.Name = "wgsDMSYTextBox";
+            this.wgsDMSYTextBox.Size = new System.Drawing.Size(68, 21);
+            this.wgsDMSYTextBox.TabIndex = 26;
+            this.wgsDMSYTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
+            this.wgsDMSYTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WgsDMSXTextBox_KeyDown);
             // 
             // toolStrip3
             // 
@@ -542,36 +582,6 @@
             this.WgsGeoPasteButton.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
             this.WgsGeoPasteButton.Size = new System.Drawing.Size(23, 20);
             this.WgsGeoPasteButton.Click += new System.EventHandler(this.WgsGeoPasteButton_Click);
-            // 
-            // wgsDMSYTextBox
-            // 
-            this.wgsDMSYTextBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.wgsDMSYTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.wgsDMSYTextBox.Location = new System.Drawing.Point(175, 4);
-            this.wgsDMSYTextBox.Name = "wgsDMSYTextBox";
-            this.wgsDMSYTextBox.Size = new System.Drawing.Size(68, 21);
-            this.wgsDMSYTextBox.TabIndex = 26;
-            this.wgsDMSYTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
-            this.wgsDMSYTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WgsDMSXTextBox_KeyDown);
-            // 
-            // panel7
-            // 
-            this.panel7.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel7.Location = new System.Drawing.Point(171, 4);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(4, 22);
-            this.panel7.TabIndex = 60;
-            // 
-            // wgsDMSXTextBox
-            // 
-            this.wgsDMSXTextBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.wgsDMSXTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.wgsDMSXTextBox.Location = new System.Drawing.Point(103, 4);
-            this.wgsDMSXTextBox.Name = "wgsDMSXTextBox";
-            this.wgsDMSXTextBox.Size = new System.Drawing.Size(68, 21);
-            this.wgsDMSXTextBox.TabIndex = 25;
-            this.wgsDMSXTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
-            this.wgsDMSXTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WgsDMSXTextBox_KeyDown);
             // 
             // wgsGeoLabel
             // 
@@ -623,6 +633,36 @@
             this.panel10.Size = new System.Drawing.Size(300, 30);
             this.panel10.TabIndex = 60;
             // 
+            // PulkovoXCoordinateTextBox
+            // 
+            this.PulkovoXCoordinateTextBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.PulkovoXCoordinateTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.PulkovoXCoordinateTextBox.Location = new System.Drawing.Point(103, 4);
+            this.PulkovoXCoordinateTextBox.Name = "PulkovoXCoordinateTextBox";
+            this.PulkovoXCoordinateTextBox.Size = new System.Drawing.Size(68, 21);
+            this.PulkovoXCoordinateTextBox.TabIndex = 10;
+            this.PulkovoXCoordinateTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
+            this.PulkovoXCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PulkovoXCoordinateTextBox_KeyDown);
+            // 
+            // panel14
+            // 
+            this.panel14.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel14.Location = new System.Drawing.Point(171, 4);
+            this.panel14.Name = "panel14";
+            this.panel14.Size = new System.Drawing.Size(4, 22);
+            this.panel14.TabIndex = 60;
+            // 
+            // PulkovoYCoordinateTextBox
+            // 
+            this.PulkovoYCoordinateTextBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.PulkovoYCoordinateTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.PulkovoYCoordinateTextBox.Location = new System.Drawing.Point(175, 4);
+            this.PulkovoYCoordinateTextBox.Name = "PulkovoYCoordinateTextBox";
+            this.PulkovoYCoordinateTextBox.Size = new System.Drawing.Size(68, 21);
+            this.PulkovoYCoordinateTextBox.TabIndex = 8;
+            this.PulkovoYCoordinateTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
+            this.PulkovoYCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PulkovoXCoordinateTextBox_KeyDown);
+            // 
             // toolStrip4
             // 
             this.toolStrip4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
@@ -657,36 +697,6 @@
             this.PulkovoProjPasteButton.Size = new System.Drawing.Size(23, 20);
             this.PulkovoProjPasteButton.Click += new System.EventHandler(this.PulkovoProjPasteButton_Click);
             // 
-            // PulkovoYCoordinateTextBox
-            // 
-            this.PulkovoYCoordinateTextBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.PulkovoYCoordinateTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.PulkovoYCoordinateTextBox.Location = new System.Drawing.Point(175, 4);
-            this.PulkovoYCoordinateTextBox.Name = "PulkovoYCoordinateTextBox";
-            this.PulkovoYCoordinateTextBox.Size = new System.Drawing.Size(68, 21);
-            this.PulkovoYCoordinateTextBox.TabIndex = 8;
-            this.PulkovoYCoordinateTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
-            this.PulkovoYCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PulkovoXCoordinateTextBox_KeyDown);
-            // 
-            // panel14
-            // 
-            this.panel14.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel14.Location = new System.Drawing.Point(171, 4);
-            this.panel14.Name = "panel14";
-            this.panel14.Size = new System.Drawing.Size(4, 22);
-            this.panel14.TabIndex = 60;
-            // 
-            // PulkovoXCoordinateTextBox
-            // 
-            this.PulkovoXCoordinateTextBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.PulkovoXCoordinateTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.PulkovoXCoordinateTextBox.Location = new System.Drawing.Point(103, 4);
-            this.PulkovoXCoordinateTextBox.Name = "PulkovoXCoordinateTextBox";
-            this.PulkovoXCoordinateTextBox.Size = new System.Drawing.Size(68, 21);
-            this.PulkovoXCoordinateTextBox.TabIndex = 10;
-            this.PulkovoXCoordinateTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
-            this.PulkovoXCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PulkovoXCoordinateTextBox_KeyDown);
-            // 
             // PulkovoProjectedLabel
             // 
             this.PulkovoProjectedLabel.AutoSize = true;
@@ -712,6 +722,36 @@
             this.panel11.Padding = new System.Windows.Forms.Padding(4, 4, 8, 4);
             this.panel11.Size = new System.Drawing.Size(300, 30);
             this.panel11.TabIndex = 61;
+            // 
+            // pulkovoDMSXTextBox
+            // 
+            this.pulkovoDMSXTextBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pulkovoDMSXTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.pulkovoDMSXTextBox.Location = new System.Drawing.Point(103, 4);
+            this.pulkovoDMSXTextBox.Name = "pulkovoDMSXTextBox";
+            this.pulkovoDMSXTextBox.Size = new System.Drawing.Size(68, 21);
+            this.pulkovoDMSXTextBox.TabIndex = 25;
+            this.pulkovoDMSXTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
+            this.pulkovoDMSXTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PulkovoDMSXTextBox_KeyDown);
+            // 
+            // panel13
+            // 
+            this.panel13.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel13.Location = new System.Drawing.Point(171, 4);
+            this.panel13.Name = "panel13";
+            this.panel13.Size = new System.Drawing.Size(4, 22);
+            this.panel13.TabIndex = 60;
+            // 
+            // pulkovoDMSYTextBox
+            // 
+            this.pulkovoDMSYTextBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pulkovoDMSYTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.pulkovoDMSYTextBox.Location = new System.Drawing.Point(175, 4);
+            this.pulkovoDMSYTextBox.Name = "pulkovoDMSYTextBox";
+            this.pulkovoDMSYTextBox.Size = new System.Drawing.Size(68, 21);
+            this.pulkovoDMSYTextBox.TabIndex = 26;
+            this.pulkovoDMSYTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
+            this.pulkovoDMSYTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PulkovoDMSXTextBox_KeyDown);
             // 
             // toolStrip5
             // 
@@ -746,36 +786,6 @@
             this.PulkovoGeoPasteButton.Name = "PulkovoGeoPasteButton";
             this.PulkovoGeoPasteButton.Size = new System.Drawing.Size(23, 20);
             this.PulkovoGeoPasteButton.Click += new System.EventHandler(this.PulkovoGeoPasteButton_Click);
-            // 
-            // pulkovoDMSYTextBox
-            // 
-            this.pulkovoDMSYTextBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pulkovoDMSYTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.pulkovoDMSYTextBox.Location = new System.Drawing.Point(175, 4);
-            this.pulkovoDMSYTextBox.Name = "pulkovoDMSYTextBox";
-            this.pulkovoDMSYTextBox.Size = new System.Drawing.Size(68, 21);
-            this.pulkovoDMSYTextBox.TabIndex = 26;
-            this.pulkovoDMSYTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
-            this.pulkovoDMSYTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PulkovoDMSXTextBox_KeyDown);
-            // 
-            // panel13
-            // 
-            this.panel13.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel13.Location = new System.Drawing.Point(171, 4);
-            this.panel13.Name = "panel13";
-            this.panel13.Size = new System.Drawing.Size(4, 22);
-            this.panel13.TabIndex = 60;
-            // 
-            // pulkovoDMSXTextBox
-            // 
-            this.pulkovoDMSXTextBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pulkovoDMSXTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.pulkovoDMSXTextBox.Location = new System.Drawing.Point(103, 4);
-            this.pulkovoDMSXTextBox.Name = "pulkovoDMSXTextBox";
-            this.pulkovoDMSXTextBox.Size = new System.Drawing.Size(68, 21);
-            this.pulkovoDMSXTextBox.TabIndex = 25;
-            this.pulkovoDMSXTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
-            this.pulkovoDMSXTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PulkovoDMSXTextBox_KeyDown);
             // 
             // PulkovoGeoLabel
             // 
@@ -837,6 +847,36 @@
             this.panel15.Size = new System.Drawing.Size(300, 30);
             this.panel15.TabIndex = 60;
             // 
+            // UkraineXCoordinateTextBox
+            // 
+            this.UkraineXCoordinateTextBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.UkraineXCoordinateTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.UkraineXCoordinateTextBox.Location = new System.Drawing.Point(103, 4);
+            this.UkraineXCoordinateTextBox.Name = "UkraineXCoordinateTextBox";
+            this.UkraineXCoordinateTextBox.Size = new System.Drawing.Size(68, 21);
+            this.UkraineXCoordinateTextBox.TabIndex = 11;
+            this.UkraineXCoordinateTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
+            this.UkraineXCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UkraineXCoordinateTextBox_KeyDown);
+            // 
+            // panel19
+            // 
+            this.panel19.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel19.Location = new System.Drawing.Point(171, 4);
+            this.panel19.Name = "panel19";
+            this.panel19.Size = new System.Drawing.Size(4, 22);
+            this.panel19.TabIndex = 61;
+            // 
+            // UkraineYCoordinateTextBox
+            // 
+            this.UkraineYCoordinateTextBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.UkraineYCoordinateTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.UkraineYCoordinateTextBox.Location = new System.Drawing.Point(175, 4);
+            this.UkraineYCoordinateTextBox.Name = "UkraineYCoordinateTextBox";
+            this.UkraineYCoordinateTextBox.Size = new System.Drawing.Size(68, 21);
+            this.UkraineYCoordinateTextBox.TabIndex = 12;
+            this.UkraineYCoordinateTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
+            this.UkraineYCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UkraineXCoordinateTextBox_KeyDown);
+            // 
             // toolStrip6
             // 
             this.toolStrip6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
@@ -871,36 +911,6 @@
             this.UkraineProjPasteButton.Size = new System.Drawing.Size(23, 20);
             this.UkraineProjPasteButton.Click += new System.EventHandler(this.UkraineProjPasteButton_Click);
             // 
-            // UkraineYCoordinateTextBox
-            // 
-            this.UkraineYCoordinateTextBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.UkraineYCoordinateTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.UkraineYCoordinateTextBox.Location = new System.Drawing.Point(175, 4);
-            this.UkraineYCoordinateTextBox.Name = "UkraineYCoordinateTextBox";
-            this.UkraineYCoordinateTextBox.Size = new System.Drawing.Size(68, 21);
-            this.UkraineYCoordinateTextBox.TabIndex = 12;
-            this.UkraineYCoordinateTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
-            this.UkraineYCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UkraineXCoordinateTextBox_KeyDown);
-            // 
-            // panel19
-            // 
-            this.panel19.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel19.Location = new System.Drawing.Point(171, 4);
-            this.panel19.Name = "panel19";
-            this.panel19.Size = new System.Drawing.Size(4, 22);
-            this.panel19.TabIndex = 61;
-            // 
-            // UkraineXCoordinateTextBox
-            // 
-            this.UkraineXCoordinateTextBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.UkraineXCoordinateTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.UkraineXCoordinateTextBox.Location = new System.Drawing.Point(103, 4);
-            this.UkraineXCoordinateTextBox.Name = "UkraineXCoordinateTextBox";
-            this.UkraineXCoordinateTextBox.Size = new System.Drawing.Size(68, 21);
-            this.UkraineXCoordinateTextBox.TabIndex = 11;
-            this.UkraineXCoordinateTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
-            this.UkraineXCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UkraineXCoordinateTextBox_KeyDown);
-            // 
             // UkraineProjectedLabel
             // 
             this.UkraineProjectedLabel.AutoSize = true;
@@ -926,6 +936,36 @@
             this.panel16.Padding = new System.Windows.Forms.Padding(4, 4, 8, 4);
             this.panel16.Size = new System.Drawing.Size(300, 30);
             this.panel16.TabIndex = 61;
+            // 
+            // ukraineDMSYTextBox
+            // 
+            this.ukraineDMSYTextBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.ukraineDMSYTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ukraineDMSYTextBox.Location = new System.Drawing.Point(103, 4);
+            this.ukraineDMSYTextBox.Name = "ukraineDMSYTextBox";
+            this.ukraineDMSYTextBox.Size = new System.Drawing.Size(68, 21);
+            this.ukraineDMSYTextBox.TabIndex = 26;
+            this.ukraineDMSYTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
+            this.ukraineDMSYTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UkraineDMSXTextBox_KeyDown);
+            // 
+            // panel18
+            // 
+            this.panel18.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel18.Location = new System.Drawing.Point(171, 4);
+            this.panel18.Name = "panel18";
+            this.panel18.Size = new System.Drawing.Size(4, 22);
+            this.panel18.TabIndex = 61;
+            // 
+            // ukraineDMSXTextBox
+            // 
+            this.ukraineDMSXTextBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.ukraineDMSXTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ukraineDMSXTextBox.Location = new System.Drawing.Point(175, 4);
+            this.ukraineDMSXTextBox.Name = "ukraineDMSXTextBox";
+            this.ukraineDMSXTextBox.Size = new System.Drawing.Size(68, 21);
+            this.ukraineDMSXTextBox.TabIndex = 25;
+            this.ukraineDMSXTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
+            this.ukraineDMSXTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UkraineDMSXTextBox_KeyDown);
             // 
             // toolStrip7
             // 
@@ -960,36 +1000,6 @@
             this.UkraineGeoPasteButton.Name = "UkraineGeoPasteButton";
             this.UkraineGeoPasteButton.Size = new System.Drawing.Size(23, 20);
             this.UkraineGeoPasteButton.Click += new System.EventHandler(this.UkraineGeoPasteButton_Click);
-            // 
-            // ukraineDMSYTextBox
-            // 
-            this.ukraineDMSYTextBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.ukraineDMSYTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ukraineDMSYTextBox.Location = new System.Drawing.Point(103, 4);
-            this.ukraineDMSYTextBox.Name = "ukraineDMSYTextBox";
-            this.ukraineDMSYTextBox.Size = new System.Drawing.Size(68, 21);
-            this.ukraineDMSYTextBox.TabIndex = 26;
-            this.ukraineDMSYTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
-            this.ukraineDMSYTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UkraineDMSXTextBox_KeyDown);
-            // 
-            // panel18
-            // 
-            this.panel18.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel18.Location = new System.Drawing.Point(171, 4);
-            this.panel18.Name = "panel18";
-            this.panel18.Size = new System.Drawing.Size(4, 22);
-            this.panel18.TabIndex = 61;
-            // 
-            // ukraineDMSXTextBox
-            // 
-            this.ukraineDMSXTextBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.ukraineDMSXTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ukraineDMSXTextBox.Location = new System.Drawing.Point(175, 4);
-            this.ukraineDMSXTextBox.Name = "ukraineDMSXTextBox";
-            this.ukraineDMSXTextBox.Size = new System.Drawing.Size(68, 21);
-            this.ukraineDMSXTextBox.TabIndex = 25;
-            this.ukraineDMSXTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
-            this.ukraineDMSXTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UkraineDMSXTextBox_KeyDown);
             // 
             // UkraineGeoLabel
             // 
@@ -1041,40 +1051,27 @@
             this.panel4.Size = new System.Drawing.Size(300, 30);
             this.panel4.TabIndex = 55;
             // 
-            // toolStrip9
+            // MgrsNotationTextBox
             // 
-            this.toolStrip9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.toolStrip9.Dock = System.Windows.Forms.DockStyle.Right;
-            this.toolStrip9.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip9.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MgrsCopyButton,
-            this.MgrsPasteButton});
-            this.toolStrip9.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.toolStrip9.Location = new System.Drawing.Point(243, 4);
-            this.toolStrip9.Name = "toolStrip9";
-            this.toolStrip9.Padding = new System.Windows.Forms.Padding(2, 0, 1, 0);
-            this.toolStrip9.Size = new System.Drawing.Size(49, 22);
-            this.toolStrip9.TabIndex = 59;
-            this.toolStrip9.Text = "toolStrip2";
+            this.MgrsNotationTextBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.MgrsNotationTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.MgrsNotationTextBox.Location = new System.Drawing.Point(93, 4);
+            this.MgrsNotationTextBox.Name = "MgrsNotationTextBox";
+            this.MgrsNotationTextBox.Size = new System.Drawing.Size(150, 21);
+            this.MgrsNotationTextBox.TabIndex = 18;
+            this.MgrsNotationTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MgrsNotationTextBox_KeyDown);
+            this.MgrsNotationTextBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.MgrsNotationTextBox_MouseDoubleClick);
             // 
-            // MgrsCopyButton
+            // UTMNotationTextBox
             // 
-            this.MgrsCopyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.MgrsCopyButton.Image = ((System.Drawing.Image)(resources.GetObject("MgrsCopyButton.Image")));
-            this.MgrsCopyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.MgrsCopyButton.Name = "MgrsCopyButton";
-            this.MgrsCopyButton.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
-            this.MgrsCopyButton.Size = new System.Drawing.Size(23, 20);
-            this.MgrsCopyButton.Click += new System.EventHandler(this.MgrsCopyButton_Click);
-            // 
-            // MgrsPasteButton
-            // 
-            this.MgrsPasteButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.MgrsPasteButton.Image = ((System.Drawing.Image)(resources.GetObject("MgrsPasteButton.Image")));
-            this.MgrsPasteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.MgrsPasteButton.Name = "MgrsPasteButton";
-            this.MgrsPasteButton.Size = new System.Drawing.Size(23, 20);
-            this.MgrsPasteButton.Click += new System.EventHandler(this.MgrsPasteButton_Click);
+            this.UTMNotationTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.UTMNotationTextBox.Location = new System.Drawing.Point(93, 5);
+            this.UTMNotationTextBox.Name = "UTMNotationTextBox";
+            this.UTMNotationTextBox.Size = new System.Drawing.Size(150, 21);
+            this.UTMNotationTextBox.TabIndex = 31;
+            this.UTMNotationTextBox.Visible = false;
+            this.UTMNotationTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UTMNotationTextBox_KeyDown);
+            this.UTMNotationTextBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.UTMNotationTextBox_MouseDoubleClick);
             // 
             // toolStrip8
             // 
@@ -1082,11 +1079,21 @@
             this.toolStrip8.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip8.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip8.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.UtmCopyButton});
+            this.UtmCopyButton,
+            this.newToolStripButton,
+            this.openToolStripButton,
+            this.saveToolStripButton,
+            this.printToolStripButton,
+            this.toolStripSeparator,
+            this.cutToolStripButton,
+            this.copyToolStripButton,
+            this.pasteToolStripButton,
+            this.toolStripSeparator10,
+            this.helpToolStripButton});
             this.toolStrip8.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.toolStrip8.Location = new System.Drawing.Point(240, 7);
             this.toolStrip8.Name = "toolStrip8";
-            this.toolStrip8.Size = new System.Drawing.Size(1, 0);
+            this.toolStrip8.Size = new System.Drawing.Size(197, 23);
             this.toolStrip8.TabIndex = 58;
             this.toolStrip8.Text = "toolStrip2";
             // 
@@ -1100,17 +1107,6 @@
             this.UtmCopyButton.Visible = false;
             this.UtmCopyButton.Click += new System.EventHandler(this.UtmCopyButton_Click);
             // 
-            // MgrsNotationTextBox
-            // 
-            this.MgrsNotationTextBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.MgrsNotationTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.MgrsNotationTextBox.Location = new System.Drawing.Point(93, 4);
-            this.MgrsNotationTextBox.Name = "MgrsNotationTextBox";
-            this.MgrsNotationTextBox.Size = new System.Drawing.Size(150, 21);
-            this.MgrsNotationTextBox.TabIndex = 18;
-            this.MgrsNotationTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MgrsNotationTextBox_KeyDown);
-            this.MgrsNotationTextBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.MgrsNotationTextBox_MouseDoubleClick);
-            // 
             // MgrsNotationLabel
             // 
             this.MgrsNotationLabel.Dock = System.Windows.Forms.DockStyle.Left;
@@ -1121,17 +1117,6 @@
             this.MgrsNotationLabel.Size = new System.Drawing.Size(80, 22);
             this.MgrsNotationLabel.TabIndex = 30;
             this.MgrsNotationLabel.Text = "MGRS:";
-            // 
-            // UTMNotationTextBox
-            // 
-            this.UTMNotationTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.UTMNotationTextBox.Location = new System.Drawing.Point(93, 5);
-            this.UTMNotationTextBox.Name = "UTMNotationTextBox";
-            this.UTMNotationTextBox.Size = new System.Drawing.Size(150, 21);
-            this.UTMNotationTextBox.TabIndex = 31;
-            this.UTMNotationTextBox.Visible = false;
-            this.UTMNotationTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UTMNotationTextBox_KeyDown);
-            this.UTMNotationTextBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.UTMNotationTextBox_MouseDoubleClick);
             // 
             // UTMNotationLabel
             // 
@@ -1749,6 +1734,123 @@
             this.imageList1.Images.SetKeyName(211, "Download.png");
             this.imageList1.Images.SetKeyName(212, "Refresh20x20.png");
             // 
+            // newToolStripButton
+            // 
+            this.newToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.newToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("newToolStripButton.Image")));
+            this.newToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.newToolStripButton.Name = "newToolStripButton";
+            this.newToolStripButton.Size = new System.Drawing.Size(23, 20);
+            this.newToolStripButton.Text = "&New";
+            // 
+            // openToolStripButton
+            // 
+            this.openToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.openToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("openToolStripButton.Image")));
+            this.openToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.openToolStripButton.Name = "openToolStripButton";
+            this.openToolStripButton.Size = new System.Drawing.Size(23, 20);
+            this.openToolStripButton.Text = "&Open";
+            // 
+            // saveToolStripButton
+            // 
+            this.saveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.saveToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripButton.Image")));
+            this.saveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.saveToolStripButton.Name = "saveToolStripButton";
+            this.saveToolStripButton.Size = new System.Drawing.Size(23, 20);
+            this.saveToolStripButton.Text = "&Save";
+            // 
+            // printToolStripButton
+            // 
+            this.printToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.printToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("printToolStripButton.Image")));
+            this.printToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.printToolStripButton.Name = "printToolStripButton";
+            this.printToolStripButton.Size = new System.Drawing.Size(23, 20);
+            this.printToolStripButton.Text = "&Print";
+            // 
+            // toolStripSeparator
+            // 
+            this.toolStripSeparator.Name = "toolStripSeparator";
+            this.toolStripSeparator.Size = new System.Drawing.Size(6, 23);
+            // 
+            // cutToolStripButton
+            // 
+            this.cutToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.cutToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("cutToolStripButton.Image")));
+            this.cutToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.cutToolStripButton.Name = "cutToolStripButton";
+            this.cutToolStripButton.Size = new System.Drawing.Size(23, 20);
+            this.cutToolStripButton.Text = "C&ut";
+            // 
+            // copyToolStripButton
+            // 
+            this.copyToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.copyToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("copyToolStripButton.Image")));
+            this.copyToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.copyToolStripButton.Name = "copyToolStripButton";
+            this.copyToolStripButton.Size = new System.Drawing.Size(23, 20);
+            this.copyToolStripButton.Text = "&Copy";
+            // 
+            // pasteToolStripButton
+            // 
+            this.pasteToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.pasteToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteToolStripButton.Image")));
+            this.pasteToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.pasteToolStripButton.Name = "pasteToolStripButton";
+            this.pasteToolStripButton.Size = new System.Drawing.Size(23, 20);
+            this.pasteToolStripButton.Text = "&Paste";
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(6, 23);
+            // 
+            // helpToolStripButton
+            // 
+            this.helpToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.helpToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("helpToolStripButton.Image")));
+            this.helpToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.helpToolStripButton.Name = "helpToolStripButton";
+            this.helpToolStripButton.Size = new System.Drawing.Size(23, 20);
+            this.helpToolStripButton.Text = "He&lp";
+            // 
+            // MgrsCopyButton
+            // 
+            this.MgrsCopyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.MgrsCopyButton.Image = ((System.Drawing.Image)(resources.GetObject("MgrsCopyButton.Image")));
+            this.MgrsCopyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.MgrsCopyButton.Name = "MgrsCopyButton";
+            this.MgrsCopyButton.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
+            this.MgrsCopyButton.Size = new System.Drawing.Size(23, 20);
+            this.MgrsCopyButton.Click += new System.EventHandler(this.MgrsCopyButton_Click);
+            // 
+            // MgrsPasteButton
+            // 
+            this.MgrsPasteButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.MgrsPasteButton.Image = ((System.Drawing.Image)(resources.GetObject("MgrsPasteButton.Image")));
+            this.MgrsPasteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.MgrsPasteButton.Name = "MgrsPasteButton";
+            this.MgrsPasteButton.Size = new System.Drawing.Size(23, 20);
+            this.MgrsPasteButton.Click += new System.EventHandler(this.MgrsPasteButton_Click);
+            // 
+            // toolStrip9
+            // 
+            this.toolStrip9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.toolStrip9.Dock = System.Windows.Forms.DockStyle.Right;
+            this.toolStrip9.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip9.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MgrsCopyButton,
+            this.MgrsPasteButton});
+            this.toolStrip9.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.toolStrip9.Location = new System.Drawing.Point(243, 4);
+            this.toolStrip9.Name = "toolStrip9";
+            this.toolStrip9.Padding = new System.Windows.Forms.Padding(2, 0, 1, 0);
+            this.toolStrip9.Size = new System.Drawing.Size(49, 22);
+            this.toolStrip9.TabIndex = 59;
+            this.toolStrip9.Text = "toolStrip2";
+            // 
             // DockableWindowGeoCalculator
             // 
             this.AutoScroll = true;
@@ -1810,8 +1912,6 @@
             this.panel17.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
-            this.toolStrip9.ResumeLayout(false);
-            this.toolStrip9.PerformLayout();
             this.toolStrip8.ResumeLayout(false);
             this.toolStrip8.PerformLayout();
             this.GridToolStrip.ResumeLayout(false);
@@ -1824,6 +1924,8 @@
             this.comboPanel.ResumeLayout(false);
             this.graphicTitlePanel.ResumeLayout(false);
             this.graphicTitlePanel.PerformLayout();
+            this.toolStrip9.ResumeLayout(false);
+            this.toolStrip9.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1890,8 +1992,6 @@
         private System.Windows.Forms.ToolStripButton UkraineGeoCopyButton;
         private System.Windows.Forms.ToolStrip toolStrip6;
         private System.Windows.Forms.ToolStripButton UkraineProjCopyButton;
-        private System.Windows.Forms.ToolStrip toolStrip9;
-        private System.Windows.Forms.ToolStripButton MgrsCopyButton;
         private System.Windows.Forms.ToolStrip toolStrip8;
         private System.Windows.Forms.ToolStripButton UtmCopyButton;
         private System.Windows.Forms.ToolStripButton CurrentCoordsPasteButton;
@@ -1901,7 +2001,6 @@
         private System.Windows.Forms.ToolStripButton PulkovoProjPasteButton;
         private System.Windows.Forms.ToolStripButton UkraineGeoPasteButton;
         private System.Windows.Forms.ToolStripButton UkraineProjPasteButton;
-        private System.Windows.Forms.ToolStripButton MgrsPasteButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton MoveToTheProjectedCoordButton;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
@@ -1955,5 +2054,18 @@
         private System.Windows.Forms.Panel panel18;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+        private System.Windows.Forms.ToolStripButton newToolStripButton;
+        private System.Windows.Forms.ToolStripButton openToolStripButton;
+        private System.Windows.Forms.ToolStripButton saveToolStripButton;
+        private System.Windows.Forms.ToolStripButton printToolStripButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
+        private System.Windows.Forms.ToolStripButton cutToolStripButton;
+        private System.Windows.Forms.ToolStripButton copyToolStripButton;
+        private System.Windows.Forms.ToolStripButton pasteToolStripButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+        private System.Windows.Forms.ToolStripButton helpToolStripButton;
+        private System.Windows.Forms.ToolStrip toolStrip9;
+        private System.Windows.Forms.ToolStripButton MgrsCopyButton;
+        private System.Windows.Forms.ToolStripButton MgrsPasteButton;
     }
 }
