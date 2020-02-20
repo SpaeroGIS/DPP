@@ -652,6 +652,7 @@
             this.lblSetPeofileProperties.Size = new System.Drawing.Size(155, 32);
             this.lblSetPeofileProperties.TabIndex = 22;
             this.lblSetPeofileProperties.Text = "Задать профиль";
+            this.lblSetPeofileProperties.Click += new System.EventHandler(this.lblSetPeofileProperties_Click);
             // 
             // tableLayoutPanel2
             // 

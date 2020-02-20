@@ -43,16 +43,16 @@
             this.titlePanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.titlePanel.Location = new System.Drawing.Point(0, 0);
             this.titlePanel.Name = "titlePanel";
-            this.titlePanel.Size = new System.Drawing.Size(257, 28);
+            this.titlePanel.Size = new System.Drawing.Size(257, 32);
             this.titlePanel.TabIndex = 0;
             // 
             // lblLayer
             // 
             this.lblLayer.AutoSize = true;
-            this.lblLayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblLayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.lblLayer.Location = new System.Drawing.Point(3, 6);
             this.lblLayer.Name = "lblLayer";
-            this.lblLayer.Size = new System.Drawing.Size(41, 17);
+            this.lblLayer.Size = new System.Drawing.Size(52, 20);
             this.lblLayer.TabIndex = 0;
             this.lblLayer.Text = "Слой";
             // 
@@ -83,10 +83,10 @@
             this.lvPoints.FullRowSelect = true;
             this.lvPoints.GridLines = true;
             this.lvPoints.HideSelection = false;
-            this.lvPoints.Location = new System.Drawing.Point(0, 28);
+            this.lvPoints.Location = new System.Drawing.Point(0, 32);
             this.lvPoints.MultiSelect = false;
             this.lvPoints.Name = "lvPoints";
-            this.lvPoints.Size = new System.Drawing.Size(257, 294);
+            this.lvPoints.Size = new System.Drawing.Size(257, 290);
             this.lvPoints.TabIndex = 2;
             this.lvPoints.UseCompatibleStateImageBehavior = false;
             // 
@@ -98,6 +98,8 @@
             this.Controls.Add(this.lvPoints);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.titlePanel);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "PointsListModalWindow";
             this.Text = "PointsListModalWindow";
             this.titlePanel.ResumeLayout(false);

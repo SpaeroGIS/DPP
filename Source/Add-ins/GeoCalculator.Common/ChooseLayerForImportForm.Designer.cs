@@ -98,6 +98,8 @@
             this.Controls.Add(this.buttonPanel);
             this.Controls.Add(this.lbLayers);
             this.Controls.Add(this.labelPanel);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ChooseLayerForImportForm";
             this.Text = "ChooseLayerForImportForm";
             this.labelPanel.ResumeLayout(false);

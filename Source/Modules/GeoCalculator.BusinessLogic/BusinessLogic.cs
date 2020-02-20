@@ -119,7 +119,7 @@ namespace MilSpace.GeoCalculator.BusinessLogic
 
             IPoint resultPoint = new Point();
 
-            resultPoint = (currentDocument.FocusMap as IActiveView).ScreenDisplay.DisplayTransformation.ToMapPoint(mousePositionX, mousePositionY);
+            resultPoint = currentDocument.ActiveView.ScreenDisplay.DisplayTransformation.ToMapPoint(mousePositionX, mousePositionY);
             return resultPoint;
         }
 
