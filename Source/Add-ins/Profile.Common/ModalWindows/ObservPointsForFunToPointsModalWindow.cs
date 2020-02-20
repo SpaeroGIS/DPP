@@ -1,20 +1,25 @@
-﻿using MilSpace.Core;
+﻿using ESRI.ArcGIS.Geometry;
+using MilSpace.Core;
 using MilSpace.Core.DataAccess;
 using MilSpace.Profile.Localization;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MilSpace.Profile.ModalWindows
 {
-    public partial class ObservationPointsListModalWindow : Form
+    public partial class ObservPointsForFunToPointsModalWindow : Form
     {
         private List<FromLayerPointModel> _points = new List<FromLayerPointModel>();
-        private Logger _log = Logger.GetLoggerEx("MilSpace.Profile.ModalWindows.ObservationPointsListModalWindow");
-        internal FromLayerPointModel SelectedPoint;
+        public List<IGeometry> SelectedPoints;
 
-        public ObservationPointsListModalWindow(List<FromLayerPointModel> points)
+        public ObservPointsForFunToPointsModalWindow(List<FromLayerPointModel> points)
         {
             InitializeComponent();
             LocalizeStrings();
@@ -24,7 +29,7 @@ namespace MilSpace.Profile.ModalWindows
 
         private void LocalizeStrings()
         {
-            this.Text = LocalizationContext.Instance.FindLocalizedElement("ModalTargetObservPointsTitle", "Вибір точок з шару точок спостереження");
+            this.Text = LocalizationContext.Instance.FindLocalizedElement("ModalObservPointsTitle", "Вибір точки з шару точок спостереження");
             btnChoosePoint.Text = LocalizationContext.Instance.FindLocalizedElement("BtnChooseText", "Обрати");
             dgvPoints.Columns["IdCol"].HeaderText = LocalizationContext.Instance.FindLocalizedElement("DgvObservPointsIdHeader", "Ідентифікатор");
             dgvPoints.Columns["TitleCol"].HeaderText = LocalizationContext.Instance.FindLocalizedElement("DgvObservPointsTitleHeader", "Назва");
@@ -37,15 +42,28 @@ namespace MilSpace.Profile.ModalWindows
 
             foreach(var point in _points)
             {
-                dgvPoints.Rows.Add(point.ObjId, point.DisplayedField, point.Point.X.ToFormattedString(), point.Point.Y.ToFormattedString());
+                dgvPoints.Rows.Add(false, point.ObjId, point.DisplayedField, point.Point.X.ToFormattedString(), point.Point.Y.ToFormattedString());
+            }
+        }
+
+        private void ChckAllPoints_CheckedChanged(object sender, EventArgs e)
+        {
+            foreach(DataGridViewRow row in dgvPoints.Rows)
+            {
+                row.Cells[0].Value = chckAllPoints.Checked;
             }
         }
 
         private void BtnChoosePoint_Click(object sender, EventArgs e)
         {
-            if(dgvPoints.SelectedRows.Count > 0)
+            SelectedPoints = new List<IGeometry>();
+
+            foreach(DataGridViewRow row in dgvPoints.Rows)
             {
-                SelectedPoint = _points.First(p => p.ObjId == (int)dgvPoints.SelectedRows[0].Cells["IdCol"].Value);
+                if((bool)row.Cells[0].Value)
+                {
+                    SelectedPoints.Add(_points.First(point => point.ObjId == (int)row.Cells["IdCol"].Value).Point);
+                }
             }
         }
     }

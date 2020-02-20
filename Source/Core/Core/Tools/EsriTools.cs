@@ -413,6 +413,45 @@ namespace MilSpace.Core.Tools
             logger.InfoEx("FlashGeometry. Geometries flashed.");
         }
 
+        public static IEnumerable<IPolyline> CreateDefaultPolylinesForFun(IPoint centerPoint, IEnumerable<IPoint> points,
+                                                                                 out double minAzimuth, out double maxAzimuth, out double maxLength)
+        {
+            maxAzimuth = -1;
+            minAzimuth = 7; //radian of 360 = 6,28319
+            maxLength = -1;
+
+            foreach(var point in points)
+            { 
+                var line = new Line() { FromPoint = centerPoint, ToPoint = point };
+
+                if(line.Angle > maxAzimuth)
+                {
+                    maxAzimuth = line.Angle;
+                }
+
+                if(line.Angle < minAzimuth)
+                {
+                    minAzimuth = line.Angle;
+                }
+
+                if(line.Length > maxLength)
+                {
+                    maxLength = line.Length;
+                }
+            }
+
+            var polylines = new IPolyline[3];
+            var startPoint = GetPointFromAngelAndDistance(centerPoint, minAzimuth, maxLength);
+            var middlePoint = GetPointFromAngelAndDistance(centerPoint, minAzimuth + (maxAzimuth - minAzimuth)/2, maxLength);
+            var endPoint = GetPointFromAngelAndDistance(centerPoint, maxAzimuth, maxLength);
+
+            polylines[0] = CreatePolylineFromPoints(centerPoint, startPoint);
+            polylines[1] = CreatePolylineFromPoints(centerPoint, middlePoint);
+            polylines[2] = CreatePolylineFromPoints(centerPoint, endPoint);
+
+            return polylines;
+        }
+
         public static IEnumerable<IPolyline> CreatePolylinesFromPointAndAzimuths(
             IPoint centerPoint, double length, int count, double azimuth1, double azimuth2)
         {
@@ -1655,7 +1694,7 @@ namespace MilSpace.Core.Tools
                 System.Diagnostics.Debug.WriteLine(ex.Message);
             }
         }
-
+        
         public static bool IsPointOnExtent(IEnvelope envelope, IPoint point)
         {
             if(point.X >= envelope.XMin && point.X <= envelope.XMax && point.Y >= envelope.YMin && point.Y <= envelope.YMax)
@@ -1669,7 +1708,38 @@ namespace MilSpace.Core.Tools
         public static double GetExtentHeightInMapUnits(IEnvelope envelope, double extentHeight)
         {
             return envelope.Height*0.1;
-
         }
+
+        public static IEnumerable<IPoint> GetPointsFromGeometries(IEnumerable<IGeometry> geometries, ISpatialReference spatialReference)
+        {
+            var points = new List<IPoint>();
+
+            if(geometries.First().GeometryType == esriGeometryType.esriGeometryPoint)
+            {
+                foreach(var geometry in geometries)
+                {
+                    var point = geometry as IPoint;
+                    point.Project(spatialReference);
+                    points.Add(point);
+                }
+            }
+            else
+            {
+                foreach(var geometry in geometries)
+                {
+                    var path = geometry as IPointCollection;
+
+                    for(int i = 0; i < path.PointCount; i++)
+                    {
+                        var point = path.Point[i];
+                        point.Project(spatialReference);
+                        points.Add(path.Point[i]);
+                    }
+                }
+            }
+
+            return points;
+        }
+
     }
 }

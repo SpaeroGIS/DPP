@@ -989,6 +989,17 @@ namespace MilSpace.Profile
             }
         }
 
+        public void SetFunToPointsParams(double averageAzimuth, double averageAngle, double maxLength, int count)
+        {
+            lbFunInfo.Items.Clear();
+
+            lbFunInfo.Items.Add(LocalizationContext.Instance.FindLocalizedElement("LbFunParamsTitleText", "Параметри набору профілів"));
+            lbFunInfo.Items.Add(LocalizationContext.Instance.FindLocalizedElement("LbFunParamsAvgAzimuthText", "Середній азимут:"));
+            lbFunInfo.Items.Add(LocalizationContext.Instance.FindLocalizedElement("LbFunParamsAvgAngleText", "Середній кут між лініями:"));
+            lbFunInfo.Items.Add(LocalizationContext.Instance.FindLocalizedElement("LbFunParamsAvgLengthText", "Середня довжина проекції лінії:"));
+            lbFunInfo.Items.Add(LocalizationContext.Instance.FindLocalizedElement("LbFunParamsLinesCountText", "Кількість ліній"));
+        }
+
         public void SetReturnButtonEnable(ProfileSettingsPointButtonEnum pointType, bool enabled)
         {
             if(pointType == ProfileSettingsPointButtonEnum.PointsFist)
@@ -1644,6 +1655,12 @@ namespace MilSpace.Profile
         private void BtnFlipPoints_Click(object sender, EventArgs e)
         {
             controller.FlipPoints();
+        }
+
+        private void BtnTargetObjAssignmentMethod_Click(object sender, EventArgs e)
+        {
+            controller.CalcFunToPoints(controller.GetTargetAssignmentMethodByString(cmbTargetObjAssignmentMethod.SelectedItem.ToString()),
+                                          Helpers.ToPointsCreationMethodsEnum.Default);
         }
     }
 }

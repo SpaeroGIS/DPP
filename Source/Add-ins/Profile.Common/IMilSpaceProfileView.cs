@@ -76,7 +76,7 @@ namespace MilSpace.Profile
         void SetProifileLineInfo(double length, double azimuth);
         void SetPointInfo(ProfileSettingsPointButtonEnum pointType, string text);
         void SetReturnButtonEnable(ProfileSettingsPointButtonEnum pointType, bool enabled);
-
+        void SetFunToPointsParams(double averageAzimuth, double averageAngle, double avgLength, int count);
 
         List<string> GetLayers();
 

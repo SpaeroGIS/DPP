@@ -13,6 +13,7 @@
 
     enum ToPointsCreationMethodsEnum
     {
+        Default,
         AzimuthsCenter,
         AzimuthsLines,
         ToVertices

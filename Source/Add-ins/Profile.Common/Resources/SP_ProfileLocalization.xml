@@ -202,11 +202,18 @@
   <ModalPointsListTitle>Вибір точки зі списку точок Геокалькулятора</ModalPointsListTitle>
   <ModalPointsFromLayerTitle>Вибір точки з точкового шару</ModalPointsFromLayerTitle>
   <ModalObservPointsTitle>Вибір точки з шару точок спостереження</ModalObservPointsTitle>
+  <ModalTargetObservPointsTitle>Вибір точок з шару точок спостереження</ModalTargetObservPointsTitle>
 
   <FbdSelectFolderDescription>Виберіть папку для збереження даних</FbdSelectFolderDescription>
   <TxtCreatorPlaceholder>Автор</TxtCreatorPlaceholder>
   <TxtNamePlaceholder>Назва профілю</TxtNamePlaceholder>
   <TxtGraphicsLayerValue>графічні об'єкти</TxtGraphicsLayerValue>
   <TxtNewProfileNameValue>Новий профіль</TxtNewProfileNameValue>
+  
+  <LbFunParamsTitleText>Параметри набору профілів</LbFunParamsTitleText>
+  <LbFunParamsAvgAzimuthText>Середній азимут:</LbFunParamsAvgAzimuthText>
+  <LbFunParamsAvgAngleText>Середній кут між лініями:</LbFunParamsAvgAngleText>
+  <LbFunParamsAvgLengthText>Середня довжина проекції лінії:</LbFunParamsAvgLengthText>
+  <LbFunParamsLinesCountText>Кількість ліній</LbFunParamsLinesCountText>
   
 </SP_ProfileLocalization>

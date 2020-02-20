@@ -227,6 +227,14 @@
       <Link>ModalWindows\ObservationPointsListModalWindow.designer.cs</Link>
       <DependentUpon>ObservationPointsListModalWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\Profile.Common\ModalWindows\ObservPointsForFunToPointsModalWindow.cs">
+      <Link>ModalWindows\ObservPointsForFunToPointsModalWindow.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\Profile.Common\ModalWindows\ObservPointsForFunToPointsModalWindow.designer.cs">
+      <Link>ModalWindows\ObservPointsForFunToPointsModalWindow.designer.cs</Link>
+      <DependentUpon>ObservPointsForFunToPointsModalWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="..\Profile.Common\ModalWindows\PointsFromLayerController.cs">
       <Link>ModalWindows\PointsFromLayerController.cs</Link>
     </Compile>
@@ -376,6 +384,10 @@
     <EmbeddedResource Include="..\Profile.Common\ModalWindows\ObservationPointsListModalWindow.resx">
       <Link>ModalWindows\ObservationPointsListModalWindow.resx</Link>
       <DependentUpon>ObservationPointsListModalWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Profile.Common\ModalWindows\ObservPointsForFunToPointsModalWindow.resx">
+      <Link>ModalWindows\ObservPointsForFunToPointsModalWindow.resx</Link>
+      <DependentUpon>ObservPointsForFunToPointsModalWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="..\Profile.Common\ModalWindows\PointsFromLayerModalWindow.resx">
       <Link>ModalWindows\PointsFromLayerModalWindow.resx</Link>
