@@ -210,7 +210,7 @@
   <TxtGraphicsLayerValue>графічні об'єкти</TxtGraphicsLayerValue>
   <TxtNewProfileNameValue>Новий профіль</TxtNewProfileNameValue>
   
-  <LbFunParamsTitleText>Параметри набору профілів</LbFunParamsTitleText>
+  <LbFunParamsTitleText>Параметри набору профілів:</LbFunParamsTitleText>
   <LbFunParamsAvgAzimuthText>Середній азимут:</LbFunParamsAvgAzimuthText>
   <LbFunParamsAvgAngleText>Середній кут між лініями:</LbFunParamsAvgAngleText>
   <LbFunParamsAvgLengthText>Середня довжина проекції лінії:</LbFunParamsAvgLengthText>

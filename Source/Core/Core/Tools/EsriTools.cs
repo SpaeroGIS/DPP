@@ -416,22 +416,28 @@ namespace MilSpace.Core.Tools
         public static IEnumerable<IPolyline> CreateDefaultPolylinesForFun(IPoint centerPoint, IEnumerable<IPoint> points,
                                                                                  out double minAzimuth, out double maxAzimuth, out double maxLength)
         {
-            maxAzimuth = -1;
-            minAzimuth = 7; //radian of 360 = 6,28319
+            maxAzimuth = 0;
+            minAzimuth = 360;
             maxLength = -1;
 
             foreach(var point in points)
             { 
                 var line = new Line() { FromPoint = centerPoint, ToPoint = point };
 
-                if(line.Angle > maxAzimuth)
+                var posAzimuth = line.Azimuth();
+                if(posAzimuth < 0)
                 {
-                    maxAzimuth = line.Angle;
+                    posAzimuth += 360;
                 }
 
-                if(line.Angle < minAzimuth)
+                if(posAzimuth > maxAzimuth)
                 {
-                    minAzimuth = line.Angle;
+                    maxAzimuth = posAzimuth;
+                }
+
+                if(posAzimuth < minAzimuth)
+                {
+                    minAzimuth = posAzimuth;
                 }
 
                 if(line.Length > maxLength)
@@ -441,9 +447,9 @@ namespace MilSpace.Core.Tools
             }
 
             var polylines = new IPolyline[3];
-            var startPoint = GetPointFromAngelAndDistance(centerPoint, minAzimuth, maxLength);
-            var middlePoint = GetPointFromAngelAndDistance(centerPoint, minAzimuth + (maxAzimuth - minAzimuth)/2, maxLength);
-            var endPoint = GetPointFromAngelAndDistance(centerPoint, maxAzimuth, maxLength);
+            var startPoint = GetPointByAzimuthAndLength(centerPoint, minAzimuth, maxLength);
+            var middlePoint = GetPointByAzimuthAndLength(centerPoint, minAzimuth + (maxAzimuth - minAzimuth)/2, maxLength);
+            var endPoint = GetPointByAzimuthAndLength(centerPoint, maxAzimuth, maxLength);
 
             polylines[0] = CreatePolylineFromPoints(centerPoint, startPoint);
             polylines[1] = CreatePolylineFromPoints(centerPoint, middlePoint);
@@ -1739,6 +1745,16 @@ namespace MilSpace.Core.Tools
             }
 
             return points;
+        }
+
+        public static double GetFormattedAzimuth(double azimuth)
+        {
+            if(azimuth > 180)
+            {
+                return azimuth -= 360;
+            }
+
+            return azimuth;
         }
 
     }

@@ -1144,7 +1144,7 @@ namespace MilSpace.Profile
             return _toPointsCreationMethods.FirstOrDefault(method => method.Value.Equals(methodString)).Key;
         }
 
-        internal void CalcFunToPoints(AssignmentMethodsEnum assignmentMethod, ToPointsCreationMethodsEnum creationMethod)
+        internal void CalcFunToPoints(AssignmentMethodsEnum assignmentMethod, ToPointsCreationMethodsEnum creationMethod, bool changeTextBoxesValues)
         {
             if(pointsToShow[ProfileSettingsPointButtonEnum.CenterFun] == null)
             {
@@ -1173,6 +1173,11 @@ namespace MilSpace.Profile
             double minAzimuth = -1;
             double maxAzimuth = -1;
             double maxLength = -1;
+
+            if(points.Count() == 1)
+            {
+                creationMethod = ToPointsCreationMethodsEnum.ToVertices;
+            }
 
             try
             {
@@ -1216,7 +1221,11 @@ namespace MilSpace.Profile
             }
 
             SetFunProperties(polylines, minAzimuth, maxAzimuth, maxLength);
-            //TODO: Fill textboxes
+            
+            if(changeTextBoxesValues)
+            {
+                View.SetFunTxtValues(maxLength, maxAzimuth, minAzimuth, polylines.Count);
+            }
         }
 
 
@@ -1368,8 +1377,8 @@ namespace MilSpace.Profile
 
             profileSetting.DemLayerName = View.DemLayerName;
 
-            profileSetting.Azimuth1 = minAzimuth;
-            profileSetting.Azimuth2 = maxAzimuth;
+            profileSetting.Azimuth1 = EsriTools.GetFormattedAzimuth(minAzimuth);
+            profileSetting.Azimuth2 = EsriTools.GetFormattedAzimuth(maxAzimuth);
 
             profileSetting.ProfileLines = polylines.ToArray();
 
@@ -1392,8 +1401,7 @@ namespace MilSpace.Profile
         private void SetFunParams(double maxAzimuth, double minAzimuth, IEnumerable<IPolyline> lines, double length = -1)
         {
             double azimuthsSum = 0;
-
-              double allLength = 0;
+            double allLength = 0;
 
             foreach(var line in lines)
             {
@@ -1401,8 +1409,11 @@ namespace MilSpace.Profile
                 {
                     allLength += line.Length;
                 }
-                var lineWithAngle = new Line { FromPoint = line.FromPoint, ToPoint = line.ToPoint };
-                azimuthsSum += lineWithAngle.Azimuth();
+                var lineWithAngle = new Line { FromPoint = line.FromPoint, ToPoint = line.ToPoint, SpatialReference = line.SpatialReference };
+
+                var azimuth = lineWithAngle.Azimuth();
+                if(azimuth < 0) azimuth += 360;
+                azimuthsSum += azimuth;
             }
 
             var linesCount = lines.Count();
@@ -1412,7 +1423,7 @@ namespace MilSpace.Profile
                 length = allLength / linesCount;
             }
 
-            var avgAngle = (maxAzimuth - minAzimuth) / linesCount;
+            var avgAngle = (maxAzimuth - minAzimuth) / (linesCount - 1);
             var avgAzimuth = azimuthsSum / linesCount;
 
             View.SetFunToPointsParams(avgAzimuth, avgAngle, length, linesCount);

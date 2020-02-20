@@ -989,15 +989,24 @@ namespace MilSpace.Profile
             }
         }
 
-        public void SetFunToPointsParams(double averageAzimuth, double averageAngle, double maxLength, int count)
+        public void SetFunToPointsParams(double averageAzimuth, double averageAngle, double averageLength, int count)
         {
             lbFunInfo.Items.Clear();
 
-            lbFunInfo.Items.Add(LocalizationContext.Instance.FindLocalizedElement("LbFunParamsTitleText", "Параметри набору профілів"));
-            lbFunInfo.Items.Add(LocalizationContext.Instance.FindLocalizedElement("LbFunParamsAvgAzimuthText", "Середній азимут:"));
-            lbFunInfo.Items.Add(LocalizationContext.Instance.FindLocalizedElement("LbFunParamsAvgAngleText", "Середній кут між лініями:"));
-            lbFunInfo.Items.Add(LocalizationContext.Instance.FindLocalizedElement("LbFunParamsAvgLengthText", "Середня довжина проекції лінії:"));
-            lbFunInfo.Items.Add(LocalizationContext.Instance.FindLocalizedElement("LbFunParamsLinesCountText", "Кількість ліній"));
+            lbFunInfo.Items.Add(LocalizationContext.Instance.FindLocalizedElement("LbFunParamsTitleText", "Параметри набору профілів:"));
+            lbFunInfo.Items.Add(string.Empty);
+            lbFunInfo.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbFunParamsAvgAzimuthText", "Середній азимут:")} {Math.Round(averageAzimuth)}");
+            lbFunInfo.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbFunParamsAvgAngleText", "Середній кут між лініями:")} {Math.Round(averageAngle)}");
+            lbFunInfo.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbFunParamsAvgLengthText", "Середня довжина проекції лінії:")} {Math.Round(averageLength)}");
+            lbFunInfo.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbFunParamsLinesCountText", "Кількість ліній")} {count}");
+        }
+
+        public void SetFunTxtValues(double length, double maxAzimuth, double minAzimuth, int linesCount)
+        {
+            profileLength.Text = Math.Round(length).ToString();
+            azimuth1.Text = Math.Round(minAzimuth).ToString();
+            azimuth2.Text = Math.Round(maxAzimuth).ToString();
+            funLinesCount.Text = linesCount.ToString();
         }
 
         public void SetReturnButtonEnable(ProfileSettingsPointButtonEnum pointType, bool enabled)
@@ -1660,7 +1669,7 @@ namespace MilSpace.Profile
         private void BtnTargetObjAssignmentMethod_Click(object sender, EventArgs e)
         {
             controller.CalcFunToPoints(controller.GetTargetAssignmentMethodByString(cmbTargetObjAssignmentMethod.SelectedItem.ToString()),
-                                          Helpers.ToPointsCreationMethodsEnum.Default);
+                                          Helpers.ToPointsCreationMethodsEnum.Default, true);
         }
     }
 }

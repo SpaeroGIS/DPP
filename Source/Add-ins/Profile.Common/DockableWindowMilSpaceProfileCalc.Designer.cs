@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Графика");
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.profileTabPage = new System.Windows.Forms.TabPage();
             this.btnRefreshLayers = new System.Windows.Forms.Button();
@@ -787,7 +787,7 @@
             this.infoPanel.Controls.Add(this.lblLengthInfo);
             this.infoPanel.Controls.Add(this.lblProfileInfo);
             this.infoPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.infoPanel.Location = new System.Drawing.Point(0, 274);
+            this.infoPanel.Location = new System.Drawing.Point(0, 268);
             this.infoPanel.Name = "infoPanel";
             this.infoPanel.Size = new System.Drawing.Size(327, 75);
             this.infoPanel.TabIndex = 44;
@@ -826,7 +826,7 @@
             this.panel16.Controls.Add(this.txtSecondHeight);
             this.panel16.Controls.Add(this.lblHeightOfViewSecond);
             this.panel16.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel16.Location = new System.Drawing.Point(0, 246);
+            this.panel16.Location = new System.Drawing.Point(0, 240);
             this.panel16.Name = "panel16";
             this.panel16.Padding = new System.Windows.Forms.Padding(8, 4, 0, 0);
             this.panel16.Size = new System.Drawing.Size(327, 28);
@@ -868,7 +868,7 @@
             this.panel5.Controls.Add(this.txtSecondPointY);
             this.panel5.Controls.Add(this.txtSecondPointX);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel5.Location = new System.Drawing.Point(0, 222);
+            this.panel5.Location = new System.Drawing.Point(0, 216);
             this.panel5.Name = "panel5";
             this.panel5.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
             this.panel5.Size = new System.Drawing.Size(327, 24);
@@ -962,7 +962,7 @@
             // 
             this.secondPointInfoPanel.Controls.Add(this.lblSecondPointInfo);
             this.secondPointInfoPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.secondPointInfoPanel.Location = new System.Drawing.Point(0, 205);
+            this.secondPointInfoPanel.Location = new System.Drawing.Point(0, 199);
             this.secondPointInfoPanel.Name = "secondPointInfoPanel";
             this.secondPointInfoPanel.Size = new System.Drawing.Size(327, 17);
             this.secondPointInfoPanel.TabIndex = 50;
@@ -983,7 +983,7 @@
             this.SecondPointGettingWayPanel.Controls.Add(this.cmbSecondPointAssignmentMethod);
             this.SecondPointGettingWayPanel.Controls.Add(this.lblSecondPointGettingWay);
             this.SecondPointGettingWayPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.SecondPointGettingWayPanel.Location = new System.Drawing.Point(0, 165);
+            this.SecondPointGettingWayPanel.Location = new System.Drawing.Point(0, 159);
             this.SecondPointGettingWayPanel.Name = "SecondPointGettingWayPanel";
             this.SecondPointGettingWayPanel.Size = new System.Drawing.Size(327, 40);
             this.SecondPointGettingWayPanel.TabIndex = 49;
@@ -1022,9 +1022,9 @@
             this.secondPointTitlePanel.Controls.Add(this.lblLineSecondPoint);
             this.secondPointTitlePanel.Controls.Add(this.reverseSecondPointButton);
             this.secondPointTitlePanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.secondPointTitlePanel.Location = new System.Drawing.Point(0, 137);
+            this.secondPointTitlePanel.Location = new System.Drawing.Point(0, 134);
             this.secondPointTitlePanel.Name = "secondPointTitlePanel";
-            this.secondPointTitlePanel.Size = new System.Drawing.Size(327, 28);
+            this.secondPointTitlePanel.Size = new System.Drawing.Size(327, 25);
             this.secondPointTitlePanel.TabIndex = 45;
             // 
             // lblLineSecondPoint
@@ -1042,7 +1042,7 @@
             // 
             this.reverseSecondPointButton.ImageKey = "Direction Vert.png";
             this.reverseSecondPointButton.ImageList = this.imageList1;
-            this.reverseSecondPointButton.Location = new System.Drawing.Point(105, 3);
+            this.reverseSecondPointButton.Location = new System.Drawing.Point(105, 1);
             this.reverseSecondPointButton.Name = "reverseSecondPointButton";
             this.reverseSecondPointButton.Size = new System.Drawing.Size(23, 23);
             this.reverseSecondPointButton.TabIndex = 44;
@@ -1055,7 +1055,7 @@
             this.panel17.Controls.Add(this.txtFirstHeight);
             this.panel17.Controls.Add(this.lblHeightOfViewFirst);
             this.panel17.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel17.Location = new System.Drawing.Point(0, 109);
+            this.panel17.Location = new System.Drawing.Point(0, 106);
             this.panel17.Name = "panel17";
             this.panel17.Padding = new System.Windows.Forms.Padding(8, 4, 0, 0);
             this.panel17.Size = new System.Drawing.Size(327, 28);
@@ -1097,7 +1097,7 @@
             this.panel4.Controls.Add(this.txtFirstPointY);
             this.panel4.Controls.Add(this.txtFirstPointX);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel4.Location = new System.Drawing.Point(0, 85);
+            this.panel4.Location = new System.Drawing.Point(0, 82);
             this.panel4.Margin = new System.Windows.Forms.Padding(2);
             this.panel4.Name = "panel4";
             this.panel4.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
@@ -1194,7 +1194,7 @@
             // 
             this.firstPointInfoPanel.Controls.Add(this.lblFirstPointInfo);
             this.firstPointInfoPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.firstPointInfoPanel.Location = new System.Drawing.Point(0, 68);
+            this.firstPointInfoPanel.Location = new System.Drawing.Point(0, 65);
             this.firstPointInfoPanel.Name = "firstPointInfoPanel";
             this.firstPointInfoPanel.Size = new System.Drawing.Size(327, 17);
             this.firstPointInfoPanel.TabIndex = 48;
@@ -1215,7 +1215,7 @@
             this.pointGettingWayPanel.Controls.Add(this.cmbFirstPointAssignmentMethod);
             this.pointGettingWayPanel.Controls.Add(this.lblFirstlPointGettingWay);
             this.pointGettingWayPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pointGettingWayPanel.Location = new System.Drawing.Point(0, 28);
+            this.pointGettingWayPanel.Location = new System.Drawing.Point(0, 25);
             this.pointGettingWayPanel.Name = "pointGettingWayPanel";
             this.pointGettingWayPanel.Size = new System.Drawing.Size(327, 40);
             this.pointGettingWayPanel.TabIndex = 45;
@@ -1256,7 +1256,7 @@
             this.firstPointTitlePanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.firstPointTitlePanel.Location = new System.Drawing.Point(0, 0);
             this.firstPointTitlePanel.Name = "firstPointTitlePanel";
-            this.firstPointTitlePanel.Size = new System.Drawing.Size(327, 28);
+            this.firstPointTitlePanel.Size = new System.Drawing.Size(327, 25);
             this.firstPointTitlePanel.TabIndex = 11;
             // 
             // lblLineFirstPoint
@@ -1274,7 +1274,7 @@
             // 
             this.reverseButton.ImageKey = "Direction Vert.png";
             this.reverseButton.ImageList = this.imageList1;
-            this.reverseButton.Location = new System.Drawing.Point(105, 2);
+            this.reverseButton.Location = new System.Drawing.Point(105, 1);
             this.reverseButton.Name = "reverseButton";
             this.reverseButton.Size = new System.Drawing.Size(23, 23);
             this.reverseButton.TabIndex = 44;
@@ -1307,9 +1307,10 @@
             // 
             // lbFunInfo
             // 
-            this.lbFunInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbFunInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lbFunInfo.FormattingEnabled = true;
-            this.lbFunInfo.Location = new System.Drawing.Point(0, 318);
+            this.lbFunInfo.Location = new System.Drawing.Point(0, 314);
             this.lbFunInfo.Name = "lbFunInfo";
             this.lbFunInfo.Size = new System.Drawing.Size(327, 108);
             this.lbFunInfo.TabIndex = 55;
@@ -1321,18 +1322,18 @@
             this.panel9.Controls.Add(this.funLinesCount);
             this.panel9.Controls.Add(this.lblFunCount);
             this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel9.Location = new System.Drawing.Point(0, 290);
+            this.panel9.Location = new System.Drawing.Point(0, 287);
             this.panel9.Margin = new System.Windows.Forms.Padding(3, 4, 3, 3);
             this.panel9.Name = "panel9";
-            this.panel9.Padding = new System.Windows.Forms.Padding(8, 4, 0, 0);
-            this.panel9.Size = new System.Drawing.Size(327, 28);
+            this.panel9.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
+            this.panel9.Size = new System.Drawing.Size(327, 25);
             this.panel9.TabIndex = 26;
             // 
             // azimuth2
             // 
             this.azimuth2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.azimuth2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.azimuth2.Location = new System.Drawing.Point(208, 4);
+            this.azimuth2.Location = new System.Drawing.Point(208, 2);
             this.azimuth2.Name = "azimuth2";
             this.azimuth2.Size = new System.Drawing.Size(60, 20);
             this.azimuth2.TabIndex = 18;
@@ -1344,10 +1345,10 @@
             // lblFunAzimuth2
             // 
             this.lblFunAzimuth2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblFunAzimuth2.Location = new System.Drawing.Point(138, 4);
+            this.lblFunAzimuth2.Location = new System.Drawing.Point(138, 2);
             this.lblFunAzimuth2.Name = "lblFunAzimuth2";
             this.lblFunAzimuth2.Padding = new System.Windows.Forms.Padding(5, 4, 4, 4);
-            this.lblFunAzimuth2.Size = new System.Drawing.Size(70, 24);
+            this.lblFunAzimuth2.Size = new System.Drawing.Size(70, 21);
             this.lblFunAzimuth2.TabIndex = 17;
             this.lblFunAzimuth2.Text = "азимут 2";
             // 
@@ -1355,7 +1356,7 @@
             // 
             this.funLinesCount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.funLinesCount.Dock = System.Windows.Forms.DockStyle.Left;
-            this.funLinesCount.Location = new System.Drawing.Point(78, 4);
+            this.funLinesCount.Location = new System.Drawing.Point(78, 2);
             this.funLinesCount.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
             this.funLinesCount.Name = "funLinesCount";
             this.funLinesCount.Size = new System.Drawing.Size(60, 20);
@@ -1368,10 +1369,10 @@
             // lblFunCount
             // 
             this.lblFunCount.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblFunCount.Location = new System.Drawing.Point(8, 4);
+            this.lblFunCount.Location = new System.Drawing.Point(8, 2);
             this.lblFunCount.Name = "lblFunCount";
             this.lblFunCount.Padding = new System.Windows.Forms.Padding(4, 4, 8, 4);
-            this.lblFunCount.Size = new System.Drawing.Size(70, 24);
+            this.lblFunCount.Size = new System.Drawing.Size(70, 21);
             this.lblFunCount.TabIndex = 19;
             this.lblFunCount.Text = "количество";
             // 
@@ -1384,15 +1385,15 @@
             this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel8.Location = new System.Drawing.Point(0, 262);
             this.panel8.Name = "panel8";
-            this.panel8.Padding = new System.Windows.Forms.Padding(8, 4, 0, 0);
-            this.panel8.Size = new System.Drawing.Size(327, 28);
+            this.panel8.Padding = new System.Windows.Forms.Padding(8, 2, 0, 3);
+            this.panel8.Size = new System.Drawing.Size(327, 25);
             this.panel8.TabIndex = 25;
             // 
             // azimuth1
             // 
             this.azimuth1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.azimuth1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.azimuth1.Location = new System.Drawing.Point(208, 4);
+            this.azimuth1.Location = new System.Drawing.Point(208, 2);
             this.azimuth1.Name = "azimuth1";
             this.azimuth1.Size = new System.Drawing.Size(60, 20);
             this.azimuth1.TabIndex = 20;
@@ -1404,10 +1405,10 @@
             // lblFunAzimuth1
             // 
             this.lblFunAzimuth1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblFunAzimuth1.Location = new System.Drawing.Point(138, 4);
+            this.lblFunAzimuth1.Location = new System.Drawing.Point(138, 2);
             this.lblFunAzimuth1.Name = "lblFunAzimuth1";
             this.lblFunAzimuth1.Padding = new System.Windows.Forms.Padding(5, 4, 4, 4);
-            this.lblFunAzimuth1.Size = new System.Drawing.Size(70, 24);
+            this.lblFunAzimuth1.Size = new System.Drawing.Size(70, 20);
             this.lblFunAzimuth1.TabIndex = 19;
             this.lblFunAzimuth1.Text = "азимут 1";
             // 
@@ -1415,7 +1416,7 @@
             // 
             this.profileLength.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.profileLength.Dock = System.Windows.Forms.DockStyle.Left;
-            this.profileLength.Location = new System.Drawing.Point(78, 4);
+            this.profileLength.Location = new System.Drawing.Point(78, 2);
             this.profileLength.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
             this.profileLength.Name = "profileLength";
             this.profileLength.Size = new System.Drawing.Size(60, 20);
@@ -1428,10 +1429,10 @@
             // lblFunDistance
             // 
             this.lblFunDistance.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblFunDistance.Location = new System.Drawing.Point(8, 4);
+            this.lblFunDistance.Location = new System.Drawing.Point(8, 2);
             this.lblFunDistance.Name = "lblFunDistance";
             this.lblFunDistance.Padding = new System.Windows.Forms.Padding(0, 4, 8, 4);
-            this.lblFunDistance.Size = new System.Drawing.Size(70, 24);
+            this.lblFunDistance.Size = new System.Drawing.Size(70, 20);
             this.lblFunDistance.TabIndex = 15;
             this.lblFunDistance.Text = "растояние";
             // 
@@ -1953,8 +1954,8 @@
             // 
             // profileTreeTabPage
             // 
-            this.profileTreeTabPage.Controls.Add(this.lvProfileAttributes);
             this.profileTreeTabPage.Controls.Add(this.profilesTreeView);
+            this.profileTreeTabPage.Controls.Add(this.lvProfileAttributes);
             this.profileTreeTabPage.Controls.Add(this.panel6);
             this.profileTreeTabPage.Controls.Add(this.lblProfileList);
             this.profileTreeTabPage.ImageKey = "Table.png";
@@ -1967,16 +1968,15 @@
             // 
             // lvProfileAttributes
             // 
-            this.lvProfileAttributes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.lvProfileAttributes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.Attribute,
             this.Value});
+            this.lvProfileAttributes.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lvProfileAttributes.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvProfileAttributes.HideSelection = false;
-            this.lvProfileAttributes.Location = new System.Drawing.Point(0, 337);
+            this.lvProfileAttributes.Location = new System.Drawing.Point(0, 472);
             this.lvProfileAttributes.Name = "lvProfileAttributes";
-            this.lvProfileAttributes.Size = new System.Drawing.Size(312, 286);
+            this.lvProfileAttributes.Size = new System.Drawing.Size(335, 286);
             this.lvProfileAttributes.TabIndex = 36;
             this.lvProfileAttributes.UseCompatibleStateImageBehavior = false;
             this.lvProfileAttributes.View = System.Windows.Forms.View.Details;
@@ -1993,35 +1993,33 @@
             // 
             // profilesTreeView
             // 
-            this.profilesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.profilesTreeView.CheckBoxes = true;
+            this.profilesTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.profilesTreeView.FullRowSelect = true;
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.Location = new System.Drawing.Point(0, 62);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode1.Checked = true;
-            treeNode1.ImageKey = "vector-path-line.png";
-            treeNode1.Name = "Points";
-            treeNode1.SelectedImageIndex = 205;
-            treeNode1.Text = "Отрезки";
-            treeNode2.Checked = true;
-            treeNode2.ImageKey = "Editing-Line-icon3.png";
-            treeNode2.Name = "Fun";
-            treeNode2.SelectedImageIndex = 208;
-            treeNode2.Text = "Веер";
-            treeNode3.Checked = true;
-            treeNode3.ImageKey = "vector-polygon.png";
-            treeNode3.Name = "Primitives";
-            treeNode3.SelectedImageIndex = 209;
-            treeNode3.Text = "Графика";
+            treeNode4.Checked = true;
+            treeNode4.ImageKey = "vector-path-line.png";
+            treeNode4.Name = "Points";
+            treeNode4.SelectedImageIndex = 205;
+            treeNode4.Text = "Отрезки";
+            treeNode5.Checked = true;
+            treeNode5.ImageKey = "Editing-Line-icon3.png";
+            treeNode5.Name = "Fun";
+            treeNode5.SelectedImageIndex = 208;
+            treeNode5.Text = "Веер";
+            treeNode6.Checked = true;
+            treeNode6.ImageKey = "vector-polygon.png";
+            treeNode6.Name = "Primitives";
+            treeNode6.SelectedImageIndex = 209;
+            treeNode6.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
+            treeNode4,
+            treeNode5,
+            treeNode6});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
-            this.profilesTreeView.Size = new System.Drawing.Size(312, 269);
+            this.profilesTreeView.Size = new System.Drawing.Size(335, 410);
             this.profilesTreeView.TabIndex = 35;
             this.profilesTreeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.profilesTreeView_AfterCheck);
             // 
