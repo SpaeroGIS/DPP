@@ -35,6 +35,7 @@ namespace MilSpace.Profile.ModalWindows
         {
             cmbLayers.Items.Clear();
             cmbLayers.Items.AddRange(_controller.GetPointLayers());
+            cmbLayers.SelectedIndex = 0;
         }
 
         private void PopulateFieldsComboBox(string layerName)
@@ -51,6 +52,7 @@ namespace MilSpace.Profile.ModalWindows
             cmbFields.Items.Clear();
             cmbFields.Enabled = true;
             cmbFields.Items.AddRange(fields);
+            cmbFields.SelectedIndex = 0;
         }
 
         private void FillPointsGrid(string selectedField = null)
@@ -72,9 +74,8 @@ namespace MilSpace.Profile.ModalWindows
 
         private void CmbLayers_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cmbFields.SelectedItem = null;
-            PopulateFieldsComboBox(cmbLayers.SelectedItem.ToString());
             dgvPoints.Rows.Clear();
+            PopulateFieldsComboBox(cmbLayers.SelectedItem.ToString());
             lblLayer.Text = cmbLayers.SelectedItem.ToString();
         }
 

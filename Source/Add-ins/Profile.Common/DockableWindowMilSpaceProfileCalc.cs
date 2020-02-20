@@ -1600,7 +1600,7 @@ namespace MilSpace.Profile
             if(cmbFirstPointAssignmentMethod.SelectedItem.Equals(LocalizationContext.Instance.AssignmentMethodFromMapItem))
             {
                 btnChooseFirstPointAssignmentMethod.Enabled = false;
-                SetPointInfo(ProfileSettingsPointButtonEnum.PointsFist, string.Empty);
+               // SetPointInfo(ProfileSettingsPointButtonEnum.PointsFist, string.Empty);
                 SetReturnButtonEnable(ProfileSettingsPointButtonEnum.PointsFist, false);
             }
             else
@@ -1614,7 +1614,7 @@ namespace MilSpace.Profile
             if(cmbSecondPointAssignmentMethod.SelectedItem.Equals(LocalizationContext.Instance.AssignmentMethodFromMapItem))
             {
                 btnChooseSecondPointAssignmentMethod.Enabled = false;
-                SetPointInfo(ProfileSettingsPointButtonEnum.PointsSecond, string.Empty);
+                //SetPointInfo(ProfileSettingsPointButtonEnum.PointsSecond, string.Empty);
                 SetReturnButtonEnable(ProfileSettingsPointButtonEnum.PointsSecond, false);
             }
             else
@@ -1628,7 +1628,7 @@ namespace MilSpace.Profile
             if(cmbCenterPointAssignmentMethod.SelectedItem.Equals(LocalizationContext.Instance.AssignmentMethodFromMapItem))
             {
                 btnCenterPointAssignmantMethod.Enabled = false;
-                SetPointInfo(ProfileSettingsPointButtonEnum.CenterFun, string.Empty);
+               // SetPointInfo(ProfileSettingsPointButtonEnum.CenterFun, string.Empty);
                 SetReturnButtonEnable(ProfileSettingsPointButtonEnum.CenterFun, false);
             }
             else

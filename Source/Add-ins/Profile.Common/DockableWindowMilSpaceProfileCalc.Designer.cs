@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Графика");
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.profileTabPage = new System.Windows.Forms.TabPage();
             this.btnRefreshLayers = new System.Windows.Forms.Button();
@@ -652,7 +652,6 @@
             this.lblSetPeofileProperties.Size = new System.Drawing.Size(155, 32);
             this.lblSetPeofileProperties.TabIndex = 22;
             this.lblSetPeofileProperties.Text = "Задать профиль";
-            this.lblSetPeofileProperties.Click += new System.EventHandler(this.lblSetPeofileProperties_Click);
             // 
             // tableLayoutPanel2
             // 
@@ -2002,25 +2001,25 @@
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.Location = new System.Drawing.Point(0, 62);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode10.Checked = true;
-            treeNode10.ImageKey = "vector-path-line.png";
-            treeNode10.Name = "Points";
-            treeNode10.SelectedImageIndex = 205;
-            treeNode10.Text = "Отрезки";
-            treeNode11.Checked = true;
-            treeNode11.ImageKey = "Editing-Line-icon3.png";
-            treeNode11.Name = "Fun";
-            treeNode11.SelectedImageIndex = 208;
-            treeNode11.Text = "Веер";
-            treeNode12.Checked = true;
-            treeNode12.ImageKey = "vector-polygon.png";
-            treeNode12.Name = "Primitives";
-            treeNode12.SelectedImageIndex = 209;
-            treeNode12.Text = "Графика";
+            treeNode1.Checked = true;
+            treeNode1.ImageKey = "vector-path-line.png";
+            treeNode1.Name = "Points";
+            treeNode1.SelectedImageIndex = 205;
+            treeNode1.Text = "Отрезки";
+            treeNode2.Checked = true;
+            treeNode2.ImageKey = "Editing-Line-icon3.png";
+            treeNode2.Name = "Fun";
+            treeNode2.SelectedImageIndex = 208;
+            treeNode2.Text = "Веер";
+            treeNode3.Checked = true;
+            treeNode3.ImageKey = "vector-polygon.png";
+            treeNode3.Name = "Primitives";
+            treeNode3.SelectedImageIndex = 209;
+            treeNode3.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode10,
-            treeNode11,
-            treeNode12});
+            treeNode1,
+            treeNode2,
+            treeNode3});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(312, 269);
             this.profilesTreeView.TabIndex = 35;
