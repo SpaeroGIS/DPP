@@ -1148,7 +1148,9 @@ namespace MilSpace.Profile
         {
             if(pointsToShow[ProfileSettingsPointButtonEnum.CenterFun] == null)
             {
-                //TODO: Message
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgCenterPointNotChosenText", "Будь ласка, оберіть центральну точку для подальших розрахунків"),
+                                    LocalizationContext.Instance.MessageBoxTitle);
+
                 return;
             }
 
@@ -1212,7 +1214,9 @@ namespace MilSpace.Profile
             }
             catch(Exception ex)
             {
-                //TODO: Message
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgCalcFunErrorText", "Під час розрахунку набору профілів сталася помилка. Більш детальна інформація знаходиться у журналі"),
+                                    LocalizationContext.Instance.MessageBoxTitle);
+                //TODO: Log
             }
 
             if(polylines == null || polylines.Count == 0)
@@ -1359,7 +1363,8 @@ namespace MilSpace.Profile
             }
             catch(Exception ex)
             {
-                //TODO: Message
+              
+                //TODO: Log
             }
 
             return geometries;
@@ -1394,7 +1399,8 @@ namespace MilSpace.Profile
             }
             catch(Exception ex)
             {
-                //TODO: Message
+                
+                //TODO: Log
             }
         }
         
