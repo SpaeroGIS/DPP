@@ -91,9 +91,9 @@ namespace MilSpace.Profile
         {
             { AssignmentMethodsEnum.Sector, LocalizationContext.Instance.FindLocalizedElement("CmbTargetAssignmentMethodInSectorText","У вказаному секторі")},
             { AssignmentMethodsEnum.GeoCalculator, LocalizationContext.Instance.FindLocalizedElement("CmbTargetAssignmentMethodGeoCalcText", "ГеоКалькулятор") },
-            { AssignmentMethodsEnum.ObservationObjects, LocalizationContext.Instance.FindLocalizedElement("CmbTargetAssignmentMethodFeatureLayerText", "Векторний шар") },
+            { AssignmentMethodsEnum.FeatureLayers, LocalizationContext.Instance.FindLocalizedElement("CmbTargetAssignmentMethodFeatureLayerText", "Векторний шар") },
             { AssignmentMethodsEnum.ObservationPoints, LocalizationContext.Instance.FindLocalizedElement("CmbTargetAssignmentMethodObservPointsText", "Шар пунктів спостереження") },
-            { AssignmentMethodsEnum.FeatureLayers, LocalizationContext.Instance.FindLocalizedElement("CmbTargetAssignmentMethodObservObjText", "Шар об'єктів спостереження") },
+            { AssignmentMethodsEnum.ObservationObjects, LocalizationContext.Instance.FindLocalizedElement("CmbTargetAssignmentMethodObservObjText", "Шар об'єктів спостереження") },
             { AssignmentMethodsEnum.SelectedGraphic, LocalizationContext.Instance.FindLocalizedElement("CmbTargetAssignmentMethodSelectedGraphicText", "Обрана графіка") }
         };
 
@@ -1169,14 +1169,17 @@ namespace MilSpace.Profile
                 return;
             }
 
+            bool isCircle = false;
+
+            var points = EsriTools.GetPointsFromGeometries(geometries, ArcMap.Document.FocusMap.SpatialReference, out isCircle);
             var polylines = new List<IPolyline>();
-            var points = EsriTools.GetPointsFromGeometries(geometries, ArcMap.Document.FocusMap.SpatialReference);
 
             double minAzimuth = -1;
             double maxAzimuth = -1;
             double maxLength = -1;
+            bool isPointInside = (geometries.First().GeometryType == esriGeometryType.esriGeometryPoint)? false : EsriTools.IsPointOnExtent(EsriTools.GetEnvelopeOfGeometriesList(new List<IGeometry>(geometries)), pointsToShow[ProfileSettingsPointButtonEnum.CenterFun]);
 
-            if(points.Count() == 1)
+            if(points.Count() == 1 && !(isCircle && isPointInside))
             {
                 creationMethod = ToPointsCreationMethodsEnum.ToVertices;
             }
@@ -1187,8 +1190,8 @@ namespace MilSpace.Profile
                 {
                     case ToPointsCreationMethodsEnum.Default:
 
-                        polylines = EsriTools.CreateDefaultPolylinesForFun(pointsToShow[ProfileSettingsPointButtonEnum.CenterFun], points,
-                                                                                 out minAzimuth, out maxAzimuth, out maxLength).ToList();
+                        polylines = EsriTools.CreateDefaultPolylinesForFun(pointsToShow[ProfileSettingsPointButtonEnum.CenterFun], points.ToArray(),
+                                                                              isCircle, isPointInside, out minAzimuth, out maxAzimuth, out maxLength).ToList();
 
                         break;
 
@@ -1342,6 +1345,7 @@ namespace MilSpace.Profile
 
                     case AssignmentMethodsEnum.ObservationObjects:
 
+                        geometries = GetTargetObservObjects();
 
                         break;
 
@@ -1478,6 +1482,54 @@ namespace MilSpace.Profile
             if(result == DialogResult.OK)
             {
                 return observPointsForFunToPointsModal.SelectedPoints;
+            }
+
+            return null;
+        }
+
+        private List<IGeometry> GetTargetObservObjects()
+        {
+            var visibilityModule = ModuleInteraction.Instance.GetModuleInteraction<IVisibilityInteraction>(out bool changes);
+            List<ObservObjectsShape> observObjects;
+
+            if(!changes && visibilityModule == null)
+            {
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgObservPointscModuleDoesnotExistText", "Модуль \"Видимість\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним"), LocalizationContext.Instance.MessageBoxTitle);
+                logger.ErrorEx($"> GetTargetObservObjects Exception: {LocalizationContext.Instance.FindLocalizedElement("MsgObservPointscModuleDoesnotExistText", "Модуль \"Видимість\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним")}");
+                return null;
+            }
+
+            try
+            {
+                observObjects = visibilityModule.GetObservationObjects();
+
+                if(observObjects == null)
+                {
+                    MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgObservObjectsLayerDoesnotExistText", "У проекті відсутній шар об'єктів спостереження. Будь ласка додайте шар, щоб мати можливість отримати точки"),
+                                LocalizationContext.Instance.MessageBoxTitle);
+                    return null;
+                }
+            }
+            catch(MissingFieldException)
+            {
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgCannotFindObjIdText", "У шарі відсутнє поле OBJECTID"),
+                                   LocalizationContext.Instance.MessageBoxTitle);
+                return null;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(LocalizationContext.Instance.ErrorHappendText, LocalizationContext.Instance.MessageBoxTitle);
+                logger.ErrorEx($"> GetTargetObservObjects Exception: {ex.Message}");
+                return null;
+            }
+
+            ObservObjForFunModalWindow observObjForFunModal = new ObservObjForFunModalWindow(observObjects);
+
+            var result = observObjForFunModal.ShowDialog();
+
+            if(result == DialogResult.OK)
+            {
+                return observObjForFunModal.SelectedPoints;
             }
 
             return null;

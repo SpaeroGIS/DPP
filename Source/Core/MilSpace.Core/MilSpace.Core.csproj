@@ -215,6 +215,9 @@
     <Compile Include="..\Core\DataAccess\FromLayerPointModel.cs">
       <Link>DataAccess\FromLayerPointModel.cs</Link>
     </Compile>
+    <Compile Include="..\Core\DataAccess\ObservObjectsShape.cs">
+      <Link>DataAccess\ObservObjectsShape.cs</Link>
+    </Compile>
     <Compile Include="..\Core\Exceptions\MilSpaceException.cs">
       <Link>Exceptions\MilSpaceException.cs</Link>
     </Compile>

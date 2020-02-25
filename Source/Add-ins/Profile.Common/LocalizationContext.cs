@@ -46,6 +46,8 @@ namespace MilSpace.Profile.Localization
         internal string TargetAssignmentMethodInSector => FindLocalizedElement("CmbTargetAssignmentMethodInSectorText", "У вказаному секторі");
         internal string ToPointsCreationMethodAzimuthsLines => FindLocalizedElement("CmbToPointsCreationMethodLineNumberText", "К-ть ліній від мін до макс азимуту");
         internal string DemLayerNotChosenText => FindLocalizedElement("MsgDemLayerNotChosenText", "Будь ласка оберіть шар ЦМР/ЦММ, щоб отримати Z координату");
+        internal string IdHeaderText => FindLocalizedElement("DgvObservPointsIdHeader", "Ідентифікатор");
+        internal string TitleHeaderText => FindLocalizedElement("DgvObservPointsTitleHeader", "Назва");
 
         internal bool HasLocalizedElement(string xmlNodeName)
         {

@@ -1,5 +1,4 @@
 ﻿using ESRI.ArcGIS.Geometry;
-using MilSpace.Core;
 using MilSpace.Core.DataAccess;
 using MilSpace.Profile.Localization;
 using System;
@@ -14,35 +13,35 @@ using System.Windows.Forms;
 
 namespace MilSpace.Profile.ModalWindows
 {
-    public partial class ObservPointsForFunToPointsModalWindow : Form
+    public partial class ObservObjForFunModalWindow : Form
     {
-        private List<FromLayerPointModel> _points = new List<FromLayerPointModel>();
+        private List<ObservObjectsShape> _observObjects = new List<ObservObjectsShape>();
         public List<IGeometry> SelectedPoints;
 
-        public ObservPointsForFunToPointsModalWindow(List<FromLayerPointModel> points)
+        public ObservObjForFunModalWindow(List<ObservObjectsShape> observObjects)
         {
             InitializeComponent();
             LocalizeStrings();
-            _points = points;
+            _observObjects = observObjects;
             FillPointsGrid();
         }
 
         private void LocalizeStrings()
         {
-            this.Text = LocalizationContext.Instance.FindLocalizedElement("ModalObservPointsTitle", "Вибір точки з шару точок спостереження");
+            this.Text = LocalizationContext.Instance.FindLocalizedElement("ModalTargetObservObjTitle", "Вибір об'єктів спостереження");
             btnChoosePoint.Text = LocalizationContext.Instance.ChooseText;
             dgvPoints.Columns["IdCol"].HeaderText = LocalizationContext.Instance.IdHeaderText;
             dgvPoints.Columns["TitleCol"].HeaderText = LocalizationContext.Instance.TitleHeaderText;
-            lblLayer.Text = LocalizationContext.Instance.FindLocalizedElement("ObservPointsTypeText", "Пункти спостереження");
+            lblLayer.Text = LocalizationContext.Instance.FindLocalizedElement("ObservObjectsTypeText", "Об'єкти спостереження");
         }
 
         private void FillPointsGrid()
         {
             dgvPoints.Rows.Clear();
 
-            foreach(var point in _points)
+            foreach(var observObject in _observObjects)
             {
-                dgvPoints.Rows.Add(false, point.ObjId, point.DisplayedField, point.Point.X.ToFormattedString(), point.Point.Y.ToFormattedString());
+                dgvPoints.Rows.Add(false, observObject.ObjId, observObject.Title);
             }
         }
 
@@ -62,7 +61,7 @@ namespace MilSpace.Profile.ModalWindows
             {
                 if((bool)row.Cells[0].Value)
                 {
-                    SelectedPoints.Add(_points.First(point => point.ObjId == (int)row.Cells["IdCol"].Value).Point);
+                    SelectedPoints.Add(_observObjects.First(observObject => observObject.ObjId == (int)row.Cells["IdCol"].Value).Polygon);
                 }
             }
         }

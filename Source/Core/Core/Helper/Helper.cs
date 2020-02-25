@@ -189,6 +189,23 @@ namespace MilSpace.Core
             return Math.Abs(degrees - 90);
         }
 
+        public static double PosAzimuth(this ILine line)
+        {
+            var degrees = (line.Angle * 180 / Math.PI);
+
+            if(degrees > 90)
+            {
+                return 360 - (degrees - 90);
+            }
+
+            if(degrees < -90)
+            {
+                return Math.Abs(degrees) + 90;
+            }
+
+            return Math.Abs(degrees - 90);
+        }
+
         public static string GetRegistryValue(string registrypath)
         {
             using (RegistryKey key = Registry.LocalMachine.OpenSubKey(milSpaceRegistryPath))

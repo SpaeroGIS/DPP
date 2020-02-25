@@ -131,6 +131,7 @@
   <ProfilesSetNotSharedText>Приватний</ProfilesSetNotSharedText>
   <ProfilesSetSharedText>Спільний</ProfilesSetSharedText>
   <ObservPointsTypeText>Пункти спостереження</ObservPointsTypeText>
+  <ObservObjectsTypeText>Об'єкти спостереження</ObservObjectsTypeText>
   <TabFunTabText>"Віяло"</TabFunTabText>
   <TabGraphTitle>Графік</TabGraphTitle>
   <TabLoadTabText>Завантажити</TabLoadTabText>
@@ -170,6 +171,7 @@
   <MsgObservPointscModuleDoesnotExistText>Модуль "Видимість" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</MsgObservPointscModuleDoesnotExistText>
   <MsgCannotFindObjIdText>У шарі відсутнє поле OBJECTID</MsgCannotFindObjIdText>
   <MsgObservPointsLayerDoesnotExistText>У проекті відсутній шар точок спостереження. Будь ласка додайте шар, щоб мати можливість отримати точки</MsgObservPointsLayerDoesnotExistText>
+  <MsgObservObjectsLayerDoesnotExistText>У проекті відсутній шар об'єктів спостереження. Будь ласка додайте шар, щоб мати можливість отримати точки</MsgObservObjectsLayerDoesnotExistText>
   <MsgDemLayerNotChosenText>Будь ласка оберіть шар ЦМР/ЦММ, щоб отримати Z координату</MsgDemLayerNotChosenText>
   <MsgCenterPointNotChosenText>Будь ласка, оберіть центральну точку для подальших розрахунків</MsgCenterPointNotChosenText>
   <MsgCalcFunErrorText>Під час розрахунку набору профілів сталася помилка. Більш детальна інформація знаходиться у журналі</MsgCalcFunErrorText>
@@ -205,6 +207,7 @@
   <ModalPointsFromLayerTitle>Вибір точки з точкового шару</ModalPointsFromLayerTitle>
   <ModalObservPointsTitle>Вибір точки з шару точок спостереження</ModalObservPointsTitle>
   <ModalTargetObservPointsTitle>Вибір точок з шару точок спостереження</ModalTargetObservPointsTitle>
+  <ModalTargetObservObjTitle>Вибір об'єктів спостереження</ModalTargetObservObjTitle>
 
   <FbdSelectFolderDescription>Виберіть папку для збереження даних</FbdSelectFolderDescription>
   <TxtCreatorPlaceholder>Автор</TxtCreatorPlaceholder>
