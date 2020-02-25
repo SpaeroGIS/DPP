@@ -1329,8 +1329,6 @@ namespace MilSpace.Profile
                
         }
 
-      
-
         private void SetFunProperties(IEnumerable<IPolyline> polylines, double minAzimuth, double maxAzimuth, double maxLength)
         {
             var profileSetting = profileSettings[ProfileSettingsTypeEnum.Fun];

@@ -451,6 +451,8 @@ namespace MilSpace.Core.Tools
                     minAzimuth = linesAzimuths[1];
                     maxAzimuth = linesAzimuths[0];
                 }
+
+                angle = FindAngleBetweenAzimuths(maxAzimuth, minAzimuth, true);
             }
 
             if(points.Length != 1 && points.Length != 2)

@@ -40,6 +40,7 @@ namespace MilSpace.Profile
 
                     case AssignmentMethodsEnum.GeoCalculator:
 
+                        geometries = GetTargetPointsFromGeoCalculator();
 
                         break;
 
@@ -154,6 +155,41 @@ namespace MilSpace.Profile
             if(result == DialogResult.OK)
             {
                 return observObjForFunModal.SelectedPoints;
+            }
+
+            return null;
+        }
+
+        private static List<IGeometry> GetTargetPointsFromGeoCalculator()
+        {
+            Dictionary<int, IPoint> points;
+
+            var geoModule = ModuleInteraction.Instance.GetModuleInteraction<IGeocalculatorInteraction>(out bool changes);
+
+            if(!changes && geoModule == null)
+            {
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgGeoCalcModuleDoesnotExistText", "Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним"), LocalizationContext.Instance.MessageBoxTitle);
+                logger.ErrorEx($"> GetTargetPointsFromGeoCalculator Exception: {LocalizationContext.Instance.FindLocalizedElement("MsgGeoCalcModuleDoesnotExistText", "Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним")}");
+                return null;
+            }
+
+            try
+            {
+                points = geoModule.GetPoints();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(LocalizationContext.Instance.ErrorHappendText, LocalizationContext.Instance.MessageBoxTitle);
+                logger.ErrorEx($"> GetTargetPointsFromGeoCalculator Exception: {ex.Message}");
+                return null;
+            }
+
+            var pointsWindow = new CalcPointsForFunToPointsModalWindow(points);
+            var result = pointsWindow.ShowDialog();
+
+            if(result == DialogResult.OK)
+            {
+                return pointsWindow.SelectedPoints;
             }
 
             return null;

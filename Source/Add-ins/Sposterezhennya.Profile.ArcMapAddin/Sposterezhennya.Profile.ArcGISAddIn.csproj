@@ -222,6 +222,14 @@
       <Link>ModalWindows\AccessibleProfilesModalWindow.designer.cs</Link>
       <DependentUpon>AccessibleProfilesModalWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\Profile.Common\ModalWindows\CalcPointsForFunToPointsModalWindow.cs">
+      <Link>ModalWindows\CalcPointsForFunToPointsModalWindow.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\Profile.Common\ModalWindows\CalcPointsForFunToPointsModalWindow.designer.cs">
+      <Link>ModalWindows\CalcPointsForFunToPointsModalWindow.designer.cs</Link>
+      <DependentUpon>CalcPointsForFunToPointsModalWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="..\Profile.Common\ModalWindows\ObservationPointsListModalWindow.cs">
       <Link>ModalWindows\ObservationPointsListModalWindow.cs</Link>
       <SubType>Form</SubType>
@@ -391,6 +399,10 @@
     <EmbeddedResource Include="..\Profile.Common\ModalWindows\AccessibleProfilesModalWindow.resx">
       <Link>ModalWindows\AccessibleProfilesModalWindow.resx</Link>
       <DependentUpon>AccessibleProfilesModalWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Profile.Common\ModalWindows\CalcPointsForFunToPointsModalWindow.resx">
+      <Link>ModalWindows\CalcPointsForFunToPointsModalWindow.resx</Link>
+      <DependentUpon>CalcPointsForFunToPointsModalWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="..\Profile.Common\ModalWindows\ObservationPointsListModalWindow.resx">
       <Link>ModalWindows\ObservationPointsListModalWindow.resx</Link>
