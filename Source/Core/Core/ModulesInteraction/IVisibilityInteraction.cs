@@ -10,6 +10,6 @@ namespace MilSpace.Core.ModulesInteraction
     public interface IVisibilityInteraction
     {
         List<FromLayerPointModel> GetObservationPoints();
-        List<ObservObjectsShape> GetObservationObjects();
+        List<FromLayerGeometry> GetObservationObjects();
     }
 }

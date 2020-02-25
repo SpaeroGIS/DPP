@@ -15,10 +15,10 @@ namespace MilSpace.Profile.ModalWindows
 {
     public partial class ObservObjForFunModalWindow : Form
     {
-        private List<ObservObjectsShape> _observObjects = new List<ObservObjectsShape>();
+        private List<FromLayerGeometry> _observObjects = new List<FromLayerGeometry>();
         public List<IGeometry> SelectedPoints;
 
-        public ObservObjForFunModalWindow(List<ObservObjectsShape> observObjects)
+        public ObservObjForFunModalWindow(List<FromLayerGeometry> observObjects)
         {
             InitializeComponent();
             LocalizeStrings();
@@ -61,7 +61,7 @@ namespace MilSpace.Profile.ModalWindows
             {
                 if((bool)row.Cells[0].Value)
                 {
-                    SelectedPoints.Add(_observObjects.First(observObject => observObject.ObjId == (int)row.Cells["IdCol"].Value).Polygon);
+                    SelectedPoints.Add(_observObjects.First(observObject => observObject.ObjId == (int)row.Cells["IdCol"].Value).Geometry);
                 }
             }
         }

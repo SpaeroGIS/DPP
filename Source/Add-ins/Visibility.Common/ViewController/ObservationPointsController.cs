@@ -883,14 +883,14 @@ namespace MilSpace.Visibility.ViewController
             return points;
         }
         
-        internal List<ObservObjectsShape> GetObservObjectsFromModule()
+        internal List<FromLayerGeometry> GetObservObjectsFromModule()
         {
             if(!IsObservObjectsExists())
             {
                 return null;
             }
 
-            var objects = new List<ObservObjectsShape>();
+            var objects = new List<FromLayerGeometry>();
 
             var featureClass = GetObservatioStationFeatureClass(mapDocument.ActiveView);
             var idFieldIndex = featureClass.FindField("OBJECTID");
@@ -931,7 +931,7 @@ namespace MilSpace.Visibility.ViewController
                         titleField = feature.Value[titleFieldIndex].ToString();
                     }
 
-                    objects.Add(new ObservObjectsShape { Polygon = shape as IPolygon, ObjId = id, Title = titleField });
+                    objects.Add(new FromLayerGeometry { Geometry = shape, ObjId = id, Title = titleField });
 
                     feature = featureCursor.NextFeature();
                 }

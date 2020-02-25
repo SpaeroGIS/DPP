@@ -46,6 +46,7 @@ namespace MilSpace.Profile
 
                     case AssignmentMethodsEnum.FeatureLayers:
 
+                        geometries = GetTargetGeometriesFromFeatureLayer();
 
                         break;
 
@@ -115,7 +116,7 @@ namespace MilSpace.Profile
         private static List<IGeometry> GetTargetObservObjects()
         {
             var visibilityModule = ModuleInteraction.Instance.GetModuleInteraction<IVisibilityInteraction>(out bool changes);
-            List<ObservObjectsShape> observObjects;
+            List<FromLayerGeometry> observObjects;
 
             if(!changes && visibilityModule == null)
             {
@@ -190,6 +191,19 @@ namespace MilSpace.Profile
             if(result == DialogResult.OK)
             {
                 return pointsWindow.SelectedPoints;
+            }
+
+            return null;
+        }
+
+        private static List<IGeometry> GetTargetGeometriesFromFeatureLayer()
+        {
+            var geomFromLayerModal = new GeometriesFromLayerForFunToPointsModalWindow();
+            var result = geomFromLayerModal.ShowDialog();
+
+            if(result == DialogResult.OK)
+            {
+                return geomFromLayerModal.SelectedGeometries;
             }
 
             return null;

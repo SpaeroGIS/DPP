@@ -24,7 +24,7 @@ namespace MilSpace.Visibility.Interaction
             return _controller.GetObservationPointsFromModule();
         }
 
-        public List<ObservObjectsShape> GetObservationObjects()
+        public List<FromLayerGeometry> GetObservationObjects()
         {
             return _controller.GetObservObjectsFromModule();
         }
