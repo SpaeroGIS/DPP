@@ -1162,7 +1162,7 @@ namespace MilSpace.Profile
                 return;
             }
 
-            var geometries = GetGeometriesByMethod(assignmentMethod);
+            var geometries = FunCreationManager.GetGeometriesByMethod(assignmentMethod);
 
             if(geometries == null || geometries.Count() == 0)
             {
@@ -1329,50 +1329,7 @@ namespace MilSpace.Profile
                
         }
 
-        private IEnumerable<IGeometry> GetGeometriesByMethod(AssignmentMethodsEnum method)
-        {
-            var geometries = new List<IGeometry>();
-
-            try
-            {
-                switch(method)
-                {
-                    case AssignmentMethodsEnum.ObservationPoints:
-
-                        geometries = GetTargetObservPoints();
-
-                        break;
-
-                    case AssignmentMethodsEnum.ObservationObjects:
-
-                        geometries = GetTargetObservObjects();
-
-                        break;
-
-                    case AssignmentMethodsEnum.GeoCalculator:
-
-
-                        break;
-
-                    case AssignmentMethodsEnum.FeatureLayers:
-
-
-                        break;
-
-                    case AssignmentMethodsEnum.SelectedGraphic:
-
-
-                        break;
-                }
-            }
-            catch(Exception ex)
-            {
-              
-                //TODO: Log
-            }
-
-            return geometries;
-        }
+      
 
         private void SetFunProperties(IEnumerable<IPolyline> polylines, double minAzimuth, double maxAzimuth, double maxLength)
         {
@@ -1439,102 +1396,7 @@ namespace MilSpace.Profile
             View.SetFunToPointsParams(avgAzimuth, avgAngle, length, linesCount);
         }
 
-        private List<IGeometry> GetTargetObservPoints()
-        {
-            var visibilityModule = ModuleInteraction.Instance.GetModuleInteraction<IVisibilityInteraction>(out bool changes);
-            var points = new List<FromLayerPointModel>();
-
-            if(!changes && visibilityModule == null)
-            {
-                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgObservPointscModuleDoesnotExistText", "Модуль \"Видимість\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним"), LocalizationContext.Instance.MessageBoxTitle);
-                logger.ErrorEx($"> GetTargetObservPoints Exception: {LocalizationContext.Instance.FindLocalizedElement("MsgObservPointscModuleDoesnotExistText", "Модуль \"Видимість\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним")}");
-                return null;
-            }
-
-            try
-            {
-                points = visibilityModule.GetObservationPoints();
-
-                if(points == null)
-                {
-                    MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgObservPointsLayerDoesnotExistText", "У проекті відсутній шар точок спостереження \nБудь ласка додайте шар, щоб мати можливість отримати точки"),
-                                LocalizationContext.Instance.MessageBoxTitle);
-                    return null;
-                }
-            }
-            catch(MissingFieldException)
-            {
-                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgCannotFindObjIdText", "У шарі відсутнє поле OBJECTID"),
-                                   LocalizationContext.Instance.MessageBoxTitle);
-                return null;
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(LocalizationContext.Instance.ErrorHappendText, LocalizationContext.Instance.MessageBoxTitle);
-                logger.ErrorEx($"> GetTargetObservPoints Exception: {ex.Message}");
-                return null;
-            }
-
-            ObservPointsForFunToPointsModalWindow observPointsForFunToPointsModal = new ObservPointsForFunToPointsModalWindow(points);
-
-            var result = observPointsForFunToPointsModal.ShowDialog();
-            
-            if(result == DialogResult.OK)
-            {
-                return observPointsForFunToPointsModal.SelectedPoints;
-            }
-
-            return null;
-        }
-
-        private List<IGeometry> GetTargetObservObjects()
-        {
-            var visibilityModule = ModuleInteraction.Instance.GetModuleInteraction<IVisibilityInteraction>(out bool changes);
-            List<ObservObjectsShape> observObjects;
-
-            if(!changes && visibilityModule == null)
-            {
-                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgObservPointscModuleDoesnotExistText", "Модуль \"Видимість\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним"), LocalizationContext.Instance.MessageBoxTitle);
-                logger.ErrorEx($"> GetTargetObservObjects Exception: {LocalizationContext.Instance.FindLocalizedElement("MsgObservPointscModuleDoesnotExistText", "Модуль \"Видимість\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним")}");
-                return null;
-            }
-
-            try
-            {
-                observObjects = visibilityModule.GetObservationObjects();
-
-                if(observObjects == null)
-                {
-                    MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgObservObjectsLayerDoesnotExistText", "У проекті відсутній шар об'єктів спостереження. Будь ласка додайте шар, щоб мати можливість отримати точки"),
-                                LocalizationContext.Instance.MessageBoxTitle);
-                    return null;
-                }
-            }
-            catch(MissingFieldException)
-            {
-                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgCannotFindObjIdText", "У шарі відсутнє поле OBJECTID"),
-                                   LocalizationContext.Instance.MessageBoxTitle);
-                return null;
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(LocalizationContext.Instance.ErrorHappendText, LocalizationContext.Instance.MessageBoxTitle);
-                logger.ErrorEx($"> GetTargetObservObjects Exception: {ex.Message}");
-                return null;
-            }
-
-            ObservObjForFunModalWindow observObjForFunModal = new ObservObjForFunModalWindow(observObjects);
-
-            var result = observObjForFunModal.ShowDialog();
-
-            if(result == DialogResult.OK)
-            {
-                return observObjForFunModal.SelectedPoints;
-            }
-
-            return null;
-        }
-
+        
         private IPoint GetPointFromGeoCalculator(ProfileSettingsPointButtonEnum pointType)
         {
             Dictionary<int, IPoint> points;

@@ -1858,7 +1858,7 @@ namespace MilSpace.Core.Tools
 
                     for(int i = 0; i < path.PointCount; i++)
                     {
-                        if(i == path.PointCount - 1 && path.Point[i].X == path.Point[0].X && path.Point[0].Y == path.Point[i].Y)
+                        if(geometries.Count() == 1 && i == path.PointCount - 1 && path.Point[i].X == path.Point[0].X && path.Point[0].Y == path.Point[i].Y)
                         {
                             isCircle = true;
                             continue;
