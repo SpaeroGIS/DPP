@@ -1179,7 +1179,7 @@ namespace MilSpace.Profile
             double maxLength = -1;
             bool isPointInside = (geometries.First().GeometryType == esriGeometryType.esriGeometryPoint)? false : EsriTools.IsPointOnExtent(EsriTools.GetEnvelopeOfGeometriesList(new List<IGeometry>(geometries)), pointsToShow[ProfileSettingsPointButtonEnum.CenterFun]);
 
-            if(points.Count() == 1 && !(isCircle && isPointInside))
+            if(points.Count() == 1 && points[0].Points.Count == 1 && !(isCircle && isPointInside))
             {
                 creationMethod = ToPointsCreationMethodsEnum.ToVertices;
             }
