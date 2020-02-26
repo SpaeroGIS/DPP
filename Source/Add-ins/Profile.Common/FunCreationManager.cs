@@ -5,6 +5,7 @@ using MilSpace.Core.ModulesInteraction;
 using MilSpace.Profile.Helpers;
 using MilSpace.Profile.Localization;
 using MilSpace.Profile.ModalWindows;
+using MilSpace.Tools.GraphicsLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,8 @@ namespace MilSpace.Profile
 {
     internal static class FunCreationManager
     {
-        private static Logger logger = Logger.GetLoggerEx("MilSpace.Profile.FunCreationManager");
+        private static Logger _logger = Logger.GetLoggerEx("MilSpace.Profile.FunCreationManager");
+        private static GraphicsLayerManager _graphicsLayerManager = new GraphicsLayerManager(ArcMap.Document.ActiveView);
 
         public static IEnumerable<IGeometry> GetGeometriesByMethod(AssignmentMethodsEnum method)
         {
@@ -52,6 +54,7 @@ namespace MilSpace.Profile
 
                     case AssignmentMethodsEnum.SelectedGraphic:
 
+                        geometries = GetTargetGeometriesFromSelectedGraphic();
 
                         break;
                 }
@@ -73,7 +76,7 @@ namespace MilSpace.Profile
             if(!changes && visibilityModule == null)
             {
                 MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgObservPointscModuleDoesnotExistText", "Модуль \"Видимість\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним"), LocalizationContext.Instance.MessageBoxTitle);
-                logger.ErrorEx($"> GetTargetObservPoints Exception: {LocalizationContext.Instance.FindLocalizedElement("MsgObservPointscModuleDoesnotExistText", "Модуль \"Видимість\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним")}");
+                _logger.ErrorEx($"> GetTargetObservPoints Exception: {LocalizationContext.Instance.FindLocalizedElement("MsgObservPointscModuleDoesnotExistText", "Модуль \"Видимість\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним")}");
                 return null;
             }
 
@@ -97,7 +100,7 @@ namespace MilSpace.Profile
             catch(Exception ex)
             {
                 MessageBox.Show(LocalizationContext.Instance.ErrorHappendText, LocalizationContext.Instance.MessageBoxTitle);
-                logger.ErrorEx($"> GetTargetObservPoints Exception: {ex.Message}");
+                _logger.ErrorEx($"> GetTargetObservPoints Exception: {ex.Message}");
                 return null;
             }
 
@@ -121,7 +124,7 @@ namespace MilSpace.Profile
             if(!changes && visibilityModule == null)
             {
                 MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgObservPointscModuleDoesnotExistText", "Модуль \"Видимість\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним"), LocalizationContext.Instance.MessageBoxTitle);
-                logger.ErrorEx($"> GetTargetObservObjects Exception: {LocalizationContext.Instance.FindLocalizedElement("MsgObservPointscModuleDoesnotExistText", "Модуль \"Видимість\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним")}");
+                _logger.ErrorEx($"> GetTargetObservObjects Exception: {LocalizationContext.Instance.FindLocalizedElement("MsgObservPointscModuleDoesnotExistText", "Модуль \"Видимість\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним")}");
                 return null;
             }
 
@@ -145,7 +148,7 @@ namespace MilSpace.Profile
             catch(Exception ex)
             {
                 MessageBox.Show(LocalizationContext.Instance.ErrorHappendText, LocalizationContext.Instance.MessageBoxTitle);
-                logger.ErrorEx($"> GetTargetObservObjects Exception: {ex.Message}");
+                _logger.ErrorEx($"> GetTargetObservObjects Exception: {ex.Message}");
                 return null;
             }
 
@@ -170,7 +173,7 @@ namespace MilSpace.Profile
             if(!changes && geoModule == null)
             {
                 MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgGeoCalcModuleDoesnotExistText", "Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним"), LocalizationContext.Instance.MessageBoxTitle);
-                logger.ErrorEx($"> GetTargetPointsFromGeoCalculator Exception: {LocalizationContext.Instance.FindLocalizedElement("MsgGeoCalcModuleDoesnotExistText", "Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним")}");
+                _logger.ErrorEx($"> GetTargetPointsFromGeoCalculator Exception: {LocalizationContext.Instance.FindLocalizedElement("MsgGeoCalcModuleDoesnotExistText", "Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним")}");
                 return null;
             }
 
@@ -181,7 +184,7 @@ namespace MilSpace.Profile
             catch(Exception ex)
             {
                 MessageBox.Show(LocalizationContext.Instance.ErrorHappendText, LocalizationContext.Instance.MessageBoxTitle);
-                logger.ErrorEx($"> GetTargetPointsFromGeoCalculator Exception: {ex.Message}");
+                _logger.ErrorEx($"> GetTargetPointsFromGeoCalculator Exception: {ex.Message}");
                 return null;
             }
 
@@ -207,6 +210,11 @@ namespace MilSpace.Profile
             }
 
             return null;
+        }
+
+        private static List<IGeometry> GetTargetGeometriesFromSelectedGraphic()
+        {
+            return _graphicsLayerManager.GetAllSelectedGraphics().ToList();
         }
 
     }
