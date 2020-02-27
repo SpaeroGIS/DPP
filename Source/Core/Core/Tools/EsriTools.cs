@@ -458,7 +458,7 @@ namespace MilSpace.Core.Tools
                     maxAzimuth = linesAzimuths[0].Azimuth;
                 }
 
-                if(centerAzimuth == null)
+                if(centerAzimuth == -1)
                 {
                     var angle = FindAngleBetweenAzimuths(maxAzimuth, minAzimuth, true);
                     betweenAzimuth = GetBetweenAzimuth(maxAzimuth, minAzimuth, angle / 2, true);

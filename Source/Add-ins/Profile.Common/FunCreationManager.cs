@@ -55,7 +55,19 @@ namespace MilSpace.Profile
 
                     case AssignmentMethodsEnum.SelectedGraphic:
 
-                        geometries = GetTargetGeometriesFromSelectedGraphic();
+                        var geomFromSelectedGraphic = GetTargetGeometriesFromSelectedGraphic();
+
+                        if(geomFromSelectedGraphic == null)
+                        {
+                            geometries = null;
+                            MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgSelectedGeomNotFoundText", "Будь ласка, оберіть графіку для розрахунку набору профілів"),
+                                                LocalizationContext.Instance.MessageBoxTitle);
+                            //TODO: LOG
+                        }
+                        else
+                        {
+                            geometries = geomFromSelectedGraphic.ToList();
+                        }
 
                         break;
                 }
@@ -222,9 +234,9 @@ namespace MilSpace.Profile
             return null;
         }
 
-        private static List<IGeometry> GetTargetGeometriesFromSelectedGraphic()
+        private static IEnumerable<IGeometry> GetTargetGeometriesFromSelectedGraphic()
         {
-            return _graphicsLayerManager.GetAllSelectedGraphics().ToList();
+            return _graphicsLayerManager.GetAllSelectedGraphics();
         }
 
     }

@@ -15,7 +15,7 @@ namespace MilSpace.Profile
         ProfileSettingsTypeEnum SelectedProfileSettingsType { get; }
 
         ProfileSettingsPointButtonEnum ActiveButton { get; }
-
+       
         IActiveView ActiveView { get; }
 
         /// <summary>

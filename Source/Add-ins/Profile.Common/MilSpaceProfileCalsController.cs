@@ -241,17 +241,17 @@ namespace MilSpace.Profile
             return null;
         }
 
-        internal void SetProfileSettings(ProfileSettingsTypeEnum profileType)
+        internal void SetProfileSettings(ProfileSettingsTypeEnum profileType, List<IPolyline> polylines = null)
         {
-            SetSettings(profileType, profileId);
+            SetSettings(profileType, profileId, polylines);
         }
 
-        internal void SetProfileSettings(ProfileSettingsTypeEnum profileType, int profileIdValue)
+        internal void SetProfileSettings(ProfileSettingsTypeEnum profileType, int profileIdValue, List<IPolyline> polylines = null)
         {
-            SetSettings(profileType, profileIdValue);
+            SetSettings(profileType, profileIdValue, polylines);
         }
 
-        private void SetSettings(ProfileSettingsTypeEnum profileType, int profileIdValue)
+        private void SetSettings(ProfileSettingsTypeEnum profileType, int profileIdValue, List<IPolyline> polylines)
         {
             List<IPolyline> profileLines = new List<IPolyline>();
 
@@ -261,7 +261,6 @@ namespace MilSpace.Profile
                 profileSetting = new ProfileSettings();
                 profileSetting.Type = profileType;
             }
-
 
             //Check if the View.DemLayerName if Layer name
             profileSetting.DemLayerName = View.DemLayerName;
@@ -290,8 +289,8 @@ namespace MilSpace.Profile
             {
                 try
                 {
-                    var lines = EsriTools.CreatePolylinesFromPointAndAzimuths(pointsToShow[ProfileSettingsPointButtonEnum.CenterFun], View.FunLength, View.FunLinesCount, View.FunAzimuth1, View.FunAzimuth2);
-                    if (lines != null)
+                    var lines = polylines ?? EsriTools.CreatePolylinesFromPointAndAzimuths(pointsToShow[ProfileSettingsPointButtonEnum.CenterFun], View.FunLength, View.FunLinesCount, View.FunAzimuth1, View.FunAzimuth2);
+                    if(lines != null)
                     {
                         profileLines.AddRange(lines);
                     }
@@ -1214,8 +1213,8 @@ namespace MilSpace.Profile
 
 
                     case ToPointsCreationMethodsEnum.AzimuthsLines:
-
-
+                        
+                        polylines = EsriTools.CreatePolylinesFromPointAndAzimuths(centerPoint, View.FunLength, View.FunLinesCount, View.FunAzimuth1, View.FunAzimuth2).ToList();
 
                         break;
 
@@ -1240,6 +1239,8 @@ namespace MilSpace.Profile
 
             SetFunProperties(polylines, minAzimuth, maxAzimuth, maxLength);
             View.SetFunTxtValues(maxLength, maxAzimuth, minAzimuth, polylines.Count);
+
+            SetProfileSettings(ProfileSettingsTypeEnum.Fun, polylines);
         }
 
 

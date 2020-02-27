@@ -103,7 +103,7 @@ namespace MilSpace.Profile
         public IEnumerable<string> GetLayersForLineSelection => controller.GetLayersForLineSelection();
 
         public string DemLayerName => cmbRasterLayers.SelectedItem == null ? string.Empty : cmbRasterLayers.SelectedItem.ToString();
-
+       
         public int ProfileId
         {
             set { txtProfileName.Text = value.ToString(); }

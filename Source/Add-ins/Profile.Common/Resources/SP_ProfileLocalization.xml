@@ -172,10 +172,11 @@
   <MsgCannotFindObjIdText>У шарі відсутнє поле OBJECTID</MsgCannotFindObjIdText>
   <MsgObservPointsLayerDoesnotExistText>У проекті відсутній шар точок спостереження. Будь ласка додайте шар, щоб мати можливість отримати точки</MsgObservPointsLayerDoesnotExistText>
   <MsgObservObjectsLayerDoesnotExistText>У проекті відсутній шар об'єктів спостереження. Будь ласка додайте шар, щоб мати можливість отримати точки</MsgObservObjectsLayerDoesnotExistText>
-  <MsgDemLayerNotChosenText>Будь ласка оберіть шар ЦМР/ЦММ, щоб отримати Z координату</MsgDemLayerNotChosenText>
+  <MsgDemLayerNotChosenText>Будь ласка, оберіть шар ЦМР/ЦММ, щоб отримати Z координату</MsgDemLayerNotChosenText>
   <MsgCenterPointNotChosenText>Будь ласка, оберіть центральну точку для подальших розрахунків</MsgCenterPointNotChosenText>
   <MsgCalcFunErrorText>Під час розрахунку набору профілів сталася помилка. Більш детальна інформація знаходиться у журналі</MsgCalcFunErrorText>
-
+  <MsgSelectedGeomNotFoundText>Будь ласка, оберіть графіку для розрахунку набору профілів</MsgSelectedGeomNotFoundText>
+  
   <DataExportPointsPropertiesHeader>Номер; X; Y; Z; Відстань; Точка перегину; Видима; Перетини</DataExportPointsPropertiesHeader>
   <DataExportProfilePropertiesHeader>Номер; Назва профілю; Зовнішній; Стан; Точка початку; Точка кінцю; Азимут; Пункт спостереження; Довжина; Макс. висота; Різниця висот; Мін. висота; Макс. кут підйому; Макс. кут спуску; Процент видимих зон</DataExportProfilePropertiesHeader>
   <DgvProfilePropertiesAscendingAngleColHeader>КП</DgvProfilePropertiesAscendingAngleColHeader>
