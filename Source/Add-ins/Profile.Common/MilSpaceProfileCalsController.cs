@@ -69,6 +69,7 @@ namespace MilSpace.Profile
         };
 
         private IEnumerable<IPolyline> selectedOnMapLines;
+        private IEnumerable<IGeometry> _funGeometries;
 
 
         private Dictionary<ProfileSettingsTypeEnum, ProfileSettings> profileSettings = new Dictionary<ProfileSettingsTypeEnum, ProfileSettings>()
@@ -171,6 +172,8 @@ namespace MilSpace.Profile
             View.FunPropertiesCenterPoint = pointToView;
 
             SetProfileSettings(ProfileSettingsTypeEnum.Fun);
+
+            View.RecalculateFun();
         }
 
 
@@ -1144,7 +1147,7 @@ namespace MilSpace.Profile
             return _toPointsCreationMethods.FirstOrDefault(method => method.Value.Equals(methodString)).Key;
         }
 
-        internal void CalcFunToPoints(AssignmentMethodsEnum assignmentMethod, ToPointsCreationMethodsEnum creationMethod, bool changeTextBoxesValues)
+        internal void CalcFunToPoints(AssignmentMethodsEnum assignmentMethod, ToPointsCreationMethodsEnum creationMethod, bool isNewTarget)
         {
             if(pointsToShow[ProfileSettingsPointButtonEnum.CenterFun] == null)
             {
@@ -1162,22 +1165,26 @@ namespace MilSpace.Profile
                 return;
             }
 
-            var geometries = FunCreationManager.GetGeometriesByMethod(assignmentMethod);
+            if(isNewTarget || _funGeometries == null)
+            {
+                _funGeometries = FunCreationManager.GetGeometriesByMethod(assignmentMethod);
+            }
 
-            if(geometries == null || geometries.Count() == 0)
+            if(_funGeometries == null || _funGeometries.Count() == 0)
             {
                 return;
             }
 
             bool isCircle = false;
 
-            var points = EsriTools.GetPointsFromGeometries(geometries, ArcMap.Document.FocusMap.SpatialReference, out isCircle);
+            var points = EsriTools.GetPointsFromGeometries(_funGeometries, ArcMap.Document.FocusMap.SpatialReference, out isCircle);
             var polylines = new List<IPolyline>();
 
             double minAzimuth = -1;
             double maxAzimuth = -1;
             double maxLength = -1;
-            bool isPointInside = (geometries.First().GeometryType == esriGeometryType.esriGeometryPoint)? false : EsriTools.IsPointOnExtent(EsriTools.GetEnvelopeOfGeometriesList(new List<IGeometry>(geometries)), pointsToShow[ProfileSettingsPointButtonEnum.CenterFun]);
+            bool isPointInside = (_funGeometries.First().GeometryType == esriGeometryType.esriGeometryPoint)? false : EsriTools.IsPointOnExtent(EsriTools.GetEnvelopeOfGeometriesList(new List<IGeometry>(_funGeometries)), pointsToShow[ProfileSettingsPointButtonEnum.CenterFun]);
+            var centerPoint = pointsToShow[ProfileSettingsPointButtonEnum.CenterFun];
 
             if(points.Count() == 1 && points[0].Points.Count == 1 && !(isCircle && isPointInside))
             {
@@ -1190,14 +1197,18 @@ namespace MilSpace.Profile
                 {
                     case ToPointsCreationMethodsEnum.Default:
 
-                        polylines = EsriTools.CreateDefaultPolylinesForFun(pointsToShow[ProfileSettingsPointButtonEnum.CenterFun], points.ToArray(),
+                        polylines = EsriTools.CreateDefaultPolylinesForFun(centerPoint, points.ToArray(),
                                                                               isCircle, isPointInside, out minAzimuth, out maxAzimuth, out maxLength).ToList();
 
                         break;
 
                     case ToPointsCreationMethodsEnum.AzimuthsCenter:
 
-
+                        var geomCenterPoint = FunCreationManager.GetCenterPoint(_funGeometries.ToList());
+                        geomCenterPoint.Project(centerPoint.SpatialReference);
+                        var lineToCenter = new Line { FromPoint = centerPoint, ToPoint = geomCenterPoint, SpatialReference = centerPoint.SpatialReference };
+                        polylines = EsriTools.CreateDefaultPolylinesForFun(centerPoint, points.ToArray(),
+                                                                              isCircle, isPointInside, out minAzimuth, out maxAzimuth, out maxLength, lineToCenter.PosAzimuth()).ToList();
 
                         break;
 
@@ -1228,11 +1239,7 @@ namespace MilSpace.Profile
             }
 
             SetFunProperties(polylines, minAzimuth, maxAzimuth, maxLength);
-            
-            if(changeTextBoxesValues)
-            {
-                View.SetFunTxtValues(maxLength, maxAzimuth, minAzimuth, polylines.Count);
-            }
+            View.SetFunTxtValues(maxLength, maxAzimuth, minAzimuth, polylines.Count);
         }
 
 

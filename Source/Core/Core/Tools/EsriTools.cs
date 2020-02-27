@@ -415,7 +415,7 @@ namespace MilSpace.Core.Tools
         }
 
         public static IEnumerable<IPolyline> CreateDefaultPolylinesForFun(IPoint centerPoint, PointsInGeometry[] geometries, bool circle, bool isPointInside,
-                                                                       out double minAzimuth, out double maxAzimuth, out double maxLength)
+                                                                       out double minAzimuth, out double maxAzimuth, out double maxLength, double centerAzimuth = -1)
         {
             double maxAngle = 0;
             maxAzimuth = 0;
@@ -423,7 +423,7 @@ namespace MilSpace.Core.Tools
             maxLength = -1;
             bool isCircle = true;
             double betweenAzimuth = 0;
-
+            
             var linesAzimuths = new List<AzimuthLine>();
 
             foreach(var geometry in geometries)
@@ -458,8 +458,11 @@ namespace MilSpace.Core.Tools
                     maxAzimuth = linesAzimuths[0].Azimuth;
                 }
 
-                var angle = FindAngleBetweenAzimuths(maxAzimuth, minAzimuth, true);
-                betweenAzimuth = GetBetweenAzimuth(maxAzimuth, minAzimuth, angle / 2, true);
+                if(centerAzimuth == null)
+                {
+                    var angle = FindAngleBetweenAzimuths(maxAzimuth, minAzimuth, true);
+                    betweenAzimuth = GetBetweenAzimuth(maxAzimuth, minAzimuth, angle / 2, true);
+                }
             }
 
             if(!(geometries.Length == 1 && (geometries[0].Points.Count == 1 || geometries[0].Points.Count == 2)))
@@ -511,8 +514,12 @@ namespace MilSpace.Core.Tools
                                 minAzimuth = minAz;
 
                                 maxAngle = angleWithoutAzimuths;
-                                var angle = FindAngleBetweenAzimuths(maxAzimuth, minAzimuth, false);
-                                betweenAzimuth = GetBetweenAzimuth(maxAzimuth, minAzimuth, angle / 2, false);
+
+                                if(centerAzimuth == -1)
+                                {
+                                    var angle = FindAngleBetweenAzimuths(maxAzimuth, minAzimuth, false);
+                                    betweenAzimuth = GetBetweenAzimuth(maxAzimuth, minAzimuth, angle / 2, false);
+                                }
 
                                 isCircle = false;
                                 continue;
@@ -531,8 +538,12 @@ namespace MilSpace.Core.Tools
                                 minAzimuth = minAz;
 
                                 maxAngle = angleWithoutAzimuths;
-                                var angle = FindAngleBetweenAzimuths(maxAzimuth, minAzimuth, true);
-                                betweenAzimuth = GetBetweenAzimuth(maxAzimuth, minAzimuth, angle / 2, true);
+
+                                if(centerAzimuth == -1)
+                                {
+                                    var angle = FindAngleBetweenAzimuths(maxAzimuth, minAzimuth, true);
+                                    betweenAzimuth = GetBetweenAzimuth(maxAzimuth, minAzimuth, angle / 2, true);
+                                }
 
                                 isCircle = false;
                                 continue;
@@ -547,7 +558,13 @@ namespace MilSpace.Core.Tools
                 return CreatePolylinesFromPointAndAzimuths(centerPoint, maxLength, 6, 0, 360);
             }
 
+            if(centerAzimuth != -1)
+            {
+                betweenAzimuth = centerAzimuth;
+            }
+
             var polylines = new IPolyline[3];
+
             var startPoint = GetPointByAzimuthAndLength(centerPoint, minAzimuth, maxLength);
             var middlePoint = GetPointByAzimuthAndLength(centerPoint, betweenAzimuth, maxLength);
             var endPoint = GetPointByAzimuthAndLength(centerPoint, maxAzimuth, maxLength);

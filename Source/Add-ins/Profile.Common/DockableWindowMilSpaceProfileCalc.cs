@@ -7,6 +7,7 @@ using MilSpace.Core.ModulesInteraction;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Profile.DTO;
+using MilSpace.Profile.Helpers;
 using MilSpace.Profile.Interaction;
 using MilSpace.Profile.Localization;
 using System;
@@ -1025,6 +1026,22 @@ namespace MilSpace.Profile
             }
         }
 
+        public void RecalculateFun()
+        {
+            var creationMethod = controller.GetCreationMethodByString(cmbTargetObjCreation.SelectedItem.ToString());
+
+            if(creationMethod == ToPointsCreationMethodsEnum.AzimuthsLines)
+            {
+                controller.CalcFunToPoints(controller.GetTargetAssignmentMethodByString(cmbTargetObjAssignmentMethod.SelectedItem.ToString()),
+                                        ToPointsCreationMethodsEnum.Default, false);
+            }
+            else
+            {
+                controller.CalcFunToPoints(controller.GetTargetAssignmentMethodByString(cmbTargetObjAssignmentMethod.SelectedItem.ToString()),
+                                            creationMethod, false);
+            }
+        }
+
         private void ChangeSessionHeigth(TreeNodeCollection nodes, int id, double height)
         {
             foreach (TreeNode node in nodes)
@@ -1260,6 +1277,7 @@ namespace MilSpace.Profile
             btnChooseSecondPointAssignmentMethod.Text = LocalizationContext.Instance.ChooseText;
             btnCenterPointAssignmantMethod.Text = LocalizationContext.Instance.ChooseText;
             btnTargetObjAssignmentMethod.Text = LocalizationContext.Instance.ChooseText;
+            btnChooseCreationMethod.Text = LocalizationContext.Instance.ChooseText;
 
             profilesTreeView.Nodes["Points"].Text = LocalizationContext.Instance.FindLocalizedElement("TvProfilesPointsNodeText", "Відрізки");
             profilesTreeView.Nodes["Fun"].Text = LocalizationContext.Instance.FindLocalizedElement("TvProfilesFunNodeText", "\"Віяло\"");
@@ -1668,8 +1686,32 @@ namespace MilSpace.Profile
 
         private void BtnTargetObjAssignmentMethod_Click(object sender, EventArgs e)
         {
-            controller.CalcFunToPoints(controller.GetTargetAssignmentMethodByString(cmbTargetObjAssignmentMethod.SelectedItem.ToString()),
-                                          Helpers.ToPointsCreationMethodsEnum.Default, true);
+            var targetAssignmentMethod = controller.GetTargetAssignmentMethodByString(cmbTargetObjAssignmentMethod.SelectedItem.ToString());
+            var creationMethod = controller.GetCreationMethodByString(cmbTargetObjCreation.SelectedItem.ToString());
+
+            if(targetAssignmentMethod == AssignmentMethodsEnum.Sector || creationMethod == ToPointsCreationMethodsEnum.AzimuthsLines)
+            {
+                controller.CalcFunToPoints(targetAssignmentMethod, ToPointsCreationMethodsEnum.Default, true);
+            }
+            else
+            {
+                controller.CalcFunToPoints(targetAssignmentMethod, creationMethod, true);
+            }
+
+            if(targetAssignmentMethod == AssignmentMethodsEnum.Sector)
+            {
+                cmbTargetObjCreation.SelectedItem = LocalizationContext.Instance.ToPointsCreationMethodAzimuthsLines;
+                cmbTargetObjCreation.Enabled = false;
+            }
+            else
+            {
+                cmbTargetObjCreation.Enabled = true;
+            }
+        }
+        
+        private void BtnChooseCreationMethod_Click(object sender, EventArgs e)
+        {
+            RecalculateFun();
         }
     }
 }

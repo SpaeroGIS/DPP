@@ -2,6 +2,7 @@
 using MilSpace.Core;
 using MilSpace.Core.DataAccess;
 using MilSpace.Core.ModulesInteraction;
+using MilSpace.Core.Tools;
 using MilSpace.Profile.Helpers;
 using MilSpace.Profile.Localization;
 using MilSpace.Profile.ModalWindows;
@@ -66,6 +67,15 @@ namespace MilSpace.Profile
             }
 
             return geometries;
+        }
+
+        public static IPoint GetCenterPoint(List<IGeometry> geometries)
+        {
+            var envelope = EsriTools.GetEnvelopeOfGeometriesList(geometries);
+            var x = envelope.XMin + (envelope.XMax - envelope.XMin) / 2;
+            var y = envelope.YMin + (envelope.YMax - envelope.YMin) / 2;
+
+            return new Point { X = x, Y = y, SpatialReference = envelope.SpatialReference };
         }
 
         private static List<IGeometry> GetTargetObservPoints()
