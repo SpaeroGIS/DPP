@@ -1220,7 +1220,7 @@ namespace MilSpace.Profile
 
                     case ToPointsCreationMethodsEnum.ToVertices:
 
-
+                        polylines = EsriTools.CreateToVerticesPolylinesForFun(points, centerPoint, out minAzimuth, out maxAzimuth, out maxLength).ToList();
 
                         break;
                 }

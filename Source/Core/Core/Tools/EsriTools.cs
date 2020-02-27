@@ -683,6 +683,51 @@ namespace MilSpace.Core.Tools
             return result;
         }
 
+        public static IEnumerable<IPolyline> CreateToVerticesPolylinesForFun(IEnumerable<PointsInGeometry> geometries, IPoint centerPoint,
+                                                                                out double minAzimuth, out double maxAzimuth, out double maxLength)
+        {
+            var azimuths = new List<double>();
+            var polylines = new List<IPolyline>();
+            maxLength = 0;
+            maxAzimuth = 0;
+            minAzimuth = 360;
+
+            foreach(var geometry in geometries)
+            {
+                for(int i = 0; i < geometry.Points.Count; i++)
+                {
+                    var line = new Line() { FromPoint = centerPoint, ToPoint = geometry.Points[i], SpatialReference = centerPoint.SpatialReference };
+
+                    if(maxLength < line.Length)
+                    {
+                        maxLength = line.Length;
+                    }
+
+                    if(!azimuths.Any(az => az == line.PosAzimuth()))
+                    {
+                        azimuths.Add(line.PosAzimuth());
+                    }
+                }
+            }
+
+            foreach(var azimuth in azimuths)
+            {
+                if(azimuth > maxAzimuth)
+                {
+                    maxAzimuth = azimuth;
+                }
+
+                if(azimuth < minAzimuth)
+                {
+                    minAzimuth = azimuth;
+                }
+
+                var point = GetPointByAzimuthAndLength(centerPoint, azimuth, maxLength);
+                polylines.Add(CreatePolylineFromPoints(centerPoint, point));
+            }
+
+            return polylines;
+        }
 
         /// <summary>
         /// Get new point by distance and angel
