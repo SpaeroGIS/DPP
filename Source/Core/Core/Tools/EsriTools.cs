@@ -521,20 +521,24 @@ namespace MilSpace.Core.Tools
 
                         if(!isAzimuthsBetweenExists)
                         {
-                            var angleWithoutAzimuths = FindAngleBetweenAzimuths(maxAz, minAz, true);
-                            if(maxAngle < angleWithoutAzimuths)
+                            if(!IsAzimuthIntersectGeometry(linesAzimuths[i].Geometry, centerPoint, maxLength, outBetweenAzimuth))
                             {
-                                maxAzimuth = maxAz;
-                                minAzimuth = minAz;
-
-                                maxAngle = angleWithoutAzimuths;
-
-                                if(centerAzimuth == -1)
+                                //var angleWithoutAzimuths = FindAngleBetweenAzimuths(maxAz, minAz, true);
+                                if(maxAngle < inAngle)
                                 {
-                                    betweenAzimuth = inBetweenAzimuth;
-                                }
+                                    maxAzimuth = maxAz;
+                                    minAzimuth = minAz;
 
-                                isCircle = false;
+                                    maxAngle = inAngle;
+
+                                    if(centerAzimuth == -1)
+                                    {
+                                        betweenAzimuth = inBetweenAzimuth;
+                                    }
+
+                                    isCircle = false;
+                                    continue;
+                                }
                             }
                         }
 
@@ -542,21 +546,23 @@ namespace MilSpace.Core.Tools
 
                         if(!isAzimuthsOutExists)
                         {
-                            var angleWithoutAzimuths = FindAngleBetweenAzimuths(maxAz, minAz, false);
+                            if(!IsAzimuthIntersectGeometry(linesAzimuths[i].Geometry, centerPoint, maxLength, inBetweenAzimuth))
+                            {//var angleWithoutAzimuths = FindAngleBetweenAzimuths(maxAz, minAz, false);
 
-                            if(maxAngle < angleWithoutAzimuths)
-                            {
-                                maxAzimuth = maxAz;
-                                minAzimuth = minAz;
-
-                                maxAngle = angleWithoutAzimuths;
-
-                                if(centerAzimuth == -1)
+                                if(maxAngle < outAngle)
                                 {
-                                    betweenAzimuth = outBetweenAzimuth;
-                                }
+                                    maxAzimuth = maxAz;
+                                    minAzimuth = minAz;
 
-                                isCircle = false;
+                                    maxAngle = outAngle;
+
+                                    if(centerAzimuth == -1)
+                                    {
+                                        betweenAzimuth = outBetweenAzimuth;
+                                    }
+
+                                    isCircle = false;
+                                }
                             }
                         }
                     }
@@ -611,12 +617,12 @@ namespace MilSpace.Core.Tools
 
         private static double FindAngleBetweenAzimuths(double maxAzimuth, double minAzimuth, bool between)
         {
-            if((minAzimuth < 180 && maxAzimuth < 180) || (minAzimuth > 180 && maxAzimuth > 180))
-            {
-                return Math.Abs(maxAzimuth - minAzimuth);
-            }
-            else
-            {
+            //if((minAzimuth < 180 && maxAzimuth < 180) || (minAzimuth > 180 && maxAzimuth > 180))
+            //{
+            //    return Math.Abs(maxAzimuth - minAzimuth);
+            //}
+            //else
+            //{
                 if(!between)
                 {
                     return (360 - maxAzimuth) + minAzimuth;
@@ -625,12 +631,12 @@ namespace MilSpace.Core.Tools
                 {
                     return maxAzimuth - minAzimuth;
                 }
-            }
+            //}
         }
 
         private static double GetBetweenAzimuth(double maxAzimuth, double minAzimuth, double angle, bool between)
         {
-            if((minAzimuth < 180 && maxAzimuth < 180) || (minAzimuth > 180 && maxAzimuth > 180) || between)
+            if(/*(minAzimuth < 180 && maxAzimuth < 180) || (minAzimuth > 180 && maxAzimuth > 180) ||*/ between)
             {
                 return minAzimuth + angle; 
             }
