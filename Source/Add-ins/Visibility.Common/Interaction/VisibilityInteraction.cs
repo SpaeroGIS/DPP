@@ -22,7 +22,11 @@ namespace MilSpace.Visibility.Interaction
         public List<FromLayerPointModel> GetObservationPoints()
         {
             return _controller.GetObservationPointsFromModule();
+        }
 
+        public List<FromLayerGeometry> GetObservationObjects()
+        {
+            return _controller.GetObservObjectsFromModule();
         }
     }
 }

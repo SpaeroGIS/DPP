@@ -409,6 +409,28 @@ namespace MilSpace.Tools.GraphicsLayer
             return res;
         }
 
+        public IEnumerable<IGeometry> GetAllSelectedGraphics()
+        {
+            var graphContainerSelection = (IGraphicsContainerSelect)activeView.FocusMap;
+
+            if(graphContainerSelection.ElementSelectionCount == 0)
+                return null;
+
+            var selected = graphContainerSelection.SelectedElements;
+
+            selected.Reset();
+            var element = selected.Next();
+            var res = new List<IGeometry>();
+            while(element != null)
+            {
+                var geometry = element.Geometry;
+                 res.Add(geometry);
+                
+                element = selected.Next();
+            }
+            return res;
+        }
+
         private void AddPolyline(GraphicElement graphicElement, MilSpaceGraphicsTypeEnum graphicsType,
                                     IRgbColor color = null, LineType lineType = LineType.DefaultLine, bool doRefresh = false,
                                     bool persist = false, int width = 2)

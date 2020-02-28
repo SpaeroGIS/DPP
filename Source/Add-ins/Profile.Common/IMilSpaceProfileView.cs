@@ -15,7 +15,7 @@ namespace MilSpace.Profile
         ProfileSettingsTypeEnum SelectedProfileSettingsType { get; }
 
         ProfileSettingsPointButtonEnum ActiveButton { get; }
-
+       
         IActiveView ActiveView { get; }
 
         /// <summary>
@@ -76,7 +76,10 @@ namespace MilSpace.Profile
         void SetProifileLineInfo(double length, double azimuth);
         void SetPointInfo(ProfileSettingsPointButtonEnum pointType, string text);
         void SetReturnButtonEnable(ProfileSettingsPointButtonEnum pointType, bool enabled);
-
+        void SetFunToPointsParams(double averageAzimuth, double averageAngle, double avgLength, int count);
+        void SetFunTxtValues(double length, double maxAzimuth, double minAzimuth, int linesCount);
+        void RecalculateFun();
+        void RecalculateFunWithParams();
 
         List<string> GetLayers();
 

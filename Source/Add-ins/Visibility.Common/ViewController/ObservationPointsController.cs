@@ -847,11 +847,11 @@ namespace MilSpace.Visibility.ViewController
             {
                 while(feature != null)
                 {
-                    var shape = feature.Shape;
+                    var shape = feature.ShapeCopy;
 
                     var point = shape as IPoint;
                     var pointCopy = point.Clone();
-                    pointCopy.Project(EsriTools.Wgs84Spatialreference);
+                    //pointCopy.Project(EsriTools.Wgs84Spatialreference);
 
                     int id = -1;
                     string titleField = string.Empty;
@@ -883,6 +883,71 @@ namespace MilSpace.Visibility.ViewController
             return points;
         }
         
+        internal List<FromLayerGeometry> GetObservObjectsFromModule()
+        {
+            if(!IsObservObjectsExists())
+            {
+                return null;
+            }
+
+            var objects = new List<FromLayerGeometry>();
+
+            var featureClass = GetObservatioStationFeatureClass(mapDocument.ActiveView);
+            var idFieldIndex = featureClass.FindField("OBJECTID");
+            var titleFieldIndex = featureClass.FindField("sTitleOO");
+
+            if(idFieldIndex == -1)
+            {
+                log.WarnEx($"> GetObservObjectsFromModule. Warning: Cannot find fild \"OBJECTID\" in featureClass {featureClass.AliasName}");
+                throw new MissingFieldException();
+            }
+
+            if(titleFieldIndex == -1)
+            {
+                log.WarnEx($"> GetObservObjectsFromModule. Warning: Cannot find fild sTitleOO in featureClass {featureClass.AliasName}");
+            }
+
+            IQueryFilter queryFilter = new QueryFilter();
+            queryFilter.WhereClause = "OBJECTID > 0";
+
+            IFeatureCursor featureCursor = featureClass.Search(queryFilter, true);
+            IFeature feature = featureCursor.NextFeature();
+            try
+            {
+                while(feature != null)
+                {
+                    var shape = feature.ShapeCopy;
+
+                    int id = -1;
+                    string titleField = string.Empty;
+
+                    if(idFieldIndex >= 0)
+                    {
+                        id = (int)feature.Value[idFieldIndex];
+                    }
+
+                    if(titleFieldIndex >= 0)
+                    {
+                        titleField = feature.Value[titleFieldIndex].ToString();
+                    }
+
+                    objects.Add(new FromLayerGeometry { Geometry = shape, ObjId = id, Title = titleField });
+
+                    feature = featureCursor.NextFeature();
+                }
+            }
+            catch(Exception ex)
+            {
+                log.ErrorEx($"> GetObservObjectsFromModule Exception. ex.Message:{ex.Message}");
+            }
+            finally
+            {
+                Marshal.ReleaseComObject(featureCursor);
+            }
+
+            return objects;
+        }
+
         #region ArcMap Eventts
 
         internal bool IsArcMapEditingStarted()

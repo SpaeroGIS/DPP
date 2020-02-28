@@ -69,6 +69,7 @@ namespace MilSpace.Profile
         };
 
         private IEnumerable<IPolyline> selectedOnMapLines;
+        private IEnumerable<IGeometry> _funGeometries;
 
 
         private Dictionary<ProfileSettingsTypeEnum, ProfileSettings> profileSettings = new Dictionary<ProfileSettingsTypeEnum, ProfileSettings>()
@@ -84,7 +85,24 @@ namespace MilSpace.Profile
             { AssignmentMethodsEnum.FromMap, LocalizationContext.Instance.FindLocalizedElement("CmbAssignmentMethodFromMapTypeText", "Мапа") },
             { AssignmentMethodsEnum.GeoCalculator, LocalizationContext.Instance.FindLocalizedElement("CmbAssignmentMethodGeoCalcTypeText", "ГеоКалькулятор") },
             { AssignmentMethodsEnum.ObservationPoints, LocalizationContext.Instance.FindLocalizedElement("CmbAssignmentMethodObservPointsTypeText", "Шар пунктів спостереження") },
-            { AssignmentMethodsEnum.PointsLayers, LocalizationContext.Instance.FindLocalizedElement("CmbAssignmentMethodPointsLayerTypeText", "Точковий шар") }
+            { AssignmentMethodsEnum.FeatureLayers, LocalizationContext.Instance.FindLocalizedElement("CmbAssignmentMethodPointsLayerTypeText", "Точковий шар") }
+        };
+
+        private Dictionary<AssignmentMethodsEnum, string> _targetAssignmentMethods = new Dictionary<AssignmentMethodsEnum, string>()
+        {
+            { AssignmentMethodsEnum.Sector, LocalizationContext.Instance.FindLocalizedElement("CmbTargetAssignmentMethodInSectorText","У вказаному секторі")},
+            { AssignmentMethodsEnum.GeoCalculator, LocalizationContext.Instance.FindLocalizedElement("CmbTargetAssignmentMethodGeoCalcText", "ГеоКалькулятор") },
+            { AssignmentMethodsEnum.FeatureLayers, LocalizationContext.Instance.FindLocalizedElement("CmbTargetAssignmentMethodFeatureLayerText", "Векторний шар") },
+            { AssignmentMethodsEnum.ObservationPoints, LocalizationContext.Instance.FindLocalizedElement("CmbTargetAssignmentMethodObservPointsText", "Шар пунктів спостереження") },
+            { AssignmentMethodsEnum.ObservationObjects, LocalizationContext.Instance.FindLocalizedElement("CmbTargetAssignmentMethodObservObjText", "Шар об'єктів спостереження") },
+            { AssignmentMethodsEnum.SelectedGraphic, LocalizationContext.Instance.FindLocalizedElement("CmbTargetAssignmentMethodSelectedGraphicText", "Обрана графіка") }
+        };
+
+        private Dictionary<ToPointsCreationMethodsEnum, string> _toPointsCreationMethods = new Dictionary<ToPointsCreationMethodsEnum, string>()
+        {
+            { ToPointsCreationMethodsEnum.AzimuthsCenter, LocalizationContext.Instance.FindLocalizedElement("CmbToPointsCreationMethodCenterText", "Азмимути (мін і макс), центр") },
+            { ToPointsCreationMethodsEnum.AzimuthsLines, LocalizationContext.Instance.FindLocalizedElement("CmbToPointsCreationMethodLineNumberText", "К-ть ліній від мін до макс азимуту") },
+            { ToPointsCreationMethodsEnum.ToVertices, LocalizationContext.Instance.FindLocalizedElement("CmbToPointsCreationMethodToVerticesText", "До вершин") },
         };
 
         internal Dictionary<ProfileSettingsTypeEnum, ProfileSettings> ProfileSettings => profileSettings;
@@ -152,8 +170,8 @@ namespace MilSpace.Profile
         {
             pointsToShow[ProfileSettingsPointButtonEnum.CenterFun] = pointToShow;
             View.FunPropertiesCenterPoint = pointToView;
-
-            SetProfileSettings(ProfileSettingsTypeEnum.Fun);
+            
+            View.RecalculateFun();
         }
 
 
@@ -221,12 +239,12 @@ namespace MilSpace.Profile
             return null;
         }
 
-        internal void SetProfileSettings(ProfileSettingsTypeEnum profileType)
+        internal void SetProfileSettings(ProfileSettingsTypeEnum profileType, List<IPolyline> polylines = null)
         {
             SetSettings(profileType, profileId);
         }
 
-        internal void SetProfileSettings(ProfileSettingsTypeEnum profileType, int profileIdValue)
+        internal void SetProfileSettings(ProfileSettingsTypeEnum profileType, int profileIdValue, List<IPolyline> polylines = null)
         {
             SetSettings(profileType, profileIdValue);
         }
@@ -241,7 +259,6 @@ namespace MilSpace.Profile
                 profileSetting = new ProfileSettings();
                 profileSetting.Type = profileType;
             }
-
 
             //Check if the View.DemLayerName if Layer name
             profileSetting.DemLayerName = View.DemLayerName;
@@ -267,28 +284,33 @@ namespace MilSpace.Profile
             }
 
             if (View.SelectedProfileSettingsType == ProfileSettingsTypeEnum.Fun)
-            {
-                try
+            {       
+                if(pointsToShow[ProfileSettingsPointButtonEnum.CenterFun] != null)
                 {
-                    var lines = EsriTools.CreatePolylinesFromPointAndAzimuths(pointsToShow[ProfileSettingsPointButtonEnum.CenterFun], View.FunLength, View.FunLinesCount, View.FunAzimuth1, View.FunAzimuth2);
-                    if (lines != null)
-                    {
-                        profileLines.AddRange(lines);
-                    }
+                    View.RecalculateFunWithParams();
+                    return;
+                }
+                //try
+                //{
+                //    var lines = EsriTools.CreatePolylinesFromPointAndAzimuths(pointsToShow[ProfileSettingsPointButtonEnum.CenterFun], View.FunLength, View.FunLinesCount, View.FunAzimuth1, View.FunAzimuth2);
+                //    if(lines != null)
+                //    {
+                //        profileLines.AddRange(lines);
+                //    }
 
-                    profileSetting.Azimuth1 = View.FunAzimuth1;
-                    profileSetting.Azimuth2 = View.FunAzimuth2;
-                }
-                catch (MilSpaceProfileLackOfParameterException ex)
-                {
-                    logger.ErrorEx(ex.Message);
-                    MessageBox.Show(ex.Message, Properties.Resources.AddinMessageBoxHeader, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //    profileSetting.Azimuth1 = View.FunAzimuth1;
+                //    profileSetting.Azimuth2 = View.FunAzimuth2;
+                //}
+                //catch(MilSpaceProfileLackOfParameterException ex)
+                //{
+                //    logger.ErrorEx(ex.Message);
+                //    MessageBox.Show(ex.Message, Properties.Resources.AddinMessageBoxHeader, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                }
-                catch (Exception ex)
-                {
-                    logger.ErrorEx(ex.Message);
-                }
+                //}
+                //catch(Exception ex)
+                //{
+                //    logger.ErrorEx(ex.Message);
+                //}
             }
 
             if (View.SelectedProfileSettingsType == ProfileSettingsTypeEnum.Primitives)
@@ -570,6 +592,24 @@ namespace MilSpace.Profile
             }
         }
 
+        internal void PanToFun()
+        {
+            var lines = profileSettings[ProfileSettingsTypeEnum.Fun].ProfileLines;
+            IEnvelope env = new EnvelopeClass();
+
+            if(lines == null)
+            {
+                return;
+            }
+
+            foreach(var line in lines)
+            {
+                env.Union(line.Envelope);
+            }
+
+            EsriTools.PanToGeometry(View.ActiveView, env);
+            EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, lines);
+        }
 
         internal void HighlightProfileOnMap(int profileId, int lineId)
         {
@@ -1102,10 +1142,146 @@ namespace MilSpace.Profile
             return _assignmentMethods.Values.ToArray();
         }
 
+        internal string[] GetTargetAssignmentMethodsStrings()
+        {
+            return _targetAssignmentMethods.Values.ToArray();
+        }
+
+        internal string[] GetToPointsCreationMethodsString()
+        {
+            return _toPointsCreationMethods.Values.ToArray();
+        }
+
         internal AssignmentMethodsEnum GetMethodByString(string methodString)
         {
-            return _assignmentMethods.FirstOrDefault(method => method.Value == methodString).Key;
+            return _assignmentMethods.FirstOrDefault(method => method.Value.Equals(methodString)).Key;
         }
+
+        internal AssignmentMethodsEnum GetTargetAssignmentMethodByString(string methodString)
+        {
+            return _targetAssignmentMethods.FirstOrDefault(method => method.Value.Equals(methodString)).Key;
+        }
+
+        internal ToPointsCreationMethodsEnum GetCreationMethodByString(string methodString)
+        {
+            return _toPointsCreationMethods.FirstOrDefault(method => method.Value.Equals(methodString)).Key;
+        }
+
+        internal void CalcFunToPoints(AssignmentMethodsEnum assignmentMethod, ToPointsCreationMethodsEnum creationMethod, bool isNewTarget, double length = -1)
+        {
+            if(pointsToShow[ProfileSettingsPointButtonEnum.CenterFun] == null)
+            {
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgCenterPointNotChosenText", "Будь ласка, оберіть центральну точку для подальших розрахунків"),
+                                    LocalizationContext.Instance.MessageBoxTitle);
+
+                return;
+            }
+
+            var rl = _mapLayersManager.RasterLayers.FirstOrDefault(l => l.Name == View.DemLayerName);
+
+            if(rl == null || String.IsNullOrEmpty(View.DemLayerName))
+            {
+                MessageBox.Show(LocalizationContext.Instance.DemLayerNotChosenText, LocalizationContext.Instance.MessageBoxTitle);
+                return;
+            }
+
+            if(isNewTarget || _funGeometries == null)
+            {
+                var geometries = FunCreationManager.GetGeometriesByMethod(assignmentMethod);
+                if(geometries != null && geometries.Count() != 0)
+                {
+                    _funGeometries = geometries;
+                }
+                else if(assignmentMethod != AssignmentMethodsEnum.Sector)
+                {
+                    return;
+                }
+            }
+            
+            var polylines = new List<IPolyline>();
+
+            double minAzimuth = -1;
+            double maxAzimuth = -1;
+            double maxLength = length;
+            var centerPoint = pointsToShow[ProfileSettingsPointButtonEnum.CenterFun];
+
+            if(assignmentMethod == AssignmentMethodsEnum.Sector)
+            {
+                polylines = EsriTools.CreatePolylinesFromPointAndAzimuths(centerPoint, View.FunLength, View.FunLinesCount, View.FunAzimuth1, View.FunAzimuth2).ToList();
+
+                minAzimuth = View.FunAzimuth1;
+                maxAzimuth = View.FunAzimuth2;
+                maxLength = View.FunLength;
+            }
+            else
+            {
+                bool isCircle = false;
+
+                var points = EsriTools.GetPointsFromGeometries(_funGeometries, centerPoint.SpatialReference, out isCircle);
+
+                bool isPointInside = (_funGeometries.First().GeometryType == esriGeometryType.esriGeometryPoint) ? false : EsriTools.IsPointOnExtent(EsriTools.GetEnvelopeOfGeometriesList(new List<IGeometry>(_funGeometries)), pointsToShow[ProfileSettingsPointButtonEnum.CenterFun]);
+
+                if(points.Count() == 1 && points[0].Points.Count == 1 && !(isCircle && isPointInside))
+                {
+                    creationMethod = ToPointsCreationMethodsEnum.ToVertices;
+                }
+
+                try
+                {
+                    switch(creationMethod)
+                    {
+                        case ToPointsCreationMethodsEnum.Default:
+
+                            polylines = EsriTools.CreateDefaultPolylinesForFun(centerPoint, points.ToArray(),
+                                                                                  isCircle, isPointInside, length, out minAzimuth, out maxAzimuth, out maxLength).ToList();
+
+                            break;
+
+                        case ToPointsCreationMethodsEnum.AzimuthsCenter:
+
+                            var geomCenterPoint = FunCreationManager.GetCenterPoint(_funGeometries.ToList());
+                            geomCenterPoint.Project(centerPoint.SpatialReference);
+                            var lineToCenter = new Line { FromPoint = centerPoint, ToPoint = geomCenterPoint, SpatialReference = centerPoint.SpatialReference };
+                            polylines = EsriTools.CreateDefaultPolylinesForFun(centerPoint, points.ToArray(),
+                                                                                  isCircle, isPointInside, length, out minAzimuth, out maxAzimuth, out maxLength, lineToCenter.PosAzimuth()).ToList();
+
+                            break;
+
+
+                        case ToPointsCreationMethodsEnum.AzimuthsLines:
+
+                            polylines = EsriTools.CreatePolylinesFromPointAndAzimuths(centerPoint, View.FunLength, View.FunLinesCount, View.FunAzimuth1, View.FunAzimuth2).ToList();
+
+                            minAzimuth = View.FunAzimuth1;
+                            maxAzimuth = View.FunAzimuth2;
+                            maxLength = View.FunLength;
+
+                            break;
+
+                        case ToPointsCreationMethodsEnum.ToVertices:
+
+                            polylines = EsriTools.CreateToVerticesPolylinesForFun(points, centerPoint, length, out minAzimuth, out maxAzimuth, out maxLength).ToList();
+
+                            break;
+                    }
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgCalcFunErrorText", "Під час розрахунку набору профілів сталася помилка. Більш детальна інформація знаходиться у журналі"),
+                                        LocalizationContext.Instance.MessageBoxTitle);
+                    logger.ErrorEx($"> CalcFunToPoints Exception: {ex.Message}");
+                }
+            }
+
+            if(polylines == null || polylines.Count == 0)
+            {
+                return;
+            }
+
+            SetFunProperties(polylines, minAzimuth, maxAzimuth, maxLength);
+            View.SetFunTxtValues(maxLength, maxAzimuth, minAzimuth, polylines.Count);
+        }
+
 
         internal void SetPointBySelectedMethod(AssignmentMethodsEnum method, ProfileSettingsPointButtonEnum pointType)
         {
@@ -1134,7 +1310,7 @@ namespace MilSpace.Profile
                     break;
 
 
-                case AssignmentMethodsEnum.PointsLayers:
+                case AssignmentMethodsEnum.FeatureLayers:
 
                     point = GetPointFromPointLayers(pointType);
 
@@ -1178,28 +1354,98 @@ namespace MilSpace.Profile
         {
             var secondPoint = pointsToShow[ProfileSettingsPointButtonEnum.PointsSecond].Clone();
 
-            if(pointsToShow[ProfileSettingsPointButtonEnum.PointsFist] == null)
+            if(pointsToShow[ProfileSettingsPointButtonEnum.PointsFist] == null || secondPoint == null)
             {
-                SetSecondfPointForLineProfile(null, null);
-            }
-            else
-            {
-                var firstPoint = pointsToShow[ProfileSettingsPointButtonEnum.PointsFist].CloneWithProjecting();
-                SetSecondfPointForLineProfile(firstPoint, pointsToShow[ProfileSettingsPointButtonEnum.PointsFist]);
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgCannotFlipEmptyPoint", "Будь ласка, оберіть початкову і кінцеву точку"),
+                                    LocalizationContext.Instance.MessageBoxTitle);
+
+                logger.WarnEx("> FlipPoints. One of the points is empty");
+                return;
             }
 
-            if(secondPoint == null)
-            {
-                SetFirsPointForLineProfile(null, null);
-            }
-            else
-            {
-                var secondPointToWgs = secondPoint.CloneWithProjecting();
-                SetFirsPointForLineProfile(secondPointToWgs, secondPoint);
-            }
-               
+            var firstPoint = pointsToShow[ProfileSettingsPointButtonEnum.PointsFist].CloneWithProjecting();
+            SetSecondfPointForLineProfile(firstPoint, pointsToShow[ProfileSettingsPointButtonEnum.PointsFist]);
+
+            var secondPointToWgs = secondPoint.CloneWithProjecting();
+            SetFirsPointForLineProfile(secondPointToWgs, secondPoint);
+
         }
 
+        private void SetFunProperties(IEnumerable<IPolyline> polylines, double minAzimuth, double maxAzimuth, double maxLength)
+        {
+            var profileSetting = profileSettings[ProfileSettingsTypeEnum.Fun];
+
+            if(profileSetting == null)
+            {
+                profileSetting = new ProfileSettings();
+                profileSetting.Type = ProfileSettingsTypeEnum.Fun;
+            }
+
+            profileSetting.DemLayerName = View.DemLayerName;
+
+            profileSetting.Azimuth1 = EsriTools.GetFormattedAzimuth(minAzimuth);
+            profileSetting.Azimuth2 = EsriTools.GetFormattedAzimuth(maxAzimuth);
+
+            profileSetting.ProfileLines = polylines.ToArray();
+
+            profileSettings[ProfileSettingsTypeEnum.Fun] = profileSetting;
+
+            try
+            {
+                InvokeOnProfileSettingsChanged();
+                logger.WarnEx("");
+                GraphicsLayerManager.UpdateCalculatingGraphic(profileSetting.ProfileLines, profileId, (int)ProfileSettingsTypeEnum.Fun);
+
+                SetFunParams(maxAzimuth, minAzimuth, polylines, maxLength);
+            }
+            catch(Exception ex)
+            {
+                logger.ErrorEx($"> SetFunProperties Exception: {ex.Message}");
+            }
+        }
+        
+        private void SetFunParams(double maxAzimuth, double minAzimuth, IEnumerable<IPolyline> lines, double length = -1)
+        {
+            double azimuthsSum = 0;
+            double allLength = 0;
+
+            foreach(var line in lines)
+            {
+                if(length == -1)
+                {
+                    allLength += line.Length;
+                }
+                var lineWithAngle = new Line { FromPoint = line.FromPoint, ToPoint = line.ToPoint, SpatialReference = line.SpatialReference };
+
+                var azimuth = lineWithAngle.Azimuth();
+                if(azimuth < 0) azimuth += 360;
+                azimuthsSum += azimuth;
+            }
+
+            var linesCount = lines.Count();
+
+            if(length == -1)
+            {
+                length = allLength / linesCount;
+            }
+
+            double angle;
+            if(maxAzimuth > minAzimuth)
+            {
+                angle = maxAzimuth - minAzimuth;
+            }
+            else
+            {
+                angle = (360 - maxAzimuth) + minAzimuth;
+            }
+
+            var avgAngle = (lines.Count() == 1)? 0 : angle / (linesCount - 1);
+            var avgAzimuth = azimuthsSum / linesCount;
+
+            View.SetFunToPointsParams(avgAzimuth, avgAngle, length, linesCount);
+        }
+
+        
         private IPoint GetPointFromGeoCalculator(ProfileSettingsPointButtonEnum pointType)
         {
             Dictionary<int, IPoint> points;
