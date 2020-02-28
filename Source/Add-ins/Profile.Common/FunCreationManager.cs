@@ -62,7 +62,7 @@ namespace MilSpace.Profile
                             geometries = null;
                             MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgSelectedGeomNotFoundText", "Будь ласка, оберіть графіку для розрахунку набору профілів"),
                                                 LocalizationContext.Instance.MessageBoxTitle);
-                            //TODO: LOG
+                            _logger.WarnEx("> GetGeometriesByMethod There are no selected graphics on the map");
                         }
                         else
                         {
@@ -75,7 +75,7 @@ namespace MilSpace.Profile
             catch(Exception ex)
             {
 
-                //TODO: Log
+                _logger.ErrorEx($"> GetGeometriesByMethod Exception: {ex.Message}");
             }
 
             return geometries;

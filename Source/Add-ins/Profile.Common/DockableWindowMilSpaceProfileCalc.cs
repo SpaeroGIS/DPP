@@ -895,12 +895,12 @@ namespace MilSpace.Profile
 
         private void UpdateFunProperties(object sender, EventArgs e)
         {
-            if(Convert.ToInt32(funLinesCount.Text) < 2)
+            if(sender == funLinesCount && Convert.ToInt32(funLinesCount.Text) < 2)
             {
+                funLinesCount.Text = "2";
+
                 MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgLinesCountLessThanTwoText", "Кількість профілів не може бути меншою за 2"),
                                     LocalizationContext.Instance.MessageBoxTitle);
-
-                funLinesCount.Text = "2";
             }
 
             RecalculateFunWithParams();

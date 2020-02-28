@@ -1269,7 +1269,7 @@ namespace MilSpace.Profile
                 {
                     MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgCalcFunErrorText", "Під час розрахунку набору профілів сталася помилка. Більш детальна інформація знаходиться у журналі"),
                                         LocalizationContext.Instance.MessageBoxTitle);
-                    //TODO: Log
+                    logger.ErrorEx($"> CalcFunToPoints Exception: {ex.Message}");
                 }
             }
 
@@ -1356,7 +1356,10 @@ namespace MilSpace.Profile
 
             if(pointsToShow[ProfileSettingsPointButtonEnum.PointsFist] == null || secondPoint == null)
             {
-                //TODO MEssage
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgCannotFlipEmptyPoint", "Будь ласка, оберіть початкову і кінцеву точку"),
+                                    LocalizationContext.Instance.MessageBoxTitle);
+
+                logger.WarnEx("> FlipPoints. One of the points is empty");
                 return;
             }
 
@@ -1397,8 +1400,7 @@ namespace MilSpace.Profile
             }
             catch(Exception ex)
             {
-                
-                //TODO: Log
+                logger.ErrorEx($"> SetFunProperties Exception: {ex.Message}");
             }
         }
         
