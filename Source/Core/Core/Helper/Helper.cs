@@ -220,14 +220,14 @@ namespace MilSpace.Core
             }
         }
 
-        public static string ToFormattedString(this double pointCoord)
+        public static string ToFormattedString(this double pointCoord, int signs = 5)
         {
             if(Double.IsNaN(pointCoord))
             {
                 return string.Empty;
             }
 
-            var pointString = pointCoord.ToString("F5");
+            var pointString = pointCoord.ToString($"F{signs}");
             return pointString.Replace(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator, ".");
         }
     }

@@ -10,6 +10,7 @@
   <BtnTakeCoordToolTip>Взяти координати з карти</BtnTakeCoordToolTip>
   <BtnReverseToolTip>Змінити напрямок профілю</BtnReverseToolTip>
   <BtnReturnPointValueToolTip>Повернутися до дійсного значення точки</BtnReturnPointValueToolTip>
+  <BtnPanToFunToolTip>Наблизити до набору профілів</BtnPanToFunToolTip>
   <DgvProfilePropertiesAscendingAngleColToolTip>Максимальний кут підйому (градуси)</DgvProfilePropertiesAscendingAngleColToolTip>
   <DgvProfilePropertiesAzimuthColToolTip>Азимут</DgvProfilePropertiesAzimuthColToolTip>
   <DgvProfilePropertiesDescendingAngleColToolTip>Максимальний кут спуску (градуси)</DgvProfilePropertiesDescendingAngleColToolTip>
@@ -89,7 +90,7 @@
   <LblFunBasePointText>Базова точка</LblFunBasePointText>
   <LblFunCountText>Кількість</LblFunCountText>
   <LblFunDistanceText>Відстань</LblFunDistanceText>
-  <LblFunParametersText>Параметри</LblFunParametersText>
+  <LblFunParametersText>Правило створення і параметри</LblFunParametersText>
   <LblHeightOfViewText>Висота</LblHeightOfViewText>
   <LblHydrographyLayerText>гідрографія</LblHydrographyLayerText>
   <LblInvisibleLineColorText>невидимі</LblInvisibleLineColorText>
@@ -176,7 +177,8 @@
   <MsgCenterPointNotChosenText>Будь ласка, оберіть центральну точку для подальших розрахунків</MsgCenterPointNotChosenText>
   <MsgCalcFunErrorText>Під час розрахунку набору профілів сталася помилка. Більш детальна інформація знаходиться у журналі</MsgCalcFunErrorText>
   <MsgSelectedGeomNotFoundText>Будь ласка, оберіть графіку для розрахунку набору профілів</MsgSelectedGeomNotFoundText>
-  
+  <MsgLinesCountLessThanTwoText>Кількість профілів не може бути меншою за 2</MsgLinesCountLessThanTwoText>
+ 
   <DataExportPointsPropertiesHeader>Номер; X; Y; Z; Відстань; Точка перегину; Видима; Перетини</DataExportPointsPropertiesHeader>
   <DataExportProfilePropertiesHeader>Номер; Назва профілю; Зовнішній; Стан; Точка початку; Точка кінцю; Азимут; Пункт спостереження; Довжина; Макс. висота; Різниця висот; Мін. висота; Макс. кут підйому; Макс. кут спуску; Процент видимих зон</DataExportProfilePropertiesHeader>
   <DgvProfilePropertiesAscendingAngleColHeader>КП</DgvProfilePropertiesAscendingAngleColHeader>

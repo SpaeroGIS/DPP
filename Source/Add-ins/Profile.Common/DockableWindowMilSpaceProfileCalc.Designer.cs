@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Графика");
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.profileTabPage = new System.Windows.Forms.TabPage();
             this.btnRefreshLayers = new System.Windows.Forms.Button();
@@ -123,6 +123,7 @@
             this.btnChooseCreationMethod = new System.Windows.Forms.Button();
             this.cmbTargetObjCreation = new System.Windows.Forms.ComboBox();
             this.paramPanel = new System.Windows.Forms.Panel();
+            this.btnPanToFun = new System.Windows.Forms.Button();
             this.lblFunParameters = new System.Windows.Forms.Label();
             this.toPointsInfoPanel = new System.Windows.Forms.Panel();
             this.lblTargetObjInfo = new System.Windows.Forms.Label();
@@ -1468,12 +1469,24 @@
             // 
             // paramPanel
             // 
+            this.paramPanel.Controls.Add(this.btnPanToFun);
             this.paramPanel.Controls.Add(this.lblFunParameters);
             this.paramPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.paramPanel.Location = new System.Drawing.Point(0, 216);
             this.paramPanel.Name = "paramPanel";
             this.paramPanel.Size = new System.Drawing.Size(327, 23);
             this.paramPanel.TabIndex = 52;
+            // 
+            // btnPanToFun
+            // 
+            this.btnPanToFun.ImageKey = "Directions.png";
+            this.btnPanToFun.ImageList = this.imageList1;
+            this.btnPanToFun.Location = new System.Drawing.Point(304, 0);
+            this.btnPanToFun.Name = "btnPanToFun";
+            this.btnPanToFun.Size = new System.Drawing.Size(23, 23);
+            this.btnPanToFun.TabIndex = 45;
+            this.btnPanToFun.UseVisualStyleBackColor = true;
+            this.btnPanToFun.Click += new System.EventHandler(this.BtnPanToFun_Click);
             // 
             // lblFunParameters
             // 
@@ -1986,25 +1999,25 @@
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.Location = new System.Drawing.Point(0, 62);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode1.Checked = true;
-            treeNode1.ImageKey = "vector-path-line.png";
-            treeNode1.Name = "Points";
-            treeNode1.SelectedImageIndex = 205;
-            treeNode1.Text = "Отрезки";
-            treeNode2.Checked = true;
-            treeNode2.ImageKey = "Editing-Line-icon3.png";
-            treeNode2.Name = "Fun";
-            treeNode2.SelectedImageIndex = 208;
-            treeNode2.Text = "Веер";
-            treeNode3.Checked = true;
-            treeNode3.ImageKey = "vector-polygon.png";
-            treeNode3.Name = "Primitives";
-            treeNode3.SelectedImageIndex = 209;
-            treeNode3.Text = "Графика";
+            treeNode10.Checked = true;
+            treeNode10.ImageKey = "vector-path-line.png";
+            treeNode10.Name = "Points";
+            treeNode10.SelectedImageIndex = 205;
+            treeNode10.Text = "Отрезки";
+            treeNode11.Checked = true;
+            treeNode11.ImageKey = "Editing-Line-icon3.png";
+            treeNode11.Name = "Fun";
+            treeNode11.SelectedImageIndex = 208;
+            treeNode11.Text = "Веер";
+            treeNode12.Checked = true;
+            treeNode12.ImageKey = "vector-polygon.png";
+            treeNode12.Name = "Primitives";
+            treeNode12.SelectedImageIndex = 209;
+            treeNode12.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
+            treeNode10,
+            treeNode11,
+            treeNode12});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(335, 410);
             this.profilesTreeView.TabIndex = 35;
@@ -2477,5 +2490,6 @@
         private System.Windows.Forms.ComboBox cmbTargetObjCreation;
         private System.Windows.Forms.ListBox lbFunInfo;
         private System.Windows.Forms.Button btnChooseCreationMethod;
+        private System.Windows.Forms.Button btnPanToFun;
     }
 }

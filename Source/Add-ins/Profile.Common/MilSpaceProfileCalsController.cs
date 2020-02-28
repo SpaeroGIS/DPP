@@ -170,9 +170,7 @@ namespace MilSpace.Profile
         {
             pointsToShow[ProfileSettingsPointButtonEnum.CenterFun] = pointToShow;
             View.FunPropertiesCenterPoint = pointToView;
-
-            SetProfileSettings(ProfileSettingsTypeEnum.Fun);
-
+            
             View.RecalculateFun();
         }
 
@@ -243,15 +241,15 @@ namespace MilSpace.Profile
 
         internal void SetProfileSettings(ProfileSettingsTypeEnum profileType, List<IPolyline> polylines = null)
         {
-            SetSettings(profileType, profileId, polylines);
+            SetSettings(profileType, profileId);
         }
 
         internal void SetProfileSettings(ProfileSettingsTypeEnum profileType, int profileIdValue, List<IPolyline> polylines = null)
         {
-            SetSettings(profileType, profileIdValue, polylines);
+            SetSettings(profileType, profileIdValue);
         }
 
-        private void SetSettings(ProfileSettingsTypeEnum profileType, int profileIdValue, List<IPolyline> polylines)
+        private void SetSettings(ProfileSettingsTypeEnum profileType, int profileIdValue)
         {
             List<IPolyline> profileLines = new List<IPolyline>();
 
@@ -286,28 +284,33 @@ namespace MilSpace.Profile
             }
 
             if (View.SelectedProfileSettingsType == ProfileSettingsTypeEnum.Fun)
-            {
-                try
+            {       
+                if(pointsToShow[ProfileSettingsPointButtonEnum.CenterFun] != null)
                 {
-                    var lines = polylines ?? EsriTools.CreatePolylinesFromPointAndAzimuths(pointsToShow[ProfileSettingsPointButtonEnum.CenterFun], View.FunLength, View.FunLinesCount, View.FunAzimuth1, View.FunAzimuth2);
-                    if(lines != null)
-                    {
-                        profileLines.AddRange(lines);
-                    }
+                    View.RecalculateFunWithParams();
+                    return;
+                }
+                //try
+                //{
+                //    var lines = EsriTools.CreatePolylinesFromPointAndAzimuths(pointsToShow[ProfileSettingsPointButtonEnum.CenterFun], View.FunLength, View.FunLinesCount, View.FunAzimuth1, View.FunAzimuth2);
+                //    if(lines != null)
+                //    {
+                //        profileLines.AddRange(lines);
+                //    }
 
-                    profileSetting.Azimuth1 = View.FunAzimuth1;
-                    profileSetting.Azimuth2 = View.FunAzimuth2;
-                }
-                catch (MilSpaceProfileLackOfParameterException ex)
-                {
-                    logger.ErrorEx(ex.Message);
-                    MessageBox.Show(ex.Message, Properties.Resources.AddinMessageBoxHeader, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //    profileSetting.Azimuth1 = View.FunAzimuth1;
+                //    profileSetting.Azimuth2 = View.FunAzimuth2;
+                //}
+                //catch(MilSpaceProfileLackOfParameterException ex)
+                //{
+                //    logger.ErrorEx(ex.Message);
+                //    MessageBox.Show(ex.Message, Properties.Resources.AddinMessageBoxHeader, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                }
-                catch (Exception ex)
-                {
-                    logger.ErrorEx(ex.Message);
-                }
+                //}
+                //catch(Exception ex)
+                //{
+                //    logger.ErrorEx(ex.Message);
+                //}
             }
 
             if (View.SelectedProfileSettingsType == ProfileSettingsTypeEnum.Primitives)
@@ -589,6 +592,24 @@ namespace MilSpace.Profile
             }
         }
 
+        internal void PanToFun()
+        {
+            var lines = profileSettings[ProfileSettingsTypeEnum.Fun].ProfileLines;
+            IEnvelope env = new EnvelopeClass();
+
+            if(lines == null)
+            {
+                return;
+            }
+
+            foreach(var line in lines)
+            {
+                env.Union(line.Envelope);
+            }
+
+            EsriTools.PanToGeometry(View.ActiveView, env);
+            EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, lines);
+        }
 
         internal void HighlightProfileOnMap(int profileId, int lineId)
         {
@@ -1146,7 +1167,7 @@ namespace MilSpace.Profile
             return _toPointsCreationMethods.FirstOrDefault(method => method.Value.Equals(methodString)).Key;
         }
 
-        internal void CalcFunToPoints(AssignmentMethodsEnum assignmentMethod, ToPointsCreationMethodsEnum creationMethod, bool isNewTarget)
+        internal void CalcFunToPoints(AssignmentMethodsEnum assignmentMethod, ToPointsCreationMethodsEnum creationMethod, bool isNewTarget, double length = -1)
         {
             if(pointsToShow[ProfileSettingsPointButtonEnum.CenterFun] == null)
             {
@@ -1166,70 +1187,90 @@ namespace MilSpace.Profile
 
             if(isNewTarget || _funGeometries == null)
             {
-                _funGeometries = FunCreationManager.GetGeometriesByMethod(assignmentMethod);
+                var geometries = FunCreationManager.GetGeometriesByMethod(assignmentMethod);
+                if(geometries != null && geometries.Count() != 0)
+                {
+                    _funGeometries = geometries;
+                }
+                else if(assignmentMethod != AssignmentMethodsEnum.Sector)
+                {
+                    return;
+                }
             }
-
-            if(_funGeometries == null || _funGeometries.Count() == 0)
-            {
-                return;
-            }
-
-            bool isCircle = false;
-
-            var points = EsriTools.GetPointsFromGeometries(_funGeometries, ArcMap.Document.FocusMap.SpatialReference, out isCircle);
+            
             var polylines = new List<IPolyline>();
 
             double minAzimuth = -1;
             double maxAzimuth = -1;
-            double maxLength = -1;
-            bool isPointInside = (_funGeometries.First().GeometryType == esriGeometryType.esriGeometryPoint)? false : EsriTools.IsPointOnExtent(EsriTools.GetEnvelopeOfGeometriesList(new List<IGeometry>(_funGeometries)), pointsToShow[ProfileSettingsPointButtonEnum.CenterFun]);
+            double maxLength = length;
             var centerPoint = pointsToShow[ProfileSettingsPointButtonEnum.CenterFun];
 
-            if(points.Count() == 1 && points[0].Points.Count == 1 && !(isCircle && isPointInside))
+            if(assignmentMethod == AssignmentMethodsEnum.Sector)
             {
-                creationMethod = ToPointsCreationMethodsEnum.ToVertices;
-            }
+                polylines = EsriTools.CreatePolylinesFromPointAndAzimuths(centerPoint, View.FunLength, View.FunLinesCount, View.FunAzimuth1, View.FunAzimuth2).ToList();
 
-            try
+                minAzimuth = View.FunAzimuth1;
+                maxAzimuth = View.FunAzimuth2;
+                maxLength = View.FunLength;
+            }
+            else
             {
-                switch(creationMethod)
+                bool isCircle = false;
+
+                var points = EsriTools.GetPointsFromGeometries(_funGeometries, centerPoint.SpatialReference, out isCircle);
+
+                bool isPointInside = (_funGeometries.First().GeometryType == esriGeometryType.esriGeometryPoint) ? false : EsriTools.IsPointOnExtent(EsriTools.GetEnvelopeOfGeometriesList(new List<IGeometry>(_funGeometries)), pointsToShow[ProfileSettingsPointButtonEnum.CenterFun]);
+
+                if(points.Count() == 1 && points[0].Points.Count == 1 && !(isCircle && isPointInside))
                 {
-                    case ToPointsCreationMethodsEnum.Default:
-
-                        polylines = EsriTools.CreateDefaultPolylinesForFun(centerPoint, points.ToArray(),
-                                                                              isCircle, isPointInside, out minAzimuth, out maxAzimuth, out maxLength).ToList();
-
-                        break;
-
-                    case ToPointsCreationMethodsEnum.AzimuthsCenter:
-
-                        var geomCenterPoint = FunCreationManager.GetCenterPoint(_funGeometries.ToList());
-                        geomCenterPoint.Project(centerPoint.SpatialReference);
-                        var lineToCenter = new Line { FromPoint = centerPoint, ToPoint = geomCenterPoint, SpatialReference = centerPoint.SpatialReference };
-                        polylines = EsriTools.CreateDefaultPolylinesForFun(centerPoint, points.ToArray(),
-                                                                              isCircle, isPointInside, out minAzimuth, out maxAzimuth, out maxLength, lineToCenter.PosAzimuth()).ToList();
-
-                        break;
-
-
-                    case ToPointsCreationMethodsEnum.AzimuthsLines:
-                        
-                        polylines = EsriTools.CreatePolylinesFromPointAndAzimuths(centerPoint, View.FunLength, View.FunLinesCount, View.FunAzimuth1, View.FunAzimuth2).ToList();
-
-                        break;
-
-                    case ToPointsCreationMethodsEnum.ToVertices:
-
-                        polylines = EsriTools.CreateToVerticesPolylinesForFun(points, centerPoint, out minAzimuth, out maxAzimuth, out maxLength).ToList();
-
-                        break;
+                    creationMethod = ToPointsCreationMethodsEnum.ToVertices;
                 }
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgCalcFunErrorText", "Під час розрахунку набору профілів сталася помилка. Більш детальна інформація знаходиться у журналі"),
-                                    LocalizationContext.Instance.MessageBoxTitle);
-                //TODO: Log
+
+                try
+                {
+                    switch(creationMethod)
+                    {
+                        case ToPointsCreationMethodsEnum.Default:
+
+                            polylines = EsriTools.CreateDefaultPolylinesForFun(centerPoint, points.ToArray(),
+                                                                                  isCircle, isPointInside, length, out minAzimuth, out maxAzimuth, out maxLength).ToList();
+
+                            break;
+
+                        case ToPointsCreationMethodsEnum.AzimuthsCenter:
+
+                            var geomCenterPoint = FunCreationManager.GetCenterPoint(_funGeometries.ToList());
+                            geomCenterPoint.Project(centerPoint.SpatialReference);
+                            var lineToCenter = new Line { FromPoint = centerPoint, ToPoint = geomCenterPoint, SpatialReference = centerPoint.SpatialReference };
+                            polylines = EsriTools.CreateDefaultPolylinesForFun(centerPoint, points.ToArray(),
+                                                                                  isCircle, isPointInside, length, out minAzimuth, out maxAzimuth, out maxLength, lineToCenter.PosAzimuth()).ToList();
+
+                            break;
+
+
+                        case ToPointsCreationMethodsEnum.AzimuthsLines:
+
+                            polylines = EsriTools.CreatePolylinesFromPointAndAzimuths(centerPoint, View.FunLength, View.FunLinesCount, View.FunAzimuth1, View.FunAzimuth2).ToList();
+
+                            minAzimuth = View.FunAzimuth1;
+                            maxAzimuth = View.FunAzimuth2;
+                            maxLength = View.FunLength;
+
+                            break;
+
+                        case ToPointsCreationMethodsEnum.ToVertices:
+
+                            polylines = EsriTools.CreateToVerticesPolylinesForFun(points, centerPoint, length, out minAzimuth, out maxAzimuth, out maxLength).ToList();
+
+                            break;
+                    }
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgCalcFunErrorText", "Під час розрахунку набору профілів сталася помилка. Більш детальна інформація знаходиться у журналі"),
+                                        LocalizationContext.Instance.MessageBoxTitle);
+                    //TODO: Log
+                }
             }
 
             if(polylines == null || polylines.Count == 0)
@@ -1239,8 +1280,6 @@ namespace MilSpace.Profile
 
             SetFunProperties(polylines, minAzimuth, maxAzimuth, maxLength);
             View.SetFunTxtValues(maxLength, maxAzimuth, minAzimuth, polylines.Count);
-
-            SetProfileSettings(ProfileSettingsTypeEnum.Fun, polylines);
         }
 
 
@@ -1315,26 +1354,18 @@ namespace MilSpace.Profile
         {
             var secondPoint = pointsToShow[ProfileSettingsPointButtonEnum.PointsSecond].Clone();
 
-            if(pointsToShow[ProfileSettingsPointButtonEnum.PointsFist] == null)
+            if(pointsToShow[ProfileSettingsPointButtonEnum.PointsFist] == null || secondPoint == null)
             {
-                SetSecondfPointForLineProfile(null, null);
-            }
-            else
-            {
-                var firstPoint = pointsToShow[ProfileSettingsPointButtonEnum.PointsFist].CloneWithProjecting();
-                SetSecondfPointForLineProfile(firstPoint, pointsToShow[ProfileSettingsPointButtonEnum.PointsFist]);
+                //TODO MEssage
+                return;
             }
 
-            if(secondPoint == null)
-            {
-                SetFirsPointForLineProfile(null, null);
-            }
-            else
-            {
-                var secondPointToWgs = secondPoint.CloneWithProjecting();
-                SetFirsPointForLineProfile(secondPointToWgs, secondPoint);
-            }
-               
+            var firstPoint = pointsToShow[ProfileSettingsPointButtonEnum.PointsFist].CloneWithProjecting();
+            SetSecondfPointForLineProfile(firstPoint, pointsToShow[ProfileSettingsPointButtonEnum.PointsFist]);
+
+            var secondPointToWgs = secondPoint.CloneWithProjecting();
+            SetFirsPointForLineProfile(secondPointToWgs, secondPoint);
+
         }
 
         private void SetFunProperties(IEnumerable<IPolyline> polylines, double minAzimuth, double maxAzimuth, double maxLength)
@@ -1396,7 +1427,17 @@ namespace MilSpace.Profile
                 length = allLength / linesCount;
             }
 
-            var avgAngle = (maxAzimuth - minAzimuth) / (linesCount - 1);
+            double angle;
+            if(maxAzimuth > minAzimuth)
+            {
+                angle = maxAzimuth - minAzimuth;
+            }
+            else
+            {
+                angle = (360 - maxAzimuth) + minAzimuth;
+            }
+
+            var avgAngle = (lines.Count() == 1)? 0 : angle / (linesCount - 1);
             var avgAzimuth = azimuthsSum / linesCount;
 
             View.SetFunToPointsParams(avgAzimuth, avgAngle, length, linesCount);

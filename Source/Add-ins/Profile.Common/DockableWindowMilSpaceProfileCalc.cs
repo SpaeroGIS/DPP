@@ -738,7 +738,7 @@ namespace MilSpace.Profile
                 {
                     controlX.Text = point.X.ToFormattedString();
                     controlY.Text = point.Y.ToFormattedString();
-                    controlZ.Text = point.Z.ToFormattedString();
+                    controlZ.Text = point.Z.ToFormattedString(1);
                 }
                 else
                 {
@@ -895,13 +895,20 @@ namespace MilSpace.Profile
 
         private void UpdateFunProperties(object sender, EventArgs e)
         {
-            controller.SetProfileSettings(ProfileSettingsTypeEnum.Fun);
+            if(Convert.ToInt32(funLinesCount.Text) < 2)
+            {
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgLinesCountLessThanTwoText", "Кількість профілів не може бути меншою за 2"),
+                                    LocalizationContext.Instance.MessageBoxTitle);
+
+                funLinesCount.Text = "2";
+            }
+
+            RecalculateFunWithParams();
         }
 
         private void profileSettingsTab_SelectedIndexChanged(object sender, EventArgs e)
         {
             controller.SetProfileSettings(SelectedProfileSettingsType);
-
         }
 
         private void cmbRasterLayers_SelectedIndexChanged(object sender, EventArgs e)
@@ -1042,6 +1049,22 @@ namespace MilSpace.Profile
             }
         }
 
+        public void RecalculateFunWithParams()
+        {
+            var creationMethod = controller.GetCreationMethodByString(cmbTargetObjCreation.SelectedItem.ToString());
+
+            if(creationMethod == ToPointsCreationMethodsEnum.AzimuthsLines)
+            {
+                controller.CalcFunToPoints(controller.GetTargetAssignmentMethodByString(cmbTargetObjAssignmentMethod.SelectedItem.ToString()),
+                                        ToPointsCreationMethodsEnum.AzimuthsLines, false);
+            }
+            else
+            {
+                controller.CalcFunToPoints(controller.GetTargetAssignmentMethodByString(cmbTargetObjAssignmentMethod.SelectedItem.ToString()),
+                                            creationMethod, false, Convert.ToDouble(profileLength.Text));
+            }
+        }
+
         private void ChangeSessionHeigth(TreeNodeCollection nodes, int id, double height)
         {
             foreach (TreeNode node in nodes)
@@ -1134,6 +1157,7 @@ namespace MilSpace.Profile
             var athimuthControl = sender as TextBox;
 
             double result;
+
             if (Helper.TryParceToDouble(azimuth2.Text, out result) && (result <= 360 && result >= 0))
             {
                 UpdateFunProperties(sender, e);
@@ -1178,6 +1202,7 @@ namespace MilSpace.Profile
             toolTip.SetToolTip(this.btnRefreshLayers, LocalizationContext.Instance.FindLocalizedElement("BtnRefreshLayersToolTip", "Оновити шари даних"));
             toolTip.SetToolTip(reverseButton, LocalizationContext.Instance.FindLocalizedElement("BtnReverseToolTip", "Змінити напрямок профілю"));
             toolTip.SetToolTip(reverseSecondPointButton, LocalizationContext.Instance.FindLocalizedElement("BtnReverseToolTip", "Змінити напрямок профілю"));
+            toolTip.SetToolTip(btnPanToFun, LocalizationContext.Instance.FindLocalizedElement("BtnPanToFunToolTip", "Наблизити до набору профілів"));
 
             firstPointToolBar.Buttons["toolBarButton8"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnTakeCoordToolTip", "Взяти координати з карти");
             firstPointToolBar.Buttons["toolBarButton55"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnShowCoordToolTip", "Показати координати на карті");
@@ -1299,6 +1324,7 @@ namespace MilSpace.Profile
 
             cmbTargetObjCreation.Items.AddRange(controller.GetToPointsCreationMethodsString());
             cmbTargetObjCreation.SelectedItem = LocalizationContext.Instance.ToPointsCreationMethodAzimuthsLines;
+            cmbTargetObjCreation.Enabled = false;
 
             logger.InfoEx("> LocalizeStrings Profile END");
         }
@@ -1711,7 +1737,28 @@ namespace MilSpace.Profile
         
         private void BtnChooseCreationMethod_Click(object sender, EventArgs e)
         {
+            if(controller.GetCreationMethodByString(cmbTargetObjCreation.SelectedItem.ToString()) == ToPointsCreationMethodsEnum.AzimuthsLines)
+            {
+                SetFunTxtEnabled(true);
+            }
+            else
+            {
+                SetFunTxtEnabled(false);
+            }
+
             RecalculateFun();
+        }
+
+        private void SetFunTxtEnabled(bool isEnabled)
+        {
+            azimuth1.Enabled = isEnabled;
+            azimuth2.Enabled = isEnabled;
+            funLinesCount.Enabled = isEnabled;
+        }
+
+        private void BtnPanToFun_Click(object sender, EventArgs e)
+        {
+            controller.PanToFun();
         }
     }
 }

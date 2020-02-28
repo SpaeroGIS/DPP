@@ -79,6 +79,7 @@ namespace MilSpace.Profile
         void SetFunToPointsParams(double averageAzimuth, double averageAngle, double avgLength, int count);
         void SetFunTxtValues(double length, double maxAzimuth, double minAzimuth, int linesCount);
         void RecalculateFun();
+        void RecalculateFunWithParams();
 
         List<string> GetLayers();
 
