@@ -1217,11 +1217,11 @@ namespace MilSpace.Profile
             {
                 bool isCircle = false;
 
-                var points = EsriTools.GetPointsFromGeometries(_funGeometries, centerPoint.SpatialReference, out isCircle);
+                var points = EsriTools.GetPointsFromGeometries(_funGeometries, centerPoint.SpatialReference, out isCircle).ToArray();
 
                 bool isPointInside = (_funGeometries.First().GeometryType == esriGeometryType.esriGeometryPoint) ? false : EsriTools.IsPointOnExtent(EsriTools.GetEnvelopeOfGeometriesList(new List<IGeometry>(_funGeometries)), pointsToShow[ProfileSettingsPointButtonEnum.CenterFun]);
 
-                if(points.Count() == 1 && points[0].Points.Count == 1 && !(isCircle && isPointInside))
+                if(points.Count() == 1 && points.Length == 1 && !(isCircle && isPointInside))
                 {
                     creationMethod = ToPointsCreationMethodsEnum.ToVertices;
                 }
@@ -1232,7 +1232,7 @@ namespace MilSpace.Profile
                     {
                         case ToPointsCreationMethodsEnum.Default:
 
-                            polylines = EsriTools.CreateDefaultPolylinesForFun(centerPoint, points.ToArray(),
+                            polylines = EsriTools.CreateDefaultPolylinesForFun(centerPoint, points, _funGeometries,
                                                                                   isCircle, isPointInside, length, out minAzimuth, out maxAzimuth, out maxLength).ToList();
 
                             break;
@@ -1242,7 +1242,7 @@ namespace MilSpace.Profile
                             var geomCenterPoint = FunCreationManager.GetCenterPoint(_funGeometries.ToList());
                             geomCenterPoint.Project(centerPoint.SpatialReference);
                             var lineToCenter = new Line { FromPoint = centerPoint, ToPoint = geomCenterPoint, SpatialReference = centerPoint.SpatialReference };
-                            polylines = EsriTools.CreateDefaultPolylinesForFun(centerPoint, points.ToArray(),
+                            polylines = EsriTools.CreateDefaultPolylinesForFun(centerPoint, points, _funGeometries,
                                                                                   isCircle, isPointInside, length, out minAzimuth, out maxAzimuth, out maxLength, lineToCenter.PosAzimuth()).ToList();
 
                             break;
