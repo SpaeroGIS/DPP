@@ -1,6 +1,6 @@
 ﻿namespace MilSpace.Profile.Helpers
 {
-    enum AssignmentMethodsEnum
+    public enum AssignmentMethodsEnum
     {
         FromMap,
         GeoCalculator,

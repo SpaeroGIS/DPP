@@ -421,6 +421,20 @@ namespace MilSpace.Core.Tools
             logger.InfoEx("FlashGeometry. Geometries flashed.");
         }
 
+        public static IEnumerable<IPolyline> CreatePolylinesFromPoints(IPoint[] points, ISpatialReference spatialReference)
+        {
+            var polylines = new List<IPolyline>();
+
+            for(int i = 0; i < points.Length - 1; i++)
+            {
+                var polyline = CreatePolylineFromPoints(points[i], points[i + 1]);
+                polyline.Project(spatialReference);
+                polylines.Add(polyline);
+            }
+
+            return polylines;
+        }
+
         public static IEnumerable<IPolyline> CreateDefaultPolylinesForFun(IPoint centerPoint, IPoint[] points, IEnumerable<IGeometry> geometries, bool circle, bool isPointInside, double length,
                                                                        out double minAzimuth, out double maxAzimuth, out double maxLength,  double centerAzimuth = -1)
         {

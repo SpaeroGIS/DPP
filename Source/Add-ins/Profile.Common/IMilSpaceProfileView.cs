@@ -2,6 +2,7 @@
 using ESRI.ArcGIS.Geometry;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Profile.DTO;
+using MilSpace.Profile.Helpers;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -32,6 +33,7 @@ namespace MilSpace.Profile
         /// Center point for Fun Profile setting 
         /// </summary>
         IPoint FunPropertiesCenterPoint { set; }
+        AssignmentMethodsEnum PrimitiveAssignmentMethod { get; }
 
         int FunLinesCount { get; }
 

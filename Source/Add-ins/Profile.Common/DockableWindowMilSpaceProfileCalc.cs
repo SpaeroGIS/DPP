@@ -104,6 +104,8 @@ namespace MilSpace.Profile
 
         public string DemLayerName => cmbRasterLayers.SelectedItem == null ? string.Empty : cmbRasterLayers.SelectedItem.ToString();
        
+        public AssignmentMethodsEnum PrimitiveAssignmentMethod { get => controller.GetPrimitiveAssignmentMethodByString(layersToSelectLine.SelectedItem.ToString()); }
+
         public int ProfileId
         {
             set { txtProfileName.Text = value.ToString(); }
@@ -187,7 +189,7 @@ namespace MilSpace.Profile
             PopulateComboBox(cmbVegetationLayer, mlmngr.PolygonLayers);
             //PopulateComboBox(cmbPointLayers, mlmngr.PointLayers);
 
-            layersToSelectLine.Items.AddRange(GetLayersForLineSelection.ToArray());
+            layersToSelectLine.Items.AddRange(controller.GetPrimitiveAssigmentMethodsString().ToArray());
             layersToSelectLine.SelectedItem = layersToSelectLine.Items[0];
 
             logger.InfoEx("> OnDocumentOpenFillDropdowns END");
@@ -296,8 +298,8 @@ namespace MilSpace.Profile
 
         private void Controller_OnMapSelectionChanged(SelectedGraphicsArgs selectedLines)
         {
-            lblSelectedPrimitivesValue.Text = selectedLines.LinesCount.ToString();
-            lblCommonLengthValue.Text = selectedLines.FullLength.ToString("F2");
+            //lblSelectedPrimitivesValue.Text = selectedLines.LinesCount.ToString();
+            //lblCommonLengthValue.Text = selectedLines.FullLength.ToString("F2");
         }
 
         public void SetController(MilSpaceProfileCalcsController controller)
@@ -1223,8 +1225,8 @@ namespace MilSpace.Profile
             basePointToolbar.Buttons["tlbbReturnCenterPoint"].ToolTipText = LocalizationContext.Instance.ReturnPointValueText;
 
             addAvailableProfilesSets.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnAddAvailableProfilesSetsToolTip", "Додати доступні набори профілів");
-            lblSelectedPrimitives.Text = LocalizationContext.Instance.FindLocalizedElement("LblSelectedPrimitivesText", "Вибрані об'єкти:");
-            lblCommonLength.Text = LocalizationContext.Instance.FindLocalizedElement("LblCommonLengthText", "Довжина вибраних об'єктів:");
+            //lblSelectedPrimitives.Text = LocalizationContext.Instance.FindLocalizedElement("LblSelectedPrimitivesText", "Вибрані об'єкти:");
+            //lblCommonLength.Text = LocalizationContext.Instance.FindLocalizedElement("LblCommonLengthText", "Довжина вибраних об'єктів:");
 
             //Profile Tabs
             profileTabPage.Text = LocalizationContext.Instance.FindLocalizedElement("TabProfileTabPageText", "Параметри профілю");
@@ -1759,6 +1761,16 @@ namespace MilSpace.Profile
         private void BtnPanToFun_Click(object sender, EventArgs e)
         {
             controller.PanToFun();
+        }
+
+        private void LayersToSelectLine_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //PrimitiveAssignmentMethod = controller.GetPrimitiveAssignmentMethodByString(layersToSelectLine.SelectedItem.ToString());
+        }
+
+        private void BtnPrimitiveAssignmentMethod_Click(object sender, EventArgs e)
+        {
+            controller.SetProfileSettings(ProfileSettingsTypeEnum.Primitives);
         }
     }
 }
