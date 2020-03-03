@@ -59,11 +59,6 @@
     <LocalizationOutputDirectory>$(OutputDirectory)\Localization</LocalizationOutputDirectory>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ESRI.ArcGIS.AddIns.SDK, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\ESRI.ArcGIS.AddIns.SDK\v4.0_10.4.0.0__8fc3cc631e44ad86\ESRI.ArcGIS.AddIns.SDK.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="ESRI.ArcGIS.ADF.Local, Version=10.6.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
@@ -75,6 +70,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Desktop.AddIns">
+      <HintPath>C:\Program Files (x86)\ArcGIS\Desktop10.4\bin\ESRI.ArcGIS.Desktop.AddIns.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Display, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
