@@ -241,6 +241,14 @@
       <Link>ModalWindows\GeometriesFromLayerForFunToPointsModalWindow.designer.cs</Link>
       <DependentUpon>GeometriesFromLayerForFunToPointsModalWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\Profile.Common\ModalWindows\GeometryFromFeatureLayerModalWindow.cs">
+      <Link>ModalWindows\GeometryFromFeatureLayerModalWindow.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\Profile.Common\ModalWindows\GeometryFromFeatureLayerModalWindow.designer.cs">
+      <Link>ModalWindows\GeometryFromFeatureLayerModalWindow.designer.cs</Link>
+      <DependentUpon>GeometryFromFeatureLayerModalWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="..\Profile.Common\ModalWindows\ObservationPointsListModalWindow.cs">
       <Link>ModalWindows\ObservationPointsListModalWindow.cs</Link>
       <SubType>Form</SubType>
@@ -418,6 +426,10 @@
     <EmbeddedResource Include="..\Profile.Common\ModalWindows\GeometriesFromLayerForFunToPointsModalWindow.resx">
       <Link>ModalWindows\GeometriesFromLayerForFunToPointsModalWindow.resx</Link>
       <DependentUpon>GeometriesFromLayerForFunToPointsModalWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Profile.Common\ModalWindows\GeometryFromFeatureLayerModalWindow.resx">
+      <Link>ModalWindows\GeometryFromFeatureLayerModalWindow.resx</Link>
+      <DependentUpon>GeometryFromFeatureLayerModalWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="..\Profile.Common\ModalWindows\ObservationPointsListModalWindow.resx">
       <Link>ModalWindows\ObservationPointsListModalWindow.resx</Link>

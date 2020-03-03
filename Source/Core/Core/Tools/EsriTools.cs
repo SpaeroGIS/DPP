@@ -421,21 +421,26 @@ namespace MilSpace.Core.Tools
             logger.InfoEx("FlashGeometry. Geometries flashed.");
         }
 
-        public static IEnumerable<IPolyline> CreatePolylinesFromPoints(IPoint[] points, ISpatialReference spatialReference)
+        public static IEnumerable<IPolyline> CreatePolylineFromPointsArray(IPoint[] points, ISpatialReference spatialReference)
         {
-            var polylines = new List<IPolyline>();
+            IGeometryBridge2 pGeoBrg = new GeometryEnvironment() as IGeometryBridge2;
 
-            for(int i = 0; i < points.Length - 1; i++)
-            {
-                var polyline = CreatePolylineFromPoints(points[i], points[i + 1]);
-                polyline.Project(spatialReference);
-                polylines.Add(polyline);
-            }
+            IPointCollection4 pPointColl = new PolylineClass();
 
-            return polylines;
+            //foreach(var point in points)
+            //{
+            //    pPointColl.AddPoint(point);
+            //}
+
+            pGeoBrg.SetPoints(pPointColl, ref points);
+            var polyline = pPointColl as IPolyline;
+            polyline.SpatialReference = points[0].SpatialReference;
+            polyline.Project(spatialReference);
+
+            return new List<IPolyline> { polyline };
         }
 
-        public static IEnumerable<IPolyline> CreateDefaultPolylinesForFun(IPoint centerPoint, IPoint[] points, IEnumerable<IGeometry> geometries, bool circle, bool isPointInside, double length,
+            public static IEnumerable<IPolyline> CreateDefaultPolylinesForFun(IPoint centerPoint, IPoint[] points, IEnumerable<IGeometry> geometries, bool circle, bool isPointInside, double length,
                                                                        out double minAzimuth, out double maxAzimuth, out double maxLength,  double centerAzimuth = -1)
         {
             double minAngle = 360;

@@ -302,7 +302,7 @@ namespace MilSpace.Profile
             if (View.SelectedProfileSettingsType == ProfileSettingsTypeEnum.Primitives)
             {
                 //GetSelectedGraphics();
-                //if (selectedOnMapLines != null)
+                //if(selectedOnMapLines != null)
                 //{
                 //    profileLines = selectedOnMapLines.ToList();
                 //}
@@ -1176,7 +1176,7 @@ namespace MilSpace.Profile
 
                     if(selectedOnMapLines != null)
                     {
-                        polylines = selectedOnMapLines.ToList();
+                        polylines = new List<IPolyline> { selectedOnMapLines.First() };
                     }
 
                     //polylines = new List<IPolyline>();
@@ -1189,7 +1189,7 @@ namespace MilSpace.Profile
 
                     if(points != null)
                     {
-                        polylines = EsriTools.CreatePolylinesFromPoints(points.Values.ToArray(), ArcMap.Document.FocusMap.SpatialReference).ToList();
+                        polylines = EsriTools.CreatePolylineFromPointsArray(points.Values.ToArray(), ArcMap.Document.FocusMap.SpatialReference).ToList();
                     }
 
                     break;
@@ -1197,6 +1197,26 @@ namespace MilSpace.Profile
 
                 case AssignmentMethodsEnum.FeatureLayers:
 
+                    var geometryFromFeatureLayerModal = new GeometryFromFeatureLayerModalWindow();
+                    var result = geometryFromFeatureLayerModal.ShowDialog();
+                    IGeometry geometry;
+
+                    if(result == DialogResult.OK)
+                    {
+                        geometry = geometryFromFeatureLayerModal.SelectedGeometry;
+
+                        var geomPoints = new List<IPoint>();
+                        var path = geometry as IPointCollection;
+
+                        for(int i = 0; i < path.PointCount; i++)
+                        {
+                            var point = path.Point[i].Clone();
+                            point.Project(ArcMap.Document.FocusMap.SpatialReference);
+                            geomPoints.Add(point);
+                        }
+
+                        polylines = EsriTools.CreatePolylineFromPointsArray(geomPoints.ToArray(), ArcMap.Document.FocusMap.SpatialReference).ToList();
+                    }
 
                     break;
             }

@@ -212,6 +212,7 @@
   <ModalObservPointsTitle>Вибір точки з шару точок спостереження</ModalObservPointsTitle>
   <ModalTargetObservPointsTitle>Вибір точок з шару точок спостереження</ModalTargetObservPointsTitle>
   <ModalTargetObservObjTitle>Вибір об'єктів спостереження</ModalTargetObservObjTitle>
+  <ModalGeometryFromLayerTitle>Вибір геометрії з векторного шару</ModalGeometryFromLayerTitle>
 
   <FbdSelectFolderDescription>Виберіть папку для збереження даних</FbdSelectFolderDescription>
   <TxtCreatorPlaceholder>Автор</TxtCreatorPlaceholder>
