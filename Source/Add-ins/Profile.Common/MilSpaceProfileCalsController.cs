@@ -579,9 +579,9 @@ namespace MilSpace.Profile
             }
         }
 
-        internal void PanToFun()
+        internal void PanToProfile(ProfileSettingsTypeEnum type)
         {
-            var lines = profileSettings[ProfileSettingsTypeEnum.Fun].ProfileLines;
+            var lines = profileSettings[type].ProfileLines;
             IEnvelope env = new EnvelopeClass();
 
             if(lines == null)
@@ -1179,8 +1179,6 @@ namespace MilSpace.Profile
                         polylines = new List<IPolyline> { selectedOnMapLines.First() };
                     }
 
-                    //polylines = new List<IPolyline>();
-
                     break;
 
                 case AssignmentMethodsEnum.GeoCalculator:
@@ -1221,6 +1219,7 @@ namespace MilSpace.Profile
                     break;
             }
 
+            SetPrimitiveInfo(polylines);
             return polylines;
         }
 
@@ -1500,6 +1499,29 @@ namespace MilSpace.Profile
             var avgAzimuth = azimuthsSum / linesCount;
 
             View.SetFunToPointsParams(avgAzimuth, avgAngle, length, linesCount);
+        }
+
+        private void SetPrimitiveInfo(List<IPolyline> lines)
+        {
+            if(lines == null || lines.Count == 0)
+            {
+                return;
+            }
+
+            double length = 0;
+            var segmentCount = 0;
+
+            foreach(var line in lines)
+            {
+                length += line.Length;
+                segmentCount += line.Vertices().Count();
+            }
+
+            var projLine = new Line { FromPoint = lines[0].FromPoint, ToPoint = lines.Last().ToPoint };
+            var projLength = projLine.Length;
+            var azimuth = projLine.Azimuth();
+
+            View.SetPrimitiveInfo(length, azimuth, projLength, segmentCount);
         }
 
         private Dictionary<int, IPoint> GetPointsFromGeoCalculator()

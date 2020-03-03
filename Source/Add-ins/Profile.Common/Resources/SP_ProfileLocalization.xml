@@ -11,6 +11,7 @@
   <BtnReverseToolTip>Змінити напрямок профілю</BtnReverseToolTip>
   <BtnReturnPointValueToolTip>Повернутися до дійсного значення точки</BtnReturnPointValueToolTip>
   <BtnPanToFunToolTip>Наблизити до набору профілів</BtnPanToFunToolTip>
+  <BtnPanToPrimitive>Наблизити до примітиву</BtnPanToPrimitive>
   <DgvProfilePropertiesAscendingAngleColToolTip>Максимальний кут підйому (градуси)</DgvProfilePropertiesAscendingAngleColToolTip>
   <DgvProfilePropertiesAzimuthColToolTip>Азимут</DgvProfilePropertiesAzimuthColToolTip>
   <DgvProfilePropertiesDescendingAngleColToolTip>Максимальний кут спуску (градуси)</DgvProfilePropertiesDescendingAngleColToolTip>
@@ -224,6 +225,11 @@
   <LbFunParamsAvgAzimuthText>Середній азимут:</LbFunParamsAvgAzimuthText>
   <LbFunParamsAvgAngleText>Середній кут між лініями:</LbFunParamsAvgAngleText>
   <LbFunParamsAvgLengthText>Середня довжина проекції лінії:</LbFunParamsAvgLengthText>
-  <LbFunParamsLinesCountText>Кількість ліній</LbFunParamsLinesCountText>
+  <LbFunParamsLinesCountText>Кількість ліній:</LbFunParamsLinesCountText>
+  <LbPrimitiveParamsTitleText>Параметру примітиву:</LbPrimitiveParamsTitleText>
+  <LbPrimitiveParamsLengthText>Довжина проекцій ліній:</LbPrimitiveParamsLengthText>
+  <LbPrimitiveParamsAzimuthText>Азимут між крайніми точками:</LbPrimitiveParamsAzimuthText>
+  <LbPrimitiveParamsProjLengthText>Відстань між крайніми точками:</LbPrimitiveParamsProjLengthText>
+  <LbPrimitiveParamsVerticesCountText>Кількість сегментів:</LbPrimitiveParamsVerticesCountText>
   
 </SP_ProfileLocalization>

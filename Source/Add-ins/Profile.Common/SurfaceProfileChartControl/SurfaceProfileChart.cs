@@ -605,6 +605,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             if(ProfilesProperties.Count == 1)
             {
                 var height = ProfilesProperties[0].MaxHeight;
+                var points = serie[0].Points.OrderBy(point => point.XValue);
+
                 if(!_isObserverHeightIgnore)
                 {
                     height += ProfilesProperties[0].ObserverHeight;
@@ -612,7 +614,8 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
                 profileChart.ChartAreas["Default"].AxisY.Maximum = height + height / 10;
                 profileChart.ChartAreas["Default"].AxisY.Minimum = ProfilesProperties[0].MinHeight - height / 10;
-                profileChart.ChartAreas["Default"].AxisX.Maximum = serie[0].Points.Last().XValue + serie[0].Points.Last().XValue / 10;
+                
+                profileChart.ChartAreas["Default"].AxisX.Maximum = points.Last().XValue + points.Last().XValue / 10;
             }
             else
             {

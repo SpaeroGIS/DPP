@@ -1011,6 +1011,18 @@ namespace MilSpace.Profile
             lbFunInfo.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbFunParamsLinesCountText", "Кількість ліній")} {count}");
         }
 
+        public void SetPrimitiveInfo(double length, double azimuth, double projectionLength, int segmentsCount)
+        {
+            lbGraphicsParam.Items.Clear();
+
+            lbGraphicsParam.Items.Add(LocalizationContext.Instance.FindLocalizedElement("LbPrimitiveParamsTitleText", "Параметру примітиву:"));
+            lbGraphicsParam.Items.Add(string.Empty);
+            lbGraphicsParam.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbPrimitiveParamsLengthText", "Довжина проекцій ліній:")} {Math.Round(length)}");
+            lbGraphicsParam.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbPrimitiveParamsAzimuthText", "Азимут між крайніми точками:")} {Math.Round(azimuth)}");
+            lbGraphicsParam.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbPrimitiveParamsProjLengthText", "Відстань між крайніми точками:")} {Math.Round(projectionLength)}");
+            lbGraphicsParam.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbPrimitiveParamsVerticesCountText", "Кількість сегментів:")} {segmentsCount}");
+        }
+
         public void SetFunTxtValues(double length, double maxAzimuth, double minAzimuth, int linesCount)
         {
             profileLength.Text = Math.Round(length).ToString();
@@ -1205,6 +1217,7 @@ namespace MilSpace.Profile
             toolTip.SetToolTip(reverseButton, LocalizationContext.Instance.FindLocalizedElement("BtnReverseToolTip", "Змінити напрямок профілю"));
             toolTip.SetToolTip(reverseSecondPointButton, LocalizationContext.Instance.FindLocalizedElement("BtnReverseToolTip", "Змінити напрямок профілю"));
             toolTip.SetToolTip(btnPanToFun, LocalizationContext.Instance.FindLocalizedElement("BtnPanToFunToolTip", "Наблизити до набору профілів"));
+            toolTip.SetToolTip(btnPanToPrimitive, LocalizationContext.Instance.FindLocalizedElement("BtnPanToPrimitive", "Наблизити до примітиву"));
 
             firstPointToolBar.Buttons["toolBarButton8"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnTakeCoordToolTip", "Взяти координати з карти");
             firstPointToolBar.Buttons["toolBarButton55"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnShowCoordToolTip", "Показати координати на карті");
@@ -1305,6 +1318,7 @@ namespace MilSpace.Profile
             btnCenterPointAssignmantMethod.Text = LocalizationContext.Instance.ChooseText;
             btnTargetObjAssignmentMethod.Text = LocalizationContext.Instance.ChooseText;
             btnChooseCreationMethod.Text = LocalizationContext.Instance.ChooseText;
+            btnPrimitiveAssignmentMethod.Text = LocalizationContext.Instance.ChooseText;
 
             profilesTreeView.Nodes["Points"].Text = LocalizationContext.Instance.FindLocalizedElement("TvProfilesPointsNodeText", "Відрізки");
             profilesTreeView.Nodes["Fun"].Text = LocalizationContext.Instance.FindLocalizedElement("TvProfilesFunNodeText", "\"Віяло\"");
@@ -1760,7 +1774,7 @@ namespace MilSpace.Profile
 
         private void BtnPanToFun_Click(object sender, EventArgs e)
         {
-            controller.PanToFun();
+            controller.PanToProfile(ProfileSettingsTypeEnum.Fun);
         }
 
         private void LayersToSelectLine_SelectedIndexChanged(object sender, EventArgs e)
@@ -1771,6 +1785,11 @@ namespace MilSpace.Profile
         private void BtnPrimitiveAssignmentMethod_Click(object sender, EventArgs e)
         {
             controller.SetProfileSettings(ProfileSettingsTypeEnum.Primitives);
+        }
+
+        private void BtnPanToPrimitive_Click(object sender, EventArgs e)
+        {
+            controller.PanToProfile(ProfileSettingsTypeEnum.Primitives);
         }
     }
 }
