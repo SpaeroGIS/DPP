@@ -52,7 +52,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ESRI.ArcGIS.3DAnalyst, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="ESRI.ArcGIS.ArcMapUI, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
@@ -80,7 +79,6 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Desktop.AddIns">
-      <HintPath>C:\Program Files (x86)\ArcGIS\Desktop10.4\bin\ESRI.ArcGIS.Desktop.AddIns.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Display, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
@@ -186,6 +184,11 @@
     </Compile>
     <Compile Include="Models\VisibilitySessionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AddInContent Include="Config.esriaddinx">
@@ -218,6 +221,10 @@
     <EmbeddedResource Include="..\3DVisualization.Common\VisibilitySessionsModalWindow.resx">
       <Link>VisibilitySessionsModalWindow.resx</Link>
       <DependentUpon>VisibilitySessionsModalWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -276,7 +283,7 @@
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
-  
+  -->
   <Target Name="Resources" BeforeTargets="Build">
     <Message Text="Copying.." />
     <Copy SourceFiles="@(None)" DestinationFiles="@(None->'Localization\SPPRD.%(Filename)%(Extension)')" Condition="%(None.Link) != ''" />
@@ -289,7 +296,6 @@
       <Output TaskParameter="OutputResources" ItemName="Resources" />
     </GenerateResource>
   </Target>
-  -->
   <Target Name="AfterBuild">
     <!-- Gives build warning when add-in targets file is not found. -->
     <Warning Text="Unable to create .esriAddin; missing ESRI ArcGIS Add-in SDK component(s)." Condition="!Exists('$(MSBuildExtensionsPath)\ESRI\ESRI.ArcGIS.AddIns.targets')" />

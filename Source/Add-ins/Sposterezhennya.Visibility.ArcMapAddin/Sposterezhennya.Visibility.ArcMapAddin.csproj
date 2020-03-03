@@ -85,7 +85,6 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Desktop.AddIns">
-      <HintPath>C:\Program Files (x86)\ArcGIS\Desktop10.4\bin\ESRI.ArcGIS.Desktop.AddIns.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Editor, Version=10.6.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
