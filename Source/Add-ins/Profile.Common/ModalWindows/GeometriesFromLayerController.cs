@@ -85,9 +85,19 @@ namespace MilSpace.Profile.ModalWindows
             return geometries;
         }
 
-        public List<string> GetNotPointFeatureLayers()
+        public List<string> GetNotPointFeatureLayers(bool withObservObj = false)
         {
-            var layers = _mapLayersManager.PolygonLayers.Where(l => !(l as IFeatureLayer).FeatureClass.AliasName.EndsWith("MilSp_Visible_ObjectsObservation_R")).Select(layer => layer.Name).ToList();
+            var layers = new List<string>();
+
+            if(withObservObj)
+            {
+                layers = _mapLayersManager.PolygonLayers.Select(layer => layer.Name).ToList();
+            }
+            else
+            {
+                layers = _mapLayersManager.PolygonLayers.Where(l => !(l as IFeatureLayer).FeatureClass.AliasName.EndsWith("MilSp_Visible_ObjectsObservation_R")).Select(layer => layer.Name).ToList();
+            }
+
             layers.AddRange(_mapLayersManager.LineLayers.Select(layer => layer.Name));
 
             return layers;

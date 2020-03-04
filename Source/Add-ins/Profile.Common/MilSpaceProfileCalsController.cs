@@ -98,6 +98,13 @@ namespace MilSpace.Profile
             { AssignmentMethodsEnum.SelectedGraphic, LocalizationContext.Instance.FindLocalizedElement("CmbTargetAssignmentMethodSelectedGraphicText", "Обрана графіка") }
         };
 
+        private Dictionary<AssignmentMethodsEnum, string> _primitiveAssigmentMethods = new Dictionary<AssignmentMethodsEnum, string>()
+        {
+            { AssignmentMethodsEnum.SelectedGraphic, LocalizationContext.Instance.FindLocalizedElement("CmbTargetAssignmentMethodSelectedGraphicText", "Обрана графіка") },
+            { AssignmentMethodsEnum.GeoCalculator, LocalizationContext.Instance.FindLocalizedElement("CmbTargetAssignmentMethodGeoCalcText", "ГеоКалькулятор") },
+            { AssignmentMethodsEnum.FeatureLayers, LocalizationContext.Instance.FindLocalizedElement("CmbTargetAssignmentMethodFeatureLayerText", "Векторний шар") },
+        };
+
         private Dictionary<ToPointsCreationMethodsEnum, string> _toPointsCreationMethods = new Dictionary<ToPointsCreationMethodsEnum, string>()
         {
             { ToPointsCreationMethodsEnum.AzimuthsCenter, LocalizationContext.Instance.FindLocalizedElement("CmbToPointsCreationMethodCenterText", "Азмимути (мін і макс), центр") },
@@ -290,36 +297,16 @@ namespace MilSpace.Profile
                     View.RecalculateFunWithParams();
                     return;
                 }
-                //try
-                //{
-                //    var lines = EsriTools.CreatePolylinesFromPointAndAzimuths(pointsToShow[ProfileSettingsPointButtonEnum.CenterFun], View.FunLength, View.FunLinesCount, View.FunAzimuth1, View.FunAzimuth2);
-                //    if(lines != null)
-                //    {
-                //        profileLines.AddRange(lines);
-                //    }
-
-                //    profileSetting.Azimuth1 = View.FunAzimuth1;
-                //    profileSetting.Azimuth2 = View.FunAzimuth2;
-                //}
-                //catch(MilSpaceProfileLackOfParameterException ex)
-                //{
-                //    logger.ErrorEx(ex.Message);
-                //    MessageBox.Show(ex.Message, Properties.Resources.AddinMessageBoxHeader, MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                //}
-                //catch(Exception ex)
-                //{
-                //    logger.ErrorEx(ex.Message);
-                //}
             }
 
             if (View.SelectedProfileSettingsType == ProfileSettingsTypeEnum.Primitives)
             {
-                GetSelectedGraphics();
-                if (selectedOnMapLines != null)
-                {
-                    profileLines = selectedOnMapLines.ToList();
-                }
+                //GetSelectedGraphics();
+                //if(selectedOnMapLines != null)
+                //{
+                //    profileLines = selectedOnMapLines.ToList();
+                //}
+                profileLines = CalcPrimitive(View.PrimitiveAssignmentMethod);
             }
 
             profileSetting.ProfileLines = profileLines.ToArray();
@@ -592,9 +579,9 @@ namespace MilSpace.Profile
             }
         }
 
-        internal void PanToFun()
+        internal void PanToProfile(ProfileSettingsTypeEnum type)
         {
-            var lines = profileSettings[ProfileSettingsTypeEnum.Fun].ProfileLines;
+            var lines = profileSettings[type].ProfileLines;
             IEnvelope env = new EnvelopeClass();
 
             if(lines == null)
@@ -1152,6 +1139,11 @@ namespace MilSpace.Profile
             return _toPointsCreationMethods.Values.ToArray();
         }
 
+        internal string[] GetPrimitiveAssigmentMethodsString()
+        {
+            return _primitiveAssigmentMethods.Values.ToArray();
+        }
+
         internal AssignmentMethodsEnum GetMethodByString(string methodString)
         {
             return _assignmentMethods.FirstOrDefault(method => method.Value.Equals(methodString)).Key;
@@ -1165,6 +1157,70 @@ namespace MilSpace.Profile
         internal ToPointsCreationMethodsEnum GetCreationMethodByString(string methodString)
         {
             return _toPointsCreationMethods.FirstOrDefault(method => method.Value.Equals(methodString)).Key;
+        }
+
+        internal AssignmentMethodsEnum GetPrimitiveAssignmentMethodByString(string methodString)
+        {
+            return _primitiveAssigmentMethods.FirstOrDefault(method => method.Value.Equals(methodString)).Key;
+        }
+
+        internal List<IPolyline> CalcPrimitive(AssignmentMethodsEnum assignmentMethod)
+        {
+            var polylines = new List<IPolyline>();
+
+            switch(assignmentMethod)
+            {
+                case AssignmentMethodsEnum.SelectedGraphic:
+
+                    GetSelectedGraphics();
+
+                    if(selectedOnMapLines != null)
+                    {
+                        polylines = new List<IPolyline> { selectedOnMapLines.First() };
+                    }
+
+                    break;
+
+                case AssignmentMethodsEnum.GeoCalculator:
+
+                    var points = GetPointsFromGeoCalculator();
+
+                    if(points != null)
+                    {
+                        polylines = EsriTools.CreatePolylineFromPointsArray(points.Values.ToArray(), ArcMap.Document.FocusMap.SpatialReference).ToList();
+                    }
+
+                    break;
+
+
+                case AssignmentMethodsEnum.FeatureLayers:
+
+                    var geometryFromFeatureLayerModal = new GeometryFromFeatureLayerModalWindow();
+                    var result = geometryFromFeatureLayerModal.ShowDialog();
+                    IGeometry geometry;
+
+                    if(result == DialogResult.OK)
+                    {
+                        geometry = geometryFromFeatureLayerModal.SelectedGeometry;
+
+                        var geomPoints = new List<IPoint>();
+                        var path = geometry as IPointCollection;
+
+                        for(int i = 0; i < path.PointCount; i++)
+                        {
+                            var point = path.Point[i].Clone();
+                            point.Project(ArcMap.Document.FocusMap.SpatialReference);
+                            geomPoints.Add(point);
+                        }
+
+                        polylines = EsriTools.CreatePolylineFromPointsArray(geomPoints.ToArray(), ArcMap.Document.FocusMap.SpatialReference).ToList();
+                    }
+
+                    break;
+            }
+
+            SetPrimitiveInfo(polylines);
+            return polylines;
         }
 
         internal void CalcFunToPoints(AssignmentMethodsEnum assignmentMethod, ToPointsCreationMethodsEnum creationMethod, bool isNewTarget, double length = -1)
@@ -1217,11 +1273,11 @@ namespace MilSpace.Profile
             {
                 bool isCircle = false;
 
-                var points = EsriTools.GetPointsFromGeometries(_funGeometries, centerPoint.SpatialReference, out isCircle);
+                var points = EsriTools.GetPointsFromGeometries(_funGeometries, centerPoint.SpatialReference, out isCircle).ToArray();
 
                 bool isPointInside = (_funGeometries.First().GeometryType == esriGeometryType.esriGeometryPoint) ? false : EsriTools.IsPointOnExtent(EsriTools.GetEnvelopeOfGeometriesList(new List<IGeometry>(_funGeometries)), pointsToShow[ProfileSettingsPointButtonEnum.CenterFun]);
 
-                if(points.Count() == 1 && points[0].Points.Count == 1 && !(isCircle && isPointInside))
+                if(points.Count() == 1 && points.Length == 1 && !(isCircle && isPointInside))
                 {
                     creationMethod = ToPointsCreationMethodsEnum.ToVertices;
                 }
@@ -1232,7 +1288,7 @@ namespace MilSpace.Profile
                     {
                         case ToPointsCreationMethodsEnum.Default:
 
-                            polylines = EsriTools.CreateDefaultPolylinesForFun(centerPoint, points.ToArray(),
+                            polylines = EsriTools.CreateDefaultPolylinesForFun(centerPoint, points, _funGeometries,
                                                                                   isCircle, isPointInside, length, out minAzimuth, out maxAzimuth, out maxLength).ToList();
 
                             break;
@@ -1242,7 +1298,7 @@ namespace MilSpace.Profile
                             var geomCenterPoint = FunCreationManager.GetCenterPoint(_funGeometries.ToList());
                             geomCenterPoint.Project(centerPoint.SpatialReference);
                             var lineToCenter = new Line { FromPoint = centerPoint, ToPoint = geomCenterPoint, SpatialReference = centerPoint.SpatialReference };
-                            polylines = EsriTools.CreateDefaultPolylinesForFun(centerPoint, points.ToArray(),
+                            polylines = EsriTools.CreateDefaultPolylinesForFun(centerPoint, points, _funGeometries,
                                                                                   isCircle, isPointInside, length, out minAzimuth, out maxAzimuth, out maxLength, lineToCenter.PosAzimuth()).ToList();
 
                             break;
@@ -1445,8 +1501,30 @@ namespace MilSpace.Profile
             View.SetFunToPointsParams(avgAzimuth, avgAngle, length, linesCount);
         }
 
-        
-        private IPoint GetPointFromGeoCalculator(ProfileSettingsPointButtonEnum pointType)
+        private void SetPrimitiveInfo(List<IPolyline> lines)
+        {
+            if(lines == null || lines.Count == 0)
+            {
+                return;
+            }
+
+            double length = 0;
+            var segmentCount = 0;
+
+            foreach(var line in lines)
+            {
+                length += line.Length;
+                segmentCount += line.Vertices().Count();
+            }
+
+            var projLine = new Line { FromPoint = lines[0].FromPoint, ToPoint = lines.Last().ToPoint };
+            var projLength = projLine.Length;
+            var azimuth = projLine.Azimuth();
+
+            View.SetPrimitiveInfo(length, azimuth, projLength, segmentCount);
+        }
+
+        private Dictionary<int, IPoint> GetPointsFromGeoCalculator()
         {
             Dictionary<int, IPoint> points;
 
@@ -1467,6 +1545,18 @@ namespace MilSpace.Profile
             {
                 MessageBox.Show(LocalizationContext.Instance.ErrorHappendText, LocalizationContext.Instance.MessageBoxTitle);
                 logger.ErrorEx($"> GetPointFromGeoCalculator Exception: {ex.Message}");
+                return null;
+            }
+
+            return points;
+        }
+
+        private IPoint GetPointFromGeoCalculator(ProfileSettingsPointButtonEnum pointType)
+        {
+            var points = GetPointsFromGeoCalculator();
+
+            if(points == null)
+            {
                 return null;
             }
 
@@ -1548,11 +1638,11 @@ namespace MilSpace.Profile
         
         private void OnMapSelectionChangedLocal()
         {
-            if (View.SelectedProfileSettingsType != ProfileSettingsTypeEnum.Primitives)
+            if (View.SelectedProfileSettingsType != ProfileSettingsTypeEnum.Primitives || View.PrimitiveAssignmentMethod  != AssignmentMethodsEnum.SelectedGraphic)
             {
                 return;
             }
-            GetSelectedGraphics();
+            //GetSelectedGraphics();
             SetProfileSettings(ProfileSettingsTypeEnum.Primitives);
         }
 

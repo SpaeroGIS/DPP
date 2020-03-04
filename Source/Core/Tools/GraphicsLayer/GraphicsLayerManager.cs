@@ -725,7 +725,7 @@ namespace MilSpace.Tools.GraphicsLayer
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
         }
 
-        public  void AddLineToMap(Dictionary<Guid, IPoint> points, string name)
+        public void AddLineToMap(Dictionary<Guid, IPoint> points, string name)
         {
             var prevPoint = points.First();
 
@@ -743,7 +743,7 @@ namespace MilSpace.Tools.GraphicsLayer
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
         }
 
-        public  void AddLineSegmentToMap(IPoint pointFrom, IPoint pointTo, string name, string fromPointGuid)
+        public void AddLineSegmentToMap(IPoint pointFrom, IPoint pointTo, string name, string fromPointGuid)
         {
             var color = (IRgbColor)new RgbColorClass() { Green = 255 };
             var polyline = EsriTools.CreatePolylineFromPoints(pointFrom, pointTo);
