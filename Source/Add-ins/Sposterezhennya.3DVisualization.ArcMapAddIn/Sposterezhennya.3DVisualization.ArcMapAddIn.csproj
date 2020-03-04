@@ -52,6 +52,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ESRI.ArcGIS.3DAnalyst, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="ESRI.ArcGIS.ArcMapUI, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
@@ -79,6 +80,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Desktop.AddIns">
+      <HintPath>C:\Program Files (x86)\ArcGIS\Desktop10.4\bin\ESRI.ArcGIS.Desktop.AddIns.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Display, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
@@ -284,18 +286,6 @@
   <Target Name="BeforeBuild">
   </Target>
   -->
-  <Target Name="Resources" BeforeTargets="Build">
-    <Message Text="Copying.." />
-    <Copy SourceFiles="@(None)" DestinationFiles="@(None->'Localization\SPPRD.%(Filename)%(Extension)')" Condition="%(None.Link) != ''" />
-    <Message Text="Copied" />
-    <ItemGroup>
-      <SourceLocalization Include="Localization\*.resx" />
-    </ItemGroup>
-    <MakeDir Directories="$(OutputPath)Localization" />
-    <GenerateResource Sources="@(SourceLocalization)" OutputResources="@(SourceLocalization->'Localization\%(Filename).resources')">
-      <Output TaskParameter="OutputResources" ItemName="Resources" />
-    </GenerateResource>
-  </Target>
   <Target Name="AfterBuild">
     <!-- Gives build warning when add-in targets file is not found. -->
     <Warning Text="Unable to create .esriAddin; missing ESRI ArcGIS Add-in SDK component(s)." Condition="!Exists('$(MSBuildExtensionsPath)\ESRI\ESRI.ArcGIS.AddIns.targets')" />
