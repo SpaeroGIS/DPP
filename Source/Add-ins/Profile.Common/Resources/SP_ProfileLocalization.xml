@@ -144,21 +144,25 @@
   <TvProfilesFunNodeText>"Віяло"</TvProfilesFunNodeText>
   <TvProfilesPointsNodeText>Відрізки</TvProfilesPointsNodeText>
   <TvProfilesPritiveNodeText>Графіка</TvProfilesPritiveNodeText>
-  <TxtAttrProfileAzimuth1Text>Азимут 1:</TxtAttrProfileAzimuth1Text>
-  <TxtAttrProfileAzimuth2Text>Азимут 2:</TxtAttrProfileAzimuth2Text>
+  <TxtAttrProfileAzimuth1Text>Початковий азимут:</TxtAttrProfileAzimuth1Text>
+  <TxtAttrProfileAzimuth2Text>Кінцевий азимут:</TxtAttrProfileAzimuth2Text>
   <TxtAttrProfileAzimuthText>Азимут:</TxtAttrProfileAzimuthText>
-  <TxtAttrProfileBasePointText>Базова точка (довгота / широта):</TxtAttrProfileBasePointText>
+  <TxtAttrProfileBasePointXText>Базова точка (довгота):</TxtAttrProfileBasePointXText>
+  <TxtAttrProfileBasePointYText>Базова точка (широта):</TxtAttrProfileBasePointYText>
   <TxtAttrProfileCountText>Кількість ліній:</TxtAttrProfileCountText>
   <TxtAttrProfileCreatorText>Автор:</TxtAttrProfileCreatorText>
   <TxtAttrProfileDateText>Дата:</TxtAttrProfileDateText>
   <TxtAttrProfileDistanceText>Відстань:</TxtAttrProfileDistanceText>
-  <TxtAttrProfileEndPointText>Кінець в точці:</TxtAttrProfileEndPointText>
+  <TxtAttrProfileEndPointXText>Кінцева точка (довгота):</TxtAttrProfileEndPointXText>
+  <TxtAttrProfileEndPointYText>Кінцева точка (широта):</TxtAttrProfileEndPointYText>
   <TxtAttrProfileIdText>Ідентифікатор:</TxtAttrProfileIdText>
   <TxtAttrProfileNameText>Назва:</TxtAttrProfileNameText>
-  <TxtAttrProfilePointOfViewText>Точка спостереження:</TxtAttrProfilePointOfViewText>
-  <TxtAttrProfileStartPointText>Початок в точці:</TxtAttrProfileStartPointText>
+  <TxtAttrProfilePointOfViewText>Висота, м:</TxtAttrProfilePointOfViewText>
+  <TxtAttrProfileStartPointXText>Початкова точка (довгота):</TxtAttrProfileStartPointXText>
+  <TxtAttrProfileStartPointYText>Початкова точка (широта):</TxtAttrProfileStartPointYText>
   <TxtAttrProfileTypeText>Тип:</TxtAttrProfileTypeText>
   <TxtTreeViewProfileText>Профіль:</TxtTreeViewProfileText>
+  <TxtTreeViewProfileSurfaceText>Поверхня:</TxtTreeViewProfileSurfaceText>
 
   <MsgLineNotFoundErrorText>Лінію не знайдено</MsgLineNotFoundErrorText>
   <MsgFolderAlreadyExistText>Каталог  "{0}"  вже існує \n Ви дійсно хочете оновити дані?</MsgFolderAlreadyExistText>

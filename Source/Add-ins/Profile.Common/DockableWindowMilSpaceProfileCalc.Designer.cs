@@ -190,6 +190,8 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.clearExtraGraphic = new System.Windows.Forms.ToolStripButton();
             this.lblProfileList = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.lblProfileInfoTitle = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.profileTabPage.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -226,6 +228,7 @@
             this.profileTreeTabPage.SuspendLayout();
             this.panel6.SuspendLayout();
             this.profilesToolStrip.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -1945,6 +1948,7 @@
             // profileTreeTabPage
             // 
             this.profileTreeTabPage.Controls.Add(this.profilesTreeView);
+            this.profileTreeTabPage.Controls.Add(this.panel2);
             this.profileTreeTabPage.Controls.Add(this.lvProfileAttributes);
             this.profileTreeTabPage.Controls.Add(this.panel6);
             this.profileTreeTabPage.Controls.Add(this.lblProfileList);
@@ -1984,7 +1988,7 @@
             treeNode2,
             treeNode3});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
-            this.profilesTreeView.Size = new System.Drawing.Size(335, 410);
+            this.profilesTreeView.Size = new System.Drawing.Size(335, 356);
             this.profilesTreeView.TabIndex = 35;
             this.profilesTreeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.profilesTreeView_AfterCheck);
             // 
@@ -1996,9 +2000,9 @@
             this.lvProfileAttributes.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lvProfileAttributes.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvProfileAttributes.HideSelection = false;
-            this.lvProfileAttributes.Location = new System.Drawing.Point(0, 472);
+            this.lvProfileAttributes.Location = new System.Drawing.Point(0, 456);
             this.lvProfileAttributes.Name = "lvProfileAttributes";
-            this.lvProfileAttributes.Size = new System.Drawing.Size(335, 286);
+            this.lvProfileAttributes.Size = new System.Drawing.Size(335, 302);
             this.lvProfileAttributes.TabIndex = 36;
             this.lvProfileAttributes.UseCompatibleStateImageBehavior = false;
             this.lvProfileAttributes.View = System.Windows.Forms.View.Details;
@@ -2203,6 +2207,25 @@
             this.lblProfileList.TabIndex = 1;
             this.lblProfileList.Text = "Список профилей";
             // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.SystemColors.Control;
+            this.panel2.Controls.Add(this.lblProfileInfoTitle);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel2.Location = new System.Drawing.Point(0, 418);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(335, 38);
+            this.panel2.TabIndex = 37;
+            // 
+            // lblProfileInfoTitle
+            // 
+            this.lblProfileInfoTitle.AutoSize = true;
+            this.lblProfileInfoTitle.Location = new System.Drawing.Point(41, 16);
+            this.lblProfileInfoTitle.Name = "lblProfileInfoTitle";
+            this.lblProfileInfoTitle.Size = new System.Drawing.Size(35, 13);
+            this.lblProfileInfoTitle.TabIndex = 0;
+            this.lblProfileInfoTitle.Text = "label1";
+            // 
             // DockableWindowMilSpaceProfileCalc
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2279,6 +2302,8 @@
             this.panel6.PerformLayout();
             this.profilesToolStrip.ResumeLayout(false);
             this.profilesToolStrip.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2452,5 +2477,7 @@
         private System.Windows.Forms.ListBox lbGraphicsParam;
         private System.Windows.Forms.Button btnPrimitiveAssignmentMethod;
         private System.Windows.Forms.Button btnPanToPrimitive;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label lblProfileInfoTitle;
     }
 }

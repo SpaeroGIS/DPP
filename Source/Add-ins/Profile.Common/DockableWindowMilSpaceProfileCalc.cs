@@ -1407,37 +1407,47 @@ namespace MilSpace.Profile
                 newNode.SetProfileType(ConvertProfileTypeToString(profile.DefinitionType));
                 if (profile.DefinitionType == ProfileSettingsTypeEnum.Points)
                 {
-                    var firstX = profile.ProfileLines.First().Line.FromPoint.X.ToFormattedString();
-                    var firstY = profile.ProfileLines.First().Line.FromPoint.Y.ToFormattedString();
-                    var secondX = profile.ProfileLines.First().Line.ToPoint.X.ToFormattedString();
-                    var secondY = profile.ProfileLines.First().Line.ToPoint.Y.ToFormattedString();
-                    var lineDistance = profile.ProfileLines.First().Line.Length.ToString("F5");
+                    var fromPoint = profile.ProfileLines.First().Line.FromPoint.CloneWithProjecting();
+                    var toPoint = profile.ProfileLines.First().Line.ToPoint.CloneWithProjecting();
 
-                    newNode.SetBasePoint($"X= {firstX}; Y= {firstY};");
-                    newNode.SetToPoint($"X= {secondX}; Y= {secondY};");
+                    var firstX = fromPoint.X.ToFormattedString();
+                    var firstY = fromPoint.Y.ToFormattedString();
+                    var secondX = toPoint.X.ToFormattedString();
+                    var secondY = toPoint.Y.ToFormattedString();
+                    var lineDistance = profile.ProfileLines.First().Line.Length.ToString("D");
+
+                    newNode.SetBasePointX(firstX);
+                    newNode.SetBasePointY(firstY);
+                    newNode.SetToPointX(secondX);
+                    newNode.SetToPointY(secondY);
                     newNode.SetBasePointHeight(profile.ObserverHeight.ToString());
                     newNode.SetToPointHeight(SectionHeightSecond.ToString());
                     newNode.SetLineDistance(lineDistance);
-
+                    newNode.SetSurface(profile.SurfaceLayerName);
                 }
                 else if (profile.DefinitionType == ProfileSettingsTypeEnum.Fun)
                 {
-                    var basePointX = profile.ProfileLines.First().Line.FromPoint.X.ToFormattedString();
-                    var basePointY = profile.ProfileLines.First().Line.FromPoint.Y.ToFormattedString();
-                    var lineDistance = profile.ProfileLines.First().Line.Length.ToString("F5");
+                    var fromPoint = profile.ProfileLines.First().Line.FromPoint.CloneWithProjecting();
+
+                    var basePointX = fromPoint.X.ToFormattedString();
+                    var basePointY = fromPoint.Y.ToFormattedString();
+                    var lineDistance = profile.ProfileLines.First().Line.Length.ToString("D");
                     var linesCount = profile.ProfileLines.Length.ToString();
 
-                    newNode.SetBasePoint($"X= {basePointX}; Y= {basePointY};");
+                    newNode.SetBasePointX(basePointX);
+                    newNode.SetBasePointY(basePointY);
                     newNode.SetLineCount(linesCount);
                     newNode.SetAzimuth1(profile.Azimuth1);
                     newNode.SetAzimuth2(profile.Azimuth2);
                     newNode.SetBasePointHeight(profile.ObserverHeight.ToString());
                     newNode.SetLineDistance(lineDistance);
+                    newNode.SetSurface(profile.SurfaceLayerName);
                 }
                 else if (profile.DefinitionType == ProfileSettingsTypeEnum.Primitives)
                 {
-                    var linesCount = profile.ProfileLines.Length.ToString();
+                    var linesCount = profile.ProfileLines.Length.ToString("D");
                     newNode.SetLineCount(linesCount);
+                    newNode.SetSurface(profile.SurfaceLayerName);
                 }
 
                 newNode.SetCreatorName(profile.CreatedBy);
