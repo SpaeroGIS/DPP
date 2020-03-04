@@ -59,11 +59,6 @@
     <LocalizationOutputDirectory>$(OutputDirectory)\Localization</LocalizationOutputDirectory>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ESRI.ArcGIS.AddIns.SDK, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\ESRI.ArcGIS.AddIns.SDK\v4.0_10.4.0.0__8fc3cc631e44ad86\ESRI.ArcGIS.AddIns.SDK.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="ESRI.ArcGIS.ADF.Local, Version=10.6.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
@@ -76,6 +71,7 @@
     </Reference>
     <Reference Include="ESRI.ArcGIS.Desktop.AddIns">
       <Private>False</Private>
+      <HintPath>C:\Program Files (x86)\ArcGIS\Desktop10.4\bin\ESRI.ArcGIS.Desktop.AddIns.dll</HintPath>
     </Reference>
     <Reference Include="ESRI.ArcGIS.Display, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -240,6 +236,14 @@
     <Compile Include="..\Profile.Common\ModalWindows\GeometriesFromLayerForFunToPointsModalWindow.designer.cs">
       <Link>ModalWindows\GeometriesFromLayerForFunToPointsModalWindow.designer.cs</Link>
       <DependentUpon>GeometriesFromLayerForFunToPointsModalWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\Profile.Common\ModalWindows\GeometryFromFeatureLayerModalWindow.cs">
+      <Link>ModalWindows\GeometryFromFeatureLayerModalWindow.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\Profile.Common\ModalWindows\GeometryFromFeatureLayerModalWindow.designer.cs">
+      <Link>ModalWindows\GeometryFromFeatureLayerModalWindow.designer.cs</Link>
+      <DependentUpon>GeometryFromFeatureLayerModalWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="..\Profile.Common\ModalWindows\ObservationPointsListModalWindow.cs">
       <Link>ModalWindows\ObservationPointsListModalWindow.cs</Link>
@@ -418,6 +422,10 @@
     <EmbeddedResource Include="..\Profile.Common\ModalWindows\GeometriesFromLayerForFunToPointsModalWindow.resx">
       <Link>ModalWindows\GeometriesFromLayerForFunToPointsModalWindow.resx</Link>
       <DependentUpon>GeometriesFromLayerForFunToPointsModalWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Profile.Common\ModalWindows\GeometryFromFeatureLayerModalWindow.resx">
+      <Link>ModalWindows\GeometryFromFeatureLayerModalWindow.resx</Link>
+      <DependentUpon>GeometryFromFeatureLayerModalWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="..\Profile.Common\ModalWindows\ObservationPointsListModalWindow.resx">
       <Link>ModalWindows\ObservationPointsListModalWindow.resx</Link>
