@@ -388,6 +388,15 @@ namespace MilSpace.Core.Tools
             }
         }
 
+        public static void ZoomToGeometry(IActiveView view, IGeometry geometry)
+        {
+            var transformation = view.ScreenDisplay.DisplayTransformation as IDisplayTransformationScales;
+            var scale = transformation.CalculateScale(geometry.Envelope);
+            transformation.ZoomTo(geometry.Envelope, scale);
+            view.Refresh();
+            view.ScreenDisplay.UpdateWindow();
+        }
+
         public static void FlashGeometry(IScreenDisplay display, IEnumerable<IGeometry> geometries)
         {
             IRgbColor color = new RgbColor();

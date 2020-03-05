@@ -269,8 +269,8 @@ namespace MilSpace.Profile
 
         private void OnListViewResize(object sender, EventArgs eventArgs)
         {
-            lvProfileAttributes.Columns[0].Width = -1;
-            lvProfileAttributes.Columns[0].Width += 5;
+            //lvProfileAttributes.Columns[0].Width = -1;
+            //lvProfileAttributes.Columns[0].Width += 5;
         }
 
         private static void PopulateComboBox(ComboBox comboBox, IEnumerable<ILayer> layers)
@@ -1099,7 +1099,7 @@ namespace MilSpace.Profile
             var node = profilesTreeView.SelectedNode;
             var ids = GetProfileAndLineIds(node);
 
-            Controller.ShowProfileOnMap();//ShowProfileOnMap(ids.Item1, ids.Item2);
+            controller.ShowProfileOnMap(ids.Item1, ids.Item2);
         }
 
         private void profilesTreeView_AfterCheck(object sender, TreeViewEventArgs e)
