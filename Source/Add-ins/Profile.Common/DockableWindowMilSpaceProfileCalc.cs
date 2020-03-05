@@ -263,12 +263,14 @@ namespace MilSpace.Profile
 
                 lvProfileAttributes.Items.Add(lvItem);
             }
+
+            SetListView();
         }
 
         private void OnListViewResize(object sender, EventArgs eventArgs)
         {
-            lvProfileAttributes.Columns[0].Width = lvProfileAttributes.Width / 2 - 10;
-            lvProfileAttributes.Columns[1].Width = lvProfileAttributes.Width / 2 - 10;
+            lvProfileAttributes.Columns[0].Width = -1;
+            lvProfileAttributes.Columns[0].Width += 5;
         }
 
         private static void PopulateComboBox(ComboBox comboBox, IEnumerable<ILayer> layers)
@@ -1294,7 +1296,7 @@ namespace MilSpace.Profile
             lblLengthInfo.Text = LocalizationContext.Instance.LengthInfoText;
             lblAzimuthInfo.Text = LocalizationContext.Instance.AzimuthInfoText;
             lblTargetObj.Text = LocalizationContext.Instance.FindLocalizedElement("LblTargetObjText", "Цільовий об'єкт");
-
+            lblProfileInfoTitle.Text = LocalizationContext.Instance.FindLocalizedElement("LblProfileInfoTitle", "Параметри набору/профілю");
 
             lblFirstPointInfo.Text = string.Empty;
             lblSecondPointInfo.Text = string.Empty;
@@ -1388,7 +1390,6 @@ namespace MilSpace.Profile
 
         public bool AddNodeToTreeView(ProfileSession profile)
         {
-
             int imageIndex = nodeDefinition[profile.DefinitionType][0];
             int selectedImageIndex = nodeDefinition[profile.DefinitionType][1];
 
@@ -1405,47 +1406,67 @@ namespace MilSpace.Profile
 
                 newNode.SetProfileName(profile.SessionName);
                 newNode.SetProfileType(ConvertProfileTypeToString(profile.DefinitionType));
-                if (profile.DefinitionType == ProfileSettingsTypeEnum.Points)
+                if(profile.DefinitionType == ProfileSettingsTypeEnum.Points)
                 {
-                    var fromPoint = profile.ProfileLines.First().Line.FromPoint.CloneWithProjecting();
-                    var toPoint = profile.ProfileLines.First().Line.ToPoint.CloneWithProjecting();
+                    var fromPoint = profile.ProfileSurfaces.First().ProfileSurfacePoints.First();
+                    var toPoint = profile.ProfileSurfaces.First().ProfileSurfacePoints.Last();
 
                     var firstX = fromPoint.X.ToFormattedString();
                     var firstY = fromPoint.Y.ToFormattedString();
                     var secondX = toPoint.X.ToFormattedString();
                     var secondY = toPoint.Y.ToFormattedString();
-                    var lineDistance = profile.ProfileLines.First().Line.Length.ToString("D");
+                    var lineDistance = profile.ProfileLines.First().Line.Length.ToString("F0");
 
                     newNode.SetBasePointX(firstX);
                     newNode.SetBasePointY(firstY);
+                    newNode.SetBasePointHeight(profile.ObserverHeight.ToString());
+                    newNode.SetBasePointFromSurfaceHeight(fromPoint.Z.ToFormattedString(1));
                     newNode.SetToPointX(secondX);
                     newNode.SetToPointY(secondY);
-                    newNode.SetBasePointHeight(profile.ObserverHeight.ToString());
                     newNode.SetToPointHeight(SectionHeightSecond.ToString());
+                    newNode.SetToPointFromSurfaceHeight(toPoint.Z.ToFormattedString(1));
                     newNode.SetLineDistance(lineDistance);
+                    newNode.SetAzimuth(profile.ProfileLines.First().Azimuth.ToString("F0"));
                     newNode.SetSurface(profile.SurfaceLayerName);
                 }
-                else if (profile.DefinitionType == ProfileSettingsTypeEnum.Fun)
+                else if(profile.DefinitionType == ProfileSettingsTypeEnum.Fun)
                 {
                     var fromPoint = profile.ProfileLines.First().Line.FromPoint.CloneWithProjecting();
 
                     var basePointX = fromPoint.X.ToFormattedString();
                     var basePointY = fromPoint.Y.ToFormattedString();
-                    var lineDistance = profile.ProfileLines.First().Line.Length.ToString("D");
+                    var lineDistance = profile.ProfileLines.First().Line.Length.ToString("F0");
                     var linesCount = profile.ProfileLines.Length.ToString();
 
                     newNode.SetBasePointX(basePointX);
                     newNode.SetBasePointY(basePointY);
-                    newNode.SetLineCount(linesCount);
+                    newNode.SetBasePointHeight(profile.ObserverHeight.ToString());
+                    newNode.SetBasePointFromSurfaceHeight(profile.ProfileSurfaces.First().ProfileSurfacePoints.First().Z.ToFormattedString(1));
+                    newNode.SetLineDistance(lineDistance);
                     newNode.SetAzimuth1(profile.Azimuth1);
                     newNode.SetAzimuth2(profile.Azimuth2);
-                    newNode.SetBasePointHeight(profile.ObserverHeight.ToString());
-                    newNode.SetLineDistance(lineDistance);
+                    newNode.SetLineCount(linesCount);
                     newNode.SetSurface(profile.SurfaceLayerName);
                 }
-                else if (profile.DefinitionType == ProfileSettingsTypeEnum.Primitives)
+                else if(profile.DefinitionType == ProfileSettingsTypeEnum.Primitives)
                 {
-                    var linesCount = profile.ProfileLines.Length.ToString("D");
+                    var fromPoint = profile.ProfileSurfaces.First().ProfileSurfacePoints.First();
+                    var toPoint = profile.ProfileSurfaces.Last().ProfileSurfacePoints.Last();
+
+                    var firstX = fromPoint.X.ToFormattedString();
+                    var firstY = fromPoint.Y.ToFormattedString();
+                    var secondX = toPoint.X.ToFormattedString();
+                    var secondY = toPoint.Y.ToFormattedString();
+                    var linesCount = profile.ProfileLines.First().Vertices.Count().ToString("F0");
+
+                    newNode.SetBasePointX(firstX);
+                    newNode.SetBasePointY(firstY);
+                    newNode.SetBasePointHeight(profile.ObserverHeight.ToString());
+                    newNode.SetBasePointFromSurfaceHeight(fromPoint.Z.ToFormattedString(1));
+                    newNode.SetToPointX(secondX);
+                    newNode.SetToPointY(secondY);
+                    newNode.SetToPointHeight(SectionHeightSecond.ToString());
+                    newNode.SetToPointFromSurfaceHeight(toPoint.Z.ToFormattedString(1));
                     newNode.SetLineCount(linesCount);
                     newNode.SetSurface(profile.SurfaceLayerName);
                 }
@@ -1459,6 +1480,10 @@ namespace MilSpace.Profile
 
                 foreach (var line in profile.ProfileLines)
                 {
+                    var profileSurface = profile.ProfileSurfaces.FirstOrDefault(surface => surface.LineId == line.Id);
+                   
+                    var fromPoint = (profileSurface == null) ? new ProfileSurfacePoint { X = line.PointFrom.X, Y = line.PointFrom.Y, Z = line.PointFrom.Z } : profileSurface.ProfileSurfacePoints.First();
+                    var toPoint = (profileSurface == null) ? new ProfileSurfacePoint { X = line.PointTo.X, Y = line.PointTo.Y, Z = line.PointTo.Z } : profileSurface.ProfileSurfacePoints.Last();
                     var azimuth = line.Azimuth.ToString("F0");
                     var nodeName = profile.DefinitionType == ProfileSettingsTypeEnum.Points
                         ? $"{azimuth}{Degree}" :
@@ -1469,11 +1494,17 @@ namespace MilSpace.Profile
                     childNode.Tag = line.Id;
                     childNode.Checked = newNode.Checked;
                     childNode.IsProfileNode = false;
-                    childNode.SetLineDistance(line.Length.ToString("F5"));
-                    childNode.SetStartPoint($"X={line.Line.FromPoint.X:F5}; Y={line.Line.FromPoint.Y:F5}");
-                    childNode.SetToPoint($"X={line.Line.ToPoint.X:F5}; Y={line.Line.ToPoint.Y:F5}");
-
+                    childNode.SetBasePointX(fromPoint.X.ToFormattedString());
+                    childNode.SetBasePointY(fromPoint.Y.ToFormattedString());
+                    childNode.SetBasePointHeight(profile.ObserverHeight.ToString());
+                    childNode.SetBasePointFromSurfaceHeight(fromPoint.Z.ToFormattedString(1));
+                    childNode.SetToPointX(toPoint.X.ToFormattedString());
+                    childNode.SetToPointY(toPoint.Y.ToFormattedString());
+                    childNode.SetToPointHeight(SectionHeightSecond.ToString());
+                    childNode.SetToPointFromSurfaceHeight(toPoint.Z.ToFormattedString(1));
+                    childNode.SetLineDistance(line.Line.Length.ToString("F0"));
                     childNode.SetAzimuth($"{azimuth}{Degree}");
+                    childNode.SetSurface(profile.SurfaceLayerName);
 
                     logger.InfoEx($"Line {nodeName} was added to the tree");
                 }
@@ -1612,14 +1643,16 @@ namespace MilSpace.Profile
             {
                 profileSettingsTab.SelectTab(0);
 
-                var baseValue = rows.Find(AttributeKeys.BasePoint)[AttributeKeys.ValueColumnName].ToString();
+                var baseValueX = rows.Find(AttributeKeys.BasePointX)[AttributeKeys.ValueColumnName].ToString();
+                var baseValueY = rows.Find(AttributeKeys.BasePointX)[AttributeKeys.ValueColumnName].ToString();
 
-                var basePoint = GetPointFromRowValue(baseValue);
+                var basePoint = GetPointFromRowValue(baseValueX, baseValueY);
                 controller.SetFirsPointForLineProfile(basePoint.CloneWithProjecting(), basePoint);
 
-                var toValue = rows.Find(AttributeKeys.ToPoint)[AttributeKeys.ValueColumnName].ToString();
+                var toValueX = rows.Find(AttributeKeys.ToPointX)[AttributeKeys.ValueColumnName].ToString();
+                var toValueY = rows.Find(AttributeKeys.ToPointY)[AttributeKeys.ValueColumnName].ToString();
 
-                var toPoint = GetPointFromRowValue(toValue);
+                var toPoint = GetPointFromRowValue(toValueX, toValueY);
                 controller.SetSecondfPointForLineProfile(toPoint.CloneWithProjecting(), toPoint);
 
                 txtFirstHeight.Text = rows.Find(AttributeKeys.SectionFirstPointHeight)[AttributeKeys.ValueColumnName].ToString();
@@ -1629,10 +1662,11 @@ namespace MilSpace.Profile
             {
                 profileSettingsTab.SelectTab(1);
 
-                var baseValue = rows.Find(AttributeKeys.BasePoint)[AttributeKeys.ValueColumnName].ToString();
+                var baseValueX = rows.Find(AttributeKeys.BasePointX)[AttributeKeys.ValueColumnName].ToString();
+                var baseValueY = rows.Find(AttributeKeys.BasePointX)[AttributeKeys.ValueColumnName].ToString();
 
-                var basePoint = GetPointFromRowValue(baseValue);
-                controller.SetCenterPointForFunProfile(basePoint.CloneWithProjecting(), basePoint);
+                var basePoint = GetPointFromRowValue(baseValueX, baseValueY);
+                controller.SetFirsPointForLineProfile(basePoint.CloneWithProjecting(), basePoint);
 
                 txtCenterPointHeight.Text = rows.Find(AttributeKeys.SectionFirstPointHeight)[AttributeKeys.ValueColumnName].ToString();
 
@@ -1645,6 +1679,23 @@ namespace MilSpace.Profile
             }
 
             controller.SetProfileSettings(profileType);
+        }
+
+        private IPoint GetPointFromRowValue(string xValue, string yValue)
+        {
+            //var points = rowValue.Split(';');
+
+            var pointX = Convert.ToDouble(Regex.Match(xValue, @"\d+,?\d+").Value);
+            var pointY = Convert.ToDouble(Regex.Match(yValue, @"\d+,?\d+").Value);
+
+          //  var av = ArcMap.Document.ActivatedView;
+
+            return new Point()
+            {
+                X = pointX,
+                Y = pointY,
+                SpatialReference = EsriTools.Wgs84Spatialreference
+            };
         }
 
         private IPoint GetPointFromRowValue(string rowValue)
@@ -1786,12 +1837,7 @@ namespace MilSpace.Profile
         {
             controller.PanToProfile(ProfileSettingsTypeEnum.Fun);
         }
-
-        private void LayersToSelectLine_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //PrimitiveAssignmentMethod = controller.GetPrimitiveAssignmentMethodByString(layersToSelectLine.SelectedItem.ToString());
-        }
-
+        
         private void BtnPrimitiveAssignmentMethod_Click(object sender, EventArgs e)
         {
             controller.SetProfileSettings(ProfileSettingsTypeEnum.Primitives);
@@ -1800,6 +1846,15 @@ namespace MilSpace.Profile
         private void BtnPanToPrimitive_Click(object sender, EventArgs e)
         {
             controller.PanToProfile(ProfileSettingsTypeEnum.Primitives);
+        }
+
+        private void SetListView()
+        {
+            lvProfileAttributes.Columns.Add("Attribute", -1);
+            lvProfileAttributes.Columns[0].Width += 5;
+            lvProfileAttributes.Columns.Add("Value", -1);
+
+            lvProfileAttributes.HeaderStyle = ColumnHeaderStyle.None;
         }
     }
 }

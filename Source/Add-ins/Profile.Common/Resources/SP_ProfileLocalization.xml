@@ -121,6 +121,7 @@
   <LblFieldsText>Поле</LblFieldsText>
   <LblTargetObjText>Цільовий об'єкт</LblTargetObjText>
   <LblFunParametersText>Правило створення та параметри</LblFunParametersText>
+  <LblProfileInfoTitle>Параметри набору/профілю</LblProfileInfoTitle>
   <LvProfileDetailsAnglesText>Кути:</LvProfileDetailsAnglesText>
   <LvProfileDetailsAzimuthText>Азимут:</LvProfileDetailsAzimuthText>
   <LvProfileDetailsEndPointsText>Початок - кінець</LvProfileDetailsEndPointsText>
@@ -157,12 +158,15 @@
   <TxtAttrProfileEndPointYText>Кінцева точка (широта):</TxtAttrProfileEndPointYText>
   <TxtAttrProfileIdText>Ідентифікатор:</TxtAttrProfileIdText>
   <TxtAttrProfileNameText>Назва:</TxtAttrProfileNameText>
-  <TxtAttrProfilePointOfViewText>Висота, м:</TxtAttrProfilePointOfViewText>
+  <TxtAttrProfilePointOfViewText>Висота початкової точки над поверхнею, м:</TxtAttrProfilePointOfViewText>
+  <TxtAttrProfilePointToHeightText>Висота кінцевої точки над поверхнею, м:</TxtAttrProfilePointToHeightText>
   <TxtAttrProfileStartPointXText>Початкова точка (довгота):</TxtAttrProfileStartPointXText>
   <TxtAttrProfileStartPointYText>Початкова точка (широта):</TxtAttrProfileStartPointYText>
   <TxtAttrProfileTypeText>Тип:</TxtAttrProfileTypeText>
   <TxtTreeViewProfileText>Профіль:</TxtTreeViewProfileText>
   <TxtTreeViewProfileSurfaceText>Поверхня:</TxtTreeViewProfileSurfaceText>
+  <TxtTreeViewProfileBasePointFromSurfaceHeightText>Висота початкової точки на поверхні:</TxtTreeViewProfileBasePointFromSurfaceHeightText>
+  <TxtTreeViewProfileToPointFromSurfaceHeightText>Висота кінцевої точки на поверхні:</TxtTreeViewProfileToPointFromSurfaceHeightText>
 
   <MsgLineNotFoundErrorText>Лінію не знайдено</MsgLineNotFoundErrorText>
   <MsgFolderAlreadyExistText>Каталог  "{0}"  вже існує \n Ви дійсно хочете оновити дані?</MsgFolderAlreadyExistText>

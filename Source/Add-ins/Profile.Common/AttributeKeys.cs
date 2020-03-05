@@ -12,7 +12,7 @@
         internal const string SectionFirstPointY = "SectionFirstPointY";
         internal const string SectionSecondPointY = "SectionSecondPointY";
         internal const string SectionFirstPointHeight = "SectionFirstPointHeight";
-        internal const string SectionSecondPointHeight = "SectionSecondPoint";
+        internal const string SectionSecondPointHeight = "SectionSecondPointHeight";
         internal const string LineDistance = "LineDistance";
         internal const string LinesCount = "LinesCount";
         internal const string BasePointX = "BasePointX";
@@ -27,6 +27,8 @@
         internal const string ToPointX = "ToPointX";
         internal const string ToPointY = "ToPointY";
         internal const string Surface = "Surface";
+        internal const string FromPointFromSurfaceHeight = "FromPointFromSurfaceHeight";
+        internal const string ToPointFromSurfaceHeight = "ToPointFromSurfaceHeight";
 
         internal const string AttributeColumnName = "Attribute";
         internal const string ValueColumnName = "Value";

@@ -169,6 +169,8 @@
             this.lblPrimitivesLayerToSelect = new System.Windows.Forms.Label();
             this.profileTreeTabPage = new System.Windows.Forms.TabPage();
             this.profilesTreeView = new System.Windows.Forms.TreeView();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.lblProfileInfoTitle = new System.Windows.Forms.Label();
             this.lvProfileAttributes = new System.Windows.Forms.ListView();
             this.Attribute = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Value = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -190,8 +192,6 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.clearExtraGraphic = new System.Windows.Forms.ToolStripButton();
             this.lblProfileList = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.lblProfileInfoTitle = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.profileTabPage.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -226,9 +226,9 @@
             this.panel1.SuspendLayout();
             this.panel13.SuspendLayout();
             this.profileTreeTabPage.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.panel6.SuspendLayout();
             this.profilesToolStrip.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -1931,7 +1931,6 @@
             this.layersToSelectLine.Name = "layersToSelectLine";
             this.layersToSelectLine.Size = new System.Drawing.Size(229, 21);
             this.layersToSelectLine.TabIndex = 0;
-            this.layersToSelectLine.SelectedIndexChanged += new System.EventHandler(this.LayersToSelectLine_SelectedIndexChanged);
             // 
             // lblPrimitivesLayerToSelect
             // 
@@ -1988,9 +1987,29 @@
             treeNode2,
             treeNode3});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
-            this.profilesTreeView.Size = new System.Drawing.Size(335, 356);
+            this.profilesTreeView.Size = new System.Drawing.Size(335, 376);
             this.profilesTreeView.TabIndex = 35;
             this.profilesTreeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.profilesTreeView_AfterCheck);
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.SystemColors.Control;
+            this.panel2.Controls.Add(this.lblProfileInfoTitle);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel2.Location = new System.Drawing.Point(0, 438);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(335, 30);
+            this.panel2.TabIndex = 37;
+            // 
+            // lblProfileInfoTitle
+            // 
+            this.lblProfileInfoTitle.AutoSize = true;
+            this.lblProfileInfoTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblProfileInfoTitle.Location = new System.Drawing.Point(16, 7);
+            this.lblProfileInfoTitle.Name = "lblProfileInfoTitle";
+            this.lblProfileInfoTitle.Size = new System.Drawing.Size(46, 17);
+            this.lblProfileInfoTitle.TabIndex = 0;
+            this.lblProfileInfoTitle.Text = "label1";
             // 
             // lvProfileAttributes
             // 
@@ -2000,9 +2019,9 @@
             this.lvProfileAttributes.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lvProfileAttributes.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvProfileAttributes.HideSelection = false;
-            this.lvProfileAttributes.Location = new System.Drawing.Point(0, 456);
+            this.lvProfileAttributes.Location = new System.Drawing.Point(0, 468);
             this.lvProfileAttributes.Name = "lvProfileAttributes";
-            this.lvProfileAttributes.Size = new System.Drawing.Size(335, 302);
+            this.lvProfileAttributes.Size = new System.Drawing.Size(335, 290);
             this.lvProfileAttributes.TabIndex = 36;
             this.lvProfileAttributes.UseCompatibleStateImageBehavior = false;
             this.lvProfileAttributes.View = System.Windows.Forms.View.Details;
@@ -2207,25 +2226,6 @@
             this.lblProfileList.TabIndex = 1;
             this.lblProfileList.Text = "Список профилей";
             // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.SystemColors.Control;
-            this.panel2.Controls.Add(this.lblProfileInfoTitle);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 418);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(335, 38);
-            this.panel2.TabIndex = 37;
-            // 
-            // lblProfileInfoTitle
-            // 
-            this.lblProfileInfoTitle.AutoSize = true;
-            this.lblProfileInfoTitle.Location = new System.Drawing.Point(41, 16);
-            this.lblProfileInfoTitle.Name = "lblProfileInfoTitle";
-            this.lblProfileInfoTitle.Size = new System.Drawing.Size(35, 13);
-            this.lblProfileInfoTitle.TabIndex = 0;
-            this.lblProfileInfoTitle.Text = "label1";
-            // 
             // DockableWindowMilSpaceProfileCalc
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2298,12 +2298,12 @@
             this.panel13.ResumeLayout(false);
             this.profileTreeTabPage.ResumeLayout(false);
             this.profileTreeTabPage.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.profilesToolStrip.ResumeLayout(false);
             this.profilesToolStrip.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
