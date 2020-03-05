@@ -186,6 +186,7 @@
             this.openGraphWindow = new System.Windows.Forms.ToolStripButton();
             this.addAvailableProfilesSets = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.renameProfile = new System.Windows.Forms.ToolStripButton();
             this.removeProfile = new System.Windows.Forms.ToolStripButton();
             this.saveProfileAsShared = new System.Windows.Forms.ToolStripButton();
             this.eraseProfile = new System.Windows.Forms.ToolStripButton();
@@ -1989,6 +1990,7 @@
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(335, 376);
             this.profilesTreeView.TabIndex = 35;
+            this.profilesTreeView.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.ProfilesTreeView_AfterLabelEdit);
             this.profilesTreeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.profilesTreeView_AfterCheck);
             // 
             // panel2
@@ -2060,6 +2062,7 @@
             this.openGraphWindow,
             this.addAvailableProfilesSets,
             this.toolStripSeparator4,
+            this.renameProfile,
             this.removeProfile,
             this.saveProfileAsShared,
             this.eraseProfile,
@@ -2161,6 +2164,17 @@
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(6, 30);
+            // 
+            // renameProfile
+            // 
+            this.renameProfile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.renameProfile.Enabled = false;
+            this.renameProfile.Image = ((System.Drawing.Image)(resources.GetObject("renameProfile.Image")));
+            this.renameProfile.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.renameProfile.Name = "renameProfile";
+            this.renameProfile.Size = new System.Drawing.Size(23, 27);
+            this.renameProfile.Text = "toolStripButton1";
+            this.renameProfile.Click += new System.EventHandler(this.RenameProfile_Click);
             // 
             // removeProfile
             // 
@@ -2479,5 +2493,6 @@
         private System.Windows.Forms.Button btnPanToPrimitive;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label lblProfileInfoTitle;
+        private System.Windows.Forms.ToolStripButton renameProfile;
     }
 }

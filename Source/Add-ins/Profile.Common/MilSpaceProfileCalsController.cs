@@ -669,6 +669,14 @@ namespace MilSpace.Profile
             }
         }
 
+        internal void RenameProfile(int id, string newName)
+        {
+            var session = GetProfileSessionById(id);
+            session.SessionName = newName;
+
+            SaveProfileSet(session);
+        }
+
         internal void CallGraphsHandle(int profileSessionId)
         {
             var profileSession = GetProfileSessionById(profileSessionId);

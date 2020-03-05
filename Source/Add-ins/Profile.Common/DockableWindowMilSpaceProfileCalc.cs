@@ -225,7 +225,7 @@ namespace MilSpace.Profile
 
             saveProfileAsShared.Enabled = (pr != null && pr.CreatedBy == Environment.UserName && !pr.Shared);
 
-            removeProfile.Enabled = addProfileToGraph.Enabled = toolPanOnMap.Enabled = toolBtnFlash.Enabled =
+            renameProfile.Enabled = removeProfile.Enabled = addProfileToGraph.Enabled = toolPanOnMap.Enabled = toolBtnFlash.Enabled =
                 treeViewselectedIds.ProfileSessionId > 0;
 
             var profileType = GetProfileTypeFromNode();
@@ -1855,6 +1855,59 @@ namespace MilSpace.Profile
             lvProfileAttributes.Columns.Add("Value", -1);
 
             lvProfileAttributes.HeaderStyle = ColumnHeaderStyle.None;
+        }
+
+        private void RenameProfile_Click(object sender, EventArgs e)
+        {
+            profilesTreeView.LabelEdit = true;
+
+            var node = profilesTreeView.SelectedNode;
+            var ids = GetProfileAndLineIds(node);
+
+            var lineId = ids.Item2;
+            treeViewselectedIds.ProfileSessionId = ids.Item1;
+            TreeNode selectedNode;
+
+            if(lineId == -1)
+            {
+                selectedNode = profilesTreeView.SelectedNode;
+            }
+            else
+            {
+                selectedNode = profilesTreeView.SelectedNode.Parent;
+            }
+
+            selectedNode.BeginEdit();
+        }
+
+        private void ProfilesTreeView_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
+        {
+            var res = MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgRenameProfileText", "Ви дійсно хочете перейменувати профіль/набор профілів?"), LocalizationContext.Instance.MessageBoxTitle, MessageBoxButtons.OKCancel);
+
+            if(res == DialogResult.OK)
+            {
+                e.Node.EndEdit(false);
+
+                if(!String.IsNullOrEmpty(e.Label))
+                {
+                    var ids = GetProfileAndLineIds(e.Node);
+                    controller.RenameProfile(ids.Item1, e.Label);
+                    var node = e.Node as ProfileTreeNode;
+
+                    node.SetProfileName(e.Label);
+
+                    var lvItem = new ListViewItem(node.Attributes.Rows[0][AttributeKeys.AttributeColumnName].ToString());
+                    lvItem.SubItems.Add(node.Attributes.Rows[0][AttributeKeys.ValueColumnName].ToString());
+
+                    lvProfileAttributes.Items[0] = lvItem;
+                }
+            }
+            else
+            {
+                e.CancelEdit = true;
+            }
+
+            profilesTreeView.LabelEdit = false;
         }
     }
 }
