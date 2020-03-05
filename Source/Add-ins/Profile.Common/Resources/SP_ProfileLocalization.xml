@@ -48,7 +48,9 @@
   <HintToolBtnPanOnMapText>Переміститись  на карті</HintToolBtnPanOnMapText>
   <HintToolBtnShowOnMapText>Показати на карті</HintToolBtnShowOnMapText>
   <HintToolSetProfileSettingsToCalcText>Скопіювати параметри профілю</HintToolSetProfileSettingsToCalcText>
-
+  <HintToolRenameProfile>Перейменувати профіль/набір профілів</HintToolRenameProfile>
+  <HintToolCopyExtremePoints>Копіювати координати крайніх точок</HintToolCopyExtremePoints>
+  
   <BtnAddToSessionText>Додати до сесії</BtnAddToSessionText>
   <BtnCancelText>Відмінити</BtnCancelText>
   <BtnСalcProfileText>Розрахувати</BtnСalcProfileText>

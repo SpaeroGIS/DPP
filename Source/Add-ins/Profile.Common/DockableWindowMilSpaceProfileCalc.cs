@@ -236,6 +236,7 @@ namespace MilSpace.Profile
             openGraphWindow.Enabled = !controller.MilSpaceProfileGraphsController.IsWindowVisible;
 
             eraseProfile.Enabled = controller.CanEraseProfileSession(ids.Item1);
+            copyExtremePoints.Enabled = !(treeViewselectedIds.ProfileLineId == -1);
         }
 
         private void DisplaySelectedNodeAttributes(object sender, TreeViewEventArgs treeViewEventArgs)
@@ -1303,7 +1304,6 @@ namespace MilSpace.Profile
             lblCenterPointInfo.Text = string.Empty;
             lblTargetObjInfo.Text = string.Empty;
 
-
             toolPanOnMap.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintToolBtnPanOnMapText", "Переміститись  на карті");
             toolBtnFlash.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintToolBtnShowOnMapText", "Показати на карті");
             setProfileSettingsToCalc.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintToolSetProfileSettingsToCalcText", "Скопіювати параметри профілю");
@@ -1314,6 +1314,8 @@ namespace MilSpace.Profile
             saveProfileAsShared.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintSaveProfileAsSharedText", "Надати спільний доступ до профілю");
             eraseProfile.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintEraseProfileText", "Видалити профіль");
             clearExtraGraphic.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintClearExtraGraphicText", "Очистити графіку на карті");
+            renameProfile.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintToolRenameProfile", "Перейменувати профіль/набір профілів");
+            copyExtremePoints.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintToolCopyExtremePoints", "Копіювати координати крайніх точок");
 
             btnChooseFirstPointAssignmentMethod.Text = LocalizationContext.Instance.ChooseText;
             btnChooseSecondPointAssignmentMethod.Text = LocalizationContext.Instance.ChooseText;
@@ -1908,6 +1910,28 @@ namespace MilSpace.Profile
             }
 
             profilesTreeView.LabelEdit = false;
+        }
+
+        private void CopyExtremePoints_Click(object sender, EventArgs e)
+        {
+            var node = profilesTreeView.SelectedNode;
+
+            if(!(node is ProfileTreeNode)) return;
+
+            ProfileTreeNode profileNode = (ProfileTreeNode)node;
+            var profileType = GetProfileTypeFromNode();
+            var rows = profileNode.Attributes.Rows;
+
+            var baseValueX = rows.Find(AttributeKeys.BasePointX)[AttributeKeys.ValueColumnName].ToString();
+            var baseValueY = rows.Find(AttributeKeys.BasePointY)[AttributeKeys.ValueColumnName].ToString();
+
+            var toValueX = rows.Find(AttributeKeys.ToPointX)[AttributeKeys.ValueColumnName].ToString();
+            var toValueY = rows.Find(AttributeKeys.ToPointY)[AttributeKeys.ValueColumnName].ToString();
+
+            var coordString = $"{baseValueX};{baseValueY}-{toValueX};{toValueY}";
+
+            Clipboard.Clear();
+            Clipboard.SetText(coordString);
         }
     }
 }
