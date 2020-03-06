@@ -48,7 +48,9 @@
   <HintToolBtnPanOnMapText>Переміститись  на карті</HintToolBtnPanOnMapText>
   <HintToolBtnShowOnMapText>Показати на карті</HintToolBtnShowOnMapText>
   <HintToolSetProfileSettingsToCalcText>Скопіювати параметри профілю</HintToolSetProfileSettingsToCalcText>
-
+  <HintToolRenameProfile>Перейменувати профіль/набір профілів</HintToolRenameProfile>
+  <HintToolCopyExtremePoints>Копіювати координати крайніх точок</HintToolCopyExtremePoints>
+  
   <BtnAddToSessionText>Додати до сесії</BtnAddToSessionText>
   <BtnCancelText>Відмінити</BtnCancelText>
   <BtnСalcProfileText>Розрахувати</BtnСalcProfileText>
@@ -121,6 +123,7 @@
   <LblFieldsText>Поле</LblFieldsText>
   <LblTargetObjText>Цільовий об'єкт</LblTargetObjText>
   <LblFunParametersText>Правило створення та параметри</LblFunParametersText>
+  <LblProfileInfoTitle>Параметри набору/профілю</LblProfileInfoTitle>
   <LvProfileDetailsAnglesText>Кути:</LvProfileDetailsAnglesText>
   <LvProfileDetailsAzimuthText>Азимут:</LvProfileDetailsAzimuthText>
   <LvProfileDetailsEndPointsText>Початок - кінець</LvProfileDetailsEndPointsText>
@@ -157,12 +160,15 @@
   <TxtAttrProfileEndPointYText>Кінцева точка (широта):</TxtAttrProfileEndPointYText>
   <TxtAttrProfileIdText>Ідентифікатор:</TxtAttrProfileIdText>
   <TxtAttrProfileNameText>Назва:</TxtAttrProfileNameText>
-  <TxtAttrProfilePointOfViewText>Висота, м:</TxtAttrProfilePointOfViewText>
+  <TxtAttrProfilePointOfViewText>Висота початкової точки над поверхнею, м:</TxtAttrProfilePointOfViewText>
+  <TxtAttrProfilePointToHeightText>Висота кінцевої точки над поверхнею, м:</TxtAttrProfilePointToHeightText>
   <TxtAttrProfileStartPointXText>Початкова точка (довгота):</TxtAttrProfileStartPointXText>
   <TxtAttrProfileStartPointYText>Початкова точка (широта):</TxtAttrProfileStartPointYText>
   <TxtAttrProfileTypeText>Тип:</TxtAttrProfileTypeText>
   <TxtTreeViewProfileText>Профіль:</TxtTreeViewProfileText>
   <TxtTreeViewProfileSurfaceText>Поверхня:</TxtTreeViewProfileSurfaceText>
+  <TxtTreeViewProfileBasePointFromSurfaceHeightText>Висота початкової точки на поверхні:</TxtTreeViewProfileBasePointFromSurfaceHeightText>
+  <TxtTreeViewProfileToPointFromSurfaceHeightText>Висота кінцевої точки на поверхні:</TxtTreeViewProfileToPointFromSurfaceHeightText>
 
   <MsgLineNotFoundErrorText>Лінію не знайдено</MsgLineNotFoundErrorText>
   <MsgFolderAlreadyExistText>Каталог  "{0}"  вже існує \n Ви дійсно хочете оновити дані?</MsgFolderAlreadyExistText>
@@ -184,7 +190,8 @@
   <MsgSelectedGeomNotFoundText>Будь ласка, оберіть графіку для розрахунку набору профілів</MsgSelectedGeomNotFoundText>
   <MsgLinesCountLessThanTwoText>Кількість профілів не може бути меншою за 2</MsgLinesCountLessThanTwoText>
   <MsgCannotFlipEmptyPoint>Будь ласка, оберіть початкову і кінцеву точку</MsgCannotFlipEmptyPoint>
- 
+  <MsgRenameProfileText>Ви дійсно хочете перейменувати профіль/набор профілів?</MsgRenameProfileText>
+  
   <DataExportPointsPropertiesHeader>Номер; X; Y; Z; Відстань; Точка перегину; Видима; Перетини</DataExportPointsPropertiesHeader>
   <DataExportProfilePropertiesHeader>Номер; Назва профілю; Зовнішній; Стан; Точка початку; Точка кінцю; Азимут; Пункт спостереження; Довжина; Макс. висота; Різниця висот; Мін. висота; Макс. кут підйому; Макс. кут спуску; Процент видимих зон</DataExportProfilePropertiesHeader>
   <DgvProfilePropertiesAscendingAngleColHeader>КП</DgvProfilePropertiesAscendingAngleColHeader>

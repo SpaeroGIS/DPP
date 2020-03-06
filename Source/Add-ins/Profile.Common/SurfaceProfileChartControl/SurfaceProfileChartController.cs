@@ -664,7 +664,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 _linesSegments.Add(segments[0].LineId, segments);
             }
         }
-
+        
         internal void AddVertexPointsToLine(List<ProfileSurface> segments, double observerHeight)
         {
             _surfaceProfileChart.AddVertexPoint(segments[0].ProfileSurfacePoints.First(), true, segments[0].LineId, observerHeight);
