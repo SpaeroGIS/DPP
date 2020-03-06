@@ -219,11 +219,20 @@
     <Compile Include="..\Core\ArcMap\Hooks.cs">
       <Link>ArcMap\Hooks.cs</Link>
     </Compile>
+    <Compile Include="..\Core\DataAccess\AzimuthLine.cs">
+      <Link>DataAccess\AzimuthLine.cs</Link>
+    </Compile>
     <Compile Include="..\Core\DataAccess\DataOperationsEnum.cs">
       <Link>DataAccess\DataOperationsEnum.cs</Link>
     </Compile>
+    <Compile Include="..\Core\DataAccess\FromLayerGeometry.cs">
+      <Link>DataAccess\FromLayerGeometry.cs</Link>
+    </Compile>
     <Compile Include="..\Core\DataAccess\FromLayerPointModel.cs">
       <Link>DataAccess\FromLayerPointModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\DataAccess\PointsInGeometry.cs">
+      <Link>DataAccess\PointsInGeometry.cs</Link>
     </Compile>
     <Compile Include="..\Core\Exceptions\MilSpaceException.cs">
       <Link>Exceptions\MilSpaceException.cs</Link>

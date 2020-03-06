@@ -24,7 +24,7 @@ namespace MilSpace.Profile.ModalWindows
 
         private void LocalizeStrings()
         {
-            this.Text = LocalizationContext.Instance.FindLocalizedElement("ModalObservPointsTitle", "Вибір точки з шару точок спостереження");
+            this.Text = LocalizationContext.Instance.FindLocalizedElement("ModalTargetObservPointsTitle", "Вибір точок з шару точок спостереження");
             btnChoosePoint.Text = LocalizationContext.Instance.FindLocalizedElement("BtnChooseText", "Обрати");
             dgvPoints.Columns["IdCol"].HeaderText = LocalizationContext.Instance.FindLocalizedElement("DgvObservPointsIdHeader", "Ідентифікатор");
             dgvPoints.Columns["TitleCol"].HeaderText = LocalizationContext.Instance.FindLocalizedElement("DgvObservPointsTitleHeader", "Назва");

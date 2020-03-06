@@ -39,10 +39,15 @@ namespace MilSpace.Profile.Localization
         internal string LengthInfoText => FindLocalizedElement("LblLengthInfoText", "Довжина:");
         internal string DimensionText => FindLocalizedElement("LblDimensionText", "м");
         internal string ChooseText => FindLocalizedElement("BtnChooseText", "Обрати");
+        internal string AssignmentMethodText => FindLocalizedElement("LblAssignmentMethodText", "Спосіб призначення");
         internal string ErrorHappendText => FindLocalizedElement("MsgErrorHappenedText", "Виникла помилка /n Більш детальна інформація знаходиться у журналі");
         internal string ReturnPointValueText => FindLocalizedElement("BtnReturnPointValueToolTip", "Повернутися до дійсного значення точки");
         internal string AssignmentMethodFromMapItem => FindLocalizedElement("CmbAssignmentMethodFromMapTypeText", "Мапа");
-        internal string DemLayerNotChosenText => FindLocalizedElement("MsgDemLayerNotChosen", "Будь ласка оберіть шар ЦМР/ЦММ, щоб отримати Z координату");
+        internal string TargetAssignmentMethodInSector => FindLocalizedElement("CmbTargetAssignmentMethodInSectorText", "У вказаному секторі");
+        internal string ToPointsCreationMethodAzimuthsLines => FindLocalizedElement("CmbToPointsCreationMethodLineNumberText", "К-ть ліній від мін до макс азимуту");
+        internal string DemLayerNotChosenText => FindLocalizedElement("MsgDemLayerNotChosenText", "Будь ласка оберіть шар ЦМР/ЦММ, щоб отримати Z координату");
+        internal string IdHeaderText => FindLocalizedElement("DgvObservPointsIdHeader", "Ідентифікатор");
+        internal string TitleHeaderText => FindLocalizedElement("DgvObservPointsTitleHeader", "Назва");
 
         internal bool HasLocalizedElement(string xmlNodeName)
         {

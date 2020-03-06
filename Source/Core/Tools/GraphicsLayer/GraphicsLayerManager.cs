@@ -409,6 +409,28 @@ namespace MilSpace.Tools.GraphicsLayer
             return res;
         }
 
+        public IEnumerable<IGeometry> GetAllSelectedGraphics()
+        {
+            var graphContainerSelection = (IGraphicsContainerSelect)activeView.FocusMap;
+
+            if(graphContainerSelection.ElementSelectionCount == 0)
+                return null;
+
+            var selected = graphContainerSelection.SelectedElements;
+
+            selected.Reset();
+            var element = selected.Next();
+            var res = new List<IGeometry>();
+            while(element != null)
+            {
+                var geometry = element.Geometry;
+                 res.Add(geometry);
+                
+                element = selected.Next();
+            }
+            return res;
+        }
+
         private void AddPolyline(GraphicElement graphicElement, MilSpaceGraphicsTypeEnum graphicsType,
                                     IRgbColor color = null, LineType lineType = LineType.DefaultLine, bool doRefresh = false,
                                     bool persist = false, int width = 2)
@@ -703,7 +725,7 @@ namespace MilSpace.Tools.GraphicsLayer
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
         }
 
-        public  void AddLineToMap(Dictionary<Guid, IPoint> points, string name)
+        public void AddLineToMap(Dictionary<Guid, IPoint> points, string name)
         {
             var prevPoint = points.First();
 
@@ -721,7 +743,7 @@ namespace MilSpace.Tools.GraphicsLayer
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
         }
 
-        public  void AddLineSegmentToMap(IPoint pointFrom, IPoint pointTo, string name, string fromPointGuid)
+        public void AddLineSegmentToMap(IPoint pointFrom, IPoint pointTo, string name, string fromPointGuid)
         {
             var color = (IRgbColor)new RgbColorClass() { Green = 255 };
             var polyline = EsriTools.CreatePolylineFromPoints(pointFrom, pointTo);

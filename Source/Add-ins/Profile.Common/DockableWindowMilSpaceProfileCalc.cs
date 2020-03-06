@@ -7,6 +7,7 @@ using MilSpace.Core.ModulesInteraction;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Profile.DTO;
+using MilSpace.Profile.Helpers;
 using MilSpace.Profile.Interaction;
 using MilSpace.Profile.Localization;
 using System;
@@ -102,6 +103,8 @@ namespace MilSpace.Profile
         public IEnumerable<string> GetLayersForLineSelection => controller.GetLayersForLineSelection();
 
         public string DemLayerName => cmbRasterLayers.SelectedItem == null ? string.Empty : cmbRasterLayers.SelectedItem.ToString();
+       
+        public AssignmentMethodsEnum PrimitiveAssignmentMethod { get => controller.GetPrimitiveAssignmentMethodByString(layersToSelectLine.SelectedItem.ToString()); }
 
         public int ProfileId
         {
@@ -186,7 +189,7 @@ namespace MilSpace.Profile
             PopulateComboBox(cmbVegetationLayer, mlmngr.PolygonLayers);
             //PopulateComboBox(cmbPointLayers, mlmngr.PointLayers);
 
-            layersToSelectLine.Items.AddRange(GetLayersForLineSelection.ToArray());
+            layersToSelectLine.Items.AddRange(controller.GetPrimitiveAssigmentMethodsString().ToArray());
             layersToSelectLine.SelectedItem = layersToSelectLine.Items[0];
 
             logger.InfoEx("> OnDocumentOpenFillDropdowns END");
@@ -295,8 +298,8 @@ namespace MilSpace.Profile
 
         private void Controller_OnMapSelectionChanged(SelectedGraphicsArgs selectedLines)
         {
-            lblSelectedPrimitivesValue.Text = selectedLines.LinesCount.ToString();
-            lblCommonLengthValue.Text = selectedLines.FullLength.ToString("F2");
+            //lblSelectedPrimitivesValue.Text = selectedLines.LinesCount.ToString();
+            //lblCommonLengthValue.Text = selectedLines.FullLength.ToString("F2");
         }
 
         public void SetController(MilSpaceProfileCalcsController controller)
@@ -737,7 +740,7 @@ namespace MilSpace.Profile
                 {
                     controlX.Text = point.X.ToFormattedString();
                     controlY.Text = point.Y.ToFormattedString();
-                    controlZ.Text = point.Z.ToFormattedString();
+                    controlZ.Text = point.Z.ToFormattedString(1);
                 }
                 else
                 {
@@ -894,13 +897,20 @@ namespace MilSpace.Profile
 
         private void UpdateFunProperties(object sender, EventArgs e)
         {
-            controller.SetProfileSettings(ProfileSettingsTypeEnum.Fun);
+            if(sender == funLinesCount && Convert.ToInt32(funLinesCount.Text) < 2)
+            {
+                funLinesCount.Text = "2";
+
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgLinesCountLessThanTwoText", "Кількість профілів не може бути меншою за 2"),
+                                    LocalizationContext.Instance.MessageBoxTitle);
+            }
+
+            RecalculateFunWithParams();
         }
 
         private void profileSettingsTab_SelectedIndexChanged(object sender, EventArgs e)
         {
             controller.SetProfileSettings(SelectedProfileSettingsType);
-
         }
 
         private void cmbRasterLayers_SelectedIndexChanged(object sender, EventArgs e)
@@ -989,6 +999,38 @@ namespace MilSpace.Profile
             }
         }
 
+        public void SetFunToPointsParams(double averageAzimuth, double averageAngle, double averageLength, int count)
+        {
+            lbFunInfo.Items.Clear();
+
+            lbFunInfo.Items.Add(LocalizationContext.Instance.FindLocalizedElement("LbFunParamsTitleText", "Параметри набору профілів:"));
+            lbFunInfo.Items.Add(string.Empty);
+            lbFunInfo.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbFunParamsAvgAzimuthText", "Середній азимут:")} {Math.Round(averageAzimuth)}");
+            lbFunInfo.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbFunParamsAvgAngleText", "Середній кут між лініями:")} {Math.Round(averageAngle)}");
+            lbFunInfo.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbFunParamsAvgLengthText", "Середня довжина проекції лінії:")} {Math.Round(averageLength)}");
+            lbFunInfo.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbFunParamsLinesCountText", "Кількість ліній")} {count}");
+        }
+
+        public void SetPrimitiveInfo(double length, double azimuth, double projectionLength, int segmentsCount)
+        {
+            lbGraphicsParam.Items.Clear();
+
+            lbGraphicsParam.Items.Add(LocalizationContext.Instance.FindLocalizedElement("LbPrimitiveParamsTitleText", "Параметру примітиву:"));
+            lbGraphicsParam.Items.Add(string.Empty);
+            lbGraphicsParam.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbPrimitiveParamsLengthText", "Довжина проекцій ліній:")} {Math.Round(length)}");
+            lbGraphicsParam.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbPrimitiveParamsAzimuthText", "Азимут між крайніми точками:")} {Math.Round(azimuth)}");
+            lbGraphicsParam.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbPrimitiveParamsProjLengthText", "Відстань між крайніми точками:")} {Math.Round(projectionLength)}");
+            lbGraphicsParam.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbPrimitiveParamsVerticesCountText", "Кількість сегментів:")} {segmentsCount}");
+        }
+
+        public void SetFunTxtValues(double length, double maxAzimuth, double minAzimuth, int linesCount)
+        {
+            profileLength.Text = Math.Round(length).ToString();
+            azimuth1.Text = Math.Round(minAzimuth).ToString();
+            azimuth2.Text = Math.Round(maxAzimuth).ToString();
+            funLinesCount.Text = linesCount.ToString();
+        }
+
         public void SetReturnButtonEnable(ProfileSettingsPointButtonEnum pointType, bool enabled)
         {
             if(pointType == ProfileSettingsPointButtonEnum.PointsFist)
@@ -1002,6 +1044,38 @@ namespace MilSpace.Profile
             else
             {
                 tlbbReturnCenterPoint.Enabled = enabled;
+            }
+        }
+
+        public void RecalculateFun()
+        {
+            var creationMethod = controller.GetCreationMethodByString(cmbTargetObjCreation.SelectedItem.ToString());
+
+            if(creationMethod == ToPointsCreationMethodsEnum.AzimuthsLines)
+            {
+                controller.CalcFunToPoints(controller.GetTargetAssignmentMethodByString(cmbTargetObjAssignmentMethod.SelectedItem.ToString()),
+                                        ToPointsCreationMethodsEnum.Default, false);
+            }
+            else
+            {
+                controller.CalcFunToPoints(controller.GetTargetAssignmentMethodByString(cmbTargetObjAssignmentMethod.SelectedItem.ToString()),
+                                            creationMethod, false);
+            }
+        }
+
+        public void RecalculateFunWithParams()
+        {
+            var creationMethod = controller.GetCreationMethodByString(cmbTargetObjCreation.SelectedItem.ToString());
+
+            if(creationMethod == ToPointsCreationMethodsEnum.AzimuthsLines)
+            {
+                controller.CalcFunToPoints(controller.GetTargetAssignmentMethodByString(cmbTargetObjAssignmentMethod.SelectedItem.ToString()),
+                                        ToPointsCreationMethodsEnum.AzimuthsLines, false);
+            }
+            else
+            {
+                controller.CalcFunToPoints(controller.GetTargetAssignmentMethodByString(cmbTargetObjAssignmentMethod.SelectedItem.ToString()),
+                                            creationMethod, false, Convert.ToDouble(profileLength.Text));
             }
         }
 
@@ -1097,6 +1171,7 @@ namespace MilSpace.Profile
             var athimuthControl = sender as TextBox;
 
             double result;
+
             if (Helper.TryParceToDouble(azimuth2.Text, out result) && (result <= 360 && result >= 0))
             {
                 UpdateFunProperties(sender, e);
@@ -1141,6 +1216,8 @@ namespace MilSpace.Profile
             toolTip.SetToolTip(this.btnRefreshLayers, LocalizationContext.Instance.FindLocalizedElement("BtnRefreshLayersToolTip", "Оновити шари даних"));
             toolTip.SetToolTip(reverseButton, LocalizationContext.Instance.FindLocalizedElement("BtnReverseToolTip", "Змінити напрямок профілю"));
             toolTip.SetToolTip(reverseSecondPointButton, LocalizationContext.Instance.FindLocalizedElement("BtnReverseToolTip", "Змінити напрямок профілю"));
+            toolTip.SetToolTip(btnPanToFun, LocalizationContext.Instance.FindLocalizedElement("BtnPanToFunToolTip", "Наблизити до набору профілів"));
+            toolTip.SetToolTip(btnPanToPrimitive, LocalizationContext.Instance.FindLocalizedElement("BtnPanToPrimitive", "Наблизити до примітиву"));
 
             firstPointToolBar.Buttons["toolBarButton8"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnTakeCoordToolTip", "Взяти координати з карти");
             firstPointToolBar.Buttons["toolBarButton55"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnShowCoordToolTip", "Показати координати на карті");
@@ -1161,8 +1238,8 @@ namespace MilSpace.Profile
             basePointToolbar.Buttons["tlbbReturnCenterPoint"].ToolTipText = LocalizationContext.Instance.ReturnPointValueText;
 
             addAvailableProfilesSets.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnAddAvailableProfilesSetsToolTip", "Додати доступні набори профілів");
-            lblSelectedPrimitives.Text = LocalizationContext.Instance.FindLocalizedElement("LblSelectedPrimitivesText", "Вибрані об'єкти:");
-            lblCommonLength.Text = LocalizationContext.Instance.FindLocalizedElement("LblCommonLengthText", "Довжина вибраних об'єктів:");
+            //lblSelectedPrimitives.Text = LocalizationContext.Instance.FindLocalizedElement("LblSelectedPrimitivesText", "Вибрані об'єкти:");
+            //lblCommonLength.Text = LocalizationContext.Instance.FindLocalizedElement("LblCommonLengthText", "Довжина вибраних об'єктів:");
 
             //Profile Tabs
             profileTabPage.Text = LocalizationContext.Instance.FindLocalizedElement("TabProfileTabPageText", "Параметри профілю");
@@ -1209,15 +1286,21 @@ namespace MilSpace.Profile
             lblAboutSelected.Text = LocalizationContext.Instance.FindLocalizedElement("LblAboutSelectedText", "Інформація про обране");
 
             lblProfileList.Text = LocalizationContext.Instance.FindLocalizedElement("LblProfileListText", "Профілі в роботі");
-            lblFirstlPointGettingWay.Text = LocalizationContext.Instance.FindLocalizedElement("LblAssignmentMethodText", "Спосіб призначення");
-            lblSecondPointGettingWay.Text = LocalizationContext.Instance.FindLocalizedElement("LblAssignmentMethodText", "Спосіб призначення");
+            lblFirstlPointGettingWay.Text = LocalizationContext.Instance.AssignmentMethodText;
+            lblSecondPointGettingWay.Text = LocalizationContext.Instance.AssignmentMethodText;
+            lblCenterPointAssignmentMethod.Text = LocalizationContext.Instance.AssignmentMethodText;
+            lblTargetObjAssignmentMethod.Text = LocalizationContext.Instance.AssignmentMethodText;
             lblProfileInfo.Text = LocalizationContext.Instance.FindLocalizedElement("LblProfileInfoText", "Параметри відрізку");
             lblLengthInfo.Text = LocalizationContext.Instance.LengthInfoText;
             lblAzimuthInfo.Text = LocalizationContext.Instance.AzimuthInfoText;
+            lblTargetObj.Text = LocalizationContext.Instance.FindLocalizedElement("LblTargetObjText", "Цільовий об'єкт");
+
 
             lblFirstPointInfo.Text = string.Empty;
             lblSecondPointInfo.Text = string.Empty;
             lblCenterPointInfo.Text = string.Empty;
+            lblTargetObjInfo.Text = string.Empty;
+
 
             toolPanOnMap.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintToolBtnPanOnMapText", "Переміститись  на карті");
             toolBtnFlash.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintToolBtnShowOnMapText", "Показати на карті");
@@ -1233,6 +1316,9 @@ namespace MilSpace.Profile
             btnChooseFirstPointAssignmentMethod.Text = LocalizationContext.Instance.ChooseText;
             btnChooseSecondPointAssignmentMethod.Text = LocalizationContext.Instance.ChooseText;
             btnCenterPointAssignmantMethod.Text = LocalizationContext.Instance.ChooseText;
+            btnTargetObjAssignmentMethod.Text = LocalizationContext.Instance.ChooseText;
+            btnChooseCreationMethod.Text = LocalizationContext.Instance.ChooseText;
+            btnPrimitiveAssignmentMethod.Text = LocalizationContext.Instance.ChooseText;
 
             profilesTreeView.Nodes["Points"].Text = LocalizationContext.Instance.FindLocalizedElement("TvProfilesPointsNodeText", "Відрізки");
             profilesTreeView.Nodes["Fun"].Text = LocalizationContext.Instance.FindLocalizedElement("TvProfilesFunNodeText", "\"Віяло\"");
@@ -1248,6 +1334,13 @@ namespace MilSpace.Profile
 
             cmbCenterPointAssignmentMethod.Items.AddRange(controller.GetAssignmentMethodsStrings());
             cmbCenterPointAssignmentMethod.SelectedItem = mapItem;
+
+            cmbTargetObjAssignmentMethod.Items.AddRange(controller.GetTargetAssignmentMethodsStrings());
+            cmbTargetObjAssignmentMethod.SelectedItem = LocalizationContext.Instance.TargetAssignmentMethodInSector;
+
+            cmbTargetObjCreation.Items.AddRange(controller.GetToPointsCreationMethodsString());
+            cmbTargetObjCreation.SelectedItem = LocalizationContext.Instance.ToPointsCreationMethodAzimuthsLines;
+            cmbTargetObjCreation.Enabled = false;
 
             logger.InfoEx("> LocalizeStrings Profile END");
         }
@@ -1314,37 +1407,47 @@ namespace MilSpace.Profile
                 newNode.SetProfileType(ConvertProfileTypeToString(profile.DefinitionType));
                 if (profile.DefinitionType == ProfileSettingsTypeEnum.Points)
                 {
-                    var firstX = profile.ProfileLines.First().Line.FromPoint.X.ToFormattedString();
-                    var firstY = profile.ProfileLines.First().Line.FromPoint.Y.ToFormattedString();
-                    var secondX = profile.ProfileLines.First().Line.ToPoint.X.ToFormattedString();
-                    var secondY = profile.ProfileLines.First().Line.ToPoint.Y.ToFormattedString();
-                    var lineDistance = profile.ProfileLines.First().Line.Length.ToString("F5");
+                    var fromPoint = profile.ProfileLines.First().Line.FromPoint.CloneWithProjecting();
+                    var toPoint = profile.ProfileLines.First().Line.ToPoint.CloneWithProjecting();
 
-                    newNode.SetBasePoint($"X= {firstX}; Y= {firstY};");
-                    newNode.SetToPoint($"X= {secondX}; Y= {secondY};");
+                    var firstX = fromPoint.X.ToFormattedString();
+                    var firstY = fromPoint.Y.ToFormattedString();
+                    var secondX = toPoint.X.ToFormattedString();
+                    var secondY = toPoint.Y.ToFormattedString();
+                    var lineDistance = profile.ProfileLines.First().Line.Length.ToString("D");
+
+                    newNode.SetBasePointX(firstX);
+                    newNode.SetBasePointY(firstY);
+                    newNode.SetToPointX(secondX);
+                    newNode.SetToPointY(secondY);
                     newNode.SetBasePointHeight(profile.ObserverHeight.ToString());
                     newNode.SetToPointHeight(SectionHeightSecond.ToString());
                     newNode.SetLineDistance(lineDistance);
-
+                    newNode.SetSurface(profile.SurfaceLayerName);
                 }
                 else if (profile.DefinitionType == ProfileSettingsTypeEnum.Fun)
                 {
-                    var basePointX = profile.ProfileLines.First().Line.FromPoint.X.ToFormattedString();
-                    var basePointY = profile.ProfileLines.First().Line.FromPoint.Y.ToFormattedString();
-                    var lineDistance = profile.ProfileLines.First().Line.Length.ToString("F5");
+                    var fromPoint = profile.ProfileLines.First().Line.FromPoint.CloneWithProjecting();
+
+                    var basePointX = fromPoint.X.ToFormattedString();
+                    var basePointY = fromPoint.Y.ToFormattedString();
+                    var lineDistance = profile.ProfileLines.First().Line.Length.ToString("D");
                     var linesCount = profile.ProfileLines.Length.ToString();
 
-                    newNode.SetBasePoint($"X= {basePointX}; Y= {basePointY};");
+                    newNode.SetBasePointX(basePointX);
+                    newNode.SetBasePointY(basePointY);
                     newNode.SetLineCount(linesCount);
                     newNode.SetAzimuth1(profile.Azimuth1);
                     newNode.SetAzimuth2(profile.Azimuth2);
                     newNode.SetBasePointHeight(profile.ObserverHeight.ToString());
                     newNode.SetLineDistance(lineDistance);
+                    newNode.SetSurface(profile.SurfaceLayerName);
                 }
                 else if (profile.DefinitionType == ProfileSettingsTypeEnum.Primitives)
                 {
-                    var linesCount = profile.ProfileLines.Length.ToString();
+                    var linesCount = profile.ProfileLines.Length.ToString("D");
                     newNode.SetLineCount(linesCount);
+                    newNode.SetSurface(profile.SurfaceLayerName);
                 }
 
                 newNode.SetCreatorName(profile.CreatedBy);
@@ -1576,7 +1679,7 @@ namespace MilSpace.Profile
             if(cmbFirstPointAssignmentMethod.SelectedItem.Equals(LocalizationContext.Instance.AssignmentMethodFromMapItem))
             {
                 btnChooseFirstPointAssignmentMethod.Enabled = false;
-                SetPointInfo(ProfileSettingsPointButtonEnum.PointsFist, string.Empty);
+               // SetPointInfo(ProfileSettingsPointButtonEnum.PointsFist, string.Empty);
                 SetReturnButtonEnable(ProfileSettingsPointButtonEnum.PointsFist, false);
             }
             else
@@ -1590,7 +1693,7 @@ namespace MilSpace.Profile
             if(cmbSecondPointAssignmentMethod.SelectedItem.Equals(LocalizationContext.Instance.AssignmentMethodFromMapItem))
             {
                 btnChooseSecondPointAssignmentMethod.Enabled = false;
-                SetPointInfo(ProfileSettingsPointButtonEnum.PointsSecond, string.Empty);
+                //SetPointInfo(ProfileSettingsPointButtonEnum.PointsSecond, string.Empty);
                 SetReturnButtonEnable(ProfileSettingsPointButtonEnum.PointsSecond, false);
             }
             else
@@ -1604,7 +1707,7 @@ namespace MilSpace.Profile
             if(cmbCenterPointAssignmentMethod.SelectedItem.Equals(LocalizationContext.Instance.AssignmentMethodFromMapItem))
             {
                 btnCenterPointAssignmantMethod.Enabled = false;
-                SetPointInfo(ProfileSettingsPointButtonEnum.CenterFun, string.Empty);
+               // SetPointInfo(ProfileSettingsPointButtonEnum.CenterFun, string.Empty);
                 SetReturnButtonEnable(ProfileSettingsPointButtonEnum.CenterFun, false);
             }
             else
@@ -1633,9 +1736,70 @@ namespace MilSpace.Profile
             controller.FlipPoints();
         }
 
-        private void lblSetPeofileProperties_Click(object sender, EventArgs e)
+        private void BtnTargetObjAssignmentMethod_Click(object sender, EventArgs e)
         {
+            var targetAssignmentMethod = controller.GetTargetAssignmentMethodByString(cmbTargetObjAssignmentMethod.SelectedItem.ToString());
+            var creationMethod = controller.GetCreationMethodByString(cmbTargetObjCreation.SelectedItem.ToString());
 
+            if(targetAssignmentMethod == AssignmentMethodsEnum.Sector || creationMethod == ToPointsCreationMethodsEnum.AzimuthsLines)
+            {
+                controller.CalcFunToPoints(targetAssignmentMethod, ToPointsCreationMethodsEnum.Default, true);
+            }
+            else
+            {
+                controller.CalcFunToPoints(targetAssignmentMethod, creationMethod, true);
+            }
+
+            if(targetAssignmentMethod == AssignmentMethodsEnum.Sector)
+            {
+                cmbTargetObjCreation.SelectedItem = LocalizationContext.Instance.ToPointsCreationMethodAzimuthsLines;
+                cmbTargetObjCreation.Enabled = false;
+            }
+            else
+            {
+                cmbTargetObjCreation.Enabled = true;
+            }
+        }
+        
+        private void BtnChooseCreationMethod_Click(object sender, EventArgs e)
+        {
+            if(controller.GetCreationMethodByString(cmbTargetObjCreation.SelectedItem.ToString()) == ToPointsCreationMethodsEnum.AzimuthsLines)
+            {
+                SetFunTxtEnabled(true);
+            }
+            else
+            {
+                SetFunTxtEnabled(false);
+            }
+
+            RecalculateFun();
+        }
+
+        private void SetFunTxtEnabled(bool isEnabled)
+        {
+            azimuth1.Enabled = isEnabled;
+            azimuth2.Enabled = isEnabled;
+            funLinesCount.Enabled = isEnabled;
+        }
+
+        private void BtnPanToFun_Click(object sender, EventArgs e)
+        {
+            controller.PanToProfile(ProfileSettingsTypeEnum.Fun);
+        }
+
+        private void LayersToSelectLine_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //PrimitiveAssignmentMethod = controller.GetPrimitiveAssignmentMethodByString(layersToSelectLine.SelectedItem.ToString());
+        }
+
+        private void BtnPrimitiveAssignmentMethod_Click(object sender, EventArgs e)
+        {
+            controller.SetProfileSettings(ProfileSettingsTypeEnum.Primitives);
+        }
+
+        private void BtnPanToPrimitive_Click(object sender, EventArgs e)
+        {
+            controller.PanToProfile(ProfileSettingsTypeEnum.Primitives);
         }
     }
 }

@@ -10,6 +10,8 @@
   <BtnTakeCoordToolTip>Взяти координати з карти</BtnTakeCoordToolTip>
   <BtnReverseToolTip>Змінити напрямок профілю</BtnReverseToolTip>
   <BtnReturnPointValueToolTip>Повернутися до дійсного значення точки</BtnReturnPointValueToolTip>
+  <BtnPanToFunToolTip>Наблизити до набору профілів</BtnPanToFunToolTip>
+  <BtnPanToPrimitive>Наблизити до примітиву</BtnPanToPrimitive>
   <DgvProfilePropertiesAscendingAngleColToolTip>Максимальний кут підйому (градуси)</DgvProfilePropertiesAscendingAngleColToolTip>
   <DgvProfilePropertiesAzimuthColToolTip>Азимут</DgvProfilePropertiesAzimuthColToolTip>
   <DgvProfilePropertiesDescendingAngleColToolTip>Максимальний кут спуску (градуси)</DgvProfilePropertiesDescendingAngleColToolTip>
@@ -61,6 +63,15 @@
   <CmbAssignmentMethodFromMapTypeText>Мапа</CmbAssignmentMethodFromMapTypeText>
   <CmbAssignmentMethodObservPointsTypeText>Шар пунктів спостереження</CmbAssignmentMethodObservPointsTypeText>
   <CmbAssignmentMethodPointsLayerTypeText>Точковий шар</CmbAssignmentMethodPointsLayerTypeText>
+  <CmbTargetAssignmentMethodInSectorText>У вказаному секторі</CmbTargetAssignmentMethodInSectorText>
+  <CmbTargetAssignmentMethodObservPointsText>Шар пунктів спостереження</CmbTargetAssignmentMethodObservPointsText>
+  <CmbTargetAssignmentMethodObservObjText>Шар об'єктів спостереження</CmbTargetAssignmentMethodObservObjText>
+  <CmbTargetAssignmentMethodFeatureLayerText>Векторний шар</CmbTargetAssignmentMethodFeatureLayerText>
+  <CmbTargetAssignmentMethodSelectedGraphicText>Обрана графіка</CmbTargetAssignmentMethodSelectedGraphicText>
+  <CmbTargetAssignmentMethodGeoCalcText>Геокалькулятор</CmbTargetAssignmentMethodGeoCalcText>
+  <CmbToPointsCreationMethodCenterText>Азмимути (мін і макс), центр</CmbToPointsCreationMethodCenterText>
+  <CmbToPointsCreationMethodLineNumberText>К-ть ліній від мін до макс азимуту</CmbToPointsCreationMethodLineNumberText>
+  <CmbToPointsCreationMethodToVerticesText>До вершин</CmbToPointsCreationMethodToVerticesText>
   <CopyStripMenuItemText>Скопіювати</CopyStripMenuItemText>
   <FrmSavedProfilesModalWindowText>Додати профілі до сесії</FrmSavedProfilesModalWindowText>
   <FunTypeText>"Віяло"</FunTypeText>
@@ -80,7 +91,7 @@
   <LblFunBasePointText>Базова точка</LblFunBasePointText>
   <LblFunCountText>Кількість</LblFunCountText>
   <LblFunDistanceText>Відстань</LblFunDistanceText>
-  <LblFunParametersText>Параметри</LblFunParametersText>
+  <LblFunParametersText>Правило створення і параметри</LblFunParametersText>
   <LblHeightOfViewText>Висота</LblHeightOfViewText>
   <LblHydrographyLayerText>гідрографія</LblHydrographyLayerText>
   <LblInvisibleLineColorText>невидимі</LblInvisibleLineColorText>
@@ -108,6 +119,8 @@
   <LblGetPointsFromGeoCalculator>Список точок модулю Геокалькулятор</LblGetPointsFromGeoCalculator>
   <LblLayersText>Шар</LblLayersText>
   <LblFieldsText>Поле</LblFieldsText>
+  <LblTargetObjText>Цільовий об'єкт</LblTargetObjText>
+  <LblFunParametersText>Правило створення та параметри</LblFunParametersText>
   <LvProfileDetailsAnglesText>Кути:</LvProfileDetailsAnglesText>
   <LvProfileDetailsAzimuthText>Азимут:</LvProfileDetailsAzimuthText>
   <LvProfileDetailsEndPointsText>Початок - кінець</LvProfileDetailsEndPointsText>
@@ -120,6 +133,7 @@
   <ProfilesSetNotSharedText>Приватний</ProfilesSetNotSharedText>
   <ProfilesSetSharedText>Спільний</ProfilesSetSharedText>
   <ObservPointsTypeText>Пункти спостереження</ObservPointsTypeText>
+  <ObservObjectsTypeText>Об'єкти спостереження</ObservObjectsTypeText>
   <TabFunTabText>"Віяло"</TabFunTabText>
   <TabGraphTitle>Графік</TabGraphTitle>
   <TabLoadTabText>Завантажити</TabLoadTabText>
@@ -130,21 +144,25 @@
   <TvProfilesFunNodeText>"Віяло"</TvProfilesFunNodeText>
   <TvProfilesPointsNodeText>Відрізки</TvProfilesPointsNodeText>
   <TvProfilesPritiveNodeText>Графіка</TvProfilesPritiveNodeText>
-  <TxtAttrProfileAzimuth1Text>Азимут 1:</TxtAttrProfileAzimuth1Text>
-  <TxtAttrProfileAzimuth2Text>Азимут 2:</TxtAttrProfileAzimuth2Text>
+  <TxtAttrProfileAzimuth1Text>Початковий азимут:</TxtAttrProfileAzimuth1Text>
+  <TxtAttrProfileAzimuth2Text>Кінцевий азимут:</TxtAttrProfileAzimuth2Text>
   <TxtAttrProfileAzimuthText>Азимут:</TxtAttrProfileAzimuthText>
-  <TxtAttrProfileBasePointText>Базова точка (довгота / широта):</TxtAttrProfileBasePointText>
+  <TxtAttrProfileBasePointXText>Базова точка (довгота):</TxtAttrProfileBasePointXText>
+  <TxtAttrProfileBasePointYText>Базова точка (широта):</TxtAttrProfileBasePointYText>
   <TxtAttrProfileCountText>Кількість ліній:</TxtAttrProfileCountText>
   <TxtAttrProfileCreatorText>Автор:</TxtAttrProfileCreatorText>
   <TxtAttrProfileDateText>Дата:</TxtAttrProfileDateText>
   <TxtAttrProfileDistanceText>Відстань:</TxtAttrProfileDistanceText>
-  <TxtAttrProfileEndPointText>Кінець в точці:</TxtAttrProfileEndPointText>
+  <TxtAttrProfileEndPointXText>Кінцева точка (довгота):</TxtAttrProfileEndPointXText>
+  <TxtAttrProfileEndPointYText>Кінцева точка (широта):</TxtAttrProfileEndPointYText>
   <TxtAttrProfileIdText>Ідентифікатор:</TxtAttrProfileIdText>
   <TxtAttrProfileNameText>Назва:</TxtAttrProfileNameText>
-  <TxtAttrProfilePointOfViewText>Точка спостереження:</TxtAttrProfilePointOfViewText>
-  <TxtAttrProfileStartPointText>Початок в точці:</TxtAttrProfileStartPointText>
+  <TxtAttrProfilePointOfViewText>Висота, м:</TxtAttrProfilePointOfViewText>
+  <TxtAttrProfileStartPointXText>Початкова точка (довгота):</TxtAttrProfileStartPointXText>
+  <TxtAttrProfileStartPointYText>Початкова точка (широта):</TxtAttrProfileStartPointYText>
   <TxtAttrProfileTypeText>Тип:</TxtAttrProfileTypeText>
   <TxtTreeViewProfileText>Профіль:</TxtTreeViewProfileText>
+  <TxtTreeViewProfileSurfaceText>Поверхня:</TxtTreeViewProfileSurfaceText>
 
   <MsgLineNotFoundErrorText>Лінію не знайдено</MsgLineNotFoundErrorText>
   <MsgFolderAlreadyExistText>Каталог  "{0}"  вже існує \n Ви дійсно хочете оновити дані?</MsgFolderAlreadyExistText>
@@ -159,8 +177,14 @@
   <MsgObservPointscModuleDoesnotExistText>Модуль "Видимість" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</MsgObservPointscModuleDoesnotExistText>
   <MsgCannotFindObjIdText>У шарі відсутнє поле OBJECTID</MsgCannotFindObjIdText>
   <MsgObservPointsLayerDoesnotExistText>У проекті відсутній шар точок спостереження. Будь ласка додайте шар, щоб мати можливість отримати точки</MsgObservPointsLayerDoesnotExistText>
-  <MsgDemLayerNotChosen>Будь ласка оберіть шар ЦМР/ЦММ, щоб отримати Z координату</MsgDemLayerNotChosen>
-
+  <MsgObservObjectsLayerDoesnotExistText>У проекті відсутній шар об'єктів спостереження. Будь ласка додайте шар, щоб мати можливість отримати точки</MsgObservObjectsLayerDoesnotExistText>
+  <MsgDemLayerNotChosenText>Будь ласка, оберіть шар ЦМР/ЦММ, щоб отримати Z координату</MsgDemLayerNotChosenText>
+  <MsgCenterPointNotChosenText>Будь ласка, оберіть центральну точку для подальших розрахунків</MsgCenterPointNotChosenText>
+  <MsgCalcFunErrorText>Під час розрахунку набору профілів сталася помилка. Більш детальна інформація знаходиться у журналі</MsgCalcFunErrorText>
+  <MsgSelectedGeomNotFoundText>Будь ласка, оберіть графіку для розрахунку набору профілів</MsgSelectedGeomNotFoundText>
+  <MsgLinesCountLessThanTwoText>Кількість профілів не може бути меншою за 2</MsgLinesCountLessThanTwoText>
+  <MsgCannotFlipEmptyPoint>Будь ласка, оберіть початкову і кінцеву точку</MsgCannotFlipEmptyPoint>
+ 
   <DataExportPointsPropertiesHeader>Номер; X; Y; Z; Відстань; Точка перегину; Видима; Перетини</DataExportPointsPropertiesHeader>
   <DataExportProfilePropertiesHeader>Номер; Назва профілю; Зовнішній; Стан; Точка початку; Точка кінцю; Азимут; Пункт спостереження; Довжина; Макс. висота; Різниця висот; Мін. висота; Макс. кут підйому; Макс. кут спуску; Процент видимих зон</DataExportProfilePropertiesHeader>
   <DgvProfilePropertiesAscendingAngleColHeader>КП</DgvProfilePropertiesAscendingAngleColHeader>
@@ -191,11 +215,25 @@
   <ModalPointsListTitle>Вибір точки зі списку точок Геокалькулятора</ModalPointsListTitle>
   <ModalPointsFromLayerTitle>Вибір точки з точкового шару</ModalPointsFromLayerTitle>
   <ModalObservPointsTitle>Вибір точки з шару точок спостереження</ModalObservPointsTitle>
+  <ModalTargetObservPointsTitle>Вибір точок з шару точок спостереження</ModalTargetObservPointsTitle>
+  <ModalTargetObservObjTitle>Вибір об'єктів спостереження</ModalTargetObservObjTitle>
+  <ModalGeometryFromLayerTitle>Вибір геометрії з векторного шару</ModalGeometryFromLayerTitle>
 
   <FbdSelectFolderDescription>Виберіть папку для збереження даних</FbdSelectFolderDescription>
   <TxtCreatorPlaceholder>Автор</TxtCreatorPlaceholder>
   <TxtNamePlaceholder>Назва профілю</TxtNamePlaceholder>
   <TxtGraphicsLayerValue>графічні об'єкти</TxtGraphicsLayerValue>
   <TxtNewProfileNameValue>Новий профіль</TxtNewProfileNameValue>
+  
+  <LbFunParamsTitleText>Параметри набору профілів:</LbFunParamsTitleText>
+  <LbFunParamsAvgAzimuthText>Середній азимут:</LbFunParamsAvgAzimuthText>
+  <LbFunParamsAvgAngleText>Середній кут між лініями:</LbFunParamsAvgAngleText>
+  <LbFunParamsAvgLengthText>Середня довжина проекції лінії:</LbFunParamsAvgLengthText>
+  <LbFunParamsLinesCountText>Кількість ліній:</LbFunParamsLinesCountText>
+  <LbPrimitiveParamsTitleText>Параметру примітиву:</LbPrimitiveParamsTitleText>
+  <LbPrimitiveParamsLengthText>Довжина проекцій ліній:</LbPrimitiveParamsLengthText>
+  <LbPrimitiveParamsAzimuthText>Азимут між крайніми точками:</LbPrimitiveParamsAzimuthText>
+  <LbPrimitiveParamsProjLengthText>Відстань між крайніми точками:</LbPrimitiveParamsProjLengthText>
+  <LbPrimitiveParamsVerticesCountText>Кількість сегментів:</LbPrimitiveParamsVerticesCountText>
   
 </SP_ProfileLocalization>
