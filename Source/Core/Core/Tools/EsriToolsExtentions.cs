@@ -42,7 +42,7 @@ namespace MilSpace.Core.Tools
             //Get the value at a given band.
             var pixel = raster2.GetPixelValue(0, col, row);
 
-            return pixel != null ? Convert.ChangeType(pixel, typeof(double)) : double.NaN;
+            return pixel != null ? (double)Convert.ChangeType(pixel, typeof(double)) : double.NaN;
 
         }
 
