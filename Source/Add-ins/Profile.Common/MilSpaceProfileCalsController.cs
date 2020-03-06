@@ -526,6 +526,15 @@ namespace MilSpace.Profile
             return _workingProfiles.FirstOrDefault(p => p.DefinitionType == profileType && p.SessionId == profileId);
         }
 
+        internal void ShowProfileOnMap(int profileId, int lineId)
+        {
+            var profile = GetProfileById(profileId);
+            var line = profile.ProfileLines.FirstOrDefault(profileLine => profileLine.Id == lineId);
+
+            ShowProfileOnMap(profileId, line);
+
+        }
+
         internal void ShowProfileOnMap(int profileId = -1, ProfileLine line = null)
         {
             var mapScale = View.ActiveView.FocusMap.MapScale;
@@ -539,7 +548,7 @@ namespace MilSpace.Profile
             {
                profile = GetProfileSessionById(profileId);
             }
-
+            
             if (profile == null)
             {
                 logger.ErrorEx("Cannot find Selected Profiles set");
@@ -564,7 +573,7 @@ namespace MilSpace.Profile
                 env.Union(profileLine.Envelope);
             }
 
-            EsriTools.PanToGeometry(View.ActiveView, env);
+            EsriTools.ZoomToGeometry(View.ActiveView, env);
 
             if (profile.DefinitionType == ProfileSettingsTypeEnum.Primitives)
             {
@@ -667,6 +676,14 @@ namespace MilSpace.Profile
                     MilSpaceProfileFacade.SaveUserSession(set.SessionId);
                 }
             }
+        }
+
+        internal void RenameProfile(int id, string newName)
+        {
+            var session = GetProfileSessionById(id);
+            session.SessionName = newName;
+
+            SaveProfileSet(session);
         }
 
         internal void CallGraphsHandle(int profileSessionId)

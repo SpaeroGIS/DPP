@@ -140,7 +140,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 profileChart.Series.Last().Points.AddXY(point.Distance, point.Z);
                 points.Add(point);
 
-                if(point.isVertex 
+                if(point.isVertex
                     && point != profileSurface.ProfileSurfacePoints.First() 
                     && point != profileSurface.ProfileSurfacePoints.Last())
                 {
