@@ -11,15 +11,12 @@ namespace MilSpace.Profile
         private const string ValueColumnName = "Value";
 
         #region AttributeNames
-        //DS TODO: Change localized text
+        
         private static readonly string profileName = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfileNameText", "Назва:");
         private static readonly string profileId = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfileIdText", "Ідентифікатор:");
         private static readonly string profileType = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfileTypeText", "Тип:");
-        private static readonly string firstPointX = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfileStartPointXText", "Початкова точка (довгота):");
-        private static readonly string secondPointX = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfileEndPointText", "Кінець в точці:");
-        private static readonly string firstPointY = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfileStartPointYText", "Початкова точка (широта):");
-        private static readonly string secondPointY = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfileEndPointText", "Кінець в точці:");
-        private static readonly string firstPointHeight = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfilePointOfViewText", "Висота, м:");
+        private static readonly string firstPointHeight = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfilePointOfViewText", "Висота початкової точки на поверхнею, м:");
+        private static readonly string secondPointHeight = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfilePointToHeightText", "Висота кінцевої точки на поверхнею, м:");
         private static readonly string lineDistance = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfileDistanceText", "Відстань:");
         private static readonly string linesCount = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfileCountText", "Кількість ліній:");
         private static readonly string basePointX = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfileBasePointXText", "Базова точка (довгота):");
@@ -32,33 +29,10 @@ namespace MilSpace.Profile
         private static readonly string toPointX = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfileEndPointXText", "Кінцева точка (довгота):");
         private static readonly string toPointY = LocalizationContext.Instance.FindLocalizedElement("TxtAttrProfileEndPointYText", "Кінцева точка (широта):");
         private static readonly string surface = LocalizationContext.Instance.FindLocalizedElement("TxtTreeViewProfileSurfaceText", "Поверхня:");
+        private static readonly string basePointSurfaceHeight = LocalizationContext.Instance.FindLocalizedElement("TxtTreeViewProfileBasePointFromSurfaceHeightText", "Висота початкової точки на поверхні:");
+        private static readonly string toPointSurfaceHeight = LocalizationContext.Instance.FindLocalizedElement("TxtTreeViewProfileToPointFromSurfaceHeightText", "Висота кінцевої точки на поверхні:");
 
         #endregion
-
-
-        //internal string ProfileName { get; set; }
-        //internal int ProfileId { get; set; }
-        //internal double ProfileDistance { get; set; }
-
-        //internal double LineDistance { get; set; }
-
-        //internal int LinesCount { get; set; }
-
-        //internal IPoint BasePoint { get; set; }
-
-        //internal IPoint ToPoint { get; set; }
-
-        //internal string ProfileType { get; set; }
-
-        //internal double AzimuthFirst { get; set; }
-
-        //internal double AzimuthSecond { get; set; }
-
-        //internal string MapName { get; set; }
-
-        //internal string CreatorName { get; set; }
-
-        //internal DateTime Date { get; set; }
 
         internal DataTable Attributes { get; private set; }
 
@@ -88,17 +62,7 @@ namespace MilSpace.Profile
         {
             SetAttributeValue(Attributes, AttributeKeys.LinesCount, lineCountValue);
         }
-
-        internal void SetStartPointX(string startPointXValue)
-        {
-            SetAttributeValue(Attributes, AttributeKeys.FromPointX, startPointXValue);
-        }
-
-        internal void SetStartPointY(string startPointYValue)
-        {
-            SetAttributeValue(Attributes, AttributeKeys.FromPointX, startPointYValue);
-        }
-
+        
         internal void SetBasePointX(string basePointValueX)
         {
             SetAttributeValue(Attributes, AttributeKeys.BasePointX, basePointValueX);
@@ -162,6 +126,16 @@ namespace MilSpace.Profile
             SetAttributeValue(Attributes, AttributeKeys.Surface, surfaceValue);
         }
 
+        internal void SetBasePointFromSurfaceHeight(string surfaceValue)
+        {
+            SetAttributeValue(Attributes, AttributeKeys.FromPointFromSurfaceHeight, surfaceValue);
+        }
+
+        internal void SetToPointFromSurfaceHeight(string surfaceValue)
+        {
+            SetAttributeValue(Attributes, AttributeKeys.ToPointFromSurfaceHeight, surfaceValue);
+        }
+
         private DataTable GenerateDataTable()
         {
             var table = new DataTable();
@@ -176,53 +150,11 @@ namespace MilSpace.Profile
             profileNameRow[AttributeColumnName] = profileName;
             table.Rows.Add(profileNameRow);
 
-
             var profileTypeRow = table.NewRow();
             profileTypeRow[KeyColumnName] = AttributeKeys.ProfileType;
             profileTypeRow[AttributeColumnName] = profileType;
             table.Rows.Add(profileTypeRow);
-
-            //var firstPointXRow = table.NewRow();
-            //firstPointXRow[KeyColumnName] = AttributeKeys.SectionFirstPointX;
-            //firstPointXRow[AttributeColumnName] = firstPointX;
-            //table.Rows.Add(firstPointXRow);
-
-            //var firstPointYRow = table.NewRow();
-            //firstPointYRow[KeyColumnName] = AttributeKeys.SectionFirstPointY;
-            //firstPointYRow[AttributeColumnName] = firstPointY;
-            //table.Rows.Add(firstPointYRow);
-
-            //var firstPointHeightRow = table.NewRow();
-            //firstPointHeightRow[KeyColumnName] = AttributeKeys.SectionFirstPointHeight;
-            //firstPointHeightRow[AttributeColumnName] = firstPointHeight;
-            //table.Rows.Add(firstPointHeightRow);
-
-            //var secondPointXRow = table.NewRow();
-            //secondPointXRow[KeyColumnName] = AttributeKeys.SectionSecondPointX;
-            //secondPointXRow[AttributeColumnName] = secondPointX;
-            //table.Rows.Add(secondPointXRow);
-
-            //var secondPointYRow = table.NewRow();
-            //secondPointYRow[KeyColumnName] = AttributeKeys.SectionSecondPointY;
-            //secondPointYRow[AttributeColumnName] = secondPointY;
-            //table.Rows.Add(secondPointYRow);
-
-
-            //var secondPointHeightRow = table.NewRow();
-            //secondPointHeightRow[KeyColumnName] = AttributeKeys.SectionSecondPointHeight;
-            //secondPointHeightRow[AttributeColumnName] = secondPointHeight;
-            //table.Rows.Add(secondPointHeightRow);
-
-            var lineDistanceRow = table.NewRow();
-            lineDistanceRow[KeyColumnName] = AttributeKeys.LineDistance;
-            lineDistanceRow[AttributeColumnName] = lineDistance;
-            table.Rows.Add(lineDistanceRow);
-
-            var linesCountRow = table.NewRow();
-            linesCountRow[KeyColumnName] = AttributeKeys.LinesCount;
-            linesCountRow[AttributeColumnName] = linesCount;
-            table.Rows.Add(linesCountRow);
-
+            
             var basePointXRow = table.NewRow();
             basePointXRow[KeyColumnName] = AttributeKeys.BasePointX;
             basePointXRow[AttributeColumnName] = basePointX;
@@ -233,20 +165,45 @@ namespace MilSpace.Profile
             basePointYRow[AttributeColumnName] = basePointY;
             table.Rows.Add(basePointYRow);
 
+            var basePointFromSurfaceRow = table.NewRow();
+            basePointFromSurfaceRow[KeyColumnName] = AttributeKeys.FromPointFromSurfaceHeight;
+            basePointFromSurfaceRow[AttributeColumnName] = basePointSurfaceHeight;
+            table.Rows.Add(basePointFromSurfaceRow);
+
+            var firstPointHeightRow = table.NewRow();
+            firstPointHeightRow[KeyColumnName] = AttributeKeys.SectionFirstPointHeight;
+            firstPointHeightRow[AttributeColumnName] = firstPointHeight;
+            table.Rows.Add(firstPointHeightRow);
+
             var toPointXRow = table.NewRow();
             toPointXRow[KeyColumnName] = AttributeKeys.ToPointX;
             toPointXRow[AttributeColumnName] = toPointX;
             table.Rows.Add(toPointXRow);
 
-            var firstPointXRow = table.NewRow();
-            firstPointXRow[KeyColumnName] = AttributeKeys.FromPointX;
-            firstPointXRow[AttributeColumnName] = firstPointX;
-            table.Rows.Add(firstPointXRow);
+            var toPointYRow = table.NewRow();
+            toPointYRow[KeyColumnName] = AttributeKeys.ToPointY;
+            toPointYRow[AttributeColumnName] = toPointY;
+            table.Rows.Add(toPointYRow);
 
-            var firstPointYRow = table.NewRow();
-            firstPointYRow[KeyColumnName] = AttributeKeys.FromPointY;
-            firstPointYRow[AttributeColumnName] = firstPointY;
-            table.Rows.Add(firstPointYRow);
+            var toPointFromSurfaceRow = table.NewRow();
+            toPointFromSurfaceRow[KeyColumnName] = AttributeKeys.ToPointFromSurfaceHeight;
+            toPointFromSurfaceRow[AttributeColumnName] = toPointSurfaceHeight;
+            table.Rows.Add(toPointFromSurfaceRow);
+
+            var secondPointHeightRow = table.NewRow();
+            secondPointHeightRow[KeyColumnName] = AttributeKeys.SectionSecondPointHeight;
+            secondPointHeightRow[AttributeColumnName] = secondPointHeight;
+            table.Rows.Add(secondPointHeightRow);
+
+            var lineDistanceRow = table.NewRow();
+            lineDistanceRow[KeyColumnName] = AttributeKeys.LineDistance;
+            lineDistanceRow[AttributeColumnName] = lineDistance;
+            table.Rows.Add(lineDistanceRow);
+
+            var linesCountRow = table.NewRow();
+            linesCountRow[KeyColumnName] = AttributeKeys.LinesCount;
+            linesCountRow[AttributeColumnName] = linesCount;
+            table.Rows.Add(linesCountRow);
 
             var azimuthFirstRow = table.NewRow();
             azimuthFirstRow[KeyColumnName] = AttributeKeys.Azimuth;
