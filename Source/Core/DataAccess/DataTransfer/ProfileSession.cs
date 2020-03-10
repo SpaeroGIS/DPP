@@ -106,29 +106,26 @@ namespace MilSpace.DataAccess.DataTransfer
 
         public IEnumerable<IPolyline> ConvertLinesToEsriPolypile(ISpatialReference spatialReference, int lineId = -1)
         {
-            Func<ProfileLine, IPolyline> converter = (l) =>
+            Func<ProfileSurface, IPolyline> converter = (l) =>
             {
-                var pointFrom = new Point { X = l.PointFrom.X, Y = l.PointFrom.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
-                var pointTo = new Point { X = l.PointTo.X, Y = l.PointTo.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
+                var vertices = l.ProfileSurfacePoints.Where(point => point.isVertex).Select(p => new Point { X = p.X, Y = p.Y, Z = p.Z, SpatialReference = EsriTools.Wgs84Spatialreference});
+                var result = EsriTools.CreatePolylineFromPointsArray(vertices.ToArray(), EsriTools.Wgs84Spatialreference);
+                var line = ProfileLines.First(pl => pl.Id == l.LineId);
 
-                pointFrom.Project(spatialReference);
-                pointTo.Project(spatialReference);
-
-                var result = EsriTools.CreatePolylineFromPoints(pointFrom, pointTo);
-                if (l.Line == null)
+                if(line.Line == null)
                 {
-                    l.Line = result;
+                    line.Line = result.First();
                 }
 
-                return result;
+                return result.First();
             };
 
             if (lineId < 0 || lineId >= ProfileLines.Length)
             {
-                return ProfileLines.Select(l => converter(l)).ToArray();
+                return ProfileSurfaces.Select(l => converter(l)).ToArray();
             }
 
-            return new IPolyline[] { converter(ProfileLines[lineId]) };
+            return new IPolyline[] { converter(ProfileSurfaces.First(surface => surface.LineId == lineId)) };
         }
 
         public void SetSegments(ISpatialReference spatialReference, ProfileLine profileLine = null)
