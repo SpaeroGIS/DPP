@@ -324,21 +324,34 @@ namespace MilSpace.Profile
         /// Do Actions to generate profile(s), save them and set properties to default values
         /// </summary>
         /// <returns>Profile Session data</returns>
-        internal ProfileSession GenerateProfile()
+        internal ProfileSession GenerateProfile(ProfileSettings profileSetting = null, string profileName = null)
         {
             logger.DebugEx($"> GenerateProfile START");
             string errorMessage;
             try
             {
                 ProfileManager manager = new ProfileManager();
+                ProfileSettingsTypeEnum profileType;
 
                 logger.DebugEx($"GenerateProfile. new ProfileManager OK");
-                var profileSetting = profileSettings[View.SelectedProfileSettingsType];
+
                 var newProfileId = GenerateProfileId();
                 logger.DebugEx($"GenerateProfile.Profile. ID:{newProfileId}");
-                var newProfileName = GenerateProfileName();
+
+                var newProfileName = String.IsNullOrEmpty(profileName)? GenerateProfileName() : profileName;
+               
                 logger.DebugEx($"GenerateProfile.Profile. Name:{newProfileName}");
 
+                if(profileSetting == null)
+                {
+                    profileSetting = profileSettings[View.SelectedProfileSettingsType];
+                    profileType = View.SelectedProfileSettingsType;
+                }
+                else
+                {
+                    profileType = profileSetting.Type;
+                }
+                
                 if (manager == null)
                 {
                     logger.DebugEx("GenerateProfile. Cannot find profile manager");
@@ -347,15 +360,15 @@ namespace MilSpace.Profile
 
                 if (profileSetting == null)
                 {
-                    logger.DebugEx("GenerateProfile. Cannot find profile manager");
-                    throw new NullReferenceException("Cannot find profile manager");
+                    logger.DebugEx("GenerateProfile. Profile parameters are empty");
+                    throw new NullReferenceException("GenerateProfile. Profile parameters are empty");
                 }
 
                 logger.DebugEx($"GenerateProfile. Profile {newProfileId}. GenerateProfile CALL");
                 var session = manager.GenerateProfile(
                     profileSetting.DemLayerName, 
-                    profileSetting.ProfileLines, 
-                    View.SelectedProfileSettingsType, 
+                    profileSetting.ProfileLines,
+                    profileType, 
                     newProfileId, 
                     newProfileName, 
                     View.ObserveHeight, 
@@ -373,7 +386,11 @@ namespace MilSpace.Profile
                 }
 
                 SetPeofileId();
-                SetProfileName();
+
+                if(String.IsNullOrEmpty(profileName))
+                {
+                    SetProfileName();
+                }
 
                 logger.InfoEx($"> GenerateProfile END");
                 return session;
@@ -403,6 +420,27 @@ namespace MilSpace.Profile
                 errorMessage
                 );
             return null;
+        }
+        
+        internal ProfileSession RecalculateSessionForNewSurface(int profileId)
+        {
+            var session = GetProfileSessionById(profileId);
+
+            var setting = new ProfileSettings();
+
+            if(session.DefinitionType == ProfileSettingsTypeEnum.Fun)
+            {
+                setting.Azimuth1 = session.Azimuth1;
+                setting.Azimuth2 = session.Azimuth2;
+            }
+
+            setting.DemLayerName = View.DemLayerName;
+            setting.Type = session.DefinitionType;
+            setting.ProfileLines = session.ProfileLines.Select(line => line.Line).ToArray();
+
+            var profileName = $"{session.SessionName}_{View.DemLayerName}";
+
+            return GenerateProfile(setting, profileName);
         }
 
         internal bool RemoveProfilesFromUserSession(bool eraseFromDB = false)
@@ -1538,7 +1576,7 @@ namespace MilSpace.Profile
             var projLength = projLine.Length;
             var azimuth = projLine.Azimuth();
 
-            View.SetPrimitiveInfo(length, azimuth, projLength, segmentCount);
+            View.SetPrimitiveInfo(length, azimuth, projLength, segmentCount - 1);
         }
 
         private Dictionary<int, IPoint> GetPointsFromGeoCalculator()

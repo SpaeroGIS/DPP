@@ -138,7 +138,7 @@
             this.renumberButton = new System.Windows.Forms.ToolStripButton();
             this.panToLineButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.refreshGraphicsButton = new System.Windows.Forms.ToolStripButton();
             this.PointsGridView = new System.Windows.Forms.DataGridView();
             this.NumberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.XCoordColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -1165,7 +1165,7 @@
             this.renumberButton,
             this.panToLineButton,
             this.toolStripSeparator7,
-            this.toolStripButton1});
+            this.refreshGraphicsButton});
             this.GridToolStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.GridToolStrip.Location = new System.Drawing.Point(0, 396);
             this.GridToolStrip.Name = "GridToolStrip";
@@ -1298,16 +1298,16 @@
             this.toolStripSeparator7.Name = "toolStripSeparator7";
             this.toolStripSeparator7.Size = new System.Drawing.Size(6, 23);
             // 
-            // toolStripButton1
+            // refreshGraphicsButton
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 20);
-            this.toolStripButton1.Text = "toolStripButton1";
-            this.toolStripButton1.ToolTipText = "toolStripButtonRefresh";
-            this.toolStripButton1.Click += new System.EventHandler(this.BtnRefreshGraphic_Click);
+            this.refreshGraphicsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.refreshGraphicsButton.Image = ((System.Drawing.Image)(resources.GetObject("refreshGraphicsButton.Image")));
+            this.refreshGraphicsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.refreshGraphicsButton.Name = "refreshGraphicsButton";
+            this.refreshGraphicsButton.Size = new System.Drawing.Size(23, 20);
+            this.refreshGraphicsButton.Text = "toolStripButton1";
+            this.refreshGraphicsButton.ToolTipText = "toolStripButtonRefresh";
+            this.refreshGraphicsButton.Click += new System.EventHandler(this.BtnRefreshGraphic_Click);
             // 
             // PointsGridView
             // 
@@ -1936,7 +1936,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton refreshGraphicsButton;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Panel panel7;

@@ -50,6 +50,7 @@
   <HintToolSetProfileSettingsToCalcText>Скопіювати параметри профілю</HintToolSetProfileSettingsToCalcText>
   <HintToolRenameProfile>Перейменувати профіль/набір профілів</HintToolRenameProfile>
   <HintToolCopyExtremePoints>Копіювати координати крайніх точок</HintToolCopyExtremePoints>
+  <HintRecalcProfileForNewSurfaceText>Перерахувати профіль для нової поверхні</HintRecalcProfileForNewSurfaceText>
   
   <BtnAddToSessionText>Додати до сесії</BtnAddToSessionText>
   <BtnCancelText>Відмінити</BtnCancelText>
