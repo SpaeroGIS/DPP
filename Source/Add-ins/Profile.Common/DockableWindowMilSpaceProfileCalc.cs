@@ -237,6 +237,7 @@ namespace MilSpace.Profile
 
             eraseProfile.Enabled = controller.CanEraseProfileSession(ids.Item1);
             copyExtremePoints.Enabled = !(treeViewselectedIds.ProfileLineId == -1);
+            recalcForCurrentSurface.Enabled = !String.IsNullOrEmpty(cmbRasterLayers.SelectedItem.ToString());
         }
 
         private void DisplaySelectedNodeAttributes(object sender, TreeViewEventArgs treeViewEventArgs)
@@ -1316,6 +1317,7 @@ namespace MilSpace.Profile
             clearExtraGraphic.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintClearExtraGraphicText", "Очистити графіку на карті");
             renameProfile.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintToolRenameProfile", "Перейменувати профіль/набір профілів");
             copyExtremePoints.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintToolCopyExtremePoints", "Копіювати координати крайніх точок");
+            recalcForCurrentSurface.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintRecalcProfileForNewSurfaceText", "Перерахувати профіль для нової поверхні");
 
             btnChooseFirstPointAssignmentMethod.Text = LocalizationContext.Instance.ChooseText;
             btnChooseSecondPointAssignmentMethod.Text = LocalizationContext.Instance.ChooseText;
@@ -1932,6 +1934,34 @@ namespace MilSpace.Profile
 
             Clipboard.Clear();
             Clipboard.SetText(coordString);
+        }
+
+        private void RecalcForCurrentSurface_Click(object sender, EventArgs e)
+        {
+           
+            logger.DebugEx("> RecalcForCurrentSurface_Click START");
+
+            var ids = GetProfileAndLineIds(profilesTreeView.SelectedNode);
+            var session = controller.RecalculateSessionForNewSurface(ids.Item1);
+
+            if(session != null)
+            {
+                logger.DebugEx("RecalcForCurrentSurface_Click. session.SessionName:{0}", session.SessionName);
+                controller.AddProfileToList(session);
+                controller.CallGraphsHandle(session);
+                controller.SaveProfileSet(session);
+            }
+            else
+            {
+                logger.DebugEx("RecalcForCurrentSurface_Click controller.GenerateProfile ERROR. Session is NULL");
+                MessageBox.Show(
+                    "Calculation error. GenerateProfile return NULL",
+                    "Модуль профілю. Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+
+            logger.DebugEx("> RecalcForCurrentSurface_Click END");
         }
     }
 }
