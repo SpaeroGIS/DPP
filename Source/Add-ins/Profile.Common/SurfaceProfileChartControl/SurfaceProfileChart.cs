@@ -180,10 +180,17 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         {
             foreach(var point in surface.ProfileSurfacePoints)
             {
-                profileChart.Series[surface.LineId.ToString()]
+                var seriePoint = profileChart.Series[surface.LineId.ToString()]
                         .Points
-                        .FirstOrDefault(linePoint => (linePoint.XValue.Equals(point.Distance)))
-                        .Color = profileChart.Series[surface.LineId.ToString()].BackSecondaryColor;
+                        .FirstOrDefault(linePoint => (linePoint.XValue.Equals(point.Distance)));
+
+                if(seriePoint != null)
+                {
+                    seriePoint.Color = profileChart.Series[surface.LineId.ToString()].BackSecondaryColor;
+                }
+                else
+                {
+                }
             }
         }
 

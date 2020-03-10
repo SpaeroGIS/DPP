@@ -324,7 +324,7 @@ namespace MilSpace.Profile
         /// Do Actions to generate profile(s), save them and set properties to default values
         /// </summary>
         /// <returns>Profile Session data</returns>
-        internal ProfileSession GenerateProfile(ProfileSettings profileSetting = null, string newProfileName = null)
+        internal ProfileSession GenerateProfile(ProfileSettings profileSetting = null, string profileName = null)
         {
             logger.DebugEx($"> GenerateProfile START");
             string errorMessage;
@@ -338,10 +338,7 @@ namespace MilSpace.Profile
                 var newProfileId = GenerateProfileId();
                 logger.DebugEx($"GenerateProfile.Profile. ID:{newProfileId}");
 
-                if(String.IsNullOrEmpty(newProfileName))
-                {
-                    newProfileName = GenerateProfileName();
-                }
+                var newProfileName = String.IsNullOrEmpty(profileName)? GenerateProfileName() : profileName;
                
                 logger.DebugEx($"GenerateProfile.Profile. Name:{newProfileName}");
 
@@ -390,7 +387,7 @@ namespace MilSpace.Profile
 
                 SetPeofileId();
 
-                if(String.IsNullOrEmpty(newProfileName))
+                if(String.IsNullOrEmpty(profileName))
                 {
                     SetProfileName();
                 }
@@ -1579,7 +1576,7 @@ namespace MilSpace.Profile
             var projLength = projLine.Length;
             var azimuth = projLine.Azimuth();
 
-            View.SetPrimitiveInfo(length, azimuth, projLength, segmentCount);
+            View.SetPrimitiveInfo(length, azimuth, projLength, segmentCount - 1);
         }
 
         private Dictionary<int, IPoint> GetPointsFromGeoCalculator()
