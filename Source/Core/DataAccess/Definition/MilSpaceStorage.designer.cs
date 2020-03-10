@@ -39,7 +39,7 @@ namespace MilSpace.DataAccess.Definition
     #endregion
 		
 		public MilSpaceStorageContext() : 
-				base(global::MilSpace.DataAccess.Properties.Settings.Default.DNOEGDBConnectionString, mappingSource)
+				base(global::MilSpace.DataAccess.Settings.Default.DNOEGDBConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
