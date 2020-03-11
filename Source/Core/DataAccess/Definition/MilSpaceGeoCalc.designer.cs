@@ -36,7 +36,7 @@ namespace MilSpace.DataAccess.Definition
     #endregion
 		
 		public MilSpaceGeoCalcContext() : 
-				base(global::MilSpace.DataAccess.Settings.Default.DNOEGDBConnectionString, mappingSource)
+				base(global::MilSpace.DataAccess.Properties.Settings.Default.DNOEGDBConnectionString, mappingSource)
 		{
 			OnCreated();
 		}

@@ -272,7 +272,7 @@
       <DependentUpon>MilSpaceGeoCalc.dbml</DependentUpon>
     </None>
     <None Include="..\DataAccess\Properties\Settings.settings">
-      <Link>Settings.settings</Link>
+      <Link>Properties\Settings.settings</Link>
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
