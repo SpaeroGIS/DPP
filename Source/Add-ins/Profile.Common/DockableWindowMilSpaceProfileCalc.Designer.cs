@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Графика");
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.profileTabPage = new System.Windows.Forms.TabPage();
             this.btnRefreshLayers = new System.Windows.Forms.Button();
@@ -174,6 +174,8 @@
             this.lvProfileAttributes = new System.Windows.Forms.ListView();
             this.Attribute = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Value = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.contextMenuProfilesAttributes = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.copyToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.panel6 = new System.Windows.Forms.Panel();
             this.profilesToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolPanOnMap = new System.Windows.Forms.ToolStripButton();
@@ -195,8 +197,6 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.clearExtraGraphic = new System.Windows.Forms.ToolStripButton();
             this.lblProfileList = new System.Windows.Forms.Label();
-            this.contextMenuProfilesAttributes = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.copyToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.profileTabPage.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -232,9 +232,9 @@
             this.panel13.SuspendLayout();
             this.profileTreeTabPage.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.contextMenuProfilesAttributes.SuspendLayout();
             this.panel6.SuspendLayout();
             this.profilesToolStrip.SuspendLayout();
-            this.contextMenuProfilesAttributes.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -1974,25 +1974,25 @@
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.Location = new System.Drawing.Point(0, 62);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode10.Checked = true;
-            treeNode10.ImageKey = "vector-path-line.png";
-            treeNode10.Name = "Points";
-            treeNode10.SelectedImageIndex = 205;
-            treeNode10.Text = "Отрезки";
-            treeNode11.Checked = true;
-            treeNode11.ImageKey = "Editing-Line-icon3.png";
-            treeNode11.Name = "Fun";
-            treeNode11.SelectedImageIndex = 208;
-            treeNode11.Text = "Веер";
-            treeNode12.Checked = true;
-            treeNode12.ImageKey = "vector-polygon.png";
-            treeNode12.Name = "Primitives";
-            treeNode12.SelectedImageIndex = 209;
-            treeNode12.Text = "Графика";
+            treeNode1.Checked = true;
+            treeNode1.ImageKey = "vector-path-line.png";
+            treeNode1.Name = "Points";
+            treeNode1.SelectedImageIndex = 205;
+            treeNode1.Text = "Отрезки";
+            treeNode2.Checked = true;
+            treeNode2.ImageKey = "Editing-Line-icon3.png";
+            treeNode2.Name = "Fun";
+            treeNode2.SelectedImageIndex = 208;
+            treeNode2.Text = "Веер";
+            treeNode3.Checked = true;
+            treeNode3.ImageKey = "vector-polygon.png";
+            treeNode3.Name = "Primitives";
+            treeNode3.SelectedImageIndex = 209;
+            treeNode3.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode10,
-            treeNode11,
-            treeNode12});
+            treeNode1,
+            treeNode2,
+            treeNode3});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(335, 376);
             this.profilesTreeView.TabIndex = 35;
@@ -2045,6 +2045,20 @@
             // 
             this.Value.Text = "";
             this.Value.Width = 542;
+            // 
+            // contextMenuProfilesAttributes
+            // 
+            this.contextMenuProfilesAttributes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyToolStrip});
+            this.contextMenuProfilesAttributes.Name = "contextMenuProfilesAttributes";
+            this.contextMenuProfilesAttributes.Size = new System.Drawing.Size(103, 26);
+            // 
+            // copyToolStrip
+            // 
+            this.copyToolStrip.Name = "copyToolStrip";
+            this.copyToolStrip.Size = new System.Drawing.Size(102, 22);
+            this.copyToolStrip.Text = "Copy";
+            this.copyToolStrip.Click += new System.EventHandler(this.CopyStripMenuItem_Click);
             // 
             // panel6
             // 
@@ -2255,7 +2269,7 @@
             this.clearExtraGraphic.Image = ((System.Drawing.Image)(resources.GetObject("clearExtraGraphic.Image")));
             this.clearExtraGraphic.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.clearExtraGraphic.Name = "clearExtraGraphic";
-            this.clearExtraGraphic.Size = new System.Drawing.Size(23, 27);
+            this.clearExtraGraphic.Size = new System.Drawing.Size(23, 20);
             this.clearExtraGraphic.ToolTipText = "Очистить карту от неактуальных графиков";
             this.clearExtraGraphic.Click += new System.EventHandler(this.clearExtraGraphic_Click);
             // 
@@ -2271,20 +2285,6 @@
             this.lblProfileList.Size = new System.Drawing.Size(161, 32);
             this.lblProfileList.TabIndex = 1;
             this.lblProfileList.Text = "Список профилей";
-            // 
-            // contextMenuProfilesAttributes
-            // 
-            this.contextMenuProfilesAttributes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.copyToolStrip});
-            this.contextMenuProfilesAttributes.Name = "contextMenuProfilesAttributes";
-            this.contextMenuProfilesAttributes.Size = new System.Drawing.Size(103, 26);
-            // 
-            // copyToolStrip
-            // 
-            this.copyToolStrip.Name = "copyToolStrip";
-            this.copyToolStrip.Size = new System.Drawing.Size(180, 22);
-            this.copyToolStrip.Text = "Copy";
-            this.copyToolStrip.Click += new System.EventHandler(this.CopyStripMenuItem_Click);
             // 
             // DockableWindowMilSpaceProfileCalc
             // 
@@ -2360,11 +2360,11 @@
             this.profileTreeTabPage.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.contextMenuProfilesAttributes.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.profilesToolStrip.ResumeLayout(false);
             this.profilesToolStrip.PerformLayout();
-            this.contextMenuProfilesAttributes.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

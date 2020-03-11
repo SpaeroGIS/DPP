@@ -539,10 +539,14 @@ namespace MilSpace.Profile
                 if (profile.DefinitionType == ProfileSettingsTypeEnum.Primitives)
                 {
                     profile.Segments = ProfileLinesConverter.GetSegmentsFromProfileLine(profile.ProfileSurfaces, spatialReference);
-                    GraphicsLayerManager.AddLinesToWorkingGraphics(ProfileLinesConverter.ConvertLineToPrimitivePolylines(profile.ProfileSurfaces[0],
-                                                                                                                           spatialReference),
-                                                                   profile.SessionId,
-                                                                   profile.Segments.First());
+
+                    if (profile.ProfileSurfaces.Any())
+                    {
+                        GraphicsLayerManager.AddLinesToWorkingGraphics(ProfileLinesConverter.ConvertLineToPrimitivePolylines(profile.ProfileSurfaces[0],
+                                                                                                                               spatialReference),
+                                                                       profile.SessionId,
+                                                                       profile.Segments.First());
+                    }
                 }
                 else
                 {
@@ -615,14 +619,13 @@ namespace MilSpace.Profile
 
             if (profile.DefinitionType == ProfileSettingsTypeEnum.Primitives)
             {
-               EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, profile.Segments.First().Polylines);
+                EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, profile.Segments.First().Polylines);
             }
             else
             {
                 logger.InfoEx("Flashing geomerty");
                 EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, profileLines);
                 logger.InfoEx("Geomerty flashed");
-
             }
         }
 
@@ -768,8 +771,16 @@ namespace MilSpace.Profile
 
         internal void CallGraphsHandle(ProfileSession profileSession)
         {
-            MilSpaceProfileGraphsController.ShowWindow();
-            MilSpaceProfileGraphsController.AddSession(profileSession);
+            if (profileSession.ProfileSurfaces.Any())
+            {
+                MilSpaceProfileGraphsController.ShowWindow();
+                MilSpaceProfileGraphsController.AddSession(profileSession);
+            }
+            else
+            {
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgProfileSurfaceNotFound", "Неможливо побудувати графік. Відсутні дані з поверхні"),
+                                    LocalizationContext.Instance.MessageBoxTitle);
+            }
         }
 
         internal void ShowGraphsWindow()

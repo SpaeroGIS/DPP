@@ -1456,8 +1456,21 @@ namespace MilSpace.Profile
                 }
                 else if(profile.DefinitionType == ProfileSettingsTypeEnum.Primitives)
                 {
-                    var fromPoint = profile.ProfileSurfaces.First().ProfileSurfacePoints.First();
-                    var toPoint = profile.ProfileSurfaces.Last().ProfileSurfacePoints.Last();
+                    ProfileSurfacePoint fromPoint;
+                    ProfileSurfacePoint toPoint;
+
+                    if(profile.ProfileSurfaces.Any())
+                    {
+                        fromPoint = profile.ProfileSurfaces.First().ProfileSurfacePoints.First();
+                        toPoint = profile.ProfileSurfaces.Last().ProfileSurfacePoints.Last();
+                    }
+                    else
+                    {
+                        var line = profile.ProfileLines.First();
+
+                        fromPoint = new ProfileSurfacePoint { X = line.PointFrom.X, Y = line.PointFrom.Y };
+                        toPoint = new ProfileSurfacePoint { X = line.PointTo.X, Y = line.PointTo.Y };
+                    }
 
                     var firstX = fromPoint.X.ToFormattedString();
                     var firstY = fromPoint.Y.ToFormattedString();

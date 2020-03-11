@@ -109,7 +109,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         {
             profileChart.Series.Clear();
             foreach(var line in profileSession.ProfileLines)
-            {
+            {              
                 var profileSurface = profileSession.ProfileSurfaces.First(surface => surface.LineId == line.Id);
                 AddSerie(profileSurface);
             }
@@ -1324,7 +1324,7 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 List<double> azimuths = ProfilesProperties.Select(profile => profile.Azimuth).ToList();
                 azimuths.Sort();
 
-                if(profilePropertiesTable.Columns["AzimuthCol"].Tag == "ASC")
+                if((string)profilePropertiesTable.Columns["AzimuthCol"].Tag == "ASC")
                 {
                     azimuths.Reverse();
                     profilePropertiesTable.Columns["AzimuthCol"].Tag = "DESC";

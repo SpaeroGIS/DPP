@@ -106,26 +106,41 @@ namespace MilSpace.DataAccess.DataTransfer
 
         public IEnumerable<IPolyline> ConvertLinesToEsriPolypile(ISpatialReference spatialReference, int lineId = -1)
         {
-            Func<ProfileSurface, IPolyline> converter = (l) =>
+            Func<ProfileLine, IPolyline> converter = (l) =>
             {
-                var vertices = l.ProfileSurfacePoints.Where(point => point.isVertex).Select(p => new Point { X = p.X, Y = p.Y, Z = p.Z, SpatialReference = EsriTools.Wgs84Spatialreference});
-                var result = EsriTools.CreatePolylineFromPointsArray(vertices.ToArray(), EsriTools.Wgs84Spatialreference);
-                var line = ProfileLines.First(pl => pl.Id == l.LineId);
+                var surface = ProfileSurfaces.FirstOrDefault(s => l.Id == s.LineId);
+                IPolyline result;
 
-                if(line.Line == null)
+                if(DefinitionType == ProfileSettingsTypeEnum.Primitives && surface != null)
                 {
-                    line.Line = result.First();
+                    var vertices = surface.ProfileSurfacePoints.Where(point => point.isVertex).Select(p => new Point { X = p.X, Y = p.Y, Z = p.Z, SpatialReference = EsriTools.Wgs84Spatialreference });
+                    result = EsriTools.CreatePolylineFromPointsArray(vertices.ToArray(), spatialReference).First();
+                }
+                else
+                {
+                    var pointFrom = new Point { X = l.PointFrom.X, Y = l.PointFrom.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
+                    var pointTo = new Point { X = l.PointTo.X, Y = l.PointTo.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
+
+                    pointFrom.Project(spatialReference);
+                    pointTo.Project(spatialReference);
+
+                    result = EsriTools.CreatePolylineFromPoints(pointFrom, pointTo);
                 }
 
-                return result.First();
+                if (l.Line == null)
+                {
+                    l.Line = result;
+                }
+
+                return result;
             };
 
             if (lineId < 0 || lineId >= ProfileLines.Length)
             {
-                return ProfileSurfaces.Select(l => converter(l)).ToArray();
+                return ProfileLines.Select(l => converter(l)).ToArray();
             }
 
-            return new IPolyline[] { converter(ProfileSurfaces.First(surface => surface.LineId == lineId)) };
+            return new IPolyline[] { converter(ProfileLines[lineId])};
         }
 
         public void SetSegments(ISpatialReference spatialReference, ProfileLine profileLine = null)
@@ -156,7 +171,6 @@ namespace MilSpace.DataAccess.DataTransfer
                 lines[0].Visible = true;
 
                 var polyline = new List<IPolyline> { profileLine.Line };
-
 
                 Segments.Add(new GroupedLines
                 {

@@ -83,7 +83,7 @@ namespace MilSpace.Profile
             var av = ArcMap.Document.ActivatedView;
             point.Project(av.FocusMap.SpatialReference);
 
-            if(!EsriTools.IsPointOnExtent(ArcMap.Document.ActivatedView.Extent, point))
+            if (!EsriTools.IsPointOnExtent(ArcMap.Document.ActivatedView.Extent, point))
             {
                 EsriTools.PanToGeometry(View.ActiveView, point);
             }
@@ -106,7 +106,7 @@ namespace MilSpace.Profile
         internal void ClearProfileSelection(SurfaceProfileChart chart)
         {
             SetChart(chart);
-            SurfaceProfileChartController.InvokeSelectedProfile(-1);
+            _surfaceProfileChartController.InvokeSelectedProfile(-1);
         }
 
         internal void InvokeSelectedProfileChanged(GroupedLines oldSelectedLines, GroupedLines newSelectedLines, int profileId)
@@ -141,7 +141,7 @@ namespace MilSpace.Profile
 
         internal void SetIntersections(List<IntersectionsInLayer> intersectionsLines, int lineId)
         {
-            SurfaceProfileChartController.SetIntersectionLines(intersectionsLines, lineId);
+            _surfaceProfileChartController.SetIntersectionLines(intersectionsLines, lineId);
         }
 
         internal string GetProfileNameById(int id)
@@ -172,10 +172,18 @@ namespace MilSpace.Profile
 
         internal void AddSession(ProfileSession profileSession)
         {
+            _surfaceProfileChartController = new SurfaceProfileChartController();
 
-            SurfaceProfileChartController.SetSession(profileSession);
+            _surfaceProfileChartController.OnProfileGraphClicked += OnProfileGraphClicked;
+            _surfaceProfileChartController.InvisibleZonesChanged += InvokeInvisibleZonesChanged;
+            _surfaceProfileChartController.ProfileRemoved += InvokeProfileRemoved;
+            _surfaceProfileChartController.SelectedProfileChanged += InvokeSelectedProfileChanged;
+            _surfaceProfileChartController.IntersectionLinesDrawing += InvokeIntersectionLinesDrawing;
+            _surfaceProfileChartController.ProfileSessionsHeightsChange += InvokeOnSessionsHeightsChanged;
+
+            _surfaceProfileChartController.SetSession(profileSession);
             SurfaceProfileChart surfaceProfileChart =
-                SurfaceProfileChartController.CreateProfileChart(profileSession.ObserverHeight);
+                _surfaceProfileChartController.CreateProfileChart(profileSession.ObserverHeight);
 
             View.AddNewTab(surfaceProfileChart, profileSession.SessionId);
         }
@@ -183,12 +191,12 @@ namespace MilSpace.Profile
         internal void AddProfileToTab(ProfileLine profileLine, ProfileSurface profileSurface, bool isOneLineProfile)
         {
             View.SetCurrentChart();
-            SurfaceProfileChartController.AddLineToGraph(profileLine, profileSurface, isOneLineProfile);
+            _surfaceProfileChartController.AddLineToGraph(profileLine, profileSurface, isOneLineProfile);
         }
 
         internal void SetChart(SurfaceProfileChart currentChart)
         {
-            _surfaceProfileChartController = SurfaceProfileChartController.GetCurrentController(currentChart, this);
+            _surfaceProfileChartController = _surfaceProfileChartController.GetCurrentController(currentChart, this);
         }
 
         internal void RemoveTab()
@@ -204,30 +212,6 @@ namespace MilSpace.Profile
         internal void AddEmptyGraph()
         {
             CreateEmptyGraph?.Invoke();
-        }
-
-        internal SurfaceProfileChartController SurfaceProfileChartController
-        {
-            get
-            {
-                if (_surfaceProfileChartController == null)
-                {
-                    InitializeSurfaceProfileChartController();
-                }
-                return _surfaceProfileChartController;
-            }
-        }
-
-        private void InitializeSurfaceProfileChartController()
-        {
-            _surfaceProfileChartController = new SurfaceProfileChartController();
-
-            _surfaceProfileChartController.OnProfileGraphClicked += OnProfileGraphClicked;
-            _surfaceProfileChartController.InvisibleZonesChanged += InvokeInvisibleZonesChanged;
-            _surfaceProfileChartController.ProfileRemoved += InvokeProfileRemoved;
-            _surfaceProfileChartController.SelectedProfileChanged += InvokeSelectedProfileChanged;
-            _surfaceProfileChartController.IntersectionLinesDrawing += InvokeIntersectionLinesDrawing;
-            _surfaceProfileChartController.ProfileSessionsHeightsChange += InvokeOnSessionsHeightsChanged;
         }
 
         private IDockableWindow Docablewindow
