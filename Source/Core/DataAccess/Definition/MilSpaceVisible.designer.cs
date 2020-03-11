@@ -59,6 +59,12 @@ namespace MilSpace.DataAccess.Definition
     partial void DeleteMilSp_VisibilityUserSession(MilSp_VisibilityUserSession instance);
     #endregion
 		
+		public MilSpaceVisibilityContext() : 
+				base(global::MilSpace.DataAccess.Properties.Settings.Default.DNOEGDBConnectionString, mappingSource)
+		{
+			OnCreated();
+		}
+		
 		public MilSpaceVisibilityContext(string connection) : 
 				base(connection, mappingSource)
 		{
