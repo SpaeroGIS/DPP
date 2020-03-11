@@ -239,5 +239,4 @@
 /Source/Add-ins/Visibility.Common/bin/Debug
 /Source/Add-ins/Visibility.Common/obj
 /Source/Tools/gpxlibrary
-/.vs/DPP/v16
-/Source/Add-ins/GeoCalculator.Common/obj/Release
+/Source/Add-ins/GeoCalculator.Common/obj/Debug

@@ -148,7 +148,6 @@ namespace MilSpace.Visibility.Localization
         internal Dictionary<ObservationPointTypesEnum, string> AffiliationTypes => affiliationTypes;
         internal Dictionary<ObservationObjectTypesEnum, string> ObservObjectsTypes => observObjectsTypes;
 
-
         internal string CalcFirstTypeDescriptionShort =>
             FindLocalizedElement("CalcFirstTypeDescriptionShort", "VS");
         internal string CalcFirstTypeDescription =>

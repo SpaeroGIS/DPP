@@ -14,7 +14,7 @@
         <elementListCompartment Id="edbd3673-5fcb-44db-b4d4-98e6442cc03d" absoluteBounds="5.515, 0.96, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.5 : 1.09699625651042); (4.125 : 1.09699625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.5 : 1.09699625651042); (4.125 : 1.09699625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/MilSpaceStorageContext/MilSp_Profile/MilSp_Profile_MilSp_Session" />
       <nodes>
         <classShapeMoniker Id="ea25abe1-e6a2-4e4f-afd5-da38ed3c1fa5" />
