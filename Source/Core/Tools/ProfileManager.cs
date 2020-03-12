@@ -1,4 +1,5 @@
-﻿using ESRI.ArcGIS.Geodatabase;
+﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Configurations;
 using MilSpace.Core;
@@ -34,7 +35,7 @@ namespace MilSpace.Tools
 
 
         public ProfileSession GenerateProfile(
-            string profileSource,
+            IRasterLayer raster,
             IEnumerable<IPolyline> profileLines,
             ProfileSettingsTypeEnum profileSettingsTypeEnum,
             int sessionId, 
@@ -45,6 +46,7 @@ namespace MilSpace.Tools
             logger.InfoEx("> GenerateProfile START. Adding {0}".InvariantFormat(profileLines.Count()));
             try
             {
+                string profileSource = raster.Name;
                 string profileSourceName = GdbAccess.Instance.AddProfileLinesToCalculation(profileLines);
 
                 logger.InfoEx("GenerateProfile. Spatial source:{0}".InvariantFormat(profileSourceName));
@@ -105,12 +107,13 @@ namespace MilSpace.Tools
                     ProfileSession session = new ProfileSession()
                     {
                         ProfileSurfaces = profileSurfaces.ToArray(),
-                        ProfileLines = GetProfileLines(lines).ToArray(),
+                        ProfileLines = GetProfileLines(lines, raster.Raster).ToArray(),
                         SessionId = sessionId,
                         SessionName = sessionName,
                         DefinitionType = profileSettingsTypeEnum,
                         ObserverHeight = observHeight,
                         SurfaceLayerName = profileSource,
+                        SurfaceLayerPath = raster.FilePath,
                         CreatedBy = Environment.UserName,
                         CreatedOn = DateTime.Now,
                         Shared = false,
@@ -261,7 +264,7 @@ namespace MilSpace.Tools
         }
 
 
-        private static IEnumerable<ProfileLine> GetProfileLines(IFeatureClass profileLines)
+        private static IEnumerable<ProfileLine> GetProfileLines(IFeatureClass profileLines, IRaster raster)
         {
             var result = new List<ProfileLine>();
 
@@ -292,13 +295,17 @@ namespace MilSpace.Tools
 
                     var transformedFrom = from.CloneWithProjecting();
                     var transformedTo = to.CloneWithProjecting();
+
+                    transformedFrom.AddZCoordinate(raster);
+                    transformedTo.AddZCoordinate(raster);
+
                     IPolyline polyline = line.ShapeCopy as IPolyline;
                     polyline.Project(EsriTools.Wgs84Spatialreference);
 
                     var profileLine = new ProfileLine
                     {
-                        PointFrom = new ProfilePoint { X = transformedFrom.X, Y = transformedFrom.Y },
-                        PointTo = new ProfilePoint { X = transformedTo.X, Y = transformedTo.Y },
+                        PointFrom = new ProfilePoint { X = transformedFrom.X, Y = transformedFrom.Y, Z = transformedFrom.Z },
+                        PointTo = new ProfilePoint { X = transformedTo.X, Y = transformedTo.Y, Z = transformedTo.Z },
                         Id = line.OID,
                         Length = polyline.Length,
                         Line = polyline,
