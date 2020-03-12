@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Графика");
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.profileTabPage = new System.Windows.Forms.TabPage();
             this.btnRefreshLayers = new System.Windows.Forms.Button();
@@ -174,12 +174,15 @@
             this.lvProfileAttributes = new System.Windows.Forms.ListView();
             this.Attribute = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Value = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.contextMenuProfilesAttributes = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.copyToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.panel6 = new System.Windows.Forms.Panel();
             this.profilesToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolPanOnMap = new System.Windows.Forms.ToolStripButton();
             this.toolBtnFlash = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.setProfileSettingsToCalc = new System.Windows.Forms.ToolStripButton();
+            this.copyExtremePoints = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.addProfileToExistingGraph = new System.Windows.Forms.ToolStripButton();
             this.addProfileToGraph = new System.Windows.Forms.ToolStripButton();
@@ -187,12 +190,12 @@
             this.addAvailableProfilesSets = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.renameProfile = new System.Windows.Forms.ToolStripButton();
+            this.recalcForCurrentSurface = new System.Windows.Forms.ToolStripButton();
             this.removeProfile = new System.Windows.Forms.ToolStripButton();
             this.saveProfileAsShared = new System.Windows.Forms.ToolStripButton();
             this.eraseProfile = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.clearExtraGraphic = new System.Windows.Forms.ToolStripButton();
-            this.copyExtremePoints = new System.Windows.Forms.ToolStripButton();
             this.lblProfileList = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.profileTabPage.SuspendLayout();
@@ -229,6 +232,7 @@
             this.panel13.SuspendLayout();
             this.profileTreeTabPage.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.contextMenuProfilesAttributes.SuspendLayout();
             this.panel6.SuspendLayout();
             this.profilesToolStrip.SuspendLayout();
             this.SuspendLayout();
@@ -835,6 +839,7 @@
             this.panel16.Padding = new System.Windows.Forms.Padding(8, 4, 0, 0);
             this.panel16.Size = new System.Drawing.Size(327, 28);
             this.panel16.TabIndex = 30;
+            this.panel16.Visible = false;
             // 
             // lblDimensionSecond
             // 
@@ -900,7 +905,7 @@
             this.tlbbReturnToPoint});
             this.secondPointToolbar.ButtonSize = new System.Drawing.Size(16, 16);
             this.secondPointToolbar.Divider = false;
-            this.secondPointToolbar.Dock = System.Windows.Forms.DockStyle.Right;
+            this.secondPointToolbar.Dock = System.Windows.Forms.DockStyle.None;
             this.secondPointToolbar.DropDownArrows = true;
             this.secondPointToolbar.ImageList = this.imageList1;
             this.secondPointToolbar.Location = new System.Drawing.Point(212, 0);
@@ -1097,9 +1102,9 @@
             // panel4
             // 
             this.panel4.Controls.Add(this.txtFirstPointZ);
-            this.panel4.Controls.Add(this.firstPointToolBar);
             this.panel4.Controls.Add(this.txtFirstPointY);
             this.panel4.Controls.Add(this.txtFirstPointX);
+            this.panel4.Controls.Add(this.firstPointToolBar);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(0, 82);
             this.panel4.Margin = new System.Windows.Forms.Padding(2);
@@ -1130,7 +1135,7 @@
             this.tlbbReturnPoint});
             this.firstPointToolBar.ButtonSize = new System.Drawing.Size(16, 16);
             this.firstPointToolBar.Divider = false;
-            this.firstPointToolBar.Dock = System.Windows.Forms.DockStyle.Right;
+            this.firstPointToolBar.Dock = System.Windows.Forms.DockStyle.None;
             this.firstPointToolBar.DropDownArrows = true;
             this.firstPointToolBar.ImageList = this.imageList1;
             this.firstPointToolBar.Location = new System.Drawing.Point(212, 0);
@@ -1138,7 +1143,7 @@
             this.firstPointToolBar.Name = "firstPointToolBar";
             this.firstPointToolBar.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.firstPointToolBar.ShowToolTips = true;
-            this.firstPointToolBar.Size = new System.Drawing.Size(115, 24);
+            this.firstPointToolBar.Size = new System.Drawing.Size(115, 21);
             this.firstPointToolBar.TabIndex = 27;
             this.firstPointToolBar.Wrappable = false;
             this.firstPointToolBar.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.toolBar1_ButtonClick);
@@ -1658,7 +1663,7 @@
             this.tlbbReturnCenterPoint});
             this.basePointToolbar.ButtonSize = new System.Drawing.Size(18, 18);
             this.basePointToolbar.Divider = false;
-            this.basePointToolbar.Dock = System.Windows.Forms.DockStyle.Right;
+            this.basePointToolbar.Dock = System.Windows.Forms.DockStyle.None;
             this.basePointToolbar.DropDownArrows = true;
             this.basePointToolbar.ImageList = this.imageList1;
             this.basePointToolbar.Location = new System.Drawing.Point(212, 0);
@@ -1969,25 +1974,25 @@
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.Location = new System.Drawing.Point(0, 62);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode7.Checked = true;
-            treeNode7.ImageKey = "vector-path-line.png";
-            treeNode7.Name = "Points";
-            treeNode7.SelectedImageIndex = 205;
-            treeNode7.Text = "Отрезки";
-            treeNode8.Checked = true;
-            treeNode8.ImageKey = "Editing-Line-icon3.png";
-            treeNode8.Name = "Fun";
-            treeNode8.SelectedImageIndex = 208;
-            treeNode8.Text = "Веер";
-            treeNode9.Checked = true;
-            treeNode9.ImageKey = "vector-polygon.png";
-            treeNode9.Name = "Primitives";
-            treeNode9.SelectedImageIndex = 209;
-            treeNode9.Text = "Графика";
+            treeNode10.Checked = true;
+            treeNode10.ImageKey = "vector-path-line.png";
+            treeNode10.Name = "Points";
+            treeNode10.SelectedImageIndex = 205;
+            treeNode10.Text = "Отрезки";
+            treeNode11.Checked = true;
+            treeNode11.ImageKey = "Editing-Line-icon3.png";
+            treeNode11.Name = "Fun";
+            treeNode11.SelectedImageIndex = 208;
+            treeNode11.Text = "Веер";
+            treeNode12.Checked = true;
+            treeNode12.ImageKey = "vector-polygon.png";
+            treeNode12.Name = "Primitives";
+            treeNode12.SelectedImageIndex = 209;
+            treeNode12.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode7,
-            treeNode8,
-            treeNode9});
+            treeNode10,
+            treeNode11,
+            treeNode12});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(335, 376);
             this.profilesTreeView.TabIndex = 35;
@@ -2019,8 +2024,10 @@
             this.lvProfileAttributes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.Attribute,
             this.Value});
+            this.lvProfileAttributes.ContextMenuStrip = this.contextMenuProfilesAttributes;
             this.lvProfileAttributes.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lvProfileAttributes.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvProfileAttributes.FullRowSelect = true;
+            this.lvProfileAttributes.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lvProfileAttributes.HideSelection = false;
             this.lvProfileAttributes.Location = new System.Drawing.Point(0, 468);
             this.lvProfileAttributes.Name = "lvProfileAttributes";
@@ -2038,6 +2045,20 @@
             // 
             this.Value.Text = "";
             this.Value.Width = 542;
+            // 
+            // contextMenuProfilesAttributes
+            // 
+            this.contextMenuProfilesAttributes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyToolStrip});
+            this.contextMenuProfilesAttributes.Name = "contextMenuProfilesAttributes";
+            this.contextMenuProfilesAttributes.Size = new System.Drawing.Size(103, 26);
+            // 
+            // copyToolStrip
+            // 
+            this.copyToolStrip.Name = "copyToolStrip";
+            this.copyToolStrip.Size = new System.Drawing.Size(102, 22);
+            this.copyToolStrip.Text = "Copy";
+            this.copyToolStrip.Click += new System.EventHandler(this.CopyStripMenuItem_Click);
             // 
             // panel6
             // 
@@ -2057,6 +2078,7 @@
             this.toolBtnFlash,
             this.toolStripSeparator1,
             this.setProfileSettingsToCalc,
+            this.copyExtremePoints,
             this.toolStripSeparator3,
             this.addProfileToExistingGraph,
             this.addProfileToGraph,
@@ -2064,12 +2086,12 @@
             this.addAvailableProfilesSets,
             this.toolStripSeparator4,
             this.renameProfile,
+            this.recalcForCurrentSurface,
             this.removeProfile,
             this.saveProfileAsShared,
             this.eraseProfile,
             this.toolStripSeparator2,
-            this.clearExtraGraphic,
-            this.copyExtremePoints});
+            this.clearExtraGraphic});
             this.profilesToolStrip.Location = new System.Drawing.Point(0, 0);
             this.profilesToolStrip.Name = "profilesToolStrip";
             this.profilesToolStrip.Size = new System.Drawing.Size(335, 30);
@@ -2115,6 +2137,17 @@
             this.setProfileSettingsToCalc.Size = new System.Drawing.Size(23, 27);
             this.setProfileSettingsToCalc.ToolTipText = "Редактировать профиль";
             this.setProfileSettingsToCalc.Click += new System.EventHandler(this.setProfileSettingsToCalc_Click);
+            // 
+            // copyExtremePoints
+            // 
+            this.copyExtremePoints.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.copyExtremePoints.Enabled = false;
+            this.copyExtremePoints.Image = ((System.Drawing.Image)(resources.GetObject("copyExtremePoints.Image")));
+            this.copyExtremePoints.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.copyExtremePoints.Name = "copyExtremePoints";
+            this.copyExtremePoints.Size = new System.Drawing.Size(23, 27);
+            this.copyExtremePoints.Text = "toolStripButton1";
+            this.copyExtremePoints.Click += new System.EventHandler(this.CopyExtremePoints_Click);
             // 
             // toolStripSeparator3
             // 
@@ -2178,6 +2211,17 @@
             this.renameProfile.Text = "toolStripButton1";
             this.renameProfile.Click += new System.EventHandler(this.RenameProfile_Click);
             // 
+            // recalcForCurrentSurface
+            // 
+            this.recalcForCurrentSurface.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.recalcForCurrentSurface.Enabled = false;
+            this.recalcForCurrentSurface.Image = ((System.Drawing.Image)(resources.GetObject("recalcForCurrentSurface.Image")));
+            this.recalcForCurrentSurface.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.recalcForCurrentSurface.Name = "recalcForCurrentSurface";
+            this.recalcForCurrentSurface.Size = new System.Drawing.Size(23, 27);
+            this.recalcForCurrentSurface.Text = "toolStripButton1";
+            this.recalcForCurrentSurface.Click += new System.EventHandler(this.RecalcForCurrentSurface_Click);
+            // 
             // removeProfile
             // 
             this.removeProfile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -2228,17 +2272,6 @@
             this.clearExtraGraphic.Size = new System.Drawing.Size(23, 27);
             this.clearExtraGraphic.ToolTipText = "Очистить карту от неактуальных графиков";
             this.clearExtraGraphic.Click += new System.EventHandler(this.clearExtraGraphic_Click);
-            // 
-            // copyExtremePoints
-            // 
-            this.copyExtremePoints.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.copyExtremePoints.Enabled = false;
-            this.copyExtremePoints.Image = ((System.Drawing.Image)(resources.GetObject("copyExtremePoints.Image")));
-            this.copyExtremePoints.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.copyExtremePoints.Name = "copyExtremePoints";
-            this.copyExtremePoints.Size = new System.Drawing.Size(23, 27);
-            this.copyExtremePoints.Text = "toolStripButton1";
-            this.copyExtremePoints.Click += new System.EventHandler(this.CopyExtremePoints_Click);
             // 
             // lblProfileList
             // 
@@ -2327,6 +2360,7 @@
             this.profileTreeTabPage.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.contextMenuProfilesAttributes.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.profilesToolStrip.ResumeLayout(false);
@@ -2508,5 +2542,8 @@
         private System.Windows.Forms.Label lblProfileInfoTitle;
         private System.Windows.Forms.ToolStripButton renameProfile;
         private System.Windows.Forms.ToolStripButton copyExtremePoints;
+        private System.Windows.Forms.ToolStripButton recalcForCurrentSurface;
+        private System.Windows.Forms.ContextMenuStrip contextMenuProfilesAttributes;
+        private System.Windows.Forms.ToolStripMenuItem copyToolStrip;
     }
 }

@@ -27,7 +27,7 @@ namespace MilSpace.Profile
 
             try
             {
-                switch(method)
+                switch (method)
                 {
                     case AssignmentMethodsEnum.ObservationPoints:
 
@@ -57,7 +57,7 @@ namespace MilSpace.Profile
 
                         var geomFromSelectedGraphic = GetTargetGeometriesFromSelectedGraphic();
 
-                        if(geomFromSelectedGraphic == null)
+                        if (geomFromSelectedGraphic == null)
                         {
                             geometries = null;
                             MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgSelectedGeomNotFoundText", "Будь ласка, оберіть графіку для розрахунку набору профілів"),
@@ -223,12 +223,21 @@ namespace MilSpace.Profile
 
         private static List<IGeometry> GetTargetGeometriesFromFeatureLayer()
         {
-            var geomFromLayerModal = new GeometriesFromLayerForFunToPointsModalWindow();
-            var result = geomFromLayerModal.ShowDialog();
-
-            if(result == DialogResult.OK)
+            try
             {
-                return geomFromLayerModal.SelectedGeometries;
+                var geomFromLayerModal = new GeometriesFromLayerForFunToPointsModalWindow();
+                var result = geomFromLayerModal.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    return geomFromLayerModal.SelectedGeometries;
+                }
+            }
+            catch (ArgumentNullException ex)
+            {
+                _logger.WarnEx($"> GetTargetGeometriesFromFeatureLayer Exception: {ex.Message}");
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgRequiredLayersDoesNotExists", "У проекті відсутні необхідні шари"),
+                                LocalizationContext.Instance.MessageBoxTitle);
             }
 
             return null;

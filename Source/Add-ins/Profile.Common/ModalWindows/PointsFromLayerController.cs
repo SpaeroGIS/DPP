@@ -98,7 +98,14 @@ namespace MilSpace.Profile.ModalWindows
 
         public string[] GetPointLayers()
         {
-            return _mapLayersManager.PointLayers.Where(layer => !layer.Name.Equals("MilSp_Visible_ObservPoints")).Select(l => l.Name).ToArray();
+            var layers = _mapLayersManager.PointLayers.Where(layer => !layer.Name.Equals("MilSp_Visible_ObservPoints")).Select(l => l.Name).ToArray();
+
+            if (layers.Length == 0)
+            {
+                throw new ArgumentNullException("Required layers are missing in the project");
+            }
+
+            return layers; 
         }
 
         public string[] GetLayerFields(string layerName)

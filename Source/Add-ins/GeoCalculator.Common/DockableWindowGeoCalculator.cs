@@ -55,6 +55,7 @@ namespace MilSpace.GeoCalculator
             SetController(controller);
             this.Hook = hook;
             _businessLogic = businessLogic ?? throw new ArgumentNullException(nameof(businessLogic));
+            _graphicsLayerManager = new GraphicsLayerManager(ArcMap.Document.ActiveView);
 
             LocalizeComponents();
 
@@ -1252,6 +1253,7 @@ namespace MilSpace.GeoCalculator
                 this.toDownStripItem.Text = _context.FindLocalizedElement("MoveToLastButtonTitle", "Помістити у кінець");
                 this.renumberButton.ToolTipText = _context.FindLocalizedElement("RenumberButtonToolTip", "Обновити нумерацію точок");
                 this.panToLineButton.ToolTipText = _context.FindLocalizedElement("PanToLineButtonToolTip", "Показати лінію на карті");
+                this.refreshGraphicsButton.ToolTipText = _context.FindLocalizedElement("RefreshGraphicButtonToolTip", "Оновити графіку");
                 this.toolTip.SetToolTip(btnRefreshGraphic, _context.FindLocalizedElement("RefreshGraphicButtonToolTip", "Оновити графіку"));
                 
                 SetSCComboBoxItems();
