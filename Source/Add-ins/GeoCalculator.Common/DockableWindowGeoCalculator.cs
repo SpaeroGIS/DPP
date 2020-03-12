@@ -55,6 +55,7 @@ namespace MilSpace.GeoCalculator
             SetController(controller);
             this.Hook = hook;
             _businessLogic = businessLogic ?? throw new ArgumentNullException(nameof(businessLogic));
+            _graphicsLayerManager = new GraphicsLayerManager(ArcMap.Document.ActiveView);
 
             LocalizeComponents();
 

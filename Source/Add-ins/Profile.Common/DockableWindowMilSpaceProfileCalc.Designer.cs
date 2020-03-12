@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Графика");
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.profileTabPage = new System.Windows.Forms.TabPage();
             this.btnRefreshLayers = new System.Windows.Forms.Button();
@@ -905,7 +905,7 @@
             this.tlbbReturnToPoint});
             this.secondPointToolbar.ButtonSize = new System.Drawing.Size(16, 16);
             this.secondPointToolbar.Divider = false;
-            this.secondPointToolbar.Dock = System.Windows.Forms.DockStyle.Right;
+            this.secondPointToolbar.Dock = System.Windows.Forms.DockStyle.None;
             this.secondPointToolbar.DropDownArrows = true;
             this.secondPointToolbar.ImageList = this.imageList1;
             this.secondPointToolbar.Location = new System.Drawing.Point(212, 0);
@@ -1102,9 +1102,9 @@
             // panel4
             // 
             this.panel4.Controls.Add(this.txtFirstPointZ);
-            this.panel4.Controls.Add(this.firstPointToolBar);
             this.panel4.Controls.Add(this.txtFirstPointY);
             this.panel4.Controls.Add(this.txtFirstPointX);
+            this.panel4.Controls.Add(this.firstPointToolBar);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(0, 82);
             this.panel4.Margin = new System.Windows.Forms.Padding(2);
@@ -1135,7 +1135,7 @@
             this.tlbbReturnPoint});
             this.firstPointToolBar.ButtonSize = new System.Drawing.Size(16, 16);
             this.firstPointToolBar.Divider = false;
-            this.firstPointToolBar.Dock = System.Windows.Forms.DockStyle.Right;
+            this.firstPointToolBar.Dock = System.Windows.Forms.DockStyle.None;
             this.firstPointToolBar.DropDownArrows = true;
             this.firstPointToolBar.ImageList = this.imageList1;
             this.firstPointToolBar.Location = new System.Drawing.Point(212, 0);
@@ -1143,7 +1143,7 @@
             this.firstPointToolBar.Name = "firstPointToolBar";
             this.firstPointToolBar.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.firstPointToolBar.ShowToolTips = true;
-            this.firstPointToolBar.Size = new System.Drawing.Size(115, 24);
+            this.firstPointToolBar.Size = new System.Drawing.Size(115, 21);
             this.firstPointToolBar.TabIndex = 27;
             this.firstPointToolBar.Wrappable = false;
             this.firstPointToolBar.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.toolBar1_ButtonClick);
@@ -1663,7 +1663,7 @@
             this.tlbbReturnCenterPoint});
             this.basePointToolbar.ButtonSize = new System.Drawing.Size(18, 18);
             this.basePointToolbar.Divider = false;
-            this.basePointToolbar.Dock = System.Windows.Forms.DockStyle.Right;
+            this.basePointToolbar.Dock = System.Windows.Forms.DockStyle.None;
             this.basePointToolbar.DropDownArrows = true;
             this.basePointToolbar.ImageList = this.imageList1;
             this.basePointToolbar.Location = new System.Drawing.Point(212, 0);
@@ -1974,25 +1974,25 @@
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.Location = new System.Drawing.Point(0, 62);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode1.Checked = true;
-            treeNode1.ImageKey = "vector-path-line.png";
-            treeNode1.Name = "Points";
-            treeNode1.SelectedImageIndex = 205;
-            treeNode1.Text = "Отрезки";
-            treeNode2.Checked = true;
-            treeNode2.ImageKey = "Editing-Line-icon3.png";
-            treeNode2.Name = "Fun";
-            treeNode2.SelectedImageIndex = 208;
-            treeNode2.Text = "Веер";
-            treeNode3.Checked = true;
-            treeNode3.ImageKey = "vector-polygon.png";
-            treeNode3.Name = "Primitives";
-            treeNode3.SelectedImageIndex = 209;
-            treeNode3.Text = "Графика";
+            treeNode10.Checked = true;
+            treeNode10.ImageKey = "vector-path-line.png";
+            treeNode10.Name = "Points";
+            treeNode10.SelectedImageIndex = 205;
+            treeNode10.Text = "Отрезки";
+            treeNode11.Checked = true;
+            treeNode11.ImageKey = "Editing-Line-icon3.png";
+            treeNode11.Name = "Fun";
+            treeNode11.SelectedImageIndex = 208;
+            treeNode11.Text = "Веер";
+            treeNode12.Checked = true;
+            treeNode12.ImageKey = "vector-polygon.png";
+            treeNode12.Name = "Primitives";
+            treeNode12.SelectedImageIndex = 209;
+            treeNode12.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
+            treeNode10,
+            treeNode11,
+            treeNode12});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(335, 376);
             this.profilesTreeView.TabIndex = 35;
@@ -2269,7 +2269,7 @@
             this.clearExtraGraphic.Image = ((System.Drawing.Image)(resources.GetObject("clearExtraGraphic.Image")));
             this.clearExtraGraphic.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.clearExtraGraphic.Name = "clearExtraGraphic";
-            this.clearExtraGraphic.Size = new System.Drawing.Size(23, 20);
+            this.clearExtraGraphic.Size = new System.Drawing.Size(23, 27);
             this.clearExtraGraphic.ToolTipText = "Очистить карту от неактуальных графиков";
             this.clearExtraGraphic.Click += new System.EventHandler(this.clearExtraGraphic_Click);
             // 

@@ -920,7 +920,7 @@ namespace MilSpace.Profile
 
         private void cmbRasterLayers_SelectedIndexChanged(object sender, EventArgs e)
         {
-            controller.SetProfileSettings(SelectedProfileSettingsType);
+            controller.SetProfileDemLayer(SelectedProfileSettingsType);
         }
 
         private static bool CheckDouble(char charValue, TextBox textValue, bool justInt = false)
@@ -1476,7 +1476,7 @@ namespace MilSpace.Profile
                     var firstY = fromPoint.Y.ToFormattedString();
                     var secondX = toPoint.X.ToFormattedString();
                     var secondY = toPoint.Y.ToFormattedString();
-                    var linesCount = profile.ProfileLines.First().Vertices.Count().ToString("F0");
+                    var linesCount = (profile.ProfileLines.First().Vertices.Count() - 1).ToString();
 
                     newNode.SetBasePointX(firstX);
                     newNode.SetBasePointY(firstY);

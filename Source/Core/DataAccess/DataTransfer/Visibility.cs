@@ -178,7 +178,7 @@ namespace MilSpace.DataAccess.DataTransfer
                 allResulrs = new List<string>();
                 VisibilityCalculationResultsEnum calculatedResults = (VisibilityCalculationResultsEnum)CalculatedResults;
 
-                int pointsCount = Summary.ObservationPoints.Count();
+                int pointsCount = (Summary.ObservationPoints == null) ? 0 : Summary.ObservationPoints.Count();
 
                 foreach (var result in VisibilityResulSuffixes)
                 {
