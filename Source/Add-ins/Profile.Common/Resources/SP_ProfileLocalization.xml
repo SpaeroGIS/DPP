@@ -50,6 +50,7 @@
   <HintToolSetProfileSettingsToCalcText>Скопіювати параметри профілю</HintToolSetProfileSettingsToCalcText>
   <HintToolRenameProfile>Перейменувати профіль/набір профілів</HintToolRenameProfile>
   <HintToolCopyExtremePoints>Копіювати координати крайніх точок</HintToolCopyExtremePoints>
+  <HintRecalcProfileForNewSurfaceText>Перерахувати профіль для нової поверхні</HintRecalcProfileForNewSurfaceText>
   
   <BtnAddToSessionText>Додати до сесії</BtnAddToSessionText>
   <BtnCancelText>Відмінити</BtnCancelText>
@@ -191,6 +192,8 @@
   <MsgLinesCountLessThanTwoText>Кількість профілів не може бути меншою за 2</MsgLinesCountLessThanTwoText>
   <MsgCannotFlipEmptyPoint>Будь ласка, оберіть початкову і кінцеву точку</MsgCannotFlipEmptyPoint>
   <MsgRenameProfileText>Ви дійсно хочете перейменувати профіль/набор профілів?</MsgRenameProfileText>
+  <MsgProfileSurfaceNotFound>Неможливо побудувати графік. Відсутні дані з поверхні</MsgProfileSurfaceNotFound>
+  <MsgRequiredLayersDoesNotExists>У проекті відсутні необхідні шари</MsgRequiredLayersDoesNotExists>
   
   <DataExportPointsPropertiesHeader>Номер; X; Y; Z; Відстань; Точка перегину; Видима; Перетини</DataExportPointsPropertiesHeader>
   <DataExportProfilePropertiesHeader>Номер; Назва профілю; Зовнішній; Стан; Точка початку; Точка кінцю; Азимут; Пункт спостереження; Довжина; Макс. висота; Різниця висот; Мін. висота; Макс. кут підйому; Макс. кут спуску; Процент видимих зон</DataExportProfilePropertiesHeader>

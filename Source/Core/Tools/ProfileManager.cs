@@ -229,7 +229,7 @@ namespace MilSpace.Tools
                     session.ProfileSurfaces = surface.Select(r => new ProfileSurface
                     {
                         LineId = r.Key,
-                        ProfileSurfacePoints = r.Value.ToArray()
+                        ProfileSurfacePoints = r.Value.OrderBy(point => point.Distance).ToArray()
                     }
                     ).ToArray();
 

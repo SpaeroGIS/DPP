@@ -108,13 +108,25 @@ namespace MilSpace.DataAccess.DataTransfer
         {
             Func<ProfileLine, IPolyline> converter = (l) =>
             {
-                var pointFrom = new Point { X = l.PointFrom.X, Y = l.PointFrom.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
-                var pointTo = new Point { X = l.PointTo.X, Y = l.PointTo.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
+                var surface = ProfileSurfaces.FirstOrDefault(s => l.Id == s.LineId);
+                IPolyline result;
 
-                pointFrom.Project(spatialReference);
-                pointTo.Project(spatialReference);
+                if(DefinitionType == ProfileSettingsTypeEnum.Primitives && surface != null)
+                {
+                    var vertices = surface.ProfileSurfacePoints.Where(point => point.isVertex).Select(p => new Point { X = p.X, Y = p.Y, Z = p.Z, SpatialReference = EsriTools.Wgs84Spatialreference });
+                    result = EsriTools.CreatePolylineFromPointsArray(vertices.ToArray(), spatialReference).First();
+                }
+                else
+                {
+                    var pointFrom = new Point { X = l.PointFrom.X, Y = l.PointFrom.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
+                    var pointTo = new Point { X = l.PointTo.X, Y = l.PointTo.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
 
-                var result = EsriTools.CreatePolylineFromPoints(pointFrom, pointTo);
+                    pointFrom.Project(spatialReference);
+                    pointTo.Project(spatialReference);
+
+                    result = EsriTools.CreatePolylineFromPoints(pointFrom, pointTo);
+                }
+
                 if (l.Line == null)
                 {
                     l.Line = result;
@@ -128,7 +140,7 @@ namespace MilSpace.DataAccess.DataTransfer
                 return ProfileLines.Select(l => converter(l)).ToArray();
             }
 
-            return new IPolyline[] { converter(ProfileLines[lineId]) };
+            return new IPolyline[] { converter(ProfileLines[lineId])};
         }
 
         public void SetSegments(ISpatialReference spatialReference, ProfileLine profileLine = null)
@@ -159,7 +171,6 @@ namespace MilSpace.DataAccess.DataTransfer
                 lines[0].Visible = true;
 
                 var polyline = new List<IPolyline> { profileLine.Line };
-
 
                 Segments.Add(new GroupedLines
                 {

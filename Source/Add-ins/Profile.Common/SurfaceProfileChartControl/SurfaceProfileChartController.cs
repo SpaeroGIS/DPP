@@ -288,7 +288,11 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                             {
                                 isInvisibleZone = false;
                                 invisiblePoints.Add(segment.ProfileSurfacePoints[i]);
-                                segment.ProfileSurfacePoints[i + 1].Visible = true;
+                                if (i < segment.ProfileSurfacePoints.Length - 1)
+                                {
+                                    segment.ProfileSurfacePoints[i + 1].Visible = true;
+                                }
+
                                 i++;
                             }
                             else

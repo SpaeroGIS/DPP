@@ -100,6 +100,11 @@ namespace MilSpace.Profile.ModalWindows
 
             layers.AddRange(_mapLayersManager.LineLayers.Select(layer => layer.Name));
 
+            if(layers.Count == 0)
+            {
+                throw new ArgumentNullException("Required layers are missing in the project");
+            }
+
             return layers;
         }
 
