@@ -315,13 +315,12 @@ namespace MilSpace.Visualization3D
                 }
                 else
                 {
-                //TODO: Exception message
+                    MessageBox.Show(context.LackOfParametersMessage, context.MessageBoxTitle);
                 }
             }
             catch (Exception ex)
             {
-                //TODO: Log Error
-
+                log.ErrorEx($"> GenerateButton_Click. Exception: {ex.Message}");
             }
         }
 

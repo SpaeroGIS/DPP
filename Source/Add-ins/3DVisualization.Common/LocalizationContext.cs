@@ -71,6 +71,10 @@ namespace MilSpace.Visualization3D
         public string ButtonAddProfileToolTip => FindLocalizedElement("ButtonAddProfileToolTip", "Add profiles");
         public string ButtonRemoveProfileToolTip => FindLocalizedElement("ButtonRemoveProfileToolTip", "Remove selected profiles");
 
+        public string LackOfParametersMessage => FindLocalizedElement("MsgLackOfArgumentsText", "Для генерації 3D сцени необхідно обрати шар поверхні та дані для відображення (поверхні видимості або профілі)");
+        public string MessageBoxTitle => FindLocalizedElement("MessageBoxTitle", "Спостереження");
+
+
         private string FindLocalizedElement(string xmlNodeName, string defaultValue)
         {
             return _root?.SelectSingleNode(xmlNodeName)?.InnerText ?? defaultValue;

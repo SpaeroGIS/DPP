@@ -45,7 +45,7 @@ namespace MilSpace.Core
             }
             catch (Exception ex)
             {
-                //TODO: create logging
+                Logger.Warn($"> Convert. Exception: {ex.Message}");
                 result = DefaultValueSimpleDataTypes[typeTo].Invoke();
             }
             return false;
@@ -99,7 +99,7 @@ namespace MilSpace.Core
             }
             catch (Exception ex)
             {
-                //Logger.Debug("Rty to convert to Guid:" + ex.Message);
+                Logger.Debug(">IsGuid. Unable to convert to Guid: " + ex.Message);
             }
             return false;
 

@@ -13,6 +13,7 @@ namespace MilSpace.Core.Actions.Actions
 {
     public class ActionSereilizer
     {
+        private Logger _logger = Logger.GetLoggerEx("MilSpace.Core.Actions.Actions.ActionSereilizer");
         IActionParam[] actionParameters = null;
         private string actionId;
 
@@ -52,7 +53,7 @@ namespace MilSpace.Core.Actions.Actions
             }
             catch (Exception ex)
             {
-                //TODO: Write to LOG
+                _logger.WarnEx($"> Serialize. Exception: {ex.Message}");
             }
 
 
