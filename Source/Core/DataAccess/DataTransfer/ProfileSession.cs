@@ -31,6 +31,7 @@ namespace MilSpace.DataAccess.DataTransfer
         public string Azimuth;
         public string SessionName;
         public string SurfaceLayerName;
+        public string SurfaceLayerPath;
 
         /// <summary>
         /// Date and time  when the Profile session was created
