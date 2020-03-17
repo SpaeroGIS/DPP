@@ -19,7 +19,6 @@ namespace MilSpace.Profile
     internal static class FunCreationManager
     {
         private static Logger _logger = Logger.GetLoggerEx("MilSpace.Profile.FunCreationManager");
-        private static GraphicsLayerManager _graphicsLayerManager = new GraphicsLayerManager(ArcMap.Document.ActiveView);
 
         public static IEnumerable<IGeometry> GetGeometriesByMethod(AssignmentMethodsEnum method)
         {
@@ -245,7 +244,7 @@ namespace MilSpace.Profile
 
         private static IEnumerable<IGeometry> GetTargetGeometriesFromSelectedGraphic()
         {
-            return _graphicsLayerManager.GetAllSelectedGraphics();
+            return GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).GetAllSelectedGraphics();
         }
 
     }

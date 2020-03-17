@@ -671,6 +671,8 @@ namespace MilSpace.Profile
             }
             catch (Exception ex)
             {
+                logger.ErrorEx(ex.Message);
+
                 MessageBox.Show(
                     "Please make sure X and Y values are valid and try again!"
                     );

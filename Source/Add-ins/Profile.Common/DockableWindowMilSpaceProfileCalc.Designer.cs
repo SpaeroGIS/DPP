@@ -2390,7 +2390,6 @@
         private System.Windows.Forms.Label lblHeightOfViewFirst;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.ToolBar firstPointToolBar;
-        private System.Windows.Forms.ToolBarButton btnCopyFirstPoint;
         private System.Windows.Forms.ToolBarButton toolBarButton58;
         private System.Windows.Forms.Label lblLineFirstPoint;
         private System.Windows.Forms.TabPage funTab;
@@ -2426,11 +2425,8 @@
         internal System.Windows.Forms.TextBox txtSecondPointX;
         internal System.Windows.Forms.TextBox txtBasePointY;
         internal System.Windows.Forms.TextBox txtBasePointX;
-        internal System.Windows.Forms.ToolBarButton btnPickSecondPoint;
-        internal System.Windows.Forms.ToolBarButton btnPickFirstPoint;
         internal System.Windows.Forms.ToolBarButton toolBarButton55;
         private System.Windows.Forms.ToolBarButton toolBarButton57;
-        internal System.Windows.Forms.ToolBarButton btnPickBasePoint;
         internal System.Windows.Forms.ToolBarButton linePickCoordSecond;
         internal System.Windows.Forms.ToolBarButton linePickCoordFirst;
         internal System.Windows.Forms.ToolBarButton fanPickCoord;
