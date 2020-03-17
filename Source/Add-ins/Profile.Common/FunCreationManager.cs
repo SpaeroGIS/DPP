@@ -247,6 +247,5 @@ namespace MilSpace.Profile
         {
             return _graphicsLayerManager.GetAllSelectedGraphics();
         }
-
     }
 }

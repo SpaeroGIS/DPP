@@ -31,6 +31,7 @@ namespace MilSpace.Tools
         public static readonly string ObservStationFeature = "MilSp_Visible_ObjectsObservation_R";
         public static IFeatureClass observStationFeatureClass;
         public static IFeatureClass observPointFeatureClass;
+        public static IFeatureLayer observStationFeatureLayer;
         public static IMap CurrentMap;
 
         public delegate void SessionStartGenerationDelegate(bool isNewSessionAdded = false, string newSessionId = null);
@@ -179,7 +180,7 @@ namespace MilSpace.Tools
             logger.InfoEx("> AddObservationObjectLayer START");
             try
             {
-                var objLayer = GdbAccess.Instance.GetLayerFromWorkingWorkspace(ObservStationFeature);
+                var objLayer = ObservationStationsFeatureLayer;
                 view.FocusMap.AddLayer(objLayer);
                 logger.InfoEx("> AddObservationObjectLayer END");
                 return true;
@@ -206,6 +207,19 @@ namespace MilSpace.Tools
                 }
 
                 return observPointFeatureClass;
+            }
+        }
+
+        public static IFeatureLayer ObservationStationsFeatureLayer
+        {
+            get
+            {
+                if(observStationFeatureLayer == null)
+                {
+                    observStationFeatureLayer = GdbAccess.Instance.GetLayerFromWorkingWorkspace(ObservStationFeature) as IFeatureLayer;
+                }
+
+                return observStationFeatureLayer;
             }
         }
 

@@ -17,6 +17,9 @@ using MilSpace.Visibility.DTO;
 using ESRI.ArcGIS.Editor;
 using MilSpace.Core.DataAccess;
 using System.Runtime.InteropServices;
+using MilSpace.Tools.GraphicsLayer;
+using System.Windows.Forms;
+using ESRI.ArcGIS.Display;
 
 namespace MilSpace.Visibility.ViewController
 {
@@ -28,6 +31,7 @@ namespace MilSpace.Visibility.ViewController
         private List<ObservationPoint> _observationPoints = new List<ObservationPoint>();
         private List<ObservationObject> _observationObjects = new List<ObservationObject>();
         private static bool localized = false;
+        private IPolygon _coverageArea;
         private string _previousPickedRasterLayer { get; set; }
 
         /// <summary>
@@ -42,6 +46,7 @@ namespace MilSpace.Visibility.ViewController
         private IMxDocument mapDocument;
         private IMxApplication application;
         private static Logger log = Logger.GetLoggerEx("MilSpace.Visibility.ViewController.ObservationPointsController");
+        private static GraphicsLayerManager _graphicsLayerManager;
 
         public ObservationPointsController(IMxDocument mapDocument, IMxApplication application)
         {
@@ -66,6 +71,11 @@ namespace MilSpace.Visibility.ViewController
         internal void SetView(IObservationPointsView view)
         {
             this.view = view;
+        }
+
+        internal void SetGrahicsLayerManager()
+        {
+            _graphicsLayerManager = new GraphicsLayerManager(mapDocument.ActiveView);
         }
 
 
@@ -520,11 +530,7 @@ namespace MilSpace.Visibility.ViewController
 
         internal IPoint GetEnvelopeCenterPoint(IEnvelope envelope)
         {
-            //TODO: Move this method to Core.Tools.EsriTools
-            var x = (envelope.XMin + envelope.XMax) / 2;
-            var y = (envelope.YMin + envelope.YMax) / 2;
-
-            var point = new PointClass { X = x, Y = y, SpatialReference = envelope.SpatialReference };
+            var point = EsriTools.GetCenterPoint(envelope);
             point.Project(EsriTools.Wgs84Spatialreference);
             return point;
         }
@@ -946,6 +952,105 @@ namespace MilSpace.Visibility.ViewController
             }
 
             return objects;
+        }
+
+        internal void DrawObservPointsGraphics(int id)
+        {
+            var observPoint = _observationPoints.FirstOrDefault(point => point.Objectid == id);
+
+            if(observPoint == null || observPoint.X == null || observPoint.Y == null)
+            {
+                return;
+            }
+
+            var pointGeom = new Point { X = observPoint.X.Value, Y = observPoint.Y.Value, SpatialReference = EsriTools.Wgs84Spatialreference };
+            pointGeom.Project(mapDocument.FocusMap.SpatialReference);
+
+            var maxDistance = CalcCoverageArea(pointGeom, observPoint);
+            _graphicsLayerManager.AddObservPointsGraphicsToMap(_coverageArea, $"coverageArea_{id}");
+            _graphicsLayerManager.AddCrossPointerToPoint(pointGeom, Convert.ToInt32(maxDistance), $"crossPointer_coverageArea_{id}_");
+        }
+
+        internal double CalcCoverageArea(IPoint pointGeom, ObservationPoint observPoint)
+        {
+            var realMaxDistance = EsriTools.GetMaxDistance(observPoint.OuterRadius.Value, observPoint.AngelMaxH.Value, observPoint.RelativeHeight.Value);
+            var realMinDistance = EsriTools.GetMinDistance(observPoint.InnerRadius.Value, observPoint.AngelMinH.Value, observPoint.RelativeHeight.Value);
+
+            if(realMaxDistance < realMinDistance)
+            {
+                log.WarnEx("> DrawObservPointsGraphics. Observation point doesn`t has a coverage area");
+                MessageBox.Show(LocalizationContext.Instance.CoverageAreaIsEmptyMessage, LocalizationContext.Instance.MessageBoxCaption);
+                return observPoint.OuterRadius.Value;
+            }
+
+            _coverageArea = EsriTools.GetCoverageArea(pointGeom, observPoint.AzimuthStart.Value, observPoint.AzimuthEnd.Value,
+                                                           realMinDistance, realMaxDistance);
+            _coverageArea.SpatialReference = mapDocument.FocusMap.SpatialReference;
+            return realMaxDistance;
+        }
+
+        internal void DrawObservPointToObservObjectsRelationsGraphics(int id)
+        {
+            var observPoint = _observationPoints.FirstOrDefault(point => point.Objectid == id);
+
+            if(observPoint == null || observPoint.X == null || observPoint.Y == null)
+            {
+                return;
+            }
+
+            var pointGeom = new Point { X = observPoint.X.Value, Y = observPoint.Y.Value, SpatialReference = EsriTools.Wgs84Spatialreference };
+            pointGeom.Project(mapDocument.FocusMap.SpatialReference);
+
+            var geometries = EsriTools.GetGeometriesFromLayer(VisibilityManager.ObservationStationsFeatureLayer, mapDocument.ActiveView);
+
+            if(_coverageArea == null)
+            {
+                CalcCoverageArea(pointGeom, observPoint);
+            }
+
+            foreach(var geometry in geometries)
+            {
+                var relationLine = EsriTools.GetToGeometryCenterPolyline(pointGeom, geometry.Value);
+                var intersectionArea = EsriTools.GetIntersection(_coverageArea, geometry.Value);
+
+                IRgbColor color;
+
+                if(intersectionArea.IsEmpty)
+                {
+                    color = new RgbColor { Red = 255, Blue = 0, Green = 0 };
+                }
+                else
+                {
+                    var intersectionAreaValue = intersectionArea.Envelope as IArea;
+                    var geometryAreaValue = geometry.Value.Envelope as IArea;
+                    var diff = geometryAreaValue.Area - intersectionAreaValue.Area;
+                    if(diff < 0.01)
+                    {
+                        color = new RgbColor { Red = 15, Blue = 49, Green = 107 };
+                    }
+                    else
+                    {
+                        color = new RgbColor { Red = 229, Blue = 1, Green = 167 };
+                    }
+                }
+
+                var currentObj = _observationObjects.FirstOrDefault(obj => obj.ObjectId == geometry.Key);
+                var title = (currentObj == null) ? string.Empty : currentObj.Title;
+
+                _graphicsLayerManager.AddObservPointsRelationLineToMap(relationLine, color, $"relationLine_{id}", title);
+            }
+        }
+
+        internal void RemoveObservPointsGraphics(bool removeCoverageArea = true, bool removeObservObjectsRelations = true)
+        {
+            if(removeCoverageArea)
+            {
+                _graphicsLayerManager.RemoveAllGeometryFromMap($"coverageArea_", MilSpaceGraphicsTypeEnum.Visibility, true);
+            }
+            if(removeObservObjectsRelations)
+            {
+                _graphicsLayerManager.RemoveAllGeometryFromMap($"relationLine_", MilSpaceGraphicsTypeEnum.Visibility, true);
+            }
         }
 
         #region ArcMap Eventts

@@ -74,7 +74,7 @@ namespace MilSpace.Visibility
                 this.Text = LocalizationContext.Instance.WindowCaption;
 
                 this.tbpPoints.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_tbpPoints_Text", "Пункти С");
-                this.tabPage5.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_tabPage5_Text", "Параметри ПС)");
+                this.tabObservPoints.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_tabPage5_Text", "Параметри ПС)");
                 this.label19.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label19_Text", "Висота над поверхнею, м");
                 this.lblMinDistance.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_lblMinDistance_Text", "до");
                 this.lblMaxDistance.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_lblMaxDistance_Text", "Відст., м від");
@@ -207,6 +207,7 @@ namespace MilSpace.Visibility
 
             ArcMap.Events.OpenDocument += OnContentsChanged;
             ArcMap.Events.NewDocument += OnContentsChanged;
+            ArcMap.Events.ActiveViewChanged += OnActivaeViewChanged;
 
             ArcMap.Events.OpenDocument += delegate ()
             {
@@ -346,7 +347,7 @@ namespace MilSpace.Visibility
         public void ChangeRecord(int id, ObservationPoint observationPoint)
         {
             var rowIndex = dgvObservationPoints.SelectedRows[0].Index;
-            var source = dgvObservationPoints.DataSource as ObservPointGui[];
+            var source = dgvObservationPoints.DataSource as BindingList<ObservPointGui>;
             var pointGui = source.FirstOrDefault(point => point.Id == id);
 
             pointGui.Title = observationPoint.Title;
@@ -361,7 +362,7 @@ namespace MilSpace.Visibility
 
         public void AddRecord(ObservationPoint observationPoint)
         {
-            var source = dgvObservationPoints.DataSource as ObservPointGui[];
+            var source = dgvObservationPoints.DataSource as BindingList<ObservPointGui>;
             var sourceList = new List<ObservPointGui>(source);
             sourceList.Add(new ObservPointGui
             {
@@ -503,6 +504,11 @@ namespace MilSpace.Visibility
             SetObservObjectsControlsState(_observPointsController.IsObservObjectsExists());
 
             log.DebugEx("> OnContentsChanged END");
+        }
+
+        private void OnActivaeViewChanged()
+        {
+            _observPointsController.SetGrahicsLayerManager();
         }
 
         private void OnItemDelete(object item)
@@ -1840,7 +1846,7 @@ namespace MilSpace.Visibility
         {
             _isFieldsChanged = false;
 
-            if (dgvObservationPoints.SelectedRows.Count == 0)
+            if(dgvObservationPoints.SelectedRows.Count == 0)
             {
                 EnableObservPointsControls(true);
                 return;
@@ -1850,12 +1856,23 @@ namespace MilSpace.Visibility
             var selectedPoint = _observPointsController.GetObservPointById(_selectedPointId);
             selectedPointMEM = selectedPoint;
 
-            if (selectedPoint == null)
+            if(selectedPoint == null)
             {
                 return;
             }
 
             FillObservPointsFields(selectedPoint);
+            _observPointsController.RemoveObservPointsGraphics();
+
+            if(chckDrawOPGraphics.Checked)
+            {
+                _observPointsController.DrawObservPointsGraphics(_selectedPointId);
+            }
+
+            if(chckShowOOGraphics.Checked)
+            {
+                _observPointsController.DrawObservPointToObservObjectsRelationsGraphics(_selectedPointId);
+            }
         }
 
 
@@ -2414,6 +2431,45 @@ namespace MilSpace.Visibility
             else if (e.Button == toolBarButton29)
             {
                 _observPointsController.UpdateObservObjectsList();
+            }
+        }
+
+        private void ChckDrawOPGraphics_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chckDrawOPGraphics.Checked)
+            {
+                _observPointsController.DrawObservPointsGraphics(_selectedPointId);
+            }
+            else
+            {
+                _observPointsController.RemoveObservPointsGraphics(true, false);
+            }
+        }
+
+        private void ChckShowOOGraphics_CheckedChanged(object sender, EventArgs e)
+        {
+            if(chckShowOOGraphics.Checked)
+            {
+                _observPointsController.DrawObservPointToObservObjectsRelationsGraphics(_selectedPointId);
+            }
+            else
+            {
+                _observPointsController.RemoveObservPointsGraphics(false, true);
+            }
+        }
+
+        private void BtnRefreshOPGraphics_Click(object sender, EventArgs e)
+        {
+            _observPointsController.RemoveObservPointsGraphics();
+
+            if(chckDrawOPGraphics.Checked)
+            {
+                _observPointsController.DrawObservPointsGraphics(_selectedPointId);
+            }
+
+            if(chckShowOOGraphics.Checked)
+            {
+                _observPointsController.DrawObservPointToObservObjectsRelationsGraphics(_selectedPointId);
             }
         }
     }

@@ -619,6 +619,16 @@ namespace MilSpace.Core.Tools
             return polylines;
         }
 
+        public static IPolyline GetToGeometryCenterPolyline(IPoint fromPoint, IGeometry geometry)
+        {
+            var polylines = new List<IPolyline>();
+
+            var toPoint = GetCenterPoint(geometry);
+            var polyline = CreatePolylineFromPoints(fromPoint, toPoint);
+
+            return polyline;
+        }
+
         public static IEnvelope GetEnvelopeOfGeometriesList(IEnumerable<IGeometry> geometries)
         {
             IGeometryCollection bag = new GeometryBagClass() as IGeometryCollection;
@@ -939,6 +949,15 @@ namespace MilSpace.Core.Tools
             return result;
         }
 
+        public static IPoint GetCenterPoint(IGeometry geometry)
+        {
+            var envelope = geometry.Envelope;
+            var x = envelope.XMin + (envelope.XMax - envelope.XMin) / 2;
+            var y = envelope.YMin + (envelope.YMax - envelope.YMin) / 2;
+
+            return new Point { X = x, Y = y, SpatialReference = envelope.SpatialReference };
+        }
+
         public static ILayer GetLayer(string layerName, IMap map)
         {
             var layers = map.Layers;
@@ -1195,7 +1214,20 @@ namespace MilSpace.Core.Tools
         }
         public static void IdentifyPixelValue(IRaster raster, double xMap, double yMap)
         {
-           
+        }
+
+        public static IGeometry GetIntersection(IPolygon coverageArea, IGeometry observObject)
+        {
+            if(observObject.GeometryType != esriGeometryType.esriGeometryPoint && observObject.GeometryType != esriGeometryType.esriGeometryMultipoint 
+                    && observObject.GeometryType != esriGeometryType.esriGeometryPolyline && observObject.GeometryType != esriGeometryType.esriGeometryPolygon)
+            {
+                throw new ArgumentException("Intersection method must be applied on high-level geometries only");
+            }
+
+            ITopologicalOperator pTopo = coverageArea as ITopologicalOperator;
+            var result = pTopo.Intersect(observObject, esriGeometryDimension.esriGeometryNoDimension);
+
+            return result;
         }
 
         private static List<IPolyline> GetIntersection(IPolyline polyline, ILayer layer)
@@ -1311,6 +1343,49 @@ namespace MilSpace.Core.Tools
             return resultPolylines;
         }
 
+        public static Dictionary<int, IGeometry> GetGeometriesFromLayer(IFeatureLayer featureLayer, IActiveView activeView)
+        {
+            var geometries = new Dictionary<int, IGeometry>();
+            var featureClass = featureLayer.FeatureClass;
+
+            var idFieldIndex = featureClass.FindField("OBJECTID");
+
+            if(idFieldIndex == -1)
+            {
+                logger.WarnEx($"> GetGeometriesFromLayer. Warning: Cannot find fild \"OBJECTID\" in featureClass {featureClass.AliasName}");
+                throw new MissingFieldException();
+            }
+
+            IQueryFilter queryFilter = new QueryFilter();
+            queryFilter.WhereClause = "OBJECTID > 0";
+
+            IFeatureCursor featureCursor = featureClass.Search(queryFilter, true);
+            IFeature feature = featureCursor.NextFeature();
+            try
+            {
+                while(feature != null)
+                {
+                    var shape = feature.ShapeCopy;
+                    shape.Project(activeView.FocusMap.SpatialReference);
+                    var id = (int)feature.Value[idFieldIndex];
+
+                    geometries.Add(id, shape);
+
+                    feature = featureCursor.NextFeature();
+                }
+            }
+            catch(Exception ex)
+            {
+                logger.ErrorEx($"> GetGeometriesFromLayer Exception. ex.Message:{ex.Message}");
+            }
+            finally
+            {
+                Marshal.ReleaseComObject(featureCursor);
+            }
+
+            return geometries;
+        }
+
         private static void AddLayersToMapAsGroupLayer(
             IEnumerable<ILayer> layers,
             string sessionName,
@@ -1398,6 +1473,42 @@ namespace MilSpace.Core.Tools
             rasterLayer.CreateFromDataset(rasterDataset);
 
             return rasterLayer;
+        }
+
+        public static double GetMinDistance(double minDistance, double minAngle, double height)
+        {
+            var toMinPointDistance = Math.Sqrt(Math.Pow(height, 2) + Math.Pow(minDistance, 2));
+
+            var sin = minDistance / toMinPointDistance;
+            var angle = -90 + Math.Asin(sin);
+
+            if(angle < minAngle)
+            {
+                var radians = Math.Tan(minAngle + 90);
+                return radians * (180/Math.PI) * height;
+            }
+            else
+            {
+                return minDistance;
+            }
+        }
+
+        public static double GetMaxDistance(double maxDistance, double maxAngle, double height)
+        {
+            var toMinPointDistance = Math.Sqrt(Math.Pow(height, 2) + Math.Pow(maxDistance, 2));
+
+            var sin = maxDistance / toMinPointDistance;
+            var angle = -90 + Math.Asin(sin);
+
+            if (angle > maxAngle)
+            {
+                var radians = Math.Tan(maxAngle + 90);
+                return radians * (180 / Math.PI) * height;
+            }
+            else
+            {
+                return maxDistance;
+            }
         }
 
         public static IPolygon GetCoverageArea(

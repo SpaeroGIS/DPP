@@ -2005,7 +2005,7 @@ namespace MilSpace.GeoCalculator
                 return;
             }
 
-            _graphicsLayerManager.RemoveAllGeometryFromMap(_lineName);
+            _graphicsLayerManager.RemoveAllGeometryFromMap(_lineName, MilSpaceGraphicsTypeEnum.GeoCalculator);
             DrawLine();
         }
 
@@ -2040,7 +2040,7 @@ namespace MilSpace.GeoCalculator
                 return;
             }
 
-            _graphicsLayerManager.RemoveAllGeometryFromMap(_textName);
+            _graphicsLayerManager.RemoveAllGeometryFromMap(_textName, MilSpaceGraphicsTypeEnum.GeoCalculator);
             DrawText();
         }
 
@@ -2055,7 +2055,7 @@ namespace MilSpace.GeoCalculator
 
                 var pointGuid = (Guid)row.Tag;
                 var pointGeom = ClickedPointsDictionary.First(point => point.Key == pointGuid).Value;
-                _graphicsLayerManager.DrawText(pointGeom, (int)row.Cells[0].Value, row.Tag.ToString(), _textName);
+                _graphicsLayerManager.DrawText(pointGeom, (string)row.Cells[0].Value, $"{_textName}{row.Tag.ToString()}", MilSpaceGraphicsTypeEnum.Calculating);
             }
         }
 
@@ -2093,7 +2093,7 @@ namespace MilSpace.GeoCalculator
             }
             else
             {
-                _graphicsLayerManager.RemoveAllGeometryFromMap(_lineName);
+                _graphicsLayerManager.RemoveAllGeometryFromMap(_lineName, MilSpaceGraphicsTypeEnum.GeoCalculator);
             }
         }
 
@@ -2110,7 +2110,7 @@ namespace MilSpace.GeoCalculator
             }
             else
             {
-                _graphicsLayerManager.RemoveAllGeometryFromMap(_textName);
+                _graphicsLayerManager.RemoveAllGeometryFromMap(_textName, MilSpaceGraphicsTypeEnum.GeoCalculator);
             }
         }
 

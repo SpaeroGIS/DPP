@@ -237,7 +237,7 @@ namespace MilSpace.Visibility.Localization
         public string VisibilityResultLayersRemoveMessage => FindLocalizedElement("VisibilityResultLayersRemoveMessage", "Are you sure you want to delete the calculation result layers?");
         public string SuccessfullySharedMessage => FindLocalizedElement("SuccessfullySharedMessage", "Shared with all users");
         public string AlreadySharedMessage => FindLocalizedElement("AlreadySharedMessage", "Results are already shared");
-
+        public string CoverageAreaIsEmptyMessage => FindLocalizedElement("CoverageAreaIsEmptyMessage", "Пункт спостереження не має зони покриття. Будь ласка, перевірте правильність введених даних");
 
         ////---------------------------------------------------------------------------------------
 
