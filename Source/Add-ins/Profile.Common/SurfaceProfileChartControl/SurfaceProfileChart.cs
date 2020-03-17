@@ -18,7 +18,6 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
         private SurfaceProfileChartController _controller;
         private bool _isObserverHeightIgnore = false;
         private bool _isCommentDisplay = false;
-        private int _maxObserverHeightIndex = 0;
         private CheckBox _checkBoxHeader;
 
         [Browsable(false)]

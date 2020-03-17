@@ -8,7 +8,6 @@ namespace MilSpace.Core.MilSpaceResourceManager
     public class MilSpaceResourceManager
     {
 
-        private static readonly string localizationregistryKey = "Localization";
         private static Logger logger = Logger.GetLoggerEx("MilSpaceResourceManager");
         private static string defailtValueNotLocalized = "<not localized>";
         private static CultureInfo cultoreToLocalize;
