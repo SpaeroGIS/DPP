@@ -379,9 +379,21 @@ namespace MilSpace.Profile
                     throw new NullReferenceException("GenerateProfile. Profile parameters are empty");
                 }
 
+
+                var rl = _mapLayersManager.RasterLayers.FirstOrDefault(l => l.Name == profileSetting.DemLayerName);
+
+                if(rl == null)
+                {
+                    logger.WarnEx("> GenerateProfile. Raster layer not found");
+                    MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgRasterLayerNotFound", "Неможливо розрахувати профіль, шар ЦМР/ЦММ не було знайдено"),
+                                        LocalizationContext.Instance.MessageBoxTitle);
+
+                    return null;
+                }
+
                 logger.DebugEx($"GenerateProfile. Profile {newProfileId}. GenerateProfile CALL");
                 var session = manager.GenerateProfile(
-                    profileSetting.DemLayerName, 
+                    rl, 
                     profileSetting.ProfileLines,
                     profileType, 
                     newProfileId, 

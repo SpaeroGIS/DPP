@@ -34,4 +34,7 @@
   <ButtonAddProfileToolTip>Додати профілі</ButtonAddProfileToolTip>
   <ButtonRemoveProfileToolTip>Видалити обрані профілі</ButtonRemoveProfileToolTip>
 
+  <MsgLackOfArgumentsText>Для генерації 3D сцени необхідно обрати шар поверхні та дані для відображення (поверхні видимості або профілі)</MsgLackOfArgumentsText>
+  <MessageBoxTitle>Спостереження</MessageBoxTitle>
+
 </Visualization3D>
