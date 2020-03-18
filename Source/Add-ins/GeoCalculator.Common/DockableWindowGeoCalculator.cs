@@ -1993,7 +1993,7 @@ namespace MilSpace.GeoCalculator
                 return;
             }
 
-            GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).RemoveAllGeometryFromMap(_lineName);
+            GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).RemoveAllGeometryFromMap(_lineName, MilSpaceGraphicsTypeEnum.GeoCalculator);
             DrawLine();
         }
 
@@ -2028,7 +2028,7 @@ namespace MilSpace.GeoCalculator
                 return;
             }
 
-            GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).RemoveAllGeometryFromMap(_textName);
+            GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).RemoveAllGeometryFromMap(_textName, MilSpaceGraphicsTypeEnum.GeoCalculator);
             DrawText();
         }
 
@@ -2043,7 +2043,7 @@ namespace MilSpace.GeoCalculator
 
                 var pointGuid = (Guid)row.Tag;
                 var pointGeom = ClickedPointsDictionary.First(point => point.Key == pointGuid).Value;
-                GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).DrawText(pointGeom, (int)row.Cells[0].Value, row.Tag.ToString(), _textName);
+                GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).DrawText(pointGeom, (string)row.Cells[0].Value, $"{_textName}{row.Tag.ToString()}", MilSpaceGraphicsTypeEnum.Calculating);
             }
         }
 
@@ -2081,7 +2081,7 @@ namespace MilSpace.GeoCalculator
             }
             else
             {
-                GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).RemoveAllGeometryFromMap(_lineName);
+                GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).RemoveAllGeometryFromMap(_lineName, MilSpaceGraphicsTypeEnum.GeoCalculator);
             }
         }
 
@@ -2098,7 +2098,7 @@ namespace MilSpace.GeoCalculator
             }
             else
             {
-                GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).RemoveAllGeometryFromMap(_textName);
+                GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).RemoveAllGeometryFromMap(_textName, MilSpaceGraphicsTypeEnum.GeoCalculator);
             }
         }
 

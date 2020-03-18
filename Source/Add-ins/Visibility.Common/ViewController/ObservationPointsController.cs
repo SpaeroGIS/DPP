@@ -88,7 +88,7 @@ namespace MilSpace.Visibility.ViewController
 
         internal void SetGrahicsLayerManager()
         {
-            _graphicsLayerManager = new GraphicsLayerManager(mapDocument.ActiveView);
+            _graphicsLayerManager = GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView);
         }
 
 
