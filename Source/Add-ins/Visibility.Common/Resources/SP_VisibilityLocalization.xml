@@ -305,4 +305,18 @@
 
   <HeaderCreatedGridSessionResult>Створено</HeaderCreatedGridSessionResult>
 
+  <ObservPointsSetText>Пункти спостреження</ObservPointsSetText>
+  <ObservObjectsSetText>Об'єкти спостреження</ObservObjectsSetText>
+  <GeoCalcSetText>Точки Геокалькулятора</GeoCalcSetText>
+  <FeatureLayerSetText>Векторний шар</FeatureLayerSetText>
+
+  <DgvObservStationSetTitleHeader>Назва</DgvObservStationSetTitleHeader>
+  <DgvObservStationSetDistanceHeader>Відстань</DgvObservStationSetDistanceHeader>
+  <DgvObservStationSetAzimuthHeader>Азимут</DgvObservStationSetAzimuthHeader>
+  <DgvObservStationSetCoverageHeader>Видимий</DgvObservStationSetCoverageHeader>
+
+  <CoverageTypeNoneText>Ні</CoverageTypeNoneText>
+  <CoverageTypePartlyText>Частково</CoverageTypePartlyText>
+  <CoverageTypeFull>Повністю</CoverageTypeFull>
+
 </SP_Visibility>

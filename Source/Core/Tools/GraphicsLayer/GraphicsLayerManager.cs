@@ -716,7 +716,7 @@ namespace MilSpace.Tools.GraphicsLayer
         }
 
 
-        public void DrawText(IPoint point, string text, string textName, MilSpaceGraphicsTypeEnum graphicsType, IRgbColor textColor = null, int size = 10)
+        public void DrawText(IPoint point, string text, string textName, MilSpaceGraphicsTypeEnum graphicsType, IRgbColor textColor = null, int size = 12)
         {
             var units = GetLengthInMapUnits(activeView, 5);
             var textPoint = new Point() { X = point.X + units, Y = point.Y + units, SpatialReference = point.SpatialReference };
@@ -787,12 +787,13 @@ namespace MilSpace.Tools.GraphicsLayer
             }
 
             ISimpleFillSymbol simplePolygonSymbol = new SimpleFillSymbolClass();
-            simplePolygonSymbol.Color = grapchucsTypeColors[MilSpaceGraphicsTypeEnum.Visibility]();
-            simplePolygonSymbol.Style = esriSimpleFillStyle.esriSFSSolid;
+            var color = grapchucsTypeColors[MilSpaceGraphicsTypeEnum.Visibility]();
+            simplePolygonSymbol.Color = color; 
+            simplePolygonSymbol.Style = esriSimpleFillStyle.esriSFSForwardDiagonal;
 
             IFillShapeElement markerElement = new PolygonElementClass();
             markerElement.Symbol = simplePolygonSymbol;
-
+            
             IElement element = null;
             element = (IElement)markerElement;
             if (element == null)

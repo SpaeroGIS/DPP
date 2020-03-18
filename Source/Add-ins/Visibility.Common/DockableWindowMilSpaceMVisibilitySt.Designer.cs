@@ -85,9 +85,15 @@
             this.label20 = new System.Windows.Forms.Label();
             this.tabTable = new System.Windows.Forms.TabPage();
             this.observObjectsTablePanel = new System.Windows.Forms.Panel();
+            this.dgvObservStationSet = new System.Windows.Forms.DataGridView();
+            this.TitleCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DistanceCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AzimuthCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CoverCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.observObjGraphicPanel = new System.Windows.Forms.Panel();
             this.chckShowOOGraphics = new System.Windows.Forms.CheckBox();
             this.observObjectsChoosePanel = new System.Windows.Forms.Panel();
+            this.cmbObservStationSet = new System.Windows.Forms.ComboBox();
             this.panel9 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.buttonSaveOPoint = new System.Windows.Forms.Button();
@@ -245,7 +251,10 @@
             this.panel13.SuspendLayout();
             this.panelObservPointName.SuspendLayout();
             this.tabTable.SuspendLayout();
+            this.observObjectsTablePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvObservStationSet)).BeginInit();
             this.observObjGraphicPanel.SuspendLayout();
+            this.observObjectsChoosePanel.SuspendLayout();
             this.panel9.SuspendLayout();
             this.panel16.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvObservationPoints)).BeginInit();
@@ -1115,11 +1124,55 @@
             // 
             // observObjectsTablePanel
             // 
+            this.observObjectsTablePanel.Controls.Add(this.dgvObservStationSet);
             this.observObjectsTablePanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.observObjectsTablePanel.Location = new System.Drawing.Point(0, 24);
+            this.observObjectsTablePanel.Location = new System.Drawing.Point(0, 28);
             this.observObjectsTablePanel.Name = "observObjectsTablePanel";
-            this.observObjectsTablePanel.Size = new System.Drawing.Size(304, 244);
+            this.observObjectsTablePanel.Size = new System.Drawing.Size(304, 240);
             this.observObjectsTablePanel.TabIndex = 1;
+            // 
+            // dgvObservStationSet
+            // 
+            this.dgvObservStationSet.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.dgvObservStationSet.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvObservStationSet.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.TitleCol,
+            this.DistanceCol,
+            this.AzimuthCol,
+            this.CoverCol});
+            this.dgvObservStationSet.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvObservStationSet.Location = new System.Drawing.Point(0, 0);
+            this.dgvObservStationSet.Name = "dgvObservStationSet";
+            this.dgvObservStationSet.RowHeadersVisible = false;
+            this.dgvObservStationSet.Size = new System.Drawing.Size(304, 240);
+            this.dgvObservStationSet.TabIndex = 0;
+            // 
+            // TitleCol
+            // 
+            this.TitleCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.TitleCol.HeaderText = "Title";
+            this.TitleCol.Name = "TitleCol";
+            this.TitleCol.ReadOnly = true;
+            // 
+            // DistanceCol
+            // 
+            this.DistanceCol.HeaderText = "Distance";
+            this.DistanceCol.Name = "DistanceCol";
+            this.DistanceCol.ReadOnly = true;
+            // 
+            // AzimuthCol
+            // 
+            this.AzimuthCol.HeaderText = "Azimuth";
+            this.AzimuthCol.Name = "AzimuthCol";
+            this.AzimuthCol.ReadOnly = true;
+            this.AzimuthCol.Width = 50;
+            // 
+            // CoverCol
+            // 
+            this.CoverCol.HeaderText = "IsCover";
+            this.CoverCol.Name = "CoverCol";
+            this.CoverCol.ReadOnly = true;
+            this.CoverCol.Width = 70;
             // 
             // observObjGraphicPanel
             // 
@@ -1143,11 +1196,22 @@
             // 
             // observObjectsChoosePanel
             // 
+            this.observObjectsChoosePanel.Controls.Add(this.cmbObservStationSet);
             this.observObjectsChoosePanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.observObjectsChoosePanel.Location = new System.Drawing.Point(0, 0);
             this.observObjectsChoosePanel.Name = "observObjectsChoosePanel";
-            this.observObjectsChoosePanel.Size = new System.Drawing.Size(304, 24);
+            this.observObjectsChoosePanel.Size = new System.Drawing.Size(304, 28);
             this.observObjectsChoosePanel.TabIndex = 0;
+            // 
+            // cmbObservStationSet
+            // 
+            this.cmbObservStationSet.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbObservStationSet.FormattingEnabled = true;
+            this.cmbObservStationSet.Location = new System.Drawing.Point(55, 4);
+            this.cmbObservStationSet.Name = "cmbObservStationSet";
+            this.cmbObservStationSet.Size = new System.Drawing.Size(194, 21);
+            this.cmbObservStationSet.TabIndex = 0;
             // 
             // panel9
             // 
@@ -2702,8 +2766,11 @@
             this.panelObservPointName.ResumeLayout(false);
             this.panelObservPointName.PerformLayout();
             this.tabTable.ResumeLayout(false);
+            this.observObjectsTablePanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvObservStationSet)).EndInit();
             this.observObjGraphicPanel.ResumeLayout(false);
             this.observObjGraphicPanel.PerformLayout();
+            this.observObjectsChoosePanel.ResumeLayout(false);
             this.panel9.ResumeLayout(false);
             this.panel16.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvObservationPoints)).EndInit();
@@ -2970,5 +3037,11 @@
         private System.Windows.Forms.CheckBox chckDrawOPGraphics;
         private System.Windows.Forms.Button btnRefreshOPGraphics;
         private System.Windows.Forms.CheckBox chckShowOOGraphics;
+        private System.Windows.Forms.DataGridView dgvObservStationSet;
+        private System.Windows.Forms.ComboBox cmbObservStationSet;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TitleCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DistanceCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn AzimuthCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CoverCol;
     }
 }

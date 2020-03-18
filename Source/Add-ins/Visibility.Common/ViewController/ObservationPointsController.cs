@@ -30,6 +30,7 @@ namespace MilSpace.Visibility.ViewController
         private static readonly string _observStationFeature = "MilSp_Visible_ObjectsObservation_R";
         private List<ObservationPoint> _observationPoints = new List<ObservationPoint>();
         private List<ObservationObject> _observationObjects = new List<ObservationObject>();
+        private List<ObservationStationToObservPointRelationModel> _relationLines = new List<ObservationStationToObservPointRelationModel>();
         private static bool localized = false;
         private IPolygon _coverageArea;
         private string _previousPickedRasterLayer { get; set; }
@@ -42,6 +43,18 @@ namespace MilSpace.Visibility.ViewController
         private static Dictionary<string, ObservationObjectTypesEnum> _observObjectsTypesToConvert = Enum.GetValues(typeof(ObservationObjectTypesEnum)).Cast<ObservationObjectTypesEnum>().ToDictionary(ts => ts.ToString(), t => t);
         private static Dictionary<ObservationObjectTypesEnum, string> _observObjectsTypes = null; //Enum.GetValues(typeof(ObservationObjectTypesEnum)).Cast<ObservationObjectTypesEnum>().ToDictionary(ts => ts.ToString(), t => t);
         private static Dictionary<LayerPositionsEnum, string> _layerPositions = Enum.GetValues(typeof(LayerPositionsEnum)).Cast<LayerPositionsEnum>().ToDictionary(t => t, ts => ts.ToString());
+        private static Dictionary<ObservationSetsEnum, string> _observPointSets = new Dictionary<ObservationSetsEnum, string>
+        {
+            {ObservationSetsEnum.Gdb, LocalizationContext.Instance.ObservPointsSet },
+            {ObservationSetsEnum.GeoCalculator, LocalizationContext.Instance.GeoCalcSet }
+        };
+
+        private static Dictionary<ObservationSetsEnum, string> _observObjectsSets = new Dictionary<ObservationSetsEnum, string>
+        {
+            {ObservationSetsEnum.Gdb, LocalizationContext.Instance.ObservObjectsSet },
+            {ObservationSetsEnum.GeoCalculator, LocalizationContext.Instance.GeoCalcSet },
+            {ObservationSetsEnum.FeatureLayers, LocalizationContext.Instance.FeatureLayerSet }
+        };
 
         private IMxDocument mapDocument;
         private IMxApplication application;
@@ -787,6 +800,7 @@ namespace MilSpace.Visibility.ViewController
 
             return false;
         }
+
         public string GetPreviousPickedRasterLayer() => _previousPickedRasterLayer;
 
         public void UpdataPreviousPickedRasterLayer(string raster)
@@ -989,11 +1003,11 @@ namespace MilSpace.Visibility.ViewController
             return realMaxDistance;
         }
 
-        internal void DrawObservPointToObservObjectsRelationsGraphics(int id)
+        internal void CalcRelationLines(int id, bool fromNewCoverageArea = false)
         {
             var observPoint = _observationPoints.FirstOrDefault(point => point.Objectid == id);
 
-            if(observPoint == null || observPoint.X == null || observPoint.Y == null)
+            if (observPoint == null || observPoint.X == null || observPoint.Y == null)
             {
                 return;
             }
@@ -1003,41 +1017,89 @@ namespace MilSpace.Visibility.ViewController
 
             var geometries = EsriTools.GetGeometriesFromLayer(VisibilityManager.ObservationStationsFeatureLayer, mapDocument.ActiveView);
 
-            if(_coverageArea == null)
+            if (_coverageArea == null || fromNewCoverageArea)
             {
                 CalcCoverageArea(pointGeom, observPoint);
             }
 
-            foreach(var geometry in geometries)
+            _relationLines.Clear();
+
+            foreach (var geometry in geometries)
             {
                 var relationLine = EsriTools.GetToGeometryCenterPolyline(pointGeom, geometry.Value);
                 var intersectionArea = EsriTools.GetIntersection(_coverageArea, geometry.Value);
 
-                IRgbColor color;
+                var simpleLine = new Line { FromPoint = relationLine.FromPoint, ToPoint = relationLine.ToPoint, SpatialReference = relationLine.SpatialReference };
 
-                if(intersectionArea.IsEmpty)
+                if (!_observationObjects.Any())
                 {
-                    color = new RgbColor { Red = 255, Blue = 0, Green = 0 };
+                    UpdateObservObjectsList();
+                }
+
+                var currentObj = _observationObjects.FirstOrDefault(obj => obj.ObjectId == geometry.Key);
+                var title = (currentObj == null) ? string.Empty : currentObj.Title;
+
+                var line = new ObservationStationToObservPointRelationModel
+                {
+                    Id = geometry.Key,
+                    Polyline = relationLine,
+                    Azimuth = simpleLine.Azimuth(),
+                    Title = title
+                };
+
+                if (intersectionArea.IsEmpty)
+                {
+                    line.CoverageType = CoverageTypesEnum.None;
                 }
                 else
                 {
                     var intersectionAreaValue = intersectionArea.Envelope as IArea;
                     var geometryAreaValue = geometry.Value.Envelope as IArea;
                     var diff = geometryAreaValue.Area - intersectionAreaValue.Area;
-                    if(diff < 0.01)
+
+                    if (diff < 0.01)
                     {
-                        color = new RgbColor { Red = 15, Blue = 49, Green = 107 };
+                        line.CoverageType = CoverageTypesEnum.Full;
+                    }
+                    else
+                    {
+                        line.CoverageType = CoverageTypesEnum.Partly;
+                    }
+                }
+
+                _relationLines.Add(line);
+            }
+        }
+
+
+        internal void DrawObservPointToObservObjectsRelationsGraphics(int id)
+        {
+            if (_relationLines == null || !_relationLines.Any())
+            {
+                CalcRelationLines(id);
+            }
+
+            foreach(var line in _relationLines)
+            {
+                IRgbColor color;
+
+                if(line.CoverageType == CoverageTypesEnum.None)
+                {
+                    color = new RgbColor { Red = 255, Blue = 0, Green = 0 };
+                }
+                else
+                {
+                    if(line.CoverageType == CoverageTypesEnum.Full)
+                    {
+                        color = new RgbColor { Red = 69, Blue = 0, Green = 230 };
                     }
                     else
                     {
                         color = new RgbColor { Red = 229, Blue = 1, Green = 167 };
                     }
                 }
-
-                var currentObj = _observationObjects.FirstOrDefault(obj => obj.ObjectId == geometry.Key);
-                var title = (currentObj == null) ? string.Empty : currentObj.Title;
-
-                _graphicsLayerManager.AddObservPointsRelationLineToMap(relationLine, color, $"relationLine_{id}", title);
+                
+                _graphicsLayerManager.AddObservPointsRelationLineToMap(line.Polyline, color, $"relationLine_{id}", line.Title);
             }
         }
 
@@ -1051,6 +1113,34 @@ namespace MilSpace.Visibility.ViewController
             {
                 _graphicsLayerManager.RemoveAllGeometryFromMap($"relationLine_", MilSpaceGraphicsTypeEnum.Visibility, true);
             }
+        }
+
+        internal string[] GetObservStationSetsStrings()
+        {
+            return _observObjectsSets.Select(set => set.Value).ToArray();
+        }
+
+        internal ObservationSetsEnum GetObservStationSet(string setString)
+        {
+            return _observObjectsSets.FirstOrDefault(set => set.Value == setString).Key;
+        }
+
+        internal ObservationStationToObservPointRelationModel[] GetObservationStationToObservPointRelations(int id, ObservationSetsEnum set)
+        {
+            switch (set)
+            {
+                case ObservationSetsEnum.Gdb:
+
+                    if (_relationLines == null || !_relationLines.Any())
+                    {
+                        CalcRelationLines(id);
+                    }
+
+                    return _relationLines.ToArray();
+            }
+
+            return null;
+
         }
 
         #region ArcMap Eventts

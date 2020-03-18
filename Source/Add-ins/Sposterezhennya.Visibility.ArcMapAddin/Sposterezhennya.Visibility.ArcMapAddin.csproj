@@ -139,6 +139,12 @@
     <Compile Include="..\Visibility.Common\DTO\CheckObservPointGui.cs">
       <Link>DTO\CheckObservPointGui.cs</Link>
     </Compile>
+    <Compile Include="..\Visibility.Common\DTO\ObservationSetsEnum.cs">
+      <Link>DTO\ObservationSetsEnum.cs</Link>
+    </Compile>
+    <Compile Include="..\Visibility.Common\DTO\ObservationStationToObservPointRelationModel.cs">
+      <Link>DTO\ObservationStationToObservPointRelationModel.cs</Link>
+    </Compile>
     <Compile Include="..\Visibility.Common\DTO\ObservObjectGui.cs">
       <Link>DTO\ObservObjectGui.cs</Link>
     </Compile>
