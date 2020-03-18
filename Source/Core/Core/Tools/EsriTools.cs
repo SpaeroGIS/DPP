@@ -131,7 +131,7 @@ namespace MilSpace.Core.Tools
             }
             catch (Exception ex)
             {
-                //ToDO: Loggig
+                logger.WarnEx($"> ProjectToWgs84. Exception: {ex.Message}");
             }
 
         }

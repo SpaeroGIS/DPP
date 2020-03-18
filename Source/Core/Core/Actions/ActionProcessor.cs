@@ -412,7 +412,7 @@ namespace MilSpace.Core.Actions
                         double diff = new TimeSpan((DateTime.Now.Ticks - check.Ticks)).TotalSeconds;
                         if (diff > waitForThreadSec)
                         {
-                            Logger.Error(string.Format("Action \"{0}\". Cannot access the action thread during {0} second(s)", act.ActionId, waitForThreadSec));
+                            Logger.Error(string.Format("Action \"{0}\". Cannot access the action thread during {1} second(s)", act.ActionId, waitForThreadSec));
                             throw new CannotAccessThreadException(this.CurrentAction.ActionId);
                         }
                     }

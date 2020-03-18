@@ -972,8 +972,6 @@
 
         private System.Windows.Forms.Panel basePanel;
         private System.Windows.Forms.ImageList imageList1;
-        internal System.Windows.Forms.ToolBarButton toolBarButton1;
-        private System.Windows.Forms.ToolBarButton toolBarButton2;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ComboBox SurfaceComboBox;
         private System.Windows.Forms.Label SurfaceLabel;

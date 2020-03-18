@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Point = ESRI.ArcGIS.Geometry.Point;
@@ -237,6 +238,7 @@ namespace MilSpace.Profile
 
             eraseProfile.Enabled = controller.CanEraseProfileSession(ids.Item1);
             copyExtremePoints.Enabled = !(treeViewselectedIds.ProfileLineId == -1);
+            recalcForCurrentSurface.Enabled = cmbRasterLayers.SelectedItem != null;
         }
 
         private void DisplaySelectedNodeAttributes(object sender, TreeViewEventArgs treeViewEventArgs)
@@ -669,6 +671,8 @@ namespace MilSpace.Profile
             }
             catch (Exception ex)
             {
+                logger.ErrorEx(ex.Message);
+
                 MessageBox.Show(
                     "Please make sure X and Y values are valid and try again!"
                     );
@@ -918,7 +922,7 @@ namespace MilSpace.Profile
 
         private void cmbRasterLayers_SelectedIndexChanged(object sender, EventArgs e)
         {
-            controller.SetProfileSettings(SelectedProfileSettingsType);
+            controller.SetProfileDemLayer(SelectedProfileSettingsType);
         }
 
         private static bool CheckDouble(char charValue, TextBox textValue, bool justInt = false)
@@ -1221,6 +1225,7 @@ namespace MilSpace.Profile
             toolTip.SetToolTip(reverseSecondPointButton, LocalizationContext.Instance.FindLocalizedElement("BtnReverseToolTip", "Змінити напрямок профілю"));
             toolTip.SetToolTip(btnPanToFun, LocalizationContext.Instance.FindLocalizedElement("BtnPanToFunToolTip", "Наблизити до набору профілів"));
             toolTip.SetToolTip(btnPanToPrimitive, LocalizationContext.Instance.FindLocalizedElement("BtnPanToPrimitive", "Наблизити до примітиву"));
+            toolTip.SetToolTip(lvProfileAttributes, LocalizationContext.Instance.FindLocalizedElement("LvProfileDetailsToolTip", "Щоб скопіювати рядки натисніть праву клавішу миші"));
 
             firstPointToolBar.Buttons["toolBarButton8"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnTakeCoordToolTip", "Взяти координати з карти");
             firstPointToolBar.Buttons["toolBarButton55"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnShowCoordToolTip", "Показати координати на карті");
@@ -1316,6 +1321,7 @@ namespace MilSpace.Profile
             clearExtraGraphic.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintClearExtraGraphicText", "Очистити графіку на карті");
             renameProfile.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintToolRenameProfile", "Перейменувати профіль/набір профілів");
             copyExtremePoints.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintToolCopyExtremePoints", "Копіювати координати крайніх точок");
+            recalcForCurrentSurface.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintRecalcProfileForNewSurfaceText", "Перерахувати профіль для нової поверхні");
 
             btnChooseFirstPointAssignmentMethod.Text = LocalizationContext.Instance.ChooseText;
             btnChooseSecondPointAssignmentMethod.Text = LocalizationContext.Instance.ChooseText;
@@ -1323,6 +1329,7 @@ namespace MilSpace.Profile
             btnTargetObjAssignmentMethod.Text = LocalizationContext.Instance.ChooseText;
             btnChooseCreationMethod.Text = LocalizationContext.Instance.ChooseText;
             btnPrimitiveAssignmentMethod.Text = LocalizationContext.Instance.ChooseText;
+            copyToolStrip.Text = LocalizationContext.Instance.FindLocalizedElement("CopyStripMenuItemText", "Скопіювати");
 
             profilesTreeView.Nodes["Points"].Text = LocalizationContext.Instance.FindLocalizedElement("TvProfilesPointsNodeText", "Відрізки");
             profilesTreeView.Nodes["Fun"].Text = LocalizationContext.Instance.FindLocalizedElement("TvProfilesFunNodeText", "\"Віяло\"");
@@ -1425,11 +1432,10 @@ namespace MilSpace.Profile
                     newNode.SetBasePointFromSurfaceHeight(fromPoint.Z.ToFormattedString(1));
                     newNode.SetToPointX(secondX);
                     newNode.SetToPointY(secondY);
-                    newNode.SetToPointHeight(SectionHeightSecond.ToString());
                     newNode.SetToPointFromSurfaceHeight(toPoint.Z.ToFormattedString(1));
                     newNode.SetLineDistance(lineDistance);
                     newNode.SetAzimuth(profile.ProfileLines.First().Azimuth.ToString("F0"));
-                    newNode.SetSurface(profile.SurfaceLayerName);
+                    newNode.SetSurface(profile.SurfaceLayerPath);
                 }
                 else if(profile.DefinitionType == ProfileSettingsTypeEnum.Fun)
                 {
@@ -1448,18 +1454,31 @@ namespace MilSpace.Profile
                     newNode.SetAzimuth1(profile.Azimuth1);
                     newNode.SetAzimuth2(profile.Azimuth2);
                     newNode.SetLineCount(linesCount);
-                    newNode.SetSurface(profile.SurfaceLayerName);
+                    newNode.SetSurface(profile.SurfaceLayerPath);
                 }
                 else if(profile.DefinitionType == ProfileSettingsTypeEnum.Primitives)
                 {
-                    var fromPoint = profile.ProfileSurfaces.First().ProfileSurfacePoints.First();
-                    var toPoint = profile.ProfileSurfaces.Last().ProfileSurfacePoints.Last();
+                    ProfileSurfacePoint fromPoint;
+                    ProfileSurfacePoint toPoint;
+
+                    if(profile.ProfileSurfaces.Any())
+                    {
+                        fromPoint = profile.ProfileSurfaces.First().ProfileSurfacePoints.First();
+                        toPoint = profile.ProfileSurfaces.Last().ProfileSurfacePoints.Last();
+                    }
+                    else
+                    {
+                        var line = profile.ProfileLines.First();
+
+                        fromPoint = new ProfileSurfacePoint { X = line.PointFrom.X, Y = line.PointFrom.Y };
+                        toPoint = new ProfileSurfacePoint { X = line.PointTo.X, Y = line.PointTo.Y };
+                    }
 
                     var firstX = fromPoint.X.ToFormattedString();
                     var firstY = fromPoint.Y.ToFormattedString();
                     var secondX = toPoint.X.ToFormattedString();
                     var secondY = toPoint.Y.ToFormattedString();
-                    var linesCount = profile.ProfileLines.First().Vertices.Count().ToString("F0");
+                    var linesCount = (profile.ProfileLines.First().Vertices.Count() - 1).ToString();
 
                     newNode.SetBasePointX(firstX);
                     newNode.SetBasePointY(firstY);
@@ -1467,10 +1486,9 @@ namespace MilSpace.Profile
                     newNode.SetBasePointFromSurfaceHeight(fromPoint.Z.ToFormattedString(1));
                     newNode.SetToPointX(secondX);
                     newNode.SetToPointY(secondY);
-                    newNode.SetToPointHeight(SectionHeightSecond.ToString());
                     newNode.SetToPointFromSurfaceHeight(toPoint.Z.ToFormattedString(1));
                     newNode.SetLineCount(linesCount);
-                    newNode.SetSurface(profile.SurfaceLayerName);
+                    newNode.SetSurface(profile.SurfaceLayerPath);
                 }
 
                 newNode.SetCreatorName(profile.CreatedBy);
@@ -1502,11 +1520,10 @@ namespace MilSpace.Profile
                     childNode.SetBasePointFromSurfaceHeight(fromPoint.Z.ToFormattedString(1));
                     childNode.SetToPointX(toPoint.X.ToFormattedString());
                     childNode.SetToPointY(toPoint.Y.ToFormattedString());
-                    childNode.SetToPointHeight(SectionHeightSecond.ToString());
                     childNode.SetToPointFromSurfaceHeight(toPoint.Z.ToFormattedString(1));
                     childNode.SetLineDistance(line.Line.Length.ToString("F0"));
                     childNode.SetAzimuth($"{azimuth}{Degree}");
-                    childNode.SetSurface(profile.SurfaceLayerName);
+                    childNode.SetSurface(profile.SurfaceLayerPath);
 
                     logger.InfoEx($"Line {nodeName} was added to the tree");
                 }
@@ -1852,11 +1869,9 @@ namespace MilSpace.Profile
 
         private void SetListView()
         {
-            lvProfileAttributes.Columns.Add("Attribute", -1);
+            lvProfileAttributes.Columns[0].Width = -1;
             lvProfileAttributes.Columns[0].Width += 5;
-            lvProfileAttributes.Columns.Add("Value", -1);
-
-            lvProfileAttributes.HeaderStyle = ColumnHeaderStyle.None;
+            lvProfileAttributes.Columns[1].Width = -1;
         }
 
         private void RenameProfile_Click(object sender, EventArgs e)
@@ -1932,6 +1947,59 @@ namespace MilSpace.Profile
 
             Clipboard.Clear();
             Clipboard.SetText(coordString);
+        }
+
+        private void RecalcForCurrentSurface_Click(object sender, EventArgs e)
+        {
+           
+            logger.DebugEx("> RecalcForCurrentSurface_Click START");
+
+            var ids = GetProfileAndLineIds(profilesTreeView.SelectedNode);
+            var session = controller.RecalculateSessionForNewSurface(ids.Item1);
+
+            if(session != null)
+            {
+                logger.DebugEx("RecalcForCurrentSurface_Click. session.SessionName:{0}", session.SessionName);
+                controller.AddProfileToList(session);
+                controller.CallGraphsHandle(session);
+                controller.SaveProfileSet(session);
+            }
+            else
+            {
+                logger.DebugEx("RecalcForCurrentSurface_Click controller.GenerateProfile ERROR. Session is NULL");
+                MessageBox.Show(
+                    "Calculation error. GenerateProfile return NULL",
+                    "Модуль профілю. Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+
+            logger.DebugEx("> RecalcForCurrentSurface_Click END");
+        }
+
+        private void CopyStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                StringBuilder text = new StringBuilder();
+
+                foreach(ListViewItem item in lvProfileAttributes.SelectedItems)
+                {
+                    foreach(ListViewItem.ListViewSubItem sub in item.SubItems)
+                    {
+                        text.Append(sub.Text + "\t");
+                    }
+
+                    text.AppendLine();
+                }
+
+                Clipboard.SetDataObject(text.ToString());
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(LocalizationContext.Instance.ErrorHappendText, LocalizationContext.Instance.MessageBoxTitle);
+                logger.WarnEx($"> CopyStripMenuItem_Click Exception: {ex.Message}");
+            }
         }
     }
 }

@@ -34,7 +34,7 @@ namespace MilSpace.Profile
         private MapLayersManager _mapLayersManager;
 
         private int profileId;
-        GraphicsLayerManager graphicsLayerManager;
+
         private Logger logger = Logger.GetLoggerEx("MilSpace.Profile.MilSpaceProfileCalsController");
 
         public delegate void ProfileSettingsChangedDelegate(ProfileSettingsEventArgs e);
@@ -246,9 +246,24 @@ namespace MilSpace.Profile
             return null;
         }
 
-        internal void SetProfileSettings(ProfileSettingsTypeEnum profileType, List<IPolyline> polylines = null)
+        internal void SetProfileSettings(ProfileSettingsTypeEnum profileType)
         {
             SetSettings(profileType, profileId);
+        }
+
+        internal void SetProfileDemLayer(ProfileSettingsTypeEnum profileType)
+        {
+            var profileSetting = profileSettings[profileType];
+
+            if (profileSetting == null)
+            {
+                SetSettings(profileType, profileId);
+            }
+            else
+            {
+                profileSetting.DemLayerName = View.DemLayerName;
+                InvokeOnProfileSettingsChanged();
+            }
         }
 
         internal void SetProfileSettings(ProfileSettingsTypeEnum profileType, int profileIdValue, List<IPolyline> polylines = null)
@@ -324,21 +339,34 @@ namespace MilSpace.Profile
         /// Do Actions to generate profile(s), save them and set properties to default values
         /// </summary>
         /// <returns>Profile Session data</returns>
-        internal ProfileSession GenerateProfile()
+        internal ProfileSession GenerateProfile(ProfileSettings profileSetting = null, string profileName = null)
         {
             logger.DebugEx($"> GenerateProfile START");
             string errorMessage;
             try
             {
                 ProfileManager manager = new ProfileManager();
+                ProfileSettingsTypeEnum profileType;
 
                 logger.DebugEx($"GenerateProfile. new ProfileManager OK");
-                var profileSetting = profileSettings[View.SelectedProfileSettingsType];
+
                 var newProfileId = GenerateProfileId();
                 logger.DebugEx($"GenerateProfile.Profile. ID:{newProfileId}");
-                var newProfileName = GenerateProfileName();
+
+                var newProfileName = String.IsNullOrEmpty(profileName)? GenerateProfileName() : profileName;
+               
                 logger.DebugEx($"GenerateProfile.Profile. Name:{newProfileName}");
 
+                if(profileSetting == null)
+                {
+                    profileSetting = profileSettings[View.SelectedProfileSettingsType];
+                    profileType = View.SelectedProfileSettingsType;
+                }
+                else
+                {
+                    profileType = profileSetting.Type;
+                }
+                
                 if (manager == null)
                 {
                     logger.DebugEx("GenerateProfile. Cannot find profile manager");
@@ -347,15 +375,27 @@ namespace MilSpace.Profile
 
                 if (profileSetting == null)
                 {
-                    logger.DebugEx("GenerateProfile. Cannot find profile manager");
-                    throw new NullReferenceException("Cannot find profile manager");
+                    logger.DebugEx("GenerateProfile. Profile parameters are empty");
+                    throw new NullReferenceException("GenerateProfile. Profile parameters are empty");
+                }
+
+
+                var rl = _mapLayersManager.RasterLayers.FirstOrDefault(l => l.Name == profileSetting.DemLayerName);
+
+                if(rl == null)
+                {
+                    logger.WarnEx("> GenerateProfile. Raster layer not found");
+                    MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgRasterLayerNotFound", "Неможливо розрахувати профіль, шар ЦМР/ЦММ не було знайдено"),
+                                        LocalizationContext.Instance.MessageBoxTitle);
+
+                    return null;
                 }
 
                 logger.DebugEx($"GenerateProfile. Profile {newProfileId}. GenerateProfile CALL");
                 var session = manager.GenerateProfile(
-                    profileSetting.DemLayerName, 
-                    profileSetting.ProfileLines, 
-                    View.SelectedProfileSettingsType, 
+                    rl, 
+                    profileSetting.ProfileLines,
+                    profileType, 
                     newProfileId, 
                     newProfileName, 
                     View.ObserveHeight, 
@@ -373,7 +413,11 @@ namespace MilSpace.Profile
                 }
 
                 SetPeofileId();
-                SetProfileName();
+
+                if(String.IsNullOrEmpty(profileName))
+                {
+                    SetProfileName();
+                }
 
                 logger.InfoEx($"> GenerateProfile END");
                 return session;
@@ -403,6 +447,27 @@ namespace MilSpace.Profile
                 errorMessage
                 );
             return null;
+        }
+        
+        internal ProfileSession RecalculateSessionForNewSurface(int profileId)
+        {
+            var session = GetProfileSessionById(profileId);
+
+            var setting = new ProfileSettings();
+
+            if(session.DefinitionType == ProfileSettingsTypeEnum.Fun)
+            {
+                setting.Azimuth1 = session.Azimuth1;
+                setting.Azimuth2 = session.Azimuth2;
+            }
+
+            setting.DemLayerName = View.DemLayerName;
+            setting.Type = session.DefinitionType;
+            setting.ProfileLines = session.ProfileLines.Select(line => line.Line).ToArray();
+
+            var profileName = $"{session.SessionName}_{View.DemLayerName}";
+
+            return GenerateProfile(setting, profileName);
         }
 
         internal bool RemoveProfilesFromUserSession(bool eraseFromDB = false)
@@ -501,10 +566,14 @@ namespace MilSpace.Profile
                 if (profile.DefinitionType == ProfileSettingsTypeEnum.Primitives)
                 {
                     profile.Segments = ProfileLinesConverter.GetSegmentsFromProfileLine(profile.ProfileSurfaces, spatialReference);
-                    GraphicsLayerManager.AddLinesToWorkingGraphics(ProfileLinesConverter.ConvertLineToPrimitivePolylines(profile.ProfileSurfaces[0],
-                                                                                                                           spatialReference),
-                                                                   profile.SessionId,
-                                                                   profile.Segments.First());
+
+                    if (profile.ProfileSurfaces.Any())
+                    {
+                        GraphicsLayerManager.AddLinesToWorkingGraphics(ProfileLinesConverter.ConvertLineToPrimitivePolylines(profile.ProfileSurfaces[0],
+                                                                                                                               spatialReference),
+                                                                       profile.SessionId,
+                                                                       profile.Segments.First());
+                    }
                 }
                 else
                 {
@@ -577,14 +646,13 @@ namespace MilSpace.Profile
 
             if (profile.DefinitionType == ProfileSettingsTypeEnum.Primitives)
             {
-               EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, profile.Segments.First().Polylines);
+                EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, profile.Segments.First().Polylines);
             }
             else
             {
                 logger.InfoEx("Flashing geomerty");
                 EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, profileLines);
                 logger.InfoEx("Geomerty flashed");
-
             }
         }
 
@@ -730,8 +798,16 @@ namespace MilSpace.Profile
 
         internal void CallGraphsHandle(ProfileSession profileSession)
         {
-            MilSpaceProfileGraphsController.ShowWindow();
-            MilSpaceProfileGraphsController.AddSession(profileSession);
+            if (profileSession.ProfileSurfaces.Any())
+            {
+                MilSpaceProfileGraphsController.ShowWindow();
+                MilSpaceProfileGraphsController.AddSession(profileSession);
+            }
+            else
+            {
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgProfileSurfaceNotFound", "Неможливо побудувати графік. Відсутні дані з поверхні"),
+                                    LocalizationContext.Instance.MessageBoxTitle);
+            }
         }
 
         internal void ShowGraphsWindow()
@@ -1109,12 +1185,7 @@ namespace MilSpace.Profile
         {
             get
             {
-                if (graphicsLayerManager == null)
-                {
-                    graphicsLayerManager = new GraphicsLayerManager(View.ActiveView);
-                }
-
-                return graphicsLayerManager;
+                return GraphicsLayerManager.GetGraphicsLayerManager(View.ActiveView);
             }
         }
 
@@ -1212,25 +1283,35 @@ namespace MilSpace.Profile
 
                 case AssignmentMethodsEnum.FeatureLayers:
 
-                    var geometryFromFeatureLayerModal = new GeometryFromFeatureLayerModalWindow();
-                    var result = geometryFromFeatureLayerModal.ShowDialog();
-                    IGeometry geometry;
-
-                    if(result == DialogResult.OK)
+                    try
                     {
-                        geometry = geometryFromFeatureLayerModal.SelectedGeometry;
+                        var geometryFromFeatureLayerModal = new GeometryFromFeatureLayerModalWindow();
+                        var result = geometryFromFeatureLayerModal.ShowDialog();
 
-                        var geomPoints = new List<IPoint>();
-                        var path = geometry as IPointCollection;
+                        IGeometry geometry;
 
-                        for(int i = 0; i < path.PointCount; i++)
+                        if (result == DialogResult.OK)
                         {
-                            var point = path.Point[i].Clone();
-                            point.Project(ArcMap.Document.FocusMap.SpatialReference);
-                            geomPoints.Add(point);
-                        }
+                            geometry = geometryFromFeatureLayerModal.SelectedGeometry;
 
-                        polylines = EsriTools.CreatePolylineFromPointsArray(geomPoints.ToArray(), ArcMap.Document.FocusMap.SpatialReference).ToList();
+                            var geomPoints = new List<IPoint>();
+                            var path = geometry as IPointCollection;
+
+                            for (int i = 0; i < path.PointCount; i++)
+                            {
+                                var point = path.Point[i].Clone();
+                                point.Project(ArcMap.Document.FocusMap.SpatialReference);
+                                geomPoints.Add(point);
+                            }
+
+                            polylines = EsriTools.CreatePolylineFromPointsArray(geomPoints.ToArray(), ArcMap.Document.FocusMap.SpatialReference).ToList();
+                        }
+                    }
+                    catch(ArgumentNullException ex)
+                    {
+                        logger.WarnEx($"> CalcPrimitive Exception: {ex.Message}");
+                        MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgRequiredLayersDoesNotExists", "У проекті відсутні необхідні шари"),
+                                        LocalizationContext.Instance.MessageBoxTitle);
                     }
 
                     break;
@@ -1538,7 +1619,7 @@ namespace MilSpace.Profile
             var projLength = projLine.Length;
             var azimuth = projLine.Azimuth();
 
-            View.SetPrimitiveInfo(length, azimuth, projLength, segmentCount);
+            View.SetPrimitiveInfo(length, azimuth, projLength, segmentCount - 1);
         }
 
         private Dictionary<int, IPoint> GetPointsFromGeoCalculator()
@@ -1641,13 +1722,22 @@ namespace MilSpace.Profile
 
         private IPoint GetPointFromPointLayers(ProfileSettingsPointButtonEnum pointType)
         {
-            PointsFromLayerModalWindow pointsFromLayerModal = new PointsFromLayerModalWindow();
-            var result = pointsFromLayerModal.ShowDialog();
-
-            if(result == DialogResult.OK)
+            try
             {
-                View.SetPointInfo(pointType, $"{pointsFromLayerModal.LayerName}; {pointsFromLayerModal.SelectedPoint.ObjId}");
-                return pointsFromLayerModal.SelectedPoint.Point;
+                PointsFromLayerModalWindow pointsFromLayerModal = new PointsFromLayerModalWindow();
+                var result = pointsFromLayerModal.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    View.SetPointInfo(pointType, $"{pointsFromLayerModal.LayerName}; {pointsFromLayerModal.SelectedPoint.ObjId}");
+                    return pointsFromLayerModal.SelectedPoint.Point;
+                }
+            }
+            catch (ArgumentNullException ex)
+            {
+                logger.WarnEx($"> GetPointFromPointLayers Exception: {ex.Message}");
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgRequiredLayersDoesNotExists", "У проекті відсутні необхідні шари"),
+                                LocalizationContext.Instance.MessageBoxTitle);
             }
 
             return null;

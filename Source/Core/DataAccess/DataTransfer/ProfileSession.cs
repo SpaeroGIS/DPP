@@ -14,7 +14,7 @@ namespace MilSpace.DataAccess.DataTransfer
     public class ProfileSession
     {
         static Logger logger = Logger.GetLoggerEx("ProfileSession");
-        
+
         // The Azimuth value  has format "{0}:{1}" 
         static readonly char[] athimuthSeparator = new char[] { ':' };
         private double[] azimuth;
@@ -31,6 +31,7 @@ namespace MilSpace.DataAccess.DataTransfer
         public string Azimuth;
         public string SessionName;
         public string SurfaceLayerName;
+        public string SurfaceLayerPath;
 
         /// <summary>
         /// Date and time  when the Profile session was created
@@ -108,13 +109,25 @@ namespace MilSpace.DataAccess.DataTransfer
         {
             Func<ProfileLine, IPolyline> converter = (l) =>
             {
-                var pointFrom = new Point { X = l.PointFrom.X, Y = l.PointFrom.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
-                var pointTo = new Point { X = l.PointTo.X, Y = l.PointTo.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
+                var surface = ProfileSurfaces.FirstOrDefault(s => l.Id == s.LineId);
+                IPolyline result;
 
-                pointFrom.Project(spatialReference);
-                pointTo.Project(spatialReference);
+                if (DefinitionType == ProfileSettingsTypeEnum.Primitives && surface != null)
+                {
+                    var vertices = surface.ProfileSurfacePoints.Where(point => point.isVertex).Select(p => new Point { X = p.X, Y = p.Y, Z = p.Z, SpatialReference = EsriTools.Wgs84Spatialreference });
+                    result = EsriTools.CreatePolylineFromPointsArray(vertices.ToArray(), spatialReference).First();
+                }
+                else
+                {
+                    var pointFrom = new Point { X = l.PointFrom.X, Y = l.PointFrom.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
+                    var pointTo = new Point { X = l.PointTo.X, Y = l.PointTo.Y, SpatialReference = EsriTools.Wgs84Spatialreference };
 
-                var result = EsriTools.CreatePolylineFromPoints(pointFrom, pointTo);
+                    pointFrom.Project(spatialReference);
+                    pointTo.Project(spatialReference);
+
+                    result = EsriTools.CreatePolylineFromPoints(pointFrom, pointTo);
+                }
+
                 if (l.Line == null)
                 {
                     l.Line = result;
@@ -160,7 +173,6 @@ namespace MilSpace.DataAccess.DataTransfer
 
                 var polyline = new List<IPolyline> { profileLine.Line };
 
-
                 Segments.Add(new GroupedLines
                 {
                     Lines = lines,
@@ -186,20 +198,20 @@ namespace MilSpace.DataAccess.DataTransfer
             }
 
             logger.InfoEx("Try to parse Athimuth {0}".InvariantFormat(valueToParse));
-            
+
 
             double azm1;
             double azm2;
             if (!double.TryParse(athimutList[0], out azm1))
             {
                 logger.WarnEx("Can not parse value {0}".InvariantFormat(athimutList[0]));
-                return new double[] { double.MinValue, double.MinValue }; 
+                return new double[] { double.MinValue, double.MinValue };
             }
 
             if (!double.TryParse(athimutList[1], out azm2))
             {
                 logger.WarnEx("Can not parse value {0}".InvariantFormat(athimutList[1]));
-                return new double[] { double.MinValue, double.MinValue }; 
+                return new double[] { double.MinValue, double.MinValue };
             }
 
             return new double[] { azm1, azm2 };
@@ -218,7 +230,6 @@ namespace MilSpace.DataAccess.DataTransfer
                 {
 
                     var resu = Encoding.UTF8.GetString((stream as MemoryStream).ToArray());
-                    //
                     ProfileSession sessionOut = null;
 
                     XmlSerializer serializerOut = new XmlSerializer(typeof(ProfileSession));
@@ -231,28 +242,20 @@ namespace MilSpace.DataAccess.DataTransfer
                             writer.Write(resu);
                             writer.Flush();
 
-                            try
+
+                            memoryStream.Seek(0, SeekOrigin.Begin);
+                            if (serializer.Deserialize(memoryStream) is ProfileSession result)
                             {
-                                memoryStream.Seek(0, SeekOrigin.Begin);
-                                if (serializer.Deserialize(memoryStream) is ProfileSession result)
-                                {
-                                    sessionOut = result;
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                //TODO: log the error
-                                //throw new MilSpaceDataException("MilSp_Profile", DataOperationsEnum.Convert, ex);
+                                sessionOut = result;
                             }
                         }
                     }
-                    //
 
                     return Encoding.UTF8.GetString((stream as MemoryStream).ToArray());
                 }
                 catch (Exception ex)
                 {
-                    //TODO: log the error
+                    logger.ErrorEx(ex.Message);
                 }
 
                 return null;

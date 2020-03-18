@@ -39,7 +39,11 @@ namespace MilSpace.Profile.ModalWindows
         {
             cmbLayers.Items.Clear();
             cmbLayers.Items.AddRange(_controller.GetNotPointFeatureLayers(true).ToArray());
-            cmbLayers.SelectedIndex = 0;
+
+            if (cmbLayers.Items.Count > 0)
+            {
+                cmbLayers.SelectedIndex = 0;
+            }
         }
 
         private void PopulateFieldsComboBox(string layerName)
