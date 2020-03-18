@@ -22,10 +22,6 @@ namespace MilSpace.Tools
 {
     public class VisibilityManager
     {
-        private static readonly string FIRST_DIST_Field = "FIRST_DIST";
-        private static readonly string FIRST_Z_Field = "FIRST_Z";
-        private static readonly string LINE_ID_Field = "LINE_ID";
-        private static readonly string WhereAllRecords = "OBJECTID > 0";
 
         public static readonly string ObservPointFeature = "MilSp_Visible_ObservPoints";
         public static readonly string ObservStationFeature = "MilSp_Visible_ObjectsObservation_R";

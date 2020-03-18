@@ -7,6 +7,7 @@ namespace MilSpace.Configurations.Connection
 {
     public class MilSpaceConnectionProperty
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "GDB")]
         public string TemporaryGDBConnection
         {
             get;
@@ -17,6 +18,7 @@ namespace MilSpace.Configurations.Connection
             get;
             internal set;
         }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "GDB")]
         public string WorkingGDBConnection
         {
             get;

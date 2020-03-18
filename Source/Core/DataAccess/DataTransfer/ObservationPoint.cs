@@ -177,5 +177,20 @@ namespace MilSpace.DataAccess.DataTransfer
 
             return string.Join(" | ", values.ToArray());
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is ObservationPoint obserPoint)
+            {
+                return obserPoint == this;
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

@@ -33,11 +33,13 @@ namespace MilSpace.Tools.GraphicsLayer
             { MilSpaceGraphicsTypeEnum.Visibility, () =>  new RgbColor(){ Red = 96,Green = 154, Blue = 185} }
         };
 
+        private static Dictionary<IActiveView, GraphicsLayerManager> activeViews = new Dictionary<IActiveView, GraphicsLayerManager>();
+
         private Dictionary<MilSpaceGraphicsTypeEnum, List<GraphicElement>> allGraphics = new Dictionary<MilSpaceGraphicsTypeEnum, List<GraphicElement>>();
 
         private enum LineType { Point, Line, Arrow, Cross, DefaultLine };
 
-        public GraphicsLayerManager(IActiveView activeView)
+        internal GraphicsLayerManager(IActiveView activeView)
         {
             this.activeView = activeView;
             graphics = activeView.GraphicsContainer;
@@ -46,6 +48,16 @@ namespace MilSpace.Tools.GraphicsLayer
             allGraphics.Add(MilSpaceGraphicsTypeEnum.GeoCalculator, milSpaceGeoCalcGraphics);
             allGraphics.Add(MilSpaceGraphicsTypeEnum.Visibility, milSpaceVisibilityGraphics);
 
+        }
+
+        public static GraphicsLayerManager GetGraphicsLayerManager(IActiveView activeView)
+        {
+            if (activeViews.ContainsKey(activeView))
+            { return activeViews[activeView]; }
+
+            GraphicsLayerManager graphicsLayerManager = new GraphicsLayerManager(activeView);
+            activeViews.Add(activeView, graphicsLayerManager);
+            return graphicsLayerManager;
         }
 
         private void UpdateGraphic(IEnumerable<IPolyline> profileLines, int profileId, int profileTypeId, MilSpaceGraphicsTypeEnum graphicsType)
@@ -103,7 +115,7 @@ namespace MilSpace.Tools.GraphicsLayer
 
                 LineType lineType;
 
-                if      (groupedLines.Lines.Count() == 1) { lineType = LineType.DefaultLine; }
+                if (groupedLines.Lines.Count() == 1) { lineType = LineType.DefaultLine; }
                 else if (groupedLines.Lines.First() == groupedLines.Lines[lineNumber]) { lineType = LineType.Point; }
                 else if (groupedLines.Lines.Last() == groupedLines.Lines[lineNumber])
                 { lineType = (!isVertex) ? LineType.Arrow : LineType.DefaultLine; }
@@ -313,7 +325,7 @@ namespace MilSpace.Tools.GraphicsLayer
                     else if (profileColorLines.Lines.First() == profileColorLines.Lines[lineNumber]) { lineType = LineType.Point; }
                     else if (profileColorLines.Lines.Last() == profileColorLines.Lines[lineNumber])
                     { lineType = (!isVertex) ? LineType.Arrow : LineType.DefaultLine; }
-                    else        { lineType = (!isVertex) ? LineType.Line : LineType.Point; }
+                    else { lineType = (!isVertex) ? LineType.Line : LineType.Point; }
 
 
                     AddPolyline(ge, graphicsType, color, lineType, false, false, width);

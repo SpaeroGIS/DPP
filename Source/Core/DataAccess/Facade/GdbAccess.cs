@@ -168,7 +168,6 @@ namespace MilSpace.DataAccess.Facade
 
             IWorkspace targetWorkspace = calcWorkspace;
             IWorkspaceEdit workspaceEdit = null;
-            bool isBeingEdited = false;
             try
             {
                 //create source workspace name
@@ -180,12 +179,6 @@ namespace MilSpace.DataAccess.Facade
                 IFeatureClassName sourceDatasetName = (IFeatureClassName)sourceDataset.FullName;
 
                 workspaceEdit = (IWorkspaceEdit)sourceDataset.Workspace;
-                //isBeingEdited = workspaceEdit.IsBeingEdited();
-                //if (!isBeingEdited)
-                //{
-                //    workspaceEdit.StartEditing(true);
-                //    workspaceEdit.StartEditOperation();
-                //}
 
                 //create target workspace name
                 IDataset targetWorkspaceDataset = (IDataset)targetWorkspace;
@@ -585,12 +578,12 @@ namespace MilSpace.DataAccess.Facade
             }
             catch (MilSpaceCanotDeletePrifileCalcTable ex)
             {
-                //TODO: add logging
+                logger.ErrorEx(ex.Message);
                 throw;
             }
             catch (Exception ex)
             {
-                //TODO: add logging
+                logger.ErrorEx(ex.Message);
 
             }
             return false;

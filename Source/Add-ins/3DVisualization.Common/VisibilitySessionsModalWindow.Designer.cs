@@ -363,7 +363,6 @@
         #endregion
         private System.Windows.Forms.ToolBar sessionsToolBar;
         private System.Windows.Forms.ImageList imageList1;
-        internal System.Windows.Forms.ToolBarButton toolBarButton1;
         private System.Windows.Forms.ToolBarButton tlbbAdd;
         internal System.Windows.Forms.ToolBarButton AddProfile;
         private System.Windows.Forms.Panel panel1;

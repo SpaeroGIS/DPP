@@ -34,7 +34,7 @@ namespace MilSpace.Profile
         private MapLayersManager _mapLayersManager;
 
         private int profileId;
-        GraphicsLayerManager graphicsLayerManager;
+
         private Logger logger = Logger.GetLoggerEx("MilSpace.Profile.MilSpaceProfileCalsController");
 
         public delegate void ProfileSettingsChangedDelegate(ProfileSettingsEventArgs e);
@@ -1185,12 +1185,7 @@ namespace MilSpace.Profile
         {
             get
             {
-                if (graphicsLayerManager == null)
-                {
-                    graphicsLayerManager = new GraphicsLayerManager(View.ActiveView);
-                }
-
-                return graphicsLayerManager;
+                return GraphicsLayerManager.GetGraphicsLayerManager(View.ActiveView);
             }
         }
 

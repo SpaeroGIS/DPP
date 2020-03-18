@@ -10,7 +10,8 @@ namespace MilSpace.Configurations
     public class ConnectionsSection : ConfigurationSectionGroup
     {
         internal static string SectionName = ConfigElementNames.MilSpaceConnections;
-        
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "GDB")]
         public WorkingGDBConnectionSection WorkingGDBConnectionSection
         {
             get
@@ -27,6 +28,7 @@ namespace MilSpace.Configurations
             }
 
         }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "GDB")]
         public TemporaryGDBConnectionSection TemporaryGDBConnectionSection
         {
             get
