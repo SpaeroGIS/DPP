@@ -671,6 +671,8 @@ namespace MilSpace.Profile
             }
             catch (Exception ex)
             {
+                logger.ErrorEx(ex.Message);
+
                 MessageBox.Show(
                     "Please make sure X and Y values are valid and try again!"
                     );
@@ -920,7 +922,7 @@ namespace MilSpace.Profile
 
         private void cmbRasterLayers_SelectedIndexChanged(object sender, EventArgs e)
         {
-            controller.SetProfileSettings(SelectedProfileSettingsType);
+            controller.SetProfileDemLayer(SelectedProfileSettingsType);
         }
 
         private static bool CheckDouble(char charValue, TextBox textValue, bool justInt = false)
@@ -1433,7 +1435,7 @@ namespace MilSpace.Profile
                     newNode.SetToPointFromSurfaceHeight(toPoint.Z.ToFormattedString(1));
                     newNode.SetLineDistance(lineDistance);
                     newNode.SetAzimuth(profile.ProfileLines.First().Azimuth.ToString("F0"));
-                    newNode.SetSurface(profile.SurfaceLayerName);
+                    newNode.SetSurface(profile.SurfaceLayerPath);
                 }
                 else if(profile.DefinitionType == ProfileSettingsTypeEnum.Fun)
                 {
@@ -1452,7 +1454,7 @@ namespace MilSpace.Profile
                     newNode.SetAzimuth1(profile.Azimuth1);
                     newNode.SetAzimuth2(profile.Azimuth2);
                     newNode.SetLineCount(linesCount);
-                    newNode.SetSurface(profile.SurfaceLayerName);
+                    newNode.SetSurface(profile.SurfaceLayerPath);
                 }
                 else if(profile.DefinitionType == ProfileSettingsTypeEnum.Primitives)
                 {
@@ -1476,7 +1478,7 @@ namespace MilSpace.Profile
                     var firstY = fromPoint.Y.ToFormattedString();
                     var secondX = toPoint.X.ToFormattedString();
                     var secondY = toPoint.Y.ToFormattedString();
-                    var linesCount = profile.ProfileLines.First().Vertices.Count().ToString("F0");
+                    var linesCount = (profile.ProfileLines.First().Vertices.Count() - 1).ToString();
 
                     newNode.SetBasePointX(firstX);
                     newNode.SetBasePointY(firstY);
@@ -1486,7 +1488,7 @@ namespace MilSpace.Profile
                     newNode.SetToPointY(secondY);
                     newNode.SetToPointFromSurfaceHeight(toPoint.Z.ToFormattedString(1));
                     newNode.SetLineCount(linesCount);
-                    newNode.SetSurface(profile.SurfaceLayerName);
+                    newNode.SetSurface(profile.SurfaceLayerPath);
                 }
 
                 newNode.SetCreatorName(profile.CreatedBy);
@@ -1521,7 +1523,7 @@ namespace MilSpace.Profile
                     childNode.SetToPointFromSurfaceHeight(toPoint.Z.ToFormattedString(1));
                     childNode.SetLineDistance(line.Line.Length.ToString("F0"));
                     childNode.SetAzimuth($"{azimuth}{Degree}");
-                    childNode.SetSurface(profile.SurfaceLayerName);
+                    childNode.SetSurface(profile.SurfaceLayerPath);
 
                     logger.InfoEx($"Line {nodeName} was added to the tree");
                 }

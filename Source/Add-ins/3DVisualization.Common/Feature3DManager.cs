@@ -1,5 +1,6 @@
 ﻿using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Geometry;
+using MilSpace.Core;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
 using MilSpace.Visualization3D.Models;
@@ -11,6 +12,8 @@ namespace MilSpace.Visualization3D
 {
     internal class Feature3DManager
     {
+        private static Logger logger = Logger.GetLoggerEx("MilSpace.Visualization3D.Feature3DManager");
+
         internal Feature3DManager() { }
 
         internal static ArcSceneArguments Get3DFeatures(string demLayer, List<ProfileSession> profileSessions)
@@ -95,7 +98,7 @@ namespace MilSpace.Visualization3D
             }
             catch(Exception ex)
             {
-                //TODO: Log erros
+                logger.ErrorEx(ex.Message);
                 return null;
             }
         }

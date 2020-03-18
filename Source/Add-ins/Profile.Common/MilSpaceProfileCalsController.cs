@@ -34,7 +34,7 @@ namespace MilSpace.Profile
         private MapLayersManager _mapLayersManager;
 
         private int profileId;
-        GraphicsLayerManager graphicsLayerManager;
+
         private Logger logger = Logger.GetLoggerEx("MilSpace.Profile.MilSpaceProfileCalsController");
 
         public delegate void ProfileSettingsChangedDelegate(ProfileSettingsEventArgs e);
@@ -246,9 +246,24 @@ namespace MilSpace.Profile
             return null;
         }
 
-        internal void SetProfileSettings(ProfileSettingsTypeEnum profileType, List<IPolyline> polylines = null)
+        internal void SetProfileSettings(ProfileSettingsTypeEnum profileType)
         {
             SetSettings(profileType, profileId);
+        }
+
+        internal void SetProfileDemLayer(ProfileSettingsTypeEnum profileType)
+        {
+            var profileSetting = profileSettings[profileType];
+
+            if (profileSetting == null)
+            {
+                SetSettings(profileType, profileId);
+            }
+            else
+            {
+                profileSetting.DemLayerName = View.DemLayerName;
+                InvokeOnProfileSettingsChanged();
+            }
         }
 
         internal void SetProfileSettings(ProfileSettingsTypeEnum profileType, int profileIdValue, List<IPolyline> polylines = null)
@@ -364,9 +379,21 @@ namespace MilSpace.Profile
                     throw new NullReferenceException("GenerateProfile. Profile parameters are empty");
                 }
 
+
+                var rl = _mapLayersManager.RasterLayers.FirstOrDefault(l => l.Name == profileSetting.DemLayerName);
+
+                if(rl == null)
+                {
+                    logger.WarnEx("> GenerateProfile. Raster layer not found");
+                    MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgRasterLayerNotFound", "Неможливо розрахувати профіль, шар ЦМР/ЦММ не було знайдено"),
+                                        LocalizationContext.Instance.MessageBoxTitle);
+
+                    return null;
+                }
+
                 logger.DebugEx($"GenerateProfile. Profile {newProfileId}. GenerateProfile CALL");
                 var session = manager.GenerateProfile(
-                    profileSetting.DemLayerName, 
+                    rl, 
                     profileSetting.ProfileLines,
                     profileType, 
                     newProfileId, 
@@ -1158,12 +1185,7 @@ namespace MilSpace.Profile
         {
             get
             {
-                if (graphicsLayerManager == null)
-                {
-                    graphicsLayerManager = new GraphicsLayerManager(View.ActiveView);
-                }
-
-                return graphicsLayerManager;
+                return GraphicsLayerManager.GetGraphicsLayerManager(View.ActiveView);
             }
         }
 
@@ -1261,25 +1283,35 @@ namespace MilSpace.Profile
 
                 case AssignmentMethodsEnum.FeatureLayers:
 
-                    var geometryFromFeatureLayerModal = new GeometryFromFeatureLayerModalWindow();
-                    var result = geometryFromFeatureLayerModal.ShowDialog();
-                    IGeometry geometry;
-
-                    if(result == DialogResult.OK)
+                    try
                     {
-                        geometry = geometryFromFeatureLayerModal.SelectedGeometry;
+                        var geometryFromFeatureLayerModal = new GeometryFromFeatureLayerModalWindow();
+                        var result = geometryFromFeatureLayerModal.ShowDialog();
 
-                        var geomPoints = new List<IPoint>();
-                        var path = geometry as IPointCollection;
+                        IGeometry geometry;
 
-                        for(int i = 0; i < path.PointCount; i++)
+                        if (result == DialogResult.OK)
                         {
-                            var point = path.Point[i].Clone();
-                            point.Project(ArcMap.Document.FocusMap.SpatialReference);
-                            geomPoints.Add(point);
-                        }
+                            geometry = geometryFromFeatureLayerModal.SelectedGeometry;
 
-                        polylines = EsriTools.CreatePolylineFromPointsArray(geomPoints.ToArray(), ArcMap.Document.FocusMap.SpatialReference).ToList();
+                            var geomPoints = new List<IPoint>();
+                            var path = geometry as IPointCollection;
+
+                            for (int i = 0; i < path.PointCount; i++)
+                            {
+                                var point = path.Point[i].Clone();
+                                point.Project(ArcMap.Document.FocusMap.SpatialReference);
+                                geomPoints.Add(point);
+                            }
+
+                            polylines = EsriTools.CreatePolylineFromPointsArray(geomPoints.ToArray(), ArcMap.Document.FocusMap.SpatialReference).ToList();
+                        }
+                    }
+                    catch(ArgumentNullException ex)
+                    {
+                        logger.WarnEx($"> CalcPrimitive Exception: {ex.Message}");
+                        MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgRequiredLayersDoesNotExists", "У проекті відсутні необхідні шари"),
+                                        LocalizationContext.Instance.MessageBoxTitle);
                     }
 
                     break;
@@ -1690,13 +1722,22 @@ namespace MilSpace.Profile
 
         private IPoint GetPointFromPointLayers(ProfileSettingsPointButtonEnum pointType)
         {
-            PointsFromLayerModalWindow pointsFromLayerModal = new PointsFromLayerModalWindow();
-            var result = pointsFromLayerModal.ShowDialog();
-
-            if(result == DialogResult.OK)
+            try
             {
-                View.SetPointInfo(pointType, $"{pointsFromLayerModal.LayerName}; {pointsFromLayerModal.SelectedPoint.ObjId}");
-                return pointsFromLayerModal.SelectedPoint.Point;
+                PointsFromLayerModalWindow pointsFromLayerModal = new PointsFromLayerModalWindow();
+                var result = pointsFromLayerModal.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    View.SetPointInfo(pointType, $"{pointsFromLayerModal.LayerName}; {pointsFromLayerModal.SelectedPoint.ObjId}");
+                    return pointsFromLayerModal.SelectedPoint.Point;
+                }
+            }
+            catch (ArgumentNullException ex)
+            {
+                logger.WarnEx($"> GetPointFromPointLayers Exception: {ex.Message}");
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgRequiredLayersDoesNotExists", "У проекті відсутні необхідні шари"),
+                                LocalizationContext.Instance.MessageBoxTitle);
             }
 
             return null;

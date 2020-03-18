@@ -2699,9 +2699,6 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox heightMin;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.ToolBarButton toolBarButton2;
-        private System.Windows.Forms.ToolBarButton toolBarButton3;
-        private System.Windows.Forms.ToolBarButton toolBarButton4;
         private System.Windows.Forms.Panel panelObservPointName;
         private System.Windows.Forms.TextBox observPointName;
         private System.Windows.Forms.Label label20;

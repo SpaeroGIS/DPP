@@ -7,6 +7,7 @@ using MilSpace.Configurations.Base;
 
 namespace MilSpace.Configurations
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "GDB")]
     public class TemporaryGDBConnectionSection : ConfigurationSection
     {
         internal static string SectionName = ConfigElementNames.TemporaryGDBConnectionSection;

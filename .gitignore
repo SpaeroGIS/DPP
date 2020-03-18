@@ -241,3 +241,6 @@
 /Source/Tools/gpxlibrary
 /Source/Add-ins/GeoCalculator.Common/obj/Debug
 /Source/Add-ins/GeoCalculator.Common/obj/Release/MilSpace.GeoCalculator.ArcMapAddin.csprojAssemblyReference.cache
+/Source/Add-ins/GeoCalculator.Common/obj/Release
+/.vs/DPP/v16
+/Source/Add-ins/GeoCalculator.Common/obj/Release/MilSpace.GeoCalculator.ArcMapAddin.csproj.CoreCompileInputs.cache

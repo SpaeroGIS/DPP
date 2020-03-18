@@ -38,7 +38,7 @@ namespace MilSpace.GeoCalculator
         private readonly Dictionary<Guid, IPoint> ClickedPointsDictionary = new Dictionary<Guid, IPoint>();
         //private List<GeoCalcPoint> _geoCalcPoints = new List<GeoCalcPoint>();
         private GeoCalculatorController controller;
-        private GraphicsLayerManager _graphicsLayerManager;
+        //private GraphicsLayerManager _graphicsLayerManager;
         private int maxNum = 0;
 
         private static Logger log = Logger.GetLoggerEx("MilSpace.GeoCalculator.DockableWindowGeoCalculator");
@@ -55,6 +55,7 @@ namespace MilSpace.GeoCalculator
             SetController(controller);
             this.Hook = hook;
             _businessLogic = businessLogic ?? throw new ArgumentNullException(nameof(businessLogic));
+            //_graphicsLayerManager = new GraphicsLayerManager(ArcMap.Document.ActiveView);
 
             LocalizeComponents();
 
@@ -83,7 +84,8 @@ namespace MilSpace.GeoCalculator
             PointsGridView.Rows.Clear();
             foreach(var point in points)
             {
-                _graphicsLayerManager.RemovePoint(point.Id.ToString());
+                GraphicsLayerManager graphicsLayerManager = GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView);
+                graphicsLayerManager.RemovePoint(point.Id.ToString());
                 ProcessPointAsClicked(point, Constants.WgsGeoModel, true);
             }
 
@@ -351,6 +353,7 @@ namespace MilSpace.GeoCalculator
             }
             catch (Exception ex)
             {
+                log.ErrorEx(ex.Message);
                 MessageBox.Show(
                     _context.WrongFormatMessage,
                     _context.ErrorString,
@@ -987,14 +990,16 @@ namespace MilSpace.GeoCalculator
 
                 if(chkShowLine.Checked)
                 {
-                    _graphicsLayerManager.RemovePoint(selectedPoint.Key.ToString());
+                    GraphicsLayerManager graphicsLayerManager = GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView);
+
+                    graphicsLayerManager.RemovePoint(selectedPoint.Key.ToString());
                     var linesToRemove = new string[] { $"{_lineName}_{prevPointGuid}" };
 
-                    _graphicsLayerManager.RemoveGraphicsFromMap(linesToRemove);
+                    graphicsLayerManager.RemoveGraphicsFromMap(linesToRemove);
 
                     if(e.RowIndex > 0 && e.RowIndex < PointsGridView.RowCount)
                     {
-                        _graphicsLayerManager.AddLineSegmentToMap(ClickedPointsDictionary[prevPointGuid], ClickedPointsDictionary[nextPointGuid], _lineName, prevPointGuid.ToString());
+                        graphicsLayerManager.AddLineSegmentToMap(ClickedPointsDictionary[prevPointGuid], ClickedPointsDictionary[nextPointGuid], _lineName, prevPointGuid.ToString());
                     }
                 }
 
@@ -1131,9 +1136,11 @@ namespace MilSpace.GeoCalculator
             if (grid.Rows.Count > 0)
             {
                 grid.Rows.Clear();
+                GraphicsLayerManager graphicsLayerManager = GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView);
+
                 foreach (var point in ClickedPointsDictionary)
                 {
-                    _graphicsLayerManager.RemovePoint(point.Key.ToString());
+                    graphicsLayerManager.RemovePoint(point.Key.ToString());
                 }
 
                 ClickedPointsDictionary?.Clear();
@@ -1165,28 +1172,9 @@ namespace MilSpace.GeoCalculator
 
         private void OnOpenDocument()
         {
-            _graphicsLayerManager = new GraphicsLayerManager(ArcMap.Document.ActiveView);
             controller.FillPointsListFromDB();
         }
 
-        //internal void OnApplicationClosedHandler()
-        //{
-        //    var points = new GeoCalcPoint[PointsGridView.RowCount];
-        //    int i = 0;
-
-        //    foreach(DataGridViewRow row in PointsGridView.Rows)
-        //    {
-        //        if(row.Tag == null)
-        //        {
-        //            continue;
-        //        }
-
-        //        points[i] = GetGeoCalcPoint(row.Tag.ToString(), (int)row.Cells[0].Value);
-        //        i++;
-        //    }
-
-        //    controller.SaveAllPointsToDB(points);
-        //}
         #endregion        
 
         #region Private methods
@@ -1600,8 +1588,9 @@ namespace MilSpace.GeoCalculator
                     log.DebugEx("AddPointToList. point.X:{0} point.Y:{1}", point.X, point.Y);
 
                     var pointNum = (pointNumber == -1) ? PointsGridView.RowCount + 1 : pointNumber;
+                    GraphicsLayerManager graphicsLayerManager = GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView);
 
-                    var placedPoint = _graphicsLayerManager.AddGraphicToMap(
+                    var placedPoint = graphicsLayerManager.AddGraphicToMap(
                         point, 
                         color,
                         pointNum,
@@ -1614,7 +1603,7 @@ namespace MilSpace.GeoCalculator
                     if(drawLine == true && PointsGridView.RowCount > 0)
                     {
                         var fromPointGuid = (Guid)PointsGridView.Rows[PointsGridView.RowCount - 1].Tag;
-                        _graphicsLayerManager.AddLineSegmentToMap(ClickedPointsDictionary[fromPointGuid], point, _lineName, fromPointGuid.ToString());
+                        graphicsLayerManager.AddLineSegmentToMap(ClickedPointsDictionary[fromPointGuid], point, _lineName, fromPointGuid.ToString());
                     }
 
                     log.DebugEx("AddPointToList. placedPoint.Value.X:{0} placedPoint.Value.Y:{1} placedPoint.Key:{2}"
@@ -2004,7 +1993,7 @@ namespace MilSpace.GeoCalculator
                 return;
             }
 
-            _graphicsLayerManager.RemoveAllGeometryFromMap(_lineName);
+            GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).RemoveAllGeometryFromMap(_lineName);
             DrawLine();
         }
 
@@ -2029,7 +2018,7 @@ namespace MilSpace.GeoCalculator
                 orderedPoints.Add(pointPair.Key, pointPair.Value);
             }
 
-            _graphicsLayerManager.AddLineToMap(orderedPoints, _lineName);
+            GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).AddLineToMap(orderedPoints, _lineName);
         }
 
         private void RedrawText()
@@ -2039,7 +2028,7 @@ namespace MilSpace.GeoCalculator
                 return;
             }
 
-            _graphicsLayerManager.RemoveAllGeometryFromMap(_textName);
+            GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).RemoveAllGeometryFromMap(_textName);
             DrawText();
         }
 
@@ -2054,7 +2043,7 @@ namespace MilSpace.GeoCalculator
 
                 var pointGuid = (Guid)row.Tag;
                 var pointGeom = ClickedPointsDictionary.First(point => point.Key == pointGuid).Value;
-                _graphicsLayerManager.DrawText(pointGeom, (int)row.Cells[0].Value, row.Tag.ToString(), _textName);
+                GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).DrawText(pointGeom, (int)row.Cells[0].Value, row.Tag.ToString(), _textName);
             }
         }
 
@@ -2092,7 +2081,7 @@ namespace MilSpace.GeoCalculator
             }
             else
             {
-                _graphicsLayerManager.RemoveAllGeometryFromMap(_lineName);
+                GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).RemoveAllGeometryFromMap(_lineName);
             }
         }
 
@@ -2109,7 +2098,7 @@ namespace MilSpace.GeoCalculator
             }
             else
             {
-                _graphicsLayerManager.RemoveAllGeometryFromMap(_textName);
+                GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).RemoveAllGeometryFromMap(_textName);
             }
         }
 
@@ -2152,9 +2141,11 @@ namespace MilSpace.GeoCalculator
                 return;
             }
 
-            foreach(var point in ClickedPointsDictionary)
+            var graphicsLayerManager = GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView);
+
+            foreach (var point in ClickedPointsDictionary)
             {
-                _graphicsLayerManager.RemovePoint(point.Key.ToString());
+                graphicsLayerManager.RemovePoint(point.Key.ToString());
             }
 
             var orderedPoints = new List<IPoint>();
@@ -2171,7 +2162,7 @@ namespace MilSpace.GeoCalculator
 
                 var color = (IColor)new RgbColorClass() { Green = 255 };
 
-                var placedPoint = _graphicsLayerManager.AddGraphicToMap(
+                var placedPoint = graphicsLayerManager.AddGraphicToMap(
                     pointGeom,
                     color,
                     (int)row.Cells[0].Value,

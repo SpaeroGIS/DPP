@@ -19,7 +19,6 @@ namespace MilSpace.Profile
     internal static class FunCreationManager
     {
         private static Logger _logger = Logger.GetLoggerEx("MilSpace.Profile.FunCreationManager");
-        private static GraphicsLayerManager _graphicsLayerManager = new GraphicsLayerManager(ArcMap.Document.ActiveView);
 
         public static IEnumerable<IGeometry> GetGeometriesByMethod(AssignmentMethodsEnum method)
         {
@@ -27,7 +26,7 @@ namespace MilSpace.Profile
 
             try
             {
-                switch(method)
+                switch (method)
                 {
                     case AssignmentMethodsEnum.ObservationPoints:
 
@@ -57,7 +56,7 @@ namespace MilSpace.Profile
 
                         var geomFromSelectedGraphic = GetTargetGeometriesFromSelectedGraphic();
 
-                        if(geomFromSelectedGraphic == null)
+                        if (geomFromSelectedGraphic == null)
                         {
                             geometries = null;
                             MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgSelectedGeomNotFoundText", "Будь ласка, оберіть графіку для розрахунку набору профілів"),
@@ -223,12 +222,21 @@ namespace MilSpace.Profile
 
         private static List<IGeometry> GetTargetGeometriesFromFeatureLayer()
         {
-            var geomFromLayerModal = new GeometriesFromLayerForFunToPointsModalWindow();
-            var result = geomFromLayerModal.ShowDialog();
-
-            if(result == DialogResult.OK)
+            try
             {
-                return geomFromLayerModal.SelectedGeometries;
+                var geomFromLayerModal = new GeometriesFromLayerForFunToPointsModalWindow();
+                var result = geomFromLayerModal.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    return geomFromLayerModal.SelectedGeometries;
+                }
+            }
+            catch (ArgumentNullException ex)
+            {
+                _logger.WarnEx($"> GetTargetGeometriesFromFeatureLayer Exception: {ex.Message}");
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgRequiredLayersDoesNotExists", "У проекті відсутні необхідні шари"),
+                                LocalizationContext.Instance.MessageBoxTitle);
             }
 
             return null;
@@ -236,7 +244,7 @@ namespace MilSpace.Profile
 
         private static IEnumerable<IGeometry> GetTargetGeometriesFromSelectedGraphic()
         {
-            return _graphicsLayerManager.GetAllSelectedGraphics();
+            return GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).GetAllSelectedGraphics();
         }
 
     }

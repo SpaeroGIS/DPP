@@ -8,6 +8,7 @@ using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Configurations;
+using MilSpace.Core;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Visualization3D.Models;
 using System;
@@ -20,6 +21,7 @@ namespace MilSpace.Visualization3D
     public static class Visualization3DHandler
     {
         private static IApplication m_application;
+        private static Logger logger = Logger.GetLoggerEx("MilSpace.Visualization3D");
 
         //Application removed event
         private static IAppROTEvents_Event m_appROTEvent;
@@ -54,7 +56,9 @@ namespace MilSpace.Visualization3D
                 AddVisibilityLayers(layers.VisibilityResultsInfo, objFactory, document, baseSurface);
                 AddExtraLayers(layers.AdditionalLayers, objFactory, document, baseSurface);
             }
-            catch(Exception ex) { }
+            catch(Exception ex) {
+                logger.ErrorEx(ex.Message);
+            }
 
         }
 
@@ -105,7 +109,7 @@ namespace MilSpace.Visualization3D
                 }
                 catch(Exception ex)
                 {
-                    //todo add log
+                    logger.ErrorEx(ex.Message);
                 }
             }
 
@@ -140,7 +144,7 @@ namespace MilSpace.Visualization3D
                 }
                 catch(Exception ex)
                 {
-                    //todo add log
+                    logger.ErrorEx(ex.Message);
                 }
             }
 
@@ -165,7 +169,7 @@ namespace MilSpace.Visualization3D
                     }
                     catch(Exception ex)
                     {
-                        //todo add log
+                        logger.ErrorEx(ex.Message);
                     }
                 }
             }
