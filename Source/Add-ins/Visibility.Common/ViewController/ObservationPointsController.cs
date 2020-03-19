@@ -34,6 +34,7 @@ namespace MilSpace.Visibility.ViewController
         private List<ObservationStationToObservPointRelationModel> _relationLines = new List<ObservationStationToObservPointRelationModel>();
         private static bool localized = false;
         private IPolygon _coverageArea;
+        private string _layerName;
         private string _previousPickedRasterLayer { get; set; }
 
         /// <summary>
@@ -1004,7 +1005,7 @@ namespace MilSpace.Visibility.ViewController
             return realMaxDistance;
         }
 
-        internal void CalcRelationLines(int id, ObservationSetsEnum set, bool fromNewCoverageArea = false)
+        internal void CalcRelationLines(int id, ObservationSetsEnum set, bool fromNewLayer = false, bool fromNewCoverageArea = false)
         {
             var observPoint = _observationPoints.FirstOrDefault(point => point.Objectid == id);
 
@@ -1046,7 +1047,35 @@ namespace MilSpace.Visibility.ViewController
 
                 case ObservationSetsEnum.FeatureLayers:
 
+                    if (string.IsNullOrEmpty(_layerName) || fromNewLayer)
+                    {
+                        var getLayerWindow = new ChooseVectorLayerFromMapModalWindow(mapDocument.ActiveView);
+                        var result = getLayerWindow.ShowDialog();
 
+                        if (result == DialogResult.OK)
+                        {
+                            var layer = EsriTools.GetLayer(getLayerWindow.SelectedLayer, mapDocument.FocusMap);
+
+                            if (layer != null && layer is IFeatureLayer)
+                            {
+                                geometries = EsriTools.GetGeometriesFromLayer(layer as IFeatureLayer, mapDocument.ActiveView);
+                                _layerName = getLayerWindow.SelectedLayer;
+                            }
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        var layer = EsriTools.GetLayer(_layerName, mapDocument.FocusMap);
+
+                        if (layer != null && layer is IFeatureLayer)
+                        {
+                            geometries = EsriTools.GetGeometriesFromLayer(layer as IFeatureLayer, mapDocument.ActiveView);
+                        }
+                    }
 
                     break;
             }

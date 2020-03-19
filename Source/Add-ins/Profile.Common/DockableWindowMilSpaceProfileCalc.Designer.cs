@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Графика");
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.profileTabPage = new System.Windows.Forms.TabPage();
             this.btnRefreshLayers = new System.Windows.Forms.Button();
@@ -90,14 +90,14 @@
             this.lblHeightOfViewFirst = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.txtFirstPointZ = new System.Windows.Forms.TextBox();
+            this.txtFirstPointY = new System.Windows.Forms.TextBox();
+            this.txtFirstPointX = new System.Windows.Forms.TextBox();
             this.firstPointToolBar = new System.Windows.Forms.ToolBar();
             this.toolBarButton8 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton55 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton57 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton58 = new System.Windows.Forms.ToolBarButton();
             this.tlbbReturnPoint = new System.Windows.Forms.ToolBarButton();
-            this.txtFirstPointY = new System.Windows.Forms.TextBox();
-            this.txtFirstPointX = new System.Windows.Forms.TextBox();
             this.firstPointInfoPanel = new System.Windows.Forms.Panel();
             this.lblFirstPointInfo = new System.Windows.Forms.Label();
             this.pointGettingWayPanel = new System.Windows.Forms.Panel();
@@ -1123,6 +1123,26 @@
             this.txtFirstPointZ.TabIndex = 28;
             this.txtFirstPointZ.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // txtFirstPointY
+            // 
+            this.txtFirstPointY.Location = new System.Drawing.Point(66, 2);
+            this.txtFirstPointY.Margin = new System.Windows.Forms.Padding(0);
+            this.txtFirstPointY.Name = "txtFirstPointY";
+            this.txtFirstPointY.ReadOnly = true;
+            this.txtFirstPointY.Size = new System.Drawing.Size(60, 20);
+            this.txtFirstPointY.TabIndex = 2;
+            this.txtFirstPointY.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txtFirstPointX
+            // 
+            this.txtFirstPointX.Location = new System.Drawing.Point(2, 2);
+            this.txtFirstPointX.Margin = new System.Windows.Forms.Padding(3, 7, 3, 3);
+            this.txtFirstPointX.Name = "txtFirstPointX";
+            this.txtFirstPointX.ReadOnly = true;
+            this.txtFirstPointX.Size = new System.Drawing.Size(60, 20);
+            this.txtFirstPointX.TabIndex = 0;
+            this.txtFirstPointX.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // firstPointToolBar
             // 
             this.firstPointToolBar.Appearance = System.Windows.Forms.ToolBarAppearance.Flat;
@@ -1178,26 +1198,6 @@
             this.tlbbReturnPoint.Enabled = false;
             this.tlbbReturnPoint.ImageKey = "Loop.png";
             this.tlbbReturnPoint.Name = "tlbbReturnPoint";
-            // 
-            // txtFirstPointY
-            // 
-            this.txtFirstPointY.Location = new System.Drawing.Point(66, 2);
-            this.txtFirstPointY.Margin = new System.Windows.Forms.Padding(0);
-            this.txtFirstPointY.Name = "txtFirstPointY";
-            this.txtFirstPointY.ReadOnly = true;
-            this.txtFirstPointY.Size = new System.Drawing.Size(60, 20);
-            this.txtFirstPointY.TabIndex = 2;
-            this.txtFirstPointY.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // txtFirstPointX
-            // 
-            this.txtFirstPointX.Location = new System.Drawing.Point(2, 2);
-            this.txtFirstPointX.Margin = new System.Windows.Forms.Padding(3, 7, 3, 3);
-            this.txtFirstPointX.Name = "txtFirstPointX";
-            this.txtFirstPointX.ReadOnly = true;
-            this.txtFirstPointX.Size = new System.Drawing.Size(60, 20);
-            this.txtFirstPointX.TabIndex = 0;
-            this.txtFirstPointX.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // firstPointInfoPanel
             // 
@@ -1974,25 +1974,25 @@
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.Location = new System.Drawing.Point(0, 62);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode10.Checked = true;
-            treeNode10.ImageKey = "vector-path-line.png";
-            treeNode10.Name = "Points";
-            treeNode10.SelectedImageIndex = 205;
-            treeNode10.Text = "Отрезки";
-            treeNode11.Checked = true;
-            treeNode11.ImageKey = "Editing-Line-icon3.png";
-            treeNode11.Name = "Fun";
-            treeNode11.SelectedImageIndex = 208;
-            treeNode11.Text = "Веер";
-            treeNode12.Checked = true;
-            treeNode12.ImageKey = "vector-polygon.png";
-            treeNode12.Name = "Primitives";
-            treeNode12.SelectedImageIndex = 209;
-            treeNode12.Text = "Графика";
+            treeNode1.Checked = true;
+            treeNode1.ImageKey = "vector-path-line.png";
+            treeNode1.Name = "Points";
+            treeNode1.SelectedImageIndex = 205;
+            treeNode1.Text = "Отрезки";
+            treeNode2.Checked = true;
+            treeNode2.ImageKey = "Editing-Line-icon3.png";
+            treeNode2.Name = "Fun";
+            treeNode2.SelectedImageIndex = 208;
+            treeNode2.Text = "Веер";
+            treeNode3.Checked = true;
+            treeNode3.ImageKey = "vector-polygon.png";
+            treeNode3.Name = "Primitives";
+            treeNode3.SelectedImageIndex = 209;
+            treeNode3.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode10,
-            treeNode11,
-            treeNode12});
+            treeNode1,
+            treeNode2,
+            treeNode3});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(335, 376);
             this.profilesTreeView.TabIndex = 35;

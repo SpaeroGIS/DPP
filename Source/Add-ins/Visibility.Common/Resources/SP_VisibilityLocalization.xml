@@ -146,6 +146,8 @@
   <MainW_label12_Text>макс</MainW_label12_Text>
   <MainW_label9_Text>висота над поверхнею (м) мін</MainW_label9_Text>
   <MainW_lblLayer_Text>Пункти спостереження (ПС)</MainW_lblLayer_Text>
+  <MainW_btnRefreshOPGrahics_Text>Оновити графіку</MainW_btnRefreshOPGrahics_Text>
+  <MainW_btnRefreshObservStationsSet_Text>Оновити об'єкти спостреження</MainW_btnRefreshObservStationsSet_Text>
 
   <MainW_btnAddLayerPS_Tag>Додати шар ПС до карти</MainW_btnAddLayerPS_Tag>
   <MainW_btnSaveParamPS_Tag>Зберегти зміни</MainW_btnSaveParamPS_Tag>
@@ -321,5 +323,9 @@
   <CoverageTypeNoneText>Ні</CoverageTypeNoneText>
   <CoverageTypePartlyText>Частково</CoverageTypePartlyText>
   <CoverageTypeFull>Повністю</CoverageTypeFull>
+
+  <LayersListLabelText>Шари</LayersListLabelText>
+  <ChooseButtonText>Обрати</ChooseButtonText>
+  <ChooseLayerWindowCaption>Обрати шар</ChooseLayerWindowCaption>
 
 </SP_Visibility>

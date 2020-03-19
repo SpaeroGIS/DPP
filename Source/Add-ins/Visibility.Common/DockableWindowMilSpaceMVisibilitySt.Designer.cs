@@ -93,6 +93,7 @@
             this.observObjGraphicPanel = new System.Windows.Forms.Panel();
             this.chckShowOOGraphics = new System.Windows.Forms.CheckBox();
             this.observObjectsChoosePanel = new System.Windows.Forms.Panel();
+            this.btnRefreshObservStationsSet = new System.Windows.Forms.Button();
             this.cmbObservStationSet = new System.Windows.Forms.ComboBox();
             this.panel9 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
@@ -1199,12 +1200,25 @@
             // 
             // observObjectsChoosePanel
             // 
+            this.observObjectsChoosePanel.Controls.Add(this.btnRefreshObservStationsSet);
             this.observObjectsChoosePanel.Controls.Add(this.cmbObservStationSet);
             this.observObjectsChoosePanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.observObjectsChoosePanel.Location = new System.Drawing.Point(0, 0);
             this.observObjectsChoosePanel.Name = "observObjectsChoosePanel";
             this.observObjectsChoosePanel.Size = new System.Drawing.Size(304, 28);
             this.observObjectsChoosePanel.TabIndex = 0;
+            // 
+            // btnRefreshObservStationsSet
+            // 
+            this.btnRefreshObservStationsSet.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnRefreshObservStationsSet.ImageIndex = 144;
+            this.btnRefreshObservStationsSet.ImageList = this.imageList1;
+            this.btnRefreshObservStationsSet.Location = new System.Drawing.Point(278, 0);
+            this.btnRefreshObservStationsSet.Name = "btnRefreshObservStationsSet";
+            this.btnRefreshObservStationsSet.Size = new System.Drawing.Size(26, 28);
+            this.btnRefreshObservStationsSet.TabIndex = 6;
+            this.btnRefreshObservStationsSet.UseVisualStyleBackColor = true;
+            this.btnRefreshObservStationsSet.Click += new System.EventHandler(this.BtnRefreshObservStationsSet_Click);
             // 
             // cmbObservStationSet
             // 
@@ -3045,5 +3059,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn DistanceCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn AzimuthCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn CoverCol;
+        private System.Windows.Forms.Button btnRefreshObservStationsSet;
     }
 }

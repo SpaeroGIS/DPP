@@ -166,6 +166,10 @@ namespace MilSpace.Visibility
                 this.btnAddLayerPS.Tag = LocalizationContext.Instance.FindLocalizedElement("MainW_btnAddLayerPS_Tag", "додати шар ПС до карти");
                 this.lblLayer.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_lblLayer_Text", "Пункти спостереження (ПС)");
 
+                ToolTip toolTip = new ToolTip();
+                toolTip.SetToolTip(this.btnRefreshOPGraphics, LocalizationContext.Instance.FindLocalizedElement("MainW_btnRefreshOPGrahics_Text", "Оновити графіку"));
+                toolTip.SetToolTip(this.btnRefreshObservStationsSet, LocalizationContext.Instance.FindLocalizedElement("MainW_btnRefreshObservStationsSet_Text", "Оновити об'єкти спостреження"));
+
                 SetObservationStationTableView();
 
                 log.InfoEx("> LocalizeComponent (Visibility) END");
@@ -1891,7 +1895,7 @@ namespace MilSpace.Visibility
 
             FillObservPointsFields(selectedPoint);
             _observPointsController.RemoveObservPointsGraphics();
-            _observPointsController.CalcRelationLines(_selectedPointId, _observationStationSetType, true);
+            _observPointsController.CalcRelationLines(_selectedPointId, _observationStationSetType, false, true);
 
             FillSelectedPointObservationStationTable(_observationStationSetType);
 
@@ -2506,6 +2510,16 @@ namespace MilSpace.Visibility
         }
 
         private void CmbObservStationSet_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateObservStationSet();
+        }
+
+        private void BtnRefreshObservStationsSet_Click(object sender, EventArgs e)
+        {
+            UpdateObservStationSet();
+        }
+
+        private void UpdateObservStationSet()
         {
             _observPointsController.CalcRelationLines(_selectedPointId, _observationStationSetType, true);
             FillSelectedPointObservationStationTable(_observationStationSetType);
