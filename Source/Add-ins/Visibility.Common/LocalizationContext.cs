@@ -214,6 +214,7 @@ namespace MilSpace.Visibility.Localization
         public string DateHeaderText => FindLocalizedElement("DateHeaderText", "Date");
         public string GroupHeaderText => FindLocalizedElement("GroupHeaderText", "Group");
         public string TitleHeaderText => FindLocalizedElement("DgvObservStationSetTitleHeader", "Назва");
+        public string IdHeaderText => FindLocalizedElement("DgvObservStationSetIdHeader", "Ід");
         public string DistanceHeaderText => FindLocalizedElement("DgvObservStationSetDistanceHeader", "Площа");
         public string AzimuthHeaderText => FindLocalizedElement("DgvObservStationSetAzimuthHeader", "Азимут");
         public string CoverageHeaderText => FindLocalizedElement("DgvObservStationSetCoverageHeader", "Видимий");
@@ -261,7 +262,7 @@ namespace MilSpace.Visibility.Localization
         public string SuccessfullySharedMessage => FindLocalizedElement("SuccessfullySharedMessage", "Shared with all users");
         public string AlreadySharedMessage => FindLocalizedElement("AlreadySharedMessage", "Results are already shared");
         public string CoverageAreaIsEmptyMessage => FindLocalizedElement("CoverageAreaIsEmptyMessage", "Пункт спостереження не має зони покриття. Будь ласка, перевірте правильність введених даних");
-       
+        public string ErrorMessage => FindLocalizedElement("UnexpectedErrorMessage", "Виникла помилка. Для перегляду повної інформації зверніться до журналу роботи");
         ////---------------------------------------------------------------------------------------
 
         //            this.cmbAffiliationEdit.Items.AddRange(new object[] { "свои", "чужие ", "нейтральные", "неизвкчтно"});

@@ -284,6 +284,8 @@
   <CalculationErrorMessage>Розрахунок скінчився з помилкою\nДля перегляду повної інформації зверніться до журналу роботи</CalculationErrorMessage>
   <SomeResultsNotAddedMessage>Частина результатів розрахунку не може бути додана до поточного сеансу</SomeResultsNotAddedMessage>
   <CoverageAreaIsEmptyMessage>Пункт спостереження не має зони покриття. Будь ласка, перевірте правильність введених даних</CoverageAreaIsEmptyMessage>
+  <UnexpectedErrorMessage>Виникла помилка. Для перегляду повної інформації зверніться до журналу роботи</UnexpectedErrorMessage>
+  <GeoCalcModuleDoesnotExistMessage>Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</GeoCalcModuleDoesnotExistMessage>
   
   <ObservPointRemoveMessage>Ви дійсно бажаєте видалити точку (ПС)?</ObservPointRemoveMessage>
   <VisibilityTaskRemoveMessage>Ви дійсно бажаєте видалити результат розрахунку з поточного сеансу?</VisibilityTaskRemoveMessage>
@@ -311,6 +313,7 @@
   <FeatureLayerSetText>Векторний шар</FeatureLayerSetText>
 
   <DgvObservStationSetTitleHeader>Назва</DgvObservStationSetTitleHeader>
+  <DgvObservStationSetIdHeader>Ід</DgvObservStationSetIdHeader>
   <DgvObservStationSetDistanceHeader>Відстань</DgvObservStationSetDistanceHeader>
   <DgvObservStationSetAzimuthHeader>Азимут</DgvObservStationSetAzimuthHeader>
   <DgvObservStationSetCoverageHeader>Видимий</DgvObservStationSetCoverageHeader>

@@ -622,8 +622,17 @@ namespace MilSpace.Core.Tools
         public static IPolyline GetToGeometryCenterPolyline(IPoint fromPoint, IGeometry geometry)
         {
             var polylines = new List<IPolyline>();
+            IPoint toPoint;
 
-            var toPoint = GetCenterPoint(geometry);
+            if(geometry.GeometryType == esriGeometryType.esriGeometryPoint)
+            {
+                toPoint = geometry as IPoint;
+            }
+            else
+            {
+                toPoint = GetCenterPoint(geometry);
+            }
+
             var polyline = CreatePolylineFromPoints(fromPoint, toPoint);
 
             return polyline;

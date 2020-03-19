@@ -20,6 +20,7 @@ using System.Runtime.InteropServices;
 using MilSpace.Tools.GraphicsLayer;
 using System.Windows.Forms;
 using ESRI.ArcGIS.Display;
+using MilSpace.Core.ModulesInteraction;
 
 namespace MilSpace.Visibility.ViewController
 {
@@ -1003,7 +1004,7 @@ namespace MilSpace.Visibility.ViewController
             return realMaxDistance;
         }
 
-        internal void CalcRelationLines(int id, bool fromNewCoverageArea = false)
+        internal void CalcRelationLines(int id, ObservationSetsEnum set, bool fromNewCoverageArea = false)
         {
             var observPoint = _observationPoints.FirstOrDefault(point => point.Objectid == id);
 
@@ -1015,8 +1016,41 @@ namespace MilSpace.Visibility.ViewController
             var pointGeom = new Point { X = observPoint.X.Value, Y = observPoint.Y.Value, SpatialReference = EsriTools.Wgs84Spatialreference };
             pointGeom.Project(mapDocument.FocusMap.SpatialReference);
 
-            var geometries = EsriTools.GetGeometriesFromLayer(VisibilityManager.ObservationStationsFeatureLayer, mapDocument.ActiveView);
+            Dictionary<int, IGeometry> geometries = new Dictionary<int, IGeometry>();
 
+            switch (set)
+            {
+                case ObservationSetsEnum.Gdb:
+
+                     geometries = EsriTools.GetGeometriesFromLayer(VisibilityManager.ObservationStationsFeatureLayer, mapDocument.ActiveView);
+
+                    break;
+
+                case ObservationSetsEnum.GeoCalculator:
+
+                    var points = GetPointsFromGeoCalculator();
+
+                    if (points == null)
+                    {
+                        _relationLines = null;
+                        return;
+                    }
+
+                    foreach (var point in points)
+                    {
+                        point.Value.Project(mapDocument.FocusMap.SpatialReference);
+                        geometries.Add(point.Key, point.Value);
+                    }
+
+                    break;
+
+                case ObservationSetsEnum.FeatureLayers:
+
+
+
+                    break;
+            }
+            
             if (_coverageArea == null || fromNewCoverageArea)
             {
                 CalcCoverageArea(pointGeom, observPoint);
@@ -1036,8 +1070,17 @@ namespace MilSpace.Visibility.ViewController
                     UpdateObservObjectsList();
                 }
 
-                var currentObj = _observationObjects.FirstOrDefault(obj => obj.ObjectId == geometry.Key);
-                var title = (currentObj == null) ? string.Empty : currentObj.Title;
+                string title;
+
+                if (set == ObservationSetsEnum.Gdb)
+                {
+                    var currentObj = _observationObjects.FirstOrDefault(obj => obj.ObjectId == geometry.Key);
+                    title = (currentObj == null) ? string.Empty : currentObj.Title;
+                }
+                else
+                {
+                    title = geometry.Key.ToString();
+                }
 
                 var line = new ObservationStationToObservPointRelationModel
                 {
@@ -1072,11 +1115,11 @@ namespace MilSpace.Visibility.ViewController
         }
 
 
-        internal void DrawObservPointToObservObjectsRelationsGraphics(int id)
+        internal void DrawObservPointToObservObjectsRelationsGraphics(int id, ObservationSetsEnum set)
         {
             if (_relationLines == null || !_relationLines.Any())
             {
-                CalcRelationLines(id);
+                CalcRelationLines(id, set);
             }
 
             foreach(var line in _relationLines)
@@ -1127,20 +1170,39 @@ namespace MilSpace.Visibility.ViewController
 
         internal ObservationStationToObservPointRelationModel[] GetObservationStationToObservPointRelations(int id, ObservationSetsEnum set)
         {
-            switch (set)
+            if (_relationLines == null || !_relationLines.Any())
             {
-                case ObservationSetsEnum.Gdb:
-
-                    if (_relationLines == null || !_relationLines.Any())
-                    {
-                        CalcRelationLines(id);
-                    }
-
-                    return _relationLines.ToArray();
+                CalcRelationLines(id, set);
             }
 
-            return null;
+            return _relationLines.ToArray();
+        }
 
+        private Dictionary<int, IPoint> GetPointsFromGeoCalculator()
+        {
+            Dictionary<int, IPoint> points;
+
+            var geoModule = ModuleInteraction.Instance.GetModuleInteraction<IGeocalculatorInteraction>(out bool changes);
+
+            if (!changes && geoModule == null)
+            {
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("GeoCalcModuleDoesnotExistMessage", "Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним"), LocalizationContext.Instance.ErrorMessage);
+                log.ErrorEx($"> GetPointFromGeoCalculator Exception: {LocalizationContext.Instance.FindLocalizedElement("GeoCalcModuleDoesnotExistMessage", "Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним")}");
+                return null;
+            }
+
+            try
+            {
+                points = geoModule.GetPoints();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(LocalizationContext.Instance.ErrorMessage, LocalizationContext.Instance.MsgBoxErrorHeader);
+                log.ErrorEx($"> GetPointFromGeoCalculator Exception: {ex.Message}");
+                return null;
+            }
+
+            return points;
         }
 
         #region ArcMap Eventts

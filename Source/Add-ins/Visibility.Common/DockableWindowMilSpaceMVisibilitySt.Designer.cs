@@ -1133,6 +1133,9 @@
             // 
             // dgvObservStationSet
             // 
+            this.dgvObservStationSet.AllowUserToAddRows = false;
+            this.dgvObservStationSet.AllowUserToDeleteRows = false;
+            this.dgvObservStationSet.AllowUserToResizeRows = false;
             this.dgvObservStationSet.BackgroundColor = System.Drawing.SystemColors.Window;
             this.dgvObservStationSet.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvObservStationSet.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -1207,11 +1210,13 @@
             // 
             this.cmbObservStationSet.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbObservStationSet.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbObservStationSet.FormattingEnabled = true;
             this.cmbObservStationSet.Location = new System.Drawing.Point(55, 4);
             this.cmbObservStationSet.Name = "cmbObservStationSet";
             this.cmbObservStationSet.Size = new System.Drawing.Size(194, 21);
             this.cmbObservStationSet.TabIndex = 0;
+            this.cmbObservStationSet.SelectedIndexChanged += new System.EventHandler(this.CmbObservStationSet_SelectedIndexChanged);
             // 
             // panel9
             // 

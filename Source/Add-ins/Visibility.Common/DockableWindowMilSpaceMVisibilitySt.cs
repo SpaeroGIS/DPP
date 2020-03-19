@@ -45,6 +45,7 @@ namespace MilSpace.Visibility
         private ObservationPoint selectedPointMEM = new ObservationPoint();
 
         private int _selectedPointId => dgvObservationPoints.SelectedRows.Count == 0 ? -1 : Convert.ToInt32(dgvObservationPoints.SelectedRows[0].Cells["Id"].Value);
+        private ObservationSetsEnum _observationStationSetType => _observPointsController.GetObservStationSet(cmbObservStationSet.SelectedItem.ToString());
         //private bool IsPointFieldsEnabled => _observPointsController.IsObservPointsExists();
         private bool IsPointFieldsEnabled = true;
         private ValuableObservPointSortFieldsEnum curObservPointsSorting = ValuableObservPointSortFieldsEnum.Name;
@@ -1332,16 +1333,30 @@ namespace MilSpace.Visibility
             observPointCreator.Text = selectedPoint.Operator;
         }
 
-        private void FillSelectedPointObservationStationTable()
+        private void FillSelectedPointObservationStationTable(ObservationSetsEnum observationStationsSet)
         {
-            var observationStationsSet = _observPointsController.GetObservStationSet(cmbObservStationSet.SelectedItem.ToString());
             var set = _observPointsController.GetObservationStationToObservPointRelations(_selectedPointId, observationStationsSet);
 
+            if(observationStationsSet == ObservationSetsEnum.Gdb)
+            {
+                dgvObservStationSet.Columns["TitleCol"].HeaderText = LocalizationContext.Instance.TitleHeaderText;
+            }
+            else
+            {
+                dgvObservStationSet.Columns["TitleCol"].HeaderText = LocalizationContext.Instance.IdHeaderText;
+            }
+
             dgvObservStationSet.Rows.Clear();
+
+            if(set == null)
+            {
+                return;
+            }
 
             foreach(var station in set)
             {
                 dgvObservStationSet.Rows.Add(station.Title, station.Polyline.Length.ToString("F0"), station.Azimuth.ToString("F0"), LocalizationContext.Instance.CoverageTypes[station.CoverageType]);
+                dgvObservStationSet.Rows[dgvObservStationSet.Rows.Count - 1].Tag = station.Id;
             }
         }
 
@@ -1876,9 +1891,9 @@ namespace MilSpace.Visibility
 
             FillObservPointsFields(selectedPoint);
             _observPointsController.RemoveObservPointsGraphics();
-            _observPointsController.CalcRelationLines(_selectedPointId, true);
+            _observPointsController.CalcRelationLines(_selectedPointId, _observationStationSetType, true);
 
-            FillSelectedPointObservationStationTable();
+            FillSelectedPointObservationStationTable(_observationStationSetType);
 
             if(chckDrawOPGraphics.Checked)
             {
@@ -1887,7 +1902,7 @@ namespace MilSpace.Visibility
 
             if(chckShowOOGraphics.Checked)
             {
-                _observPointsController.DrawObservPointToObservObjectsRelationsGraphics(_selectedPointId);
+                _observPointsController.DrawObservPointToObservObjectsRelationsGraphics(_selectedPointId, _observationStationSetType);
             }
         }
 
@@ -2466,7 +2481,8 @@ namespace MilSpace.Visibility
         {
             if(chckShowOOGraphics.Checked)
             {
-                _observPointsController.DrawObservPointToObservObjectsRelationsGraphics(_selectedPointId);
+
+                _observPointsController.DrawObservPointToObservObjectsRelationsGraphics(_selectedPointId, _observationStationSetType);
             }
             else
             {
@@ -2485,7 +2501,19 @@ namespace MilSpace.Visibility
 
             if(chckShowOOGraphics.Checked)
             {
-                _observPointsController.DrawObservPointToObservObjectsRelationsGraphics(_selectedPointId);
+                _observPointsController.DrawObservPointToObservObjectsRelationsGraphics(_selectedPointId, _observationStationSetType);
+            }
+        }
+
+        private void CmbObservStationSet_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _observPointsController.CalcRelationLines(_selectedPointId, _observationStationSetType, true);
+            FillSelectedPointObservationStationTable(_observationStationSetType);
+
+            if (chckShowOOGraphics.Checked)
+            {
+                _observPointsController.RemoveObservPointsGraphics(false, true);
+                _observPointsController.DrawObservPointToObservObjectsRelationsGraphics(_selectedPointId, _observationStationSetType);
             }
         }
     }
