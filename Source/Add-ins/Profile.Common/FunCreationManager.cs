@@ -246,6 +246,5 @@ namespace MilSpace.Profile
         {
             return GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).GetAllSelectedGraphics();
         }
-
     }
 }

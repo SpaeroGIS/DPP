@@ -128,6 +128,14 @@
     <Compile Include="..\Visibility.Common\ButtonMilSpaceMVis.cs">
       <Link>ButtonMilSpaceMVis.cs</Link>
     </Compile>
+    <Compile Include="..\Visibility.Common\ChooseVectorLayerFromMap.cs">
+      <Link>ChooseVectorLayerFromMap.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\Visibility.Common\ChooseVectorLayerFromMap.designer.cs">
+      <Link>ChooseVectorLayerFromMap.designer.cs</Link>
+      <DependentUpon>ChooseVectorLayerFromMap.cs</DependentUpon>
+    </Compile>
     <Compile Include="..\Visibility.Common\DockableWindowMilSpaceMVisibilitySt.cs">
       <Link>DockableWindowMilSpaceMVisibilitySt.cs</Link>
       <SubType>UserControl</SubType>
@@ -138,6 +146,12 @@
     </Compile>
     <Compile Include="..\Visibility.Common\DTO\CheckObservPointGui.cs">
       <Link>DTO\CheckObservPointGui.cs</Link>
+    </Compile>
+    <Compile Include="..\Visibility.Common\DTO\ObservationSetsEnum.cs">
+      <Link>DTO\ObservationSetsEnum.cs</Link>
+    </Compile>
+    <Compile Include="..\Visibility.Common\DTO\ObservationStationToObservPointRelationModel.cs">
+      <Link>DTO\ObservationStationToObservPointRelationModel.cs</Link>
     </Compile>
     <Compile Include="..\Visibility.Common\DTO\ObservObjectGui.cs">
       <Link>DTO\ObservObjectGui.cs</Link>
@@ -235,6 +249,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="..\Visibility.Common\ChooseVectorLayerFromMap.resx">
+      <Link>ChooseVectorLayerFromMap.resx</Link>
+      <DependentUpon>ChooseVectorLayerFromMap.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="..\Visibility.Common\DockableWindowMilSpaceMVisibilitySt.resx">
       <Link>DockableWindowMilSpaceMVisibilitySt.resx</Link>
       <DependentUpon>DockableWindowMilSpaceMVisibilitySt.cs</DependentUpon>

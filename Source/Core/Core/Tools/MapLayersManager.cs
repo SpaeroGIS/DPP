@@ -218,6 +218,15 @@ namespace MilSpace.Core.Tools
             return false;
         }
 
+        public IEnumerable<string> GetFeatureLayersNames()
+        {
+            var types = new esriGeometryType[3] { esriGeometryType.esriGeometryPoint, esriGeometryType.esriGeometryPolygon, esriGeometryType.esriGeometryPolyline };
+            var layers = GetFeatureLayers(types);
+            var layesStrings = layers.Select(l => l.Name);
+
+            return layesStrings;
+        }
+
         public bool InserLayerAfter(ILayer layerToAdd, string layerName)
         {
             var lr = GetAllLayers().FirstOrDefault(l => l.Name == layerName);
