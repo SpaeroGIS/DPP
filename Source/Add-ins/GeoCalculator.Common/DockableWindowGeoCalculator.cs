@@ -981,7 +981,7 @@ namespace MilSpace.GeoCalculator
                 ProjectPointAsync(selectedPoint.Value, true);
             }
             else
-            if (column is DataGridViewImageColumn && column.Name == Constants.DeleteColumnName)
+            if (column is DataGridViewImageColumn && column.Name.Equals(Constants.DeleteColumnName, StringComparison.CurrentCultureIgnoreCase))
             {
                 var prevPointGuid = (e.RowIndex == 0) ? (Guid)PointsGridView.Rows[e.RowIndex].Tag : (Guid)PointsGridView.Rows[e.RowIndex - 1].Tag;
                 var nextPointGuid = (e.RowIndex == PointsGridView.RowCount - 1) ? (Guid)PointsGridView.Rows[e.RowIndex].Tag : (Guid)PointsGridView.Rows[e.RowIndex + 1].Tag;
@@ -1012,14 +1012,6 @@ namespace MilSpace.GeoCalculator
                 {
                     maxNum--;
                 }
-                //SynchronizePointNumbers(e.RowIndex + 1);
-
-                //Refresh Numbers column cells values
-                //for (int i = 0; i < grid.Rows.Count; i++)
-                //{
-                //    grid[Constants.NumberColumnName, i].Value = i + 1;
-                //}
-                //grid.Refresh();
             }
             else
             {
