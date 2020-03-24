@@ -45,6 +45,7 @@ namespace MilSpace.Visibility
         private ObservationPoint selectedPointMEM = new ObservationPoint();
 
         private int _selectedPointId => dgvObservationPoints.SelectedRows.Count == 0 ? -1 : Convert.ToInt32(dgvObservationPoints.SelectedRows[0].Cells["Id"].Value);
+        private ObservationSetsEnum _observationStationSetType => _observPointsController.GetObservStationSet(cmbObservStationSet.SelectedItem.ToString());
         //private bool IsPointFieldsEnabled => _observPointsController.IsObservPointsExists();
         private bool IsPointFieldsEnabled = true;
         private ValuableObservPointSortFieldsEnum curObservPointsSorting = ValuableObservPointSortFieldsEnum.Name;
@@ -74,7 +75,7 @@ namespace MilSpace.Visibility
                 this.Text = LocalizationContext.Instance.WindowCaption;
 
                 this.tbpPoints.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_tbpPoints_Text", "Пункти С");
-                this.tabPage5.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_tabPage5_Text", "Параметри ПС)");
+                this.tabObservPoints.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_tabPage5_Text", "Параметри ПС)");
                 this.label19.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label19_Text", "Висота над поверхнею, м");
                 this.lblMinDistance.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_lblMinDistance_Text", "до");
                 this.lblMaxDistance.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_lblMaxDistance_Text", "Відст., м від");
@@ -165,6 +166,12 @@ namespace MilSpace.Visibility
                 this.btnAddLayerPS.Tag = LocalizationContext.Instance.FindLocalizedElement("MainW_btnAddLayerPS_Tag", "додати шар ПС до карти");
                 this.lblLayer.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_lblLayer_Text", "Пункти спостереження (ПС)");
 
+                ToolTip toolTip = new ToolTip();
+                toolTip.SetToolTip(this.btnRefreshOPGraphics, LocalizationContext.Instance.FindLocalizedElement("MainW_btnRefreshOPGrahics_Text", "Оновити графіку"));
+                toolTip.SetToolTip(this.btnRefreshObservStationsSet, LocalizationContext.Instance.FindLocalizedElement("MainW_btnRefreshObservStationsSet_Text", "Оновити об'єкти спостреження"));
+
+                SetObservationStationTableView();
+
                 log.InfoEx("> LocalizeComponent (Visibility) END");
             }
             catch (Exception ex)
@@ -206,6 +213,7 @@ namespace MilSpace.Visibility
 
             ArcMap.Events.OpenDocument += OnContentsChanged;
             ArcMap.Events.NewDocument += OnContentsChanged;
+            ArcMap.Events.ActiveViewChanged += OnActivaeViewChanged;
 
             ArcMap.Events.OpenDocument += delegate ()
             {
@@ -343,7 +351,7 @@ namespace MilSpace.Visibility
         public void ChangeRecord(int id, ObservationPoint observationPoint)
         {
             var rowIndex = dgvObservationPoints.SelectedRows[0].Index;
-            var source = dgvObservationPoints.DataSource as ObservPointGui[];
+            var source = dgvObservationPoints.DataSource as BindingList<ObservPointGui>;
             var pointGui = source.FirstOrDefault(point => point.Id == id);
 
             pointGui.Title = observationPoint.Title;
@@ -358,7 +366,7 @@ namespace MilSpace.Visibility
 
         public void AddRecord(ObservationPoint observationPoint)
         {
-            var source = dgvObservationPoints.DataSource as ObservPointGui[];
+            var source = dgvObservationPoints.DataSource as BindingList<ObservPointGui>;
             var sourceList = new List<ObservPointGui>(source);
             sourceList.Add(new ObservPointGui
             {
@@ -502,6 +510,11 @@ namespace MilSpace.Visibility
             log.DebugEx("> OnContentsChanged END");
         }
 
+        private void OnActivaeViewChanged()
+        {
+            _observPointsController.SetGrahicsLayerManager();
+        }
+
         private void OnItemDelete(object item)
         {
             log.DebugEx("> OnItemDelete START");
@@ -627,6 +640,14 @@ namespace MilSpace.Visibility
             dgvObservationPoints.Columns["Id"].Visible = false;
         }
 
+        private void SetObservationStationTableView()
+        {
+            dgvObservStationSet.Columns["TitleCol"].HeaderText = LocalizationContext.Instance.TitleHeaderText;
+            dgvObservStationSet.Columns["DistanceCol"].HeaderText = LocalizationContext.Instance.DistanceHeaderText;
+            dgvObservStationSet.Columns["AzimuthCol"].HeaderText = LocalizationContext.Instance.AzimuthHeaderText;
+            dgvObservStationSet.Columns["CoverCol"].HeaderText = LocalizationContext.Instance.CoverageHeaderText;
+        }
+
         private void DgvObservationPoints_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
 
@@ -735,6 +756,9 @@ namespace MilSpace.Visibility
             cmbAffiliation.Items.Add(_observPointsController.GetAllAffiliationType());
             cmbAffiliationEdit.Items.AddRange(GetAffiliation.ToArray());
 
+            cmbObservStationSet.Items.Clear();
+            cmbObservStationSet.Items.AddRange(_observPointsController.GetObservStationSetsStrings());
+
             SetDefaultValues();
 
             log.InfoEx("> InitilizeObservPointsData END");
@@ -748,6 +772,7 @@ namespace MilSpace.Visibility
             cmbAffiliationEdit.SelectedItem = ObservationPointTypesEnum.Enemy.ToString();
             cmbObservPointType.SelectedItem = _observPointsController.GetAllMobilityType();
             cmbAffiliation.SelectedItem = _observPointsController.GetAllAffiliationType();
+            cmbObservStationSet.SelectedIndex = 0;
 
             _isDropDownItemChangedManualy = true;
 
@@ -1312,6 +1337,33 @@ namespace MilSpace.Visibility
             observPointCreator.Text = selectedPoint.Operator;
         }
 
+        private void FillSelectedPointObservationStationTable(ObservationSetsEnum observationStationsSet)
+        {
+            var set = _observPointsController.GetObservationStationToObservPointRelations(_selectedPointId, observationStationsSet);
+
+            if(observationStationsSet == ObservationSetsEnum.Gdb)
+            {
+                dgvObservStationSet.Columns["TitleCol"].HeaderText = LocalizationContext.Instance.TitleHeaderText;
+            }
+            else
+            {
+                dgvObservStationSet.Columns["TitleCol"].HeaderText = LocalizationContext.Instance.IdHeaderText;
+            }
+
+            dgvObservStationSet.Rows.Clear();
+
+            if(set == null)
+            {
+                return;
+            }
+
+            foreach(var station in set)
+            {
+                dgvObservStationSet.Rows.Add(station.Title, station.Polyline.Length.ToString("F0"), station.Azimuth.ToString("F0"), LocalizationContext.Instance.CoverageTypes[station.CoverageType]);
+                dgvObservStationSet.Rows[dgvObservStationSet.Rows.Count - 1].Tag = station.Id;
+            }
+        }
+
         #endregion
 
         #region VisibilitySessionsPrivateMethods
@@ -1836,12 +1888,26 @@ namespace MilSpace.Visibility
             var selectedPoint = _observPointsController.GetObservPointById(_selectedPointId);
             selectedPointMEM = selectedPoint;
 
-            if (selectedPoint == null)
+            if(selectedPoint == null)
             {
                 return;
             }
 
             FillObservPointsFields(selectedPoint);
+            _observPointsController.RemoveObservPointsGraphics();
+            _observPointsController.CalcRelationLines(_selectedPointId, _observationStationSetType, false, true);
+
+            FillSelectedPointObservationStationTable(_observationStationSetType);
+
+            if(chckDrawOPGraphics.Checked)
+            {
+                _observPointsController.DrawObservPointsGraphics(_selectedPointId);
+            }
+
+            if(chckShowOOGraphics.Checked)
+            {
+                _observPointsController.DrawObservPointToObservObjectsRelationsGraphics(_selectedPointId, _observationStationSetType);
+            }
         }
 
 
@@ -2400,6 +2466,68 @@ namespace MilSpace.Visibility
             else if (e.Button == toolBarButton29)
             {
                 _observPointsController.UpdateObservObjectsList();
+            }
+        }
+
+        private void ChckDrawOPGraphics_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chckDrawOPGraphics.Checked)
+            {
+                _observPointsController.DrawObservPointsGraphics(_selectedPointId);
+            }
+            else
+            {
+                _observPointsController.RemoveObservPointsGraphics(true, false);
+            }
+        }
+
+        private void ChckShowOOGraphics_CheckedChanged(object sender, EventArgs e)
+        {
+            if(chckShowOOGraphics.Checked)
+            {
+
+                _observPointsController.DrawObservPointToObservObjectsRelationsGraphics(_selectedPointId, _observationStationSetType);
+            }
+            else
+            {
+                _observPointsController.RemoveObservPointsGraphics(false, true);
+            }
+        }
+
+        private void BtnRefreshOPGraphics_Click(object sender, EventArgs e)
+        {
+            _observPointsController.RemoveObservPointsGraphics();
+
+            if(chckDrawOPGraphics.Checked)
+            {
+                _observPointsController.DrawObservPointsGraphics(_selectedPointId);
+            }
+
+            if(chckShowOOGraphics.Checked)
+            {
+                _observPointsController.DrawObservPointToObservObjectsRelationsGraphics(_selectedPointId, _observationStationSetType);
+            }
+        }
+
+        private void CmbObservStationSet_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateObservStationSet();
+        }
+
+        private void BtnRefreshObservStationsSet_Click(object sender, EventArgs e)
+        {
+            UpdateObservStationSet();
+        }
+
+        private void UpdateObservStationSet()
+        {
+            _observPointsController.CalcRelationLines(_selectedPointId, _observationStationSetType, true);
+            FillSelectedPointObservationStationTable(_observationStationSetType);
+
+            if (chckShowOOGraphics.Checked)
+            {
+                _observPointsController.RemoveObservPointsGraphics(false, true);
+                _observPointsController.DrawObservPointToObservObjectsRelationsGraphics(_selectedPointId, _observationStationSetType);
             }
         }
     }

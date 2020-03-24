@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MilSpace.Tools.GraphicsLayer
+namespace MilSpace.Visibility.DTO
 {
-    public enum MilSpaceGraphicsTypeEnum  
+    public enum ObservationSetsEnum
     {
-        Calculating,
-        Session,
+        Gdb,
         GeoCalculator,
-        Visibility
+        FeatureLayers,
     }
 }
