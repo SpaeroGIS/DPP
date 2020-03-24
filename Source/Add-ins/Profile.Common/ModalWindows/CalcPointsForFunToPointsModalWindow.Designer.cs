@@ -60,6 +60,7 @@
             this.dgvPoints.AllowUserToResizeColumns = false;
             this.dgvPoints.AllowUserToResizeRows = false;
             this.dgvPoints.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvPoints.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvPoints.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvPoints.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ChooseCol,
@@ -116,7 +117,8 @@
             // 
             this.lblLayer.AutoSize = true;
             this.lblLayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblLayer.Location = new System.Drawing.Point(3, 6);
+            this.lblLayer.Location = new System.Drawing.Point(1, 6);
+            this.lblLayer.Margin = new System.Windows.Forms.Padding(3, 0, 1, 0);
             this.lblLayer.Name = "lblLayer";
             this.lblLayer.Size = new System.Drawing.Size(41, 17);
             this.lblLayer.TabIndex = 0;
@@ -152,7 +154,10 @@
             this.Controls.Add(this.dgvPoints);
             this.Controls.Add(this.titlePanel);
             this.Controls.Add(this.panel1);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "CalcPointsForFunToPointsModalWindow";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "CalcPointsForFunToPointsModalWindow";
             ((System.ComponentModel.ISupportInitialize)(this.dgvPoints)).EndInit();
             this.titlePanel.ResumeLayout(false);

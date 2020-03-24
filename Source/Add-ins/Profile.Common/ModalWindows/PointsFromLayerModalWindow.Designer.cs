@@ -55,6 +55,7 @@
             this.dgvPoints.AllowUserToResizeColumns = false;
             this.dgvPoints.AllowUserToResizeRows = false;
             this.dgvPoints.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvPoints.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvPoints.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPoints.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.IdCol,
@@ -207,6 +208,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "PointsFromLayerModalWindow";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "PointsFromLayerModalWindow";
             ((System.ComponentModel.ISupportInitialize)(this.dgvPoints)).EndInit();
             this.titlePanel.ResumeLayout(false);

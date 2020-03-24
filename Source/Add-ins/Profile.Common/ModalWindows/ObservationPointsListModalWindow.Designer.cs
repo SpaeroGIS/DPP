@@ -76,7 +76,7 @@
             // 
             this.lblLayer.AutoSize = true;
             this.lblLayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.lblLayer.Location = new System.Drawing.Point(3, 6);
+            this.lblLayer.Location = new System.Drawing.Point(1, 6);
             this.lblLayer.Name = "lblLayer";
             this.lblLayer.Size = new System.Drawing.Size(52, 20);
             this.lblLayer.TabIndex = 0;
@@ -89,6 +89,7 @@
             this.dgvPoints.AllowUserToResizeColumns = false;
             this.dgvPoints.AllowUserToResizeRows = false;
             this.dgvPoints.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvPoints.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvPoints.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPoints.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.IdCol,
@@ -147,6 +148,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ObservationPointsListModalWindow";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ObservationPointsListModalWindow";
             this.panel1.ResumeLayout(false);
             this.titlePanel.ResumeLayout(false);

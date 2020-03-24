@@ -29,16 +29,16 @@
         private void InitializeComponent()
         {
             this.dgvPoints = new System.Windows.Forms.DataGridView();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.btnChoosePoint = new System.Windows.Forms.Button();
-            this.titlePanel = new System.Windows.Forms.Panel();
-            this.lblLayer = new System.Windows.Forms.Label();
-            this.chckAllPoints = new System.Windows.Forms.CheckBox();
             this.ChooseCol = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.IdCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TitleCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.XCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.YCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.btnChoosePoint = new System.Windows.Forms.Button();
+            this.titlePanel = new System.Windows.Forms.Panel();
+            this.lblLayer = new System.Windows.Forms.Label();
+            this.chckAllPoints = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPoints)).BeginInit();
             this.panel1.SuspendLayout();
             this.titlePanel.SuspendLayout();
@@ -51,6 +51,7 @@
             this.dgvPoints.AllowUserToResizeColumns = false;
             this.dgvPoints.AllowUserToResizeRows = false;
             this.dgvPoints.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvPoints.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvPoints.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvPoints.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ChooseCol,
@@ -66,6 +67,43 @@
             this.dgvPoints.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvPoints.Size = new System.Drawing.Size(283, 295);
             this.dgvPoints.TabIndex = 8;
+            // 
+            // ChooseCol
+            // 
+            this.ChooseCol.HeaderText = "";
+            this.ChooseCol.MinimumWidth = 25;
+            this.ChooseCol.Name = "ChooseCol";
+            this.ChooseCol.Width = 25;
+            // 
+            // IdCol
+            // 
+            this.IdCol.HeaderText = "ObjectId";
+            this.IdCol.Name = "IdCol";
+            this.IdCol.ReadOnly = true;
+            this.IdCol.Width = 70;
+            // 
+            // TitleCol
+            // 
+            this.TitleCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.TitleCol.HeaderText = "TitleOp";
+            this.TitleCol.Name = "TitleCol";
+            this.TitleCol.ReadOnly = true;
+            // 
+            // XCol
+            // 
+            this.XCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.XCol.HeaderText = "X";
+            this.XCol.Name = "XCol";
+            this.XCol.ReadOnly = true;
+            this.XCol.Width = 39;
+            // 
+            // YCol
+            // 
+            this.YCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.YCol.HeaderText = "Y";
+            this.YCol.Name = "YCol";
+            this.YCol.ReadOnly = true;
+            this.YCol.Width = 39;
             // 
             // panel1
             // 
@@ -117,43 +155,6 @@
             this.chckAllPoints.UseVisualStyleBackColor = true;
             this.chckAllPoints.CheckedChanged += new System.EventHandler(this.ChckAllPoints_CheckedChanged);
             // 
-            // ChooseCol
-            // 
-            this.ChooseCol.HeaderText = "";
-            this.ChooseCol.MinimumWidth = 25;
-            this.ChooseCol.Name = "ChooseCol";
-            this.ChooseCol.Width = 25;
-            // 
-            // IdCol
-            // 
-            this.IdCol.HeaderText = "ObjectId";
-            this.IdCol.Name = "IdCol";
-            this.IdCol.ReadOnly = true;
-            this.IdCol.Width = 70;
-            // 
-            // TitleCol
-            // 
-            this.TitleCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.TitleCol.HeaderText = "TitleOp";
-            this.TitleCol.Name = "TitleCol";
-            this.TitleCol.ReadOnly = true;
-            // 
-            // XCol
-            // 
-            this.XCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.XCol.HeaderText = "X";
-            this.XCol.Name = "XCol";
-            this.XCol.ReadOnly = true;
-            this.XCol.Width = 39;
-            // 
-            // YCol
-            // 
-            this.YCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.YCol.HeaderText = "Y";
-            this.YCol.Name = "YCol";
-            this.YCol.ReadOnly = true;
-            this.YCol.Width = 39;
-            // 
             // ObservPointsForFunToPointsModalWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -163,7 +164,10 @@
             this.Controls.Add(this.dgvPoints);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.titlePanel);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ObservPointsForFunToPointsModalWindow";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ObservPointsForFunToPointsModalWindow";
             ((System.ComponentModel.ISupportInitialize)(this.dgvPoints)).EndInit();
             this.panel1.ResumeLayout(false);

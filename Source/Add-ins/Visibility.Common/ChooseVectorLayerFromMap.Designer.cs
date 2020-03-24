@@ -72,6 +72,7 @@
             // 
             // lbLayers
             // 
+            this.lbLayers.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lbLayers.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbLayers.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lbLayers.ItemHeight = 15;
@@ -100,7 +101,7 @@
             this.panel1.Size = new System.Drawing.Size(221, 208);
             this.panel1.TabIndex = 6;
             // 
-            // ChooseVectorLayerFromMap
+            // ChooseVectorLayerFromMapModalWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -108,7 +109,10 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.buttonPanel);
             this.Controls.Add(this.labelPanel);
-            this.Name = "ChooseVectorLayerFromMap";
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "ChooseVectorLayerFromMapModalWindow";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ChooseVectorLayerFromMap";
             this.buttonPanel.ResumeLayout(false);
             this.labelPanel.ResumeLayout(false);

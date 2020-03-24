@@ -38,10 +38,10 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnChoosePoint = new System.Windows.Forms.Button();
             this.dgvPoints = new System.Windows.Forms.DataGridView();
-            this.chckAllPoints = new System.Windows.Forms.CheckBox();
             this.SelectCol = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.IdCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DisplayFieldCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.chckAllPoints = new System.Windows.Forms.CheckBox();
             this.titlePanel.SuspendLayout();
             this.comboPanel.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -147,6 +147,7 @@
             this.dgvPoints.AllowUserToResizeColumns = false;
             this.dgvPoints.AllowUserToResizeRows = false;
             this.dgvPoints.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvPoints.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvPoints.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPoints.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.SelectCol,
@@ -160,16 +161,6 @@
             this.dgvPoints.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvPoints.Size = new System.Drawing.Size(328, 243);
             this.dgvPoints.TabIndex = 14;
-            // 
-            // chckAllPoints
-            // 
-            this.chckAllPoints.AutoSize = true;
-            this.chckAllPoints.Location = new System.Drawing.Point(7, 93);
-            this.chckAllPoints.Name = "chckAllPoints";
-            this.chckAllPoints.Size = new System.Drawing.Size(15, 14);
-            this.chckAllPoints.TabIndex = 15;
-            this.chckAllPoints.UseVisualStyleBackColor = true;
-            this.chckAllPoints.CheckedChanged += new System.EventHandler(this.ChckAllPoints_CheckedChanged);
             // 
             // SelectCol
             // 
@@ -192,6 +183,16 @@
             this.DisplayFieldCol.Name = "DisplayFieldCol";
             this.DisplayFieldCol.ReadOnly = true;
             // 
+            // chckAllPoints
+            // 
+            this.chckAllPoints.AutoSize = true;
+            this.chckAllPoints.Location = new System.Drawing.Point(7, 93);
+            this.chckAllPoints.Name = "chckAllPoints";
+            this.chckAllPoints.Size = new System.Drawing.Size(15, 14);
+            this.chckAllPoints.TabIndex = 15;
+            this.chckAllPoints.UseVisualStyleBackColor = true;
+            this.chckAllPoints.CheckedChanged += new System.EventHandler(this.ChckAllPoints_CheckedChanged);
+            // 
             // GeometriesFromLayerForFunToPointsModalWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -202,7 +203,10 @@
             this.Controls.Add(this.titlePanel);
             this.Controls.Add(this.comboPanel);
             this.Controls.Add(this.panel1);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "GeometriesFromLayerForFunToPointsModalWindow";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "GeometriesFromLayerForFunToPointsModalWindow";
             this.titlePanel.ResumeLayout(false);
             this.titlePanel.PerformLayout();

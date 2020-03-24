@@ -49,6 +49,7 @@
             this.dgvPoints.AllowUserToResizeColumns = false;
             this.dgvPoints.AllowUserToResizeRows = false;
             this.dgvPoints.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvPoints.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvPoints.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvPoints.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ChooseCol,
@@ -60,7 +61,7 @@
             this.dgvPoints.Name = "dgvPoints";
             this.dgvPoints.RowHeadersVisible = false;
             this.dgvPoints.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPoints.Size = new System.Drawing.Size(264, 295);
+            this.dgvPoints.Size = new System.Drawing.Size(264, 267);
             this.dgvPoints.TabIndex = 11;
             // 
             // ChooseCol
@@ -88,7 +89,7 @@
             // 
             this.panel1.Controls.Add(this.btnChoosePoint);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 323);
+            this.panel1.Location = new System.Drawing.Point(0, 295);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(264, 28);
             this.panel1.TabIndex = 10;
@@ -138,12 +139,15 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(264, 351);
+            this.ClientSize = new System.Drawing.Size(264, 323);
             this.Controls.Add(this.chckAllPoints);
             this.Controls.Add(this.dgvPoints);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.titlePanel);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ObservObjForFunModalWindow";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ObservObjForFunModalWindow";
             ((System.ComponentModel.ISupportInitialize)(this.dgvPoints)).EndInit();
             this.panel1.ResumeLayout(false);
