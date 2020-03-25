@@ -301,7 +301,7 @@ namespace MilSpace.Profile
                         SpatialReference = line.SpatialReference
                     };
 
-                    View.SetProifileLineInfo(line.Length, ln.Azimuth());
+                    View.SetProifileLineInfo(line.Length, ln.PosAzimuth());
                 }
             }
 
@@ -632,7 +632,7 @@ namespace MilSpace.Profile
             }
             else
             {
-                profileLines = new List<IGeometry> { line.Line };
+                profileLines = new List<IGeometry> { line.Line as IGeometry};
             }
 
             IEnvelope env = new EnvelopeClass();
@@ -1537,8 +1537,8 @@ namespace MilSpace.Profile
 
             profileSetting.DemLayerName = View.DemLayerName;
 
-            profileSetting.Azimuth1 = EsriTools.GetFormattedAzimuth(minAzimuth);
-            profileSetting.Azimuth2 = EsriTools.GetFormattedAzimuth(maxAzimuth);
+            profileSetting.Azimuth1 = minAzimuth;
+            profileSetting.Azimuth2 = maxAzimuth;
 
             profileSetting.ProfileLines = polylines.ToArray();
 
@@ -1571,8 +1571,8 @@ namespace MilSpace.Profile
                 }
                 var lineWithAngle = new Line { FromPoint = line.FromPoint, ToPoint = line.ToPoint, SpatialReference = line.SpatialReference };
 
-                var azimuth = lineWithAngle.Azimuth();
-                if(azimuth < 0) azimuth += 360;
+                var azimuth = lineWithAngle.PosAzimuth();
+               // if(azimuth < 0) azimuth += 360;
                 azimuthsSum += azimuth;
             }
 
@@ -1617,7 +1617,7 @@ namespace MilSpace.Profile
 
             var projLine = new Line { FromPoint = lines[0].FromPoint, ToPoint = lines.Last().ToPoint };
             var projLength = projLine.Length;
-            var azimuth = projLine.Azimuth();
+            var azimuth = projLine.PosAzimuth();
 
             View.SetPrimitiveInfo(length, azimuth, projLength, segmentCount - 1);
         }

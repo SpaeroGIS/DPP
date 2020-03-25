@@ -136,12 +136,12 @@ namespace MilSpace.DataAccess.DataTransfer
                 return result;
             };
 
-            if (lineId < 0 || lineId >= ProfileLines.Length)
+            if (lineId <= 0 || lineId > ProfileLines.Length)
             {
                 return ProfileLines.Select(l => converter(l)).ToArray();
             }
 
-            return new IPolyline[] { converter(ProfileLines[lineId]) };
+            return new IPolyline[] { converter(ProfileLines.First(l => l.Id == lineId)) };
         }
 
         public void SetSegments(ISpatialReference spatialReference, ProfileLine profileLine = null)

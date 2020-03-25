@@ -1115,7 +1115,7 @@ namespace MilSpace.Visibility.ViewController
                 {
                     Id = geometry.Key,
                     Polyline = relationLine,
-                    Azimuth = simpleLine.Azimuth(),
+                    Azimuth = simpleLine.PosAzimuth(),
                     Title = title
                 };
 
