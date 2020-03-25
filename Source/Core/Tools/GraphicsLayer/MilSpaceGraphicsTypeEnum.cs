@@ -10,6 +10,7 @@ namespace MilSpace.Tools.GraphicsLayer
     {
         Calculating,
         Session,
-        GeoCalculator
+        GeoCalculator,
+        Visibility
     }
 }

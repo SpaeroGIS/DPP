@@ -7,6 +7,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Xml;
+using MilSpace.Visibility.DTO;
 
 namespace MilSpace.Visibility.Localization
 {
@@ -98,13 +99,13 @@ namespace MilSpace.Visibility.Localization
             summaryItems[VisibilityresultSummaryItemsEnum.Type] =
                 FindLocalizedElement("VisibilityresultSummaryItemsEnum.Type", "Тип розрахунку");
 
-            states[VisibilityTaskStateEnum.All] = 
+            states[VisibilityTaskStateEnum.All] =
                 FindLocalizedElement("State_Calculate_all", states[VisibilityTaskStateEnum.All]);
-            states[VisibilityTaskStateEnum.Calculated] = 
+            states[VisibilityTaskStateEnum.Calculated] =
                 FindLocalizedElement("State_Calculate_queue", states[VisibilityTaskStateEnum.Calculated]);
-            states[VisibilityTaskStateEnum.Finished] = 
+            states[VisibilityTaskStateEnum.Finished] =
                 FindLocalizedElement("StateFilter_Calculate_finished", states[VisibilityTaskStateEnum.Finished]);
-            states[VisibilityTaskStateEnum.Pending] = 
+            states[VisibilityTaskStateEnum.Pending] =
                 FindLocalizedElement("StateFilter_Calculate_run", states[VisibilityTaskStateEnum.Pending]);
 
             mobilityTypes[ObservationPointMobilityTypesEnum.All] =
@@ -114,27 +115,34 @@ namespace MilSpace.Visibility.Localization
             mobilityTypes[ObservationPointMobilityTypesEnum.Stationary] =
                 FindLocalizedElement("mobilityTypes_Stationary", mobilityTypes[ObservationPointMobilityTypesEnum.Stationary]);
 
-            affiliationTypes[ObservationPointTypesEnum.All] = 
+            affiliationTypes[ObservationPointTypesEnum.All] =
                 FindLocalizedElement("Affiliation_All", affiliationTypes[ObservationPointTypesEnum.All]);
-            affiliationTypes[ObservationPointTypesEnum.Enemy] = 
+            affiliationTypes[ObservationPointTypesEnum.Enemy] =
                 FindLocalizedElement("AffiliationEdit_strangers", affiliationTypes[ObservationPointTypesEnum.Enemy]);
-            affiliationTypes[ObservationPointTypesEnum.Neutrality] = 
+            affiliationTypes[ObservationPointTypesEnum.Neutrality] =
                 FindLocalizedElement("AffiliationEdit_neutral", affiliationTypes[ObservationPointTypesEnum.Neutrality]);
-            affiliationTypes[ObservationPointTypesEnum.Our] = 
+            affiliationTypes[ObservationPointTypesEnum.Our] =
                 FindLocalizedElement("Affiliation_Own", affiliationTypes[ObservationPointTypesEnum.Our]);
-            affiliationTypes[ObservationPointTypesEnum.Undefined] = 
+            affiliationTypes[ObservationPointTypesEnum.Undefined] =
                 FindLocalizedElement("AffiliationEdit_unknown", affiliationTypes[ObservationPointTypesEnum.Undefined]);
 
-            observObjectsTypes[ObservationObjectTypesEnum.All] = 
+            observObjectsTypes[ObservationObjectTypesEnum.All] =
                 FindLocalizedElement("Affiliation_All", observObjectsTypes[ObservationObjectTypesEnum.All]);
-            observObjectsTypes[ObservationObjectTypesEnum.Enemy] = 
+            observObjectsTypes[ObservationObjectTypesEnum.Enemy] =
                 FindLocalizedElement("AffiliationEdit_strangers", observObjectsTypes[ObservationObjectTypesEnum.Enemy]);
-            observObjectsTypes[ObservationObjectTypesEnum.Neutrality] = 
+            observObjectsTypes[ObservationObjectTypesEnum.Neutrality] =
                 FindLocalizedElement("AffiliationEdit_neutral", observObjectsTypes[ObservationObjectTypesEnum.Neutrality]);
-            observObjectsTypes[ObservationObjectTypesEnum.Our] = 
+            observObjectsTypes[ObservationObjectTypesEnum.Our] =
                 FindLocalizedElement("Affiliation_Own", observObjectsTypes[ObservationObjectTypesEnum.Our]);
-            observObjectsTypes[ObservationObjectTypesEnum.Undefined] = 
+            observObjectsTypes[ObservationObjectTypesEnum.Undefined] =
                 FindLocalizedElement("AffiliationEdit_unknown", observObjectsTypes[ObservationObjectTypesEnum.Undefined]);
+
+            CoverageTypes = new Dictionary<CoverageTypesEnum, string>
+            {
+                {CoverageTypesEnum.None, NoCoverageText },
+                {CoverageTypesEnum.Partly, PartlyCoverageText },
+                {CoverageTypesEnum.Full, FullCoverageText }
+             };
         }
 
         internal static LocalizationContext Instance => instance;
@@ -147,6 +155,8 @@ namespace MilSpace.Visibility.Localization
         internal Dictionary<ObservationPointMobilityTypesEnum, string> MobilityTypes => mobilityTypes;
         internal Dictionary<ObservationPointTypesEnum, string> AffiliationTypes => affiliationTypes;
         internal Dictionary<ObservationObjectTypesEnum, string> ObservObjectsTypes => observObjectsTypes;
+
+        internal Dictionary<CoverageTypesEnum, string> CoverageTypes;
 
         internal string CalcFirstTypeDescriptionShort =>
             FindLocalizedElement("CalcFirstTypeDescriptionShort", "VS");
@@ -187,6 +197,15 @@ namespace MilSpace.Visibility.Localization
         public string TasksTabCaption => FindLocalizedElement("TasksTabCaption", "Tasks");
         public string ResultsTabCaption => FindLocalizedElement("ResultsTabCaption", "Results");
 
+        public string ObservPointsSet => FindLocalizedElement("ObservPointsSetText", "Пункти спостреження");
+        public string ObservObjectsSet => FindLocalizedElement("ObservObjectsSetText", "Об'єкти спостреження");
+        public string GeoCalcSet => FindLocalizedElement("GeoCalcSetText", "Точки Геокалькулятора");
+        public string FeatureLayerSet => FindLocalizedElement("FeatureLayerSetText", "Векторний шар");
+
+        public string NoCoverageText => FindLocalizedElement("CoverageTypeNoneText", "Ні");
+        public string PartlyCoverageText => FindLocalizedElement("CoverageTypePartlyText", "Частково");
+        public string FullCoverageText => FindLocalizedElement("CoverageTypeFull", "Повністю");
+
         //Header
         public string NameHeaderText => FindLocalizedElement("NameHeaderText", "Name");
         public string StateHeaderText => FindLocalizedElement("StateHeaderText", "State");
@@ -194,7 +213,12 @@ namespace MilSpace.Visibility.Localization
         public string AffiliationHeaderText => FindLocalizedElement("AffiliationHeaderText", "Affiliation");
         public string DateHeaderText => FindLocalizedElement("DateHeaderText", "Date");
         public string GroupHeaderText => FindLocalizedElement("GroupHeaderText", "Group");
-         
+        public string TitleHeaderText => FindLocalizedElement("DgvObservStationSetTitleHeader", "Назва");
+        public string IdHeaderText => FindLocalizedElement("DgvObservStationSetIdHeader", "Ід");
+        public string DistanceHeaderText => FindLocalizedElement("DgvObservStationSetDistanceHeader", "Площа");
+        public string AzimuthHeaderText => FindLocalizedElement("DgvObservStationSetAzimuthHeader", "Азимут");
+        public string CoverageHeaderText => FindLocalizedElement("DgvObservStationSetCoverageHeader", "Видимий");
+
         //Buttons
         public string GenerateButton => FindLocalizedElement("GenerateButton", "Generate");
 
@@ -237,8 +261,8 @@ namespace MilSpace.Visibility.Localization
         public string VisibilityResultLayersRemoveMessage => FindLocalizedElement("VisibilityResultLayersRemoveMessage", "Are you sure you want to delete the calculation result layers?");
         public string SuccessfullySharedMessage => FindLocalizedElement("SuccessfullySharedMessage", "Shared with all users");
         public string AlreadySharedMessage => FindLocalizedElement("AlreadySharedMessage", "Results are already shared");
-
-
+        public string CoverageAreaIsEmptyMessage => FindLocalizedElement("CoverageAreaIsEmptyMessage", "Пункт спостереження не має зони покриття. Будь ласка, перевірте правильність введених даних");
+        public string ErrorMessage => FindLocalizedElement("UnexpectedErrorMessage", "Виникла помилка. Для перегляду повної інформації зверніться до журналу роботи");
         ////---------------------------------------------------------------------------------------
 
         //            this.cmbAffiliationEdit.Items.AddRange(new object[] { "свои", "чужие ", "нейтральные", "неизвкчтно"});

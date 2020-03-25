@@ -17,6 +17,10 @@ using MilSpace.Visibility.DTO;
 using ESRI.ArcGIS.Editor;
 using MilSpace.Core.DataAccess;
 using System.Runtime.InteropServices;
+using MilSpace.Tools.GraphicsLayer;
+using System.Windows.Forms;
+using ESRI.ArcGIS.Display;
+using MilSpace.Core.ModulesInteraction;
 
 namespace MilSpace.Visibility.ViewController
 {
@@ -27,7 +31,10 @@ namespace MilSpace.Visibility.ViewController
         private static readonly string _observStationFeature = "MilSp_Visible_ObjectsObservation_R";
         private List<ObservationPoint> _observationPoints = new List<ObservationPoint>();
         private List<ObservationObject> _observationObjects = new List<ObservationObject>();
+        private List<ObservationStationToObservPointRelationModel> _relationLines = new List<ObservationStationToObservPointRelationModel>();
         private static bool localized = false;
+        private IPolygon _coverageArea;
+        private string _layerName;
         private string _previousPickedRasterLayer { get; set; }
 
         /// <summary>
@@ -38,10 +45,23 @@ namespace MilSpace.Visibility.ViewController
         private static Dictionary<string, ObservationObjectTypesEnum> _observObjectsTypesToConvert = Enum.GetValues(typeof(ObservationObjectTypesEnum)).Cast<ObservationObjectTypesEnum>().ToDictionary(ts => ts.ToString(), t => t);
         private static Dictionary<ObservationObjectTypesEnum, string> _observObjectsTypes = null; //Enum.GetValues(typeof(ObservationObjectTypesEnum)).Cast<ObservationObjectTypesEnum>().ToDictionary(ts => ts.ToString(), t => t);
         private static Dictionary<LayerPositionsEnum, string> _layerPositions = Enum.GetValues(typeof(LayerPositionsEnum)).Cast<LayerPositionsEnum>().ToDictionary(t => t, ts => ts.ToString());
+        private static Dictionary<ObservationSetsEnum, string> _observPointSets = new Dictionary<ObservationSetsEnum, string>
+        {
+            {ObservationSetsEnum.Gdb, LocalizationContext.Instance.ObservPointsSet },
+            {ObservationSetsEnum.GeoCalculator, LocalizationContext.Instance.GeoCalcSet }
+        };
+
+        private static Dictionary<ObservationSetsEnum, string> _observObjectsSets = new Dictionary<ObservationSetsEnum, string>
+        {
+            {ObservationSetsEnum.Gdb, LocalizationContext.Instance.ObservObjectsSet },
+            {ObservationSetsEnum.GeoCalculator, LocalizationContext.Instance.GeoCalcSet },
+            {ObservationSetsEnum.FeatureLayers, LocalizationContext.Instance.FeatureLayerSet }
+        };
 
         private IMxDocument mapDocument;
         private IMxApplication application;
         private static Logger log = Logger.GetLoggerEx("MilSpace.Visibility.ViewController.ObservationPointsController");
+        private static GraphicsLayerManager _graphicsLayerManager;
 
         public ObservationPointsController(IMxDocument mapDocument, IMxApplication application)
         {
@@ -66,6 +86,11 @@ namespace MilSpace.Visibility.ViewController
         internal void SetView(IObservationPointsView view)
         {
             this.view = view;
+        }
+
+        internal void SetGrahicsLayerManager()
+        {
+            _graphicsLayerManager = GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView);
         }
 
 
@@ -520,11 +545,7 @@ namespace MilSpace.Visibility.ViewController
 
         internal IPoint GetEnvelopeCenterPoint(IEnvelope envelope)
         {
-            //TODO: Move this method to Core.Tools.EsriTools
-            var x = (envelope.XMin + envelope.XMax) / 2;
-            var y = (envelope.YMin + envelope.YMax) / 2;
-
-            var point = new PointClass { X = x, Y = y, SpatialReference = envelope.SpatialReference };
+            var point = EsriTools.GetCenterPoint(envelope);
             point.Project(EsriTools.Wgs84Spatialreference);
             return point;
         }
@@ -781,6 +802,7 @@ namespace MilSpace.Visibility.ViewController
 
             return false;
         }
+
         public string GetPreviousPickedRasterLayer() => _previousPickedRasterLayer;
 
         public void UpdataPreviousPickedRasterLayer(string raster)
@@ -946,6 +968,270 @@ namespace MilSpace.Visibility.ViewController
             }
 
             return objects;
+        }
+
+        internal void DrawObservPointsGraphics(int id)
+        {
+            var observPoint = _observationPoints.FirstOrDefault(point => point.Objectid == id);
+
+            if(observPoint == null || observPoint.X == null || observPoint.Y == null)
+            {
+                return;
+            }
+
+            var pointGeom = new Point { X = observPoint.X.Value, Y = observPoint.Y.Value, SpatialReference = EsriTools.Wgs84Spatialreference };
+            pointGeom.Project(mapDocument.FocusMap.SpatialReference);
+
+            var maxDistance = CalcCoverageArea(pointGeom, observPoint);
+            _graphicsLayerManager.AddObservPointsGraphicsToMap(_coverageArea, $"coverageArea_{id}");
+            _graphicsLayerManager.AddCrossPointerToPoint(pointGeom, Convert.ToInt32(maxDistance), $"crossPointer_coverageArea_{id}_");
+        }
+
+        internal double CalcCoverageArea(IPoint pointGeom, ObservationPoint observPoint)
+        {
+            var realMaxDistance = EsriTools.GetMaxDistance(observPoint.OuterRadius.Value, observPoint.AngelMaxH.Value, observPoint.RelativeHeight.Value);
+            var realMinDistance = EsriTools.GetMinDistance(observPoint.InnerRadius.Value, observPoint.AngelMinH.Value, observPoint.RelativeHeight.Value);
+
+            if(realMaxDistance < realMinDistance)
+            {
+                log.WarnEx("> DrawObservPointsGraphics. Observation point doesn`t has a coverage area");
+                MessageBox.Show(LocalizationContext.Instance.CoverageAreaIsEmptyMessage, LocalizationContext.Instance.MessageBoxCaption);
+                return observPoint.OuterRadius.Value;
+            }
+
+            _coverageArea = EsriTools.GetCoverageArea(pointGeom, observPoint.AzimuthStart.Value, observPoint.AzimuthEnd.Value,
+                                                           realMinDistance, realMaxDistance);
+            _coverageArea.SpatialReference = mapDocument.FocusMap.SpatialReference;
+            return realMaxDistance;
+        }
+
+        internal void CalcRelationLines(int id, ObservationSetsEnum set, bool fromNewLayer = false, bool fromNewCoverageArea = false)
+        {
+            var observPoint = _observationPoints.FirstOrDefault(point => point.Objectid == id);
+
+            if (observPoint == null || observPoint.X == null || observPoint.Y == null)
+            {
+                return;
+            }
+
+            var pointGeom = new Point { X = observPoint.X.Value, Y = observPoint.Y.Value, SpatialReference = EsriTools.Wgs84Spatialreference };
+            pointGeom.Project(mapDocument.FocusMap.SpatialReference);
+
+            Dictionary<int, IGeometry> geometries = new Dictionary<int, IGeometry>();
+
+            switch (set)
+            {
+                case ObservationSetsEnum.Gdb:
+
+                     geometries = EsriTools.GetGeometriesFromLayer(VisibilityManager.ObservationStationsFeatureLayer, mapDocument.ActiveView);
+
+                    break;
+
+                case ObservationSetsEnum.GeoCalculator:
+
+                    var points = GetPointsFromGeoCalculator();
+
+                    if (points == null)
+                    {
+                        _relationLines = null;
+                        return;
+                    }
+
+                    foreach (var point in points)
+                    {
+                        point.Value.Project(mapDocument.FocusMap.SpatialReference);
+                        geometries.Add(point.Key, point.Value);
+                    }
+
+                    break;
+
+                case ObservationSetsEnum.FeatureLayers:
+
+                    if (string.IsNullOrEmpty(_layerName) || fromNewLayer)
+                    {
+                        var getLayerWindow = new ChooseVectorLayerFromMapModalWindow(mapDocument.ActiveView);
+                        var result = getLayerWindow.ShowDialog();
+
+                        if (result == DialogResult.OK)
+                        {
+                            var layer = EsriTools.GetLayer(getLayerWindow.SelectedLayer, mapDocument.FocusMap);
+
+                            if (layer != null && layer is IFeatureLayer)
+                            {
+                                geometries = EsriTools.GetGeometriesFromLayer(layer as IFeatureLayer, mapDocument.ActiveView);
+                                _layerName = getLayerWindow.SelectedLayer;
+                            }
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        var layer = EsriTools.GetLayer(_layerName, mapDocument.FocusMap);
+
+                        if (layer != null && layer is IFeatureLayer)
+                        {
+                            geometries = EsriTools.GetGeometriesFromLayer(layer as IFeatureLayer, mapDocument.ActiveView);
+                        }
+                    }
+
+                    break;
+            }
+            
+            if (_coverageArea == null || fromNewCoverageArea)
+            {
+                CalcCoverageArea(pointGeom, observPoint);
+            }
+
+            _relationLines.Clear();
+
+            foreach (var geometry in geometries)
+            {
+                var relationLine = EsriTools.GetToGeometryCenterPolyline(pointGeom, geometry.Value);
+                var intersectionArea = EsriTools.GetIntersection(_coverageArea, geometry.Value);
+
+                var simpleLine = new Line { FromPoint = relationLine.FromPoint, ToPoint = relationLine.ToPoint, SpatialReference = relationLine.SpatialReference };
+
+                if (!_observationObjects.Any())
+                {
+                    UpdateObservObjectsList();
+                }
+
+                string title;
+
+                if (set == ObservationSetsEnum.Gdb)
+                {
+                    var currentObj = _observationObjects.FirstOrDefault(obj => obj.ObjectId == geometry.Key);
+                    title = (currentObj == null) ? string.Empty : currentObj.Title;
+                }
+                else
+                {
+                    title = geometry.Key.ToString();
+                }
+
+                var line = new ObservationStationToObservPointRelationModel
+                {
+                    Id = geometry.Key,
+                    Polyline = relationLine,
+                    Azimuth = simpleLine.Azimuth(),
+                    Title = title
+                };
+
+                if (intersectionArea.IsEmpty)
+                {
+                    line.CoverageType = CoverageTypesEnum.None;
+                }
+                else
+                {
+                    var intersectionAreaValue = intersectionArea.Envelope as IArea;
+                    var geometryAreaValue = geometry.Value.Envelope as IArea;
+                    var diff = geometryAreaValue.Area - intersectionAreaValue.Area;
+
+                    if (diff < 0.01)
+                    {
+                        line.CoverageType = CoverageTypesEnum.Full;
+                    }
+                    else
+                    {
+                        line.CoverageType = CoverageTypesEnum.Partly;
+                    }
+                }
+
+                _relationLines.Add(line);
+            }
+        }
+
+
+        internal void DrawObservPointToObservObjectsRelationsGraphics(int id, ObservationSetsEnum set)
+        {
+            if (_relationLines == null || !_relationLines.Any())
+            {
+                CalcRelationLines(id, set);
+            }
+
+            foreach(var line in _relationLines)
+            {
+                IRgbColor color;
+
+                if(line.CoverageType == CoverageTypesEnum.None)
+                {
+                    color = new RgbColor { Red = 255, Blue = 0, Green = 0 };
+                }
+                else
+                {
+                    if(line.CoverageType == CoverageTypesEnum.Full)
+                    {
+                        color = new RgbColor { Red = 69, Blue = 0, Green = 230 };
+                    }
+                    else
+                    {
+                        color = new RgbColor { Red = 229, Blue = 1, Green = 167 };
+                    }
+                }
+                
+                _graphicsLayerManager.AddObservPointsRelationLineToMap(line.Polyline, color, $"relationLine_{id}", line.Title);
+            }
+        }
+
+        internal void RemoveObservPointsGraphics(bool removeCoverageArea = true, bool removeObservObjectsRelations = true)
+        {
+            if(removeCoverageArea)
+            {
+                _graphicsLayerManager.RemoveAllGeometryFromMap($"coverageArea_", MilSpaceGraphicsTypeEnum.Visibility, true);
+            }
+            if(removeObservObjectsRelations)
+            {
+                _graphicsLayerManager.RemoveAllGeometryFromMap($"relationLine_", MilSpaceGraphicsTypeEnum.Visibility, true);
+            }
+        }
+
+        internal string[] GetObservStationSetsStrings()
+        {
+            return _observObjectsSets.Select(set => set.Value).ToArray();
+        }
+
+        internal ObservationSetsEnum GetObservStationSet(string setString)
+        {
+            return _observObjectsSets.FirstOrDefault(set => set.Value == setString).Key;
+        }
+
+        internal ObservationStationToObservPointRelationModel[] GetObservationStationToObservPointRelations(int id, ObservationSetsEnum set)
+        {
+            if (_relationLines == null || !_relationLines.Any())
+            {
+                CalcRelationLines(id, set);
+            }
+
+            return _relationLines.ToArray();
+        }
+
+        private Dictionary<int, IPoint> GetPointsFromGeoCalculator()
+        {
+            Dictionary<int, IPoint> points;
+
+            var geoModule = ModuleInteraction.Instance.GetModuleInteraction<IGeocalculatorInteraction>(out bool changes);
+
+            if (!changes && geoModule == null)
+            {
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("GeoCalcModuleDoesnotExistMessage", "Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним"), LocalizationContext.Instance.ErrorMessage);
+                log.ErrorEx($"> GetPointFromGeoCalculator Exception: {LocalizationContext.Instance.FindLocalizedElement("GeoCalcModuleDoesnotExistMessage", "Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним")}");
+                return null;
+            }
+
+            try
+            {
+                points = geoModule.GetPoints();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(LocalizationContext.Instance.ErrorMessage, LocalizationContext.Instance.MsgBoxErrorHeader);
+                log.ErrorEx($"> GetPointFromGeoCalculator Exception: {ex.Message}");
+                return null;
+            }
+
+            return points;
         }
 
         #region ArcMap Eventts

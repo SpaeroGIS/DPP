@@ -146,6 +146,8 @@
   <MainW_label12_Text>макс</MainW_label12_Text>
   <MainW_label9_Text>висота над поверхнею (м) мін</MainW_label9_Text>
   <MainW_lblLayer_Text>Пункти спостереження (ПС)</MainW_lblLayer_Text>
+  <MainW_btnRefreshOPGrahics_Text>Оновити графіку</MainW_btnRefreshOPGrahics_Text>
+  <MainW_btnRefreshObservStationsSet_Text>Оновити об'єкти спостреження</MainW_btnRefreshObservStationsSet_Text>
 
   <MainW_btnAddLayerPS_Tag>Додати шар ПС до карти</MainW_btnAddLayerPS_Tag>
   <MainW_btnSaveParamPS_Tag>Зберегти зміни</MainW_btnSaveParamPS_Tag>
@@ -283,7 +285,10 @@
   <UnableToFullRemoveTaskMessage>Неможливо повністтю видалити результат розрахунку</UnableToFullRemoveTaskMessage>
   <CalculationErrorMessage>Розрахунок скінчився з помилкою\nДля перегляду повної інформації зверніться до журналу роботи</CalculationErrorMessage>
   <SomeResultsNotAddedMessage>Частина результатів розрахунку не може бути додана до поточного сеансу</SomeResultsNotAddedMessage>
-
+  <CoverageAreaIsEmptyMessage>Пункт спостереження не має зони покриття. Будь ласка, перевірте правильність введених даних</CoverageAreaIsEmptyMessage>
+  <UnexpectedErrorMessage>Виникла помилка. Для перегляду повної інформації зверніться до журналу роботи</UnexpectedErrorMessage>
+  <GeoCalcModuleDoesnotExistMessage>Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</GeoCalcModuleDoesnotExistMessage>
+  
   <ObservPointRemoveMessage>Ви дійсно бажаєте видалити точку (ПС)?</ObservPointRemoveMessage>
   <VisibilityTaskRemoveMessage>Ви дійсно бажаєте видалити результат розрахунку з поточного сеансу?</VisibilityTaskRemoveMessage>
   <VisibilityResultsFullRemoveMessage>Ви дійсно бажаєте повністтю видалити результат розрахунку?</VisibilityResultsFullRemoveMessage>
@@ -303,5 +308,24 @@
   <NewObservationObjectName>ОН-{0}</NewObservationObjectName>
 
   <HeaderCreatedGridSessionResult>Створено</HeaderCreatedGridSessionResult>
+
+  <ObservPointsSetText>Пункти спостреження</ObservPointsSetText>
+  <ObservObjectsSetText>Об'єкти спостреження</ObservObjectsSetText>
+  <GeoCalcSetText>Точки Геокалькулятора</GeoCalcSetText>
+  <FeatureLayerSetText>Векторний шар</FeatureLayerSetText>
+
+  <DgvObservStationSetTitleHeader>Назва</DgvObservStationSetTitleHeader>
+  <DgvObservStationSetIdHeader>Ід</DgvObservStationSetIdHeader>
+  <DgvObservStationSetDistanceHeader>Відстань</DgvObservStationSetDistanceHeader>
+  <DgvObservStationSetAzimuthHeader>Азимут</DgvObservStationSetAzimuthHeader>
+  <DgvObservStationSetCoverageHeader>Видимий</DgvObservStationSetCoverageHeader>
+
+  <CoverageTypeNoneText>Ні</CoverageTypeNoneText>
+  <CoverageTypePartlyText>Частково</CoverageTypePartlyText>
+  <CoverageTypeFull>Повністю</CoverageTypeFull>
+
+  <LayersListLabelText>Шари</LayersListLabelText>
+  <ChooseButtonText>Обрати</ChooseButtonText>
+  <ChooseLayerWindowCaption>Обрати шар</ChooseLayerWindowCaption>
 
 </SP_Visibility>

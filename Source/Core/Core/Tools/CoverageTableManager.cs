@@ -133,13 +133,21 @@ namespace MilSpace.Tools
                 pointGeom.Project(VisibilityManager.CurrentMap.SpatialReference);
 
                 var pointModel = observPoints.First(p => p.Objectid == pointId);
+                var realMaxDistance = EsriTools.GetMaxDistance(pointModel.OuterRadius.Value, pointModel.AngelMaxH.Value, pointModel.RelativeHeight.Value);
+                var realMinDistance = EsriTools.GetMinDistance(pointModel.InnerRadius.Value, pointModel.AngelMinH.Value, pointModel.RelativeHeight.Value);
+                
+                if(realMaxDistance < realMinDistance)
+                {
+                    _logger.WarnEx("> SetCoverageAreas END. Observation point doesn`t has a coverage area");
+                    return;
+                }
 
                 var visibilityPolygon = EsriTools.GetCoverageArea(
                     pointGeom, 
                     pointModel.AzimuthStart.Value, 
                     pointModel.AzimuthEnd.Value,
-                    pointModel.InnerRadius.Value, 
-                    pointModel.OuterRadius.Value);
+                    realMinDistance, 
+                    realMaxDistance);
 
                 _coverageAreaData.Add(new CoverageAreaData
                 {

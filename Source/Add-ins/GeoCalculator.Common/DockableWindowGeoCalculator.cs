@@ -106,7 +106,10 @@ namespace MilSpace.GeoCalculator
                 var point = ClickedPointsDictionary[(Guid)row.Tag];
                 var pointCopy = point.CloneWithProjecting();
 
-                points.Add((int)row.Cells[0].Value, pointCopy);
+                if (!points.Any(p => p.Key == (int)row.Cells[0].Value))
+                {
+                    points.Add((int)row.Cells[0].Value, pointCopy);
+                }
             }
 
             return points;
@@ -981,7 +984,7 @@ namespace MilSpace.GeoCalculator
                 ProjectPointAsync(selectedPoint.Value, true);
             }
             else
-            if (column is DataGridViewImageColumn && column.Name == Constants.DeleteColumnName)
+            if (column is DataGridViewImageColumn && column.Name.Equals(Constants.DeleteColumnName, StringComparison.CurrentCultureIgnoreCase))
             {
                 var prevPointGuid = (e.RowIndex == 0) ? (Guid)PointsGridView.Rows[e.RowIndex].Tag : (Guid)PointsGridView.Rows[e.RowIndex - 1].Tag;
                 var nextPointGuid = (e.RowIndex == PointsGridView.RowCount - 1) ? (Guid)PointsGridView.Rows[e.RowIndex].Tag : (Guid)PointsGridView.Rows[e.RowIndex + 1].Tag;
@@ -1012,14 +1015,6 @@ namespace MilSpace.GeoCalculator
                 {
                     maxNum--;
                 }
-                //SynchronizePointNumbers(e.RowIndex + 1);
-
-                //Refresh Numbers column cells values
-                //for (int i = 0; i < grid.Rows.Count; i++)
-                //{
-                //    grid[Constants.NumberColumnName, i].Value = i + 1;
-                //}
-                //grid.Refresh();
             }
             else
             {
@@ -1495,23 +1490,26 @@ namespace MilSpace.GeoCalculator
             var drawLine = forbidLineDrawing ? true : chkShowLine.Checked;
             var pointGuid = AddPointToList(point, drawLine);
 
-            if(pointGuid != Guid.Empty)
+            if (pointGuid != Guid.Empty)
             {
-                if(maxNum < PointsGridView.RowCount)
+                maxNum = (int)PointsGridView.Rows[0].Cells[0].Value;
+                foreach (DataGridViewRow row in PointsGridView.Rows)
                 {
-                    maxNum = PointsGridView.RowCount + 1;
-                }
-                else
-                {
-                    maxNum++;
+                    var num = (int)row.Cells[0].Value;
+                    if (num > maxNum)
+                    {
+                        maxNum = num;
+                    }
                 }
 
-                var pointNumber = maxNum;
-                AddPointToGrid(point, pointNumber, pointGuid);
-                if(projectPoint)
-                {
-                    ProjectPointAsync(point, false, pointGuid.ToString(), pointNumber);
-                }
+                maxNum++;
+            }
+
+            var pointNumber = maxNum;
+            AddPointToGrid(point, pointNumber, pointGuid);
+            if (projectPoint)
+            {
+                ProjectPointAsync(point, false, pointGuid.ToString(), pointNumber);
             }
         }
 
@@ -1993,7 +1991,7 @@ namespace MilSpace.GeoCalculator
                 return;
             }
 
-            GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).RemoveAllGeometryFromMap(_lineName);
+            GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).RemoveAllGeometryFromMap(_lineName, MilSpaceGraphicsTypeEnum.GeoCalculator);
             DrawLine();
         }
 
@@ -2028,7 +2026,7 @@ namespace MilSpace.GeoCalculator
                 return;
             }
 
-            GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).RemoveAllGeometryFromMap(_textName);
+            GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).RemoveAllGeometryFromMap(_textName, MilSpaceGraphicsTypeEnum.GeoCalculator);
             DrawText();
         }
 
@@ -2043,7 +2041,7 @@ namespace MilSpace.GeoCalculator
 
                 var pointGuid = (Guid)row.Tag;
                 var pointGeom = ClickedPointsDictionary.First(point => point.Key == pointGuid).Value;
-                GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).DrawText(pointGeom, (int)row.Cells[0].Value, row.Tag.ToString(), _textName);
+                GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).DrawText(pointGeom, row.Cells[0].Value.ToString(), $"{_textName}{row.Tag.ToString()}", MilSpaceGraphicsTypeEnum.Calculating);
             }
         }
 
@@ -2081,7 +2079,7 @@ namespace MilSpace.GeoCalculator
             }
             else
             {
-                GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).RemoveAllGeometryFromMap(_lineName);
+                GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).RemoveAllGeometryFromMap(_lineName, MilSpaceGraphicsTypeEnum.GeoCalculator);
             }
         }
 
@@ -2098,7 +2096,7 @@ namespace MilSpace.GeoCalculator
             }
             else
             {
-                GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).RemoveAllGeometryFromMap(_textName);
+                GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).RemoveAllGeometryFromMap(_textName, MilSpaceGraphicsTypeEnum.GeoCalculator);
             }
         }
 

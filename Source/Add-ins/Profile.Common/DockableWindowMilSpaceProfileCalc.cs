@@ -270,12 +270,6 @@ namespace MilSpace.Profile
             SetListView();
         }
 
-        private void OnListViewResize(object sender, EventArgs eventArgs)
-        {
-            //lvProfileAttributes.Columns[0].Width = -1;
-            //lvProfileAttributes.Columns[0].Width += 5;
-        }
-
         private static void PopulateComboBox(ComboBox comboBox, IEnumerable<ILayer> layers)
         {
             comboBox.Items.AddRange(layers.Select(l => l.Name).ToArray());
@@ -290,7 +284,6 @@ namespace MilSpace.Profile
 
             profilesTreeView.AfterSelect += ChangeTreeViewToolbarState;
             profilesTreeView.AfterSelect += DisplaySelectedNodeAttributes;
-            lvProfileAttributes.Resize += OnListViewResize;
 
             controller.OnProfileSettingsChanged += OnProfileSettingsChanged;
             controller.OnMapSelectionChanged += Controller_OnMapSelectionChanged;
@@ -303,8 +296,6 @@ namespace MilSpace.Profile
 
         private void Controller_OnMapSelectionChanged(SelectedGraphicsArgs selectedLines)
         {
-            //lblSelectedPrimitivesValue.Text = selectedLines.LinesCount.ToString();
-            //lblCommonLengthValue.Text = selectedLines.FullLength.ToString("F2");
         }
 
         public void SetController(MilSpaceProfileCalcsController controller)
