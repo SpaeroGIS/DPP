@@ -220,6 +220,20 @@
   <WinM.label23.Text>Поверхня розрахунку</WinM.label23.Text>
   <WinM.label44.Text>Назва результату розрахунку</WinM.label44.Text>
   <WinM.label37.Text>Тип  розрахунку</WinM.label37.Text>
+  <WinM.lblOPType.Text>Джерело ПС</WinM.lblOPType.Text>
+  <WinM.lblOOSourse.Text>Джерело ОН</WinM.lblOOSourse.Text>
+  <MinM.lblMin.Text>мін.</MinM.lblMin.Text>
+  <MinM.lblMax.Text>макс.</MinM.lblMax.Text>
+  <MinM.lblAzimuths.Text>Азимути:</MinM.lblAzimuths.Text>
+  <MinM.lblAngles.Text>Кути нахилу:</MinM.lblAngles.Text>
+  <MinM.lblHeights.Text>Вибірка висот:</MinM.lblHeights.Text>
+  <MinM.lblFrom.Text>від</MinM.lblFrom.Text>
+  <MinM.lblTo.Text>до</MinM.lblTo.Text>
+  <MinM.lblStep.Text>крок</MinM.lblStep.Text>
+  <MinM.lblBufferDistance.Text>Відстань для буфера</MinM.lblBufferDistance.Text>
+  <MinM.lblCoveragePercent.Text>Відсоток покриття</MinM.lblCoveragePercent.Text>
+  <MinM.btnShowPoint.ToolTip>Показати пункт спостеження на мапі</MinM.btnShowPoint.ToolTip>
+  <MinM.btnShowOO.ToolTip>Показати об'єкт спостереження на мапі</MinM.btnShowOO.ToolTip>
 
   <WinMErrorValueOutRange>Недійсні дані. Потрібне значення від 0 до 100")</WinMErrorValueOutRange>
   <WinMWarningNoSourceForCalculation>Не вказано поверню для розрахунку</WinMWarningNoSourceForCalculation>
@@ -313,6 +327,7 @@
   <ObservObjectsSetText>Об'єкти спостреження</ObservObjectsSetText>
   <GeoCalcSetText>Точки Геокалькулятора</GeoCalcSetText>
   <FeatureLayerSetText>Векторний шар</FeatureLayerSetText>
+  <PointsLayerSetText>Точковий шар</PointsLayerSetText>
 
   <DgvObservStationSetTitleHeader>Назва</DgvObservStationSetTitleHeader>
   <DgvObservStationSetIdHeader>Ід</DgvObservStationSetIdHeader>

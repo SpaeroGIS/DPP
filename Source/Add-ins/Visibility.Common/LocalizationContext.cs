@@ -48,7 +48,6 @@ namespace MilSpace.Visibility.Localization
             Cast<ObservationObjectTypesEnum>().
             ToDictionary(t => t, ts => ts.ToString());
 
-
         private LocalizationContext()
         {
             var localizationDoc = new XmlDocument();
@@ -143,6 +142,20 @@ namespace MilSpace.Visibility.Localization
                 {CoverageTypesEnum.Partly, PartlyCoverageText },
                 {CoverageTypesEnum.Full, FullCoverageText }
              };
+
+            ObservObjectsSets = new Dictionary<ObservationSetsEnum, string>
+            {
+                { ObservationSetsEnum.Gdb, ObservObjectsSet },
+                { ObservationSetsEnum.GeoCalculator, GeoCalcSet },
+                { ObservationSetsEnum.FeatureLayers, FeatureLayerSet }
+            };
+
+            ObservPointSets = new Dictionary<ObservationSetsEnum, string>
+            {
+                {ObservationSetsEnum.Gdb, ObservPointsSet },
+                {ObservationSetsEnum.GeoCalculator, GeoCalcSet },
+                {ObservationSetsEnum.FeatureLayers, PointsFeatureLayerSet }
+            };
         }
 
         internal static LocalizationContext Instance => instance;
@@ -157,6 +170,8 @@ namespace MilSpace.Visibility.Localization
         internal Dictionary<ObservationObjectTypesEnum, string> ObservObjectsTypes => observObjectsTypes;
 
         internal Dictionary<CoverageTypesEnum, string> CoverageTypes;
+        internal Dictionary<ObservationSetsEnum, string> ObservObjectsSets;
+        internal Dictionary<ObservationSetsEnum, string> ObservPointSets;
 
         internal string CalcFirstTypeDescriptionShort =>
             FindLocalizedElement("CalcFirstTypeDescriptionShort", "VS");
@@ -201,6 +216,7 @@ namespace MilSpace.Visibility.Localization
         public string ObservObjectsSet => FindLocalizedElement("ObservObjectsSetText", "Об'єкти спостреження");
         public string GeoCalcSet => FindLocalizedElement("GeoCalcSetText", "Точки Геокалькулятора");
         public string FeatureLayerSet => FindLocalizedElement("FeatureLayerSetText", "Векторний шар");
+        public string PointsFeatureLayerSet => FindLocalizedElement("PointsLayerSetText", "Точковий шар");
 
         public string NoCoverageText => FindLocalizedElement("CoverageTypeNoneText", "Ні");
         public string PartlyCoverageText => FindLocalizedElement("CoverageTypePartlyText", "Частково");

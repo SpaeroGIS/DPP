@@ -45,18 +45,6 @@ namespace MilSpace.Visibility.ViewController
         private static Dictionary<string, ObservationObjectTypesEnum> _observObjectsTypesToConvert = Enum.GetValues(typeof(ObservationObjectTypesEnum)).Cast<ObservationObjectTypesEnum>().ToDictionary(ts => ts.ToString(), t => t);
         private static Dictionary<ObservationObjectTypesEnum, string> _observObjectsTypes = null; //Enum.GetValues(typeof(ObservationObjectTypesEnum)).Cast<ObservationObjectTypesEnum>().ToDictionary(ts => ts.ToString(), t => t);
         private static Dictionary<LayerPositionsEnum, string> _layerPositions = Enum.GetValues(typeof(LayerPositionsEnum)).Cast<LayerPositionsEnum>().ToDictionary(t => t, ts => ts.ToString());
-        private static Dictionary<ObservationSetsEnum, string> _observPointSets = new Dictionary<ObservationSetsEnum, string>
-        {
-            {ObservationSetsEnum.Gdb, LocalizationContext.Instance.ObservPointsSet },
-            {ObservationSetsEnum.GeoCalculator, LocalizationContext.Instance.GeoCalcSet }
-        };
-
-        private static Dictionary<ObservationSetsEnum, string> _observObjectsSets = new Dictionary<ObservationSetsEnum, string>
-        {
-            {ObservationSetsEnum.Gdb, LocalizationContext.Instance.ObservObjectsSet },
-            {ObservationSetsEnum.GeoCalculator, LocalizationContext.Instance.GeoCalcSet },
-            {ObservationSetsEnum.FeatureLayers, LocalizationContext.Instance.FeatureLayerSet }
-        };
 
         private IMxDocument mapDocument;
         private IMxApplication application;
@@ -1189,12 +1177,17 @@ namespace MilSpace.Visibility.ViewController
 
         internal string[] GetObservStationSetsStrings()
         {
-            return _observObjectsSets.Select(set => set.Value).ToArray();
+            return LocalizationContext.Instance.ObservObjectsSets.Select(set => set.Value).ToArray();
         }
 
         internal ObservationSetsEnum GetObservStationSet(string setString)
         {
-            return _observObjectsSets.FirstOrDefault(set => set.Value == setString).Key;
+            return LocalizationContext.Instance.ObservObjectsSets.FirstOrDefault(set => set.Value == setString).Key;
+        }
+
+        internal ObservationSetsEnum GetObservPointsSet(string setString)
+        {
+            return LocalizationContext.Instance.ObservPointSets.FirstOrDefault(set => set.Value == setString).Key;
         }
 
         internal ObservationStationToObservPointRelationModel[] GetObservationStationToObservPointRelations(int id, ObservationSetsEnum set)

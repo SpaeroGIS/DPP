@@ -16,6 +16,11 @@ namespace MilSpace.Visibility
 {
     public partial class WindowMilSpaceMVisibilityMaster : Form, IObservationPointsView
     {
+        const int BACKSPACE = 8;
+        const int DECIMAL_POINT = 46;
+        const int ZERO = 48;
+        const int NINE = 57;
+
         private string _previousPickedRasterLayer;
         private VisibilityCalcTypeEnum _stepControl = VisibilityCalcTypeEnum.None;
         private string _allValuesFilterText = "All";
@@ -61,7 +66,7 @@ namespace MilSpace.Visibility
                 this.label45.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label45.Text", "4 (VP)");
                 this.label49.Text =
                     LocalizationContext.Instance.FindLocalizedElement("WinM.label49.Text", "Визначення параметрів пунктів спостереження (ПC) \r\nПошук параметрів ПC для спостереження заданих об\'ектів спостереження (ОC) (параметри апаратури, висота над поверхнею, напрямки і кути огляду)");
-                this.button2.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.button2.Text", "Обрати >");
+                this.btnVO.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.button2.Text", "Обрати >");
                 this.label33.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label33.Text", "3 (VO)");
                 this.label48.Text =
                     LocalizationContext.Instance.FindLocalizedElement("WinM.label48.Text", "Визначення видимості в заданих ОC. \r\nПроводиться для обраних пунктів спостереження (ПС) та об\'єктів нагляду, з урахуванням індивідуальних параметрів ПС");
@@ -116,6 +121,24 @@ namespace MilSpace.Visibility
                 this.label44.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label44.Text", "Назва результату розрахунку");
                 this.label37.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label37.Text", "Тип  розрахунку");
                 this.label29.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label29.Text", "Крок 4. Перевірка параметрів розрахунку");
+                this.lblOPType.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblOPType.Text", "Джерело ПС");
+                this.lblOOSource.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblOOSourse.Text", "Джерело ОН");
+                this.lblMinAzimuth.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblMin.Text", "мін.");
+                this.lblMinAngle.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblMin.Text", "мін.");
+                this.lblMaxAzimuth.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblMax.Text", "макс.");
+                this.lblMaxAngle.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblMax.Text", "макс.");
+                this.lblAzimuths.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblAzimuths.Text", "Азимути:");
+                this.lblAngles.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblAngles.Text", "Кути нахилу:");
+                this.lblHeights.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblHeights.Text", "Вибірка висот:");
+                this.lblFrom.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblFrom.Text", "від");
+                this.lblTo.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblTo.Text", "до");
+                this.lblStep.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblStep.Text", "крок");
+                this.lblBufferDistance.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblBufferDistance.Text", "Відстань для буфера");
+                this.lblCoveragePercent.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblCoveragePercent.Text", "Відсоток покриття");
+
+                ToolTip toolTip = new ToolTip();
+                toolTip.SetToolTip(btnShowPoint, LocalizationContext.Instance.FindLocalizedElement("MinM.btnShowPoint.ToolTip", "Показати пункт спостеження на мапі"));
+                toolTip.SetToolTip(btnShowOO, LocalizationContext.Instance.FindLocalizedElement("MinM.btnShowOO.ToolTip", "Показати об'єкт спостереження на мапі"));
             }
             catch
             {
@@ -149,7 +172,7 @@ namespace MilSpace.Visibility
             dgvObjects.Enabled = false;
             splitContainer1.Panel2.Enabled = false;
         }
-        public void EanableObjList()
+        public void EnableObjList()
         {
             dgvObjects.Enabled = true;
             dgvObjects.Refresh();
@@ -170,8 +193,22 @@ namespace MilSpace.Visibility
         {
             _stepControl = VisibilityCalcTypeEnum.ObservationObjects;
             controller.UpdateObservationPointsList();
-            EanableObjList();
+            EnableObjList();
             PopulateComboBox();
+            FillObservPointLabel();
+            FillObsObj(true);
+            FillObservPointsOnCurrentView(controller.GetObservPointsOnCurrentMapExtent(ActiveView));
+        }
+
+        public void ThirdTypePicked()//triggers when user picks third type
+        {
+            _stepControl = VisibilityCalcTypeEnum.BestObservationParameters;
+            SetVOControlsVisibility(true);
+            controller.UpdateObservationPointsList();
+            EnableObjList();
+            PopulateComboBox();
+            PopulateObservationPointsTypesComboBox();
+            PopulateObservationObjectsTypesComboBox();
             FillObservPointLabel();
             FillObsObj(true);
             FillObservPointsOnCurrentView(controller.GetObservPointsOnCurrentMapExtent(ActiveView));
@@ -222,6 +259,20 @@ namespace MilSpace.Visibility
             {
                 imagesComboBox.SelectedItem = _previousPickedRasterLayer;
             }
+        }
+
+        public void PopulateObservationPointsTypesComboBox()
+        {
+            cmbOPSource.Items.Clear();
+            cmbOPSource.Items.AddRange(LocalizationContext.Instance.ObservPointSets.Select(set => set.Value).ToArray());
+            cmbOPSource.SelectedItem = LocalizationContext.Instance.ObservPointsSet;
+        }
+
+        public void PopulateObservationObjectsTypesComboBox()
+        {
+            cmbOOSource.Items.Clear();
+            cmbOOSource.Items.AddRange(LocalizationContext.Instance.ObservObjectsSets.Select(set => set.Value).ToArray());
+            cmbOOSource.SelectedItem = LocalizationContext.Instance.ObservObjectsSet;
         }
 
         public void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints, ValuableObservPointFieldsEnum filter)
@@ -430,7 +481,7 @@ namespace MilSpace.Visibility
 
             foreach (CheckObservPointGui o in _observationObjects)
             {
-                o.Check = checkBox4.Checked;
+                o.Check = chckOO.Checked;
             }
 
             dgvObjects.DataSource = _observationObjects;
@@ -442,7 +493,7 @@ namespace MilSpace.Visibility
 
             foreach (CheckObservPointGui o in _observPointGuis)
             {
-                o.Check = checkBox6.Checked;
+                o.Check = chckOP.Checked;
             }
 
             dvgCheckList.DataSource = _observPointGuis;
@@ -716,9 +767,16 @@ namespace MilSpace.Visibility
             }
             if (StepsTabControl.SelectedIndex == 0)
             {
-                panel1.Enabled = false;
+                ResetControlsSettings();
             }
         }
+
+        private void ResetControlsSettings()
+        {
+            panel1.Enabled = false;
+            SetVOControlsVisibility(false);
+        }
+
         private void ultraButton1_Click(object sender, EventArgs e)
         {
             SecondTypePicked();
@@ -780,16 +838,35 @@ namespace MilSpace.Visibility
                 tbTransparency.Text = "33";
             }
         }
+
+        private void BtnVO_Click(object sender, EventArgs e)
+        {
+            ThirdTypePicked();
+            StepsTabControl.SelectedTab.Enabled = false;
+            (StepsTabControl.TabPages[StepsTabControl.SelectedIndex + 1] as TabPage).Enabled = panel1.Enabled = true;
+            StepsTabControl.SelectedIndex++;
+        }
+
+        private void SetVOControlsVisibility(bool isVisible)
+        {
+            observPointsFiltersPanel.Visible = !isVisible;
+            observObjectsFiltersPanel.Visible = !isVisible;
+            columnsOOVisibilityPanel.Visible = !isVisible;
+            columnsOPVisibilityPanel.Visible = !isVisible;
+            chckOP.Visible = !isVisible;
+            chckOO.Visible = !isVisible;
+            chooseOPPanel.Visible = isVisible;
+            chooseOOPanel.Visible = isVisible;
+            selectedOPPanel.Visible = isVisible;
+            selectedOOPanel.Visible = isVisible;
+        }
+
+
         public void FillVisibilitySessionsTree(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded)
         {
             throw new NotImplementedException();
         }
-
-        private void tbTransparency_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
+        
         public void FillVisibilityResultsTree(IEnumerable<VisibilityCalcResults> visibilityResults)
         {
             throw new NotImplementedException();
@@ -803,6 +880,13 @@ namespace MilSpace.Visibility
         public void FillVisibilitySessionsList(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded, string newTaskName)
         {
             throw new NotImplementedException();
+        }
+
+        private void FieldsWithDouble_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            var textBox = (TextBox)sender;
+           e.Handled = (((e.KeyChar == BACKSPACE) || ((e.KeyChar >= ZERO) && (e.KeyChar <= NINE)))
+                 || ((e.KeyChar == DECIMAL_POINT) && textBox.Text.IndexOf(".") == -1)));
         }
     }
 }
