@@ -1,21 +1,24 @@
-﻿using ESRI.ArcGIS.Geometry;
+﻿using ESRI.ArcGIS.Carto;
 using MilSpace.Core.DataAccess;
-using MilSpace.Profile.Localization;
+using MilSpace.Core.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace MilSpace.Profile.ModalWindows
+namespace MilSpace.Core.ModalWindows
 {
-    public partial class GeometriesFromLayerForFunToPointsModalWindow : Form
+    public partial class PointsFromLayerModalWindow : Form
     {
-        private GeometriesFromLayerController _controller = new GeometriesFromLayerController();
-        private List<FromLayerGeometry> _geometries = new List<FromLayerGeometry>();
-        internal List<IGeometry> SelectedGeometries;
+        private PointsFromLayerController _controller;
+        private List<FromLayerPointModel> _points;
+        public FromLayerPointModel SelectedPoint;
+        public string LayerName;
 
-        public GeometriesFromLayerForFunToPointsModalWindow()
+        public PointsFromLayerModalWindow(IActiveView activeView)
         {
+            _controller = new PointsFromLayerController(activeView);
+
             InitializeComponent();
             LocalizeStrings();
             PopulateLayerComboBox();
@@ -33,7 +36,7 @@ namespace MilSpace.Profile.ModalWindows
         private void PopulateLayerComboBox()
         {
             cmbLayers.Items.Clear();
-            cmbLayers.Items.AddRange(_controller.GetNotPointFeatureLayers().ToArray());
+            cmbLayers.Items.AddRange(_controller.GetPointLayers());
             cmbLayers.SelectedIndex = 0;
         }
 
@@ -41,7 +44,7 @@ namespace MilSpace.Profile.ModalWindows
         {
             var fields = _controller.GetLayerFields(layerName);
 
-            if(fields == null || fields.Length == 0)
+            if(fields == null || fields.Count() == 0)
             {
                 cmbFields.Enabled = false;
                 FillPointsGrid();
@@ -56,8 +59,8 @@ namespace MilSpace.Profile.ModalWindows
 
         private void FillPointsGrid(string selectedField = null)
         {
-            _geometries = _controller.GetGeometries(cmbLayers.SelectedItem.ToString(), selectedField);
-            if(_geometries == null)
+            _points = _controller.GetPoints(cmbLayers.SelectedItem.ToString(), selectedField);
+            if(_points == null)
             {
                 return;
             }
@@ -65,9 +68,9 @@ namespace MilSpace.Profile.ModalWindows
             dgvPoints.Rows.Clear();
             dgvPoints.Columns["DisplayFieldCol"].Visible = selectedField != null;
 
-            foreach(var geometry in _geometries)
+            foreach(var point in _points)
             {
-                dgvPoints.Rows.Add(false, geometry.ObjId, geometry.Title);
+                dgvPoints.Rows.Add(point.ObjId, point.DisplayedField, point.Point.X.ToFormattedString(), point.Point.Y.ToFormattedString());
             }
         }
 
@@ -91,22 +94,10 @@ namespace MilSpace.Profile.ModalWindows
 
         private void BtnChoosePoint_Click(object sender, EventArgs e)
         {
-            SelectedGeometries = new List<IGeometry>();
-
-            foreach(DataGridViewRow row in dgvPoints.Rows)
+            if(dgvPoints.SelectedRows.Count > 0)
             {
-                if((bool)row.Cells[0].Value)
-                {
-                    SelectedGeometries.Add(_geometries.FirstOrDefault(geom => geom.ObjId == (int)row.Cells["IdCol"].Value).Geometry);
-                }
-            }
-        }
-
-        private void ChckAllPoints_CheckedChanged(object sender, EventArgs e)
-        {
-            foreach(DataGridViewRow row in dgvPoints.Rows)
-            {
-                row.Cells[0].Value = chckAllPoints.Checked;
+                SelectedPoint = _points.First(point => point.ObjId == (int)dgvPoints.SelectedRows[0].Cells["IdCol"].Value);
+                LayerName = lblLayer.Text;
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿namespace MilSpace.Profile.ModalWindows
+﻿namespace MilSpace.Core.ModalWindows
 {
     partial class ObservPointsForFunToPointsModalWindow
     {

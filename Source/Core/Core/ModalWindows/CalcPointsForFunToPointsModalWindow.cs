@@ -1,11 +1,11 @@
 ﻿using ESRI.ArcGIS.Geometry;
-using MilSpace.Profile.Localization;
+using MilSpace.Core.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace MilSpace.Profile.ModalWindows
+namespace MilSpace.Core.ModalWindows
 {
     public partial class CalcPointsForFunToPointsModalWindow : Form
     {

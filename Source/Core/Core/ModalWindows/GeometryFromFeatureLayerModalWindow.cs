@@ -1,26 +1,23 @@
-﻿using ESRI.ArcGIS.Geometry;
+﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.DataAccess;
-using MilSpace.Profile.Localization;
+using MilSpace.Core.Localization;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MilSpace.Profile.ModalWindows
+namespace MilSpace.Core.ModalWindows
 {
     public partial class GeometryFromFeatureLayerModalWindow : Form
     {
-        private GeometriesFromLayerController _controller = new GeometriesFromLayerController();
+        private GeometriesFromLayerController _controller;
         private List<FromLayerGeometry> _geometries = new List<FromLayerGeometry>();
-        internal IGeometry SelectedGeometry;
+        public IGeometry SelectedGeometry;
 
-        public GeometryFromFeatureLayerModalWindow()
+        public GeometryFromFeatureLayerModalWindow(IActiveView activeView)
         {
+            _controller = new GeometriesFromLayerController(activeView);
             InitializeComponent();
             LocalizeStrings();
             PopulateLayerComboBox();

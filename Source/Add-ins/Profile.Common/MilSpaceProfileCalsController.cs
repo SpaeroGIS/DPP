@@ -4,6 +4,7 @@ using ESRI.ArcGIS.Geometry;
 using MilSpace.Core;
 using MilSpace.Core.DataAccess;
 using MilSpace.Core.Exceptions;
+using MilSpace.Core.ModalWindows;
 using MilSpace.Core.ModulesInteraction;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess;
@@ -1285,7 +1286,7 @@ namespace MilSpace.Profile
 
                     try
                     {
-                        var geometryFromFeatureLayerModal = new GeometryFromFeatureLayerModalWindow();
+                        var geometryFromFeatureLayerModal = new GeometryFromFeatureLayerModalWindow(View.ActiveView);
                         var result = geometryFromFeatureLayerModal.ShowDialog();
 
                         IGeometry geometry;
@@ -1724,7 +1725,7 @@ namespace MilSpace.Profile
         {
             try
             {
-                PointsFromLayerModalWindow pointsFromLayerModal = new PointsFromLayerModalWindow();
+                PointsFromLayerModalWindow pointsFromLayerModal = new PointsFromLayerModalWindow(View.ActiveView);
                 var result = pointsFromLayerModal.ShowDialog();
 
                 if (result == DialogResult.OK)

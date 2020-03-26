@@ -218,76 +218,6 @@
       <Link>ModalWindows\AccessibleProfilesModalWindow.designer.cs</Link>
       <DependentUpon>AccessibleProfilesModalWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="..\Profile.Common\ModalWindows\CalcPointsForFunToPointsModalWindow.cs">
-      <Link>ModalWindows\CalcPointsForFunToPointsModalWindow.cs</Link>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="..\Profile.Common\ModalWindows\CalcPointsForFunToPointsModalWindow.designer.cs">
-      <Link>ModalWindows\CalcPointsForFunToPointsModalWindow.designer.cs</Link>
-      <DependentUpon>CalcPointsForFunToPointsModalWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="..\Profile.Common\ModalWindows\GeometriesFromLayerController.cs">
-      <Link>ModalWindows\GeometriesFromLayerController.cs</Link>
-    </Compile>
-    <Compile Include="..\Profile.Common\ModalWindows\GeometriesFromLayerForFunToPointsModalWindow.cs">
-      <Link>ModalWindows\GeometriesFromLayerForFunToPointsModalWindow.cs</Link>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="..\Profile.Common\ModalWindows\GeometriesFromLayerForFunToPointsModalWindow.designer.cs">
-      <Link>ModalWindows\GeometriesFromLayerForFunToPointsModalWindow.designer.cs</Link>
-      <DependentUpon>GeometriesFromLayerForFunToPointsModalWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="..\Profile.Common\ModalWindows\GeometryFromFeatureLayerModalWindow.cs">
-      <Link>ModalWindows\GeometryFromFeatureLayerModalWindow.cs</Link>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="..\Profile.Common\ModalWindows\GeometryFromFeatureLayerModalWindow.designer.cs">
-      <Link>ModalWindows\GeometryFromFeatureLayerModalWindow.designer.cs</Link>
-      <DependentUpon>GeometryFromFeatureLayerModalWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="..\Profile.Common\ModalWindows\ObservationPointsListModalWindow.cs">
-      <Link>ModalWindows\ObservationPointsListModalWindow.cs</Link>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="..\Profile.Common\ModalWindows\ObservationPointsListModalWindow.designer.cs">
-      <Link>ModalWindows\ObservationPointsListModalWindow.designer.cs</Link>
-      <DependentUpon>ObservationPointsListModalWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="..\Profile.Common\ModalWindows\ObservObjForFunModalWindow.cs">
-      <Link>ModalWindows\ObservObjForFunModalWindow.cs</Link>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="..\Profile.Common\ModalWindows\ObservObjForFunModalWindow.designer.cs">
-      <Link>ModalWindows\ObservObjForFunModalWindow.designer.cs</Link>
-      <DependentUpon>ObservObjForFunModalWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="..\Profile.Common\ModalWindows\ObservPointsForFunToPointsModalWindow.cs">
-      <Link>ModalWindows\ObservPointsForFunToPointsModalWindow.cs</Link>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="..\Profile.Common\ModalWindows\ObservPointsForFunToPointsModalWindow.designer.cs">
-      <Link>ModalWindows\ObservPointsForFunToPointsModalWindow.designer.cs</Link>
-      <DependentUpon>ObservPointsForFunToPointsModalWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="..\Profile.Common\ModalWindows\PointsFromLayerController.cs">
-      <Link>ModalWindows\PointsFromLayerController.cs</Link>
-    </Compile>
-    <Compile Include="..\Profile.Common\ModalWindows\PointsFromLayerModalWindow.cs">
-      <Link>ModalWindows\PointsFromLayerModalWindow.cs</Link>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="..\Profile.Common\ModalWindows\PointsFromLayerModalWindow.designer.cs">
-      <Link>ModalWindows\PointsFromLayerModalWindow.designer.cs</Link>
-      <DependentUpon>PointsFromLayerModalWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="..\Profile.Common\ModalWindows\PointsListModalWindow.cs">
-      <Link>ModalWindows\PointsListModalWindow.cs</Link>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="..\Profile.Common\ModalWindows\PointsListModalWindow.designer.cs">
-      <Link>ModalWindows\PointsListModalWindow.designer.cs</Link>
-      <DependentUpon>PointsListModalWindow.cs</DependentUpon>
-    </Compile>
     <Compile Include="..\Profile.Common\ModalWindows\ProfilesTreeModalWindow.cs">
       <Link>ModalWindows\ProfilesTreeModalWindow.cs</Link>
       <SubType>Form</SubType>
@@ -414,38 +344,6 @@
     <EmbeddedResource Include="..\Profile.Common\ModalWindows\AccessibleProfilesModalWindow.resx">
       <Link>ModalWindows\AccessibleProfilesModalWindow.resx</Link>
       <DependentUpon>AccessibleProfilesModalWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Profile.Common\ModalWindows\CalcPointsForFunToPointsModalWindow.resx">
-      <Link>ModalWindows\CalcPointsForFunToPointsModalWindow.resx</Link>
-      <DependentUpon>CalcPointsForFunToPointsModalWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Profile.Common\ModalWindows\GeometriesFromLayerForFunToPointsModalWindow.resx">
-      <Link>ModalWindows\GeometriesFromLayerForFunToPointsModalWindow.resx</Link>
-      <DependentUpon>GeometriesFromLayerForFunToPointsModalWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Profile.Common\ModalWindows\GeometryFromFeatureLayerModalWindow.resx">
-      <Link>ModalWindows\GeometryFromFeatureLayerModalWindow.resx</Link>
-      <DependentUpon>GeometryFromFeatureLayerModalWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Profile.Common\ModalWindows\ObservationPointsListModalWindow.resx">
-      <Link>ModalWindows\ObservationPointsListModalWindow.resx</Link>
-      <DependentUpon>ObservationPointsListModalWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Profile.Common\ModalWindows\ObservObjForFunModalWindow.resx">
-      <Link>ModalWindows\ObservObjForFunModalWindow.resx</Link>
-      <DependentUpon>ObservObjForFunModalWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Profile.Common\ModalWindows\ObservPointsForFunToPointsModalWindow.resx">
-      <Link>ModalWindows\ObservPointsForFunToPointsModalWindow.resx</Link>
-      <DependentUpon>ObservPointsForFunToPointsModalWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Profile.Common\ModalWindows\PointsFromLayerModalWindow.resx">
-      <Link>ModalWindows\PointsFromLayerModalWindow.resx</Link>
-      <DependentUpon>PointsFromLayerModalWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Profile.Common\ModalWindows\PointsListModalWindow.resx">
-      <Link>ModalWindows\PointsListModalWindow.resx</Link>
-      <DependentUpon>PointsListModalWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="..\Profile.Common\ModalWindows\ProfilesTreeModalWindow.resx">
       <Link>ModalWindows\ProfilesTreeModalWindow.resx</Link>

@@ -3,25 +3,32 @@ using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core;
 using MilSpace.Core.DataAccess;
+using MilSpace.Core.Localization;
 using MilSpace.Core.Tools;
-using MilSpace.Profile.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MilSpace.Profile.ModalWindows
+namespace MilSpace.Core.ModalWindows
 {
-    internal class GeometriesFromLayerController
+    internal class PointsFromLayerController
     {
-        private MapLayersManager _mapLayersManager = new MapLayersManager(ArcMap.Document.ActiveView);
-        private Logger _log = Logger.GetLoggerEx("MilSpace.Profile.ModalWindows.GeometriesFromLayerController");
+        private MapLayersManager _mapLayersManager;
+        private Logger _log = Logger.GetLoggerEx("MilSpace.Profile.ModalWindows.PointsFromLayerController");
 
-        public List<FromLayerGeometry> GetGeometries(string layerName, string displayedFieldName)
+        internal PointsFromLayerController(IActiveView activeView)
+        {
+            _mapLayersManager = new MapLayersManager(activeView);
+        }
+
+        public List<FromLayerPointModel> GetPoints(string layerName, string displayedFieldName)
         {
             var layer = _mapLayersManager.GetLayer(layerName) as IFeatureLayer;
-            var geometries = new List<FromLayerGeometry>();
+            var points = new List<FromLayerPointModel>();
 
             var featureClass = layer.FeatureClass;
             var idFieldIndex = featureClass.FindField("OBJECTID");
@@ -29,7 +36,7 @@ namespace MilSpace.Profile.ModalWindows
 
             if(idFieldIndex == -1)
             {
-                _log.WarnEx($"> GetGeometries. Warning: Cannot find fild \"OBJECTID\" in featureClass {featureClass.AliasName}");
+                _log.WarnEx($"> GetPoints. Warning: Cannot find fild \"OBJECTID\" in featureClass {featureClass.AliasName}");
                 MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgCannotFindObjIdText", "У шарі відсутнє поле OBJECTID"),
                                     LocalizationContext.Instance.MessageBoxTitle);
 
@@ -38,7 +45,7 @@ namespace MilSpace.Profile.ModalWindows
 
             if(selectedFieldIndex == -1)
             {
-                _log.WarnEx($"> GetGeometries. Warning: Cannot find fild {displayedFieldName} in featureClass {featureClass.AliasName}");
+                _log.WarnEx($"> GetPoints. Warning: Cannot find fild {displayedFieldName} in featureClass {featureClass.AliasName}");
             }
 
             IQueryFilter queryFilter = new QueryFilter();
@@ -50,24 +57,33 @@ namespace MilSpace.Profile.ModalWindows
             {
                 while(feature != null)
                 {
-                    var shape = feature.ShapeCopy;
+                    var shape = feature.Shape;
 
-                    var geometry = shape as IGeometry;
-                    
-                    int id = -1;
-                    string displayedField = string.Empty;
-
-                    if(idFieldIndex >= 0)
+                    if(featureClass.ShapeType == esriGeometryType.esriGeometryPoint)
                     {
-                        id = (int)feature.Value[idFieldIndex];
-                    }
+                        var point = shape as IPoint;
+                        var pointCopy = point.Clone();
+                        pointCopy.Project(EsriTools.Wgs84Spatialreference);
 
-                    if(selectedFieldIndex >= 0)
+                        int id = -1;
+                        string displayedField = string.Empty;
+
+                        if(idFieldIndex >= 0)
+                        {
+                            id = (int)feature.Value[idFieldIndex];
+                        }
+
+                        if(selectedFieldIndex >= 0)
+                        {
+                            displayedField = feature.Value[selectedFieldIndex].ToString();
+                        }
+
+                        points.Add(new FromLayerPointModel { Point = pointCopy, ObjId = id, DisplayedField = displayedField });
+                    }
+                    else
                     {
-                        displayedField = feature.Value[selectedFieldIndex].ToString();
+                        throw new Exception($"> GetPoints. Exception: Layer {layerName} doesn`t have a feature class with type esriGeometryPoint");
                     }
-
-                    geometries.Add(new FromLayerGeometry { Geometry = geometry, ObjId = id, Title = displayedField });
 
                     feature = featureCursor.NextFeature();
                 }
@@ -82,30 +98,19 @@ namespace MilSpace.Profile.ModalWindows
                 Marshal.ReleaseComObject(featureCursor);
             }
 
-            return geometries;
+            return points;
         }
 
-        public List<string> GetNotPointFeatureLayers(bool withObservObj = false)
+        public string[] GetPointLayers()
         {
-            var layers = new List<string>();
+            var layers = _mapLayersManager.PointLayers.Where(layer => !layer.Name.Equals("MilSp_Visible_ObservPoints")).Select(l => l.Name).ToArray();
 
-            if(withObservObj)
-            {
-                layers = _mapLayersManager.PolygonLayers.Select(layer => layer.Name).ToList();
-            }
-            else
-            {
-                layers = _mapLayersManager.PolygonLayers.Where(l => !(l as IFeatureLayer).FeatureClass.AliasName.EndsWith("MilSp_Visible_ObjectsObservation_R")).Select(layer => layer.Name).ToList();
-            }
-
-            layers.AddRange(_mapLayersManager.LineLayers.Select(layer => layer.Name));
-
-            if(layers.Count == 0)
+            if (layers.Length == 0)
             {
                 throw new ArgumentNullException("Required layers are missing in the project");
             }
 
-            return layers;
+            return layers; 
         }
 
         public string[] GetLayerFields(string layerName)
@@ -113,7 +118,7 @@ namespace MilSpace.Profile.ModalWindows
             try
             {
                 var layer = _mapLayersManager.GetLayer(layerName);
-                return _mapLayersManager.GetFeatureLayerFields(layer as IFeatureLayer).ToArray();
+                return  _mapLayersManager.GetFeatureLayerFields(layer as IFeatureLayer).ToArray();
             }
             catch(Exception ex)
             {

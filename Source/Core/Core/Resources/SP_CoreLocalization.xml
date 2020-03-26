@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SP_CoreLocalization xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  
+  <MessageBoxTitle>Спостереження</MessageBoxTitle>
+  <ModalPointsListTitle>Вибір точки зі списку точок Геокалькулятора</ModalPointsListTitle>
+  <ModalPointsFromLayerTitle>Вибір точки з точкового шару</ModalPointsFromLayerTitle>
+  <ModalObservPointsTitle>Вибір точки з шару точок спостереження</ModalObservPointsTitle>
+  <ModalTargetObservObjTitle>Вибір об'єктів спостереження</ModalTargetObservObjTitle>
+  <ModalTargetObservPointsTitle>Вибір точок з шару точок спостереження</ModalTargetObservPointsTitle>
+  <ModalGeometryFromLayerTitle>Вибір геометрії з векторного шару</ModalGeometryFromLayerTitle>
+
+  <ObservPointsTypeText>Пункти спостереження</ObservPointsTypeText>
+  <ObservObjectsTypeText>Об'єкти спостереження</ObservObjectsTypeText>
+  
+  <BtnChooseText>Обрати</BtnChooseText>
+
+  <LblLayersText>Шар</LblLayersText>
+  <LblFieldsText>Поле</LblFieldsText>
+  <LblGetPointsFromGeoCalculator>Список точок Геокалькулятора</LblGetPointsFromGeoCalculator>
+  
+  
+  <MsgErrorHappenedText>Виникла помилка /n Більш детальна інформація знаходиться у журналі</MsgErrorHappenedText>
+  <MsgCannotFindObjIdText>У шарі відсутнє поле OBJECTID</MsgCannotFindObjIdText>
+
+  <DgvObservPointsIdHeader>Ідентифікатор</DgvObservPointsIdHeader>
+  <DgvObservPointsTitleHeader>Назва</DgvObservPointsTitleHeader>
+
+  <LvPointsFromGeoCalculatorNumberHeader>Номер</LvPointsFromGeoCalculatorNumberHeader>
+  
+</SP_CoreLocalization>

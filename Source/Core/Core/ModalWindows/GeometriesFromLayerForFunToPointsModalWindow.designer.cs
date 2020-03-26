@@ -1,4 +1,4 @@
-﻿namespace MilSpace.Profile.ModalWindows
+﻿namespace MilSpace.Core.ModalWindows
 {
     partial class GeometriesFromLayerForFunToPointsModalWindow
     {
@@ -13,7 +13,7 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if(disposing && (components != null))
+            if (disposing && (components != null))
             {
                 components.Dispose();
             }
@@ -110,7 +110,7 @@
             // 
             // cmbLayers
             // 
-            this.cmbLayers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.cmbLayers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbLayers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbLayers.Location = new System.Drawing.Point(6, 27);

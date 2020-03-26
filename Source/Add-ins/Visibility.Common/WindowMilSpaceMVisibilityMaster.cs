@@ -884,9 +884,9 @@ namespace MilSpace.Visibility
 
         private void FieldsWithDouble_KeyPress(object sender, KeyPressEventArgs e)
         {
-            var textBox = (TextBox)sender;
-           e.Handled = (((e.KeyChar == BACKSPACE) || ((e.KeyChar >= ZERO) && (e.KeyChar <= NINE)))
-                 || ((e.KeyChar == DECIMAL_POINT) && textBox.Text.IndexOf(".") == -1)));
+           // var textBox = (TextBox)sender;
+           //e.Handled = (((e.KeyChar == BACKSPACE) || ((e.KeyChar >= ZERO) && (e.KeyChar <= NINE)))
+           //      || ((e.KeyChar == DECIMAL_POINT) && textBox.Text.IndexOf(".") == -1)));
         }
     }
 }
