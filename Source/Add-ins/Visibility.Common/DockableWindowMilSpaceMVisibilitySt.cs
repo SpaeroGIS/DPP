@@ -351,7 +351,7 @@ namespace MilSpace.Visibility
         public void ChangeRecord(int id, ObservationPoint observationPoint)
         {
             var rowIndex = dgvObservationPoints.SelectedRows[0].Index;
-            var source = dgvObservationPoints.DataSource as BindingList<ObservPointGui>;
+            var source = dgvObservationPoints.DataSource as ObservPointGui[];
             var pointGui = source.FirstOrDefault(point => point.Id == id);
 
             pointGui.Title = observationPoint.Title;
@@ -366,7 +366,7 @@ namespace MilSpace.Visibility
 
         public void AddRecord(ObservationPoint observationPoint)
         {
-            var source = dgvObservationPoints.DataSource as BindingList<ObservPointGui>;
+            var source = dgvObservationPoints.DataSource as ObservPointGui[];
             var sourceList = new List<ObservPointGui>(source);
             sourceList.Add(new ObservPointGui
             {
@@ -2529,6 +2529,11 @@ namespace MilSpace.Visibility
                 _observPointsController.RemoveObservPointsGraphics(false, true);
                 _observPointsController.DrawObservPointToObservObjectsRelationsGraphics(_selectedPointId, _observationStationSetType);
             }
+        }
+
+        public void FillSelectedOPFields(ObservationPoint point, string layer)
+        {
+            throw new NotImplementedException();
         }
     }
 }

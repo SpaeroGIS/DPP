@@ -383,6 +383,20 @@ namespace MilSpace.Visibility
             }
 
         }
+
+        public void FillSelectedOPFields(ObservationPoint point, string layer)
+        {
+            ObservPointLabel.Text = layer;
+            lblSelectedOP.Text = point.Title;
+            txtMinAzimuth.Text = point.AzimuthStart.Value.ToFormattedString(1);
+            txtMaxAzimuth.Text = point.AzimuthEnd.Value.ToFormattedString(1);
+            txtMinAngle.Text = point.AngelMinH.Value.ToFormattedString(1);
+            txtMaxAngle.Text = point.AngelMaxH.Value.ToFormattedString(1);
+            txtMinHeight.Text = point.RelativeHeight.Value.ToFormattedString(1);
+            txtMaxHeight.Text = point.RelativeHeight.Value.ToFormattedString(1);
+            txtStep.Text = "0";
+        }
+
         private void SetDataGridView_For_Objects()
         {
             try
@@ -774,6 +788,7 @@ namespace MilSpace.Visibility
         private void ResetControlsSettings()
         {
             panel1.Enabled = false;
+            ObservPointLabel.Text = controller.GetObservPointsFromGdbFeatureClassName();
             SetVOControlsVisibility(false);
         }
 
@@ -861,7 +876,6 @@ namespace MilSpace.Visibility
             selectedOOPanel.Visible = isVisible;
         }
 
-
         public void FillVisibilitySessionsTree(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded)
         {
             throw new NotImplementedException();
@@ -884,9 +898,19 @@ namespace MilSpace.Visibility
 
         private void FieldsWithDouble_KeyPress(object sender, KeyPressEventArgs e)
         {
-           // var textBox = (TextBox)sender;
-           //e.Handled = (((e.KeyChar == BACKSPACE) || ((e.KeyChar >= ZERO) && (e.KeyChar <= NINE)))
-           //      || ((e.KeyChar == DECIMAL_POINT) && textBox.Text.IndexOf(".") == -1)));
+            var textBox = (TextBox)sender;
+            e.Handled = (((e.KeyChar == BACKSPACE) || ((e.KeyChar >= ZERO) && (e.KeyChar <= NINE)))
+                  || ((e.KeyChar == DECIMAL_POINT) && textBox.Text.IndexOf(".") == -1));
+        }
+
+        private void BtnChooseOP_Click(object sender, EventArgs e)
+        {
+            controller.SelectObservationPointFromSet(controller.GetObservPointsSet(cmbOPSource.SelectedItem.ToString()));
+        }
+
+        private void FieldsWithInteger_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = ((e.KeyChar == BACKSPACE) || ((e.KeyChar >= ZERO) && (e.KeyChar <= NINE)));
         }
     }
 }

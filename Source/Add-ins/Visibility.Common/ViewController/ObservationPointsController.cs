@@ -21,6 +21,7 @@ using MilSpace.Tools.GraphicsLayer;
 using System.Windows.Forms;
 using ESRI.ArcGIS.Display;
 using MilSpace.Core.ModulesInteraction;
+using MilSpace.Core.ModalWindows;
 
 namespace MilSpace.Visibility.ViewController
 {
@@ -892,7 +893,7 @@ namespace MilSpace.Visibility.ViewController
 
             return points;
         }
-        
+
         internal List<FromLayerGeometry> GetObservObjectsFromModule()
         {
             if(!IsObservObjectsExists())
@@ -1198,6 +1199,135 @@ namespace MilSpace.Visibility.ViewController
             }
 
             return _relationLines.ToArray();
+        }
+
+        internal string GetObservPointsFromGdbFeatureClassName()
+        {
+            return VisibilityManager.ObservationPointsFeatureClass.AliasName;
+        }
+
+        internal void SelectObservationPointFromSet(ObservationSetsEnum set)
+        {
+            ObservationPoint point = null;
+            string layerName = string.Empty;
+
+            switch(set)
+            {
+                case ObservationSetsEnum.Gdb:
+
+                    point = GetObservationPointFromGdb();
+                    layerName = GetObservPointsFromGdbFeatureClassName();
+
+                    break;
+
+                case ObservationSetsEnum.GeoCalculator:
+
+                    point = GetObservationPointFromGeoCalc();
+                    layerName = LocalizationContext.Instance.GeoCalcSet;
+
+                    break;
+
+                case ObservationSetsEnum.FeatureLayers:
+
+                    point = GetObservationPointFromPointLayer(out layerName);
+
+                    break;
+            }
+
+            if(point == null)
+            {
+                return;
+            }
+
+            view.FillSelectedOPFields(point, layerName);
+        }
+
+        private ObservationPoint GetObservationPointFromGdb()
+        {
+            if(!IsObservPointsExists())
+            {
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("ObservPointscModuleDoesnotExistMessage", "Модуль \"Видимість\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним"), LocalizationContext.Instance.MessageBoxCaption);
+                log.WarnEx($"> GetObservationPointFromGdb Exception: {LocalizationContext.Instance.FindLocalizedElement("ObservPointscModuleDoesnotExistMessage", "Модуль \"Видимість\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним")}");
+                return null;
+            }
+
+            var observPointsModel = _observationPoints.Where(point => point.X.HasValue && point.Y.HasValue).Select(point =>
+            {
+                    return new FromLayerPointModel
+                    {
+                        Point = new Point { X = point.X.Value, Y = point.Y.Value, SpatialReference = EsriTools.Wgs84Spatialreference },
+                        ObjId = point.Objectid,
+                        DisplayedField = point.Title
+                    };
+
+            }).ToList();
+
+            var observPointsListModal = new ObservationPointsListModalWindow(observPointsModel);
+            var result = observPointsListModal.ShowDialog();
+
+            if(result == DialogResult.OK)
+            {
+                if(observPointsListModal.SelectedPoint != null)
+                {
+                    return _observationPoints.FirstOrDefault(point => point.Objectid == observPointsListModal.SelectedPoint.ObjId);
+                }
+            }
+
+            return null;
+        }
+
+        private ObservationPoint GetObservationPointFromGeoCalc()
+        {
+            var geoCalcPoints = GetPointsFromGeoCalculator();
+
+            if (geoCalcPoints == null)
+            {
+                return null;
+            }
+
+            var geoCalcPointsListModal = new PointsListModalWindow(geoCalcPoints);
+            var result = geoCalcPointsListModal.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                if (geoCalcPointsListModal.SelectedPoint != null)
+                {
+                    return new ObservationPoint
+                    {
+                        X = geoCalcPointsListModal.SelectedPoint.Point.X,
+                        Y = geoCalcPointsListModal.SelectedPoint.Point.Y,
+                        Title = geoCalcPointsListModal.SelectedPoint.DisplayedField,
+                        AzimuthStart = 0,
+                        AzimuthEnd = 360,
+                        AngelMinH = -90,
+                        AngelMaxH = 90,
+                        RelativeHeight = 0
+                    };
+                }
+            }
+
+            return null;
+        }
+
+        private ObservationPoint GetObservationPointFromPointLayer(out string layerName)
+        {
+            var manager = new MapLayersManager(mapDocument.ActiveView);
+            layerName = string.Empty;
+
+            var fromLayerPointsListModal = new PointsFromLayerModalWindow(ArcMap.Document.ActiveView, manager.GetObservPointsAppropriateLayers().Where(layer => !layer.EndsWith(GetObservPointsFromGdbFeatureClassName())).ToArray());
+            var result = fromLayerPointsListModal.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                if (fromLayerPointsListModal.SelectedPoint != null)
+                {
+                    layerName = fromLayerPointsListModal.LayerName;
+                    var pointsFromLayer = VisibilityManager.GetObservationPointsFromAppropriateLayer(fromLayerPointsListModal.LayerName, ArcMap.Document.ActiveView);
+                    return pointsFromLayer.FirstOrDefault(point => point.Id == fromLayerPointsListModal.SelectedPoint.ObjId.ToString());
+                }
+            }
+
+            return null;
         }
 
         private Dictionary<int, IPoint> GetPointsFromGeoCalculator()

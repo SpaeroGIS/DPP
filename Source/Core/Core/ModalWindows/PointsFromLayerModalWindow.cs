@@ -12,12 +12,18 @@ namespace MilSpace.Core.ModalWindows
     {
         private PointsFromLayerController _controller;
         private List<FromLayerPointModel> _points;
+        private string[] _layers;
         public FromLayerPointModel SelectedPoint;
         public string LayerName;
 
-        public PointsFromLayerModalWindow(IActiveView activeView)
+        public PointsFromLayerModalWindow(IActiveView activeView, string[] layers = null)
         {
             _controller = new PointsFromLayerController(activeView);
+
+            if(layers != null && layers.Any())
+            {
+                _layers = layers;
+            }
 
             InitializeComponent();
             LocalizeStrings();
@@ -36,7 +42,9 @@ namespace MilSpace.Core.ModalWindows
         private void PopulateLayerComboBox()
         {
             cmbLayers.Items.Clear();
-            cmbLayers.Items.AddRange(_controller.GetPointLayers());
+
+            var layers = _layers ?? _controller.GetPointLayers();
+            cmbLayers.Items.AddRange(layers);
             cmbLayers.SelectedIndex = 0;
         }
 
