@@ -20,9 +20,10 @@ namespace MilSpace.Profile
     {
         private static Logger _logger = Logger.GetLoggerEx("MilSpace.Profile.FunCreationManager");
 
-        public static IEnumerable<IGeometry> GetGeometriesByMethod(AssignmentMethodsEnum method)
+        public static IEnumerable<IGeometry> GetGeometriesByMethod(AssignmentMethodsEnum method, out string layerName)
         {
             var geometries = new List<IGeometry>();
+            layerName = string.Empty;
 
             try
             {
@@ -31,30 +32,34 @@ namespace MilSpace.Profile
                     case AssignmentMethodsEnum.ObservationPoints:
 
                         geometries = GetTargetObservPoints();
+                        layerName = LocalizationContext.Instance.FindLocalizedElement("ObservPointsTypeText", "Пункти спостереження");
 
                         break;
 
                     case AssignmentMethodsEnum.ObservationObjects:
 
-                        geometries = GetTargetObservObjects();
+                        geometries = GetTargetObservObjects(); 
+                        layerName = LocalizationContext.Instance.FindLocalizedElement("ObservObjectsTypeText", "Пункти спостереження");
 
                         break;
 
                     case AssignmentMethodsEnum.GeoCalculator:
 
                         geometries = GetTargetPointsFromGeoCalculator();
+                        layerName = LocalizationContext.Instance.FindLocalizedElement("CmbAssignmentMethodGeoCalcTypeText", "Геокалькулятор");
 
                         break;
 
                     case AssignmentMethodsEnum.FeatureLayers:
 
-                        geometries = GetTargetGeometriesFromFeatureLayer();
+                        geometries = GetTargetGeometriesFromFeatureLayer(out layerName);
 
                         break;
 
                     case AssignmentMethodsEnum.SelectedGraphic:
 
                         var geomFromSelectedGraphic = GetTargetGeometriesFromSelectedGraphic();
+                        layerName = LocalizationContext.Instance.FindLocalizedElement("CmbTargetAssignmentMethodSelectedGraphicText", "Обрана графіка");
 
                         if (geomFromSelectedGraphic == null)
                         {
@@ -220,8 +225,10 @@ namespace MilSpace.Profile
             return null;
         }
 
-        private static List<IGeometry> GetTargetGeometriesFromFeatureLayer()
+        private static List<IGeometry> GetTargetGeometriesFromFeatureLayer(out string layerName)
         {
+            layerName = string.Empty;
+
             try
             {
                 var geomFromLayerModal = new GeometriesFromLayerForFunToPointsModalWindow();
@@ -229,6 +236,7 @@ namespace MilSpace.Profile
 
                 if (result == DialogResult.OK)
                 {
+                    layerName = geomFromLayerModal.SelectedLayerName;
                     return geomFromLayerModal.SelectedGeometries;
                 }
             }
