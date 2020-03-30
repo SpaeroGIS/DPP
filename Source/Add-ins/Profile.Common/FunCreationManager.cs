@@ -180,7 +180,7 @@ namespace MilSpace.Profile
 
             if(result == DialogResult.OK)
             {
-                return observObjForFunModal.SelectedPoints;
+                return observObjForFunModal.SelectedGeometries;
             }
 
             return null;

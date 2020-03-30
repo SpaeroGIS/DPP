@@ -1206,6 +1206,51 @@ namespace MilSpace.Visibility.ViewController
             return VisibilityManager.ObservationPointsFeatureClass.AliasName;
         }
 
+        internal string GetObservObjectsFromGdbFeatureClassName()
+        {
+            return VisibilityManager.ObservationStationsFeatureClass.AliasName;
+        }
+
+        internal void SelectObservationStationFromSet(ObservationSetsEnum set)
+        {
+            IGeometry geometry = null;
+            string layerName = string.Empty;
+
+            switch (set)
+            {
+                case ObservationSetsEnum.Gdb:
+
+                    geometry = GetObservationStationFromGdb();
+                    layerName = GetObservObjectsFromGdbFeatureClassName();
+
+                    break;
+
+                case ObservationSetsEnum.GeoCalculator:
+
+                    geometry = GetObservationStationFromGeoCalc();
+                    layerName = LocalizationContext.Instance.GeoCalcSet;
+
+                    break;
+
+                case ObservationSetsEnum.FeatureLayers:
+
+                    var geometryFromLayer = GetObservationStationFromFeatureLayer();
+                    geometry = geometryFromLayer.Key;
+                    layerName = geometryFromLayer.Value;
+
+                    break;
+            }
+
+            if (geometry == null)
+            {
+                return;
+            }
+
+            geometry.Project(ArcMap.Document.FocusMap.SpatialReference);
+            //TODO place using geometry here
+           //TEST GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).TestObjects(geometry);
+        }
+
         internal void SelectObservationPointFromSet(ObservationSetsEnum set)
         {
             ObservationPoint point = null;
@@ -1229,7 +1274,9 @@ namespace MilSpace.Visibility.ViewController
 
                 case ObservationSetsEnum.FeatureLayers:
 
-                    point = GetObservationPointFromPointLayer(out layerName);
+                    var pointFromLayer = GetObservationPointFromPointLayer();
+                    point = pointFromLayer.Key;
+                    layerName = pointFromLayer.Value;
 
                     break;
             }
@@ -1309,10 +1356,10 @@ namespace MilSpace.Visibility.ViewController
             return null;
         }
 
-        private ObservationPoint GetObservationPointFromPointLayer(out string layerName)
+        private KeyValuePair<ObservationPoint, string> GetObservationPointFromPointLayer()
         {
             var manager = new MapLayersManager(mapDocument.ActiveView);
-            layerName = string.Empty;
+            var layerName = string.Empty;
 
             var fromLayerPointsListModal = new PointsFromLayerModalWindow(ArcMap.Document.ActiveView, manager.GetObservPointsAppropriateLayers().Where(layer => !layer.EndsWith(GetObservPointsFromGdbFeatureClassName())).ToArray());
             var result = fromLayerPointsListModal.ShowDialog();
@@ -1323,11 +1370,81 @@ namespace MilSpace.Visibility.ViewController
                 {
                     layerName = fromLayerPointsListModal.LayerName;
                     var pointsFromLayer = VisibilityManager.GetObservationPointsFromAppropriateLayer(fromLayerPointsListModal.LayerName, ArcMap.Document.ActiveView);
-                    return pointsFromLayer.FirstOrDefault(point => point.Id == fromLayerPointsListModal.SelectedPoint.ObjId.ToString());
+                    var observPoint = pointsFromLayer.FirstOrDefault(point => point.Id == fromLayerPointsListModal.SelectedPoint.ObjId.ToString());
+
+                    return new KeyValuePair<ObservationPoint, string>(observPoint, layerName);
+                }
+            }
+
+            return new KeyValuePair<ObservationPoint, string>();
+        }
+
+        private IGeometry GetObservationStationFromGdb()
+        {
+            var fromGdbObservStationListModal = new ObservObjForFunModalWindow(GetObservObjectsFromModule(), false);
+            var result = fromGdbObservStationListModal.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                if (fromGdbObservStationListModal.SelectedGeometries != null)
+                {
+                    return fromGdbObservStationListModal.SelectedGeometries.First();
                 }
             }
 
             return null;
+        }
+
+        private IGeometry GetObservationStationFromGeoCalc()
+        {
+            var points = GetPointsFromGeoCalculator();
+            List<IGeometry> selectedPointsGeoms = null;
+
+            if(points == null || points.Count == 0)
+            {
+                return null;
+            }
+
+            var calcPointsModal = new CalcPointsForFunToPointsModalWindow(points);
+            var result = calcPointsModal.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                selectedPointsGeoms = calcPointsModal.SelectedPoints;
+            }
+
+            if(selectedPointsGeoms == null || !selectedPointsGeoms.Any())
+            {
+                return null;
+            }
+
+            if(selectedPointsGeoms.Count > 1)
+            {
+                var selectedPoints = selectedPointsGeoms.Select(point => point as IPoint).ToArray();
+                var polyline = EsriTools.CreatePolylineFromPointsArray(selectedPoints, ArcMap.Document.FocusMap.SpatialReference);
+
+                return polyline.First();
+            }
+            else
+            {
+                return points.First().Value;
+            }
+        }
+
+        private KeyValuePair<IGeometry, string> GetObservationStationFromFeatureLayer()
+        {
+            var geometryFromFeatureLayerModal = new GeometryFromFeatureLayerModalWindow(ArcMap.Document.ActiveView);
+            var result = geometryFromFeatureLayerModal.ShowDialog();
+
+            if(result == DialogResult.OK)
+            {
+                var geometry = geometryFromFeatureLayerModal.SelectedGeometry;
+                var layerName = geometryFromFeatureLayerModal.SelectedLayerName;
+
+                return new KeyValuePair<IGeometry, string>(geometry, layerName);
+            }
+
+            return new KeyValuePair<IGeometry, string>();
         }
 
         private Dictionary<int, IPoint> GetPointsFromGeoCalculator()

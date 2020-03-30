@@ -381,7 +381,6 @@ namespace MilSpace.Visibility
             {
                 dgvObjects.Text = "Objects are not found";
             }
-
         }
 
         public void FillSelectedOPFields(ObservationPoint point, string layer)
@@ -906,6 +905,11 @@ namespace MilSpace.Visibility
         private void BtnChooseOP_Click(object sender, EventArgs e)
         {
             controller.SelectObservationPointFromSet(controller.GetObservPointsSet(cmbOPSource.SelectedItem.ToString()));
+        }
+
+        private void BtnChooseOO_Click(object sender, EventArgs e)
+        {
+            controller.SelectObservationStationFromSet(controller.GetObservStationSet(cmbOOSource.SelectedItem.ToString()));
         }
 
         private void FieldsWithInteger_KeyPress(object sender, KeyPressEventArgs e)

@@ -1558,6 +1558,7 @@ namespace MilSpace.Visibility
             this.btnChooseOO.TabIndex = 7;
             this.btnChooseOO.Text = "Обрати";
             this.btnChooseOO.UseVisualStyleBackColor = true;
+            this.btnChooseOO.Click += new System.EventHandler(this.BtnChooseOO_Click);
             // 
             // cmbOOSource
             // 

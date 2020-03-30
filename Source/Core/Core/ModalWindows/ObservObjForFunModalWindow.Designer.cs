@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dgvPoints = new System.Windows.Forms.DataGridView();
+            this.dgvObjects = new System.Windows.Forms.DataGridView();
             this.ChooseCol = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.IdCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TitleCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -37,32 +37,32 @@
             this.titlePanel = new System.Windows.Forms.Panel();
             this.lblLayer = new System.Windows.Forms.Label();
             this.chckAllPoints = new System.Windows.Forms.CheckBox();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvPoints)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvObjects)).BeginInit();
             this.panel1.SuspendLayout();
             this.titlePanel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // dgvPoints
+            // dgvObjects
             // 
-            this.dgvPoints.AllowUserToAddRows = false;
-            this.dgvPoints.AllowUserToDeleteRows = false;
-            this.dgvPoints.AllowUserToResizeColumns = false;
-            this.dgvPoints.AllowUserToResizeRows = false;
-            this.dgvPoints.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.dgvPoints.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvPoints.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dgvPoints.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvObjects.AllowUserToAddRows = false;
+            this.dgvObjects.AllowUserToDeleteRows = false;
+            this.dgvObjects.AllowUserToResizeColumns = false;
+            this.dgvObjects.AllowUserToResizeRows = false;
+            this.dgvObjects.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvObjects.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvObjects.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dgvObjects.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ChooseCol,
             this.IdCol,
             this.TitleCol});
-            this.dgvPoints.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvPoints.Location = new System.Drawing.Point(0, 28);
-            this.dgvPoints.MultiSelect = false;
-            this.dgvPoints.Name = "dgvPoints";
-            this.dgvPoints.RowHeadersVisible = false;
-            this.dgvPoints.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPoints.Size = new System.Drawing.Size(264, 267);
-            this.dgvPoints.TabIndex = 11;
+            this.dgvObjects.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvObjects.Location = new System.Drawing.Point(0, 28);
+            this.dgvObjects.MultiSelect = false;
+            this.dgvObjects.Name = "dgvObjects";
+            this.dgvObjects.RowHeadersVisible = false;
+            this.dgvObjects.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvObjects.Size = new System.Drawing.Size(264, 267);
+            this.dgvObjects.TabIndex = 11;
             // 
             // ChooseCol
             // 
@@ -141,7 +141,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(264, 323);
             this.Controls.Add(this.chckAllPoints);
-            this.Controls.Add(this.dgvPoints);
+            this.Controls.Add(this.dgvObjects);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.titlePanel);
             this.MaximizeBox = false;
@@ -149,7 +149,7 @@
             this.Name = "ObservObjForFunModalWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ObservObjForFunModalWindow";
-            ((System.ComponentModel.ISupportInitialize)(this.dgvPoints)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvObjects)).EndInit();
             this.panel1.ResumeLayout(false);
             this.titlePanel.ResumeLayout(false);
             this.titlePanel.PerformLayout();
@@ -160,7 +160,7 @@
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dgvPoints;
+        private System.Windows.Forms.DataGridView dgvObjects;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnChoosePoint;
         private System.Windows.Forms.Panel titlePanel;

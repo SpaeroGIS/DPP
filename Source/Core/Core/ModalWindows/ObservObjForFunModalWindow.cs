@@ -1,6 +1,5 @@
 ﻿using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.DataAccess;
-using MilSpace.Core.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +10,15 @@ namespace MilSpace.Core.ModalWindows
     public partial class ObservObjForFunModalWindow : Form
     {
         private List<FromLayerGeometry> _observObjects = new List<FromLayerGeometry>();
-        public List<IGeometry> SelectedPoints;
+        private bool _isMultiSelect;
+        public List<IGeometry> SelectedGeometries;
 
-        public ObservObjForFunModalWindow(List<FromLayerGeometry> observObjects)
+        public ObservObjForFunModalWindow(List<FromLayerGeometry> observObjects, bool isMultiSelect = true)
         {
             InitializeComponent();
             LocalizeStrings();
             _observObjects = observObjects;
+            _isMultiSelect = isMultiSelect;
             FillPointsGrid();
         }
 
@@ -25,24 +26,26 @@ namespace MilSpace.Core.ModalWindows
         {
             this.Text = LocalizationContext.Instance.FindLocalizedElement("ModalTargetObservObjTitle", "Вибір об'єктів спостереження");
             btnChoosePoint.Text = LocalizationContext.Instance.ChooseText;
-            dgvPoints.Columns["IdCol"].HeaderText = LocalizationContext.Instance.IdHeaderText;
-            dgvPoints.Columns["TitleCol"].HeaderText = LocalizationContext.Instance.TitleHeaderText;
+            dgvObjects.Columns["IdCol"].HeaderText = LocalizationContext.Instance.IdHeaderText;
+            dgvObjects.Columns["TitleCol"].HeaderText = LocalizationContext.Instance.TitleHeaderText;
             lblLayer.Text = LocalizationContext.Instance.FindLocalizedElement("ObservObjectsTypeText", "Об'єкти спостереження");
         }
 
         private void FillPointsGrid()
         {
-            dgvPoints.Rows.Clear();
+            dgvObjects.Rows.Clear();
+            dgvObjects.Columns[0].Visible = _isMultiSelect;
+            chckAllPoints.Visible = _isMultiSelect;
 
             foreach(var observObject in _observObjects)
             {
-                dgvPoints.Rows.Add(false, observObject.ObjId, observObject.Title);
+                dgvObjects.Rows.Add(false, observObject.ObjId, observObject.Title);
             }
         }
 
         private void ChckAllPoints_CheckedChanged(object sender, EventArgs e)
         {
-            foreach(DataGridViewRow row in dgvPoints.Rows)
+            foreach(DataGridViewRow row in dgvObjects.Rows)
             {
                 row.Cells[0].Value = chckAllPoints.Checked;
             }
@@ -50,13 +53,23 @@ namespace MilSpace.Core.ModalWindows
 
         private void BtnChoosePoint_Click(object sender, EventArgs e)
         {
-            SelectedPoints = new List<IGeometry>();
+            SelectedGeometries = new List<IGeometry>();
 
-            foreach(DataGridViewRow row in dgvPoints.Rows)
+            if (_isMultiSelect)
             {
-                if((bool)row.Cells[0].Value)
+                foreach (DataGridViewRow row in dgvObjects.Rows)
                 {
-                    SelectedPoints.Add(_observObjects.First(observObject => observObject.ObjId == (int)row.Cells["IdCol"].Value).Geometry);
+                    if ((bool)row.Cells[0].Value)
+                    {
+                        SelectedGeometries.Add(_observObjects.First(observObject => observObject.ObjId == (int)row.Cells["IdCol"].Value).Geometry);
+                    }
+                }
+            }
+            else
+            {
+                if(dgvObjects.SelectedRows.Count > 0)
+                {
+                    SelectedGeometries.Add(_observObjects.First(observObject => observObject.ObjId == (int)dgvObjects.SelectedRows[0].Cells["IdCol"].Value).Geometry);
                 }
             }
         }
