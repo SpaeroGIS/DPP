@@ -13,6 +13,7 @@ namespace MilSpace.Profile.ModalWindows
         private GeometriesFromLayerController _controller = new GeometriesFromLayerController();
         private List<FromLayerGeometry> _geometries = new List<FromLayerGeometry>();
         internal List<IGeometry> SelectedGeometries;
+        internal string SelectedLayerName;
 
         public GeometriesFromLayerForFunToPointsModalWindow()
         {
@@ -76,6 +77,7 @@ namespace MilSpace.Profile.ModalWindows
             dgvPoints.Rows.Clear();
             PopulateFieldsComboBox(cmbLayers.SelectedItem.ToString());
             lblLayer.Text = cmbLayers.SelectedItem.ToString();
+            SelectedLayerName = cmbLayers.SelectedItem.ToString();
         }
 
         private void CmbFields_SelectedIndexChanged(object sender, EventArgs e)

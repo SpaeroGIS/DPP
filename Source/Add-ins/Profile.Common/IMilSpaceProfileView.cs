@@ -79,7 +79,7 @@ namespace MilSpace.Profile
         void SetPointInfo(ProfileSettingsPointButtonEnum pointType, string text);
         void SetReturnButtonEnable(ProfileSettingsPointButtonEnum pointType, bool enabled);
         void SetFunToPointsParams(double averageAzimuth, double averageAngle, double avgLength, int count);
-        void SetFunTxtValues(double length, double maxAzimuth, double minAzimuth, int linesCount);
+        void SetFunTxtValues(double length, double maxAzimuth, double minAzimuth, int linesCount, string layerName, int geomCount);
         void SetPrimitiveInfo(double length, double azimuth, double projectionLength, int segmentsCount);
         void RecalculateFun();
         void RecalculateFunWithParams();
