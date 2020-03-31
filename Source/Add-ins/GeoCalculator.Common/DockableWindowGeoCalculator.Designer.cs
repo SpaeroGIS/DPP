@@ -30,12 +30,12 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowGeoCalculator));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.mgrsToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.utmToolTip = new System.Windows.Forms.ToolTip(this.components);
@@ -116,11 +116,11 @@
             this.panel17 = new System.Windows.Forms.Panel();
             this.ukraineLabel = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.MgrsNotationTextBox = new System.Windows.Forms.TextBox();
-            this.UTMNotationTextBox = new System.Windows.Forms.TextBox();
             this.toolStrip9 = new System.Windows.Forms.ToolStrip();
             this.MgrsCopyButton = new System.Windows.Forms.ToolStripButton();
             this.MgrsPasteButton = new System.Windows.Forms.ToolStripButton();
+            this.MgrsNotationTextBox = new System.Windows.Forms.TextBox();
+            this.UTMNotationTextBox = new System.Windows.Forms.TextBox();
             this.toolStrip8 = new System.Windows.Forms.ToolStrip();
             this.UtmCopyButton = new System.Windows.Forms.ToolStripButton();
             this.MgrsNotationLabel = new System.Windows.Forms.Label();
@@ -208,7 +208,7 @@
             this.TitlePanel.Location = new System.Drawing.Point(0, 0);
             this.TitlePanel.Name = "TitlePanel";
             this.TitlePanel.Padding = new System.Windows.Forms.Padding(4);
-            this.TitlePanel.Size = new System.Drawing.Size(300, 30);
+            this.TitlePanel.Size = new System.Drawing.Size(268, 30);
             this.TitlePanel.TabIndex = 49;
             // 
             // btnRefreshGraphic
@@ -216,7 +216,7 @@
             this.btnRefreshGraphic.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnRefreshGraphic.ImageKey = "Refresh20x20.png";
             this.btnRefreshGraphic.ImageList = this.imageList1;
-            this.btnRefreshGraphic.Location = new System.Drawing.Point(271, 4);
+            this.btnRefreshGraphic.Location = new System.Drawing.Point(239, 4);
             this.btnRefreshGraphic.Name = "btnRefreshGraphic";
             this.btnRefreshGraphic.Size = new System.Drawing.Size(25, 22);
             this.btnRefreshGraphic.TabIndex = 62;
@@ -468,7 +468,7 @@
             this.GeneralToolStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.GeneralToolStrip.Location = new System.Drawing.Point(0, 30);
             this.GeneralToolStrip.Name = "GeneralToolStrip";
-            this.GeneralToolStrip.Size = new System.Drawing.Size(300, 23);
+            this.GeneralToolStrip.Size = new System.Drawing.Size(268, 23);
             this.GeneralToolStrip.TabIndex = 50;
             this.GeneralToolStrip.Text = "toolStrip1";
             // 
@@ -531,7 +531,7 @@
             // 
             // CurrentCoordinatesPanel
             // 
-            this.CurrentCoordinatesPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.CurrentCoordinatesPanel.BackColor = System.Drawing.SystemColors.Window;
             this.CurrentCoordinatesPanel.Controls.Add(this.toolStrip1);
             this.CurrentCoordinatesPanel.Controls.Add(this.YCoordinateTextBox);
             this.CurrentCoordinatesPanel.Controls.Add(this.panel5);
@@ -541,7 +541,7 @@
             this.CurrentCoordinatesPanel.Location = new System.Drawing.Point(0, 53);
             this.CurrentCoordinatesPanel.Name = "CurrentCoordinatesPanel";
             this.CurrentCoordinatesPanel.Padding = new System.Windows.Forms.Padding(4, 4, 8, 4);
-            this.CurrentCoordinatesPanel.Size = new System.Drawing.Size(300, 30);
+            this.CurrentCoordinatesPanel.Size = new System.Drawing.Size(268, 30);
             this.CurrentCoordinatesPanel.TabIndex = 51;
             // 
             // toolStrip1
@@ -586,7 +586,6 @@
             this.YCoordinateTextBox.Name = "YCoordinateTextBox";
             this.YCoordinateTextBox.Size = new System.Drawing.Size(68, 21);
             this.YCoordinateTextBox.TabIndex = 7;
-            this.YCoordinateTextBox.Text = "050.12345";
             this.YCoordinateTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
             this.YCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.XCoordinateTextBox_KeyDown);
             // 
@@ -607,7 +606,6 @@
             this.XCoordinateTextBox.Name = "XCoordinateTextBox";
             this.XCoordinateTextBox.Size = new System.Drawing.Size(68, 21);
             this.XCoordinateTextBox.TabIndex = 5;
-            this.XCoordinateTextBox.Text = "036.12345";
             this.XCoordinateTextBox.TextChanged += new System.EventHandler(this.CoordinatesTextBoxes_TextChanged);
             this.XCoordinateTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.XCoordinateTextBox_KeyDown);
             // 
@@ -632,7 +630,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 83);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(300, 82);
+            this.panel1.Size = new System.Drawing.Size(268, 82);
             this.panel1.TabIndex = 52;
             // 
             // panel8
@@ -646,7 +644,7 @@
             this.panel8.Location = new System.Drawing.Point(0, 54);
             this.panel8.Name = "panel8";
             this.panel8.Padding = new System.Windows.Forms.Padding(4, 4, 8, 4);
-            this.panel8.Size = new System.Drawing.Size(300, 30);
+            this.panel8.Size = new System.Drawing.Size(268, 30);
             this.panel8.TabIndex = 62;
             // 
             // toolStrip2
@@ -735,7 +733,7 @@
             this.panel6.Location = new System.Drawing.Point(0, 24);
             this.panel6.Name = "panel6";
             this.panel6.Padding = new System.Windows.Forms.Padding(4, 4, 8, 4);
-            this.panel6.Size = new System.Drawing.Size(300, 30);
+            this.panel6.Size = new System.Drawing.Size(268, 30);
             this.panel6.TabIndex = 60;
             // 
             // toolStrip3
@@ -816,13 +814,13 @@
             // 
             // wgsLabel
             // 
-            this.wgsLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.wgsLabel.BackColor = System.Drawing.SystemColors.ControlLight;
             this.wgsLabel.Dock = System.Windows.Forms.DockStyle.Top;
             this.wgsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.wgsLabel.Location = new System.Drawing.Point(0, 0);
             this.wgsLabel.Name = "wgsLabel";
             this.wgsLabel.Padding = new System.Windows.Forms.Padding(8, 3, 0, 0);
-            this.wgsLabel.Size = new System.Drawing.Size(300, 24);
+            this.wgsLabel.Size = new System.Drawing.Size(268, 24);
             this.wgsLabel.TabIndex = 61;
             this.wgsLabel.Text = "WGS84";
             // 
@@ -835,7 +833,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 165);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(300, 86);
+            this.panel2.Size = new System.Drawing.Size(268, 86);
             this.panel2.TabIndex = 53;
             // 
             // panel10
@@ -849,7 +847,7 @@
             this.panel10.Location = new System.Drawing.Point(0, 54);
             this.panel10.Name = "panel10";
             this.panel10.Padding = new System.Windows.Forms.Padding(4, 4, 8, 4);
-            this.panel10.Size = new System.Drawing.Size(300, 30);
+            this.panel10.Size = new System.Drawing.Size(268, 30);
             this.panel10.TabIndex = 60;
             // 
             // toolStrip4
@@ -938,7 +936,7 @@
             this.panel11.Location = new System.Drawing.Point(0, 24);
             this.panel11.Name = "panel11";
             this.panel11.Padding = new System.Windows.Forms.Padding(4, 4, 8, 4);
-            this.panel11.Size = new System.Drawing.Size(300, 30);
+            this.panel11.Size = new System.Drawing.Size(268, 30);
             this.panel11.TabIndex = 61;
             // 
             // toolStrip5
@@ -1018,12 +1016,12 @@
             // 
             // panel12
             // 
-            this.panel12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.panel12.BackColor = System.Drawing.SystemColors.ControlLight;
             this.panel12.Controls.Add(this.pulkovoLabel);
             this.panel12.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel12.Location = new System.Drawing.Point(0, 0);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(300, 24);
+            this.panel12.Size = new System.Drawing.Size(268, 24);
             this.panel12.TabIndex = 62;
             // 
             // pulkovoLabel
@@ -1047,7 +1045,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(0, 251);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(300, 84);
+            this.panel3.Size = new System.Drawing.Size(268, 84);
             this.panel3.TabIndex = 54;
             // 
             // panel15
@@ -1061,7 +1059,7 @@
             this.panel15.Location = new System.Drawing.Point(0, 54);
             this.panel15.Name = "panel15";
             this.panel15.Padding = new System.Windows.Forms.Padding(4, 4, 8, 4);
-            this.panel15.Size = new System.Drawing.Size(300, 30);
+            this.panel15.Size = new System.Drawing.Size(268, 30);
             this.panel15.TabIndex = 60;
             // 
             // toolStrip6
@@ -1150,7 +1148,7 @@
             this.panel16.Location = new System.Drawing.Point(0, 24);
             this.panel16.Name = "panel16";
             this.panel16.Padding = new System.Windows.Forms.Padding(4, 4, 8, 4);
-            this.panel16.Size = new System.Drawing.Size(300, 30);
+            this.panel16.Size = new System.Drawing.Size(268, 30);
             this.panel16.TabIndex = 61;
             // 
             // toolStrip7
@@ -1230,12 +1228,12 @@
             // 
             // panel17
             // 
-            this.panel17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.panel17.BackColor = System.Drawing.SystemColors.ControlLight;
             this.panel17.Controls.Add(this.ukraineLabel);
             this.panel17.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel17.Location = new System.Drawing.Point(0, 0);
             this.panel17.Name = "panel17";
-            this.panel17.Size = new System.Drawing.Size(300, 24);
+            this.panel17.Size = new System.Drawing.Size(268, 24);
             this.panel17.TabIndex = 62;
             // 
             // ukraineLabel
@@ -1252,7 +1250,7 @@
             // 
             // panel4
             // 
-            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.panel4.BackColor = System.Drawing.SystemColors.ControlLight;
             this.panel4.Controls.Add(this.toolStrip9);
             this.panel4.Controls.Add(this.MgrsNotationTextBox);
             this.panel4.Controls.Add(this.UTMNotationTextBox);
@@ -1263,31 +1261,8 @@
             this.panel4.Location = new System.Drawing.Point(0, 335);
             this.panel4.Name = "panel4";
             this.panel4.Padding = new System.Windows.Forms.Padding(4, 4, 8, 4);
-            this.panel4.Size = new System.Drawing.Size(300, 30);
+            this.panel4.Size = new System.Drawing.Size(268, 30);
             this.panel4.TabIndex = 55;
-            // 
-            // MgrsNotationTextBox
-            // 
-            this.MgrsNotationTextBox.Dock = System.Windows.Forms.DockStyle.Left;
-            this.MgrsNotationTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.MgrsNotationTextBox.Location = new System.Drawing.Point(74, 4);
-            this.MgrsNotationTextBox.Name = "MgrsNotationTextBox";
-            this.MgrsNotationTextBox.Size = new System.Drawing.Size(140, 21);
-            this.MgrsNotationTextBox.TabIndex = 18;
-            this.MgrsNotationTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MgrsNotationTextBox_KeyDown);
-            this.MgrsNotationTextBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.MgrsNotationTextBox_MouseDoubleClick);
-            // 
-            // UTMNotationTextBox
-            // 
-            this.UTMNotationTextBox.BackColor = System.Drawing.SystemColors.Window;
-            this.UTMNotationTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.UTMNotationTextBox.Location = new System.Drawing.Point(74, 4);
-            this.UTMNotationTextBox.Name = "UTMNotationTextBox";
-            this.UTMNotationTextBox.Size = new System.Drawing.Size(150, 21);
-            this.UTMNotationTextBox.TabIndex = 31;
-            this.UTMNotationTextBox.Visible = false;
-            this.UTMNotationTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UTMNotationTextBox_KeyDown);
-            this.UTMNotationTextBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.UTMNotationTextBox_MouseDoubleClick);
             // 
             // toolStrip9
             // 
@@ -1323,6 +1298,29 @@
             this.MgrsPasteButton.Name = "MgrsPasteButton";
             this.MgrsPasteButton.Size = new System.Drawing.Size(23, 20);
             this.MgrsPasteButton.Click += new System.EventHandler(this.MgrsPasteButton_Click);
+            // 
+            // MgrsNotationTextBox
+            // 
+            this.MgrsNotationTextBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.MgrsNotationTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.MgrsNotationTextBox.Location = new System.Drawing.Point(74, 4);
+            this.MgrsNotationTextBox.Name = "MgrsNotationTextBox";
+            this.MgrsNotationTextBox.Size = new System.Drawing.Size(140, 21);
+            this.MgrsNotationTextBox.TabIndex = 18;
+            this.MgrsNotationTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MgrsNotationTextBox_KeyDown);
+            this.MgrsNotationTextBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.MgrsNotationTextBox_MouseDoubleClick);
+            // 
+            // UTMNotationTextBox
+            // 
+            this.UTMNotationTextBox.BackColor = System.Drawing.SystemColors.Window;
+            this.UTMNotationTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.UTMNotationTextBox.Location = new System.Drawing.Point(74, 4);
+            this.UTMNotationTextBox.Name = "UTMNotationTextBox";
+            this.UTMNotationTextBox.Size = new System.Drawing.Size(150, 21);
+            this.UTMNotationTextBox.TabIndex = 31;
+            this.UTMNotationTextBox.Visible = false;
+            this.UTMNotationTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UTMNotationTextBox_KeyDown);
+            this.UTMNotationTextBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.UTMNotationTextBox_MouseDoubleClick);
             // 
             // toolStrip8
             // 
@@ -1394,7 +1392,7 @@
             this.GridToolStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.GridToolStrip.Location = new System.Drawing.Point(0, 395);
             this.GridToolStrip.Name = "GridToolStrip";
-            this.GridToolStrip.Size = new System.Drawing.Size(300, 24);
+            this.GridToolStrip.Size = new System.Drawing.Size(268, 24);
             this.GridToolStrip.TabIndex = 56;
             this.GridToolStrip.Text = "toolStrip2";
             // 
@@ -1544,14 +1542,14 @@
             this.PointsGridView.BackgroundColor = System.Drawing.SystemColors.Window;
             this.PointsGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.PointsGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle19.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.PointsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.PointsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.PointsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.PointsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.NumberColumn,
@@ -1559,30 +1557,30 @@
             this.YCoordColumn,
             this.HighlightColumn,
             this.DeleteColumn});
-            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle23.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle23.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle23.SelectionBackColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle23.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.PointsGridView.DefaultCellStyle = dataGridViewCellStyle23;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.PointsGridView.DefaultCellStyle = dataGridViewCellStyle5;
             this.PointsGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PointsGridView.GridColor = System.Drawing.SystemColors.Window;
             this.PointsGridView.Location = new System.Drawing.Point(0, 449);
             this.PointsGridView.Name = "PointsGridView";
             this.PointsGridView.ReadOnly = true;
-            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle24.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle24.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle24.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle24.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.PointsGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle24;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.PointsGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.PointsGridView.RowHeadersVisible = false;
             this.PointsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.PointsGridView.Size = new System.Drawing.Size(300, 143);
+            this.PointsGridView.Size = new System.Drawing.Size(268, 143);
             this.PointsGridView.TabIndex = 57;
             this.PointsGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.PointsGridView_CellContentClick);
             this.PointsGridView.SelectionChanged += new System.EventHandler(this.PointsGridView_SelectionChanged);
@@ -1591,10 +1589,10 @@
             // NumberColumn
             // 
             this.NumberColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle20.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle20.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            this.NumberColumn.DefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            this.NumberColumn.DefaultCellStyle = dataGridViewCellStyle2;
             this.NumberColumn.HeaderText = "N";
             this.NumberColumn.Name = "NumberColumn";
             this.NumberColumn.ReadOnly = true;
@@ -1603,11 +1601,11 @@
             // XCoordColumn
             // 
             this.XCoordColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle21.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle21.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle21.SelectionForeColor = System.Drawing.Color.White;
-            this.XCoordColumn.DefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
+            this.XCoordColumn.DefaultCellStyle = dataGridViewCellStyle3;
             this.XCoordColumn.HeaderText = "Longitude";
             this.XCoordColumn.Name = "XCoordColumn";
             this.XCoordColumn.ReadOnly = true;
@@ -1617,11 +1615,11 @@
             // YCoordColumn
             // 
             this.YCoordColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle22.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle22.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle22.SelectionForeColor = System.Drawing.Color.White;
-            this.YCoordColumn.DefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.White;
+            this.YCoordColumn.DefaultCellStyle = dataGridViewCellStyle4;
             this.YCoordColumn.HeaderText = "Latitude";
             this.YCoordColumn.Name = "YCoordColumn";
             this.YCoordColumn.ReadOnly = true;
@@ -1655,7 +1653,7 @@
             this.checkBoxesPanel.Location = new System.Drawing.Point(0, 615);
             this.checkBoxesPanel.Name = "checkBoxesPanel";
             this.checkBoxesPanel.Padding = new System.Windows.Forms.Padding(14, 6, 6, 6);
-            this.checkBoxesPanel.Size = new System.Drawing.Size(300, 45);
+            this.checkBoxesPanel.Size = new System.Drawing.Size(268, 45);
             this.checkBoxesPanel.TabIndex = 60;
             // 
             // chkShowNumbers
@@ -1666,7 +1664,7 @@
             this.chkShowNumbers.Dock = System.Windows.Forms.DockStyle.Top;
             this.chkShowNumbers.Location = new System.Drawing.Point(14, 23);
             this.chkShowNumbers.Name = "chkShowNumbers";
-            this.chkShowNumbers.Size = new System.Drawing.Size(280, 17);
+            this.chkShowNumbers.Size = new System.Drawing.Size(248, 17);
             this.chkShowNumbers.TabIndex = 1;
             this.chkShowNumbers.Text = "Show numbers";
             this.chkShowNumbers.UseVisualStyleBackColor = true;
@@ -1680,7 +1678,7 @@
             this.chkShowLine.Dock = System.Windows.Forms.DockStyle.Top;
             this.chkShowLine.Location = new System.Drawing.Point(14, 6);
             this.chkShowLine.Name = "chkShowLine";
-            this.chkShowLine.Size = new System.Drawing.Size(280, 17);
+            this.chkShowLine.Size = new System.Drawing.Size(248, 17);
             this.chkShowLine.TabIndex = 0;
             this.chkShowLine.Text = "Show line";
             this.chkShowLine.UseVisualStyleBackColor = true;
@@ -1694,7 +1692,7 @@
             this.toolBoxTitlePanel.Location = new System.Drawing.Point(0, 365);
             this.toolBoxTitlePanel.Name = "toolBoxTitlePanel";
             this.toolBoxTitlePanel.Padding = new System.Windows.Forms.Padding(8, 3, 0, 4);
-            this.toolBoxTitlePanel.Size = new System.Drawing.Size(300, 30);
+            this.toolBoxTitlePanel.Size = new System.Drawing.Size(268, 30);
             this.toolBoxTitlePanel.TabIndex = 60;
             // 
             // toolsLabel
@@ -1719,7 +1717,7 @@
             this.comboPanel.Location = new System.Drawing.Point(0, 419);
             this.comboPanel.Name = "comboPanel";
             this.comboPanel.Padding = new System.Windows.Forms.Padding(4);
-            this.comboPanel.Size = new System.Drawing.Size(300, 30);
+            this.comboPanel.Size = new System.Drawing.Size(268, 30);
             this.comboPanel.TabIndex = 61;
             // 
             // cmbCoordSystem
@@ -1747,9 +1745,10 @@
             this.graphicTitlePanel.Controls.Add(this.graphicLabel);
             this.graphicTitlePanel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.graphicTitlePanel.Location = new System.Drawing.Point(0, 592);
+            this.graphicTitlePanel.Margin = new System.Windows.Forms.Padding(0);
             this.graphicTitlePanel.Name = "graphicTitlePanel";
-            this.graphicTitlePanel.Padding = new System.Windows.Forms.Padding(14, 3, 0, 4);
-            this.graphicTitlePanel.Size = new System.Drawing.Size(300, 23);
+            this.graphicTitlePanel.Padding = new System.Windows.Forms.Padding(8, 3, 0, 4);
+            this.graphicTitlePanel.Size = new System.Drawing.Size(268, 23);
             this.graphicTitlePanel.TabIndex = 61;
             // 
             // graphicLabel
@@ -1757,7 +1756,7 @@
             this.graphicLabel.AutoSize = true;
             this.graphicLabel.Dock = System.Windows.Forms.DockStyle.Top;
             this.graphicLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.graphicLabel.Location = new System.Drawing.Point(14, 3);
+            this.graphicLabel.Location = new System.Drawing.Point(8, 3);
             this.graphicLabel.Name = "graphicLabel";
             this.graphicLabel.Size = new System.Drawing.Size(120, 18);
             this.graphicLabel.TabIndex = 0;
@@ -1780,7 +1779,7 @@
             this.Controls.Add(this.GeneralToolStrip);
             this.Controls.Add(this.TitlePanel);
             this.Name = "DockableWindowGeoCalculator";
-            this.Size = new System.Drawing.Size(300, 660);
+            this.Size = new System.Drawing.Size(268, 660);
             this.Load += new System.EventHandler(this.DockableWindowGeoCalculator_Load);
             this.TitlePanel.ResumeLayout(false);
             this.TitlePanel.PerformLayout();
