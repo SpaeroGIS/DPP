@@ -263,6 +263,8 @@ namespace MilSpace.Visibility.Localization
         public string IncorrectRangeMessage => FindLocalizedElement("IncorrectRangeMessage", "Invalid data.\nThe value must be in range from {0} to {1}");
         public string ValueLessThenZeroMessage => FindLocalizedElement("ValueLessThenZeroMessage", "Invalid data.\nThe value must be greater than zero");
         public string EmptyValueMessage => FindLocalizedElement("EmptyValueMessage", "Invalid data.\nPlease enter a value");
+        public string ValueMoreThanMaxMessage => FindLocalizedElement("ValueMoreThanMaxMessage", "Invalid data.\nЗначення не може бути більше максимального");
+        public string ValueLessThanMinMessage => FindLocalizedElement("ValueLessThanMinMessage", "Invalid data.\nЗначення не може бути менше мінімального");
         public string InvalidFormatMessage => FindLocalizedElement("InvalidFormatMessage", "Invalid format");
         public string UnableToRemoveTaskMessage => FindLocalizedElement("UnableToRemoveTaskMessage", "The result of the current session visibility calculation cannot be deleted");
         public string UnableToFullRemoveTaskMessage => FindLocalizedElement("UnableToFullRemoveTaskMessage", "The result of the visibility calculation cannot be completely deleted");
@@ -301,7 +303,8 @@ namespace MilSpace.Visibility.Localization
 
         internal string FindLocalizedElement(string xmlNodeName, string defaultValue)
         {
-            return _root?.SelectSingleNode(xmlNodeName)?.InnerText ?? defaultValue;
+            var result = _root?.SelectSingleNode(xmlNodeName)?.InnerText ?? defaultValue;
+            return result.Replace(@"\n", Environment.NewLine);
         }
     }
 }

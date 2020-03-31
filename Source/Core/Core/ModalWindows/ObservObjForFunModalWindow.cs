@@ -11,7 +11,7 @@ namespace MilSpace.Core.ModalWindows
     {
         private List<FromLayerGeometry> _observObjects = new List<FromLayerGeometry>();
         private bool _isMultiSelect;
-        public List<IGeometry> SelectedGeometries;
+        public Dictionary<int, IGeometry> SelectedGeometries;
 
         public ObservObjForFunModalWindow(List<FromLayerGeometry> observObjects, bool isMultiSelect = true)
         {
@@ -53,7 +53,7 @@ namespace MilSpace.Core.ModalWindows
 
         private void BtnChoosePoint_Click(object sender, EventArgs e)
         {
-            SelectedGeometries = new List<IGeometry>();
+            SelectedGeometries = new Dictionary<int, IGeometry>();
 
             if (_isMultiSelect)
             {
@@ -61,7 +61,8 @@ namespace MilSpace.Core.ModalWindows
                 {
                     if ((bool)row.Cells[0].Value)
                     {
-                        SelectedGeometries.Add(_observObjects.First(observObject => observObject.ObjId == (int)row.Cells["IdCol"].Value).Geometry);
+                        var objId = (int)row.Cells["IdCol"].Value;
+                        SelectedGeometries.Add(objId, _observObjects.First(observObject => observObject.ObjId == objId).Geometry);
                     }
                 }
             }
@@ -69,7 +70,8 @@ namespace MilSpace.Core.ModalWindows
             {
                 if(dgvObjects.SelectedRows.Count > 0)
                 {
-                    SelectedGeometries.Add(_observObjects.First(observObject => observObject.ObjId == (int)dgvObjects.SelectedRows[0].Cells["IdCol"].Value).Geometry);
+                    var objId = (int)dgvObjects.SelectedRows[0].Cells["IdCol"].Value;
+                    SelectedGeometries.Add(objId, _observObjects.First(observObject => observObject.ObjId == objId).Geometry);
                 }
             }
         }

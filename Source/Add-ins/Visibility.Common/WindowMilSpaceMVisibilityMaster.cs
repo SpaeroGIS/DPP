@@ -1,4 +1,5 @@
 ﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Geometry;
 using MilSpace.Core;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
@@ -28,6 +29,8 @@ namespace MilSpace.Visibility
         private ObservationPointsController controller = new ObservationPointsController(ArcMap.Document, ArcMap.ThisApplication);
         private BindingList<CheckObservPointGui> _observPointGuis;
         private BindingList<CheckObservPointGui> _observationObjects;
+        private ObservationPoint _selectedObservationPoint;
+        private IGeometry _selectedGeometry;
         internal WizardResult FinalResult = new WizardResult();
 
         private static IActiveView ActiveView => ArcMap.Document.ActiveView;
@@ -139,6 +142,8 @@ namespace MilSpace.Visibility
                 ToolTip toolTip = new ToolTip();
                 toolTip.SetToolTip(btnShowPoint, LocalizationContext.Instance.FindLocalizedElement("MinM.btnShowPoint.ToolTip", "Показати пункт спостеження на мапі"));
                 toolTip.SetToolTip(btnShowOO, LocalizationContext.Instance.FindLocalizedElement("MinM.btnShowOO.ToolTip", "Показати об'єкт спостереження на мапі"));
+
+                SetDefaultValues();
             }
             catch
             {
@@ -151,6 +156,13 @@ namespace MilSpace.Visibility
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
             }
+        }
+
+        private void SetDefaultValues()
+        {
+            txtStep.Text = "1";
+            txtBufferDistance.Text = "1";
+            txtCoveragePercent.Text = "100";
         }
 
         protected override void OnLoad(EventArgs e)
@@ -385,6 +397,8 @@ namespace MilSpace.Visibility
 
         public void FillSelectedOPFields(ObservationPoint point, string layer)
         {
+            _selectedObservationPoint = point;
+
             ObservPointLabel.Text = layer;
             lblSelectedOP.Text = point.Title;
             txtMinAzimuth.Text = point.AzimuthStart.Value.ToFormattedString(1);
@@ -393,7 +407,23 @@ namespace MilSpace.Visibility
             txtMaxAngle.Text = point.AngelMaxH.Value.ToFormattedString(1);
             txtMinHeight.Text = point.RelativeHeight.Value.ToFormattedString(1);
             txtMaxHeight.Text = point.RelativeHeight.Value.ToFormattedString(1);
-            txtStep.Text = "0";
+
+            SetSelectedOPControlsEnabled(true);
+        }
+
+        public void AddSelectedOO(IGeometry geometry, string title)
+        {
+            _selectedGeometry = geometry;
+
+            lblSelectedOO.Text = title;
+            txtBufferDistance.Enabled = (geometry.GeometryType != esriGeometryType.esriGeometryPolygon);
+            txtCoveragePercent.Enabled = true;
+        }
+
+        private void SetSelectedOPControlsEnabled(bool enabled)
+        {
+            txtMinAzimuth.Enabled = txtMaxAzimuth.Enabled = txtMinAngle.Enabled = txtMaxAngle.Enabled
+             = txtMinHeight.Enabled = txtMaxHeight.Enabled = txtStep.Enabled = enabled;
         }
 
         private void SetDataGridView_For_Objects()
@@ -898,7 +928,7 @@ namespace MilSpace.Visibility
         private void FieldsWithDouble_KeyPress(object sender, KeyPressEventArgs e)
         {
             var textBox = (TextBox)sender;
-            e.Handled = (((e.KeyChar == BACKSPACE) || ((e.KeyChar >= ZERO) && (e.KeyChar <= NINE)))
+            e.Handled = !(((e.KeyChar == BACKSPACE) || ((e.KeyChar >= ZERO) && (e.KeyChar <= NINE)))
                   || ((e.KeyChar == DECIMAL_POINT) && textBox.Text.IndexOf(".") == -1));
         }
 
@@ -914,7 +944,95 @@ namespace MilSpace.Visibility
 
         private void FieldsWithInteger_KeyPress(object sender, KeyPressEventArgs e)
         {
-            e.Handled = ((e.KeyChar == BACKSPACE) || ((e.KeyChar >= ZERO) && (e.KeyChar <= NINE)));
+            e.Handled = !((e.KeyChar == BACKSPACE) || ((e.KeyChar >= ZERO) && (e.KeyChar <= NINE)));
+        }
+
+        private void ValidateRangedValues(TextBox sender, TextBox minTxt, TextBox maxTxt, double min, double max, string replaceValue)
+        {
+            var isDouble = Double.TryParse(sender.Text, out double value);
+            var isMax = (sender == maxTxt);
+
+            if (!isDouble)
+            {
+                MessageBox.Show(LocalizationContext.Instance.InvalidFormatMessage, LocalizationContext.Instance.MessageBoxWarningCaption);
+                sender.Text = replaceValue;
+                return;
+            }
+
+            if (value < min || value > max)
+            {
+                MessageBox.Show(String.Format(LocalizationContext.Instance.IncorrectRangeMessage, min, max), LocalizationContext.Instance.MessageBoxWarningCaption);
+                sender.Text = replaceValue;
+                return;
+            }
+
+            if (isMax)
+            {
+                if (value < Convert.ToDouble(minTxt.Text))
+                {
+                    MessageBox.Show(String.Format(LocalizationContext.Instance.ValueLessThanMinMessage, minTxt.Text), LocalizationContext.Instance.MessageBoxWarningCaption);
+                    sender.Text = replaceValue;
+                    return;
+                }
+            }
+            else if (value > Convert.ToDouble(maxTxt.Text))
+            {
+                MessageBox.Show(String.Format(LocalizationContext.Instance.ValueMoreThanMaxMessage, maxTxt.Text), LocalizationContext.Instance.MessageBoxWarningCaption);
+                sender.Text = replaceValue;
+                return;
+            }
+        }
+
+        private void TxtAzimuth_Leave(object sender, EventArgs e)
+        {
+            var textBox = sender as TextBox;
+            var replaceValue = (textBox == txtMaxAzimuth) ? _selectedObservationPoint.AzimuthEnd.Value : _selectedObservationPoint.AzimuthStart.Value;
+
+            ValidateRangedValues(textBox, txtMinAzimuth, txtMaxAzimuth, 0, 360, replaceValue.ToFormattedString(1));
+        }
+
+        private void TxtAngle_Leave(object sender, EventArgs e)
+        {
+            var textBox = sender as TextBox;
+            var replaceValue = (textBox == txtMaxAngle) ? _selectedObservationPoint.AngelMaxH.Value : _selectedObservationPoint.AngelMinH.Value;
+
+            ValidateRangedValues(textBox, txtMinAngle, txtMaxAngle, -90, 90, replaceValue.ToFormattedString(1));
+        }
+
+        private void TxtHeight_Leave(object sender, EventArgs e)
+        {
+            var textBox = sender as TextBox;
+
+            ValidateRangedValues(textBox, txtMinHeight, txtMaxHeight, 0, Double.MaxValue, _selectedObservationPoint.RelativeHeight.Value.ToFormattedString(1));
+        }
+
+        private void TxtStep_Leave(object sender, EventArgs e)
+        {
+            var textBox = sender as TextBox;
+            var isInteger = Int32.TryParse(textBox.Text, out int value);
+
+            if(!isInteger)
+            {
+                MessageBox.Show(LocalizationContext.Instance.InvalidFormatMessage, LocalizationContext.Instance.MessageBoxWarningCaption);
+                textBox.Text = "1";
+                return;
+            }
+            
+            if(value < 0)
+            {
+                MessageBox.Show(LocalizationContext.Instance.ValueLessThenZeroMessage, LocalizationContext.Instance.MessageBoxWarningCaption);
+                textBox.Text = "1";
+                return;
+            }
+
+            var heightsDiff = Convert.ToInt32(txtMaxHeight.Text) - Convert.ToInt32(txtMinHeight.Text);
+
+            if (value > heightsDiff)
+            {
+                MessageBox.Show(String.Format(LocalizationContext.Instance.ValueMoreThanMaxMessage, heightsDiff.ToString("F0")), LocalizationContext.Instance.MessageBoxWarningCaption);
+                textBox.Text = "1";
+                return;
+            }
         }
     }
 }

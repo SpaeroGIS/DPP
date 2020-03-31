@@ -15,6 +15,7 @@ namespace MilSpace.Core.ModalWindows
         private List<FromLayerGeometry> _geometries = new List<FromLayerGeometry>();
         public IGeometry SelectedGeometry;
         public string SelectedLayerName;
+        public string SelectedGeometryId;
 
         public GeometryFromFeatureLayerModalWindow(IActiveView activeView)
         {
@@ -98,7 +99,9 @@ namespace MilSpace.Core.ModalWindows
 
         private void BtnChoosePoint_Click(object sender, EventArgs e)
         {
-            SelectedGeometry = _geometries.First(geometry => geometry.ObjId == (int)dgvGeometries.SelectedRows[0].Cells["IdCol"].Value).Geometry;
+            var objId = (int)dgvGeometries.SelectedRows[0].Cells["IdCol"].Value;
+            SelectedGeometryId = objId.ToString();
+            SelectedGeometry = _geometries.First(geometry => geometry.ObjId == objId).Geometry;
         }
     }
 }

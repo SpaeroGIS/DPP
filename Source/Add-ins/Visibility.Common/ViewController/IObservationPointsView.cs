@@ -1,4 +1,5 @@
-﻿using MilSpace.DataAccess.DataTransfer;
+﻿using ESRI.ArcGIS.Geometry;
+using MilSpace.DataAccess.DataTransfer;
 using System.Collections.Generic;
 
 namespace MilSpace.Visibility.ViewController
@@ -10,6 +11,7 @@ namespace MilSpace.Visibility.ViewController
         void FillVisibilityResultsTree(IEnumerable<VisibilityCalcResults> visibilityResults);
         void FillObservationObjectsList(IEnumerable<ObservationObject> observationObjects);
         void FillSelectedOPFields(ObservationPoint point, string layer);
+        void AddSelectedOO(IGeometry geometry, string title);
         void ChangeRecord(int id, ObservationPoint observationPoint);
         void AddRecord(ObservationPoint observationPoint);
         void RemoveSessionFromList(string id);

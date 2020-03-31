@@ -1214,21 +1214,22 @@ namespace MilSpace.Visibility.ViewController
         internal void SelectObservationStationFromSet(ObservationSetsEnum set)
         {
             IGeometry geometry = null;
-            string layerName = string.Empty;
+            string layerNameAndObjId = string.Empty;
 
             switch (set)
             {
                 case ObservationSetsEnum.Gdb:
 
-                    geometry = GetObservationStationFromGdb();
-                    layerName = GetObservObjectsFromGdbFeatureClassName();
+                    var geometryWithId = GetObservationStationFromGdb();
+                    geometry = geometryWithId.Value;
+                    layerNameAndObjId = $"{ GetObservObjectsFromGdbFeatureClassName()}; {_observationObjects.First(obj => obj.ObjectId == geometryWithId.Key).Title}";
 
                     break;
 
                 case ObservationSetsEnum.GeoCalculator:
 
                     geometry = GetObservationStationFromGeoCalc();
-                    layerName = LocalizationContext.Instance.GeoCalcSet;
+                    layerNameAndObjId = LocalizationContext.Instance.GeoCalcSet;
 
                     break;
 
@@ -1236,7 +1237,7 @@ namespace MilSpace.Visibility.ViewController
 
                     var geometryFromLayer = GetObservationStationFromFeatureLayer();
                     geometry = geometryFromLayer.Key;
-                    layerName = geometryFromLayer.Value;
+                    layerNameAndObjId = geometryFromLayer.Value;
 
                     break;
             }
@@ -1247,7 +1248,7 @@ namespace MilSpace.Visibility.ViewController
             }
 
             geometry.Project(ArcMap.Document.FocusMap.SpatialReference);
-            //TODO place using geometry here
+            view.AddSelectedOO(geometry, layerNameAndObjId);
            //TEST GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).TestObjects(geometry);
         }
 
@@ -1379,7 +1380,7 @@ namespace MilSpace.Visibility.ViewController
             return new KeyValuePair<ObservationPoint, string>();
         }
 
-        private IGeometry GetObservationStationFromGdb()
+        private KeyValuePair<int, IGeometry> GetObservationStationFromGdb()
         {
             var fromGdbObservStationListModal = new ObservObjForFunModalWindow(GetObservObjectsFromModule(), false);
             var result = fromGdbObservStationListModal.ShowDialog();
@@ -1392,7 +1393,7 @@ namespace MilSpace.Visibility.ViewController
                 }
             }
 
-            return null;
+            return new KeyValuePair<int, IGeometry>();
         }
 
         private IGeometry GetObservationStationFromGeoCalc()
@@ -1439,9 +1440,9 @@ namespace MilSpace.Visibility.ViewController
             if(result == DialogResult.OK)
             {
                 var geometry = geometryFromFeatureLayerModal.SelectedGeometry;
-                var layerName = geometryFromFeatureLayerModal.SelectedLayerName;
+                var selectedObjTitle = $"{geometryFromFeatureLayerModal.SelectedLayerName}; {geometryFromFeatureLayerModal.SelectedGeometryId}";
 
-                return new KeyValuePair<IGeometry, string>(geometry, layerName);
+                return new KeyValuePair<IGeometry, string>(geometry, selectedObjTitle);
             }
 
             return new KeyValuePair<IGeometry, string>();

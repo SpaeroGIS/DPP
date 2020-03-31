@@ -969,11 +969,13 @@ namespace MilSpace.Visibility
             // 
             // txtStep
             // 
+            this.txtStep.Enabled = false;
             this.txtStep.Location = new System.Drawing.Point(361, 126);
             this.txtStep.Name = "txtStep";
             this.txtStep.Size = new System.Drawing.Size(55, 20);
             this.txtStep.TabIndex = 21;
             this.txtStep.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithInteger_KeyPress);
+            this.txtStep.Leave += new System.EventHandler(this.TxtStep_Leave);
             // 
             // lblStep
             // 
@@ -988,11 +990,13 @@ namespace MilSpace.Visibility
             // 
             // txtMinHeight
             // 
+            this.txtMinHeight.Enabled = false;
             this.txtMinHeight.Location = new System.Drawing.Point(146, 127);
             this.txtMinHeight.Name = "txtMinHeight";
             this.txtMinHeight.Size = new System.Drawing.Size(55, 20);
             this.txtMinHeight.TabIndex = 19;
             this.txtMinHeight.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithDouble_KeyPress);
+            this.txtMinHeight.Leave += new System.EventHandler(this.TxtHeight_Leave);
             // 
             // lblFrom
             // 
@@ -1007,11 +1011,13 @@ namespace MilSpace.Visibility
             // 
             // txtMaxHeight
             // 
+            this.txtMaxHeight.Enabled = false;
             this.txtMaxHeight.Location = new System.Drawing.Point(245, 126);
             this.txtMaxHeight.Name = "txtMaxHeight";
             this.txtMaxHeight.Size = new System.Drawing.Size(55, 20);
             this.txtMaxHeight.TabIndex = 17;
             this.txtMaxHeight.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithDouble_KeyPress);
+            this.txtMaxHeight.Leave += new System.EventHandler(this.TxtHeight_Leave);
             // 
             // lblTo
             // 
@@ -1026,11 +1032,13 @@ namespace MilSpace.Visibility
             // 
             // txtMinAngle
             // 
+            this.txtMinAngle.Enabled = false;
             this.txtMinAngle.Location = new System.Drawing.Point(146, 89);
             this.txtMinAngle.Name = "txtMinAngle";
             this.txtMinAngle.Size = new System.Drawing.Size(55, 20);
             this.txtMinAngle.TabIndex = 15;
             this.txtMinAngle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithDouble_KeyPress);
+            this.txtMinAngle.Leave += new System.EventHandler(this.TxtAngle_Leave);
             // 
             // lblAngles
             // 
@@ -1045,11 +1053,13 @@ namespace MilSpace.Visibility
             // 
             // txtMaxAngle
             // 
+            this.txtMaxAngle.Enabled = false;
             this.txtMaxAngle.Location = new System.Drawing.Point(245, 89);
             this.txtMaxAngle.Name = "txtMaxAngle";
             this.txtMaxAngle.Size = new System.Drawing.Size(55, 20);
             this.txtMaxAngle.TabIndex = 13;
             this.txtMaxAngle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithDouble_KeyPress);
+            this.txtMaxAngle.Leave += new System.EventHandler(this.TxtAngle_Leave);
             // 
             // lblMaxAngle
             // 
@@ -1064,11 +1074,13 @@ namespace MilSpace.Visibility
             // 
             // txtMinAzimuth
             // 
+            this.txtMinAzimuth.Enabled = false;
             this.txtMinAzimuth.Location = new System.Drawing.Point(146, 56);
             this.txtMinAzimuth.Name = "txtMinAzimuth";
             this.txtMinAzimuth.Size = new System.Drawing.Size(55, 20);
             this.txtMinAzimuth.TabIndex = 11;
             this.txtMinAzimuth.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithDouble_KeyPress);
+            this.txtMinAzimuth.Leave += new System.EventHandler(this.TxtAzimuth_Leave);
             // 
             // lblAzimuths
             // 
@@ -1083,11 +1095,13 @@ namespace MilSpace.Visibility
             // 
             // txtMaxAzimuth
             // 
+            this.txtMaxAzimuth.Enabled = false;
             this.txtMaxAzimuth.Location = new System.Drawing.Point(245, 53);
             this.txtMaxAzimuth.Name = "txtMaxAzimuth";
             this.txtMaxAzimuth.Size = new System.Drawing.Size(55, 20);
             this.txtMaxAzimuth.TabIndex = 9;
             this.txtMaxAzimuth.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithDouble_KeyPress);
+            this.txtMaxAzimuth.Leave += new System.EventHandler(this.TxtAzimuth_Leave);
             // 
             // lblSelectedOP
             // 
@@ -1400,6 +1414,7 @@ namespace MilSpace.Visibility
             // 
             // txtCoveragePercent
             // 
+            this.txtCoveragePercent.Enabled = false;
             this.txtCoveragePercent.Location = new System.Drawing.Point(161, 92);
             this.txtCoveragePercent.Name = "txtCoveragePercent";
             this.txtCoveragePercent.Size = new System.Drawing.Size(55, 20);
@@ -1408,6 +1423,7 @@ namespace MilSpace.Visibility
             // 
             // txtBufferDistance
             // 
+            this.txtBufferDistance.Enabled = false;
             this.txtBufferDistance.Location = new System.Drawing.Point(161, 55);
             this.txtBufferDistance.Name = "txtBufferDistance";
             this.txtBufferDistance.Size = new System.Drawing.Size(55, 20);

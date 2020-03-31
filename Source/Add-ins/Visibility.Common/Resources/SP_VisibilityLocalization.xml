@@ -294,7 +294,9 @@
   <IncorrectRangeMessage>Invalid data.\nЗначення має бути від {0} до {1}</IncorrectRangeMessage>
   <ValueLessThenZeroMessage>Invalid data.\nЗначення не має бути менше нуля</ValueLessThenZeroMessage>
   <EmptyValueMessage>Invalid data.\nВкажіть число</EmptyValueMessage>
-  <InvalidFormatMessage>Невірний формат</InvalidFormatMessage>
+  <ValueMoreThanMaxMessage>Invalid data.\nЗначення не може перевищувати {0}</ValueMoreThanMaxMessage>
+  <ValueLessThanMinMessage>Invalid data.\nЗначення не може бути менше за {0}</ValueLessThanMinMessage>
+  <InvalidFormatMessage>Invalid data.\nНевірний формат</InvalidFormatMessage>
   <UnableToRemoveTaskMessage>Неможливо видалити результат розрахунку видимості поточного сеансу</UnableToRemoveTaskMessage>
   <UnableToFullRemoveTaskMessage>Неможливо повністтю видалити результат розрахунку</UnableToFullRemoveTaskMessage>
   <CalculationErrorMessage>Розрахунок скінчився з помилкою\nДля перегляду повної інформації зверніться до журналу роботи</CalculationErrorMessage>

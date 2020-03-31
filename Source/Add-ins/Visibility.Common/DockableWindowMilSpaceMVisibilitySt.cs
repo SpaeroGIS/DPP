@@ -2535,6 +2535,11 @@ namespace MilSpace.Visibility
         {
             throw new NotImplementedException();
         }
+
+        public void AddSelectedOO(IGeometry geometry, string title)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 
