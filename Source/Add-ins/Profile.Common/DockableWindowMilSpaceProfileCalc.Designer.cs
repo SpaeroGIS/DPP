@@ -31,9 +31,9 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Panel panelGO;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Графика");
             this.calcProfile = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.profileTabPage = new System.Windows.Forms.TabPage();
@@ -294,7 +294,7 @@
             panelGO.Dock = System.Windows.Forms.DockStyle.Bottom;
             panelGO.Location = new System.Drawing.Point(0, 667);
             panelGO.Name = "panelGO";
-            panelGO.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
+            panelGO.Padding = new System.Windows.Forms.Padding(4, 2, 4, 2);
             panelGO.Size = new System.Drawing.Size(292, 30);
             panelGO.TabIndex = 45;
             // 
@@ -303,9 +303,9 @@
             this.calcProfile.Dock = System.Windows.Forms.DockStyle.Right;
             this.calcProfile.Enabled = false;
             this.calcProfile.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.calcProfile.Location = new System.Drawing.Point(168, 0);
+            this.calcProfile.Location = new System.Drawing.Point(168, 2);
             this.calcProfile.Name = "calcProfile";
-            this.calcProfile.Size = new System.Drawing.Size(120, 30);
+            this.calcProfile.Size = new System.Drawing.Size(120, 26);
             this.calcProfile.TabIndex = 27;
             this.calcProfile.Text = "Рассчитать";
             this.calcProfile.UseVisualStyleBackColor = true;
@@ -396,10 +396,10 @@
             this.infoPanel.Controls.Add(this.lblAzimuthInfo);
             this.infoPanel.Controls.Add(this.lblLengthInfo);
             this.infoPanel.Controls.Add(this.panel11);
-            this.infoPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.infoPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.infoPanel.Location = new System.Drawing.Point(0, 324);
             this.infoPanel.Name = "infoPanel";
-            this.infoPanel.Size = new System.Drawing.Size(284, 60);
+            this.infoPanel.Size = new System.Drawing.Size(284, 79);
             this.infoPanel.TabIndex = 44;
             // 
             // lblAzimuthInfo
@@ -1050,7 +1050,6 @@
             this.txtFirstPointZ.ReadOnly = true;
             this.txtFirstPointZ.Size = new System.Drawing.Size(45, 20);
             this.txtFirstPointZ.TabIndex = 28;
-            this.txtFirstPointZ.Text = "9999.9";
             this.txtFirstPointZ.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txtFirstPointY
@@ -1063,7 +1062,6 @@
             this.txtFirstPointY.ReadOnly = true;
             this.txtFirstPointY.Size = new System.Drawing.Size(60, 20);
             this.txtFirstPointY.TabIndex = 2;
-            this.txtFirstPointY.Text = "123.12345";
             this.txtFirstPointY.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txtFirstPointX
@@ -1076,7 +1074,6 @@
             this.txtFirstPointX.ReadOnly = true;
             this.txtFirstPointX.Size = new System.Drawing.Size(60, 20);
             this.txtFirstPointX.TabIndex = 0;
-            this.txtFirstPointX.Text = "123.12345";
             this.txtFirstPointX.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // firstPointInfoPanel
@@ -2068,7 +2065,7 @@
             // 
             // panelPNLayers
             // 
-            this.panelPNLayers.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.panelPNLayers.BackColor = System.Drawing.SystemColors.Window;
             this.panelPNLayers.Controls.Add(this.panelLayrsSet);
             this.panelPNLayers.Controls.Add(this.panelLayersHeaderPN);
             this.panelPNLayers.Dock = System.Windows.Forms.DockStyle.Top;
@@ -2328,25 +2325,25 @@
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.Location = new System.Drawing.Point(0, 62);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode1.Checked = true;
-            treeNode1.ImageKey = "vector-path-line.png";
-            treeNode1.Name = "Points";
-            treeNode1.SelectedImageIndex = 205;
-            treeNode1.Text = "Отрезки";
-            treeNode2.Checked = true;
-            treeNode2.ImageKey = "Editing-Line-icon3.png";
-            treeNode2.Name = "Fun";
-            treeNode2.SelectedImageIndex = 208;
-            treeNode2.Text = "Веер";
-            treeNode3.Checked = true;
-            treeNode3.ImageKey = "vector-polygon.png";
-            treeNode3.Name = "Primitives";
-            treeNode3.SelectedImageIndex = 209;
-            treeNode3.Text = "Графика";
+            treeNode7.Checked = true;
+            treeNode7.ImageKey = "vector-path-line.png";
+            treeNode7.Name = "Points";
+            treeNode7.SelectedImageIndex = 205;
+            treeNode7.Text = "Отрезки";
+            treeNode8.Checked = true;
+            treeNode8.ImageKey = "Editing-Line-icon3.png";
+            treeNode8.Name = "Fun";
+            treeNode8.SelectedImageIndex = 208;
+            treeNode8.Text = "Веер";
+            treeNode9.Checked = true;
+            treeNode9.ImageKey = "vector-polygon.png";
+            treeNode9.Name = "Primitives";
+            treeNode9.SelectedImageIndex = 209;
+            treeNode9.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
+            treeNode7,
+            treeNode8,
+            treeNode9});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(292, 315);
             this.profilesTreeView.TabIndex = 35;
