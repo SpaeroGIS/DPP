@@ -247,9 +247,9 @@ namespace MilSpace.Profile
             return null;
         }
 
-        internal void SetProfileSettings(ProfileSettingsTypeEnum profileType)
+        internal void SetProfileSettings(ProfileSettingsTypeEnum profileType, bool recalc = true)
         {
-            SetSettings(profileType, profileId);
+            SetSettings(profileType, profileId, recalc);
         }
 
         internal void SetProfileDemLayer(ProfileSettingsTypeEnum profileType)
@@ -267,14 +267,14 @@ namespace MilSpace.Profile
             }
         }
 
-        internal void SetProfileSettings(ProfileSettingsTypeEnum profileType, int profileIdValue, List<IPolyline> polylines = null)
+        internal void SetProfileSettings(ProfileSettingsTypeEnum profileType, int profileIdValue)
         {
             SetSettings(profileType, profileIdValue);
         }
 
-        private void SetSettings(ProfileSettingsTypeEnum profileType, int profileIdValue)
+        private void SetSettings(ProfileSettingsTypeEnum profileType, int profileIdValue, bool recalc = true)
         {
-            List<IPolyline> profileLines = new List<IPolyline>();
+            IPolyline[] profileLines = null;
 
             var profileSetting = profileSettings[profileType];
             if (profileSetting == null)
@@ -293,7 +293,8 @@ namespace MilSpace.Profile
                 var line = EsriTools.CreatePolylineFromPoints(pointsToShow[ProfileSettingsPointButtonEnum.PointsFist], pointsToShow[ProfileSettingsPointButtonEnum.PointsSecond]);
                 if (line != null)
                 {
-                    profileLines.Add(line);
+                    profileLines = new IPolyline[1];
+                    profileLines[0] = line;
 
                     ILine ln = new Line()
                     {
@@ -322,17 +323,28 @@ namespace MilSpace.Profile
                 //{
                 //    profileLines = selectedOnMapLines.ToList();
                 //}
-                profileLines = CalcPrimitive(View.PrimitiveAssignmentMethod);
+
+                if (profileSettings[profileType] == null || recalc)
+                {
+                    profileLines = CalcPrimitive(View.PrimitiveAssignmentMethod).ToArray();
+                }
+                else
+                {
+                    profileLines = profileSettings[profileType].ProfileLines;
+                }
             }
 
-            profileSetting.ProfileLines = profileLines.ToArray();
+            if (profileLines != null)
+            {
+                profileSetting.ProfileLines = profileLines;
 
-            profileSettings[profileType] = profileSetting;
-            
+                profileSettings[profileType] = profileSetting;
 
-            InvokeOnProfileSettingsChanged();
-            logger.WarnEx("");
-            GraphicsLayerManager.UpdateCalculatingGraphic(profileSetting.ProfileLines, profileIdValue, (int)profileType);
+
+                InvokeOnProfileSettingsChanged();
+                logger.WarnEx("");
+                GraphicsLayerManager.UpdateCalculatingGraphic(profileSetting.ProfileLines, profileIdValue, (int)profileType);
+            }
         }
 
 
@@ -607,7 +619,7 @@ namespace MilSpace.Profile
 
         internal void ShowProfileOnMap(int profileId = -1, ProfileLine line = null)
         {
-            var mapScale = View.ActiveView.FocusMap.MapScale;
+            //var mapScale = View.ActiveView.FocusMap.MapScale;
             ProfileSession profile;
 
             if(profileId == -1)
@@ -659,20 +671,26 @@ namespace MilSpace.Profile
 
         internal void PanToProfile(ProfileSettingsTypeEnum type)
         {
-            var lines = profileSettings[type].ProfileLines;
-            IEnvelope env = new EnvelopeClass();
-
-            if(lines == null)
+            if(profileSettings[type] == null)
             {
                 return;
             }
 
-            foreach(var line in lines)
+            var lines = profileSettings[type].ProfileLines;
+
+            if (lines == null)
+            {
+                return;
+            }
+
+            IEnvelope env = new EnvelopeClass();
+
+            foreach (var line in lines)
             {
                 env.Union(line.Envelope);
             }
 
-            EsriTools.PanToGeometry(View.ActiveView, env);
+            EsriTools.ZoomToGeometry(View.ActiveView, env);
             EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, lines);
         }
 
@@ -1612,6 +1630,32 @@ namespace MilSpace.Profile
             var avgAzimuth = azimuthsSum / linesCount;
 
             View.SetFunToPointsParams(avgAzimuth, avgAngle, length, linesCount);
+        }
+
+        private void SetPrimitiveProperties(List<IPolyline> polylines)
+        {
+            var profileSetting = profileSettings[ProfileSettingsTypeEnum.Primitives];
+
+            if (profileSetting == null)
+            {
+                profileSetting = new ProfileSettings();
+                profileSetting.Type = ProfileSettingsTypeEnum.Primitives;
+            }
+            
+            profileSetting.ProfileLines = polylines.ToArray();
+
+            profileSettings[ProfileSettingsTypeEnum.Primitives] = profileSetting;
+
+            try
+            {
+                InvokeOnProfileSettingsChanged();
+                logger.WarnEx("");
+                GraphicsLayerManager.UpdateCalculatingGraphic(profileSetting.ProfileLines, profileId, (int)ProfileSettingsTypeEnum.Primitives);
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorEx($"> SetPrimitiveProperties Exception: {ex.Message}");
+            }
         }
 
         private void SetPrimitiveInfo(List<IPolyline> lines)

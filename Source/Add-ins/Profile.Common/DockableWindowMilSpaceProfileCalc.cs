@@ -721,7 +721,7 @@ namespace MilSpace.Profile
 
                 if(String.IsNullOrEmpty(txtFirstPointX.Text) && String.IsNullOrEmpty(txtFirstPointY.Text))
                 {
-                    var newPoint = new PointClass { X = value.X, Y = controller.GetDefaultSecondYCoord(value) };
+                    var newPoint = new PointClass { X = value.X, Y = controller.GetDefaultSecondYCoord(value), Z = value.Z, SpatialReference = value.SpatialReference };
                     var pointCopy = new PointClass { X = newPoint.X, Y = newPoint.Y, Z = newPoint.Z, SpatialReference = newPoint.SpatialReference };
 
                     pointCopy.Project(ArcMap.Document.ActiveView.FocusMap.SpatialReference);
@@ -911,7 +911,7 @@ namespace MilSpace.Profile
 
         private void profileSettingsTab_SelectedIndexChanged(object sender, EventArgs e)
         {
-            controller.SetProfileSettings(SelectedProfileSettingsType);
+            controller.SetProfileSettings(SelectedProfileSettingsType, false);
         }
 
         private void cmbRasterLayers_SelectedIndexChanged(object sender, EventArgs e)
@@ -1003,9 +1003,7 @@ namespace MilSpace.Profile
         public void SetFunToPointsParams(double averageAzimuth, double averageAngle, double averageLength, int count)
         {
             lbFunInfo.Items.Clear();
-
-            lbFunInfo.Items.Add(LocalizationContext.Instance.FindLocalizedElement("LbFunParamsTitleText", "Параметри набору профілів:"));
-            lbFunInfo.Items.Add(string.Empty);
+            
             lbFunInfo.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbFunParamsAvgAzimuthText", "Середній азимут:")} {Math.Round(averageAzimuth)}");
             lbFunInfo.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbFunParamsAvgAngleText", "Середній кут між лініями:")} {Math.Round(averageAngle)}");
             lbFunInfo.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbFunParamsAvgLengthText", "Середня довжина проекції лінії:")} {Math.Round(averageLength)}");
@@ -1015,9 +1013,7 @@ namespace MilSpace.Profile
         public void SetPrimitiveInfo(double length, double azimuth, double projectionLength, int segmentsCount)
         {
             lbGraphicsParam.Items.Clear();
-
-            lbGraphicsParam.Items.Add(LocalizationContext.Instance.FindLocalizedElement("LbPrimitiveParamsTitleText", "Параметру примітиву:"));
-            lbGraphicsParam.Items.Add(string.Empty);
+            
             lbGraphicsParam.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbPrimitiveParamsLengthText", "Довжина проекцій ліній:")} {Math.Round(length)}");
             lbGraphicsParam.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbPrimitiveParamsAzimuthText", "Азимут між крайніми точками:")} {Math.Round(azimuth)}");
             lbGraphicsParam.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbPrimitiveParamsProjLengthText", "Відстань між крайніми точками:")} {Math.Round(projectionLength)}");
@@ -1299,15 +1295,17 @@ namespace MilSpace.Profile
             lblCenterPointAssignmentMethod.Text = LocalizationContext.Instance.AssignmentMethodText;
             lblTargetObjAssignmentMethod.Text = LocalizationContext.Instance.AssignmentMethodText;
             lblProfileInfo.Text = LocalizationContext.Instance.FindLocalizedElement("LblProfileInfoText", "Параметри відрізку");
-            lblLengthInfo.Text = LocalizationContext.Instance.LengthInfoText;
-            lblAzimuthInfo.Text = LocalizationContext.Instance.AzimuthInfoText;
             lblTargetObj.Text = LocalizationContext.Instance.FindLocalizedElement("LblTargetObjText", "Цільовий об'єкт");
             lblProfileInfoTitle.Text = LocalizationContext.Instance.FindLocalizedElement("LblProfileInfoTitle", "Параметри набору/профілю");
+            label2.Text = LocalizationContext.Instance.FindLocalizedElement("LbFunParamsTitleText", "Параметри набору профілів:");
+            label1.Text = LocalizationContext.Instance.FindLocalizedElement("LbPrimitiveParamsTitleText", "Параметру примітиву:");
 
             lblFirstPointInfo.Text = string.Empty;
             lblSecondPointInfo.Text = string.Empty;
             lblCenterPointInfo.Text = string.Empty;
             lblTargetObjInfo.Text = string.Empty;
+            lblLengthInfo.Text = string.Empty;
+            lblAzimuthInfo.Text = string.Empty;
 
             toolPanOnMap.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintToolBtnPanOnMapText", "Переміститись  на карті");
             toolBtnFlash.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("HintToolBtnShowOnMapText", "Показати на карті");
@@ -1833,15 +1831,6 @@ namespace MilSpace.Profile
         
         private void BtnChooseCreationMethod_Click(object sender, EventArgs e)
         {
-            if(controller.GetCreationMethodByString(cmbTargetObjCreation.SelectedItem.ToString()) == ToPointsCreationMethodsEnum.AzimuthsLines)
-            {
-                SetFunTxtEnabled(true);
-            }
-            else
-            {
-                SetFunTxtEnabled(false);
-            }
-
             RecalculateFun();
         }
 
@@ -1999,6 +1988,23 @@ namespace MilSpace.Profile
             {
                 MessageBox.Show(LocalizationContext.Instance.ErrorHappendText, LocalizationContext.Instance.MessageBoxTitle);
                 logger.WarnEx($"> CopyStripMenuItem_Click Exception: {ex.Message}");
+            }
+        }
+
+        private void BtnShowProfileLine_Click(object sender, EventArgs e)
+        {
+           controller.PanToProfile(ProfileSettingsTypeEnum.Points);
+        }
+
+        private void CmbTargetObjCreation_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (controller.GetCreationMethodByString(cmbTargetObjCreation.SelectedItem.ToString()) == ToPointsCreationMethodsEnum.AzimuthsLines)
+            {
+                SetFunTxtEnabled(true);
+            }
+            else
+            {
+                SetFunTxtEnabled(false);
             }
         }
     }

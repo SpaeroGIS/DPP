@@ -31,13 +31,13 @@ namespace MilSpace.Core.ModalWindows
             var points = new List<FromLayerPointModel>();
 
             var featureClass = layer.FeatureClass;
-            var idFieldIndex = featureClass.FindField("OBJECTID");
+            var idFieldIndex = featureClass.FindField(featureClass.OIDFieldName);
             var selectedFieldIndex = (!string.IsNullOrEmpty(displayedFieldName)) ? featureClass.FindField(displayedFieldName) : -2;
 
             if(idFieldIndex == -1)
             {
-                _log.WarnEx($"> GetPoints. Warning: Cannot find fild \"OBJECTID\" in featureClass {featureClass.AliasName}");
-                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgCannotFindObjIdText", "У шарі відсутнє поле OBJECTID"),
+                _log.WarnEx($"> GetPoints. Warning: Cannot find fild {featureClass.OIDFieldName} in featureClass {featureClass.AliasName}");
+                MessageBox.Show(String.Format(LocalizationContext.Instance.FindLocalizedElement("MsgCannotFindObjIdText", "У шарі відсутнє поле {0}"), featureClass.OIDFieldName),
                                     LocalizationContext.Instance.MessageBoxTitle);
 
                 return null;
@@ -49,7 +49,7 @@ namespace MilSpace.Core.ModalWindows
             }
 
             IQueryFilter queryFilter = new QueryFilter();
-            queryFilter.WhereClause = "OBJECTID > 0";
+            queryFilter.WhereClause = $"{featureClass.OIDFieldName} > 0";
 
             IFeatureCursor featureCursor = featureClass.Search(queryFilter, true);
             IFeature feature = featureCursor.NextFeature();

@@ -28,5 +28,15 @@ namespace MilSpace.Visibility.Interaction
         {
             return _controller.GetObservObjectsFromModule();
         }
+
+        public string GetObservationPointsFeatureClassName()
+        {
+            return _controller.GetObservPointsFromGdbFeatureClassName();
+        }
+
+        public string GetObservationStationFeatureClassName()
+        {
+            return _controller.GetObservObjectsFromGdbFeatureClassName();
+        }
     }
 }
