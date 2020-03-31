@@ -1477,9 +1477,9 @@ namespace MilSpace.GeoCalculator
 
             if(!currentModelWgs.Equals(CurrentProjectionsModel.WGS84Projection.Name))
             {
-                this.wgsProjectedLabel.Text = CurrentProjectionsModel.WGS84Projection.Name;
-                this.PulkovoProjectedLabel.Text = CurrentProjectionsModel.Pulkovo1942Projection.Name;
-                this.UkraineProjectedLabel.Text = CurrentProjectionsModel.Ukraine2000Projection.Name;
+                wgsProjectedLabel.Text = CurrentProjectionsModel.WGS84Projection.Name;
+                PulkovoProjectedLabel.Text = CurrentProjectionsModel.Pulkovo1942Projection.Name;
+                UkraineProjectedLabel.Text = CurrentProjectionsModel.Ukraine2000Projection.Name;
 
                 SetSCComboBoxItems();
             }
