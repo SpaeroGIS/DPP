@@ -220,6 +220,10 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.clearExtraGraphic = new System.Windows.Forms.ToolStripButton();
             this.lblProfileList = new System.Windows.Forms.Label();
+            this.panelListProfiles = new System.Windows.Forms.Panel();
+            this.panelListProfilesHeader = new System.Windows.Forms.Panel();
+            this.panelParamCurrProfile = new System.Windows.Forms.Panel();
+            this.splitter1 = new System.Windows.Forms.Splitter();
             panelGO = new System.Windows.Forms.Panel();
             panelGO.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -285,6 +289,9 @@
             this.contextMenuProfilesAttributes.SuspendLayout();
             this.panel6.SuspendLayout();
             this.profilesToolStrip.SuspendLayout();
+            this.panelListProfiles.SuspendLayout();
+            this.panelListProfilesHeader.SuspendLayout();
+            this.panelParamCurrProfile.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelGO
@@ -292,7 +299,7 @@
             panelGO.BackColor = System.Drawing.SystemColors.ControlDark;
             panelGO.Controls.Add(this.calcProfile);
             panelGO.Dock = System.Windows.Forms.DockStyle.Bottom;
-            panelGO.Location = new System.Drawing.Point(0, 667);
+            panelGO.Location = new System.Drawing.Point(0, 649);
             panelGO.Name = "panelGO";
             panelGO.Padding = new System.Windows.Forms.Padding(4, 2, 4, 2);
             panelGO.Size = new System.Drawing.Size(292, 30);
@@ -324,7 +331,7 @@
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.Padding = new System.Drawing.Point(0, 0);
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(300, 727);
+            this.tabControl1.Size = new System.Drawing.Size(300, 709);
             this.tabControl1.TabIndex = 1;
             // 
             // profileTabPage
@@ -340,7 +347,7 @@
             this.profileTabPage.Location = new System.Drawing.Point(4, 26);
             this.profileTabPage.Margin = new System.Windows.Forms.Padding(0);
             this.profileTabPage.Name = "profileTabPage";
-            this.profileTabPage.Size = new System.Drawing.Size(292, 697);
+            this.profileTabPage.Size = new System.Drawing.Size(292, 679);
             this.profileTabPage.TabIndex = 0;
             this.profileTabPage.Text = "Параметры профиля";
             // 
@@ -355,7 +362,7 @@
             this.panelProfileSet.Margin = new System.Windows.Forms.Padding(0);
             this.panelProfileSet.Name = "panelProfileSet";
             this.panelProfileSet.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.panelProfileSet.Size = new System.Drawing.Size(292, 493);
+            this.panelProfileSet.Size = new System.Drawing.Size(292, 475);
             this.panelProfileSet.TabIndex = 48;
             // 
             // profileSettingsTab
@@ -370,7 +377,7 @@
             this.profileSettingsTab.Name = "profileSettingsTab";
             this.profileSettingsTab.Padding = new System.Drawing.Point(0, 0);
             this.profileSettingsTab.SelectedIndex = 0;
-            this.profileSettingsTab.Size = new System.Drawing.Size(292, 431);
+            this.profileSettingsTab.Size = new System.Drawing.Size(292, 413);
             this.profileSettingsTab.TabIndex = 6;
             this.profileSettingsTab.SelectedIndexChanged += new System.EventHandler(this.profileSettingsTab_SelectedIndexChanged);
             // 
@@ -385,7 +392,7 @@
             this.sectionTab.Location = new System.Drawing.Point(4, 24);
             this.sectionTab.Margin = new System.Windows.Forms.Padding(0);
             this.sectionTab.Name = "sectionTab";
-            this.sectionTab.Size = new System.Drawing.Size(284, 403);
+            this.sectionTab.Size = new System.Drawing.Size(284, 385);
             this.sectionTab.TabIndex = 0;
             this.sectionTab.Text = "Отрезком";
             this.sectionTab.UseVisualStyleBackColor = true;
@@ -399,7 +406,7 @@
             this.infoPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.infoPanel.Location = new System.Drawing.Point(0, 324);
             this.infoPanel.Name = "infoPanel";
-            this.infoPanel.Size = new System.Drawing.Size(284, 79);
+            this.infoPanel.Size = new System.Drawing.Size(284, 61);
             this.infoPanel.TabIndex = 44;
             // 
             // lblAzimuthInfo
@@ -464,7 +471,7 @@
             this.panel16.Controls.Add(this.lblHeightOfViewSecond);
             this.panel16.Controls.Add(this.txtSecondHeight);
             this.panel16.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel16.Location = new System.Drawing.Point(0, 130);
+            this.panel16.Location = new System.Drawing.Point(0, 128);
             this.panel16.Name = "panel16";
             this.panel16.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
             this.panel16.Size = new System.Drawing.Size(284, 28);
@@ -498,7 +505,7 @@
             this.panel5.Controls.Add(this.txtSecondPointY);
             this.panel5.Controls.Add(this.txtSecondPointX);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel5.Location = new System.Drawing.Point(0, 102);
+            this.panel5.Location = new System.Drawing.Point(0, 100);
             this.panel5.Name = "panel5";
             this.panel5.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
             this.panel5.Size = new System.Drawing.Size(284, 28);
@@ -819,7 +826,7 @@
             this.secondPointInfoPanel.Location = new System.Drawing.Point(0, 78);
             this.secondPointInfoPanel.Name = "secondPointInfoPanel";
             this.secondPointInfoPanel.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
-            this.secondPointInfoPanel.Size = new System.Drawing.Size(284, 24);
+            this.secondPointInfoPanel.Size = new System.Drawing.Size(284, 22);
             this.secondPointInfoPanel.TabIndex = 50;
             // 
             // lblSecondPointInfo
@@ -944,7 +951,7 @@
             this.panel17.Controls.Add(this.lblHeightOfViewFirst);
             this.panel17.Controls.Add(this.txtFirstHeight);
             this.panel17.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel17.Location = new System.Drawing.Point(0, 130);
+            this.panel17.Location = new System.Drawing.Point(0, 128);
             this.panel17.Name = "panel17";
             this.panel17.Padding = new System.Windows.Forms.Padding(4);
             this.panel17.Size = new System.Drawing.Size(284, 28);
@@ -977,7 +984,7 @@
             this.panel4.Controls.Add(this.txtFirstPointY);
             this.panel4.Controls.Add(this.txtFirstPointX);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel4.Location = new System.Drawing.Point(0, 102);
+            this.panel4.Location = new System.Drawing.Point(0, 100);
             this.panel4.Margin = new System.Windows.Forms.Padding(2);
             this.panel4.Name = "panel4";
             this.panel4.Padding = new System.Windows.Forms.Padding(4);
@@ -1083,7 +1090,7 @@
             this.firstPointInfoPanel.Location = new System.Drawing.Point(0, 78);
             this.firstPointInfoPanel.Name = "firstPointInfoPanel";
             this.firstPointInfoPanel.Padding = new System.Windows.Forms.Padding(4);
-            this.firstPointInfoPanel.Size = new System.Drawing.Size(284, 24);
+            this.firstPointInfoPanel.Size = new System.Drawing.Size(284, 22);
             this.firstPointInfoPanel.TabIndex = 48;
             // 
             // lblFirstPointInfo
@@ -1196,30 +1203,31 @@
             this.funTab.ImageKey = "Editing-Line-icon3.png";
             this.funTab.Location = new System.Drawing.Point(4, 24);
             this.funTab.Name = "funTab";
-            this.funTab.Size = new System.Drawing.Size(284, 403);
+            this.funTab.Size = new System.Drawing.Size(284, 385);
             this.funTab.TabIndex = 1;
             this.funTab.Text = "\"Веером\"";
             // 
             // panelFanInfo
             // 
-            this.panelFanInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.panelFanInfo.BackColor = System.Drawing.SystemColors.Window;
             this.panelFanInfo.Controls.Add(this.lbFunInfo);
             this.panelFanInfo.Controls.Add(this.panelFanInfoHeader);
             this.panelFanInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelFanInfo.Location = new System.Drawing.Point(0, 345);
             this.panelFanInfo.Name = "panelFanInfo";
-            this.panelFanInfo.Size = new System.Drawing.Size(284, 58);
+            this.panelFanInfo.Size = new System.Drawing.Size(284, 40);
             this.panelFanInfo.TabIndex = 58;
             // 
             // lbFunInfo
             // 
             this.lbFunInfo.BackColor = System.Drawing.SystemColors.Window;
+            this.lbFunInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lbFunInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbFunInfo.FormattingEnabled = true;
             this.lbFunInfo.Location = new System.Drawing.Point(0, 25);
             this.lbFunInfo.Margin = new System.Windows.Forms.Padding(0);
             this.lbFunInfo.Name = "lbFunInfo";
-            this.lbFunInfo.Size = new System.Drawing.Size(284, 33);
+            this.lbFunInfo.Size = new System.Drawing.Size(284, 15);
             this.lbFunInfo.TabIndex = 55;
             // 
             // panelFanInfoHeader
@@ -1814,7 +1822,7 @@
             this.primitiveTab.Location = new System.Drawing.Point(4, 24);
             this.primitiveTab.Margin = new System.Windows.Forms.Padding(0);
             this.primitiveTab.Name = "primitiveTab";
-            this.primitiveTab.Size = new System.Drawing.Size(284, 403);
+            this.primitiveTab.Size = new System.Drawing.Size(284, 433);
             this.primitiveTab.TabIndex = 2;
             this.primitiveTab.Text = "Примитивом";
             this.primitiveTab.UseVisualStyleBackColor = true;
@@ -1828,17 +1836,18 @@
             this.panelGraphInfo.Location = new System.Drawing.Point(0, 122);
             this.panelGraphInfo.Margin = new System.Windows.Forms.Padding(0);
             this.panelGraphInfo.Name = "panelGraphInfo";
-            this.panelGraphInfo.Size = new System.Drawing.Size(284, 281);
+            this.panelGraphInfo.Size = new System.Drawing.Size(284, 311);
             this.panelGraphInfo.TabIndex = 54;
             // 
             // lbGraphicsParam
             // 
             this.lbGraphicsParam.BackColor = System.Drawing.SystemColors.Window;
+            this.lbGraphicsParam.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lbGraphicsParam.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbGraphicsParam.FormattingEnabled = true;
             this.lbGraphicsParam.Location = new System.Drawing.Point(0, 30);
             this.lbGraphicsParam.Name = "lbGraphicsParam";
-            this.lbGraphicsParam.Size = new System.Drawing.Size(284, 251);
+            this.lbGraphicsParam.Size = new System.Drawing.Size(284, 281);
             this.lbGraphicsParam.TabIndex = 51;
             // 
             // panel18
@@ -2304,26 +2313,25 @@
             // 
             // profileTreeTabPage
             // 
-            this.profileTreeTabPage.Controls.Add(this.profilesTreeView);
-            this.profileTreeTabPage.Controls.Add(this.panel2);
-            this.profileTreeTabPage.Controls.Add(this.lvProfileAttributes);
-            this.profileTreeTabPage.Controls.Add(this.panel6);
-            this.profileTreeTabPage.Controls.Add(this.lblProfileList);
+            this.profileTreeTabPage.Controls.Add(this.panelListProfiles);
+            this.profileTreeTabPage.Controls.Add(this.splitter1);
+            this.profileTreeTabPage.Controls.Add(this.panelParamCurrProfile);
             this.profileTreeTabPage.ImageKey = "Table.png";
             this.profileTreeTabPage.Location = new System.Drawing.Point(4, 26);
             this.profileTreeTabPage.Name = "profileTreeTabPage";
-            this.profileTreeTabPage.Size = new System.Drawing.Size(292, 697);
+            this.profileTreeTabPage.Size = new System.Drawing.Size(292, 679);
             this.profileTreeTabPage.TabIndex = 1;
             this.profileTreeTabPage.Text = "Список профилей";
             this.profileTreeTabPage.UseVisualStyleBackColor = true;
             // 
             // profilesTreeView
             // 
+            this.profilesTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.profilesTreeView.CheckBoxes = true;
             this.profilesTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.profilesTreeView.FullRowSelect = true;
             this.profilesTreeView.ImageKey = "0.png";
-            this.profilesTreeView.Location = new System.Drawing.Point(0, 62);
+            this.profilesTreeView.Location = new System.Drawing.Point(0, 54);
             this.profilesTreeView.Name = "profilesTreeView";
             treeNode7.Checked = true;
             treeNode7.ImageKey = "vector-path-line.png";
@@ -2345,26 +2353,29 @@
             treeNode8,
             treeNode9});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
-            this.profilesTreeView.Size = new System.Drawing.Size(292, 315);
+            this.profilesTreeView.Size = new System.Drawing.Size(292, 393);
             this.profilesTreeView.TabIndex = 35;
             this.profilesTreeView.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.ProfilesTreeView_AfterLabelEdit);
             this.profilesTreeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.profilesTreeView_AfterCheck);
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.SystemColors.Control;
+            this.panel2.BackColor = System.Drawing.SystemColors.ControlDark;
             this.panel2.Controls.Add(this.lblProfileInfoTitle);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 377);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
+            this.panel2.Padding = new System.Windows.Forms.Padding(4);
             this.panel2.Size = new System.Drawing.Size(292, 30);
             this.panel2.TabIndex = 37;
             // 
             // lblProfileInfoTitle
             // 
             this.lblProfileInfoTitle.AutoSize = true;
+            this.lblProfileInfoTitle.Dock = System.Windows.Forms.DockStyle.Left;
             this.lblProfileInfoTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblProfileInfoTitle.Location = new System.Drawing.Point(16, 7);
+            this.lblProfileInfoTitle.Location = new System.Drawing.Point(4, 4);
+            this.lblProfileInfoTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblProfileInfoTitle.Name = "lblProfileInfoTitle";
             this.lblProfileInfoTitle.Size = new System.Drawing.Size(46, 17);
             this.lblProfileInfoTitle.TabIndex = 0;
@@ -2372,17 +2383,18 @@
             // 
             // lvProfileAttributes
             // 
+            this.lvProfileAttributes.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lvProfileAttributes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.Attribute,
             this.Value});
             this.lvProfileAttributes.ContextMenuStrip = this.contextMenuProfilesAttributes;
-            this.lvProfileAttributes.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lvProfileAttributes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvProfileAttributes.FullRowSelect = true;
             this.lvProfileAttributes.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lvProfileAttributes.HideSelection = false;
-            this.lvProfileAttributes.Location = new System.Drawing.Point(0, 407);
+            this.lvProfileAttributes.Location = new System.Drawing.Point(0, 30);
             this.lvProfileAttributes.Name = "lvProfileAttributes";
-            this.lvProfileAttributes.Size = new System.Drawing.Size(292, 290);
+            this.lvProfileAttributes.Size = new System.Drawing.Size(292, 198);
             this.lvProfileAttributes.TabIndex = 36;
             this.lvProfileAttributes.UseCompatibleStateImageBehavior = false;
             this.lvProfileAttributes.View = System.Windows.Forms.View.Details;
@@ -2390,12 +2402,12 @@
             // Attribute
             // 
             this.Attribute.Text = "";
-            this.Attribute.Width = 210;
+            this.Attribute.Width = 100;
             // 
             // Value
             // 
             this.Value.Text = "";
-            this.Value.Width = 542;
+            this.Value.Width = 200;
             // 
             // contextMenuProfilesAttributes
             // 
@@ -2415,9 +2427,9 @@
             // 
             this.panel6.Controls.Add(this.profilesToolStrip);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel6.Location = new System.Drawing.Point(0, 32);
+            this.panel6.Location = new System.Drawing.Point(0, 30);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(292, 30);
+            this.panel6.Size = new System.Drawing.Size(292, 24);
             this.panel6.TabIndex = 34;
             // 
             // profilesToolStrip
@@ -2445,182 +2457,215 @@
             this.clearExtraGraphic});
             this.profilesToolStrip.Location = new System.Drawing.Point(0, 0);
             this.profilesToolStrip.Name = "profilesToolStrip";
-            this.profilesToolStrip.Size = new System.Drawing.Size(292, 30);
+            this.profilesToolStrip.Size = new System.Drawing.Size(292, 24);
             this.profilesToolStrip.TabIndex = 37;
             this.profilesToolStrip.Text = "toolStrip1";
             // 
             // toolPanOnMap
             // 
+            this.toolPanOnMap.AutoSize = false;
             this.toolPanOnMap.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolPanOnMap.Enabled = false;
             this.toolPanOnMap.Image = ((System.Drawing.Image)(resources.GetObject("toolPanOnMap.Image")));
             this.toolPanOnMap.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolPanOnMap.Margin = new System.Windows.Forms.Padding(0);
             this.toolPanOnMap.Name = "toolPanOnMap";
-            this.toolPanOnMap.Size = new System.Drawing.Size(23, 27);
+            this.toolPanOnMap.Size = new System.Drawing.Size(20, 24);
             this.toolPanOnMap.Text = "toolStripButton1";
             this.toolPanOnMap.ToolTipText = "Показать на карте";
             this.toolPanOnMap.Click += new System.EventHandler(this.toolBtnShowOnMap_Click);
             // 
             // toolBtnFlash
             // 
+            this.toolBtnFlash.AutoSize = false;
             this.toolBtnFlash.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolBtnFlash.Enabled = false;
             this.toolBtnFlash.Image = ((System.Drawing.Image)(resources.GetObject("toolBtnFlash.Image")));
             this.toolBtnFlash.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolBtnFlash.Margin = new System.Windows.Forms.Padding(0);
             this.toolBtnFlash.Name = "toolBtnFlash";
-            this.toolBtnFlash.Size = new System.Drawing.Size(23, 27);
+            this.toolBtnFlash.Size = new System.Drawing.Size(20, 24);
             this.toolBtnFlash.Text = "toolShowOnMap";
             this.toolBtnFlash.ToolTipText = "Подсветить на карте";
             this.toolBtnFlash.Click += new System.EventHandler(this.toolBtnFlash_Click);
             // 
             // toolStripSeparator1
             // 
+            this.toolStripSeparator1.AutoSize = false;
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 30);
+            this.toolStripSeparator1.Padding = new System.Windows.Forms.Padding(0, 0, 0, 4);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(4, 24);
             // 
             // setProfileSettingsToCalc
             // 
+            this.setProfileSettingsToCalc.AutoSize = false;
             this.setProfileSettingsToCalc.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.setProfileSettingsToCalc.Enabled = false;
             this.setProfileSettingsToCalc.Image = ((System.Drawing.Image)(resources.GetObject("setProfileSettingsToCalc.Image")));
             this.setProfileSettingsToCalc.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.setProfileSettingsToCalc.Margin = new System.Windows.Forms.Padding(0);
             this.setProfileSettingsToCalc.Name = "setProfileSettingsToCalc";
-            this.setProfileSettingsToCalc.Size = new System.Drawing.Size(23, 27);
+            this.setProfileSettingsToCalc.Size = new System.Drawing.Size(20, 24);
             this.setProfileSettingsToCalc.ToolTipText = "Редактировать профиль";
             this.setProfileSettingsToCalc.Click += new System.EventHandler(this.setProfileSettingsToCalc_Click);
             // 
             // copyExtremePoints
             // 
+            this.copyExtremePoints.AutoSize = false;
             this.copyExtremePoints.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.copyExtremePoints.Enabled = false;
             this.copyExtremePoints.Image = ((System.Drawing.Image)(resources.GetObject("copyExtremePoints.Image")));
             this.copyExtremePoints.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.copyExtremePoints.Margin = new System.Windows.Forms.Padding(0);
             this.copyExtremePoints.Name = "copyExtremePoints";
-            this.copyExtremePoints.Size = new System.Drawing.Size(23, 27);
+            this.copyExtremePoints.Size = new System.Drawing.Size(20, 21);
             this.copyExtremePoints.Text = "toolStripButton1";
             this.copyExtremePoints.Click += new System.EventHandler(this.CopyExtremePoints_Click);
             // 
             // toolStripSeparator3
             // 
+            this.toolStripSeparator3.AutoSize = false;
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 30);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(4, 24);
             // 
             // addProfileToExistingGraph
             // 
+            this.addProfileToExistingGraph.AutoSize = false;
             this.addProfileToExistingGraph.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.addProfileToExistingGraph.Image = ((System.Drawing.Image)(resources.GetObject("addProfileToExistingGraph.Image")));
             this.addProfileToExistingGraph.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.addProfileToExistingGraph.Margin = new System.Windows.Forms.Padding(0);
             this.addProfileToExistingGraph.Name = "addProfileToExistingGraph";
-            this.addProfileToExistingGraph.Size = new System.Drawing.Size(23, 27);
+            this.addProfileToExistingGraph.Size = new System.Drawing.Size(20, 24);
             this.addProfileToExistingGraph.Visible = false;
             this.addProfileToExistingGraph.Click += new System.EventHandler(this.addProfileToExistingGraph_Click);
             // 
             // addProfileToGraph
             // 
+            this.addProfileToGraph.AutoSize = false;
             this.addProfileToGraph.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.addProfileToGraph.Enabled = false;
             this.addProfileToGraph.Image = ((System.Drawing.Image)(resources.GetObject("addProfileToGraph.Image")));
             this.addProfileToGraph.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.addProfileToGraph.Margin = new System.Windows.Forms.Padding(0);
             this.addProfileToGraph.Name = "addProfileToGraph";
-            this.addProfileToGraph.Size = new System.Drawing.Size(23, 27);
+            this.addProfileToGraph.Size = new System.Drawing.Size(20, 21);
             this.addProfileToGraph.Text = "addProfileToGraph";
             this.addProfileToGraph.ToolTipText = "Перейти к графику";
             this.addProfileToGraph.Click += new System.EventHandler(this.addProfileToGraph_Click);
             // 
             // openGraphWindow
             // 
+            this.openGraphWindow.AutoSize = false;
             this.openGraphWindow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.openGraphWindow.Image = ((System.Drawing.Image)(resources.GetObject("openGraphWindow.Image")));
             this.openGraphWindow.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.openGraphWindow.Margin = new System.Windows.Forms.Padding(0);
             this.openGraphWindow.Name = "openGraphWindow";
-            this.openGraphWindow.Size = new System.Drawing.Size(23, 27);
+            this.openGraphWindow.Size = new System.Drawing.Size(20, 21);
             this.openGraphWindow.ToolTipText = "Open Grpah window";
             this.openGraphWindow.Click += new System.EventHandler(this.openGraphWindow_Click);
             // 
             // addAvailableProfilesSets
             // 
+            this.addAvailableProfilesSets.AutoSize = false;
             this.addAvailableProfilesSets.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.addAvailableProfilesSets.Image = ((System.Drawing.Image)(resources.GetObject("addAvailableProfilesSets.Image")));
             this.addAvailableProfilesSets.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.addAvailableProfilesSets.Margin = new System.Windows.Forms.Padding(0);
             this.addAvailableProfilesSets.Name = "addAvailableProfilesSets";
-            this.addAvailableProfilesSets.Size = new System.Drawing.Size(23, 27);
+            this.addAvailableProfilesSets.Size = new System.Drawing.Size(20, 21);
             this.addAvailableProfilesSets.Click += new System.EventHandler(this.addAvailableProfilesSets_Click);
             // 
             // toolStripSeparator4
             // 
+            this.toolStripSeparator4.AutoSize = false;
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 30);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(4, 24);
             // 
             // renameProfile
             // 
+            this.renameProfile.AutoSize = false;
             this.renameProfile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.renameProfile.Enabled = false;
             this.renameProfile.Image = ((System.Drawing.Image)(resources.GetObject("renameProfile.Image")));
             this.renameProfile.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.renameProfile.Margin = new System.Windows.Forms.Padding(0);
             this.renameProfile.Name = "renameProfile";
-            this.renameProfile.Size = new System.Drawing.Size(23, 27);
+            this.renameProfile.Size = new System.Drawing.Size(20, 21);
             this.renameProfile.Text = "toolStripButton1";
             this.renameProfile.Click += new System.EventHandler(this.RenameProfile_Click);
             // 
             // recalcForCurrentSurface
             // 
+            this.recalcForCurrentSurface.AutoSize = false;
             this.recalcForCurrentSurface.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.recalcForCurrentSurface.Enabled = false;
             this.recalcForCurrentSurface.Image = ((System.Drawing.Image)(resources.GetObject("recalcForCurrentSurface.Image")));
             this.recalcForCurrentSurface.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.recalcForCurrentSurface.Margin = new System.Windows.Forms.Padding(0);
             this.recalcForCurrentSurface.Name = "recalcForCurrentSurface";
-            this.recalcForCurrentSurface.Size = new System.Drawing.Size(23, 27);
+            this.recalcForCurrentSurface.Size = new System.Drawing.Size(20, 21);
             this.recalcForCurrentSurface.Text = "toolStripButton1";
             this.recalcForCurrentSurface.Click += new System.EventHandler(this.RecalcForCurrentSurface_Click);
             // 
             // removeProfile
             // 
+            this.removeProfile.AutoSize = false;
             this.removeProfile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.removeProfile.Enabled = false;
             this.removeProfile.Image = ((System.Drawing.Image)(resources.GetObject("removeProfile.Image")));
             this.removeProfile.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.removeProfile.Margin = new System.Windows.Forms.Padding(0);
             this.removeProfile.Name = "removeProfile";
-            this.removeProfile.Size = new System.Drawing.Size(23, 27);
+            this.removeProfile.Size = new System.Drawing.Size(20, 21);
             this.removeProfile.Text = "Remove profile(s) from user session";
             this.removeProfile.ToolTipText = "Убрать из списка";
             this.removeProfile.Click += new System.EventHandler(this.removeProfile_Click);
             // 
             // saveProfileAsShared
             // 
+            this.saveProfileAsShared.AutoSize = false;
             this.saveProfileAsShared.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.saveProfileAsShared.Enabled = false;
             this.saveProfileAsShared.Image = ((System.Drawing.Image)(resources.GetObject("saveProfileAsShared.Image")));
             this.saveProfileAsShared.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.saveProfileAsShared.Margin = new System.Windows.Forms.Padding(0);
             this.saveProfileAsShared.Name = "saveProfileAsShared";
-            this.saveProfileAsShared.Size = new System.Drawing.Size(23, 27);
+            this.saveProfileAsShared.Size = new System.Drawing.Size(20, 21);
             this.saveProfileAsShared.Text = "saveProfileAsShared";
             this.saveProfileAsShared.ToolTipText = "Сохранить в базу";
             this.saveProfileAsShared.Click += new System.EventHandler(this.saveProfileAsShared_Click_1);
             // 
             // eraseProfile
             // 
+            this.eraseProfile.AutoSize = false;
             this.eraseProfile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.eraseProfile.Enabled = false;
             this.eraseProfile.Image = ((System.Drawing.Image)(resources.GetObject("eraseProfile.Image")));
             this.eraseProfile.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.eraseProfile.Margin = new System.Windows.Forms.Padding(0);
             this.eraseProfile.Name = "eraseProfile";
-            this.eraseProfile.Size = new System.Drawing.Size(23, 20);
+            this.eraseProfile.Size = new System.Drawing.Size(20, 21);
             this.eraseProfile.Text = "toolStripButton1";
             this.eraseProfile.ToolTipText = "Удалить из базы";
             this.eraseProfile.Click += new System.EventHandler(this.eraseProfile_Click);
             // 
             // toolStripSeparator2
             // 
+            this.toolStripSeparator2.AutoSize = false;
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 30);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(4, 30);
             // 
             // clearExtraGraphic
             // 
+            this.clearExtraGraphic.AutoSize = false;
             this.clearExtraGraphic.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.clearExtraGraphic.Image = ((System.Drawing.Image)(resources.GetObject("clearExtraGraphic.Image")));
             this.clearExtraGraphic.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.clearExtraGraphic.Margin = new System.Windows.Forms.Padding(0);
             this.clearExtraGraphic.Name = "clearExtraGraphic";
-            this.clearExtraGraphic.Size = new System.Drawing.Size(23, 20);
+            this.clearExtraGraphic.Size = new System.Drawing.Size(20, 21);
             this.clearExtraGraphic.ToolTipText = "Очистить карту от неактуальных графиков";
             this.clearExtraGraphic.Click += new System.EventHandler(this.clearExtraGraphic_Click);
             // 
@@ -2629,13 +2674,56 @@
             this.lblProfileList.AutoSize = true;
             this.lblProfileList.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblProfileList.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblProfileList.Location = new System.Drawing.Point(0, 0);
-            this.lblProfileList.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
+            this.lblProfileList.Location = new System.Drawing.Point(4, 4);
+            this.lblProfileList.Margin = new System.Windows.Forms.Padding(0);
             this.lblProfileList.Name = "lblProfileList";
-            this.lblProfileList.Padding = new System.Windows.Forms.Padding(0, 6, 0, 6);
-            this.lblProfileList.Size = new System.Drawing.Size(161, 32);
+            this.lblProfileList.Size = new System.Drawing.Size(161, 20);
             this.lblProfileList.TabIndex = 1;
             this.lblProfileList.Text = "Список профилей";
+            // 
+            // panelListProfiles
+            // 
+            this.panelListProfiles.BackColor = System.Drawing.SystemColors.Window;
+            this.panelListProfiles.Controls.Add(this.profilesTreeView);
+            this.panelListProfiles.Controls.Add(this.panel6);
+            this.panelListProfiles.Controls.Add(this.panelListProfilesHeader);
+            this.panelListProfiles.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelListProfiles.Location = new System.Drawing.Point(0, 0);
+            this.panelListProfiles.Name = "panelListProfiles";
+            this.panelListProfiles.Size = new System.Drawing.Size(292, 447);
+            this.panelListProfiles.TabIndex = 38;
+            // 
+            // panelListProfilesHeader
+            // 
+            this.panelListProfilesHeader.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.panelListProfilesHeader.Controls.Add(this.lblProfileList);
+            this.panelListProfilesHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelListProfilesHeader.Location = new System.Drawing.Point(0, 0);
+            this.panelListProfilesHeader.Name = "panelListProfilesHeader";
+            this.panelListProfilesHeader.Padding = new System.Windows.Forms.Padding(4);
+            this.panelListProfilesHeader.Size = new System.Drawing.Size(292, 30);
+            this.panelListProfilesHeader.TabIndex = 0;
+            // 
+            // panelParamCurrProfile
+            // 
+            this.panelParamCurrProfile.BackColor = System.Drawing.SystemColors.Window;
+            this.panelParamCurrProfile.Controls.Add(this.lvProfileAttributes);
+            this.panelParamCurrProfile.Controls.Add(this.panel2);
+            this.panelParamCurrProfile.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelParamCurrProfile.Location = new System.Drawing.Point(0, 451);
+            this.panelParamCurrProfile.Name = "panelParamCurrProfile";
+            this.panelParamCurrProfile.Size = new System.Drawing.Size(292, 228);
+            this.panelParamCurrProfile.TabIndex = 39;
+            // 
+            // splitter1
+            // 
+            this.splitter1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.splitter1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.splitter1.Location = new System.Drawing.Point(0, 447);
+            this.splitter1.Name = "splitter1";
+            this.splitter1.Size = new System.Drawing.Size(292, 4);
+            this.splitter1.TabIndex = 40;
+            this.splitter1.TabStop = false;
             // 
             // DockableWindowMilSpaceProfileCalc
             // 
@@ -2645,7 +2733,7 @@
             this.DoubleBuffered = true;
             this.MinimumSize = new System.Drawing.Size(300, 650);
             this.Name = "DockableWindowMilSpaceProfileCalc";
-            this.Size = new System.Drawing.Size(300, 727);
+            this.Size = new System.Drawing.Size(300, 709);
             panelGO.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.profileTabPage.ResumeLayout(false);
@@ -2735,7 +2823,6 @@
             this.panelLayersHeaderPN.ResumeLayout(false);
             this.panelLayersHeaderPN.PerformLayout();
             this.profileTreeTabPage.ResumeLayout(false);
-            this.profileTreeTabPage.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.contextMenuProfilesAttributes.ResumeLayout(false);
@@ -2743,6 +2830,10 @@
             this.panel6.PerformLayout();
             this.profilesToolStrip.ResumeLayout(false);
             this.profilesToolStrip.PerformLayout();
+            this.panelListProfiles.ResumeLayout(false);
+            this.panelListProfilesHeader.ResumeLayout(false);
+            this.panelListProfilesHeader.PerformLayout();
+            this.panelParamCurrProfile.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2941,5 +3032,9 @@
         private System.Windows.Forms.Panel panelFanInfo;
         private System.Windows.Forms.Panel panelFanInfoHeader;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Panel panelListProfiles;
+        private System.Windows.Forms.Panel panelListProfilesHeader;
+        private System.Windows.Forms.Splitter splitter1;
+        private System.Windows.Forms.Panel panelParamCurrProfile;
     }
 }
