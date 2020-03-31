@@ -232,7 +232,7 @@
             this.MinimizeBox = false;
             this.Name = "AccessibleProfilesModalWindow";
             this.Padding = new System.Windows.Forms.Padding(10, 5, 10, 10);
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "SavedProfilesModalWindow";
             this.gbFilters.ResumeLayout(false);
             this.gbFilters.PerformLayout();

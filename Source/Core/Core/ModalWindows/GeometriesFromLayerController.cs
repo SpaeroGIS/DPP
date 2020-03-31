@@ -28,12 +28,12 @@ namespace MilSpace.Core.ModalWindows
             var geometries = new List<FromLayerGeometry>();
 
             var featureClass = layer.FeatureClass;
-            var idFieldIndex = featureClass.FindField("OBJECTID");
+            var idFieldIndex = featureClass.FindField(featureClass.OIDFieldName);
             var selectedFieldIndex = (!string.IsNullOrEmpty(displayedFieldName)) ? featureClass.FindField(displayedFieldName) : -2;
 
             if(idFieldIndex == -1)
             {
-                _log.WarnEx($"> GetGeometries. Warning: Cannot find fild \"OBJECTID\" in featureClass {featureClass.AliasName}");
+                _log.WarnEx($"> GetGeometries. Warning: Cannot find fild \"{featureClass.OIDFieldName}\" in featureClass {featureClass.AliasName}");
                 MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgCannotFindObjIdText", "У шарі відсутнє поле OBJECTID"),
                                     LocalizationContext.Instance.MessageBoxTitle);
 
@@ -46,7 +46,7 @@ namespace MilSpace.Core.ModalWindows
             }
 
             IQueryFilter queryFilter = new QueryFilter();
-            queryFilter.WhereClause = "OBJECTID > 0";
+            queryFilter.WhereClause = $"{featureClass.OIDFieldName} > 0";
 
             IFeatureCursor featureCursor = featureClass.Search(queryFilter, true);
             IFeature feature = featureCursor.NextFeature();
@@ -99,6 +99,7 @@ namespace MilSpace.Core.ModalWindows
             }
             else
             {
+                //TODO: The MilSp_Visible_ObjectsObservation_R should be tacken form the Visibility layer using interaction!!!!!
                 layers = _mapLayersManager.PolygonLayers.Where(l => !(l as IFeatureLayer).FeatureClass.AliasName.EndsWith("MilSp_Visible_ObjectsObservation_R")).Select(layer => layer.Name).ToList();
             }
 

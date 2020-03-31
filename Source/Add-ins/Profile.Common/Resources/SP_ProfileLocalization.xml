@@ -95,7 +95,7 @@
   <LblFunCountText>Кількість</LblFunCountText>
   <LblFunDistanceText>Відстань</LblFunDistanceText>
   <LblFunParametersText>Правило створення і параметри</LblFunParametersText>
-  <LblHeightOfViewText>Висота</LblHeightOfViewText>
+  <LblHeightOfViewText>Висота над повернею, м</LblHeightOfViewText>
   <LblHydrographyLayerText>гідрографія</LblHydrographyLayerText>
   <LblInvisibleLineColorText>невидимі</LblInvisibleLineColorText>
   <LblLayersForCalcText>Шари для розрахунків</LblLayersForCalcText>
@@ -170,7 +170,8 @@
   <TxtTreeViewProfileSurfaceText>Поверхня:</TxtTreeViewProfileSurfaceText>
   <TxtTreeViewProfileBasePointFromSurfaceHeightText>Висота початкової точки на поверхні:</TxtTreeViewProfileBasePointFromSurfaceHeightText>
   <TxtTreeViewProfileToPointFromSurfaceHeightText>Висота кінцевої точки на поверхні:</TxtTreeViewProfileToPointFromSurfaceHeightText>
-
+  <TxtObjCountText>Кількість об'єктів: {0}</TxtObjCountText>
+  
   <MsgLineNotFoundErrorText>Лінію не знайдено</MsgLineNotFoundErrorText>
   <MsgFolderAlreadyExistText>Каталог  "{0}"  вже існує \n Ви дійсно хочете оновити дані?</MsgFolderAlreadyExistText>
   <MsgRemovingProfileText>Ви дійсно хочете видалити профіль?</MsgRemovingProfileText>

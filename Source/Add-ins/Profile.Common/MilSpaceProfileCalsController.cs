@@ -1322,6 +1322,18 @@ namespace MilSpace.Profile
             return polylines;
         }
 
+        internal IPoint GetPointWithZFromSelectedDemLayer(IPoint point)
+        {
+            var rl = _mapLayersManager.RasterLayers.FirstOrDefault(l => l.Name == View.DemLayerName);
+
+            if (rl != null)
+            {
+                point.AddZCoordinate(rl.Raster);
+            }
+
+            return point;
+        }
+
         internal void CalcFunToPoints(AssignmentMethodsEnum assignmentMethod, ToPointsCreationMethodsEnum creationMethod, bool isNewTarget, double length = -1)
         {
             if(pointsToShow[ProfileSettingsPointButtonEnum.CenterFun] == null)
@@ -1333,6 +1345,7 @@ namespace MilSpace.Profile
             }
 
             var rl = _mapLayersManager.RasterLayers.FirstOrDefault(l => l.Name == View.DemLayerName);
+            var layerName = string.Empty;
 
             if(rl == null || String.IsNullOrEmpty(View.DemLayerName))
             {
@@ -1342,7 +1355,7 @@ namespace MilSpace.Profile
 
             if(isNewTarget || _funGeometries == null)
             {
-                var geometries = FunCreationManager.GetGeometriesByMethod(assignmentMethod);
+                var geometries = FunCreationManager.GetGeometriesByMethod(assignmentMethod, out layerName);
                 if(geometries != null && geometries.Count() != 0)
                 {
                     _funGeometries = geometries;
@@ -1434,7 +1447,8 @@ namespace MilSpace.Profile
             }
 
             SetFunProperties(polylines, minAzimuth, maxAzimuth, maxLength);
-            View.SetFunTxtValues(maxLength, maxAzimuth, minAzimuth, polylines.Count);
+            var geomCount = (_funGeometries == null) ? -1 : _funGeometries.Count();
+            View.SetFunTxtValues(maxLength, maxAzimuth, minAzimuth, polylines.Count, layerName, geomCount);
         }
 
 

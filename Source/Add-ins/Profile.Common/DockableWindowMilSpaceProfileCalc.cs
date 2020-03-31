@@ -413,6 +413,7 @@ namespace MilSpace.Profile
                         var coords = sCoords.Replace(' ', ';');
                         var point = GetPointFromRowValue(coords);
                         point.SpatialReference = EsriTools.Wgs84Spatialreference;
+                        controller.GetPointWithZFromSelectedDemLayer(point);
                         var pointOnMap = new PointClass { X = point.X, Y = point.Y, Z = point.Z, SpatialReference = point.SpatialReference };
                         pointOnMap.Project(ArcMap.Document.ActiveView.FocusMap.SpatialReference);
                         controller.SetFirsPointForLineProfile(point, pointOnMap);
@@ -514,6 +515,7 @@ namespace MilSpace.Profile
                         var coords = sCoords.Replace(' ', ';');
                         var point = GetPointFromRowValue(coords);
                         point.SpatialReference = EsriTools.Wgs84Spatialreference;
+                        controller.GetPointWithZFromSelectedDemLayer(point);
                         var pointOnMap = new PointClass { X = point.X, Y = point.Y, Z = point.Z, SpatialReference = point.SpatialReference };
                         pointOnMap.Project(ArcMap.Document.ActiveView.FocusMap.SpatialReference);
                         controller.SetSecondfPointForLineProfile(point, pointOnMap);
@@ -604,6 +606,7 @@ namespace MilSpace.Profile
                         var coords = sCoords.Replace(' ', ';');
                         var point = GetPointFromRowValue(coords);
                         point.SpatialReference = EsriTools.Wgs84Spatialreference;
+                        controller.GetPointWithZFromSelectedDemLayer(point);
                         var pointOnMap = new PointClass { X = point.X, Y = point.Y, Z = point.Z, SpatialReference = point.SpatialReference };
                         pointOnMap.Project(ArcMap.Document.ActiveView.FocusMap.SpatialReference);
                         controller.SetCenterPointForFunProfile(point, pointOnMap);
@@ -1021,12 +1024,18 @@ namespace MilSpace.Profile
             lbGraphicsParam.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbPrimitiveParamsVerticesCountText", "Кількість сегментів:")} {segmentsCount}");
         }
 
-        public void SetFunTxtValues(double length, double maxAzimuth, double minAzimuth, int linesCount)
+        public void SetFunTxtValues(double length, double maxAzimuth, double minAzimuth, int linesCount, string layerName, int geomCount)
         {
             profileLength.Text = Math.Round(length).ToString();
             azimuth1.Text = Math.Round(minAzimuth).ToString();
             azimuth2.Text = Math.Round(maxAzimuth).ToString();
             funLinesCount.Text = linesCount.ToString();
+
+            if (!String.IsNullOrEmpty(layerName) && geomCount > -1)
+            {
+                var countText = String.Format(LocalizationContext.Instance.FindLocalizedElement("TxtObjCountText", "Кількість об1єктів: {0}"), geomCount);
+                lblTargetObjInfo.Text = $"{layerName}; {countText}";
+            }
         }
 
         public void SetReturnButtonEnable(ProfileSettingsPointButtonEnum pointType, bool enabled)
@@ -1268,9 +1277,9 @@ namespace MilSpace.Profile
 
             lblHeightOfViewFirst.Text = LocalizationContext.Instance.FindLocalizedElement("LblHeightOfViewText", "Висота");
             lblHeightOfViewSecond.Text = LocalizationContext.Instance.FindLocalizedElement("LblHeightOfViewText", "Висота");
-            lblDimensionSecond.Text = LocalizationContext.Instance.FindLocalizedElement("LblDimensionSecondText", "м");
-            lblDimensionFirst.Text = LocalizationContext.Instance.FindLocalizedElement("LblDimensionFirstText", "м");
-            lblDimentionCenter.Text = LocalizationContext.Instance.DimensionText;
+            //lblDimensionSecond.Text = LocalizationContext.Instance.FindLocalizedElement("LblDimensionSecondText", "м");
+            //lblDimensionFirst.Text = LocalizationContext.Instance.FindLocalizedElement("LblDimensionFirstText", "м");
+            //lblDimentionCenter.Text = LocalizationContext.Instance.DimensionText;
             lblFunBasePoint.Text = LocalizationContext.Instance.FindLocalizedElement("LblFunBasePointText", "Базова точка");
             lblCenterPointHeight.Text = LocalizationContext.Instance.FindLocalizedElement("LblHeightOfViewText", "Висота");
             lblFunParameters.Text = LocalizationContext.Instance.FindLocalizedElement("LblFunParametersText", "Параметри");
