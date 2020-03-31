@@ -143,7 +143,10 @@
             this.Controls.Add(this.dgvPoints);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.titlePanel);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ObservObjForFunModalWindow";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ObservObjForFunModalWindow";
             ((System.ComponentModel.ISupportInitialize)(this.dgvPoints)).EndInit();
             this.panel1.ResumeLayout(false);
