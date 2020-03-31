@@ -1490,7 +1490,7 @@ namespace MilSpace.GeoCalculator
             var drawLine = forbidLineDrawing ? true : chkShowLine.Checked;
             var pointGuid = AddPointToList(point, drawLine);
 
-            if (pointGuid != Guid.Empty)
+            if (pointGuid != Guid.Empty && PointsGridView.Rows.Count > 0)
             {
                 maxNum = (int)PointsGridView.Rows[0].Cells[0].Value;
                 foreach (DataGridViewRow row in PointsGridView.Rows)
@@ -1501,11 +1501,9 @@ namespace MilSpace.GeoCalculator
                         maxNum = num;
                     }
                 }
-
-                maxNum++;
             }
 
-            var pointNumber = maxNum;
+            var pointNumber = ++maxNum;
             AddPointToGrid(point, pointNumber, pointGuid);
             if (projectPoint)
             {
