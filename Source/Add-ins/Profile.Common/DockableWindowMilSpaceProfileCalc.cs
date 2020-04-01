@@ -90,7 +90,10 @@ namespace MilSpace.Profile
 
         private void OnProfileSettingsChanged(ProfileSettingsEventArgs e)
         {
-            this.calcProfile.Enabled = e.ProfileSetting.IsReady;
+            if (e.ProfileSetting != null)
+            {
+                this.calcProfile.Enabled = e.ProfileSetting.IsReady;
+            }
         }
 
         public IActiveView ActiveView => ArcMap.Document.ActiveView;
@@ -104,7 +107,7 @@ namespace MilSpace.Profile
         public IEnumerable<string> GetLayersForLineSelection => controller.GetLayersForLineSelection();
 
         public string DemLayerName => cmbRasterLayers.SelectedItem == null ? string.Empty : cmbRasterLayers.SelectedItem.ToString();
-       
+
         public AssignmentMethodsEnum PrimitiveAssignmentMethod { get => controller.GetPrimitiveAssignmentMethodByString(layersToSelectLine.SelectedItem.ToString()); }
 
         public int ProfileId
@@ -393,7 +396,7 @@ namespace MilSpace.Profile
                     Clipboard.Clear();
                     string sCoord = $"{txtFirstPointX.Text} {txtFirstPointY.Text}";
 
-                    if(String.IsNullOrEmpty(sCoord) || String.IsNullOrEmpty(sCoord.Trim()))
+                    if (String.IsNullOrEmpty(sCoord) || String.IsNullOrEmpty(sCoord.Trim()))
                     {
                         break;
                     }
@@ -497,7 +500,7 @@ namespace MilSpace.Profile
                     Clipboard.Clear();
                     string sCoord = $"{txtSecondPointX.Text} {txtSecondPointY.Text}";
 
-                    if(String.IsNullOrEmpty(sCoord) || String.IsNullOrEmpty(sCoord.Trim()))
+                    if (String.IsNullOrEmpty(sCoord) || String.IsNullOrEmpty(sCoord.Trim()))
                     {
                         break;
                     }
@@ -583,7 +586,7 @@ namespace MilSpace.Profile
                     Clipboard.Clear();
                     string sCoord = $"{txtBasePointX.Text} {txtBasePointY.Text}";
 
-                    if(String.IsNullOrEmpty(sCoord) || String.IsNullOrEmpty(sCoord.Trim()))
+                    if (String.IsNullOrEmpty(sCoord) || String.IsNullOrEmpty(sCoord.Trim()))
                     {
                         break;
                     }
@@ -698,7 +701,7 @@ namespace MilSpace.Profile
             {
                 SetPointValue(txtFirstPointX, txtFirstPointY, txtFirstPointZ, value);
 
-                if(String.IsNullOrEmpty(txtSecondPointX.Text) && String.IsNullOrEmpty(txtSecondPointY.Text))
+                if (String.IsNullOrEmpty(txtSecondPointX.Text) && String.IsNullOrEmpty(txtSecondPointY.Text))
                 {
                     var newPoint = new PointClass { X = value.X, Y = controller.GetDefaultSecondYCoord(value), Z = value.Z, SpatialReference = value.SpatialReference };
                     var pointCopy = new PointClass { X = newPoint.X, Y = newPoint.Y, Z = newPoint.Z, SpatialReference = newPoint.SpatialReference };
@@ -719,7 +722,7 @@ namespace MilSpace.Profile
             {
                 SetPointValue(txtSecondPointX, txtSecondPointY, txtSecondPointZ, value);
 
-                if(String.IsNullOrEmpty(txtFirstPointX.Text) && String.IsNullOrEmpty(txtFirstPointY.Text))
+                if (String.IsNullOrEmpty(txtFirstPointX.Text) && String.IsNullOrEmpty(txtFirstPointY.Text))
                 {
                     var newPoint = new PointClass { X = value.X, Y = controller.GetDefaultSecondYCoord(value), Z = value.Z, SpatialReference = value.SpatialReference };
                     var pointCopy = new PointClass { X = newPoint.X, Y = newPoint.Y, Z = newPoint.Z, SpatialReference = newPoint.SpatialReference };
@@ -898,7 +901,7 @@ namespace MilSpace.Profile
 
         private void UpdateFunProperties(object sender, EventArgs e)
         {
-            if(sender == funLinesCount && Convert.ToInt32(funLinesCount.Text) < 2)
+            if (sender == funLinesCount && Convert.ToInt32(funLinesCount.Text) < 2)
             {
                 funLinesCount.Text = "2";
 
@@ -986,11 +989,11 @@ namespace MilSpace.Profile
 
         public void SetPointInfo(ProfileSettingsPointButtonEnum pointType, string text)
         {
-            if(pointType == ProfileSettingsPointButtonEnum.PointsFist)
+            if (pointType == ProfileSettingsPointButtonEnum.PointsFist)
             {
                 lblFirstPointInfo.Text = text;
             }
-            else if(pointType == ProfileSettingsPointButtonEnum.PointsSecond)
+            else if (pointType == ProfileSettingsPointButtonEnum.PointsSecond)
             {
                 lblSecondPointInfo.Text = text;
             }
@@ -1003,7 +1006,7 @@ namespace MilSpace.Profile
         public void SetFunToPointsParams(double averageAzimuth, double averageAngle, double averageLength, int count)
         {
             lbFunInfo.Items.Clear();
-            
+
             lbFunInfo.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbFunParamsAvgAzimuthText", "Середній азимут:")} {Math.Round(averageAzimuth)}");
             lbFunInfo.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbFunParamsAvgAngleText", "Середній кут між лініями:")} {Math.Round(averageAngle)}");
             lbFunInfo.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbFunParamsAvgLengthText", "Середня довжина проекції лінії:")} {Math.Round(averageLength)}");
@@ -1013,7 +1016,7 @@ namespace MilSpace.Profile
         public void SetPrimitiveInfo(double length, double azimuth, double projectionLength, int segmentsCount)
         {
             lbGraphicsParam.Items.Clear();
-            
+
             lbGraphicsParam.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbPrimitiveParamsLengthText", "Довжина проекцій ліній:")} {Math.Round(length)}");
             lbGraphicsParam.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbPrimitiveParamsAzimuthText", "Азимут між крайніми точками:")} {Math.Round(azimuth)}");
             lbGraphicsParam.Items.Add($"{LocalizationContext.Instance.FindLocalizedElement("LbPrimitiveParamsProjLengthText", "Відстань між крайніми точками:")} {Math.Round(projectionLength)}");
@@ -1036,11 +1039,11 @@ namespace MilSpace.Profile
 
         public void SetReturnButtonEnable(ProfileSettingsPointButtonEnum pointType, bool enabled)
         {
-            if(pointType == ProfileSettingsPointButtonEnum.PointsFist)
+            if (pointType == ProfileSettingsPointButtonEnum.PointsFist)
             {
                 tlbbReturnPoint.Enabled = enabled;
             }
-            else if(pointType == ProfileSettingsPointButtonEnum.PointsSecond)
+            else if (pointType == ProfileSettingsPointButtonEnum.PointsSecond)
             {
                 tlbbReturnToPoint.Enabled = enabled;
             }
@@ -1054,7 +1057,7 @@ namespace MilSpace.Profile
         {
             var creationMethod = controller.GetCreationMethodByString(cmbTargetObjCreation.SelectedItem.ToString());
 
-            if(creationMethod == ToPointsCreationMethodsEnum.AzimuthsLines)
+            if (creationMethod == ToPointsCreationMethodsEnum.AzimuthsLines)
             {
                 controller.CalcFunToPoints(controller.GetTargetAssignmentMethodByString(cmbTargetObjAssignmentMethod.SelectedItem.ToString()),
                                         ToPointsCreationMethodsEnum.Default, false);
@@ -1070,7 +1073,7 @@ namespace MilSpace.Profile
         {
             var creationMethod = controller.GetCreationMethodByString(cmbTargetObjCreation.SelectedItem.ToString());
 
-            if(creationMethod == ToPointsCreationMethodsEnum.AzimuthsLines)
+            if (creationMethod == ToPointsCreationMethodsEnum.AzimuthsLines)
             {
                 controller.CalcFunToPoints(controller.GetTargetAssignmentMethodByString(cmbTargetObjAssignmentMethod.SelectedItem.ToString()),
                                         ToPointsCreationMethodsEnum.AzimuthsLines, false);
@@ -1236,8 +1239,8 @@ namespace MilSpace.Profile
             secondPointToolbar.Buttons["tlbbReturnToPoint"].ToolTipText = LocalizationContext.Instance.ReturnPointValueText;
 
             basePointToolbar.Buttons["toolBarButton16"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnTakeCoordToolTip", "Взяти координати з карти");
-            basePointToolbar.Buttons["toolBarButton17"].ToolTipText =  LocalizationContext.Instance.FindLocalizedElement("BtnShowCoordToolTip", "Показати координати на карті");
-            basePointToolbar.Buttons["toolBarButton19"].ToolTipText =  LocalizationContext.Instance.FindLocalizedElement("BtnCopyCoordToolTip", "Копіювати координати");
+            basePointToolbar.Buttons["toolBarButton17"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnShowCoordToolTip", "Показати координати на карті");
+            basePointToolbar.Buttons["toolBarButton19"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnCopyCoordToolTip", "Копіювати координати");
             basePointToolbar.Buttons["toolBarButton20"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnPasteCoordToolTip", "Вставити координати");
             basePointToolbar.Buttons["tlbbReturnCenterPoint"].ToolTipText = LocalizationContext.Instance.ReturnPointValueText;
 
@@ -1263,7 +1266,7 @@ namespace MilSpace.Profile
             lblBuildingsLayer.Text = LocalizationContext.Instance.FindLocalizedElement("LblBuildingsLayerText", "забудова");
             lblRoadsLayer.Text = LocalizationContext.Instance.FindLocalizedElement("LblRoadsLayerText", "транспорт");
             lblHydrographyLayer.Text = LocalizationContext.Instance.FindLocalizedElement("LblHydrographyLayerText", "гідрографія");
-           // lblPointOfViewLayer.Text = LocalizationContext.Instance.FindLocalizedElement("LblPointOfViewLayerText", "Шар точок спостереження");
+            // lblPointOfViewLayer.Text = LocalizationContext.Instance.FindLocalizedElement("LblPointOfViewLayerText", "Шар точок спостереження");
             lblSetPeofileProperties.Text = LocalizationContext.Instance.FindLocalizedElement("LblSetProfilePropertiesText", "Задати профіль");
             lblProfileName.Text = LocalizationContext.Instance.FindLocalizedElement("LblProfileNameText", "Ім'я профілю");
 
@@ -1374,16 +1377,16 @@ namespace MilSpace.Profile
                LocalizationContext.Instance.FindLocalizedElement("MsgRemoveProfaileText", $"Ви дійсно бажаєти cкинути профіль  \"{0}\" з сесії?")
                .InvariantFormat(profilesTreeView.SelectedNode.Text);
             if (MessageBox.Show(
-                loalizedtext, 
-                LocalizationContext.Instance.MessageBoxTitle, 
-                MessageBoxButtons.YesNo, 
+                loalizedtext,
+                LocalizationContext.Instance.MessageBoxTitle,
+                MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 if (!controller.RemoveProfilesFromUserSession())
                 {
                     MessageBox.Show(
-                        "There was an error. Look at the log file for more detail", 
-                        LocalizationContext.Instance.MessageBoxTitle, 
+                        "There was an error. Look at the log file for more detail",
+                        LocalizationContext.Instance.MessageBoxTitle,
                         MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
@@ -1413,7 +1416,7 @@ namespace MilSpace.Profile
 
                 newNode.SetProfileName(profile.SessionName);
                 newNode.SetProfileType(ConvertProfileTypeToString(profile.DefinitionType));
-                if(profile.DefinitionType == ProfileSettingsTypeEnum.Points)
+                if (profile.DefinitionType == ProfileSettingsTypeEnum.Points)
                 {
                     var fromPoint = profile.ProfileSurfaces.First().ProfileSurfacePoints.First();
                     var toPoint = profile.ProfileSurfaces.First().ProfileSurfacePoints.Last();
@@ -1435,7 +1438,7 @@ namespace MilSpace.Profile
                     newNode.SetAzimuth(profile.ProfileLines.First().Azimuth.ToString("F0"));
                     newNode.SetSurface(profile.SurfaceLayerPath);
                 }
-                else if(profile.DefinitionType == ProfileSettingsTypeEnum.Fun)
+                else if (profile.DefinitionType == ProfileSettingsTypeEnum.Fun)
                 {
                     var fromPoint = profile.ProfileLines.First().Line.FromPoint.CloneWithProjecting();
 
@@ -1454,12 +1457,12 @@ namespace MilSpace.Profile
                     newNode.SetLineCount(linesCount);
                     newNode.SetSurface(profile.SurfaceLayerPath);
                 }
-                else if(profile.DefinitionType == ProfileSettingsTypeEnum.Primitives)
+                else if (profile.DefinitionType == ProfileSettingsTypeEnum.Primitives)
                 {
                     ProfileSurfacePoint fromPoint;
                     ProfileSurfacePoint toPoint;
 
-                    if(profile.ProfileSurfaces.Any())
+                    if (profile.ProfileSurfaces.Any())
                     {
                         fromPoint = profile.ProfileSurfaces.First().ProfileSurfacePoints.First();
                         toPoint = profile.ProfileSurfaces.Last().ProfileSurfacePoints.Last();
@@ -1499,7 +1502,7 @@ namespace MilSpace.Profile
                 foreach (var line in profile.ProfileLines)
                 {
                     var profileSurface = profile.ProfileSurfaces.FirstOrDefault(surface => surface.LineId == line.Id);
-                   
+
                     var fromPoint = (profileSurface == null) ? new ProfileSurfacePoint { X = line.PointFrom.X, Y = line.PointFrom.Y, Z = line.PointFrom.Z } : profileSurface.ProfileSurfacePoints.First();
                     var toPoint = (profileSurface == null) ? new ProfileSurfacePoint { X = line.PointTo.X, Y = line.PointTo.Y, Z = line.PointTo.Z } : profileSurface.ProfileSurfacePoints.Last();
                     var azimuth = line.Azimuth.ToString("F0");
@@ -1590,9 +1593,9 @@ namespace MilSpace.Profile
             if (!res.HasValue)
             {
                 MessageBox.Show(
-                    LocalizationContext.Instance.FindLocalizedElement("MsgNotAllowedToShareText", "Ви не можете дозволити спільний доступ для цього профілю."), 
-                    LocalizationContext.Instance.MessageBoxTitle, 
-                    MessageBoxButtons.OK, 
+                    LocalizationContext.Instance.FindLocalizedElement("MsgNotAllowedToShareText", "Ви не можете дозволити спільний доступ для цього профілю."),
+                    LocalizationContext.Instance.MessageBoxTitle,
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 return;
             }
@@ -1600,9 +1603,9 @@ namespace MilSpace.Profile
             if (!res.Value)
             {
                 MessageBox.Show(
-                    LocalizationContext.Instance.ErrorHappendText, 
-                    LocalizationContext.Instance.MessageBoxTitle, 
-                    MessageBoxButtons.OK, 
+                    LocalizationContext.Instance.ErrorHappendText,
+                    LocalizationContext.Instance.MessageBoxTitle,
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
 
@@ -1612,21 +1615,21 @@ namespace MilSpace.Profile
 
         private void eraseProfile_Click(object sender, EventArgs e)
         {
-            string loalizedtext = 
+            string loalizedtext =
                 LocalizationContext.Instance.FindLocalizedElement("MsgDeleteProfaileText", $"Ви дійсно бажаєти видалити профіль  \"{0}\"?")
                 .InvariantFormat(profilesTreeView.SelectedNode.Text);
             if (MessageBox.Show(
-                loalizedtext, 
-                LocalizationContext.Instance.MessageBoxTitle, 
-                MessageBoxButtons.YesNo, 
+                loalizedtext,
+                LocalizationContext.Instance.MessageBoxTitle,
+                MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 if (!controller.RemoveProfilesFromUserSession(true))
                 {
                     MessageBox.Show(
                        LocalizationContext.Instance.ErrorHappendText,
-                        LocalizationContext.Instance.MessageBoxTitle, 
-                        MessageBoxButtons.OK, 
+                        LocalizationContext.Instance.MessageBoxTitle,
+                        MessageBoxButtons.OK,
                         MessageBoxIcon.Exclamation);
                 }
             }
@@ -1661,29 +1664,45 @@ namespace MilSpace.Profile
                 profileSettingsTab.SelectTab(0);
 
                 var baseValueX = rows.Find(AttributeKeys.BasePointX)[AttributeKeys.ValueColumnName].ToString();
-                var baseValueY = rows.Find(AttributeKeys.BasePointX)[AttributeKeys.ValueColumnName].ToString();
-
+                var baseValueY = rows.Find(AttributeKeys.BasePointY)[AttributeKeys.ValueColumnName].ToString();
                 var basePoint = GetPointFromRowValue(baseValueX, baseValueY);
-                controller.SetFirsPointForLineProfile(basePoint.CloneWithProjecting(), basePoint);
+                if (basePoint == null)
+                {
+                    MessageBox.Show("Invalid convertation. See log for more detaoils");
+                    return;
+                }
 
                 var toValueX = rows.Find(AttributeKeys.ToPointX)[AttributeKeys.ValueColumnName].ToString();
                 var toValueY = rows.Find(AttributeKeys.ToPointY)[AttributeKeys.ValueColumnName].ToString();
-
                 var toPoint = GetPointFromRowValue(toValueX, toValueY);
+                if (toPoint == null)
+                {
+                    MessageBox.Show("Invalid convertation. See log for more detaoils");
+                    return;
+                }
+
+
+                controller.SetFirsPointForLineProfile(basePoint.CloneWithProjecting(), basePoint);
+               
                 controller.SetSecondfPointForLineProfile(toPoint.CloneWithProjecting(), toPoint);
 
                 txtFirstHeight.Text = rows.Find(AttributeKeys.SectionFirstPointHeight)[AttributeKeys.ValueColumnName].ToString();
                 txtSecondHeight.Text = rows.Find(AttributeKeys.SectionSecondPointHeight)[AttributeKeys.ValueColumnName].ToString();
+
             }
             if (profileType == ProfileSettingsTypeEnum.Fun)
             {
                 profileSettingsTab.SelectTab(1);
 
                 var baseValueX = rows.Find(AttributeKeys.BasePointX)[AttributeKeys.ValueColumnName].ToString();
-                var baseValueY = rows.Find(AttributeKeys.BasePointX)[AttributeKeys.ValueColumnName].ToString();
+                var baseValueY = rows.Find(AttributeKeys.BasePointY)[AttributeKeys.ValueColumnName].ToString();
 
                 var basePoint = GetPointFromRowValue(baseValueX, baseValueY);
-                controller.SetFirsPointForLineProfile(basePoint.CloneWithProjecting(), basePoint);
+                if (basePoint == null)
+                {
+                    MessageBox.Show("Invalid convertation. See log for more detaoils");
+                    return;
+                }
 
                 txtCenterPointHeight.Text = rows.Find(AttributeKeys.SectionFirstPointHeight)[AttributeKeys.ValueColumnName].ToString();
 
@@ -1693,6 +1712,8 @@ namespace MilSpace.Profile
                 funLinesCount.Text = rows.Find(AttributeKeys.LinesCount)[AttributeKeys.ValueColumnName].ToString();
                 azimuth1.Text = rows.Find(AttributeKeys.Azimuth1)[AttributeKeys.ValueColumnName].ToString();
                 azimuth2.Text = rows.Find(AttributeKeys.Azimuth2)[AttributeKeys.ValueColumnName].ToString();
+
+                controller.SetCenterPointForFunProfile(basePoint.CloneWithProjecting(), basePoint);
             }
 
             controller.SetProfileSettings(profileType);
@@ -1700,19 +1721,32 @@ namespace MilSpace.Profile
 
         private IPoint GetPointFromRowValue(string xValue, string yValue)
         {
-            //var points = rowValue.Split(';');
-
-            var pointX = Convert.ToDouble(Regex.Match(xValue, @"\d+,?\d+").Value);
-            var pointY = Convert.ToDouble(Regex.Match(yValue, @"\d+,?\d+").Value);
-
-          //  var av = ArcMap.Document.ActivatedView;
-
-            return new Point()
+            double pointX;
+            double pointY;
+            if (xValue.TryParceToDouble(out pointX) && yValue.TryParceToDouble(out pointY))
             {
-                X = pointX,
-                Y = pointY,
-                SpatialReference = EsriTools.Wgs84Spatialreference
-            };
+                var point = new Point()
+                {
+                    X = pointX,
+                    Y = pointY,
+                    SpatialReference = EsriTools.Wgs84Spatialreference
+                };
+
+                MapLayersManager mngr = new MapLayersManager(ActiveView);
+                //Set Z value using selected DEM
+                var rl = mngr.RasterLayers.FirstOrDefault(l => l.Name == DemLayerName);
+                if (rl != null)
+                {
+                    point.AddZCoordinate(rl.Raster);
+                }
+
+                return point;
+            }
+            else
+            {
+                logger.ErrorEx($"Values \"{xValue}\" or {yValue} cannot be converted indo double type");
+                return null;
+            }
         }
 
         private IPoint GetPointFromRowValue(string rowValue)
@@ -1744,10 +1778,10 @@ namespace MilSpace.Profile
 
         private void CmbFirstPointAssignmentMethod_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(cmbFirstPointAssignmentMethod.SelectedItem.Equals(LocalizationContext.Instance.AssignmentMethodFromMapItem))
+            if (cmbFirstPointAssignmentMethod.SelectedItem.Equals(LocalizationContext.Instance.AssignmentMethodFromMapItem))
             {
                 btnChooseFirstPointAssignmentMethod.Enabled = false;
-               // SetPointInfo(ProfileSettingsPointButtonEnum.PointsFist, string.Empty);
+                // SetPointInfo(ProfileSettingsPointButtonEnum.PointsFist, string.Empty);
                 SetReturnButtonEnable(ProfileSettingsPointButtonEnum.PointsFist, false);
             }
             else
@@ -1758,7 +1792,7 @@ namespace MilSpace.Profile
 
         private void CmbSecondPointAssignmentMethod_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(cmbSecondPointAssignmentMethod.SelectedItem.Equals(LocalizationContext.Instance.AssignmentMethodFromMapItem))
+            if (cmbSecondPointAssignmentMethod.SelectedItem.Equals(LocalizationContext.Instance.AssignmentMethodFromMapItem))
             {
                 btnChooseSecondPointAssignmentMethod.Enabled = false;
                 //SetPointInfo(ProfileSettingsPointButtonEnum.PointsSecond, string.Empty);
@@ -1772,10 +1806,10 @@ namespace MilSpace.Profile
 
         private void CmbCenterPointAssignmentMethod_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(cmbCenterPointAssignmentMethod.SelectedItem.Equals(LocalizationContext.Instance.AssignmentMethodFromMapItem))
+            if (cmbCenterPointAssignmentMethod.SelectedItem.Equals(LocalizationContext.Instance.AssignmentMethodFromMapItem))
             {
                 btnCenterPointAssignmantMethod.Enabled = false;
-               // SetPointInfo(ProfileSettingsPointButtonEnum.CenterFun, string.Empty);
+                // SetPointInfo(ProfileSettingsPointButtonEnum.CenterFun, string.Empty);
                 SetReturnButtonEnable(ProfileSettingsPointButtonEnum.CenterFun, false);
             }
             else
@@ -1809,7 +1843,7 @@ namespace MilSpace.Profile
             var targetAssignmentMethod = controller.GetTargetAssignmentMethodByString(cmbTargetObjAssignmentMethod.SelectedItem.ToString());
             var creationMethod = controller.GetCreationMethodByString(cmbTargetObjCreation.SelectedItem.ToString());
 
-            if(targetAssignmentMethod == AssignmentMethodsEnum.Sector || creationMethod == ToPointsCreationMethodsEnum.AzimuthsLines)
+            if (targetAssignmentMethod == AssignmentMethodsEnum.Sector || creationMethod == ToPointsCreationMethodsEnum.AzimuthsLines)
             {
                 controller.CalcFunToPoints(targetAssignmentMethod, ToPointsCreationMethodsEnum.Default, true);
             }
@@ -1818,7 +1852,7 @@ namespace MilSpace.Profile
                 controller.CalcFunToPoints(targetAssignmentMethod, creationMethod, true);
             }
 
-            if(targetAssignmentMethod == AssignmentMethodsEnum.Sector)
+            if (targetAssignmentMethod == AssignmentMethodsEnum.Sector)
             {
                 cmbTargetObjCreation.SelectedItem = LocalizationContext.Instance.ToPointsCreationMethodAzimuthsLines;
                 cmbTargetObjCreation.Enabled = false;
@@ -1828,7 +1862,7 @@ namespace MilSpace.Profile
                 cmbTargetObjCreation.Enabled = true;
             }
         }
-        
+
         private void BtnChooseCreationMethod_Click(object sender, EventArgs e)
         {
             RecalculateFun();
@@ -1845,7 +1879,7 @@ namespace MilSpace.Profile
         {
             controller.PanToProfile(ProfileSettingsTypeEnum.Fun);
         }
-        
+
         private void BtnPrimitiveAssignmentMethod_Click(object sender, EventArgs e)
         {
             controller.SetProfileSettings(ProfileSettingsTypeEnum.Primitives);
@@ -1874,7 +1908,7 @@ namespace MilSpace.Profile
             treeViewselectedIds.ProfileSessionId = ids.Item1;
             TreeNode selectedNode;
 
-            if(lineId == -1)
+            if (lineId == -1)
             {
                 selectedNode = profilesTreeView.SelectedNode;
             }
@@ -1890,11 +1924,11 @@ namespace MilSpace.Profile
         {
             var res = MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgRenameProfileText", "Ви дійсно хочете перейменувати профіль/набор профілів?"), LocalizationContext.Instance.MessageBoxTitle, MessageBoxButtons.OKCancel);
 
-            if(res == DialogResult.OK)
+            if (res == DialogResult.OK)
             {
                 e.Node.EndEdit(false);
 
-                if(!String.IsNullOrEmpty(e.Label))
+                if (!String.IsNullOrEmpty(e.Label))
                 {
                     var ids = GetProfileAndLineIds(e.Node);
                     controller.RenameProfile(ids.Item1, e.Label);
@@ -1920,7 +1954,7 @@ namespace MilSpace.Profile
         {
             var node = profilesTreeView.SelectedNode;
 
-            if(!(node is ProfileTreeNode)) return;
+            if (!(node is ProfileTreeNode)) return;
 
             ProfileTreeNode profileNode = (ProfileTreeNode)node;
             var profileType = GetProfileTypeFromNode();
@@ -1940,13 +1974,13 @@ namespace MilSpace.Profile
 
         private void RecalcForCurrentSurface_Click(object sender, EventArgs e)
         {
-           
+
             logger.DebugEx("> RecalcForCurrentSurface_Click START");
 
             var ids = GetProfileAndLineIds(profilesTreeView.SelectedNode);
             var session = controller.RecalculateSessionForNewSurface(ids.Item1);
 
-            if(session != null)
+            if (session != null)
             {
                 logger.DebugEx("RecalcForCurrentSurface_Click. session.SessionName:{0}", session.SessionName);
                 controller.AddProfileToList(session);
@@ -1972,9 +2006,9 @@ namespace MilSpace.Profile
             {
                 StringBuilder text = new StringBuilder();
 
-                foreach(ListViewItem item in lvProfileAttributes.SelectedItems)
+                foreach (ListViewItem item in lvProfileAttributes.SelectedItems)
                 {
-                    foreach(ListViewItem.ListViewSubItem sub in item.SubItems)
+                    foreach (ListViewItem.ListViewSubItem sub in item.SubItems)
                     {
                         text.Append(sub.Text + "\t");
                     }
@@ -1984,7 +2018,7 @@ namespace MilSpace.Profile
 
                 Clipboard.SetDataObject(text.ToString());
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(LocalizationContext.Instance.ErrorHappendText, LocalizationContext.Instance.MessageBoxTitle);
                 logger.WarnEx($"> CopyStripMenuItem_Click Exception: {ex.Message}");
@@ -1993,7 +2027,7 @@ namespace MilSpace.Profile
 
         private void BtnShowProfileLine_Click(object sender, EventArgs e)
         {
-           controller.PanToProfile(ProfileSettingsTypeEnum.Points);
+            controller.PanToProfile(ProfileSettingsTypeEnum.Points);
         }
 
         private void CmbTargetObjCreation_SelectedIndexChanged(object sender, EventArgs e)

@@ -178,7 +178,6 @@ namespace MilSpace.Profile
         {
             pointsToShow[ProfileSettingsPointButtonEnum.CenterFun] = pointToShow;
             View.FunPropertiesCenterPoint = pointToView;
-            
             View.RecalculateFun();
         }
 
@@ -318,12 +317,6 @@ namespace MilSpace.Profile
 
             if (View.SelectedProfileSettingsType == ProfileSettingsTypeEnum.Primitives)
             {
-                //GetSelectedGraphics();
-                //if(selectedOnMapLines != null)
-                //{
-                //    profileLines = selectedOnMapLines.ToList();
-                //}
-
                 if (profileSettings[profileType] == null || recalc)
                 {
                     profileLines = CalcPrimitive(View.PrimitiveAssignmentMethod).ToArray();
@@ -1367,7 +1360,7 @@ namespace MilSpace.Profile
 
             if(rl == null || String.IsNullOrEmpty(View.DemLayerName))
             {
-                MessageBox.Show(LocalizationContext.Instance.DemLayerNotChosenText, LocalizationContext.Instance.MessageBoxTitle);
+                MessageBox.Show(LocalizationContext.Instance.DemLayerNotChosenText, LocalizationContext.Instance.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
