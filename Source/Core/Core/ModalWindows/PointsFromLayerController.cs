@@ -3,8 +3,8 @@ using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core;
 using MilSpace.Core.DataAccess;
+using MilSpace.Core.Localization;
 using MilSpace.Core.Tools;
-using MilSpace.Profile.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +13,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MilSpace.Profile.ModalWindows
+namespace MilSpace.Core.ModalWindows
 {
     internal class PointsFromLayerController
     {
-        private MapLayersManager _mapLayersManager = new MapLayersManager(ArcMap.Document.ActiveView);
+        private MapLayersManager _mapLayersManager;
         private Logger _log = Logger.GetLoggerEx("MilSpace.Profile.ModalWindows.PointsFromLayerController");
+
+        internal PointsFromLayerController(IActiveView activeView)
+        {
+            _mapLayersManager = new MapLayersManager(activeView);
+        }
 
         public List<FromLayerPointModel> GetPoints(string layerName, string displayedFieldName)
         {
@@ -26,13 +31,13 @@ namespace MilSpace.Profile.ModalWindows
             var points = new List<FromLayerPointModel>();
 
             var featureClass = layer.FeatureClass;
-            var idFieldIndex = featureClass.FindField("OBJECTID");
+            var idFieldIndex = featureClass.FindField(featureClass.OIDFieldName);
             var selectedFieldIndex = (!string.IsNullOrEmpty(displayedFieldName)) ? featureClass.FindField(displayedFieldName) : -2;
 
             if(idFieldIndex == -1)
             {
-                _log.WarnEx($"> GetPoints. Warning: Cannot find fild \"OBJECTID\" in featureClass {featureClass.AliasName}");
-                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgCannotFindObjIdText", "У шарі відсутнє поле OBJECTID"),
+                _log.WarnEx($"> GetPoints. Warning: Cannot find fild {featureClass.OIDFieldName} in featureClass {featureClass.AliasName}");
+                MessageBox.Show(String.Format(LocalizationContext.Instance.FindLocalizedElement("MsgCannotFindObjIdText", "У шарі відсутнє поле {0}"), featureClass.OIDFieldName),
                                     LocalizationContext.Instance.MessageBoxTitle);
 
                 return null;
@@ -44,7 +49,7 @@ namespace MilSpace.Profile.ModalWindows
             }
 
             IQueryFilter queryFilter = new QueryFilter();
-            queryFilter.WhereClause = "OBJECTID > 0";
+            queryFilter.WhereClause = $"{featureClass.OIDFieldName} > 0";
 
             IFeatureCursor featureCursor = featureClass.Search(queryFilter, true);
             IFeature feature = featureCursor.NextFeature();

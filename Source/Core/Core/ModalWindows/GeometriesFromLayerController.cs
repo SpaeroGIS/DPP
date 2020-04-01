@@ -1,22 +1,27 @@
 ﻿using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
-using MilSpace.Core;
 using MilSpace.Core.DataAccess;
+using MilSpace.Core.Localization;
+using MilSpace.Core.ModulesInteraction;
 using MilSpace.Core.Tools;
-using MilSpace.Profile.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace MilSpace.Profile.ModalWindows
+namespace MilSpace.Core.ModalWindows
 {
     internal class GeometriesFromLayerController
     {
-        private MapLayersManager _mapLayersManager = new MapLayersManager(ArcMap.Document.ActiveView);
-        private Logger _log = Logger.GetLoggerEx("MilSpace.Profile.ModalWindows.GeometriesFromLayerController");
+        private MapLayersManager _mapLayersManager;
+        private Logger _log = Logger.GetLoggerEx("MilSpace.Core.ModalWindows.GeometriesFromLayerController");
+
+        internal GeometriesFromLayerController(IActiveView activeView)
+        {
+            _mapLayersManager = new MapLayersManager(activeView);
+        }
 
         public List<FromLayerGeometry> GetGeometries(string layerName, string displayedFieldName)
         {
@@ -95,8 +100,17 @@ namespace MilSpace.Profile.ModalWindows
             }
             else
             {
-                //TODO: The MilSp_Visible_ObjectsObservation_R should be tacken form the Visibility layer using interaction!!!!!
-                layers = _mapLayersManager.PolygonLayers.Where(l => !(l as IFeatureLayer).FeatureClass.AliasName.EndsWith("MilSp_Visible_ObjectsObservation_R")).Select(layer => layer.Name).ToList();
+                var visibilityModule = ModuleInteraction.Instance.GetModuleInteraction<IVisibilityInteraction>(out bool changes);
+
+                if (!changes && visibilityModule == null)
+                {
+                    layers = _mapLayersManager.PolygonLayers.Select(layer => layer.Name).ToList();
+                }
+                else
+                {
+                    var observObjFeatureClassName = visibilityModule.GetObservationStationFeatureClassName();
+                    layers = _mapLayersManager.PolygonLayers.Where(l => !(l as IFeatureLayer).FeatureClass.AliasName.EndsWith(observObjFeatureClassName)).Select(layer => layer.Name).ToList();
+                }
             }
 
             layers.AddRange(_mapLayersManager.LineLayers.Select(layer => layer.Name));

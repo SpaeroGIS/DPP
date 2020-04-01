@@ -1,4 +1,4 @@
-﻿namespace MilSpace.Profile.ModalWindows
+﻿namespace MilSpace.Core.ModalWindows
 {
     partial class PointsListModalWindow
     {
@@ -50,7 +50,7 @@
             // 
             this.lblLayer.AutoSize = true;
             this.lblLayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.lblLayer.Location = new System.Drawing.Point(3, 6);
+            this.lblLayer.Location = new System.Drawing.Point(0, 7);
             this.lblLayer.Name = "lblLayer";
             this.lblLayer.Size = new System.Drawing.Size(52, 20);
             this.lblLayer.TabIndex = 0;
@@ -79,6 +79,7 @@
             // 
             // lvPoints
             // 
+            this.lvPoints.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lvPoints.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvPoints.FullRowSelect = true;
             this.lvPoints.GridLines = true;
@@ -101,6 +102,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "PointsListModalWindow";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "PointsListModalWindow";
             this.titlePanel.ResumeLayout(false);
             this.titlePanel.PerformLayout();

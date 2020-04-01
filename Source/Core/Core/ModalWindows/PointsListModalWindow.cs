@@ -1,17 +1,16 @@
 ﻿using ESRI.ArcGIS.Geometry;
-using MilSpace.Core;
 using MilSpace.Core.DataAccess;
-using MilSpace.Profile.Localization;
+using MilSpace.Core.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace MilSpace.Profile.ModalWindows
+namespace MilSpace.Core.ModalWindows
 {
     public partial class PointsListModalWindow : Form
     {
-        internal FromLayerPointModel SelectedPoint;
+        public FromLayerPointModel SelectedPoint;
         private Dictionary<int, IPoint> _points = new Dictionary<int, IPoint>();
 
         public PointsListModalWindow(Dictionary<int, IPoint> points)
@@ -28,7 +27,6 @@ namespace MilSpace.Profile.ModalWindows
         private void InitializeListView(Dictionary<int, IPoint> points)
         {
             lvPoints.View = View.Details;
-
            
             lvPoints.Items.Clear();
 

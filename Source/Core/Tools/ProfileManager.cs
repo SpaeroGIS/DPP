@@ -273,6 +273,7 @@ namespace MilSpace.Tools
                 WhereClause = WhereAllRecords
             };
 
+            bool isFirst = true;
             var allrecords = profileLines.Search(queryFilter, true);
 
             IFeature line = null;
@@ -316,7 +317,14 @@ namespace MilSpace.Tools
                     var vertices = profileLine.Vertices;
                     if (vertices.Count() == 2)
                     {
-                        profileLine.Azimuth = ln.Azimuth();
+                        if (!isFirst && ln.PosAzimuth() == 0)
+                        {
+                            profileLine.Azimuth = 360;
+                        }
+                        else
+                        {
+                            profileLine.Azimuth = ln.PosAzimuth();
+                        }
                     }
                     else
                     {
@@ -328,6 +336,7 @@ namespace MilSpace.Tools
                     }
 
                     result.Add(profileLine);
+                    isFirst = false;
                 }
             }
 

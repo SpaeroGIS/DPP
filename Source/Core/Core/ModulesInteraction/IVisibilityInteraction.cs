@@ -11,5 +11,7 @@ namespace MilSpace.Core.ModulesInteraction
     {
         List<FromLayerPointModel> GetObservationPoints();
         List<FromLayerGeometry> GetObservationObjects();
+        string GetObservationPointsFeatureClassName();
+        string GetObservationStationFeatureClassName();
     }
 }

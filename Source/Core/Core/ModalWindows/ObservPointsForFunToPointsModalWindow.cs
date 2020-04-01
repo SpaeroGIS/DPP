@@ -1,47 +1,42 @@
 ﻿using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.DataAccess;
-using MilSpace.Profile.Localization;
+using MilSpace.Core.Localization;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MilSpace.Profile.ModalWindows
+namespace MilSpace.Core.ModalWindows
 {
-    public partial class ObservObjForFunModalWindow : Form
+    public partial class ObservPointsForFunToPointsModalWindow : Form
     {
-        private List<FromLayerGeometry> _observObjects = new List<FromLayerGeometry>();
+        private List<FromLayerPointModel> _points = new List<FromLayerPointModel>();
         public List<IGeometry> SelectedPoints;
 
-        public ObservObjForFunModalWindow(List<FromLayerGeometry> observObjects)
+        public ObservPointsForFunToPointsModalWindow(List<FromLayerPointModel> points)
         {
             InitializeComponent();
             LocalizeStrings();
-            _observObjects = observObjects;
+            _points = points;
             FillPointsGrid();
         }
 
         private void LocalizeStrings()
         {
-            this.Text = LocalizationContext.Instance.FindLocalizedElement("ModalTargetObservObjTitle", "Вибір об'єктів спостереження");
+            this.Text = LocalizationContext.Instance.FindLocalizedElement("ModalObservPointsTitle", "Вибір точки з шару точок спостереження");
             btnChoosePoint.Text = LocalizationContext.Instance.ChooseText;
             dgvPoints.Columns["IdCol"].HeaderText = LocalizationContext.Instance.IdHeaderText;
             dgvPoints.Columns["TitleCol"].HeaderText = LocalizationContext.Instance.TitleHeaderText;
-            lblLayer.Text = LocalizationContext.Instance.FindLocalizedElement("ObservObjectsTypeText", "Об'єкти спостереження");
+            lblLayer.Text = LocalizationContext.Instance.FindLocalizedElement("ObservPointsTypeText", "Пункти спостереження");
         }
 
         private void FillPointsGrid()
         {
             dgvPoints.Rows.Clear();
 
-            foreach(var observObject in _observObjects)
+            foreach(var point in _points)
             {
-                dgvPoints.Rows.Add(false, observObject.ObjId, observObject.Title);
+                dgvPoints.Rows.Add(false, point.ObjId, point.DisplayedField, point.Point.X.ToFormattedString(), point.Point.Y.ToFormattedString());
             }
         }
 
@@ -61,7 +56,7 @@ namespace MilSpace.Profile.ModalWindows
             {
                 if((bool)row.Cells[0].Value)
                 {
-                    SelectedPoints.Add(_observObjects.First(observObject => observObject.ObjId == (int)row.Cells["IdCol"].Value).Geometry);
+                    SelectedPoints.Add(_points.First(point => point.ObjId == (int)row.Cells["IdCol"].Value).Point);
                 }
             }
         }

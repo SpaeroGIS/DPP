@@ -1,49 +1,44 @@
-﻿using ESRI.ArcGIS.Geometry;
+﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.DataAccess;
-using MilSpace.Profile.Localization;
+using MilSpace.Core.Localization;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MilSpace.Profile.ModalWindows
+namespace MilSpace.Core.ModalWindows
 {
-    public partial class GeometryFromFeatureLayerModalWindow : Form
+    public partial class GeometriesFromLayerForFunToPointsModalWindow : Form
     {
-        private GeometriesFromLayerController _controller = new GeometriesFromLayerController();
+        private GeometriesFromLayerController _controller;
         private List<FromLayerGeometry> _geometries = new List<FromLayerGeometry>();
-        internal IGeometry SelectedGeometry;
+        public List<IGeometry> SelectedGeometries;
+        public string SelectedLayerName;
 
-        public GeometryFromFeatureLayerModalWindow()
+        public GeometriesFromLayerForFunToPointsModalWindow(IActiveView activeView)
         {
+            _controller = new GeometriesFromLayerController(activeView);
+
             InitializeComponent();
             LocalizeStrings();
             PopulateLayerComboBox();
         }
-       
+
         private void LocalizeStrings()
         {
             lblChooseLayer.Text = LocalizationContext.Instance.FindLocalizedElement("LblLayersText", "Шар");
             lblField.Text = LocalizationContext.Instance.FindLocalizedElement("LblFieldsText", "Поле");
             btnChoosePoint.Text = LocalizationContext.Instance.ChooseText;
 
-            this.Text = LocalizationContext.Instance.FindLocalizedElement("ModalGeometryFromLayerTitle", "Вибір геометрії з векторного шару");
+            this.Text = LocalizationContext.Instance.FindLocalizedElement("ModalPointsFromLayerTitle", "Вибір точки з точкового шару");
         }
 
         private void PopulateLayerComboBox()
         {
             cmbLayers.Items.Clear();
-            cmbLayers.Items.AddRange(_controller.GetNotPointFeatureLayers(true).ToArray());
-
-            if (cmbLayers.Items.Count > 0)
-            {
-                cmbLayers.SelectedIndex = 0;
-            }
+            cmbLayers.Items.AddRange(_controller.GetNotPointFeatureLayers().ToArray());
+            cmbLayers.SelectedIndex = 0;
         }
 
         private void PopulateFieldsComboBox(string layerName)
@@ -71,20 +66,20 @@ namespace MilSpace.Profile.ModalWindows
                 return;
             }
 
-            dgvGeometries.Rows.Clear();
-            dgvGeometries.Columns["DisplayFieldCol"].Visible = selectedField != null;
+            dgvPoints.Rows.Clear();
+            dgvPoints.Columns["DisplayFieldCol"].Visible = selectedField != null;
 
             foreach(var geometry in _geometries)
             {
-                dgvGeometries.Rows.Add(geometry.ObjId, geometry.Title);
+                dgvPoints.Rows.Add(false, geometry.ObjId, geometry.Title);
             }
         }
 
         private void CmbLayers_SelectedIndexChanged(object sender, EventArgs e)
         {
-            dgvGeometries.Rows.Clear();
+            dgvPoints.Rows.Clear();
             PopulateFieldsComboBox(cmbLayers.SelectedItem.ToString());
-            lblLayer.Text = cmbLayers.SelectedItem.ToString();
+            SelectedLayerName = lblLayer.Text = cmbLayers.SelectedItem.ToString();
         }
 
         private void CmbFields_SelectedIndexChanged(object sender, EventArgs e)
@@ -94,13 +89,29 @@ namespace MilSpace.Profile.ModalWindows
                 return;
             }
 
-            dgvGeometries.Columns["DisplayFieldCol"].HeaderText = cmbFields.SelectedItem.ToString();
+            dgvPoints.Columns["DisplayFieldCol"].HeaderText = cmbFields.SelectedItem.ToString();
             FillPointsGrid(cmbFields.SelectedItem.ToString());
         }
 
         private void BtnChoosePoint_Click(object sender, EventArgs e)
         {
-            SelectedGeometry = _geometries.First(geometry => geometry.ObjId == (int)dgvGeometries.SelectedRows[0].Cells["IdCol"].Value).Geometry;
+            SelectedGeometries = new List<IGeometry>();
+
+            foreach(DataGridViewRow row in dgvPoints.Rows)
+            {
+                if((bool)row.Cells[0].Value)
+                {
+                    SelectedGeometries.Add(_geometries.FirstOrDefault(geom => geom.ObjId == (int)row.Cells["IdCol"].Value).Geometry);
+                }
+            }
+        }
+
+        private void ChckAllPoints_CheckedChanged(object sender, EventArgs e)
+        {
+            foreach(DataGridViewRow row in dgvPoints.Rows)
+            {
+                row.Cells[0].Value = chckAllPoints.Checked;
+            }
         }
     }
 }

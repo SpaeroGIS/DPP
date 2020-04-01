@@ -1,22 +1,30 @@
-﻿using MilSpace.Core;
+﻿using ESRI.ArcGIS.Carto;
 using MilSpace.Core.DataAccess;
-using MilSpace.Profile.Localization;
+using MilSpace.Core.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace MilSpace.Profile.ModalWindows
+namespace MilSpace.Core.ModalWindows
 {
     public partial class PointsFromLayerModalWindow : Form
     {
-        private PointsFromLayerController _controller = new PointsFromLayerController();
+        private PointsFromLayerController _controller;
         private List<FromLayerPointModel> _points;
-        internal FromLayerPointModel SelectedPoint;
-        internal string LayerName;
+        private string[] _layers;
+        public FromLayerPointModel SelectedPoint;
+        public string LayerName;
 
-        public PointsFromLayerModalWindow()
+        public PointsFromLayerModalWindow(IActiveView activeView, string[] layers = null)
         {
+            _controller = new PointsFromLayerController(activeView);
+
+            if(layers != null && layers.Any())
+            {
+                _layers = layers;
+            }
+
             InitializeComponent();
             LocalizeStrings();
             PopulateLayerComboBox();
@@ -26,7 +34,7 @@ namespace MilSpace.Profile.ModalWindows
         {
             lblChooseLayer.Text = LocalizationContext.Instance.FindLocalizedElement("LblLayersText", "Шар");
             lblField.Text = LocalizationContext.Instance.FindLocalizedElement("LblFieldsText", "Поле");
-            btnChoosePoint.Text = LocalizationContext.Instance.FindLocalizedElement("BtnChooseText", "Обрати");
+            btnChoosePoint.Text = LocalizationContext.Instance.ChooseText;
 
             this.Text = LocalizationContext.Instance.FindLocalizedElement("ModalPointsFromLayerTitle", "Вибір точки з точкового шару");
         }
@@ -34,7 +42,9 @@ namespace MilSpace.Profile.ModalWindows
         private void PopulateLayerComboBox()
         {
             cmbLayers.Items.Clear();
-            cmbLayers.Items.AddRange(_controller.GetPointLayers());
+
+            var layers = _layers ?? _controller.GetPointLayers();
+            cmbLayers.Items.AddRange(layers);
             cmbLayers.SelectedIndex = 0;
         }
 

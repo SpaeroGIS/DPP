@@ -49,7 +49,7 @@ namespace MilSpace.Visibility
             this.panel5 = new System.Windows.Forms.Panel();
             this.panel42 = new System.Windows.Forms.Panel();
             this.label49 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnVO = new System.Windows.Forms.Button();
             this.panel30 = new System.Windows.Forms.Panel();
             this.label33 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -69,14 +69,39 @@ namespace MilSpace.Visibility
             this.stepTwo = new System.Windows.Forms.TabPage();
             this.panel7 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.checkBox6 = new System.Windows.Forms.CheckBox();
+            this.selectedOPPanel = new System.Windows.Forms.Panel();
+            this.lblHeights = new System.Windows.Forms.Label();
+            this.lblMinAngle = new System.Windows.Forms.Label();
+            this.lblMinAzimuth = new System.Windows.Forms.Label();
+            this.txtStep = new System.Windows.Forms.TextBox();
+            this.lblStep = new System.Windows.Forms.Label();
+            this.txtMinHeight = new System.Windows.Forms.TextBox();
+            this.lblFrom = new System.Windows.Forms.Label();
+            this.txtMaxHeight = new System.Windows.Forms.TextBox();
+            this.lblTo = new System.Windows.Forms.Label();
+            this.txtMinAngle = new System.Windows.Forms.TextBox();
+            this.lblAngles = new System.Windows.Forms.Label();
+            this.txtMaxAngle = new System.Windows.Forms.TextBox();
+            this.lblMaxAngle = new System.Windows.Forms.Label();
+            this.txtMinAzimuth = new System.Windows.Forms.TextBox();
+            this.lblAzimuths = new System.Windows.Forms.Label();
+            this.txtMaxAzimuth = new System.Windows.Forms.TextBox();
+            this.lblSelectedOP = new System.Windows.Forms.Label();
+            this.btnShowPoint = new System.Windows.Forms.Button();
+            this.lblMaxAzimuth = new System.Windows.Forms.Label();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.chckOP = new System.Windows.Forms.CheckBox();
             this.dvgCheckList = new System.Windows.Forms.DataGridView();
-            this.panel9 = new System.Windows.Forms.Panel();
+            this.columnsOPVisibilityPanel = new System.Windows.Forms.Panel();
             this.checkDate = new System.Windows.Forms.CheckBox();
             this.checkAffiliation = new System.Windows.Forms.CheckBox();
             this.checkType = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.panel10 = new System.Windows.Forms.Panel();
+            this.chooseOPPanel = new System.Windows.Forms.Panel();
+            this.btnChooseOP = new System.Windows.Forms.Button();
+            this.cmbOPSource = new System.Windows.Forms.ComboBox();
+            this.lblOPType = new System.Windows.Forms.Label();
+            this.observPointsFiltersPanel = new System.Windows.Forms.Panel();
             this.cmbAffiliation = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cmbType = new System.Windows.Forms.ComboBox();
@@ -85,13 +110,24 @@ namespace MilSpace.Visibility
             this.ObservPointLabel = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.panel19 = new System.Windows.Forms.Panel();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.selectedOOPanel = new System.Windows.Forms.Panel();
+            this.txtCoveragePercent = new System.Windows.Forms.TextBox();
+            this.txtBufferDistance = new System.Windows.Forms.TextBox();
+            this.lblCoveragePercent = new System.Windows.Forms.Label();
+            this.lblBufferDistance = new System.Windows.Forms.Label();
+            this.btnShowOO = new System.Windows.Forms.Button();
+            this.lblSelectedOO = new System.Windows.Forms.Label();
+            this.chckOO = new System.Windows.Forms.CheckBox();
             this.dgvObjects = new System.Windows.Forms.DataGridView();
-            this.panel18 = new System.Windows.Forms.Panel();
+            this.columnsOOVisibilityPanel = new System.Windows.Forms.Panel();
             this.checkDate_Object = new System.Windows.Forms.CheckBox();
             this.checkB_Affilation = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.panel17 = new System.Windows.Forms.Panel();
+            this.chooseOOPanel = new System.Windows.Forms.Panel();
+            this.btnChooseOO = new System.Windows.Forms.Button();
+            this.cmbOOSource = new System.Windows.Forms.ComboBox();
+            this.lblOOSource = new System.Windows.Forms.Label();
+            this.observObjectsFiltersPanel = new System.Windows.Forms.Panel();
             this.cmbObservObject = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.panel14 = new System.Windows.Forms.Panel();
@@ -182,14 +218,19 @@ namespace MilSpace.Visibility
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.selectedOPPanel.SuspendLayout();
+            this.panel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dvgCheckList)).BeginInit();
-            this.panel9.SuspendLayout();
-            this.panel10.SuspendLayout();
+            this.columnsOPVisibilityPanel.SuspendLayout();
+            this.chooseOPPanel.SuspendLayout();
+            this.observPointsFiltersPanel.SuspendLayout();
             this.panel13.SuspendLayout();
             this.panel19.SuspendLayout();
+            this.selectedOOPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvObjects)).BeginInit();
-            this.panel18.SuspendLayout();
-            this.panel17.SuspendLayout();
+            this.columnsOOVisibilityPanel.SuspendLayout();
+            this.chooseOOPanel.SuspendLayout();
+            this.observObjectsFiltersPanel.SuspendLayout();
             this.panel14.SuspendLayout();
             this.panel44.SuspendLayout();
             this.panel47.SuspendLayout();
@@ -579,7 +620,7 @@ namespace MilSpace.Visibility
             // 
             this.panel5.BackColor = System.Drawing.Color.Silver;
             this.panel5.Controls.Add(this.panel42);
-            this.panel5.Controls.Add(this.button2);
+            this.panel5.Controls.Add(this.btnVO);
             this.panel5.Controls.Add(this.panel30);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(0, 228);
@@ -600,7 +641,6 @@ namespace MilSpace.Visibility
             // label49
             // 
             this.label49.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label49.Enabled = false;
             this.label49.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label49.Location = new System.Drawing.Point(0, 0);
             this.label49.Name = "label49";
@@ -612,19 +652,19 @@ namespace MilSpace.Visibility
     "ерхнею, напрямки і кути огляду)";
             this.label49.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // button2
+            // btnVO
             // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button2.Enabled = false;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.Location = new System.Drawing.Point(797, 4);
-            this.button2.Name = "button2";
-            this.button2.Padding = new System.Windows.Forms.Padding(4);
-            this.button2.Size = new System.Drawing.Size(120, 86);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "Обрати >";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnVO.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnVO.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnVO.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnVO.Location = new System.Drawing.Point(797, 4);
+            this.btnVO.Name = "btnVO";
+            this.btnVO.Padding = new System.Windows.Forms.Padding(4);
+            this.btnVO.Size = new System.Drawing.Size(120, 86);
+            this.btnVO.TabIndex = 7;
+            this.btnVO.Text = "Обрати >";
+            this.btnVO.UseVisualStyleBackColor = true;
+            this.btnVO.Click += new System.EventHandler(this.BtnVO_Click);
             // 
             // panel30
             // 
@@ -639,7 +679,6 @@ namespace MilSpace.Visibility
             // label33
             // 
             this.label33.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label33.Enabled = false;
             this.label33.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label33.Location = new System.Drawing.Point(0, 0);
             this.label33.Margin = new System.Windows.Forms.Padding(0);
@@ -846,18 +885,20 @@ namespace MilSpace.Visibility
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.checkBox6);
-            this.splitContainer1.Panel1.Controls.Add(this.dvgCheckList);
-            this.splitContainer1.Panel1.Controls.Add(this.panel9);
-            this.splitContainer1.Panel1.Controls.Add(this.panel10);
+            this.splitContainer1.Panel1.Controls.Add(this.selectedOPPanel);
+            this.splitContainer1.Panel1.Controls.Add(this.panel8);
+            this.splitContainer1.Panel1.Controls.Add(this.columnsOPVisibilityPanel);
+            this.splitContainer1.Panel1.Controls.Add(this.chooseOPPanel);
+            this.splitContainer1.Panel1.Controls.Add(this.observPointsFiltersPanel);
             this.splitContainer1.Panel1.Controls.Add(this.panel13);
             this.splitContainer1.Panel1MinSize = 300;
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.panel19);
-            this.splitContainer1.Panel2.Controls.Add(this.panel18);
-            this.splitContainer1.Panel2.Controls.Add(this.panel17);
+            this.splitContainer1.Panel2.Controls.Add(this.columnsOOVisibilityPanel);
+            this.splitContainer1.Panel2.Controls.Add(this.chooseOOPanel);
+            this.splitContainer1.Panel2.Controls.Add(this.observObjectsFiltersPanel);
             this.splitContainer1.Panel2.Controls.Add(this.panel14);
             this.splitContainer1.Panel2MinSize = 300;
             this.splitContainer1.Size = new System.Drawing.Size(921, 347);
@@ -866,15 +907,252 @@ namespace MilSpace.Visibility
             this.splitContainer1.TabIndex = 0;
             this.splitContainer1.TabStop = false;
             // 
-            // checkBox6
+            // selectedOPPanel
             // 
-            this.checkBox6.AutoSize = true;
-            this.checkBox6.Location = new System.Drawing.Point(5, 93);
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Size = new System.Drawing.Size(15, 14);
-            this.checkBox6.TabIndex = 24;
-            this.checkBox6.UseVisualStyleBackColor = true;
-            this.checkBox6.CheckedChanged += new System.EventHandler(this.Select_All_Points);
+            this.selectedOPPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.selectedOPPanel.Controls.Add(this.lblHeights);
+            this.selectedOPPanel.Controls.Add(this.lblMinAngle);
+            this.selectedOPPanel.Controls.Add(this.lblMinAzimuth);
+            this.selectedOPPanel.Controls.Add(this.txtStep);
+            this.selectedOPPanel.Controls.Add(this.lblStep);
+            this.selectedOPPanel.Controls.Add(this.txtMinHeight);
+            this.selectedOPPanel.Controls.Add(this.lblFrom);
+            this.selectedOPPanel.Controls.Add(this.txtMaxHeight);
+            this.selectedOPPanel.Controls.Add(this.lblTo);
+            this.selectedOPPanel.Controls.Add(this.txtMinAngle);
+            this.selectedOPPanel.Controls.Add(this.lblAngles);
+            this.selectedOPPanel.Controls.Add(this.txtMaxAngle);
+            this.selectedOPPanel.Controls.Add(this.lblMaxAngle);
+            this.selectedOPPanel.Controls.Add(this.txtMinAzimuth);
+            this.selectedOPPanel.Controls.Add(this.lblAzimuths);
+            this.selectedOPPanel.Controls.Add(this.txtMaxAzimuth);
+            this.selectedOPPanel.Controls.Add(this.lblSelectedOP);
+            this.selectedOPPanel.Controls.Add(this.btnShowPoint);
+            this.selectedOPPanel.Controls.Add(this.lblMaxAzimuth);
+            this.selectedOPPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.selectedOPPanel.Location = new System.Drawing.Point(0, 120);
+            this.selectedOPPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.selectedOPPanel.Name = "selectedOPPanel";
+            this.selectedOPPanel.Size = new System.Drawing.Size(441, 227);
+            this.selectedOPPanel.TabIndex = 9;
+            // 
+            // lblHeights
+            // 
+            this.lblHeights.AutoSize = true;
+            this.lblHeights.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblHeights.Location = new System.Drawing.Point(5, 130);
+            this.lblHeights.Name = "lblHeights";
+            this.lblHeights.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
+            this.lblHeights.Size = new System.Drawing.Size(105, 17);
+            this.lblHeights.TabIndex = 24;
+            this.lblHeights.Text = "Вибірка висот:";
+            // 
+            // lblMinAngle
+            // 
+            this.lblMinAngle.AutoSize = true;
+            this.lblMinAngle.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblMinAngle.Location = new System.Drawing.Point(113, 94);
+            this.lblMinAngle.Name = "lblMinAngle";
+            this.lblMinAngle.Size = new System.Drawing.Size(32, 17);
+            this.lblMinAngle.TabIndex = 23;
+            this.lblMinAngle.Text = "мін.";
+            // 
+            // lblMinAzimuth
+            // 
+            this.lblMinAzimuth.AutoSize = true;
+            this.lblMinAzimuth.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblMinAzimuth.Location = new System.Drawing.Point(113, 57);
+            this.lblMinAzimuth.Name = "lblMinAzimuth";
+            this.lblMinAzimuth.Size = new System.Drawing.Size(32, 17);
+            this.lblMinAzimuth.TabIndex = 22;
+            this.lblMinAzimuth.Text = "мін.";
+            // 
+            // txtStep
+            // 
+            this.txtStep.Enabled = false;
+            this.txtStep.Location = new System.Drawing.Point(361, 126);
+            this.txtStep.Name = "txtStep";
+            this.txtStep.Size = new System.Drawing.Size(55, 20);
+            this.txtStep.TabIndex = 21;
+            this.txtStep.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithInteger_KeyPress);
+            this.txtStep.Leave += new System.EventHandler(this.TxtStep_Leave);
+            // 
+            // lblStep
+            // 
+            this.lblStep.AutoSize = true;
+            this.lblStep.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblStep.Location = new System.Drawing.Point(321, 127);
+            this.lblStep.Name = "lblStep";
+            this.lblStep.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
+            this.lblStep.Size = new System.Drawing.Size(43, 17);
+            this.lblStep.TabIndex = 20;
+            this.lblStep.Text = "крок:";
+            // 
+            // txtMinHeight
+            // 
+            this.txtMinHeight.Enabled = false;
+            this.txtMinHeight.Location = new System.Drawing.Point(146, 127);
+            this.txtMinHeight.Name = "txtMinHeight";
+            this.txtMinHeight.Size = new System.Drawing.Size(55, 20);
+            this.txtMinHeight.TabIndex = 19;
+            this.txtMinHeight.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithDouble_KeyPress);
+            this.txtMinHeight.Leave += new System.EventHandler(this.TxtHeight_Leave);
+            // 
+            // lblFrom
+            // 
+            this.lblFrom.AutoSize = true;
+            this.lblFrom.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblFrom.Location = new System.Drawing.Point(113, 129);
+            this.lblFrom.Name = "lblFrom";
+            this.lblFrom.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
+            this.lblFrom.Size = new System.Drawing.Size(27, 17);
+            this.lblFrom.TabIndex = 18;
+            this.lblFrom.Text = "від";
+            // 
+            // txtMaxHeight
+            // 
+            this.txtMaxHeight.Enabled = false;
+            this.txtMaxHeight.Location = new System.Drawing.Point(245, 126);
+            this.txtMaxHeight.Name = "txtMaxHeight";
+            this.txtMaxHeight.Size = new System.Drawing.Size(55, 20);
+            this.txtMaxHeight.TabIndex = 17;
+            this.txtMaxHeight.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithDouble_KeyPress);
+            this.txtMaxHeight.Leave += new System.EventHandler(this.TxtHeight_Leave);
+            // 
+            // lblTo
+            // 
+            this.lblTo.AutoSize = true;
+            this.lblTo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblTo.Location = new System.Drawing.Point(218, 127);
+            this.lblTo.Margin = new System.Windows.Forms.Padding(0);
+            this.lblTo.Name = "lblTo";
+            this.lblTo.Size = new System.Drawing.Size(24, 17);
+            this.lblTo.TabIndex = 16;
+            this.lblTo.Text = "до";
+            // 
+            // txtMinAngle
+            // 
+            this.txtMinAngle.Enabled = false;
+            this.txtMinAngle.Location = new System.Drawing.Point(146, 89);
+            this.txtMinAngle.Name = "txtMinAngle";
+            this.txtMinAngle.Size = new System.Drawing.Size(55, 20);
+            this.txtMinAngle.TabIndex = 15;
+            this.txtMinAngle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithDouble_KeyPress);
+            this.txtMinAngle.Leave += new System.EventHandler(this.TxtAngle_Leave);
+            // 
+            // lblAngles
+            // 
+            this.lblAngles.AutoSize = true;
+            this.lblAngles.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblAngles.Location = new System.Drawing.Point(5, 92);
+            this.lblAngles.Name = "lblAngles";
+            this.lblAngles.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
+            this.lblAngles.Size = new System.Drawing.Size(97, 17);
+            this.lblAngles.TabIndex = 14;
+            this.lblAngles.Text = "Кути нахилу: ";
+            // 
+            // txtMaxAngle
+            // 
+            this.txtMaxAngle.Enabled = false;
+            this.txtMaxAngle.Location = new System.Drawing.Point(245, 89);
+            this.txtMaxAngle.Name = "txtMaxAngle";
+            this.txtMaxAngle.Size = new System.Drawing.Size(55, 20);
+            this.txtMaxAngle.TabIndex = 13;
+            this.txtMaxAngle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithDouble_KeyPress);
+            this.txtMaxAngle.Leave += new System.EventHandler(this.TxtAngle_Leave);
+            // 
+            // lblMaxAngle
+            // 
+            this.lblMaxAngle.AutoSize = true;
+            this.lblMaxAngle.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblMaxAngle.Location = new System.Drawing.Point(204, 94);
+            this.lblMaxAngle.Name = "lblMaxAngle";
+            this.lblMaxAngle.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
+            this.lblMaxAngle.Size = new System.Drawing.Size(44, 17);
+            this.lblMaxAngle.TabIndex = 12;
+            this.lblMaxAngle.Text = "макс.";
+            // 
+            // txtMinAzimuth
+            // 
+            this.txtMinAzimuth.Enabled = false;
+            this.txtMinAzimuth.Location = new System.Drawing.Point(146, 56);
+            this.txtMinAzimuth.Name = "txtMinAzimuth";
+            this.txtMinAzimuth.Size = new System.Drawing.Size(55, 20);
+            this.txtMinAzimuth.TabIndex = 11;
+            this.txtMinAzimuth.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithDouble_KeyPress);
+            this.txtMinAzimuth.Leave += new System.EventHandler(this.TxtAzimuth_Leave);
+            // 
+            // lblAzimuths
+            // 
+            this.lblAzimuths.AutoSize = true;
+            this.lblAzimuths.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblAzimuths.Location = new System.Drawing.Point(5, 57);
+            this.lblAzimuths.Name = "lblAzimuths";
+            this.lblAzimuths.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
+            this.lblAzimuths.Size = new System.Drawing.Size(68, 17);
+            this.lblAzimuths.TabIndex = 10;
+            this.lblAzimuths.Text = "Азимути:";
+            // 
+            // txtMaxAzimuth
+            // 
+            this.txtMaxAzimuth.Enabled = false;
+            this.txtMaxAzimuth.Location = new System.Drawing.Point(245, 53);
+            this.txtMaxAzimuth.Name = "txtMaxAzimuth";
+            this.txtMaxAzimuth.Size = new System.Drawing.Size(55, 20);
+            this.txtMaxAzimuth.TabIndex = 9;
+            this.txtMaxAzimuth.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithDouble_KeyPress);
+            this.txtMaxAzimuth.Leave += new System.EventHandler(this.TxtAzimuth_Leave);
+            // 
+            // lblSelectedOP
+            // 
+            this.lblSelectedOP.AutoSize = true;
+            this.lblSelectedOP.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblSelectedOP.Location = new System.Drawing.Point(39, 11);
+            this.lblSelectedOP.Name = "lblSelectedOP";
+            this.lblSelectedOP.Size = new System.Drawing.Size(0, 17);
+            this.lblSelectedOP.TabIndex = 7;
+            // 
+            // btnShowPoint
+            // 
+            this.btnShowPoint.ImageIndex = 86;
+            this.btnShowPoint.ImageList = this.imageList1;
+            this.btnShowPoint.Location = new System.Drawing.Point(7, 8);
+            this.btnShowPoint.Name = "btnShowPoint";
+            this.btnShowPoint.Size = new System.Drawing.Size(26, 24);
+            this.btnShowPoint.TabIndex = 8;
+            this.btnShowPoint.UseVisualStyleBackColor = true;
+            // 
+            // lblMaxAzimuth
+            // 
+            this.lblMaxAzimuth.AutoSize = true;
+            this.lblMaxAzimuth.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblMaxAzimuth.Location = new System.Drawing.Point(204, 54);
+            this.lblMaxAzimuth.Name = "lblMaxAzimuth";
+            this.lblMaxAzimuth.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
+            this.lblMaxAzimuth.Size = new System.Drawing.Size(44, 17);
+            this.lblMaxAzimuth.TabIndex = 6;
+            this.lblMaxAzimuth.Text = "макс.";
+            // 
+            // panel8
+            // 
+            this.panel8.Controls.Add(this.chckOP);
+            this.panel8.Controls.Add(this.dvgCheckList);
+            this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel8.Location = new System.Drawing.Point(0, 120);
+            this.panel8.Margin = new System.Windows.Forms.Padding(0);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(441, 227);
+            this.panel8.TabIndex = 25;
+            // 
+            // chckOP
+            // 
+            this.chckOP.AutoSize = true;
+            this.chckOP.Location = new System.Drawing.Point(5, 5);
+            this.chckOP.Name = "chckOP";
+            this.chckOP.Size = new System.Drawing.Size(15, 14);
+            this.chckOP.TabIndex = 24;
+            this.chckOP.UseVisualStyleBackColor = true;
+            this.chckOP.CheckedChanged += new System.EventHandler(this.Select_All_Points);
             // 
             // dvgCheckList
             // 
@@ -889,27 +1167,27 @@ namespace MilSpace.Visibility
             this.dvgCheckList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dvgCheckList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dvgCheckList.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnF2;
-            this.dvgCheckList.Location = new System.Drawing.Point(0, 90);
+            this.dvgCheckList.Location = new System.Drawing.Point(0, 0);
             this.dvgCheckList.MultiSelect = false;
             this.dvgCheckList.Name = "dvgCheckList";
             this.dvgCheckList.RowHeadersVisible = false;
             this.dvgCheckList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dvgCheckList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dvgCheckList.Size = new System.Drawing.Size(441, 257);
+            this.dvgCheckList.Size = new System.Drawing.Size(441, 227);
             this.dvgCheckList.TabIndex = 23;
             // 
-            // panel9
+            // columnsOPVisibilityPanel
             // 
-            this.panel9.Controls.Add(this.checkDate);
-            this.panel9.Controls.Add(this.checkAffiliation);
-            this.panel9.Controls.Add(this.checkType);
-            this.panel9.Controls.Add(this.label1);
-            this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel9.Location = new System.Drawing.Point(0, 60);
-            this.panel9.Name = "panel9";
-            this.panel9.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel9.Size = new System.Drawing.Size(441, 30);
-            this.panel9.TabIndex = 17;
+            this.columnsOPVisibilityPanel.Controls.Add(this.checkDate);
+            this.columnsOPVisibilityPanel.Controls.Add(this.checkAffiliation);
+            this.columnsOPVisibilityPanel.Controls.Add(this.checkType);
+            this.columnsOPVisibilityPanel.Controls.Add(this.label1);
+            this.columnsOPVisibilityPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.columnsOPVisibilityPanel.Location = new System.Drawing.Point(0, 90);
+            this.columnsOPVisibilityPanel.Name = "columnsOPVisibilityPanel";
+            this.columnsOPVisibilityPanel.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.columnsOPVisibilityPanel.Size = new System.Drawing.Size(441, 30);
+            this.columnsOPVisibilityPanel.TabIndex = 17;
             // 
             // checkDate
             // 
@@ -967,18 +1245,64 @@ namespace MilSpace.Visibility
             this.label1.Text = "відображати";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // panel10
+            // chooseOPPanel
             // 
-            this.panel10.Controls.Add(this.cmbAffiliation);
-            this.panel10.Controls.Add(this.label3);
-            this.panel10.Controls.Add(this.cmbType);
-            this.panel10.Controls.Add(this.label2);
-            this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel10.Location = new System.Drawing.Point(0, 30);
-            this.panel10.Name = "panel10";
-            this.panel10.Padding = new System.Windows.Forms.Padding(4, 3, 3, 3);
-            this.panel10.Size = new System.Drawing.Size(441, 30);
-            this.panel10.TabIndex = 16;
+            this.chooseOPPanel.Controls.Add(this.btnChooseOP);
+            this.chooseOPPanel.Controls.Add(this.cmbOPSource);
+            this.chooseOPPanel.Controls.Add(this.lblOPType);
+            this.chooseOPPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.chooseOPPanel.Location = new System.Drawing.Point(0, 60);
+            this.chooseOPPanel.Name = "chooseOPPanel";
+            this.chooseOPPanel.Padding = new System.Windows.Forms.Padding(4, 3, 3, 3);
+            this.chooseOPPanel.Size = new System.Drawing.Size(441, 30);
+            this.chooseOPPanel.TabIndex = 25;
+            // 
+            // btnChooseOP
+            // 
+            this.btnChooseOP.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnChooseOP.Location = new System.Drawing.Point(363, 3);
+            this.btnChooseOP.Name = "btnChooseOP";
+            this.btnChooseOP.Size = new System.Drawing.Size(75, 24);
+            this.btnChooseOP.TabIndex = 6;
+            this.btnChooseOP.Text = "Обрати";
+            this.btnChooseOP.UseVisualStyleBackColor = true;
+            this.btnChooseOP.Click += new System.EventHandler(this.BtnChooseOP_Click);
+            // 
+            // cmbOPSource
+            // 
+            this.cmbOPSource.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbOPSource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbOPSource.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cmbOPSource.FormattingEnabled = true;
+            this.cmbOPSource.Location = new System.Drawing.Point(99, 3);
+            this.cmbOPSource.Name = "cmbOPSource";
+            this.cmbOPSource.Size = new System.Drawing.Size(252, 24);
+            this.cmbOPSource.TabIndex = 5;
+            // 
+            // lblOPType
+            // 
+            this.lblOPType.AutoSize = true;
+            this.lblOPType.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblOPType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblOPType.Location = new System.Drawing.Point(4, 3);
+            this.lblOPType.Name = "lblOPType";
+            this.lblOPType.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
+            this.lblOPType.Size = new System.Drawing.Size(95, 21);
+            this.lblOPType.TabIndex = 0;
+            this.lblOPType.Text = "Джерело ПС";
+            // 
+            // observPointsFiltersPanel
+            // 
+            this.observPointsFiltersPanel.Controls.Add(this.cmbAffiliation);
+            this.observPointsFiltersPanel.Controls.Add(this.label3);
+            this.observPointsFiltersPanel.Controls.Add(this.cmbType);
+            this.observPointsFiltersPanel.Controls.Add(this.label2);
+            this.observPointsFiltersPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.observPointsFiltersPanel.Location = new System.Drawing.Point(0, 30);
+            this.observPointsFiltersPanel.Name = "observPointsFiltersPanel";
+            this.observPointsFiltersPanel.Padding = new System.Windows.Forms.Padding(4, 3, 3, 3);
+            this.observPointsFiltersPanel.Size = new System.Drawing.Size(441, 30);
+            this.observPointsFiltersPanel.TabIndex = 16;
             // 
             // cmbAffiliation
             // 
@@ -1063,24 +1387,99 @@ namespace MilSpace.Visibility
             // 
             // panel19
             // 
-            this.panel19.Controls.Add(this.checkBox4);
+            this.panel19.Controls.Add(this.selectedOOPanel);
+            this.panel19.Controls.Add(this.chckOO);
             this.panel19.Controls.Add(this.dgvObjects);
             this.panel19.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel19.Location = new System.Drawing.Point(0, 90);
+            this.panel19.Location = new System.Drawing.Point(0, 120);
             this.panel19.Margin = new System.Windows.Forms.Padding(0);
             this.panel19.Name = "panel19";
-            this.panel19.Size = new System.Drawing.Size(472, 257);
+            this.panel19.Size = new System.Drawing.Size(472, 227);
             this.panel19.TabIndex = 22;
             // 
-            // checkBox4
+            // selectedOOPanel
             // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(5, 5);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(15, 14);
-            this.checkBox4.TabIndex = 24;
-            this.checkBox4.UseVisualStyleBackColor = true;
-            this.checkBox4.CheckedChanged += new System.EventHandler(this.Select_All);
+            this.selectedOOPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.selectedOOPanel.Controls.Add(this.txtCoveragePercent);
+            this.selectedOOPanel.Controls.Add(this.txtBufferDistance);
+            this.selectedOOPanel.Controls.Add(this.lblCoveragePercent);
+            this.selectedOOPanel.Controls.Add(this.lblBufferDistance);
+            this.selectedOOPanel.Controls.Add(this.btnShowOO);
+            this.selectedOOPanel.Controls.Add(this.lblSelectedOO);
+            this.selectedOOPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.selectedOOPanel.Location = new System.Drawing.Point(0, 0);
+            this.selectedOOPanel.Name = "selectedOOPanel";
+            this.selectedOOPanel.Size = new System.Drawing.Size(472, 227);
+            this.selectedOOPanel.TabIndex = 25;
+            // 
+            // txtCoveragePercent
+            // 
+            this.txtCoveragePercent.Enabled = false;
+            this.txtCoveragePercent.Location = new System.Drawing.Point(161, 92);
+            this.txtCoveragePercent.Name = "txtCoveragePercent";
+            this.txtCoveragePercent.Size = new System.Drawing.Size(55, 20);
+            this.txtCoveragePercent.TabIndex = 27;
+            this.txtCoveragePercent.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithDouble_KeyPress);
+            // 
+            // txtBufferDistance
+            // 
+            this.txtBufferDistance.Enabled = false;
+            this.txtBufferDistance.Location = new System.Drawing.Point(161, 55);
+            this.txtBufferDistance.Name = "txtBufferDistance";
+            this.txtBufferDistance.Size = new System.Drawing.Size(55, 20);
+            this.txtBufferDistance.TabIndex = 25;
+            this.txtBufferDistance.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithDouble_KeyPress);
+            // 
+            // lblCoveragePercent
+            // 
+            this.lblCoveragePercent.AutoSize = true;
+            this.lblCoveragePercent.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblCoveragePercent.Location = new System.Drawing.Point(5, 92);
+            this.lblCoveragePercent.Name = "lblCoveragePercent";
+            this.lblCoveragePercent.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
+            this.lblCoveragePercent.Size = new System.Drawing.Size(135, 17);
+            this.lblCoveragePercent.TabIndex = 26;
+            this.lblCoveragePercent.Text = "Відсоток покриття ";
+            // 
+            // lblBufferDistance
+            // 
+            this.lblBufferDistance.AutoSize = true;
+            this.lblBufferDistance.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblBufferDistance.Location = new System.Drawing.Point(5, 57);
+            this.lblBufferDistance.Name = "lblBufferDistance";
+            this.lblBufferDistance.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
+            this.lblBufferDistance.Size = new System.Drawing.Size(148, 17);
+            this.lblBufferDistance.TabIndex = 25;
+            this.lblBufferDistance.Text = "Відстань для буфера";
+            // 
+            // btnShowOO
+            // 
+            this.btnShowOO.ImageIndex = 86;
+            this.btnShowOO.ImageList = this.imageList1;
+            this.btnShowOO.Location = new System.Drawing.Point(7, 8);
+            this.btnShowOO.Name = "btnShowOO";
+            this.btnShowOO.Size = new System.Drawing.Size(26, 24);
+            this.btnShowOO.TabIndex = 25;
+            this.btnShowOO.UseVisualStyleBackColor = true;
+            // 
+            // lblSelectedOO
+            // 
+            this.lblSelectedOO.AutoSize = true;
+            this.lblSelectedOO.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblSelectedOO.Location = new System.Drawing.Point(39, 11);
+            this.lblSelectedOO.Name = "lblSelectedOO";
+            this.lblSelectedOO.Size = new System.Drawing.Size(0, 17);
+            this.lblSelectedOO.TabIndex = 25;
+            // 
+            // chckOO
+            // 
+            this.chckOO.AutoSize = true;
+            this.chckOO.Location = new System.Drawing.Point(5, 5);
+            this.chckOO.Name = "chckOO";
+            this.chckOO.Size = new System.Drawing.Size(15, 14);
+            this.chckOO.TabIndex = 24;
+            this.chckOO.UseVisualStyleBackColor = true;
+            this.chckOO.CheckedChanged += new System.EventHandler(this.Select_All);
             // 
             // dgvObjects
             // 
@@ -1098,20 +1497,20 @@ namespace MilSpace.Visibility
             this.dgvObjects.Name = "dgvObjects";
             this.dgvObjects.RowHeadersVisible = false;
             this.dgvObjects.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvObjects.Size = new System.Drawing.Size(472, 257);
+            this.dgvObjects.Size = new System.Drawing.Size(472, 227);
             this.dgvObjects.TabIndex = 23;
             // 
-            // panel18
+            // columnsOOVisibilityPanel
             // 
-            this.panel18.Controls.Add(this.checkDate_Object);
-            this.panel18.Controls.Add(this.checkB_Affilation);
-            this.panel18.Controls.Add(this.label4);
-            this.panel18.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel18.Location = new System.Drawing.Point(0, 60);
-            this.panel18.Name = "panel18";
-            this.panel18.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel18.Size = new System.Drawing.Size(472, 30);
-            this.panel18.TabIndex = 18;
+            this.columnsOOVisibilityPanel.Controls.Add(this.checkDate_Object);
+            this.columnsOOVisibilityPanel.Controls.Add(this.checkB_Affilation);
+            this.columnsOOVisibilityPanel.Controls.Add(this.label4);
+            this.columnsOOVisibilityPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.columnsOOVisibilityPanel.Location = new System.Drawing.Point(0, 90);
+            this.columnsOOVisibilityPanel.Name = "columnsOOVisibilityPanel";
+            this.columnsOOVisibilityPanel.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.columnsOOVisibilityPanel.Size = new System.Drawing.Size(472, 30);
+            this.columnsOOVisibilityPanel.TabIndex = 18;
             // 
             // checkDate_Object
             // 
@@ -1154,16 +1553,62 @@ namespace MilSpace.Visibility
             this.label4.Text = "відображати";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // panel17
+            // chooseOOPanel
             // 
-            this.panel17.Controls.Add(this.cmbObservObject);
-            this.panel17.Controls.Add(this.label9);
-            this.panel17.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel17.Location = new System.Drawing.Point(0, 30);
-            this.panel17.Name = "panel17";
-            this.panel17.Padding = new System.Windows.Forms.Padding(4, 3, 4, 0);
-            this.panel17.Size = new System.Drawing.Size(472, 30);
-            this.panel17.TabIndex = 17;
+            this.chooseOOPanel.Controls.Add(this.btnChooseOO);
+            this.chooseOOPanel.Controls.Add(this.cmbOOSource);
+            this.chooseOOPanel.Controls.Add(this.lblOOSource);
+            this.chooseOOPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.chooseOOPanel.Location = new System.Drawing.Point(0, 60);
+            this.chooseOOPanel.Name = "chooseOOPanel";
+            this.chooseOOPanel.Padding = new System.Windows.Forms.Padding(4, 3, 3, 3);
+            this.chooseOOPanel.Size = new System.Drawing.Size(472, 30);
+            this.chooseOOPanel.TabIndex = 26;
+            // 
+            // btnChooseOO
+            // 
+            this.btnChooseOO.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnChooseOO.Location = new System.Drawing.Point(393, 3);
+            this.btnChooseOO.Name = "btnChooseOO";
+            this.btnChooseOO.Size = new System.Drawing.Size(75, 24);
+            this.btnChooseOO.TabIndex = 7;
+            this.btnChooseOO.Text = "Обрати";
+            this.btnChooseOO.UseVisualStyleBackColor = true;
+            this.btnChooseOO.Click += new System.EventHandler(this.BtnChooseOO_Click);
+            // 
+            // cmbOOSource
+            // 
+            this.cmbOOSource.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbOOSource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbOOSource.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cmbOOSource.FormattingEnabled = true;
+            this.cmbOOSource.Location = new System.Drawing.Point(101, 3);
+            this.cmbOOSource.Name = "cmbOOSource";
+            this.cmbOOSource.Size = new System.Drawing.Size(279, 24);
+            this.cmbOOSource.TabIndex = 5;
+            // 
+            // lblOOSource
+            // 
+            this.lblOOSource.AutoSize = true;
+            this.lblOOSource.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblOOSource.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblOOSource.Location = new System.Drawing.Point(4, 3);
+            this.lblOOSource.Name = "lblOOSource";
+            this.lblOOSource.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
+            this.lblOOSource.Size = new System.Drawing.Size(97, 21);
+            this.lblOOSource.TabIndex = 0;
+            this.lblOOSource.Text = "Джерело ОН";
+            // 
+            // observObjectsFiltersPanel
+            // 
+            this.observObjectsFiltersPanel.Controls.Add(this.cmbObservObject);
+            this.observObjectsFiltersPanel.Controls.Add(this.label9);
+            this.observObjectsFiltersPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.observObjectsFiltersPanel.Location = new System.Drawing.Point(0, 30);
+            this.observObjectsFiltersPanel.Name = "observObjectsFiltersPanel";
+            this.observObjectsFiltersPanel.Padding = new System.Windows.Forms.Padding(4, 3, 4, 0);
+            this.observObjectsFiltersPanel.Size = new System.Drawing.Size(472, 30);
+            this.observObjectsFiltersPanel.TabIndex = 17;
             // 
             // cmbObservObject
             // 
@@ -1171,7 +1616,7 @@ namespace MilSpace.Visibility
             this.cmbObservObject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbObservObject.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cmbObservObject.FormattingEnabled = true;
-            this.cmbObservObject.Location = new System.Drawing.Point(103, 3);
+            this.cmbObservObject.Location = new System.Drawing.Point(101, 3);
             this.cmbObservObject.Name = "cmbObservObject";
             this.cmbObservObject.Size = new System.Drawing.Size(157, 24);
             this.cmbObservObject.TabIndex = 4;
@@ -1184,7 +1629,7 @@ namespace MilSpace.Visibility
             this.label9.Location = new System.Drawing.Point(4, 3);
             this.label9.Name = "label9";
             this.label9.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.label9.Size = new System.Drawing.Size(99, 27);
+            this.label9.Size = new System.Drawing.Size(97, 27);
             this.label9.TabIndex = 3;
             this.label9.Text = "належність";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1989,20 +2434,29 @@ namespace MilSpace.Visibility
             this.stepTwo.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.selectedOPPanel.ResumeLayout(false);
+            this.selectedOPPanel.PerformLayout();
+            this.panel8.ResumeLayout(false);
+            this.panel8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dvgCheckList)).EndInit();
-            this.panel9.ResumeLayout(false);
-            this.panel10.ResumeLayout(false);
-            this.panel10.PerformLayout();
+            this.columnsOPVisibilityPanel.ResumeLayout(false);
+            this.chooseOPPanel.ResumeLayout(false);
+            this.chooseOPPanel.PerformLayout();
+            this.observPointsFiltersPanel.ResumeLayout(false);
+            this.observPointsFiltersPanel.PerformLayout();
             this.panel13.ResumeLayout(false);
             this.panel19.ResumeLayout(false);
             this.panel19.PerformLayout();
+            this.selectedOOPanel.ResumeLayout(false);
+            this.selectedOOPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvObjects)).EndInit();
-            this.panel18.ResumeLayout(false);
-            this.panel17.ResumeLayout(false);
+            this.columnsOOVisibilityPanel.ResumeLayout(false);
+            this.chooseOOPanel.ResumeLayout(false);
+            this.chooseOOPanel.PerformLayout();
+            this.observObjectsFiltersPanel.ResumeLayout(false);
             this.panel14.ResumeLayout(false);
             this.panel44.ResumeLayout(false);
             this.panel47.ResumeLayout(false);
@@ -2108,7 +2562,7 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Panel panel42;
         private System.Windows.Forms.Label label49;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnVO;
         private System.Windows.Forms.Panel panel30;
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.Panel panel4;
@@ -2127,14 +2581,14 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Label label46;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.CheckBox checkBox6;
+        private System.Windows.Forms.CheckBox chckOP;
         private System.Windows.Forms.DataGridView dvgCheckList;
-        private System.Windows.Forms.Panel panel9;
+        private System.Windows.Forms.Panel columnsOPVisibilityPanel;
         private System.Windows.Forms.CheckBox checkDate;
         private System.Windows.Forms.CheckBox checkAffiliation;
         private System.Windows.Forms.CheckBox checkType;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Panel panel10;
+        private System.Windows.Forms.Panel observPointsFiltersPanel;
         private System.Windows.Forms.ComboBox cmbAffiliation;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cmbType;
@@ -2143,10 +2597,10 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Label ObservPointLabel;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel19;
-        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.CheckBox chckOO;
         private System.Windows.Forms.DataGridView dgvObjects;
-        private System.Windows.Forms.Panel panel18;
-        private System.Windows.Forms.Panel panel17;
+        private System.Windows.Forms.Panel columnsOOVisibilityPanel;
+        private System.Windows.Forms.Panel observObjectsFiltersPanel;
         private System.Windows.Forms.ComboBox cmbObservObject;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Panel panel14;
@@ -2161,5 +2615,41 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.CheckBox chkTrimRaster;
         private System.Windows.Forms.CheckBox TableChkBox;
         private System.Windows.Forms.CheckBox chkConvertToPolygon;
+        private System.Windows.Forms.Panel chooseOPPanel;
+        private System.Windows.Forms.Label lblOPType;
+        private System.Windows.Forms.ComboBox cmbOPSource;
+        private System.Windows.Forms.Panel chooseOOPanel;
+        private System.Windows.Forms.ComboBox cmbOOSource;
+        private System.Windows.Forms.Label lblOOSource;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Panel selectedOPPanel;
+        private System.Windows.Forms.Label lblSelectedOP;
+        private System.Windows.Forms.Button btnShowPoint;
+        private System.Windows.Forms.TextBox txtMaxAzimuth;
+        private System.Windows.Forms.Label lblMaxAzimuth;
+        private System.Windows.Forms.TextBox txtMinAzimuth;
+        private System.Windows.Forms.Label lblAzimuths;
+        private System.Windows.Forms.TextBox txtMinAngle;
+        private System.Windows.Forms.Label lblAngles;
+        private System.Windows.Forms.TextBox txtMaxAngle;
+        private System.Windows.Forms.Label lblMaxAngle;
+        private System.Windows.Forms.TextBox txtMinHeight;
+        private System.Windows.Forms.Label lblFrom;
+        private System.Windows.Forms.TextBox txtMaxHeight;
+        private System.Windows.Forms.Label lblTo;
+        private System.Windows.Forms.Label lblStep;
+        private System.Windows.Forms.TextBox txtStep;
+        private System.Windows.Forms.Label lblMinAngle;
+        private System.Windows.Forms.Label lblMinAzimuth;
+        private System.Windows.Forms.Label lblHeights;
+        private System.Windows.Forms.Panel selectedOOPanel;
+        private System.Windows.Forms.Label lblSelectedOO;
+        private System.Windows.Forms.Button btnShowOO;
+        private System.Windows.Forms.Label lblCoveragePercent;
+        private System.Windows.Forms.Label lblBufferDistance;
+        private System.Windows.Forms.TextBox txtCoveragePercent;
+        private System.Windows.Forms.TextBox txtBufferDistance;
+        private System.Windows.Forms.Button btnChooseOP;
+        private System.Windows.Forms.Button btnChooseOO;
     }
 }

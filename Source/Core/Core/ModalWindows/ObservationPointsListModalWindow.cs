@@ -1,18 +1,17 @@
-﻿using MilSpace.Core;
-using MilSpace.Core.DataAccess;
-using MilSpace.Profile.Localization;
+﻿using MilSpace.Core.DataAccess;
+using MilSpace.Core.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace MilSpace.Profile.ModalWindows
+namespace MilSpace.Core.ModalWindows
 {
     public partial class ObservationPointsListModalWindow : Form
     {
         private List<FromLayerPointModel> _points = new List<FromLayerPointModel>();
-        private Logger _log = Logger.GetLoggerEx("MilSpace.Profile.ModalWindows.ObservationPointsListModalWindow");
-        internal FromLayerPointModel SelectedPoint;
+        private Logger _log = Logger.GetLoggerEx("MilSpace.Core.ModalWindows.ObservationPointsListModalWindow");
+        public FromLayerPointModel SelectedPoint;
 
         public ObservationPointsListModalWindow(List<FromLayerPointModel> points)
         {
@@ -25,9 +24,9 @@ namespace MilSpace.Profile.ModalWindows
         private void LocalizeStrings()
         {
             this.Text = LocalizationContext.Instance.FindLocalizedElement("ModalTargetObservPointsTitle", "Вибір точок з шару точок спостереження");
-            btnChoosePoint.Text = LocalizationContext.Instance.FindLocalizedElement("BtnChooseText", "Обрати");
-            dgvPoints.Columns["IdCol"].HeaderText = LocalizationContext.Instance.FindLocalizedElement("DgvObservPointsIdHeader", "Ідентифікатор");
-            dgvPoints.Columns["TitleCol"].HeaderText = LocalizationContext.Instance.FindLocalizedElement("DgvObservPointsTitleHeader", "Назва");
+            btnChoosePoint.Text = LocalizationContext.Instance.ChooseText;
+            dgvPoints.Columns["IdCol"].HeaderText = LocalizationContext.Instance.IdHeaderText;
+            dgvPoints.Columns["TitleCol"].HeaderText = LocalizationContext.Instance.TitleHeaderText;
             lblLayer.Text = LocalizationContext.Instance.FindLocalizedElement("ObservPointsTypeText", "Пункти спостереження");
         }
 

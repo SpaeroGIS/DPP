@@ -4,6 +4,7 @@ using ESRI.ArcGIS.Geometry;
 using MilSpace.Core;
 using MilSpace.Core.DataAccess;
 using MilSpace.Core.Exceptions;
+using MilSpace.Core.ModalWindows;
 using MilSpace.Core.ModulesInteraction;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess;
@@ -246,9 +247,9 @@ namespace MilSpace.Profile
             return null;
         }
 
-        internal void SetProfileSettings(ProfileSettingsTypeEnum profileType)
+        internal void SetProfileSettings(ProfileSettingsTypeEnum profileType, bool recalc = true)
         {
-            SetSettings(profileType, profileId);
+            SetSettings(profileType, profileId, recalc);
         }
 
         internal void SetProfileDemLayer(ProfileSettingsTypeEnum profileType)
@@ -266,14 +267,14 @@ namespace MilSpace.Profile
             }
         }
 
-        internal void SetProfileSettings(ProfileSettingsTypeEnum profileType, int profileIdValue, List<IPolyline> polylines = null)
+        internal void SetProfileSettings(ProfileSettingsTypeEnum profileType, int profileIdValue)
         {
             SetSettings(profileType, profileIdValue);
         }
 
-        private void SetSettings(ProfileSettingsTypeEnum profileType, int profileIdValue)
+        private void SetSettings(ProfileSettingsTypeEnum profileType, int profileIdValue, bool recalc = true)
         {
-            List<IPolyline> profileLines = new List<IPolyline>();
+            IPolyline[] profileLines = null;
 
             var profileSetting = profileSettings[profileType];
             if (profileSetting == null)
@@ -292,7 +293,8 @@ namespace MilSpace.Profile
                 var line = EsriTools.CreatePolylineFromPoints(pointsToShow[ProfileSettingsPointButtonEnum.PointsFist], pointsToShow[ProfileSettingsPointButtonEnum.PointsSecond]);
                 if (line != null)
                 {
-                    profileLines.Add(line);
+                    profileLines = new IPolyline[1];
+                    profileLines[0] = line;
 
                     ILine ln = new Line()
                     {
@@ -301,7 +303,7 @@ namespace MilSpace.Profile
                         SpatialReference = line.SpatialReference
                     };
 
-                    View.SetProifileLineInfo(line.Length, ln.Azimuth());
+                    View.SetProifileLineInfo(line.Length, ln.PosAzimuth());
                 }
             }
 
@@ -321,17 +323,28 @@ namespace MilSpace.Profile
                 //{
                 //    profileLines = selectedOnMapLines.ToList();
                 //}
-                profileLines = CalcPrimitive(View.PrimitiveAssignmentMethod);
+
+                if (profileSettings[profileType] == null || recalc)
+                {
+                    profileLines = CalcPrimitive(View.PrimitiveAssignmentMethod).ToArray();
+                }
+                else
+                {
+                    profileLines = profileSettings[profileType].ProfileLines;
+                }
             }
 
-            profileSetting.ProfileLines = profileLines.ToArray();
+            if (profileLines != null)
+            {
+                profileSetting.ProfileLines = profileLines;
 
-            profileSettings[profileType] = profileSetting;
-            
+                profileSettings[profileType] = profileSetting;
 
-            InvokeOnProfileSettingsChanged();
-            logger.WarnEx("");
-            GraphicsLayerManager.UpdateCalculatingGraphic(profileSetting.ProfileLines, profileIdValue, (int)profileType);
+
+                InvokeOnProfileSettingsChanged();
+                logger.WarnEx("");
+                GraphicsLayerManager.UpdateCalculatingGraphic(profileSetting.ProfileLines, profileIdValue, (int)profileType);
+            }
         }
 
 
@@ -606,7 +619,7 @@ namespace MilSpace.Profile
 
         internal void ShowProfileOnMap(int profileId = -1, ProfileLine line = null)
         {
-            var mapScale = View.ActiveView.FocusMap.MapScale;
+            //var mapScale = View.ActiveView.FocusMap.MapScale;
             ProfileSession profile;
 
             if(profileId == -1)
@@ -632,7 +645,7 @@ namespace MilSpace.Profile
             }
             else
             {
-                profileLines = new List<IGeometry> { line.Line };
+                profileLines = new List<IGeometry> { line.Line as IGeometry};
             }
 
             IEnvelope env = new EnvelopeClass();
@@ -658,20 +671,26 @@ namespace MilSpace.Profile
 
         internal void PanToProfile(ProfileSettingsTypeEnum type)
         {
-            var lines = profileSettings[type].ProfileLines;
-            IEnvelope env = new EnvelopeClass();
-
-            if(lines == null)
+            if(profileSettings[type] == null)
             {
                 return;
             }
 
-            foreach(var line in lines)
+            var lines = profileSettings[type].ProfileLines;
+
+            if (lines == null)
+            {
+                return;
+            }
+
+            IEnvelope env = new EnvelopeClass();
+
+            foreach (var line in lines)
             {
                 env.Union(line.Envelope);
             }
 
-            EsriTools.PanToGeometry(View.ActiveView, env);
+            EsriTools.ZoomToGeometry(View.ActiveView, env);
             EsriTools.FlashGeometry(View.ActiveView.ScreenDisplay, lines);
         }
 
@@ -1285,7 +1304,7 @@ namespace MilSpace.Profile
 
                     try
                     {
-                        var geometryFromFeatureLayerModal = new GeometryFromFeatureLayerModalWindow();
+                        var geometryFromFeatureLayerModal = new GeometryFromFeatureLayerModalWindow(View.ActiveView);
                         var result = geometryFromFeatureLayerModal.ShowDialog();
 
                         IGeometry geometry;
@@ -1551,8 +1570,8 @@ namespace MilSpace.Profile
 
             profileSetting.DemLayerName = View.DemLayerName;
 
-            profileSetting.Azimuth1 = EsriTools.GetFormattedAzimuth(minAzimuth);
-            profileSetting.Azimuth2 = EsriTools.GetFormattedAzimuth(maxAzimuth);
+            profileSetting.Azimuth1 = minAzimuth;
+            profileSetting.Azimuth2 = maxAzimuth;
 
             profileSetting.ProfileLines = polylines.ToArray();
 
@@ -1585,8 +1604,8 @@ namespace MilSpace.Profile
                 }
                 var lineWithAngle = new Line { FromPoint = line.FromPoint, ToPoint = line.ToPoint, SpatialReference = line.SpatialReference };
 
-                var azimuth = lineWithAngle.Azimuth();
-                if(azimuth < 0) azimuth += 360;
+                var azimuth = lineWithAngle.PosAzimuth();
+               // if(azimuth < 0) azimuth += 360;
                 azimuthsSum += azimuth;
             }
 
@@ -1613,6 +1632,32 @@ namespace MilSpace.Profile
             View.SetFunToPointsParams(avgAzimuth, avgAngle, length, linesCount);
         }
 
+        private void SetPrimitiveProperties(List<IPolyline> polylines)
+        {
+            var profileSetting = profileSettings[ProfileSettingsTypeEnum.Primitives];
+
+            if (profileSetting == null)
+            {
+                profileSetting = new ProfileSettings();
+                profileSetting.Type = ProfileSettingsTypeEnum.Primitives;
+            }
+            
+            profileSetting.ProfileLines = polylines.ToArray();
+
+            profileSettings[ProfileSettingsTypeEnum.Primitives] = profileSetting;
+
+            try
+            {
+                InvokeOnProfileSettingsChanged();
+                logger.WarnEx("");
+                GraphicsLayerManager.UpdateCalculatingGraphic(profileSetting.ProfileLines, profileId, (int)ProfileSettingsTypeEnum.Primitives);
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorEx($"> SetPrimitiveProperties Exception: {ex.Message}");
+            }
+        }
+
         private void SetPrimitiveInfo(List<IPolyline> lines)
         {
             if(lines == null || lines.Count == 0)
@@ -1631,7 +1676,7 @@ namespace MilSpace.Profile
 
             var projLine = new Line { FromPoint = lines[0].FromPoint, ToPoint = lines.Last().ToPoint };
             var projLength = projLine.Length;
-            var azimuth = projLine.Azimuth();
+            var azimuth = projLine.PosAzimuth();
 
             View.SetPrimitiveInfo(length, azimuth, projLength, segmentCount - 1);
         }
@@ -1694,7 +1739,7 @@ namespace MilSpace.Profile
             if(!changes && visibilityModule == null)
             {
                 MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgObservPointscModuleDoesnotExistText", "Модуль \"Видимість\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним"), LocalizationContext.Instance.MessageBoxTitle);
-                logger.ErrorEx($"> GetPointFromObservationPoints Exception: {LocalizationContext.Instance.FindLocalizedElement("MsgObservPointscModuleDoesnotExistText", "Модуль \"Видимість\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним")}");
+                logger.WarnEx($"> GetPointFromObservationPoints Exception: {LocalizationContext.Instance.FindLocalizedElement("MsgObservPointscModuleDoesnotExistText", "Модуль \"Видимість\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним")}");
                 return null;
             }
 
@@ -1738,7 +1783,7 @@ namespace MilSpace.Profile
         {
             try
             {
-                PointsFromLayerModalWindow pointsFromLayerModal = new PointsFromLayerModalWindow();
+                PointsFromLayerModalWindow pointsFromLayerModal = new PointsFromLayerModalWindow(View.ActiveView);
                 var result = pointsFromLayerModal.ShowDialog();
 
                 if (result == DialogResult.OK)

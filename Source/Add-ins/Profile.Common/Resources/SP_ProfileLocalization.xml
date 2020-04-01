@@ -119,7 +119,7 @@
   <LblProfileInfoText>Параметри відрізку</LblProfileInfoText>
   <LblLengthInfoText>Довжина:</LblLengthInfoText>
   <LblAzimuthInfoText>Азимут:</LblAzimuthInfoText>
-  <LblGetPointsFromGeoCalculator>Список точок модулю Геокалькулятор</LblGetPointsFromGeoCalculator>
+  <LblGetPointsFromGeoCalculator>Список точок Геокалькулятора</LblGetPointsFromGeoCalculator>
   <LblLayersText>Шар</LblLayersText>
   <LblFieldsText>Поле</LblFieldsText>
   <LblTargetObjText>Цільовий об'єкт</LblTargetObjText>
@@ -237,7 +237,7 @@
   <TxtGraphicsLayerValue>графічні об'єкти</TxtGraphicsLayerValue>
   <TxtNewProfileNameValue>Новий профіль</TxtNewProfileNameValue>
   
-  <LbFunParamsTitleText>Параметри набору профілів:</LbFunParamsTitleText>
+  <LbFunParamsTitleText>Параметри набору профілів</LbFunParamsTitleText>
   <LbFunParamsAvgAzimuthText>Середній азимут:</LbFunParamsAvgAzimuthText>
   <LbFunParamsAvgAngleText>Середній кут між лініями:</LbFunParamsAvgAngleText>
   <LbFunParamsAvgLengthText>Середня довжина проекції лінії:</LbFunParamsAvgLengthText>

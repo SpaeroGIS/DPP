@@ -1,6 +1,7 @@
 ﻿using ESRI.ArcGIS.Geometry;
 using MilSpace.Core;
 using MilSpace.Core.DataAccess;
+using MilSpace.Core.ModalWindows;
 using MilSpace.Core.ModulesInteraction;
 using MilSpace.Core.Tools;
 using MilSpace.Profile.Helpers;
@@ -184,7 +185,7 @@ namespace MilSpace.Profile
 
             if(result == DialogResult.OK)
             {
-                return observObjForFunModal.SelectedPoints;
+                return observObjForFunModal.SelectedGeometries.Select(geom => geom.Value).ToList();
             }
 
             return null;
@@ -231,7 +232,7 @@ namespace MilSpace.Profile
 
             try
             {
-                var geomFromLayerModal = new GeometriesFromLayerForFunToPointsModalWindow();
+                var geomFromLayerModal = new GeometriesFromLayerForFunToPointsModalWindow(ArcMap.Document.ActiveView);
                 var result = geomFromLayerModal.ShowDialog();
 
                 if (result == DialogResult.OK)

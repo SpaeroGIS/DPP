@@ -1,4 +1,4 @@
-﻿namespace MilSpace.Profile.ModalWindows
+﻿namespace MilSpace.Core.ModalWindows
 {
     partial class GeometryFromFeatureLayerModalWindow
     {
@@ -53,6 +53,7 @@
             this.dgvGeometries.AllowUserToResizeColumns = false;
             this.dgvGeometries.AllowUserToResizeRows = false;
             this.dgvGeometries.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvGeometries.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvGeometries.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvGeometries.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.IdCol,
@@ -182,7 +183,10 @@
             this.Controls.Add(this.titlePanel);
             this.Controls.Add(this.comboPanel);
             this.Controls.Add(this.panel1);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "GeometryFromFeatureLayerModalWindow";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "PointsFromFeatureLayerModalWindow";
             ((System.ComponentModel.ISupportInitialize)(this.dgvGeometries)).EndInit();
             this.titlePanel.ResumeLayout(false);

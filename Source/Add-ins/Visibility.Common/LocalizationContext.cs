@@ -48,7 +48,6 @@ namespace MilSpace.Visibility.Localization
             Cast<ObservationObjectTypesEnum>().
             ToDictionary(t => t, ts => ts.ToString());
 
-
         private LocalizationContext()
         {
             var localizationDoc = new XmlDocument();
@@ -143,6 +142,20 @@ namespace MilSpace.Visibility.Localization
                 {CoverageTypesEnum.Partly, PartlyCoverageText },
                 {CoverageTypesEnum.Full, FullCoverageText }
              };
+
+            ObservObjectsSets = new Dictionary<ObservationSetsEnum, string>
+            {
+                { ObservationSetsEnum.Gdb, ObservObjectsSet },
+                { ObservationSetsEnum.GeoCalculator, GeoCalcSet },
+                { ObservationSetsEnum.FeatureLayers, FeatureLayerSet }
+            };
+
+            ObservPointSets = new Dictionary<ObservationSetsEnum, string>
+            {
+                {ObservationSetsEnum.Gdb, ObservPointsSet },
+                {ObservationSetsEnum.GeoCalculator, GeoCalcSet },
+                {ObservationSetsEnum.FeatureLayers, PointsFeatureLayerSet }
+            };
         }
 
         internal static LocalizationContext Instance => instance;
@@ -157,6 +170,8 @@ namespace MilSpace.Visibility.Localization
         internal Dictionary<ObservationObjectTypesEnum, string> ObservObjectsTypes => observObjectsTypes;
 
         internal Dictionary<CoverageTypesEnum, string> CoverageTypes;
+        internal Dictionary<ObservationSetsEnum, string> ObservObjectsSets;
+        internal Dictionary<ObservationSetsEnum, string> ObservPointSets;
 
         internal string CalcFirstTypeDescriptionShort =>
             FindLocalizedElement("CalcFirstTypeDescriptionShort", "VS");
@@ -201,6 +216,7 @@ namespace MilSpace.Visibility.Localization
         public string ObservObjectsSet => FindLocalizedElement("ObservObjectsSetText", "Об'єкти спостреження");
         public string GeoCalcSet => FindLocalizedElement("GeoCalcSetText", "Точки Геокалькулятора");
         public string FeatureLayerSet => FindLocalizedElement("FeatureLayerSetText", "Векторний шар");
+        public string PointsFeatureLayerSet => FindLocalizedElement("PointsLayerSetText", "Точковий шар");
 
         public string NoCoverageText => FindLocalizedElement("CoverageTypeNoneText", "Ні");
         public string PartlyCoverageText => FindLocalizedElement("CoverageTypePartlyText", "Частково");
@@ -247,6 +263,8 @@ namespace MilSpace.Visibility.Localization
         public string IncorrectRangeMessage => FindLocalizedElement("IncorrectRangeMessage", "Invalid data.\nThe value must be in range from {0} to {1}");
         public string ValueLessThenZeroMessage => FindLocalizedElement("ValueLessThenZeroMessage", "Invalid data.\nThe value must be greater than zero");
         public string EmptyValueMessage => FindLocalizedElement("EmptyValueMessage", "Invalid data.\nPlease enter a value");
+        public string ValueMoreThanMaxMessage => FindLocalizedElement("ValueMoreThanMaxMessage", "Invalid data.\nЗначення не може бути більше максимального");
+        public string ValueLessThanMinMessage => FindLocalizedElement("ValueLessThanMinMessage", "Invalid data.\nЗначення не може бути менше мінімального");
         public string InvalidFormatMessage => FindLocalizedElement("InvalidFormatMessage", "Invalid format");
         public string UnableToRemoveTaskMessage => FindLocalizedElement("UnableToRemoveTaskMessage", "The result of the current session visibility calculation cannot be deleted");
         public string UnableToFullRemoveTaskMessage => FindLocalizedElement("UnableToFullRemoveTaskMessage", "The result of the visibility calculation cannot be completely deleted");
@@ -285,7 +303,8 @@ namespace MilSpace.Visibility.Localization
 
         internal string FindLocalizedElement(string xmlNodeName, string defaultValue)
         {
-            return _root?.SelectSingleNode(xmlNodeName)?.InnerText ?? defaultValue;
+            var result = _root?.SelectSingleNode(xmlNodeName)?.InnerText ?? defaultValue;
+            return result.Replace(@"\n", Environment.NewLine);
         }
     }
 }

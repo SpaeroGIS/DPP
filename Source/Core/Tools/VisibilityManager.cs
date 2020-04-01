@@ -232,6 +232,65 @@ namespace MilSpace.Tools
             }
         }
 
+        public static List<ObservationPoint> GetObservationPointsFromAppropriateLayer(string layerName, IActiveView activeView)
+        {
+            var mapLayersManager = new MapLayersManager(activeView);
+            var layer = mapLayersManager.GetLayer(layerName);
+
+            if (!(layer is IFeatureLayer))
+            {
+                return null;
+            }
+
+            var featureLayer = layer as IFeatureLayer;
+            var points = new List<ObservationPoint>();
+
+            var featureClass = featureLayer.FeatureClass;
+
+            IQueryFilter queryFilter = new QueryFilter();
+            queryFilter.WhereClause = "OBJECTID > 0";
+
+            IFeatureCursor featureCursor = featureClass.Search(queryFilter, true);
+            int heightIndex = featureClass.FindField("HRel");
+            IFeature feature = featureCursor.NextFeature();
+            try
+            {
+                while (feature != null)
+                {
+                    var shape = feature.ShapeCopy;
+
+                    var point = shape as IPoint;
+                    var pointCopy = point.Clone();
+
+                        points.Add(new ObservationPoint
+                        {
+                            X = point.X,
+                            Y = point.Y,
+                            Title = feature.Value[featureClass.FindField("TitleOp")].ToString(),
+                            Id = feature.Value[featureClass.FindField(featureClass.OIDFieldName)].ToString(),
+                            AzimuthStart = (double)feature.Value[featureClass.FindField("AzimuthB")],
+                            AzimuthEnd = (double)feature.Value[featureClass.FindField("AzimuthE")],
+                            AngelMinH = (double)feature.Value[featureClass.FindField("AnglMinH")],
+                            AngelMaxH = (double)feature.Value[featureClass.FindField("AnglMaxH")],
+                            RelativeHeight = (heightIndex == -1) ? 0 : (double)feature.Value[heightIndex]
+                        });
+
+                    feature = featureCursor.NextFeature();
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorEx($"> GetObservationPointsFromAppropriateLayer Exception. ex.Message:{ex.Message}");
+            }
+            finally
+            {
+                Marshal.ReleaseComObject(featureCursor);
+            }
+
+            return points;
+        }
+
+
         private static void OnCalculationFinished(IActionResult message)
         {
             if (message is VisibilityCalculationResult res)

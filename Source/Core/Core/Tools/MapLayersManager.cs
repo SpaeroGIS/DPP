@@ -117,7 +117,7 @@ namespace MilSpace.Core.Tools
 
             for(int i = 0; i < fields.FieldCount; i++)
             {
-                if(!fields.Field[i].Name.Equals(featureClass.ShapeFieldName) && !(fields.Field[i].Name.Equals("OBJECTID")))
+                if(!fields.Field[i].Name.Equals(featureClass.ShapeFieldName) && !(fields.Field[i].Name.Equals(featureClass.OIDFieldName)))
                 {
                     fieldsNames.Add(fields.Field[i].AliasName);
                 }
@@ -225,6 +225,34 @@ namespace MilSpace.Core.Tools
             var layesStrings = layers.Select(l => l.Name);
 
             return layesStrings;
+        }
+
+        public IEnumerable<string> GetObservPointsAppropriateLayers()
+        {
+            var appropriateLayers = new List<string>();
+
+            try
+            {
+                foreach (var layer in PointLayers)
+                {
+                    var featureLayer = layer as IFeatureLayer;
+                    var featureClass = featureLayer.FeatureClass;
+
+                    if (featureClass.FindField(featureClass.OIDFieldName) == -1 || featureClass.FindField("TitleOP") == -1 || featureClass.FindField("AzimuthB") == -1
+                        || featureClass.FindField("AzimuthE") == -1 || featureClass.FindField("AnglMinH") == -1 || featureClass.FindField("AnglMaxH") == -1) 
+                    {
+                        continue;
+                    }
+
+                    appropriateLayers.Add(layer.Name);
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorEx($"> GetObservPointsAppropriateLayers Exception. ex.Message:{ex.Message}");
+            }
+
+            return appropriateLayers;
         }
 
         public bool InserLayerAfter(ILayer layerToAdd, string layerName)

@@ -977,6 +977,74 @@ namespace MilSpace.Tools.GraphicsLayer
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
         }
 
+        public void TestObjects(IGeometry geometry)
+        {
+            var color = new RgbColor { Red = 80, Blue = 150, Green = 150 };
+            ISymbol symbol;
+            IElement element = null;
+
+            if (geometry.GeometryType == esriGeometryType.esriGeometryPolygon)
+            {
+                ISimpleFillSymbol simplePolygonSymbol = new SimpleFillSymbolClass();
+                simplePolygonSymbol.Color = color;
+                simplePolygonSymbol.Style = esriSimpleFillStyle.esriSFSSolid;
+
+                IFillShapeElement markerElement = new PolygonElementClass();
+                markerElement.Symbol = simplePolygonSymbol;
+
+                symbol = simplePolygonSymbol as ISymbol;
+                element = markerElement as IElement;
+            }
+
+            if (geometry.GeometryType == esriGeometryType.esriGeometryPolyline)
+            {
+                ISimpleLineSymbol simplePolylineSymbol = new SimpleLineSymbolClass();
+                simplePolylineSymbol.Color = color;
+                simplePolylineSymbol.Width = 4;
+
+                symbol = simplePolylineSymbol as ISymbol;
+                ILineElement lineElement = new LineElementClass();
+                lineElement.Symbol = simplePolylineSymbol;
+                element = lineElement as IElement;
+            }
+
+            if (geometry.GeometryType == esriGeometryType.esriGeometryPoint)
+            {
+                Type factoryType = Type.GetTypeFromProgID("esriDisplay.SimpleMarkerSymbol");
+                string typeFactoryID = factoryType.GUID.ToString("B");
+
+                ISimpleMarkerSymbol pointMarkerSymbol = new SimpleMarkerSymbolClass();
+                pointMarkerSymbol.Color = color;
+                pointMarkerSymbol.Style = esriSimpleMarkerStyle.esriSMSCircle;
+                pointMarkerSymbol.Size = 10;
+
+                IMarkerElement markerElement = new MarkerElementClass();
+                markerElement.Symbol = pointMarkerSymbol;
+                element = markerElement as IElement;
+                symbol = pointMarkerSymbol as ISymbol;
+            }
+
+            if (element == null)
+                return;
+            element.Geometry = geometry;
+            element.Geometry.SpatialReference = activeView.FocusMap.SpatialReference;
+
+            var eprop = (IElementProperties)element;
+            eprop.Name = "test";
+
+            var ge = new GraphicElement() { Source = geometry, Name = eprop.Name, Element = element };
+
+            if (allGraphics[MilSpaceGraphicsTypeEnum.Visibility].Exists(el => el.Name == eprop.Name))
+            {
+                DeleteGraphicsElement(ge, true, true);
+            }
+
+            graphics.AddElement(element, 0);
+            allGraphics[MilSpaceGraphicsTypeEnum.Visibility].Add(ge);
+
+            activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
+        }
+
         private bool CheckElementOnGraphics(GraphicElement milSpaceElement)
         {
             if (milSpaceElement == null)

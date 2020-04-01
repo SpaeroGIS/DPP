@@ -1,4 +1,4 @@
-﻿namespace MilSpace.Profile.ModalWindows
+﻿namespace MilSpace.Core.ModalWindows
 {
     partial class ObservPointsForFunToPointsModalWindow
     {
@@ -51,6 +51,7 @@
             this.dgvPoints.AllowUserToResizeColumns = false;
             this.dgvPoints.AllowUserToResizeRows = false;
             this.dgvPoints.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvPoints.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvPoints.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvPoints.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ChooseCol,
@@ -163,6 +164,8 @@
             this.Controls.Add(this.dgvPoints);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.titlePanel);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ObservPointsForFunToPointsModalWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ObservPointsForFunToPointsModalWindow";
