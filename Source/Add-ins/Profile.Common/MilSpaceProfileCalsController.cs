@@ -1304,7 +1304,7 @@ namespace MilSpace.Profile
 
                     try
                     {
-                        var geometryFromFeatureLayerModal = new GeometryFromFeatureLayerModalWindow(View.ActiveView);
+                        var geometryFromFeatureLayerModal = new GeometryFromFeatureLayerModalWindow(View.ActiveView, true);
                         var result = geometryFromFeatureLayerModal.ShowDialog();
 
                         IGeometry geometry;

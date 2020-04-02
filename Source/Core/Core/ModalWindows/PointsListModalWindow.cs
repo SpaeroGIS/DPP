@@ -51,7 +51,7 @@ namespace MilSpace.Core.ModalWindows
             if(lvPoints.SelectedItems.Count > 0)
             {
                 var pair = _points.First(point => point.Key == Convert.ToInt32(lvPoints.SelectedItems[0].Text));
-                SelectedPoint = new FromLayerPointModel { Point = pair.Value, ObjId = pair.Key };
+                SelectedPoint = new FromLayerPointModel { Point = pair.Value, ObjId = pair.Key, DisplayedField = pair.Key.ToString()};
             }
         }
     }

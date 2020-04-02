@@ -35,7 +35,7 @@ namespace MilSpace.Core.ModalWindows
             if(idFieldIndex == -1)
             {
                 _log.WarnEx($"> GetGeometries. Warning: Cannot find fild \"{featureClass.OIDFieldName}\" in featureClass {featureClass.AliasName}");
-                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgCannotFindObjIdText", "У шарі відсутнє поле OBJECTID"),
+                MessageBox.Show(String.Format(LocalizationContext.Instance.FindLocalizedElement("MsgCannotFindObjIdText", "У шарі відсутнє поле {0}"), featureClass.OIDFieldName),
                                     LocalizationContext.Instance.MessageBoxTitle);
 
                 return null;
@@ -90,7 +90,7 @@ namespace MilSpace.Core.ModalWindows
             return geometries;
         }
 
-        public List<string> GetNotPointFeatureLayers(bool withObservObj = false)
+        public List<string> GetFeatureLayers(bool withObservObj = false, bool withPointLayers = false)
         {
             var layers = new List<string>();
 
@@ -114,6 +114,11 @@ namespace MilSpace.Core.ModalWindows
             }
 
             layers.AddRange(_mapLayersManager.LineLayers.Select(layer => layer.Name));
+
+            if(withPointLayers)
+            {
+                layers.AddRange(_mapLayersManager.PointLayers.Select(layer => layer.Name));
+            }
 
             if(layers.Count == 0)
             {
