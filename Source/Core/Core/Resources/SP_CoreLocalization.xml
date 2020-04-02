@@ -20,7 +20,7 @@
   
   
   <MsgErrorHappenedText>Виникла помилка /n Більш детальна інформація знаходиться у журналі</MsgErrorHappenedText>
-  <MsgCannotFindObjIdText>У шарі відсутнє поле OBJECTID</MsgCannotFindObjIdText>
+  <MsgCannotFindObjIdText>У шарі відсутнє поле {0}</MsgCannotFindObjIdText>
 
   <DgvObservPointsIdHeader>Ідентифікатор</DgvObservPointsIdHeader>
   <DgvObservPointsTitleHeader>Назва</DgvObservPointsTitleHeader>

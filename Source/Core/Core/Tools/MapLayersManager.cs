@@ -117,7 +117,7 @@ namespace MilSpace.Core.Tools
 
             for(int i = 0; i < fields.FieldCount; i++)
             {
-                if(!fields.Field[i].Name.Equals(featureClass.ShapeFieldName) && !(fields.Field[i].Name.Equals("OBJECTID")))
+                if(!fields.Field[i].Name.Equals(featureClass.ShapeFieldName) && !(fields.Field[i].Name.Equals(featureClass.OIDFieldName)))
                 {
                     fieldsNames.Add(fields.Field[i].AliasName);
                 }
@@ -238,7 +238,7 @@ namespace MilSpace.Core.Tools
                     var featureLayer = layer as IFeatureLayer;
                     var featureClass = featureLayer.FeatureClass;
 
-                    if (featureClass.FindField("OBJECTID") == -1 || featureClass.FindField("TitleOP") == -1 || featureClass.FindField("AzimuthB") == -1
+                    if (featureClass.FindField(featureClass.OIDFieldName) == -1 || featureClass.FindField("TitleOP") == -1 || featureClass.FindField("AzimuthB") == -1
                         || featureClass.FindField("AzimuthE") == -1 || featureClass.FindField("AnglMinH") == -1 || featureClass.FindField("AnglMaxH") == -1) 
                     {
                         continue;

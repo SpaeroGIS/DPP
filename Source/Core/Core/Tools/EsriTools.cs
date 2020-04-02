@@ -1357,16 +1357,16 @@ namespace MilSpace.Core.Tools
             var geometries = new Dictionary<int, IGeometry>();
             var featureClass = featureLayer.FeatureClass;
 
-            var idFieldIndex = featureClass.FindField("OBJECTID");
+            var idFieldIndex = featureClass.FindField(featureClass.OIDFieldName);
 
             if(idFieldIndex == -1)
             {
-                logger.WarnEx($"> GetGeometriesFromLayer. Warning: Cannot find fild \"OBJECTID\" in featureClass {featureClass.AliasName}");
+                logger.WarnEx($"> GetGeometriesFromLayer. Warning: Cannot find fild {featureClass.OIDFieldName} in featureClass {featureClass.AliasName}");
                 throw new MissingFieldException();
             }
 
             IQueryFilter queryFilter = new QueryFilter();
-            queryFilter.WhereClause = "OBJECTID > 0";
+            queryFilter.WhereClause = $"{featureClass.OIDFieldName} > 0";
 
             IFeatureCursor featureCursor = featureClass.Search(queryFilter, true);
             IFeature feature = featureCursor.NextFeature();

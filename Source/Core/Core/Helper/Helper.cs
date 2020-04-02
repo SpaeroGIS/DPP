@@ -75,7 +75,7 @@ namespace MilSpace.Core
             {
                 snumericString2 = snumericString.Replace(",", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
             }
-            
+
             return double.TryParse(snumericString2, out result);
         }
 

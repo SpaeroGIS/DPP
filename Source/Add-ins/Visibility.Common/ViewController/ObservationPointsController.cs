@@ -835,12 +835,12 @@ namespace MilSpace.Visibility.ViewController
             var points = new List<FromLayerPointModel>();
 
             var featureClass = GetObservatioPointFeatureClass();
-            var idFieldIndex = featureClass.FindField("OBJECTID");
+            var idFieldIndex = featureClass.FindField(featureClass.OIDFieldName);
             var titleFieldIndex = featureClass.FindField("TitleOp");
 
             if(idFieldIndex == -1)
             {
-                log.WarnEx($"> GetObservationPointsFromModule. Warning: Cannot find fild \"OBJECTID\" in featureClass {featureClass.AliasName}");
+                log.WarnEx($"> GetObservationPointsFromModule. Warning: Cannot find fild {featureClass.OIDFieldName} in featureClass {featureClass.AliasName}");
                 throw new MissingFieldException();
             }
 
@@ -850,7 +850,7 @@ namespace MilSpace.Visibility.ViewController
             }
 
             IQueryFilter queryFilter = new QueryFilter();
-            queryFilter.WhereClause = "OBJECTID > 0";
+            queryFilter.WhereClause = $"{featureClass.OIDFieldName} > 0";
 
             IFeatureCursor featureCursor = featureClass.Search(queryFilter, true);
             IFeature feature = featureCursor.NextFeature();
@@ -904,12 +904,12 @@ namespace MilSpace.Visibility.ViewController
             var objects = new List<FromLayerGeometry>();
 
             var featureClass = GetObservatioStationFeatureClass(mapDocument.ActiveView);
-            var idFieldIndex = featureClass.FindField("OBJECTID");
+            var idFieldIndex = featureClass.FindField(featureClass.OIDFieldName);
             var titleFieldIndex = featureClass.FindField("sTitleOO");
 
             if(idFieldIndex == -1)
             {
-                log.WarnEx($"> GetObservObjectsFromModule. Warning: Cannot find fild \"OBJECTID\" in featureClass {featureClass.AliasName}");
+                log.WarnEx($"> GetObservObjectsFromModule. Warning: Cannot find fild {featureClass.OIDFieldName} in featureClass {featureClass.AliasName}");
                 throw new MissingFieldException();
             }
 
@@ -919,7 +919,7 @@ namespace MilSpace.Visibility.ViewController
             }
 
             IQueryFilter queryFilter = new QueryFilter();
-            queryFilter.WhereClause = "OBJECTID > 0";
+            queryFilter.WhereClause = $"{featureClass.OIDFieldName} > 0";
 
             IFeatureCursor featureCursor = featureClass.Search(queryFilter, true);
             IFeature feature = featureCursor.NextFeature();

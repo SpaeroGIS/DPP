@@ -161,15 +161,15 @@
   <TxtAttrProfileEndPointYText>Кінцева точка (широта):</TxtAttrProfileEndPointYText>
   <TxtAttrProfileIdText>Ідентифікатор:</TxtAttrProfileIdText>
   <TxtAttrProfileNameText>Назва:</TxtAttrProfileNameText>
-  <TxtAttrProfilePointOfViewText>Висота початкової точки над поверхнею, м:</TxtAttrProfilePointOfViewText>
-  <TxtAttrProfilePointToHeightText>Висота кінцевої точки над поверхнею, м:</TxtAttrProfilePointToHeightText>
+  <TxtAttrProfilePointOfViewText>Висота над поверхнею, м:</TxtAttrProfilePointOfViewText>
+  <TxtAttrProfilePointToHeightText>Висота над поверхнею, м:</TxtAttrProfilePointToHeightText>
   <TxtAttrProfileStartPointXText>Початкова точка (довгота):</TxtAttrProfileStartPointXText>
   <TxtAttrProfileStartPointYText>Початкова точка (широта):</TxtAttrProfileStartPointYText>
   <TxtAttrProfileTypeText>Тип:</TxtAttrProfileTypeText>
   <TxtTreeViewProfileText>Профіль:</TxtTreeViewProfileText>
   <TxtTreeViewProfileSurfaceText>Поверхня:</TxtTreeViewProfileSurfaceText>
-  <TxtTreeViewProfileBasePointFromSurfaceHeightText>Висота початкової точки на поверхні:</TxtTreeViewProfileBasePointFromSurfaceHeightText>
-  <TxtTreeViewProfileToPointFromSurfaceHeightText>Висота кінцевої точки на поверхні:</TxtTreeViewProfileToPointFromSurfaceHeightText>
+  <TxtTreeViewProfileBasePointFromSurfaceHeightText>Висота на поверхні:</TxtTreeViewProfileBasePointFromSurfaceHeightText>
+  <TxtTreeViewProfileToPointFromSurfaceHeightText>Висота на поверхні:</TxtTreeViewProfileToPointFromSurfaceHeightText>
   <TxtObjCountText>Кількість об'єктів: {0}</TxtObjCountText>
   
   <MsgLineNotFoundErrorText>Лінію не знайдено</MsgLineNotFoundErrorText>
@@ -237,7 +237,7 @@
   <TxtGraphicsLayerValue>графічні об'єкти</TxtGraphicsLayerValue>
   <TxtNewProfileNameValue>Новий профіль</TxtNewProfileNameValue>
   
-  <LbFunParamsTitleText>Параметри набору профілів:</LbFunParamsTitleText>
+  <LbFunParamsTitleText>Параметри набору профілів</LbFunParamsTitleText>
   <LbFunParamsAvgAzimuthText>Середній азимут:</LbFunParamsAvgAzimuthText>
   <LbFunParamsAvgAngleText>Середній кут між лініями:</LbFunParamsAvgAngleText>
   <LbFunParamsAvgLengthText>Середня довжина проекції лінії:</LbFunParamsAvgLengthText>
