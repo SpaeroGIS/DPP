@@ -228,6 +228,9 @@
     <Compile Include="..\Core\DataAccess\FromLayerPointModel.cs">
       <Link>DataAccess\FromLayerPointModel.cs</Link>
     </Compile>
+    <Compile Include="..\Core\DataAccess\KeyCodesEnum.cs">
+      <Link>DataAccess\KeyCodesEnum.cs</Link>
+    </Compile>
     <Compile Include="..\Core\DataAccess\PointsInGeometry.cs">
       <Link>DataAccess\PointsInGeometry.cs</Link>
     </Compile>
@@ -421,6 +424,7 @@
     <Content Include="..\Core\Resources\SP_CoreLocalization.xml">
       <Link>Resources\SP_CoreLocalization.xml</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

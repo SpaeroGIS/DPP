@@ -31,9 +31,9 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Panel panelGO;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Графика");
             this.calcProfile = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.profileTabPage = new System.Windows.Forms.TabPage();
@@ -175,7 +175,6 @@
             this.panelPNLayers = new System.Windows.Forms.Panel();
             this.panelLayrsSet = new System.Windows.Forms.Panel();
             this.panellyr5 = new System.Windows.Forms.Panel();
-            this.lblHydrographyLayer = new System.Windows.Forms.Label();
             this.cmbHydrographyLayer = new System.Windows.Forms.ComboBox();
             this.lblHydrographyLayer = new System.Windows.Forms.Label();
             this.panellyr4 = new System.Windows.Forms.Panel();
@@ -2162,10 +2161,10 @@
             // lblHydrographyLayer
             // 
             this.lblHydrographyLayer.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblHydrographyLayer.Location = new System.Drawing.Point(4, 3);
+            this.lblHydrographyLayer.Location = new System.Drawing.Point(4, 4);
             this.lblHydrographyLayer.Name = "lblHydrographyLayer";
             this.lblHydrographyLayer.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.lblHydrographyLayer.Size = new System.Drawing.Size(100, 23);
+            this.lblHydrographyLayer.Size = new System.Drawing.Size(100, 20);
             this.lblHydrographyLayer.TabIndex = 42;
             this.lblHydrographyLayer.Text = "гидрография";
             // 
@@ -2232,10 +2231,10 @@
             // lblBuildingsLayer
             // 
             this.lblBuildingsLayer.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblBuildingsLayer.Location = new System.Drawing.Point(4, 3);
+            this.lblBuildingsLayer.Location = new System.Drawing.Point(4, 4);
             this.lblBuildingsLayer.Name = "lblBuildingsLayer";
             this.lblBuildingsLayer.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.lblBuildingsLayer.Size = new System.Drawing.Size(100, 23);
+            this.lblBuildingsLayer.Size = new System.Drawing.Size(100, 20);
             this.lblBuildingsLayer.TabIndex = 41;
             this.lblBuildingsLayer.Text = " сооружения";
             // 
@@ -2376,25 +2375,25 @@
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.Location = new System.Drawing.Point(0, 54);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode4.Checked = true;
-            treeNode4.ImageKey = "vector-path-line.png";
-            treeNode4.Name = "Points";
-            treeNode4.SelectedImageIndex = 205;
-            treeNode4.Text = "Отрезки";
-            treeNode5.Checked = true;
-            treeNode5.ImageKey = "Editing-Line-icon3.png";
-            treeNode5.Name = "Fun";
-            treeNode5.SelectedImageIndex = 208;
-            treeNode5.Text = "Веер";
-            treeNode6.Checked = true;
-            treeNode6.ImageKey = "vector-polygon.png";
-            treeNode6.Name = "Primitives";
-            treeNode6.SelectedImageIndex = 209;
-            treeNode6.Text = "Графика";
+            treeNode1.Checked = true;
+            treeNode1.ImageKey = "vector-path-line.png";
+            treeNode1.Name = "Points";
+            treeNode1.SelectedImageIndex = 205;
+            treeNode1.Text = "Отрезки";
+            treeNode2.Checked = true;
+            treeNode2.ImageKey = "Editing-Line-icon3.png";
+            treeNode2.Name = "Fun";
+            treeNode2.SelectedImageIndex = 208;
+            treeNode2.Text = "Веер";
+            treeNode3.Checked = true;
+            treeNode3.ImageKey = "vector-polygon.png";
+            treeNode3.Name = "Primitives";
+            treeNode3.SelectedImageIndex = 209;
+            treeNode3.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode5,
-            treeNode6});
+            treeNode1,
+            treeNode2,
+            treeNode3});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(292, 410);
             this.profilesTreeView.TabIndex = 35;

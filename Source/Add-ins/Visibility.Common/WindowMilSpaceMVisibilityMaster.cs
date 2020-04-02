@@ -1,6 +1,7 @@
 ﻿using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core;
+using MilSpace.Core.DataAccess;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Tools;
@@ -17,11 +18,6 @@ namespace MilSpace.Visibility
 {
     public partial class WindowMilSpaceMVisibilityMaster : Form, IObservationPointsView
     {
-        const int BACKSPACE = 8;
-        const int DECIMAL_POINT = 46;
-        const int ZERO = 48;
-        const int NINE = 57;
-
         private string _previousPickedRasterLayer;
         private VisibilityCalcTypeEnum _stepControl = VisibilityCalcTypeEnum.None;
         private string _allValuesFilterText = "All";
@@ -411,19 +407,22 @@ namespace MilSpace.Visibility
             SetSelectedOPControlsEnabled(true);
         }
 
-        public void AddSelectedOO(IGeometry geometry, string title)
+        public void AddSelectedOO(IGeometry geometry, string title, string layer)
         {
             _selectedGeometry = geometry;
 
             lblSelectedOO.Text = title;
+            observObjectsLabel.Text = layer;
             txtBufferDistance.Enabled = (geometry.GeometryType != esriGeometryType.esriGeometryPolygon);
             txtCoveragePercent.Enabled = true;
+            btnShowOO.Enabled = true;
         }
 
         private void SetSelectedOPControlsEnabled(bool enabled)
         {
             txtMinAzimuth.Enabled = txtMaxAzimuth.Enabled = txtMinAngle.Enabled = txtMaxAngle.Enabled
              = txtMinHeight.Enabled = txtMaxHeight.Enabled = txtStep.Enabled = enabled;
+            btnShowPoint.Enabled = enabled;
         }
 
         private void SetDataGridView_For_Objects()
@@ -925,13 +924,6 @@ namespace MilSpace.Visibility
             throw new NotImplementedException();
         }
 
-        private void FieldsWithDouble_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            var textBox = (TextBox)sender;
-            e.Handled = !(((e.KeyChar == BACKSPACE) || ((e.KeyChar >= ZERO) && (e.KeyChar <= NINE)))
-                  || ((e.KeyChar == DECIMAL_POINT) && textBox.Text.IndexOf(".") == -1));
-        }
-
         private void BtnChooseOP_Click(object sender, EventArgs e)
         {
             controller.SelectObservationPointFromSet(controller.GetObservPointsSet(cmbOPSource.SelectedItem.ToString()));
@@ -942,15 +934,116 @@ namespace MilSpace.Visibility
             controller.SelectObservationStationFromSet(controller.GetObservStationSet(cmbOOSource.SelectedItem.ToString()));
         }
 
-        private void FieldsWithInteger_KeyPress(object sender, KeyPressEventArgs e)
+
+        private void BtnShowPoint_Click(object sender, EventArgs e)
         {
-            e.Handled = !((e.KeyChar == BACKSPACE) || ((e.KeyChar >= ZERO) && (e.KeyChar <= NINE)));
+            if (_selectedObservationPoint != null)
+            {
+                controller.ShowPoint(_selectedObservationPoint);
+            }
+
         }
 
-        private void ValidateRangedValues(TextBox sender, TextBox minTxt, TextBox maxTxt, double min, double max, string replaceValue)
+        private void BtnShowOO_Click(object sender, EventArgs e)
         {
-            var isDouble = Double.TryParse(sender.Text, out double value);
-            var isMax = (sender == maxTxt);
+            if (_selectedGeometry != null)
+            {
+                controller.ShowGeometry(_selectedGeometry, Convert.ToInt32(txtBufferDistance.Text));
+            }
+        }
+
+        #region Validation
+
+        private void TxSignedDouble_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            var textBox = (TextBox)sender;
+            e.Handled = !(CheckDouble(textBox, e.KeyChar) || (e.KeyChar == (char)KeyCodesEnum.Minus));
+        }
+
+        private void FieldsWithInteger_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !(char.IsNumber(e.KeyChar) || e.KeyChar == (char)Keys.Back);
+        }
+
+        private void FieldsWithDouble_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            var textBox = (TextBox)sender;
+            e.Handled = !CheckDouble(textBox, e.KeyChar);
+        }
+
+        private bool CheckDouble(TextBox textBox, char keyChar)
+        {
+            return (char.IsNumber(keyChar) || keyChar == (char)Keys.Back
+                            || (keyChar == (int)KeyCodesEnum.DecimalPoint && textBox.Text.IndexOf(".") == -1));
+        }
+
+        private void TxtCoveragePercent_Leave(object sender, EventArgs e)
+        {
+            var textBox = (TextBox)sender;
+            ValidateRangedValues(textBox, 0, 100, "100");
+        }
+
+        private void TxtAzimuth_Leave(object sender, EventArgs e)
+        {
+            var textBox = sender as TextBox;
+            var replaceValue = (textBox == txtMaxAzimuth) ? _selectedObservationPoint.AzimuthEnd.Value : _selectedObservationPoint.AzimuthStart.Value;
+
+            ValidateRangedValues(textBox, 0, 360, replaceValue.ToFormattedString(1), txtMinAzimuth, txtMaxAzimuth);
+        }
+
+        private void TxtAngle_Leave(object sender, EventArgs e)
+        {
+            var textBox = sender as TextBox;
+            var replaceValue = (textBox == txtMaxAngle) ? _selectedObservationPoint.AngelMaxH.Value : _selectedObservationPoint.AngelMinH.Value;
+
+            ValidateRangedValues(textBox, -90, 90, replaceValue.ToFormattedString(1), txtMinAngle, txtMaxAngle);
+        }
+
+        private void TxtHeight_Leave(object sender, EventArgs e)
+        {
+            var textBox = sender as TextBox;
+            ValidateRangedValues(textBox, 0, Double.MaxValue, _selectedObservationPoint.RelativeHeight.Value.ToFormattedString(1), txtMinHeight, txtMaxHeight);
+        }
+
+        private void TxtStep_Leave(object sender, EventArgs e)
+        {
+            var textBox = sender as TextBox;
+            var isInteger = Int32.TryParse(textBox.Text, out int value);
+
+            if (!isInteger)
+            {
+                MessageBox.Show(LocalizationContext.Instance.InvalidFormatMessage, LocalizationContext.Instance.MessageBoxWarningCaption);
+                textBox.Text = "1";
+                return;
+            }
+
+            if (value < 0)
+            {
+                MessageBox.Show(LocalizationContext.Instance.ValueLessThenZeroMessage, LocalizationContext.Instance.MessageBoxWarningCaption);
+                textBox.Text = "1";
+                return;
+            }
+
+            var isMaxDouble = txtMaxHeight.Text.TryParceToDouble(out double max);
+            var isMinDouble = txtMinHeight.Text.TryParceToDouble(out double min);
+
+            if (isMaxDouble && isMinDouble)
+            {
+                var heightsDiff = max - min;
+
+                if (value > heightsDiff)
+                {
+                    MessageBox.Show(String.Format(LocalizationContext.Instance.ValueMoreThanMaxMessage, heightsDiff.ToString("F0")), LocalizationContext.Instance.MessageBoxWarningCaption);
+                    textBox.Text = "1";
+                    return;
+                }
+            }
+        }
+
+
+        private void ValidateRangedValues(TextBox sender, double min, double max, string replaceValue, TextBox minTxt = null, TextBox maxTxt = null)
+        {
+            var isDouble = sender.Text.TryParceToDouble(out double value);
 
             if (!isDouble)
             {
@@ -966,73 +1059,36 @@ namespace MilSpace.Visibility
                 return;
             }
 
-            if (isMax)
+            if (maxTxt != null && minTxt != null)
             {
-                if (value < Convert.ToDouble(minTxt.Text))
+                var isMax = (sender == maxTxt);
+
+                if (isMax)
                 {
-                    MessageBox.Show(String.Format(LocalizationContext.Instance.ValueLessThanMinMessage, minTxt.Text), LocalizationContext.Instance.MessageBoxWarningCaption);
-                    sender.Text = replaceValue;
-                    return;
+                    var isMinDouble = minTxt.Text.TryParceToDouble(out double minValue);
+                    if (isMinDouble && value < minValue)
+                    {
+                        MessageBox.Show(String.Format(LocalizationContext.Instance.ValueLessThanMinMessage, minTxt.Text), LocalizationContext.Instance.MessageBoxWarningCaption);
+                        sender.Text = replaceValue;
+                        return;
+                    }
+                }
+                else
+                {
+                    var isMaxDouble = maxTxt.Text.TryParceToDouble(out double maxValue);
+
+                    if (isMaxDouble && value > maxValue)
+                    {
+                        MessageBox.Show(String.Format(LocalizationContext.Instance.ValueMoreThanMaxMessage, maxTxt.Text), LocalizationContext.Instance.MessageBoxWarningCaption);
+                        sender.Text = replaceValue;
+                        return;
+                    }
                 }
             }
-            else if (value > Convert.ToDouble(maxTxt.Text))
-            {
-                MessageBox.Show(String.Format(LocalizationContext.Instance.ValueMoreThanMaxMessage, maxTxt.Text), LocalizationContext.Instance.MessageBoxWarningCaption);
-                sender.Text = replaceValue;
-                return;
-            }
         }
 
-        private void TxtAzimuth_Leave(object sender, EventArgs e)
-        {
-            var textBox = sender as TextBox;
-            var replaceValue = (textBox == txtMaxAzimuth) ? _selectedObservationPoint.AzimuthEnd.Value : _selectedObservationPoint.AzimuthStart.Value;
 
-            ValidateRangedValues(textBox, txtMinAzimuth, txtMaxAzimuth, 0, 360, replaceValue.ToFormattedString(1));
-        }
+        #endregion
 
-        private void TxtAngle_Leave(object sender, EventArgs e)
-        {
-            var textBox = sender as TextBox;
-            var replaceValue = (textBox == txtMaxAngle) ? _selectedObservationPoint.AngelMaxH.Value : _selectedObservationPoint.AngelMinH.Value;
-
-            ValidateRangedValues(textBox, txtMinAngle, txtMaxAngle, -90, 90, replaceValue.ToFormattedString(1));
-        }
-
-        private void TxtHeight_Leave(object sender, EventArgs e)
-        {
-            var textBox = sender as TextBox;
-
-            ValidateRangedValues(textBox, txtMinHeight, txtMaxHeight, 0, Double.MaxValue, _selectedObservationPoint.RelativeHeight.Value.ToFormattedString(1));
-        }
-
-        private void TxtStep_Leave(object sender, EventArgs e)
-        {
-            var textBox = sender as TextBox;
-            var isInteger = Int32.TryParse(textBox.Text, out int value);
-
-            if(!isInteger)
-            {
-                MessageBox.Show(LocalizationContext.Instance.InvalidFormatMessage, LocalizationContext.Instance.MessageBoxWarningCaption);
-                textBox.Text = "1";
-                return;
-            }
-            
-            if(value < 0)
-            {
-                MessageBox.Show(LocalizationContext.Instance.ValueLessThenZeroMessage, LocalizationContext.Instance.MessageBoxWarningCaption);
-                textBox.Text = "1";
-                return;
-            }
-
-            var heightsDiff = Convert.ToInt32(txtMaxHeight.Text) - Convert.ToInt32(txtMinHeight.Text);
-
-            if (value > heightsDiff)
-            {
-                MessageBox.Show(String.Format(LocalizationContext.Instance.ValueMoreThanMaxMessage, heightsDiff.ToString("F0")), LocalizationContext.Instance.MessageBoxWarningCaption);
-                textBox.Text = "1";
-                return;
-            }
-        }
     }
 }
