@@ -31,9 +31,9 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Panel panelGO;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Графика");
             this.calcProfile = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.profileTabPage = new System.Windows.Forms.TabPage();
@@ -175,14 +175,14 @@
             this.panelPNLayers = new System.Windows.Forms.Panel();
             this.panelLayrsSet = new System.Windows.Forms.Panel();
             this.panellyr5 = new System.Windows.Forms.Panel();
-            this.lblHydrographyLayer = new System.Windows.Forms.Label();
             this.cmbHydrographyLayer = new System.Windows.Forms.ComboBox();
+            this.lblHydrographyLayer = new System.Windows.Forms.Label();
             this.panellyr4 = new System.Windows.Forms.Panel();
             this.cmbRoadLayers = new System.Windows.Forms.ComboBox();
             this.lblRoadsLayer = new System.Windows.Forms.Label();
             this.panellyr3 = new System.Windows.Forms.Panel();
-            this.lblBuildingsLayer = new System.Windows.Forms.Label();
             this.cmbBuildings = new System.Windows.Forms.ComboBox();
+            this.lblBuildingsLayer = new System.Windows.Forms.Label();
             this.panellyr2 = new System.Windows.Forms.Panel();
             this.cmbVegetationLayer = new System.Windows.Forms.ComboBox();
             this.lblVegetationLayer = new System.Windows.Forms.Label();
@@ -361,11 +361,11 @@
             this.panelProfileSet.Controls.Add(this.panelProfileName);
             this.panelProfileSet.Controls.Add(this.panelProfileSetHeader);
             this.panelProfileSet.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelProfileSet.Location = new System.Drawing.Point(0, 174);
+            this.panelProfileSet.Location = new System.Drawing.Point(0, 164);
             this.panelProfileSet.Margin = new System.Windows.Forms.Padding(0);
             this.panelProfileSet.Name = "panelProfileSet";
             this.panelProfileSet.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.panelProfileSet.Size = new System.Drawing.Size(292, 492);
+            this.panelProfileSet.Size = new System.Drawing.Size(292, 502);
             this.panelProfileSet.TabIndex = 48;
             // 
             // profileSettingsTab
@@ -380,7 +380,7 @@
             this.profileSettingsTab.Name = "profileSettingsTab";
             this.profileSettingsTab.Padding = new System.Drawing.Point(0, 0);
             this.profileSettingsTab.SelectedIndex = 0;
-            this.profileSettingsTab.Size = new System.Drawing.Size(292, 430);
+            this.profileSettingsTab.Size = new System.Drawing.Size(292, 440);
             this.profileSettingsTab.TabIndex = 6;
             this.profileSettingsTab.SelectedIndexChanged += new System.EventHandler(this.profileSettingsTab_SelectedIndexChanged);
             // 
@@ -395,7 +395,7 @@
             this.sectionTab.Location = new System.Drawing.Point(4, 24);
             this.sectionTab.Margin = new System.Windows.Forms.Padding(0);
             this.sectionTab.Name = "sectionTab";
-            this.sectionTab.Size = new System.Drawing.Size(284, 402);
+            this.sectionTab.Size = new System.Drawing.Size(284, 412);
             this.sectionTab.TabIndex = 0;
             this.sectionTab.Text = "Отрезком";
             this.sectionTab.UseVisualStyleBackColor = true;
@@ -406,17 +406,17 @@
             this.infoPanel.Controls.Add(this.lblAzimuthInfo);
             this.infoPanel.Controls.Add(this.lblLengthInfo);
             this.infoPanel.Controls.Add(this.panel11);
-            this.infoPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.infoPanel.Location = new System.Drawing.Point(0, 341);
+            this.infoPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.infoPanel.Location = new System.Drawing.Point(0, 312);
             this.infoPanel.Name = "infoPanel";
-            this.infoPanel.Size = new System.Drawing.Size(284, 61);
+            this.infoPanel.Size = new System.Drawing.Size(284, 100);
             this.infoPanel.TabIndex = 44;
             // 
             // lblAzimuthInfo
             // 
             this.lblAzimuthInfo.AutoSize = true;
             this.lblAzimuthInfo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblAzimuthInfo.Location = new System.Drawing.Point(0, 38);
+            this.lblAzimuthInfo.Location = new System.Drawing.Point(0, 37);
             this.lblAzimuthInfo.Name = "lblAzimuthInfo";
             this.lblAzimuthInfo.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.lblAzimuthInfo.Size = new System.Drawing.Size(48, 13);
@@ -427,7 +427,7 @@
             // 
             this.lblLengthInfo.AutoSize = true;
             this.lblLengthInfo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblLengthInfo.Location = new System.Drawing.Point(0, 25);
+            this.lblLengthInfo.Location = new System.Drawing.Point(0, 24);
             this.lblLengthInfo.Name = "lblLengthInfo";
             this.lblLengthInfo.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.lblLengthInfo.Size = new System.Drawing.Size(44, 13);
@@ -436,14 +436,14 @@
             // 
             // panel11
             // 
-            this.panel11.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.panel11.BackColor = System.Drawing.SystemColors.ControlLight;
             this.panel11.Controls.Add(this.btnShowProfileLine);
             this.panel11.Controls.Add(this.lblProfileInfo);
             this.panel11.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel11.Location = new System.Drawing.Point(0, 0);
             this.panel11.Name = "panel11";
             this.panel11.Padding = new System.Windows.Forms.Padding(4, 1, 4, 1);
-            this.panel11.Size = new System.Drawing.Size(284, 25);
+            this.panel11.Size = new System.Drawing.Size(284, 24);
             this.panel11.TabIndex = 3;
             // 
             // btnShowProfileLine
@@ -453,7 +453,7 @@
             this.btnShowProfileLine.ImageList = this.imageList1;
             this.btnShowProfileLine.Location = new System.Drawing.Point(257, 1);
             this.btnShowProfileLine.Name = "btnShowProfileLine";
-            this.btnShowProfileLine.Size = new System.Drawing.Size(23, 23);
+            this.btnShowProfileLine.Size = new System.Drawing.Size(23, 22);
             this.btnShowProfileLine.TabIndex = 46;
             this.btnShowProfileLine.UseVisualStyleBackColor = true;
             this.btnShowProfileLine.Click += new System.EventHandler(this.BtnShowProfileLine_Click);
@@ -680,10 +680,10 @@
             // 
             this.lblProfileInfo.AutoSize = true;
             this.lblProfileInfo.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblProfileInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblProfileInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lblProfileInfo.Location = new System.Drawing.Point(4, 1);
             this.lblProfileInfo.Name = "lblProfileInfo";
-            this.lblProfileInfo.Size = new System.Drawing.Size(141, 17);
+            this.lblProfileInfo.Size = new System.Drawing.Size(158, 17);
             this.lblProfileInfo.TabIndex = 0;
             this.lblProfileInfo.Text = "Параметры отрезка";
             // 
@@ -697,9 +697,9 @@
             this.panelLineSecondPoint.Controls.Add(this.panel3);
             this.panelLineSecondPoint.Controls.Add(this.secondPointTitlePanel);
             this.panelLineSecondPoint.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelLineSecondPoint.Location = new System.Drawing.Point(0, 162);
+            this.panelLineSecondPoint.Location = new System.Drawing.Point(0, 156);
             this.panelLineSecondPoint.Name = "panelLineSecondPoint";
-            this.panelLineSecondPoint.Size = new System.Drawing.Size(284, 162);
+            this.panelLineSecondPoint.Size = new System.Drawing.Size(284, 156);
             this.panelLineSecondPoint.TabIndex = 51;
             // 
             // panel16
@@ -707,7 +707,7 @@
             this.panel16.Controls.Add(this.lblHeightOfViewSecond);
             this.panel16.Controls.Add(this.txtSecondHeight);
             this.panel16.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel16.Location = new System.Drawing.Point(0, 128);
+            this.panel16.Location = new System.Drawing.Point(0, 126);
             this.panel16.Name = "panel16";
             this.panel16.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
             this.panel16.Size = new System.Drawing.Size(284, 28);
@@ -741,7 +741,7 @@
             this.panel5.Controls.Add(this.txtSecondPointY);
             this.panel5.Controls.Add(this.txtSecondPointX);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel5.Location = new System.Drawing.Point(0, 100);
+            this.panel5.Location = new System.Drawing.Point(0, 98);
             this.panel5.Name = "panel5";
             this.panel5.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
             this.panel5.Size = new System.Drawing.Size(284, 28);
@@ -841,7 +841,7 @@
             // 
             this.secondPointInfoPanel.Controls.Add(this.lblSecondPointInfo);
             this.secondPointInfoPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.secondPointInfoPanel.Location = new System.Drawing.Point(0, 78);
+            this.secondPointInfoPanel.Location = new System.Drawing.Point(0, 76);
             this.secondPointInfoPanel.Name = "secondPointInfoPanel";
             this.secondPointInfoPanel.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
             this.secondPointInfoPanel.Size = new System.Drawing.Size(284, 22);
@@ -866,7 +866,7 @@
             this.SecondPointGettingWayPanel.Location = new System.Drawing.Point(0, 48);
             this.SecondPointGettingWayPanel.Name = "SecondPointGettingWayPanel";
             this.SecondPointGettingWayPanel.Padding = new System.Windows.Forms.Padding(4);
-            this.SecondPointGettingWayPanel.Size = new System.Drawing.Size(284, 30);
+            this.SecondPointGettingWayPanel.Size = new System.Drawing.Size(284, 28);
             this.SecondPointGettingWayPanel.TabIndex = 49;
             // 
             // btnChooseSecondPointAssignmentMethod
@@ -875,7 +875,7 @@
             this.btnChooseSecondPointAssignmentMethod.Location = new System.Drawing.Point(168, 4);
             this.btnChooseSecondPointAssignmentMethod.Margin = new System.Windows.Forms.Padding(0);
             this.btnChooseSecondPointAssignmentMethod.Name = "btnChooseSecondPointAssignmentMethod";
-            this.btnChooseSecondPointAssignmentMethod.Size = new System.Drawing.Size(83, 22);
+            this.btnChooseSecondPointAssignmentMethod.Size = new System.Drawing.Size(83, 20);
             this.btnChooseSecondPointAssignmentMethod.TabIndex = 47;
             this.btnChooseSecondPointAssignmentMethod.Text = "Выбрать";
             this.btnChooseSecondPointAssignmentMethod.UseVisualStyleBackColor = true;
@@ -915,7 +915,7 @@
             // 
             // secondPointTitlePanel
             // 
-            this.secondPointTitlePanel.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.secondPointTitlePanel.BackColor = System.Drawing.SystemColors.ControlLight;
             this.secondPointTitlePanel.Controls.Add(this.reverseSecondPointButton);
             this.secondPointTitlePanel.Controls.Add(this.lblLineSecondPoint);
             this.secondPointTitlePanel.Dock = System.Windows.Forms.DockStyle.Top;
@@ -941,7 +941,7 @@
             // lblLineSecondPoint
             // 
             this.lblLineSecondPoint.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblLineSecondPoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblLineSecondPoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lblLineSecondPoint.Location = new System.Drawing.Point(4, 0);
             this.lblLineSecondPoint.Name = "lblLineSecondPoint";
             this.lblLineSecondPoint.Padding = new System.Windows.Forms.Padding(0, 2, 0, 4);
@@ -961,7 +961,7 @@
             this.panelLineFirstPoint.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelLineFirstPoint.Location = new System.Drawing.Point(0, 0);
             this.panelLineFirstPoint.Name = "panelLineFirstPoint";
-            this.panelLineFirstPoint.Size = new System.Drawing.Size(284, 162);
+            this.panelLineFirstPoint.Size = new System.Drawing.Size(284, 156);
             this.panelLineFirstPoint.TabIndex = 52;
             // 
             // panel17
@@ -969,7 +969,7 @@
             this.panel17.Controls.Add(this.lblHeightOfViewFirst);
             this.panel17.Controls.Add(this.txtFirstHeight);
             this.panel17.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel17.Location = new System.Drawing.Point(0, 128);
+            this.panel17.Location = new System.Drawing.Point(0, 126);
             this.panel17.Name = "panel17";
             this.panel17.Padding = new System.Windows.Forms.Padding(4);
             this.panel17.Size = new System.Drawing.Size(284, 28);
@@ -1002,7 +1002,7 @@
             this.panel4.Controls.Add(this.txtFirstPointY);
             this.panel4.Controls.Add(this.txtFirstPointX);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel4.Location = new System.Drawing.Point(0, 100);
+            this.panel4.Location = new System.Drawing.Point(0, 98);
             this.panel4.Margin = new System.Windows.Forms.Padding(2);
             this.panel4.Name = "panel4";
             this.panel4.Padding = new System.Windows.Forms.Padding(4);
@@ -1105,7 +1105,7 @@
             // 
             this.firstPointInfoPanel.Controls.Add(this.lblFirstPointInfo);
             this.firstPointInfoPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.firstPointInfoPanel.Location = new System.Drawing.Point(0, 78);
+            this.firstPointInfoPanel.Location = new System.Drawing.Point(0, 76);
             this.firstPointInfoPanel.Name = "firstPointInfoPanel";
             this.firstPointInfoPanel.Padding = new System.Windows.Forms.Padding(4);
             this.firstPointInfoPanel.Size = new System.Drawing.Size(284, 22);
@@ -1130,7 +1130,7 @@
             this.pointGettingWayPanel.Location = new System.Drawing.Point(0, 48);
             this.pointGettingWayPanel.Name = "pointGettingWayPanel";
             this.pointGettingWayPanel.Padding = new System.Windows.Forms.Padding(4);
-            this.pointGettingWayPanel.Size = new System.Drawing.Size(284, 30);
+            this.pointGettingWayPanel.Size = new System.Drawing.Size(284, 28);
             this.pointGettingWayPanel.TabIndex = 45;
             // 
             // btnChooseFirstPointAssignmentMethod
@@ -1139,7 +1139,7 @@
             this.btnChooseFirstPointAssignmentMethod.Location = new System.Drawing.Point(168, 4);
             this.btnChooseFirstPointAssignmentMethod.Margin = new System.Windows.Forms.Padding(0);
             this.btnChooseFirstPointAssignmentMethod.Name = "btnChooseFirstPointAssignmentMethod";
-            this.btnChooseFirstPointAssignmentMethod.Size = new System.Drawing.Size(83, 22);
+            this.btnChooseFirstPointAssignmentMethod.Size = new System.Drawing.Size(83, 20);
             this.btnChooseFirstPointAssignmentMethod.TabIndex = 47;
             this.btnChooseFirstPointAssignmentMethod.Text = "Выбрать";
             this.btnChooseFirstPointAssignmentMethod.UseVisualStyleBackColor = true;
@@ -1178,7 +1178,7 @@
             // 
             // firstPointTitlePanel
             // 
-            this.firstPointTitlePanel.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.firstPointTitlePanel.BackColor = System.Drawing.SystemColors.ControlLight;
             this.firstPointTitlePanel.Controls.Add(this.reverseButton);
             this.firstPointTitlePanel.Controls.Add(this.lblLineFirstPoint);
             this.firstPointTitlePanel.Dock = System.Windows.Forms.DockStyle.Top;
@@ -1203,7 +1203,7 @@
             // lblLineFirstPoint
             // 
             this.lblLineFirstPoint.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblLineFirstPoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblLineFirstPoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lblLineFirstPoint.Location = new System.Drawing.Point(4, 0);
             this.lblLineFirstPoint.Name = "lblLineFirstPoint";
             this.lblLineFirstPoint.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
@@ -1221,7 +1221,7 @@
             this.funTab.ImageKey = "Editing-Line-icon3.png";
             this.funTab.Location = new System.Drawing.Point(4, 24);
             this.funTab.Name = "funTab";
-            this.funTab.Size = new System.Drawing.Size(284, 402);
+            this.funTab.Size = new System.Drawing.Size(284, 412);
             this.funTab.TabIndex = 1;
             this.funTab.Text = "\"Веером\"";
             // 
@@ -1230,10 +1230,10 @@
             this.panelFanInfo.BackColor = System.Drawing.SystemColors.Window;
             this.panelFanInfo.Controls.Add(this.lbFunInfo);
             this.panelFanInfo.Controls.Add(this.panelFanInfoHeader);
-            this.panelFanInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelFanInfo.Location = new System.Drawing.Point(0, 347);
+            this.panelFanInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelFanInfo.Location = new System.Drawing.Point(0, 345);
             this.panelFanInfo.Name = "panelFanInfo";
-            this.panelFanInfo.Size = new System.Drawing.Size(284, 55);
+            this.panelFanInfo.Size = new System.Drawing.Size(284, 67);
             this.panelFanInfo.TabIndex = 58;
             // 
             // lbFunInfo
@@ -1245,12 +1245,12 @@
             this.lbFunInfo.Location = new System.Drawing.Point(0, 25);
             this.lbFunInfo.Margin = new System.Windows.Forms.Padding(0);
             this.lbFunInfo.Name = "lbFunInfo";
-            this.lbFunInfo.Size = new System.Drawing.Size(284, 30);
+            this.lbFunInfo.Size = new System.Drawing.Size(284, 42);
             this.lbFunInfo.TabIndex = 55;
             // 
             // panelFanInfoHeader
             // 
-            this.panelFanInfoHeader.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.panelFanInfoHeader.BackColor = System.Drawing.SystemColors.ControlLight;
             this.panelFanInfoHeader.Controls.Add(this.btnPanToFun);
             this.panelFanInfoHeader.Controls.Add(this.label2);
             this.panelFanInfoHeader.Dock = System.Windows.Forms.DockStyle.Top;
@@ -1277,12 +1277,12 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label2.Location = new System.Drawing.Point(4, 1);
             this.label2.Margin = new System.Windows.Forms.Padding(0);
             this.label2.Name = "label2";
             this.label2.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.label2.Size = new System.Drawing.Size(86, 19);
+            this.label2.Size = new System.Drawing.Size(96, 19);
             this.label2.TabIndex = 0;
             this.label2.Text = "Параметри ";
             // 
@@ -1561,7 +1561,7 @@
             // 
             // toPointsTitlePanel
             // 
-            this.toPointsTitlePanel.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.toPointsTitlePanel.BackColor = System.Drawing.SystemColors.ControlLight;
             this.toPointsTitlePanel.Controls.Add(this.lblTargetObj);
             this.toPointsTitlePanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.toPointsTitlePanel.Location = new System.Drawing.Point(0, 0);
@@ -1574,11 +1574,11 @@
             // 
             this.lblTargetObj.AutoSize = true;
             this.lblTargetObj.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblTargetObj.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblTargetObj.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lblTargetObj.Location = new System.Drawing.Point(4, 0);
             this.lblTargetObj.Name = "lblTargetObj";
             this.lblTargetObj.Padding = new System.Windows.Forms.Padding(0, 2, 0, 4);
-            this.lblTargetObj.Size = new System.Drawing.Size(115, 23);
+            this.lblTargetObj.Size = new System.Drawing.Size(129, 23);
             this.lblTargetObj.TabIndex = 24;
             this.lblTargetObj.Text = "Целевой обьект";
             // 
@@ -1811,7 +1811,7 @@
             // 
             // panelYtfderBP
             // 
-            this.panelYtfderBP.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.panelYtfderBP.BackColor = System.Drawing.SystemColors.ControlLight;
             this.panelYtfderBP.Controls.Add(this.lblFunBasePoint);
             this.panelYtfderBP.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelYtfderBP.Location = new System.Drawing.Point(0, 0);
@@ -1824,13 +1824,13 @@
             // 
             this.lblFunBasePoint.AutoSize = true;
             this.lblFunBasePoint.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblFunBasePoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblFunBasePoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lblFunBasePoint.Location = new System.Drawing.Point(4, 0);
             this.lblFunBasePoint.Name = "lblFunBasePoint";
             this.lblFunBasePoint.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.lblFunBasePoint.Size = new System.Drawing.Size(224, 25);
+            this.lblFunBasePoint.Size = new System.Drawing.Size(117, 25);
             this.lblFunBasePoint.TabIndex = 12;
-            this.lblFunBasePoint.Text = "базовая точка (долгота широта)";
+            this.lblFunBasePoint.Text = "базовая точка";
             // 
             // primitiveTab
             // 
@@ -1841,7 +1841,7 @@
             this.primitiveTab.Location = new System.Drawing.Point(4, 24);
             this.primitiveTab.Margin = new System.Windows.Forms.Padding(0);
             this.primitiveTab.Name = "primitiveTab";
-            this.primitiveTab.Size = new System.Drawing.Size(284, 402);
+            this.primitiveTab.Size = new System.Drawing.Size(284, 412);
             this.primitiveTab.TabIndex = 2;
             this.primitiveTab.Text = "Примитивом";
             this.primitiveTab.UseVisualStyleBackColor = true;
@@ -1852,10 +1852,10 @@
             this.panelGraphInfo.Controls.Add(this.panel19);
             this.panelGraphInfo.Controls.Add(this.panel18);
             this.panelGraphInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelGraphInfo.Location = new System.Drawing.Point(0, 122);
+            this.panelGraphInfo.Location = new System.Drawing.Point(0, 111);
             this.panelGraphInfo.Margin = new System.Windows.Forms.Padding(0);
             this.panelGraphInfo.Name = "panelGraphInfo";
-            this.panelGraphInfo.Size = new System.Drawing.Size(284, 280);
+            this.panelGraphInfo.Size = new System.Drawing.Size(284, 301);
             this.panelGraphInfo.TabIndex = 54;
             // 
             // panel19
@@ -1863,10 +1863,10 @@
             this.panel19.BackColor = System.Drawing.SystemColors.Window;
             this.panel19.Controls.Add(this.lbGraphicsParam);
             this.panel19.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel19.Location = new System.Drawing.Point(0, 25);
+            this.panel19.Location = new System.Drawing.Point(0, 28);
             this.panel19.Name = "panel19";
             this.panel19.Padding = new System.Windows.Forms.Padding(4, 1, 4, 1);
-            this.panel19.Size = new System.Drawing.Size(284, 255);
+            this.panel19.Size = new System.Drawing.Size(284, 273);
             this.panel19.TabIndex = 52;
             // 
             // lbGraphicsParam
@@ -1877,19 +1877,19 @@
             this.lbGraphicsParam.FormattingEnabled = true;
             this.lbGraphicsParam.Location = new System.Drawing.Point(4, 1);
             this.lbGraphicsParam.Name = "lbGraphicsParam";
-            this.lbGraphicsParam.Size = new System.Drawing.Size(276, 253);
+            this.lbGraphicsParam.Size = new System.Drawing.Size(276, 271);
             this.lbGraphicsParam.TabIndex = 51;
             // 
             // panel18
             // 
-            this.panel18.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.panel18.BackColor = System.Drawing.SystemColors.ControlLight;
             this.panel18.Controls.Add(this.btnPanToPrimitive);
             this.panel18.Controls.Add(this.label1);
             this.panel18.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel18.Location = new System.Drawing.Point(0, 0);
             this.panel18.Name = "panel18";
-            this.panel18.Padding = new System.Windows.Forms.Padding(4, 1, 4, 1);
-            this.panel18.Size = new System.Drawing.Size(284, 25);
+            this.panel18.Padding = new System.Windows.Forms.Padding(4, 3, 4, 1);
+            this.panel18.Size = new System.Drawing.Size(284, 28);
             this.panel18.TabIndex = 0;
             // 
             // btnPanToPrimitive
@@ -1897,9 +1897,9 @@
             this.btnPanToPrimitive.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnPanToPrimitive.ImageKey = "Directions.png";
             this.btnPanToPrimitive.ImageList = this.imageList1;
-            this.btnPanToPrimitive.Location = new System.Drawing.Point(257, 1);
+            this.btnPanToPrimitive.Location = new System.Drawing.Point(257, 3);
             this.btnPanToPrimitive.Name = "btnPanToPrimitive";
-            this.btnPanToPrimitive.Size = new System.Drawing.Size(23, 23);
+            this.btnPanToPrimitive.Size = new System.Drawing.Size(23, 24);
             this.btnPanToPrimitive.TabIndex = 52;
             this.btnPanToPrimitive.UseVisualStyleBackColor = true;
             this.btnPanToPrimitive.Click += new System.EventHandler(this.BtnPanToPrimitive_Click);
@@ -1908,10 +1908,10 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(4, 1);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(4, 3);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(136, 17);
+            this.label1.Size = new System.Drawing.Size(153, 17);
             this.label1.TabIndex = 0;
             this.label1.Text = "Параметри графіки";
             // 
@@ -1925,7 +1925,7 @@
             this.panelProfileGraph.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelProfileGraph.Location = new System.Drawing.Point(0, 0);
             this.panelProfileGraph.Name = "panelProfileGraph";
-            this.panelProfileGraph.Size = new System.Drawing.Size(284, 122);
+            this.panelProfileGraph.Size = new System.Drawing.Size(284, 111);
             this.panelProfileGraph.TabIndex = 53;
             // 
             // panel1
@@ -1936,7 +1936,7 @@
             this.panel1.Controls.Add(this.lblHeightOfViewGraphics);
             this.panel1.Controls.Add(this.observerHeightSelection);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 79);
+            this.panel1.Location = new System.Drawing.Point(0, 82);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
             this.panel1.Size = new System.Drawing.Size(284, 28);
@@ -1971,7 +1971,7 @@
             this.panel15.BackColor = System.Drawing.SystemColors.Window;
             this.panel15.Controls.Add(this.lblAboutSelected);
             this.panel15.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel15.Location = new System.Drawing.Point(0, 55);
+            this.panel15.Location = new System.Drawing.Point(0, 58);
             this.panel15.Name = "panel15";
             this.panel15.Size = new System.Drawing.Size(284, 24);
             this.panel15.TabIndex = 46;
@@ -1994,7 +1994,7 @@
             this.panel13.Controls.Add(this.btnPrimitiveAssignmentMethod);
             this.panel13.Controls.Add(this.layersToSelectLine);
             this.panel13.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel13.Location = new System.Drawing.Point(0, 25);
+            this.panel13.Location = new System.Drawing.Point(0, 28);
             this.panel13.Name = "panel13";
             this.panel13.Padding = new System.Windows.Forms.Padding(4);
             this.panel13.Size = new System.Drawing.Size(284, 30);
@@ -2023,26 +2023,26 @@
             // 
             // panelProfileGraphHeader
             // 
-            this.panelProfileGraphHeader.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.panelProfileGraphHeader.BackColor = System.Drawing.SystemColors.ControlLight;
             this.panelProfileGraphHeader.Controls.Add(this.lblPrimitivesLayerToSelect);
             this.panelProfileGraphHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelProfileGraphHeader.Location = new System.Drawing.Point(0, 0);
             this.panelProfileGraphHeader.Margin = new System.Windows.Forms.Padding(0);
             this.panelProfileGraphHeader.Name = "panelProfileGraphHeader";
-            this.panelProfileGraphHeader.Padding = new System.Windows.Forms.Padding(4);
-            this.panelProfileGraphHeader.Size = new System.Drawing.Size(284, 25);
+            this.panelProfileGraphHeader.Padding = new System.Windows.Forms.Padding(4, 3, 4, 4);
+            this.panelProfileGraphHeader.Size = new System.Drawing.Size(284, 28);
             this.panelProfileGraphHeader.TabIndex = 0;
             // 
             // lblPrimitivesLayerToSelect
             // 
             this.lblPrimitivesLayerToSelect.AutoSize = true;
             this.lblPrimitivesLayerToSelect.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblPrimitivesLayerToSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblPrimitivesLayerToSelect.Location = new System.Drawing.Point(4, 4);
+            this.lblPrimitivesLayerToSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblPrimitivesLayerToSelect.Location = new System.Drawing.Point(4, 3);
             this.lblPrimitivesLayerToSelect.Margin = new System.Windows.Forms.Padding(0);
             this.lblPrimitivesLayerToSelect.Name = "lblPrimitivesLayerToSelect";
             this.lblPrimitivesLayerToSelect.Padding = new System.Windows.Forms.Padding(0, 2, 0, 4);
-            this.lblPrimitivesLayerToSelect.Size = new System.Drawing.Size(237, 23);
+            this.lblPrimitivesLayerToSelect.Size = new System.Drawing.Size(269, 23);
             this.lblPrimitivesLayerToSelect.TabIndex = 16;
             this.lblPrimitivesLayerToSelect.Text = "класс (слой) объектов для выбора";
             // 
@@ -2104,7 +2104,7 @@
             // 
             // panelPNLayers
             // 
-            this.panelPNLayers.BackColor = System.Drawing.SystemColors.Window;
+            this.panelPNLayers.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.panelPNLayers.Controls.Add(this.panelLayrsSet);
             this.panelPNLayers.Controls.Add(this.panelLayersHeaderPN);
             this.panelPNLayers.Dock = System.Windows.Forms.DockStyle.Top;
@@ -2112,12 +2112,12 @@
             this.panelPNLayers.Margin = new System.Windows.Forms.Padding(0);
             this.panelPNLayers.Name = "panelPNLayers";
             this.panelPNLayers.Padding = new System.Windows.Forms.Padding(1);
-            this.panelPNLayers.Size = new System.Drawing.Size(292, 174);
+            this.panelPNLayers.Size = new System.Drawing.Size(292, 164);
             this.panelPNLayers.TabIndex = 47;
             // 
             // panelLayrsSet
             // 
-            this.panelLayrsSet.BackColor = System.Drawing.SystemColors.Window;
+            this.panelLayrsSet.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.panelLayrsSet.Controls.Add(this.panellyr5);
             this.panelLayrsSet.Controls.Add(this.panellyr4);
             this.panelLayrsSet.Controls.Add(this.panellyr3);
@@ -2127,7 +2127,7 @@
             this.panelLayrsSet.Location = new System.Drawing.Point(1, 31);
             this.panelLayrsSet.Margin = new System.Windows.Forms.Padding(0);
             this.panelLayrsSet.Name = "panelLayrsSet";
-            this.panelLayrsSet.Size = new System.Drawing.Size(290, 141);
+            this.panelLayrsSet.Size = new System.Drawing.Size(290, 132);
             this.panelLayrsSet.TabIndex = 46;
             // 
             // panellyr5
@@ -2136,22 +2136,12 @@
             this.panellyr5.Controls.Add(this.cmbHydrographyLayer);
             this.panellyr5.Controls.Add(this.lblHydrographyLayer);
             this.panellyr5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panellyr5.Location = new System.Drawing.Point(0, 112);
+            this.panellyr5.Location = new System.Drawing.Point(0, 104);
             this.panellyr5.Margin = new System.Windows.Forms.Padding(0);
             this.panellyr5.Name = "panellyr5";
-            this.panellyr5.Padding = new System.Windows.Forms.Padding(4);
-            this.panellyr5.Size = new System.Drawing.Size(290, 28);
+            this.panellyr5.Padding = new System.Windows.Forms.Padding(4, 3, 4, 0);
+            this.panellyr5.Size = new System.Drawing.Size(290, 26);
             this.panellyr5.TabIndex = 48;
-            // 
-            // lblHydrographyLayer
-            // 
-            this.lblHydrographyLayer.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblHydrographyLayer.Location = new System.Drawing.Point(4, 4);
-            this.lblHydrographyLayer.Name = "lblHydrographyLayer";
-            this.lblHydrographyLayer.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.lblHydrographyLayer.Size = new System.Drawing.Size(100, 20);
-            this.lblHydrographyLayer.TabIndex = 42;
-            this.lblHydrographyLayer.Text = "гидрография";
             // 
             // cmbHydrographyLayer
             // 
@@ -2162,11 +2152,21 @@
             "Указанием отрезка на карте",
             "От \"базовой\" точки",
             "Выбором графики"});
-            this.cmbHydrographyLayer.Location = new System.Drawing.Point(104, 4);
+            this.cmbHydrographyLayer.Location = new System.Drawing.Point(104, 3);
             this.cmbHydrographyLayer.Margin = new System.Windows.Forms.Padding(0);
             this.cmbHydrographyLayer.Name = "cmbHydrographyLayer";
             this.cmbHydrographyLayer.Size = new System.Drawing.Size(182, 21);
             this.cmbHydrographyLayer.TabIndex = 38;
+            // 
+            // lblHydrographyLayer
+            // 
+            this.lblHydrographyLayer.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblHydrographyLayer.Location = new System.Drawing.Point(4, 3);
+            this.lblHydrographyLayer.Name = "lblHydrographyLayer";
+            this.lblHydrographyLayer.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.lblHydrographyLayer.Size = new System.Drawing.Size(100, 23);
+            this.lblHydrographyLayer.TabIndex = 42;
+            this.lblHydrographyLayer.Text = "гидрография";
             // 
             // panellyr4
             // 
@@ -2174,11 +2174,11 @@
             this.panellyr4.Controls.Add(this.cmbRoadLayers);
             this.panellyr4.Controls.Add(this.lblRoadsLayer);
             this.panellyr4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panellyr4.Location = new System.Drawing.Point(0, 84);
+            this.panellyr4.Location = new System.Drawing.Point(0, 78);
             this.panellyr4.Margin = new System.Windows.Forms.Padding(0);
             this.panellyr4.Name = "panellyr4";
-            this.panellyr4.Padding = new System.Windows.Forms.Padding(4);
-            this.panellyr4.Size = new System.Drawing.Size(290, 28);
+            this.panellyr4.Padding = new System.Windows.Forms.Padding(4, 3, 4, 0);
+            this.panellyr4.Size = new System.Drawing.Size(290, 26);
             this.panellyr4.TabIndex = 47;
             // 
             // cmbRoadLayers
@@ -2190,7 +2190,7 @@
             "Указанием отрезка на карте",
             "От \"базовой\" точки",
             "Выбором графики"});
-            this.cmbRoadLayers.Location = new System.Drawing.Point(104, 4);
+            this.cmbRoadLayers.Location = new System.Drawing.Point(104, 3);
             this.cmbRoadLayers.Name = "cmbRoadLayers";
             this.cmbRoadLayers.Size = new System.Drawing.Size(182, 21);
             this.cmbRoadLayers.TabIndex = 41;
@@ -2198,10 +2198,10 @@
             // lblRoadsLayer
             // 
             this.lblRoadsLayer.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblRoadsLayer.Location = new System.Drawing.Point(4, 4);
+            this.lblRoadsLayer.Location = new System.Drawing.Point(4, 3);
             this.lblRoadsLayer.Name = "lblRoadsLayer";
             this.lblRoadsLayer.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.lblRoadsLayer.Size = new System.Drawing.Size(100, 20);
+            this.lblRoadsLayer.Size = new System.Drawing.Size(100, 23);
             this.lblRoadsLayer.TabIndex = 39;
             this.lblRoadsLayer.Text = "дорожной сети";
             // 
@@ -2211,32 +2211,32 @@
             this.panellyr3.Controls.Add(this.cmbBuildings);
             this.panellyr3.Controls.Add(this.lblBuildingsLayer);
             this.panellyr3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panellyr3.Location = new System.Drawing.Point(0, 56);
+            this.panellyr3.Location = new System.Drawing.Point(0, 52);
             this.panellyr3.Margin = new System.Windows.Forms.Padding(0);
             this.panellyr3.Name = "panellyr3";
-            this.panellyr3.Padding = new System.Windows.Forms.Padding(4);
-            this.panellyr3.Size = new System.Drawing.Size(290, 28);
+            this.panellyr3.Padding = new System.Windows.Forms.Padding(4, 3, 4, 0);
+            this.panellyr3.Size = new System.Drawing.Size(290, 26);
             this.panellyr3.TabIndex = 46;
-            // 
-            // lblBuildingsLayer
-            // 
-            this.lblBuildingsLayer.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblBuildingsLayer.Location = new System.Drawing.Point(4, 4);
-            this.lblBuildingsLayer.Name = "lblBuildingsLayer";
-            this.lblBuildingsLayer.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.lblBuildingsLayer.Size = new System.Drawing.Size(100, 20);
-            this.lblBuildingsLayer.TabIndex = 41;
-            this.lblBuildingsLayer.Text = " сооружения";
             // 
             // cmbBuildings
             // 
             this.cmbBuildings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cmbBuildings.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBuildings.FormattingEnabled = true;
-            this.cmbBuildings.Location = new System.Drawing.Point(104, 4);
+            this.cmbBuildings.Location = new System.Drawing.Point(104, 3);
             this.cmbBuildings.Name = "cmbBuildings";
             this.cmbBuildings.Size = new System.Drawing.Size(182, 21);
             this.cmbBuildings.TabIndex = 42;
+            // 
+            // lblBuildingsLayer
+            // 
+            this.lblBuildingsLayer.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblBuildingsLayer.Location = new System.Drawing.Point(4, 3);
+            this.lblBuildingsLayer.Name = "lblBuildingsLayer";
+            this.lblBuildingsLayer.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.lblBuildingsLayer.Size = new System.Drawing.Size(100, 23);
+            this.lblBuildingsLayer.TabIndex = 41;
+            this.lblBuildingsLayer.Text = " сооружения";
             // 
             // panellyr2
             // 
@@ -2244,11 +2244,11 @@
             this.panellyr2.Controls.Add(this.cmbVegetationLayer);
             this.panellyr2.Controls.Add(this.lblVegetationLayer);
             this.panellyr2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panellyr2.Location = new System.Drawing.Point(0, 28);
+            this.panellyr2.Location = new System.Drawing.Point(0, 26);
             this.panellyr2.Margin = new System.Windows.Forms.Padding(0);
             this.panellyr2.Name = "panellyr2";
-            this.panellyr2.Padding = new System.Windows.Forms.Padding(4);
-            this.panellyr2.Size = new System.Drawing.Size(290, 28);
+            this.panellyr2.Padding = new System.Windows.Forms.Padding(4, 3, 4, 0);
+            this.panellyr2.Size = new System.Drawing.Size(290, 26);
             this.panellyr2.TabIndex = 45;
             // 
             // cmbVegetationLayer
@@ -2256,7 +2256,7 @@
             this.cmbVegetationLayer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cmbVegetationLayer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbVegetationLayer.FormattingEnabled = true;
-            this.cmbVegetationLayer.Location = new System.Drawing.Point(104, 4);
+            this.cmbVegetationLayer.Location = new System.Drawing.Point(104, 3);
             this.cmbVegetationLayer.Name = "cmbVegetationLayer";
             this.cmbVegetationLayer.Size = new System.Drawing.Size(182, 21);
             this.cmbVegetationLayer.TabIndex = 40;
@@ -2264,10 +2264,10 @@
             // lblVegetationLayer
             // 
             this.lblVegetationLayer.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblVegetationLayer.Location = new System.Drawing.Point(4, 4);
+            this.lblVegetationLayer.Location = new System.Drawing.Point(4, 3);
             this.lblVegetationLayer.Name = "lblVegetationLayer";
             this.lblVegetationLayer.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.lblVegetationLayer.Size = new System.Drawing.Size(100, 20);
+            this.lblVegetationLayer.Size = new System.Drawing.Size(100, 23);
             this.lblVegetationLayer.TabIndex = 39;
             this.lblVegetationLayer.Text = "растительность";
             // 
@@ -2279,8 +2279,8 @@
             this.panellyr1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panellyr1.Location = new System.Drawing.Point(0, 0);
             this.panellyr1.Name = "panellyr1";
-            this.panellyr1.Padding = new System.Windows.Forms.Padding(4);
-            this.panellyr1.Size = new System.Drawing.Size(290, 28);
+            this.panellyr1.Padding = new System.Windows.Forms.Padding(4, 3, 4, 2);
+            this.panellyr1.Size = new System.Drawing.Size(290, 26);
             this.panellyr1.TabIndex = 44;
             // 
             // cmbRasterLayers
@@ -2288,7 +2288,7 @@
             this.cmbRasterLayers.BackColor = System.Drawing.SystemColors.Window;
             this.cmbRasterLayers.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cmbRasterLayers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbRasterLayers.Location = new System.Drawing.Point(104, 4);
+            this.cmbRasterLayers.Location = new System.Drawing.Point(104, 3);
             this.cmbRasterLayers.Name = "cmbRasterLayers";
             this.cmbRasterLayers.Size = new System.Drawing.Size(182, 21);
             this.cmbRasterLayers.TabIndex = 9;
@@ -2297,10 +2297,10 @@
             // lblDEM
             // 
             this.lblDEM.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblDEM.Location = new System.Drawing.Point(4, 4);
+            this.lblDEM.Location = new System.Drawing.Point(4, 3);
             this.lblDEM.Name = "lblDEM";
             this.lblDEM.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.lblDEM.Size = new System.Drawing.Size(100, 20);
+            this.lblDEM.Size = new System.Drawing.Size(100, 21);
             this.lblDEM.TabIndex = 8;
             this.lblDEM.Text = "Шар ЦМР/ ЦММ";
             // 
@@ -2375,25 +2375,25 @@
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.Location = new System.Drawing.Point(0, 54);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode7.Checked = true;
-            treeNode7.ImageKey = "vector-path-line.png";
-            treeNode7.Name = "Points";
-            treeNode7.SelectedImageIndex = 205;
-            treeNode7.Text = "Отрезки";
-            treeNode8.Checked = true;
-            treeNode8.ImageKey = "Editing-Line-icon3.png";
-            treeNode8.Name = "Fun";
-            treeNode8.SelectedImageIndex = 208;
-            treeNode8.Text = "Веер";
-            treeNode9.Checked = true;
-            treeNode9.ImageKey = "vector-polygon.png";
-            treeNode9.Name = "Primitives";
-            treeNode9.SelectedImageIndex = 209;
-            treeNode9.Text = "Графика";
+            treeNode4.Checked = true;
+            treeNode4.ImageKey = "vector-path-line.png";
+            treeNode4.Name = "Points";
+            treeNode4.SelectedImageIndex = 205;
+            treeNode4.Text = "Отрезки";
+            treeNode5.Checked = true;
+            treeNode5.ImageKey = "Editing-Line-icon3.png";
+            treeNode5.Name = "Fun";
+            treeNode5.SelectedImageIndex = 208;
+            treeNode5.Text = "Веер";
+            treeNode6.Checked = true;
+            treeNode6.ImageKey = "vector-polygon.png";
+            treeNode6.Name = "Primitives";
+            treeNode6.SelectedImageIndex = 209;
+            treeNode6.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode7,
-            treeNode8,
-            treeNode9});
+            treeNode4,
+            treeNode5,
+            treeNode6});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(292, 410);
             this.profilesTreeView.TabIndex = 35;

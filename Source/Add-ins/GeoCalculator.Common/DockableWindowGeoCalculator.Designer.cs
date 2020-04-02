@@ -1691,7 +1691,7 @@
             this.toolBoxTitlePanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.toolBoxTitlePanel.Location = new System.Drawing.Point(0, 365);
             this.toolBoxTitlePanel.Name = "toolBoxTitlePanel";
-            this.toolBoxTitlePanel.Padding = new System.Windows.Forms.Padding(8, 3, 0, 4);
+            this.toolBoxTitlePanel.Padding = new System.Windows.Forms.Padding(4, 3, 0, 4);
             this.toolBoxTitlePanel.Size = new System.Drawing.Size(268, 30);
             this.toolBoxTitlePanel.TabIndex = 60;
             // 
@@ -1700,11 +1700,11 @@
             this.toolsLabel.AutoSize = true;
             this.toolsLabel.Dock = System.Windows.Forms.DockStyle.Left;
             this.toolsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.toolsLabel.Location = new System.Drawing.Point(8, 3);
+            this.toolsLabel.Location = new System.Drawing.Point(4, 3);
             this.toolsLabel.Margin = new System.Windows.Forms.Padding(0);
             this.toolsLabel.Name = "toolsLabel";
-            this.toolsLabel.Padding = new System.Windows.Forms.Padding(0, 3, 0, 0);
-            this.toolsLabel.Size = new System.Drawing.Size(117, 21);
+            this.toolsLabel.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.toolsLabel.Size = new System.Drawing.Size(117, 20);
             this.toolsLabel.TabIndex = 0;
             this.toolsLabel.Text = "Список точок";
             // 
@@ -1747,7 +1747,7 @@
             this.graphicTitlePanel.Location = new System.Drawing.Point(0, 592);
             this.graphicTitlePanel.Margin = new System.Windows.Forms.Padding(0);
             this.graphicTitlePanel.Name = "graphicTitlePanel";
-            this.graphicTitlePanel.Padding = new System.Windows.Forms.Padding(8, 3, 0, 4);
+            this.graphicTitlePanel.Padding = new System.Windows.Forms.Padding(4, 3, 0, 4);
             this.graphicTitlePanel.Size = new System.Drawing.Size(268, 23);
             this.graphicTitlePanel.TabIndex = 61;
             // 
@@ -1756,7 +1756,7 @@
             this.graphicLabel.AutoSize = true;
             this.graphicLabel.Dock = System.Windows.Forms.DockStyle.Top;
             this.graphicLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.graphicLabel.Location = new System.Drawing.Point(8, 3);
+            this.graphicLabel.Location = new System.Drawing.Point(4, 3);
             this.graphicLabel.Name = "graphicLabel";
             this.graphicLabel.Size = new System.Drawing.Size(120, 18);
             this.graphicLabel.TabIndex = 0;

@@ -18,7 +18,7 @@
   <MgrsName>MGRS</MgrsName>
   
   <UtmLabel>UTM</UtmLabel>
-  <UtmName>UTM Zone 35N</UtmName>
+  <UtmName>UTM 35N</UtmName>
   
   <SaveButton>Зберегти в файл</SaveButton>
   <OpenFileButton>Відкрити файл</OpenFileButton>
