@@ -175,6 +175,7 @@
             this.panelPNLayers = new System.Windows.Forms.Panel();
             this.panelLayrsSet = new System.Windows.Forms.Panel();
             this.panellyr5 = new System.Windows.Forms.Panel();
+            this.lblHydrographyLayer = new System.Windows.Forms.Label();
             this.cmbHydrographyLayer = new System.Windows.Forms.ComboBox();
             this.lblHydrographyLayer = new System.Windows.Forms.Label();
             this.panellyr4 = new System.Windows.Forms.Panel();
