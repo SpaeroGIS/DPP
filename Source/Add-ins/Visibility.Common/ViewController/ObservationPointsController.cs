@@ -686,12 +686,26 @@ namespace MilSpace.Visibility.ViewController
 
         public bool IsObservPointsExists()
         {
-            return IsFeatureLayerExists(mapDocument.ActiveView, _observPointFeature);
+            try
+            {
+                return IsFeatureLayerExists(mapDocument.ActiveView, _observPointFeature);
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public bool IsObservObjectsExists()
         {
-            return IsFeatureLayerExists(mapDocument.ActiveView, _observStationFeature);
+            try
+            {
+                return IsFeatureLayerExists(mapDocument.ActiveView, _observStationFeature);
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public string GetObservationPointsLayerName => view.ObservationPointsFeatureClass;
@@ -823,6 +837,72 @@ namespace MilSpace.Visibility.ViewController
                 EsriTools.PanToGeometry(mapDocument.ActiveView, observObject.Shape, true);
                 EsriTools.FlashGeometry(mapDocument.ActiveView.ScreenDisplay, new IGeometry[] { observObject.Shape });
             }
+        }
+
+        internal void ShowGeometry(IGeometry geometry, int buffer = -1)
+        {
+            IGeometry shownGeometry;
+
+            if(geometry.GeometryType != esriGeometryType.esriGeometryPoint && geometry.GeometryType != esriGeometryType.esriGeometryPolygon  
+                && geometry.GeometryType != esriGeometryType.esriGeometryPolyline)
+            {
+                log.ErrorEx($"> ShowGeometry Exception. Input geometry is not high level");
+                return;
+            }
+
+            if (geometry.GeometryType != esriGeometryType.esriGeometryPolygon)
+            {
+                if (buffer == -1)
+                {
+                    if (geometry.GeometryType != esriGeometryType.esriGeometryPoint)
+                    {
+                        var point = geometry as IPoint;
+
+                        if (!IsPointOnExtent(mapDocument.ActiveView.Extent, point))
+                        {
+                            EsriTools.PanToGeometry(mapDocument.ActiveView, point, true);
+
+                        }
+                        EsriTools.FlashGeometry(point, 500, ArcMap.Application);
+
+                        return;
+                    }
+                    else
+                    {
+                        shownGeometry = geometry;
+                    }
+                }
+                else
+                {
+                    var topologicalOperator = (ITopologicalOperator)geometry;
+                    shownGeometry = topologicalOperator.Buffer(buffer);
+                }
+            }
+            else
+            {
+                shownGeometry = geometry;
+            }
+
+            EsriTools.ZoomToGeometry(mapDocument.ActiveView, shownGeometry);
+            EsriTools.FlashGeometry(mapDocument.ActiveView.ScreenDisplay, new IGeometry[] { shownGeometry });
+        }
+
+        internal void ShowPoint(ObservationPoint observPoint)
+        {
+            if (!observPoint.X.HasValue || !observPoint.Y.HasValue)
+            {
+                return;
+            }
+
+            var point = new PointClass { X = observPoint.X.Value, Y = observPoint.Y.Value, SpatialReference = EsriTools.Wgs84Spatialreference };
+            point.Project(mapDocument.FocusMap.SpatialReference);
+
+            if (!IsPointOnExtent(mapDocument.ActiveView.Extent, point))
+            {
+                EsriTools.PanToGeometry(mapDocument.ActiveView, point, true);
+
+            }
+            EsriTools.FlashGeometry(point, 500, ArcMap.Application);
         }
 
         internal List<FromLayerPointModel> GetObservationPointsFromModule()
@@ -972,8 +1052,8 @@ namespace MilSpace.Visibility.ViewController
             pointGeom.Project(mapDocument.FocusMap.SpatialReference);
 
             var maxDistance = CalcCoverageArea(pointGeom, observPoint);
-            _graphicsLayerManager.AddObservPointsGraphicsToMap(_coverageArea, $"coverageArea_{id}");
-            _graphicsLayerManager.AddCrossPointerToPoint(pointGeom, Convert.ToInt32(maxDistance), $"crossPointer_coverageArea_{id}_");
+            GraphicsLayerManager.AddObservPointsGraphicsToMap(_coverageArea, $"coverageArea_{id}");
+            GraphicsLayerManager.AddCrossPointerToPoint(pointGeom, Convert.ToInt32(maxDistance), $"crossPointer_coverageArea_{id}_");
         }
 
         internal double CalcCoverageArea(IPoint pointGeom, ObservationPoint observPoint)
@@ -1160,7 +1240,7 @@ namespace MilSpace.Visibility.ViewController
                     }
                 }
                 
-                _graphicsLayerManager.AddObservPointsRelationLineToMap(line.Polyline, color, $"relationLine_{id}", line.Title);
+                GraphicsLayerManager.AddObservPointsRelationLineToMap(line.Polyline, color, $"relationLine_{id}", line.Title);
             }
         }
 
@@ -1168,11 +1248,11 @@ namespace MilSpace.Visibility.ViewController
         {
             if(removeCoverageArea)
             {
-                _graphicsLayerManager.RemoveAllGeometryFromMap($"coverageArea_", MilSpaceGraphicsTypeEnum.Visibility, true);
+                GraphicsLayerManager.RemoveAllGeometryFromMap($"coverageArea_", MilSpaceGraphicsTypeEnum.Visibility, true);
             }
             if(removeObservObjectsRelations)
             {
-                _graphicsLayerManager.RemoveAllGeometryFromMap($"relationLine_", MilSpaceGraphicsTypeEnum.Visibility, true);
+                GraphicsLayerManager.RemoveAllGeometryFromMap($"relationLine_", MilSpaceGraphicsTypeEnum.Visibility, true);
             }
         }
 
@@ -1203,33 +1283,47 @@ namespace MilSpace.Visibility.ViewController
 
         internal string GetObservPointsFromGdbFeatureClassName()
         {
-            return VisibilityManager.ObservationPointsFeatureClass.AliasName;
+            return VisibilityManager.ObservationPointsFeatureLayer.Name;
         }
 
         internal string GetObservObjectsFromGdbFeatureClassName()
         {
-            return VisibilityManager.ObservationStationsFeatureClass.AliasName;
+            return VisibilityManager.ObservationStationsFeatureLayer.Name;
         }
 
         internal void SelectObservationStationFromSet(ObservationSetsEnum set)
         {
             IGeometry geometry = null;
-            string layerNameAndObjId = string.Empty;
+            var layerName = string.Empty;
+            var title = string.Empty;
 
             switch (set)
             {
                 case ObservationSetsEnum.Gdb:
 
                     var geometryWithId = GetObservationStationFromGdb();
+
+                    if(geometryWithId.Key == -1)
+                    {
+                        break;
+                    }
+
                     geometry = geometryWithId.Value;
-                    layerNameAndObjId = $"{ GetObservObjectsFromGdbFeatureClassName()}; {_observationObjects.First(obj => obj.ObjectId == geometryWithId.Key).Title}";
+
+                    if(!_observationObjects.Any())
+                    {
+                        _observationObjects = VisibilityZonesFacade.GetAllObservationObjects().ToList();
+                    }
+
+                    layerName = GetObservObjectsFromGdbFeatureClassName();
+                    title = _observationObjects.First(obj => obj.ObjectId == geometryWithId.Key).Title;
 
                     break;
 
                 case ObservationSetsEnum.GeoCalculator:
 
                     geometry = GetObservationStationFromGeoCalc();
-                    layerNameAndObjId = LocalizationContext.Instance.GeoCalcSet;
+                    layerName = LocalizationContext.Instance.GeoCalcSet;
 
                     break;
 
@@ -1237,7 +1331,17 @@ namespace MilSpace.Visibility.ViewController
 
                     var geometryFromLayer = GetObservationStationFromFeatureLayer();
                     geometry = geometryFromLayer.Key;
-                    layerNameAndObjId = geometryFromLayer.Value;
+
+                    if (!String.IsNullOrEmpty(geometryFromLayer.Value))
+                    {
+                        var geomData = geometryFromLayer.Value.Split(';');
+
+                        if (geomData.Length == 2)
+                        {
+                            layerName = geomData[0];
+                            title = geomData[1];
+                        }
+                    }
 
                     break;
             }
@@ -1248,7 +1352,7 @@ namespace MilSpace.Visibility.ViewController
             }
 
             geometry.Project(ArcMap.Document.FocusMap.SpatialReference);
-            view.AddSelectedOO(geometry, layerNameAndObjId);
+            view.AddSelectedOO(geometry, title, layerName);
            //TEST GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).TestObjects(geometry);
         }
 
@@ -1393,7 +1497,7 @@ namespace MilSpace.Visibility.ViewController
                 }
             }
 
-            return new KeyValuePair<int, IGeometry>();
+            return new KeyValuePair<int, IGeometry>(-1, null);
         }
 
         private IGeometry GetObservationStationFromGeoCalc()
@@ -1434,19 +1538,33 @@ namespace MilSpace.Visibility.ViewController
 
         private KeyValuePair<IGeometry, string> GetObservationStationFromFeatureLayer()
         {
-            var geometryFromFeatureLayerModal = new GeometryFromFeatureLayerModalWindow(ArcMap.Document.ActiveView);
+            var geometryFromFeatureLayerModal = new GeometryFromFeatureLayerModalWindow(ArcMap.Document.ActiveView, false, true);
             var result = geometryFromFeatureLayerModal.ShowDialog();
 
             if(result == DialogResult.OK)
             {
                 var geometry = geometryFromFeatureLayerModal.SelectedGeometry;
-                var selectedObjTitle = $"{geometryFromFeatureLayerModal.SelectedLayerName}; {geometryFromFeatureLayerModal.SelectedGeometryId}";
+                var selectedObjTitle = $"{geometryFromFeatureLayerModal.SelectedLayerName};{geometryFromFeatureLayerModal.SelectedGeometryTitle}";
 
                 return new KeyValuePair<IGeometry, string>(geometry, selectedObjTitle);
             }
 
             return new KeyValuePair<IGeometry, string>();
         }
+
+        private GraphicsLayerManager GraphicsLayerManager
+        {
+            get
+            {
+                if (_graphicsLayerManager == null)
+                {
+                    _graphicsLayerManager = GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView);
+                }
+
+                return _graphicsLayerManager;
+            }
+        }
+            
 
         private Dictionary<int, IPoint> GetPointsFromGeoCalculator()
         {

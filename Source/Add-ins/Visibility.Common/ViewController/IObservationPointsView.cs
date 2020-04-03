@@ -11,7 +11,7 @@ namespace MilSpace.Visibility.ViewController
         void FillVisibilityResultsTree(IEnumerable<VisibilityCalcResults> visibilityResults);
         void FillObservationObjectsList(IEnumerable<ObservationObject> observationObjects);
         void FillSelectedOPFields(ObservationPoint point, string layer);
-        void AddSelectedOO(IGeometry geometry, string title);
+        void AddSelectedOO(IGeometry geometry, string title, string layer);
         void ChangeRecord(int id, ObservationPoint observationPoint);
         void AddRecord(ObservationPoint observationPoint);
         void RemoveSessionFromList(string id);
