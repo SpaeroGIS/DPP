@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="MilSpaceStorage">
+<ordesignerObjectsDiagram dslVersion="1.1.0.0" absoluteBounds="0, 0, 11, 8.5" name="MilSpaceStorage">
   <DataContextMoniker Name="/MilSpaceGeoCalcContext" />
   <nestedChildShapes>
     <classShape Id="598c1b4c-6e16-4ae8-a291-e5346f694dd5" absoluteBounds="3.5, 1, 2, 1.7708968098958331">

@@ -3,11 +3,11 @@
   <AddInID>{B1C5AC1C-5F45-406F-B929-5ED62DE06E71}</AddInID>
 
   <Description>Sposterezhennya 3-D solution. Module Profile</Description>
-  <Version>1.5.00002</Version>
+  <Version>1.6.0003</Version>
   <Image>Images\Poll.png</Image>
   <Author>DPP</Author>
   <Company>DPP</Company>
-  <Date>2019.11.25</Date>
+  <Date>2020.04.02</Date>
   
   <Targets>
     <Target name="Desktop" version="10.4" />

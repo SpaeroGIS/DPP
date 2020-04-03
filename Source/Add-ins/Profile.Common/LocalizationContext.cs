@@ -34,7 +34,7 @@ namespace MilSpace.Profile.Localization
         internal string PointsTypeText => FindLocalizedElement("PointsTypeText", "Відрізки");
         internal string FunTypeText => FindLocalizedElement("FunTypeText", "\"Віяло\"");
         internal string PrimitiveTypeText => FindLocalizedElement("PrimitiveTypeText", "Графіка");
-        internal string MessageBoxTitle => FindLocalizedElement("MessageBoxTitle", "Спостереження");
+        internal string MessageBoxTitle => FindLocalizedElement("MessageBoxTitle", "Спостереження. Профіль");
         internal string AzimuthInfoText => FindLocalizedElement("LblAzimuthInfoText", "Азимут:");
         internal string LengthInfoText => FindLocalizedElement("LblLengthInfoText", "Довжина:");
         internal string DimensionText => FindLocalizedElement("LblDimensionText", "м");

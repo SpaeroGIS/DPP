@@ -3,11 +3,11 @@
   <AddInID>{FB57E9FC-FDCA-492A-980D-F73624C1BB77}</AddInID>
   
   <Description>Спостереження Module Visibility</Description>
-  <Version>1.5.201911130905</Version>
+  <Version>1.6.0003</Version>
   <Image>Images\Visibility.png</Image>
   <Author>DPP</Author>
   <Company>DPP</Company>
-  <Date>2019.11.25</Date>
+  <Date>2020.04.02</Date>
   
   <Targets>
     <Target name="Desktop" version="10.4" />

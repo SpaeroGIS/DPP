@@ -509,15 +509,13 @@ namespace MilSpace.DataAccess.Facade
         public ITable GetProfileTable(string resultTable)
         {
             IWorkspace2 wsp2 = (IWorkspace2)calcWorkspace;
-            IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)calcWorkspace;
-
             if (!wsp2.get_NameExists(esriDatasetType.esriDTTable, resultTable))
             {
                 //TODO: Create the feature class
                 throw new FileNotFoundException(resultTable);
             }
 
-            return featureWorkspace.OpenTable(resultTable);
+            return calcWorkspace.OpenTable(resultTable);
         }
 
         public bool DeleteTemporarSource(string resultTable, string lineFeatureClass)

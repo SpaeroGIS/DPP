@@ -58,7 +58,8 @@ namespace MilSpace.Tools
                 };
 
                 string sdtnow = MilSpace.DataAccess.Helper.GetTemporaryNameSuffix();
-                var resuTable = $"{MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection}\\StackProfile{sdtnow}";
+                var resuTable = 
+                    $"{MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection}\\StackProfile{sdtnow}";
 
                 logger.InfoEx("GenerateProfile. Temporary profile source:{0}".InvariantFormat(resuTable));
 
@@ -251,13 +252,13 @@ namespace MilSpace.Tools
                 }
                 catch (Exception ex)
                 {
-                    logger.DebugEx("GenerateProfile Exception. ex.Message: {0}", ex.Message);
+                    logger.DebugEx("GenerateProfile Exception 1. ex.Message: {0}", ex.Message);
                     throw ex;
                 }
             }
             catch (Exception ex)
             {
-                logger.DebugEx("> GenerateProfile Exception. ex.Message: {0}", ex.Message);
+                logger.DebugEx("> GenerateProfile Exception 2. ex.Message: {0}", ex.Message);
                 return null;
             }
 
