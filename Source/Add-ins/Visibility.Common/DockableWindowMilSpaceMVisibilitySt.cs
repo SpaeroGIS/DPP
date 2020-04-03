@@ -1528,11 +1528,11 @@ namespace MilSpace.Visibility
 
             observatioObjectsSordDirection = !observatioObjectsSordDirection;
 
-            var source = dgvObservObjects.DataSource as ObservObjectGui[];
+            var source = dgvObservObjects.DataSource as BindingList<ObservObjectGui>;
             curObservObjectSorting = sortColumn;
 
             var sorted = _observPointsController.SortObservationObjects(source.ToArray(), sortColumn, observatioObjectsSordDirection);
-            dgvObservObjects.DataSource = sorted.ToArray();
+            dgvObservObjects.DataSource = new BindingList<ObservObjectGui>(sorted.ToList());
             CmbObservObjAffiliationFilter_SelectedIndexChanged(dgvObservObjects, null);
             dgvObservObjects.Refresh();
         }
@@ -1611,7 +1611,10 @@ namespace MilSpace.Visibility
         {
             if (!isObservObjectsExist)
             {
-                dgvObservObjects.Rows.Clear();
+                if (dgvObservObjects.Rows.Count > 0)
+                {
+                    dgvObservObjects.Rows.Clear();
+                }
             }
             else
             {
@@ -2535,8 +2538,8 @@ namespace MilSpace.Visibility
         {
             throw new NotImplementedException();
         }
-
-        public void AddSelectedOO(IGeometry geometry, string title)
+        
+        public void AddSelectedOO(IGeometry geometry, string title, string layer)
         {
             throw new NotImplementedException();
         }

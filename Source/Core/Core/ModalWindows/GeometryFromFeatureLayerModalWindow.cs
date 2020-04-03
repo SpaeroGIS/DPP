@@ -1,7 +1,6 @@
 ﻿using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core.DataAccess;
-using MilSpace.Core.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,14 +14,14 @@ namespace MilSpace.Core.ModalWindows
         private List<FromLayerGeometry> _geometries = new List<FromLayerGeometry>();
         public IGeometry SelectedGeometry;
         public string SelectedLayerName;
-        public string SelectedGeometryId;
+        public string SelectedGeometryTitle;
 
-        public GeometryFromFeatureLayerModalWindow(IActiveView activeView)
+        public GeometryFromFeatureLayerModalWindow(IActiveView activeView, bool addObservStationLayer, bool addPointLayers = false)
         {
             _controller = new GeometriesFromLayerController(activeView);
             InitializeComponent();
             LocalizeStrings();
-            PopulateLayerComboBox();
+            PopulateLayerComboBox(addPointLayers, addObservStationLayer);
         }
        
         private void LocalizeStrings()
@@ -34,10 +33,10 @@ namespace MilSpace.Core.ModalWindows
             this.Text = LocalizationContext.Instance.FindLocalizedElement("ModalGeometryFromLayerTitle", "Вибір геометрії з векторного шару");
         }
 
-        private void PopulateLayerComboBox()
+        private void PopulateLayerComboBox(bool addPointsLayer, bool observStationLayer)
         {
             cmbLayers.Items.Clear();
-            cmbLayers.Items.AddRange(_controller.GetNotPointFeatureLayers(true).ToArray());
+            cmbLayers.Items.AddRange(_controller.GetFeatureLayers(observStationLayer, addPointsLayer).ToArray());
 
             if (cmbLayers.Items.Count > 0)
             {
@@ -100,7 +99,7 @@ namespace MilSpace.Core.ModalWindows
         private void BtnChoosePoint_Click(object sender, EventArgs e)
         {
             var objId = (int)dgvGeometries.SelectedRows[0].Cells["IdCol"].Value;
-            SelectedGeometryId = objId.ToString();
+            SelectedGeometryTitle = dgvGeometries.SelectedRows[0].Cells["DisplayFieldCol"].Value.ToString();
             SelectedGeometry = _geometries.First(geometry => geometry.ObjId == objId).Geometry;
         }
     }

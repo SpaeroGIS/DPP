@@ -224,18 +224,18 @@
   <WinM.lblOOSourse.Text>Джерело ОН</WinM.lblOOSourse.Text>
   <MinM.lblMin.Text>мін.</MinM.lblMin.Text>
   <MinM.lblMax.Text>макс.</MinM.lblMax.Text>
-  <MinM.lblAzimuths.Text>Азимути:</MinM.lblAzimuths.Text>
-  <MinM.lblAngles.Text>Кути нахилу:</MinM.lblAngles.Text>
-  <MinM.lblHeights.Text>Вибірка висот:</MinM.lblHeights.Text>
+  <MinM.lblAzimuths.Text>Азимути (дгр):</MinM.lblAzimuths.Text>
+  <MinM.lblAngles.Text>Кути нахилу (дгр):</MinM.lblAngles.Text>
+  <MinM.lblHeights.Text>Вибірка висот (м):</MinM.lblHeights.Text>
   <MinM.lblFrom.Text>від</MinM.lblFrom.Text>
   <MinM.lblTo.Text>до</MinM.lblTo.Text>
-  <MinM.lblStep.Text>крок</MinM.lblStep.Text>
-  <MinM.lblBufferDistance.Text>Відстань для буфера</MinM.lblBufferDistance.Text>
-  <MinM.lblCoveragePercent.Text>Відсоток покриття</MinM.lblCoveragePercent.Text>
+  <MinM.lblStep.Text>крок (м)</MinM.lblStep.Text>
+  <MinM.lblBufferDistance.Text>Відстань для буфера (м)</MinM.lblBufferDistance.Text>
+  <MinM.lblCoveragePercent.Text>Відсоток покриття (%)</MinM.lblCoveragePercent.Text>
   <MinM.btnShowPoint.ToolTip>Показати пункт спостеження на мапі</MinM.btnShowPoint.ToolTip>
   <MinM.btnShowOO.ToolTip>Показати об'єкт спостереження на мапі</MinM.btnShowOO.ToolTip>
 
-  <WinMErrorValueOutRange>Недійсні дані. Потрібне значення від 0 до 100")</WinMErrorValueOutRange>
+  <WinMErrorValueOutRange>Недійсні дані. Потрібне значення від 0 до 100"</WinMErrorValueOutRange>
   <WinMWarningNoSourceForCalculation>Не вказано поверню для розрахунку</WinMWarningNoSourceForCalculation>
   <WinMWarningNoRasterLayrSelected>Растровій шар повине бути обраним</WinMWarningNoRasterLayrSelected>
 
