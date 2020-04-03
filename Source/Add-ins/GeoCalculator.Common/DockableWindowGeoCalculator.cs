@@ -40,6 +40,7 @@ namespace MilSpace.GeoCalculator
         private GeoCalculatorController controller;
         //private GraphicsLayerManager _graphicsLayerManager;
         private int maxNum = 0;
+        private static Guid emptyGuid = Guid.Empty;
 
         private static Logger log = Logger.GetLoggerEx("MilSpace.GeoCalculator.DockableWindowGeoCalculator");
 
@@ -70,7 +71,7 @@ namespace MilSpace.GeoCalculator
 
         public void AddPointsToGrid(IEnumerable<IPoint> points)
         {
-            foreach(var point in points)
+            foreach (var point in points)
             {
                 point.Project(FocusMapSpatialReference);
                 ProcessPointAsClicked(point, true, true);
@@ -82,7 +83,7 @@ namespace MilSpace.GeoCalculator
         public void AddPointsToGrid(IEnumerable<GeoCalcPoint> points)
         {
             PointsGridView.Rows.Clear();
-            foreach(var point in points)
+            foreach (var point in points)
             {
                 GraphicsLayerManager graphicsLayerManager = GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView);
                 graphicsLayerManager.RemovePoint(point.Id.ToString());
@@ -96,9 +97,9 @@ namespace MilSpace.GeoCalculator
         {
             var points = new Dictionary<int, IPoint>();
 
-            foreach(DataGridViewRow row in PointsGridView.Rows)
+            foreach (DataGridViewRow row in PointsGridView.Rows)
             {
-                if(row == null)
+                if (row == null)
                 {
                     continue;
                 }
@@ -968,7 +969,7 @@ namespace MilSpace.GeoCalculator
         #region DataGridView Events
         private void PointsGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if(e.RowIndex == -1)
+            if (e.RowIndex == -1)
             {
                 return;
             }
@@ -991,7 +992,7 @@ namespace MilSpace.GeoCalculator
 
                 grid.Rows.RemoveAt(e.RowIndex);
 
-                if(chkShowLine.Checked)
+                if (chkShowLine.Checked)
                 {
                     GraphicsLayerManager graphicsLayerManager = GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView);
 
@@ -1000,7 +1001,7 @@ namespace MilSpace.GeoCalculator
 
                     graphicsLayerManager.RemoveGraphicsFromMap(linesToRemove);
 
-                    if(e.RowIndex > 0 && e.RowIndex < PointsGridView.RowCount)
+                    if (e.RowIndex > 0 && e.RowIndex < PointsGridView.RowCount)
                     {
                         graphicsLayerManager.AddLineSegmentToMap(ClickedPointsDictionary[prevPointGuid], ClickedPointsDictionary[nextPointGuid], _lineName, prevPointGuid.ToString());
                     }
@@ -1011,7 +1012,7 @@ namespace MilSpace.GeoCalculator
                 pointModels.Remove(selectedPoint.Key);
                 controller.RemovePoint(selectedPoint.Key);
 
-                if(num == maxNum)
+                if (num == maxNum)
                 {
                     maxNum--;
                 }
@@ -1033,7 +1034,7 @@ namespace MilSpace.GeoCalculator
 
                 log.InfoEx($"Export points into {chosenRadio}");
 
-                if(chosenRadio == RadioButtonsValues.Layer)
+                if (chosenRadio == RadioButtonsValues.Layer)
                 {
                     ExportToLayer();
                     return;
@@ -1057,27 +1058,27 @@ namespace MilSpace.GeoCalculator
             var startCount = PointsGridView.RowCount;
             var chosenRadio = ShowExportForm(false);
 
-            if(chosenRadio != RadioButtonsValues.Layer)
+            if (chosenRadio != RadioButtonsValues.Layer)
             {
                 var filter = chosenRadio == RadioButtonsValues.CSV ? "CSV|*.csv" : "XML|*.xml";
                 openFileDialog.Filter = filter;
                 var openFileDialogResult = openFileDialog.ShowDialog();
                 var fileName = openFileDialog.FileName;
                 var pointsList = new List<PointModel>();
-                if(openFileDialogResult == DialogResult.OK && !string.IsNullOrWhiteSpace(fileName))
+                if (openFileDialogResult == DialogResult.OK && !string.IsNullOrWhiteSpace(fileName))
                 {
                     try
                     {
-                        if(System.IO.Path.GetExtension(fileName).Equals(Constants.CSV))
+                        if (System.IO.Path.GetExtension(fileName).Equals(Constants.CSV))
                             pointsList = await _businessLogic.ImportProjectionsFromCsvAsync(fileName).ConfigureAwait(true);
-                        else if(System.IO.Path.GetExtension(fileName).Equals(Constants.XML))
+                        else if (System.IO.Path.GetExtension(fileName).Equals(Constants.XML))
                             pointsList = await _businessLogic.ImportProjectionsFromXmlAsync(fileName).ConfigureAwait(true);
 
                         //ClearGridButton_Click(sender, e);
 
-                        if(pointsList != null && pointsList.Any())
+                        if (pointsList != null && pointsList.Any())
                         {
-                            foreach(var pointModel in pointsList)
+                            foreach (var pointModel in pointsList)
                             {
                                 ProcessPointAsClicked(pointModel, Constants.WgsGeoModel, true);
                             }
@@ -1094,7 +1095,7 @@ namespace MilSpace.GeoCalculator
                 var chooseLayerForm = new ChooseLayerForImportForm();
                 var result = chooseLayerForm.ShowDialog();
 
-                if(result == DialogResult.OK)
+                if (result == DialogResult.OK)
                 {
                     controller.ImportFromLayer(chooseLayerForm.SelectedLayer);
                 }
@@ -1103,11 +1104,11 @@ namespace MilSpace.GeoCalculator
             var points = new List<GeoCalcPoint>();
             int startIndex = (startCount == 0) ? startCount : startCount - 1;
 
-            for(int i = startIndex; i < PointsGridView.RowCount; i++)
+            for (int i = startIndex; i < PointsGridView.RowCount; i++)
             {
                 var row = PointsGridView.Rows[i];
 
-                if(row == null)
+                if (row == null)
                 {
                     continue;
                 }
@@ -1239,7 +1240,7 @@ namespace MilSpace.GeoCalculator
                 this.panToLineButton.ToolTipText = _context.FindLocalizedElement("PanToLineButtonToolTip", "Показати лінію на карті");
                 this.refreshGraphicsButton.ToolTipText = _context.FindLocalizedElement("RefreshGraphicButtonToolTip", "Оновити графіку");
                 this.toolTip.SetToolTip(btnRefreshGraphic, _context.FindLocalizedElement("RefreshGraphicButtonToolTip", "Оновити графіку"));
-                
+
                 SetSCComboBoxItems();
             }
             catch
@@ -1274,9 +1275,17 @@ namespace MilSpace.GeoCalculator
         }
 
         private void ProjectPointAsync(
+         IPoint inputPoint,
+         bool fromUserInput = false,
+         int? pointNumber = null)
+        {
+            ProjectPointAsync(inputPoint, Guid.NewGuid(), fromUserInput, pointNumber);
+        }
+
+        private void ProjectPointAsync(
             IPoint inputPoint,
+            Guid pointGuid,
             bool fromUserInput = false,
-            string pointGuid = null,
             int? pointNumber = null)
         {
             lastProjectedPoint = new ExtendedPointModel();
@@ -1299,11 +1308,11 @@ namespace MilSpace.GeoCalculator
 
             ManageUkraineCoordinates(inputPoint, ukraineDD, lastProjectedPoint);
 
-            var guid = pointGuid ?? Guid.NewGuid().ToString();
+          
 
-            if (!fromUserInput && !string.IsNullOrWhiteSpace(guid))
+            if (!fromUserInput)
                 pointModels.Add(
-                    Guid.Parse(pointGuid),
+                    pointGuid,
                     new PointModel
                     {
                         Number = pointNumber,
@@ -1477,7 +1486,7 @@ namespace MilSpace.GeoCalculator
             else
                 CurrentProjectionsModel = Constants.ProjectionsModels[newIndex];
 
-            if(!currentModelWgs.Equals(CurrentProjectionsModel.WGS84Projection.Name))
+            if (!currentModelWgs.Equals(CurrentProjectionsModel.WGS84Projection.Name))
             {
                 wgsProjectedLabel.Text = CurrentProjectionsModel.WGS84Projection.Name;
                 PulkovoProjectedLabel.Text = CurrentProjectionsModel.Pulkovo1942Projection.Name;
@@ -1509,7 +1518,7 @@ namespace MilSpace.GeoCalculator
             AddPointToGrid(point, pointNumber, pointGuid);
             if (projectPoint)
             {
-                ProjectPointAsync(point, false, pointGuid.ToString(), pointNumber);
+                ProjectPointAsync(point, pointGuid, false,  pointNumber);
             }
         }
 
@@ -1528,7 +1537,7 @@ namespace MilSpace.GeoCalculator
             if (pointGuid != Guid.Empty)
             {
                 pointModels.Add(pointGuid, pointModel);
-                if(maxNum < PointsGridView.RowCount)
+                if (maxNum < PointsGridView.RowCount)
                 {
                     maxNum = PointsGridView.RowCount + 1;
                 }
@@ -1555,7 +1564,7 @@ namespace MilSpace.GeoCalculator
             EsriTools.ProjectToMapSpatialReference(point, FocusMapSpatialReference);
 
             var pointGuid = AddPointToList(point, chkShowLine.Checked, geoPoint.Id.ToString(), geoPoint.PointNumber);
-            if(pointGuid != Guid.Empty)
+            if (pointGuid != Guid.Empty)
             {
                 var pointModel = new PointModel { Latitude = geoPoint.Y, Longitude = geoPoint.X, Number = geoPoint.PointNumber };
                 pointModels.Add(pointGuid, pointModel);
@@ -1573,7 +1582,7 @@ namespace MilSpace.GeoCalculator
                 foreach (var p in ClickedPointsDictionary)
                 {
                     var metre = ArcMapHelper.GetMetresInMapUnits(1);
-                    if((Math.Abs(p.Value.X - point.X) < metre) && (Math.Abs(p.Value.Y - point.Y) < metre))
+                    if ((Math.Abs(p.Value.X - point.X) < metre) && (Math.Abs(p.Value.Y - point.Y) < metre))
                     {
                         fExists = true;
                     }
@@ -1589,16 +1598,16 @@ namespace MilSpace.GeoCalculator
                     GraphicsLayerManager graphicsLayerManager = GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView);
 
                     var placedPoint = graphicsLayerManager.AddGraphicToMap(
-                        point, 
+                        point,
                         color,
                         pointNum,
                         chkShowNumbers.Checked,
                         _textName,
-                        guid, 
-                        esriSimpleMarkerStyle.esriSMSCross, 
+                        guid,
+                        esriSimpleMarkerStyle.esriSMSCross,
                         16);
 
-                    if(drawLine == true && PointsGridView.RowCount > 0)
+                    if (drawLine == true && PointsGridView.RowCount > 0)
                     {
                         var fromPointGuid = (Guid)PointsGridView.Rows[PointsGridView.RowCount - 1].Tag;
                         graphicsLayerManager.AddLineSegmentToMap(ClickedPointsDictionary[fromPointGuid], point, _lineName, fromPointGuid.ToString());
@@ -1619,23 +1628,23 @@ namespace MilSpace.GeoCalculator
         {
             var exportForm = new ExportForm
             {
-                Text = isExport? _context.SaveAs : _context.FindLocalizedElement("ImportTitle", "Імпорт з")
+                Text = isExport ? _context.SaveAs : _context.FindLocalizedElement("ImportTitle", "Імпорт з")
             };
 
-            if(exportForm.ShowDialog(this) == DialogResult.OK)
+            if (exportForm.ShowDialog(this) == DialogResult.OK)
             {
-                if(exportForm.ChosenRadioButton == Enums.RadioButtonsValues.Layer)
+                if (exportForm.ChosenRadioButton == Enums.RadioButtonsValues.Layer)
                 {
                     return exportForm.ChosenRadioButton;
                 }
 
-                if(exportForm.ChosenRadioButton == Enums.RadioButtonsValues.XML)
+                if (exportForm.ChosenRadioButton == Enums.RadioButtonsValues.XML)
                 {
                     saveFileDialog.Filter = "XML Files (*.xml)|*.xml";
                     saveFileDialog.DefaultExt = "xml";
                 }
 
-                else if(exportForm.ChosenRadioButton == Enums.RadioButtonsValues.CSV)
+                else if (exportForm.ChosenRadioButton == Enums.RadioButtonsValues.CSV)
                 {
                     saveFileDialog.Filter = "CSV Files (*.csv)|*.csv";
                     saveFileDialog.DefaultExt = "csv";
@@ -1645,7 +1654,7 @@ namespace MilSpace.GeoCalculator
             }
             return exportForm.ChosenRadioButton;
         }
-        
+
         private void AddPointToGrid(IPoint point, int pointNumber, Guid key)
         {
             var pointCopy = new PointClass { SpatialReference = point.SpatialReference };
@@ -1707,7 +1716,7 @@ namespace MilSpace.GeoCalculator
             PointsGridView.Refresh();
         }
 
-        
+
 
         private GeoCalcPoint GetGeoCalcPoint(Guid pointGuid, int number)
         {
@@ -1718,7 +1727,7 @@ namespace MilSpace.GeoCalculator
 
                 return new GeoCalcPoint { Id = pointGuid, PointNumber = Convert.ToInt16(number), UserName = Environment.UserName, X = point.X, Y = point.Y };
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 log.WarnEx($"Unable to cast point to GeoCalcPoint. Exception: {ex.Message}");
                 return null;
@@ -1735,9 +1744,9 @@ namespace MilSpace.GeoCalculator
 
             PointsGridView.Rows.Clear();
 
-            foreach(DataGridViewRow row in rows)
+            foreach (DataGridViewRow row in rows)
             {
-                if(row.Tag == null)
+                if (row.Tag == null)
                 {
                     continue;
                 }
@@ -1812,7 +1821,7 @@ namespace MilSpace.GeoCalculator
 
         private void UpPointMoveButton_Click(object sender, EventArgs e)
         {
-            if(PointsGridView.SelectedRows == null || PointsGridView.SelectedRows.Count == 0)
+            if (PointsGridView.SelectedRows == null || PointsGridView.SelectedRows.Count == 0)
             {
                 return;
             }
@@ -1821,7 +1830,7 @@ namespace MilSpace.GeoCalculator
             PointsGridView.SelectedRows.CopyTo(selectedRows, 0);
             var orderedRows = selectedRows.OrderBy(row => row.Index).ToArray();
 
-            if(orderedRows.First().Index == 0)
+            if (orderedRows.First().Index == 0)
             {
                 return;
             }
@@ -1829,7 +1838,7 @@ namespace MilSpace.GeoCalculator
             var selectedRowIndex = orderedRows[0].Index;
             var insertIndex = selectedRowIndex - 1;
 
-            if(insertIndex <= 0)
+            if (insertIndex <= 0)
             {
                 insertIndex = 0;
             }
@@ -1839,7 +1848,7 @@ namespace MilSpace.GeoCalculator
 
         private void DownPointMoveButton_Click(object sender, EventArgs e)
         {
-            if(PointsGridView.SelectedRows == null || PointsGridView.SelectedRows.Count == 0)
+            if (PointsGridView.SelectedRows == null || PointsGridView.SelectedRows.Count == 0)
             {
                 return;
             }
@@ -1848,7 +1857,7 @@ namespace MilSpace.GeoCalculator
             PointsGridView.SelectedRows.CopyTo(selectedRows, 0);
             var orderedRows = selectedRows.OrderBy(row => row.Index).ToArray();
 
-            if(orderedRows.Last().Index == PointsGridView.RowCount - 1)
+            if (orderedRows.Last().Index == PointsGridView.RowCount - 1)
             {
                 return;
             }
@@ -1856,7 +1865,7 @@ namespace MilSpace.GeoCalculator
             var selectedRowIndex = orderedRows[0].Index;
             var insertIndex = selectedRowIndex + orderedRows.Count();
 
-            if(insertIndex >= PointsGridView.RowCount)
+            if (insertIndex >= PointsGridView.RowCount)
             {
                 insertIndex = PointsGridView.RowCount - 1;
             }
@@ -1866,13 +1875,13 @@ namespace MilSpace.GeoCalculator
 
         private void PointsGridView_SelectionChanged(object sender, EventArgs e)
         {
-            if(PointsGridView.SelectedRows.Count > 1)
+            if (PointsGridView.SelectedRows.Count > 1)
             {
                 DataGridViewRow[] selectedRows = new DataGridViewRow[PointsGridView.SelectedRows.Count];
                 PointsGridView.SelectedRows.CopyTo(selectedRows, 0);
                 var orderedRows = selectedRows.OrderBy(row => row.Index).ToArray();
 
-                for(int i = orderedRows[0].Index + 1; i < orderedRows[orderedRows.Count() - 1].Index; i++)
+                for (int i = orderedRows[0].Index + 1; i < orderedRows[orderedRows.Count() - 1].Index; i++)
                 {
                     PointsGridView.Rows[i].Selected = true;
                 }
@@ -1881,7 +1890,7 @@ namespace MilSpace.GeoCalculator
 
         private void UpToFirstStripItem_Click(object sender, EventArgs e)
         {
-            if(PointsGridView.SelectedRows == null || PointsGridView.SelectedRows.Count == 0)
+            if (PointsGridView.SelectedRows == null || PointsGridView.SelectedRows.Count == 0)
             {
                 return;
             }
@@ -1890,18 +1899,18 @@ namespace MilSpace.GeoCalculator
             PointsGridView.SelectedRows.CopyTo(selectedRows, 0);
             var orderedRows = selectedRows.OrderBy(row => row.Index).ToArray();
 
-            if(orderedRows.First().Index == 0)
+            if (orderedRows.First().Index == 0)
             {
                 return;
             }
-            
+
             MoveSelectedRows(orderedRows, orderedRows[0].Index, 0, true);
         }
 
-      
+
         private void ToDownStripItem_Click(object sender, EventArgs e)
         {
-            if(PointsGridView.SelectedRows == null || PointsGridView.SelectedRows.Count == 0)
+            if (PointsGridView.SelectedRows == null || PointsGridView.SelectedRows.Count == 0)
             {
                 return;
             }
@@ -1910,7 +1919,7 @@ namespace MilSpace.GeoCalculator
             PointsGridView.SelectedRows.CopyTo(selectedRows, 0);
             var orderedRows = selectedRows.OrderBy(row => row.Index).ToArray();
 
-            if(orderedRows.Last().Index == PointsGridView.RowCount - 1)
+            if (orderedRows.Last().Index == PointsGridView.RowCount - 1)
             {
                 return;
             }
@@ -1920,12 +1929,12 @@ namespace MilSpace.GeoCalculator
 
         private void MoveSelectedRows(DataGridViewRow[] orderedRows, int selectedRowIndex, int insertIndex, bool toUp)
         {
-            foreach(DataGridViewRow row in orderedRows)
+            foreach (DataGridViewRow row in orderedRows)
             {
                 var values = new object[PointsGridView.ColumnCount];
                 var i = 0;
 
-                foreach(DataGridViewCell cell in row.Cells)
+                foreach (DataGridViewCell cell in row.Cells)
                 {
                     values[i] = cell.Value;
                     i++;
@@ -1935,7 +1944,7 @@ namespace MilSpace.GeoCalculator
                 PointsGridView.Rows.Insert(insertIndex, values);
                 PointsGridView.Rows[insertIndex].Tag = row.Tag;
 
-                if(toUp)
+                if (toUp)
                 {
                     selectedRowIndex++;
                     insertIndex++;
@@ -1944,7 +1953,7 @@ namespace MilSpace.GeoCalculator
 
             PointsGridView.ClearSelection();
 
-            for(int i = 0; i < orderedRows.Count(); i++)
+            for (int i = 0; i < orderedRows.Count(); i++)
             {
                 var index = toUp ? insertIndex - i - 1 : insertIndex - i;
                 PointsGridView.Rows[index].Selected = true;
@@ -1957,9 +1966,9 @@ namespace MilSpace.GeoCalculator
         {
             var i = 1;
 
-            foreach(DataGridViewRow row in PointsGridView.Rows)
+            foreach (DataGridViewRow row in PointsGridView.Rows)
             {
-                if(row.Index == -1)
+                if (row.Index == -1)
                 {
                     continue;
                 }
@@ -1970,9 +1979,9 @@ namespace MilSpace.GeoCalculator
 
             var points = new List<GeoCalcPoint>();
 
-            foreach(DataGridViewRow row in PointsGridView.Rows)
+            foreach (DataGridViewRow row in PointsGridView.Rows)
             {
-                if(row == null)
+                if (row == null)
                 {
                     continue;
                 }
@@ -1986,7 +1995,7 @@ namespace MilSpace.GeoCalculator
 
         private void RedrawLine()
         {
-            if(!chkShowLine.Checked)
+            if (!chkShowLine.Checked)
             {
                 return;
             }
@@ -1997,16 +2006,16 @@ namespace MilSpace.GeoCalculator
 
         private void DrawLine()
         {
-            if(!chkShowLine.Checked || PointsGridView.RowCount == 0)
+            if (!chkShowLine.Checked || PointsGridView.RowCount == 0)
             {
                 return;
             }
 
             var orderedPoints = new Dictionary<Guid, IPoint>();
 
-            foreach(DataGridViewRow row in PointsGridView.Rows)
+            foreach (DataGridViewRow row in PointsGridView.Rows)
             {
-                if(row.Tag == null)
+                if (row.Tag == null)
                 {
                     continue;
                 }
@@ -2021,7 +2030,7 @@ namespace MilSpace.GeoCalculator
 
         private void RedrawText()
         {
-            if(!chkShowNumbers.Checked)
+            if (!chkShowNumbers.Checked)
             {
                 return;
             }
@@ -2032,9 +2041,9 @@ namespace MilSpace.GeoCalculator
 
         private void DrawText()
         {
-            foreach(DataGridViewRow row in PointsGridView.Rows)
+            foreach (DataGridViewRow row in PointsGridView.Rows)
             {
-                if(row.Tag == null)
+                if (row.Tag == null)
                 {
                     continue;
                 }
@@ -2049,9 +2058,9 @@ namespace MilSpace.GeoCalculator
         {
             var orderedPoints = new List<IPoint>();
 
-            foreach(DataGridViewRow row in PointsGridView.Rows)
+            foreach (DataGridViewRow row in PointsGridView.Rows)
             {
-                if(row.Tag == null)
+                if (row.Tag == null)
                 {
                     continue;
                 }
@@ -2064,16 +2073,16 @@ namespace MilSpace.GeoCalculator
             ArcMapHelper.FlashLine(orderedPoints);
         }
 
-       
+
 
         private void ChkShowLine_CheckedChanged(object sender, EventArgs e)
         {
-            if(PointsGridView.RowCount == 0)
+            if (PointsGridView.RowCount == 0)
             {
                 return;
             }
 
-            if(chkShowLine.Checked)
+            if (chkShowLine.Checked)
             {
                 DrawLine();
             }
@@ -2085,12 +2094,12 @@ namespace MilSpace.GeoCalculator
 
         private void ChkShowNumbers_CheckedChanged(object sender, EventArgs e)
         {
-            if(PointsGridView.RowCount == 0)
+            if (PointsGridView.RowCount == 0)
             {
                 return;
             }
 
-            if(chkShowNumbers.Checked)
+            if (chkShowNumbers.Checked)
             {
                 DrawText();
             }
@@ -2114,7 +2123,7 @@ namespace MilSpace.GeoCalculator
 
             foreach (DataGridViewRow row in PointsGridView.Rows)
             {
-                if(row.Tag == null)
+                if (row.Tag == null)
                 {
                     continue;
                 }
@@ -2126,7 +2135,7 @@ namespace MilSpace.GeoCalculator
                 points.Add((int)row.Cells[0].Value, pointCopy);
             }
 
-            for(int i = 1; i <= points.Count; i++)
+            for (int i = 1; i <= points.Count; i++)
             {
                 orderedPoints.Add(points[i]);
             }
@@ -2137,7 +2146,7 @@ namespace MilSpace.GeoCalculator
 
         private void BtnRefreshGraphic_Click(object sender, EventArgs e)
         {
-            if(PointsGridView.RowCount == 0)
+            if (PointsGridView.RowCount == 0)
             {
                 return;
             }
@@ -2151,9 +2160,9 @@ namespace MilSpace.GeoCalculator
 
             var orderedPoints = new List<IPoint>();
 
-            foreach(DataGridViewRow row in PointsGridView.Rows)
+            foreach (DataGridViewRow row in PointsGridView.Rows)
             {
-                if(row.Tag == null)
+                if (row.Tag == null)
                 {
                     continue;
                 }
