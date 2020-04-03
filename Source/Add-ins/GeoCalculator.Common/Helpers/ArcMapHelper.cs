@@ -64,7 +64,7 @@ namespace MilSpace.GeoCalculator
 
             if(flashGeometry != null)
             {
-                EsriTools.PanToGeometry(activeView, polyline);
+                EsriTools.ZoomToGeometry(activeView, polyline);
                 EsriTools.FlashGeometry(activeView.ScreenDisplay, new IGeometry[] { polyline });
             }
         }
