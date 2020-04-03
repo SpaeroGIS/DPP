@@ -1308,7 +1308,7 @@ namespace MilSpace.GeoCalculator
 
             ManageUkraineCoordinates(inputPoint, ukraineDD, lastProjectedPoint);
 
-          
+
 
             if (!fromUserInput)
                 pointModels.Add(
@@ -1518,7 +1518,7 @@ namespace MilSpace.GeoCalculator
             AddPointToGrid(point, pointNumber, pointGuid);
             if (projectPoint)
             {
-                ProjectPointAsync(point, pointGuid, false,  pointNumber);
+                ProjectPointAsync(point, pointGuid, false, pointNumber);
             }
         }
 
@@ -2050,7 +2050,8 @@ namespace MilSpace.GeoCalculator
 
                 var pointGuid = (Guid)row.Tag;
                 var pointGeom = ClickedPointsDictionary.First(point => point.Key == pointGuid).Value;
-                GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).DrawText(pointGeom, row.Cells[0].Value.ToString(), $"{_textName}{row.Tag.ToString()}", MilSpaceGraphicsTypeEnum.Calculating);
+                GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).DrawText(pointGeom, row.Cells[0].Value.ToString(), $"{_textName}{row.Tag.ToString()}",
+                    MilSpaceGraphicsTypeEnum.GeoCalculator, new RgbColorClass() { Green = 255 });
             }
         }
 
@@ -2170,11 +2171,9 @@ namespace MilSpace.GeoCalculator
                 var pointGuid = (Guid)row.Tag;
                 var pointGeom = ClickedPointsDictionary.First(point => point.Key == pointGuid).Value;
 
-                var color = (IColor)new RgbColorClass() { Green = 255 };
-
                 var placedPoint = graphicsLayerManager.AddGraphicToMap(
                     pointGeom,
-                    color,
+                    new RgbColorClass() { Green = 255 },
                     (int)row.Cells[0].Value,
                     chkShowNumbers.Checked,
                     _textName,
