@@ -1031,6 +1031,8 @@ namespace MilSpace.GeoCalculator
             {
                 var chosenRadio = ShowExportForm(true);
 
+                log.InfoEx($"Export points into {chosenRadio}");
+
                 if(chosenRadio == RadioButtonsValues.Layer)
                 {
                     ExportToLayer();
@@ -2108,7 +2110,9 @@ namespace MilSpace.GeoCalculator
             var points = new Dictionary<int, IPoint>();
             var orderedPoints = new List<IPoint>();
 
-            foreach(DataGridViewRow row in PointsGridView.Rows)
+            log.InfoEx($"Preparing to export {PointsGridView.Rows.Count} points...");
+
+            foreach (DataGridViewRow row in PointsGridView.Rows)
             {
                 if(row.Tag == null)
                 {
@@ -2128,6 +2132,7 @@ namespace MilSpace.GeoCalculator
             }
 
             controller.ExportToLayer(orderedPoints);
+            log.InfoEx($"Export finished.");
         }
 
         private void BtnRefreshGraphic_Click(object sender, EventArgs e)
