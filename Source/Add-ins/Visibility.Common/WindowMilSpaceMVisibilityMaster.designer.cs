@@ -951,7 +951,7 @@ namespace MilSpace.Visibility
             // 
             this.lblMinAngle.AutoSize = true;
             this.lblMinAngle.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblMinAngle.Location = new System.Drawing.Point(113, 94);
+            this.lblMinAngle.Location = new System.Drawing.Point(127, 94);
             this.lblMinAngle.Name = "lblMinAngle";
             this.lblMinAngle.Size = new System.Drawing.Size(32, 17);
             this.lblMinAngle.TabIndex = 23;
@@ -961,7 +961,7 @@ namespace MilSpace.Visibility
             // 
             this.lblMinAzimuth.AutoSize = true;
             this.lblMinAzimuth.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblMinAzimuth.Location = new System.Drawing.Point(113, 57);
+            this.lblMinAzimuth.Location = new System.Drawing.Point(127, 57);
             this.lblMinAzimuth.Name = "lblMinAzimuth";
             this.lblMinAzimuth.Size = new System.Drawing.Size(32, 17);
             this.lblMinAzimuth.TabIndex = 22;
@@ -970,7 +970,7 @@ namespace MilSpace.Visibility
             // txtStep
             // 
             this.txtStep.Enabled = false;
-            this.txtStep.Location = new System.Drawing.Point(361, 126);
+            this.txtStep.Location = new System.Drawing.Point(382, 126);
             this.txtStep.Name = "txtStep";
             this.txtStep.Size = new System.Drawing.Size(55, 20);
             this.txtStep.TabIndex = 21;
@@ -981,7 +981,7 @@ namespace MilSpace.Visibility
             // 
             this.lblStep.AutoSize = true;
             this.lblStep.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblStep.Location = new System.Drawing.Point(321, 127);
+            this.lblStep.Location = new System.Drawing.Point(325, 127);
             this.lblStep.Name = "lblStep";
             this.lblStep.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
             this.lblStep.Size = new System.Drawing.Size(43, 17);
@@ -991,7 +991,7 @@ namespace MilSpace.Visibility
             // txtMinHeight
             // 
             this.txtMinHeight.Enabled = false;
-            this.txtMinHeight.Location = new System.Drawing.Point(146, 127);
+            this.txtMinHeight.Location = new System.Drawing.Point(160, 127);
             this.txtMinHeight.Name = "txtMinHeight";
             this.txtMinHeight.Size = new System.Drawing.Size(55, 20);
             this.txtMinHeight.TabIndex = 19;
@@ -1002,7 +1002,7 @@ namespace MilSpace.Visibility
             // 
             this.lblFrom.AutoSize = true;
             this.lblFrom.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblFrom.Location = new System.Drawing.Point(113, 129);
+            this.lblFrom.Location = new System.Drawing.Point(127, 129);
             this.lblFrom.Name = "lblFrom";
             this.lblFrom.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
             this.lblFrom.Size = new System.Drawing.Size(27, 17);
@@ -1012,7 +1012,7 @@ namespace MilSpace.Visibility
             // txtMaxHeight
             // 
             this.txtMaxHeight.Enabled = false;
-            this.txtMaxHeight.Location = new System.Drawing.Point(245, 126);
+            this.txtMaxHeight.Location = new System.Drawing.Point(259, 126);
             this.txtMaxHeight.Name = "txtMaxHeight";
             this.txtMaxHeight.Size = new System.Drawing.Size(55, 20);
             this.txtMaxHeight.TabIndex = 17;
@@ -1023,7 +1023,7 @@ namespace MilSpace.Visibility
             // 
             this.lblTo.AutoSize = true;
             this.lblTo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblTo.Location = new System.Drawing.Point(218, 127);
+            this.lblTo.Location = new System.Drawing.Point(232, 127);
             this.lblTo.Margin = new System.Windows.Forms.Padding(0);
             this.lblTo.Name = "lblTo";
             this.lblTo.Size = new System.Drawing.Size(24, 17);
@@ -1033,11 +1033,11 @@ namespace MilSpace.Visibility
             // txtMinAngle
             // 
             this.txtMinAngle.Enabled = false;
-            this.txtMinAngle.Location = new System.Drawing.Point(146, 89);
+            this.txtMinAngle.Location = new System.Drawing.Point(160, 89);
             this.txtMinAngle.Name = "txtMinAngle";
             this.txtMinAngle.Size = new System.Drawing.Size(55, 20);
             this.txtMinAngle.TabIndex = 15;
-            this.txtMinAngle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithDouble_KeyPress);
+            this.txtMinAngle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxSignedDouble_KeyPress);
             this.txtMinAngle.Leave += new System.EventHandler(this.TxtAngle_Leave);
             // 
             // lblAngles
@@ -1054,18 +1054,18 @@ namespace MilSpace.Visibility
             // txtMaxAngle
             // 
             this.txtMaxAngle.Enabled = false;
-            this.txtMaxAngle.Location = new System.Drawing.Point(245, 89);
+            this.txtMaxAngle.Location = new System.Drawing.Point(259, 89);
             this.txtMaxAngle.Name = "txtMaxAngle";
             this.txtMaxAngle.Size = new System.Drawing.Size(55, 20);
             this.txtMaxAngle.TabIndex = 13;
-            this.txtMaxAngle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithDouble_KeyPress);
+            this.txtMaxAngle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxSignedDouble_KeyPress);
             this.txtMaxAngle.Leave += new System.EventHandler(this.TxtAngle_Leave);
             // 
             // lblMaxAngle
             // 
             this.lblMaxAngle.AutoSize = true;
             this.lblMaxAngle.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblMaxAngle.Location = new System.Drawing.Point(204, 94);
+            this.lblMaxAngle.Location = new System.Drawing.Point(218, 94);
             this.lblMaxAngle.Name = "lblMaxAngle";
             this.lblMaxAngle.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
             this.lblMaxAngle.Size = new System.Drawing.Size(44, 17);
@@ -1075,7 +1075,7 @@ namespace MilSpace.Visibility
             // txtMinAzimuth
             // 
             this.txtMinAzimuth.Enabled = false;
-            this.txtMinAzimuth.Location = new System.Drawing.Point(146, 56);
+            this.txtMinAzimuth.Location = new System.Drawing.Point(160, 56);
             this.txtMinAzimuth.Name = "txtMinAzimuth";
             this.txtMinAzimuth.Size = new System.Drawing.Size(55, 20);
             this.txtMinAzimuth.TabIndex = 11;
@@ -1096,7 +1096,7 @@ namespace MilSpace.Visibility
             // txtMaxAzimuth
             // 
             this.txtMaxAzimuth.Enabled = false;
-            this.txtMaxAzimuth.Location = new System.Drawing.Point(245, 53);
+            this.txtMaxAzimuth.Location = new System.Drawing.Point(259, 53);
             this.txtMaxAzimuth.Name = "txtMaxAzimuth";
             this.txtMaxAzimuth.Size = new System.Drawing.Size(55, 20);
             this.txtMaxAzimuth.TabIndex = 9;
@@ -1114,6 +1114,7 @@ namespace MilSpace.Visibility
             // 
             // btnShowPoint
             // 
+            this.btnShowPoint.Enabled = false;
             this.btnShowPoint.ImageIndex = 86;
             this.btnShowPoint.ImageList = this.imageList1;
             this.btnShowPoint.Location = new System.Drawing.Point(7, 8);
@@ -1121,12 +1122,13 @@ namespace MilSpace.Visibility
             this.btnShowPoint.Size = new System.Drawing.Size(26, 24);
             this.btnShowPoint.TabIndex = 8;
             this.btnShowPoint.UseVisualStyleBackColor = true;
+            this.btnShowPoint.Click += new System.EventHandler(this.BtnShowPoint_Click);
             // 
             // lblMaxAzimuth
             // 
             this.lblMaxAzimuth.AutoSize = true;
             this.lblMaxAzimuth.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblMaxAzimuth.Location = new System.Drawing.Point(204, 54);
+            this.lblMaxAzimuth.Location = new System.Drawing.Point(218, 54);
             this.lblMaxAzimuth.Name = "lblMaxAzimuth";
             this.lblMaxAzimuth.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
             this.lblMaxAzimuth.Size = new System.Drawing.Size(44, 17);
@@ -1415,16 +1417,17 @@ namespace MilSpace.Visibility
             // txtCoveragePercent
             // 
             this.txtCoveragePercent.Enabled = false;
-            this.txtCoveragePercent.Location = new System.Drawing.Point(161, 92);
+            this.txtCoveragePercent.Location = new System.Drawing.Point(174, 92);
             this.txtCoveragePercent.Name = "txtCoveragePercent";
             this.txtCoveragePercent.Size = new System.Drawing.Size(55, 20);
             this.txtCoveragePercent.TabIndex = 27;
             this.txtCoveragePercent.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithDouble_KeyPress);
+            this.txtCoveragePercent.Leave += new System.EventHandler(this.TxtCoveragePercent_Leave);
             // 
             // txtBufferDistance
             // 
             this.txtBufferDistance.Enabled = false;
-            this.txtBufferDistance.Location = new System.Drawing.Point(161, 55);
+            this.txtBufferDistance.Location = new System.Drawing.Point(174, 55);
             this.txtBufferDistance.Name = "txtBufferDistance";
             this.txtBufferDistance.Size = new System.Drawing.Size(55, 20);
             this.txtBufferDistance.TabIndex = 25;
@@ -1454,6 +1457,7 @@ namespace MilSpace.Visibility
             // 
             // btnShowOO
             // 
+            this.btnShowOO.Enabled = false;
             this.btnShowOO.ImageIndex = 86;
             this.btnShowOO.ImageList = this.imageList1;
             this.btnShowOO.Location = new System.Drawing.Point(7, 8);
@@ -1461,6 +1465,7 @@ namespace MilSpace.Visibility
             this.btnShowOO.Size = new System.Drawing.Size(26, 24);
             this.btnShowOO.TabIndex = 25;
             this.btnShowOO.UseVisualStyleBackColor = true;
+            this.btnShowOO.Click += new System.EventHandler(this.BtnShowOO_Click);
             // 
             // lblSelectedOO
             // 
