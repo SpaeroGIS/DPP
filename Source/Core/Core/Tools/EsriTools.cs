@@ -151,7 +151,7 @@ namespace MilSpace.Core.Tools
 
         public static IPoint Clone(this IPoint point)
         {
-            if(point != null)
+            if (point != null)
             {
                 return new Point() { X = point.X, Y = point.Y, Z = point.Z, SpatialReference = point.SpatialReference };
             }
@@ -159,7 +159,7 @@ namespace MilSpace.Core.Tools
             {
                 return null;
             }
-         }
+        }
 
         public static void ProjectToMapSpatialReference(IGeometry geometry, ISpatialReference mapSpatialReference)
         {
@@ -202,7 +202,7 @@ namespace MilSpace.Core.Tools
                 Green = 255,
                 Blue = 115
             };
-            IColor endColor = toColor != null? toColor : new RgbColor()
+            IColor endColor = toColor != null ? toColor : new RgbColor()
             {
                 Red = 115,
                 Green = 38,
@@ -392,9 +392,17 @@ namespace MilSpace.Core.Tools
         {
             var transformation = view.ScreenDisplay.DisplayTransformation as IDisplayTransformationScales;
             var scale = transformation.CalculateScale(geometry.Envelope);
-            transformation.ZoomTo(geometry.Envelope, scale);
-            view.Refresh();
-            view.ScreenDisplay.UpdateWindow();
+            var currentScale = transformation.CalculateScale(view.Extent);
+            if (scale > currentScale)
+            {
+                transformation.ZoomTo(geometry.Envelope, scale);
+                view.Refresh();
+                view.ScreenDisplay.UpdateWindow();
+            }
+            else
+            {
+                PanToGeometry(view, geometry);
+            }
         }
 
         public static void FlashGeometry(IScreenDisplay display, IEnumerable<IGeometry> geometries)
@@ -449,8 +457,8 @@ namespace MilSpace.Core.Tools
             return new List<IPolyline> { polyline };
         }
 
-            public static IEnumerable<IPolyline> CreateDefaultPolylinesForFun(IPoint centerPoint, IPoint[] points, IEnumerable<IGeometry> geometries, bool circle, bool isPointInside, double length,
-                                                                       out double minAzimuth, out double maxAzimuth, out double maxLength,  double centerAzimuth = -1)
+        public static IEnumerable<IPolyline> CreateDefaultPolylinesForFun(IPoint centerPoint, IPoint[] points, IEnumerable<IGeometry> geometries, bool circle, bool isPointInside, double length,
+                                                                   out double minAzimuth, out double maxAzimuth, out double maxLength, double centerAzimuth = -1)
         {
             double minAngle = 360;
             maxAzimuth = 0;
@@ -458,26 +466,26 @@ namespace MilSpace.Core.Tools
             maxLength = length;
             bool isCircle = true;
             double betweenAzimuth = 0;
-            
+
             var linesAzimuths = new List<double>();
 
-            for(int i = 0; i < points.Length; i++)
+            for (int i = 0; i < points.Length; i++)
+            {
+                var line = new Line() { FromPoint = centerPoint, ToPoint = points[i], SpatialReference = centerPoint.SpatialReference };
+
+                if (length == -1 && maxLength < line.Length)
                 {
-                    var line = new Line() { FromPoint = centerPoint, ToPoint = points[i], SpatialReference = centerPoint.SpatialReference };
-
-                    if(length == -1 && maxLength < line.Length)
-                    {
-                        maxLength = line.Length;
-                    }
-
-                    linesAzimuths.Add(line.PosAzimuth());
+                    maxLength = line.Length;
                 }
+
+                linesAzimuths.Add(line.PosAzimuth());
+            }
 
             var count = linesAzimuths.Count;
 
-            for(int i = 0; i < count - 1; i++)
+            for (int i = 0; i < count - 1; i++)
             {
-                if(linesAzimuths.Count(az => az == linesAzimuths[i]) > 1)
+                if (linesAzimuths.Count(az => az == linesAzimuths[i]) > 1)
                 {
                     linesAzimuths.Remove(linesAzimuths[i]);
                     count--;
@@ -485,11 +493,11 @@ namespace MilSpace.Core.Tools
             }
 
 
-            if(geometries.Count() == 1 && points.Length == 2)
+            if (geometries.Count() == 1 && points.Length == 2)
             {
                 isCircle = false;
 
-                if(linesAzimuths[0] < linesAzimuths[1])
+                if (linesAzimuths[0] < linesAzimuths[1])
                 {
                     minAzimuth = linesAzimuths[0];
                     maxAzimuth = linesAzimuths[1];
@@ -500,23 +508,23 @@ namespace MilSpace.Core.Tools
                     maxAzimuth = linesAzimuths[0];
                 }
 
-                if(centerAzimuth == -1)
+                if (centerAzimuth == -1)
                 {
                     var angle = FindAngleBetweenAzimuths(maxAzimuth, minAzimuth, true);
                     betweenAzimuth = GetBetweenAzimuth(maxAzimuth, minAzimuth, angle / 2, true);
                 }
             }
 
-            if(!(geometries.Count() == 1 && points.Length < 3))
+            if (!(geometries.Count() == 1 && points.Length < 3))
             {
-                for(int i = 0; i < linesAzimuths.Count - 1; i++)
+                for (int i = 0; i < linesAzimuths.Count - 1; i++)
                 {
-                    for(int j = i + 1; j < linesAzimuths.Count; j++)
+                    for (int j = i + 1; j < linesAzimuths.Count; j++)
                     {
                         double maxAz;
                         double minAz;
 
-                        if(linesAzimuths[i] < linesAzimuths[j])
+                        if (linesAzimuths[i] < linesAzimuths[j])
                         {
                             minAz = linesAzimuths[i];
                             maxAz = linesAzimuths[j];
@@ -536,24 +544,24 @@ namespace MilSpace.Core.Tools
                         var isInIntersect = IsAzimuthIntersectGeometry(geometries, centerPoint, maxLength, inBetweenAzimuth);
                         var isOutIntersect = IsAzimuthIntersectGeometry(geometries, centerPoint, maxLength, outBetweenAzimuth);
 
-                            if(isPointInside && (isInIntersect && isOutIntersect))
-                            {
-                                continue;
-                            }
+                        if (isPointInside && (isInIntersect && isOutIntersect))
+                        {
+                            continue;
+                        }
                         var isAzimuthsBetweenExists = linesAzimuths.Any(azimuth => azimuth > minAz && azimuth < maxAz);
 
-                        if(!isAzimuthsBetweenExists)
+                        if (!isAzimuthsBetweenExists)
                         {
-                            if(!isInIntersect)
+                            if (!isInIntersect)
                             {
-                                if(minAngle > outAngle)
+                                if (minAngle > outAngle)
                                 {
                                     maxAzimuth = maxAz;
                                     minAzimuth = minAz;
 
                                     minAngle = outAngle;
 
-                                    if(centerAzimuth == -1)
+                                    if (centerAzimuth == -1)
                                     {
                                         betweenAzimuth = outBetweenAzimuth;
                                     }
@@ -565,18 +573,18 @@ namespace MilSpace.Core.Tools
 
                         var isAzimuthsOutExists = linesAzimuths.Any(azimuth => azimuth < minAz || azimuth > maxAz);
 
-                        if(!isAzimuthsOutExists)
+                        if (!isAzimuthsOutExists)
                         {
-                            if(!isOutIntersect)
+                            if (!isOutIntersect)
                             {
-                                if(minAngle > inAngle)
+                                if (minAngle > inAngle)
                                 {
                                     maxAzimuth = maxAz;
                                     minAzimuth = minAz;
 
                                     minAngle = inAngle;
 
-                                    if(centerAzimuth == -1)
+                                    if (centerAzimuth == -1)
                                     {
                                         betweenAzimuth = inBetweenAzimuth;
                                     }
@@ -589,12 +597,12 @@ namespace MilSpace.Core.Tools
                 }
             }
 
-            if(isCircle)
+            if (isCircle)
             {
                 return CreatePolylinesFromPointAndAzimuths(centerPoint, maxLength, 6, 0, 360);
             }
 
-            if(centerAzimuth != -1)
+            if (centerAzimuth != -1)
             {
                 betweenAzimuth = centerAzimuth;
             }
@@ -609,7 +617,7 @@ namespace MilSpace.Core.Tools
             polylines[1] = CreatePolylineFromPoints(centerPoint, middlePoint);
             polylines[2] = CreatePolylineFromPoints(centerPoint, endPoint);
 
-            if(betweenAzimuth >  maxAzimuth || betweenAzimuth < minAzimuth)
+            if (betweenAzimuth > maxAzimuth || betweenAzimuth < minAzimuth)
             {
                 var buff = maxAzimuth;
                 maxAzimuth = minAzimuth;
@@ -624,7 +632,7 @@ namespace MilSpace.Core.Tools
             var polylines = new List<IPolyline>();
             IPoint toPoint;
 
-            if(geometry.GeometryType == esriGeometryType.esriGeometryPoint)
+            if (geometry.GeometryType == esriGeometryType.esriGeometryPoint)
             {
                 toPoint = geometry as IPoint;
             }
@@ -643,7 +651,7 @@ namespace MilSpace.Core.Tools
             IGeometryCollection bag = new GeometryBagClass() as IGeometryCollection;
             var spatialRef = geometries.First().SpatialReference;
 
-            foreach(var geometry in geometries)
+            foreach (var geometry in geometries)
             {
                 bag.AddGeometry(geometry);
             }
@@ -656,26 +664,26 @@ namespace MilSpace.Core.Tools
 
         private static double FindAngleBetweenAzimuths(double maxAzimuth, double minAzimuth, bool between)
         {
-                if(!between)
-                {
-                    return (360 - maxAzimuth) + minAzimuth;
-                }
-                else
-                {
-                    return maxAzimuth - minAzimuth;
-                }
+            if (!between)
+            {
+                return (360 - maxAzimuth) + minAzimuth;
+            }
+            else
+            {
+                return maxAzimuth - minAzimuth;
+            }
         }
 
         private static double GetBetweenAzimuth(double maxAzimuth, double minAzimuth, double angle, bool between)
         {
-            if(between)
+            if (between)
             {
-                return minAzimuth + angle; 
+                return minAzimuth + angle;
             }
             else
             {
                 var result = maxAzimuth + angle;
-                if(result > 360)
+                if (result > 360)
                 {
                     result -= 360;
                 }
@@ -747,30 +755,30 @@ namespace MilSpace.Core.Tools
             maxAzimuth = 0;
             minAzimuth = 360;
 
-            for(int i = 0; i < points.Length; i++)
+            for (int i = 0; i < points.Length; i++)
             {
                 var line = new Line() { FromPoint = centerPoint, ToPoint = points[i], SpatialReference = centerPoint.SpatialReference };
 
-                if(length == -1 && maxLength < line.Length)
+                if (length == -1 && maxLength < line.Length)
                 {
                     maxLength = line.Length;
                 }
 
-                if(!azimuths.Any(az => az == line.PosAzimuth()))
+                if (!azimuths.Any(az => az == line.PosAzimuth()))
                 {
                     azimuths.Add(line.PosAzimuth());
                 }
             }
 
 
-            foreach(var azimuth in azimuths)
+            foreach (var azimuth in azimuths)
             {
-                if(azimuth > maxAzimuth)
+                if (azimuth > maxAzimuth)
                 {
                     maxAzimuth = azimuth;
                 }
 
-                if(azimuth < minAzimuth)
+                if (azimuth < minAzimuth)
                 {
                     minAzimuth = azimuth;
                 }
@@ -783,7 +791,7 @@ namespace MilSpace.Core.Tools
             var maxAz = maxAzimuth;
             var minAz = minAzimuth;
 
-            if(azimuths.Any(az => az < maxAz && az < minAz))
+            if (azimuths.Any(az => az < maxAz && az < minAz))
             {
                 maxAzimuth = minAz;
                 minAzimuth = maxAz;
@@ -1227,7 +1235,7 @@ namespace MilSpace.Core.Tools
 
         public static IGeometry GetIntersection(IPolygon coverageArea, IGeometry observObject)
         {
-            if(observObject.GeometryType != esriGeometryType.esriGeometryPoint && observObject.GeometryType != esriGeometryType.esriGeometryMultipoint 
+            if (observObject.GeometryType != esriGeometryType.esriGeometryPoint && observObject.GeometryType != esriGeometryType.esriGeometryMultipoint
                     && observObject.GeometryType != esriGeometryType.esriGeometryPolyline && observObject.GeometryType != esriGeometryType.esriGeometryPolygon)
             {
                 throw new ArgumentException("Intersection method must be applied on high-level geometries only");
@@ -1269,12 +1277,12 @@ namespace MilSpace.Core.Tools
             IPolyline polyline = CreatePolylineFromPoints(centerPoint, point);
             polyline.Project(geometries.First().SpatialReference);
 
-            foreach(var geometry in geometries)
+            foreach (var geometry in geometries)
             {
                 ITopologicalOperator pTopo = geometry as ITopologicalOperator;
 
                 var result = pTopo.Intersect(polyline, esriGeometryDimension.esriGeometry0Dimension);
-                if((!result.IsEmpty))
+                if ((!result.IsEmpty))
                 {
                     return true;
                 }
@@ -1359,7 +1367,7 @@ namespace MilSpace.Core.Tools
 
             var idFieldIndex = featureClass.FindField(featureClass.OIDFieldName);
 
-            if(idFieldIndex == -1)
+            if (idFieldIndex == -1)
             {
                 logger.WarnEx($"> GetGeometriesFromLayer. Warning: Cannot find fild {featureClass.OIDFieldName} in featureClass {featureClass.AliasName}");
                 throw new MissingFieldException();
@@ -1372,7 +1380,7 @@ namespace MilSpace.Core.Tools
             IFeature feature = featureCursor.NextFeature();
             try
             {
-                while(feature != null)
+                while (feature != null)
                 {
                     var shape = feature.ShapeCopy;
                     shape.Project(activeView.FocusMap.SpatialReference);
@@ -1383,7 +1391,7 @@ namespace MilSpace.Core.Tools
                     feature = featureCursor.NextFeature();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.ErrorEx($"> GetGeometriesFromLayer Exception. ex.Message:{ex.Message}");
             }
@@ -1491,10 +1499,10 @@ namespace MilSpace.Core.Tools
             var sin = minDistance / toMinPointDistance;
             var angle = -90 + Math.Asin(sin);
 
-            if(angle < minAngle)
+            if (angle < minAngle)
             {
                 var radians = Math.Tan(minAngle + 90);
-                return radians * (180/Math.PI) * height;
+                return radians * (180 / Math.PI) * height;
             }
             else
             {
@@ -1968,7 +1976,7 @@ namespace MilSpace.Core.Tools
             IApplication application)
         {
             var mxdoc = application.Document as IMxDocument;
-            if(mxdoc == null)
+            if (mxdoc == null)
                 return;
 
             var av = (IActiveView)mxdoc.FocusMap;
@@ -1980,7 +1988,7 @@ namespace MilSpace.Core.Tools
             color.Red = 0;
             color.Blue = 0;
 
-            if((geometry == null)
+            if ((geometry == null)
                 || (geometry.GeometryType != ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPoint)
                 || (color == null)
                 || (display == null)
@@ -2029,7 +2037,7 @@ namespace MilSpace.Core.Tools
             {
                 var point = geometry as IPoint;
 
-                if((point == null) || (display == null) || (extent == null) || (markerSymbol == null) ||
+                if ((point == null) || (display == null) || (extent == null) || (markerSymbol == null) ||
                     (lineSymbol == null) || (application == null))
                     return;
 
@@ -2046,7 +2054,7 @@ namespace MilSpace.Core.Tools
                 var fromTopLat = extent.YMax;
                 var fromBottomLat = extent.YMin;
                 var av = (application.Document as IMxDocument).ActiveView;
-                if(av == null)
+                if (av == null)
                     return;
 
                 var leftPolyline = new PolylineClass();
@@ -2069,7 +2077,7 @@ namespace MilSpace.Core.Tools
                 topPC.AddPoint(new PointClass() { X = longitudeMid, Y = fromTopLat });
                 bottomPC.AddPoint(new PointClass() { X = longitudeMid, Y = fromBottomLat });
 
-                for(int x = 1; x <= numSegments; x++)
+                for (int x = 1; x <= numSegments; x++)
                 {
                     //Flash the input polygon geometry.
                     display.SetSymbol(markerSymbol);
@@ -2093,18 +2101,18 @@ namespace MilSpace.Core.Tools
                     display.StartDrawing(display.hDC, (System.Int16)ESRI.ArcGIS.Display.esriScreenCache.esriNoScreenCache); // Explicit Cast
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex.Message);
             }
         }
-        
+
         public static bool IsPointOnExtent(IEnvelope envelope, IPoint inPoint)
         {
             var point = inPoint.Clone();
             point.Project(envelope.SpatialReference);
 
-            if(point.X >= envelope.XMin && point.X <= envelope.XMax && point.Y >= envelope.YMin && point.Y <= envelope.YMax)
+            if (point.X >= envelope.XMin && point.X <= envelope.XMax && point.Y >= envelope.YMin && point.Y <= envelope.YMax)
             {
                 return true;
             }
@@ -2114,7 +2122,7 @@ namespace MilSpace.Core.Tools
 
         public static double GetExtentHeightInMapUnits(IEnvelope envelope, double extentHeight)
         {
-            return envelope.Height*0.1;
+            return envelope.Height * 0.1;
         }
 
         public static List<IPoint> GetPointsFromGeometries(IEnumerable<IGeometry> geometries, ISpatialReference spatialReference, out bool isCircle)
@@ -2122,10 +2130,10 @@ namespace MilSpace.Core.Tools
             isCircle = false;
             var points = new List<IPoint>();
 
-            if(geometries.First().GeometryType == esriGeometryType.esriGeometryPoint)
+            if (geometries.First().GeometryType == esriGeometryType.esriGeometryPoint)
             {
 
-                foreach(var geometry in geometries)
+                foreach (var geometry in geometries)
                 {
                     var point = geometry as IPoint;
                     point.Project(spatialReference);
@@ -2136,13 +2144,13 @@ namespace MilSpace.Core.Tools
             }
             else
             {
-                foreach(var geometry in geometries)
+                foreach (var geometry in geometries)
                 {
                     var path = geometry as IPointCollection;
 
-                    for(int i = 0; i < path.PointCount; i++)
+                    for (int i = 0; i < path.PointCount; i++)
                     {
-                        if(geometries.Count() == 1 && i == path.PointCount - 1 && path.Point[i].X == path.Point[0].X && path.Point[0].Y == path.Point[i].Y)
+                        if (geometries.Count() == 1 && i == path.PointCount - 1 && path.Point[i].X == path.Point[0].X && path.Point[0].Y == path.Point[i].Y)
                         {
                             isCircle = true;
                             continue;
@@ -2160,7 +2168,7 @@ namespace MilSpace.Core.Tools
 
         public static double GetFormattedAzimuth(double azimuth)
         {
-            if(azimuth > 180)
+            if (azimuth > 180)
             {
                 return azimuth -= 360;
             }
