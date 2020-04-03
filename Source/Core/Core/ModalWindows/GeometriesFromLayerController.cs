@@ -89,6 +89,10 @@ namespace MilSpace.Core.ModalWindows
 
             return geometries;
         }
+        public IEnumerable<string> GetFeatureLayers()
+        {
+            return _mapLayersManager.GetFeatureLayersNames();
+        }
 
         public List<string> GetNotPointFeatureLayers(bool withObservObj = false)
         {
