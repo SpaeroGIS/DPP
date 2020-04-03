@@ -972,8 +972,8 @@ namespace MilSpace.Visibility.ViewController
             pointGeom.Project(mapDocument.FocusMap.SpatialReference);
 
             var maxDistance = CalcCoverageArea(pointGeom, observPoint);
-            _graphicsLayerManager.AddObservPointsGraphicsToMap(_coverageArea, $"coverageArea_{id}");
-            _graphicsLayerManager.AddCrossPointerToPoint(pointGeom, Convert.ToInt32(maxDistance), $"crossPointer_coverageArea_{id}_");
+            GraphicsLayerManager.AddObservPointsGraphicsToMap(_coverageArea, $"coverageArea_{id}");
+            GraphicsLayerManager.AddCrossPointerToPoint(pointGeom, Convert.ToInt32(maxDistance), $"crossPointer_coverageArea_{id}_");
         }
 
         internal double CalcCoverageArea(IPoint pointGeom, ObservationPoint observPoint)
@@ -1160,7 +1160,7 @@ namespace MilSpace.Visibility.ViewController
                     }
                 }
                 
-                _graphicsLayerManager.AddObservPointsRelationLineToMap(line.Polyline, color, $"relationLine_{id}", line.Title);
+                GraphicsLayerManager.AddObservPointsRelationLineToMap(line.Polyline, color, $"relationLine_{id}", line.Title);
             }
         }
 
@@ -1168,11 +1168,11 @@ namespace MilSpace.Visibility.ViewController
         {
             if(removeCoverageArea)
             {
-                _graphicsLayerManager.RemoveAllGeometryFromMap($"coverageArea_", MilSpaceGraphicsTypeEnum.Visibility, true);
+                GraphicsLayerManager.RemoveAllGeometryFromMap($"coverageArea_", MilSpaceGraphicsTypeEnum.Visibility, true);
             }
             if(removeObservObjectsRelations)
             {
-                _graphicsLayerManager.RemoveAllGeometryFromMap($"relationLine_", MilSpaceGraphicsTypeEnum.Visibility, true);
+                GraphicsLayerManager.RemoveAllGeometryFromMap($"relationLine_", MilSpaceGraphicsTypeEnum.Visibility, true);
             }
         }
 
@@ -1447,6 +1447,20 @@ namespace MilSpace.Visibility.ViewController
 
             return new KeyValuePair<IGeometry, string>();
         }
+
+        private GraphicsLayerManager GraphicsLayerManager
+        {
+            get
+            {
+                if (_graphicsLayerManager == null)
+                {
+                    _graphicsLayerManager = GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView);
+                }
+
+                return _graphicsLayerManager;
+            }
+        }
+            
 
         private Dictionary<int, IPoint> GetPointsFromGeoCalculator()
         {

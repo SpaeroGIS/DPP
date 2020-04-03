@@ -719,7 +719,7 @@ namespace MilSpace.Tools.GraphicsLayer
             if (showNums)
             {
                 var point = geom as IPoint;
-                DrawText(point, number.ToString(), $"{textName}{eprop.Name}", MilSpaceGraphicsTypeEnum.GeoCalculator);
+                DrawText(point, number.ToString(), $"{textName}{eprop.Name}", MilSpaceGraphicsTypeEnum.GeoCalculator, color);
             }
             //TODO DS: Look why there is two adding to graphics
             allGraphics[MilSpaceGraphicsTypeEnum.GeoCalculator].Add(ge);
@@ -728,7 +728,7 @@ namespace MilSpace.Tools.GraphicsLayer
         }
 
 
-        public void DrawText(IPoint point, string text, string textName, MilSpaceGraphicsTypeEnum graphicsType, IRgbColor textColor = null, int size = 12)
+        public void DrawText(IPoint point, string text, string textName, MilSpaceGraphicsTypeEnum graphicsType, IColor textColor = null, int size = 12)
         {
             var units = GetLengthInMapUnits(activeView, 5);
             var textPoint = new Point() { X = point.X + units, Y = point.Y + units, SpatialReference = point.SpatialReference };
