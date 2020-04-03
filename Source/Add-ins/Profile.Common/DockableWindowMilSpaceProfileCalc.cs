@@ -1666,6 +1666,9 @@ namespace MilSpace.Profile
                 var baseValueX = rows.Find(AttributeKeys.BasePointX)[AttributeKeys.ValueColumnName].ToString();
                 var baseValueY = rows.Find(AttributeKeys.BasePointY)[AttributeKeys.ValueColumnName].ToString();
                 var basePoint = GetPointFromRowValue(baseValueX, baseValueY);
+                var basePointCurMap = basePoint.Clone();
+                basePointCurMap.Project(MapSpatialreverence);
+
                 if (basePoint == null)
                 {
                     MessageBox.Show("Invalid convertation. See log for more detaoils");
@@ -1675,16 +1678,17 @@ namespace MilSpace.Profile
                 var toValueX = rows.Find(AttributeKeys.ToPointX)[AttributeKeys.ValueColumnName].ToString();
                 var toValueY = rows.Find(AttributeKeys.ToPointY)[AttributeKeys.ValueColumnName].ToString();
                 var toPoint = GetPointFromRowValue(toValueX, toValueY);
+                var toPointCurMap = toPoint.Clone();
+                toPointCurMap.Project(MapSpatialreverence);
+
                 if (toPoint == null)
                 {
                     MessageBox.Show("Invalid convertation. See log for more detaoils");
                     return;
                 }
 
-
-                controller.SetFirsPointForLineProfile(basePoint.CloneWithProjecting(), basePoint);
-               
-                controller.SetSecondfPointForLineProfile(toPoint.CloneWithProjecting(), toPoint);
+                controller.SetFirsPointForLineProfile(basePoint, basePointCurMap);
+                controller.SetSecondfPointForLineProfile(toPoint, toPointCurMap);
 
                 txtFirstHeight.Text = rows.Find(AttributeKeys.SectionFirstPointHeight)[AttributeKeys.ValueColumnName].ToString();
                 txtSecondHeight.Text = rows.Find(AttributeKeys.SectionSecondPointHeight)[AttributeKeys.ValueColumnName].ToString();
@@ -1698,6 +1702,9 @@ namespace MilSpace.Profile
                 var baseValueY = rows.Find(AttributeKeys.BasePointY)[AttributeKeys.ValueColumnName].ToString();
 
                 var basePoint = GetPointFromRowValue(baseValueX, baseValueY);
+                var basepointCurMap = basePoint.Clone();
+                basepointCurMap.Project(MapSpatialreverence);
+
                 if (basePoint == null)
                 {
                     MessageBox.Show("Invalid convertation. See log for more detaoils");
@@ -1713,7 +1720,7 @@ namespace MilSpace.Profile
                 azimuth1.Text = rows.Find(AttributeKeys.Azimuth1)[AttributeKeys.ValueColumnName].ToString();
                 azimuth2.Text = rows.Find(AttributeKeys.Azimuth2)[AttributeKeys.ValueColumnName].ToString();
 
-                controller.SetCenterPointForFunProfile(basePoint.CloneWithProjecting(), basePoint);
+                controller.SetCenterPointForFunProfile(basePoint, basepointCurMap);
             }
 
             controller.SetProfileSettings(profileType);
@@ -1736,7 +1743,7 @@ namespace MilSpace.Profile
                 //Set Z value using selected DEM
                 var rl = mngr.RasterLayers.FirstOrDefault(l => l.Name == DemLayerName);
                 if (rl != null)
-                {
+                { 
                     point.AddZCoordinate(rl.Raster);
                 }
 
