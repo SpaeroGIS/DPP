@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 
+
 namespace MilSpace.Core.Tools
 {
     public static class EsriTools
@@ -749,30 +750,21 @@ namespace MilSpace.Core.Tools
         public static IEnumerable<IPolyline> CreateToVerticesPolylinesForFun(IPoint[] points, IPoint centerPoint, double length,
                                                                                 out double minAzimuth, out double maxAzimuth, out double maxLength)
         {
-            var azimuths = new List<double>();
             var polylines = new List<IPolyline>();
+
             maxLength = length;
             maxAzimuth = 0;
             minAzimuth = 360;
 
-            for (int i = 0; i < points.Length; i++)
+            foreach (var point in points)
             {
-                var line = new Line() { FromPoint = centerPoint, ToPoint = points[i], SpatialReference = centerPoint.SpatialReference };
-
-                if (length == -1 && maxLength < line.Length)
+                var line = new Line()
                 {
-                    maxLength = line.Length;
-                }
-
-                if (!azimuths.Any(az => az == line.PosAzimuth()))
-                {
-                    azimuths.Add(line.PosAzimuth());
-                }
-            }
-
-
-            foreach (var azimuth in azimuths)
-            {
+                    FromPoint = centerPoint,
+                    ToPoint = point,
+                    SpatialReference = centerPoint.SpatialReference
+                };
+                var azimuth = line.PosAzimuth();
                 if (azimuth > maxAzimuth)
                 {
                     maxAzimuth = azimuth;
@@ -783,19 +775,9 @@ namespace MilSpace.Core.Tools
                     minAzimuth = azimuth;
                 }
 
-                var point = GetPointByAzimuthAndLength(centerPoint, azimuth, maxLength);
-                var line = CreatePolylineFromPoints(centerPoint, point);
-                polylines.Add(line);
+                polylines.Add(CreatePolylineFromPoints(centerPoint, point));
             }
 
-            var maxAz = maxAzimuth;
-            var minAz = minAzimuth;
-
-            if (azimuths.Any(az => az < maxAz && az < minAz))
-            {
-                maxAzimuth = minAz;
-                minAzimuth = maxAz;
-            }
             return polylines;
         }
 
