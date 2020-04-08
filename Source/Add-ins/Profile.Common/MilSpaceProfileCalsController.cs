@@ -48,7 +48,7 @@ namespace MilSpace.Profile
 
         private static ProfileSettingsTypeEnum[] profileSettingsType = Enum.GetValues(typeof(ProfileSettingsTypeEnum)).Cast<ProfileSettingsTypeEnum>().ToArray();
 
-        private readonly string NewProfilePrefix = LocalizationContext.Instance.FindLocalizedElement("TxtNewProfileNameValue", "Новий профіль");
+        private readonly string NewProfilePrefix = LocalizationContext.Instance.FindLocalizedElement("TxtNewProfileNameValue", "Профіль");
 
         List<ProfileSession> _workingProfiles = new List<ProfileSession>();
 
