@@ -889,7 +889,7 @@ namespace MilSpace.Core.Tools
             return point;
         }
 
-        public static IPolygon GetVisilityPolygon(IPointCollection points)
+        public static IPolygon GetPolygonZByPointCollection(IPointCollection points)
         {
             IGeometryBridge2 geometryBridge2 = new GeometryEnvironmentClass();
             IPointCollection4 pointCollection4 = new PolygonClass();
@@ -907,6 +907,32 @@ namespace MilSpace.Core.Tools
             IZAware zAware = geometry as IZAware;
 
             zAware.ZAware = true;
+
+            var result = pointCollection4 as IPolygon;
+            result.SpatialReference = points.Point[0].SpatialReference;
+
+            return result;
+        }
+
+        public static IPolygon GetPolygonByPointCollection(IPointCollection points)
+        {
+            IGeometryBridge2 geometryBridge2 = new GeometryEnvironmentClass();
+            IPointCollection4 pointCollection4 = new PolygonClass();
+
+            WKSPoint[] aWKSPoints = new WKSPoint[points.PointCount];
+
+            for (int i = 0; i < aWKSPoints.Length; i++)
+            {
+                aWKSPoints[i].X = points.Point[i].X;
+                aWKSPoints[i].Y = points.Point[i].Y;
+            }
+
+            geometryBridge2.SetWKSPoints(pointCollection4, ref aWKSPoints);
+
+            var geometry = pointCollection4 as IGeometry;
+            IZAware zAware = geometry as IZAware;
+
+            zAware.ZAware = false;
 
             var result = pointCollection4 as IPolygon;
             result.SpatialReference = points.Point[0].SpatialReference;

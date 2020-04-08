@@ -26,7 +26,7 @@ namespace MilSpace.Tools
         private static readonly string FIRST_Z_Field = "FIRST_Z";
         private static readonly string LINE_ID_Field = "LINE_ID";
 
-        private static readonly string WhereAllRecords = "OBJECTID > 0";
+        private static readonly string WhereAllRecords = "{0} >= 0";
         private Logger logger = Logger.GetLoggerEx("ProfileManager");
 
 
@@ -94,7 +94,7 @@ namespace MilSpace.Tools
 
                     IQueryFilter queryFilter = new QueryFilter()
                     {
-                        WhereClause = WhereAllRecords
+                        WhereClause = WhereAllRecords.InvariantFormat(lines.OIDFieldName)
                     };
 
                     ICursor featureCursor = profiletable.Search(queryFilter, true);
@@ -271,7 +271,7 @@ namespace MilSpace.Tools
 
             IQueryFilter queryFilter = new QueryFilter()
             {
-                WhereClause = WhereAllRecords
+                WhereClause = WhereAllRecords.InvariantFormat(profileLines.OIDFieldName)
             };
 
             bool isFirst = true;

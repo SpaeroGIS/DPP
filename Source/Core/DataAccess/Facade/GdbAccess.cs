@@ -483,7 +483,7 @@ namespace MilSpace.DataAccess.Facade
         {
             IFeatureClass calc = GetCalcProfileFeatureClass("CalcProfile_L");
             IQueryFilter queryFilter = new QueryFilterClass();
-            queryFilter.WhereClause = "OBJECTID > 0";
+            queryFilter.WhereClause = $"{calc.OIDFieldName} >= 0";
 
             IFeatureCursor featureCursor = calc.Search(queryFilter, true);
 
