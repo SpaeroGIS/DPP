@@ -59,7 +59,7 @@ namespace MilSpace.GeoCalculator
                 var featureClass = seatureLayer.FeatureClass;
 
                 IQueryFilter queryFilter = new QueryFilter();
-                queryFilter.WhereClause = $"{featureClass.OIDFieldName} > 0";
+                queryFilter.WhereClause = $"{featureClass.OIDFieldName} >= 0";
 
                 IFeatureCursor featureCursor = featureClass.Search(queryFilter, true);
                 IFeature feature = featureCursor.NextFeature();

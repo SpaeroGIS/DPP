@@ -67,7 +67,7 @@ namespace MilSpace.Core
             string snumericString = numericString.Trim();
             string snumericString2;
 
-            if(snumericString.Contains('.'))
+            if (snumericString.Contains('.'))
             {
                 snumericString2 = snumericString.Replace(".", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
             }
@@ -77,6 +77,25 @@ namespace MilSpace.Core
             }
 
             return double.TryParse(snumericString2, out result);
+        }
+
+        public static double ParceToDouble(this string numericString)
+        {
+            string snumericString = numericString.Trim();
+            string snumericString2;
+
+            if (snumericString.Contains('.'))
+            {
+                snumericString2 = snumericString.Replace(".", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+            }
+            else
+            {
+                snumericString2 = snumericString.Replace(",", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+            }
+            double result = double.NaN;
+
+            double.TryParse(snumericString2, out result);
+            return result;
         }
 
         public static string AutoEllipses(this string str, int length = 5)
@@ -119,7 +138,6 @@ namespace MilSpace.Core
 
             foreach (var el in tre)
             {
-
                 var elem = tp.GetField(el.ToString());
                 var attrs = elem.GetCustomAttributes(typeof(XmlEnumAttribute), false);
                 if (attrs.Length == 1)
@@ -130,6 +148,40 @@ namespace MilSpace.Core
                 else
                 {
                     result.Add(el.ToString(), el);
+                }
+            }
+            if (!typeof(T).IsEnum)
+            {
+                return null;
+            }
+
+            return result;
+        }
+
+        public static Dictionary<T, string> GetEnumToDictionary<T>(this Type enumeration)
+        {
+            Type tp = enumeration;
+            if (!tp.IsEnum)
+            {
+                return null;
+            }
+
+            var tre = Enum.GetValues(tp).Cast<T>();
+
+            Dictionary<T, string> result = new Dictionary<T, string>();
+
+            foreach (var el in tre)
+            {
+                var elem = tp.GetField(el.ToString());
+                var attrs = elem.GetCustomAttributes(typeof(XmlEnumAttribute), false);
+                if (attrs.Length == 1)
+                {
+                    var attr = attrs.First() as XmlEnumAttribute;
+                    result.Add(el, attr.Name);
+                }
+                else
+                {
+                    result.Add(el, el.ToString());
                 }
             }
             if (!typeof(T).IsEnum)
@@ -193,17 +245,25 @@ namespace MilSpace.Core
         {
             var degrees = (line.Angle * 180 / Math.PI);
 
-            if(degrees > 90)
+            if (degrees > 90)
             {
                 return 360 - (degrees - 90);
             }
 
-            if(degrees < -90)
+            if (degrees < -90)
             {
                 return Math.Abs(degrees) + 90;
             }
 
             return Math.Abs(degrees - 90);
+        }
+
+
+        public static  IPoint GetCentroid(this IEnvelope envelope)
+        {
+            var x = (envelope.XMin + envelope.XMax) / 2;
+            var y = (envelope.YMin + envelope.YMax) / 2;
+            return new PointClass { X = x, Y = y };
         }
 
         public static string GetRegistryValue(string registrypath)
@@ -222,7 +282,7 @@ namespace MilSpace.Core
 
         public static string ToFormattedString(this double pointCoord, int signs = 5)
         {
-            if(Double.IsNaN(pointCoord))
+            if (Double.IsNaN(pointCoord))
             {
                 return string.Empty;
             }
