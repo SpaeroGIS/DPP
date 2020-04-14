@@ -389,19 +389,31 @@ namespace MilSpace.Core.Tools
             }
         }
 
-        public static void ZoomToGeometry(IActiveView view, IGeometry geometry)
+        public static void ZoomToGeometry(IActiveView view, IGeometry geometry, bool chcekScale = false)
         {
             var transformation = view.ScreenDisplay.DisplayTransformation as IDisplayTransformationScales;
             var scale = transformation.CalculateScale(geometry.Envelope);
-            var currentScale = transformation.CalculateScale(view.Extent);
-            if (scale > currentScale)
+            if (chcekScale)
+            {
+
+                var currentScale = transformation.CalculateScale(view.Extent);
+
+                if (scale > currentScale)
+                {
+                    transformation.ZoomTo(geometry.Envelope, scale);
+                    view.Refresh();
+                    view.ScreenDisplay.UpdateWindow();
+                }
+                else
+                {
+                    PanToGeometry(view, geometry);
+                }
+            }
+            else
             {
                 transformation.ZoomTo(geometry.Envelope, scale);
                 view.Refresh();
                 view.ScreenDisplay.UpdateWindow();
-            }
-            else
-            {
                 PanToGeometry(view, geometry);
             }
         }
