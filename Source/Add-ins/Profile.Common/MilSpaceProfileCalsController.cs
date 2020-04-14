@@ -32,7 +32,6 @@ namespace MilSpace.Profile
     {
         //TODO: Localize
         private static readonly string graphiclayerTitle = LocalizationContext.Instance.FindLocalizedElement("TxtGraphicsLayerValue", "графічні об'єкти");
-        private MapLayersManager _mapLayersManager;
 
         private int profileId;
 
@@ -136,7 +135,7 @@ namespace MilSpace.Profile
             IActiveViewEvents_Event activeViewEvents = (IActiveViewEvents_Event)View.ActiveView.FocusMap;
             IActiveViewEvents_SelectionChangedEventHandler handler = new IActiveViewEvents_SelectionChangedEventHandler(OnMapSelectionChangedLocal);
             activeViewEvents.SelectionChanged += handler;
-            _mapLayersManager = new MapLayersManager(ArcMap.Document.ActiveView);
+            
 
             logger.InfoEx("> OnDocumentsLoad END");
         }
@@ -391,7 +390,9 @@ namespace MilSpace.Profile
 
                 logger.DebugEx($"GenerateProfile.Profile. 3");
 
-                var rl = _mapLayersManager.RasterLayers.FirstOrDefault(l => l.Name == profileSetting.DemLayerName);
+                var mapLayersManager = new MapLayersManager(ArcMap.Document.ActiveView);
+
+                var rl = mapLayersManager.RasterLayers.FirstOrDefault(l => l.Name == profileSetting.DemLayerName);
 
                 logger.DebugEx($"GenerateProfile.Profile. 4");
 
@@ -1365,7 +1366,8 @@ namespace MilSpace.Profile
 
         internal IPoint GetPointWithZFromSelectedDemLayer(IPoint point)
         {
-            var rl = _mapLayersManager.RasterLayers.FirstOrDefault(l => l.Name == View.DemLayerName);
+            var mapLayersManager = new MapLayersManager(ArcMap.Document.ActiveView);
+            var rl = mapLayersManager.RasterLayers.FirstOrDefault(l => l.Name == View.DemLayerName);
 
             if (rl != null)
             {
@@ -1385,7 +1387,8 @@ namespace MilSpace.Profile
                 return;
             }
 
-            var rl = _mapLayersManager.RasterLayers.FirstOrDefault(l => l.Name == View.DemLayerName);
+            var mapLayersManager = new MapLayersManager(ArcMap.Document.ActiveView);
+            var rl = mapLayersManager.RasterLayers.FirstOrDefault(l => l.Name == View.DemLayerName);
             var layerName = string.Empty;
 
             if(rl == null || String.IsNullOrEmpty(View.DemLayerName))
@@ -1495,7 +1498,8 @@ namespace MilSpace.Profile
 
         internal void SetPointBySelectedMethod(AssignmentMethodsEnum method, ProfileSettingsPointButtonEnum pointType)
         {
-            var rl = _mapLayersManager.RasterLayers.FirstOrDefault(l => l.Name == View.DemLayerName);
+            var mapLayersManager = new MapLayersManager(ArcMap.Document.ActiveView);
+            var rl = mapLayersManager.RasterLayers.FirstOrDefault(l => l.Name == View.DemLayerName);
 
             if(rl == null || String.IsNullOrEmpty(View.DemLayerName))
             {
