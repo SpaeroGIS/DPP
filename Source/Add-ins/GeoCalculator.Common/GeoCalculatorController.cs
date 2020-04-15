@@ -45,50 +45,58 @@ namespace MilSpace.GeoCalculator
             _log.DebugEx("> ImportFromLayer START.");
 
             var spatialReference = ArcMap.Document.ActiveView.FocusMap.SpatialReference;
-            var layer = ArcMapHelper.GetLayer(layerName) as IFeatureLayer;
+            var layer = ArcMapHelper.GetLayer(layerName);
+            if (layer == null)
+            {
+                _log.ErrorEx($"Cannot find a layer {layerName}.");
+                return; 
+            }
+
             var points = new List<IPoint>();
 
-            var featureClass = layer.FeatureClass;
-
-
-            IQueryFilter queryFilter = new QueryFilter();
-            queryFilter.WhereClause = "OBJECTID > 0";
-
-            IFeatureCursor featureCursor = featureClass.Search(queryFilter, true);
-            IFeature feature = featureCursor.NextFeature();
-
-            try
+            if (layer is IFeatureLayer seatureLayer)
             {
-                while(feature != null)
+                var featureClass = seatureLayer.FeatureClass;
+
+                IQueryFilter queryFilter = new QueryFilter();
+                queryFilter.WhereClause = $"{featureClass.OIDFieldName} >= 0";
+
+                IFeatureCursor featureCursor = featureClass.Search(queryFilter, true);
+                IFeature feature = featureCursor.NextFeature();
+
+                try
                 {
-                    var shape = feature.Shape;
-
-                    if(featureClass.ShapeType == esriGeometryType.esriGeometryPoint)
+                    while (feature != null)
                     {
-                        var point = shape as IPoint;
-                        points.Add(point);
-                    }
-                    else
-                    {
-                        var path = shape as IPointCollection;
+                        var shape = feature.ShapeCopy;
 
-                        for(int i = 0; i < path.PointCount; i++)
+                        if (featureClass.ShapeType == esriGeometryType.esriGeometryPoint)
                         {
-                            points.Add(path.Point[i]);
+                            var point = shape as IPoint;
+                            points.Add(point);
                         }
+                        else
+                        {
+                            var path = shape as IPointCollection;
+
+                            for (int i = 0; i < path.PointCount; i++)
+                            {
+                                points.Add(path.Point[i]);
+                            }
+                        }
+
+                        feature = featureCursor.NextFeature();
                     }
 
-                    feature = featureCursor.NextFeature();
                 }
-
-            }
-            catch(Exception ex)
-            {
-                _log.ErrorEx($"> ImportFromLayer Exception. ex.Message:{ex.Message}");
-            }
-            finally
-            {
-                Marshal.ReleaseComObject(featureCursor);
+                catch (Exception ex)
+                {
+                    _log.ErrorEx($"> ImportFromLayer Exception. ex.Message:{ex.Message}");
+                }
+                finally
+                {
+                    Marshal.ReleaseComObject(featureCursor);
+                }
             }
 
             if(points.Count > 500)

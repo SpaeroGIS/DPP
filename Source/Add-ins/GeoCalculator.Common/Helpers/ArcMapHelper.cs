@@ -64,7 +64,7 @@ namespace MilSpace.GeoCalculator
 
             if(flashGeometry != null)
             {
-                EsriTools.PanToGeometry(activeView, polyline);
+                EsriTools.ZoomToGeometry(activeView, polyline);
                 EsriTools.FlashGeometry(activeView.ScreenDisplay, new IGeometry[] { polyline });
             }
         }
@@ -83,47 +83,22 @@ namespace MilSpace.GeoCalculator
 
         public static List<string> GetFeatureLayers()
         {
-            var result = new List<string>();
-            var map = (ArcMap.Application.Document as IMxDocument)?.FocusMap;
-            var layers = map.Layers;
+            var activeView = (ArcMap.Application.Document as IMxDocument)?.ActiveView;
 
-            var layer = layers.Next();
+            if (activeView == null)
+            { return new List<string>();  }
 
-            while(layer != null)
-            {
-                if(layer is IFeatureLayer fLayer && !layer.Name.StartsWith($"GCP_{ DateTime.Now.ToString("yyyyMMdd")}"))
-                {
-                    var featureLayer = fLayer;
-                    var featureClass = featureLayer.FeatureClass;
-
-                    if(featureClass != null &&
-                        ((featureClass.ShapeType == esriGeometryType.esriGeometryLine) ||
-                        (featureClass.ShapeType == esriGeometryType.esriGeometryPolyline) ||
-                        (featureClass.ShapeType == esriGeometryType.esriGeometryPoint) ||
-                        (featureClass.ShapeType == esriGeometryType.esriGeometryPolygon)))
-                    {
-                        result.Add(fLayer.Name);
-                    }
-                }
-
-                layer = layers.Next();
-            }
-
-            return result;
+            return new MapLayersManager(activeView).GetFeatureLayersNames().ToList();
         }
 
         public static ILayer GetLayer(string layerName)
         {
-            var map = (ArcMap.Application.Document as IMxDocument)?.FocusMap;
-            var layers = map.Layers;
-            var layer = layers.Next();
+            var activeView = (ArcMap.Application.Document as IMxDocument)?.ActiveView;
 
-            while(layer != null && layer.Name != layerName)
-            {
-                layer = layers.Next() as ILayer;
-            }
+            if (activeView == null)
+            { return null; }
 
-            return layer;
+            return new MapLayersManager(activeView).GetLayer(layerName);
         }
 
         public static double GetMetresInMapUnits(double metres)

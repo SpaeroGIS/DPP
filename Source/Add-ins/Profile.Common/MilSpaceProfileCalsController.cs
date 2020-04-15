@@ -32,7 +32,6 @@ namespace MilSpace.Profile
     {
         //TODO: Localize
         private static readonly string graphiclayerTitle = LocalizationContext.Instance.FindLocalizedElement("TxtGraphicsLayerValue", "графічні об'єкти");
-        private MapLayersManager _mapLayersManager;
 
         private int profileId;
 
@@ -48,7 +47,7 @@ namespace MilSpace.Profile
 
         private static ProfileSettingsTypeEnum[] profileSettingsType = Enum.GetValues(typeof(ProfileSettingsTypeEnum)).Cast<ProfileSettingsTypeEnum>().ToArray();
 
-        private readonly string NewProfilePrefix = LocalizationContext.Instance.FindLocalizedElement("TxtNewProfileNameValue", "Новий профіль");
+        private readonly string NewProfilePrefix = LocalizationContext.Instance.FindLocalizedElement("TxtNewProfileNameValue", "Профіль");
 
         List<ProfileSession> _workingProfiles = new List<ProfileSession>();
 
@@ -136,7 +135,7 @@ namespace MilSpace.Profile
             IActiveViewEvents_Event activeViewEvents = (IActiveViewEvents_Event)View.ActiveView.FocusMap;
             IActiveViewEvents_SelectionChangedEventHandler handler = new IActiveViewEvents_SelectionChangedEventHandler(OnMapSelectionChangedLocal);
             activeViewEvents.SelectionChanged += handler;
-            _mapLayersManager = new MapLayersManager(ArcMap.Document.ActiveView);
+            
 
             logger.InfoEx("> OnDocumentsLoad END");
         }
@@ -372,12 +371,16 @@ namespace MilSpace.Profile
                 {
                     profileType = profileSetting.Type;
                 }
-                
+
+                logger.DebugEx($"GenerateProfile.Profile. 1");
+
                 if (manager == null)
                 {
                     logger.DebugEx("GenerateProfile. Cannot find profile manager");
                     throw new NullReferenceException("Cannot find profile manager");
                 }
+
+                logger.DebugEx($"GenerateProfile.Profile. 2");
 
                 if (profileSetting == null)
                 {
@@ -385,14 +388,24 @@ namespace MilSpace.Profile
                     throw new NullReferenceException("GenerateProfile. Profile parameters are empty");
                 }
 
+                logger.DebugEx($"GenerateProfile.Profile. 3");
 
-                var rl = _mapLayersManager.RasterLayers.FirstOrDefault(l => l.Name == profileSetting.DemLayerName);
+                var mapLayersManager = new MapLayersManager(ArcMap.Document.ActiveView);
 
-                if(rl == null)
+                var rl = mapLayersManager.RasterLayers.FirstOrDefault(l => l.Name == profileSetting.DemLayerName);
+
+                logger.DebugEx($"GenerateProfile.Profile. 4");
+
+                if (rl == null)
                 {
-                    logger.WarnEx("> GenerateProfile. Raster layer not found");
-                    MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgRasterLayerNotFound", "Неможливо розрахувати профіль, шар ЦМР/ЦММ не було знайдено"),
-                                        LocalizationContext.Instance.MessageBoxTitle);
+                    logger.WarnEx("> GenerateProfile. DEM layer not found");
+                    MessageBox.Show(
+                        LocalizationContext.Instance.FindLocalizedElement(
+                            "MsgRasterLayerNotFound", 
+                            "Неможливо розрахувати профіль, " +
+                            "шар ЦМР/ЦММ не було знайдено"),
+                        LocalizationContext.Instance.MessageBoxTitle
+                        );
 
                     return null;
                 }
@@ -406,12 +419,15 @@ namespace MilSpace.Profile
                     newProfileName, 
                     View.ObserveHeight, 
                     profileSetting.AzimuthToStore);
+
                 logger.DebugEx($"GenerateProfile. Profile {newProfileId}. GenerateProfile RETURN");
 
                 if (session.DefinitionType == ProfileSettingsTypeEnum.Primitives)
                 {
                     session.Segments =
-                        ProfileLinesConverter.GetSegmentsFromProfileLine(session.ProfileSurfaces, ArcMap.Document.FocusMap.SpatialReference);
+                        ProfileLinesConverter.GetSegmentsFromProfileLine(
+                            session.ProfileSurfaces, 
+                            ArcMap.Document.FocusMap.SpatialReference);
                 }
                 else
                 {
@@ -450,8 +466,19 @@ namespace MilSpace.Profile
 
             logger.InfoEx($"> GenerateProfile END with session IS NULL");
             MessageBox.Show(
-                errorMessage
+                errorMessage,
+                LocalizationContext.Instance.MessageBoxTitle,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error
                 );
+
+            //MessageBox.Show(
+            //    LocalizationContext.Instance.ErrorHappendText,
+            //    Properties.Resources.AddinMessageBoxHeader,
+            //    MessageBoxButtons.OK,
+            //    MessageBoxIcon.Error
+            //    );
+
             return null;
         }
         
@@ -801,7 +828,11 @@ namespace MilSpace.Profile
             bool res = MilSpaceProfileFacade.SaveProfileSession(profileSet);
             if (!res)
             {
-                MessageBox.Show(LocalizationContext.Instance.ErrorHappendText, Properties.Resources.AddinMessageBoxHeader, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    LocalizationContext.Instance.ErrorHappendText, 
+                    Properties.Resources.AddinMessageBoxHeader, 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error);
             }
 
             return res;
@@ -1335,7 +1366,8 @@ namespace MilSpace.Profile
 
         internal IPoint GetPointWithZFromSelectedDemLayer(IPoint point)
         {
-            var rl = _mapLayersManager.RasterLayers.FirstOrDefault(l => l.Name == View.DemLayerName);
+            var mapLayersManager = new MapLayersManager(ArcMap.Document.ActiveView);
+            var rl = mapLayersManager.RasterLayers.FirstOrDefault(l => l.Name == View.DemLayerName);
 
             if (rl != null)
             {
@@ -1355,7 +1387,8 @@ namespace MilSpace.Profile
                 return;
             }
 
-            var rl = _mapLayersManager.RasterLayers.FirstOrDefault(l => l.Name == View.DemLayerName);
+            var mapLayersManager = new MapLayersManager(ArcMap.Document.ActiveView);
+            var rl = mapLayersManager.RasterLayers.FirstOrDefault(l => l.Name == View.DemLayerName);
             var layerName = string.Empty;
 
             if(rl == null || String.IsNullOrEmpty(View.DemLayerName))
@@ -1465,7 +1498,8 @@ namespace MilSpace.Profile
 
         internal void SetPointBySelectedMethod(AssignmentMethodsEnum method, ProfileSettingsPointButtonEnum pointType)
         {
-            var rl = _mapLayersManager.RasterLayers.FirstOrDefault(l => l.Name == View.DemLayerName);
+            var mapLayersManager = new MapLayersManager(ArcMap.Document.ActiveView);
+            var rl = mapLayersManager.RasterLayers.FirstOrDefault(l => l.Name == View.DemLayerName);
 
             if(rl == null || String.IsNullOrEmpty(View.DemLayerName))
             {

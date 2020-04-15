@@ -277,7 +277,7 @@
     <value>графічні об'єкти</value>
   </data>
   <data name="txtNewProfileNameValue" xml:space="preserve">
-    <value>Новий профіль</value>
+    <value>Профіль</value>
   </data>
   <data name="txtPickCoordinatesToolMessage" xml:space="preserve">
     <value>Будь ласка, увімкніть інструмент для виділення точки</value>

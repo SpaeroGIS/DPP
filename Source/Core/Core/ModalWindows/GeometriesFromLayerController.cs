@@ -47,7 +47,7 @@ namespace MilSpace.Core.ModalWindows
             }
 
             IQueryFilter queryFilter = new QueryFilter();
-            queryFilter.WhereClause = $"{featureClass.OIDFieldName} > 0";
+            queryFilter.WhereClause = $"{featureClass.OIDFieldName} >= 0";
 
             IFeatureCursor featureCursor = featureClass.Search(queryFilter, true);
             IFeature feature = featureCursor.NextFeature();
@@ -88,6 +88,10 @@ namespace MilSpace.Core.ModalWindows
             }
 
             return geometries;
+        }
+        public IEnumerable<string> GetFeatureLayers()
+        {
+            return _mapLayersManager.GetFeatureLayersNames();
         }
 
         public List<string> GetFeatureLayers(bool withObservObj = false, bool withPointLayers = false)

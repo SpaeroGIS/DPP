@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="DataClasses1">
+<ordesignerObjectsDiagram dslVersion="1.1.0.0" absoluteBounds="0, 0, 11, 8.5" name="DataClasses1">
   <DataContextMoniker Name="/MilSpaceVisibilityContext" />
   <nestedChildShapes>
     <classShape Id="62490a60-d5ff-406c-bcc9-b97ddb084a71" absoluteBounds="5.125, 4.5, 2, 3.3093082682291666">

@@ -49,7 +49,7 @@ namespace MilSpace.Core.ModalWindows
             }
 
             IQueryFilter queryFilter = new QueryFilter();
-            queryFilter.WhereClause = $"{featureClass.OIDFieldName} > 0";
+            queryFilter.WhereClause = $"{featureClass.OIDFieldName} >= 0";
 
             IFeatureCursor featureCursor = featureClass.Search(queryFilter, true);
             IFeature feature = featureCursor.NextFeature();
@@ -103,14 +103,19 @@ namespace MilSpace.Core.ModalWindows
 
         public string[] GetPointLayers()
         {
+
+            //TODO: The OP layer should be taken form the controller as an instance and then compared. The layer nmae property can be changed (e.g. localized)
+            //TOFix
             var layers = _mapLayersManager.PointLayers.Where(layer => !layer.Name.Equals("MilSp_Visible_ObservPoints")).Select(l => l.Name).ToArray();
 
-            if (layers.Length == 0)
-            {
-                throw new ArgumentNullException("Required layers are missing in the project");
-            }
+            //TODO: If the exception is thrown then it should be catch! Or return a value to be recognized as an exceptional point
+            //if (layers.Length == 0)
+            //{
+                //throw new ArgumentNullException("Required layers are missing in the project");
+            //}
 
-            return layers; 
+            return layers;
+            
         }
 
         public string[] GetLayerFields(string layerName)

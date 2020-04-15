@@ -1,4 +1,5 @@
-﻿using MilSpace.DataAccess.DataTransfer;
+﻿using MilSpace.Core;
+using MilSpace.DataAccess.DataTransfer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,8 @@ namespace MilSpace.DataAccess.Facade
 {
     public static class GeoCalculatiorFacade
     {
+        private static readonly Logger log = Logger.GetLoggerEx("GeoCalculatiorFacade");
+
         public static IEnumerable<GeoCalcPoint> GetUserSessionPoints()
         {
             using (var accessor = new GeoCalculatorDataAccess())
@@ -26,10 +29,27 @@ namespace MilSpace.DataAccess.Facade
 
         public static void UpdateUserSessionPoints(IEnumerable<GeoCalcPoint> points)
         {
-            using(var accessor = new GeoCalculatorDataAccess())
+
+            log.InfoEx("> UpdateUserSessionPoints START");
+            if (points != null)
             {
-                accessor.UpdateUserPoints(points);
+                try
+                {
+                    using (var accessor = new GeoCalculatorDataAccess())
+                    {
+                        accessor.UpdateUserPoints(points);
+                    }
+                }
+                catch(Exception ex)
+                {
+                    log.InfoEx("> UpdateUserSessionPoints Exception: {0}", ex.Message);
+                }
             }
+            else
+            {
+                log.InfoEx("UpdateUserSessionPoints points == null");
+            }
+            log.InfoEx("> UpdateUserSessionPoints END");
         }
 
         public static void DeleteUserSessionPoint(Guid pointId)

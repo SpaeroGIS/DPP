@@ -11,6 +11,14 @@ namespace MilSpace.DataAccess.Facade
 {
     internal class GeoCalculatorDataAccess : DataAccessor<MilSpaceGeoCalcContext>, IDisposable
     {
+        internal GeoCalculatorDataAccess()
+        {
+            log.InfoEx(
+                $"Initialise GeoCalculatorDataAccess with connection: " +
+                $"{MilSpaceConfiguration.ConnectionProperty.WorkingDBConnection}"
+                );
+        }
+
         public override string ConnectionString => MilSpaceConfiguration.ConnectionProperty.WorkingDBConnection;
 
         public IEnumerable<GeoCalcPoint> GetUserPoints()
@@ -30,10 +38,13 @@ namespace MilSpace.DataAccess.Facade
 
         public void UpdateUserPoints(IEnumerable<GeoCalcPoint> points)
         {
-            foreach(var point in points)
+            log.InfoEx($"UpdateUserPoints. Count {points.Count()}");
+
+            foreach (var point in points)
             {
                 try
                 {
+                    log.InfoEx($"UpdateUserPoints. Processing Id: {point.Id}");
                     var pointEntity = context.GeoCalcSessionPoints.FirstOrDefault(entity => entity.id == point.Id);
 
                     if(pointEntity != null)

@@ -235,7 +235,7 @@
   <TxtCreatorPlaceholder>Автор</TxtCreatorPlaceholder>
   <TxtNamePlaceholder>Назва профілю</TxtNamePlaceholder>
   <TxtGraphicsLayerValue>графічні об'єкти</TxtGraphicsLayerValue>
-  <TxtNewProfileNameValue>Новий профіль</TxtNewProfileNameValue>
+  <TxtNewProfileNameValue>Профіль</TxtNewProfileNameValue>
   
   <LbFunParamsTitleText>Параметри набору профілів</LbFunParamsTitleText>
   <LbFunParamsAvgAzimuthText>Середній азимут:</LbFunParamsAvgAzimuthText>
