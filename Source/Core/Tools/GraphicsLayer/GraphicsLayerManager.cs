@@ -611,12 +611,10 @@ namespace MilSpace.Tools.GraphicsLayer
                 SimpleMarkerSymbol crossMarkerSymbol = new SimpleMarkerSymbol()
                 {
                     Color = color,
-                    Size = 7,
+                    Size = 4 * width,
                     Style = esriSimpleMarkerStyle.esriSMSCross,
                 };
 
-                //Add an offset to make sure the square end of the line is hidden  
-                crossMarkerSymbol.XOffset = 0.8;
                 simpleLineDecorationElement.MarkerSymbol = crossMarkerSymbol;
 
                 lineDecoration.AddElement(simpleLineDecorationElement);
@@ -728,9 +726,9 @@ namespace MilSpace.Tools.GraphicsLayer
         }
 
 
-        public void DrawText(IPoint point, string text, string textName, MilSpaceGraphicsTypeEnum graphicsType, IColor textColor = null, int size = 12)
+        public void DrawText(IPoint point, string text, string textName, MilSpaceGraphicsTypeEnum graphicsType, IColor textColor = null, int size = 12, int distance = 5)
         {
-            var units = GetLengthInMapUnits(activeView, 5);
+            var units = GetLengthInMapUnits(activeView, distance);
             var textPoint = new Point() { X = point.X + units, Y = point.Y + units, SpatialReference = point.SpatialReference };
 
             if (textColor == null)
@@ -799,15 +797,22 @@ namespace MilSpace.Tools.GraphicsLayer
             }
 
             ISimpleFillSymbol simplePolygonSymbol = new SimpleFillSymbolClass();
-            var color = grapchucsTypeColors[MilSpaceGraphicsTypeEnum.Visibility]();
+            var color = (IRgbColor)new RgbColorClass() { Red = 255, Green = 253, Blue = 3 }; 
             simplePolygonSymbol.Color = color; 
-            simplePolygonSymbol.Style = esriSimpleFillStyle.esriSFSForwardDiagonal;
+            simplePolygonSymbol.Style = esriSimpleFillStyle.esriSFSHollow;
+
+            ILineSymbol polygonOutline = new SimpleLineSymbol();
+            polygonOutline.Color = color;
+            polygonOutline.Width = 2;
+
+            simplePolygonSymbol.Outline = polygonOutline;
 
             IFillShapeElement markerElement = new PolygonElementClass();
             markerElement.Symbol = simplePolygonSymbol;
             
             IElement element = null;
             element = (IElement)markerElement;
+
             if (element == null)
                 return;
             element.Geometry = coverageArea;
@@ -833,7 +838,7 @@ namespace MilSpace.Tools.GraphicsLayer
         {
             int segmentLength;
             int segmentCount;
-            var color = (IRgbColor)new RgbColorClass() { Red = 255, Green = 253, Blue = 3 };
+            var color = grapchucsTypeColors[MilSpaceGraphicsTypeEnum.Visibility]();
             var fromPoints = new Dictionary<int, IPoint>
             {
                 {0, point},
@@ -868,24 +873,27 @@ namespace MilSpace.Tools.GraphicsLayer
 
                 for (int j = 0; j < 360; j += 90)
                 {
-                    double radian = j * (Math.PI / 180);
+                    double radian = (90 - j) * (Math.PI / 180);
                     var toPoint = EsriTools.GetPointFromAngelAndDistance(point, radian, segEndPointDistance);
                     var line = EsriTools.CreatePolylineFromPoints(fromPoints[j], toPoint);
-                    var segmentName = name + "_" + j + i;
+                    var segmentName = name + "_" + j + "_" + i;
                     var ge = new GraphicElement() { Source = line, Name = segmentName };
 
-                    if (i != segmentCount)
+                    if (j == 0 && i == segmentCount)
                     {
-                        AddPolyline(ge, MilSpaceGraphicsTypeEnum.Visibility, color, LineType.Cross, true, true);
+                        AddPolyline(ge, MilSpaceGraphicsTypeEnum.Visibility, color, LineType.Arrow, true, true, 1);
                     }
                     else
                     {
-                        AddPolyline(ge, MilSpaceGraphicsTypeEnum.Visibility, color, LineType.Arrow, true, true);
+                        AddPolyline(ge, MilSpaceGraphicsTypeEnum.Visibility, color, LineType.Cross, true, true, 1);
                     }
 
                     fromPoints[j] = toPoint.Clone();
                 }
             }
+
+            var markPoint = EsriTools.GetPointFromAngelAndDistance(point, 0, segmentLength);
+            DrawText(markPoint, segmentLength.ToString(), $"text_{name}", MilSpaceGraphicsTypeEnum.Visibility, color, 9, 1);
         }
 
         public void AddObservPointsRelationLineToMap(IPolyline polyline, IRgbColor color, string name, string title)
