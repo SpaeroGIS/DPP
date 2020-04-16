@@ -1514,14 +1514,22 @@ namespace MilSpace.Core.Tools
 
         public static double GetMinDistance(double minDistance, double minAngle, double height)
         {
+            if(minDistance == 0 && minAngle > -90)
+            {
+                var minAngleRadians = (minAngle + 90) * (Math.PI / 180);
+                var radians = Math.Tan(minAngleRadians);
+                return radians * (180 / Math.PI) * height;
+            }
+
             var toMinPointDistance = Math.Sqrt(Math.Pow(height, 2) + Math.Pow(minDistance, 2));
 
             var sin = minDistance / toMinPointDistance;
-            var angle = -90 + Math.Asin(sin);
+            var angle = -90 + Math.Asin(sin) * (180 / Math.PI);
 
             if (angle < minAngle)
             {
-                var radians = Math.Tan(minAngle + 90);
+                var minAngleRadians = (minAngle + 90) * (Math.PI / 180);
+                var radians = Math.Tan(minAngleRadians);
                 return radians * (180 / Math.PI) * height;
             }
             else
@@ -1535,11 +1543,12 @@ namespace MilSpace.Core.Tools
             var toMinPointDistance = Math.Sqrt(Math.Pow(height, 2) + Math.Pow(maxDistance, 2));
 
             var sin = maxDistance / toMinPointDistance;
-            var angle = -90 + Math.Asin(sin);
+            var angle = -90 + Math.Asin(sin) * (180 / Math.PI);
 
             if (angle > maxAngle)
             {
-                var radians = Math.Tan(maxAngle + 90);
+                var maxAngleRadians = (maxAngle + 90) * (Math.PI / 180);
+                var radians = Math.Tan(maxAngleRadians);
                 return radians * (180 / Math.PI) * height;
             }
             else
