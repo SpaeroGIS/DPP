@@ -1043,7 +1043,7 @@ namespace MilSpace.Visibility.ViewController
         {
             var observPoint = _observationPoints.FirstOrDefault(point => point.Objectid == id);
 
-            if(observPoint == null || observPoint.X == null || observPoint.Y == null)
+            if (observPoint == null || observPoint.X == null || observPoint.Y == null)
             {
                 return;
             }
@@ -1051,9 +1051,19 @@ namespace MilSpace.Visibility.ViewController
             var pointGeom = new Point { X = observPoint.X.Value, Y = observPoint.Y.Value, SpatialReference = EsriTools.Wgs84Spatialreference };
             pointGeom.Project(mapDocument.FocusMap.SpatialReference);
 
-            var maxDistance = CalcCoverageArea(pointGeom, observPoint);
-            GraphicsLayerManager.AddObservPointsGraphicsToMap(_coverageArea, $"coverageArea_{id}");
-            GraphicsLayerManager.AddCrossPointerToPoint(pointGeom, Convert.ToInt32(maxDistance), $"crossPointer_coverageArea_{id}_");
+            try
+            {
+                var maxDistance = CalcCoverageArea(pointGeom, observPoint);
+
+                GraphicsLayerManager.AddObservPointsGraphicsToMap(_coverageArea, $"coverageArea_{id}");
+                GraphicsLayerManager.AddCrossPointerToPoint(pointGeom, Convert.ToInt32(maxDistance), $"crossPointer_coverageArea_{id}_");
+            }
+            catch (ArgumentException exception)
+            {
+                log.WarnEx($"> DrawObservPointsGraphics. Exception {exception}");
+                MessageBox.Show(LocalizationContext.Instance.CoverageAreaIsEmptyMessage, LocalizationContext.Instance.MessageBoxCaption);
+                RemoveObservPointsGraphics(true, true);
+            }
         }
 
         internal double CalcCoverageArea(IPoint pointGeom, ObservationPoint observPoint)
@@ -1061,11 +1071,10 @@ namespace MilSpace.Visibility.ViewController
             var realMaxDistance = EsriTools.GetMaxDistance(observPoint.OuterRadius.Value, observPoint.AngelMaxH.Value, observPoint.RelativeHeight.Value);
             var realMinDistance = EsriTools.GetMinDistance(observPoint.InnerRadius.Value, observPoint.AngelMinH.Value, observPoint.RelativeHeight.Value);
 
-            if(realMaxDistance < realMinDistance)
+            if(realMaxDistance < realMinDistance || observPoint.AngelMinH.Value >= 0)
             {
-                log.WarnEx("> DrawObservPointsGraphics. Observation point doesn`t has a coverage area");
-                MessageBox.Show(LocalizationContext.Instance.CoverageAreaIsEmptyMessage, LocalizationContext.Instance.MessageBoxCaption);
-                return observPoint.OuterRadius.Value;
+                _coverageArea = null;
+               throw new ArgumentException("Observation point doesn`t has a coverage area");
             }
 
             _coverageArea = EsriTools.GetCoverageArea(pointGeom, observPoint.AzimuthStart.Value, observPoint.AzimuthEnd.Value,
@@ -1151,7 +1160,14 @@ namespace MilSpace.Visibility.ViewController
             
             if (_coverageArea == null || fromNewCoverageArea)
             {
-                CalcCoverageArea(pointGeom, observPoint);
+                try
+                {
+                    var maxDistance = CalcCoverageArea(pointGeom, observPoint);
+                }
+                catch
+                {
+                    
+                }
             }
 
             _relationLines.Clear();
@@ -1159,7 +1175,7 @@ namespace MilSpace.Visibility.ViewController
             foreach (var geometry in geometries)
             {
                 var relationLine = EsriTools.GetToGeometryCenterPolyline(pointGeom, geometry.Value);
-                var intersectionArea = EsriTools.GetIntersection(_coverageArea, geometry.Value);
+                var intersectionArea = (_coverageArea != null)? EsriTools.GetIntersection(_coverageArea, geometry.Value) : null;
 
                 var simpleLine = new Line { FromPoint = relationLine.FromPoint, ToPoint = relationLine.ToPoint, SpatialReference = relationLine.SpatialReference };
 
@@ -1188,7 +1204,7 @@ namespace MilSpace.Visibility.ViewController
                     Title = title
                 };
 
-                if (intersectionArea.IsEmpty)
+                if (intersectionArea == null || intersectionArea.IsEmpty)
                 {
                     line.CoverageType = CoverageTypesEnum.None;
                 }
