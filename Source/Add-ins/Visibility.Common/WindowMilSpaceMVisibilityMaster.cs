@@ -217,7 +217,6 @@ namespace MilSpace.Visibility
             PopulateComboBox();
             PopulateObservationPointsTypesComboBox();
             PopulateObservationObjectsTypesComboBox();
-            FillObservPointLabel();
             FillObsObj(true);
             FillObservPointsOnCurrentView(controller.GetObservPointsOnCurrentMapExtent(ActiveView));
         }
@@ -391,11 +390,10 @@ namespace MilSpace.Visibility
             }
         }
 
-        public void FillSelectedOPFields(ObservationPoint point, string layer)
+        public void FillSelectedOPFields(ObservationPoint point)
         {
             _selectedObservationPoint = point;
 
-            ObservPointLabel.Text = layer;
             lblSelectedOP.Text = point.Title;
             txtMinAzimuth.Text = point.AzimuthStart.Value.ToFormattedString(1);
             txtMaxAzimuth.Text = point.AzimuthEnd.Value.ToFormattedString(1);
@@ -407,12 +405,11 @@ namespace MilSpace.Visibility
             SetSelectedOPControlsEnabled(true);
         }
 
-        public void AddSelectedOO(IGeometry geometry, string title, string layer)
+        public void AddSelectedOO(IGeometry geometry, string title)
         {
             _selectedGeometry = geometry;
 
             lblSelectedOO.Text = title;
-            observObjectsLabel.Text = layer;
             txtBufferDistance.Enabled = (geometry.GeometryType != esriGeometryType.esriGeometryPolygon);
             txtCoveragePercent.Enabled = true;
             btnShowOO.Enabled = true;
@@ -896,6 +893,8 @@ namespace MilSpace.Visibility
             observObjectsFiltersPanel.Visible = !isVisible;
             columnsOOVisibilityPanel.Visible = !isVisible;
             columnsOPVisibilityPanel.Visible = !isVisible;
+            panel13.Visible = !isVisible;
+            panel14.Visible = !isVisible;
             chckOP.Visible = !isVisible;
             chckOO.Visible = !isVisible;
             chooseOPPanel.Visible = isVisible;
