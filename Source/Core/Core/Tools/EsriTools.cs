@@ -1514,18 +1514,40 @@ namespace MilSpace.Core.Tools
 
         public static double GetMinDistance(double minDistance, double minAngle, double height)
         {
-            if(minDistance == 0 && minAngle > -90)
+            // If the inner radius (min distance) is 0 we didn`t need to check min distance restrictions
+            // so return the distance to the intersection of the surface and the lower tilt limit
+            if (minDistance == 0)
             {
-                var minAngleRadians = (minAngle + 90) * (Math.PI / 180);
-                var radians = Math.Tan(minAngleRadians);
-                return radians * (180 / Math.PI) * height;
+                // If the min distance and the lower titl angle have the minimum values return 
+                // the minimum possible distance (0 m)
+                if (minAngle > -90)
+                {
+                    var minAngleRadians = (minAngle + 90) * (Math.PI / 180);
+                    var radians = Math.Tan(minAngleRadians);
+                    return radians * (180 / Math.PI) * height;
+                }
+                else
+                {
+                    return 0;
+                }
             }
 
+            // Calculate a distance from observation point to the end of inner radius (min distance) - hypotenuse
             var toMinPointDistance = Math.Sqrt(Math.Pow(height, 2) + Math.Pow(minDistance, 2));
 
+            // Find the angle between perpendicular from observation point to surface (height), 
+            // which is the tilt angle to the nearest possible point from observation point
+            //              |\
+            //              | \ <---- this angle
+            //      1 ---- >|  \
+            //              |   \
+            //              |    \
+            //              |_____\<---- 2     1- height 2- min distance (inner radius)
             var sin = minDistance / toMinPointDistance;
             var angle = -90 + Math.Asin(sin) * (180 / Math.PI);
 
+            // If founded angle less than the min angle from parameters return the distance to the 
+            // intersection of the surface and the lower tilt limit
             if (angle < minAngle)
             {
                 var minAngleRadians = (minAngle + 90) * (Math.PI / 180);
@@ -1540,11 +1562,22 @@ namespace MilSpace.Core.Tools
 
         public static double GetMaxDistance(double maxDistance, double maxAngle, double height)
         {
+            // Calculate a distance from observation point to the end of outer radius (max distance) - hypotenuse
             var toMinPointDistance = Math.Sqrt(Math.Pow(height, 2) + Math.Pow(maxDistance, 2));
 
+            // Find the angle between perpendicular from observation point to surface (height), 
+            // which is the tilt angle to the farthest possible point from observation point
+            //              |\
+            //              | \ <---- this angle
+            //      1 - >   |  \
+            //              |   \
+            //              |    \
+            //              |_____\<-2     1- height 2- max distance (outer radius)
             var sin = maxDistance / toMinPointDistance;
             var angle = -90 + Math.Asin(sin) * (180 / Math.PI);
 
+            // If founded angle more than the max angle from parameters return the distance to the 
+            // intersection of the surface and the upper tilt limit
             if (angle > maxAngle)
             {
                 var maxAngleRadians = (maxAngle + 90) * (Math.PI / 180);

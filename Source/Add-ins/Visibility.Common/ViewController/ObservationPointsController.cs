@@ -1068,18 +1068,27 @@ namespace MilSpace.Visibility.ViewController
 
         internal double CalcCoverageArea(IPoint pointGeom, ObservationPoint observPoint)
         {
+            // Get min and max distances taking into account min and max distance from parameters and vertical angles
             var realMaxDistance = EsriTools.GetMaxDistance(observPoint.OuterRadius.Value, observPoint.AngelMaxH.Value, observPoint.RelativeHeight.Value);
             var realMinDistance = EsriTools.GetMinDistance(observPoint.InnerRadius.Value, observPoint.AngelMinH.Value, observPoint.RelativeHeight.Value);
 
-            if(realMaxDistance < realMinDistance || observPoint.AngelMinH.Value >= 0)
+            // If min distance more than max distance or min vertical angle isn`n negative we can not calculate coverage
+            // area on the flat surface
+            if (realMaxDistance < realMinDistance || observPoint.AngelMinH.Value >= 0)
             {
                 _coverageArea = null;
                throw new ArgumentException("Observation point doesn`t has a coverage area");
             }
 
-            _coverageArea = EsriTools.GetCoverageArea(pointGeom, observPoint.AzimuthStart.Value, observPoint.AzimuthEnd.Value,
-                                                           realMinDistance, realMaxDistance);
+            _coverageArea = EsriTools.GetCoverageArea(
+                pointGeom,
+                observPoint.AzimuthStart.Value,
+                observPoint.AzimuthEnd.Value,
+                realMinDistance,
+                realMaxDistance);
+
             _coverageArea.SpatialReference = mapDocument.FocusMap.SpatialReference;
+
             return realMaxDistance;
         }
 
