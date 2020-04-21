@@ -63,7 +63,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             try
             {
                 IEnumerable<string> mesasges = null;
-                if (!ProfileLibrary.GenerateProfileData(featureClass, profileSource, tableName, mesasges))
+                if (!CalculationLibrary.GenerateProfileData(featureClass, profileSource, tableName, mesasges))
                 {
                     result.Exception = new MilSpaceVisibilityCalcFailedException();
                 }
