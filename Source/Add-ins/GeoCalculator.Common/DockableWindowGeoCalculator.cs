@@ -1616,7 +1616,10 @@ namespace MilSpace.GeoCalculator
                     log.DebugEx("AddPointToList. placedPoint.Value.X:{0} placedPoint.Value.Y:{1} placedPoint.Key:{2}"
                         , placedPoint.Value.X, placedPoint.Value.Y, placedPoint.Key);
 
-                    ClickedPointsDictionary.Add(placedPoint.Key, point);
+                    if (!ClickedPointsDictionary.Keys.Any(key => key == placedPoint.Key))
+                    {
+                        ClickedPointsDictionary.Add(placedPoint.Key, point);
+                    }
                     //NIKOL ClickedPointsDictionary.Add(placedPoint.Key, placedPoint.Value);
                     return placedPoint.Key;
                 }
