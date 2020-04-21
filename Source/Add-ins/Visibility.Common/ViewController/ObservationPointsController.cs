@@ -1473,7 +1473,11 @@ namespace MilSpace.Visibility.ViewController
             var manager = new MapLayersManager(mapDocument.ActiveView);
             var layerName = string.Empty;
 
-            var fromLayerPointsListModal = new PointsFromLayerModalWindow(ArcMap.Document.ActiveView, manager.GetObservPointsAppropriateLayers().Where(layer => !layer.EndsWith(GetObservPointsFromGdbFeatureClassName())).ToArray());
+            var fromLayerPointsListModal = new PointsFromLayerModalWindow(
+                        ArcMap.Document.ActiveView,
+                        manager.GetObservPointsAppropriateLayers().Where(layer => !layer.EndsWith(GetObservPointsFromGdbFeatureClassName())).ToArray(),
+                        true);
+
             var result = fromLayerPointsListModal.ShowDialog();
 
             if (result == DialogResult.OK)

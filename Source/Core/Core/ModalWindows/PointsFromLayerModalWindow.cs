@@ -13,17 +13,15 @@ namespace MilSpace.Core.ModalWindows
         private PointsFromLayerController _controller;
         private List<FromLayerPointModel> _points;
         private string[] _layers;
+        private bool _setInputLayers;
         public FromLayerPointModel SelectedPoint;
         public string LayerName;
 
-        public PointsFromLayerModalWindow(IActiveView activeView, string[] layers = null)
+        public PointsFromLayerModalWindow(IActiveView activeView, string[] layers = null, bool setInputLayers = false)
         {
             _controller = new PointsFromLayerController(activeView);
-
-            if(layers != null && layers.Any())
-            {
-                _layers = layers;
-            }
+            _setInputLayers = setInputLayers;
+            _layers = layers;
 
             InitializeComponent();
             LocalizeStrings();
@@ -43,8 +41,21 @@ namespace MilSpace.Core.ModalWindows
         {
             cmbLayers.Items.Clear();
 
-            var layers = _layers ?? _controller.GetPointLayers();
-            cmbLayers.Items.AddRange(layers);
+            if (!_setInputLayers)
+            {
+                if (_layers == null || !_layers.Any())
+                {
+                    _layers = _controller.GetPointLayers(); 
+                }
+            }
+
+            if (_layers == null || !_layers.Any())
+            {
+               
+                return;
+            }
+
+            cmbLayers.Items.AddRange(_layers);
             cmbLayers.SelectedIndex = 0;
         }
 
@@ -106,6 +117,18 @@ namespace MilSpace.Core.ModalWindows
             {
                 SelectedPoint = _points.First(point => point.ObjId == (int)dgvPoints.SelectedRows[0].Cells["IdCol"].Value);
                 LayerName = lblLayer.Text;
+            }
+        }
+
+        private void PointsFromLayerModalWindow_Shown(object sender, EventArgs e)
+        {
+            if (cmbLayers.Items.Count == 0)
+            {
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgThereAreNotAnyLayers", "У проекті відсутні відповідні шари"),
+                               LocalizationContext.Instance.MessageBoxTitle);
+
+                this.Close();
+                this.DialogResult = DialogResult.Cancel;
             }
         }
     }
