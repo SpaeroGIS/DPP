@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace MilSpace.Tools.SurfaceProfile
 {
-    public static class ProfileLibrary
+    public static class CalculationLibrary
     {
         private static readonly string environmentName = "workspace";
         private static readonly string temporaryWorkspace = MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection;
@@ -22,7 +22,7 @@ namespace MilSpace.Tools.SurfaceProfile
         private static Geoprocessor gp = null;
 
         //-------------------------------------------------------------------------
-        static ProfileLibrary()
+        static CalculationLibrary()
         {
         }
 
