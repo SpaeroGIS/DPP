@@ -2534,12 +2534,12 @@ namespace MilSpace.Visibility
             }
         }
 
-        public void FillSelectedOPFields(ObservationPoint point, string layer)
+        public void FillSelectedOPFields(ObservationPoint point)
         {
             throw new NotImplementedException();
         }
         
-        public void AddSelectedOO(IGeometry geometry, string title, string layer)
+        public void AddSelectedOO(IGeometry geometry, string title)
         {
             throw new NotImplementedException();
         }

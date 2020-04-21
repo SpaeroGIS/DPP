@@ -1068,18 +1068,27 @@ namespace MilSpace.Visibility.ViewController
 
         internal double CalcCoverageArea(IPoint pointGeom, ObservationPoint observPoint)
         {
+            // Get min and max distances taking into account min and max distance from parameters and vertical angles
             var realMaxDistance = EsriTools.GetMaxDistance(observPoint.OuterRadius.Value, observPoint.AngelMaxH.Value, observPoint.RelativeHeight.Value);
             var realMinDistance = EsriTools.GetMinDistance(observPoint.InnerRadius.Value, observPoint.AngelMinH.Value, observPoint.RelativeHeight.Value);
 
-            if(realMaxDistance < realMinDistance || observPoint.AngelMinH.Value >= 0)
+            // If min distance more than max distance or min vertical angle isn`n negative we can not calculate coverage
+            // area on the flat surface
+            if (realMaxDistance < realMinDistance || observPoint.AngelMinH.Value >= 0)
             {
                 _coverageArea = null;
                throw new ArgumentException("Observation point doesn`t has a coverage area");
             }
 
-            _coverageArea = EsriTools.GetCoverageArea(pointGeom, observPoint.AzimuthStart.Value, observPoint.AzimuthEnd.Value,
-                                                           realMinDistance, realMaxDistance);
+            _coverageArea = EsriTools.GetCoverageArea(
+                pointGeom,
+                observPoint.AzimuthStart.Value,
+                observPoint.AzimuthEnd.Value,
+                realMinDistance,
+                realMaxDistance);
+
             _coverageArea.SpatialReference = mapDocument.FocusMap.SpatialReference;
+
             return realMaxDistance;
         }
 
@@ -1310,7 +1319,6 @@ namespace MilSpace.Visibility.ViewController
         internal void SelectObservationStationFromSet(ObservationSetsEnum set)
         {
             IGeometry geometry = null;
-            var layerName = string.Empty;
             var title = string.Empty;
 
             switch (set)
@@ -1331,7 +1339,6 @@ namespace MilSpace.Visibility.ViewController
                         _observationObjects = VisibilityZonesFacade.GetAllObservationObjects().ToList();
                     }
 
-                    layerName = GetObservObjectsFromGdbFeatureClassName();
                     title = _observationObjects.First(obj => obj.ObjectId == geometryWithId.Key).Title;
 
                     break;
@@ -1339,7 +1346,6 @@ namespace MilSpace.Visibility.ViewController
                 case ObservationSetsEnum.GeoCalculator:
 
                     geometry = GetObservationStationFromGeoCalc();
-                    layerName = LocalizationContext.Instance.GeoCalcSet;
 
                     break;
 
@@ -1347,17 +1353,7 @@ namespace MilSpace.Visibility.ViewController
 
                     var geometryFromLayer = GetObservationStationFromFeatureLayer();
                     geometry = geometryFromLayer.Key;
-
-                    if (!String.IsNullOrEmpty(geometryFromLayer.Value))
-                    {
-                        var geomData = geometryFromLayer.Value.Split(';');
-
-                        if (geomData.Length == 2)
-                        {
-                            layerName = geomData[0];
-                            title = geomData[1];
-                        }
-                    }
+                    title = geometryFromLayer.Value;
 
                     break;
             }
@@ -1368,36 +1364,31 @@ namespace MilSpace.Visibility.ViewController
             }
 
             geometry.Project(ArcMap.Document.FocusMap.SpatialReference);
-            view.AddSelectedOO(geometry, title, layerName);
+            view.AddSelectedOO(geometry, title);
            //TEST GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).TestObjects(geometry);
         }
 
         internal void SelectObservationPointFromSet(ObservationSetsEnum set)
         {
             ObservationPoint point = null;
-            string layerName = string.Empty;
 
             switch(set)
             {
                 case ObservationSetsEnum.Gdb:
 
                     point = GetObservationPointFromGdb();
-                    layerName = GetObservPointsFromGdbFeatureClassName();
 
                     break;
 
                 case ObservationSetsEnum.GeoCalculator:
 
                     point = GetObservationPointFromGeoCalc();
-                    layerName = LocalizationContext.Instance.GeoCalcSet;
 
                     break;
 
                 case ObservationSetsEnum.FeatureLayers:
 
-                    var pointFromLayer = GetObservationPointFromPointLayer();
-                    point = pointFromLayer.Key;
-                    layerName = pointFromLayer.Value;
+                    point = GetObservationPointFromPointLayer();
 
                     break;
             }
@@ -1407,7 +1398,7 @@ namespace MilSpace.Visibility.ViewController
                 return;
             }
 
-            view.FillSelectedOPFields(point, layerName);
+            view.FillSelectedOPFields(point);
         }
 
         private ObservationPoint GetObservationPointFromGdb()
@@ -1477,7 +1468,7 @@ namespace MilSpace.Visibility.ViewController
             return null;
         }
 
-        private KeyValuePair<ObservationPoint, string> GetObservationPointFromPointLayer()
+        private ObservationPoint GetObservationPointFromPointLayer()
         {
             var manager = new MapLayersManager(mapDocument.ActiveView);
             var layerName = string.Empty;
@@ -1489,15 +1480,14 @@ namespace MilSpace.Visibility.ViewController
             {
                 if (fromLayerPointsListModal.SelectedPoint != null)
                 {
-                    layerName = fromLayerPointsListModal.LayerName;
                     var pointsFromLayer = VisibilityManager.GetObservationPointsFromAppropriateLayer(fromLayerPointsListModal.LayerName, ArcMap.Document.ActiveView);
                     var observPoint = pointsFromLayer.FirstOrDefault(point => point.Id == fromLayerPointsListModal.SelectedPoint.ObjId.ToString());
 
-                    return new KeyValuePair<ObservationPoint, string>(observPoint, layerName);
+                    return observPoint;
                 }
             }
 
-            return new KeyValuePair<ObservationPoint, string>();
+            return null;
         }
 
         private KeyValuePair<int, IGeometry> GetObservationStationFromGdb()
@@ -1560,7 +1550,7 @@ namespace MilSpace.Visibility.ViewController
             if(result == DialogResult.OK)
             {
                 var geometry = geometryFromFeatureLayerModal.SelectedGeometry;
-                var selectedObjTitle = $"{geometryFromFeatureLayerModal.SelectedLayerName};{geometryFromFeatureLayerModal.SelectedGeometryTitle}";
+                var selectedObjTitle = geometryFromFeatureLayerModal.SelectedGeometryTitle;
 
                 return new KeyValuePair<IGeometry, string>(geometry, selectedObjTitle);
             }
