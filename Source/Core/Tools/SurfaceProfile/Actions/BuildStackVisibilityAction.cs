@@ -234,7 +234,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                     outputSourceName,
                     pointId);
 
-                if (!ProfileLibrary.GenerateVisibilityData(
+                if (!CalculationLibrary.GenerateVisibilityData(
                     rasterSource,
                     featureClass,
                     VisibilityAnalysisTypesEnum.Frequency,
@@ -263,7 +263,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                             VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle :
                             VisibilityCalculationResultsEnum.VisibilityAreaPolygons, outputSourceName, pointId);
 
-                        if (!ProfileLibrary.ConvertRasterToPolygon(outImageName, visibilityArePolyFCName, out messages))
+                        if (!CalculationLibrary.ConvertRasterToPolygon(outImageName, visibilityArePolyFCName, out messages))
                         {
                             if (!messages.Any(m => m.StartsWith("ERROR 010151"))) // Observatioj areas dont intersect Visibility aresa
                             {
@@ -298,7 +298,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                         var outClipName = VisibilityTask.GetResultName(resultLype,
                             outputSourceName, pointId);
 
-                        if (!ProfileLibrary.ClipVisibilityZonesByAreas(
+                        if (!CalculationLibrary.ClipVisibilityZonesByAreas(
                             inClipName,
                             outClipName,
                             oservStationsFeatureClassName,
@@ -348,7 +348,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                             }
                             else
                             {
-                                if (!ProfileLibrary.ConvertRasterToPolygon(outClipName, visibilityArePolyFCName, out messages))
+                                if (!CalculationLibrary.ConvertRasterToPolygon(outClipName, visibilityArePolyFCName, out messages))
                                 {
                                     if (!messages.Any(m => m.StartsWith("ERROR 010151"))) // Observatioj areas dont intersect Visibility area
                                     {
@@ -378,7 +378,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                           VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle :
                           VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly, outputSourceName, pointId);
 
-                        if (!ProfileLibrary.ClipVisibilityZonesByAreas(
+                        if (!CalculationLibrary.ClipVisibilityZonesByAreas(
                             inClipName,
                             outClipName,
                             visibilityArePolyFCName,
