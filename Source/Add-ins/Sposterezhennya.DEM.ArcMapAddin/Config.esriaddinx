@@ -1,0 +1,34 @@
+﻿<ESRI.Configuration xmlns="http://schemas.esri.com/Desktop/AddIns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>Sposterezhennya.DEM.ArcMapAddin</Name>
+  <AddInID>{e32a48a7-a93b-47ff-90f3-d7f301e4e6c8}</AddInID>
+  <Description>Generate and support DEM for "Sposterezhennya" solution</Description>
+  <Version>1.0</Version>
+  <Image>Images\Sposterezhennya.DEM.ArcMapAddin.png</Image>
+  <Author>xviksor</Author>
+  <Company></Company>
+  <Date>4/23/2020</Date>
+  <Targets>
+    <Target name="Desktop" version="10.4" />
+  </Targets>
+  <AddIn language="CLR" library="Sposterezhennya.DEM.ArcMapAddin.dll" namespace="Sposterezhennya.DEM.ArcMapAddin">
+    <ArcMap>
+      <Commands>
+        <Button id="Sposterezhennya.DEM.DEMAddInButtom"
+                class="DEMAddInButtom"
+                message="Sposterezhennya DEM Window"
+                caption="Sposterezhennya DEM support"
+                tip="Open DEM support Window"
+                category="Спостереження інструменти"
+                image="Images\Sposterezhennya.DEM.ArcMapAddin.png" />
+      </Commands>
+      <DockableWindows>
+        <DockableWindow id="Sposterezhennya.DEM.ArcMapAddin_DockableDEMWindow"
+                        class="DockableDEMWindow+AddinImpl" 
+                        caption="My Dockable Window" 
+                        image="Images\DockableWindow1.png">
+          <InitialPlacement height="300" width="300" state="pinned" position="left" />
+        </DockableWindow>
+      </DockableWindows>
+    </ArcMap>
+  </AddIn>
+</ESRI.Configuration>
