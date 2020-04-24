@@ -340,6 +340,9 @@
       <Link>ModalWindows\PointsListModalWindow.designer.cs</Link>
       <DependentUpon>PointsListModalWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\Core\ModulesInteraction\IAddDemInteraction.cs">
+      <Link>ModulesInteraction\IAddDemInteraction.cs</Link>
+    </Compile>
     <Compile Include="..\Core\Tools\MapLayersManager.cs">
       <Link>Tools\MapLayersManager.cs</Link>
     </Compile>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 
-namespace Sposterezhennya.DEM.ArcMapAddin
+namespace Sposterezhennya.AddDEM.ArcMapAddin
 {
     public class DEMAddInButtom : ESRI.ArcGIS.Desktop.AddIns.Button
     {

@@ -1,23 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
+﻿using MilSpace.Core.ModulesInteraction;
+using Sposterezhennya.AddDEM.ArcMapAddin.AddInComponents;
+using Sposterezhennya.AddDEM.ArcMapAddin.Interaction;
+using System;
 using System.Windows.Forms;
 
-namespace Sposterezhennya.DEM.ArcMapAddin
+namespace Sposterezhennya.AddDEM.ArcMapAddin
 {
     /// <summary>
     /// Designer class of the dockable window add-in. It contains user interfaces that
     /// make up the dockable window.
     /// </summary>
-    public partial class DockableDEMWindow : UserControl
+    public partial class DockableDEMWindow : UserControl, IAddDemView
     {
-        public DockableDEMWindow(object hook)
+        AddDemController controller;
+
+        public DockableDEMWindow(object hook, AddDemController controller)
         {
             InitializeComponent();
             this.Hook = hook;
+            this.controller = controller;
+            this.controller.RegisterView(this);
         }
 
         /// <summary>
@@ -43,7 +45,10 @@ namespace Sposterezhennya.DEM.ArcMapAddin
 
             protected override IntPtr OnCreateChild()
             {
-                m_windowUI = new DockableDEMWindow(this.Hook);
+                AddDemController controller = new AddDemController();
+                ModuleInteraction.Instance.RegisterModuleInteraction<IAddDemInteraction>(new AddDemInteraction(controller));
+
+                m_windowUI = new DockableDEMWindow(this.Hook, controller);
                 return m_windowUI.Handle;
             }
 
@@ -55,6 +60,11 @@ namespace Sposterezhennya.DEM.ArcMapAddin
                 base.Dispose(disposing);
             }
 
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            controller.OpenDemCalcForm();
         }
     }
 }

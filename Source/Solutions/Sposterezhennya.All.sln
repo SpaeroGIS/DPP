@@ -21,7 +21,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilSpace.DataAccess", "..\C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilSpace.Tools", "..\Core\MilSpace.Tools\MilSpace.Tools.csproj", "{CBD5675B-F382-497D-98CC-70539ED658B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sposterezhennya.DEM.ArcMapAddin", "..\Add-ins\Sposterezhennya.DEM.ArcMapAddin\Sposterezhennya.DEM.ArcMapAddin.csproj", "{B2FCB163-F64C-45EB-8735-EB6178708E9D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sposterezhennya.AddDEM.ArcMapAddin", "..\Add-ins\Sposterezhennya.AddDEM.ArcMapAddin\Sposterezhennya.AddDEM.ArcMapAddin.csproj", "{B2FCB163-F64C-45EB-8735-EB6178708E9D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddDEM.ReliefProcessing", "..\Modules\AddDEM.ReliefProcessing\AddDEM.ReliefProcessing.csproj", "{A725B2F5-A0F6-4975-B272-9F747546A89C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -153,6 +155,18 @@ Global
 		{B2FCB163-F64C-45EB-8735-EB6178708E9D}.Release|x64.Build.0 = Release|Any CPU
 		{B2FCB163-F64C-45EB-8735-EB6178708E9D}.Release|x86.ActiveCfg = Release|Any CPU
 		{B2FCB163-F64C-45EB-8735-EB6178708E9D}.Release|x86.Build.0 = Release|Any CPU
+		{A725B2F5-A0F6-4975-B272-9F747546A89C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A725B2F5-A0F6-4975-B272-9F747546A89C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A725B2F5-A0F6-4975-B272-9F747546A89C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A725B2F5-A0F6-4975-B272-9F747546A89C}.Debug|x64.Build.0 = Debug|Any CPU
+		{A725B2F5-A0F6-4975-B272-9F747546A89C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A725B2F5-A0F6-4975-B272-9F747546A89C}.Debug|x86.Build.0 = Debug|Any CPU
+		{A725B2F5-A0F6-4975-B272-9F747546A89C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A725B2F5-A0F6-4975-B272-9F747546A89C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A725B2F5-A0F6-4975-B272-9F747546A89C}.Release|x64.ActiveCfg = Release|Any CPU
+		{A725B2F5-A0F6-4975-B272-9F747546A89C}.Release|x64.Build.0 = Release|Any CPU
+		{A725B2F5-A0F6-4975-B272-9F747546A89C}.Release|x86.ActiveCfg = Release|Any CPU
+		{A725B2F5-A0F6-4975-B272-9F747546A89C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -8,8 +8,8 @@
     <ProjectGuid>{B2FCB163-F64C-45EB-8735-EB6178708E9D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sposterezhennya.DEM.ArcMapAddin</RootNamespace>
-    <AssemblyName>Sposterezhennya.DEM.ArcMapAddin</AssemblyName>
+    <RootNamespace>Sposterezhennya.AddDEM.ArcMapAddin</RootNamespace>
+    <AssemblyName>Sposterezhennya.AddDEM.ArcMapAddin</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -99,16 +99,25 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\DEM.Common\AddInComponents\DEMAddInButtom.cs">
+    <Compile Include="..\AddDEM.Common\AddInComponents\AddDemController.cs">
+      <Link>AddInComponents\AddDemController.cs</Link>
+    </Compile>
+    <Compile Include="..\AddDEM.Common\AddInComponents\DEMAddInButtom.cs">
       <Link>AddInComponents\DEMAddInButtom.cs</Link>
     </Compile>
-    <Compile Include="..\DEM.Common\DockableDEMWindow.cs">
+    <Compile Include="..\AddDEM.Common\AddInComponents\IAddDemView.cs">
+      <Link>AddInComponents\IAddDemView.cs</Link>
+    </Compile>
+    <Compile Include="..\AddDEM.Common\DockableDEMWindow.cs">
       <Link>DockableDEMWindow.cs</Link>
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="..\DEM.Common\DockableDEMWindow.designer.cs">
+    <Compile Include="..\AddDEM.Common\DockableDEMWindow.designer.cs">
       <Link>DockableDEMWindow.designer.cs</Link>
       <DependentUpon>DockableDEMWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\AddDEM.Common\Interaction\AddDemInteraction.cs">
+      <Link>Interaction\AddDemInteraction.cs</Link>
     </Compile>
     <Compile Include="Config.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -123,7 +132,7 @@
     </AddInContent>
   </ItemGroup>
   <ItemGroup>
-    <AddInContent Include="Images\Sposterezhennya.DEM.ArcMapAddin.png" />
+    <AddInContent Include="Images\Sposterezhennya.AddDEM.ArcMapAddin.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Windows.Forms" />
@@ -145,9 +154,13 @@
       <Project>{A9DEED9B-A54B-4C1D-ABA7-D2C7BB5FA6EC}</Project>
       <Name>MilSpace.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Modules\AddDEM.ReliefProcessing\AddDEM.ReliefProcessing.csproj">
+      <Project>{a725b2f5-a0f6-4975-b272-9f747546a89c}</Project>
+      <Name>AddDEM.ReliefProcessing</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\DEM.Common\DockableDEMWindow.resx">
+    <EmbeddedResource Include="..\AddDEM.Common\DockableDEMWindow.resx">
       <Link>DockableDEMWindow.resx</Link>
       <DependentUpon>DockableDEMWindow.cs</DependentUpon>
     </EmbeddedResource>
