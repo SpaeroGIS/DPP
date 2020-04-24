@@ -245,3 +245,5 @@
 /.vs/DPP/v16
 /Source/Add-ins/GeoCalculator.Common/obj/Release/MilSpace.GeoCalculator.ArcMapAddin.csproj.CoreCompileInputs.cache
 /Source/GUIModels/AddinADDDEM/WindowsFormsAddinAddDEM/obj/Debug
+/Source/Add-ins/Sposterezhennya.DEM.ArcMapAddin/bin/Debug
+/Source/Add-ins/Sposterezhennya.DEM.ArcMapAddin/obj/Debug

@@ -14,6 +14,7 @@ namespace MilSpace.Core.ModulesInteraction
             {ModulesEnum.GeoCalculator, typeof(IGeocalculatorInteraction) },
             {ModulesEnum.Profile, typeof(IProfileInteraction) },
             {ModulesEnum.Visibility, typeof(IVisibilityInteraction) },
+            {ModulesEnum.AddDem, typeof(IAddDemInteraction) },
             {ModulesEnum.Visualization3D, typeof(I3DVisualizationInteraction) }
         };
 
@@ -23,6 +24,7 @@ namespace MilSpace.Core.ModulesInteraction
             { typeof(IGeocalculatorInteraction), null },
             { typeof(IProfileInteraction), null },
             { typeof(IVisibilityInteraction), null },
+            { typeof(IAddDemInteraction), null },
             { typeof(I3DVisualizationInteraction), null }
         };
 
