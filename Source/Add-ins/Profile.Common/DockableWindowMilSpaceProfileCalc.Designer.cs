@@ -2161,10 +2161,10 @@
             // lblHydrographyLayer
             // 
             this.lblHydrographyLayer.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblHydrographyLayer.Location = new System.Drawing.Point(4, 4);
+            this.lblHydrographyLayer.Location = new System.Drawing.Point(4, 3);
             this.lblHydrographyLayer.Name = "lblHydrographyLayer";
             this.lblHydrographyLayer.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.lblHydrographyLayer.Size = new System.Drawing.Size(100, 20);
+            this.lblHydrographyLayer.Size = new System.Drawing.Size(100, 23);
             this.lblHydrographyLayer.TabIndex = 42;
             this.lblHydrographyLayer.Text = "гидрография";
             // 
@@ -2231,10 +2231,10 @@
             // lblBuildingsLayer
             // 
             this.lblBuildingsLayer.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblBuildingsLayer.Location = new System.Drawing.Point(4, 4);
+            this.lblBuildingsLayer.Location = new System.Drawing.Point(4, 3);
             this.lblBuildingsLayer.Name = "lblBuildingsLayer";
             this.lblBuildingsLayer.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.lblBuildingsLayer.Size = new System.Drawing.Size(100, 20);
+            this.lblBuildingsLayer.Size = new System.Drawing.Size(100, 23);
             this.lblBuildingsLayer.TabIndex = 41;
             this.lblBuildingsLayer.Text = " сооружения";
             // 

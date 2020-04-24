@@ -99,16 +99,20 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddInComponents\DEMAddInButtom.cs" />
+    <Compile Include="..\DEM.Common\AddInComponents\DEMAddInButtom.cs">
+      <Link>AddInComponents\DEMAddInButtom.cs</Link>
+    </Compile>
+    <Compile Include="..\DEM.Common\DockableDEMWindow.cs">
+      <Link>DockableDEMWindow.cs</Link>
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="..\DEM.Common\DockableDEMWindow.designer.cs">
+      <Link>DockableDEMWindow.designer.cs</Link>
+      <DependentUpon>DockableDEMWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Config.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Config.esriaddinx</DependentUpon>
-    </Compile>
-    <Compile Include="DockableDEMWindow.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="DockableDEMWindow.Designer.cs">
-      <DependentUpon>DockableDEMWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -137,15 +141,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DockableDEMWindow.resx">
-      <DependentUpon>DockableDEMWindow.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\Core\MilSpace.Core\MilSpace.Core.csproj">
       <Project>{A9DEED9B-A54B-4C1D-ABA7-D2C7BB5FA6EC}</Project>
       <Name>MilSpace.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\DEM.Common\DockableDEMWindow.resx">
+      <Link>DockableDEMWindow.resx</Link>
+      <DependentUpon>DockableDEMWindow.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>
