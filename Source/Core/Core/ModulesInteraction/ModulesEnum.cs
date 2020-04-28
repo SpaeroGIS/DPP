@@ -5,6 +5,7 @@
         Visualization3D,
         GeoCalculator,
         Profile,
-        Visibility
+        Visibility,
+        AddDem
     }
 }
