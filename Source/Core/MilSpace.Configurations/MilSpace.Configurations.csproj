@@ -99,6 +99,15 @@
     <Compile Include="..\Configurations\Connection\MilSpaceConnectionProperty.cs">
       <Link>Connection\MilSpaceConnectionProperty.cs</Link>
     </Compile>
+    <Compile Include="..\Configurations\DemStorages\DemStorages.cs">
+      <Link>DemStorages\DemStorages.cs</Link>
+    </Compile>
+    <Compile Include="..\Configurations\DemStorages\DemStoragesSections.cs">
+      <Link>DemStorages\DemStoragesSections.cs</Link>
+    </Compile>
+    <Compile Include="..\Configurations\DemStorages\SrtmStorageSection.cs">
+      <Link>DemStorages\SrtmStorageSection.cs</Link>
+    </Compile>
     <Compile Include="..\Configurations\FeatrueClasses\FeatureClasses.cs">
       <Link>FeatrueClasses\FeatureClasses.cs</Link>
     </Compile>

@@ -7,7 +7,7 @@ namespace MilSpace.Configurations.Base
 {
     internal class ConfigElementNames
     {
-        
+
         /// <summary>
         /// Defines assembly contained Spaero actions
         /// </summary>
@@ -36,12 +36,22 @@ namespace MilSpace.Configurations.Base
         /// <summary>temporaryGDB
         /// Defines the section where the main connection is defined 
         /// </summary>
-        
+
         internal const string MilSpaceConnections = "connections";
 
         internal const string WorkingGDBConnectionSection = "workingGDB";
         internal const string WorkingDBConnectionSection = "workingDB";
         internal const string TemporaryGDBConnectionSection = "temporaryGDB";
+
+        /// <summary>
+        /// The section group to defibne file storages for SRTM and Santitel files
+        /// </summary>
+        internal const string DemStorages = "demStorages";
+
+        /// <summary>
+        /// Defines the root folder for SRTM files
+        /// </summary>
+        internal const string SrtmStorage = "srtmStorage";
 
 
         /// <summary>
@@ -62,6 +72,7 @@ namespace MilSpace.Configurations.Base
         internal const string FeatureClasses = "featureClasses";
         internal const string ObservationPoint = "observationPoint";
         internal const string NameAttribute = "name";
+        internal const string RootFolderAttribte = "rootFolder";
 
     }
 }
