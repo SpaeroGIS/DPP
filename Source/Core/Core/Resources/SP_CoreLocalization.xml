@@ -21,6 +21,7 @@
   
   <MsgErrorHappenedText>Виникла помилка /n Більш детальна інформація знаходиться у журналі</MsgErrorHappenedText>
   <MsgCannotFindObjIdText>У шарі відсутнє поле {0}</MsgCannotFindObjIdText>
+  <MsgThereAreNotAnyLayers>У проекті відсутні відповідні шари</MsgThereAreNotAnyLayers>
 
   <DgvObservPointsIdHeader>Ідентифікатор</DgvObservPointsIdHeader>
   <DgvObservPointsTitleHeader>Назва</DgvObservPointsTitleHeader>
