@@ -1191,11 +1191,11 @@ namespace MilSpace.GeoCalculator
                 this.YCoordColumn.HeaderText = _context.FindLocalizedElement("YCoordColHeader", "Широта");
 
                 //TODO:Localize the next Labels and add config here
-                this.wgsProjectedLabel.Text = CurrentProjectionsModel.WGS84Projection.Name;
+                this.wgsProjectedLabel.Text = _context.FindLocalizedElement("WGS84Projection", CurrentProjectionsModel.WGS84Projection.Name); 
                 this.wgsGeoLabel.Text = _context.WgsLabel;
-                this.PulkovoProjectedLabel.Text = CurrentProjectionsModel.Pulkovo1942Projection.Name;
+                this.PulkovoProjectedLabel.Text = _context.FindLocalizedElement("Pulkovo1942Projection", CurrentProjectionsModel.Pulkovo1942Projection.Name); 
                 this.PulkovoGeoLabel.Text = _context.PulkovoLabel;
-                this.UkraineProjectedLabel.Text = CurrentProjectionsModel.Ukraine2000Projection.Name;
+                this.UkraineProjectedLabel.Text = _context.FindLocalizedElement("Ukraine2000Projection", CurrentProjectionsModel.Ukraine2000Projection.Name);
                 this.UkraineGeoLabel.Text = _context.UkraineLabel;
                 this.toolsLabel.Text = _context.FindLocalizedElement("ToolBarTitle", "Список точок");
                 this.coordLabel.Text = _context.FindLocalizedElement("CoordsSystemsLabel", "СК:");
