@@ -58,6 +58,13 @@
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Microsoft SQL Server\130\SDK\Assemblies\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\Solutions\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -155,7 +162,16 @@
     <Compile Include="..\Tools\VisibilityManager.cs">
       <Link>VisibilityManager.cs</Link>
     </Compile>
+    <Compile Include="CopyRaster\Actions\ActionParameters.cs" />
+    <Compile Include="CopyRaster\Actions\ActionsEnum.cs" />
+    <Compile Include="CopyRaster\Actions\CopyRastersToStorageAction.cs" />
+    <Compile Include="CopyRaster\CopyRasterManager.cs" />
+    <Compile Include="CopyRaster\ResterStorageTypesEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sentinel\Extentions.cs" />
+    <Compile Include="Sentinel\ImportManager.cs" />
+    <Compile Include="Sentinel\ImportSantinelData.cs" />
+    <Compile Include="Sentinel\JsonClasses.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MilSpace.Configurations\MilSpace.Configurations.csproj">
@@ -171,5 +187,9 @@
       <Name>MilSpace.DataAccess</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
