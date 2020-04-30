@@ -19,6 +19,11 @@ namespace MilSpace.Tools.SurfaceProfile
         private static Logger log = Logger.GetLoggerEx("ProfileLibrary");
         private const string NonvisibleCellValue = "NODATA";
         private const string ClippingGeometry = "ClippingGeometry";
+
+
+        #region RasterToOtherFormat
+        private const string rasterOutFormat = "TIFF";
+        #endregion
         private static Geoprocessor gp = null;
 
         //-------------------------------------------------------------------------
@@ -123,6 +128,18 @@ namespace MilSpace.Tools.SurfaceProfile
             };
 
             return RunTool(rasterToPolygon, null, out messages);
+        }
+
+        public static bool RasterToOtherFormat(IEnumerable<string> inputRasters, string outputFolder, out IEnumerable<string> messages)
+        {
+            RasterToOtherFormat coppier = new RasterToOtherFormat
+            {
+                Input_Rasters = string.Join(";",inputRasters.ToArray()),
+                Output_Workspace = outputFolder,
+                Raster_Format = rasterOutFormat
+            };
+
+            return RunTool(coppier, null, out messages);
         }
 
         private static bool RunTool(IGPProcess process, ITrackCancel TC, out IEnumerable<string> messages)

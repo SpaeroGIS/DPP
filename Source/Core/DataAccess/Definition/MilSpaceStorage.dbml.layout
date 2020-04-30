@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.1.0.0" absoluteBounds="0, 0, 11, 8.5" name="MilSpaceStorage">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="MilSpaceStorage">
   <DataContextMoniker Name="/MilSpaceStorageContext" />
   <nestedChildShapes>
     <classShape Id="e67135f7-208c-4515-b400-76f4e4953b7a" absoluteBounds="2.125, 0.5, 2, 1.1939925130208327">
@@ -21,5 +21,11 @@
         <classShapeMoniker Id="e67135f7-208c-4515-b400-76f4e4953b7a" />
       </nodes>
     </associationConnector>
+    <classShape Id="bd3ae589-5895-47f8-b53d-5265d93e2b8b" absoluteBounds="5.5, 3.125, 2, 2.5401025390625">
+      <DataClassMoniker Name="/MilSpaceStorageContext/MilSp_SrtmGrid" />
+      <nestedChildShapes>
+        <elementListCompartment Id="90f9cf52-db7f-4494-ad20-b89a81d10819" absoluteBounds="5.515, 3.585, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

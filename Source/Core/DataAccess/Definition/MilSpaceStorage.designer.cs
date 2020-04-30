@@ -36,6 +36,9 @@ namespace MilSpace.DataAccess.Definition
     partial void InsertMilSp_Profile(MilSp_Profile instance);
     partial void UpdateMilSp_Profile(MilSp_Profile instance);
     partial void DeleteMilSp_Profile(MilSp_Profile instance);
+    partial void InsertMilSp_SrtmGrid(MilSp_SrtmGrid instance);
+    partial void UpdateMilSp_SrtmGrid(MilSp_SrtmGrid instance);
+    partial void DeleteMilSp_SrtmGrid(MilSp_SrtmGrid instance);
     #endregion
 		
 		public MilSpaceStorageContext() : 
@@ -81,6 +84,14 @@ namespace MilSpace.DataAccess.Definition
 			get
 			{
 				return this.GetTable<MilSp_Profile>();
+			}
+		}
+		
+		internal System.Data.Linq.Table<MilSp_SrtmGrid> MilSp_SrtmGrids
+		{
+			get
+			{
+				return this.GetTable<MilSp_SrtmGrid>();
 			}
 		}
 	}
@@ -419,6 +430,260 @@ namespace MilSpace.DataAccess.Definition
 		{
 			this.SendPropertyChanging();
 			entity.MilSp_Profile = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MILSP_SRTM_GRID")]
+	internal partial class MilSp_SrtmGrid : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _OBJECTID;
+		
+		private string _FileName;
+		
+		private int _Id;
+		
+		private decimal _POINT_X;
+		
+		private decimal _POINT_Y;
+		
+		private string _SRTM;
+		
+		private short _Boundary;
+		
+		private short _Loaded;
+		
+		private string _Zone_UTM;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnOBJECTIDChanging(int value);
+    partial void OnOBJECTIDChanged();
+    partial void OnFileNameChanging(string value);
+    partial void OnFileNameChanged();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnPOINT_XChanging(decimal value);
+    partial void OnPOINT_XChanged();
+    partial void OnPOINT_YChanging(decimal value);
+    partial void OnPOINT_YChanged();
+    partial void OnSRTMChanging(string value);
+    partial void OnSRTMChanged();
+    partial void OnBoundaryChanging(short value);
+    partial void OnBoundaryChanged();
+    partial void OnLoadedChanging(short value);
+    partial void OnLoadedChanged();
+    partial void OnZone_UTMChanging(string value);
+    partial void OnZone_UTMChanged();
+    #endregion
+		
+		public MilSp_SrtmGrid()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OBJECTID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int OBJECTID
+		{
+			get
+			{
+				return this._OBJECTID;
+			}
+			set
+			{
+				if ((this._OBJECTID != value))
+				{
+					this.OnOBJECTIDChanging(value);
+					this.SendPropertyChanging();
+					this._OBJECTID = value;
+					this.SendPropertyChanged("OBJECTID");
+					this.OnOBJECTIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="Filename", Storage="_FileName", DbType="NVarChar(254) NOT NULL", CanBeNull=false)]
+		public string FileName
+		{
+			get
+			{
+				return this._FileName;
+			}
+			set
+			{
+				if ((this._FileName != value))
+				{
+					this.OnFileNameChanging(value);
+					this.SendPropertyChanging();
+					this._FileName = value;
+					this.SendPropertyChanged("FileName");
+					this.OnFileNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int NOT NULL")]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_POINT_X", DbType="Decimal(38,8) NOT NULL")]
+		public decimal POINT_X
+		{
+			get
+			{
+				return this._POINT_X;
+			}
+			set
+			{
+				if ((this._POINT_X != value))
+				{
+					this.OnPOINT_XChanging(value);
+					this.SendPropertyChanging();
+					this._POINT_X = value;
+					this.SendPropertyChanged("POINT_X");
+					this.OnPOINT_XChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_POINT_Y", DbType="Decimal(38,8) NOT NULL")]
+		public decimal POINT_Y
+		{
+			get
+			{
+				return this._POINT_Y;
+			}
+			set
+			{
+				if ((this._POINT_Y != value))
+				{
+					this.OnPOINT_YChanging(value);
+					this.SendPropertyChanging();
+					this._POINT_Y = value;
+					this.SendPropertyChanged("POINT_Y");
+					this.OnPOINT_YChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SRTM", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string SRTM
+		{
+			get
+			{
+				return this._SRTM;
+			}
+			set
+			{
+				if ((this._SRTM != value))
+				{
+					this.OnSRTMChanging(value);
+					this.SendPropertyChanging();
+					this._SRTM = value;
+					this.SendPropertyChanged("SRTM");
+					this.OnSRTMChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Boundary", DbType="SmallInt NOT NULL")]
+		public short Boundary
+		{
+			get
+			{
+				return this._Boundary;
+			}
+			set
+			{
+				if ((this._Boundary != value))
+				{
+					this.OnBoundaryChanging(value);
+					this.SendPropertyChanging();
+					this._Boundary = value;
+					this.SendPropertyChanged("Boundary");
+					this.OnBoundaryChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Loaded", DbType="SmallInt NOT NULL")]
+		public short Loaded
+		{
+			get
+			{
+				return this._Loaded;
+			}
+			set
+			{
+				if ((this._Loaded != value))
+				{
+					this.OnLoadedChanging(value);
+					this.SendPropertyChanging();
+					this._Loaded = value;
+					this.SendPropertyChanged("Loaded");
+					this.OnLoadedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Zone_UTM", DbType="NVarChar(10) NOT NULL", CanBeNull=false)]
+		public string Zone_UTM
+		{
+			get
+			{
+				return this._Zone_UTM;
+			}
+			set
+			{
+				if ((this._Zone_UTM != value))
+				{
+					this.OnZone_UTMChanging(value);
+					this.SendPropertyChanging();
+					this._Zone_UTM = value;
+					this.SendPropertyChanged("Zone_UTM");
+					this.OnZone_UTMChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }

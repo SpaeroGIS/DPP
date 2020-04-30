@@ -13,6 +13,10 @@
   <Pulkovo1942TitleLabel>Pulkovo 1942</Pulkovo1942TitleLabel>
   <Wgs1984TitleLabel>WGS84</Wgs1984TitleLabel>
   <Ukraine2000TitleLabel>Ukraine 2000</Ukraine2000TitleLabel>
+
+  <WGS84Projection>WGS84Projection</WGS84Projection>
+  <Pulkovo1942Projection>Pulkovo1942Projection</Pulkovo1942Projection>
+  <Ukraine2000Projection>Ukraine2000Projection</Ukraine2000Projection>
   
   <MgrsLabel>MGRS</MgrsLabel>
   <MgrsName>MGRS</MgrsName>

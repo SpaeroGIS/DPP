@@ -157,6 +157,12 @@
     <Compile Include="..\DataAccess\DataTransfer\ProfileLine.cs">
       <Link>DataTransfer\ProfileLine.cs</Link>
     </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\Sentinel\SentinelFootprint.cs">
+      <Link>DataTransfer\Sentinel\SentinelFootprint.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\SrtmGrid.cs">
+      <Link>DataTransfer\SrtmGrid.cs</Link>
+    </Compile>
     <Compile Include="..\DataAccess\DataTransfer\Visibility.cs">
       <Link>DataTransfer\Visibility.cs</Link>
     </Compile>
@@ -219,6 +225,12 @@
     <Compile Include="..\DataAccess\Exceptions\MilSpaceVisibilityDataException.cs">
       <Link>Exceptions\MilSpaceVisibilityDataException.cs</Link>
     </Compile>
+    <Compile Include="..\DataAccess\Facade\AddDemDataAccess.cs">
+      <Link>Facade\AddDemDataAccess.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\Facade\AddDemFacade.cs">
+      <Link>Facade\AddDemFacade.cs</Link>
+    </Compile>
     <Compile Include="..\DataAccess\Facade\DataAccess.cs">
       <Link>Facade\DataAccess.cs</Link>
     </Compile>
@@ -230,6 +242,9 @@
     </Compile>
     <Compile Include="..\DataAccess\Facade\MilSpaceProfileFacade.cs">
       <Link>Facade\MilSpaceProfileFacade.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\Facade\SentinelFacade.cs">
+      <Link>Facade\SentinelFacade.cs</Link>
     </Compile>
     <Compile Include="..\DataAccess\Facade\VisibilityDataAccess.cs">
       <Link>Facade\VisibilityDataAccess.cs</Link>

@@ -53,9 +53,15 @@ namespace MilSpace.Core.Actions
         public const string FeatureClassX = "fcx";
 
         /// <summary>
-        /// Feature class
+        /// Field names
         /// </summary>
         public const string FieldName = "fldnm";
+
+        /// <summary>
+        /// Files name
+        /// </summary>
+        public const string Files = "fls";
+
 
         /// <summary>
         /// Boundary
