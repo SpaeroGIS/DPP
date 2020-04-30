@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sposterezhennya.AddDEM.ArcMapAddin</RootNamespace>
-    <AssemblyName>Sposterezhennya.AddDEM.ArcMapAddin</AssemblyName>
+    <AssemblyName>Sposterezhennya.AddDEM</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

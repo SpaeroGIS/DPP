@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DNOEGDB" Class="MilSpaceStorageContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=SPAERO;Initial Catalog=DNOEGDB;Integrated Security=True" SettingsObjectName="MilSpace.DataAccess.Settings" SettingsPropertyName="DNOEGDBConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=SPAERO;Initial Catalog=DNOEGDB;Integrated Security=True" SettingsObjectName="MilSpace.DataAccess.Properties.Settings" SettingsPropertyName="DNOEGDBConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.MilSp_Session" Member="MilSp_Sessions" AccessModifier="Internal">
     <Type Name="MilSp_Session" AccessModifier="Internal">
       <Column Name="userName" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -16,6 +16,19 @@
       <Column Name="Creator" Type="System.String" DbType="NChar(20) NOT NULL" CanBeNull="false" />
       <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Association Name="MilSp_Profile_MilSp_Session" Member="MilSp_Sessions" ThisKey="idRow" OtherKey="ProfileId" Type="MilSp_Session" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MILSP_SRTM_GRID" Member="MilSp_SrtmGrids" AccessModifier="Internal">
+    <Type Name="MilSp_SrtmGrid" AccessModifier="Internal">
+      <Column Name="OBJECTID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Filename" Type="System.String" DbType="NVarChar(254)" CanBeNull="true" />
+      <Column Name="Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="POINT_X" Type="System.Decimal" DbType="Decimal(38,8)" CanBeNull="true" />
+      <Column Name="POINT_Y" Type="System.Decimal" DbType="Decimal(38,8)" CanBeNull="true" />
+      <Column Name="SRTM" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Boundary" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="Load_" Member="Load" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="Zone_UTM" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>
