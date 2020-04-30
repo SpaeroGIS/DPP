@@ -192,5 +192,10 @@ namespace MilSpace.DataAccess.DataTransfer
         {
             return base.GetHashCode();
         }
+
+        public ObservationPoint ShallowCopy()
+        {
+            return (ObservationPoint)this.MemberwiseClone();
+        }
     }
 }

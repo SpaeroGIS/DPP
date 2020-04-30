@@ -9,8 +9,6 @@ using MilSpace.Tools.SurfaceProfile;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MilSpace.Tools
 {
@@ -29,14 +27,14 @@ namespace MilSpace.Tools
         private string _gdb = MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection;
 
         public void SetCalculateAreas(
-            int[] observPointsIds, 
-            int[] observObjectsIds, 
-            IFeatureClass observPointFC, 
+            int[] observPointsIds,
+            int[] observObjectsIds,
+            IFeatureClass observPointFC,
             IFeatureClass observObjFC = null)
         {
             _logger.InfoEx("> SetCalculateAreas START. observPointFC:{0} observObjFC:{1}", observPointFC.AliasName, observObjFC.AliasName);
 
-            if(observObjectsIds != null && observObjectsIds.Count() > 0 && observObjFC != null)
+            if (observObjectsIds != null && observObjectsIds.Count() > 0 && observObjFC != null)
             {
                 _calcType = VisibilityCalcTypeEnum.ObservationObjects;
                 SetObjPolygons(observObjectsIds, observObjFC);
@@ -55,9 +53,9 @@ namespace MilSpace.Tools
             _logger.InfoEx("> SetCalculateAreas END. calcType:{0} totalExpectedArea:{1}", _calcType.ToString(), _totalExpectedArea);
         }
 
-        public  void AddPotentialArea(string featureClassName, bool isTotal, int currPointId = 0)
+        public void AddPotentialArea(string featureClassName, bool isTotal, int currPointId = 0)
         {
-            _logger.InfoEx("> AddPotentialArea START featureClassName:{0} isTotal:{1} currPointId:{2}", 
+            _logger.InfoEx("> AddPotentialArea START featureClassName:{0} isTotal:{1} currPointId:{2}",
                 featureClassName, isTotal.ToString(), currPointId);
             try
             {
@@ -72,8 +70,8 @@ namespace MilSpace.Tools
                     foreach (var area in pointAreas)
                     {
                         GdbAccess.Instance.AddCoverageAreaFeature(
-                            area.Polygon, 
-                            area.PointId, 
+                            area.Polygon,
+                            area.PointId,
                             featureClassName,
                             VisibilityManager.CurrentMap.SpatialReference);
                     }
@@ -91,20 +89,19 @@ namespace MilSpace.Tools
             _logger.DebugEx("> SetObjPolygons START");
             try
             {
-                foreach(var objId in observObjectsIds)
+                foreach (var objId in observObjectsIds)
                 {
                     var obj = observObjFC.GetFeature(objId);
                     var objGeom = obj.Shape as IPolygon;
                     objGeom.Project(VisibilityManager.CurrentMap.SpatialReference);
                     _objPolygons.Add(objId, objGeom as IPolygon);
-
-                    // ??? var objArea = (IArea)objGeom;
                 }
+
                 var totalObjArea = EsriTools.GetTotalPolygon(_objPolygons.Select(area => { return area.Value; }).ToList());
 
                 _objPolygons.Add(-1, totalObjArea);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.ErrorEx("> SetObjPolygons Exception: {0}", ex.Message);
                 return;
@@ -118,7 +115,7 @@ namespace MilSpace.Tools
 
             var observPoints = VisibilityZonesFacade.GetObservationPointsByObjectIds(observPointsIds);
 
-            if(observPoints == null || observPoints.Count() == 0)
+            if (observPoints == null || observPoints.Count() == 0)
             {
                 _logger.ErrorEx($"> SetCoverageAreas END. Observation points are not found");
                 return;
@@ -126,7 +123,7 @@ namespace MilSpace.Tools
 
             var observObjPolygons = new Dictionary<int, IPolygon>();
 
-            foreach(var pointId in observPointsIds)
+            foreach (var pointId in observPointsIds)
             {
                 var point = observPointFC.GetFeature(pointId);
                 IPoint pointGeom = point.Shape as IPoint;
@@ -135,18 +132,18 @@ namespace MilSpace.Tools
                 var pointModel = observPoints.First(p => p.Objectid == pointId);
                 var realMaxDistance = EsriTools.GetMaxDistance(pointModel.OuterRadius.Value, pointModel.AngelMaxH.Value, pointModel.RelativeHeight.Value);
                 var realMinDistance = EsriTools.GetMinDistance(pointModel.InnerRadius.Value, pointModel.AngelMinH.Value, pointModel.RelativeHeight.Value);
-                
-                if(realMaxDistance < realMinDistance)
+
+                if (realMaxDistance < realMinDistance)
                 {
                     _logger.WarnEx("> SetCoverageAreas END. Observation point doesn`t has a coverage area");
                     return;
                 }
 
                 var visibilityPolygon = EsriTools.GetCoverageArea(
-                    pointGeom, 
-                    pointModel.AzimuthStart.Value, 
+                    pointGeom,
+                    pointModel.AzimuthStart.Value,
                     pointModel.AzimuthEnd.Value,
-                    realMinDistance, 
+                    realMinDistance,
                     realMaxDistance);
 
                 _coverageAreaData.Add(new CoverageAreaData
@@ -171,11 +168,11 @@ namespace MilSpace.Tools
 
         public void CalculateCoverageTableDataForPoint(bool isTotal, string visibilityAreasFCName, int pointCount, int currPointId)
         {
-            if(_calcType == VisibilityCalcTypeEnum.ObservationObjects)
+            if (_calcType == VisibilityCalcTypeEnum.ObservationObjects)
             {
                 CalculateCoverageTableVADataForPoint(isTotal, currPointId, visibilityAreasFCName, pointCount);
             }
-            else if (_calcType == VisibilityCalcTypeEnum.OpservationPoints) 
+            else if (_calcType == VisibilityCalcTypeEnum.OpservationPoints)
             {
                 CalculateCoverageTableVSDataForPoint(isTotal, currPointId, visibilityAreasFCName, pointCount);
             }
@@ -183,7 +180,7 @@ namespace MilSpace.Tools
 
         public void SaveDataToCoverageTable(string tableName)
         {
-            if(_calcType == VisibilityCalcTypeEnum.ObservationObjects)
+            if (_calcType == VisibilityCalcTypeEnum.ObservationObjects)
             {
                 GdbAccess.Instance.FillVACoverageTable(_coverageTableModel, tableName, _gdb);
             }
@@ -195,16 +192,16 @@ namespace MilSpace.Tools
 
         private void CalculateCoverageTableVSDataForPoint(bool isTotal, int currPointId, string visibilityAreasFCName, int pointCount)
         {
-            if(isTotal)
+            if (isTotal)
             {
                 CalculateVSTotalValues(pointCount, visibilityAreasFCName);
             }
 
-            if(!isTotal || pointCount == 1)
+            if (!isTotal || pointCount == 1)
             {
                 var observPoint = VisibilityZonesFacade.GetObservationPointsByObjectIds(new int[] { currPointId }).First();
 
-                if(_totalExpectedArea == 0)
+                if (_totalExpectedArea == 0)
                 {
                     AddEmptyAreaRow(observPoint.Title, currPointId);
                     return;
@@ -226,11 +223,11 @@ namespace MilSpace.Tools
             {
                 CalculateVATotalValues(pointCount, visibilityAreasFCName);
             }
-            
-            if(!isTotal || pointCount == 1)
+
+            if (!isTotal || pointCount == 1)
             {
                 var observPoint = VisibilityZonesFacade.GetObservationPointsByObjectIds(new int[] { currPointId }).First();
-                if(observPoint == null)
+                if (observPoint == null)
                 {
                     _logger.ErrorEx($"> CalculateCoverageTableVADataForPoint END. Observation point with id {currPointId} is not found");
                     return;
@@ -245,16 +242,16 @@ namespace MilSpace.Tools
                     var totalObjArea = (IArea)_objPolygons[-1];
                     var visibilityPolygonsForPointFeatureClass = GdbAccess.Instance.GetFeatureClass(_gdb, visibilityAreasFCName);
 
-                    foreach(var polygon in _objPolygons)
+                    foreach (var polygon in _objPolygons)
                     {
-                        if(polygon.Key == -1)
+                        if (polygon.Key == -1)
                         {
                             continue;
                         }
 
                         var obj = VisibilityZonesFacade.GetObservationObjectByObjectIds(new int[] { polygon.Key }).First();
 
-                        if(totalObjArea.Area == 0)
+                        if (totalObjArea.Area == 0)
                         {
                             AddEmptyAreaRow(observPoint.Title, currPointId, polygon.Key, obj.Title);
                             continue;
@@ -263,7 +260,7 @@ namespace MilSpace.Tools
                         AddVARowModel(observPoint.Title, currPointId, obj.Title, polygon.Key, 1, visibilityArea);
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     _logger.ErrorEx($"> CalculateCoverageTableVADataForPoint Exception: {ex.Message}");
                     return;
@@ -281,21 +278,21 @@ namespace MilSpace.Tools
 
             try
             {
-                foreach(var polygon in _objPolygons)
+                foreach (var polygon in _objPolygons)
                 {
-                    if(polygon.Key == -1)
+                    if (polygon.Key == -1)
                     {
                         continue;
                     }
 
                     var obj = VisibilityZonesFacade.GetObservationObjectByObjectIds(new int[] { polygon.Key }).First();
-                    if(obj == null)
+                    if (obj == null)
                     {
                         _logger.ErrorEx($"CalculateVATotalValues. Observation object with id {polygon.Key} is not found");
                         return;
                     }
 
-                    if(totalObjArea.Area == 0)
+                    if (totalObjArea.Area == 0)
                     {
                         AddEmptyAreaRow(_allTitle, -1, polygon.Key, obj.Title, -1);
                         continue;
@@ -305,20 +302,20 @@ namespace MilSpace.Tools
                     AddVARowModel(_allTitle, -1, obj.Title, polygon.Key, -1, visibilityArea);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.ErrorEx($"CalculateVATotalValues Exception(1): {ex.Message}");
             }
 
             try
             {
-                for(int i = 1; i <= pointsCount; i++)
+                for (int i = 1; i <= pointsCount; i++)
                 {
                     var areaByPointsSee = EsriTools.GetObjVisibilityArea(visibilityPolygonsForPointFeatureClass, _objPolygons[-1], i);
                     AddVARowModel(_allTitle, -1, _allTitle, -1, i, areaByPointsSee);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.ErrorEx($"CalculateVATotalValues Exception(2): {ex.Message}");
             }
@@ -328,7 +325,7 @@ namespace MilSpace.Tools
 
         private void CalculateVSTotalValues(int pointsCount, string visibilityAreasFCName)
         {
-            if(_totalExpectedArea == 0)
+            if (_totalExpectedArea == 0)
             {
                 AddEmptyAreaRow(_allTitle, -1);
                 return;
@@ -341,23 +338,23 @@ namespace MilSpace.Tools
 
                 AddVSRowModel(_allTitle, -1, -1, _totalExpectedArea, _totalVisibleArea);
 
-                for(int i = 1; i <= pointsCount; i++)
+                for (int i = 1; i <= pointsCount; i++)
                 {
                     var areaByPointsSee = EsriTools.GetTotalAreaFromFeatureClass(visibilityPolygonsFeatureClass, i);
                     AddVSRowModel(_allTitle, -1, i, _totalExpectedArea, areaByPointsSee);
                 }
             }
-             catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.ErrorEx($"> CalculateVSTotalValues Exception:{ex.Message}");
             }
         }
 
         private void AddEmptyAreaRow(
-            string observPointTitle, 
-            int observPointId, 
-            int observObjId = -1, 
-            string observObjName = null, 
+            string observPointTitle,
+            int observPointId,
+            int observObjId = -1,
+            string observObjName = null,
             int pointSee = 0)
         {
             _coverageTableModel.Add(new CoverageTableRowModel

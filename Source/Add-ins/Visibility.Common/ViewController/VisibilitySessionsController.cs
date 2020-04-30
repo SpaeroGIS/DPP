@@ -222,10 +222,16 @@ namespace MilSpace.Visibility.ViewController
 
         internal bool IsResultsLayerExist(string resultsId, IActiveView activeView)
         {
-            var selectedResults = _visibilityResults.First(res => res.Id == resultsId).Name;
-            var layer = EsriTools.GetLayer(selectedResults, activeView.FocusMap);
+            try
+            {
+                var selectedResults = _visibilityResults.First(res => res.Id == resultsId).Name;
+                var layer = EsriTools.GetLayer(selectedResults, activeView.FocusMap);
 
-            return (layer != null);
+                return (layer != null);
+
+            }
+            catch { return false; }
+
         }
 
         internal void AddResultsGroupLayer(string id, IActiveView activeView)
@@ -241,10 +247,21 @@ namespace MilSpace.Visibility.ViewController
             //EsriTools.AddVisibilityGroupLayer(datasets, selectedResults.Name, selectedResults.Id, selectedResults.ReferencedGDB, GetLastLayer(activeView),
             //                                    true, 33, activeView);
 
-            ArcMapHelper.AddResultsToMapAsGroupLayer(selectedResults, activeView, null, true, 33, null);
-
-
-            EsriTools.AddTableToMap(tbls, VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.CoverageTable, selectedResults.Name), selectedResults.ReferencedGDB, mapDocument, application);
+            if(selectedResults.CalculationType == VisibilityCalcTypeEnum.BestObservationParameters)
+            {
+                EsriTools.AddTableToMap(tbls,
+                                VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.BestParametersTable,
+                                                                selectedResults.Name),
+                                selectedResults.ReferencedGDB, mapDocument, application);
+            }
+            else
+            {
+                ArcMapHelper.AddResultsToMapAsGroupLayer(selectedResults, activeView, null, true, 33, null);
+                EsriTools.AddTableToMap(tbls, 
+                                VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.CoverageTable,
+                                                                selectedResults.Name),
+                                selectedResults.ReferencedGDB, mapDocument, application);
+            }
         }
 
         internal void ZoomToLayer(string id, IActiveView activeView)
@@ -256,7 +273,14 @@ namespace MilSpace.Visibility.ViewController
 
         internal bool IsResultsShared(string id)
         {
-            return _visibilityResults.First(res => res.Id == id).Shared;
+            try
+            {
+                return _visibilityResults.First(res => res.Id == id).Shared;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private string GetLastLayer(IActiveView activeView)
