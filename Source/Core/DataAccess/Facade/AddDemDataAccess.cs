@@ -38,11 +38,22 @@ namespace MilSpace.DataAccess.Facade
             return null;
         }
 
+        internal IEnumerable<SrtmGrid> GetNotLoadedSrtmGrids()
+        {
+            return GettLoadedSrtmGrids(false);
+        }
+
         internal IEnumerable<SrtmGrid> GetLoadedSrtmGrids()
+        {
+            return GettLoadedSrtmGrids(true);
+        }
+        private IEnumerable<SrtmGrid> GettLoadedSrtmGrids(bool isLoaded)
         {
             try
             {
-                return context.MilSp_SrtmGrids.Where(g => g.Loaded == 1).Select(g => g.Get());
+                short loaded = (short)(isLoaded ? 1 : 0);
+
+                return context.MilSp_SrtmGrids.Where(g => g.Loaded == 0).Select(g => g.Get());
             }
             catch (MilSpaceDataException ex)
             {

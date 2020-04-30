@@ -27,5 +27,13 @@ namespace MilSpace.DataAccess.Facade
                 return accessor.GetLoadedSrtmGrids();
             }
         }
+
+        public static IEnumerable<SrtmGrid> GetNotLoadedSrtmGrids()
+        {
+            using (var accessor = new AddDemDataAccess())
+            {
+                return accessor.GetLoadedSrtmGrids();
+            }
+        }
     }
 }
