@@ -70,6 +70,7 @@ namespace MilSpace.Visibility
             this.panel7 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.selectedOPPanel = new System.Windows.Forms.Panel();
+            this.chckSaveOPParams = new System.Windows.Forms.CheckBox();
             this.lblHeights = new System.Windows.Forms.Label();
             this.lblMinAngle = new System.Windows.Forms.Label();
             this.lblMinAzimuth = new System.Windows.Forms.Label();
@@ -91,7 +92,7 @@ namespace MilSpace.Visibility
             this.lblMaxAzimuth = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
             this.chckOP = new System.Windows.Forms.CheckBox();
-            this.dvgCheckList = new System.Windows.Forms.DataGridView();
+            this.dgvCheckList = new System.Windows.Forms.DataGridView();
             this.columnsOPVisibilityPanel = new System.Windows.Forms.Panel();
             this.checkDate = new System.Windows.Forms.CheckBox();
             this.checkAffiliation = new System.Windows.Forms.CheckBox();
@@ -220,7 +221,7 @@ namespace MilSpace.Visibility
             this.splitContainer1.SuspendLayout();
             this.selectedOPPanel.SuspendLayout();
             this.panel8.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dvgCheckList)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCheckList)).BeginInit();
             this.columnsOPVisibilityPanel.SuspendLayout();
             this.chooseOPPanel.SuspendLayout();
             this.observPointsFiltersPanel.SuspendLayout();
@@ -910,6 +911,7 @@ namespace MilSpace.Visibility
             // selectedOPPanel
             // 
             this.selectedOPPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.selectedOPPanel.Controls.Add(this.chckSaveOPParams);
             this.selectedOPPanel.Controls.Add(this.lblHeights);
             this.selectedOPPanel.Controls.Add(this.lblMinAngle);
             this.selectedOPPanel.Controls.Add(this.lblMinAzimuth);
@@ -935,6 +937,17 @@ namespace MilSpace.Visibility
             this.selectedOPPanel.Name = "selectedOPPanel";
             this.selectedOPPanel.Size = new System.Drawing.Size(441, 227);
             this.selectedOPPanel.TabIndex = 9;
+            // 
+            // chckSaveOPParams
+            // 
+            this.chckSaveOPParams.AutoSize = true;
+            this.chckSaveOPParams.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.chckSaveOPParams.Location = new System.Drawing.Point(8, 182);
+            this.chckSaveOPParams.Name = "chckSaveOPParams";
+            this.chckSaveOPParams.Size = new System.Drawing.Size(210, 21);
+            this.chckSaveOPParams.TabIndex = 25;
+            this.chckSaveOPParams.Text = "Враховувати параметри ПН";
+            this.chckSaveOPParams.UseVisualStyleBackColor = true;
             // 
             // lblHeights
             // 
@@ -1138,7 +1151,7 @@ namespace MilSpace.Visibility
             // panel8
             // 
             this.panel8.Controls.Add(this.chckOP);
-            this.panel8.Controls.Add(this.dvgCheckList);
+            this.panel8.Controls.Add(this.dgvCheckList);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(0, 120);
             this.panel8.Margin = new System.Windows.Forms.Padding(0);
@@ -1156,27 +1169,27 @@ namespace MilSpace.Visibility
             this.chckOP.UseVisualStyleBackColor = true;
             this.chckOP.CheckedChanged += new System.EventHandler(this.Select_All_Points);
             // 
-            // dvgCheckList
+            // dgvCheckList
             // 
-            this.dvgCheckList.AllowUserToAddRows = false;
-            this.dvgCheckList.AllowUserToDeleteRows = false;
-            this.dvgCheckList.AllowUserToResizeColumns = false;
-            this.dvgCheckList.AllowUserToResizeRows = false;
-            this.dvgCheckList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
-            this.dvgCheckList.BackgroundColor = System.Drawing.SystemColors.Window;
-            this.dvgCheckList.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dvgCheckList.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            this.dvgCheckList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dvgCheckList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dvgCheckList.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnF2;
-            this.dvgCheckList.Location = new System.Drawing.Point(0, 0);
-            this.dvgCheckList.MultiSelect = false;
-            this.dvgCheckList.Name = "dvgCheckList";
-            this.dvgCheckList.RowHeadersVisible = false;
-            this.dvgCheckList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dvgCheckList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dvgCheckList.Size = new System.Drawing.Size(441, 227);
-            this.dvgCheckList.TabIndex = 23;
+            this.dgvCheckList.AllowUserToAddRows = false;
+            this.dgvCheckList.AllowUserToDeleteRows = false;
+            this.dgvCheckList.AllowUserToResizeColumns = false;
+            this.dgvCheckList.AllowUserToResizeRows = false;
+            this.dgvCheckList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
+            this.dgvCheckList.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.dgvCheckList.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvCheckList.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.dgvCheckList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCheckList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvCheckList.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnF2;
+            this.dgvCheckList.Location = new System.Drawing.Point(0, 0);
+            this.dgvCheckList.MultiSelect = false;
+            this.dgvCheckList.Name = "dgvCheckList";
+            this.dgvCheckList.RowHeadersVisible = false;
+            this.dgvCheckList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dgvCheckList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvCheckList.Size = new System.Drawing.Size(441, 227);
+            this.dgvCheckList.TabIndex = 23;
             // 
             // columnsOPVisibilityPanel
             // 
@@ -1421,7 +1434,7 @@ namespace MilSpace.Visibility
             this.txtCoveragePercent.Name = "txtCoveragePercent";
             this.txtCoveragePercent.Size = new System.Drawing.Size(55, 20);
             this.txtCoveragePercent.TabIndex = 27;
-            this.txtCoveragePercent.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithDouble_KeyPress);
+            this.txtCoveragePercent.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithInteger_KeyPress);
             this.txtCoveragePercent.Leave += new System.EventHandler(this.TxtCoveragePercent_Leave);
             // 
             // txtBufferDistance
@@ -2446,7 +2459,7 @@ namespace MilSpace.Visibility
             this.selectedOPPanel.PerformLayout();
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dvgCheckList)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCheckList)).EndInit();
             this.columnsOPVisibilityPanel.ResumeLayout(false);
             this.chooseOPPanel.ResumeLayout(false);
             this.chooseOPPanel.PerformLayout();
@@ -2587,7 +2600,7 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.CheckBox chckOP;
-        private System.Windows.Forms.DataGridView dvgCheckList;
+        private System.Windows.Forms.DataGridView dgvCheckList;
         private System.Windows.Forms.Panel columnsOPVisibilityPanel;
         private System.Windows.Forms.CheckBox checkDate;
         private System.Windows.Forms.CheckBox checkAffiliation;
@@ -2656,5 +2669,6 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.TextBox txtBufferDistance;
         private System.Windows.Forms.Button btnChooseOP;
         private System.Windows.Forms.Button btnChooseOO;
+        private System.Windows.Forms.CheckBox chckSaveOPParams;
     }
 }

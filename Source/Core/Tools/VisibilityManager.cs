@@ -12,6 +12,7 @@ using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Exceptions;
 using MilSpace.DataAccess.Facade;
 using MilSpace.Tools.Exceptions;
+using MilSpace.Tools.SurfaceProfile;
 using MilSpace.Tools.SurfaceProfile.Actions;
 using System;
 using System.Collections.Generic;
@@ -54,7 +55,8 @@ namespace MilSpace.Tools
             string taskName,
             string taskId,
             VisibilityCalcTypeEnum calculationType,
-            IMap currentMap)
+            IMap currentMap,
+            short visibilityPercent)
         {
             logger.InfoEx("> Generate START. Visiblility result {2} using DEM {0} from observation points {1}"
                 .InvariantFormat(sourceDem, obervationPoints, taskId));
@@ -87,14 +89,14 @@ namespace MilSpace.Tools
                 ParamName = ActionParamNamesCore.Action,
                 Value = ActionsEnum.vblt.ToString()
             };
-
+           
             var prm = new List<IActionParam>
             {
                action,
                new ActionParam<IFeatureClass>()
-               { ParamName = ActionParameters.FeatureClass, Value = ObservationPointsFeatureClass},
+               { ParamName = ActionParameters.FeatureClass, Value = obervationPoints},
                new ActionParam<IFeatureClass>()
-               { ParamName = ActionParameters.FeatureClassX, Value = ObservationStationsFeatureClass},
+               { ParamName = ActionParameters.FeatureClassX, Value = obervationStations},
                new ActionParam<int[]>()
                { ParamName = ActionParameters.FilteringPointsIds, Value = pointsToExport.ToArray()},
                new ActionParam<int[]>()
@@ -107,6 +109,8 @@ namespace MilSpace.Tools
                { ParamName = ActionParameters.OutputSourceName, Value = nameOfTargetDataset},
                new ActionParam<VisibilityTask>()
                { ParamName = ActionParameters.Session, Value = calcTask},
+               new ActionParam<short>()
+               {ParamName = ActionParameters.VisibilityPercent, Value =  visibilityPercent}
             };
 
             var procc = new ActionProcessor(prm);
@@ -142,7 +146,7 @@ namespace MilSpace.Tools
 
             return calcTask;
         }
-
+        
         public static string GenerateResultId(string preffix = VisibilityCalcFeatureClass)
         {
             logger.DebugEx("> GenerateResultId Periffics: {0}", preffix);

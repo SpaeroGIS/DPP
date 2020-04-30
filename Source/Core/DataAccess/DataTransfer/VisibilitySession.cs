@@ -79,7 +79,12 @@ namespace MilSpace.DataAccess.DataTransfer
         //Polydon of a potential visibility area of the OP which took part in the calculation
         //If this value is in the calculation result number that the raster dataset
         //{taskName}_{id}_pvas_r should be in the calculation GBD
-        VisibilityAreaPotentialSingle = 16384
+        VisibilityAreaPotentialSingle = 16384,
+
+        //Table with best parameters for observer point
+        //If this value is in the calculation result number that the table
+        //{taskName}_bp should be in the calculation GBD
+        BestParametersTable = 32768,
     }
 
     public enum LayerPositionsEnum

@@ -24,8 +24,8 @@ namespace MilSpace.DataAccess.DataTransfer
             { VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly , "_imgt"},
             { VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle , "_imgts"},
             { VisibilityCalculationResultsEnum.VisibilityAreasPotential , "_pva_r" },
-            { VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle , "_pvas_r" }
-
+            { VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle , "_pvas_r" },
+            { VisibilityCalculationResultsEnum.BestParametersTable , "_bp"}
         };
 
         private static Dictionary<VisibilityCalcTypeEnum, IEnumerable<VisibilityCalculationResultsEnum>> ResultsToShow = new Dictionary<VisibilityCalcTypeEnum, IEnumerable<VisibilityCalculationResultsEnum>>
@@ -40,7 +40,7 @@ namespace MilSpace.DataAccess.DataTransfer
                             VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle,
                             VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle,
                             VisibilityCalculationResultsEnum.VisibilityAreasPotential,
-                            VisibilityCalculationResultsEnum.CoverageTable
+                            VisibilityCalculationResultsEnum.CoverageTable,
                         }
             },
             { VisibilityCalcTypeEnum.ObservationObjects, new VisibilityCalculationResultsEnum[]
@@ -54,6 +54,13 @@ namespace MilSpace.DataAccess.DataTransfer
                             VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle,
                             VisibilityCalculationResultsEnum.VisibilityAreasPotential,
                             VisibilityCalculationResultsEnum.CoverageTable
+                        }
+            },
+            { VisibilityCalcTypeEnum.BestObservationParameters, new VisibilityCalculationResultsEnum[]
+                        {
+                            VisibilityCalculationResultsEnum.BestParametersTable,
+                            VisibilityCalculationResultsEnum.ObservationPoints,
+                             VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle,
                         }
             }
         };
@@ -78,7 +85,8 @@ namespace MilSpace.DataAccess.DataTransfer
         };
 
         internal static VisibilityCalculationResultsEnum[] TableResults = {
-            VisibilityCalculationResultsEnum.CoverageTable
+            VisibilityCalculationResultsEnum.CoverageTable,
+            VisibilityCalculationResultsEnum.BestParametersTable
         };
 
         internal static Dictionary<esriDatasetType, VisibilityCalculationResultsEnum[]> EsriDatatypeToResultMapping = new Dictionary<esriDatasetType, VisibilityCalculationResultsEnum[]>
