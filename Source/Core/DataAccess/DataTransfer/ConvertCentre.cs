@@ -203,7 +203,7 @@ namespace MilSpace.DataAccess.DataTransfer
 
                 return visibilityResults;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new MilSpaceDataException("VisibilityResults", DataOperationsEnum.Convert, ex);
             }
@@ -229,7 +229,7 @@ namespace MilSpace.DataAccess.DataTransfer
 
                 return visibility;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new MilSpaceDataException("VisibilityResults", DataOperationsEnum.Convert, ex);
             }
@@ -255,7 +255,7 @@ namespace MilSpace.DataAccess.DataTransfer
 
                 return visibility;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new MilSpaceDataException("VisibilityResults", DataOperationsEnum.Convert, ex);
             }
@@ -401,5 +401,39 @@ namespace MilSpace.DataAccess.DataTransfer
             pointEntity.X = point.X;
             pointEntity.Y = point.Y;
         }
+
+
+        internal static SrtmGrid Get(this MilSp_SrtmGrid dbGrid)
+        {
+            return new SrtmGrid
+            {
+                Boundary = dbGrid.Boundary,
+                FileName = dbGrid.FileName,
+                Id = dbGrid.Id,
+                Loaded = dbGrid.Loaded == 1,
+                OBJECTID = dbGrid.OBJECTID,
+                POINT_X = dbGrid.POINT_X,
+                POINT_Y = dbGrid.POINT_Y,
+                SRTM = dbGrid.SRTM,
+                Zone_UTM = dbGrid.Zone_UTM
+            };
+        }
+        internal static MilSp_SrtmGrid Get(this SrtmGrid grid)
+        {
+            return new MilSp_SrtmGrid
+            {
+                Boundary = grid.Boundary,
+                FileName = grid.FileName,
+                Id = grid.Id,
+                Loaded = (short)(grid.Loaded ? 1 : 0),
+                OBJECTID = grid.OBJECTID,
+                POINT_X = grid.POINT_X,
+                POINT_Y = grid.POINT_Y,
+                SRTM = grid.SRTM,
+                Zone_UTM = grid.Zone_UTM
+            };
+
+        }
     }
+
 }

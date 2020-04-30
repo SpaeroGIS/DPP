@@ -21,10 +21,10 @@
         <classShapeMoniker Id="e67135f7-208c-4515-b400-76f4e4953b7a" />
       </nodes>
     </associationConnector>
-    <classShape Id="30a2c01e-9ad2-450c-9803-4826abec1f25" absoluteBounds="2.75, 2.625, 2, 2.5401025390625">
+    <classShape Id="bd3ae589-5895-47f8-b53d-5265d93e2b8b" absoluteBounds="5.5, 3.125, 2, 2.5401025390625">
       <DataClassMoniker Name="/MilSpaceStorageContext/MilSp_SrtmGrid" />
       <nestedChildShapes>
-        <elementListCompartment Id="c1f9989e-88aa-4bc4-adb9-c38b17a494cd" absoluteBounds="2.7649999999999997, 3.085, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="90f9cf52-db7f-4494-ad20-b89a81d10819" absoluteBounds="5.515, 3.585, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

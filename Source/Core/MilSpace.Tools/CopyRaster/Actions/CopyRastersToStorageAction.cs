@@ -1,6 +1,8 @@
-﻿using MilSpace.Core.Actions.ActionResults;
+﻿using MilSpace.Configurations;
+using MilSpace.Core.Actions.ActionResults;
 using MilSpace.Core.Actions.Base;
 using MilSpace.Core.Actions.Interfaces;
+using MilSpace.Tools.SurfaceProfile;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -51,6 +53,12 @@ namespace MilSpace.Tools.CopyRaster.Actions
 
         public override void Process()
         {
+
+            var srtmStorage = MilSpaceConfiguration.DemStorages.SrtmStorage;
+            IEnumerable<string> errorMessages = new List<string>();
+            CalculationLibrary.RasterToOtherFormat(files, srtmStorage, out errorMessages);
+
+
             var fileUsage = files.ToDictionary(f => f, t => true);
             if (!replaceFiles)
             {

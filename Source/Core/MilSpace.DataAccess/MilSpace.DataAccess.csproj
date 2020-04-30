@@ -157,6 +157,12 @@
     <Compile Include="..\DataAccess\DataTransfer\ProfileLine.cs">
       <Link>DataTransfer\ProfileLine.cs</Link>
     </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\Sentinel\SentinelFootprint.cs">
+      <Link>DataTransfer\Sentinel\SentinelFootprint.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\SrtmGrid.cs">
+      <Link>DataTransfer\SrtmGrid.cs</Link>
+    </Compile>
     <Compile Include="..\DataAccess\DataTransfer\Visibility.cs">
       <Link>DataTransfer\Visibility.cs</Link>
     </Compile>
@@ -273,8 +279,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="DataTransfer\Sentinel\SentinelFootprint.cs" />
-    <Compile Include="DataTransfer\SrtmGrid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

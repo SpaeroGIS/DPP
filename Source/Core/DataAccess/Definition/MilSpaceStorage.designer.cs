@@ -441,19 +441,19 @@ namespace MilSpace.DataAccess.Definition
 		
 		private int _OBJECTID;
 		
-		private string _Filename;
+		private string _FileName;
 		
-		private System.Nullable<int> _Id;
+		private int _Id;
 		
-		private System.Nullable<decimal> _POINT_X;
+		private decimal _POINT_X;
 		
-		private System.Nullable<decimal> _POINT_Y;
+		private decimal _POINT_Y;
 		
 		private string _SRTM;
 		
-		private System.Nullable<short> _Boundary;
+		private short _Boundary;
 		
-		private System.Nullable<short> _Load;
+		private short _Loaded;
 		
 		private string _Zone_UTM;
 		
@@ -463,20 +463,20 @@ namespace MilSpace.DataAccess.Definition
     partial void OnCreated();
     partial void OnOBJECTIDChanging(int value);
     partial void OnOBJECTIDChanged();
-    partial void OnFilenameChanging(string value);
-    partial void OnFilenameChanged();
-    partial void OnIdChanging(System.Nullable<int> value);
+    partial void OnFileNameChanging(string value);
+    partial void OnFileNameChanged();
+    partial void OnIdChanging(int value);
     partial void OnIdChanged();
-    partial void OnPOINT_XChanging(System.Nullable<decimal> value);
+    partial void OnPOINT_XChanging(decimal value);
     partial void OnPOINT_XChanged();
-    partial void OnPOINT_YChanging(System.Nullable<decimal> value);
+    partial void OnPOINT_YChanging(decimal value);
     partial void OnPOINT_YChanged();
     partial void OnSRTMChanging(string value);
     partial void OnSRTMChanged();
-    partial void OnBoundaryChanging(System.Nullable<short> value);
+    partial void OnBoundaryChanging(short value);
     partial void OnBoundaryChanged();
-    partial void OnLoadChanging(System.Nullable<short> value);
-    partial void OnLoadChanged();
+    partial void OnLoadedChanging(short value);
+    partial void OnLoadedChanged();
     partial void OnZone_UTMChanging(string value);
     partial void OnZone_UTMChanged();
     #endregion
@@ -506,28 +506,28 @@ namespace MilSpace.DataAccess.Definition
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Filename", DbType="NVarChar(254)")]
-		public string Filename
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="Filename", Storage="_FileName", DbType="NVarChar(254) NOT NULL", CanBeNull=false)]
+		public string FileName
 		{
 			get
 			{
-				return this._Filename;
+				return this._FileName;
 			}
 			set
 			{
-				if ((this._Filename != value))
+				if ((this._FileName != value))
 				{
-					this.OnFilenameChanging(value);
+					this.OnFileNameChanging(value);
 					this.SendPropertyChanging();
-					this._Filename = value;
-					this.SendPropertyChanged("Filename");
-					this.OnFilenameChanged();
+					this._FileName = value;
+					this.SendPropertyChanged("FileName");
+					this.OnFileNameChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int")]
-		public System.Nullable<int> Id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int NOT NULL")]
+		public int Id
 		{
 			get
 			{
@@ -546,8 +546,8 @@ namespace MilSpace.DataAccess.Definition
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_POINT_X", DbType="Decimal(38,8)")]
-		public System.Nullable<decimal> POINT_X
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_POINT_X", DbType="Decimal(38,8) NOT NULL")]
+		public decimal POINT_X
 		{
 			get
 			{
@@ -566,8 +566,8 @@ namespace MilSpace.DataAccess.Definition
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_POINT_Y", DbType="Decimal(38,8)")]
-		public System.Nullable<decimal> POINT_Y
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_POINT_Y", DbType="Decimal(38,8) NOT NULL")]
+		public decimal POINT_Y
 		{
 			get
 			{
@@ -586,7 +586,7 @@ namespace MilSpace.DataAccess.Definition
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SRTM", DbType="NVarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SRTM", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
 		public string SRTM
 		{
 			get
@@ -606,8 +606,8 @@ namespace MilSpace.DataAccess.Definition
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Boundary", DbType="SmallInt")]
-		public System.Nullable<short> Boundary
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Boundary", DbType="SmallInt NOT NULL")]
+		public short Boundary
 		{
 			get
 			{
@@ -626,27 +626,27 @@ namespace MilSpace.DataAccess.Definition
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="Load_", Storage="_Load", DbType="SmallInt")]
-		public System.Nullable<short> Load
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Loaded", DbType="SmallInt NOT NULL")]
+		public short Loaded
 		{
 			get
 			{
-				return this._Load;
+				return this._Loaded;
 			}
 			set
 			{
-				if ((this._Load != value))
+				if ((this._Loaded != value))
 				{
-					this.OnLoadChanging(value);
+					this.OnLoadedChanging(value);
 					this.SendPropertyChanging();
-					this._Load = value;
-					this.SendPropertyChanged("Load");
-					this.OnLoadChanged();
+					this._Loaded = value;
+					this.SendPropertyChanged("Loaded");
+					this.OnLoadedChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Zone_UTM", DbType="NVarChar(10)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Zone_UTM", DbType="NVarChar(10) NOT NULL", CanBeNull=false)]
 		public string Zone_UTM
 		{
 			get
