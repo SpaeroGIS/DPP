@@ -114,6 +114,9 @@
     <Compile Include="..\Core\Tools\CoverageTableManager.cs">
       <Link>CoverageTableManager.cs</Link>
     </Compile>
+    <Compile Include="..\Tools\BestOPParametersManager.cs">
+      <Link>BestOPParametersManager.cs</Link>
+    </Compile>
     <Compile Include="..\Tools\Exceptions\MilSpaceProfileLineNotFound.cs">
       <Link>Exceptions\MilSpaceProfileLineNotFound.cs</Link>
     </Compile>

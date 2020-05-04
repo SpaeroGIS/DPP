@@ -22,6 +22,8 @@ using System.Windows.Forms;
 using ESRI.ArcGIS.Display;
 using MilSpace.Core.ModulesInteraction;
 using MilSpace.Core.ModalWindows;
+using ESRI.ArcGIS.esriSystem;
+using MilSpace.Configurations;
 
 namespace MilSpace.Visibility.ViewController
 {
@@ -218,7 +220,7 @@ namespace MilSpace.Visibility.ViewController
             }
             EsriTools.FlashGeometry(pointGeometry, 500, ArcMap.Application);
         }
-
+        // DS: Exception
         internal IEnumerable<VisibilityTasknGui> SortTasks(IEnumerable<VisibilityTasknGui> source, VeluableTaskSortFieldsEnum sortBy, bool sortDireaction)
         {
             if (sortBy == VeluableTaskSortFieldsEnum.Created)
@@ -383,7 +385,7 @@ namespace MilSpace.Visibility.ViewController
         }
 
         // TODO: Define the field in the View Interface to take sessionName, rasterLayerName and  visibilityCalculationResults
-        internal bool CalculateVisibility(WizardResult calcParams)
+        internal bool ExsecuteVisibilityCalculations(WizardResult calcParams)
         {
             log.InfoEx("> CalculateVisibility START");
 
@@ -393,73 +395,13 @@ namespace MilSpace.Visibility.ViewController
 
             try
             {
-                MapLayersManager layersManager = new MapLayersManager(mapDocument.ActiveView);
-                exx++;
-                var demLayer = layersManager.RasterLayers.FirstOrDefault(l => l.Name.Equals(calcParams.RasterLayerName));
-                exx++;
-                if (demLayer == null)
+                if(calcParams.CalculationType == VisibilityCalcTypeEnum.OpservationPoints || calcParams.CalculationType == VisibilityCalcTypeEnum.ObservationObjects)
                 {
-                    throw new MilSpaceVisibilityCalcFailedException($"Cannot find DEM layer {calcParams.RasterLayerName }.");
+                    exx = CalculateVisibility(calcParams, animationProgressor);
                 }
-                calcParams.RasterLayerName = demLayer.FilePath;
-                exx++;
-                var observPoints = GetObservatioPointFeatureClass(mapDocument.ActiveView);
-                exx++;
-                var observObjects = GetObservatioStationFeatureClass(mapDocument.ActiveView);
-                exx++;
-                if (calcParams.ObservPointIDs == null) // Get points forn the current extent
+                else if(calcParams.CalculationType == VisibilityCalcTypeEnum.BestObservationParameters)
                 {
-                    calcParams.ObservPointIDs = EsriTools.GetSelectionByExtent(observPoints, mapDocument.ActiveView);
-                }
-                if (calcParams.ObservObjectIDs == null) // Get points forn the current extent
-                {
-                    calcParams.ObservObjectIDs = EsriTools.GetSelectionByExtent(observObjects, mapDocument.ActiveView);
-                }
-                exx++;
-                animationProgressor.Show();
-                animationProgressor.Play(0, 200);
-
-                exx++;
-
-                var calcTask = VisibilityManager.Generate(
-                    observPoints,
-                    calcParams.ObservPointIDs,
-                    observObjects,
-                    calcParams.ObservObjectIDs,
-                    calcParams.RasterLayerName,
-                    calcParams.VisibilityCalculationResults,
-                    calcParams.TaskName,
-                    calcParams.TaskName,
-                    calcParams.CalculationType,
-                    mapDocument.ActiveView.FocusMap);
-
-                exx++;
-
-                if (calcTask.Finished != null)
-                {
-                    var isLayerAbove = (calcParams.ResultLayerPosition == LayerPositionsEnum.Above);
-
-                    var datasets = GdbAccess.Instance.GetDatasetsFromCalcWorkspace(calcTask.ResultsInfo);
-                    var tbls = mapDocument.TableProperties;
-
-                    ArcMapHelper.AddResultsToMapAsGroupLayer(
-                        calcTask,
-                        mapDocument.ActiveView,
-                        calcParams.RelativeLayerName,
-                        isLayerAbove,
-                        calcParams.ResultLayerTransparency
-                        , null);
-
-                    exx++;
-
-                    EsriTools.AddTableToMap(
-                        tbls,
-                        VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.CoverageTable, calcTask.Name),
-                        calcTask.ReferencedGDB,
-                        mapDocument,
-                        application);
-                    exx++;
-
+                    exx = CalculateBestOPParams(calcParams, animationProgressor);
                 }
             }
             catch (Exception ex)
@@ -712,6 +654,175 @@ namespace MilSpace.Visibility.ViewController
 
         public string GetObservationStationLayerName => _observStationFeature;
 
+        private int CalculateVisibility(WizardResult calcParams, IAnimationProgressor animationProgressor)
+        {
+            int exx = 1;
+
+            MapLayersManager layersManager = new MapLayersManager(mapDocument.ActiveView);
+            exx++;
+            var demLayer = layersManager.RasterLayers.FirstOrDefault(l => l.Name.Equals(calcParams.RasterLayerName));
+            exx++;
+            if (demLayer == null)
+            {
+                throw new MilSpaceVisibilityCalcFailedException($"Cannot find DEM layer {calcParams.RasterLayerName }.");
+            }
+            calcParams.RasterLayerName = demLayer.FilePath;
+            exx++;
+            var observPoints = GetObservatioPointFeatureClass(mapDocument.ActiveView);
+            exx++;
+            var observObjects = GetObservatioStationFeatureClass(mapDocument.ActiveView);
+            exx++;
+            if (calcParams.ObservPointIDs == null) // Get points from the current extent
+            {
+                calcParams.ObservPointIDs = EsriTools.GetSelectionByExtent(observPoints, mapDocument.ActiveView);
+            }
+            if (calcParams.ObservObjectIDs == null) // Get points from the current extent
+            {
+                calcParams.ObservObjectIDs = EsriTools.GetSelectionByExtent(observObjects, mapDocument.ActiveView);
+            }
+            exx++;
+            animationProgressor.Show();
+            animationProgressor.Play(0, 200);
+
+            exx++;
+
+            var calcTask = VisibilityManager.Generate(
+                observPoints,
+                calcParams.ObservPointIDs,
+                observObjects,
+                calcParams.ObservObjectIDs,
+                calcParams.RasterLayerName,
+                calcParams.VisibilityCalculationResults,
+                calcParams.TaskName,
+                calcParams.TaskName,
+                calcParams.CalculationType,
+                mapDocument.ActiveView.FocusMap,
+                100);
+
+            exx++;
+
+            if (calcTask.Finished != null)
+            {
+                var isLayerAbove = (calcParams.ResultLayerPosition == LayerPositionsEnum.Above);
+
+                var datasets = GdbAccess.Instance.GetDatasetsFromCalcWorkspace(calcTask.ResultsInfo);
+                var tbls = mapDocument.TableProperties;
+
+                ArcMapHelper.AddResultsToMapAsGroupLayer(
+                    calcTask,
+                    mapDocument.ActiveView,
+                    calcParams.RelativeLayerName,
+                    isLayerAbove,
+                    calcParams.ResultLayerTransparency
+                    , null);
+
+                exx++;
+
+                EsriTools.AddTableToMap(
+                    tbls,
+                    VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.CoverageTable, calcTask.Name),
+                    calcTask.ReferencedGDB,
+                    mapDocument,
+                    application);
+                exx++;
+
+            }
+
+            return exx;
+        }
+
+        private int CalculateBestOPParams(WizardResult calcParams, IAnimationProgressor animationProgressor)
+        {
+            int exx = 1;
+
+            MapLayersManager layersManager = new MapLayersManager(mapDocument.ActiveView);
+            exx++;
+
+            var demLayer = layersManager.RasterLayers.FirstOrDefault(l => l.Name.Equals(calcParams.RasterLayerName));
+            exx++;
+
+            if (demLayer == null)
+            {
+                throw new MilSpaceVisibilityCalcFailedException($"Cannot find DEM layer {calcParams.RasterLayerName }.");
+            }
+
+            calcParams.RasterLayerName = demLayer.FilePath;
+            exx++;
+
+            var observPointsFeatureClass = GetObservatioPointFeatureClass(mapDocument.ActiveView);
+            exx++;
+
+            var observerPointTemporaryFeatureClass = BestOPParametersManager.CreateOPFeatureClass(
+                    calcParams,
+                    observPointsFeatureClass,
+                    mapDocument.ActiveView,
+                    demLayer.Raster);
+            exx++;
+
+            var observationStationTemporaryFeatureClass = BestOPParametersManager.CreateOOFeatureClass(
+                    calcParams.ObservationStation,
+                    mapDocument.ActiveView,
+                    calcParams.TaskName);
+            exx++;
+
+            var observPointsIds = BestOPParametersManager.GetAllIdsFromFeatureClass(observerPointTemporaryFeatureClass);
+            var observStationsIds = BestOPParametersManager.GetAllIdsFromFeatureClass(observationStationTemporaryFeatureClass);
+
+            exx++;
+
+            if (observPointsIds == null || observStationsIds == null)
+            {
+                var featureClassName = observPointsIds == null ?
+                         LocalizationContext.Instance.FindLocalizedElement("ObserverPointParametersText", "параметрів пункту спостереження") :
+                         LocalizationContext.Instance.FindLocalizedElement("ObservationStationText", "об'єкту спостреження");
+
+                MessageBox.Show(
+                     String.Format(LocalizationContext.Instance.FindLocalizedElement("ErrorInTemporaryStorageGenerating",
+                         "Під час генерації векторного класу {0} сталася помилка"), featureClassName),
+                     LocalizationContext.Instance.MessageBoxCaption);
+
+                BestOPParametersManager.ClearTemporaryData(calcParams.TaskName);
+                return exx;
+            }
+
+            animationProgressor.Show();
+            animationProgressor.Play(0, 200);
+
+            var calcTask = VisibilityManager.Generate(
+                observerPointTemporaryFeatureClass,
+                observPointsIds,
+                observationStationTemporaryFeatureClass,
+                observStationsIds,
+                calcParams.RasterLayerName,
+                calcParams.VisibilityCalculationResults,
+                calcParams.TaskName,
+                calcParams.TaskName,
+                calcParams.CalculationType,
+                mapDocument.ActiveView.FocusMap,
+                calcParams.VisibilityPercent);
+
+            exx++;
+
+            BestOPParametersManager.ClearTemporaryData(calcParams.TaskName, calcTask.ReferencedGDB);
+            exx++;
+
+            if (calcTask.Finished != null)
+            {
+                var tbls = mapDocument.TableProperties;
+
+                EsriTools.AddTableToMap(
+                    tbls,
+                    VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.BestParametersTable, calcTask.Name),
+                    calcTask.ReferencedGDB,
+                    mapDocument,
+                    application);
+                exx++;
+
+            }
+            return exx;
+        }
+
+
         private bool IsFeatureLayerExists(IActiveView view, string featureClass)
         {
             log.DebugEx("> IsFeatureLayerExists START. featureClass:{0}", featureClass);
@@ -841,50 +952,24 @@ namespace MilSpace.Visibility.ViewController
 
         internal void ShowGeometry(IGeometry geometry, int buffer = -1)
         {
-            IGeometry shownGeometry;
+            var geometryWithBuffer = CalculateGeometryWithBuffer(geometry, buffer);
 
-            if(geometry.GeometryType != esriGeometryType.esriGeometryPoint && geometry.GeometryType != esriGeometryType.esriGeometryPolygon  
-                && geometry.GeometryType != esriGeometryType.esriGeometryPolyline)
+            if (geometryWithBuffer.GeometryType == esriGeometryType.esriGeometryPoint)
             {
-                log.ErrorEx($"> ShowGeometry Exception. Input geometry is not high level");
+                var point = geometryWithBuffer as IPoint;
+
+                if (!IsPointOnExtent(mapDocument.ActiveView.Extent, point))
+                {
+                    EsriTools.PanToGeometry(mapDocument.ActiveView, point, true);
+
+                }
+                EsriTools.FlashGeometry(point, 500, ArcMap.Application);
+
                 return;
             }
 
-            if (geometry.GeometryType != esriGeometryType.esriGeometryPolygon)
-            {
-                if (buffer == -1)
-                {
-                    if (geometry.GeometryType != esriGeometryType.esriGeometryPoint)
-                    {
-                        var point = geometry as IPoint;
-
-                        if (!IsPointOnExtent(mapDocument.ActiveView.Extent, point))
-                        {
-                            EsriTools.PanToGeometry(mapDocument.ActiveView, point, true);
-
-                        }
-                        EsriTools.FlashGeometry(point, 500, ArcMap.Application);
-
-                        return;
-                    }
-                    else
-                    {
-                        shownGeometry = geometry;
-                    }
-                }
-                else
-                {
-                    var topologicalOperator = (ITopologicalOperator)geometry;
-                    shownGeometry = topologicalOperator.Buffer(buffer);
-                }
-            }
-            else
-            {
-                shownGeometry = geometry;
-            }
-
-            EsriTools.ZoomToGeometry(mapDocument.ActiveView, shownGeometry);
-            EsriTools.FlashGeometry(mapDocument.ActiveView.ScreenDisplay, new IGeometry[] { shownGeometry });
+            EsriTools.ZoomToGeometry(mapDocument.ActiveView, geometryWithBuffer);
+            EsriTools.FlashGeometry(mapDocument.ActiveView.ScreenDisplay, new IGeometry[] { geometryWithBuffer });
         }
 
         internal void ShowPoint(ObservationPoint observPoint)
@@ -903,6 +988,28 @@ namespace MilSpace.Visibility.ViewController
 
             }
             EsriTools.FlashGeometry(point, 500, ArcMap.Application);
+        }
+
+        internal IGeometry CalculateGeometryWithBuffer(IGeometry geometry, int buffer = -1)
+        {
+            if (geometry.GeometryType != esriGeometryType.esriGeometryPoint && geometry.GeometryType != esriGeometryType.esriGeometryPolygon
+                && geometry.GeometryType != esriGeometryType.esriGeometryPolyline)
+            {
+                log.ErrorEx($"> CalculateGeometryWithBuffer Exception. Input geometry is not high level");
+                return null;
+            }
+
+            if (buffer < 1)
+            {
+                return geometry;
+            }
+            else
+            {
+                var topologicalOperator = (ITopologicalOperator)geometry;
+                var geometryWithBuffer = topologicalOperator.Buffer(buffer);
+
+                return geometryWithBuffer;
+            }
         }
 
         internal List<FromLayerPointModel> GetObservationPointsFromModule()
@@ -1410,6 +1517,11 @@ namespace MilSpace.Visibility.ViewController
                 return null;
             }
 
+            if(_observationPoints.Count == 0)
+            {
+                UpdateObservationPointsList();
+            }
+
             var observPointsModel = _observationPoints.Where(point => point.X.HasValue && point.Y.HasValue).Select(point =>
             {
                     return new FromLayerPointModel
@@ -1473,7 +1585,8 @@ namespace MilSpace.Visibility.ViewController
             var manager = new MapLayersManager(mapDocument.ActiveView);
             var layerName = string.Empty;
 
-            var fromLayerPointsListModal = new PointsFromLayerModalWindow(ArcMap.Document.ActiveView, manager.GetObservPointsAppropriateLayers().Where(layer => !layer.EndsWith(GetObservPointsFromGdbFeatureClassName())).ToArray());
+            var fromLayerPointsListModal = new PointsFromLayerModalWindow(ArcMap.Document.ActiveView);
+
             var result = fromLayerPointsListModal.ShowDialog();
 
             if (result == DialogResult.OK)
@@ -1538,7 +1651,7 @@ namespace MilSpace.Visibility.ViewController
             }
             else
             {
-                return points.First().Value;
+                return selectedPointsGeoms.First();
             }
         }
 

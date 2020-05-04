@@ -234,10 +234,11 @@
   <MinM.lblCoveragePercent.Text>Відсоток покриття (%)</MinM.lblCoveragePercent.Text>
   <MinM.btnShowPoint.ToolTip>Показати пункт спостеження на мапі</MinM.btnShowPoint.ToolTip>
   <MinM.btnShowOO.ToolTip>Показати об'єкт спостереження на мапі</MinM.btnShowOO.ToolTip>
-
+  <MinM.chckSaveOPParams.Text>Враховувати параметри ПН</MinM.chckSaveOPParams.Text>
+  
   <WinMErrorValueOutRange>Недійсні дані. Потрібне значення від 0 до 100"</WinMErrorValueOutRange>
-  <WinMWarningNoSourceForCalculation>Не вказано поверню для розрахунку</WinMWarningNoSourceForCalculation>
-  <WinMWarningNoRasterLayrSelected>Растровій шар повине бути обраним</WinMWarningNoRasterLayrSelected>
+  <WinMWarningNoSourceForCalculation>Не вказано поверхню для розрахунку</WinMWarningNoSourceForCalculation>
+  <WinMWarningNoRasterLayrSelected>Растровій шар повинен бути обраним</WinMWarningNoRasterLayrSelected>
 
   <!-- ######################################################################### -->
   <WinDB.Caption>Спостереження. Додати результати з БД</WinDB.Caption>
@@ -305,6 +306,7 @@
   <UnexpectedErrorMessage>Виникла помилка. Для перегляду повної інформації зверніться до журналу роботи</UnexpectedErrorMessage>
   <GeoCalcModuleDoesnotExistMessage>Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</GeoCalcModuleDoesnotExistMessage>
   <ObservPointscModuleDoesnotExistMessage>Модуль \"Видимість\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</ObservPointscModuleDoesnotExistMessage>
+  <ErrorInTemporaryStorageGenerating>Під час генерації векторного класу {0} сталася помилка</ErrorInTemporaryStorageGenerating>
   
   <ObservPointRemoveMessage>Ви дійсно бажаєте видалити точку (ПС)?</ObservPointRemoveMessage>
   <VisibilityTaskRemoveMessage>Ви дійсно бажаєте видалити результат розрахунку з поточного сеансу?</VisibilityTaskRemoveMessage>
@@ -345,5 +347,7 @@
   <LayersListLabelText>Шари</LayersListLabelText>
   <ChooseButtonText>Обрати</ChooseButtonText>
   <ChooseLayerWindowCaption>Обрати шар</ChooseLayerWindowCaption>
+  <ObserverPointParametersText>параметрів пункту спостереження</ObserverPointParametersText>
+  <ObservationStationText>об'єкту спостреження</ObservationStationText>
 
 </SP_Visibility>

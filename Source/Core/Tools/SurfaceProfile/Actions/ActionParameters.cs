@@ -14,5 +14,6 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
         public static string FilteringStationsIds = "StnsfltrIds";
         public static string Calculationresults = "calcresults";
         public static string Session = "session";
+        public static string VisibilityPercent = "visibilityPercent";
     }
 }

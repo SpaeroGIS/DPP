@@ -210,6 +210,7 @@
             this.Name = "PointsFromLayerModalWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "PointsFromLayerModalWindow";
+            this.Shown += new System.EventHandler(this.PointsFromLayerModalWindow_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPoints)).EndInit();
             this.titlePanel.ResumeLayout(false);
             this.titlePanel.PerformLayout();
