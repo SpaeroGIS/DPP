@@ -704,8 +704,10 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
 
         private void SetProfileProperty(ProfileLine profileSessionProfileLine)
         {
-            var profileProperty = new ProfileProperties();
-            profileProperty.LineId = profileSessionProfileLine.Id;
+            var profileProperty = new ProfileProperties
+            {
+                LineId = profileSessionProfileLine.Id
+            };
 
             var profileSurfacePoints = _profileSession.ProfileSurfaces.FirstOrDefault(surface =>
                     surface.LineId == profileSessionProfileLine.Id).ProfileSurfacePoints;

@@ -124,7 +124,7 @@ namespace MilSpace.DataAccess.DataTransfer
                     Id = visibilitySessionModel.Id?.Trim(),
                     Name = visibilitySessionModel.Name?.Trim(),
                     UserName = visibilitySessionModel.UserName?.Trim(),
-                    Created = visibilitySessionModel.Created.HasValue ? visibilitySessionModel.Created.Value : DateTime.Now,
+                    Created = visibilitySessionModel.Created ?? DateTime.Now,
                     Started = visibilitySessionModel.Started,
                     Finished = visibilitySessionModel.Finished,
                     CalculatedResults = visibilitySessionModel.CalculatedResults,
@@ -193,7 +193,7 @@ namespace MilSpace.DataAccess.DataTransfer
                     Id = visibilityResultsModel.Id?.Trim(),
                     Name = visibilityResultsModel.Name?.Trim(),
                     UserName = visibilityResultsModel.UserName?.Trim(),
-                    Created = visibilityResultsModel.Created.HasValue ? visibilityResultsModel.Created.Value : DateTime.Now,
+                    Created = visibilityResultsModel.Created ?? DateTime.Now,
                     CalculatedResults = visibilityResultsModel.CalculatedResults,
                     ReferencedGDB = visibilityResultsModel.ReferencedGDB,
                     CalculationType = (int)visibilityResultsModel.CalculationType,
@@ -346,7 +346,7 @@ namespace MilSpace.DataAccess.DataTransfer
             return new ObservationObject
             {
                 Creator = observObject.soper?.Trim(),
-                DTO = observObject.DTO.HasValue ? observObject.DTO.Value : DateTime.Now,
+                DTO = observObject.DTO ?? DateTime.Now,
                 Group = observObject.sGroupOO,
                 Id = observObject.idOO?.Trim(),
                 ObjectId = observObject.OBJECTID,

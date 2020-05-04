@@ -14,7 +14,7 @@ namespace MilSpace.Core
     public class Logger
     {
         private static ILog logger = null;
-        private static string log4NetSectionName = "log4net";
+        private const string log4NetSectionName = "log4net";
         private ILog instanceLogger = null;
 
         private Logger()
@@ -25,16 +25,24 @@ namespace MilSpace.Core
         public static Logger GetLoggerEx(Type type)
         {
             Initiate();
-            Logger newInstance = new Logger();
-            newInstance.instanceLogger = LogManager.GetLogger(type);
+
+            Logger newInstance = new Logger
+            {
+                instanceLogger = LogManager.GetLogger(type)
+            };
+
             return newInstance;
         }
 
         public static Logger GetLoggerEx(string loggerName)
         {
             Initiate();
-            Logger newInstance = new Logger();
-            newInstance.instanceLogger = LogManager.GetLogger(loggerName);
+
+            Logger newInstance = new Logger
+            {
+                instanceLogger = LogManager.GetLogger(loggerName)
+            };
+
             return newInstance;
         }
 

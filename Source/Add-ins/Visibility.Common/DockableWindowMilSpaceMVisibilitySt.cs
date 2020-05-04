@@ -363,6 +363,7 @@ namespace MilSpace.Visibility
         {
             var source = dgvObservationPoints.DataSource as ObservPointGui[];
             var sourceList = new List<ObservPointGui>(source);
+
             sourceList.Add(new ObservPointGui
             {
                 Title = observationPoint.Title,
@@ -1069,9 +1070,7 @@ namespace MilSpace.Visibility
 
         private double ValidateHeight(TextBox heightTextBox, string defaultValue)
         {
-            double height;
-
-            if (Double.TryParse(heightTextBox.Text, out height))
+            if (Double.TryParse(heightTextBox.Text, out double height))
             {
                 if (height >= 0)
                 {
@@ -1201,6 +1200,7 @@ namespace MilSpace.Visibility
 
             double xdd = 0;
             double ydd = 0;
+
             if (!Helper.TryParceToDouble(xCoord.Text, out xdd) || !Helper.TryParceToDouble(yCoord.Text, out ydd))
             {
                 //string sMsgText = LocalizationContext.Instance.FindLocalizedElement(
@@ -1379,7 +1379,7 @@ namespace MilSpace.Visibility
             dgvVisibilitySessions.Columns["State"].Width = 100;
         }
 
-        private void dgvVisibilitySessions_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void DgvVisibilitySessions_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             VeluableTaskSortFieldsEnum sortColumn = VeluableTaskSortFieldsEnum.Title;
             //TBD: Create dictionary to get this values
@@ -1497,10 +1497,10 @@ namespace MilSpace.Visibility
 
             dgvObservObjects.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-            dgvObservObjects.ColumnHeaderMouseClick += dgvObservationObjects_ColumnHeaderMouseClick;
+            dgvObservObjects.ColumnHeaderMouseClick += DgvObservationObjects_ColumnHeaderMouseClick;
         }
 
-        private void dgvObservationObjects_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void DgvObservationObjects_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             VeluableObservObjectSortFieldsEnum sortColumn = VeluableObservObjectSortFieldsEnum.Id;
             //TBD: cahnge it to Dictionary
@@ -1686,10 +1686,12 @@ namespace MilSpace.Visibility
                         throw new NullReferenceException();
                     }
 
-                    TreeNode taskNode = new TreeNode(res.Name);
-                    taskNode.ImageKey = "Stats.png";
-                    taskNode.Tag = res.Id;
-                    taskNode.Name = res.Id;
+                    TreeNode taskNode = new TreeNode(res.Name)
+                    {
+                        ImageKey = "Stats.png",
+                        Tag = res.Id,
+                        Name = res.Id
+                    };
 
                     parentNode.Nodes.Add(taskNode);
 
@@ -1697,9 +1699,11 @@ namespace MilSpace.Visibility
                     {
                         var img = _visibilitySessionsController.GetImgName(VisibilityCalcResults.GetResultTypeByName(result));
 
-                        TreeNode resNode = new TreeNode(result);
-                        resNode.ImageKey = img;
-                        resNode.Tag = res.Id;
+                        TreeNode resNode = new TreeNode(result)
+                        {
+                            ImageKey = img,
+                            Tag = res.Id
+                        };
 
                         taskNode.Nodes.Add(resNode);
                     }
@@ -2082,7 +2086,7 @@ namespace MilSpace.Visibility
             }
         }
 
-        private void tbObservObjects_ButtonClick(object sender, EventArgs e)
+        private void TbObservObjects_ButtonClick(object sender, EventArgs e)
         {
             log.DebugEx("> tbObservObjects START");
 
@@ -2115,7 +2119,7 @@ namespace MilSpace.Visibility
             dgvObservObjects.Columns["Group"].Visible = chckObservObjGroup.Checked;
         }
 
-        private void buttonSaveOPoint_Click(object sender, EventArgs e)
+        private void ButtonSaveOPoint_Click(object sender, EventArgs e)
         {
             if (_observPointsController.IsArcMapEditingStarted())
             {
@@ -2287,7 +2291,7 @@ namespace MilSpace.Visibility
             }
         }
 
-        private void tvResults_AfterSelect(object sender, TreeViewEventArgs e)
+        private void TvResults_AfterSelect(object sender, TreeViewEventArgs e)
         {
             var selectedNode = e.Node;
 
@@ -2332,7 +2336,7 @@ namespace MilSpace.Visibility
 
         #endregion
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Button2_Click(object sender, EventArgs e)
         {
             log.DebugEx("> (button2_Click) AddObservPointsLayer START");
 
@@ -2359,11 +2363,13 @@ namespace MilSpace.Visibility
 
         private void DockableWindowMilSpaceMVisibilitySt_Load(object sender, EventArgs e)
         {
-            ToolTip toolTip = new ToolTip();
-            toolTip.AutoPopDelay = 5000;
-            toolTip.InitialDelay = 1000;
-            toolTip.ReshowDelay = 500;
-            toolTip.ShowAlways = true;
+            ToolTip toolTip = new ToolTip
+            {
+                AutoPopDelay = 5000,
+                InitialDelay = 1000,
+                ReshowDelay = 500,
+                ShowAlways = true
+            };
 
             toolTip.SetToolTip(this.tlbbAddObservObjLayer, this.tlbbAddObservObjLayer.Tag.ToString());
             toolTip.SetToolTip(this.btnAddLayerPS, this.btnAddLayerPS.Tag.ToString());
@@ -2371,9 +2377,8 @@ namespace MilSpace.Visibility
             toolTip.SetToolTip(this.btnSaveParamPS, this.btnSaveParamPS.Tag.ToString());
         }
 
-        private void tbObservObjects_CheckChanged(object sender, EventArgs e)
+        private void TbObservObjects_CheckChanged(object sender, EventArgs e)
         {
-
             if (dgvObservObjects.SelectedRows.Count == 0) return;
 
             var seletctedItem = dgvObservObjects.SelectedRows[0];
@@ -2409,7 +2414,7 @@ namespace MilSpace.Visibility
             }
         }
 
-        private void btnSaveParamPS_Click(object sender, EventArgs e)
+        private void BtnSaveParamPS_Click(object sender, EventArgs e)
         {
             var seletctedItem = dgvObservObjects.SelectedRows[0];
             if (seletctedItem.DataBoundItem is ObservObjectGui sourceItem)
@@ -2421,7 +2426,6 @@ namespace MilSpace.Visibility
                 bool result = _observPointsController.SaveObservationObject(sourceItem);
                 if (!result)
                 {
-
                     string sMsgText = LocalizationContext.Instance.FindLocalizedElement(
                                         "MsgTextCannotSaveObservationstahtions",
                                         "Параметри облаcті нагляду не були збережені./nБільш детпльна інформація знахолится у лог файлі.");
@@ -2440,7 +2444,7 @@ namespace MilSpace.Visibility
             }
         }
 
-        private void tbObservObjects_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        private void TbObservObjects_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
             if (e.Button == toolBarButton31 && dgvObservObjects.RowCount > 0)
             {

@@ -33,7 +33,7 @@ namespace MilSpace.Core.Tools
         {
             { esriGeometryType.esriGeometryPoint, (rgbColor) => {
                   //Set point props to the flash geometry
-                ISimpleMarkerSymbol simpleMarkerSymbol = new SimpleMarkerSymbol()
+                ISimpleMarkerSymbol simpleMarkerSymbol = new SimpleMarkerSymbol
                 {
                     Style = esriSimpleMarkerStyle.esriSMSCross,
                     Size = 8,
@@ -48,34 +48,36 @@ namespace MilSpace.Core.Tools
               { esriGeometryType.esriGeometryPolygon, (rgbColor) => {
                   //Set point props to the flash geometry
 
-                ISimpleFillSymbol simpleFillSymbol = new SimpleFillSymbolClass();
-                simpleFillSymbol.Color = rgbColor;
-
-                simpleFillSymbol.Style = esriSimpleFillStyle.esriSFSForwardDiagonal;
-
-
+                ISimpleFillSymbol simpleFillSymbol = new SimpleFillSymbolClass
+                {
+                    Color = rgbColor,
+                    Style = esriSimpleFillStyle.esriSFSForwardDiagonal
+                };
 
                 return (ISymbol)simpleFillSymbol; }
             },
             { esriGeometryType.esriGeometryPolyline, (rgbColor) => {
                 //Define an arrow marker  
-                IArrowMarkerSymbol arrowMarkerSymbol = new ArrowMarkerSymbol();
-
-                arrowMarkerSymbol.Color = rgbColor;
-                arrowMarkerSymbol.Size = 8;
-                arrowMarkerSymbol.Length = 8;
-                arrowMarkerSymbol.Width = 6;
-                //Add an offset to make sure the square end of the line is hidden  
-                arrowMarkerSymbol.XOffset = 0.8;
+                IArrowMarkerSymbol arrowMarkerSymbol = new ArrowMarkerSymbol
+                {
+                    Color = rgbColor,
+                    Size = 8,
+                    Length = 8,
+                    Width = 6,
+                    //Add an offset to make sure the square end of the line is hidden  
+                    XOffset = 0.8
+                };
 
                 //Create cartographic line symbol  
-                ICartographicLineSymbol cartographicLineSymbol = new CartographicLineSymbol();
-                cartographicLineSymbol.Color = rgbColor;
-                cartographicLineSymbol.Width = 4.0;
-
+                ICartographicLineSymbol cartographicLineSymbol = new CartographicLineSymbol
+                {
+                    Color = rgbColor,
+                    Width = 4.0
+                };
 
                 //Define simple line decoration  
                 ISimpleLineDecorationElement simpleLineDecorationElement = new SimpleLineDecorationElement();
+                
                 //Place the arrow at the end of the line (the "To" point in the geometry below)  
                 simpleLineDecorationElement.AddPosition(1);
                 simpleLineDecorationElement.MarkerSymbol = arrowMarkerSymbol;
@@ -178,8 +180,11 @@ namespace MilSpace.Core.Tools
             var attrTable = polygonLayer.FeatureClass as ITable;
             var fld = attrTable.FindField(valuesField);
 
-            var filter = new QueryFilter();
-            filter.SubFields = valuesField;
+            var filter = new QueryFilter
+            {
+                SubFields = valuesField
+            };
+
             IQueryFilterDefinition2 filterDefinition = (IQueryFilterDefinition2)filter;
 
             filterDefinition.PostfixClause = $"ORDER BY {valuesField}";
@@ -196,14 +201,15 @@ namespace MilSpace.Core.Tools
             }
 
             //Create the start and end colors
-            IColor startColor = fromColor != null ? fromColor : new RgbColor()
+            IColor startColor = fromColor ?? new RgbColor()
             {
                 Transparency = 33,
                 Red = 255,
                 Green = 255,
                 Blue = 115
             };
-            IColor endColor = toColor != null ? toColor : new RgbColor()
+
+            IColor endColor = toColor ?? new RgbColor()
             {
                 Red = 115,
                 Green = 38,
@@ -230,8 +236,11 @@ namespace MilSpace.Core.Tools
 
             if (ok)
             {
-                IUniqueValueRenderer uniqueRen = new UniqueValueRenderer();
-                uniqueRen.FieldCount = 1;
+                IUniqueValueRenderer uniqueRen = new UniqueValueRenderer
+                {
+                    FieldCount = 1
+                };
+
                 uniqueRen.Field[0] = valuesField;
 
 
@@ -246,18 +255,19 @@ namespace MilSpace.Core.Tools
                 foreach (var uniqueValue in ids)
                 {
                     var classValue = uniqueValue;
-                    ISimpleFillSymbol simpleFillSymbol = new SimpleFillSymbol();
 
-                    simpleFillSymbol.Color = algColorRamp == null ? startColor : algColorRamp.Color[valueClass++];
-
-                    simpleFillSymbol.Outline = new CartographicLineSymbol
+                    ISimpleFillSymbol simpleFillSymbol = new SimpleFillSymbol
                     {
-                        Width = 0.4,
-                        Color = new RgbColor()
+                        Color = algColorRamp == null ? startColor : algColorRamp.Color[valueClass++],
+                        Outline = new CartographicLineSymbol
                         {
-                            Red = 100,
-                            Green = 100,
-                            Blue = 100
+                            Width = 0.4,
+                            Color = new RgbColor()
+                            {
+                                Red = 100,
+                                Green = 100,
+                                Blue = 100
+                            }
                         }
                     };
 
@@ -276,12 +286,17 @@ namespace MilSpace.Core.Tools
             var bandCollection = raster as IRasterBandCollection;
             var band = bandCollection.Item(0);
             bool hasTable;
+
             band.HasTable(out hasTable);
+
             if (hasTable)
             {
                 var attrTable = band.AttributeTable;
-                var filter = new QueryFilter();
-                filter.SubFields = valuesField;
+                var filter = new QueryFilter
+                {
+                    SubFields = valuesField
+                };
+
                 IQueryFilterDefinition2 filterDefinition = (IQueryFilterDefinition2)filter;
 
                 filterDefinition.PrefixClause = $"DISTINCT {valuesField}";
@@ -325,8 +340,11 @@ namespace MilSpace.Core.Tools
                 }
 
                 //rasterLayer.Renderer = (IRasterRenderer)stretchRen;
-                IRasterUniqueValueRenderer uniqueRen = new RasterUniqueValueRenderer();
-                uniqueRen.HeadingCount = 1;
+                IRasterUniqueValueRenderer uniqueRen = new RasterUniqueValueRenderer
+                {
+                    HeadingCount = 1
+                };
+
                 uniqueRen.Heading[0] = "All Data Values";
                 uniqueRen.ClassCount[0] = cntRows;
                 uniqueRen.Field = valuesField;
@@ -342,10 +360,15 @@ namespace MilSpace.Core.Tools
                 while (row != null)
                 {
                     var classValue = row.Value[fldIndex];
+
                     uniqueRen.AddValue(0, valueClass, classValue);
                     uniqueRen.Label[0, valueClass] = $"{classValue}";
-                    var fillSymbol = new SimpleFillSymbol();
-                    fillSymbol.Color = ramp == null ? fromColor : ramp.Color[valueClass];
+
+                    var fillSymbol = new SimpleFillSymbol
+                    {
+                        Color = ramp == null ? fromColor : ramp.Color[valueClass]
+                    };
+
                     uniqueRen.Symbol[0, valueClass++] = fillSymbol as ISymbol;
                     row = uniwuevaluesr.NextRow();
                 }
@@ -1054,11 +1077,12 @@ namespace MilSpace.Core.Tools
             }
 
             var curExtent = activeView.Extent;
-            ISpatialFilter spatialFilter = new SpatialFilterClass();
-            spatialFilter.Geometry = activeView.Extent;
-            spatialFilter.GeometryField = featureClass.ShapeFieldName;
-            spatialFilter.SpatialRel = esriSpatialRelEnum.esriSpatialRelIntersects;
-
+            ISpatialFilter spatialFilter = new SpatialFilterClass
+            {
+                Geometry = activeView.Extent,
+                GeometryField = featureClass.ShapeFieldName,
+                SpatialRel = esriSpatialRelEnum.esriSpatialRelIntersects
+            };
 
             // Execute the query and iterate through the cursor's results.
             IFeatureCursor cursor = featureClass.Search(spatialFilter, false);
@@ -1168,17 +1192,22 @@ namespace MilSpace.Core.Tools
                 if (wsp2.NameExists[esriDatasetType.esriDTTable, tableName])
                 {
                     ITable table = featureWorkspace.OpenTable(tableName);
-                    IStandaloneTable stndaloneTable = new StandaloneTable();
-                    stndaloneTable.Table = table;
-                    stndaloneTable.Name = tableName;
+                    IStandaloneTable stndaloneTable = new StandaloneTable
+                    {
+                        Table = table,
+                        Name = tableName
+                    };
 
                     IStandaloneTableCollection tableCollection = mapDocument.FocusMap as IStandaloneTableCollection;
                     tableCollection.AddStandaloneTable(stndaloneTable);
                     mapDocument.UpdateContents();
 
-                    ITableWindow tabwindow = new TableWindow();
-                    tabwindow.Application = application;
-                    tabwindow.Table = table;
+                    ITableWindow tabwindow = new TableWindow
+                    {
+                        Application = application,
+                        Table = table
+                    };
+
                     tabwindow.Show(true);
                 }
             }
@@ -1400,8 +1429,10 @@ namespace MilSpace.Core.Tools
                 throw new MissingFieldException();
             }
 
-            IQueryFilter queryFilter = new QueryFilter();
-            queryFilter.WhereClause = $"{featureClass.OIDFieldName} > 0";
+            IQueryFilter queryFilter = new QueryFilter
+            {
+                WhereClause = $"{featureClass.OIDFieldName} > 0"
+            };
 
             IFeatureCursor featureCursor = featureClass.Search(queryFilter, true);
             IFeature feature = featureCursor.NextFeature();
@@ -1439,8 +1470,10 @@ namespace MilSpace.Core.Tools
             IActiveView activeView,
             IEnumerable<ILayer> calcRasters)
         {
-            IGroupLayer groupLayer = new GroupLayerClass();
-            groupLayer.Name = sessionName;
+            IGroupLayer groupLayer = new GroupLayerClass
+            {
+                Name = sessionName
+            };
 
             foreach (var layer in layers)
             {
@@ -1504,9 +1537,11 @@ namespace MilSpace.Core.Tools
 
         public static ILayer GetFeatureLayer(IFeatureClass dataset)
         {
-            var featurelayer = new FeatureLayer();
-            featurelayer.Name = dataset.AliasName;
-            featurelayer.FeatureClass = dataset;
+            var featurelayer = new FeatureLayer
+            {
+                Name = dataset.AliasName,
+                FeatureClass = dataset
+            };
 
             return featurelayer;
         }
@@ -1831,8 +1866,11 @@ namespace MilSpace.Core.Tools
                 return null;
             }
 
-            IGeometry geometryBag = new GeometryBagClass();
-            geometryBag.SpatialReference = polygons[0].SpatialReference;
+            IGeometry geometryBag = new GeometryBagClass
+            {
+                SpatialReference = polygons[0].SpatialReference
+            };
+
             IGeometryCollection geometryCollection = geometryBag as IGeometryCollection;
 
             foreach (var polygon in polygons)
@@ -1983,10 +2021,14 @@ namespace MilSpace.Core.Tools
 
             IGeoFeatureLayer geoFeatureLayer = (IGeoFeatureLayer)feaureLayer;
             ISimpleRenderer simpleRenderer = (ISimpleRenderer)geoFeatureLayer.Renderer;
+
             //Create a new renderer
-            simpleRenderer = new SimpleRendererClass();
-            //Set its symbol from the styleGalleryItem
-            simpleRenderer.Symbol = featureLayerSymbol;
+            simpleRenderer = new SimpleRendererClass
+            {
+                //Set its symbol from the styleGalleryItem
+                Symbol = featureLayerSymbol
+            };
+
             //Set the renderer into the geoFeatureLayer
             geoFeatureLayer.Renderer = (IFeatureRenderer)simpleRenderer;
         }
@@ -2002,10 +2044,14 @@ namespace MilSpace.Core.Tools
             {
                 IGeoFeatureLayer geoFeatureLayer = (IGeoFeatureLayer)feaureLayer;
                 ISimpleRenderer simpleRenderer = (ISimpleRenderer)geoFeatureLayer.Renderer;
+
                 //Create a new renderer
-                simpleRenderer = new SimpleRendererClass();
-                //Set its symbol from the styleGalleryItem
-                simpleRenderer.Symbol = featureLayerSymbol;
+                simpleRenderer = new SimpleRendererClass
+                {
+                    //Set its symbol from the styleGalleryItem
+                    Symbol = featureLayerSymbol
+                };
+
                 //Set the renderer into the geoFeatureLayer
                 geoFeatureLayer.Renderer = (IFeatureRenderer)simpleRenderer;
             }
@@ -2047,18 +2093,21 @@ namespace MilSpace.Core.Tools
             Int32 delay,
             IApplication application)
         {
-            var mxdoc = application.Document as IMxDocument;
-            if (mxdoc == null)
+            if (!(application.Document is IMxDocument mxdoc))
+            {
                 return;
+            }
 
             var av = (IActiveView)mxdoc.FocusMap;
             var display = av.ScreenDisplay;
             var envelope = av.Extent.Envelope;
 
-            IRgbColor color = new RgbColorClass();
-            color.Green = 255;
-            color.Red = 0;
-            color.Blue = 0;
+            IRgbColor color = new RgbColorClass
+            {
+                Green = 255,
+                Red = 0,
+                Blue = 0
+            };
 
             if ((geometry == null)
                 || (geometry.GeometryType != ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPoint)
@@ -2070,21 +2119,27 @@ namespace MilSpace.Core.Tools
                 return;
             }
 
-            display.StartDrawing(display.hDC, (System.Int16)ESRI.ArcGIS.Display.esriScreenCache.esriNoScreenCache); // Explicit Cast
+            display.StartDrawing(display.hDC, (Int16)esriScreenCache.esriNoScreenCache); // Explicit Cast
 
             //Set the flash geometry's symbol.
-            ESRI.ArcGIS.Display.ISimpleMarkerSymbol simpleMarkerSymbol = new ESRI.ArcGIS.Display.SimpleMarkerSymbolClass();
-            simpleMarkerSymbol.Style = ESRI.ArcGIS.Display.esriSimpleMarkerStyle.esriSMSCircle;
-            simpleMarkerSymbol.Size = 12;
-            simpleMarkerSymbol.Color = color;
-            ESRI.ArcGIS.Display.ISymbol markerSymbol = (ESRI.ArcGIS.Display.ISymbol)simpleMarkerSymbol;
-            markerSymbol.ROP2 = ESRI.ArcGIS.Display.esriRasterOpCode.esriROPNotXOrPen;
+            ISimpleMarkerSymbol simpleMarkerSymbol = new SimpleMarkerSymbolClass
+            {
+                Style = esriSimpleMarkerStyle.esriSMSCircle,
+                Size = 12,
+                Color = color
+            };
 
-            ESRI.ArcGIS.Display.ISimpleLineSymbol simpleLineSymbol = new ESRI.ArcGIS.Display.SimpleLineSymbolClass();
-            simpleLineSymbol.Width = 1;
-            simpleLineSymbol.Color = color;
-            ESRI.ArcGIS.Display.ISymbol lineSymbol = (ESRI.ArcGIS.Display.ISymbol)simpleLineSymbol;
-            lineSymbol.ROP2 = ESRI.ArcGIS.Display.esriRasterOpCode.esriROPNotXOrPen;
+            ISymbol markerSymbol = (ISymbol)simpleMarkerSymbol;
+            markerSymbol.ROP2 = esriRasterOpCode.esriROPNotXOrPen;
+
+            ISimpleLineSymbol simpleLineSymbol = new SimpleLineSymbolClass
+            {
+                Width = 1,
+                Color = color
+            };
+
+            ISymbol lineSymbol = (ISymbol)simpleLineSymbol;
+            lineSymbol.ROP2 = esriRasterOpCode.esriROPNotXOrPen;
 
             DrawCrossHair(geometry, display, envelope, markerSymbol, lineSymbol, application);
 
@@ -2098,8 +2153,8 @@ namespace MilSpace.Core.Tools
         }
 
         private static void DrawCrossHair(
-            ESRI.ArcGIS.Geometry.IGeometry geometry,
-            ESRI.ArcGIS.Display.IDisplay display,
+            IGeometry geometry,
+            IDisplay display,
             IEnvelope extent,
             ISymbol markerSymbol,
             ISymbol lineSymbol,
@@ -2107,11 +2162,12 @@ namespace MilSpace.Core.Tools
         {
             try
             {
-                var point = geometry as IPoint;
 
-                if ((point == null) || (display == null) || (extent == null) || (markerSymbol == null) ||
+                if ((!(geometry is IPoint point)) || (display == null) || (extent == null) || (markerSymbol == null) ||
                     (lineSymbol == null) || (application == null))
+                {
                     return;
+                }
 
                 var numSegments = 10;
 
