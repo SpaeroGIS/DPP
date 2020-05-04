@@ -22,9 +22,9 @@ namespace MilSpace.DataAccess.Facade
     {
         private static GdbAccess instance = null;
         private static IApplication application = null;
-        private static string divider = "\\";
 
-        private static readonly string profileCalcFeatureClass = "CalcProfile_L";
+        private const string divider = "\\";
+        private const string profileCalcFeatureClass = "CalcProfile_L";
 
         private static Logger logger = Logger.GetLoggerEx("MilSpace.DataAccess.Facade.GdbAccess");
 
@@ -201,6 +201,7 @@ namespace MilSpace.DataAccess.Facade
                 IFields targetFields;
                 IFields sourceFields = pSourceTab.Fields;
                 IEnumFieldError enumFieldError;
+
                 // Most importantly set the input and validate workspaces!
                 fieldChecker.InputWorkspace = sourceDataset.Workspace;
                 fieldChecker.ValidateWorkspace = targetWorkspace;
@@ -566,8 +567,10 @@ namespace MilSpace.DataAccess.Facade
         public void EraseProfileLines()
         {
             IFeatureClass calc = GetCalcProfileFeatureClass("CalcProfile_L");
-            IQueryFilter queryFilter = new QueryFilterClass();
-            queryFilter.WhereClause = $"{calc.OIDFieldName} >= 0";
+            IQueryFilter queryFilter = new QueryFilterClass
+            {
+                WhereClause = $"{calc.OIDFieldName} >= 0"
+            };
 
             IFeatureCursor featureCursor = calc.Search(queryFilter, true);
 
@@ -845,9 +848,12 @@ namespace MilSpace.DataAccess.Facade
 
         public ILayer GetLayerFromWorkingWorkspace(string featureClassName)
         {
-            var featurelayer = new FeatureLayer();
-            featurelayer.Name = featureClassName;
-            featurelayer.FeatureClass = OpenFeatureClass(WorkingWorkspace, featureClassName);
+            var featurelayer = new FeatureLayer
+            {
+                Name = featureClassName,
+                FeatureClass = OpenFeatureClass(WorkingWorkspace, featureClassName)
+            };
+
             return featurelayer;
         }
 

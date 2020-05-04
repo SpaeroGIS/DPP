@@ -332,8 +332,11 @@ namespace MilSpace.Profile
 
             internal static IDockableWindow AtivateDocableWindow()
             {
-                UID dockWinID = new UIDClass();
-                dockWinID.Value = ThisAddIn.IDs.DockableWindowMilSpaceProfileCalc;
+                UID dockWinID = new UIDClass
+                {
+                    Value = ThisAddIn.IDs.DockableWindowMilSpaceProfileCalc
+                };
+
                 IDockableWindow dockWindow = ArcMap.DockableWindowManager.GetDockableWindow(dockWinID);
                 dockWindow.Caption = LocalizationContext.Instance.FindLocalizedElement("LblProfileDocableWinCaption", "Спостереження. Розрахунок профілю");
                 return dockWindow;
@@ -365,7 +368,7 @@ namespace MilSpace.Profile
             dockWindow.Show(true);
         }
 
-        private void toolBar1_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        private void ToolBar1_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
             ToolbarButtonClicked = e.Button;
 
@@ -471,7 +474,7 @@ namespace MilSpace.Profile
             ArcMap.Application.CurrentTool = mapTool;
         }
 
-        private void secondPointToolbar_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        private void SecondPointToolbar_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
             ToolbarButtonClicked = e.Button;
             switch (ToolbarButtonClicked.Name)
@@ -558,7 +561,7 @@ namespace MilSpace.Profile
             }
         }
 
-        private void toolBar3_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        private void ToolBar3_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
             ToolbarButtonClicked = e.Button;
             switch (ToolbarButtonClicked.Name)
@@ -777,8 +780,7 @@ namespace MilSpace.Profile
         {
             get
             {
-                int result;
-                if (int.TryParse(funLinesCount.Text, out result))
+                if (int.TryParse(funLinesCount.Text, out int result))
                 {
                     return result;
                 }
@@ -790,8 +792,7 @@ namespace MilSpace.Profile
         {
             get
             {
-                double result;
-                if (Helper.TryParceToDouble(azimuth1.Text, out result))
+                if (Helper.TryParceToDouble(azimuth1.Text, out double result))
                 {
                     return result;
                 }
@@ -802,8 +803,7 @@ namespace MilSpace.Profile
         {
             get
             {
-                double result;
-                if (Helper.TryParceToDouble(azimuth2.Text, out result))
+                if (Helper.TryParceToDouble(azimuth2.Text, out double result))
                 {
                     return result;
                 }
@@ -830,8 +830,7 @@ namespace MilSpace.Profile
         {
             get
             {
-                double result;
-                if (Helper.TryParceToDouble(profileLength.Text, out result))
+                if (Helper.TryParceToDouble(profileLength.Text, out double result))
                 {
                     return result;
                 }
@@ -860,12 +859,12 @@ namespace MilSpace.Profile
             }
         }
 
-        private void panel1_Enter(object sender, EventArgs e)
+        private void Panel1_Enter(object sender, EventArgs e)
         {
             ProfileLayers.GetAllLayers();
         }
 
-        private void calcProfile_Click(object sender, EventArgs e)
+        private void CalcProfile_Click(object sender, EventArgs e)
         {
             logger.DebugEx("> calcProfile_Click START");
 
@@ -895,11 +894,6 @@ namespace MilSpace.Profile
             e.Handled = !CheckDouble(e.KeyChar, (TextBox)sender);
         }
 
-        private void funLinesCount_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            e.Handled = !CheckDouble(e.KeyChar, (TextBox)sender, true);
-        }
-
         private void UpdateFunProperties(object sender, EventArgs e)
         {
             if (sender == funLinesCount && Convert.ToInt32(funLinesCount.Text) < 2)
@@ -913,12 +907,12 @@ namespace MilSpace.Profile
             RecalculateFunWithParams();
         }
 
-        private void profileSettingsTab_SelectedIndexChanged(object sender, EventArgs e)
+        private void ProfileSettingsTab_SelectedIndexChanged(object sender, EventArgs e)
         {
             controller.SetProfileSettings(SelectedProfileSettingsType, false);
         }
 
-        private void cmbRasterLayers_SelectedIndexChanged(object sender, EventArgs e)
+        private void CmbRasterLayers_SelectedIndexChanged(object sender, EventArgs e)
         {
             controller.SetProfileDemLayer(SelectedProfileSettingsType);
         }
@@ -937,9 +931,7 @@ namespace MilSpace.Profile
                 treeNode = treeNode.Parent;
             }
 
-            ProfileSettingsTypeEnum res;
-
-            if (Enum.TryParse<ProfileSettingsTypeEnum>(treeNode.Name, out res))
+            if (Enum.TryParse<ProfileSettingsTypeEnum>(treeNode.Name, out ProfileSettingsTypeEnum res))
             {
                 return res;
             }
@@ -1099,7 +1091,7 @@ namespace MilSpace.Profile
             }
         }
 
-        private void toolBtnShowOnMap_Click(object sender, EventArgs e)
+        private void ToolBtnShowOnMap_Click(object sender, EventArgs e)
         {
             var node = profilesTreeView.SelectedNode;
             var ids = GetProfileAndLineIds(node);
@@ -1107,9 +1099,8 @@ namespace MilSpace.Profile
             controller.ShowProfileOnMap(ids.Item1, ids.Item2);
         }
 
-        private void profilesTreeView_AfterCheck(object sender, TreeViewEventArgs e)
+        private void ProfilesTreeView_AfterCheck(object sender, TreeViewEventArgs e)
         {
-
             if (e.Node.Tag != null && e.Node.Tag.GetType() == typeof(int))
             {
                 var ids = GetProfileAndLineIds(e.Node);
@@ -1177,9 +1168,7 @@ namespace MilSpace.Profile
         {
             var athimuthControl = sender as TextBox;
 
-            double result;
-
-            if (Helper.TryParceToDouble(azimuth2.Text, out result) && (result <= 360 && result >= 0))
+            if (Helper.TryParceToDouble(azimuth2.Text, out double result) && (result <= 360 && result >= 0))
             {
                 UpdateFunProperties(sender, e);
                 return;
@@ -1194,18 +1183,13 @@ namespace MilSpace.Profile
 
             athimuthControl.Focus();
         }
-
-        private void azimuth2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnRefreshLayers_Click(object sender, EventArgs e)
+        
+        private void BtnRefreshLayers_Click(object sender, EventArgs e)
         {
             OnDocumentOpenFillDropdowns();
         }
 
-        private void toolBtnFlash_Click(object sender, EventArgs e)
+        private void ToolBtnFlash_Click(object sender, EventArgs e)
         {
             var node = profilesTreeView.SelectedNode;
             var ids = GetProfileAndLineIds(node);
@@ -1358,7 +1342,7 @@ namespace MilSpace.Profile
             logger.InfoEx("> LocalizeStrings Profile END");
         }
 
-        private void addProfileToGraph_Click(object sender, EventArgs e)
+        private void AddProfileToGraph_Click(object sender, EventArgs e)
         {
             var node = profilesTreeView.SelectedNode;
             var ids = GetProfileAndLineIds(node);
@@ -1367,12 +1351,12 @@ namespace MilSpace.Profile
             controller.CallGraphsHandle(ids.Item1);
         }
 
-        private void openGraphWindow_Click(object sender, EventArgs e)
+        private void OpenGraphWindow_Click(object sender, EventArgs e)
         {
             controller.ShowGraphsWindow();
         }
 
-        private void removeProfile_Click(object sender, EventArgs e)
+        private void RemoveProfile_Click(object sender, EventArgs e)
         {
             string loalizedtext =
                LocalizationContext.Instance.FindLocalizedElement("MsgRemoveProfaileText", $"Ви дійсно бажаєти cкинути профіль  \"{0}\" з сесії?")
@@ -1579,7 +1563,7 @@ namespace MilSpace.Profile
             }
         }
 
-        private void saveProfileAsShared_Click_1(object sender, EventArgs e)
+        private void SaveProfileAsShared_Click_1(object sender, EventArgs e)
         {
             var node = profilesTreeView.SelectedNode;
             var ids = GetProfileAndLineIds(node);
@@ -1614,7 +1598,7 @@ namespace MilSpace.Profile
 
         }
 
-        private void eraseProfile_Click(object sender, EventArgs e)
+        private void EraseProfile_Click(object sender, EventArgs e)
         {
             string loalizedtext =
                 LocalizationContext.Instance.FindLocalizedElement("MsgDeleteProfaileText", $"Ви дійсно бажаєти видалити профіль  \"{0}\"?")
@@ -1636,7 +1620,7 @@ namespace MilSpace.Profile
             }
         }
 
-        private void addProfileToExistingGraph_Click(object sender, EventArgs e)
+        private void AddProfileToExistingGraph_Click(object sender, EventArgs e)
         {
             var node = profilesTreeView.SelectedNode;
             var ids = GetProfileAndLineIds(node);
@@ -1644,12 +1628,12 @@ namespace MilSpace.Profile
             controller.AddProfileToTab(ids.Item1, ids.Item2);
         }
 
-        private void clearExtraGraphic_Click(object sender, EventArgs e)
+        private void ClearExtraGraphic_Click(object sender, EventArgs e)
         {
             controller.ClearMapFromOldGraphs();
         }
 
-        private void setProfileSettingsToCalc_Click(object sender, EventArgs e)
+        private void SetProfileSettingsToCalc_Click(object sender, EventArgs e)
         {
             var node = profilesTreeView.SelectedNode;
 
@@ -1658,7 +1642,6 @@ namespace MilSpace.Profile
             ProfileTreeNode profileNode = (ProfileTreeNode)node;
             var profileType = GetProfileTypeFromNode();
             var rows = profileNode.Attributes.Rows;
-
 
             if (profileType == ProfileSettingsTypeEnum.Points)
             {
@@ -1693,8 +1676,8 @@ namespace MilSpace.Profile
 
                 txtFirstHeight.Text = rows.Find(AttributeKeys.SectionFirstPointHeight)[AttributeKeys.ValueColumnName].ToString();
                 txtSecondHeight.Text = rows.Find(AttributeKeys.SectionSecondPointHeight)[AttributeKeys.ValueColumnName].ToString();
-
             }
+
             if (profileType == ProfileSettingsTypeEnum.Fun)
             {
                 profileSettingsTab.SelectTab(1);
@@ -1731,6 +1714,7 @@ namespace MilSpace.Profile
         {
             double pointX;
             double pointY;
+
             if (xValue.TryParceToDouble(out pointX) && yValue.TryParceToDouble(out pointY))
             {
                 var point = new Point()
@@ -1741,6 +1725,7 @@ namespace MilSpace.Profile
                 };
 
                 MapLayersManager mngr = new MapLayersManager(ActiveView);
+
                 //Set Z value using selected DEM
                 var rl = mngr.RasterLayers.FirstOrDefault(l => l.Name == DemLayerName);
                 if (rl != null)
@@ -1774,16 +1759,11 @@ namespace MilSpace.Profile
             };
         }
 
-        private void addAvailableProfilesSets_Click(object sender, EventArgs e)
+        private void AddAvailableProfilesSets_Click(object sender, EventArgs e)
         {
             controller.AddAvailableSets();
         }
-
-        private void toolBarSelectedPrimitives_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
-        {
-
-        }
-
+        
         private void CmbFirstPointAssignmentMethod_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbFirstPointAssignmentMethod.SelectedItem.Equals(LocalizationContext.Instance.AssignmentMethodFromMapItem))

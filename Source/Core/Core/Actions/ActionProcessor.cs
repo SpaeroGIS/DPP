@@ -21,7 +21,7 @@ namespace MilSpace.Core.Actions
         /// </summary>
         private static List<IActionProcessor> processing = new List<IActionProcessor>();
 
-        private HttpContext context;
+        private readonly HttpContext context;
         private List<IActionParam> prosessingActionParams = new List<IActionParam>();
         private static string templateArgs = "{0}:";
         private IAction<IActionResult> act = null;
@@ -156,8 +156,11 @@ namespace MilSpace.Core.Actions
 
         public ActionParam<T> GetParameter<T>(string key, T defaultVal)
         {
-            ActionParam<T> paramVale = new ActionParam<T>();
-            paramVale.Value = defaultVal;
+            ActionParam<T> paramVale = new ActionParam<T>
+            {
+                Value = defaultVal
+            };
+
             if (this.ContainsParam(key))
             {
                 IActionParam val = this.prosessingActionParams.Single(s => s.ParamName.Equals(key));
@@ -176,8 +179,10 @@ namespace MilSpace.Core.Actions
 
         public IEnumerable<ActionParam<T>> GetParameters<T>(string key, T defaultVal)
         {
-            ActionParam<T> paramDefVale = new ActionParam<T>();
-            paramDefVale.Value = defaultVal;
+            ActionParam<T> paramDefVale = new ActionParam<T>
+            {
+                Value = defaultVal
+            };
 
             IEnumerable<ActionParam<T>> paramVales = new ActionParam<T>[] { paramDefVale };
 
@@ -255,10 +260,7 @@ namespace MilSpace.Core.Actions
                 MilSpace.Core.Logger.Info(string.Format("Action \"{0}\" processed", act.ActionId));
                 result.PeocessId = this.ProcessId;
                 state = ActionStatesEnum.Finished;
-                if (ProcessMonitor != null)
-                {
-                    ProcessMonitor(act.Description, state);
-                }
+                ProcessMonitor?.Invoke(act.Description, state);
                 this.performing = false;
             }
 
@@ -306,10 +308,10 @@ namespace MilSpace.Core.Actions
             MilSpace.Core.Logger.Info(string.Format("Action \"{0}\" with id {1} processing async", act.ActionId, this.ProcessId));
             this.onActionFinished = onActionFinished;
             ProcessAsyncCaller caller = new ProcessAsyncCaller(this.Process);
-            IAsyncResult result = caller.BeginInvoke(new AsyncCallback(worker_DoWork), null);
+            IAsyncResult result = caller.BeginInvoke(new AsyncCallback(Worker_DoWork), null);
         }
 
-        private void worker_DoWork(IAsyncResult ar)
+        private void Worker_DoWork(IAsyncResult ar)
         {
 
             AsyncResult result = (AsyncResult)ar;
@@ -328,7 +330,7 @@ namespace MilSpace.Core.Actions
             //    caller.
         }
 
-        void worker_DoWork(object sender, DoWorkEventArgs e)
+        void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
             this.CheckConsistency();
 

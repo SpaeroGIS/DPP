@@ -883,27 +883,8 @@
         #endregion
 
         private System.Windows.Forms.DataVisualization.Charting.Chart profileChart;
-        private System.Windows.Forms.ToolBarButton changeObserverHeightToolBarBtn;
-        private System.Windows.Forms.ToolBarButton changeOnlySelectedObserverHeightToolBarBtn;
         private System.Windows.Forms.ColorDialog lineColorDialog;
         private System.Windows.Forms.ToolBar graphToolBar;
-        private System.Windows.Forms.ToolBarButton leftPaddingGraphSeparator;
-        private System.Windows.Forms.ToolBarButton selectProfileToolBarBtn;
-        private System.Windows.Forms.ToolBarButton displayProfilesSignaturesToolBarBtn;
-        private System.Windows.Forms.ToolBarButton removeSelectedProfileToolBarBtn;
-        private System.Windows.Forms.ToolBarButton graphToolBarSeparator1;
-        private System.Windows.Forms.ToolBarButton synchronizationToolBarBtn;
-        private System.Windows.Forms.ToolBarButton graphToolBarSeparator3;
-        private System.Windows.Forms.ToolBarButton updateGraphDisplayToolBarBtn;
-        private System.Windows.Forms.ToolBarButton profilesFullDisplayToolBarBtn;
-        private System.Windows.Forms.ToolBarButton zoomInToolBarBtn;
-        private System.Windows.Forms.ToolBarButton zoomOutToolBarBtn;
-        private System.Windows.Forms.ToolBarButton graphToolBarSeparator2;
-        private System.Windows.Forms.ToolBarButton addGraphPageToolBarBtn;
-        private System.Windows.Forms.ToolBarButton deletePageToolBarBtn;
-        private System.Windows.Forms.ToolBarButton graphToolBarSeparator4;
-        private System.Windows.Forms.ToolBarButton createReportToolBarBtn;
-        private System.Windows.Forms.ToolBarButton saveGraphAsImageToolBarBtn;
         private System.Windows.Forms.ToolBarButton leftGraphPaddingToolBarSpr;
         private System.Windows.Forms.ToolBarButton displayProfileSignatureGraphToolBarBtn;
         private System.Windows.Forms.ToolBarButton deleteSelectedProfileGraphToolBarBtn;
@@ -916,12 +897,10 @@
         private System.Windows.Forms.ToolBarButton graphToolBarSpr3;
         private System.Windows.Forms.ToolBarButton addPageGraphToolBarBtn;
         private System.Windows.Forms.ToolBarButton deletePageGraphToolBarBtn;
-        private System.Windows.Forms.ToolBarButton graphToolBarSpr4;
         private System.Windows.Forms.ToolBarButton saveGraphToolBarBtn;
         private System.Windows.Forms.ToolBarButton toolBarSeparator19;
         private System.Windows.Forms.Panel graphPanel;
         private System.Windows.Forms.ToolTip toolTip;
-        private System.Windows.Forms.ToolBarButton graphToolBarSpr5;
         private System.Windows.Forms.ToolBarButton panToSelectedProfileGraphToolBarBtn;
         private System.Windows.Forms.ToolBarButton toolBarButton1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
@@ -939,7 +918,6 @@
         private System.Windows.Forms.Label visibleLineColorLabel;
         private System.Windows.Forms.ListView profileDetailsListView;
         private System.Windows.Forms.Panel propertiesPanel;
-        private System.Windows.Forms.ToolBarButton graphToolBarSpr6;
         private System.Windows.Forms.ToolBarButton updateIntersectionsLinesGraphToolBarBtn;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ToolBarButton toolBarButton2;

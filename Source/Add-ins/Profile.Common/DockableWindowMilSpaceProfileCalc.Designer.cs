@@ -31,9 +31,9 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Panel panelGO;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Графика");
             this.calcProfile = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.profileTabPage = new System.Windows.Forms.TabPage();
@@ -319,7 +319,7 @@
             this.calcProfile.TabIndex = 27;
             this.calcProfile.Text = "Рассчитать";
             this.calcProfile.UseVisualStyleBackColor = true;
-            this.calcProfile.Click += new System.EventHandler(this.calcProfile_Click);
+            this.calcProfile.Click += new System.EventHandler(this.CalcProfile_Click);
             // 
             // tabControl1
             // 
@@ -367,6 +367,7 @@
             this.panelProfileSet.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.panelProfileSet.Size = new System.Drawing.Size(292, 502);
             this.panelProfileSet.TabIndex = 48;
+            this.panelProfileSet.Enter += new System.EventHandler(this.Panel1_Enter);
             // 
             // profileSettingsTab
             // 
@@ -382,7 +383,7 @@
             this.profileSettingsTab.SelectedIndex = 0;
             this.profileSettingsTab.Size = new System.Drawing.Size(292, 440);
             this.profileSettingsTab.TabIndex = 6;
-            this.profileSettingsTab.SelectedIndexChanged += new System.EventHandler(this.profileSettingsTab_SelectedIndexChanged);
+            this.profileSettingsTab.SelectedIndexChanged += new System.EventHandler(this.ProfileSettingsTab_SelectedIndexChanged);
             // 
             // sectionTab
             // 
@@ -769,7 +770,7 @@
             this.secondPointToolbar.Size = new System.Drawing.Size(112, 24);
             this.secondPointToolbar.TabIndex = 28;
             this.secondPointToolbar.Wrappable = false;
-            this.secondPointToolbar.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.secondPointToolbar_ButtonClick);
+            this.secondPointToolbar.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.SecondPointToolbar_ButtonClick);
             // 
             // toolBarButton61
             // 
@@ -1031,7 +1032,7 @@
             this.firstPointToolBar.Size = new System.Drawing.Size(118, 20);
             this.firstPointToolBar.TabIndex = 27;
             this.firstPointToolBar.Wrappable = false;
-            this.firstPointToolBar.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.toolBar1_ButtonClick);
+            this.firstPointToolBar.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.ToolBar1_ButtonClick);
             // 
             // toolBarButton8
             // 
@@ -1665,7 +1666,7 @@
             this.basePointToolbar.Size = new System.Drawing.Size(112, 22);
             this.basePointToolbar.TabIndex = 28;
             this.basePointToolbar.Wrappable = false;
-            this.basePointToolbar.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.toolBar3_ButtonClick);
+            this.basePointToolbar.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.ToolBar3_ButtonClick);
             // 
             // toolBarButton16
             // 
@@ -2292,7 +2293,7 @@
             this.cmbRasterLayers.Name = "cmbRasterLayers";
             this.cmbRasterLayers.Size = new System.Drawing.Size(182, 21);
             this.cmbRasterLayers.TabIndex = 9;
-            this.cmbRasterLayers.SelectedIndexChanged += new System.EventHandler(this.cmbRasterLayers_SelectedIndexChanged);
+            this.cmbRasterLayers.SelectedIndexChanged += new System.EventHandler(this.CmbRasterLayers_SelectedIndexChanged);
             // 
             // lblDEM
             // 
@@ -2326,7 +2327,7 @@
             this.btnRefreshLayers.Size = new System.Drawing.Size(25, 24);
             this.btnRefreshLayers.TabIndex = 43;
             this.btnRefreshLayers.UseVisualStyleBackColor = true;
-            this.btnRefreshLayers.Click += new System.EventHandler(this.btnRefreshLayers_Click);
+            this.btnRefreshLayers.Click += new System.EventHandler(this.BtnRefreshLayers_Click);
             // 
             // lblLayersForCalc
             // 
@@ -2375,30 +2376,30 @@
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.Location = new System.Drawing.Point(0, 54);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode1.Checked = true;
-            treeNode1.ImageKey = "vector-path-line.png";
-            treeNode1.Name = "Points";
-            treeNode1.SelectedImageIndex = 205;
-            treeNode1.Text = "Отрезки";
-            treeNode2.Checked = true;
-            treeNode2.ImageKey = "Editing-Line-icon3.png";
-            treeNode2.Name = "Fun";
-            treeNode2.SelectedImageIndex = 208;
-            treeNode2.Text = "Веер";
-            treeNode3.Checked = true;
-            treeNode3.ImageKey = "vector-polygon.png";
-            treeNode3.Name = "Primitives";
-            treeNode3.SelectedImageIndex = 209;
-            treeNode3.Text = "Графика";
+            treeNode4.Checked = true;
+            treeNode4.ImageKey = "vector-path-line.png";
+            treeNode4.Name = "Points";
+            treeNode4.SelectedImageIndex = 205;
+            treeNode4.Text = "Отрезки";
+            treeNode5.Checked = true;
+            treeNode5.ImageKey = "Editing-Line-icon3.png";
+            treeNode5.Name = "Fun";
+            treeNode5.SelectedImageIndex = 208;
+            treeNode5.Text = "Веер";
+            treeNode6.Checked = true;
+            treeNode6.ImageKey = "vector-polygon.png";
+            treeNode6.Name = "Primitives";
+            treeNode6.SelectedImageIndex = 209;
+            treeNode6.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
+            treeNode4,
+            treeNode5,
+            treeNode6});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(292, 410);
             this.profilesTreeView.TabIndex = 35;
             this.profilesTreeView.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.ProfilesTreeView_AfterLabelEdit);
-            this.profilesTreeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.profilesTreeView_AfterCheck);
+            this.profilesTreeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.ProfilesTreeView_AfterCheck);
             // 
             // panel6
             // 
@@ -2450,7 +2451,7 @@
             this.toolPanOnMap.Size = new System.Drawing.Size(20, 24);
             this.toolPanOnMap.Text = "toolStripButton1";
             this.toolPanOnMap.ToolTipText = "Показать на карте";
-            this.toolPanOnMap.Click += new System.EventHandler(this.toolBtnShowOnMap_Click);
+            this.toolPanOnMap.Click += new System.EventHandler(this.ToolBtnShowOnMap_Click);
             // 
             // toolBtnFlash
             // 
@@ -2464,7 +2465,7 @@
             this.toolBtnFlash.Size = new System.Drawing.Size(20, 24);
             this.toolBtnFlash.Text = "toolShowOnMap";
             this.toolBtnFlash.ToolTipText = "Подсветить на карте";
-            this.toolBtnFlash.Click += new System.EventHandler(this.toolBtnFlash_Click);
+            this.toolBtnFlash.Click += new System.EventHandler(this.ToolBtnFlash_Click);
             // 
             // toolStripSeparator1
             // 
@@ -2484,7 +2485,7 @@
             this.setProfileSettingsToCalc.Name = "setProfileSettingsToCalc";
             this.setProfileSettingsToCalc.Size = new System.Drawing.Size(20, 24);
             this.setProfileSettingsToCalc.ToolTipText = "Редактировать профиль";
-            this.setProfileSettingsToCalc.Click += new System.EventHandler(this.setProfileSettingsToCalc_Click);
+            this.setProfileSettingsToCalc.Click += new System.EventHandler(this.SetProfileSettingsToCalc_Click);
             // 
             // copyExtremePoints
             // 
@@ -2515,7 +2516,7 @@
             this.addProfileToExistingGraph.Name = "addProfileToExistingGraph";
             this.addProfileToExistingGraph.Size = new System.Drawing.Size(20, 24);
             this.addProfileToExistingGraph.Visible = false;
-            this.addProfileToExistingGraph.Click += new System.EventHandler(this.addProfileToExistingGraph_Click);
+            this.addProfileToExistingGraph.Click += new System.EventHandler(this.AddProfileToExistingGraph_Click);
             // 
             // addProfileToGraph
             // 
@@ -2529,7 +2530,7 @@
             this.addProfileToGraph.Size = new System.Drawing.Size(20, 21);
             this.addProfileToGraph.Text = "addProfileToGraph";
             this.addProfileToGraph.ToolTipText = "Перейти к графику";
-            this.addProfileToGraph.Click += new System.EventHandler(this.addProfileToGraph_Click);
+            this.addProfileToGraph.Click += new System.EventHandler(this.AddProfileToGraph_Click);
             // 
             // openGraphWindow
             // 
@@ -2541,7 +2542,7 @@
             this.openGraphWindow.Name = "openGraphWindow";
             this.openGraphWindow.Size = new System.Drawing.Size(20, 21);
             this.openGraphWindow.ToolTipText = "Open Grpah window";
-            this.openGraphWindow.Click += new System.EventHandler(this.openGraphWindow_Click);
+            this.openGraphWindow.Click += new System.EventHandler(this.OpenGraphWindow_Click);
             // 
             // addAvailableProfilesSets
             // 
@@ -2552,7 +2553,7 @@
             this.addAvailableProfilesSets.Margin = new System.Windows.Forms.Padding(0);
             this.addAvailableProfilesSets.Name = "addAvailableProfilesSets";
             this.addAvailableProfilesSets.Size = new System.Drawing.Size(20, 21);
-            this.addAvailableProfilesSets.Click += new System.EventHandler(this.addAvailableProfilesSets_Click);
+            this.addAvailableProfilesSets.Click += new System.EventHandler(this.AddAvailableProfilesSets_Click);
             // 
             // toolStripSeparator4
             // 
@@ -2598,7 +2599,7 @@
             this.removeProfile.Size = new System.Drawing.Size(20, 21);
             this.removeProfile.Text = "Remove profile(s) from user session";
             this.removeProfile.ToolTipText = "Убрать из списка";
-            this.removeProfile.Click += new System.EventHandler(this.removeProfile_Click);
+            this.removeProfile.Click += new System.EventHandler(this.RemoveProfile_Click);
             // 
             // saveProfileAsShared
             // 
@@ -2612,7 +2613,7 @@
             this.saveProfileAsShared.Size = new System.Drawing.Size(20, 21);
             this.saveProfileAsShared.Text = "saveProfileAsShared";
             this.saveProfileAsShared.ToolTipText = "Сохранить в базу";
-            this.saveProfileAsShared.Click += new System.EventHandler(this.saveProfileAsShared_Click_1);
+            this.saveProfileAsShared.Click += new System.EventHandler(this.SaveProfileAsShared_Click_1);
             // 
             // eraseProfile
             // 
@@ -2626,7 +2627,7 @@
             this.eraseProfile.Size = new System.Drawing.Size(20, 21);
             this.eraseProfile.Text = "toolStripButton1";
             this.eraseProfile.ToolTipText = "Удалить из базы";
-            this.eraseProfile.Click += new System.EventHandler(this.eraseProfile_Click);
+            this.eraseProfile.Click += new System.EventHandler(this.EraseProfile_Click);
             // 
             // toolStripSeparator2
             // 
@@ -2644,7 +2645,7 @@
             this.clearExtraGraphic.Name = "clearExtraGraphic";
             this.clearExtraGraphic.Size = new System.Drawing.Size(20, 21);
             this.clearExtraGraphic.ToolTipText = "Очистить карту от неактуальных графиков";
-            this.clearExtraGraphic.Click += new System.EventHandler(this.clearExtraGraphic_Click);
+            this.clearExtraGraphic.Click += new System.EventHandler(this.ClearExtraGraphic_Click);
             // 
             // panelListProfilesHeader
             // 

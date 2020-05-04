@@ -265,8 +265,10 @@ namespace MilSpace.Tools
 
             var featureClass = featureLayer.FeatureClass;
 
-            IQueryFilter queryFilter = new QueryFilter();
-            queryFilter.WhereClause = $"{featureClass.OIDFieldName} >= 0";
+            IQueryFilter queryFilter = new QueryFilter
+            {
+                WhereClause = $"{featureClass.OIDFieldName} >= 0"
+            };
 
             IFeatureCursor featureCursor = featureClass.Search(queryFilter, true);
             int heightIndex = featureClass.FindField("HRel");

@@ -1680,8 +1680,10 @@ namespace MilSpace.GeoCalculator
 
         private void AddPointStringToGrid(int pointNumber, Guid key, string x, string y = null)
         {
-            var newRow = new DataGridViewRow();
-            newRow.Tag = key;
+            var newRow = new DataGridViewRow
+            {
+                Tag = key
+            };
 
             newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = pointNumber });
             newRow.Cells.Add(new DataGridViewTextBoxCell() { Value = x });
