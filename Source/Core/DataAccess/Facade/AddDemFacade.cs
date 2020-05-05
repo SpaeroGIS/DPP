@@ -16,7 +16,7 @@ namespace MilSpace.DataAccess.Facade
         {
             using (var accessor = new AddDemDataAccess())
             {
-                return accessor.GetSrtmGrids();
+                return accessor.GetSrtmGrids().ToArray();
             }
         }
 
@@ -24,7 +24,7 @@ namespace MilSpace.DataAccess.Facade
         {
             using (var accessor = new AddDemDataAccess())
             {
-                return accessor.GetLoadedSrtmGrids();
+                return accessor.GetLoadedSrtmGrids().ToArray();
             }
         }
 
@@ -32,7 +32,7 @@ namespace MilSpace.DataAccess.Facade
         {
             using (var accessor = new AddDemDataAccess())
             {
-                return accessor.GetLoadedSrtmGrids();
+                return accessor.GetLoadedSrtmGrids().ToArray();
             }
         }
     }
