@@ -379,20 +379,25 @@ namespace MilSpace.DataAccess.DataTransfer
                 X = sessionPoint.X,
                 Y = sessionPoint.Y,
                 UserName = sessionPoint.userName,
-                Id = sessionPoint.id
+                Id = sessionPoint.id,
+                AngFrameH = sessionPoint.AngFrameH.HasValue? sessionPoint.AngFrameH.Value: double.NaN
             };
         }
 
         internal static GeoCalcSessionPoint Get(this GeoCalcPoint sessionPoint)
         {
+            double? GetNulableDouble(double val) { if (double.IsNaN(val)) return null; return val; }
+
             return new GeoCalcSessionPoint
             {
                 PointNumber = sessionPoint.PointNumber,
                 X = sessionPoint.X,
                 Y = sessionPoint.Y,
                 userName = sessionPoint.UserName,
-                id = sessionPoint.Id
+                id = sessionPoint.Id,
+                AngFrameH = GetNulableDouble(sessionPoint.AngFrameH)
             };
+
         }
 
         internal static void Update(this GeoCalcSessionPoint pointEntity, GeoCalcPoint point)

@@ -1,12 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DNOEGDB" Class="MilSpaceGeoCalcContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=SPAERO;Initial Catalog=DNOEGDB;Integrated Security=True" SettingsObjectName="MilSpace.DataAccess.Properties.Settings" SettingsPropertyName="DNOEGDBConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.MILSP_GEOCALCULATOR_USER_SESSION" Member="GeoCalcSessionPoints">
-    <Type Name="GeoCalcSessionPoint">
+  <Table Name="dbo.MILSP_GEOCALCULATOR_USER_SESSION" Member="GeoCalcSessionPoints" AccessModifier="Internal">
+    <Type Name="GeoCalcSessionPoint" AccessModifier="Internal">
       <Column Name="id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="PointNumber" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
       <Column Name="X" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
       <Column Name="Y" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
       <Column Name="userName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="HRel" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AzimuthB" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AzimuthE" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AnglMinH" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AnglMaxH" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AzimuthMainAxis" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AngFrameH" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AnglFrameV" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AnglCameraRotationH" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AnglCameraRotationV" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AvailableHeightUpper" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="AvailableHeightLover" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="InnerRadius" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="OuterRadius" Type="System.Double" DbType="Float" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

@@ -10,7 +10,7 @@
   <Targets>
     <Target name="Desktop" version="10.4" />
   </Targets>
-  <AddIn language="CLR" library="Sposterezhennya.AddDEM.ArcMapAddin.dll" namespace="Sposterezhennya.AddDEM.ArcMapAddin">
+  <AddIn language="CLR" library="Sposterezhennya.AddDEM.dll" namespace="Sposterezhennya.AddDEM.ArcMapAddin">
     <ArcMap>
       <Commands>
         <Button id="Sposterezhennya.AddDEM.DEMAddInButtom"

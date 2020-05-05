@@ -65,7 +65,7 @@ namespace MilSpace.DataAccess.Definition
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<GeoCalcSessionPoint> GeoCalcSessionPoints
+		internal System.Data.Linq.Table<GeoCalcSessionPoint> GeoCalcSessionPoints
 		{
 			get
 			{
@@ -75,7 +75,7 @@ namespace MilSpace.DataAccess.Definition
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MILSP_GEOCALCULATOR_USER_SESSION")]
-	public partial class GeoCalcSessionPoint : INotifyPropertyChanging, INotifyPropertyChanged
+	internal partial class GeoCalcSessionPoint : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -89,6 +89,34 @@ namespace MilSpace.DataAccess.Definition
 		private double _Y;
 		
 		private string _userName;
+		
+		private System.Nullable<double> _HRel;
+		
+		private System.Nullable<double> _AzimuthB;
+		
+		private System.Nullable<double> _AzimuthE;
+		
+		private System.Nullable<double> _AnglMinH;
+		
+		private System.Nullable<double> _AnglMaxH;
+		
+		private System.Nullable<double> _AzimuthMainAxis;
+		
+		private System.Nullable<double> _AngFrameH;
+		
+		private System.Nullable<double> _AnglFrameV;
+		
+		private System.Nullable<double> _AnglCameraRotationH;
+		
+		private System.Nullable<double> _AnglCameraRotationV;
+		
+		private double _AvailableHeightUpper;
+		
+		private double _AvailableHeightLover;
+		
+		private System.Nullable<double> _InnerRadius;
+		
+		private System.Nullable<double> _OuterRadius;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -104,6 +132,34 @@ namespace MilSpace.DataAccess.Definition
     partial void OnYChanged();
     partial void OnuserNameChanging(string value);
     partial void OnuserNameChanged();
+    partial void OnHRelChanging(System.Nullable<double> value);
+    partial void OnHRelChanged();
+    partial void OnAzimuthBChanging(System.Nullable<double> value);
+    partial void OnAzimuthBChanged();
+    partial void OnAzimuthEChanging(System.Nullable<double> value);
+    partial void OnAzimuthEChanged();
+    partial void OnAnglMinHChanging(System.Nullable<double> value);
+    partial void OnAnglMinHChanged();
+    partial void OnAnglMaxHChanging(System.Nullable<double> value);
+    partial void OnAnglMaxHChanged();
+    partial void OnAzimuthMainAxisChanging(System.Nullable<double> value);
+    partial void OnAzimuthMainAxisChanged();
+    partial void OnAngFrameHChanging(System.Nullable<double> value);
+    partial void OnAngFrameHChanged();
+    partial void OnAnglFrameVChanging(System.Nullable<double> value);
+    partial void OnAnglFrameVChanged();
+    partial void OnAnglCameraRotationHChanging(System.Nullable<double> value);
+    partial void OnAnglCameraRotationHChanged();
+    partial void OnAnglCameraRotationVChanging(System.Nullable<double> value);
+    partial void OnAnglCameraRotationVChanged();
+    partial void OnAvailableHeightUpperChanging(double value);
+    partial void OnAvailableHeightUpperChanged();
+    partial void OnAvailableHeightLoverChanging(double value);
+    partial void OnAvailableHeightLoverChanged();
+    partial void OnInnerRadiusChanging(System.Nullable<double> value);
+    partial void OnInnerRadiusChanged();
+    partial void OnOuterRadiusChanging(System.Nullable<double> value);
+    partial void OnOuterRadiusChanged();
     #endregion
 		
 		public GeoCalcSessionPoint()
@@ -207,6 +263,286 @@ namespace MilSpace.DataAccess.Definition
 					this._userName = value;
 					this.SendPropertyChanged("userName");
 					this.OnuserNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HRel", DbType="Float")]
+		public System.Nullable<double> HRel
+		{
+			get
+			{
+				return this._HRel;
+			}
+			set
+			{
+				if ((this._HRel != value))
+				{
+					this.OnHRelChanging(value);
+					this.SendPropertyChanging();
+					this._HRel = value;
+					this.SendPropertyChanged("HRel");
+					this.OnHRelChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AzimuthB", DbType="Float")]
+		public System.Nullable<double> AzimuthB
+		{
+			get
+			{
+				return this._AzimuthB;
+			}
+			set
+			{
+				if ((this._AzimuthB != value))
+				{
+					this.OnAzimuthBChanging(value);
+					this.SendPropertyChanging();
+					this._AzimuthB = value;
+					this.SendPropertyChanged("AzimuthB");
+					this.OnAzimuthBChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AzimuthE", DbType="Float")]
+		public System.Nullable<double> AzimuthE
+		{
+			get
+			{
+				return this._AzimuthE;
+			}
+			set
+			{
+				if ((this._AzimuthE != value))
+				{
+					this.OnAzimuthEChanging(value);
+					this.SendPropertyChanging();
+					this._AzimuthE = value;
+					this.SendPropertyChanged("AzimuthE");
+					this.OnAzimuthEChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnglMinH", DbType="Float")]
+		public System.Nullable<double> AnglMinH
+		{
+			get
+			{
+				return this._AnglMinH;
+			}
+			set
+			{
+				if ((this._AnglMinH != value))
+				{
+					this.OnAnglMinHChanging(value);
+					this.SendPropertyChanging();
+					this._AnglMinH = value;
+					this.SendPropertyChanged("AnglMinH");
+					this.OnAnglMinHChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnglMaxH", DbType="Float")]
+		public System.Nullable<double> AnglMaxH
+		{
+			get
+			{
+				return this._AnglMaxH;
+			}
+			set
+			{
+				if ((this._AnglMaxH != value))
+				{
+					this.OnAnglMaxHChanging(value);
+					this.SendPropertyChanging();
+					this._AnglMaxH = value;
+					this.SendPropertyChanged("AnglMaxH");
+					this.OnAnglMaxHChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AzimuthMainAxis", DbType="Float")]
+		public System.Nullable<double> AzimuthMainAxis
+		{
+			get
+			{
+				return this._AzimuthMainAxis;
+			}
+			set
+			{
+				if ((this._AzimuthMainAxis != value))
+				{
+					this.OnAzimuthMainAxisChanging(value);
+					this.SendPropertyChanging();
+					this._AzimuthMainAxis = value;
+					this.SendPropertyChanged("AzimuthMainAxis");
+					this.OnAzimuthMainAxisChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AngFrameH", DbType="Float")]
+		public System.Nullable<double> AngFrameH
+		{
+			get
+			{
+				return this._AngFrameH;
+			}
+			set
+			{
+				if ((this._AngFrameH != value))
+				{
+					this.OnAngFrameHChanging(value);
+					this.SendPropertyChanging();
+					this._AngFrameH = value;
+					this.SendPropertyChanged("AngFrameH");
+					this.OnAngFrameHChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnglFrameV", DbType="Float")]
+		public System.Nullable<double> AnglFrameV
+		{
+			get
+			{
+				return this._AnglFrameV;
+			}
+			set
+			{
+				if ((this._AnglFrameV != value))
+				{
+					this.OnAnglFrameVChanging(value);
+					this.SendPropertyChanging();
+					this._AnglFrameV = value;
+					this.SendPropertyChanged("AnglFrameV");
+					this.OnAnglFrameVChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnglCameraRotationH", DbType="Float")]
+		public System.Nullable<double> AnglCameraRotationH
+		{
+			get
+			{
+				return this._AnglCameraRotationH;
+			}
+			set
+			{
+				if ((this._AnglCameraRotationH != value))
+				{
+					this.OnAnglCameraRotationHChanging(value);
+					this.SendPropertyChanging();
+					this._AnglCameraRotationH = value;
+					this.SendPropertyChanged("AnglCameraRotationH");
+					this.OnAnglCameraRotationHChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnglCameraRotationV", DbType="Float")]
+		public System.Nullable<double> AnglCameraRotationV
+		{
+			get
+			{
+				return this._AnglCameraRotationV;
+			}
+			set
+			{
+				if ((this._AnglCameraRotationV != value))
+				{
+					this.OnAnglCameraRotationVChanging(value);
+					this.SendPropertyChanging();
+					this._AnglCameraRotationV = value;
+					this.SendPropertyChanged("AnglCameraRotationV");
+					this.OnAnglCameraRotationVChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AvailableHeightUpper", DbType="Float NOT NULL")]
+		public double AvailableHeightUpper
+		{
+			get
+			{
+				return this._AvailableHeightUpper;
+			}
+			set
+			{
+				if ((this._AvailableHeightUpper != value))
+				{
+					this.OnAvailableHeightUpperChanging(value);
+					this.SendPropertyChanging();
+					this._AvailableHeightUpper = value;
+					this.SendPropertyChanged("AvailableHeightUpper");
+					this.OnAvailableHeightUpperChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AvailableHeightLover", DbType="Float NOT NULL")]
+		public double AvailableHeightLover
+		{
+			get
+			{
+				return this._AvailableHeightLover;
+			}
+			set
+			{
+				if ((this._AvailableHeightLover != value))
+				{
+					this.OnAvailableHeightLoverChanging(value);
+					this.SendPropertyChanging();
+					this._AvailableHeightLover = value;
+					this.SendPropertyChanged("AvailableHeightLover");
+					this.OnAvailableHeightLoverChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InnerRadius", DbType="Float")]
+		public System.Nullable<double> InnerRadius
+		{
+			get
+			{
+				return this._InnerRadius;
+			}
+			set
+			{
+				if ((this._InnerRadius != value))
+				{
+					this.OnInnerRadiusChanging(value);
+					this.SendPropertyChanging();
+					this._InnerRadius = value;
+					this.SendPropertyChanged("InnerRadius");
+					this.OnInnerRadiusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OuterRadius", DbType="Float")]
+		public System.Nullable<double> OuterRadius
+		{
+			get
+			{
+				return this._OuterRadius;
+			}
+			set
+			{
+				if ((this._OuterRadius != value))
+				{
+					this.OnOuterRadiusChanging(value);
+					this.SendPropertyChanging();
+					this._OuterRadius = value;
+					this.SendPropertyChanged("OuterRadius");
+					this.OnOuterRadiusChanged();
 				}
 			}
 		}
