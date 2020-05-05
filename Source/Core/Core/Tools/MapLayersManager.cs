@@ -11,10 +11,11 @@ namespace MilSpace.Core.Tools
     {
         private readonly List<ILayer> Layers;
 
-        private esriGeometryType[] lineTypes = new esriGeometryType[] { esriGeometryType.esriGeometryLine, esriGeometryType.esriGeometryPolyline };
-        private esriGeometryType[] pointTypes = new esriGeometryType[] { esriGeometryType.esriGeometryPoint };
-        private esriGeometryType[] polygonTypes = new esriGeometryType[] { esriGeometryType.esriGeometryPolygon };
+        private readonly esriGeometryType[] lineTypes = new esriGeometryType[] { esriGeometryType.esriGeometryLine, esriGeometryType.esriGeometryPolyline };
+        private readonly esriGeometryType[] pointTypes = new esriGeometryType[] { esriGeometryType.esriGeometryPoint };
+        private readonly esriGeometryType[] polygonTypes = new esriGeometryType[] { esriGeometryType.esriGeometryPolygon };
         private readonly IActiveView activeView;
+
         private static Logger logger = Logger.GetLoggerEx("MapLayersManager");
 
         public MapLayersManager(IActiveView activeView)

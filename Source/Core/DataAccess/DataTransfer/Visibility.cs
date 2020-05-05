@@ -8,7 +8,7 @@ namespace MilSpace.DataAccess.DataTransfer
 {
     public class VisibilityCalcResults
     {
-        public static Dictionary<VisibilityCalculationResultsEnum, string> VisibilityResulSuffixes = new Dictionary<VisibilityCalculationResultsEnum, string>
+        public static readonly Dictionary<VisibilityCalculationResultsEnum, string> VisibilityResulSuffixes = new Dictionary<VisibilityCalculationResultsEnum, string>
         {
             { VisibilityCalculationResultsEnum.None , ""},
             { VisibilityCalculationResultsEnum.ObservationPoints , "_op_p"},
@@ -28,7 +28,7 @@ namespace MilSpace.DataAccess.DataTransfer
             { VisibilityCalculationResultsEnum.BestParametersTable , "_bp"}
         };
 
-        private static Dictionary<VisibilityCalcTypeEnum, IEnumerable<VisibilityCalculationResultsEnum>> ResultsToShow = new Dictionary<VisibilityCalcTypeEnum, IEnumerable<VisibilityCalculationResultsEnum>>
+        private static readonly Dictionary<VisibilityCalcTypeEnum, IEnumerable<VisibilityCalculationResultsEnum>> ResultsToShow = new Dictionary<VisibilityCalcTypeEnum, IEnumerable<VisibilityCalculationResultsEnum>>
         {
             { VisibilityCalcTypeEnum.OpservationPoints, new VisibilityCalculationResultsEnum[]
                         {
@@ -65,7 +65,7 @@ namespace MilSpace.DataAccess.DataTransfer
             }
         };
 
-        internal static VisibilityCalculationResultsEnum[] FeatureClassResults = {
+        internal static readonly VisibilityCalculationResultsEnum[] FeatureClassResults = {
             VisibilityCalculationResultsEnum.ObservationPoints,
             VisibilityCalculationResultsEnum.ObservationObjects,
             VisibilityCalculationResultsEnum.VisibilityAreaPolygons,
@@ -75,7 +75,7 @@ namespace MilSpace.DataAccess.DataTransfer
             VisibilityCalculationResultsEnum.VisibilityAreasPotential
         };
 
-        internal static VisibilityCalculationResultsEnum[] RasterResults = {
+        internal static readonly VisibilityCalculationResultsEnum[] RasterResults = {
             VisibilityCalculationResultsEnum.VisibilityAreaRaster,
             VisibilityCalculationResultsEnum.VisibilityObservStationClip,
             VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly,
@@ -84,12 +84,12 @@ namespace MilSpace.DataAccess.DataTransfer
             VisibilityCalculationResultsEnum.VisibilityObservStationClipSingle
         };
 
-        internal static VisibilityCalculationResultsEnum[] TableResults = {
+        internal static readonly VisibilityCalculationResultsEnum[] TableResults = {
             VisibilityCalculationResultsEnum.CoverageTable,
             VisibilityCalculationResultsEnum.BestParametersTable
         };
 
-        internal static Dictionary<esriDatasetType, VisibilityCalculationResultsEnum[]> EsriDatatypeToResultMapping = new Dictionary<esriDatasetType, VisibilityCalculationResultsEnum[]>
+        internal static readonly Dictionary<esriDatasetType, VisibilityCalculationResultsEnum[]> EsriDatatypeToResultMapping = new Dictionary<esriDatasetType, VisibilityCalculationResultsEnum[]>
         {
             { esriDatasetType.esriDTFeatureClass, FeatureClassResults},
             { esriDatasetType.esriDTRasterDataset, RasterResults},
@@ -97,7 +97,7 @@ namespace MilSpace.DataAccess.DataTransfer
 
         };
 
-        private static IEnumerable<VisibilityCalculationResultsEnum> ResultsRelatedToSingle = new VisibilityCalculationResultsEnum[] {
+        private static readonly IEnumerable<VisibilityCalculationResultsEnum> ResultsRelatedToSingle = new VisibilityCalculationResultsEnum[] {
             VisibilityCalculationResultsEnum.ObservationPointSingle,
             VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle,
             VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle,

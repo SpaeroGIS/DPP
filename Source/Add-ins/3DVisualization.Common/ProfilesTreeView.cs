@@ -138,7 +138,7 @@ namespace MilSpace.Visualization3D
             }
         }
 
-        private void profilesToolBar_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        private void ProfilesToolBar_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
             if (AddProfiles.Equals(e.Button))
             {

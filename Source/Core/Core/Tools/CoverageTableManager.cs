@@ -19,12 +19,12 @@ namespace MilSpace.Tools
         private Dictionary<int, IPolygon> _objPolygons = new Dictionary<int, IPolygon>();
         private double _totalExpectedArea;
         private double _totalVisibleArea;
-        private string _allTitle = "All";
         private VisibilityCalcTypeEnum _calcType;
 
         private Logger _logger = Logger.GetLoggerEx("MilSpace.Tools.CoverageTableManager");
 
-        private string _gdb = MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection;
+        private readonly string _gdb = MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection;
+        private const string _allTitle = "All";
 
         public void SetCalculateAreas(
             int[] observPointsIds,

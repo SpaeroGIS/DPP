@@ -45,7 +45,7 @@ namespace MilSpace.Profile
 
         public event OnMapSelectionChangedDelegate OnMapSelectionChanged;
 
-        private static ProfileSettingsTypeEnum[] profileSettingsType = Enum.GetValues(typeof(ProfileSettingsTypeEnum)).Cast<ProfileSettingsTypeEnum>().ToArray();
+        private static readonly ProfileSettingsTypeEnum[] profileSettingsType = Enum.GetValues(typeof(ProfileSettingsTypeEnum)).Cast<ProfileSettingsTypeEnum>().ToArray();
 
         private readonly string NewProfilePrefix = LocalizationContext.Instance.FindLocalizedElement("TxtNewProfileNameValue", "Профіль");
 
@@ -277,8 +277,10 @@ namespace MilSpace.Profile
             var profileSetting = profileSettings[profileType];
             if (profileSetting == null)
             {
-                profileSetting = new ProfileSettings();
-                profileSetting.Type = profileType;
+                profileSetting = new ProfileSettings
+                {
+                    Type = profileType
+                };
             }
 
             //Check if the View.DemLayerName if Layer name
@@ -1591,8 +1593,10 @@ namespace MilSpace.Profile
 
             if(profileSetting == null)
             {
-                profileSetting = new ProfileSettings();
-                profileSetting.Type = ProfileSettingsTypeEnum.Fun;
+                profileSetting = new ProfileSettings
+                {
+                    Type = ProfileSettingsTypeEnum.Fun
+                };
             }
 
             profileSetting.DemLayerName = View.DemLayerName;
@@ -1665,8 +1669,10 @@ namespace MilSpace.Profile
 
             if (profileSetting == null)
             {
-                profileSetting = new ProfileSettings();
-                profileSetting.Type = ProfileSettingsTypeEnum.Primitives;
+                profileSetting = new ProfileSettings
+                {
+                    Type = ProfileSettingsTypeEnum.Primitives
+                };
             }
             
             profileSetting.ProfileLines = polylines.ToArray();

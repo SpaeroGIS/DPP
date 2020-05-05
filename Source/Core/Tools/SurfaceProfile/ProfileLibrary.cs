@@ -42,12 +42,13 @@ namespace MilSpace.Tools.SurfaceProfile
         {
             Geoprocessor gp = new Geoprocessor();
 
-            StackProfile stackProfile = new StackProfile();
+            StackProfile stackProfile = new StackProfile
+            {
+                in_line_features = lineFeatureClass,
+                profile_targets = profileSource,
+                out_table = outTable
+            };
 
-
-            stackProfile.in_line_features = lineFeatureClass;
-            stackProfile.profile_targets = profileSource;
-            stackProfile.out_table = outTable;
             if (!string.IsNullOrEmpty(outGraphName)) stackProfile.out_graph = outGraphName;
 
 
@@ -66,12 +67,14 @@ namespace MilSpace.Tools.SurfaceProfile
                         )
         {
 
-            Visibility visibility = new Visibility();
+            Visibility visibility = new Visibility
+            {
+                analysis_type = analyzeType.ToString().ToUpper(),
+                in_raster = rasterSource,
+                in_observer_features = observerPointsFeatureClass,
+                out_raster = outRasterName
+            };
 
-            visibility.analysis_type = analyzeType.ToString().ToUpper();
-            visibility.in_raster = rasterSource;
-            visibility.in_observer_features = observerPointsFeatureClass;
-            visibility.out_raster = outRasterName;
             if (!string.IsNullOrWhiteSpace(outAglRaster))
             {
                 visibility.out_agl_raster = outAglRaster;
@@ -146,8 +149,11 @@ namespace MilSpace.Tools.SurfaceProfile
         {
             if (gp == null)
             {
-                gp = new Geoprocessor();
-                gp.AddOutputsToMap = false;
+                gp = new Geoprocessor
+                {
+                    AddOutputsToMap = false
+                };
+
                 gp.SetEnvironmentValue(environmentName, temporaryWorkspace);
             }
 

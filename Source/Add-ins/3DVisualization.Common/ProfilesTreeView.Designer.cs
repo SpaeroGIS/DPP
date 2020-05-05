@@ -57,7 +57,7 @@
             this.profilesToolBar.Size = new System.Drawing.Size(384, 28);
             this.profilesToolBar.TabIndex = 67;
             this.profilesToolBar.Visible = false;
-            this.profilesToolBar.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.profilesToolBar_ButtonClick);
+            this.profilesToolBar.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.ProfilesToolBar_ButtonClick);
             // 
             // AddProfile
             // 

@@ -11,9 +11,9 @@ namespace MilSpace.Configurations
 {
     public abstract class MilSpaceRootConfiguration
     {
-        private static string rootSectionName = "Milspace";
+        private const string rootSectionName = "Milspace";
         private const string registryPathToConfigTemplate = @"SOFTWARE\WOW6432Node\{0}\";
-        private static string registryPathToConfig;
+        private static readonly string registryPathToConfig;
 
         //Nikol 20191202
         //private static readonly string configurationFileName = $"{typeof(MilSpaceRootConfiguration).Assembly.GetName().Name}.config";

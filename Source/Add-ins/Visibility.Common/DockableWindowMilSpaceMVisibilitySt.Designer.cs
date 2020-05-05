@@ -1266,7 +1266,7 @@
             this.buttonSaveOPoint.Size = new System.Drawing.Size(26, 26);
             this.buttonSaveOPoint.TabIndex = 3;
             this.buttonSaveOPoint.UseVisualStyleBackColor = true;
-            this.buttonSaveOPoint.Click += new System.EventHandler(this.buttonSaveOPoint_Click);
+            this.buttonSaveOPoint.Click += new System.EventHandler(this.ButtonSaveOPoint_Click);
             // 
             // splitter4
             // 
@@ -1515,7 +1515,7 @@
             this.btnAddLayerPS.TabIndex = 1;
             this.btnAddLayerPS.Tag = "додати шар ПС до карти";
             this.btnAddLayerPS.UseVisualStyleBackColor = true;
-            this.btnAddLayerPS.Click += new System.EventHandler(this.button2_Click);
+            this.btnAddLayerPS.Click += new System.EventHandler(this.Button2_Click);
             // 
             // tbpObservObjects
             // 
@@ -1630,7 +1630,7 @@
             this.tbObservObjGroup.Name = "tbObservObjGroup";
             this.tbObservObjGroup.Size = new System.Drawing.Size(180, 20);
             this.tbObservObjGroup.TabIndex = 5;
-            this.tbObservObjGroup.TextChanged += new System.EventHandler(this.tbObservObjects_CheckChanged);
+            this.tbObservObjGroup.TextChanged += new System.EventHandler(this.TbObservObjects_CheckChanged);
             this.tbObservObjGroup.Leave += new System.EventHandler(this.ObservationObjectChanged);
             // 
             // label1
@@ -1663,7 +1663,7 @@
             this.cmbObservObjAffiliation.Name = "cmbObservObjAffiliation";
             this.cmbObservObjAffiliation.Size = new System.Drawing.Size(180, 21);
             this.cmbObservObjAffiliation.TabIndex = 6;
-            this.cmbObservObjAffiliation.SelectedIndexChanged += new System.EventHandler(this.tbObservObjects_CheckChanged);
+            this.cmbObservObjAffiliation.SelectedIndexChanged += new System.EventHandler(this.TbObservObjects_CheckChanged);
             this.cmbObservObjAffiliation.Leave += new System.EventHandler(this.ObservationObjectChanged);
             // 
             // label31
@@ -1694,7 +1694,7 @@
             this.tbObservObjTitle.Name = "tbObservObjTitle";
             this.tbObservObjTitle.Size = new System.Drawing.Size(180, 20);
             this.tbObservObjTitle.TabIndex = 5;
-            this.tbObservObjTitle.TextChanged += new System.EventHandler(this.tbObservObjects_CheckChanged);
+            this.tbObservObjTitle.TextChanged += new System.EventHandler(this.TbObservObjects_CheckChanged);
             this.tbObservObjTitle.Leave += new System.EventHandler(this.ObservationObjectChanged);
             // 
             // label29
@@ -1743,7 +1743,7 @@
             this.btnSaveParamPS.TabIndex = 3;
             this.btnSaveParamPS.Tag = "Зберегти зміни";
             this.btnSaveParamPS.UseVisualStyleBackColor = true;
-            this.btnSaveParamPS.Click += new System.EventHandler(this.btnSaveParamPS_Click);
+            this.btnSaveParamPS.Click += new System.EventHandler(this.BtnSaveParamPS_Click);
             // 
             // splitter2
             // 
@@ -1819,7 +1819,7 @@
             this.tbObservObjects.ShowToolTips = true;
             this.tbObservObjects.Size = new System.Drawing.Size(308, 30);
             this.tbObservObjects.TabIndex = 40;
-            this.tbObservObjects.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.tbObservObjects_ButtonClick);
+            this.tbObservObjects.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.TbObservObjects_ButtonClick);
             // 
             // toolBarButton31
             // 
@@ -1981,7 +1981,7 @@
             this.tlbbAddObservObjLayer.TabIndex = 6;
             this.tlbbAddObservObjLayer.Tag = "Додати шар ОН до карти";
             this.tlbbAddObservObjLayer.UseVisualStyleBackColor = true;
-            this.tlbbAddObservObjLayer.Click += new System.EventHandler(this.tbObservObjects_ButtonClick);
+            this.tlbbAddObservObjLayer.Click += new System.EventHandler(this.TbObservObjects_ButtonClick);
             // 
             // toolBar5
             // 
@@ -2335,7 +2335,7 @@
             this.dgvVisibilitySessions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvVisibilitySessions.Size = new System.Drawing.Size(312, 208);
             this.dgvVisibilitySessions.TabIndex = 62;
-            this.dgvVisibilitySessions.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvVisibilitySessions_ColumnHeaderMouseClick);
+            this.dgvVisibilitySessions.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvVisibilitySessions_ColumnHeaderMouseClick);
             this.dgvVisibilitySessions.SelectionChanged += new System.EventHandler(this.DgvVisibilitySessions_SelectionChanged);
             // 
             // panel41
@@ -2559,7 +2559,7 @@
             this.tvResults.SelectedImageIndex = 0;
             this.tvResults.Size = new System.Drawing.Size(312, 268);
             this.tvResults.TabIndex = 79;
-            this.tvResults.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvResults_AfterSelect);
+            this.tvResults.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TvResults_AfterSelect);
             // 
             // panel49
             // 
@@ -2857,7 +2857,6 @@
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage tabObservPoints;
-        private System.Windows.Forms.ToolBarButton takeCoordToolBarBtn;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.Panel panelPointsHeader;
         private System.Windows.Forms.Label lblLayer;
@@ -2871,13 +2870,9 @@
         private System.Windows.Forms.ToolBarButton toolBarButton24;
         private System.Windows.Forms.ToolBarButton toolBarButton25;
         private System.Windows.Forms.TabPage tbpSessions;
-        private System.Windows.Forms.ToolBarButton tlddUpd;
-        private System.Windows.Forms.ToolBarButton tlbbDel;
         private System.Windows.Forms.Panel panel38;
         private System.Windows.Forms.Label lblCalcTasksHeader;
         private System.Windows.Forms.TabPage tbpVisibilityAreas;
-        private System.Windows.Forms.ToolBarButton toolBarButtonViewParamOnMap;
-        private System.Windows.Forms.ToolBarButton toolBarButtonAddFromDB;
         private System.Windows.Forms.Panel panel48;
         private System.Windows.Forms.Label lblHeaderVisibilityResult;
         private System.Windows.Forms.RichTextBox richTextBox1;

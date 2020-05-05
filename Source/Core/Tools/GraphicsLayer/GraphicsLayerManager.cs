@@ -552,9 +552,11 @@ namespace MilSpace.Tools.GraphicsLayer
             //TODO: Get symbol from ESRITools
 
             //Create cartographic line symbol  
-            ICartographicLineSymbol cartographicLineSymbol = new CartographicLineSymbolClass();
-            cartographicLineSymbol.Color = color;
-            cartographicLineSymbol.Width = width;
+            ICartographicLineSymbol cartographicLineSymbol = new CartographicLineSymbolClass
+            {
+                Color = color,
+                Width = width
+            };
 
             //Define line decoration  
             ILineDecoration lineDecoration = new LineDecorationClass();
@@ -568,16 +570,18 @@ namespace MilSpace.Tools.GraphicsLayer
                 simpleLineDecorationElement.AddPosition(1);
 
                 //Define an arrow marker 
-                IArrowMarkerSymbol arrowMarkerSymbol = new ArrowMarkerSymbolClass();
-                arrowMarkerSymbol.Color = color;
-                arrowMarkerSymbol.Size = 5;
-                arrowMarkerSymbol.Length = 8;
-                arrowMarkerSymbol.Width = 5 + width;
+                IArrowMarkerSymbol arrowMarkerSymbol = new ArrowMarkerSymbolClass
+                {
+                    Color = color,
+                    Size = 5,
+                    Length = 8,
+                    Width = 5 + width,
 
-                //Add an offset to make sure the square end of the line is hidden  
-                arrowMarkerSymbol.XOffset = 0.8;
+                    //Add an offset to make sure the square end of the line is hidden  
+                    XOffset = 0.8
+                };
+
                 simpleLineDecorationElement.MarkerSymbol = arrowMarkerSymbol;
-
                 lineDecoration.AddElement(simpleLineDecorationElement);
             }
 
@@ -630,9 +634,11 @@ namespace MilSpace.Tools.GraphicsLayer
         private static ILineSymbol DefineProfileLineSymbol(MilSpaceGraphicsTypeEnum graphicsType, IRgbColor color, int width = 2)
         {
             //Create cartographic line symbol  
-            ICartographicLineSymbol cartographicLineSymbol = new CartographicLineSymbolClass();
-            cartographicLineSymbol.Color = color;
-            cartographicLineSymbol.Width = width;
+            ICartographicLineSymbol cartographicLineSymbol = new CartographicLineSymbolClass
+            {
+                Color = color,
+                Width = width
+            };
 
             return cartographicLineSymbol;
         }
@@ -736,11 +742,17 @@ namespace MilSpace.Tools.GraphicsLayer
                 textColor = new RgbColorClass() { Red = 255 };
             }
 
-            ITextElement textElement = new TextElementClass();
-            textElement.Text = text;
-            var textSymbol = new TextSymbol();
-            textSymbol.Color = textColor;
-            textSymbol.Size = size;
+            ITextElement textElement = new TextElementClass
+            {
+                Text = text
+            };
+
+            var textSymbol = new TextSymbol
+            {
+                Color = textColor,
+                Size = size
+            };
+
             textElement.Symbol = textSymbol;
             IElement textElementEl = (IElement)textElement;
             textElementEl.Geometry = textPoint;
@@ -801,15 +813,19 @@ namespace MilSpace.Tools.GraphicsLayer
             simplePolygonSymbol.Color = color; 
             simplePolygonSymbol.Style = esriSimpleFillStyle.esriSFSHollow;
 
-            ILineSymbol polygonOutline = new SimpleLineSymbol();
-            polygonOutline.Color = color;
-            polygonOutline.Width = 2;
+            ILineSymbol polygonOutline = new SimpleLineSymbol
+            {
+                Color = color,
+                Width = 2
+            };
 
             simplePolygonSymbol.Outline = polygonOutline;
 
-            IFillShapeElement markerElement = new PolygonElementClass();
-            markerElement.Symbol = simplePolygonSymbol;
-            
+            IFillShapeElement markerElement = new PolygonElementClass
+            {
+                Symbol = simplePolygonSymbol
+            };
+
             IElement element = null;
             element = (IElement)markerElement;
 
@@ -993,12 +1009,16 @@ namespace MilSpace.Tools.GraphicsLayer
 
             if (geometry.GeometryType == esriGeometryType.esriGeometryPolygon)
             {
-                ISimpleFillSymbol simplePolygonSymbol = new SimpleFillSymbolClass();
-                simplePolygonSymbol.Color = color;
-                simplePolygonSymbol.Style = esriSimpleFillStyle.esriSFSSolid;
+                ISimpleFillSymbol simplePolygonSymbol = new SimpleFillSymbolClass
+                {
+                    Color = color,
+                    Style = esriSimpleFillStyle.esriSFSSolid
+                };
 
-                IFillShapeElement markerElement = new PolygonElementClass();
-                markerElement.Symbol = simplePolygonSymbol;
+                IFillShapeElement markerElement = new PolygonElementClass
+                {
+                    Symbol = simplePolygonSymbol
+                };
 
                 symbol = simplePolygonSymbol as ISymbol;
                 element = markerElement as IElement;
@@ -1006,13 +1026,19 @@ namespace MilSpace.Tools.GraphicsLayer
 
             if (geometry.GeometryType == esriGeometryType.esriGeometryPolyline)
             {
-                ISimpleLineSymbol simplePolylineSymbol = new SimpleLineSymbolClass();
-                simplePolylineSymbol.Color = color;
-                simplePolylineSymbol.Width = 4;
+                ISimpleLineSymbol simplePolylineSymbol = new SimpleLineSymbolClass
+                {
+                    Color = color,
+                    Width = 4
+                };
 
                 symbol = simplePolylineSymbol as ISymbol;
-                ILineElement lineElement = new LineElementClass();
-                lineElement.Symbol = simplePolylineSymbol;
+
+                ILineElement lineElement = new LineElementClass
+                {
+                    Symbol = simplePolylineSymbol
+                };
+
                 element = lineElement as IElement;
             }
 
@@ -1021,13 +1047,18 @@ namespace MilSpace.Tools.GraphicsLayer
                 Type factoryType = Type.GetTypeFromProgID("esriDisplay.SimpleMarkerSymbol");
                 string typeFactoryID = factoryType.GUID.ToString("B");
 
-                ISimpleMarkerSymbol pointMarkerSymbol = new SimpleMarkerSymbolClass();
-                pointMarkerSymbol.Color = color;
-                pointMarkerSymbol.Style = esriSimpleMarkerStyle.esriSMSCircle;
-                pointMarkerSymbol.Size = 10;
+                ISimpleMarkerSymbol pointMarkerSymbol = new SimpleMarkerSymbolClass
+                {
+                    Color = color,
+                    Style = esriSimpleMarkerStyle.esriSMSCircle,
+                    Size = 10
+                };
 
-                IMarkerElement markerElement = new MarkerElementClass();
-                markerElement.Symbol = pointMarkerSymbol;
+                IMarkerElement markerElement = new MarkerElementClass
+                {
+                    Symbol = pointMarkerSymbol
+                };
+
                 element = markerElement as IElement;
                 symbol = pointMarkerSymbol as ISymbol;
             }
