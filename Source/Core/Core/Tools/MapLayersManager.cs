@@ -1,4 +1,5 @@
 ﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using System;
 using System.Collections.Generic;
@@ -239,8 +240,7 @@ namespace MilSpace.Core.Tools
                     var featureLayer = layer as IFeatureLayer;
                     var featureClass = featureLayer.FeatureClass;
 
-                    if (featureClass.FindField(featureClass.OIDFieldName) == -1 || featureClass.FindField("TitleOP") == -1 || featureClass.FindField("AzimuthB") == -1
-                        || featureClass.FindField("AzimuthE") == -1 || featureClass.FindField("AnglMinH") == -1 || featureClass.FindField("AnglMaxH") == -1) 
+                    if (!HasFeatureClassObserverPointFields(featureClass)) 
                     {
                         continue;
                     }
@@ -254,6 +254,15 @@ namespace MilSpace.Core.Tools
             }
 
             return appropriateLayers;
+        }
+
+        public bool HasFeatureClassObserverPointFields(IFeatureClass featureClass)
+        {
+            return featureClass.FindField(featureClass.OIDFieldName) > -1 
+                    && featureClass.FindField("AzimuthB") > -1
+                    && featureClass.FindField("AzimuthE") > -1 
+                    && featureClass.FindField("AnglMinH") > -1 
+                    && featureClass.FindField("AnglMaxH") > -1;
         }
 
         public bool InserLayerAfter(ILayer layerToAdd, string layerName)

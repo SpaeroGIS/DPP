@@ -1147,6 +1147,11 @@ namespace MilSpace.Visibility
                 }
             }
         }
+
+        public void ClearObserverPointsList()
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
     }

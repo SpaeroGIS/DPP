@@ -34,9 +34,13 @@
             this.lbLayers = new System.Windows.Forms.ListBox();
             this.labelPanel = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.chooseTitleFieldPanel = new System.Windows.Forms.Panel();
+            this.lblTiltleField = new System.Windows.Forms.Label();
+            this.cmbTiltleField = new System.Windows.Forms.ComboBox();
             this.buttonPanel.SuspendLayout();
             this.labelPanel.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.chooseTitleFieldPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblTitle
@@ -53,17 +57,17 @@
             // 
             this.buttonPanel.Controls.Add(this.btnOk);
             this.buttonPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.buttonPanel.Location = new System.Drawing.Point(0, 240);
+            this.buttonPanel.Location = new System.Drawing.Point(0, 272);
             this.buttonPanel.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
             this.buttonPanel.Name = "buttonPanel";
-            this.buttonPanel.Size = new System.Drawing.Size(221, 35);
+            this.buttonPanel.Size = new System.Drawing.Size(240, 35);
             this.buttonPanel.TabIndex = 5;
             // 
             // btnOk
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOk.Location = new System.Drawing.Point(133, 6);
+            this.btnOk.Location = new System.Drawing.Point(152, 6);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(85, 25);
             this.btnOk.TabIndex = 0;
@@ -79,8 +83,9 @@
             this.lbLayers.Location = new System.Drawing.Point(3, 0);
             this.lbLayers.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.lbLayers.Name = "lbLayers";
-            this.lbLayers.Size = new System.Drawing.Size(215, 208);
+            this.lbLayers.Size = new System.Drawing.Size(234, 210);
             this.lbLayers.TabIndex = 4;
+            this.lbLayers.SelectedIndexChanged += new System.EventHandler(this.LbLayers_SelectedIndexChanged);
             // 
             // labelPanel
             // 
@@ -88,7 +93,7 @@
             this.labelPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.labelPanel.Location = new System.Drawing.Point(0, 0);
             this.labelPanel.Name = "labelPanel";
-            this.labelPanel.Size = new System.Drawing.Size(221, 32);
+            this.labelPanel.Size = new System.Drawing.Size(240, 32);
             this.labelPanel.TabIndex = 3;
             // 
             // panel1
@@ -98,15 +103,46 @@
             this.panel1.Location = new System.Drawing.Point(0, 32);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.panel1.Size = new System.Drawing.Size(221, 208);
+            this.panel1.Size = new System.Drawing.Size(240, 210);
             this.panel1.TabIndex = 6;
+            // 
+            // chooseTitleFieldPanel
+            // 
+            this.chooseTitleFieldPanel.Controls.Add(this.lblTiltleField);
+            this.chooseTitleFieldPanel.Controls.Add(this.cmbTiltleField);
+            this.chooseTitleFieldPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.chooseTitleFieldPanel.Location = new System.Drawing.Point(0, 242);
+            this.chooseTitleFieldPanel.Name = "chooseTitleFieldPanel";
+            this.chooseTitleFieldPanel.Size = new System.Drawing.Size(240, 30);
+            this.chooseTitleFieldPanel.TabIndex = 5;
+            // 
+            // lblTiltleField
+            // 
+            this.lblTiltleField.AutoSize = true;
+            this.lblTiltleField.Location = new System.Drawing.Point(0, 9);
+            this.lblTiltleField.Name = "lblTiltleField";
+            this.lblTiltleField.Size = new System.Drawing.Size(106, 13);
+            this.lblTiltleField.TabIndex = 1;
+            this.lblTiltleField.Text = "Ідентифікуюче поле";
+            // 
+            // cmbTiltleField
+            // 
+            this.cmbTiltleField.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbTiltleField.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbTiltleField.FormattingEnabled = true;
+            this.cmbTiltleField.Location = new System.Drawing.Point(112, 5);
+            this.cmbTiltleField.Name = "cmbTiltleField";
+            this.cmbTiltleField.Size = new System.Drawing.Size(125, 21);
+            this.cmbTiltleField.TabIndex = 0;
             // 
             // ChooseVectorLayerFromMapModalWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(221, 275);
+            this.ClientSize = new System.Drawing.Size(240, 307);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.chooseTitleFieldPanel);
             this.Controls.Add(this.buttonPanel);
             this.Controls.Add(this.labelPanel);
             this.MaximizeBox = false;
@@ -118,6 +154,8 @@
             this.labelPanel.ResumeLayout(false);
             this.labelPanel.PerformLayout();
             this.panel1.ResumeLayout(false);
+            this.chooseTitleFieldPanel.ResumeLayout(false);
+            this.chooseTitleFieldPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -130,5 +168,8 @@
         private System.Windows.Forms.ListBox lbLayers;
         private System.Windows.Forms.Panel labelPanel;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel chooseTitleFieldPanel;
+        private System.Windows.Forms.ComboBox cmbTiltleField;
+        private System.Windows.Forms.Label lblTiltleField;
     }
 }

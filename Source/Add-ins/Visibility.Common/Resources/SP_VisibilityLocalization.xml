@@ -315,6 +315,7 @@
   <VisibilityResultLayersRemoveMessage>Ви бажаєте видалити шари розрахунку?</VisibilityResultLayersRemoveMessage>
   <SuccessfullySharedMessage>Доступ для всіх користувачів встановлено</SuccessfullySharedMessage>
   <AlreadySharedMessage>Доступ для усіх користувачів вже встановлено</AlreadySharedMessage>
+  <AddNecessaryFieldsMessage>Неможливо використовувати даний шар, відсутні необхідні поля. \nВи бажаєте додати поля?</AddNecessaryFieldsMessage>
 
   <NameHeaderText>Назва</NameHeaderText>
   <StateHeaderText>Стан</StateHeaderText>
@@ -350,4 +351,6 @@
   <ObserverPointParametersText>параметрів пункту спостереження</ObserverPointParametersText>
   <ObservationStationText>об'єкту спостреження</ObservationStationText>
 
+  <Modal.LblFieldTitl.Text>Ідентифікуюче поле</Modal.LblFieldTitl.Text>
+  
 </SP_Visibility>

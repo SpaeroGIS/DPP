@@ -1,4 +1,5 @@
-﻿using ESRI.ArcGIS.Carto;
+﻿using ESRI.ArcGIS.ADF;
+using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.DataSourcesGDB;
 using ESRI.ArcGIS.DataSourcesRaster;
 using ESRI.ArcGIS.esriSystem;
@@ -1016,7 +1017,104 @@ namespace MilSpace.DataAccess.Facade
             return newFeatureClassName;
         }
 
-        private void SetObservPointValues(IFeatureClass featureClass, IFeature pointFeature, IPoint point, ObservationPoint pointArgs)
+        public void AddObserverPointFields(IFeatureClass featureClass)
+        {
+            IField azimuthBField = new FieldClass();
+            IFieldEdit azimuthBFieldEdit = (IFieldEdit)azimuthBField;
+            azimuthBFieldEdit.Name_2 = "AzimuthB";
+            azimuthBFieldEdit.Type_2 = esriFieldType.esriFieldTypeDouble;
+            featureClass.AddField(azimuthBField);
+
+            IField azimuthEField = new FieldClass();
+            IFieldEdit azimuthEFieldEdit = (IFieldEdit)azimuthEField;
+            azimuthEFieldEdit.Name_2 = "AzimuthE";
+            azimuthEFieldEdit.Type_2 = esriFieldType.esriFieldTypeDouble;
+            featureClass.AddField(azimuthEField);
+
+            IField anglMinHField = new FieldClass();
+            IFieldEdit anglMinHFieldEdit = (IFieldEdit)anglMinHField;
+            anglMinHFieldEdit.Name_2 = "AnglMinH";
+            anglMinHFieldEdit.Type_2 = esriFieldType.esriFieldTypeDouble;
+            featureClass.AddField(anglMinHField);
+
+            IField anglMaxHField = new FieldClass();
+            IFieldEdit anglMaxHFieldEdit = (IFieldEdit)anglMaxHField;
+            anglMaxHFieldEdit.Name_2 = "AnglMaxH";
+            anglMaxHFieldEdit.Type_2 = esriFieldType.esriFieldTypeDouble;
+            featureClass.AddField(anglMaxHField);
+
+            IField heightField = new FieldClass();
+            IFieldEdit heightFieldEdit = (IFieldEdit)heightField;
+            heightFieldEdit.Name_2 = "HRel";
+            heightFieldEdit.Type_2 = esriFieldType.esriFieldTypeDouble;
+            featureClass.AddField(heightField);
+
+            SetObservPointDefaultValues(featureClass);
+        }
+
+        private void SetObservPointDefaultValues(IFeatureClass featureClass)
+        {//TODO DS: try other way
+            //IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)calcWorkspace;
+            //workspaceEdit.StartEditing(true);
+
+            //IQueryFilter queryFilter = new QueryFilter
+            //{
+            //    WhereClause = $"{featureClass.OIDFieldName} >= 0"
+            //};
+
+            //IFeatureCursor featureCursor = featureClass.Search(queryFilter, true);
+            //IFeature feature = featureCursor.NextFeature();
+
+            //try
+            //{
+            //    while (feature != null)
+            //    {
+            //        workspaceEdit.StartEditOperation();
+
+            //        feature.set_Value(featureClass.FindField("AzimuthB"), 0);
+            //        feature.set_Value(featureClass.FindField("AzimuthE"), 360);
+            //        feature.set_Value(featureClass.FindField("AnglMinH"), -90);
+            //        feature.set_Value(featureClass.FindField("AnglMaxH"), 90);
+            //        feature.set_Value(featureClass.FindField("HRel"), 0);
+
+            //        feature.Store();
+            //        Marshal.ReleaseComObject(feature);
+
+            //        feature = featureCursor.NextFeature();
+            //    }
+            //}
+            //catch(Exception ex)
+            //{
+            //    logger.ErrorEx($"SetObservPointDefaultValues. Unexpected exception: {ex}");
+            //}
+            //finally
+            //{
+            //    workspaceEdit.StopEditOperation();
+            //    workspaceEdit.StopEditing(true);
+
+            //    Marshal.ReleaseComObject(featureCursor);
+            //}
+
+            using (ComReleaser comReleaser = new ComReleaser())
+            {
+                // Use IFeatureClass.Search to create a search cursor.
+                IFeatureCursor searchCursor = featureClass.Search(null, false);
+                comReleaser.ManageLifetime(searchCursor);
+                IFeature feature = null;
+                while ((feature = searchCursor.NextFeature()) != null)
+                {
+                    feature.set_Value(featureClass.FindField("AzimuthB"), 0);
+                    feature.set_Value(featureClass.FindField("AzimuthE"), 360);
+                    feature.set_Value(featureClass.FindField("AnglMinH"), -90);
+                    feature.set_Value(featureClass.FindField("AnglMaxH"), 90);
+                    feature.set_Value(featureClass.FindField("HRel"), 0);
+
+                    feature.Store();
+                }
+            }
+        }
+
+            private void SetObservPointValues(IFeatureClass featureClass, IFeature pointFeature, IPoint point, ObservationPoint pointArgs)
         {
             if (point != null)
             {

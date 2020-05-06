@@ -160,6 +160,7 @@ namespace MilSpace.Visibility
                 this.label9.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label9_Text", "висота над поверхнею (м) мин");
                 this.btnAddLayerPS.Tag = LocalizationContext.Instance.FindLocalizedElement("MainW_btnAddLayerPS_Tag", "додати шар ПС до карти");
                 this.lblLayer.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_lblLayer_Text", "Пункти спостереження (ПС)");
+                this.lblOPSource.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblOPType.Text", "Джерело ПС");
 
                 ToolTip toolTip = new ToolTip();
                 toolTip.SetToolTip(this.btnRefreshOPGraphics, LocalizationContext.Instance.FindLocalizedElement("MainW_btnRefreshOPGrahics_Text", "Оновити графіку"));
@@ -295,7 +296,7 @@ namespace MilSpace.Visibility
                         Title = op.Title,
                         Type = LocalizationContext.Instance.MobilityTypes[op.ObservationPointMobilityType],
                         Affiliation = LocalizationContext.Instance.AffiliationTypes[op.ObservationPointAffiliationType],
-                        Date = op.Dto.Value.ToString(Helper.DateFormatSmall),
+                        Date = (op.Dto.HasValue)? op.Dto.Value.ToString(Helper.DateFormatSmall) : DateTime.Now.ToString(Helper.DateFormatSmall),
                         Id = op.Objectid
                     }).OrderBy(l => l.Title);
 
@@ -316,7 +317,14 @@ namespace MilSpace.Visibility
             log.InfoEx("> FillObservationPointList END");
         }
 
+        public void ClearObserverPointsList()
+        {
+            log.InfoEx("> ClearObserverPointsList START");
 
+            dgvObservationPoints.DataSource = null;
+
+            log.InfoEx("> ClearObserverPointsList END");
+        }
 
         public void FillObservationObjectsList(IEnumerable<ObservationObject> observationObjects)
         {
@@ -755,6 +763,9 @@ namespace MilSpace.Visibility
             cmbObservStationSet.Items.Clear();
             cmbObservStationSet.Items.AddRange(_observPointsController.GetObservStationSetsStrings());
 
+            cmbOPSource.Items.Clear();
+            cmbOPSource.Items.AddRange(LocalizationContext.Instance.ObservPointSets.Select(set => set.Value).ToArray());
+
             SetDefaultValues();
 
             log.InfoEx("> InitilizeObservPointsData END");
@@ -769,6 +780,7 @@ namespace MilSpace.Visibility
             cmbObservPointType.SelectedItem = _observPointsController.GetAllMobilityType();
             cmbAffiliation.SelectedItem = _observPointsController.GetAllAffiliationType();
             cmbObservStationSet.SelectedIndex = 0;
+            cmbOPSource.SelectedItem = LocalizationContext.Instance.ObservPointsSet;
 
             _isDropDownItemChangedManualy = true;
 
@@ -1289,6 +1301,7 @@ namespace MilSpace.Visibility
                 FCPoint != null ?
                 FCPoint.X.ToString("F5") :
                 centerPoint.X.ToString("F5");
+
             yCoord.Text =
                 selectedPoint.Y.HasValue ?
                 selectedPoint.Y.Value.ToString("F5") :
@@ -1300,36 +1313,50 @@ namespace MilSpace.Visibility
                 selectedPoint.AzimuthStart.HasValue ?
                 selectedPoint.AzimuthStart.ToString() :
                 ObservPointDefaultValues.AzimuthBText;
+
             azimuthE.Text =
                 selectedPoint.AzimuthEnd.HasValue ?
                 selectedPoint.AzimuthEnd.ToString() :
                 ObservPointDefaultValues.AzimuthEText;
+
             heightCurrent.Text =
                 selectedPoint.RelativeHeight.HasValue ?
                 selectedPoint.RelativeHeight.ToString() :
                 ObservPointDefaultValues.RelativeHeightText;
+
             heightMin.Text = selectedPoint.AvailableHeightLover.ToString();
             heightMax.Text = selectedPoint.AvailableHeightUpper.ToString();
             observPointName.Text = selectedPoint.Title;
+
             angleOFViewMin.Text =
                 selectedPoint.AngelMinH.HasValue ?
                 selectedPoint.AngelMinH.ToString() :
                 ObservPointDefaultValues.AngleOFViewMinText;
+
             angleOFViewMax.Text =
                 selectedPoint.AngelMaxH.HasValue ?
                 selectedPoint.AngelMaxH.ToString() :
                 ObservPointDefaultValues.AngleOFViewMaxText;
+
             txtMinDistance.Text =
                 selectedPoint.InnerRadius.HasValue ?
                 selectedPoint.InnerRadius.ToString() :
                 ObservPointDefaultValues.DefaultRadiusText;
+
             txtMaxDistance.Text =
                 selectedPoint.OuterRadius.HasValue ?
                 selectedPoint.OuterRadius.ToString() :
                 ObservPointDefaultValues.DefaultRadiusText;
 
-            observPointDate.Text = selectedPoint.Dto.Value.ToString(Helper.DateFormat);
-            observPointCreator.Text = selectedPoint.Operator;
+            observPointDate.Text = 
+                selectedPoint.Dto.HasValue? 
+                selectedPoint.Dto.Value.ToString(Helper.DateFormat) :
+                DateTime.Now.ToString(Helper.DateFormat);
+
+            observPointCreator.Text = 
+                String.IsNullOrEmpty(selectedPoint.Operator)?
+                selectedPoint.Operator :
+                Environment.UserName;
         }
 
         private void FillSelectedPointObservationStationTable(ObservationSetsEnum observationStationsSet)
@@ -2541,6 +2568,15 @@ namespace MilSpace.Visibility
         public void AddSelectedOO(IGeometry geometry, string title)
         {
             throw new NotImplementedException();
+        }
+
+        private void CmbOPSource_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_isDropDownItemChangedManualy)
+            {
+                _observPointsController.SetSelectedObserverPoints
+                    (_observPointsController.GetObservPointsSet(cmbOPSource.SelectedItem.ToString()));
+            }
         }
     }
 }
