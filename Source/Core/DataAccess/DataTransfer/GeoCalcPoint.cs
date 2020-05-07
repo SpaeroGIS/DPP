@@ -16,11 +16,11 @@ namespace MilSpace.DataAccess.DataTransfer
 
             set { }
         }
-        public string Id
+        public int Objectid
         {
             get
             {
-                return GuidId.ToString();
+                return PointNumber;
             }
 
             set { }

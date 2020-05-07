@@ -281,11 +281,15 @@ namespace MilSpace.Visibility
             }
         }
 
-        public void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints, ValuableObservPointFieldsEnum filter)
+        public void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints,
+                                                ValuableObservPointFieldsEnum filter,
+                                                bool newSelection = false)
         {
             log.InfoEx("> FillObservationPointList START");
 
-            var selected = dgvObservationPoints.SelectedRows.Count > 0 ? dgvObservationPoints.SelectedRows[0].Index : 0;
+            var selected = (dgvObservationPoints.SelectedRows.Count > 0 && !newSelection) ?
+                                dgvObservationPoints.SelectedRows[0].Index : 0;
+
             dgvObservationPoints.CurrentCell = null;
 
             if (observationPoints != null && observationPoints.Any())
@@ -312,6 +316,8 @@ namespace MilSpace.Visibility
                     selected = dgvObservationPoints.Rows.Count - 1;
                 }
                 dgvObservationPoints.Rows[selected].Selected = true;
+
+                FilterData();
             }
 
             log.InfoEx("> FillObservationPointList END");
@@ -483,6 +489,14 @@ namespace MilSpace.Visibility
             }
         }
 
+        public void SetFieldsEditingAbility(bool areFiedlsReadOnly)
+        {
+            observPointName.ReadOnly = xCoord.ReadOnly
+                = yCoord.ReadOnly = areFiedlsReadOnly;
+
+            cmbAffiliationEdit.Enabled = cmbObservTypesEdit.Enabled
+                = tlbbGetCoord.Enabled = tlbbPasteCoord.Enabled = !areFiedlsReadOnly;
+        }
 
         private void OnSelectObserbPoint()
         {
@@ -1124,8 +1138,6 @@ namespace MilSpace.Visibility
 
             buttonSaveOPoint.Enabled = dgvObservationPoints.SelectedRows.Count > 0;
 
-            cmbAffiliationEdit.Enabled =
-                cmbObservTypesEdit.Enabled =
                 azimuthE.Enabled =
                 azimuthB.Enabled =
                 xCoord.Enabled =
@@ -1152,6 +1164,11 @@ namespace MilSpace.Visibility
 
             tlbbAddObserPointLayer.Enabled = !layerExists || isAllDisabled;
             //btnAddLayerPS.Enabled = !layerExists;
+
+            var pointsType = _observPointsController.GetObservPointsSet(cmbOPSource.SelectedItem.ToString());
+
+            cmbAffiliationEdit.Enabled = cmbObservTypesEdit.Enabled =
+                 (pointsType == ObservationSetsEnum.Gdb && layerExists && !isAllDisabled);
 
             log.DebugEx("> EnableObservPointsControls END");
         }

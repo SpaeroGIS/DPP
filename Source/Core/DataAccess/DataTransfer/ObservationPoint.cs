@@ -23,11 +23,9 @@ namespace MilSpace.DataAccess.DataTransfer
 
     public class ObservationPoint :  IObserverPoint
     {
-
-        public int Objectid { get; internal set; }
-
-        public string Id { get; set; }
-
+        public int Objectid { get; set; }
+        public string Id;
+       
         public string Title { get; set; }
 
         public string Type;

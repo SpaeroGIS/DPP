@@ -280,7 +280,8 @@ namespace MilSpace.Visibility
             cmbOOSource.SelectedItem = LocalizationContext.Instance.ObservObjectsSet;
         }
 
-        public void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints, ValuableObservPointFieldsEnum filter)
+        public void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints,
+                                                ValuableObservPointFieldsEnum filter, bool newSelection = false)
         {
             if (observationPoints != null && observationPoints.Any())
             {
@@ -1149,6 +1150,11 @@ namespace MilSpace.Visibility
         }
 
         public void ClearObserverPointsList()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetFieldsEditingAbility(bool areFiedlsReadOnly)
         {
             throw new NotImplementedException();
         }

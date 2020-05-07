@@ -290,7 +290,7 @@ namespace MilSpace.Tools
                         X = point.X,
                         Y = point.Y,
                         Title = feature.Value[featureClass.FindField(titleFieldName)].ToString(),
-                        Id = feature.Value[featureClass.FindField(featureClass.OIDFieldName)].ToString(),
+                        Objectid = (int)feature.Value[featureClass.FindField(featureClass.OIDFieldName)],
                         AzimuthStart = (double)feature.Value[featureClass.FindField("AzimuthB")],
                         AzimuthEnd = (double)feature.Value[featureClass.FindField("AzimuthE")],
                         AngelMinH = (double)feature.Value[featureClass.FindField("AnglMinH")],

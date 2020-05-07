@@ -6,7 +6,10 @@ namespace MilSpace.Visibility.ViewController
 {
     public interface IObservationPointsView
     {
-        void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints, ValuableObservPointFieldsEnum filter);
+        void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints,
+                                      ValuableObservPointFieldsEnum filter,
+                                      bool newSelection = false);
+
         void ClearObserverPointsList();
         void FillVisibilitySessionsList(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded, string newTaskName);
         void FillVisibilityResultsTree(IEnumerable<VisibilityCalcResults> visibilityResults);
@@ -16,6 +19,7 @@ namespace MilSpace.Visibility.ViewController
         void ChangeRecord(int id, ObservationPoint observationPoint);
         void AddRecord(ObservationPoint observationPoint);
         void RemoveSessionFromList(string id);
+        void SetFieldsEditingAbility(bool areFiedlsReadOnly);
         string ObservationPointsFeatureClass { get; }
        // string ObservationStationFeatureClass { get; }
         ValuableObservPointFieldsEnum GetFilter { get; }

@@ -8,7 +8,7 @@ namespace MilSpace.Core.DataAccess
 {
     public interface IObserverPoint
     {
-        string Id { get; set; }
+        int Objectid { get; set; }
 
         string Title { get; set; }
         double? X { get; set; }

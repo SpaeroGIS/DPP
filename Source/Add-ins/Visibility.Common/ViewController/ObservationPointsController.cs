@@ -1503,7 +1503,8 @@ namespace MilSpace.Visibility.ViewController
 
             if(_observationPoints != null)
             {
-                view.FillObservationPointList(_observationPoints, view.GetFilter);
+                view.FillObservationPointList(_observationPoints, view.GetFilter, true);
+                view.SetFieldsEditingAbility(!(set == ObservationSetsEnum.Gdb));
             }
             else
             {
@@ -1627,7 +1628,7 @@ namespace MilSpace.Visibility.ViewController
                 if (fromLayerPointsListModal.SelectedPoint != null)
                 {
                     var pointsFromLayer = VisibilityManager.GetObservationPointsFromAppropriateLayer(fromLayerPointsListModal.LayerName, ArcMap.Document.ActiveView);
-                    var observPoint = pointsFromLayer.FirstOrDefault(point => point.Id == fromLayerPointsListModal.SelectedPoint.ObjId.ToString());
+                    var observPoint = pointsFromLayer.FirstOrDefault(point => point.Objectid == fromLayerPointsListModal.SelectedPoint.ObjId);
 
                     return GetObservationPointFromInterface(observPoint);
                 }
@@ -1820,17 +1821,19 @@ namespace MilSpace.Visibility.ViewController
         {
             return new ObservationPoint
             {
-                Id = observerPoint.Id,
+                Objectid = observerPoint.Objectid,
                 Affiliation = ObservationPointTypesEnum.Undefined.ToString(),
                 Type = ObservationPointMobilityTypesEnum.Stationary.ToString(),
                 Title = observerPoint.Title,
                 X = observerPoint.X,
                 Y = observerPoint.Y,
-                AngelMaxH = observerPoint.AngelMaxH,
-                AngelMinH = observerPoint.AngelMinH,
-                AzimuthStart = observerPoint.AzimuthStart,
-                AzimuthEnd = observerPoint.AzimuthEnd,
-                RelativeHeight = observerPoint.RelativeHeight,
+                AngelMaxH = observerPoint.AngelMaxH ?? 90,
+                AngelMinH = observerPoint.AngelMinH ?? -90,
+                AzimuthStart = observerPoint.AzimuthStart ?? 0,
+                AzimuthEnd = observerPoint.AzimuthEnd ?? 360,
+                RelativeHeight = observerPoint.RelativeHeight ?? 0,
+                InnerRadius = 0,
+                OuterRadius = 1000,
                 Dto = DateTime.Now,
                 Operator = Environment.UserName
             };
