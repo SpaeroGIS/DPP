@@ -262,7 +262,8 @@ namespace MilSpace.Core.Tools
                     && featureClass.FindField("AzimuthB") > -1
                     && featureClass.FindField("AzimuthE") > -1 
                     && featureClass.FindField("AnglMinH") > -1 
-                    && featureClass.FindField("AnglMaxH") > -1;
+                    && featureClass.FindField("AnglMaxH") > -1
+                    && featureClass.FindField("HRel") > -1;
         }
 
         public bool InserLayerAfter(ILayer layerToAdd, string layerName)

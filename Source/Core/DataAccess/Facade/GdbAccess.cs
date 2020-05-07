@@ -1019,35 +1019,50 @@ namespace MilSpace.DataAccess.Facade
 
         public void AddObserverPointFields(IFeatureClass featureClass)
         {
-            IField azimuthBField = new FieldClass();
-            IFieldEdit azimuthBFieldEdit = (IFieldEdit)azimuthBField;
-            azimuthBFieldEdit.Name_2 = "AzimuthB";
-            azimuthBFieldEdit.Type_2 = esriFieldType.esriFieldTypeDouble;
-            featureClass.AddField(azimuthBField);
+            if (featureClass.FindField("AzimuthB") == -1)
+            {
+                IField azimuthBField = new FieldClass();
+                IFieldEdit azimuthBFieldEdit = (IFieldEdit)azimuthBField;
+                azimuthBFieldEdit.Name_2 = "AzimuthB";
+                azimuthBFieldEdit.Type_2 = esriFieldType.esriFieldTypeDouble;
+                featureClass.AddField(azimuthBField);
+            }
 
-            IField azimuthEField = new FieldClass();
-            IFieldEdit azimuthEFieldEdit = (IFieldEdit)azimuthEField;
-            azimuthEFieldEdit.Name_2 = "AzimuthE";
-            azimuthEFieldEdit.Type_2 = esriFieldType.esriFieldTypeDouble;
-            featureClass.AddField(azimuthEField);
+            if (featureClass.FindField("AzimuthE") == -1)
+            {
+                IField azimuthEField = new FieldClass();
+                IFieldEdit azimuthEFieldEdit = (IFieldEdit)azimuthEField;
+                azimuthEFieldEdit.Name_2 = "AzimuthE";
+                azimuthEFieldEdit.Type_2 = esriFieldType.esriFieldTypeDouble;
+                featureClass.AddField(azimuthEField);
+            }
 
-            IField anglMinHField = new FieldClass();
-            IFieldEdit anglMinHFieldEdit = (IFieldEdit)anglMinHField;
-            anglMinHFieldEdit.Name_2 = "AnglMinH";
-            anglMinHFieldEdit.Type_2 = esriFieldType.esriFieldTypeDouble;
-            featureClass.AddField(anglMinHField);
+            if (featureClass.FindField("AnglMinH") == -1)
+            {
+                IField anglMinHField = new FieldClass();
+                IFieldEdit anglMinHFieldEdit = (IFieldEdit)anglMinHField;
+                anglMinHFieldEdit.Name_2 = "AnglMinH";
+                anglMinHFieldEdit.Type_2 = esriFieldType.esriFieldTypeDouble;
+                featureClass.AddField(anglMinHField);
+            }
 
-            IField anglMaxHField = new FieldClass();
-            IFieldEdit anglMaxHFieldEdit = (IFieldEdit)anglMaxHField;
-            anglMaxHFieldEdit.Name_2 = "AnglMaxH";
-            anglMaxHFieldEdit.Type_2 = esriFieldType.esriFieldTypeDouble;
-            featureClass.AddField(anglMaxHField);
+            if (featureClass.FindField("AnglMaxH") == -1)
+            {
+                IField anglMaxHField = new FieldClass();
+                IFieldEdit anglMaxHFieldEdit = (IFieldEdit)anglMaxHField;
+                anglMaxHFieldEdit.Name_2 = "AnglMaxH";
+                anglMaxHFieldEdit.Type_2 = esriFieldType.esriFieldTypeDouble;
+                featureClass.AddField(anglMaxHField);
+            }
 
-            IField heightField = new FieldClass();
-            IFieldEdit heightFieldEdit = (IFieldEdit)heightField;
-            heightFieldEdit.Name_2 = "HRel";
-            heightFieldEdit.Type_2 = esriFieldType.esriFieldTypeDouble;
-            featureClass.AddField(heightField);
+            if (featureClass.FindField("HRel") == -1)
+            {
+                IField heightField = new FieldClass();
+                IFieldEdit heightFieldEdit = (IFieldEdit)heightField;
+                heightFieldEdit.Name_2 = "HRel";
+                heightFieldEdit.Type_2 = esriFieldType.esriFieldTypeDouble;
+                featureClass.AddField(heightField);
+            }
 
             SetObservPointDefaultValues(featureClass);
         }
@@ -1059,13 +1074,40 @@ namespace MilSpace.DataAccess.Facade
                 IFeatureCursor searchCursor = featureClass.Search(null, false);
                 comReleaser.ManageLifetime(searchCursor);
                 IFeature feature = null;
+
+                var azimuthBIndex = featureClass.FindField("AzimuthB");
+                var azimuthEIndex = featureClass.FindField("AzimuthE");
+                var anglMinIndex = featureClass.FindField("AnglMinH");
+                var anglMaxIndex = featureClass.FindField("AnglMaxH");
+                var hRelIndex = featureClass.FindField("HRel");
+
                 while ((feature = searchCursor.NextFeature()) != null)
                 {
-                    feature.set_Value(featureClass.FindField("AzimuthB"), 0);
-                    feature.set_Value(featureClass.FindField("AzimuthE"), 360);
-                    feature.set_Value(featureClass.FindField("AnglMinH"), -90);
-                    feature.set_Value(featureClass.FindField("AnglMaxH"), 90);
-                    feature.set_Value(featureClass.FindField("HRel"), 0);
+
+                    if (azimuthBIndex != -1 && feature.Value[azimuthBIndex] == DBNull.Value)
+                    {
+                        feature.set_Value(azimuthBIndex, 0);
+                    }
+
+                    if (azimuthEIndex != -1 && feature.Value[azimuthEIndex] == DBNull.Value)
+                    {
+                        feature.set_Value(azimuthEIndex, 360);
+                    }
+
+                    if (anglMinIndex != -1 && feature.Value[anglMinIndex] == DBNull.Value)
+                    {
+                        feature.set_Value(anglMinIndex, -90);
+                    }
+
+                    if (anglMaxIndex != -1 && feature.Value[anglMaxIndex] == DBNull.Value)
+                    {
+                        feature.set_Value(anglMaxIndex, 90);
+                    }
+
+                    if (hRelIndex != -1 && feature.Value[hRelIndex] == DBNull.Value)
+                    {
+                        feature.set_Value(hRelIndex, 0);
+                    }
 
                     feature.Store();
                 }
