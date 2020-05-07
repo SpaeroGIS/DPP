@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MilSpace.Core.DataAccess;
+using System;
 using System.Collections.Generic;
 
 namespace MilSpace.DataAccess.DataTransfer
@@ -20,14 +21,14 @@ namespace MilSpace.DataAccess.DataTransfer
         Date = 4
     }
 
-    public class ObservationPoint
+    public class ObservationPoint :  IObserverPoint
     {
 
         public int Objectid { get; internal set; }
 
-        public string Id;
+        public string Id { get; set; }
 
-        public string Title;
+        public string Title { get; set; }
 
         public string Type;
 
@@ -37,15 +38,15 @@ namespace MilSpace.DataAccess.DataTransfer
 
         public int? Share;
 
-        public double? X;
+        public double? X { get; set; }
 
-        public double? Y;
+        public double? Y { get; set; }
 
         /// <summary>
         /// Height above surface, default - 0
         /// Cannot be less then 0.
         /// </summary>
-        public double? RelativeHeight;
+        public double? RelativeHeight { get; set; }
 
         public double AvailableHeightLover;
         public double AvailableHeightUpper;
@@ -59,7 +60,7 @@ namespace MilSpace.DataAccess.DataTransfer
         ///Shold be used as the parameter horizontal_start_angle in the Visibility calculation
         ///Deafult value - 0. Can not be more less then 0 and more 360 
         /// </summary>
-        public double? AzimuthStart;
+        public double? AzimuthStart { get; set; }
 
         /// <summary>
         /// This value defines the end angle of the horizontal scan range. The value should be specified in degrees from 0 to 360, 
@@ -70,7 +71,7 @@ namespace MilSpace.DataAccess.DataTransfer
         ///Shold be used as the parameter horizontal_end_angle in the Visibility calculation
         ///Deafult value - 360. Can not be more less then 0 and more 360 
         /// </summary>
-        public double? AzimuthEnd;
+        public double? AzimuthEnd { get; set; }
 
         /// <summary>
         /// This value defines the upper vertical angle limit of the scan above a horizontal plane.
@@ -80,7 +81,7 @@ namespace MilSpace.DataAccess.DataTransfer
         /// Shold be used as the parameter vertical_upper_angle in the Visibility calculation
         /// Default value - 0
         /// </summary>
-        public double? AngelMaxH;
+        public double? AngelMaxH { get; set; }
 
         /// <summary>
         /// This value defines the lower vertical angle limit of the scan below a horizontal plane. 
@@ -90,7 +91,7 @@ namespace MilSpace.DataAccess.DataTransfer
         /// Shold be used as the parameter vertical_lower_angle in the Visibility calculation. 
         /// Default value - 90
         /// </summary>
-        public double? AngelMinH;
+        public double? AngelMinH { get; set; }
 
         /// <summary>
         /// The main direct of the observation point/station. 

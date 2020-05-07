@@ -1053,51 +1053,9 @@ namespace MilSpace.DataAccess.Facade
         }
 
         private void SetObservPointDefaultValues(IFeatureClass featureClass)
-        {//TODO DS: try other way
-            //IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)calcWorkspace;
-            //workspaceEdit.StartEditing(true);
-
-            //IQueryFilter queryFilter = new QueryFilter
-            //{
-            //    WhereClause = $"{featureClass.OIDFieldName} >= 0"
-            //};
-
-            //IFeatureCursor featureCursor = featureClass.Search(queryFilter, true);
-            //IFeature feature = featureCursor.NextFeature();
-
-            //try
-            //{
-            //    while (feature != null)
-            //    {
-            //        workspaceEdit.StartEditOperation();
-
-            //        feature.set_Value(featureClass.FindField("AzimuthB"), 0);
-            //        feature.set_Value(featureClass.FindField("AzimuthE"), 360);
-            //        feature.set_Value(featureClass.FindField("AnglMinH"), -90);
-            //        feature.set_Value(featureClass.FindField("AnglMaxH"), 90);
-            //        feature.set_Value(featureClass.FindField("HRel"), 0);
-
-            //        feature.Store();
-            //        Marshal.ReleaseComObject(feature);
-
-            //        feature = featureCursor.NextFeature();
-            //    }
-            //}
-            //catch(Exception ex)
-            //{
-            //    logger.ErrorEx($"SetObservPointDefaultValues. Unexpected exception: {ex}");
-            //}
-            //finally
-            //{
-            //    workspaceEdit.StopEditOperation();
-            //    workspaceEdit.StopEditing(true);
-
-            //    Marshal.ReleaseComObject(featureCursor);
-            //}
-
+        {
             using (ComReleaser comReleaser = new ComReleaser())
             {
-                // Use IFeatureClass.Search to create a search cursor.
                 IFeatureCursor searchCursor = featureClass.Search(null, false);
                 comReleaser.ManageLifetime(searchCursor);
                 IFeature feature = null;

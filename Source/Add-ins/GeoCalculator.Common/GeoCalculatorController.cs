@@ -2,6 +2,7 @@
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core;
+using MilSpace.Core.DataAccess;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
@@ -167,6 +168,11 @@ namespace MilSpace.GeoCalculator
         internal Dictionary<int, IPoint> GetPointsList()
         {
             return View.GetPointsList();
+        }
+
+        internal IObserverPoint[] GetGeoCalcPoints()
+        {
+            return GeoCalculatiorFacade.GetUserSessionPoints().ToArray();
         }
     }
 }

@@ -12,14 +12,11 @@ namespace MilSpace.Visibility
         public string SelectedFiled => cmbTiltleField.SelectedItem.ToString();
         private MapLayersManager _mapLayersManager;
         private string[] _layers;
-      //  private bool _chooseTitleField;
 
         public ChooseVectorLayerFromMapModalWindow(IActiveView activeView, bool chooseTitleField = false, string[] layers = null)
         {
             _mapLayersManager = new MapLayersManager(activeView);
             _layers = layers;
-
-            //_chooseTitleField = chooseTitleField;
 
             InitializeComponent();
 

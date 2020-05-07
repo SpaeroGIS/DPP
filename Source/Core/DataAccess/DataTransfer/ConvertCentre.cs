@@ -379,7 +379,7 @@ namespace MilSpace.DataAccess.DataTransfer
                 X = sessionPoint.X,
                 Y = sessionPoint.Y,
                 UserName = sessionPoint.userName,
-                Id = sessionPoint.id,
+                GuidId = sessionPoint.id,
                 AngFrameH = sessionPoint.AngFrameH.HasValue? sessionPoint.AngFrameH.Value: double.NaN
             };
         }
@@ -391,10 +391,10 @@ namespace MilSpace.DataAccess.DataTransfer
             return new GeoCalcSessionPoint
             {
                 PointNumber = sessionPoint.PointNumber,
-                X = sessionPoint.X,
-                Y = sessionPoint.Y,
+                X = sessionPoint.X.Value,
+                Y = sessionPoint.Y.Value,
                 userName = sessionPoint.UserName,
-                id = sessionPoint.Id,
+                id = sessionPoint.GuidId,
                 AngFrameH = GetNulableDouble(sessionPoint.AngFrameH)
             };
 
@@ -403,8 +403,8 @@ namespace MilSpace.DataAccess.DataTransfer
         internal static void Update(this GeoCalcSessionPoint pointEntity, GeoCalcPoint point)
         {
             pointEntity.PointNumber = point.PointNumber;
-            pointEntity.X = point.X;
-            pointEntity.Y = point.Y;
+            pointEntity.X = point.X.Value;
+            pointEntity.Y = point.Y.Value;
         }
 
 

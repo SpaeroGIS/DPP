@@ -1,17 +1,32 @@
-﻿using System;
+﻿using MilSpace.Core.DataAccess;
+using System;
 
 namespace MilSpace.DataAccess.DataTransfer
 {
-    public class GeoCalcPoint : ProfilePoint
+    public class GeoCalcPoint : IObserverPoint
     {
-        public Guid Id;
+        public Guid GuidId;
         public short PointNumber;
+        public string Title { get; set; }
+        public string Id
+        {
+            get
+            {
+                return GuidId.ToString();
+            }
+
+            set { }
+        }
+
+        public double? X { get; set; }
+        public double? Y { get; set; }
+
         public string UserName;
-        public double HRel;
-        public double AzimuthB;
-        public double AzimuthE;
-        public double AnglMinH;
-        public double AnglMaxH;
+        public double? RelativeHeight { get; set; }
+        public double? AzimuthStart { get; set; }
+        public double? AzimuthEnd { get; set; }
+        public double? AngelMaxH { get; set; }
+        public double? AngelMinH { get; set; }
         public double AzimuthMainAxis;
         public double AngFrameH;
         public double AnglFrameV;

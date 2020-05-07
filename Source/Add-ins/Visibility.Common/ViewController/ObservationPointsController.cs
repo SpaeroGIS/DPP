@@ -1630,7 +1630,7 @@ namespace MilSpace.Visibility.ViewController
                     var pointsFromLayer = VisibilityManager.GetObservationPointsFromAppropriateLayer(fromLayerPointsListModal.LayerName, ArcMap.Document.ActiveView);
                     var observPoint = pointsFromLayer.FirstOrDefault(point => point.Id == fromLayerPointsListModal.SelectedPoint.ObjId.ToString());
 
-                    return observPoint;
+                    return GetObservationPointFromInterface(observPoint);
                 }
             }
 
@@ -1746,28 +1746,28 @@ namespace MilSpace.Visibility.ViewController
             return points;
         }
 
-        //private GeoCalcPoint[] GetPointsFromGeoCalculator()
-        //{
-        //    var geoModule = ModuleInteraction.Instance.GetModuleInteraction<IGeocalculatorInteraction>(out bool changes);
+        private IObserverPoint[] GetObserverPointsFromGeoCalculator()
+        {
+            var geoModule = ModuleInteraction.Instance.GetModuleInteraction<IGeocalculatorInteraction>(out bool changes);
 
-        //    if (!changes && geoModule == null)
-        //    {
-        //        MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("GeoCalcModuleDoesnotExistMessage", "Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним"), LocalizationContext.Instance.ErrorMessage);
-        //        log.ErrorEx($"> GetPointFromGeoCalculator Exception: {LocalizationContext.Instance.FindLocalizedElement("GeoCalcModuleDoesnotExistMessage", "Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним")}");
-        //        return null;
-        //    }
+            if (!changes && geoModule == null)
+            {
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("GeoCalcModuleDoesnotExistMessage", "Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним"), LocalizationContext.Instance.ErrorMessage);
+                log.ErrorEx($"> GetPointFromGeoCalculator Exception: {LocalizationContext.Instance.FindLocalizedElement("GeoCalcModuleDoesnotExistMessage", "Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним")}");
+                return null;
+            }
 
-        //    try
-        //    {
-        //        return geoModule.();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(LocalizationContext.Instance.ErrorMessage, LocalizationContext.Instance.MsgBoxErrorHeader);
-        //        log.ErrorEx($"> GetPointFromGeoCalculator Exception: {ex.Message}");
-        //        return null;
-        //    }
-        //}
+            try
+            {
+                return geoModule.GetGeoCalcPoints();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(LocalizationContext.Instance.ErrorMessage, LocalizationContext.Instance.MsgBoxErrorHeader);
+                log.ErrorEx($"> GetPointFromGeoCalculator Exception: {ex.Message}");
+                return null;
+            }
+        }
 
         private List<ObservationPoint> GetObservationPointsFromPointLayer()
         {
@@ -1799,13 +1799,40 @@ namespace MilSpace.Visibility.ViewController
                     }
                 }
 
-                return VisibilityManager.GetObservationPointsFromAppropriateLayer(chooseLayerFromMapModal.SelectedLayer,
+                var observerPoints = VisibilityManager.GetObservationPointsFromAppropriateLayer(chooseLayerFromMapModal.SelectedLayer,
                                                     mapDocument.ActiveView, chooseLayerFromMapModal.SelectedFiled);
+
+                if(observerPoints == null)
+                {
+                    return null;
+                }
+
+                return observerPoints.Select(point => GetObservationPointFromInterface(point)).ToList();
             }
             else
             {
                 return null;
             }
+        }
+
+        private ObservationPoint GetObservationPointFromInterface(IObserverPoint observerPoint)
+        {
+            return new ObservationPoint
+            {
+                Id = observerPoint.Id,
+                Affiliation = ObservationPointTypesEnum.Undefined.ToString(),
+                Type = ObservationPointMobilityTypesEnum.Stationary.ToString(),
+                Title = observerPoint.Title,
+                X = observerPoint.X,
+                Y = observerPoint.Y,
+                AngelMaxH = observerPoint.AngelMaxH,
+                AngelMinH = observerPoint.AngelMinH,
+                AzimuthStart = observerPoint.AzimuthStart,
+                AzimuthEnd = observerPoint.AzimuthEnd,
+                RelativeHeight = observerPoint.RelativeHeight,
+                Dto = DateTime.Now,
+                Operator = Environment.UserName
+            };
         }
 
         #region ArcMap Eventts

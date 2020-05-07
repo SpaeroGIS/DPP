@@ -44,15 +44,15 @@ namespace MilSpace.DataAccess.Facade
             {
                 try
                 {
-                    log.InfoEx($"UpdateUserPoints. Processing Id: {point.Id}");
-                    var pointEntity = context.GeoCalcSessionPoints.FirstOrDefault(entity => entity.id == point.Id);
+                    log.InfoEx($"UpdateUserPoints. Processing Id: {point.GuidId}");
+                    var pointEntity = context.GeoCalcSessionPoints.FirstOrDefault(entity => entity.id == point.GuidId);
 
                     if(pointEntity != null)
                     {
                         pointEntity.Update(point);
                         Submit();
 
-                        log.InfoEx($"GeoCalcPoint {point.Id} was successfully updated");
+                        log.InfoEx($"GeoCalcPoint {point.GuidId} was successfully updated");
                     }
                     else
                     {
@@ -60,7 +60,7 @@ namespace MilSpace.DataAccess.Facade
                         context.GeoCalcSessionPoints.InsertOnSubmit(pointEntity);
                         Submit();
 
-                        log.InfoEx($"GeoCalcPoint {point.Id} was successfully added");
+                        log.InfoEx($"GeoCalcPoint {point.GuidId} was successfully added");
                     }
                 }
                 catch(Exception ex)

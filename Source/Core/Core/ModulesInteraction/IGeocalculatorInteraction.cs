@@ -1,4 +1,5 @@
 ﻿using ESRI.ArcGIS.Geometry;
+using MilSpace.Core.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace MilSpace.Core.ModulesInteraction
 {
     public interface IGeocalculatorInteraction
     {
-         Dictionary<int, IPoint> GetPoints();
+        Dictionary<int, IPoint> GetPoints();
+        IObserverPoint[] GetGeoCalcPoints();
     }
 }
