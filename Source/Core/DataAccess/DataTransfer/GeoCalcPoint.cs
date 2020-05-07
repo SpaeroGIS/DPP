@@ -7,7 +7,15 @@ namespace MilSpace.DataAccess.DataTransfer
     {
         public Guid GuidId;
         public short PointNumber;
-        public string Title { get; set; }
+        public string Title
+        {
+            get
+            {
+                return PointNumber.ToString();
+            }
+
+            set { }
+        }
         public string Id
         {
             get

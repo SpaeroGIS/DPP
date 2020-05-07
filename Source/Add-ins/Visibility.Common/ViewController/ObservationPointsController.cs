@@ -1485,13 +1485,12 @@ namespace MilSpace.Visibility.ViewController
                 case ObservationSetsEnum.Gdb:
 
                     _observationPoints = VisibilityZonesFacade.GetAllObservationPoints().ToList();
-                   
 
                     break;
 
                 case ObservationSetsEnum.GeoCalculator:
 
-
+                    _observationPoints = GetObserverPointsFromGeoCalculator();
 
                     break;
 
@@ -1746,7 +1745,8 @@ namespace MilSpace.Visibility.ViewController
             return points;
         }
 
-        private IObserverPoint[] GetObserverPointsFromGeoCalculator()
+
+        private List<ObservationPoint> GetObserverPointsFromGeoCalculator()
         {
             var geoModule = ModuleInteraction.Instance.GetModuleInteraction<IGeocalculatorInteraction>(out bool changes);
 
@@ -1759,7 +1759,8 @@ namespace MilSpace.Visibility.ViewController
 
             try
             {
-                return geoModule.GetGeoCalcPoints();
+                var geoCalcPoints = geoModule.GetGeoCalcPoints();
+                return geoCalcPoints.Select(point => GetObservationPointFromInterface(point)).ToList();
             }
             catch (Exception ex)
             {
