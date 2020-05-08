@@ -504,7 +504,8 @@ namespace MilSpace.Visibility
         public void SetFieldsEditingAbility(bool areFiedlsReadOnly)
         {
             observPointName.ReadOnly = xCoord.ReadOnly
-                = yCoord.ReadOnly = areFiedlsReadOnly;
+                = yCoord.ReadOnly = txtMinDistance.ReadOnly
+                = txtMaxDistance.ReadOnly = areFiedlsReadOnly;
 
             cmbAffiliationEdit.Enabled = cmbObservTypesEdit.Enabled
                 = tlbbGetCoord.Enabled = tlbbPasteCoord.Enabled = !areFiedlsReadOnly;
@@ -1372,7 +1373,10 @@ namespace MilSpace.Visibility
 
             _isDropDownItemChangedManualy = true;
 
-            var FCPoint = _observPointsController.GetIPointObservPoint(selectedPoint.Objectid);
+            var FCPoint = _observerPointSource == ObservationSetsEnum.Gdb ?
+                                _observPointsController.GetIPointObservPoint(selectedPoint.Objectid) :
+                                null;
+
             var centerPoint = _observPointsController.GetEnvelopeCenterPoint(ArcMap.Document.ActiveView.Extent);
 
             xCoord.Text =

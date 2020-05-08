@@ -1231,6 +1231,16 @@ namespace MilSpace.Visibility.ViewController
 
         internal double CalcCoverageArea(IPoint pointGeom, ObservationPoint observPoint)
         {
+            if(!observPoint.OuterRadius.HasValue)
+            {
+                observPoint.OuterRadius = 1000;
+            }
+
+            if (!observPoint.InnerRadius.HasValue)
+            {
+                observPoint.InnerRadius = 0;
+            }
+
             // Get min and max distances taking into account min and max distance from parameters and vertical angles
             var realMaxDistance = EsriTools.GetMaxDistance(observPoint.OuterRadius.Value, observPoint.AngelMaxH.Value, observPoint.RelativeHeight.Value);
             var realMinDistance = EsriTools.GetMinDistance(observPoint.InnerRadius.Value, observPoint.AngelMinH.Value, observPoint.RelativeHeight.Value);
