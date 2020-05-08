@@ -1164,6 +1164,11 @@ namespace MilSpace.Visibility
         {
             throw new NotImplementedException();
         }
+
+        public void RemoveObserverPoint(int id)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
     }

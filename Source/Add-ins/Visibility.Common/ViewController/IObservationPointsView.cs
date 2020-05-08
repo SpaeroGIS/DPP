@@ -21,11 +21,12 @@ namespace MilSpace.Visibility.ViewController
         void AddRecord(ObservationPoint observationPoint);
         void RemoveSessionFromList(string id);
         void SetFieldsEditingAbility(bool areFiedlsReadOnly);
+        void RemoveObserverPoint(int id);
+
         string ObservationPointsFeatureClass { get; }
        // string ObservationStationFeatureClass { get; }
         ValuableObservPointFieldsEnum GetFilter { get; }
         IEnumerable<string> GetTypes { get; }
         IEnumerable<string> GetAffiliation { get; }
-
     }
 }

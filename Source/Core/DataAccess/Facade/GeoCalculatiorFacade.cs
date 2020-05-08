@@ -19,6 +19,14 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
+        public static GeoCalcPoint GetUserSessionPointById(Guid id)
+        {
+            using (var accessor = new GeoCalculatorDataAccess())
+            {
+                return accessor.GetUserPointById(id);
+            }
+        }
+
         public static void SaveUserSessionPoints(IEnumerable<GeoCalcPoint> points)
         {
             using (var accessor = new GeoCalculatorDataAccess())

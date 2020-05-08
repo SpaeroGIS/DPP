@@ -18,6 +18,9 @@ namespace MilSpace.GeoCalculator
 {
     public class GeoCalculatorController
     {
+        public event Action<int> OnPointDeleted;
+        public event Action OnPointUpdated;
+
         private LocalizationContext _context = new LocalizationContext();
         private static Logger _log = Logger.GetLoggerEx("MilSpace.GeoCalculator.GeoCalculatorController");
 
@@ -143,6 +146,7 @@ namespace MilSpace.GeoCalculator
             _log.DebugEx("> UpdatePoints START.");
 
             GeoCalculatiorFacade.UpdateUserSessionPoints(points);
+            OnPointUpdated.Invoke();
 
             _log.DebugEx("> UpdatePoints END.");
         }
@@ -152,6 +156,7 @@ namespace MilSpace.GeoCalculator
             _log.DebugEx("> UpdatePoint START.");
 
             GeoCalculatiorFacade.UpdateUserSessionPoint(point);
+            OnPointUpdated.Invoke();
 
             _log.DebugEx("> UpdatePoint END.");
         }
@@ -160,7 +165,10 @@ namespace MilSpace.GeoCalculator
         {
             _log.DebugEx("> RemovePoint START.");
 
+            var removingGeoPoint = GeoCalculatiorFacade.GetUserSessionPointById(id);
+
             GeoCalculatiorFacade.DeleteUserSessionPoint(id);
+            OnPointDeleted.Invoke(removingGeoPoint.PointNumber);
 
             _log.DebugEx("> RemovePoint END.");
         }

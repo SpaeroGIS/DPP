@@ -36,6 +36,27 @@ namespace MilSpace.DataAccess.Facade
             return null;
         }
 
+        public GeoCalcPoint GetUserPointById(Guid id)
+        {
+            try
+            {
+                var session = context.GeoCalcSessionPoints.FirstOrDefault(s => s.userName.Equals(Environment.UserName) && s.id == id);
+
+                if(session == null)
+                {
+                    return null;
+                }
+
+                return session.Get();
+            }
+            catch (Exception ex)
+            {
+                log.WarnEx($"Unexpected exception:{ex.Message}");
+            }
+
+            return null;
+        }
+
         public void UpdateUserPoints(IEnumerable<GeoCalcPoint> points)
         {
             log.InfoEx($"UpdateUserPoints. Count {points.Count()}");

@@ -2,14 +2,14 @@
 using MilSpace.Core.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MilSpace.Core.ModulesInteraction
 {
     public interface IGeocalculatorInteraction
     {
+        event Action<int> OnPointDeleted;
+        event Action OnPointUpdated;
+
         Dictionary<int, IPoint> GetPoints();
         IObserverPoint[] GetGeoCalcPoints();
         void UpdateGeoCalcPoint(IObserverPoint geoCalcPoint);

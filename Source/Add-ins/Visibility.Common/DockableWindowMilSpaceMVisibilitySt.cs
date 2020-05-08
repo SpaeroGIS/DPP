@@ -47,6 +47,7 @@ namespace MilSpace.Visibility
 
         private int _selectedPointId => dgvObservationPoints.SelectedRows.Count == 0 ? -1 : Convert.ToInt32(dgvObservationPoints.SelectedRows[0].Cells["Id"].Value);
         private ObservationSetsEnum _observationStationSetType => _observPointsController.GetObservStationSet(cmbObservStationSet.SelectedItem.ToString());
+        private ObservationSetsEnum _observerPointSource => _observPointsController.GetObservPointsSet(cmbOPSource.SelectedItem.ToString());
         //private bool IsPointFieldsEnabled => _observPointsController.IsObservPointsExists();
         private bool IsPointFieldsEnabled = true;
         private ValuableObservPointSortFieldsEnum curObservPointsSorting = ValuableObservPointSortFieldsEnum.Name;
@@ -308,7 +309,12 @@ namespace MilSpace.Visibility
                             Date = (op.Dto.HasValue) ? op.Dto.Value.ToString(Helper.DateFormatSmall) : DateTime.Now.ToString(Helper.DateFormatSmall),
                             Id = op.Objectid
                         };
-                    }).OrderBy(l => l.Title);
+                    });
+
+                if(_observerPointSource != ObservationSetsEnum.GeoCalculator)
+                {
+                    observationPoints.OrderBy(l => l.Title);
+                }
 
 
                 dgvObservationPoints.DataSource = ItemsToShow.ToArray();
@@ -502,6 +508,15 @@ namespace MilSpace.Visibility
 
             cmbAffiliationEdit.Enabled = cmbObservTypesEdit.Enabled
                 = tlbbGetCoord.Enabled = tlbbPasteCoord.Enabled = !areFiedlsReadOnly;
+        }
+
+        public void RemoveObserverPoint(int id)
+        {
+            var source = dgvObservationPoints.DataSource as ObservPointGui[];
+            var sourceList = new List<ObservPointGui>(source);
+            sourceList.Remove(sourceList.First(point => point.Id == id));
+
+            dgvObservationPoints.DataSource = sourceList.ToArray();
         }
 
         private void OnSelectObserbPoint()
@@ -1171,7 +1186,7 @@ namespace MilSpace.Visibility
             tlbbAddObserPointLayer.Enabled = !layerExists || isAllDisabled;
             //btnAddLayerPS.Enabled = !layerExists;
 
-            var pointsType = _observPointsController.GetObservPointsSet(cmbOPSource.SelectedItem.ToString());
+            var pointsType = _observerPointSource;
 
             cmbAffiliationEdit.Enabled = cmbObservTypesEdit.Enabled =
                  (pointsType == ObservationSetsEnum.Gdb && layerExists && !isAllDisabled);
@@ -1194,7 +1209,11 @@ namespace MilSpace.Visibility
             {
                 var rowIndex = dgvObservationPoints.SelectedRows[0].Index;
 
-                _observPointsController.RemoveObservPoint(VisibilityManager.ObservPointFeature, ActiveView, _selectedPointId);
+                if (_observerPointSource == ObservationSetsEnum.Gdb)
+                {
+                    _observPointsController.RemoveObservPoint(VisibilityManager.ObservPointFeature, ActiveView, _selectedPointId);
+                }
+
                 var source = dgvObservationPoints.DataSource as ObservPointGui[];
                 var sourceList = new List<ObservPointGui>(source);
                 sourceList.Remove(sourceList.First(point => point.Id == _selectedPointId));
@@ -1215,8 +1234,7 @@ namespace MilSpace.Visibility
             _observPointsController.UpdateObservPoint(
                 GetObservationPoint(),
                 selectedPoint.Objectid,
-                _observPointsController.GetObservPointsSet(cmbOPSource.SelectedItem.ToString())
-                );
+                _observerPointSource);
         }
 
         //private void CreateNewPoint(ObservationPoint point)
@@ -1246,7 +1264,7 @@ namespace MilSpace.Visibility
             }
             //TODO DS: Add validation or catch
 
-            var sourceType = _observPointsController.GetObservPointsSet(cmbOPSource.SelectedItem.ToString());
+            var sourceType = _observerPointSource;
 
             if (sourceType == ObservationSetsEnum.GeoCalculator)
             {
@@ -2636,8 +2654,7 @@ namespace MilSpace.Visibility
         {
             if (_isDropDownItemChangedManualy)
             {
-                _observPointsController.SetSelectedObserverPoints
-                    (_observPointsController.GetObservPointsSet(cmbOPSource.SelectedItem.ToString()));
+                _observPointsController.SetSelectedObserverPoints(_observerPointSource);
             }
         }
     }

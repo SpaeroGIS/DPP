@@ -191,6 +191,19 @@ namespace MilSpace.Visibility.ViewController
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGeography, GetFeatureLayer(featureName, activeView), null);
         }
 
+        internal void RemoveGeoCalcPointAsObserverPoint(int id)
+        {
+            var geoCalcPoint = _observationPoints.FirstOrDefault(point => point.Objectid == id);
+
+            if (geoCalcPoint == null)
+            {
+                return;
+            }
+
+            _observationPoints.Remove(geoCalcPoint);
+            view.RemoveObserverPoint(id);
+        }
+
         internal void ShowObservPoint(IActiveView activeView, int id)
         {
             var point = GetObservPointByIdAsObservationPoint(id);
@@ -1559,6 +1572,11 @@ namespace MilSpace.Visibility.ViewController
 
         internal void SetSelectedObserverPoints(ObservationSetsEnum set, bool newSource = true)
         {
+            if(newSource)
+            {
+                UnsubscribeFromDeletePointEvent();
+            }
+
             switch (set)
             {
                 case ObservationSetsEnum.Gdb:
@@ -1843,6 +1861,9 @@ namespace MilSpace.Visibility.ViewController
 
             try
             {
+                geoModule.OnPointDeleted += RemoveGeoCalcPointAsObserverPoint;
+                geoModule.OnPointUpdated += UpdateGeoCalcPoints;
+
                 return geoModule.GetGeoCalcPoints().ToList();
             }
             catch (Exception ex)
@@ -1851,6 +1872,33 @@ namespace MilSpace.Visibility.ViewController
                 log.ErrorEx($"> GetPointFromGeoCalculator Exception: {ex.Message}");
                 return null;
             }
+        }
+
+        private void UnsubscribeFromDeletePointEvent()
+        {
+            var geoModule = ModuleInteraction.Instance.GetModuleInteraction<IGeocalculatorInteraction>(out bool changes);
+
+            if (!changes && geoModule == null)
+            {
+                log.ErrorEx($"> UnsubscribeFromDeletePointEvent Exception: {LocalizationContext.Instance.FindLocalizedElement("GeoCalcModuleDoesnotExistMessage", "Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним")}");
+                return;
+            }
+
+            try
+            {
+                geoModule.OnPointDeleted -= RemoveGeoCalcPointAsObserverPoint;
+                geoModule.OnPointUpdated -= UpdateGeoCalcPoints;
+            }
+            catch (Exception ex)
+            {
+                log.ErrorEx($"> UnsubscribeFromDeletePointEvent Exception: {ex.Message}");
+                return;
+            }
+        }
+
+        private void UpdateGeoCalcPoints()
+        {
+            SetSelectedObserverPoints(ObservationSetsEnum.GeoCalculator, false);
         }
 
         private List<IObserverPoint> GetObservationPointsFromPointLayer(bool changeFeatureLayer)
