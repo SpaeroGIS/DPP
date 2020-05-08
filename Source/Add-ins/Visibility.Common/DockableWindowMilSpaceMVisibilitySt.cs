@@ -6,6 +6,7 @@ using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geometry;
 
 using MilSpace.Core;
+using MilSpace.Core.DataAccess;
 using MilSpace.Core.ModulesInteraction;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
@@ -281,7 +282,7 @@ namespace MilSpace.Visibility
             }
         }
 
-        public void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints,
+        public void FillObservationPointList(IEnumerable<IObserverPoint> observationPoints,
                                                 ValuableObservPointFieldsEnum filter,
                                                 bool newSelection = false)
         {
@@ -295,13 +296,18 @@ namespace MilSpace.Visibility
             if (observationPoints != null && observationPoints.Any())
             {
                 var ItemsToShow = observationPoints.Select(
-                    op => new ObservPointGui
+                    point =>
                     {
-                        Title = op.Title,
-                        Type = LocalizationContext.Instance.MobilityTypes[op.ObservationPointMobilityType],
-                        Affiliation = LocalizationContext.Instance.AffiliationTypes[op.ObservationPointAffiliationType],
-                        Date = (op.Dto.HasValue)? op.Dto.Value.ToString(Helper.DateFormatSmall) : DateTime.Now.ToString(Helper.DateFormatSmall),
-                        Id = op.Objectid
+                        var op = _observPointsController.GetObservationPointFromInterface(point);
+
+                        return new ObservPointGui
+                        {
+                            Title = op.Title,
+                            Type = LocalizationContext.Instance.MobilityTypes[op.ObservationPointMobilityType],
+                            Affiliation = LocalizationContext.Instance.AffiliationTypes[op.ObservationPointAffiliationType],
+                            Date = (op.Dto.HasValue) ? op.Dto.Value.ToString(Helper.DateFormatSmall) : DateTime.Now.ToString(Helper.DateFormatSmall),
+                            Id = op.Objectid
+                        };
                     }).OrderBy(l => l.Title);
 
 
@@ -832,7 +838,7 @@ namespace MilSpace.Visibility
                 return;
             }
 
-            var selectedPoint = _observPointsController.GetObservPointById(_selectedPointId);
+            var selectedPoint = _observPointsController.GetObservPointByIdAsObservationPoint(_selectedPointId);
 
             if (!FieldsValidation(sender, selectedPoint))
             {
@@ -1204,13 +1210,12 @@ namespace MilSpace.Visibility
 
         private void SavePoint()
         {
-            var selectedPoint = _observPointsController.GetObservPointById(_selectedPointId);
+            var selectedPoint = _observPointsController.GetObservPointByIdAsObservationPoint(_selectedPointId);
 
             _observPointsController.UpdateObservPoint(
                 GetObservationPoint(),
-                VisibilityManager.ObservPointFeature,
-                ActiveView,
-                selectedPoint.Objectid
+                selectedPoint.Objectid,
+                _observPointsController.GetObservPointsSet(cmbOPSource.SelectedItem.ToString())
                 );
         }
 
@@ -1220,7 +1225,7 @@ namespace MilSpace.Visibility
             _observPointsController.AddPoint(VisibilityManager.ObservPointFeature, ActiveView);
         }
 
-        private ObservationPoint GetObservationPoint()
+        private IObserverPoint GetObservationPoint()
         {
             var affiliationType =
                 LocalizationContext.Instance.AffiliationTypes.First(v => v.Value.Equals(cmbAffiliationEdit.SelectedItem));
@@ -1240,7 +1245,47 @@ namespace MilSpace.Visibility
                 xdd = ydd = 25.2525252525;
             }
             //TODO DS: Add validation or catch
-            ObservationPoint op = new ObservationPoint()
+
+            var sourceType = _observPointsController.GetObservPointsSet(cmbOPSource.SelectedItem.ToString());
+
+            if (sourceType == ObservationSetsEnum.GeoCalculator)
+            {
+
+                if (!(_observPointsController.GetObservPointById(_selectedPointId) is GeoCalcPoint oldPoint))
+                {
+                    return null;
+                }
+
+                IObserverPoint newGeoCalcPointAsObserverPoint = new GeoCalcPoint()
+                {
+                    Title = observPointName.Text,
+
+                    X = xdd,
+                    Y = ydd,
+
+                    AngelMaxH = Convert.ToDouble(angleOFViewMax.Text),
+                    AngelMinH = Convert.ToDouble(angleOFViewMin.Text),
+                    //AngelCameraRotationH = Convert.ToDouble(cameraRotationH.Text),
+                    //AngelCameraRotationV = Convert.ToDouble(cameraRotationV.Text),
+                    RelativeHeight = Convert.ToDouble(heightCurrent.Text),
+                    AvailableHeightLover = Convert.ToDouble(heightMin.Text),
+                    AvailableHeightUpper = Convert.ToDouble(heightMax.Text),
+                    AzimuthStart = Convert.ToDouble(azimuthB.Text),
+                    AzimuthEnd = Convert.ToDouble(azimuthE.Text),
+                    //AzimuthMainAxis = Convert.ToDouble(azimuthMainAxis.Text),
+                    InnerRadius = Convert.ToDouble(txtMinDistance.Text),
+                    OuterRadius = Convert.ToDouble(txtMaxDistance.Text),
+
+                    GuidId = oldPoint.GuidId,
+                    PointNumber = oldPoint.PointNumber,
+                    UserName = observPointCreator.Text
+                };
+
+                return newGeoCalcPointAsObserverPoint;
+            }
+
+
+            IObserverPoint newObserverPoint = new ObservationPoint()
             {
                 Title = observPointName.Text,
                 Type = mobilityType.Key.ToString(),
@@ -1263,10 +1308,10 @@ namespace MilSpace.Visibility
                 OuterRadius = Convert.ToDouble(txtMaxDistance.Text),
 
                 Dto = Convert.ToDateTime(observPointDate.Text),
-                Operator = observPointCreator.Text,
+                Operator = observPointCreator.Text
             };
 
-            return op;
+            return newObserverPoint;
         }
 
         private void UpdateFilter(DataGridViewRow row)
@@ -1931,7 +1976,7 @@ namespace MilSpace.Visibility
             }
 
             EnableObservPointsControls();
-            var selectedPoint = _observPointsController.GetObservPointById(_selectedPointId);
+            var selectedPoint = _observPointsController.GetObservPointByIdAsObservationPoint(_selectedPointId);
             selectedPointMEM = selectedPoint;
 
             if(selectedPoint == null)

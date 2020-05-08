@@ -1,4 +1,5 @@
 ﻿using ESRI.ArcGIS.Geometry;
+using MilSpace.Core.DataAccess;
 using MilSpace.DataAccess.DataTransfer;
 using System.Collections.Generic;
 
@@ -6,7 +7,7 @@ namespace MilSpace.Visibility.ViewController
 {
     public interface IObservationPointsView
     {
-        void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints,
+        void FillObservationPointList(IEnumerable<IObserverPoint> observationPoints,
                                       ValuableObservPointFieldsEnum filter,
                                       bool newSelection = false);
 

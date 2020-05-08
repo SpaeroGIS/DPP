@@ -147,6 +147,15 @@ namespace MilSpace.GeoCalculator
             _log.DebugEx("> UpdatePoints END.");
         }
 
+        internal void UpdatePoint(GeoCalcPoint point)
+        {
+            _log.DebugEx("> UpdatePoint START.");
+
+            GeoCalculatiorFacade.UpdateUserSessionPoint(point);
+
+            _log.DebugEx("> UpdatePoint END.");
+        }
+
         internal void RemovePoint(Guid id)
         {
             _log.DebugEx("> RemovePoint START.");

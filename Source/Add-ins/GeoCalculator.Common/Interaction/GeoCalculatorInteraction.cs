@@ -26,5 +26,10 @@ namespace MilSpace.GeoCalculator.Interaction
         {
             return _controller.GetGeoCalcPoints();
         }
+
+        public void UpdateGeoCalcPoint(IObserverPoint geoCalcPoint)
+        {
+            _controller.UpdatePoint(geoCalcPoint as GeoCalcPoint);
+        }
     }
 }

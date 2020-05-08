@@ -380,7 +380,15 @@ namespace MilSpace.DataAccess.DataTransfer
                 Y = sessionPoint.Y,
                 UserName = sessionPoint.userName,
                 GuidId = sessionPoint.id,
-                AngFrameH = sessionPoint.AngFrameH.HasValue? sessionPoint.AngFrameH.Value: double.NaN
+                AngFrameH = sessionPoint.AngFrameH ?? double.NaN,
+                AngelMaxH = sessionPoint.AnglMaxH,
+                AngelMinH = sessionPoint.AnglMinH,
+                AzimuthStart = sessionPoint.AzimuthB,
+                AzimuthEnd = sessionPoint.AzimuthE,
+                RelativeHeight = sessionPoint.HRel,
+                InnerRadius = sessionPoint.InnerRadius ?? double.NaN,
+                OuterRadius = sessionPoint.OuterRadius ?? double.NaN
+
             };
         }
 
@@ -395,7 +403,14 @@ namespace MilSpace.DataAccess.DataTransfer
                 Y = sessionPoint.Y.Value,
                 userName = sessionPoint.UserName,
                 id = sessionPoint.GuidId,
-                AngFrameH = GetNulableDouble(sessionPoint.AngFrameH)
+                AngFrameH = GetNulableDouble(sessionPoint.AngFrameH),
+                AnglMaxH = sessionPoint.AngelMaxH,
+                AnglMinH = sessionPoint.AngelMinH,
+                AzimuthB = sessionPoint.AzimuthStart,
+                AzimuthE = sessionPoint.AzimuthEnd,
+                HRel = sessionPoint.RelativeHeight,
+                InnerRadius = sessionPoint.InnerRadius,
+                OuterRadius = sessionPoint.OuterRadius
             };
 
         }
@@ -405,6 +420,13 @@ namespace MilSpace.DataAccess.DataTransfer
             pointEntity.PointNumber = point.PointNumber;
             pointEntity.X = point.X.Value;
             pointEntity.Y = point.Y.Value;
+            pointEntity.AnglMinH = point.AngelMinH;
+            pointEntity.AnglMaxH = point.AngelMaxH;
+            pointEntity.AzimuthB = point.AzimuthStart;
+            pointEntity.AzimuthE = point.AzimuthEnd;
+            pointEntity.HRel = point.RelativeHeight;
+            pointEntity.InnerRadius = point.InnerRadius;
+            pointEntity.OuterRadius = point.OuterRadius;
         }
 
 
