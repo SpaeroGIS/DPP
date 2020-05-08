@@ -1,0 +1,10 @@
+E:\SourceCode\vnikolaev\DPP\Source\GUIModels\PrepareReliefSRC\PrepareReliefSRC\bin\Debug\PrepareReliefSRC.exe.config
+E:\SourceCode\vnikolaev\DPP\Source\GUIModels\PrepareReliefSRC\PrepareReliefSRC\bin\Debug\PrepareReliefSRC.exe
+E:\SourceCode\vnikolaev\DPP\Source\GUIModels\PrepareReliefSRC\PrepareReliefSRC\bin\Debug\PrepareReliefSRC.pdb
+E:\SourceCode\vnikolaev\DPP\Source\GUIModels\PrepareReliefSRC\PrepareReliefSRC\obj\Debug\PrepareReliefSRC.csprojAssemblyReference.cache
+E:\SourceCode\vnikolaev\DPP\Source\GUIModels\PrepareReliefSRC\PrepareReliefSRC\obj\Debug\PrepareReliefSRC.Form1.resources
+E:\SourceCode\vnikolaev\DPP\Source\GUIModels\PrepareReliefSRC\PrepareReliefSRC\obj\Debug\PrepareReliefSRC.Properties.Resources.resources
+E:\SourceCode\vnikolaev\DPP\Source\GUIModels\PrepareReliefSRC\PrepareReliefSRC\obj\Debug\PrepareReliefSRC.csproj.GenerateResource.cache
+E:\SourceCode\vnikolaev\DPP\Source\GUIModels\PrepareReliefSRC\PrepareReliefSRC\obj\Debug\PrepareReliefSRC.csproj.CoreCompileInputs.cache
+E:\SourceCode\vnikolaev\DPP\Source\GUIModels\PrepareReliefSRC\PrepareReliefSRC\obj\Debug\PrepareReliefSRC.exe
+E:\SourceCode\vnikolaev\DPP\Source\GUIModels\PrepareReliefSRC\PrepareReliefSRC\obj\Debug\PrepareReliefSRC.pdb
