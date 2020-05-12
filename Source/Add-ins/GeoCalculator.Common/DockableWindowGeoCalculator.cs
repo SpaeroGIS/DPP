@@ -1594,7 +1594,24 @@ namespace MilSpace.GeoCalculator
 
                     log.DebugEx("AddPointToList. point.X:{0} point.Y:{1}", point.X, point.Y);
 
-                    var pointNum = (pointNumber == -1) ? PointsGridView.RowCount + 1 : pointNumber;
+                    int pointNum;
+
+                    if(pointNumber == -1)
+                    {
+                        if (maxNum < PointsGridView.RowCount)
+                        {
+                            pointNum = PointsGridView.RowCount + 1;
+                        }
+                        else
+                        {
+                            pointNum = maxNum + 1;
+                        }
+                    }
+                    else
+                    {
+                        pointNum = pointNumber;
+                    }
+
                     GraphicsLayerManager graphicsLayerManager = GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView);
 
                     var placedPoint = graphicsLayerManager.AddGraphicToMap(
@@ -2141,9 +2158,11 @@ namespace MilSpace.GeoCalculator
                 points.Add((int)row.Cells[0].Value, pointCopy);
             }
 
-            for (int i = 1; i <= points.Count; i++)
+            var numbers = points.Keys.OrderBy(key => key);
+
+            foreach(var number in numbers)
             {
-                orderedPoints.Add(points[i]);
+                orderedPoints.Add(points[number]);
             }
 
             controller.ExportToLayer(orderedPoints);
