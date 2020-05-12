@@ -267,6 +267,7 @@ namespace MilSpace.Tools
             var points = new List<IObserverPoint>();
 
             var featureClass = featureLayer.FeatureClass;
+            var fields = featureClass.Fields;
 
             var oidFieldIndex = featureClass.FindField(featureClass.OIDFieldName);
             var titleFieldIndex = featureClass.FindField(titleFieldName);
@@ -284,6 +285,10 @@ namespace MilSpace.Tools
 
             IFeatureCursor featureCursor = featureClass.Search(queryFilter, true);
             IFeature feature = featureCursor.NextFeature();
+
+            Func<string, string, string> CreateErrorMessage = (string message, string fieldName) =>
+                $"> GetObservationPointsFromAppropriateLayer {message}. Field {fieldName}";
+
             try
             {
                 while (feature != null)
@@ -298,66 +303,59 @@ namespace MilSpace.Tools
                     try
                     {
                         if (!Helper.ConvertFromFieldType(
-                                        featureClass.Fields.Field[oidFieldIndex].Type,
-                                        feature.Value[oidFieldIndex], out int id,
-                                        out message))
+                                        fields.Field[oidFieldIndex].Type,
+                                        feature.Value[oidFieldIndex], out int id, out message))
                         {
-                            throw new InvalidCastException($"> GetObservationPointsFromAppropriateLayer " +
-                                             $"{message}. Field {featureClass.Fields.Field[oidFieldIndex].AliasName}");
+                            throw new InvalidCastException(CreateErrorMessage(message,
+                                                               fields.Field[oidFieldIndex].AliasName));
                         }
 
                         if (!Helper.ConvertFromFieldType(
-                                       featureClass.Fields.Field[titleFieldIndex].Type,
-                                       feature.Value[titleFieldIndex], out string title,
-                                       out message))
+                                       fields.Field[titleFieldIndex].Type,
+                                       feature.Value[titleFieldIndex], out string title, out message))
                         {
-                            throw new InvalidCastException($"> GetObservationPointsFromAppropriateLayer " +
-                                             $"{message}. Field {featureClass.Fields.Field[titleFieldIndex].AliasName}");
+                            throw new InvalidCastException(CreateErrorMessage(message,
+                                                               fields.Field[titleFieldIndex].AliasName));
                         }
 
                         if (!Helper.ConvertFromFieldType(
-                                       featureClass.Fields.Field[azimuthBFieldIndex].Type,
-                                       feature.Value[azimuthBFieldIndex], out double azimuthB,
-                                       out message))
+                                       fields.Field[azimuthBFieldIndex].Type,
+                                       feature.Value[azimuthBFieldIndex], out double azimuthB, out message))
                         {
-                            throw new InvalidCastException($"> GetObservationPointsFromAppropriateLayer " +
-                                             $"{message}. Field {featureClass.Fields.Field[azimuthBFieldIndex].AliasName}");
+                            throw new InvalidCastException(CreateErrorMessage(message,
+                                                              fields.Field[azimuthBFieldIndex].AliasName));
                         }
 
                         if (!Helper.ConvertFromFieldType(
-                                       featureClass.Fields.Field[azimuthEFieldIndex].Type,
-                                       feature.Value[azimuthEFieldIndex], out double azimuthE,
-                                       out message))
+                                       fields.Field[azimuthEFieldIndex].Type,
+                                       feature.Value[azimuthEFieldIndex], out double azimuthE, out message))
                         {
-                            throw new InvalidCastException($"> GetObservationPointsFromAppropriateLayer " +
-                                              $"{message}. Field {featureClass.Fields.Field[azimuthEFieldIndex].AliasName}");
+                            throw new InvalidCastException(CreateErrorMessage(message,
+                                                               fields.Field[azimuthEFieldIndex].AliasName));
                         }
 
                         if (!Helper.ConvertFromFieldType(
-                                       featureClass.Fields.Field[anglMaxHFieldIndex].Type,
-                                       feature.Value[anglMaxHFieldIndex], out double angleMax,
-                                       out message))
+                                       fields.Field[anglMaxHFieldIndex].Type,
+                                       feature.Value[anglMaxHFieldIndex], out double angleMax, out message))
                         {
-                            throw new InvalidCastException($"> GetObservationPointsFromAppropriateLayer " +
-                                             $"{message}. Field {featureClass.Fields.Field[anglMaxHFieldIndex].AliasName}");
+                            throw new InvalidCastException(CreateErrorMessage(message,
+                                                                fields.Field[anglMaxHFieldIndex].AliasName));
                         }
 
                         if (!Helper.ConvertFromFieldType(
-                                      featureClass.Fields.Field[anglMinHFieldIndex].Type,
-                                      feature.Value[anglMinHFieldIndex], out double angleMin,
-                                      out message))
+                                      fields.Field[anglMinHFieldIndex].Type,
+                                      feature.Value[anglMinHFieldIndex], out double angleMin, out message))
                         {
-                            throw new InvalidCastException($"> GetObservationPointsFromAppropriateLayer " +
-                                             $"{message}. Field {featureClass.Fields.Field[anglMinHFieldIndex].AliasName}");
+                            throw new InvalidCastException(CreateErrorMessage(message,
+                                                               fields.Field[anglMinHFieldIndex].AliasName));
                         }
 
                         if (!Helper.ConvertFromFieldType(
-                                      featureClass.Fields.Field[heightIndex].Type,
-                                      feature.Value[heightIndex], out double relativeHeight,
-                                      out message))
+                                      fields.Field[heightIndex].Type,
+                                      feature.Value[heightIndex], out double relativeHeight, out message))
                         {
-                            logger.WarnEx($"> GetObservationPointsFromAppropriateLayer " +
-                                             $"Cannot convert {feature.Value[heightIndex]} to string");
+                            throw new InvalidCastException(CreateErrorMessage(message,
+                                                               fields.Field[heightIndex].AliasName));
                         }
 
                         points.Add(new ObservationPoint

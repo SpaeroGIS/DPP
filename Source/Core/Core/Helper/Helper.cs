@@ -46,7 +46,8 @@ namespace MilSpace.Core
         private static string milSpaceRegistryPath = @"SOFTWARE\WOW6432Node\MilSpace\";
 
         public static bool ConvertFromFieldType<T>(esriFieldType fieldType,
-                                                    object value, out T result,
+                                                    object value,
+                                                    out T result,
                                                     out string message)
         {
             message = string.Empty;
@@ -68,11 +69,6 @@ namespace MilSpace.Core
                         break;
 
                     case esriFieldType.esriFieldTypeInteger:
-
-                        result = (T)System.Convert.ChangeType(System.Convert.ToInt32(value), typeof(T));
-
-                        break;
-
                     case esriFieldType.esriFieldTypeOID:
 
                         result = (T)System.Convert.ChangeType(System.Convert.ToInt32(value), typeof(T));
