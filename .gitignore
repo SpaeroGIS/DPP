@@ -251,6 +251,8 @@
 /Source/Add-ins/Sposterezhennya.AddDEM.ArcMapAddin/obj/Debug
 /Source/Modules/AddDEM.ReliefProcessing/bin/Debug
 /Source/Modules/AddDEM.ReliefProcessing/obj/Debug
+/Source/Core/MilSpace.Web/bin/Debug
+/Source/Core/MilSpace.Web/obj/Debug
 /Source/GUIModels/.vs/WindowsFormsAddinAddDEM/v15/Server/sqlite3
 /Source/GUIModels/.vs/WindowsFormsAddinAddDEM/v15
 /Source/GUIModels/AddinADDDEM/WindowsFormsAddinAddDEM/.vs/WindowsFormsAddinAddDEM/v15
