@@ -268,13 +268,21 @@ namespace MilSpace.Tools
 
             var featureClass = featureLayer.FeatureClass;
 
+            var oidFieldIndex = featureClass.FindField(featureClass.OIDFieldName);
+            var titleFieldIndex = featureClass.FindField(titleFieldName);
+            var azimuthBFieldIndex = featureClass.FindField("AzimuthB");
+            var azimuthEFieldIndex = featureClass.FindField("AzimuthE");
+            var anglMinHFieldIndex = featureClass.FindField("AnglMinH");
+            var anglMaxHFieldIndex = featureClass.FindField("AnglMaxH");
+            var heightIndex = featureClass.FindField("HRel");
+
+
             IQueryFilter queryFilter = new QueryFilter
             {
                 WhereClause = $"{featureClass.OIDFieldName} >= 0"
             };
 
             IFeatureCursor featureCursor = featureClass.Search(queryFilter, true);
-            int heightIndex = featureClass.FindField("HRel");
             IFeature feature = featureCursor.NextFeature();
             try
             {
@@ -284,21 +292,96 @@ namespace MilSpace.Tools
 
                     var point = shape as IPoint;
                     var pointCopy = point.Clone();
-
-                    points.Add(new ObservationPoint
-                    {
-                        X = point.X,
-                        Y = point.Y,
-                        Title = feature.Value[featureClass.FindField(titleFieldName)].ToString(),
-                        Objectid = (int)feature.Value[featureClass.FindField(featureClass.OIDFieldName)],
-                        AzimuthStart = (double)feature.Value[featureClass.FindField("AzimuthB")],
-                        AzimuthEnd = (double)feature.Value[featureClass.FindField("AzimuthE")],
-                        AngelMinH = (double)feature.Value[featureClass.FindField("AnglMinH")],
-                        AngelMaxH = (double)feature.Value[featureClass.FindField("AnglMaxH")],
-                        RelativeHeight = (heightIndex == -1) ? 0 : (double)feature.Value[heightIndex]
-                    });
                     
-                    feature = featureCursor.NextFeature();
+                    string message;
+
+                    try
+                    {
+                        if (!Helper.ConvertFromFieldType(
+                                        featureClass.Fields.Field[oidFieldIndex].Type,
+                                        feature.Value[oidFieldIndex], out int id,
+                                        out message))
+                        {
+                            throw new InvalidCastException($"> GetObservationPointsFromAppropriateLayer " +
+                                             $"{message}. Field {featureClass.Fields.Field[oidFieldIndex].AliasName}");
+                        }
+
+                        if (!Helper.ConvertFromFieldType(
+                                       featureClass.Fields.Field[titleFieldIndex].Type,
+                                       feature.Value[titleFieldIndex], out string title,
+                                       out message))
+                        {
+                            throw new InvalidCastException($"> GetObservationPointsFromAppropriateLayer " +
+                                             $"{message}. Field {featureClass.Fields.Field[titleFieldIndex].AliasName}");
+                        }
+
+                        if (!Helper.ConvertFromFieldType(
+                                       featureClass.Fields.Field[azimuthBFieldIndex].Type,
+                                       feature.Value[azimuthBFieldIndex], out double azimuthB,
+                                       out message))
+                        {
+                            throw new InvalidCastException($"> GetObservationPointsFromAppropriateLayer " +
+                                             $"{message}. Field {featureClass.Fields.Field[azimuthBFieldIndex].AliasName}");
+                        }
+
+                        if (!Helper.ConvertFromFieldType(
+                                       featureClass.Fields.Field[azimuthEFieldIndex].Type,
+                                       feature.Value[azimuthEFieldIndex], out double azimuthE,
+                                       out message))
+                        {
+                            throw new InvalidCastException($"> GetObservationPointsFromAppropriateLayer " +
+                                              $"{message}. Field {featureClass.Fields.Field[azimuthEFieldIndex].AliasName}");
+                        }
+
+                        if (!Helper.ConvertFromFieldType(
+                                       featureClass.Fields.Field[anglMaxHFieldIndex].Type,
+                                       feature.Value[anglMaxHFieldIndex], out double angleMax,
+                                       out message))
+                        {
+                            throw new InvalidCastException($"> GetObservationPointsFromAppropriateLayer " +
+                                             $"{message}. Field {featureClass.Fields.Field[anglMaxHFieldIndex].AliasName}");
+                        }
+
+                        if (!Helper.ConvertFromFieldType(
+                                      featureClass.Fields.Field[anglMinHFieldIndex].Type,
+                                      feature.Value[anglMinHFieldIndex], out double angleMin,
+                                      out message))
+                        {
+                            throw new InvalidCastException($"> GetObservationPointsFromAppropriateLayer " +
+                                             $"{message}. Field {featureClass.Fields.Field[anglMinHFieldIndex].AliasName}");
+                        }
+
+                        if (!Helper.ConvertFromFieldType(
+                                      featureClass.Fields.Field[heightIndex].Type,
+                                      feature.Value[heightIndex], out double relativeHeight,
+                                      out message))
+                        {
+                            logger.WarnEx($"> GetObservationPointsFromAppropriateLayer " +
+                                             $"Cannot convert {feature.Value[heightIndex]} to string");
+                        }
+
+                        points.Add(new ObservationPoint
+                        {
+                            X = point.X,
+                            Y = point.Y,
+                            Title = title,
+                            Objectid = id,
+                            AzimuthStart = azimuthB,
+                            AzimuthEnd = azimuthE,
+                            AngelMinH = angleMin,
+                            AngelMaxH = angleMax,
+                            RelativeHeight = relativeHeight
+                        });
+
+                        feature = featureCursor.NextFeature();
+                    }
+                    catch (InvalidCastException ex)
+                    {
+                        logger.WarnEx(ex.Message);
+
+                        feature = featureCursor.NextFeature();
+                        continue;
+                    }
                 }
             }
             catch (Exception ex)
