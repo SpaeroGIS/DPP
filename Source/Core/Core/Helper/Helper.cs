@@ -9,6 +9,7 @@ using MilSpace.Configurations;
 using System.Reflection;
 using ESRI.ArcGIS.Geometry;
 using Microsoft.Win32;
+using ESRI.ArcGIS.Geodatabase;
 
 namespace MilSpace.Core
 {
@@ -32,7 +33,70 @@ namespace MilSpace.Core
           { SimpleDataTypesEnum.Undefined , () =>{ return default(string);}}};
 
 
+        public static Dictionary<esriFieldType, Type> GdbFieldsTypes = new Dictionary<esriFieldType, Type>
+        {
+            { esriFieldType.esriFieldTypeString, typeof(string)},
+            { esriFieldType.esriFieldTypeDate, typeof(DateTime)},
+            { esriFieldType.esriFieldTypeDouble, typeof(double)},
+            { esriFieldType.esriFieldTypeInteger, typeof(int)},
+            { esriFieldType.esriFieldTypeOID, typeof(int)},
+            { esriFieldType.esriFieldTypeSmallInteger, typeof(short)},
+        };
+
         private static string milSpaceRegistryPath = @"SOFTWARE\WOW6432Node\MilSpace\";
+
+        public static bool ConvertFromFieldType<T>(esriFieldType fieldType,
+                                                    object value,
+                                                    out T result,
+                                                    out string message)
+        {
+            message = string.Empty;
+
+            try
+            {
+                switch (fieldType)
+                {
+                    case esriFieldType.esriFieldTypeDouble:
+
+                        result = (T)System.Convert.ChangeType(System.Convert.ToDouble(value), typeof(T));
+
+                        break;
+
+                    case esriFieldType.esriFieldTypeDate:
+
+                        result = (T)System.Convert.ChangeType(System.Convert.ToDateTime(value), typeof(T));
+
+                        break;
+
+                    case esriFieldType.esriFieldTypeInteger:
+                    case esriFieldType.esriFieldTypeOID:
+
+                        result = (T)System.Convert.ChangeType(System.Convert.ToInt32(value), typeof(T));
+
+                        break;
+
+                    case esriFieldType.esriFieldTypeSmallInteger:
+
+                        result = (T)System.Convert.ChangeType(System.Convert.ToInt16(value), typeof(T));
+
+                        break;
+
+                    default:
+
+                        result = (T)System.Convert.ChangeType(System.Convert.ToString(value), typeof(T));
+
+                        break;
+                }
+            }
+            catch
+            {
+                message = $"Cannot convert {value} to {typeof(T)}";
+                result = default(T);
+                return false;
+            }
+
+            return true;
+        }
 
         public static bool Convert(SimpleDataTypesEnum typeTo, string value, out object result)
         {
