@@ -36,6 +36,27 @@ namespace MilSpace.DataAccess.Facade
             return null;
         }
 
+        public GeoCalcPoint GetUserPointById(Guid id)
+        {
+            try
+            {
+                var session = context.GeoCalcSessionPoints.FirstOrDefault(s => s.userName.Equals(Environment.UserName) && s.id == id);
+
+                if(session == null)
+                {
+                    return null;
+                }
+
+                return session.Get();
+            }
+            catch (Exception ex)
+            {
+                log.WarnEx($"Unexpected exception:{ex.Message}");
+            }
+
+            return null;
+        }
+
         public void UpdateUserPoints(IEnumerable<GeoCalcPoint> points)
         {
             log.InfoEx($"UpdateUserPoints. Count {points.Count()}");
@@ -44,29 +65,34 @@ namespace MilSpace.DataAccess.Facade
             {
                 try
                 {
-                    log.InfoEx($"UpdateUserPoints. Processing Id: {point.Id}");
-                    var pointEntity = context.GeoCalcSessionPoints.FirstOrDefault(entity => entity.id == point.Id);
-
-                    if(pointEntity != null)
-                    {
-                        pointEntity.Update(point);
-                        Submit();
-
-                        log.InfoEx($"GeoCalcPoint {point.Id} was successfully updated");
-                    }
-                    else
-                    {
-                        pointEntity = point.Get();
-                        context.GeoCalcSessionPoints.InsertOnSubmit(pointEntity);
-                        Submit();
-
-                        log.InfoEx($"GeoCalcPoint {point.Id} was successfully added");
-                    }
+                    UpdateUserPoint(point);
                 }
                 catch(Exception ex)
                 {
                     log.WarnEx($"Unexpected exception:{ex.Message}");
                 }
+            }
+        }
+
+        public void UpdateUserPoint(GeoCalcPoint point)
+        {
+            log.InfoEx($"UpdateUserPoint. Processing Id: {point.GuidId}");
+            var pointEntity = context.GeoCalcSessionPoints.FirstOrDefault(entity => entity.id == point.GuidId);
+
+            if (pointEntity != null)
+            {
+                pointEntity.Update(point);
+                Submit();
+
+                log.InfoEx($"GeoCalcPoint {point.GuidId} was successfully updated");
+            }
+            else
+            {
+                pointEntity = point.Get();
+                context.GeoCalcSessionPoints.InsertOnSubmit(pointEntity);
+                Submit();
+
+                log.InfoEx($"GeoCalcPoint {point.GuidId} was successfully added");
             }
         }
 

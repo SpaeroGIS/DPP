@@ -7,6 +7,7 @@ using MilSpace.Core.Actions;
 using MilSpace.Core.Actions.ActionResults;
 using MilSpace.Core.Actions.Base;
 using MilSpace.Core.Actions.Interfaces;
+using MilSpace.Core.DataAccess;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Exceptions;
@@ -250,10 +251,12 @@ namespace MilSpace.Tools
             }
         }
 
-        public static List<ObservationPoint> GetObservationPointsFromAppropriateLayer(string layerName, IActiveView activeView)
+        public static List<IObserverPoint> GetObservationPointsFromAppropriateLayer(string layerName,
+                                                            IActiveView activeView, string titleFieldName = null)
         {
             var mapLayersManager = new MapLayersManager(activeView);
             var layer = mapLayersManager.GetLayer(layerName);
+            titleFieldName = titleFieldName ?? "TitleOp"; 
 
             if (!(layer is IFeatureLayer))
             {
@@ -261,7 +264,7 @@ namespace MilSpace.Tools
             }
 
             var featureLayer = layer as IFeatureLayer;
-            var points = new List<ObservationPoint>();
+            var points = new List<IObserverPoint>();
 
             var featureClass = featureLayer.FeatureClass;
 
@@ -282,19 +285,19 @@ namespace MilSpace.Tools
                     var point = shape as IPoint;
                     var pointCopy = point.Clone();
 
-                        points.Add(new ObservationPoint
-                        {
-                            X = point.X,
-                            Y = point.Y,
-                            Title = feature.Value[featureClass.FindField("TitleOp")].ToString(),
-                            Id = feature.Value[featureClass.FindField(featureClass.OIDFieldName)].ToString(),
-                            AzimuthStart = (double)feature.Value[featureClass.FindField("AzimuthB")],
-                            AzimuthEnd = (double)feature.Value[featureClass.FindField("AzimuthE")],
-                            AngelMinH = (double)feature.Value[featureClass.FindField("AnglMinH")],
-                            AngelMaxH = (double)feature.Value[featureClass.FindField("AnglMaxH")],
-                            RelativeHeight = (heightIndex == -1) ? 0 : (double)feature.Value[heightIndex]
-                        });
-
+                    points.Add(new ObservationPoint
+                    {
+                        X = point.X,
+                        Y = point.Y,
+                        Title = feature.Value[featureClass.FindField(titleFieldName)].ToString(),
+                        Objectid = (int)feature.Value[featureClass.FindField(featureClass.OIDFieldName)],
+                        AzimuthStart = (double)feature.Value[featureClass.FindField("AzimuthB")],
+                        AzimuthEnd = (double)feature.Value[featureClass.FindField("AzimuthE")],
+                        AngelMinH = (double)feature.Value[featureClass.FindField("AnglMinH")],
+                        AngelMaxH = (double)feature.Value[featureClass.FindField("AnglMaxH")],
+                        RelativeHeight = (heightIndex == -1) ? 0 : (double)feature.Value[heightIndex]
+                    });
+                    
                     feature = featureCursor.NextFeature();
                 }
             }

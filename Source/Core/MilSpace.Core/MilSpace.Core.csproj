@@ -228,6 +228,9 @@
     <Compile Include="..\Core\DataAccess\FromLayerPointModel.cs">
       <Link>DataAccess\FromLayerPointModel.cs</Link>
     </Compile>
+    <Compile Include="..\Core\DataAccess\IObserverPoint.cs">
+      <Link>DataAccess\IObserverPoint.cs</Link>
+    </Compile>
     <Compile Include="..\Core\DataAccess\KeyCodesEnum.cs">
       <Link>DataAccess\KeyCodesEnum.cs</Link>
     </Compile>

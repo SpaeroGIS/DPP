@@ -130,7 +130,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(8);
-            this.panel1.Size = new System.Drawing.Size(329, 311);
+            this.panel1.Size = new System.Drawing.Size(307, 311);
             this.panel1.TabIndex = 0;
             // 
             // panel6
@@ -148,7 +148,7 @@
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel6.Location = new System.Drawing.Point(8, 38);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(313, 265);
+            this.panel6.Size = new System.Drawing.Size(291, 265);
             this.panel6.TabIndex = 1;
             // 
             // panel16
@@ -159,7 +159,7 @@
             this.panel16.Location = new System.Drawing.Point(0, 204);
             this.panel16.Name = "panel16";
             this.panel16.Padding = new System.Windows.Forms.Padding(4);
-            this.panel16.Size = new System.Drawing.Size(313, 30);
+            this.panel16.Size = new System.Drawing.Size(291, 30);
             this.panel16.TabIndex = 64;
             // 
             // button2
@@ -180,7 +180,7 @@
             this.panel22.Location = new System.Drawing.Point(0, 180);
             this.panel22.Name = "panel22";
             this.panel22.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
-            this.panel22.Size = new System.Drawing.Size(313, 24);
+            this.panel22.Size = new System.Drawing.Size(291, 24);
             this.panel22.TabIndex = 67;
             // 
             // label9
@@ -201,7 +201,7 @@
             this.panel20.Location = new System.Drawing.Point(0, 156);
             this.panel20.Name = "panel20";
             this.panel20.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
-            this.panel20.Size = new System.Drawing.Size(313, 24);
+            this.panel20.Size = new System.Drawing.Size(291, 24);
             this.panel20.TabIndex = 66;
             // 
             // label8
@@ -222,7 +222,7 @@
             this.panel3.Location = new System.Drawing.Point(0, 132);
             this.panel3.Name = "panel3";
             this.panel3.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
-            this.panel3.Size = new System.Drawing.Size(313, 24);
+            this.panel3.Size = new System.Drawing.Size(291, 24);
             this.panel3.TabIndex = 65;
             // 
             // label7
@@ -247,7 +247,7 @@
             this.panel10.Location = new System.Drawing.Point(0, 104);
             this.panel10.Name = "panel10";
             this.panel10.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.panel10.Size = new System.Drawing.Size(313, 28);
+            this.panel10.Size = new System.Drawing.Size(291, 28);
             this.panel10.TabIndex = 63;
             // 
             // toolStrip1
@@ -341,7 +341,7 @@
             this.panel11.Location = new System.Drawing.Point(0, 76);
             this.panel11.Name = "panel11";
             this.panel11.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.panel11.Size = new System.Drawing.Size(313, 28);
+            this.panel11.Size = new System.Drawing.Size(291, 28);
             this.panel11.TabIndex = 62;
             // 
             // toolStrip5
@@ -431,7 +431,7 @@
             this.panel9.Location = new System.Drawing.Point(0, 52);
             this.panel9.Name = "panel9";
             this.panel9.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
-            this.panel9.Size = new System.Drawing.Size(313, 24);
+            this.panel9.Size = new System.Drawing.Size(291, 24);
             this.panel9.TabIndex = 2;
             // 
             // label4
@@ -453,7 +453,7 @@
             this.panel8.Location = new System.Drawing.Point(0, 24);
             this.panel8.Name = "panel8";
             this.panel8.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.panel8.Size = new System.Drawing.Size(313, 28);
+            this.panel8.Size = new System.Drawing.Size(291, 28);
             this.panel8.TabIndex = 1;
             // 
             // comboBox1
@@ -468,13 +468,13 @@
             "экран"});
             this.comboBox1.Location = new System.Drawing.Point(4, 3);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(230, 21);
+            this.comboBox1.Size = new System.Drawing.Size(208, 21);
             this.comboBox1.TabIndex = 0;
             // 
             // button1
             // 
             this.button1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button1.Location = new System.Drawing.Point(234, 3);
+            this.button1.Location = new System.Drawing.Point(212, 3);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 22);
             this.button1.TabIndex = 1;
@@ -489,7 +489,7 @@
             this.panel7.Location = new System.Drawing.Point(0, 0);
             this.panel7.Name = "panel7";
             this.panel7.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
-            this.panel7.Size = new System.Drawing.Size(313, 24);
+            this.panel7.Size = new System.Drawing.Size(291, 24);
             this.panel7.TabIndex = 0;
             // 
             // label3
@@ -511,7 +511,7 @@
             this.panel4.Location = new System.Drawing.Point(8, 8);
             this.panel4.Name = "panel4";
             this.panel4.Padding = new System.Windows.Forms.Padding(4);
-            this.panel4.Size = new System.Drawing.Size(313, 30);
+            this.panel4.Size = new System.Drawing.Size(291, 30);
             this.panel4.TabIndex = 0;
             // 
             // btnShowProfileLine
@@ -519,7 +519,7 @@
             this.btnShowProfileLine.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnShowProfileLine.ImageKey = "Directions.png";
             this.btnShowProfileLine.ImageList = this.imageList1;
-            this.btnShowProfileLine.Location = new System.Drawing.Point(286, 4);
+            this.btnShowProfileLine.Location = new System.Drawing.Point(264, 4);
             this.btnShowProfileLine.Name = "btnShowProfileLine";
             this.btnShowProfileLine.Size = new System.Drawing.Size(23, 22);
             this.btnShowProfileLine.TabIndex = 47;
@@ -771,7 +771,7 @@
             this.panelCoverageCommmon.Location = new System.Drawing.Point(0, 311);
             this.panelCoverageCommmon.Name = "panelCoverageCommmon";
             this.panelCoverageCommmon.Padding = new System.Windows.Forms.Padding(8);
-            this.panelCoverageCommmon.Size = new System.Drawing.Size(329, 386);
+            this.panelCoverageCommmon.Size = new System.Drawing.Size(307, 386);
             this.panelCoverageCommmon.TabIndex = 1;
             // 
             // panelTableCommmon
@@ -782,7 +782,7 @@
             this.panelTableCommmon.Location = new System.Drawing.Point(8, 144);
             this.panelTableCommmon.Name = "panelTableCommmon";
             this.panelTableCommmon.Padding = new System.Windows.Forms.Padding(4);
-            this.panelTableCommmon.Size = new System.Drawing.Size(313, 114);
+            this.panelTableCommmon.Size = new System.Drawing.Size(291, 114);
             this.panelTableCommmon.TabIndex = 74;
             // 
             // tableLayoutPanel
@@ -800,7 +800,7 @@
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 21F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(305, 106);
+            this.tableLayoutPanel.Size = new System.Drawing.Size(283, 106);
             this.tableLayoutPanel.TabIndex = 0;
             // 
             // panel21
@@ -811,7 +811,7 @@
             this.panel21.Location = new System.Drawing.Point(8, 258);
             this.panel21.Name = "panel21";
             this.panel21.Padding = new System.Windows.Forms.Padding(4);
-            this.panel21.Size = new System.Drawing.Size(313, 30);
+            this.panel21.Size = new System.Drawing.Size(291, 30);
             this.panel21.TabIndex = 73;
             // 
             // button7
@@ -832,7 +832,7 @@
             this.panel17.Location = new System.Drawing.Point(8, 288);
             this.panel17.Name = "panel17";
             this.panel17.Padding = new System.Windows.Forms.Padding(4);
-            this.panel17.Size = new System.Drawing.Size(313, 30);
+            this.panel17.Size = new System.Drawing.Size(291, 30);
             this.panel17.TabIndex = 72;
             // 
             // button6
@@ -853,7 +853,7 @@
             this.panel2.Location = new System.Drawing.Point(8, 318);
             this.panel2.Name = "panel2";
             this.panel2.Padding = new System.Windows.Forms.Padding(4);
-            this.panel2.Size = new System.Drawing.Size(313, 30);
+            this.panel2.Size = new System.Drawing.Size(291, 30);
             this.panel2.TabIndex = 71;
             // 
             // button5
@@ -874,7 +874,7 @@
             this.panel24.Location = new System.Drawing.Point(8, 348);
             this.panel24.Name = "panel24";
             this.panel24.Padding = new System.Windows.Forms.Padding(4);
-            this.panel24.Size = new System.Drawing.Size(313, 30);
+            this.panel24.Size = new System.Drawing.Size(291, 30);
             this.panel24.TabIndex = 70;
             // 
             // button8
@@ -898,7 +898,7 @@
             this.panel18.Location = new System.Drawing.Point(8, 120);
             this.panel18.Name = "panel18";
             this.panel18.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
-            this.panel18.Size = new System.Drawing.Size(313, 24);
+            this.panel18.Size = new System.Drawing.Size(291, 24);
             this.panel18.TabIndex = 5;
             // 
             // checkBox3
@@ -942,7 +942,7 @@
             this.panel15.Location = new System.Drawing.Point(8, 96);
             this.panel15.Name = "panel15";
             this.panel15.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
-            this.panel15.Size = new System.Drawing.Size(313, 24);
+            this.panel15.Size = new System.Drawing.Size(291, 24);
             this.panel15.TabIndex = 4;
             // 
             // label6
@@ -963,7 +963,7 @@
             this.panel19.Location = new System.Drawing.Point(8, 66);
             this.panel19.Name = "panel19";
             this.panel19.Padding = new System.Windows.Forms.Padding(4, 3, 0, 3);
-            this.panel19.Size = new System.Drawing.Size(313, 30);
+            this.panel19.Size = new System.Drawing.Size(291, 30);
             this.panel19.TabIndex = 3;
             // 
             // button3
@@ -985,7 +985,7 @@
             this.panel14.Location = new System.Drawing.Point(8, 38);
             this.panel14.Name = "panel14";
             this.panel14.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
-            this.panel14.Size = new System.Drawing.Size(313, 28);
+            this.panel14.Size = new System.Drawing.Size(291, 28);
             this.panel14.TabIndex = 2;
             // 
             // radioButton2
@@ -1021,7 +1021,7 @@
             this.panel5.Location = new System.Drawing.Point(8, 8);
             this.panel5.Name = "panel5";
             this.panel5.Padding = new System.Windows.Forms.Padding(4);
-            this.panel5.Size = new System.Drawing.Size(313, 30);
+            this.panel5.Size = new System.Drawing.Size(291, 30);
             this.panel5.TabIndex = 1;
             // 
             // button4
@@ -1029,7 +1029,7 @@
             this.button4.Dock = System.Windows.Forms.DockStyle.Right;
             this.button4.ImageKey = "Directions.png";
             this.button4.ImageList = this.imageList1;
-            this.button4.Location = new System.Drawing.Point(286, 4);
+            this.button4.Location = new System.Drawing.Point(264, 4);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(23, 22);
             this.button4.TabIndex = 48;
@@ -1055,7 +1055,7 @@
             this.Controls.Add(this.panelCoverageCommmon);
             this.Controls.Add(this.panel1);
             this.Name = "DockableDEMWindow";
-            this.Size = new System.Drawing.Size(329, 697);
+            this.Size = new System.Drawing.Size(307, 697);
             this.panel1.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel16.ResumeLayout(false);
