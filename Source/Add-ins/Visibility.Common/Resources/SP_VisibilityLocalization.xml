@@ -307,6 +307,7 @@
   <GeoCalcModuleDoesnotExistMessage>Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</GeoCalcModuleDoesnotExistMessage>
   <ObservPointscModuleDoesnotExistMessage>Модуль \"Видимість\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</ObservPointscModuleDoesnotExistMessage>
   <ErrorInTemporaryStorageGenerating>Під час генерації векторного класу {0} сталася помилка</ErrorInTemporaryStorageGenerating>
+  <LayerIsNotFeatureLayerError>Помилка під час зчитування даних шару. Шар {0} не є векторним</LayerIsNotFeatureLayerError>
   
   <ObservPointRemoveMessage>Ви дійсно бажаєте видалити точку (ПС)?</ObservPointRemoveMessage>
   <VisibilityTaskRemoveMessage>Ви дійсно бажаєте видалити результат розрахунку з поточного сеансу?</VisibilityTaskRemoveMessage>
@@ -315,6 +316,7 @@
   <VisibilityResultLayersRemoveMessage>Ви бажаєте видалити шари розрахунку?</VisibilityResultLayersRemoveMessage>
   <SuccessfullySharedMessage>Доступ для всіх користувачів встановлено</SuccessfullySharedMessage>
   <AlreadySharedMessage>Доступ для усіх користувачів вже встановлено</AlreadySharedMessage>
+  <AddNecessaryFieldsMessage>Неможливо використовувати даний шар, відсутні необхідні поля. \nВи бажаєте додати поля?</AddNecessaryFieldsMessage>
 
   <NameHeaderText>Назва</NameHeaderText>
   <StateHeaderText>Стан</StateHeaderText>
@@ -350,4 +352,6 @@
   <ObserverPointParametersText>параметрів пункту спостереження</ObserverPointParametersText>
   <ObservationStationText>об'єкту спостреження</ObservationStationText>
 
+  <Modal.LblFieldTitl.Text>Ідентифікуюче поле</Modal.LblFieldTitl.Text>
+  
 </SP_Visibility>

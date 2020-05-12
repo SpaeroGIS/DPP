@@ -2,6 +2,7 @@
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core;
+using MilSpace.Core.DataAccess;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
@@ -17,6 +18,9 @@ namespace MilSpace.GeoCalculator
 {
     public class GeoCalculatorController
     {
+        public event Action<int> OnPointDeleted;
+        public event Action OnPointUpdated;
+
         private LocalizationContext _context = new LocalizationContext();
         private static Logger _log = Logger.GetLoggerEx("MilSpace.GeoCalculator.GeoCalculatorController");
 
@@ -142,15 +146,29 @@ namespace MilSpace.GeoCalculator
             _log.DebugEx("> UpdatePoints START.");
 
             GeoCalculatiorFacade.UpdateUserSessionPoints(points);
+            OnPointUpdated.Invoke();
 
             _log.DebugEx("> UpdatePoints END.");
+        }
+
+        internal void UpdatePoint(GeoCalcPoint point)
+        {
+            _log.DebugEx("> UpdatePoint START.");
+
+            GeoCalculatiorFacade.UpdateUserSessionPoint(point);
+            OnPointUpdated.Invoke();
+
+            _log.DebugEx("> UpdatePoint END.");
         }
 
         internal void RemovePoint(Guid id)
         {
             _log.DebugEx("> RemovePoint START.");
 
+            var removingGeoPoint = GeoCalculatiorFacade.GetUserSessionPointById(id);
+
             GeoCalculatiorFacade.DeleteUserSessionPoint(id);
+            OnPointDeleted.Invoke(removingGeoPoint.PointNumber);
 
             _log.DebugEx("> RemovePoint END.");
         }
@@ -167,6 +185,11 @@ namespace MilSpace.GeoCalculator
         internal Dictionary<int, IPoint> GetPointsList()
         {
             return View.GetPointsList();
+        }
+
+        internal IObserverPoint[] GetGeoCalcPoints()
+        {
+            return GeoCalculatiorFacade.GetUserSessionPoints().ToArray();
         }
     }
 }

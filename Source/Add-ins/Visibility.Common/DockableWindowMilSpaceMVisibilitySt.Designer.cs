@@ -116,6 +116,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.cmbObservPointType = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.observPointTypePanel = new System.Windows.Forms.Panel();
+            this.cmbOPSource = new System.Windows.Forms.ComboBox();
+            this.lblOPSource = new System.Windows.Forms.Label();
             this.panelPointsHeader = new System.Windows.Forms.Panel();
             this.lblLayer = new System.Windows.Forms.Label();
             this.btnAddLayerPS = new System.Windows.Forms.Button();
@@ -262,6 +265,7 @@
             this.panel6.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel4.SuspendLayout();
+            this.observPointTypePanel.SuspendLayout();
             this.panelPointsHeader.SuspendLayout();
             this.tbpObservObjects.SuspendLayout();
             this.panel30.SuspendLayout();
@@ -1284,6 +1288,7 @@
             this.panel16.Controls.Add(this.panel6);
             this.panel16.Controls.Add(this.panel5);
             this.panel16.Controls.Add(this.panel4);
+            this.panel16.Controls.Add(this.observPointTypePanel);
             this.panel16.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel16.Location = new System.Drawing.Point(0, 34);
             this.panel16.Name = "panel16";
@@ -1303,14 +1308,14 @@
             this.dgvObservationPoints.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.RaisedHorizontal;
             this.dgvObservationPoints.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvObservationPoints.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvObservationPoints.Location = new System.Drawing.Point(0, 56);
+            this.dgvObservationPoints.Location = new System.Drawing.Point(0, 84);
             this.dgvObservationPoints.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
             this.dgvObservationPoints.MultiSelect = false;
             this.dgvObservationPoints.Name = "dgvObservationPoints";
             this.dgvObservationPoints.ReadOnly = true;
             this.dgvObservationPoints.RowHeadersVisible = false;
             this.dgvObservationPoints.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvObservationPoints.Size = new System.Drawing.Size(312, 141);
+            this.dgvObservationPoints.Size = new System.Drawing.Size(312, 113);
             this.dgvObservationPoints.TabIndex = 11;
             this.dgvObservationPoints.TabStop = false;
             this.dgvObservationPoints.SelectionChanged += new System.EventHandler(this.DgvObservationPoints_SelectionChanged);
@@ -1375,7 +1380,7 @@
             this.panel5.Controls.Add(this.chckFilterAffiliation);
             this.panel5.Controls.Add(this.chckFilterType);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel5.Location = new System.Drawing.Point(0, 28);
+            this.panel5.Location = new System.Drawing.Point(0, 56);
             this.panel5.Name = "panel5";
             this.panel5.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.panel5.Size = new System.Drawing.Size(312, 28);
@@ -1430,7 +1435,7 @@
             this.panel4.Controls.Add(this.cmbObservPointType);
             this.panel4.Controls.Add(this.label2);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel4.Location = new System.Drawing.Point(0, 0);
+            this.panel4.Location = new System.Drawing.Point(0, 28);
             this.panel4.Name = "panel4";
             this.panel4.Padding = new System.Windows.Forms.Padding(4, 3, 4, 4);
             this.panel4.Size = new System.Drawing.Size(312, 28);
@@ -1441,7 +1446,7 @@
             this.cmbAffiliation.Dock = System.Windows.Forms.DockStyle.Left;
             this.cmbAffiliation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbAffiliation.FormattingEnabled = true;
-            this.cmbAffiliation.Location = new System.Drawing.Point(204, 3);
+            this.cmbAffiliation.Location = new System.Drawing.Point(215, 3);
             this.cmbAffiliation.Name = "cmbAffiliation";
             this.cmbAffiliation.Size = new System.Drawing.Size(90, 21);
             this.cmbAffiliation.TabIndex = 4;
@@ -1450,7 +1455,7 @@
             // label3
             // 
             this.label3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label3.Location = new System.Drawing.Point(144, 3);
+            this.label3.Location = new System.Drawing.Point(155, 3);
             this.label3.Name = "label3";
             this.label3.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
             this.label3.Size = new System.Drawing.Size(60, 21);
@@ -1464,7 +1469,7 @@
             this.cmbObservPointType.Dock = System.Windows.Forms.DockStyle.Left;
             this.cmbObservPointType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbObservPointType.FormattingEnabled = true;
-            this.cmbObservPointType.Location = new System.Drawing.Point(74, 3);
+            this.cmbObservPointType.Location = new System.Drawing.Point(85, 3);
             this.cmbObservPointType.Name = "cmbObservPointType";
             this.cmbObservPointType.Size = new System.Drawing.Size(70, 21);
             this.cmbObservPointType.TabIndex = 2;
@@ -1476,9 +1481,42 @@
             this.label2.Location = new System.Drawing.Point(4, 3);
             this.label2.Name = "label2";
             this.label2.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
-            this.label2.Size = new System.Drawing.Size(70, 21);
+            this.label2.Size = new System.Drawing.Size(81, 21);
             this.label2.TabIndex = 1;
             this.label2.Text = "Тип";
+            // 
+            // observPointTypePanel
+            // 
+            this.observPointTypePanel.Controls.Add(this.cmbOPSource);
+            this.observPointTypePanel.Controls.Add(this.lblOPSource);
+            this.observPointTypePanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.observPointTypePanel.Location = new System.Drawing.Point(0, 0);
+            this.observPointTypePanel.Name = "observPointTypePanel";
+            this.observPointTypePanel.Padding = new System.Windows.Forms.Padding(4, 3, 4, 4);
+            this.observPointTypePanel.Size = new System.Drawing.Size(312, 28);
+            this.observPointTypePanel.TabIndex = 8;
+            // 
+            // cmbOPSource
+            // 
+            this.cmbOPSource.BackColor = System.Drawing.SystemColors.Window;
+            this.cmbOPSource.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbOPSource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbOPSource.FormattingEnabled = true;
+            this.cmbOPSource.Location = new System.Drawing.Point(85, 3);
+            this.cmbOPSource.Name = "cmbOPSource";
+            this.cmbOPSource.Size = new System.Drawing.Size(220, 21);
+            this.cmbOPSource.TabIndex = 2;
+            this.cmbOPSource.SelectedIndexChanged += new System.EventHandler(this.CmbOPSource_SelectedIndexChanged);
+            // 
+            // lblOPSource
+            // 
+            this.lblOPSource.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblOPSource.Location = new System.Drawing.Point(4, 3);
+            this.lblOPSource.Name = "lblOPSource";
+            this.lblOPSource.Padding = new System.Windows.Forms.Padding(0, 4, 4, 0);
+            this.lblOPSource.Size = new System.Drawing.Size(81, 21);
+            this.lblOPSource.TabIndex = 1;
+            this.lblOPSource.Text = "Джерело ПС";
             // 
             // panelPointsHeader
             // 
@@ -2796,6 +2834,7 @@
             this.panel6.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
+            this.observPointTypePanel.ResumeLayout(false);
             this.panelPointsHeader.ResumeLayout(false);
             this.tbpObservObjects.ResumeLayout(false);
             this.tbpObservObjects.PerformLayout();
@@ -3055,5 +3094,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn AzimuthCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn CoverCol;
         private System.Windows.Forms.Button btnRefreshObservStationsSet;
+        private System.Windows.Forms.Panel observPointTypePanel;
+        private System.Windows.Forms.ComboBox cmbOPSource;
+        private System.Windows.Forms.Label lblOPSource;
     }
 }

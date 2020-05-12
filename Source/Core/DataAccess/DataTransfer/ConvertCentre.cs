@@ -379,8 +379,16 @@ namespace MilSpace.DataAccess.DataTransfer
                 X = sessionPoint.X,
                 Y = sessionPoint.Y,
                 UserName = sessionPoint.userName,
-                Id = sessionPoint.id,
-                AngFrameH = sessionPoint.AngFrameH.HasValue? sessionPoint.AngFrameH.Value: double.NaN
+                GuidId = sessionPoint.id,
+                AngFrameH = sessionPoint.AngFrameH ?? double.NaN,
+                AngelMaxH = sessionPoint.AnglMaxH,
+                AngelMinH = sessionPoint.AnglMinH,
+                AzimuthStart = sessionPoint.AzimuthB,
+                AzimuthEnd = sessionPoint.AzimuthE,
+                RelativeHeight = sessionPoint.HRel,
+                InnerRadius = sessionPoint.InnerRadius ?? double.NaN,
+                OuterRadius = sessionPoint.OuterRadius ?? double.NaN
+
             };
         }
 
@@ -391,11 +399,18 @@ namespace MilSpace.DataAccess.DataTransfer
             return new GeoCalcSessionPoint
             {
                 PointNumber = sessionPoint.PointNumber,
-                X = sessionPoint.X,
-                Y = sessionPoint.Y,
+                X = sessionPoint.X.Value,
+                Y = sessionPoint.Y.Value,
                 userName = sessionPoint.UserName,
-                id = sessionPoint.Id,
-                AngFrameH = GetNulableDouble(sessionPoint.AngFrameH)
+                id = sessionPoint.GuidId,
+                AngFrameH = GetNulableDouble(sessionPoint.AngFrameH),
+                AnglMaxH = sessionPoint.AngelMaxH,
+                AnglMinH = sessionPoint.AngelMinH,
+                AzimuthB = sessionPoint.AzimuthStart,
+                AzimuthE = sessionPoint.AzimuthEnd,
+                HRel = sessionPoint.RelativeHeight,
+                InnerRadius = sessionPoint.InnerRadius,
+                OuterRadius = sessionPoint.OuterRadius
             };
 
         }
@@ -403,8 +418,15 @@ namespace MilSpace.DataAccess.DataTransfer
         internal static void Update(this GeoCalcSessionPoint pointEntity, GeoCalcPoint point)
         {
             pointEntity.PointNumber = point.PointNumber;
-            pointEntity.X = point.X;
-            pointEntity.Y = point.Y;
+            pointEntity.X = point.X.Value;
+            pointEntity.Y = point.Y.Value;
+            pointEntity.AnglMinH = point.AngelMinH;
+            pointEntity.AnglMaxH = point.AngelMaxH;
+            pointEntity.AzimuthB = point.AzimuthStart;
+            pointEntity.AzimuthE = point.AzimuthEnd;
+            pointEntity.HRel = point.RelativeHeight;
+            pointEntity.InnerRadius = point.InnerRadius;
+            pointEntity.OuterRadius = point.OuterRadius;
         }
 
 
