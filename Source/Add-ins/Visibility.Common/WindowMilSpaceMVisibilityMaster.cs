@@ -280,18 +280,25 @@ namespace MilSpace.Visibility
             cmbOOSource.SelectedItem = LocalizationContext.Instance.ObservObjectsSet;
         }
 
-        public void FillObservationPointList(IEnumerable<ObservationPoint> observationPoints, ValuableObservPointFieldsEnum filter)
+        public void FillObservationPointList(IEnumerable<IObserverPoint> observationPoints,
+                                                ValuableObservPointFieldsEnum filter, bool newSelection = false)
         {
             if (observationPoints != null && observationPoints.Any())
             {
                 var ItemsToShow = observationPoints.Select(
-                    t => new CheckObservPointGui
+                    item =>
                     {
-                        Title = t.Title,
-                        Type = LocalizationContext.Instance.MobilityTypes[t.ObservationPointMobilityType],
-                        Affiliation = LocalizationContext.Instance.AffiliationTypes[t.ObservationPointAffiliationType],
-                        Date = t.Dto.Value.ToShortDateString(),
-                        Id = t.Objectid
+                        var t = controller.GetObservationPointFromInterface(item);
+
+                        return new CheckObservPointGui
+                        {
+                            Title = t.Title,
+                            Type = LocalizationContext.Instance.MobilityTypes[t.ObservationPointMobilityType],
+                            Affiliation = LocalizationContext.Instance.AffiliationTypes[t.ObservationPointAffiliationType],
+                            Date = t.Dto.Value.ToShortDateString(),
+                            Id = t.Objectid
+                        };
+
                     }).OrderBy(l => l.Title).ToList();
 
 
@@ -1146,6 +1153,21 @@ namespace MilSpace.Visibility
                     }
                 }
             }
+        }
+
+        public void ClearObserverPointsList()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetFieldsEditingAbility(bool areFiedlsReadOnly)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveObserverPoint(int id)
+        {
+            throw new NotImplementedException();
         }
         #endregion
 

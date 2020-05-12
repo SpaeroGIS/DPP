@@ -1467,7 +1467,7 @@
             // upToFirstStripItem
             // 
             this.upToFirstStripItem.Name = "upToFirstStripItem";
-            this.upToFirstStripItem.Size = new System.Drawing.Size(119, 22);
+            this.upToFirstStripItem.Size = new System.Drawing.Size(180, 22);
             this.upToFirstStripItem.Text = "To begin";
             this.upToFirstStripItem.Click += new System.EventHandler(this.UpToFirstStripItem_Click);
             // 
