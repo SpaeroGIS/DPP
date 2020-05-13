@@ -1730,15 +1730,23 @@ namespace MilSpace.Visibility.ViewController
 
         private ObservationPoint GetObservationPointFromPointLayer()
         {
-            var fromLayerPointsListModal = new PointsFromLayerModalWindow(ArcMap.Document.ActiveView);
+            var manager = new MapLayersManager(mapDocument.ActiveView);
 
+            var fromLayerPointsListModal = 
+                    new PointsFromLayerModalWindow(
+                                                   ArcMap.Document.ActiveView,
+                                                   manager.GetObservPointsAppropriateLayers()
+                                                          .Where(layer => !layer.EndsWith(GetObservPointsFromGdbFeatureClassName()))
+                                                          .ToArray(),
+                                                   true);
+                                                     
             var result = fromLayerPointsListModal.ShowDialog();
 
             if (result == DialogResult.OK)
             {
                 if (fromLayerPointsListModal.SelectedPoint != null)
                 {
-                    var pointsFromLayer = VisibilityManager.GetObservationPointsFromAppropriateLayer(fromLayerPointsListModal.LayerName, ArcMap.Document.ActiveView);
+                    var pointsFromLayer = VisibilityManager.GetObservationPointsFromAppropriateLayer(fromLayerPointsListModal.LayerName, ArcMap.Document.ActiveView, fromLayerPointsListModal.TitleField);
                     var observPoint = pointsFromLayer.FirstOrDefault(point => point.Objectid == fromLayerPointsListModal.SelectedPoint.ObjId);
 
                     return GetObservationPointFromInterface(observPoint);
