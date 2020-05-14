@@ -75,11 +75,11 @@ namespace MilSpace.Configurations
                     demStorages = new DemStorages.DemStorages
                     {
                         SrtmStorage  = (groupSection.Sections[SrtmStorageSection.SectionName] as SrtmStorageSection).RootFolder,
-                        SentinelStorage = (groupSection.Sections[SentinelStorageSection.SectionName] as SentinelStorageSection).RootFolder,
-                        ScihubMetadataApi = (groupSection.Sections[SentinelStorageSection.SectionName] as SentinelStorageSection).ScihubMetadataApi,
-                        ScihubProductsApi = (groupSection.Sections[SentinelStorageSection.SectionName] as SentinelStorageSection).ScihubProductsApi,
-                        ScihubPassword = (groupSection.Sections[SentinelStorageSection.SectionName] as SentinelStorageSection).Password,
-                        ScihubUserName = (groupSection.Sections[SentinelStorageSection.SectionName] as SentinelStorageSection).UserName,
+                        //SentinelStorage = (groupSection.Sections[SentinelStorageSection.SectionName] as SentinelStorageSection).RootFolder,
+                        //ScihubMetadataApi = (groupSection.Sections[SentinelStorageSection.SectionName] as SentinelStorageSection).ScihubMetadataApi,
+                        //ScihubProductsApi = (groupSection.Sections[SentinelStorageSection.SectionName] as SentinelStorageSection).ScihubProductsApi,
+                        //ScihubPassword = (groupSection.Sections[SentinelStorageSection.SectionName] as SentinelStorageSection).Password,
+                        //ScihubUserName = (groupSection.Sections[SentinelStorageSection.SectionName] as SentinelStorageSection).UserName,
                     };
                 }
                 return demStorages;
