@@ -85,6 +85,10 @@ namespace MilSpace.Profile
             fanPickCoord = firstPointToolBar.Buttons[0];
             linePickCoordFirst = secondPointToolbar.Buttons[0];
             linePickCoordSecond = basePointToolbar.Buttons[0];
+
+            dgvProfileAttributes.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgvProfileAttributes.Columns[1].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+
             logger.InfoEx("> DockableWindowMilSpaceProfileCalc(2) END");
         }
 
@@ -246,15 +250,15 @@ namespace MilSpace.Profile
 
         private void DisplaySelectedNodeAttributes(object sender, TreeViewEventArgs treeViewEventArgs)
         {
-            lvProfileAttributes.Items.Clear();
+            dgvProfileAttributes.Rows.Clear();
             var node = profilesTreeView.SelectedNode;
             if (node.Parent == null)
             {
-                lvProfileAttributes.Visible = false;
+                dgvProfileAttributes.Visible = false;
                 return;
             }
 
-            lvProfileAttributes.Visible = true;
+            dgvProfileAttributes.Visible = true;
             if (!(node is ProfileTreeNode)) return;
             ProfileTreeNode profileNode = (ProfileTreeNode)node;
             foreach (DataRow row in profileNode.Attributes.Rows)
@@ -264,13 +268,45 @@ namespace MilSpace.Profile
                     continue;
                 }
 
-                var lvItem = new ListViewItem(row[AttributeKeys.AttributeColumnName].ToString());
-                lvItem.SubItems.Add(row[AttributeKeys.ValueColumnName].ToString());
+                if (row == profileNode.Attributes.Rows.Find(AttributeKeys.Surface))
+                {
+                    var surfaceStrings = SplitStringByWidth(
+                                            row[AttributeKeys.ValueColumnName].ToString(),
+                                            dgvProfileAttributes.Columns[1].Width);
 
-                lvProfileAttributes.Items.Add(lvItem);
+                    dgvProfileAttributes.Rows.Add(row[AttributeKeys.AttributeColumnName].ToString(),
+                                               surfaceStrings);
+                }
+                else
+                {
+                    dgvProfileAttributes.Rows.Add(row[AttributeKeys.AttributeColumnName].ToString(),
+                                              row[AttributeKeys.ValueColumnName].ToString());
+                }
+            }
+        }
+
+        private string SplitStringByWidth(string text, int width)
+        {
+            if(width < 0)
+            {
+                return text;
             }
 
-            SetListView();
+            var font = dgvProfileAttributes.Font;
+            var stringWidth = TextRenderer.MeasureText(text, font);
+            var stringParts = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(stringWidth.Width) / width));
+
+            if (stringParts > 1)
+            {
+                var partLength = Convert.ToInt32(text.Length / stringParts);
+
+                for (int i = 1; i < stringParts; i++)
+                {
+                    text = text.Insert(partLength * i + (i -1), "\n");
+                }
+            }
+            
+                return text;
         }
 
         private static void PopulateComboBox(ComboBox comboBox, IEnumerable<ILayer> layers)
@@ -1209,7 +1245,7 @@ namespace MilSpace.Profile
             toolTip.SetToolTip(reverseSecondPointButton, LocalizationContext.Instance.FindLocalizedElement("BtnReverseToolTip", "Змінити напрямок профілю"));
             toolTip.SetToolTip(btnPanToFun, LocalizationContext.Instance.FindLocalizedElement("BtnPanToFunToolTip", "Наблизити до набору профілів"));
             toolTip.SetToolTip(btnPanToPrimitive, LocalizationContext.Instance.FindLocalizedElement("BtnPanToPrimitive", "Наблизити до примітиву"));
-            toolTip.SetToolTip(lvProfileAttributes, LocalizationContext.Instance.FindLocalizedElement("LvProfileDetailsToolTip", "Щоб скопіювати рядки натисніть праву клавішу миші"));
+            toolTip.SetToolTip(dgvProfileAttributes, LocalizationContext.Instance.FindLocalizedElement("LvProfileDetailsToolTip", "Щоб скопіювати рядки натисніть праву клавішу миші"));
 
             firstPointToolBar.Buttons["toolBarButton8"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnTakeCoordToolTip", "Взяти координати з карти");
             firstPointToolBar.Buttons["toolBarButton55"].ToolTipText = LocalizationContext.Instance.FindLocalizedElement("BtnShowCoordToolTip", "Показати координати на карті");
@@ -1878,14 +1914,7 @@ namespace MilSpace.Profile
 
             controller.PanToProfile(ProfileSettingsTypeEnum.Primitives);
         }
-
-        private void SetListView()
-        {
-            lvProfileAttributes.Columns[0].Width = -1;
-            lvProfileAttributes.Columns[0].Width += 5;
-            lvProfileAttributes.Columns[1].Width = -1;
-        }
-
+        
         private void RenameProfile_Click(object sender, EventArgs e)
         {
             profilesTreeView.LabelEdit = true;
@@ -1925,10 +1954,8 @@ namespace MilSpace.Profile
 
                     node.SetProfileName(e.Label);
 
-                    var lvItem = new ListViewItem(node.Attributes.Rows[0][AttributeKeys.AttributeColumnName].ToString());
-                    lvItem.SubItems.Add(node.Attributes.Rows[0][AttributeKeys.ValueColumnName].ToString());
-
-                    lvProfileAttributes.Items[0] = lvItem;
+                    dgvProfileAttributes.Rows[0].Cells[0].Value = node.Attributes.Rows[0][AttributeKeys.AttributeColumnName].ToString();
+                    dgvProfileAttributes.Rows[0].Cells[1].Value = node.Attributes.Rows[0][AttributeKeys.ValueColumnName].ToString();
                 }
             }
             else
@@ -1995,11 +2022,11 @@ namespace MilSpace.Profile
             {
                 StringBuilder text = new StringBuilder();
 
-                foreach (ListViewItem item in lvProfileAttributes.SelectedItems)
+                foreach (DataGridViewRow row in dgvProfileAttributes.SelectedRows)
                 {
-                    foreach (ListViewItem.ListViewSubItem sub in item.SubItems)
+                    foreach (DataGridViewCell cell in row.Cells)
                     {
-                        text.Append(sub.Text + "\t");
+                        text.Append(cell.Value.ToString().Replace("\n", "") + "\t");
                     }
 
                     text.AppendLine();
@@ -2028,6 +2055,17 @@ namespace MilSpace.Profile
             else
             {
                 SetFunTxtEnabled(false);
+            }
+        }
+
+        private void DgvProfileAttributes_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Right)
+            {
+                int currentMouseOverRow = dgvProfileAttributes.HitTest(e.X, e.Y).RowIndex;
+                contextMenuProfilesAttributes.Show(
+                                                dgvProfileAttributes,
+                                                new System.Drawing.Point(e.X, e.Y));
             }
         }
     }
