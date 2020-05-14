@@ -294,7 +294,7 @@ namespace MilSpace.Profile
 
             var font = dgvProfileAttributes.Font;
             var stringWidth = TextRenderer.MeasureText(text, font);
-            var stringParts = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(stringWidth.Width) / width));
+            var stringParts = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(stringWidth.Width) / (width + 10)));
 
             if (stringParts > 1)
             {
