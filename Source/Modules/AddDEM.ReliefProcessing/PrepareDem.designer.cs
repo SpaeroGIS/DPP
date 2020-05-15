@@ -36,10 +36,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrepareDem));
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel7 = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lblSentinelStorage = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblSrtmStorage = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
@@ -295,7 +295,7 @@
             // panel7
             // 
             this.panel7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.panel7.Controls.Add(this.label5);
+            this.panel7.Controls.Add(this.lblSentinelStorage);
             this.panel7.Controls.Add(this.label6);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel7.Location = new System.Drawing.Point(8, 66);
@@ -304,15 +304,15 @@
             this.panel7.Size = new System.Drawing.Size(613, 28);
             this.panel7.TabIndex = 3;
             // 
-            // label5
+            // lblSentinelStorage
             // 
-            this.label5.AutoSize = true;
-            this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label5.Location = new System.Drawing.Point(82, 6);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(141, 13);
-            this.label5.TabIndex = 1;
-            this.label5.Text = "\\\\fileserver\\archiveDEM\\S1";
+            this.lblSentinelStorage.AutoSize = true;
+            this.lblSentinelStorage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblSentinelStorage.Location = new System.Drawing.Point(82, 6);
+            this.lblSentinelStorage.Name = "lblSentinelStorage";
+            this.lblSentinelStorage.Size = new System.Drawing.Size(141, 13);
+            this.lblSentinelStorage.TabIndex = 1;
+            this.lblSentinelStorage.Text = "\\\\fileserver\\archiveDEM\\S1";
             // 
             // label6
             // 
@@ -326,7 +326,7 @@
             // panel6
             // 
             this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.panel6.Controls.Add(this.label4);
+            this.panel6.Controls.Add(this.lblSrtmStorage);
             this.panel6.Controls.Add(this.label3);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel6.Location = new System.Drawing.Point(8, 38);
@@ -335,15 +335,15 @@
             this.panel6.Size = new System.Drawing.Size(613, 28);
             this.panel6.TabIndex = 2;
             // 
-            // label4
+            // lblSrtmStorage
             // 
-            this.label4.AutoSize = true;
-            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label4.Location = new System.Drawing.Point(82, 6);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(159, 13);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "\\\\fileserver\\archiveDEM\\SRTM";
+            this.lblSrtmStorage.AutoSize = true;
+            this.lblSrtmStorage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblSrtmStorage.Location = new System.Drawing.Point(82, 6);
+            this.lblSrtmStorage.Name = "lblSrtmStorage";
+            this.lblSrtmStorage.Size = new System.Drawing.Size(159, 13);
+            this.lblSrtmStorage.TabIndex = 1;
+            this.lblSrtmStorage.Text = "\\\\fileserver\\archiveDEM\\SRTM";
             // 
             // label3
             // 
@@ -854,7 +854,6 @@
             this.label28.Size = new System.Drawing.Size(87, 13);
             this.label28.TabIndex = 0;
             this.label28.Text = "для скачивания";
-            this.label28.Click += new System.EventHandler(this.label28_Click);
             // 
             // panel41
             // 
@@ -1081,7 +1080,6 @@
             this.listBox3.Name = "listBox3";
             this.listBox3.Size = new System.Drawing.Size(196, 82);
             this.listBox3.TabIndex = 8;
-            this.listBox3.SelectedIndexChanged += new System.EventHandler(this.listBox3_SelectedIndexChanged);
             // 
             // panel30
             // 
@@ -1253,7 +1251,6 @@
             this.panel22.Padding = new System.Windows.Forms.Padding(4);
             this.panel22.Size = new System.Drawing.Size(196, 28);
             this.panel22.TabIndex = 0;
-            this.panel22.Paint += new System.Windows.Forms.PaintEventHandler(this.panel22_Paint);
             // 
             // label15
             // 
@@ -1372,7 +1369,6 @@
             this.button14.TabIndex = 1;
             this.button14.Text = "предварительная обработка";
             this.button14.UseVisualStyleBackColor = true;
-            this.button14.Click += new System.EventHandler(this.button14_Click);
             // 
             // panel47
             // 
@@ -2249,10 +2245,10 @@
         #endregion
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblSentinelStorage;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblSrtmStorage;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label label2;
