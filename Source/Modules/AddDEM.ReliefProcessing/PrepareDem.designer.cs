@@ -387,7 +387,7 @@
             this.tabControl2.Margin = new System.Windows.Forms.Padding(0);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(629, 553);
+            this.tabControl2.Size = new System.Drawing.Size(629, 532);
             this.tabControl2.TabIndex = 2;
             // 
             // tabPage7
@@ -397,7 +397,7 @@
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage7.Size = new System.Drawing.Size(621, 527);
+            this.tabPage7.Size = new System.Drawing.Size(621, 506);
             this.tabPage7.TabIndex = 3;
             this.tabPage7.Text = "SRTM";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -415,7 +415,7 @@
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(8);
-            this.panel1.Size = new System.Drawing.Size(615, 521);
+            this.panel1.Size = new System.Drawing.Size(615, 500);
             this.panel1.TabIndex = 3;
             // 
             // splitter1
@@ -423,7 +423,7 @@
             this.splitter1.BackColor = System.Drawing.Color.Red;
             this.splitter1.Location = new System.Drawing.Point(265, 66);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(4, 417);
+            this.splitter1.Size = new System.Drawing.Size(4, 396);
             this.splitter1.TabIndex = 9;
             this.splitter1.TabStop = false;
             // 
@@ -435,7 +435,7 @@
             this.panel13.Location = new System.Drawing.Point(265, 66);
             this.panel13.Name = "panel13";
             this.panel13.Padding = new System.Windows.Forms.Padding(4);
-            this.panel13.Size = new System.Drawing.Size(342, 417);
+            this.panel13.Size = new System.Drawing.Size(342, 396);
             this.panel13.TabIndex = 8;
             // 
             // tabControl1
@@ -447,7 +447,7 @@
             this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(334, 409);
+            this.tabControl1.Size = new System.Drawing.Size(334, 388);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -455,7 +455,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(326, 383);
+            this.tabPage1.Size = new System.Drawing.Size(326, 362);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "информация";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -466,7 +466,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(326, 383);
+            this.tabPage2.Size = new System.Drawing.Size(326, 362);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "журнал";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -484,7 +484,7 @@
             "отметка результата"});
             this.listBox2.Location = new System.Drawing.Point(3, 3);
             this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(320, 377);
+            this.listBox2.Size = new System.Drawing.Size(320, 356);
             this.listBox2.TabIndex = 0;
             // 
             // panel11
@@ -498,7 +498,7 @@
             this.panel11.Location = new System.Drawing.Point(8, 66);
             this.panel11.Name = "panel11";
             this.panel11.Padding = new System.Windows.Forms.Padding(4);
-            this.panel11.Size = new System.Drawing.Size(257, 417);
+            this.panel11.Size = new System.Drawing.Size(257, 396);
             this.panel11.TabIndex = 7;
             // 
             // listView1
@@ -514,7 +514,7 @@
             listViewItem2,
             listViewItem3,
             listViewItem4});
-            this.listView1.Location = new System.Drawing.Point(4, 301);
+            this.listView1.Location = new System.Drawing.Point(4, 280);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(249, 112);
             this.listView1.TabIndex = 8;
@@ -590,7 +590,7 @@
             this.panel10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.panel10.Controls.Add(this.button3);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel10.Location = new System.Drawing.Point(8, 483);
+            this.panel10.Location = new System.Drawing.Point(8, 462);
             this.panel10.Name = "panel10";
             this.panel10.Padding = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.panel10.Size = new System.Drawing.Size(599, 30);
@@ -677,7 +677,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(621, 527);
+            this.tabPage4.Size = new System.Drawing.Size(621, 506);
             this.tabPage4.TabIndex = 0;
             this.tabPage4.Text = "S-1.Загрузка";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -692,7 +692,7 @@
             this.panel21.Location = new System.Drawing.Point(206, 0);
             this.panel21.Name = "panel21";
             this.panel21.Padding = new System.Windows.Forms.Padding(2);
-            this.panel21.Size = new System.Drawing.Size(415, 527);
+            this.panel21.Size = new System.Drawing.Size(415, 506);
             this.panel21.TabIndex = 1;
             // 
             // panel39
@@ -707,7 +707,7 @@
             this.panel39.Location = new System.Drawing.Point(2, 30);
             this.panel39.Name = "panel39";
             this.panel39.Padding = new System.Windows.Forms.Padding(4);
-            this.panel39.Size = new System.Drawing.Size(411, 378);
+            this.panel39.Size = new System.Drawing.Size(411, 357);
             this.panel39.TabIndex = 14;
             // 
             // listBox4
@@ -720,7 +720,7 @@
             "S1A_IW_SLC__1SDV_20200403T041139_20200403T041206_031958_03B0C2_16D5.zip"});
             this.listBox4.Location = new System.Drawing.Point(4, 30);
             this.listBox4.Name = "listBox4";
-            this.listBox4.Size = new System.Drawing.Size(403, 220);
+            this.listBox4.Size = new System.Drawing.Size(403, 199);
             this.listBox4.TabIndex = 15;
             // 
             // panel37
@@ -728,7 +728,7 @@
             this.panel37.BackColor = System.Drawing.SystemColors.ControlLight;
             this.panel37.Controls.Add(this.label27);
             this.panel37.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel37.Location = new System.Drawing.Point(4, 250);
+            this.panel37.Location = new System.Drawing.Point(4, 229);
             this.panel37.Name = "panel37";
             this.panel37.Padding = new System.Windows.Forms.Padding(4);
             this.panel37.Size = new System.Drawing.Size(403, 26);
@@ -751,7 +751,7 @@
             this.listBox5.Items.AddRange(new object[] {
             "параметры",
             "в формате параметр / значение"});
-            this.listBox5.Location = new System.Drawing.Point(4, 276);
+            this.listBox5.Location = new System.Drawing.Point(4, 255);
             this.listBox5.Name = "listBox5";
             this.listBox5.Size = new System.Drawing.Size(403, 69);
             this.listBox5.TabIndex = 17;
@@ -762,7 +762,7 @@
             this.panel38.Controls.Add(this.button13);
             this.panel38.Controls.Add(this.button11);
             this.panel38.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel38.Location = new System.Drawing.Point(4, 345);
+            this.panel38.Location = new System.Drawing.Point(4, 324);
             this.panel38.Name = "panel38";
             this.panel38.Padding = new System.Windows.Forms.Padding(4);
             this.panel38.Size = new System.Drawing.Size(403, 29);
@@ -816,7 +816,7 @@
             this.panel40.Controls.Add(this.panel42);
             this.panel40.Controls.Add(this.panel41);
             this.panel40.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel40.Location = new System.Drawing.Point(2, 408);
+            this.panel40.Location = new System.Drawing.Point(2, 387);
             this.panel40.Name = "panel40";
             this.panel40.Padding = new System.Windows.Forms.Padding(4);
             this.panel40.Size = new System.Drawing.Size(411, 117);
@@ -903,7 +903,7 @@
             this.splitter2.BackColor = System.Drawing.Color.Maroon;
             this.splitter2.Location = new System.Drawing.Point(200, 0);
             this.splitter2.Name = "splitter2";
-            this.splitter2.Size = new System.Drawing.Size(6, 527);
+            this.splitter2.Size = new System.Drawing.Size(6, 506);
             this.splitter2.TabIndex = 2;
             this.splitter2.TabStop = false;
             // 
@@ -929,7 +929,7 @@
             this.panel20.MaximumSize = new System.Drawing.Size(300, 0);
             this.panel20.Name = "panel20";
             this.panel20.Padding = new System.Windows.Forms.Padding(2);
-            this.panel20.Size = new System.Drawing.Size(200, 527);
+            this.panel20.Size = new System.Drawing.Size(200, 506);
             this.panel20.TabIndex = 0;
             // 
             // panel35
@@ -1088,7 +1088,7 @@
             this.panel30.BackColor = System.Drawing.Color.White;
             this.panel30.Controls.Add(this.button10);
             this.panel30.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel30.Location = new System.Drawing.Point(2, 495);
+            this.panel30.Location = new System.Drawing.Point(2, 474);
             this.panel30.Name = "panel30";
             this.panel30.Padding = new System.Windows.Forms.Padding(4);
             this.panel30.Size = new System.Drawing.Size(196, 30);
@@ -1274,7 +1274,7 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(621, 527);
+            this.tabPage5.Size = new System.Drawing.Size(621, 506);
             this.tabPage5.TabIndex = 1;
             this.tabPage5.Text = "S-1.Предварительная обработка";
             // 
@@ -1288,7 +1288,7 @@
             this.panel43.Location = new System.Drawing.Point(206, 0);
             this.panel43.Name = "panel43";
             this.panel43.Padding = new System.Windows.Forms.Padding(2);
-            this.panel43.Size = new System.Drawing.Size(415, 527);
+            this.panel43.Size = new System.Drawing.Size(415, 506);
             this.panel43.TabIndex = 4;
             // 
             // panel44
@@ -1303,7 +1303,7 @@
             this.panel44.Location = new System.Drawing.Point(2, 30);
             this.panel44.Name = "panel44";
             this.panel44.Padding = new System.Windows.Forms.Padding(4);
-            this.panel44.Size = new System.Drawing.Size(411, 378);
+            this.panel44.Size = new System.Drawing.Size(411, 357);
             this.panel44.TabIndex = 14;
             // 
             // listBox7
@@ -1316,7 +1316,7 @@
             "S1A_IW_SLC__1SDV_20200403T041139_20200403T041206_031958_03B0C2_16D5.zip"});
             this.listBox7.Location = new System.Drawing.Point(4, 30);
             this.listBox7.Name = "listBox7";
-            this.listBox7.Size = new System.Drawing.Size(403, 220);
+            this.listBox7.Size = new System.Drawing.Size(403, 199);
             this.listBox7.TabIndex = 15;
             // 
             // panel45
@@ -1324,7 +1324,7 @@
             this.panel45.BackColor = System.Drawing.SystemColors.ControlLight;
             this.panel45.Controls.Add(this.label29);
             this.panel45.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel45.Location = new System.Drawing.Point(4, 250);
+            this.panel45.Location = new System.Drawing.Point(4, 229);
             this.panel45.Name = "panel45";
             this.panel45.Padding = new System.Windows.Forms.Padding(4);
             this.panel45.Size = new System.Drawing.Size(403, 26);
@@ -1347,7 +1347,7 @@
             this.listBox8.Items.AddRange(new object[] {
             "параметры",
             "в формате параметр / значение"});
-            this.listBox8.Location = new System.Drawing.Point(4, 276);
+            this.listBox8.Location = new System.Drawing.Point(4, 255);
             this.listBox8.Name = "listBox8";
             this.listBox8.Size = new System.Drawing.Size(403, 69);
             this.listBox8.TabIndex = 17;
@@ -1357,7 +1357,7 @@
             this.panel46.BackColor = System.Drawing.Color.White;
             this.panel46.Controls.Add(this.button14);
             this.panel46.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel46.Location = new System.Drawing.Point(4, 345);
+            this.panel46.Location = new System.Drawing.Point(4, 324);
             this.panel46.Name = "panel46";
             this.panel46.Padding = new System.Windows.Forms.Padding(4);
             this.panel46.Size = new System.Drawing.Size(403, 29);
@@ -1401,7 +1401,7 @@
             this.panel48.Controls.Add(this.listBox9);
             this.panel48.Controls.Add(this.panel49);
             this.panel48.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel48.Location = new System.Drawing.Point(2, 408);
+            this.panel48.Location = new System.Drawing.Point(2, 387);
             this.panel48.Name = "panel48";
             this.panel48.Padding = new System.Windows.Forms.Padding(4);
             this.panel48.Size = new System.Drawing.Size(411, 117);
@@ -1463,7 +1463,7 @@
             this.splitter3.BackColor = System.Drawing.Color.Maroon;
             this.splitter3.Location = new System.Drawing.Point(200, 0);
             this.splitter3.Name = "splitter3";
-            this.splitter3.Size = new System.Drawing.Size(6, 527);
+            this.splitter3.Size = new System.Drawing.Size(6, 506);
             this.splitter3.TabIndex = 5;
             this.splitter3.TabStop = false;
             // 
@@ -1483,7 +1483,7 @@
             this.panel52.MaximumSize = new System.Drawing.Size(300, 0);
             this.panel52.Name = "panel52";
             this.panel52.Padding = new System.Windows.Forms.Padding(2);
-            this.panel52.Size = new System.Drawing.Size(200, 527);
+            this.panel52.Size = new System.Drawing.Size(200, 506);
             this.panel52.TabIndex = 3;
             // 
             // listBox11
@@ -1537,7 +1537,7 @@
             this.panel58.BackColor = System.Drawing.Color.White;
             this.panel58.Controls.Add(this.button17);
             this.panel58.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel58.Location = new System.Drawing.Point(2, 495);
+            this.panel58.Location = new System.Drawing.Point(2, 474);
             this.panel58.Name = "panel58";
             this.panel58.Padding = new System.Windows.Forms.Padding(4);
             this.panel58.Size = new System.Drawing.Size(196, 30);
@@ -1643,7 +1643,7 @@
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(621, 527);
+            this.tabPage6.Size = new System.Drawing.Size(621, 506);
             this.tabPage6.TabIndex = 2;
             this.tabPage6.Text = "S-1.Основная обработка";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -1659,7 +1659,7 @@
             this.panel50.Location = new System.Drawing.Point(206, 0);
             this.panel50.Name = "panel50";
             this.panel50.Padding = new System.Windows.Forms.Padding(2);
-            this.panel50.Size = new System.Drawing.Size(415, 527);
+            this.panel50.Size = new System.Drawing.Size(415, 506);
             this.panel50.TabIndex = 7;
             // 
             // panel15
@@ -1671,7 +1671,7 @@
             this.panel15.Location = new System.Drawing.Point(2, 327);
             this.panel15.Name = "panel15";
             this.panel15.Padding = new System.Windows.Forms.Padding(4);
-            this.panel15.Size = new System.Drawing.Size(411, 198);
+            this.panel15.Size = new System.Drawing.Size(411, 177);
             this.panel15.TabIndex = 17;
             // 
             // panel5
@@ -1681,7 +1681,7 @@
             this.panel5.Controls.Add(this.listBox17);
             this.panel5.Controls.Add(this.panel9);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel5.Location = new System.Drawing.Point(4, 101);
+            this.panel5.Location = new System.Drawing.Point(4, 80);
             this.panel5.Name = "panel5";
             this.panel5.Padding = new System.Windows.Forms.Padding(4);
             this.panel5.Size = new System.Drawing.Size(403, 93);
@@ -1760,7 +1760,7 @@
             this.panel60.Location = new System.Drawing.Point(4, 4);
             this.panel60.Name = "panel60";
             this.panel60.Padding = new System.Windows.Forms.Padding(4);
-            this.panel60.Size = new System.Drawing.Size(403, 190);
+            this.panel60.Size = new System.Drawing.Size(403, 169);
             this.panel60.TabIndex = 16;
             // 
             // listBox14
@@ -1769,7 +1769,7 @@
             this.listBox14.FormattingEnabled = true;
             this.listBox14.Location = new System.Drawing.Point(4, 30);
             this.listBox14.Name = "listBox14";
-            this.listBox14.Size = new System.Drawing.Size(395, 156);
+            this.listBox14.Size = new System.Drawing.Size(395, 135);
             this.listBox14.TabIndex = 21;
             // 
             // panel61
@@ -1943,7 +1943,7 @@
             this.splitter4.BackColor = System.Drawing.Color.Maroon;
             this.splitter4.Location = new System.Drawing.Point(200, 0);
             this.splitter4.Name = "splitter4";
-            this.splitter4.Size = new System.Drawing.Size(6, 527);
+            this.splitter4.Size = new System.Drawing.Size(6, 506);
             this.splitter4.TabIndex = 8;
             this.splitter4.TabStop = false;
             // 
@@ -1963,7 +1963,7 @@
             this.panel66.MaximumSize = new System.Drawing.Size(300, 0);
             this.panel66.Name = "panel66";
             this.panel66.Padding = new System.Windows.Forms.Padding(2);
-            this.panel66.Size = new System.Drawing.Size(200, 527);
+            this.panel66.Size = new System.Drawing.Size(200, 506);
             this.panel66.TabIndex = 6;
             // 
             // listBox15
@@ -2017,7 +2017,7 @@
             this.panel68.BackColor = System.Drawing.Color.White;
             this.panel68.Controls.Add(this.button16);
             this.panel68.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel68.Location = new System.Drawing.Point(2, 495);
+            this.panel68.Location = new System.Drawing.Point(2, 474);
             this.panel68.Name = "panel68";
             this.panel68.Padding = new System.Windows.Forms.Padding(4);
             this.panel68.Size = new System.Drawing.Size(196, 30);
@@ -2126,7 +2126,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(629, 660);
+            this.ClientSize = new System.Drawing.Size(629, 639);
             this.Controls.Add(this.tabControl2);
             this.Controls.Add(this.panel2);
             this.Name = "PrepareDem";
