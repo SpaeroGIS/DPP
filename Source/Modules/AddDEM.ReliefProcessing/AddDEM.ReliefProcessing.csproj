@@ -46,12 +46,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IPrepareDemView.cs" />
     <Compile Include="PrepareDem.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="PrepareDem.designer.cs">
       <DependentUpon>PrepareDem.cs</DependentUpon>
     </Compile>
+    <Compile Include="PrepareDemController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -62,6 +64,28 @@
     <EmbeddedResource Include="PrepareDem.resx">
       <DependentUpon>PrepareDem.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\MilSpace.Configurations\MilSpace.Configurations.csproj">
+      <Project>{73334b96-54fd-4d83-b56d-967f8728d767}</Project>
+      <Name>MilSpace.Configurations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\MilSpace.Core\MilSpace.Core.csproj">
+      <Project>{a9deed9b-a54b-4c1d-aba7-d2c7bb5fa6ec}</Project>
+      <Name>MilSpace.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\MilSpace.DataAccess\MilSpace.DataAccess.csproj">
+      <Project>{651c40fa-e0b6-45ff-9b3e-9341eb671754}</Project>
+      <Name>MilSpace.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\MilSpace.Tools\MilSpace.Tools.csproj">
+      <Project>{cbd5675b-f382-497d-98cc-70539ed658b9}</Project>
+      <Name>MilSpace.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\MilSpace.Web\MilSpace.Web.csproj">
+      <Project>{53c5e82a-ce4c-444e-bf81-5ad077dd35bf}</Project>
+      <Name>MilSpace.Web</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

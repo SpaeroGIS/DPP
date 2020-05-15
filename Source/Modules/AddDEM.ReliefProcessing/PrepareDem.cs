@@ -10,41 +10,18 @@ using System.Windows.Forms;
 
 namespace MilSpace.AddDem.ReliefProcessing
 {
-    public partial class PrepareDem : Form
+    public partial class PrepareDem : Form, IPrepareDemView
     {
+
+        PrepareDemController controller = new PrepareDemController();
         public PrepareDem()
         {
+            controller.SetView(this);
             InitializeComponent();
+            controller.ReadConfiguration();
         }
 
-        private void panel22_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void listBox3_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void listBox4_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label27_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label28_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button14_Click(object sender, EventArgs e)
-        {
-
-        }
+        public string SentinelSrtorage { get => lblSentinelStorage.Text; set => lblSentinelStorage.Text = value; }
+        public string SrtmSrtorage { get => lblSrtmStorage.Text; set => lblSrtmStorage.Text = value; }
     }
 }
