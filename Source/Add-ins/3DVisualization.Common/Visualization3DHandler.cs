@@ -9,6 +9,7 @@ using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Configurations;
 using MilSpace.Core;
+using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Visualization3D.Models;
 using System;
@@ -26,8 +27,9 @@ namespace MilSpace.Visualization3D
         //Application removed event
         private static IAppROTEvents_Event m_appROTEvent;
         private static int m_appHWnd = 0;
-        private static double zFactor;
+        private static double _zFactor;
         private static readonly string _profileGdb = MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection;
+        private static IActiveView _map;
 
         private enum LayerTypeEnum
         {
@@ -41,7 +43,7 @@ namespace MilSpace.Visualization3D
         {
         }
 
-        internal static void OpenProfilesSetIn3D(ArcSceneArguments layers)
+        internal static void OpenProfilesSetIn3D(ArcSceneArguments layers, IActiveView map)
         {
             OpenArcScene();
 
@@ -50,7 +52,8 @@ namespace MilSpace.Visualization3D
                 IObjectFactory objFactory = m_application as IObjectFactory;
                 var document = (IBasicDocument)m_application.Document;
 
-                zFactor = layers.ZFactor;
+                _zFactor = layers.ZFactor;
+                _map = map;
 
                 var baseSurface = AddBaseLayers(layers, objFactory, document);
                 AddVisibilityLayers(layers.VisibilityResultsInfo, objFactory, document, baseSurface);
@@ -174,19 +177,19 @@ namespace MilSpace.Visualization3D
                 }
             }
 
-            if(layers.ContainsValue(LayerTypeEnum.PointFeature))
-            {
-                document.UpdateContents();
+            //if(layers.ContainsValue(LayerTypeEnum.PointFeature))
+            //{
+            //    document.UpdateContents();
 
-                foreach(var layer in layers)
-                {
-                    if(layer.Value == LayerTypeEnum.PointFeature)
-                    {
-                        document.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeography,
-                                                   PointsRender((IFeatureLayer)layer.Key, new RgbColor() { Red = 24, Blue = 255, Green = 163 }, objFactory), document.ActiveView.Extent);
-                    }
-                }
-            }
+            //    foreach(var layer in layers)
+            //    {
+            //        if(layer.Value == LayerTypeEnum.PointFeature)
+            //        {
+            //            document.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeography,
+            //                                       PointsRender((IFeatureLayer)layer.Key, new RgbColor() { Red = 24, Blue = 255, Green = 163 }, objFactory), document.ActiveView.Extent);
+            //        }
+            //    }
+            //}
         }
 
         private static KeyValuePair<ILayer, LayerTypeEnum> GetVisibilityLayer(VisibilityResultInfo info, IObjectFactory objFactory, IFunctionalSurface baseSurface)
@@ -283,6 +286,17 @@ namespace MilSpace.Visualization3D
 
                 featureLayer.FeatureClass = featureClassC;
                 featureLayer.Name = featureLayer.FeatureClass.AliasName;
+
+                MapLayersManager layersManager = new MapLayersManager(_map);
+                var layerName = layersManager.GetLayerAliasByFeatureClass(featureClass);
+
+                if (!String.IsNullOrEmpty(layerName))
+                {
+                    var mapLayer =  EsriTools.GetLayer(layerName, _map.FocusMap) as IGeoFeatureLayer;
+
+                    var layer = featureLayer as IGeoFeatureLayer;
+                    layer.Renderer = mapLayer.Renderer;
+                }
 
                 return featureLayer;
             }
@@ -394,7 +408,7 @@ namespace MilSpace.Visualization3D
             properties3D.BaseOption = esriBaseOption.esriBaseSurface;
             properties3D.BaseSurface = surface;
             properties3D.OffsetExpressionString = "2";
-            properties3D.ZFactor = zFactor;
+            properties3D.ZFactor = _zFactor;
 
             properties3D.RenderVisibility = esriRenderVisibility.esriRenderAlways;
             properties3D.RenderMode = esriRenderMode.esriRenderCache;
@@ -415,7 +429,7 @@ namespace MilSpace.Visualization3D
             var properties3D = (I3DProperties)objFactory.Create("esrianalyst3d.Feature3DProperties");
             properties3D.BaseOption = esriBaseOption.esriBaseSurface;
             properties3D.BaseSurface = surface;
-            properties3D.ZFactor =  zFactor ;
+            properties3D.ZFactor =  _zFactor ;
             properties3D.OffsetExpressionString = (height == double.NaN) ? "3" : height.ToString();
 
             ILayerExtensions layerExtensions = (ILayerExtensions)layer;
@@ -427,7 +441,7 @@ namespace MilSpace.Visualization3D
         {
             var properties3D = (I3DProperties)objFactory.Create("esrianalyst3d.Feature3DProperties");
             properties3D.BaseOption = esriBaseOption.esriBaseShape;
-            properties3D.ZFactor = zFactor;
+            properties3D.ZFactor = _zFactor;
             properties3D.OffsetExpressionString = "3";
 
             ILayerExtensions layerExtensions = (ILayerExtensions)layer;
@@ -440,7 +454,7 @@ namespace MilSpace.Visualization3D
             var properties3D = (I3DProperties)objFactory.Create("esrianalyst3d.Raster3DProperties");
             properties3D.BaseOption = esriBaseOption.esriBaseSurface;
             properties3D.BaseSurface = surface;
-            properties3D.ZFactor = zFactor;
+            properties3D.ZFactor = _zFactor;
 
             ILayerExtensions layerExtensions = (ILayerExtensions)layer;
             layerExtensions.AddExtension(properties3D);
