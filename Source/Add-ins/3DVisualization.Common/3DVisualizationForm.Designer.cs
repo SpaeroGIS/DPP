@@ -685,6 +685,7 @@
             // HydroLayerComboBox
             // 
             this.HydroLayerComboBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.HydroLayerComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.HydroLayerComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.HydroLayerComboBox.FormattingEnabled = true;
             this.HydroLayerComboBox.Location = new System.Drawing.Point(74, 4);
@@ -739,6 +740,7 @@
             // TransportLayerComboBox
             // 
             this.TransportLayerComboBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.TransportLayerComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.TransportLayerComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.TransportLayerComboBox.FormattingEnabled = true;
             this.TransportLayerComboBox.Location = new System.Drawing.Point(74, 4);
@@ -793,6 +795,7 @@
             // BuildingsLayerComboBox
             // 
             this.BuildingsLayerComboBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.BuildingsLayerComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.BuildingsLayerComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.BuildingsLayerComboBox.FormattingEnabled = true;
             this.BuildingsLayerComboBox.Location = new System.Drawing.Point(74, 4);
@@ -847,6 +850,7 @@
             // PlantsLayerComboBox
             // 
             this.PlantsLayerComboBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.PlantsLayerComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.PlantsLayerComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.PlantsLayerComboBox.FormattingEnabled = true;
             this.PlantsLayerComboBox.Location = new System.Drawing.Point(74, 4);
@@ -880,6 +884,7 @@
             // SurfaceComboBox
             // 
             this.SurfaceComboBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.SurfaceComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SurfaceComboBox.FormattingEnabled = true;
             this.SurfaceComboBox.Location = new System.Drawing.Point(74, 4);
             this.SurfaceComboBox.Name = "SurfaceComboBox";

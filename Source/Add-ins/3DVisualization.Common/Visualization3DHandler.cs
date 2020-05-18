@@ -287,16 +287,7 @@ namespace MilSpace.Visualization3D
                 featureLayer.FeatureClass = featureClassC;
                 featureLayer.Name = featureLayer.FeatureClass.AliasName;
 
-                MapLayersManager layersManager = new MapLayersManager(_map);
-                var layerName = layersManager.GetLayerAliasByFeatureClass(featureClass);
-
-                if (!String.IsNullOrEmpty(layerName))
-                {
-                    var mapLayer =  EsriTools.GetLayer(layerName, _map.FocusMap) as IGeoFeatureLayer;
-
-                    var layer = featureLayer as IGeoFeatureLayer;
-                    layer.Renderer = mapLayer.Renderer;
-                }
+                SetFromMapRendererToFeatureLayer(featureLayer, objFactory, featureClass);
 
                 return featureLayer;
             }
@@ -306,14 +297,17 @@ namespace MilSpace.Visualization3D
 
         private static IRasterLayer CreateRasterLayer(string layerName, IWorkspace2 workspace, IObjectFactory objFactory, string gdb)
         {
-            if(workspace.NameExists[esriDatasetType.esriDTRasterDataset, layerName])
+            if (workspace.NameExists[esriDatasetType.esriDTRasterDataset, layerName])
             {
-                  Type rasterLayerType = typeof(RasterLayerClass);
-                  string typeRasterLayerID = rasterLayerType.GUID.ToString("B");
+                Type rasterLayerType = typeof(RasterLayerClass);
+                string typeRasterLayerID = rasterLayerType.GUID.ToString("B");
 
-                  var rasterLayer = (IRasterLayer)objFactory.Create(typeRasterLayerID);
-                  rasterLayer.CreateFromFilePath($"{gdb}\\{layerName}");
-                  return rasterLayer;
+                var rasterLayer = (IRasterLayer)objFactory.Create(typeRasterLayerID);
+                rasterLayer.CreateFromFilePath($"{gdb}\\{layerName}");
+
+                SetFromMapRendererToRasterLayer(rasterLayer, objFactory, layerName);
+
+                return rasterLayer;
             }
 
             return null;
@@ -339,23 +333,13 @@ namespace MilSpace.Visualization3D
             var layerDefinition = featureLayer as IFeatureLayerDefinition2;
             layerDefinition.DefinitionExpression = arcMapLayerDefinition.DefinitionExpression;
 
-            IGeoFeatureLayer geoArcMapLayer = layer as IGeoFeatureLayer;
+            IGeoFeatureLayer geoFeatureLayer = featureLayer as IGeoFeatureLayer;
 
-            IGeoFeatureLayer geoFL = featureLayer as IGeoFeatureLayer;
-            geoFL.Renderer = geoArcMapLayer.Renderer;
+            SetFromMapRendererToFeatureLayer(featureLayer, objFactory, layer.FeatureClass.AliasName);
 
-            //var objCopy = (IObjectCopy)objFactory.Create("esriSystem.ObjectCopy");
-
-            //IGeoFeatureLayer geoFL = featureLayer as IGeoFeatureLayer;
-            //var renderer = geoFL.Renderer as object;
-
-            //var rendererCopyObj = objCopy.Copy(geoArcMapLayer.Renderer);
-
-            ////geoFL.Renderer = rendererCopyObj as IFeatureRenderer;
-            //objCopy.Overwrite(geoArcMapLayer.Renderer, ref rendererCopyObj);
             Marshal.ReleaseComObject(workspaceFactory);
 
-            return geoFL;
+            return geoFeatureLayer;
         }
 
         private static IGeoFeatureLayer PointsRender(IFeatureLayer layer, RgbColor color, IObjectFactory objFactory)
@@ -535,6 +519,69 @@ namespace MilSpace.Visualization3D
             }
 
             return true;
+        }
+
+        private static void SetFromMapRendererToFeatureLayer(IFeatureLayer featureLayer,
+                                                             IObjectFactory objFactory,
+                                                             string featureClassName)
+        {
+            MapLayersManager mapLayersManager = new MapLayersManager(_map);
+            var layerName = mapLayersManager.GetLayerAliasByFeatureClass(featureClassName);
+
+            if (!String.IsNullOrEmpty(layerName))
+            {
+                var fromMapGeoFeatureLayer = EsriTools.GetLayer(layerName, _map.FocusMap) as IGeoFeatureLayer;
+
+                if (fromMapGeoFeatureLayer == null)
+                {
+                    return;
+                }
+
+                var geoFeatureLayer = featureLayer as IGeoFeatureLayer;
+
+                try
+                {
+                    Type renderType = typeof(SimpleRendererClass);
+                    string typeRenderID = renderType.GUID.ToString("B");
+
+                    var objCopy = (IObjectCopy)objFactory.Create("esriSystem.ObjectCopy");
+                    var rendereCopy = objCopy.Copy(fromMapGeoFeatureLayer.Renderer) as IFeatureRenderer;
+                    geoFeatureLayer.Renderer = rendereCopy;
+                }
+                catch (Exception ex)
+                {
+                    logger.WarnEx($"Cannot set rendrer from map for {featureLayer.Name} layer. Exception: {ex.Message}");
+                }
+            }
+        }
+
+        private static void SetFromMapRendererToRasterLayer(IRasterLayer rasterLayer,
+                                                     IObjectFactory objFactory,
+                                                     string mapLayerName)
+        {
+            MapLayersManager layersManager = new MapLayersManager(_map);
+            var fromMapRasterLayer = EsriTools.GetLayer(mapLayerName, _map.FocusMap) as IRasterLayer;
+
+            if (fromMapRasterLayer == null)
+            {
+                return;
+            }
+
+            try
+            {
+                Type renderType = typeof(SimpleRendererClass);
+                string typeRenderID = renderType.GUID.ToString("B");
+
+                var symbol = (ISimpleRenderer)objFactory.Create(typeRenderID);
+                var objCopy = (IObjectCopy)objFactory.Create("esriSystem.ObjectCopy");
+
+                var copyS = objCopy.Copy(fromMapRasterLayer.Renderer) as IRasterRenderer;
+                rasterLayer.Renderer = copyS;
+            }
+            catch (Exception ex)
+            {
+                logger.WarnEx($"Cannot set rendrer from map for {rasterLayer.Name} layer. Exception: {ex.Message}");
+            }
         }
 
         #region "Handle the case when the application is shutdown by user manually"
