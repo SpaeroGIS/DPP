@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IPrepareDemViewSentinel.cs" />
     <Compile Include="IPrepareDemViewSrtm.cs" />
     <Compile Include="Exceptions\NothingToImportException.cs" />
     <Compile Include="PrepareDem.cs">
@@ -54,6 +55,7 @@
     <Compile Include="PrepareDem.designer.cs">
       <DependentUpon>PrepareDem.cs</DependentUpon>
     </Compile>
+    <Compile Include="PrepareDemControllerSentinel.cs" />
     <Compile Include="PrepareDemControllerSrtm.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

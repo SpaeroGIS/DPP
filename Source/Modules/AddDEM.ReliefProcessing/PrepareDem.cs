@@ -5,16 +5,20 @@ using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+using MilSpace.Core.DataAccess;
+using MilSpace.DataAccess.DataTransfer.Sentinel;
 
 namespace MilSpace.AddDem.ReliefProcessing
 {
-    public partial class PrepareDem : Form, IPrepareDemViewSrtm
+    public partial class PrepareDem : Form, IPrepareDemViewSrtm, IPrepareDemViewSentinel
     {
         Logger log = Logger.GetLoggerEx("PrepareDem");
-        PrepareDemControllerSrtm controller = new PrepareDemControllerSrtm();
+        PrepareDemControllerSrtm controllerSrtm = new PrepareDemControllerSrtm();
+        PrepareDemControllerSentinel controllerSentinel = new PrepareDemControllerSentinel();
         public PrepareDem()
         {
-            controller.SetView(this);
+            controllerSrtm.SetView(this);
+            controllerSentinel.SetView(this);
             InitializeComponent();
             InitializeData();
 
@@ -22,31 +26,46 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void InitializeData()
         {
-            controller.ReadConfiguration();
+            controllerSrtm.ReadConfiguration();
+            controllerSentinel.ReadConfiguration();
+
             lstSrtmFiles.DataSourceChanged += LstSrtmFiles_DataSourceChanged;
             lstSrtmFiles.DataSource = SrtmFilesInfo;
             lstSrtmFiles.DisplayMember = "Name";
+
+
+            lstTiles.DataSource = TilesToImport;
+            lstTiles.DisplayMember = "Name";
+
         }
 
         private void LstSrtmFiles_DataSourceChanged(object sender, EventArgs e)
         {
-            btnImportSrtm.Enabled = SrtmFilesInfo.Count() > 0;
+
         }
-        #region IPrepareDemViewSrtm
+        #region IPrepareDemViewSentinel
         public string SentinelSrtorage { get => lblSentinelStorage.Text; set => lblSentinelStorage.Text = value; }
+
+        public IEnumerable<Tile> TilesToImport { get => controllerSentinel.TilesToImport; }
+
+        public string TileLatitude { get => txtLatitude.Text; }
+        public string TileLongtitude { get => txtLongtitude.Text; }
+        #endregion
+        #region IPrepareDemViewSrtm
+
         public string SrtmSrtorage { get => lblSrtmStorage.Text; set => lblSrtmStorage.Text = value; }
         public IEnumerable<FileInfo> SrtmFilesInfo { get; set; } = new List<FileInfo>();
         #endregion
 
         private void btnImportSrtm_Click(object sender, EventArgs e)
         {
-            if (controller.CopySrtmFilesToStorage())
+            if (controllerSrtm.CopySrtmFilesToStorage())
             {
                 MessageBox.Show("The files were imported sucessfully.", "Milspace Message title", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                MessageBox.Show("Something went wrong. /n for more detailed infor go to the log file", 
+                MessageBox.Show("Something went wrong. /n for more detailed infor go to the log file",
                                 "Milspace Message title", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -62,7 +81,7 @@ namespace MilSpace.AddDem.ReliefProcessing
                     MessageBoxIcon icon = MessageBoxIcon.Information;
                     try
                     {
-                        controller.ReadSrtmFilesFromFolder(selectFolder.SelectedPath);
+                        controllerSrtm.ReadSrtmFilesFromFolder(selectFolder.SelectedPath);
                         lstSrtmFiles.Visible = true;
                         lstSrtmFiles.DataSource = SrtmFilesInfo;
                         lstSrtmFiles.Refresh();
@@ -95,8 +114,35 @@ namespace MilSpace.AddDem.ReliefProcessing
                 }
 
             }
+        }
 
 
+        private bool CheckDouble(TextBox textBox, char keyChar)
+        {
+            return (char.IsNumber(keyChar) || keyChar == (char)Keys.Back || keyChar == (char)KeyCodesEnum.Minus
+                            || (keyChar == (int)KeyCodesEnum.DecimalPoint && textBox.Text.IndexOf(".") == -1));
+        }
+
+        private void txtLongtitude_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !CheckDouble(sender as TextBox, e.KeyChar);
+            btnAddTileToList.Enabled = !e.Handled && controllerSentinel.GetTilesByPoint() != null;
+
+        }
+
+        private void txtLatitude_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !CheckDouble(sender as TextBox, e.KeyChar);
+            btnAddTileToList.Enabled = !e.Handled && controllerSentinel.GetTilesByPoint() != null;
+        }
+
+        private void btnAddTileToList_Click(object sender, EventArgs e)
+        {
+            controllerSentinel.AddTileForImport();
+
+            lstTiles.DataSource = TilesToImport;
+            lstTiles.Update();
+            lstTiles.Refresh();
 
         }
     }
