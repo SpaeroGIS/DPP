@@ -28,7 +28,6 @@ namespace MilSpace.AddDem.ReliefProcessing
             {
                 throw new MethodAccessException("prepareDemview cannot be null");
             }
-            prepareSrtmView.SentinelSrtorage = MilSpaceConfiguration.DemStorages.SentinelStorage;
             prepareSrtmView.SrtmSrtorage = MilSpaceConfiguration.DemStorages.SrtmStorage;
         }
 
