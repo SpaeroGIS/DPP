@@ -9,6 +9,7 @@ using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Configurations;
 using MilSpace.Core;
+using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Visualization3D.Models;
 using System;
@@ -26,8 +27,9 @@ namespace MilSpace.Visualization3D
         //Application removed event
         private static IAppROTEvents_Event m_appROTEvent;
         private static int m_appHWnd = 0;
-        private static double zFactor;
+        private static double _zFactor;
         private static readonly string _profileGdb = MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection;
+        private static IActiveView _map;
 
         private enum LayerTypeEnum
         {
@@ -41,7 +43,7 @@ namespace MilSpace.Visualization3D
         {
         }
 
-        internal static void OpenProfilesSetIn3D(ArcSceneArguments layers)
+        internal static void OpenProfilesSetIn3D(ArcSceneArguments layers, IActiveView map)
         {
             OpenArcScene();
 
@@ -50,7 +52,8 @@ namespace MilSpace.Visualization3D
                 IObjectFactory objFactory = m_application as IObjectFactory;
                 var document = (IBasicDocument)m_application.Document;
 
-                zFactor = layers.ZFactor;
+                _zFactor = layers.ZFactor;
+                _map = map;
 
                 var baseSurface = AddBaseLayers(layers, objFactory, document);
                 AddVisibilityLayers(layers.VisibilityResultsInfo, objFactory, document, baseSurface);
@@ -174,19 +177,19 @@ namespace MilSpace.Visualization3D
                 }
             }
 
-            if(layers.ContainsValue(LayerTypeEnum.PointFeature))
-            {
-                document.UpdateContents();
+            //if(layers.ContainsValue(LayerTypeEnum.PointFeature))
+            //{
+            //    document.UpdateContents();
 
-                foreach(var layer in layers)
-                {
-                    if(layer.Value == LayerTypeEnum.PointFeature)
-                    {
-                        document.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeography,
-                                                   PointsRender((IFeatureLayer)layer.Key, new RgbColor() { Red = 24, Blue = 255, Green = 163 }, objFactory), document.ActiveView.Extent);
-                    }
-                }
-            }
+            //    foreach(var layer in layers)
+            //    {
+            //        if(layer.Value == LayerTypeEnum.PointFeature)
+            //        {
+            //            document.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeography,
+            //                                       PointsRender((IFeatureLayer)layer.Key, new RgbColor() { Red = 24, Blue = 255, Green = 163 }, objFactory), document.ActiveView.Extent);
+            //        }
+            //    }
+            //}
         }
 
         private static KeyValuePair<ILayer, LayerTypeEnum> GetVisibilityLayer(VisibilityResultInfo info, IObjectFactory objFactory, IFunctionalSurface baseSurface)
@@ -284,6 +287,8 @@ namespace MilSpace.Visualization3D
                 featureLayer.FeatureClass = featureClassC;
                 featureLayer.Name = featureLayer.FeatureClass.AliasName;
 
+                SetFromMapRendererToFeatureLayer(featureLayer, objFactory, featureClass);
+
                 return featureLayer;
             }
 
@@ -292,14 +297,17 @@ namespace MilSpace.Visualization3D
 
         private static IRasterLayer CreateRasterLayer(string layerName, IWorkspace2 workspace, IObjectFactory objFactory, string gdb)
         {
-            if(workspace.NameExists[esriDatasetType.esriDTRasterDataset, layerName])
+            if (workspace.NameExists[esriDatasetType.esriDTRasterDataset, layerName])
             {
-                  Type rasterLayerType = typeof(RasterLayerClass);
-                  string typeRasterLayerID = rasterLayerType.GUID.ToString("B");
+                Type rasterLayerType = typeof(RasterLayerClass);
+                string typeRasterLayerID = rasterLayerType.GUID.ToString("B");
 
-                  var rasterLayer = (IRasterLayer)objFactory.Create(typeRasterLayerID);
-                  rasterLayer.CreateFromFilePath($"{gdb}\\{layerName}");
-                  return rasterLayer;
+                var rasterLayer = (IRasterLayer)objFactory.Create(typeRasterLayerID);
+                rasterLayer.CreateFromFilePath($"{gdb}\\{layerName}");
+
+                SetFromMapRendererToRasterLayer(rasterLayer, objFactory, layerName);
+
+                return rasterLayer;
             }
 
             return null;
@@ -325,23 +333,13 @@ namespace MilSpace.Visualization3D
             var layerDefinition = featureLayer as IFeatureLayerDefinition2;
             layerDefinition.DefinitionExpression = arcMapLayerDefinition.DefinitionExpression;
 
-            IGeoFeatureLayer geoArcMapLayer = layer as IGeoFeatureLayer;
+            IGeoFeatureLayer geoFeatureLayer = featureLayer as IGeoFeatureLayer;
 
-            IGeoFeatureLayer geoFL = featureLayer as IGeoFeatureLayer;
-            geoFL.Renderer = geoArcMapLayer.Renderer;
+            SetFromMapRendererToFeatureLayer(featureLayer, objFactory, layer.FeatureClass.AliasName);
 
-            //var objCopy = (IObjectCopy)objFactory.Create("esriSystem.ObjectCopy");
-
-            //IGeoFeatureLayer geoFL = featureLayer as IGeoFeatureLayer;
-            //var renderer = geoFL.Renderer as object;
-
-            //var rendererCopyObj = objCopy.Copy(geoArcMapLayer.Renderer);
-
-            ////geoFL.Renderer = rendererCopyObj as IFeatureRenderer;
-            //objCopy.Overwrite(geoArcMapLayer.Renderer, ref rendererCopyObj);
             Marshal.ReleaseComObject(workspaceFactory);
 
-            return geoFL;
+            return geoFeatureLayer;
         }
 
         private static IGeoFeatureLayer PointsRender(IFeatureLayer layer, RgbColor color, IObjectFactory objFactory)
@@ -394,7 +392,7 @@ namespace MilSpace.Visualization3D
             properties3D.BaseOption = esriBaseOption.esriBaseSurface;
             properties3D.BaseSurface = surface;
             properties3D.OffsetExpressionString = "2";
-            properties3D.ZFactor = zFactor;
+            properties3D.ZFactor = _zFactor;
 
             properties3D.RenderVisibility = esriRenderVisibility.esriRenderAlways;
             properties3D.RenderMode = esriRenderMode.esriRenderCache;
@@ -415,7 +413,7 @@ namespace MilSpace.Visualization3D
             var properties3D = (I3DProperties)objFactory.Create("esrianalyst3d.Feature3DProperties");
             properties3D.BaseOption = esriBaseOption.esriBaseSurface;
             properties3D.BaseSurface = surface;
-            properties3D.ZFactor =  zFactor ;
+            properties3D.ZFactor =  _zFactor ;
             properties3D.OffsetExpressionString = (height == double.NaN) ? "3" : height.ToString();
 
             ILayerExtensions layerExtensions = (ILayerExtensions)layer;
@@ -427,7 +425,7 @@ namespace MilSpace.Visualization3D
         {
             var properties3D = (I3DProperties)objFactory.Create("esrianalyst3d.Feature3DProperties");
             properties3D.BaseOption = esriBaseOption.esriBaseShape;
-            properties3D.ZFactor = zFactor;
+            properties3D.ZFactor = _zFactor;
             properties3D.OffsetExpressionString = "3";
 
             ILayerExtensions layerExtensions = (ILayerExtensions)layer;
@@ -440,7 +438,7 @@ namespace MilSpace.Visualization3D
             var properties3D = (I3DProperties)objFactory.Create("esrianalyst3d.Raster3DProperties");
             properties3D.BaseOption = esriBaseOption.esriBaseSurface;
             properties3D.BaseSurface = surface;
-            properties3D.ZFactor = zFactor;
+            properties3D.ZFactor = _zFactor;
 
             ILayerExtensions layerExtensions = (ILayerExtensions)layer;
             layerExtensions.AddExtension(properties3D);
@@ -521,6 +519,69 @@ namespace MilSpace.Visualization3D
             }
 
             return true;
+        }
+
+        private static void SetFromMapRendererToFeatureLayer(IFeatureLayer featureLayer,
+                                                             IObjectFactory objFactory,
+                                                             string featureClassName)
+        {
+            MapLayersManager mapLayersManager = new MapLayersManager(_map);
+            var layerName = mapLayersManager.GetLayerAliasByFeatureClass(featureClassName);
+
+            if (!String.IsNullOrEmpty(layerName))
+            {
+                var fromMapGeoFeatureLayer = EsriTools.GetLayer(layerName, _map.FocusMap) as IGeoFeatureLayer;
+
+                if (fromMapGeoFeatureLayer == null)
+                {
+                    return;
+                }
+
+                var geoFeatureLayer = featureLayer as IGeoFeatureLayer;
+
+                try
+                {
+                    Type renderType = typeof(SimpleRendererClass);
+                    string typeRenderID = renderType.GUID.ToString("B");
+
+                    var objCopy = (IObjectCopy)objFactory.Create("esriSystem.ObjectCopy");
+                    var rendereCopy = objCopy.Copy(fromMapGeoFeatureLayer.Renderer) as IFeatureRenderer;
+                    geoFeatureLayer.Renderer = rendereCopy;
+                }
+                catch (Exception ex)
+                {
+                    logger.WarnEx($"Cannot set rendrer from map for {featureLayer.Name} layer. Exception: {ex.Message}");
+                }
+            }
+        }
+
+        private static void SetFromMapRendererToRasterLayer(IRasterLayer rasterLayer,
+                                                     IObjectFactory objFactory,
+                                                     string mapLayerName)
+        {
+            MapLayersManager layersManager = new MapLayersManager(_map);
+            var fromMapRasterLayer = EsriTools.GetLayer(mapLayerName, _map.FocusMap) as IRasterLayer;
+
+            if (fromMapRasterLayer == null)
+            {
+                return;
+            }
+
+            try
+            {
+                Type renderType = typeof(SimpleRendererClass);
+                string typeRenderID = renderType.GUID.ToString("B");
+
+                var symbol = (ISimpleRenderer)objFactory.Create(typeRenderID);
+                var objCopy = (IObjectCopy)objFactory.Create("esriSystem.ObjectCopy");
+
+                var copyS = objCopy.Copy(fromMapRasterLayer.Renderer) as IRasterRenderer;
+                rasterLayer.Renderer = copyS;
+            }
+            catch (Exception ex)
+            {
+                logger.WarnEx($"Cannot set rendrer from map for {rasterLayer.Name} layer. Exception: {ex.Message}");
+            }
         }
 
         #region "Handle the case when the application is shutdown by user manually"
