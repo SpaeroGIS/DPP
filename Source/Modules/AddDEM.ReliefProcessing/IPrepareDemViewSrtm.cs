@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+
 
 namespace MilSpace.AddDem.ReliefProcessing
 {
-    public interface IPrepareDemView
+    public interface IPrepareDemViewSrtm
     {
         string SentinelSrtorage { get; set; }
         string SrtmSrtorage { get; set; }
+        IEnumerable<FileInfo> SrtmFilesInfo { get; set; }
     }
 }

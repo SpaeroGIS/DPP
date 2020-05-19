@@ -74,7 +74,7 @@ namespace MilSpace.Visualization3D
                 if (m_windowUI != null)
                     m_windowUI.Dispose(disposing);
 
-                base.Dispose(disposing);
+                ////////////base.Dispose(disposing);
             }
 
         }
