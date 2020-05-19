@@ -31,9 +31,9 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Panel panelGO;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableWindowMilSpaceProfileCalc));
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Отрезки");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Веер");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Графика");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Отрезки");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Веер");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Графика");
             this.calcProfile = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.profileTabPage = new System.Windows.Forms.TabPage();
@@ -219,13 +219,13 @@
             this.lblProfileList = new System.Windows.Forms.Label();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.panelParamCurrProfile = new System.Windows.Forms.Panel();
-            this.lvProfileAttributes = new System.Windows.Forms.ListView();
-            this.Attribute = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Value = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.contextMenuProfilesAttributes = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.copyToolStrip = new System.Windows.Forms.ToolStripMenuItem();
+            this.dgvProfileAttributes = new System.Windows.Forms.DataGridView();
+            this.Attribute = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lblProfileInfoTitle = new System.Windows.Forms.Label();
+            this.contextMenuProfilesAttributes = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.copyToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             panelGO = new System.Windows.Forms.Panel();
             panelGO.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -293,8 +293,9 @@
             this.profilesToolStrip.SuspendLayout();
             this.panelListProfilesHeader.SuspendLayout();
             this.panelParamCurrProfile.SuspendLayout();
-            this.contextMenuProfilesAttributes.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvProfileAttributes)).BeginInit();
             this.panel2.SuspendLayout();
+            this.contextMenuProfilesAttributes.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelGO
@@ -2376,25 +2377,25 @@
             this.profilesTreeView.ImageKey = "0.png";
             this.profilesTreeView.Location = new System.Drawing.Point(0, 54);
             this.profilesTreeView.Name = "profilesTreeView";
-            treeNode4.Checked = true;
-            treeNode4.ImageKey = "vector-path-line.png";
-            treeNode4.Name = "Points";
-            treeNode4.SelectedImageIndex = 205;
-            treeNode4.Text = "Отрезки";
-            treeNode5.Checked = true;
-            treeNode5.ImageKey = "Editing-Line-icon3.png";
-            treeNode5.Name = "Fun";
-            treeNode5.SelectedImageIndex = 208;
-            treeNode5.Text = "Веер";
-            treeNode6.Checked = true;
-            treeNode6.ImageKey = "vector-polygon.png";
-            treeNode6.Name = "Primitives";
-            treeNode6.SelectedImageIndex = 209;
-            treeNode6.Text = "Графика";
+            treeNode7.Checked = true;
+            treeNode7.ImageKey = "vector-path-line.png";
+            treeNode7.Name = "Points";
+            treeNode7.SelectedImageIndex = 205;
+            treeNode7.Text = "Отрезки";
+            treeNode8.Checked = true;
+            treeNode8.ImageKey = "Editing-Line-icon3.png";
+            treeNode8.Name = "Fun";
+            treeNode8.SelectedImageIndex = 208;
+            treeNode8.Text = "Веер";
+            treeNode9.Checked = true;
+            treeNode9.ImageKey = "vector-polygon.png";
+            treeNode9.Name = "Primitives";
+            treeNode9.SelectedImageIndex = 209;
+            treeNode9.Text = "Графика";
             this.profilesTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode5,
-            treeNode6});
+            treeNode7,
+            treeNode8,
+            treeNode9});
             this.profilesTreeView.SelectedImageKey = "Ok.png";
             this.profilesTreeView.Size = new System.Drawing.Size(292, 410);
             this.profilesTreeView.TabIndex = 35;
@@ -2683,7 +2684,7 @@
             // panelParamCurrProfile
             // 
             this.panelParamCurrProfile.BackColor = System.Drawing.SystemColors.Window;
-            this.panelParamCurrProfile.Controls.Add(this.lvProfileAttributes);
+            this.panelParamCurrProfile.Controls.Add(this.dgvProfileAttributes);
             this.panelParamCurrProfile.Controls.Add(this.panel2);
             this.panelParamCurrProfile.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelParamCurrProfile.Location = new System.Drawing.Point(0, 468);
@@ -2691,47 +2692,45 @@
             this.panelParamCurrProfile.Size = new System.Drawing.Size(292, 228);
             this.panelParamCurrProfile.TabIndex = 39;
             // 
-            // lvProfileAttributes
+            // dgvProfileAttributes
             // 
-            this.lvProfileAttributes.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lvProfileAttributes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.dgvProfileAttributes.AllowUserToAddRows = false;
+            this.dgvProfileAttributes.AllowUserToDeleteRows = false;
+            this.dgvProfileAttributes.AllowUserToResizeColumns = false;
+            this.dgvProfileAttributes.AllowUserToResizeRows = false;
+            this.dgvProfileAttributes.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvProfileAttributes.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.dgvProfileAttributes.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvProfileAttributes.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.dgvProfileAttributes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvProfileAttributes.ColumnHeadersVisible = false;
+            this.dgvProfileAttributes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Attribute,
             this.Value});
-            this.lvProfileAttributes.ContextMenuStrip = this.contextMenuProfilesAttributes;
-            this.lvProfileAttributes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvProfileAttributes.FullRowSelect = true;
-            this.lvProfileAttributes.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.lvProfileAttributes.HideSelection = false;
-            this.lvProfileAttributes.Location = new System.Drawing.Point(0, 30);
-            this.lvProfileAttributes.Name = "lvProfileAttributes";
-            this.lvProfileAttributes.Size = new System.Drawing.Size(292, 198);
-            this.lvProfileAttributes.TabIndex = 36;
-            this.lvProfileAttributes.UseCompatibleStateImageBehavior = false;
-            this.lvProfileAttributes.View = System.Windows.Forms.View.Details;
+            this.dgvProfileAttributes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvProfileAttributes.Location = new System.Drawing.Point(0, 30);
+            this.dgvProfileAttributes.Name = "dgvProfileAttributes";
+            this.dgvProfileAttributes.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.dgvProfileAttributes.RowHeadersVisible = false;
+            this.dgvProfileAttributes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvProfileAttributes.ShowCellToolTips = false;
+            this.dgvProfileAttributes.Size = new System.Drawing.Size(292, 198);
+            this.dgvProfileAttributes.TabIndex = 38;
+            this.dgvProfileAttributes.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvProfileAttributes_CellMouseClick);
             // 
             // Attribute
             // 
-            this.Attribute.Text = "";
-            this.Attribute.Width = 100;
+            this.Attribute.HeaderText = "";
+            this.Attribute.Name = "Attribute";
+            this.Attribute.ReadOnly = true;
+            this.Attribute.Width = 150;
             // 
             // Value
             // 
-            this.Value.Text = "";
-            this.Value.Width = 200;
-            // 
-            // contextMenuProfilesAttributes
-            // 
-            this.contextMenuProfilesAttributes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.copyToolStrip});
-            this.contextMenuProfilesAttributes.Name = "contextMenuProfilesAttributes";
-            this.contextMenuProfilesAttributes.Size = new System.Drawing.Size(103, 26);
-            // 
-            // copyToolStrip
-            // 
-            this.copyToolStrip.Name = "copyToolStrip";
-            this.copyToolStrip.Size = new System.Drawing.Size(102, 22);
-            this.copyToolStrip.Text = "Copy";
-            this.copyToolStrip.Click += new System.EventHandler(this.CopyStripMenuItem_Click);
+            this.Value.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Value.HeaderText = "";
+            this.Value.Name = "Value";
+            this.Value.ReadOnly = true;
             // 
             // panel2
             // 
@@ -2755,6 +2754,20 @@
             this.lblProfileInfoTitle.Size = new System.Drawing.Size(46, 17);
             this.lblProfileInfoTitle.TabIndex = 0;
             this.lblProfileInfoTitle.Text = "label1";
+            // 
+            // contextMenuProfilesAttributes
+            // 
+            this.contextMenuProfilesAttributes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyToolStrip});
+            this.contextMenuProfilesAttributes.Name = "contextMenuProfilesAttributes";
+            this.contextMenuProfilesAttributes.Size = new System.Drawing.Size(103, 26);
+            // 
+            // copyToolStrip
+            // 
+            this.copyToolStrip.Name = "copyToolStrip";
+            this.copyToolStrip.Size = new System.Drawing.Size(102, 22);
+            this.copyToolStrip.Text = "Copy";
+            this.copyToolStrip.Click += new System.EventHandler(this.CopyStripMenuItem_Click);
             // 
             // DockableWindowMilSpaceProfileCalc
             // 
@@ -2863,9 +2876,10 @@
             this.panelListProfilesHeader.ResumeLayout(false);
             this.panelListProfilesHeader.PerformLayout();
             this.panelParamCurrProfile.ResumeLayout(false);
-            this.contextMenuProfilesAttributes.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvProfileAttributes)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.contextMenuProfilesAttributes.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2939,7 +2953,6 @@
         private System.Windows.Forms.ComboBox cmbVegetationLayer;
         private System.Windows.Forms.Label lblVegetationLayer;
         private System.Windows.Forms.Label lblRoadsLayer;
-        private System.Windows.Forms.ListView lvProfileAttributes;
         private System.Windows.Forms.ToolStripButton toolPanOnMap;
         private System.Windows.Forms.ToolStrip profilesToolStrip;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
@@ -2952,8 +2965,6 @@
         private System.Windows.Forms.ToolStripButton saveProfileAsShared;
         private System.Windows.Forms.ToolStripButton toolBtnFlash;
         internal System.Windows.Forms.TreeView profilesTreeView;
-        private System.Windows.Forms.ColumnHeader Attribute;
-        private System.Windows.Forms.ColumnHeader Value;
         private System.Windows.Forms.Button btnRefreshLayers;
         private System.Windows.Forms.ComboBox cmbHydrographyLayer;
         private System.Windows.Forms.ComboBox cmbRoadLayers;
@@ -3070,5 +3081,8 @@
         private System.Windows.Forms.Panel panelParamCurrProfile;
         private System.Windows.Forms.Button btnShowProfileLine;
         private System.Windows.Forms.Panel panel19;
+        private System.Windows.Forms.DataGridView dgvProfileAttributes;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Attribute;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Value;
     }
 }
