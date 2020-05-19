@@ -58,14 +58,14 @@
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel16 = new System.Windows.Forms.Panel();
             this.label10 = new System.Windows.Forms.Label();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.lstSrtmFiles = new System.Windows.Forms.ListBox();
             this.panel12 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnImportSrtm = new System.Windows.Forms.Button();
             this.panel8 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.btnSelectSrtm = new System.Windows.Forms.Button();
+            this.txtSrtmFolder = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
@@ -492,7 +492,7 @@
             this.panel11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.panel11.Controls.Add(this.listView1);
             this.panel11.Controls.Add(this.panel16);
-            this.panel11.Controls.Add(this.listBox1);
+            this.panel11.Controls.Add(this.lstSrtmFiles);
             this.panel11.Controls.Add(this.panel12);
             this.panel11.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel11.Location = new System.Drawing.Point(8, 66);
@@ -552,17 +552,17 @@
             this.label10.TabIndex = 0;
             this.label10.Text = "фильтры для списка";
             // 
-            // listBox1
+            // lstSrtmFiles
             // 
-            this.listBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Items.AddRange(new object[] {
+            this.lstSrtmFiles.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lstSrtmFiles.FormattingEnabled = true;
+            this.lstSrtmFiles.Items.AddRange(new object[] {
             "список файлов"});
-            this.listBox1.Location = new System.Drawing.Point(4, 32);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(249, 147);
-            this.listBox1.TabIndex = 6;
-            this.listBox1.Visible = false;
+            this.lstSrtmFiles.Location = new System.Drawing.Point(4, 32);
+            this.lstSrtmFiles.Name = "lstSrtmFiles";
+            this.lstSrtmFiles.Size = new System.Drawing.Size(249, 147);
+            this.lstSrtmFiles.TabIndex = 6;
+            this.lstSrtmFiles.Visible = false;
             // 
             // panel12
             // 
@@ -588,7 +588,7 @@
             // panel10
             // 
             this.panel10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.panel10.Controls.Add(this.button3);
+            this.panel10.Controls.Add(this.btnImportSrtm);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel10.Location = new System.Drawing.Point(8, 462);
             this.panel10.Name = "panel10";
@@ -596,21 +596,22 @@
             this.panel10.Size = new System.Drawing.Size(599, 30);
             this.panel10.TabIndex = 6;
             // 
-            // button3
+            // btnImportSrtm
             // 
-            this.button3.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button3.Location = new System.Drawing.Point(446, 2);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(149, 26);
-            this.button3.TabIndex = 1;
-            this.button3.Text = "Step3";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnImportSrtm.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnImportSrtm.Location = new System.Drawing.Point(446, 2);
+            this.btnImportSrtm.Name = "btnImportSrtm";
+            this.btnImportSrtm.Size = new System.Drawing.Size(149, 26);
+            this.btnImportSrtm.TabIndex = 1;
+            this.btnImportSrtm.Text = "Import ";
+            this.btnImportSrtm.UseVisualStyleBackColor = true;
+            this.btnImportSrtm.Click += new System.EventHandler(this.btnImportSrtm_Click);
             // 
             // panel8
             // 
             this.panel8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.panel8.Controls.Add(this.button1);
-            this.panel8.Controls.Add(this.textBox1);
+            this.panel8.Controls.Add(this.btnSelectSrtm);
+            this.panel8.Controls.Add(this.txtSrtmFolder);
             this.panel8.Controls.Add(this.label8);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel8.Location = new System.Drawing.Point(8, 38);
@@ -619,24 +620,25 @@
             this.panel8.Size = new System.Drawing.Size(599, 28);
             this.panel8.TabIndex = 3;
             // 
-            // button1
+            // btnSelectSrtm
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.button1.Location = new System.Drawing.Point(411, 4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 20);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "выбрать";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnSelectSrtm.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnSelectSrtm.Location = new System.Drawing.Point(411, 4);
+            this.btnSelectSrtm.Name = "btnSelectSrtm";
+            this.btnSelectSrtm.Size = new System.Drawing.Size(75, 20);
+            this.btnSelectSrtm.TabIndex = 2;
+            this.btnSelectSrtm.Text = "выбрать";
+            this.btnSelectSrtm.UseVisualStyleBackColor = true;
+            this.btnSelectSrtm.Click += new System.EventHandler(this.btnSelectSrtm_Click);
             // 
-            // textBox1
+            // txtSrtmFolder
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox1.Location = new System.Drawing.Point(82, 4);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(329, 20);
-            this.textBox1.TabIndex = 1;
-            this.textBox1.Text = "f:\\source\\s1\\20200430";
+            this.txtSrtmFolder.Dock = System.Windows.Forms.DockStyle.Left;
+            this.txtSrtmFolder.Location = new System.Drawing.Point(82, 4);
+            this.txtSrtmFolder.Name = "txtSrtmFolder";
+            this.txtSrtmFolder.ReadOnly = true;
+            this.txtSrtmFolder.Size = new System.Drawing.Size(329, 20);
+            this.txtSrtmFolder.TabIndex = 1;
             // 
             // label8
             // 
@@ -2269,14 +2271,14 @@
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.Panel panel16;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox lstSrtmFiles;
         private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Panel panel10;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnImportSrtm;
         private System.Windows.Forms.Panel panel8;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button btnSelectSrtm;
+        private System.Windows.Forms.TextBox txtSrtmFolder;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label1;

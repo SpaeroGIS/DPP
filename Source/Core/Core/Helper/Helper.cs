@@ -98,21 +98,31 @@ namespace MilSpace.Core
             return true;
         }
 
-        public static bool Convert(SimpleDataTypesEnum typeTo, string value, out object result)
+        public static T Convert<T>(string value)
         {
-            Type convertTo = MilSpace.Core.Helper.SimpleDataTypes[typeTo];
-            try
+
+            if (GdbFieldsTypes.Any(tp => tp.Value.Equals(typeof(T))))
             {
-                TypeConverter tc = TypeDescriptor.GetConverter(convertTo);
-                result = tc.ConvertFromString(value);
-                return true;
+                var convertMetadata = SimpleDataTypes.First(tp => tp.Value.Equals(typeof(T)));
+
+                T result;
+
+                try
+                {
+                    TypeConverter tc = TypeDescriptor.GetConverter(convertMetadata.Value);
+                    result = (T)tc.ConvertFromString(value);
+
+                }
+                catch (Exception ex)
+                {
+                    Logger.Warn($"> Convert. Exception: {ex.Message}");
+                    result = (T)DefaultValueSimpleDataTypes[convertMetadata.Key].Invoke();
+                }
+
+                return (T)result;
             }
-            catch (Exception ex)
-            {
-                Logger.Warn($"> Convert. Exception: {ex.Message}");
-                result = DefaultValueSimpleDataTypes[typeTo].Invoke();
-            }
-            return false;
+
+            throw new NotSupportedException($"Type {typeof(T)} is not supportde");
         }
 
         public static SimpleDataTypesEnum ConvertToSimpleDatatTypeEnum(string stringType)
@@ -323,7 +333,7 @@ namespace MilSpace.Core
         }
 
 
-        public static  IPoint GetCentroid(this IEnvelope envelope)
+        public static IPoint GetCentroid(this IEnvelope envelope)
         {
             var x = (envelope.XMin + envelope.XMax) / 2;
             var y = (envelope.YMin + envelope.YMax) / 2;

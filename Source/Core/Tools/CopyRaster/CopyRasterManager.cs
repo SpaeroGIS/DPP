@@ -1,4 +1,5 @@
 ﻿using MilSpace.Configurations;
+using MilSpace.Core;
 using MilSpace.Core.Actions;
 using MilSpace.Core.Actions.ActionResults;
 using MilSpace.Core.Actions.Base;
@@ -16,40 +17,42 @@ namespace MilSpace.Tools.CopyRaster
 {
     public class CopyRasterManager
     {
+        private static Logger log = Logger.GetLoggerEx("CopyRasterManager");
 
-        public void CopySrtmRasterToStoreage(string sourceFolder, bool replaceExisted)
+        public void CopySrtmRasterToStoreage(IEnumerable<string> rasterFiles, bool replaceExisted)
         {
+
+            if (rasterFiles == null)
+            {
+                throw new FileLoadException("Srtm files were not defined");
+            }
+
             var action = new ActionParam<string>()
             {
                 ParamName = ActionParamNamesCore.Action,
                 Value = ActionsEnum.demCopyRaster.ToString()
             };
 
-            var sourceFolde = new DirectoryInfo(sourceFolder);
-
-            if (!sourceFolde.Exists)
-            {
-                throw new DirectoryNotFoundException(sourceFolder);
-            }
-
-            var importfiles = sourceFolde.GetFiles("*.tif");
-
-            var storageDbFiles = (replaceExisted ? AddDemFacade.GetSrtmGrids() : AddDemFacade.GetNotLoadedSrtmGrids()) ?? throw new InvalidDataException("Cannot read SRTM Grig data. For more detailed infor go to the Log file");
-            var storageFiles = storageDbFiles.Select(gi => new FileInfo(Path.Combine(MilSpaceConfiguration.DemStorages.SrtmStorage, gi.FileName)));
-
-            var filtered = importfiles.Where(impf => storageDbFiles.Any(sf => impf.Name.EndsWith(sf.FileName))).Select(fi => fi.FullName);
-
             var prm = new IActionParam[]
              {
                   action,
-                   new ActionParam<IEnumerable<string>>() { ParamName = ActionParameters.Files , Value = filtered.ToArray()},
+                   new ActionParam<IEnumerable<string>>() { ParamName = ActionParameters.Files , Value = rasterFiles.ToArray()},
                    new ActionParam<bool>() { ParamName = ActionParameters.ReplaceOnExists, Value = replaceExisted},
                    new ActionParam<ResterStorageTypesEnum>() { ParamName = ActionParameters.ResterStorageType, Value = ResterStorageTypesEnum.Srtm},
              };
 
             var procc = new ActionProcessor(prm);
-            var res = procc.Process<StringCollectionResult>();
+            var res = procc.Process<CopyRasterResult>();
 
+            foreach( var line in res.Result.Log)
+            {
+                log.InfoEx(line);
+            }
+
+            if (res.Result.CopoedFiles.Count()  != rasterFiles.Count())
+            {
+                throw new FormatException("Not all SRTM files were coppied");
+            }
         }
     }
 }
