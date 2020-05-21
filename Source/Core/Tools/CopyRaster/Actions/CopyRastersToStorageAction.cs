@@ -13,7 +13,7 @@ using A = MilSpace.Core.Actions.Base;
 
 namespace MilSpace.Tools.CopyRaster.Actions
 {
-    public class CopyRastersToStorageAction : A.Action<StringCollectionResult>
+    public class CopyRastersToStorageAction : A.Action<CopyRasterResult>
     {
         private IEnumerable<string> files;
         private bool replaceFiles;
@@ -25,8 +25,8 @@ namespace MilSpace.Tools.CopyRaster.Actions
                : base(parameters)
         {
             files = parameters.GetParameterWithValidition<IEnumerable<string>>(ActionParameters.Files, null).Value;
-            replaceFiles = parameters.GetParameterWithValidition(ActionParameters.ReplaceOnExists, true).Value;
-            resterStorageType = parameters.GetParameterWithValidition(ActionParameters.ResterStorageType, ResterStorageTypesEnum.Srtm).Value;
+            replaceFiles = parameters.GetParameter(ActionParameters.ReplaceOnExists, true).Value;
+            resterStorageType = parameters.GetParameter(ActionParameters.ResterStorageType, ResterStorageTypesEnum.Srtm).Value;
         }
 
         public override string ActionId => ActionsEnum.demCopyRaster.ToString();
@@ -46,7 +46,7 @@ namespace MilSpace.Tools.CopyRaster.Actions
 
 
 
-        public override StringCollectionResult GetResult()
+        public override CopyRasterResult GetResult()
         {
             return this.returnResult;
         }
@@ -59,16 +59,16 @@ namespace MilSpace.Tools.CopyRaster.Actions
             CalculationLibrary.RasterToOtherFormat(files, srtmStorage, out errorMessages);
 
 
-            var fileUsage = files.ToDictionary(f => f, t => true);
-            if (!replaceFiles)
-            {
-                foreach (var fl in files)
-                {
-                    //if (File)
-                }
+            var fileUsage = files.ToDictionary(f => new FileInfo(f), t => false);
 
+            foreach (var fi in fileUsage.Keys.ToArray())
+            {
+                var flNm = fi.Name;
+                fileUsage[fi] = errorMessages.Any(m => m.EndsWith(flNm, StringComparison.CurrentCultureIgnoreCase));
             }
 
+            returnResult.Result.Log = errorMessages;
+            returnResult.Result.CopoedFiles = fileUsage.Where(f => f.Value).Select(f => f.Key.FullName);
         }
     }
 }

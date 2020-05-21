@@ -53,7 +53,7 @@ namespace MilSpace.Configurations.Base
         /// </summary>
         internal const string SrtmStorage = "srtmStorage";
 
-
+        internal const string SentinelStorage = "sentinelStorage";
         /// <summary>
         /// Python configuration section
         /// </summary>
@@ -72,7 +72,11 @@ namespace MilSpace.Configurations.Base
         internal const string FeatureClasses = "featureClasses";
         internal const string ObservationPoint = "observationPoint";
         internal const string NameAttribute = "name";
+        internal const string UserNameAttribute = "userName";
+        internal const string PasswordAttribute = "password";
         internal const string RootFolderAttribte = "rootFolder";
+        internal const string MetadataUrlAttribute = "scihubMetadataUrl";
+        internal const string ProductUrlAttribte = "scihubPrtoductsUrl";
 
     }
 }

@@ -105,6 +105,9 @@
     <Compile Include="..\Configurations\DemStorages\DemStoragesSections.cs">
       <Link>DemStorages\DemStoragesSections.cs</Link>
     </Compile>
+    <Compile Include="..\Configurations\DemStorages\SentinelStorageSection.cs">
+      <Link>DemStorages\SentinelStorageSection.cs</Link>
+    </Compile>
     <Compile Include="..\Configurations\DemStorages\SrtmStorageSection.cs">
       <Link>DemStorages\SrtmStorageSection.cs</Link>
     </Compile>

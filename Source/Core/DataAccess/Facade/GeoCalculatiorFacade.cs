@@ -19,6 +19,14 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
+        public static GeoCalcPoint GetUserSessionPointById(Guid id)
+        {
+            using (var accessor = new GeoCalculatorDataAccess())
+            {
+                return accessor.GetUserPointById(id);
+            }
+        }
+
         public static void SaveUserSessionPoints(IEnumerable<GeoCalcPoint> points)
         {
             using (var accessor = new GeoCalculatorDataAccess())
@@ -50,6 +58,30 @@ namespace MilSpace.DataAccess.Facade
                 log.InfoEx("UpdateUserSessionPoints points == null");
             }
             log.InfoEx("> UpdateUserSessionPoints END");
+        }
+
+        public static void UpdateUserSessionPoint(GeoCalcPoint point)
+        {
+            log.InfoEx("> UpdateUserSessionPoint START");
+            if (point != null)
+            {
+                try
+                {
+                    using (var accessor = new GeoCalculatorDataAccess())
+                    {
+                        accessor.UpdateUserPoint(point);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    log.InfoEx("> UpdateUserSessionPoint Exception: {0}", ex.Message);
+                }
+            }
+            else
+            {
+                log.InfoEx("UpdateUserSessionPoint point == null");
+            }
+            log.InfoEx("> UpdateUserSessionPoint END");
         }
 
         public static void DeleteUserSessionPoint(Guid pointId)

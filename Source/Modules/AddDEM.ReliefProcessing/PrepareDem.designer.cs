@@ -29,17 +29,17 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("длина");
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("ширина");
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("дата");
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("название тайла");
+            System.Windows.Forms.ListViewItem listViewItem21 = new System.Windows.Forms.ListViewItem("длина");
+            System.Windows.Forms.ListViewItem listViewItem22 = new System.Windows.Forms.ListViewItem("ширина");
+            System.Windows.Forms.ListViewItem listViewItem23 = new System.Windows.Forms.ListViewItem("дата");
+            System.Windows.Forms.ListViewItem listViewItem24 = new System.Windows.Forms.ListViewItem("название тайла");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrepareDem));
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel7 = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lblSentinelStorage = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblSrtmStorage = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
@@ -58,14 +58,14 @@
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel16 = new System.Windows.Forms.Panel();
             this.label10 = new System.Windows.Forms.Label();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.lstSrtmFiles = new System.Windows.Forms.ListBox();
             this.panel12 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnImportSrtm = new System.Windows.Forms.Button();
             this.panel8 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.btnSelectSrtm = new System.Windows.Forms.Button();
+            this.txtSrtmFolder = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
@@ -105,18 +105,18 @@
             this.label22 = new System.Windows.Forms.Label();
             this.panel31 = new System.Windows.Forms.Panel();
             this.label21 = new System.Windows.Forms.Label();
-            this.listBox3 = new System.Windows.Forms.ListBox();
+            this.lstTiles = new System.Windows.Forms.ListBox();
             this.panel30 = new System.Windows.Forms.Panel();
             this.button10 = new System.Windows.Forms.Button();
             this.panel29 = new System.Windows.Forms.Panel();
             this.label20 = new System.Windows.Forms.Label();
             this.panel28 = new System.Windows.Forms.Panel();
-            this.button9 = new System.Windows.Forms.Button();
+            this.btnAddTileToList = new System.Windows.Forms.Button();
             this.panel27 = new System.Windows.Forms.Panel();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.txtLatitude = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.panel26 = new System.Windows.Forms.Panel();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtLongtitude = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.panel25 = new System.Windows.Forms.Panel();
             this.label17 = new System.Windows.Forms.Label();
@@ -295,7 +295,7 @@
             // panel7
             // 
             this.panel7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.panel7.Controls.Add(this.label5);
+            this.panel7.Controls.Add(this.lblSentinelStorage);
             this.panel7.Controls.Add(this.label6);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel7.Location = new System.Drawing.Point(8, 66);
@@ -304,15 +304,15 @@
             this.panel7.Size = new System.Drawing.Size(613, 28);
             this.panel7.TabIndex = 3;
             // 
-            // label5
+            // lblSentinelStorage
             // 
-            this.label5.AutoSize = true;
-            this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label5.Location = new System.Drawing.Point(82, 6);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(141, 13);
-            this.label5.TabIndex = 1;
-            this.label5.Text = "\\\\fileserver\\archiveDEM\\S1";
+            this.lblSentinelStorage.AutoSize = true;
+            this.lblSentinelStorage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblSentinelStorage.Location = new System.Drawing.Point(82, 6);
+            this.lblSentinelStorage.Name = "lblSentinelStorage";
+            this.lblSentinelStorage.Size = new System.Drawing.Size(141, 13);
+            this.lblSentinelStorage.TabIndex = 1;
+            this.lblSentinelStorage.Text = "\\\\fileserver\\archiveDEM\\S1";
             // 
             // label6
             // 
@@ -326,7 +326,7 @@
             // panel6
             // 
             this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.panel6.Controls.Add(this.label4);
+            this.panel6.Controls.Add(this.lblSrtmStorage);
             this.panel6.Controls.Add(this.label3);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel6.Location = new System.Drawing.Point(8, 38);
@@ -335,15 +335,15 @@
             this.panel6.Size = new System.Drawing.Size(613, 28);
             this.panel6.TabIndex = 2;
             // 
-            // label4
+            // lblSrtmStorage
             // 
-            this.label4.AutoSize = true;
-            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label4.Location = new System.Drawing.Point(82, 6);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(159, 13);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "\\\\fileserver\\archiveDEM\\SRTM";
+            this.lblSrtmStorage.AutoSize = true;
+            this.lblSrtmStorage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblSrtmStorage.Location = new System.Drawing.Point(82, 6);
+            this.lblSrtmStorage.Name = "lblSrtmStorage";
+            this.lblSrtmStorage.Size = new System.Drawing.Size(159, 13);
+            this.lblSrtmStorage.TabIndex = 1;
+            this.lblSrtmStorage.Text = "\\\\fileserver\\archiveDEM\\SRTM";
             // 
             // label3
             // 
@@ -492,7 +492,7 @@
             this.panel11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.panel11.Controls.Add(this.listView1);
             this.panel11.Controls.Add(this.panel16);
-            this.panel11.Controls.Add(this.listBox1);
+            this.panel11.Controls.Add(this.lstSrtmFiles);
             this.panel11.Controls.Add(this.panel12);
             this.panel11.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel11.Location = new System.Drawing.Point(8, 66);
@@ -510,10 +510,10 @@
             this.listView1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.listView1.HideSelection = false;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4});
+            listViewItem21,
+            listViewItem22,
+            listViewItem23,
+            listViewItem24});
             this.listView1.Location = new System.Drawing.Point(4, 280);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(249, 112);
@@ -552,17 +552,17 @@
             this.label10.TabIndex = 0;
             this.label10.Text = "фильтры для списка";
             // 
-            // listBox1
+            // lstSrtmFiles
             // 
-            this.listBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Items.AddRange(new object[] {
+            this.lstSrtmFiles.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lstSrtmFiles.FormattingEnabled = true;
+            this.lstSrtmFiles.Items.AddRange(new object[] {
             "список файлов"});
-            this.listBox1.Location = new System.Drawing.Point(4, 32);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(249, 147);
-            this.listBox1.TabIndex = 6;
-            this.listBox1.Visible = false;
+            this.lstSrtmFiles.Location = new System.Drawing.Point(4, 32);
+            this.lstSrtmFiles.Name = "lstSrtmFiles";
+            this.lstSrtmFiles.Size = new System.Drawing.Size(249, 147);
+            this.lstSrtmFiles.TabIndex = 6;
+            this.lstSrtmFiles.Visible = false;
             // 
             // panel12
             // 
@@ -588,7 +588,7 @@
             // panel10
             // 
             this.panel10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.panel10.Controls.Add(this.button3);
+            this.panel10.Controls.Add(this.btnImportSrtm);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel10.Location = new System.Drawing.Point(8, 462);
             this.panel10.Name = "panel10";
@@ -596,21 +596,22 @@
             this.panel10.Size = new System.Drawing.Size(599, 30);
             this.panel10.TabIndex = 6;
             // 
-            // button3
+            // btnImportSrtm
             // 
-            this.button3.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button3.Location = new System.Drawing.Point(446, 2);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(149, 26);
-            this.button3.TabIndex = 1;
-            this.button3.Text = "Step3";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnImportSrtm.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnImportSrtm.Location = new System.Drawing.Point(446, 2);
+            this.btnImportSrtm.Name = "btnImportSrtm";
+            this.btnImportSrtm.Size = new System.Drawing.Size(149, 26);
+            this.btnImportSrtm.TabIndex = 1;
+            this.btnImportSrtm.Text = "Import ";
+            this.btnImportSrtm.UseVisualStyleBackColor = true;
+            this.btnImportSrtm.Click += new System.EventHandler(this.btnImportSrtm_Click);
             // 
             // panel8
             // 
             this.panel8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.panel8.Controls.Add(this.button1);
-            this.panel8.Controls.Add(this.textBox1);
+            this.panel8.Controls.Add(this.btnSelectSrtm);
+            this.panel8.Controls.Add(this.txtSrtmFolder);
             this.panel8.Controls.Add(this.label8);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel8.Location = new System.Drawing.Point(8, 38);
@@ -619,24 +620,25 @@
             this.panel8.Size = new System.Drawing.Size(599, 28);
             this.panel8.TabIndex = 3;
             // 
-            // button1
+            // btnSelectSrtm
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.button1.Location = new System.Drawing.Point(411, 4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 20);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "выбрать";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnSelectSrtm.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnSelectSrtm.Location = new System.Drawing.Point(411, 4);
+            this.btnSelectSrtm.Name = "btnSelectSrtm";
+            this.btnSelectSrtm.Size = new System.Drawing.Size(75, 20);
+            this.btnSelectSrtm.TabIndex = 2;
+            this.btnSelectSrtm.Text = "выбрать";
+            this.btnSelectSrtm.UseVisualStyleBackColor = true;
+            this.btnSelectSrtm.Click += new System.EventHandler(this.btnSelectSrtm_Click);
             // 
-            // textBox1
+            // txtSrtmFolder
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox1.Location = new System.Drawing.Point(82, 4);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(329, 20);
-            this.textBox1.TabIndex = 1;
-            this.textBox1.Text = "f:\\source\\s1\\20200430";
+            this.txtSrtmFolder.Dock = System.Windows.Forms.DockStyle.Left;
+            this.txtSrtmFolder.Location = new System.Drawing.Point(82, 4);
+            this.txtSrtmFolder.Name = "txtSrtmFolder";
+            this.txtSrtmFolder.ReadOnly = true;
+            this.txtSrtmFolder.Size = new System.Drawing.Size(329, 20);
+            this.txtSrtmFolder.TabIndex = 1;
             // 
             // label8
             // 
@@ -854,7 +856,6 @@
             this.label28.Size = new System.Drawing.Size(87, 13);
             this.label28.TabIndex = 0;
             this.label28.Text = "для скачивания";
-            this.label28.Click += new System.EventHandler(this.label28_Click);
             // 
             // panel41
             // 
@@ -915,7 +916,7 @@
             this.panel20.Controls.Add(this.panel33);
             this.panel20.Controls.Add(this.panel32);
             this.panel20.Controls.Add(this.panel31);
-            this.panel20.Controls.Add(this.listBox3);
+            this.panel20.Controls.Add(this.lstTiles);
             this.panel20.Controls.Add(this.panel30);
             this.panel20.Controls.Add(this.panel29);
             this.panel20.Controls.Add(this.panel28);
@@ -1069,19 +1070,14 @@
             this.label21.TabIndex = 0;
             this.label21.Text = "дополнительные параметры";
             // 
-            // listBox3
+            // lstTiles
             // 
-            this.listBox3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.listBox3.FormattingEnabled = true;
-            this.listBox3.Items.AddRange(new object[] {
-            "n50e036",
-            "n50e036",
-            "n50e036"});
-            this.listBox3.Location = new System.Drawing.Point(2, 208);
-            this.listBox3.Name = "listBox3";
-            this.listBox3.Size = new System.Drawing.Size(196, 82);
-            this.listBox3.TabIndex = 8;
-            this.listBox3.SelectedIndexChanged += new System.EventHandler(this.listBox3_SelectedIndexChanged);
+            this.lstTiles.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lstTiles.FormattingEnabled = true;
+            this.lstTiles.Location = new System.Drawing.Point(2, 208);
+            this.lstTiles.Name = "lstTiles";
+            this.lstTiles.Size = new System.Drawing.Size(196, 82);
+            this.lstTiles.TabIndex = 8;
             // 
             // panel30
             // 
@@ -1127,7 +1123,7 @@
             // 
             // panel28
             // 
-            this.panel28.Controls.Add(this.button9);
+            this.panel28.Controls.Add(this.btnAddTileToList);
             this.panel28.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel28.Location = new System.Drawing.Point(2, 147);
             this.panel28.Name = "panel28";
@@ -1135,20 +1131,22 @@
             this.panel28.Size = new System.Drawing.Size(196, 35);
             this.panel28.TabIndex = 5;
             // 
-            // button9
+            // btnAddTileToList
             // 
-            this.button9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button9.Location = new System.Drawing.Point(16, 4);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(164, 27);
-            this.button9.TabIndex = 0;
-            this.button9.Text = "добавить в список";
-            this.button9.UseVisualStyleBackColor = true;
+            this.btnAddTileToList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnAddTileToList.Enabled = false;
+            this.btnAddTileToList.Location = new System.Drawing.Point(16, 4);
+            this.btnAddTileToList.Name = "btnAddTileToList";
+            this.btnAddTileToList.Size = new System.Drawing.Size(164, 27);
+            this.btnAddTileToList.TabIndex = 0;
+            this.btnAddTileToList.Text = "добавить в список";
+            this.btnAddTileToList.UseVisualStyleBackColor = true;
+            this.btnAddTileToList.Click += new System.EventHandler(this.btnAddTileToList_Click);
             // 
             // panel27
             // 
             this.panel27.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.panel27.Controls.Add(this.textBox3);
+            this.panel27.Controls.Add(this.txtLatitude);
             this.panel27.Controls.Add(this.label19);
             this.panel27.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel27.Location = new System.Drawing.Point(2, 119);
@@ -1157,13 +1155,14 @@
             this.panel27.Size = new System.Drawing.Size(196, 28);
             this.panel27.TabIndex = 4;
             // 
-            // textBox3
+            // txtLatitude
             // 
-            this.textBox3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox3.Location = new System.Drawing.Point(84, 4);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(96, 20);
-            this.textBox3.TabIndex = 1;
+            this.txtLatitude.Dock = System.Windows.Forms.DockStyle.Left;
+            this.txtLatitude.Location = new System.Drawing.Point(84, 4);
+            this.txtLatitude.Name = "txtLatitude";
+            this.txtLatitude.Size = new System.Drawing.Size(96, 20);
+            this.txtLatitude.TabIndex = 1;
+            this.txtLatitude.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLatitude_KeyPress);
             // 
             // label19
             // 
@@ -1177,7 +1176,7 @@
             // panel26
             // 
             this.panel26.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.panel26.Controls.Add(this.textBox2);
+            this.panel26.Controls.Add(this.txtLongtitude);
             this.panel26.Controls.Add(this.label18);
             this.panel26.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel26.Location = new System.Drawing.Point(2, 91);
@@ -1186,13 +1185,14 @@
             this.panel26.Size = new System.Drawing.Size(196, 28);
             this.panel26.TabIndex = 3;
             // 
-            // textBox2
+            // txtLongtitude
             // 
-            this.textBox2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox2.Location = new System.Drawing.Point(84, 4);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(96, 20);
-            this.textBox2.TabIndex = 1;
+            this.txtLongtitude.Dock = System.Windows.Forms.DockStyle.Left;
+            this.txtLongtitude.Location = new System.Drawing.Point(84, 4);
+            this.txtLongtitude.Name = "txtLongtitude";
+            this.txtLongtitude.Size = new System.Drawing.Size(96, 20);
+            this.txtLongtitude.TabIndex = 1;
+            this.txtLongtitude.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLongtitude_KeyPress);
             // 
             // label18
             // 
@@ -1253,7 +1253,6 @@
             this.panel22.Padding = new System.Windows.Forms.Padding(4);
             this.panel22.Size = new System.Drawing.Size(196, 28);
             this.panel22.TabIndex = 0;
-            this.panel22.Paint += new System.Windows.Forms.PaintEventHandler(this.panel22_Paint);
             // 
             // label15
             // 
@@ -1372,7 +1371,6 @@
             this.button14.TabIndex = 1;
             this.button14.Text = "предварительная обработка";
             this.button14.UseVisualStyleBackColor = true;
-            this.button14.Click += new System.EventHandler(this.button14_Click);
             // 
             // panel47
             // 
@@ -2249,10 +2247,10 @@
         #endregion
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblSentinelStorage;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblSrtmStorage;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label label2;
@@ -2273,14 +2271,14 @@
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.Panel panel16;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox lstSrtmFiles;
         private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Panel panel10;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnImportSrtm;
         private System.Windows.Forms.Panel panel8;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button btnSelectSrtm;
+        private System.Windows.Forms.TextBox txtSrtmFolder;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label1;
@@ -2301,18 +2299,18 @@
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Panel panel31;
         private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.ListBox listBox3;
+        private System.Windows.Forms.ListBox lstTiles;
         private System.Windows.Forms.Panel panel30;
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Panel panel29;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Panel panel28;
-        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Button btnAddTileToList;
         private System.Windows.Forms.Panel panel27;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox txtLatitude;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Panel panel26;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtLongtitude;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Panel panel25;
         private System.Windows.Forms.Label label17;

@@ -1,4 +1,5 @@
-﻿using ESRI.ArcGIS.Carto;
+﻿using ESRI.ArcGIS.ADF;
+using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.DataSourcesGDB;
 using ESRI.ArcGIS.DataSourcesRaster;
 using ESRI.ArcGIS.esriSystem;
@@ -7,6 +8,7 @@ using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Configurations;
 using MilSpace.Core;
+using MilSpace.Core.DataAccess;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Exceptions;
 using System;
@@ -42,7 +44,7 @@ namespace MilSpace.DataAccess.Facade
                 //    MilSpaceConfiguration.ConnectionProperty.WorkingGDBConnection);
                 //Nikol 20191202
 
-                logger.DebugEx("GdbAccess. MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection: {0}", 
+                logger.DebugEx("GdbAccess. MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection: {0}",
                     MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection);
 
                 string calcGdb = MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection;
@@ -239,14 +241,14 @@ namespace MilSpace.DataAccess.Facade
 
                     //(IFeatureDatasetName)targetDataset.FullName
                     IEnumInvalidObject enumErrors = fctofc.ConvertFeatureClass(
-                        sourceDatasetName, 
-                        queryFilter, 
-                        null, 
-                        targetFeatureClassName, 
+                        sourceDatasetName,
+                        queryFilter,
+                        null,
+                        targetFeatureClassName,
                         targetGeometryDef,
-                        pSourceTab.Fields, 
-                        "", 
-                        1000, 
+                        pSourceTab.Fields,
+                        "",
+                        1000,
                         0);
 
                     if (enumErrors != null)
@@ -254,7 +256,7 @@ namespace MilSpace.DataAccess.Facade
                         var error = enumErrors.Next();
                         while (error != null)
                         {
-                            logger.WarnEx("ExportObservationFeatureClass. Export error in the featureID:{0} ErrorDescription{1}", 
+                            logger.WarnEx("ExportObservationFeatureClass. Export error in the featureID:{0} ErrorDescription{1}",
                                 error.InvalidObjectID, error.ErrorDescription);
                             error = enumErrors.Next();
                         }
@@ -297,9 +299,9 @@ namespace MilSpace.DataAccess.Facade
                 IFeatureClassDescription fcDescription = new FeatureClassDescriptionClass();
                 IObjectClassDescription ocDescription = (IObjectClassDescription)fcDescription;
 
-                 featureClass = featureWorkspace.CreateFeatureClass(name, observPointsFCFields,
-                        ocDescription.InstanceCLSID, ocDescription.ClassExtensionCLSID,
-                        esriFeatureType.esriFTSimple, "shape", "");
+                featureClass = featureWorkspace.CreateFeatureClass(name, observPointsFCFields,
+                       ocDescription.InstanceCLSID, ocDescription.ClassExtensionCLSID,
+                       esriFeatureType.esriFTSimple, "shape", "");
             }
 
             workspaceEdit.StopEditOperation();
@@ -716,7 +718,7 @@ namespace MilSpace.DataAccess.Facade
                 {
                     var dataset = datasetNames.Next();
 
-                    if(dataset == null)
+                    if (dataset == null)
                     {
                         return null;
                     }
@@ -867,7 +869,7 @@ namespace MilSpace.DataAccess.Facade
                     if (workingWorkspace == null)
                     {
                         throw new MilSpaceDataException(
-                            MilSpaceConfiguration.ConnectionProperty.WorkingGDBConnection, 
+                            MilSpaceConfiguration.ConnectionProperty.WorkingGDBConnection,
                             Core.DataAccess.DataOperationsEnum.Access);
                         //throw new MilSpaceVisibilityDataException("Cannot open working GDB");
                     }
@@ -917,8 +919,8 @@ namespace MilSpace.DataAccess.Facade
                                                     bool isZAware = true, bool addSuffix = false)
         {
             IFeatureClass featureClass = null;
-            
-            if(addSuffix)
+
+            if (addSuffix)
             {
                 featureClassName += Helper.GetTemporaryNameSuffix();
             }
@@ -946,7 +948,7 @@ namespace MilSpace.DataAccess.Facade
                     IGeometryDefEdit geometryDefEdit = (IGeometryDefEdit)geometryDef;
                     geometryDefEdit.HasZ_2 = isZAware;
                     geometryDefEdit.GeometryType_2 = type;
-                    geometryDefEdit.SpatialReference_2 = (activeView == null)? ArcMapInstance.Document.FocusMap.SpatialReference : activeView.FocusMap.SpatialReference;
+                    geometryDefEdit.SpatialReference_2 = (activeView == null) ? ArcMapInstance.Document.FocusMap.SpatialReference : activeView.FocusMap.SpatialReference;
                 }
 
                 featureClass = featureWorkspace.CreateFeatureClass(featureClassName, fields,
@@ -1016,7 +1018,149 @@ namespace MilSpace.DataAccess.Facade
             return newFeatureClassName;
         }
 
-        private void SetObservPointValues(IFeatureClass featureClass, IFeature pointFeature, IPoint point, ObservationPoint pointArgs)
+        public void UpdateObservPoint(IFeatureClass featureClass, IObserverPoint observerPoint)
+        {
+            var feature = featureClass.GetFeature(observerPoint.Objectid);
+
+            var azimuthBIndex = featureClass.FindField("AzimuthB");
+            var azimuthEIndex = featureClass.FindField("AzimuthE");
+            var anglMinIndex = featureClass.FindField("AnglMinH");
+            var anglMaxIndex = featureClass.FindField("AnglMaxH");
+            var hRelIndex = featureClass.FindField("HRel");
+
+            try
+            {
+                if (azimuthBIndex != -1)
+                {
+                    feature.set_Value(azimuthBIndex, observerPoint.AzimuthStart);
+                }
+
+                if (azimuthEIndex != -1)
+                {
+                    feature.set_Value(azimuthEIndex, observerPoint.AzimuthEnd);
+                }
+
+                if (anglMinIndex != -1)
+                {
+                    feature.set_Value(anglMinIndex, observerPoint.AngelMinH);
+                }
+
+                if (anglMaxIndex != -1)
+                {
+                    feature.set_Value(anglMaxIndex, observerPoint.AngelMaxH);
+                }
+
+                if (hRelIndex != -1)
+                {
+                    feature.set_Value(hRelIndex, observerPoint.RelativeHeight);
+                }
+
+                feature.Store();
+            }
+            catch(Exception ex)
+            {
+                logger.ErrorEx($"Cannot save observer point with id {observerPoint.Objectid} /n{ex.Message}");
+            }
+        }
+
+        public void AddObserverPointFields(IFeatureClass featureClass)
+        {
+            if (featureClass.FindField("AzimuthB") == -1)
+            {
+                IField azimuthBField = new FieldClass();
+                IFieldEdit azimuthBFieldEdit = (IFieldEdit)azimuthBField;
+                azimuthBFieldEdit.Name_2 = "AzimuthB";
+                azimuthBFieldEdit.Type_2 = esriFieldType.esriFieldTypeDouble;
+                featureClass.AddField(azimuthBField);
+            }
+
+            if (featureClass.FindField("AzimuthE") == -1)
+            {
+                IField azimuthEField = new FieldClass();
+                IFieldEdit azimuthEFieldEdit = (IFieldEdit)azimuthEField;
+                azimuthEFieldEdit.Name_2 = "AzimuthE";
+                azimuthEFieldEdit.Type_2 = esriFieldType.esriFieldTypeDouble;
+                featureClass.AddField(azimuthEField);
+            }
+
+            if (featureClass.FindField("AnglMinH") == -1)
+            {
+                IField anglMinHField = new FieldClass();
+                IFieldEdit anglMinHFieldEdit = (IFieldEdit)anglMinHField;
+                anglMinHFieldEdit.Name_2 = "AnglMinH";
+                anglMinHFieldEdit.Type_2 = esriFieldType.esriFieldTypeDouble;
+                featureClass.AddField(anglMinHField);
+            }
+
+            if (featureClass.FindField("AnglMaxH") == -1)
+            {
+                IField anglMaxHField = new FieldClass();
+                IFieldEdit anglMaxHFieldEdit = (IFieldEdit)anglMaxHField;
+                anglMaxHFieldEdit.Name_2 = "AnglMaxH";
+                anglMaxHFieldEdit.Type_2 = esriFieldType.esriFieldTypeDouble;
+                featureClass.AddField(anglMaxHField);
+            }
+
+            if (featureClass.FindField("HRel") == -1)
+            {
+                IField heightField = new FieldClass();
+                IFieldEdit heightFieldEdit = (IFieldEdit)heightField;
+                heightFieldEdit.Name_2 = "HRel";
+                heightFieldEdit.Type_2 = esriFieldType.esriFieldTypeDouble;
+                featureClass.AddField(heightField);
+            }
+
+            SetObservPointDefaultValues(featureClass);
+        }
+
+        private void SetObservPointDefaultValues(IFeatureClass featureClass)
+        {
+            using (ComReleaser comReleaser = new ComReleaser())
+            {
+                IFeatureCursor searchCursor = featureClass.Search(null, false);
+                comReleaser.ManageLifetime(searchCursor);
+                IFeature feature = null;
+
+                var azimuthBIndex = featureClass.FindField("AzimuthB");
+                var azimuthEIndex = featureClass.FindField("AzimuthE");
+                var anglMinIndex = featureClass.FindField("AnglMinH");
+                var anglMaxIndex = featureClass.FindField("AnglMaxH");
+                var hRelIndex = featureClass.FindField("HRel");
+
+                while ((feature = searchCursor.NextFeature()) != null)
+                {
+
+                    if (azimuthBIndex != -1 && feature.Value[azimuthBIndex] == DBNull.Value)
+                    {
+                        feature.set_Value(azimuthBIndex, 0);
+                    }
+
+                    if (azimuthEIndex != -1 && feature.Value[azimuthEIndex] == DBNull.Value)
+                    {
+                        feature.set_Value(azimuthEIndex, 360);
+                    }
+
+                    if (anglMinIndex != -1 && feature.Value[anglMinIndex] == DBNull.Value)
+                    {
+                        feature.set_Value(anglMinIndex, -90);
+                    }
+
+                    if (anglMaxIndex != -1 && feature.Value[anglMaxIndex] == DBNull.Value)
+                    {
+                        feature.set_Value(anglMaxIndex, 90);
+                    }
+
+                    if (hRelIndex != -1 && feature.Value[hRelIndex] == DBNull.Value)
+                    {
+                        feature.set_Value(hRelIndex, 0);
+                    }
+
+                    feature.Store();
+                }
+            }
+        }
+
+            private void SetObservPointValues(IFeatureClass featureClass, IFeature pointFeature, IPoint point, ObservationPoint pointArgs)
         {
             if (point != null)
             {

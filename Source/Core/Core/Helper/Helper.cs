@@ -9,6 +9,7 @@ using MilSpace.Configurations;
 using System.Reflection;
 using ESRI.ArcGIS.Geometry;
 using Microsoft.Win32;
+using ESRI.ArcGIS.Geodatabase;
 
 namespace MilSpace.Core
 {
@@ -32,23 +33,96 @@ namespace MilSpace.Core
           { SimpleDataTypesEnum.Undefined , () =>{ return default(string);}}};
 
 
+        public static Dictionary<esriFieldType, Type> GdbFieldsTypes = new Dictionary<esriFieldType, Type>
+        {
+            { esriFieldType.esriFieldTypeString, typeof(string)},
+            { esriFieldType.esriFieldTypeDate, typeof(DateTime)},
+            { esriFieldType.esriFieldTypeDouble, typeof(double)},
+            { esriFieldType.esriFieldTypeInteger, typeof(int)},
+            { esriFieldType.esriFieldTypeOID, typeof(int)},
+            { esriFieldType.esriFieldTypeSmallInteger, typeof(short)},
+        };
+
         private static string milSpaceRegistryPath = @"SOFTWARE\WOW6432Node\MilSpace\";
 
-        public static bool Convert(SimpleDataTypesEnum typeTo, string value, out object result)
+        public static bool ConvertFromFieldType<T>(esriFieldType fieldType,
+                                                    object value,
+                                                    out T result,
+                                                    out string message)
         {
-            Type convertTo = MilSpace.Core.Helper.SimpleDataTypes[typeTo];
+            message = string.Empty;
+
             try
             {
-                TypeConverter tc = TypeDescriptor.GetConverter(convertTo);
-                result = tc.ConvertFromString(value);
-                return true;
+                switch (fieldType)
+                {
+                    case esriFieldType.esriFieldTypeDouble:
+
+                        result = (T)System.Convert.ChangeType(System.Convert.ToDouble(value), typeof(T));
+
+                        break;
+
+                    case esriFieldType.esriFieldTypeDate:
+
+                        result = (T)System.Convert.ChangeType(System.Convert.ToDateTime(value), typeof(T));
+
+                        break;
+
+                    case esriFieldType.esriFieldTypeInteger:
+                    case esriFieldType.esriFieldTypeOID:
+
+                        result = (T)System.Convert.ChangeType(System.Convert.ToInt32(value), typeof(T));
+
+                        break;
+
+                    case esriFieldType.esriFieldTypeSmallInteger:
+
+                        result = (T)System.Convert.ChangeType(System.Convert.ToInt16(value), typeof(T));
+
+                        break;
+
+                    default:
+
+                        result = (T)System.Convert.ChangeType(System.Convert.ToString(value), typeof(T));
+
+                        break;
+                }
             }
-            catch (Exception ex)
+            catch
             {
-                Logger.Warn($"> Convert. Exception: {ex.Message}");
-                result = DefaultValueSimpleDataTypes[typeTo].Invoke();
+                message = $"Cannot convert {value} to {typeof(T)}";
+                result = default(T);
+                return false;
             }
-            return false;
+
+            return true;
+        }
+
+        public static T Convert<T>(string value)
+        {
+
+            if (GdbFieldsTypes.Any(tp => tp.Value.Equals(typeof(T))))
+            {
+                var convertMetadata = SimpleDataTypes.First(tp => tp.Value.Equals(typeof(T)));
+
+                T result;
+
+                try
+                {
+                    TypeConverter tc = TypeDescriptor.GetConverter(convertMetadata.Value);
+                    result = (T)tc.ConvertFromString(value);
+
+                }
+                catch (Exception ex)
+                {
+                    Logger.Warn($"> Convert. Exception: {ex.Message}");
+                    result = (T)DefaultValueSimpleDataTypes[convertMetadata.Key].Invoke();
+                }
+
+                return (T)result;
+            }
+
+            throw new NotSupportedException($"Type {typeof(T)} is not supportde");
         }
 
         public static SimpleDataTypesEnum ConvertToSimpleDatatTypeEnum(string stringType)
@@ -259,7 +333,7 @@ namespace MilSpace.Core
         }
 
 
-        public static  IPoint GetCentroid(this IEnvelope envelope)
+        public static IPoint GetCentroid(this IEnvelope envelope)
         {
             var x = (envelope.XMin + envelope.XMax) / 2;
             var y = (envelope.YMin + envelope.YMax) / 2;

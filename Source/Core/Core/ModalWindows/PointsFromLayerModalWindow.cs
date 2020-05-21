@@ -16,6 +16,7 @@ namespace MilSpace.Core.ModalWindows
         private bool _setInputLayers;
         public FromLayerPointModel SelectedPoint;
         public string LayerName;
+        public string TitleField => cmbFields.SelectedItem.ToString();
 
         public PointsFromLayerModalWindow(IActiveView activeView, string[] layers = null, bool setInputLayers = false)
         {

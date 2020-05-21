@@ -403,6 +403,9 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
                 CreateNewItem(LocalizationContext.Instance.FindLocalizedElement("LvProfileDetailsVisibilityText", "Видимі зони (%):"),
                 $"{Math.Round(property.VisiblePercent, 2)}"));
             profileDetailsListView.Items.Add(CreateNewItem($"{session.CreatedBy}", $"{session.CreatedOn}"));
+            profileDetailsListView.Items.Add(
+                CreateNewItem($"{LocalizationContext.Instance.FindLocalizedElement("TxtTreeViewProfileSurfaceText", "Поверхня:")}",
+                $"{session.SurfaceLayerName}"));
         }
 
         #endregion

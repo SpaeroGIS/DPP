@@ -1,7 +1,7 @@
 ﻿using MilSpace.Configurations.Base;
 using System.Configuration;
 
-namespace MilSpace.Configurations.DemStorages
+namespace MilSpace.Configurations
 {
     public class DemStoragesSections : ConfigurationSectionGroup
     {

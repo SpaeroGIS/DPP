@@ -86,7 +86,7 @@ namespace MilSpace.GeoCalculator
             foreach (var point in points)
             {
                 GraphicsLayerManager graphicsLayerManager = GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView);
-                graphicsLayerManager.RemovePoint(point.Id.ToString());
+                graphicsLayerManager.RemovePoint(point.GuidId.ToString());
                 ProcessPointAsClicked(point, Constants.WgsGeoModel, true);
             }
 
@@ -1556,17 +1556,17 @@ namespace MilSpace.GeoCalculator
             GeoCalcPoint geoPoint, CoordinateSystemModel coordinateSystem, bool createGeoCoordinateSystem)
         {
             var point = _businessLogic.CreatePoint(
-                geoPoint.X,
-                geoPoint.Y,
+                geoPoint.X.Value,
+                geoPoint.Y.Value,
                 coordinateSystem,
                 createGeoCoordinateSystem);
 
             EsriTools.ProjectToMapSpatialReference(point, FocusMapSpatialReference);
 
-            var pointGuid = AddPointToList(point, chkShowLine.Checked, geoPoint.Id.ToString(), geoPoint.PointNumber);
+            var pointGuid = AddPointToList(point, chkShowLine.Checked, geoPoint.GuidId.ToString(), geoPoint.PointNumber);
             if (pointGuid != Guid.Empty)
             {
-                var pointModel = new PointModel { Latitude = geoPoint.Y, Longitude = geoPoint.X, Number = geoPoint.PointNumber };
+                var pointModel = new PointModel { Latitude = geoPoint.Y.Value, Longitude = geoPoint.X.Value, Number = geoPoint.PointNumber };
                 pointModels.Add(pointGuid, pointModel);
 
                 AddPointToGrid(point, geoPoint.PointNumber, pointGuid);
@@ -1594,7 +1594,24 @@ namespace MilSpace.GeoCalculator
 
                     log.DebugEx("AddPointToList. point.X:{0} point.Y:{1}", point.X, point.Y);
 
-                    var pointNum = (pointNumber == -1) ? PointsGridView.RowCount + 1 : pointNumber;
+                    int pointNum;
+
+                    if(pointNumber == -1)
+                    {
+                        if (maxNum < PointsGridView.RowCount)
+                        {
+                            pointNum = PointsGridView.RowCount + 1;
+                        }
+                        else
+                        {
+                            pointNum = maxNum + 1;
+                        }
+                    }
+                    else
+                    {
+                        pointNum = pointNumber;
+                    }
+
                     GraphicsLayerManager graphicsLayerManager = GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView);
 
                     var placedPoint = graphicsLayerManager.AddGraphicToMap(
@@ -1730,7 +1747,7 @@ namespace MilSpace.GeoCalculator
                 var pointInMap = ClickedPointsDictionary[pointGuid];
                 var point = pointInMap.CloneWithProjecting();
 
-                return new GeoCalcPoint { Id = pointGuid, PointNumber = Convert.ToInt16(number), UserName = Environment.UserName, X = point.X, Y = point.Y };
+                return new GeoCalcPoint { GuidId = pointGuid, PointNumber = Convert.ToInt16(number), UserName = Environment.UserName, X = point.X, Y = point.Y };
             }
             catch (Exception ex)
             {
@@ -2141,9 +2158,11 @@ namespace MilSpace.GeoCalculator
                 points.Add((int)row.Cells[0].Value, pointCopy);
             }
 
-            for (int i = 1; i <= points.Count; i++)
+            var numbers = points.Keys.OrderBy(key => key);
+
+            foreach(var number in numbers)
             {
-                orderedPoints.Add(points[i]);
+                orderedPoints.Add(points[number]);
             }
 
             controller.ExportToLayer(orderedPoints);
