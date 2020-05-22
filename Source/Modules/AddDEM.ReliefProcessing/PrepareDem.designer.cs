@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem21 = new System.Windows.Forms.ListViewItem("длина");
-            System.Windows.Forms.ListViewItem listViewItem22 = new System.Windows.Forms.ListViewItem("ширина");
-            System.Windows.Forms.ListViewItem listViewItem23 = new System.Windows.Forms.ListViewItem("дата");
-            System.Windows.Forms.ListViewItem listViewItem24 = new System.Windows.Forms.ListViewItem("название тайла");
+            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("длина");
+            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("ширина");
+            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("дата");
+            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("название тайла");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrepareDem));
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel7 = new System.Windows.Forms.Panel();
@@ -72,7 +72,7 @@
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.panel21 = new System.Windows.Forms.Panel();
             this.panel39 = new System.Windows.Forms.Panel();
-            this.listBox4 = new System.Windows.Forms.ListBox();
+            this.lstSentilenProducts = new System.Windows.Forms.ListBox();
             this.panel37 = new System.Windows.Forms.Panel();
             this.label27 = new System.Windows.Forms.Label();
             this.listBox5 = new System.Windows.Forms.ListBox();
@@ -101,13 +101,13 @@
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.label23 = new System.Windows.Forms.Label();
             this.panel32 = new System.Windows.Forms.Panel();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.dtSentinelProductes = new System.Windows.Forms.DateTimePicker();
             this.label22 = new System.Windows.Forms.Label();
             this.panel31 = new System.Windows.Forms.Panel();
             this.label21 = new System.Windows.Forms.Label();
             this.lstTiles = new System.Windows.Forms.ListBox();
             this.panel30 = new System.Windows.Forms.Panel();
-            this.button10 = new System.Windows.Forms.Button();
+            this.btnGetScenes = new System.Windows.Forms.Button();
             this.panel29 = new System.Windows.Forms.Panel();
             this.label20 = new System.Windows.Forms.Label();
             this.panel28 = new System.Windows.Forms.Panel();
@@ -510,10 +510,10 @@
             this.listView1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.listView1.HideSelection = false;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem21,
-            listViewItem22,
-            listViewItem23,
-            listViewItem24});
+            listViewItem9,
+            listViewItem10,
+            listViewItem11,
+            listViewItem12});
             this.listView1.Location = new System.Drawing.Point(4, 280);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(249, 112);
@@ -556,8 +556,6 @@
             // 
             this.lstSrtmFiles.Dock = System.Windows.Forms.DockStyle.Top;
             this.lstSrtmFiles.FormattingEnabled = true;
-            this.lstSrtmFiles.Items.AddRange(new object[] {
-            "список файлов"});
             this.lstSrtmFiles.Location = new System.Drawing.Point(4, 32);
             this.lstSrtmFiles.Name = "lstSrtmFiles";
             this.lstSrtmFiles.Size = new System.Drawing.Size(249, 147);
@@ -700,7 +698,7 @@
             // panel39
             // 
             this.panel39.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.panel39.Controls.Add(this.listBox4);
+            this.panel39.Controls.Add(this.lstSentilenProducts);
             this.panel39.Controls.Add(this.panel37);
             this.panel39.Controls.Add(this.listBox5);
             this.panel39.Controls.Add(this.panel38);
@@ -712,18 +710,14 @@
             this.panel39.Size = new System.Drawing.Size(411, 357);
             this.panel39.TabIndex = 14;
             // 
-            // listBox4
+            // lstSentilenProducts
             // 
-            this.listBox4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox4.FormattingEnabled = true;
-            this.listBox4.Items.AddRange(new object[] {
-            "S1A_IW_SLC__1SDV_20200403T041139_20200403T041206_031958_03B0C2_16D5",
-            "S1A_IW_SLC__1SDV_20200403T041139_20200403T041206_031958_03B0C2_16D5",
-            "S1A_IW_SLC__1SDV_20200403T041139_20200403T041206_031958_03B0C2_16D5.zip"});
-            this.listBox4.Location = new System.Drawing.Point(4, 30);
-            this.listBox4.Name = "listBox4";
-            this.listBox4.Size = new System.Drawing.Size(403, 199);
-            this.listBox4.TabIndex = 15;
+            this.lstSentilenProducts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstSentilenProducts.FormattingEnabled = true;
+            this.lstSentilenProducts.Location = new System.Drawing.Point(4, 30);
+            this.lstSentilenProducts.Name = "lstSentilenProducts";
+            this.lstSentilenProducts.Size = new System.Drawing.Size(403, 199);
+            this.lstSentilenProducts.TabIndex = 15;
             // 
             // panel37
             // 
@@ -1023,7 +1017,7 @@
             // panel32
             // 
             this.panel32.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.panel32.Controls.Add(this.textBox4);
+            this.panel32.Controls.Add(this.dtSentinelProductes);
             this.panel32.Controls.Add(this.label22);
             this.panel32.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel32.Location = new System.Drawing.Point(2, 316);
@@ -1032,13 +1026,15 @@
             this.panel32.Size = new System.Drawing.Size(196, 28);
             this.panel32.TabIndex = 10;
             // 
-            // textBox4
+            // dtSentinelProductes
             // 
-            this.textBox4.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox4.Location = new System.Drawing.Point(84, 4);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(96, 20);
-            this.textBox4.TabIndex = 1;
+            this.dtSentinelProductes.CustomFormat = "yyyy-MM-dd";
+            this.dtSentinelProductes.Dock = System.Windows.Forms.DockStyle.Left;
+            this.dtSentinelProductes.Location = new System.Drawing.Point(84, 4);
+            this.dtSentinelProductes.Name = "dtSentinelProductes";
+            this.dtSentinelProductes.Size = new System.Drawing.Size(96, 20);
+            this.dtSentinelProductes.TabIndex = 1;
+            this.dtSentinelProductes.Value = new System.DateTime(2020, 4, 8, 0, 0, 0, 0);
             // 
             // label22
             // 
@@ -1082,7 +1078,7 @@
             // panel30
             // 
             this.panel30.BackColor = System.Drawing.Color.White;
-            this.panel30.Controls.Add(this.button10);
+            this.panel30.Controls.Add(this.btnGetScenes);
             this.panel30.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel30.Location = new System.Drawing.Point(2, 474);
             this.panel30.Name = "panel30";
@@ -1090,15 +1086,16 @@
             this.panel30.Size = new System.Drawing.Size(196, 30);
             this.panel30.TabIndex = 7;
             // 
-            // button10
+            // btnGetScenes
             // 
-            this.button10.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button10.Location = new System.Drawing.Point(61, 4);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(131, 22);
-            this.button10.TabIndex = 0;
-            this.button10.Text = "найти сцены";
-            this.button10.UseVisualStyleBackColor = true;
+            this.btnGetScenes.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnGetScenes.Location = new System.Drawing.Point(61, 4);
+            this.btnGetScenes.Name = "btnGetScenes";
+            this.btnGetScenes.Size = new System.Drawing.Size(131, 22);
+            this.btnGetScenes.TabIndex = 0;
+            this.btnGetScenes.Text = "найти сцены";
+            this.btnGetScenes.UseVisualStyleBackColor = true;
+            this.btnGetScenes.Click += new System.EventHandler(this.btnGetScenes_Click);
             // 
             // panel29
             // 
@@ -2174,7 +2171,6 @@
             this.panel33.ResumeLayout(false);
             this.panel33.PerformLayout();
             this.panel32.ResumeLayout(false);
-            this.panel32.PerformLayout();
             this.panel31.ResumeLayout(false);
             this.panel31.PerformLayout();
             this.panel30.ResumeLayout(false);
@@ -2295,13 +2291,12 @@
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Panel panel32;
-        private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Panel panel31;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.ListBox lstTiles;
         private System.Windows.Forms.Panel panel30;
-        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Button btnGetScenes;
         private System.Windows.Forms.Panel panel29;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Panel panel28;
@@ -2319,7 +2314,7 @@
         private System.Windows.Forms.Panel panel22;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Panel panel39;
-        private System.Windows.Forms.ListBox listBox4;
+        private System.Windows.Forms.ListBox lstSentilenProducts;
         private System.Windows.Forms.Panel panel37;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.ListBox listBox5;
@@ -2412,6 +2407,7 @@
         private System.Windows.Forms.Panel panel61;
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.Splitter splitter5;
+        private System.Windows.Forms.DateTimePicker dtSentinelProductes;
     }
 }
 

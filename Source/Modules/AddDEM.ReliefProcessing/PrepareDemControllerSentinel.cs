@@ -1,6 +1,7 @@
 ﻿using MilSpace.Configurations;
 using MilSpace.Core;
 using MilSpace.DataAccess.DataTransfer.Sentinel;
+using MilSpace.Tools.Sentinel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,11 @@ namespace MilSpace.AddDem.ReliefProcessing
 {
     public class PrepareDemControllerSentinel
     {
+
         Logger log = Logger.GetLoggerEx("PrepareDemControllerSentinel");
+        internal delegate void ProductsLoaded(IEnumerable<SentinelProduct> products);
+
+        internal event ProductsLoaded OnProductLoaded;
 
         List<Tile> tilesToImport = new List<Tile>();
 
@@ -69,6 +74,17 @@ namespace MilSpace.AddDem.ReliefProcessing
             }
 
             return testTile;
+        }
+
+        public void GetScenes()
+        {
+            SentineWeblRequestBuilder request = new SentineWeblRequestBuilder();
+
+            prepareSentinelView.TilesToImport.ToList().ForEach(t => request.AddTile(t));
+            request.Position = prepareSentinelView.SentinelRequestDate;
+            prepareSentinelView.SentinelProducts =  SentinelImportManager.GetProductsMetadata(request);
+            OnProductLoaded?.Invoke(prepareSentinelView.SentinelProducts);
+
         }
     }
 }

@@ -36,6 +36,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,6 +52,18 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MilSpace.Configurations\MilSpace.Configurations.csproj">
+      <Project>{73334b96-54fd-4d83-b56d-967f8728d767}</Project>
+      <Name>MilSpace.Configurations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MilSpace.Core\MilSpace.Core.csproj">
+      <Project>{a9deed9b-a54b-4c1d-aba7-d2c7bb5fa6ec}</Project>
+      <Name>MilSpace.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MilSpace.DataAccess\MilSpace.DataAccess.csproj">
+      <Project>{651c40fa-e0b6-45ff-9b3e-9341eb671754}</Project>
+      <Name>MilSpace.DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MilSpace.Tools\MilSpace.Tools.csproj">
       <Project>{cbd5675b-f382-497d-98cc-70539ed658b9}</Project>
       <Name>MilSpace.Tools</Name>
