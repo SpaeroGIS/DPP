@@ -35,9 +35,6 @@ namespace MilSpace.AddDem.ReliefProcessing
             lstSrtmFiles.DataSource = SrtmFilesInfo;
             lstSrtmFiles.DisplayMember = "Name";
 
-            lstTiles.Items.Clear();
-            lstTiles.DataSource = TilesToImport;
-            lstTiles.DisplayMember = "Name";
 
             lstSentilenProducts.DataSource = sentinelProducts;
             lstSentilenProducts.DisplayMember = "Identifier";
@@ -51,6 +48,12 @@ namespace MilSpace.AddDem.ReliefProcessing
             lstSentilenProducts.DisplayMember = "Identifier";
             lstSentilenProducts.Update();
             lstSentilenProducts.Refresh();
+        }
+
+        private void FillTileSource()
+        {
+            lstTiles.Items.Clear();
+            TilesToImport?.ToList().ForEach(t => lstTiles.Items.Add(t.Name));
         }
 
         private void LstSrtmFiles_DataSourceChanged(object sender, EventArgs e)
@@ -126,8 +129,6 @@ namespace MilSpace.AddDem.ReliefProcessing
                         log.ErrorEx(ex.Message);
                         icon = MessageBoxIcon.Error;
                     }
-
-
                     MessageBox.Show(message, "Mislspace Msg Cation", MessageBoxButtons.OK, icon);
                 }
 
@@ -156,13 +157,8 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void btnAddTileToList_Click(object sender, EventArgs e)
         {
-            //lstTiles.Items.Add(controllerSentinel.GetTilesByPoint());
-
             controllerSentinel.AddTileForImport();
-            lstTiles.DataSource = TilesToImport;
-            lstTiles.DisplayMember = "Name";
-            lstTiles.Refresh();
-            lstTiles.Update();
+            FillTileSource();
         }
 
         private void btnGetScenes_Click(object sender, EventArgs e)
