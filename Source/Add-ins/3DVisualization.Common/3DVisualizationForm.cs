@@ -74,7 +74,7 @@ namespace MilSpace.Visualization3D
                 if (m_windowUI != null)
                     m_windowUI.Dispose(disposing);
 
-                base.Dispose(disposing);
+                ////////////base.Dispose(disposing);
             }
 
         }
@@ -311,7 +311,7 @@ namespace MilSpace.Visualization3D
                     arcSceneArguments.AdditionalLayers = GetAdditionalLayers();
                     arcSceneArguments.VisibilityResultsInfo = GetVisibilityResultsInfo();
 
-                    Visualization3DHandler.OpenProfilesSetIn3D(arcSceneArguments);
+                    Visualization3DHandler.OpenProfilesSetIn3D(arcSceneArguments, ArcMap.Document.ActiveView);
                 }
                 else
                 {

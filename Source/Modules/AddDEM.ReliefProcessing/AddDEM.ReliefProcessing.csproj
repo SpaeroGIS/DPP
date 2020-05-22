@@ -46,14 +46,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IPrepareDemView.cs" />
+    <Compile Include="IPrepareDemViewSentinel.cs" />
+    <Compile Include="IPrepareDemViewSrtm.cs" />
+    <Compile Include="Exceptions\NothingToImportException.cs" />
     <Compile Include="PrepareDem.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="PrepareDem.designer.cs">
       <DependentUpon>PrepareDem.cs</DependentUpon>
     </Compile>
-    <Compile Include="PrepareDemController.cs" />
+    <Compile Include="PrepareDemControllerSentinel.cs" />
+    <Compile Include="PrepareDemControllerSrtm.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
