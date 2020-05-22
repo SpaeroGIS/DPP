@@ -18,7 +18,17 @@ namespace MilSpace.Tools.Sentinel
         Footprint,
         JTS_footprint,
         Relative_orbit_9start0,
-        Pass_direction
+        Pass_direction,
+        Slice_number,
+        Orbit_number_9start0,
+        Sensing_start
+    }
+
+    public enum ValuebaleProductSummaryEnum
+    {
+        Date,
+        Identifier,
+        Instrument
     }
 
     public enum ValuebaSummaryEnum
