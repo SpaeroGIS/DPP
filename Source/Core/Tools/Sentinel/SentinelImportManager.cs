@@ -6,11 +6,16 @@ using System.Linq;
 using System.Text;
 using MilSpace.Core;
 using MilSpace.DataAccess.Facade;
+using MilSpace.DataAccess.DataTransfer.Sentinel;
+using System.Net;
+using MilSpace.Configurations;
+using System.Web;
 
 namespace MilSpace.Tools.Sentinel
 {
     public static class SentinelImportManager
     {
+        private static Logger logger = Logger.GetLoggerEx("SentinelImportManager");
         public static Dictionary<IndexesEnum, string> IndexesDictionary = typeof(IndexesEnum).GetEnumToDictionary<IndexesEnum>();//(  Enum.GetValues(typeof(IndexesEnum)).Cast<IndexesEnum>().ToDictionary(k => k, v => v.ToString());
         public static Dictionary<ValuebaleProductEnum, string> productItemsDictionary = Enum.GetValues(typeof(ValuebaleProductEnum)).Cast<ValuebaleProductEnum>().ToDictionary(k => k, v => v.ToString().Replace("_", " ").Replace("9", "(").Replace("0", ")"));
         public static Dictionary<ValuebaleProductSummaryEnum, string> productSummaryItemsDictionary = Enum.GetValues(typeof(ValuebaleProductSummaryEnum) ).Cast<ValuebaleProductSummaryEnum>().ToDictionary(k => k, v => v.ToString().Replace("_", " ").Replace("9", "(").Replace("0", ")"));
@@ -61,6 +66,37 @@ namespace MilSpace.Tools.Sentinel
             });
 
             return imports;
+        }
+
+        public static IEnumerable<SentinelProduct> GetProductsMetadata(SentineWeblRequestBuilder metadataRequest)
+        {
+            var url = metadataRequest.GetMetadataUrl;
+            WebRequest myWebRequest = WebRequest.Create(url);
+            logger.InfoEx($"Getting metadata: {HttpUtility.UrlDecode(url)}");
+
+            myWebRequest.Credentials = new NetworkCredential(MilSpaceConfiguration.DemStorages.ScihubUserName, MilSpaceConfiguration.DemStorages.ScihubPassword);
+            string requestContent;
+            // Send the 'WebRequest' and wait for response.
+            try
+            {
+                using (WebResponse myWebResponse = myWebRequest.GetResponse())
+                {
+                    using (var reader = new StreamReader(myWebResponse.GetResponseStream()))
+                    {
+                        requestContent = reader.ReadToEnd();
+                    }
+
+                    myWebResponse.Close();
+                }
+
+                return ReadJson(requestContent);
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorEx(ex.Message);
+            }
+            
+            return null;
         }
 
     }

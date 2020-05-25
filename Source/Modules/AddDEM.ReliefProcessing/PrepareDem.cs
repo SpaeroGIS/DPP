@@ -7,6 +7,7 @@ using System.IO;
 using System.Windows.Forms;
 using MilSpace.Core.DataAccess;
 using MilSpace.DataAccess.DataTransfer.Sentinel;
+using MilSpace.Tools.Sentinel;
 
 namespace MilSpace.AddDem.ReliefProcessing
 {
@@ -15,6 +16,7 @@ namespace MilSpace.AddDem.ReliefProcessing
         Logger log = Logger.GetLoggerEx("PrepareDem");
         PrepareDemControllerSrtm controllerSrtm = new PrepareDemControllerSrtm();
         PrepareDemControllerSentinel controllerSentinel = new PrepareDemControllerSentinel();
+        private IEnumerable<SentinelProduct> sentinelProducts = null;
         public PrepareDem()
         {
             controllerSrtm.SetView(this);
@@ -34,9 +36,24 @@ namespace MilSpace.AddDem.ReliefProcessing
             lstSrtmFiles.DisplayMember = "Name";
 
 
-            lstTiles.DataSource = TilesToImport;
-            lstTiles.DisplayMember = "Name";
+            lstSentilenProducts.DataSource = sentinelProducts;
+            lstSentilenProducts.DisplayMember = "Identifier";
 
+            controllerSentinel.OnProductLoaded += OnSentinelProductLoaded;
+        }
+
+        private void OnSentinelProductLoaded(IEnumerable<SentinelProduct> products)
+        {
+            lstSentilenProducts.DataSource = products;
+            lstSentilenProducts.DisplayMember = "Identifier";
+            lstSentilenProducts.Update();
+            lstSentilenProducts.Refresh();
+        }
+
+        private void FillTileSource()
+        {
+            lstTiles.Items.Clear();
+            TilesToImport?.ToList().ForEach(t => lstTiles.Items.Add(t.Name));
         }
 
         private void LstSrtmFiles_DataSourceChanged(object sender, EventArgs e)
@@ -50,6 +67,10 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         public string TileLatitude { get => txtLatitude.Text; }
         public string TileLongtitude { get => txtLongtitude.Text; }
+
+        public IEnumerable<SentinelProduct> SentinelProducts { get => sentinelProducts; set => sentinelProducts = value; }
+
+        public DateTime SentinelRequestDate { get => dtSentinelProductes.Value; }
         #endregion
         #region IPrepareDemViewSrtm
 
@@ -108,8 +129,6 @@ namespace MilSpace.AddDem.ReliefProcessing
                         log.ErrorEx(ex.Message);
                         icon = MessageBoxIcon.Error;
                     }
-
-
                     MessageBox.Show(message, "Mislspace Msg Cation", MessageBoxButtons.OK, icon);
                 }
 
@@ -139,11 +158,12 @@ namespace MilSpace.AddDem.ReliefProcessing
         private void btnAddTileToList_Click(object sender, EventArgs e)
         {
             controllerSentinel.AddTileForImport();
+            FillTileSource();
+        }
 
-            lstTiles.DataSource = TilesToImport;
-            lstTiles.Update();
-            lstTiles.Refresh();
-
+        private void btnGetScenes_Click(object sender, EventArgs e)
+        {
+            controllerSentinel.GetScenes();
         }
     }
 }

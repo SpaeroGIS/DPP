@@ -11,7 +11,7 @@ namespace MilSpace.Tools.Sentinel
     {
         public string Uuid; // "70dea7e6-01f9-476a-8707-5e81a45b89fb",
         public int Id;
-        public string Identifier;
+        public string Identifier { get; set; }
         public DateTime DateTime;
         public string Instrument;
         public string Footprint;
