@@ -1428,14 +1428,10 @@ namespace MilSpace.Core.Tools
                 logger.WarnEx($"> GetGeometriesFromLayer. Warning: Cannot find fild {featureClass.OIDFieldName} in featureClass {featureClass.AliasName}");
                 throw new MissingFieldException();
             }
-
-            IQueryFilter queryFilter = new QueryFilter
-            {
-                WhereClause = $"{featureClass.OIDFieldName} > 0"
-            };
-
-            IFeatureCursor featureCursor = featureClass.Search(queryFilter, true);
+            
+            IFeatureCursor featureCursor = featureClass.Search(null, true);
             IFeature feature = featureCursor.NextFeature();
+
             try
             {
                 while (feature != null)
@@ -2304,5 +2300,22 @@ namespace MilSpace.Core.Tools
             return azimuth;
         }
 
+        public static IEnvelope GetLayerExtent(ILayer layer, IActiveView activeView)
+        {
+            if(layer is IRasterLayer)
+            {
+                var rasterLayer = layer as IRasterLayer;
+                return rasterLayer.VisibleExtent;
+            }
+
+            if(layer is IFeatureLayer)
+            {
+                var featureLayer = layer as IFeatureLayer;
+                var geometries = GetGeometriesFromLayer(featureLayer, activeView);
+                return GetEnvelopeOfGeometriesList(geometries.Values);
+            }
+
+            return null;
+        }
     }
 }

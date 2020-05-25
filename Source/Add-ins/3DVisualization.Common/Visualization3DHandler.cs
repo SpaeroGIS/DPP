@@ -1,7 +1,7 @@
 ﻿using ESRI.ArcGIS.Analyst3D;
 using ESRI.ArcGIS.ArcMapUI;
+using ESRI.ArcGIS.ArcScene;
 using ESRI.ArcGIS.Carto;
-using ESRI.ArcGIS.DataSourcesRaster;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
@@ -30,6 +30,9 @@ namespace MilSpace.Visualization3D
         private static double _zFactor;
         private static readonly string _profileGdb = MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection;
         private static IActiveView _map;
+        private static List<ILayer> _viewCalcLayers = new List<ILayer>();
+        private static List<string> _layersWithDefaultRenderer = new List<string>();
+        private static string _demLayerName;
 
         private enum LayerTypeEnum
         {
@@ -38,7 +41,7 @@ namespace MilSpace.Visualization3D
             PointFeature,
             PolygonFeature
         }
-
+        
         static Visualization3DHandler()
         {
         }
@@ -49,6 +52,8 @@ namespace MilSpace.Visualization3D
 
             try
             {
+                UpdateTemporaryDataStorage();
+
                 IObjectFactory objFactory = m_application as IObjectFactory;
                 var document = (IBasicDocument)m_application.Document;
 
@@ -58,8 +63,21 @@ namespace MilSpace.Visualization3D
                 var baseSurface = AddBaseLayers(layers, objFactory, document);
                 AddVisibilityLayers(layers.VisibilityResultsInfo, objFactory, document, baseSurface);
                 AddExtraLayers(layers.AdditionalLayers, objFactory, document, baseSurface);
+
+                if(!String.IsNullOrEmpty(layers.DraperyLayer))
+                {
+                    AddDraperyLayer(layers.DraperyLayer, objFactory, baseSurface, document);
+                }
+
+                var surfaceLayer = EsriTools.GetLayer(_demLayerName, document.ActiveView.FocusMap);
+
+                if (surfaceLayer != null)
+                {
+                    SetSceneView(document, surfaceLayer as IRasterLayer);
+                }
             }
-            catch(Exception ex) {
+            catch (Exception ex)
+            {
                 logger.ErrorEx(ex.Message);
             }
 
@@ -67,7 +85,7 @@ namespace MilSpace.Visualization3D
 
         internal static void ClosingHandler()
         {
-            if(m_appROTEvent != null)
+            if (m_appROTEvent != null)
             {
                 m_appROTEvent.AppRemoved -= new IAppROTEvents_AppRemovedEventHandler(m_appROTEvent_AppRemoved);
                 m_appROTEvent = null;
@@ -77,7 +95,7 @@ namespace MilSpace.Visualization3D
 
         public static string GetWorkspacePathForLayer(ILayer layer)
         {
-            if(layer == null || !(layer is IDataset))
+            if (layer == null || !(layer is IDataset))
             {
                 return null;
             }
@@ -93,24 +111,31 @@ namespace MilSpace.Visualization3D
 
             var surface = (IRasterSurface)objFactory.Create("esrianalyst3d.RasterSurface");
             var rasterLayer = (IRasterLayer)preparedLayers[LayerTypeEnum.Raster];
+             SetFromMapRendererToRasterLayer(rasterLayer, objFactory, rasterLayer.Name);
+
             surface.PutRaster(rasterLayer.Raster, 0);
             var functionalSurface = (IFunctionalSurface)surface;
+            _demLayerName = rasterLayer.Name;
 
-            if(preparedLayers.Count > 1)
+            SetSurface3DProperties(preparedLayers[LayerTypeEnum.Raster], objFactory, functionalSurface);
+
+            if (preparedLayers.Count > 1)
             {
-                SetSurface3DProperties(preparedLayers[0], objFactory, functionalSurface);
                 SetFeatures3DProperties((IFeatureLayer)preparedLayers[LayerTypeEnum.LineFeature], objFactory, functionalSurface);
                 SetHightFeatures3DProperties((IFeatureLayer)preparedLayers[LayerTypeEnum.PointFeature], objFactory);
                 SetHightFeatures3DProperties((IFeatureLayer)preparedLayers[LayerTypeEnum.PolygonFeature], objFactory);
+
+                _viewCalcLayers.Add(preparedLayers[LayerTypeEnum.LineFeature]);
+                _layersWithDefaultRenderer.AddRange(preparedLayers.Values.Select(layer => layer.Name));
             }
 
-            foreach(var layer in preparedLayers)
+            foreach (var layer in preparedLayers)
             {
                 try
                 {
                     document.AddLayer(layer.Value);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     logger.ErrorEx(ex.Message);
                 }
@@ -118,7 +143,7 @@ namespace MilSpace.Visualization3D
 
             document.UpdateContents();
 
-            if(preparedLayers.Count > 1)
+            if (preparedLayers.Count > 1)
             {
                 document.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeography,
                                                    VisibilityColorsRender((IFeatureLayer)preparedLayers[LayerTypeEnum.LineFeature], objFactory), document.ActiveView.Extent);
@@ -136,7 +161,7 @@ namespace MilSpace.Visualization3D
         private static void AddExtraLayers(Dictionary<ILayer, double> additionalLayers, IObjectFactory objFactory,
                                             IBasicDocument document, IFunctionalSurface surface)
         {
-            foreach(var extraLayer in additionalLayers)
+            foreach (var extraLayer in additionalLayers)
             {
                 var featureLayer = CreateLayerCopy((IFeatureLayer)extraLayer.Key, objFactory);
                 SetFeatures3DProperties(featureLayer, objFactory, surface, extraLayer.Value);
@@ -145,7 +170,7 @@ namespace MilSpace.Visualization3D
                 {
                     document.AddLayer(featureLayer);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     logger.ErrorEx(ex.Message);
                 }
@@ -154,15 +179,17 @@ namespace MilSpace.Visualization3D
             document.UpdateContents();
         }
 
-        private static void AddVisibilityLayers(IEnumerable<VisibilityResultInfo> info, IObjectFactory objFactory, IBasicDocument document, IFunctionalSurface baseSurface)
+        private static void AddVisibilityLayers(IEnumerable<VisibilityResultInfo> info,
+                                                IObjectFactory objFactory, IBasicDocument document,
+                                                IFunctionalSurface baseSurface)
         {
             Dictionary<ILayer, LayerTypeEnum> layers = new Dictionary<ILayer, LayerTypeEnum>();
 
-            foreach(var resultInfo in info)
+            foreach (var resultInfo in info)
             {
                 var layer = GetVisibilityLayer(resultInfo, objFactory, baseSurface);
 
-                if(layer.Key != null)
+                if (layer.Key != null)
                 {
                     layers.Add(layer.Key, layer.Value);
 
@@ -170,26 +197,29 @@ namespace MilSpace.Visualization3D
                     {
                         document.AddLayer(layer.Key);
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         logger.ErrorEx(ex.Message);
                     }
                 }
             }
 
-            //if(layers.ContainsValue(LayerTypeEnum.PointFeature))
-            //{
-            //    document.UpdateContents();
+            _viewCalcLayers.AddRange(layers.Keys);
 
-            //    foreach(var layer in layers)
-            //    {
-            //        if(layer.Value == LayerTypeEnum.PointFeature)
-            //        {
-            //            document.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeography,
-            //                                       PointsRender((IFeatureLayer)layer.Key, new RgbColor() { Red = 24, Blue = 255, Green = 163 }, objFactory), document.ActiveView.Extent);
-            //        }
-            //    }
-            //}
+            if (layers.ContainsValue(LayerTypeEnum.PointFeature))
+            {
+                document.UpdateContents();
+
+                foreach (var layer in layers)
+                {
+                    if (layer.Value == LayerTypeEnum.PointFeature
+                            && _layersWithDefaultRenderer.Contains(layer.Key.Name))
+                    {
+                        document.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeography,
+                                                   PointsRender((IFeatureLayer)layer.Key, new RgbColor() { Red = 24, Blue = 255, Green = 163 }, objFactory), document.ActiveView.Extent);
+                    }
+                }
+            }
         }
 
         private static KeyValuePair<ILayer, LayerTypeEnum> GetVisibilityLayer(VisibilityResultInfo info, IObjectFactory objFactory, IFunctionalSurface baseSurface)
@@ -206,27 +236,27 @@ namespace MilSpace.Visualization3D
             if (rastersTypes.Any(type => type == info.RessutType))
             {
                 var rasterLayer = CreateRasterLayer(info.ResultName, workspace, objFactory, info.GdbPath);
-                if(rasterLayer != null)
+                if (rasterLayer != null)
                 {
                     SetVisibilitySessionRaster3DProperties(rasterLayer, objFactory, baseSurface);
-                    layerKeyValuePair =  new KeyValuePair<ILayer, LayerTypeEnum>(rasterLayer, LayerTypeEnum.Raster);
+                    layerKeyValuePair = new KeyValuePair<ILayer, LayerTypeEnum>(rasterLayer, LayerTypeEnum.Raster);
                 }
             }
 
-            if(info.RessutType == VisibilityCalculationResultsEnum.ObservationPoints || info.RessutType == VisibilityCalculationResultsEnum.ObservationPointSingle)
+            if (info.RessutType == VisibilityCalculationResultsEnum.ObservationPoints || info.RessutType == VisibilityCalculationResultsEnum.ObservationPointSingle)
             {
                 var pointFeatureLayer = CreateFeatureLayer(info.ResultName, workspace, objFactory);
-                if(pointFeatureLayer != null)
+                if (pointFeatureLayer != null)
                 {
                     SetFeatures3DProperties(pointFeatureLayer, objFactory, baseSurface);
                     layerKeyValuePair = new KeyValuePair<ILayer, LayerTypeEnum>(pointFeatureLayer, LayerTypeEnum.PointFeature);
                 }
             }
 
-            if(info.RessutType == VisibilityCalculationResultsEnum.VisibilityAreaPolygons || info.RessutType == VisibilityCalculationResultsEnum.ObservationObjects)
+            if (info.RessutType == VisibilityCalculationResultsEnum.VisibilityAreaPolygons || info.RessutType == VisibilityCalculationResultsEnum.ObservationObjects)
             {
                 var polygonFeatureLayer = CreateFeatureLayer(info.ResultName, workspace, objFactory);
-                if(polygonFeatureLayer != null)
+                if (polygonFeatureLayer != null)
                 {
                     SetFeatures3DProperties(polygonFeatureLayer, objFactory, baseSurface);
                     layerKeyValuePair = new KeyValuePair<ILayer, LayerTypeEnum>(polygonFeatureLayer, LayerTypeEnum.PolygonFeature);
@@ -255,7 +285,7 @@ namespace MilSpace.Visualization3D
             IWorkspaceFactory workspaceFactory = (IWorkspaceFactory)objFactory.Create(typeFactoryID);
             IWorkspace2 workspace = (IWorkspace2)workspaceFactory.OpenFromFile(_profileGdb, 0);
 
-            if(!string.IsNullOrEmpty(layers.Line3DLayer))
+            if (!string.IsNullOrEmpty(layers.Line3DLayer))
             {
                 preparedLayers.Add(LayerTypeEnum.LineFeature, CreateFeatureLayer(layers.Line3DLayer, workspace, objFactory));
                 preparedLayers.Add(LayerTypeEnum.PointFeature, CreateFeatureLayer(layers.Point3DLayer, workspace, objFactory));
@@ -274,10 +304,10 @@ namespace MilSpace.Visualization3D
             return preparedLayers;
         }
 
-      
+
         private static IFeatureLayer CreateFeatureLayer(string featureClass, IWorkspace2 workspace, IObjectFactory objFactory)
         {
-            if(workspace.NameExists[esriDatasetType.esriDTFeatureClass, featureClass])
+            if (workspace.NameExists[esriDatasetType.esriDTFeatureClass, featureClass])
             {
                 IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)workspace;
 
@@ -295,19 +325,14 @@ namespace MilSpace.Visualization3D
             return null;
         }
 
-        private static IRasterLayer CreateRasterLayer(string layerName, IWorkspace2 workspace, IObjectFactory objFactory, string gdb)
+        private static IRasterLayer CreateRasterLayer(string layerName,
+                                                      IWorkspace2 workspace,
+                                                      IObjectFactory objFactory,
+                                                      string gdb)
         {
             if (workspace.NameExists[esriDatasetType.esriDTRasterDataset, layerName])
             {
-                Type rasterLayerType = typeof(RasterLayerClass);
-                string typeRasterLayerID = rasterLayerType.GUID.ToString("B");
-
-                var rasterLayer = (IRasterLayer)objFactory.Create(typeRasterLayerID);
-                rasterLayer.CreateFromFilePath($"{gdb}\\{layerName}");
-
-                SetFromMapRendererToRasterLayer(rasterLayer, objFactory, layerName);
-
-                return rasterLayer;
+                return CreateRasterLayer(objFactory, $"{gdb}\\{layerName}");
             }
 
             return null;
@@ -349,7 +374,7 @@ namespace MilSpace.Visualization3D
 
             ISimpleRenderer renderer = (ISimpleRenderer)objFactory.Create(typeRenderID);
             renderer.Symbol = GetSymbol(esriGeometryType.esriGeometryPoint, color, objFactory);
-            
+
             IGeoFeatureLayer geoFL = layer as IGeoFeatureLayer;
             geoFL.Renderer = renderer as IFeatureRenderer;
 
@@ -386,21 +411,32 @@ namespace MilSpace.Visualization3D
 
         }
 
-        private static void SetVisibilitySessionRaster3DProperties(IRasterLayer rasterLayer, IObjectFactory objFactory, IFunctionalSurface surface)
+        private static void SetVisibilitySessionRaster3DProperties(IRasterLayer rasterLayer,
+                                                                   IObjectFactory objFactory,
+                                                                   IFunctionalSurface surface,
+                                                                   bool isDrapperyLayer = false)
         {
             var properties3D = (I3DProperties3)objFactory.Create("esrianalyst3d.Raster3DProperties");
             properties3D.BaseOption = esriBaseOption.esriBaseSurface;
             properties3D.BaseSurface = surface;
-            properties3D.OffsetExpressionString = "2";
-            properties3D.ZFactor = _zFactor;
 
+            if (!isDrapperyLayer)
+            {
+                properties3D.OffsetExpressionString = "2";
+                properties3D.DepthPriorityValue = 1;
+            }
+            else
+            {
+                properties3D.DepthPriorityValue = 9;
+            }
+
+            properties3D.ZFactor = _zFactor;
             properties3D.RenderVisibility = esriRenderVisibility.esriRenderAlways;
             properties3D.RenderMode = esriRenderMode.esriRenderCache;
             properties3D.TextureDownsamplingFactor = 0.7;
             properties3D.AlphaThreshold = 0.1;
             properties3D.RenderRefreshRate = 0.75;
             properties3D.Illuminate = true;
-            properties3D.DepthPriorityValue = 1;
 
             ILayerExtensions layerExtensions = (ILayerExtensions)rasterLayer;
             layerExtensions.AddExtension(properties3D);
@@ -408,12 +444,13 @@ namespace MilSpace.Visualization3D
         }
 
 
-        private static void SetFeatures3DProperties(IFeatureLayer layer, IObjectFactory objFactory, IFunctionalSurface surface, double height = double.NaN)
+        private static void SetFeatures3DProperties(IFeatureLayer layer, IObjectFactory objFactory,
+                                                    IFunctionalSurface surface, double height = double.NaN)
         {
             var properties3D = (I3DProperties)objFactory.Create("esrianalyst3d.Feature3DProperties");
             properties3D.BaseOption = esriBaseOption.esriBaseSurface;
             properties3D.BaseSurface = surface;
-            properties3D.ZFactor =  _zFactor ;
+            properties3D.ZFactor = _zFactor;
             properties3D.OffsetExpressionString = (height == double.NaN) ? "3" : height.ToString();
 
             ILayerExtensions layerExtensions = (ILayerExtensions)layer;
@@ -439,6 +476,7 @@ namespace MilSpace.Visualization3D
             properties3D.BaseOption = esriBaseOption.esriBaseSurface;
             properties3D.BaseSurface = surface;
             properties3D.ZFactor = _zFactor;
+            properties3D.DepthPriorityValue = 10;
 
             ILayerExtensions layerExtensions = (ILayerExtensions)layer;
             layerExtensions.AddExtension(properties3D);
@@ -447,7 +485,7 @@ namespace MilSpace.Visualization3D
 
         private static ISymbol GetSymbol(esriGeometryType featureGeometryType, RgbColor color, IObjectFactory objFactory = null)
         {
-            if(featureGeometryType == esriGeometryType.esriGeometryPolygon)
+            if (featureGeometryType == esriGeometryType.esriGeometryPolygon)
             {
                 ISimpleFillSymbol simplePolygonSymbol = new SimpleFillSymbolClass();
                 simplePolygonSymbol.Color = color;
@@ -462,7 +500,7 @@ namespace MilSpace.Visualization3D
                 return simplePolygonSymbol as ISymbol;
             }
 
-            if(featureGeometryType == esriGeometryType.esriGeometryPolyline)
+            if (featureGeometryType == esriGeometryType.esriGeometryPolyline)
             {
                 ISimpleLineSymbol simplePolylineSymbol = new SimpleLineSymbolClass();
                 simplePolylineSymbol.Color = color;
@@ -471,7 +509,7 @@ namespace MilSpace.Visualization3D
                 return simplePolylineSymbol as ISymbol;
             }
 
-            if(featureGeometryType == esriGeometryType.esriGeometryPoint)
+            if (featureGeometryType == esriGeometryType.esriGeometryPoint)
             {
                 Type factoryType = Type.GetTypeFromProgID("esriDisplay.SimpleMarkerSymbol");
                 string typeFactoryID = factoryType.GUID.ToString("B");
@@ -494,14 +532,14 @@ namespace MilSpace.Visualization3D
             IDocument doc = null;
             try
             {
-                doc = new ESRI.ArcGIS.ArcScene.SxDocument();
+                doc = new SxDocument();
             }
             catch
             {
                 return false;
             }
 
-            if(doc != null)
+            if (doc != null)
             {
                 m_appROTEvent = new AppROTClass();
                 m_appROTEvent.AppRemoved += new IAppROTEvents_AppRemovedEventHandler(m_appROTEvent_AppRemoved);
@@ -534,6 +572,7 @@ namespace MilSpace.Visualization3D
 
                 if (fromMapGeoFeatureLayer == null)
                 {
+                    _layersWithDefaultRenderer.Add(featureLayer.Name);
                     return;
                 }
 
@@ -550,6 +589,7 @@ namespace MilSpace.Visualization3D
                 }
                 catch (Exception ex)
                 {
+                    _layersWithDefaultRenderer.Add(featureLayer.Name);
                     logger.WarnEx($"Cannot set rendrer from map for {featureLayer.Name} layer. Exception: {ex.Message}");
                 }
             }
@@ -564,6 +604,7 @@ namespace MilSpace.Visualization3D
 
             if (fromMapRasterLayer == null)
             {
+                _layersWithDefaultRenderer.Add(rasterLayer.Name);
                 return;
             }
 
@@ -580,8 +621,82 @@ namespace MilSpace.Visualization3D
             }
             catch (Exception ex)
             {
+                _layersWithDefaultRenderer.Add(rasterLayer.Name);
                 logger.WarnEx($"Cannot set rendrer from map for {rasterLayer.Name} layer. Exception: {ex.Message}");
             }
+        }
+
+        private static void SetSceneView(IBasicDocument document, IRasterLayer surface)
+        {
+            IEnvelope unionEnvelope = new EnvelopeClass();
+
+            foreach (var layer in _viewCalcLayers)
+            {
+                IEnvelope envelope = null;
+              
+                try
+                {
+                    envelope = EsriTools.GetLayerExtent(layer, document.ActiveView);
+                }
+                catch(Exception ex)
+                {
+                    logger.WarnEx($"Cannot to get envelope from {layer.Name} layer");
+                }
+
+                if (envelope != null)
+                {
+                    unionEnvelope.Union(envelope);
+                }
+            }
+
+            var pSxDoc = document as ISxDocument;
+            var camera = pSxDoc.Scene.SceneGraph.ActiveViewer.Camera;
+
+            var centerPoint = EsriTools.GetCenterPoint(unionEnvelope);
+            centerPoint.AddZCoordinate(surface.Raster);
+
+            camera.Target = centerPoint;
+
+            var observerPoint = unionEnvelope.LowerRight.Clone();
+            observerPoint.AddZCoordinate(surface.Raster);
+            observerPoint.Z += 1000;
+
+            camera.Observer = observerPoint;
+            camera.Zoom(-2);
+
+            camera.RecalcUp();
+            pSxDoc.Scene.SceneGraph.RefreshViewers();
+        }
+
+        private static void UpdateTemporaryDataStorage()
+        {
+            _viewCalcLayers = new List<ILayer>();
+            _layersWithDefaultRenderer = new List<string>();
+        }
+
+        private static void AddDraperyLayer(string draperyLayerName, IObjectFactory objFactory,
+                                            IFunctionalSurface baseSurface, IBasicDocument document)
+        {
+            var rasterLayer = CreateRasterLayer(objFactory, draperyLayerName);
+            if (rasterLayer != null)
+            {
+                SetVisibilitySessionRaster3DProperties(rasterLayer, objFactory, baseSurface, true);
+            }
+
+            document.AddLayer(rasterLayer);
+        }
+
+        private static IRasterLayer CreateRasterLayer(IObjectFactory objFactory, string layerPath)
+        {
+            Type rasterLayerType = typeof(RasterLayerClass);
+            string typeRasterLayerID = rasterLayerType.GUID.ToString("B");
+
+            var rasterLayer = (IRasterLayer)objFactory.Create(typeRasterLayerID);
+            rasterLayer.CreateFromFilePath(layerPath);
+
+            SetFromMapRendererToRasterLayer(rasterLayer, objFactory, rasterLayer.Name);
+
+            return rasterLayer;
         }
 
         #region "Handle the case when the application is shutdown by user manually"
@@ -589,7 +704,7 @@ namespace MilSpace.Visualization3D
         static void m_appROTEvent_AppRemoved(AppRef pApp)
         {
             //Application manually shuts down. Stop listening
-            if(pApp.hWnd == m_appHWnd)
+            if (pApp.hWnd == m_appHWnd)
             {
                 m_appROTEvent.AppRemoved -= new IAppROTEvents_AppRemovedEventHandler(m_appROTEvent_AppRemoved);
                 m_appROTEvent = null;

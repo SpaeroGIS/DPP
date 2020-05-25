@@ -45,6 +45,7 @@ namespace MilSpace.Visualization3D
         public string ProfilesLabel => FindLocalizedElement("ProfilesLabel", "Profiles");
         public string SurfacessLabel => FindLocalizedElement("SurfacesLabel", "Surfaces");
         public string lblZFactor => FindLocalizedElement("lblZFactor", "Height conversion factor");
+        public string DraperyLayerLabel => FindLocalizedElement("DraperyLayerLabel", "драпірування");
 
         //TreeView Strings
         public string Section => FindLocalizedElement("Section", "Section");
