@@ -64,6 +64,11 @@ namespace MilSpace.Visualization3D
                 AddVisibilityLayers(layers.VisibilityResultsInfo, objFactory, document, baseSurface);
                 AddExtraLayers(layers.AdditionalLayers, objFactory, document, baseSurface);
 
+                if(!String.IsNullOrEmpty(layers.DraperyLayer))
+                {
+                    AddDraperyLayer(layers.DraperyLayer, objFactory, baseSurface, document);
+                }
+
                 var surfaceLayer = EsriTools.GetLayer(_demLayerName, document.ActiveView.FocusMap);
 
                 if (surfaceLayer != null)
@@ -112,9 +117,10 @@ namespace MilSpace.Visualization3D
             var functionalSurface = (IFunctionalSurface)surface;
             _demLayerName = rasterLayer.Name;
 
+            SetSurface3DProperties(preparedLayers[LayerTypeEnum.Raster], objFactory, functionalSurface);
+
             if (preparedLayers.Count > 1)
             {
-                SetSurface3DProperties(preparedLayers[0], objFactory, functionalSurface);
                 SetFeatures3DProperties((IFeatureLayer)preparedLayers[LayerTypeEnum.LineFeature], objFactory, functionalSurface);
                 SetHightFeatures3DProperties((IFeatureLayer)preparedLayers[LayerTypeEnum.PointFeature], objFactory);
                 SetHightFeatures3DProperties((IFeatureLayer)preparedLayers[LayerTypeEnum.PolygonFeature], objFactory);
@@ -319,19 +325,14 @@ namespace MilSpace.Visualization3D
             return null;
         }
 
-        private static IRasterLayer CreateRasterLayer(string layerName, IWorkspace2 workspace, IObjectFactory objFactory, string gdb)
+        private static IRasterLayer CreateRasterLayer(string layerName,
+                                                      IWorkspace2 workspace,
+                                                      IObjectFactory objFactory,
+                                                      string gdb)
         {
             if (workspace.NameExists[esriDatasetType.esriDTRasterDataset, layerName])
             {
-                Type rasterLayerType = typeof(RasterLayerClass);
-                string typeRasterLayerID = rasterLayerType.GUID.ToString("B");
-
-                var rasterLayer = (IRasterLayer)objFactory.Create(typeRasterLayerID);
-                rasterLayer.CreateFromFilePath($"{gdb}\\{layerName}");
-
-                SetFromMapRendererToRasterLayer(rasterLayer, objFactory, layerName);
-
-                return rasterLayer;
+                return CreateRasterLayer(objFactory, $"{gdb}\\{layerName}");
             }
 
             return null;
@@ -410,21 +411,32 @@ namespace MilSpace.Visualization3D
 
         }
 
-        private static void SetVisibilitySessionRaster3DProperties(IRasterLayer rasterLayer, IObjectFactory objFactory, IFunctionalSurface surface)
+        private static void SetVisibilitySessionRaster3DProperties(IRasterLayer rasterLayer,
+                                                                   IObjectFactory objFactory,
+                                                                   IFunctionalSurface surface,
+                                                                   bool isDrapperyLayer = false)
         {
             var properties3D = (I3DProperties3)objFactory.Create("esrianalyst3d.Raster3DProperties");
             properties3D.BaseOption = esriBaseOption.esriBaseSurface;
             properties3D.BaseSurface = surface;
-            properties3D.OffsetExpressionString = "2";
-            properties3D.ZFactor = _zFactor;
 
+            if (!isDrapperyLayer)
+            {
+                properties3D.OffsetExpressionString = "2";
+                properties3D.DepthPriorityValue = 1;
+            }
+            else
+            {
+                properties3D.DepthPriorityValue = 9;
+            }
+
+            properties3D.ZFactor = _zFactor;
             properties3D.RenderVisibility = esriRenderVisibility.esriRenderAlways;
             properties3D.RenderMode = esriRenderMode.esriRenderCache;
             properties3D.TextureDownsamplingFactor = 0.7;
             properties3D.AlphaThreshold = 0.1;
             properties3D.RenderRefreshRate = 0.75;
             properties3D.Illuminate = true;
-            properties3D.DepthPriorityValue = 1;
 
             ILayerExtensions layerExtensions = (ILayerExtensions)rasterLayer;
             layerExtensions.AddExtension(properties3D);
@@ -464,6 +476,7 @@ namespace MilSpace.Visualization3D
             properties3D.BaseOption = esriBaseOption.esriBaseSurface;
             properties3D.BaseSurface = surface;
             properties3D.ZFactor = _zFactor;
+            properties3D.DepthPriorityValue = 10;
 
             ILayerExtensions layerExtensions = (ILayerExtensions)layer;
             layerExtensions.AddExtension(properties3D);
@@ -659,6 +672,31 @@ namespace MilSpace.Visualization3D
         {
             _viewCalcLayers = new List<ILayer>();
             _layersWithDefaultRenderer = new List<string>();
+        }
+
+        private static void AddDraperyLayer(string draperyLayerName, IObjectFactory objFactory,
+                                            IFunctionalSurface baseSurface, IBasicDocument document)
+        {
+            var rasterLayer = CreateRasterLayer(objFactory, draperyLayerName);
+            if (rasterLayer != null)
+            {
+                SetVisibilitySessionRaster3DProperties(rasterLayer, objFactory, baseSurface, true);
+            }
+
+            document.AddLayer(rasterLayer);
+        }
+
+        private static IRasterLayer CreateRasterLayer(IObjectFactory objFactory, string layerPath)
+        {
+            Type rasterLayerType = typeof(RasterLayerClass);
+            string typeRasterLayerID = rasterLayerType.GUID.ToString("B");
+
+            var rasterLayer = (IRasterLayer)objFactory.Create(typeRasterLayerID);
+            rasterLayer.CreateFromFilePath(layerPath);
+
+            SetFromMapRendererToRasterLayer(rasterLayer, objFactory, rasterLayer.Name);
+
+            return rasterLayer;
         }
 
         #region "Handle the case when the application is shutdown by user manually"
