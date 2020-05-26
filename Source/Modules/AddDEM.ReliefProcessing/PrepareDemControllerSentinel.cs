@@ -122,6 +122,11 @@ namespace MilSpace.AddDem.ReliefProcessing
         public void DownloadProducts()
         {
             downloading = true;
+            foreach( var p in sentinelProductsToDownload)
+            {
+                p.Downloading = true;
+            }
+
             SentinelImportManager.DownloadProducs(sentinelProductsToDownload);
 
         }
@@ -136,11 +141,15 @@ namespace MilSpace.AddDem.ReliefProcessing
                 probuct.Downloaded = true;
             }
 
-            if (sentinelProductsToDownload.Any(p => !p.Downloaded))
+            if (sentinelProductsToDownload.Any(p => p.Downloading && !p.Downloaded))
             {
                 return;
             }
             downloading = false;
+            foreach (var p in sentinelProductsToDownload)
+            {
+                p.Downloading = false;
+            }
             OnProductsDownloaded?.Invoke(sentinelProductsToDownload);
         }
     }

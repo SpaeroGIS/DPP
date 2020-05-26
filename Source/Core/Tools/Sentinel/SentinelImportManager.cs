@@ -144,7 +144,7 @@ namespace MilSpace.Tools.Sentinel
                 }
                 else
                 {
-                    OnProductDownloaded?.Invoke(client.BaseAddress);
+                    OnProductDownloaded?.Invoke(client.QueryString["Id"]);
                     logger.InfoEx($"Download completed. Product {client.QueryString["Id"]}");
                 }
             }
