@@ -62,11 +62,11 @@
   <MainW_tabPage5_Text>Базові</MainW_tabPage5_Text>
   <MainW_label19_Text>Висота над поверхнею (м)</MainW_label19_Text>
   <MainW_lblMinDistance_Text>до</MainW_lblMinDistance_Text>
-  <MainW_lblMaxDistance_Text>Відст (м) від</MainW_lblMaxDistance_Text>
+  <MainW_lblMaxDistance_Text>Відст (м) від/до</MainW_lblMaxDistance_Text>
   <MainW_label52_Text>до</MainW_label52_Text>
-  <MainW_label18_Text>Верт кут (дгр) від</MainW_label18_Text>
+  <MainW_label18_Text>Верт кут (дгр) від/до</MainW_label18_Text>
   <MainW_label13_Text>до</MainW_label13_Text>
-  <MainW_label14_Text>Азимут (дгр) від</MainW_label14_Text>
+  <MainW_label14_Text>Азимут (дгр) від/до</MainW_label14_Text>
   <MainW_tlbbGetCoord_ToolTipText>Отримати координати з карти</MainW_tlbbGetCoord_ToolTipText>
   <MainW_tlbbCopyCoord_ToolTipText>Скопіювати</MainW_tlbbCopyCoord_ToolTipText>
   <MainW_tlbbPasteCoord_ToolTipText>Вставити</MainW_tlbbPasteCoord_ToolTipText>
@@ -75,7 +75,7 @@
   <MainW_label10_Text>Належн</MainW_label10_Text>
   <MainW_label11_Text>Тип</MainW_label11_Text>
   <MainW_label24_Text>Оператор</MainW_label24_Text>
-  <MainW_label27_Text>Дата</MainW_label27_Text>
+  <MainW_label27_Text>Користувач/Дата</MainW_label27_Text>
   <MainW_label20_Text>Назва</MainW_label20_Text>
   <MainW_label15_Text>верт.</MainW_label15_Text>
   
