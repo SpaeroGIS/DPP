@@ -10,6 +10,7 @@ using MilSpace.DataAccess.DataTransfer.Sentinel;
 using MilSpace.Tools.Sentinel;
 using MilSpace.AddDem.ReliefProcessing.GuiData;
 using System.Drawing;
+using System.ComponentModel;
 
 namespace MilSpace.AddDem.ReliefProcessing
 {
@@ -24,9 +25,26 @@ namespace MilSpace.AddDem.ReliefProcessing
         {
             controllerSrtm.SetView(this);
             controllerSentinel.SetView(this);
+
+            controllerSentinel.OnProductsDownloaded += OnProductsDownloaded;
+
+
             InitializeComponent();
             InitializeData();
+        }
 
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (controllerSentinel.DownloadStarted && MessageBox.Show("Downloading process in progress./n Do tou realy want to close form?", "Milspace Message title", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void OnProductsDownloaded(IEnumerable<SentinelProduct> products)
+        {
+            MessageBox.Show("Products were sucessfully downloaded.", "Milspace Message title", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            ShowButtons();
         }
 
         private void InitializeData()
@@ -202,7 +220,7 @@ namespace MilSpace.AddDem.ReliefProcessing
 
             btnAddSentinelProdToDownload.Enabled = lstSentilenProducts.SelectedItem != null && !selectedProduct;
             btnSetSentinelProdAsBase.Enabled = false;
-            btnDownloadSentinelProd.Enabled = SentinelProductsToDownload != null && SentinelProductsToDownload.Count() >= 2;
+            btnDownloadSentinelProd.Enabled = SentinelProductsToDownload != null && SentinelProductsToDownload.Count() >= 2 && !controllerSentinel.DownloadStarted;
         }
 
         private void btnAddSentinelProdToDownload_Click(object sender, EventArgs e)
@@ -223,6 +241,7 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void btnDownloadSentinelProd_Click(object sender, EventArgs e)
         {
+
             controllerSentinel.DownloadProducts();
         }
     }
