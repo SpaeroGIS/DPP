@@ -1,4 +1,5 @@
-﻿using MilSpace.Configurations;
+﻿using MilSpace.AddDem.ReliefProcessing.GuiData;
+using MilSpace.Configurations;
 using MilSpace.Core;
 using MilSpace.DataAccess.DataTransfer.Sentinel;
 using MilSpace.Tools.Sentinel;
@@ -15,10 +16,13 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         Logger log = Logger.GetLoggerEx("PrepareDemControllerSentinel");
         internal delegate void ProductsLoaded(IEnumerable<SentinelProduct> products);
+        internal delegate void ProductsDownloaded(IEnumerable<SentinelProduct> products);
 
         internal event ProductsLoaded OnProductLoaded;
+        internal event ProductsDownloaded OnProductDownloaded;
 
         List<Tile> tilesToImport = new List<Tile>();
+        List<SentinelProductGui> sentinelProductsToDownload = new List<SentinelProductGui>();
 
         IPrepareDemViewSentinel prepareSentinelView;
         internal PrepareDemControllerSentinel()
@@ -29,7 +33,7 @@ namespace MilSpace.AddDem.ReliefProcessing
         public void AddTileForImport()
         {
             var tile = GetTilesByPoint();
-            if (tile != null )
+            if (tile != null)
             {
                 tilesToImport.Add(tile);
             }
@@ -38,6 +42,7 @@ namespace MilSpace.AddDem.ReliefProcessing
         public void SetView(IPrepareDemViewSentinel view)
         {
             prepareSentinelView = view;
+            prepareSentinelView.SentinelProductsToDownload = sentinelProductsToDownload;
         }
 
         public void ReadConfiguration()
@@ -82,9 +87,37 @@ namespace MilSpace.AddDem.ReliefProcessing
 
             prepareSentinelView.TilesToImport.ToList().ForEach(t => request.AddTile(t));
             request.Position = prepareSentinelView.SentinelRequestDate;
-            prepareSentinelView.SentinelProducts =  SentinelImportManager.GetProductsMetadata(request);
+            prepareSentinelView.SentinelProducts = SentinelImportManager.GetProductsMetadata(request);
             OnProductLoaded?.Invoke(prepareSentinelView.SentinelProducts);
+        }
 
+        public List<string[]> GetSentinelProductProperties(SentinelProduct product)
+        {
+            return SentinelProductHelper.GetProductProperies(product);
+        }
+
+
+        public bool CheckProductExistanceToDownload(SentinelProduct product)
+        {
+            return sentinelProductsToDownload.Any( pg=> pg.Id == product.Id);
+        }
+
+        public SentinelProductGui AddProductToDownload(SentinelProduct product)
+        {
+            if (!CheckProductExistanceToDownload(product))
+            {
+                var pg = SentinelProductGui.Get(product);
+                pg.BaseScene = sentinelProductsToDownload.Count == 0;
+                sentinelProductsToDownload.Add(pg);
+                return pg;
+            }
+
+            return null;
+        }
+
+        public void DownloadProducts()
+        {
+            SentinelImportManager.DownloadProducs(sentinelProductsToDownload);
         }
     }
 }

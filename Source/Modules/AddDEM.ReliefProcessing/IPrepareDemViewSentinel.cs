@@ -1,4 +1,5 @@
-﻿using MilSpace.DataAccess.DataTransfer.Sentinel;
+﻿using MilSpace.AddDem.ReliefProcessing.GuiData;
+using MilSpace.DataAccess.DataTransfer.Sentinel;
 using MilSpace.Tools.Sentinel;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         DateTime  SentinelRequestDate { get; }
 
+        IEnumerable<SentinelProductGui> SentinelProductsToDownload { get; set; }
         IEnumerable<SentinelProduct> SentinelProducts { get; set; }
 
     }
