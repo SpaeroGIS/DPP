@@ -117,6 +117,7 @@ namespace MilSpace.Visualization3D
                 this.HydroLayerLabel.Text = context.HydroLayerLabel;
                 this.PlantsLayerLabel.Text = context.PlantsLayerLabel;
                 this.TransportLayerLabel.Text = context.TransportLayerLabel;
+                this.DraperyLayer.Text = context.DraperyLayerLabel;
                 this.ProfilesTabPage.Text = context.Generate3DSceneTabHeader;
                 this.GenerateImageTab.Text = context.GenerateImageTabHeader;
 
@@ -154,6 +155,7 @@ namespace MilSpace.Visualization3D
             this.HydroLayerComboBox.Items.Clear();
             this.BuildingsLayerComboBox.Items.Clear();
             this.PlantsLayerComboBox.Items.Clear();
+            this.DraperyLayerComboBox.Items.Clear();
 
             var mapLayerManager = new MapLayersManager(ArcMap.Document.ActiveView);
 
@@ -162,6 +164,7 @@ namespace MilSpace.Visualization3D
             PopulateComboBox(HydroLayerComboBox, mapLayerManager.PolygonLayers);
             PopulateComboBox(BuildingsLayerComboBox, mapLayerManager.PolygonLayers);
             PopulateComboBox(PlantsLayerComboBox, mapLayerManager.PolygonLayers);
+            PopulateComboBox(DraperyLayerComboBox, mapLayerManager.RasterLayers);
 
             log.InfoEx("> OnDocumentOpenFillDropdowns END");
         }
@@ -298,14 +301,21 @@ namespace MilSpace.Visualization3D
                     profilesSets.Add(profilesSet);
                 }
 
-                if(SurfaceComboBox.SelectedItem != null && (profilesSets.Count > 0 || visibilitySessionsModel.Count > 0))
+                if (SurfaceComboBox.SelectedItem != null && (profilesSets.Count > 0 || visibilitySessionsModel.Count > 0))
                 {
                     var arcSceneArguments = Feature3DManager.Get3DFeatures(SurfaceComboBox.SelectedItem.ToString(), profilesSets);
 
-
-                    if(!String.IsNullOrEmpty(tbZFactor.Text))
+                    if (!String.IsNullOrEmpty(tbZFactor.Text))
                     {
                         arcSceneArguments.ZFactor = Convert.ToDouble(tbZFactor.Text);
+                    }
+
+                    if (DraperyLayerComboBox.SelectedItem != null)
+                    {
+                        var draperyLayer = EsriTools.GetLayer(DraperyLayerComboBox.SelectedItem.ToString(),
+                                                                ArcMap.Document.FocusMap) as IRasterLayer;
+
+                        arcSceneArguments.DraperyLayer = draperyLayer.FilePath;
                     }
 
                     arcSceneArguments.AdditionalLayers = GetAdditionalLayers();
@@ -383,15 +393,5 @@ namespace MilSpace.Visualization3D
         }
 
         #endregion
-
-        private void panel3_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void HydroHightLabel_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

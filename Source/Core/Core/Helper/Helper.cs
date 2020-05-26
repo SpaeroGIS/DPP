@@ -33,14 +33,14 @@ namespace MilSpace.Core
           { SimpleDataTypesEnum.Undefined , () =>{ return default(string);}}};
 
 
-        public static Dictionary<esriFieldType, Type> GdbFieldsTypes = new Dictionary<esriFieldType, Type>
+        public static Dictionary<esriFieldType, Func<object, object>> GdbFieldsTypes = new Dictionary<esriFieldType, Func<object, object>>
         {
-            { esriFieldType.esriFieldTypeString, typeof(string)},
-            { esriFieldType.esriFieldTypeDate, typeof(DateTime)},
-            { esriFieldType.esriFieldTypeDouble, typeof(double)},
-            { esriFieldType.esriFieldTypeInteger, typeof(int)},
-            { esriFieldType.esriFieldTypeOID, typeof(int)},
-            { esriFieldType.esriFieldTypeSmallInteger, typeof(short)},
+            { esriFieldType.esriFieldTypeString, (value) => { return System.Convert.ToString(value); } },
+            { esriFieldType.esriFieldTypeDate, (value) => {return System.Convert.ToDateTime(value); }},
+            { esriFieldType.esriFieldTypeDouble, (value) => { return System.Convert.ToDouble(value); }},
+            { esriFieldType.esriFieldTypeInteger, (value) => { return System.Convert.ToInt32(value); }},
+            { esriFieldType.esriFieldTypeOID, (value) => { return System.Convert.ToInt32(value); }},
+            { esriFieldType.esriFieldTypeSmallInteger, (value) => { return System.Convert.ToInt16(value); }},
         };
 
         private static string milSpaceRegistryPath = @"SOFTWARE\WOW6432Node\MilSpace\";
@@ -54,39 +54,7 @@ namespace MilSpace.Core
 
             try
             {
-                switch (fieldType)
-                {
-                    case esriFieldType.esriFieldTypeDouble:
-
-                        result = (T)System.Convert.ChangeType(System.Convert.ToDouble(value), typeof(T));
-
-                        break;
-
-                    case esriFieldType.esriFieldTypeDate:
-
-                        result = (T)System.Convert.ChangeType(System.Convert.ToDateTime(value), typeof(T));
-
-                        break;
-
-                    case esriFieldType.esriFieldTypeInteger:
-                    case esriFieldType.esriFieldTypeOID:
-
-                        result = (T)System.Convert.ChangeType(System.Convert.ToInt32(value), typeof(T));
-
-                        break;
-
-                    case esriFieldType.esriFieldTypeSmallInteger:
-
-                        result = (T)System.Convert.ChangeType(System.Convert.ToInt16(value), typeof(T));
-
-                        break;
-
-                    default:
-
-                        result = (T)System.Convert.ChangeType(System.Convert.ToString(value), typeof(T));
-
-                        break;
-                }
+                result = (T)System.Convert.ChangeType(GdbFieldsTypes[fieldType].Invoke(value), typeof(T));
             }
             catch
             {
