@@ -18,15 +18,19 @@ namespace MilSpace.AddDem.ReliefProcessing
         internal delegate void ProductsLoaded(IEnumerable<SentinelProduct> products);
         internal delegate void ProductsDownloaded(IEnumerable<SentinelProduct> products);
 
+        private bool downloading = false;
+
         internal event ProductsLoaded OnProductLoaded;
-        internal event ProductsDownloaded OnProductDownloaded;
+        internal event ProductsDownloaded OnProductsDownloaded;
 
         List<Tile> tilesToImport = new List<Tile>();
         List<SentinelProductGui> sentinelProductsToDownload = new List<SentinelProductGui>();
 
         IPrepareDemViewSentinel prepareSentinelView;
         internal PrepareDemControllerSentinel()
-        { }
+        {
+            SentinelImportManager.OnProductDownloaded += OnProductDownloaded;
+        }
 
         public IEnumerable<Tile> TilesToImport => tilesToImport;
 
@@ -99,7 +103,7 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         public bool CheckProductExistanceToDownload(SentinelProduct product)
         {
-            return sentinelProductsToDownload.Any( pg=> pg.Id == product.Id);
+            return sentinelProductsToDownload.Any(pg => pg.Id == product.Id);
         }
 
         public SentinelProductGui AddProductToDownload(SentinelProduct product)
@@ -117,7 +121,27 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         public void DownloadProducts()
         {
+            downloading = true;
             SentinelImportManager.DownloadProducs(sentinelProductsToDownload);
+
+        }
+
+        public bool DownloadStarted => downloading;
+
+        private void OnProductDownloaded(string productId)
+        {
+            var probuct = sentinelProductsToDownload.FirstOrDefault(p => p.Identifier == productId);
+            if (probuct != null)
+            {
+                probuct.Downloaded = true;
+            }
+
+            if (sentinelProductsToDownload.Any(p => !p.Downloaded))
+            {
+                return;
+            }
+            downloading = false;
+            OnProductsDownloaded?.Invoke(sentinelProductsToDownload);
         }
     }
 }

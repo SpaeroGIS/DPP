@@ -18,8 +18,8 @@ namespace MilSpace.Tools.Sentinel
     public static class SentinelImportManager
     {
         public delegate void SentinelProductsDownloaded(string product);
-        internal static event SentinelProductsDownloaded OnProductDownloaded;
-        internal static event SentinelProductsDownloaded OnProductDownloadingError;
+        public static event SentinelProductsDownloaded OnProductDownloaded;
+        public static event SentinelProductsDownloaded OnProductDownloadingError;
 
         private static Logger logger = Logger.GetLoggerEx("SentinelImportManager");
         public static Dictionary<IndexesEnum, string> IndexesDictionary = typeof(IndexesEnum).GetEnumToDictionary<IndexesEnum>();//(  Enum.GetValues(typeof(IndexesEnum)).Cast<IndexesEnum>().ToDictionary(k => k, v => v.ToString());
@@ -120,6 +120,7 @@ namespace MilSpace.Tools.Sentinel
             using (WebClient client = new WebClient())
             {
                 client.Credentials = new NetworkCredential(MilSpaceConfiguration.DemStorages.ScihubUserName, MilSpaceConfiguration.DemStorages.ScihubPassword);
+                client.QueryString.Add("Id", product.Identifier);
                 SentinelProductrequestBuildercs builder = new SentinelProductrequestBuildercs(product.Uuid);
 
                 string fileName = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorage, product.Identifier + ".zip");
@@ -137,13 +138,14 @@ namespace MilSpace.Tools.Sentinel
                 if (e.Error != null)
                 {
 
-                    OnProductDownloadingError?.Invoke(client.BaseAddress);
+                    OnProductDownloadingError?.Invoke(client.QueryString["Id"]);
+                    logger.ErrorEx($"Error on download. Product {client.QueryString["Id"]} ");
                     logger.ErrorEx(e.Error.Message);
                 }
                 else
                 {
                     OnProductDownloaded?.Invoke(client.BaseAddress);
-                    logger.InfoEx($"Download completed from {client.BaseAddress}");
+                    logger.InfoEx($"Download completed. Product {client.QueryString["Id"]}");
                 }
             }
         }
