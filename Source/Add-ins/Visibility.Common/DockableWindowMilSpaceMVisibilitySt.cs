@@ -79,12 +79,12 @@ namespace MilSpace.Visibility
                 this.tbpPoints.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_tbpPoints_Text", "Пункти С");
                 this.tabObservPoints.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_tabPage5_Text", "Параметри ПС)");
                 this.label19.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label19_Text", "Висота над поверхнею, м");
-                this.lblMinDistance.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_lblMinDistance_Text", "до");
-                this.lblMaxDistance.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_lblMaxDistance_Text", "Відст., м від");
-                this.label52.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label52_Text", "до");
-                this.label18.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label18_Text", "Верт вугол від");
-                this.label13.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label13_Text", "до");
-                this.label14.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label14_Text", "Азимут від");
+                //this.lblMinDistance.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_lblMinDistance_Text", "до");
+                this.lblMaxDistance.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_lblMaxDistance_Text", "Відст., м від/до");
+                //this.label52.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label52_Text", "до");
+                this.label18.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label18_Text", "Верт вугол від/до");
+                //this.label13.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label13_Text", "до");
+                this.label14.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label14_Text", "Азимут від/до");
                 this.tlbbGetCoord.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbGetCoord_ToolTipText", "Получить координаты с карты");
                 this.tlbbCopyCoord.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbCopyCoord_ToolTipText", "Скопировать");
                 this.tlbbPasteCoord.ToolTipText = LocalizationContext.Instance.FindLocalizedElement("MainW_tlbbPasteCoord_ToolTipText", "Вставить");
@@ -93,7 +93,7 @@ namespace MilSpace.Visibility
                 this.label10.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label10_Text", "Належн");
                 this.label11.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label11_Text", "Тип");
                 //this.label24.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label24_Text", "Оператор");
-                this.label27.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label27_Text", "Дата");
+                this.label27.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label27_Text", "Користувач/Дата");
                 this.label20.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label20_Text", "Назва");
                 this.label7.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label7_Text", "Параметри ПС");
                 this.buttonSaveOPoint.Tag = LocalizationContext.Instance.FindLocalizedElement("MainW_buttonSaveOPoint_Tag", "зберегти параметри ПС");
