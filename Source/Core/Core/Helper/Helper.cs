@@ -10,6 +10,7 @@ using System.Reflection;
 using ESRI.ArcGIS.Geometry;
 using Microsoft.Win32;
 using ESRI.ArcGIS.Geodatabase;
+using System.Linq.Expressions;
 
 namespace MilSpace.Core
 {
@@ -69,7 +70,7 @@ namespace MilSpace.Core
         public static T Convert<T>(string value)
         {
 
-            if (GdbFieldsTypes.Any(tp => tp.Value.Equals(typeof(T))))
+            if (SimpleDataTypes.Any(tp => tp.Value.Equals(typeof(T))))
             {
                 var convertMetadata = SimpleDataTypes.First(tp => tp.Value.Equals(typeof(T)));
 
@@ -332,5 +333,34 @@ namespace MilSpace.Core
             var pointString = pointCoord.ToString($"F{signs}");
             return pointString.Replace(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator, ".");
         }
+
+
+        public static T Clone<T>(object cloneFrom)
+        {
+            var creator = Expression.Lambda<Func<T>>(Expression.New(typeof(T))).Compile();
+            var cloneTo = creator.Invoke();
+
+            foreach (PropertyInfo sourcePropertyInfo in cloneFrom.GetType().GetProperties())
+            {
+                PropertyInfo destPropertyInfo = cloneTo.GetType().GetProperty(sourcePropertyInfo.Name);
+
+                destPropertyInfo.SetValue(
+                    cloneTo,
+                    sourcePropertyInfo.GetValue(cloneFrom, null),
+                    null);
+            }
+
+            foreach (FieldInfo sourcePropertyInfo in cloneFrom.GetType().GetFields())
+            {
+                FieldInfo destPropertyInfo = cloneTo.GetType().GetField(sourcePropertyInfo.Name);
+
+                destPropertyInfo.SetValue(
+                    cloneTo,
+                    sourcePropertyInfo.GetValue(cloneFrom));
+            }
+
+            return cloneTo;
+        }
+
     }
 }

@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.ColumnHeader clmnPropName;
+            System.Windows.Forms.ColumnHeader clmnPropValue;
+            System.Windows.Forms.ColumnHeader columnHeader3;
             System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("длина");
             System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("ширина");
             System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("дата");
@@ -75,18 +78,18 @@
             this.lstSentilenProducts = new System.Windows.Forms.ListBox();
             this.panel37 = new System.Windows.Forms.Panel();
             this.label27 = new System.Windows.Forms.Label();
-            this.listBox5 = new System.Windows.Forms.ListBox();
+            this.lstSentinelProductProps = new System.Windows.Forms.ListView();
             this.panel38 = new System.Windows.Forms.Panel();
-            this.button13 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
+            this.btnSetSentinelProdAsBase = new System.Windows.Forms.Button();
+            this.btnAddSentinelProdToDownload = new System.Windows.Forms.Button();
             this.panel36 = new System.Windows.Forms.Panel();
             this.label26 = new System.Windows.Forms.Label();
             this.panel40 = new System.Windows.Forms.Panel();
-            this.listBox6 = new System.Windows.Forms.ListBox();
+            this.lstSentinelProductsToDownload = new System.Windows.Forms.ListView();
             this.panel42 = new System.Windows.Forms.Panel();
             this.label28 = new System.Windows.Forms.Label();
             this.panel41 = new System.Windows.Forms.Panel();
-            this.button12 = new System.Windows.Forms.Button();
+            this.btnDownloadSentinelProd = new System.Windows.Forms.Button();
             this.panel23 = new System.Windows.Forms.Panel();
             this.label16 = new System.Windows.Forms.Label();
             this.splitter2 = new System.Windows.Forms.Splitter();
@@ -201,6 +204,9 @@
             this.panel72 = new System.Windows.Forms.Panel();
             this.label44 = new System.Windows.Forms.Label();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            clmnPropName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            clmnPropValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel2.SuspendLayout();
             this.panel7.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -278,6 +284,18 @@
             this.panel71.SuspendLayout();
             this.panel72.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // clmnPropName
+            // 
+            clmnPropName.Width = 90;
+            // 
+            // clmnPropValue
+            // 
+            clmnPropValue.Width = 450;
+            // 
+            // columnHeader3
+            // 
+            columnHeader3.Width = 500;
             // 
             // panel2
             // 
@@ -700,7 +718,7 @@
             this.panel39.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.panel39.Controls.Add(this.lstSentilenProducts);
             this.panel39.Controls.Add(this.panel37);
-            this.panel39.Controls.Add(this.listBox5);
+            this.panel39.Controls.Add(this.lstSentinelProductProps);
             this.panel39.Controls.Add(this.panel38);
             this.panel39.Controls.Add(this.panel36);
             this.panel39.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -718,6 +736,7 @@
             this.lstSentilenProducts.Name = "lstSentilenProducts";
             this.lstSentilenProducts.Size = new System.Drawing.Size(403, 199);
             this.lstSentilenProducts.TabIndex = 15;
+            this.lstSentilenProducts.SelectedIndexChanged += new System.EventHandler(this.lstSentilenProducts_SelectedIndexChanged);
             // 
             // panel37
             // 
@@ -740,23 +759,26 @@
             this.label27.TabIndex = 0;
             this.label27.Text = "подробно";
             // 
-            // listBox5
+            // lstSentinelProductProps
             // 
-            this.listBox5.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.listBox5.FormattingEnabled = true;
-            this.listBox5.Items.AddRange(new object[] {
-            "параметры",
-            "в формате параметр / значение"});
-            this.listBox5.Location = new System.Drawing.Point(4, 255);
-            this.listBox5.Name = "listBox5";
-            this.listBox5.Size = new System.Drawing.Size(403, 69);
-            this.listBox5.TabIndex = 17;
+            this.lstSentinelProductProps.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            clmnPropName,
+            clmnPropValue});
+            this.lstSentinelProductProps.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lstSentinelProductProps.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.lstSentinelProductProps.HideSelection = false;
+            this.lstSentinelProductProps.Location = new System.Drawing.Point(4, 255);
+            this.lstSentinelProductProps.Name = "lstSentinelProductProps";
+            this.lstSentinelProductProps.Size = new System.Drawing.Size(403, 69);
+            this.lstSentinelProductProps.TabIndex = 17;
+            this.lstSentinelProductProps.UseCompatibleStateImageBehavior = false;
+            this.lstSentinelProductProps.View = System.Windows.Forms.View.Details;
             // 
             // panel38
             // 
             this.panel38.BackColor = System.Drawing.Color.White;
-            this.panel38.Controls.Add(this.button13);
-            this.panel38.Controls.Add(this.button11);
+            this.panel38.Controls.Add(this.btnSetSentinelProdAsBase);
+            this.panel38.Controls.Add(this.btnAddSentinelProdToDownload);
             this.panel38.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel38.Location = new System.Drawing.Point(4, 324);
             this.panel38.Name = "panel38";
@@ -764,25 +786,28 @@
             this.panel38.Size = new System.Drawing.Size(403, 29);
             this.panel38.TabIndex = 18;
             // 
-            // button13
+            // btnSetSentinelProdAsBase
             // 
-            this.button13.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button13.Location = new System.Drawing.Point(85, 4);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(157, 21);
-            this.button13.TabIndex = 1;
-            this.button13.Text = "выбрать базовым";
-            this.button13.UseVisualStyleBackColor = true;
+            this.btnSetSentinelProdAsBase.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSetSentinelProdAsBase.Enabled = false;
+            this.btnSetSentinelProdAsBase.Location = new System.Drawing.Point(85, 4);
+            this.btnSetSentinelProdAsBase.Name = "btnSetSentinelProdAsBase";
+            this.btnSetSentinelProdAsBase.Size = new System.Drawing.Size(157, 21);
+            this.btnSetSentinelProdAsBase.TabIndex = 1;
+            this.btnSetSentinelProdAsBase.Text = "выбрать базовым";
+            this.btnSetSentinelProdAsBase.UseVisualStyleBackColor = true;
             // 
-            // button11
+            // btnAddSentinelProdToDownload
             // 
-            this.button11.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button11.Location = new System.Drawing.Point(242, 4);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(157, 21);
-            this.button11.TabIndex = 0;
-            this.button11.Text = "добавить для скачивания";
-            this.button11.UseVisualStyleBackColor = true;
+            this.btnAddSentinelProdToDownload.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnAddSentinelProdToDownload.Enabled = false;
+            this.btnAddSentinelProdToDownload.Location = new System.Drawing.Point(242, 4);
+            this.btnAddSentinelProdToDownload.Name = "btnAddSentinelProdToDownload";
+            this.btnAddSentinelProdToDownload.Size = new System.Drawing.Size(157, 21);
+            this.btnAddSentinelProdToDownload.TabIndex = 0;
+            this.btnAddSentinelProdToDownload.Text = "добавить для скачивания";
+            this.btnAddSentinelProdToDownload.UseVisualStyleBackColor = true;
+            this.btnAddSentinelProdToDownload.Click += new System.EventHandler(this.btnAddSentinelProdToDownload_Click);
             // 
             // panel36
             // 
@@ -808,7 +833,7 @@
             // panel40
             // 
             this.panel40.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.panel40.Controls.Add(this.listBox6);
+            this.panel40.Controls.Add(this.lstSentinelProductsToDownload);
             this.panel40.Controls.Add(this.panel42);
             this.panel40.Controls.Add(this.panel41);
             this.panel40.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -818,17 +843,19 @@
             this.panel40.Size = new System.Drawing.Size(411, 117);
             this.panel40.TabIndex = 15;
             // 
-            // listBox6
+            // lstSentinelProductsToDownload
             // 
-            this.listBox6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox6.FormattingEnabled = true;
-            this.listBox6.Items.AddRange(new object[] {
-            "(базовая сцена) название сцены 1",
-            "(вторая сцена) название сцены 2"});
-            this.listBox6.Location = new System.Drawing.Point(4, 30);
-            this.listBox6.Name = "listBox6";
-            this.listBox6.Size = new System.Drawing.Size(403, 54);
-            this.listBox6.TabIndex = 21;
+            this.lstSentinelProductsToDownload.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            columnHeader3});
+            this.lstSentinelProductsToDownload.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstSentinelProductsToDownload.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.lstSentinelProductsToDownload.HideSelection = false;
+            this.lstSentinelProductsToDownload.Location = new System.Drawing.Point(4, 30);
+            this.lstSentinelProductsToDownload.Name = "lstSentinelProductsToDownload";
+            this.lstSentinelProductsToDownload.Size = new System.Drawing.Size(403, 54);
+            this.lstSentinelProductsToDownload.TabIndex = 21;
+            this.lstSentinelProductsToDownload.UseCompatibleStateImageBehavior = false;
+            this.lstSentinelProductsToDownload.View = System.Windows.Forms.View.Details;
             // 
             // panel42
             // 
@@ -854,7 +881,7 @@
             // panel41
             // 
             this.panel41.BackColor = System.Drawing.Color.White;
-            this.panel41.Controls.Add(this.button12);
+            this.panel41.Controls.Add(this.btnDownloadSentinelProd);
             this.panel41.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel41.Location = new System.Drawing.Point(4, 84);
             this.panel41.Name = "panel41";
@@ -862,15 +889,16 @@
             this.panel41.Size = new System.Drawing.Size(403, 29);
             this.panel41.TabIndex = 19;
             // 
-            // button12
+            // btnDownloadSentinelProd
             // 
-            this.button12.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button12.Location = new System.Drawing.Point(242, 4);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(157, 21);
-            this.button12.TabIndex = 0;
-            this.button12.Text = "скачать";
-            this.button12.UseVisualStyleBackColor = true;
+            this.btnDownloadSentinelProd.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnDownloadSentinelProd.Location = new System.Drawing.Point(242, 4);
+            this.btnDownloadSentinelProd.Name = "btnDownloadSentinelProd";
+            this.btnDownloadSentinelProd.Size = new System.Drawing.Size(157, 21);
+            this.btnDownloadSentinelProd.TabIndex = 0;
+            this.btnDownloadSentinelProd.Text = "скачать";
+            this.btnDownloadSentinelProd.UseVisualStyleBackColor = true;
+            this.btnDownloadSentinelProd.Click += new System.EventHandler(this.btnDownloadSentinelProd_Click);
             // 
             // panel23
             // 
@@ -2317,18 +2345,18 @@
         private System.Windows.Forms.ListBox lstSentilenProducts;
         private System.Windows.Forms.Panel panel37;
         private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.ListBox listBox5;
+        private System.Windows.Forms.ListView lstSentinelProductProps;
         private System.Windows.Forms.Panel panel38;
-        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Button btnAddSentinelProdToDownload;
         private System.Windows.Forms.Panel panel36;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Panel panel40;
         private System.Windows.Forms.Panel panel42;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Panel panel41;
-        private System.Windows.Forms.Button button12;
-        private System.Windows.Forms.Button button13;
-        private System.Windows.Forms.ListBox listBox6;
+        private System.Windows.Forms.Button btnDownloadSentinelProd;
+        private System.Windows.Forms.Button btnSetSentinelProdAsBase;
+        private System.Windows.Forms.ListView lstSentinelProductsToDownload;
         private System.Windows.Forms.Panel panel43;
         private System.Windows.Forms.Panel panel44;
         private System.Windows.Forms.ListBox listBox7;

@@ -200,6 +200,7 @@
       <Link>VisibilityManager.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sentinel\SentinelProductrequestBuildercs.cs" />
     <Compile Include="Sentinel\SentineWeblRequestBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
