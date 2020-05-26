@@ -241,8 +241,8 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void btnDownloadSentinelProd_Click(object sender, EventArgs e)
         {
-
             controllerSentinel.DownloadProducts();
+            ShowButtons();
         }
     }
 }
