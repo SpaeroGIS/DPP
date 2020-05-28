@@ -151,12 +151,11 @@ namespace MilSpace.GeoCalculator
             _log.DebugEx("> UpdatePoints END.");
         }
 
-        internal void UpdatePoint(GeoCalcPoint point)
+        internal void UpdatePointFromVisibility(GeoCalcPoint point)
         {
             _log.DebugEx("> UpdatePoint START.");
 
             GeoCalculatiorFacade.UpdateUserSessionPoint(point);
-            OnPointUpdated.Invoke();
 
             _log.DebugEx("> UpdatePoint END.");
         }

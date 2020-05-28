@@ -1232,10 +1232,31 @@ namespace MilSpace.Visibility
         {
             var selectedPoint = _observPointsController.GetObservPointByIdAsObservationPoint(_selectedPointId);
 
+            if(rbRouteMode.Checked)
+            {
+                SavePointInRouteMode(selectedPoint);
+            }
+            else
+            {
+                _observPointsController.UpdateObservPoint(
+                                                    GetObservationPoint(),
+                                                    selectedPoint.Objectid,
+                                                    _observerPointSource);
+            }
+        }
+
+        private void SavePointInRouteMode(ObservationPoint selectedPoint)
+        {
             _observPointsController.UpdateObservPoint(
                 GetObservationPoint(),
                 selectedPoint.Objectid,
-                _observerPointSource);
+                _observerPointSource,
+                false);
+
+                _observPointsController.UpdateAllPointsWithRelativeAzimuths(Convert.ToDouble(azimuthB.Text),
+                                                                            Convert.ToDouble(azimuthE.Text),
+                                                                            _observerPointSource);
+       
         }
 
         //private void CreateNewPoint(ObservationPoint point)
@@ -1267,9 +1288,28 @@ namespace MilSpace.Visibility
 
             var sourceType = _observerPointSource;
 
+            double azimuthStart;
+            double azimuthEnd;
+
+            if (rbSeparateOP.Checked)
+            {
+                azimuthStart = Convert.ToDouble(azimuthB.Text);
+                azimuthEnd = Convert.ToDouble(azimuthE.Text);
+            }
+            else
+            {
+                var direction = Convert.ToDouble(txtDirection.Text);
+
+                azimuthStart = _observPointsController
+                                    .FindAzimuthRelativeToDirection(direction,
+                                                                    Convert.ToDouble(azimuthB.Text));
+                azimuthEnd = _observPointsController
+                                    .FindAzimuthRelativeToDirection(direction,
+                                                                    Convert.ToDouble(azimuthE.Text));
+            }
+
             if (sourceType == ObservationSetsEnum.GeoCalculator)
             {
-
                 if (!(_observPointsController.GetObservPointById(_selectedPointId) is GeoCalcPoint oldPoint))
                 {
                     return null;
@@ -1289,8 +1329,8 @@ namespace MilSpace.Visibility
                     RelativeHeight = Convert.ToDouble(heightCurrent.Text),
                     AvailableHeightLover = Convert.ToDouble(heightMin.Text),
                     AvailableHeightUpper = Convert.ToDouble(heightMax.Text),
-                    AzimuthStart = Convert.ToDouble(azimuthB.Text),
-                    AzimuthEnd = Convert.ToDouble(azimuthE.Text),
+                    AzimuthStart = azimuthStart,
+                    AzimuthEnd = azimuthEnd,
                     //AzimuthMainAxis = Convert.ToDouble(azimuthMainAxis.Text),
                     InnerRadius = Convert.ToDouble(txtMinDistance.Text),
                     OuterRadius = Convert.ToDouble(txtMaxDistance.Text),
@@ -1320,8 +1360,8 @@ namespace MilSpace.Visibility
                 RelativeHeight = Convert.ToDouble(heightCurrent.Text),
                 AvailableHeightLover = Convert.ToDouble(heightMin.Text),
                 AvailableHeightUpper = Convert.ToDouble(heightMax.Text),
-                AzimuthStart = Convert.ToDouble(azimuthB.Text),
-                AzimuthEnd = Convert.ToDouble(azimuthE.Text),
+                AzimuthStart = azimuthStart,
+                AzimuthEnd = azimuthEnd,
                 //AzimuthMainAxis = Convert.ToDouble(azimuthMainAxis.Text),
                 InnerRadius = Convert.ToDouble(txtMinDistance.Text),
                 OuterRadius = Convert.ToDouble(txtMaxDistance.Text),
@@ -1393,15 +1433,61 @@ namespace MilSpace.Visibility
                 FCPoint.Y.ToString("F5") :
                 centerPoint.Y.ToString("F5");
 
-            azimuthB.Text =
-                selectedPoint.AzimuthStart.HasValue ?
-                selectedPoint.AzimuthStart.ToString() :
-                ObservPointDefaultValues.AzimuthBText;
+            if (rbSeparateOP.Checked)
+            {
+                azimuthB.Text =
+                    selectedPoint.AzimuthStart.HasValue ?
+                    selectedPoint.AzimuthStart.Value.ToFormattedString(0) :
+                    ObservPointDefaultValues.AzimuthBText;
 
-            azimuthE.Text =
-                selectedPoint.AzimuthEnd.HasValue ?
-                selectedPoint.AzimuthEnd.ToString() :
-                ObservPointDefaultValues.AzimuthEText;
+                azimuthE.Text =
+                    selectedPoint.AzimuthEnd.HasValue ?
+                    selectedPoint.AzimuthEnd.Value.ToFormattedString(0) :
+                    ObservPointDefaultValues.AzimuthEText;
+
+                txtDirection.Text = "0";
+            }
+            else
+            {
+                IObserverPoint currentPoint = selectedPoint;
+                IObserverPoint nextPoint = _observPointsController.GetNextPoint(selectedPoint.Objectid);
+
+                if(nextPoint == null)
+                {
+                    currentPoint = _observPointsController.GetPrevPoint(selectedPoint.Objectid);
+                    nextPoint = selectedPoint;
+                }
+
+                var direction = _observPointsController.GetDirection(_observPointsController.GetObserverPointGeometry(currentPoint),
+                                                                     _observPointsController.GetObserverPointGeometry(nextPoint));
+                txtDirection.Text = direction.ToFormattedString(0);
+
+                if (selectedPoint.AzimuthStart.HasValue)
+                {
+                    var baseAzimuth =
+                            _observPointsController.FindBaseAzimuthFromRelativeToDirection(direction,
+                                                                                           selectedPoint.AzimuthStart.Value,
+                                                                                           false);
+                    azimuthB.Text = baseAzimuth.ToFormattedString(0);
+                }
+                else
+                {
+                    azimuthB.Text = ObservPointDefaultValues.AzimuthBText;
+                }
+
+                if (selectedPoint.AzimuthEnd.HasValue)
+                {
+                    var baseAzimuth =
+                            _observPointsController.FindBaseAzimuthFromRelativeToDirection(direction,
+                                                                                           selectedPoint.AzimuthEnd.Value,
+                                                                                           true);
+                    azimuthE.Text = baseAzimuth.ToFormattedString(0);
+                }
+                else
+                {
+                    azimuthE.Text = ObservPointDefaultValues.AzimuthEText;
+                }
+            }
 
             heightCurrent.Text =
                 selectedPoint.RelativeHeight.HasValue ?
@@ -2234,7 +2320,6 @@ namespace MilSpace.Visibility
         {
             if (_observPointsController.IsArcMapEditingStarted())
             {
-
                 string sMsgText = LocalizationContext.Instance.FindLocalizedElement(
                     "MsgCannotSaveObservationpoints",
                     $"Для збереження властивостей пункту спостереження {Environment.NewLine} треба вимкнути режим редагування ArcMap.");
@@ -2658,7 +2743,44 @@ namespace MilSpace.Visibility
         {
             if (_isDropDownItemChangedManualy)
             {
-                _observPointsController.SetSelectedObserverPoints(_observerPointSource);
+                _observPointsController.GetObserverPointsFromSelectedSource(_observerPointSource);
+            }
+
+            var isObservPointsFromGdb = _observerPointSource == ObservationSetsEnum.Gdb;
+
+            panelRegym.Enabled = !isObservPointsFromGdb;
+
+            if (isObservPointsFromGdb)
+            {
+                rbSeparateOP.Checked = true;
+            }
+
+            if (rbRouteMode.Checked)
+            {
+                if (!_observPointsController.SetObserverPointsToRouteMode(_observerPointSource))
+                {
+                    rbSeparateOP.Checked = true;
+                }
+            }
+        }
+
+        private void RadioButton2_Click(object sender, EventArgs e)
+        {
+            rbSeparateOP.Checked = !_observPointsController.SetObserverPointsToRouteMode(_observerPointSource);
+
+            OnModeChanged();
+        }
+
+        private void RbSeparateOP_Click(object sender, EventArgs e)
+        {
+            OnModeChanged();
+        }
+
+        private void OnModeChanged()
+        {
+            if (_selectedPointId != -1)
+            {
+                FillObservPointsFields(_observPointsController.GetObservPointByIdAsObservationPoint(_selectedPointId));
             }
         }
     }

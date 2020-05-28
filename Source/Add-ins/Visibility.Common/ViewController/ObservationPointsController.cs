@@ -1491,7 +1491,7 @@ namespace MilSpace.Visibility.ViewController
             return VisibilityManager.ObservationStationsFeatureLayer.Name;
         }
 
-        internal void UpdateObservPoint(IObserverPoint newPoint, int objId, ObservationSetsEnum set)
+        internal void UpdateObservPoint(IObserverPoint newPoint, int objId, ObservationSetsEnum set, bool updateAllPoints = true)
         {
             newPoint.Objectid = objId;
 
@@ -1525,7 +1525,10 @@ namespace MilSpace.Visibility.ViewController
                     break;
             }
 
-            SetSelectedObserverPoints(set, false);
+            if (updateAllPoints)
+            {
+                GetObserverPointsFromSelectedSource(set, false);
+            }
         }
 
         internal void SelectObservationStationFromSet(ObservationSetsEnum set)
@@ -1580,7 +1583,7 @@ namespace MilSpace.Visibility.ViewController
             //TEST GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).TestObjects(geometry);
         }
 
-        internal void SetSelectedObserverPoints(ObservationSetsEnum set, bool newSource = true)
+        internal void GetObserverPointsFromSelectedSource(ObservationSetsEnum set, bool newSource = true)
         {
             if(newSource)
             {
@@ -1653,6 +1656,219 @@ namespace MilSpace.Visibility.ViewController
 
             view.FillSelectedOPFields(point);
         }
+
+        internal bool SetObserverPointsToRouteMode(ObservationSetsEnum set)
+        {
+            if(_observationPoints.Count < 2)
+            {
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("NotEnoughPointsToBuildRoute", "Недостатньо точок для побудови маршруту."),
+                                LocalizationContext.Instance.MessageBoxCaption);
+
+                return false;
+            }
+
+            if (!CheckAllPointsHaveSameFields())
+            {
+               var dialogResult = MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("RewriteAllPointsToTheSameValues",
+                                                                                  "Неможливо побудувати маршрут з точок, які мають різні параметри. \nВи бажаєте привести всі точки до параметрів першої?"),
+                                LocalizationContext.Instance.MessageBoxCaption, MessageBoxButtons.OKCancel);
+
+                if(dialogResult != DialogResult.OK)
+                {
+                    return false;
+                }
+
+                _observationPoints.OrderBy(point => point.Objectid);
+
+                var standardPoint = _observationPoints.First();
+                var standardPointGeometry = GetObserverPointGeometry(standardPoint);
+                var nextPointGeometry = GetObserverPointGeometry(_observationPoints[1]);
+
+                var standardBaseStartAzimuth =
+                        FindBaseAzimuthFromRelativeToDirection(standardPointGeometry,
+                                                               nextPointGeometry,
+                                                               standardPoint.AzimuthStart.Value,
+                                                               false);
+
+                var standardBaseEndAzimuth =
+                        FindBaseAzimuthFromRelativeToDirection(standardPointGeometry,
+                                                               nextPointGeometry,
+                                                               standardPoint.AzimuthEnd.Value,
+                                                               true);
+                
+                for (int i = 1; i < _observationPoints.Count; i++)
+                {
+                    IPoint currentPointGeometry;
+
+                    if (i != _observationPoints.Count - 1)
+                    {
+                        currentPointGeometry = nextPointGeometry.Clone();
+                        nextPointGeometry = GetObserverPointGeometry(_observationPoints[i + 1]);
+                    }
+                    else
+                    {
+                        currentPointGeometry = GetObserverPointGeometry(_observationPoints[i - 1]);
+                    }
+
+                    var currentPointBaseStartAzimuth =
+                                FindAzimuthRelativeToDirection(currentPointGeometry,
+                                                               nextPointGeometry,
+                                                               standardBaseStartAzimuth);
+
+                        var currentPointBaseEndAzimuth =
+                                FindAzimuthRelativeToDirection(currentPointGeometry,
+                                                               nextPointGeometry,
+                                                               standardBaseEndAzimuth);
+                    
+                    _observationPoints[i].AngelMaxH = standardPoint.AngelMaxH;
+                    _observationPoints[i].AngelMinH = standardPoint.AngelMinH;
+                    _observationPoints[i].AzimuthEnd = currentPointBaseEndAzimuth;
+                    _observationPoints[i].AzimuthStart = currentPointBaseStartAzimuth;
+                    _observationPoints[i].RelativeHeight = standardPoint.RelativeHeight;
+
+                    UpdateObservPoint(_observationPoints[i], _observationPoints[i].Objectid, set, false);
+                }
+
+                view.FillObservationPointList(_observationPoints, view.GetFilter, true);
+                view.SetFieldsEditingAbility(true);
+            }
+
+            return true;
+        }
+
+        internal double GetDirection(IPoint currentPoint, IPoint nextPoint)
+        {
+            var lineBetweenPoints = new Line
+            {
+                FromPoint = currentPoint,
+                ToPoint = nextPoint,
+                SpatialReference = currentPoint.SpatialReference
+            };
+
+            return lineBetweenPoints.PosAzimuth();
+        }
+
+        internal double FindBaseAzimuthFromRelativeToDirection(IPoint currentPoint, IPoint nextPoint,
+                                                                double relativeAzimuth, bool endAzimuth)
+        {
+            var direction = GetDirection(currentPoint, nextPoint);
+            return FindBaseAzimuthFromRelativeToDirection(direction, relativeAzimuth, endAzimuth);
+        }
+
+        internal double FindBaseAzimuthFromRelativeToDirection(double direction,
+                                                               double relativeAzimuth, bool endAzimuth)
+        {
+            var baseAzimuth = Math.Round(relativeAzimuth - direction, 0);
+
+            if (baseAzimuth < 0)
+            {
+                baseAzimuth += 360;
+            }
+
+            if (baseAzimuth == 0 && endAzimuth)
+            {
+                baseAzimuth = 360;
+            }
+            else if (baseAzimuth == 360 && !endAzimuth)
+            {
+                baseAzimuth = 0;
+            }
+
+            return baseAzimuth;
+        }
+
+        internal IObserverPoint GetNextPoint(int currentPointId)
+        {
+            var currentPoint = _observationPoints.FirstOrDefault(point => point.Objectid == currentPointId);
+            var nextPointIndex = _observationPoints.IndexOf(currentPoint) + 1;
+
+            if(nextPointIndex < _observationPoints.Count)
+            {
+                return _observationPoints[nextPointIndex];
+            }
+
+            return null;
+        }
+
+        internal IObserverPoint GetPrevPoint(int currentPointId)
+        {
+            var currentPoint = _observationPoints.FirstOrDefault(point => point.Objectid == currentPointId);
+            var nextPointIndex = _observationPoints.IndexOf(currentPoint) - 1;
+
+            if (nextPointIndex > 0)
+            {
+                return _observationPoints[nextPointIndex];
+            }
+
+            return null;
+        }
+
+        internal IPoint GetObserverPointGeometry(IObserverPoint observerPoint)
+        {
+            var point = new Point
+            {
+                X = observerPoint.X.Value,
+                Y = observerPoint.Y.Value,
+                SpatialReference = EsriTools.Wgs84Spatialreference
+            };
+
+            point.Project(ArcMap.Document.FocusMap.SpatialReference);
+
+            return point;
+        }
+
+        internal double FindAzimuthRelativeToDirection(IPoint currentPoint, IPoint nextPoint,
+                                                        double baseAzimuth)
+        {
+            var direction = GetDirection(currentPoint, nextPoint);
+
+            return FindAzimuthRelativeToDirection(direction, baseAzimuth);
+        }
+
+        internal double FindAzimuthRelativeToDirection(double direction, double baseAzimuth)
+        {
+            var relativeAzimuth = Math.Round(baseAzimuth + direction, 0);
+
+            if (relativeAzimuth > 360)
+            {
+                relativeAzimuth -= 360;
+            }
+
+            return relativeAzimuth;
+        }
+
+        internal void UpdateAllPointsWithRelativeAzimuths(double baseStartAzimuth,
+                                                          double baseEndAzimuth,
+                                                          ObservationSetsEnum set)
+        {
+            IPoint nextPointGeometry = GetObserverPointGeometry(_observationPoints[0]);
+            IPoint currentPointGeometry;
+
+            for (int i = 0; i < _observationPoints.Count; i++)
+            {
+                if (i != _observationPoints.Count - 1)
+                {
+                    currentPointGeometry = nextPointGeometry.Clone();
+                    nextPointGeometry = GetObserverPointGeometry(_observationPoints[i + 1]);
+                }
+                else
+                {
+                    currentPointGeometry = GetObserverPointGeometry(_observationPoints[i - 1]);
+                }
+
+                _observationPoints[i].AzimuthStart = FindAzimuthRelativeToDirection(currentPointGeometry,
+                                                                                     nextPointGeometry,
+                                                                                     baseStartAzimuth);
+
+                _observationPoints[i].AzimuthEnd = FindAzimuthRelativeToDirection(currentPointGeometry,
+                                                                                     nextPointGeometry,
+                                                                                     baseEndAzimuth);
+
+                UpdateObservPoint(_observationPoints[i], _observationPoints[i].Objectid, set, false);
+            }
+        }
+
+        #region Private methods
 
         private ObservationPoint GetObservationPointFromGdb()
         {
@@ -1882,7 +2098,9 @@ namespace MilSpace.Visibility.ViewController
                 geoModule.OnPointDeleted += RemoveGeoCalcPointAsObserverPoint;
                 geoModule.OnPointUpdated += UpdateGeoCalcPoints;
 
-                return geoModule.GetGeoCalcPoints().ToList();
+                return geoModule.GetGeoCalcPoints()
+                                .Select(point => SetDefaultValuesToGeoCalcPoint(point as GeoCalcPoint))
+                                .ToList();
             }
             catch (Exception ex)
             {
@@ -1916,7 +2134,7 @@ namespace MilSpace.Visibility.ViewController
 
         private void UpdateGeoCalcPoints()
         {
-            SetSelectedObserverPoints(ObservationSetsEnum.GeoCalculator, false);
+            GetObserverPointsFromSelectedSource(ObservationSetsEnum.GeoCalculator, false);
         }
 
         private List<IObserverPoint> GetObservationPointsFromPointLayer(bool changeFeatureLayer)
@@ -2029,6 +2247,78 @@ namespace MilSpace.Visibility.ViewController
                 return null;
             }
         }
+
+        private bool CheckAllPointsHaveSameFields()
+        {
+            var standardPoint = _observationPoints.First();
+
+            var standardPointGeometry = GetObserverPointGeometry(standardPoint);
+            var nextPointGeometry = GetObserverPointGeometry(_observationPoints[1]);
+
+            var standardBaseStartAzimuth = 
+                    FindBaseAzimuthFromRelativeToDirection(standardPointGeometry,
+                                                           nextPointGeometry,
+                                                           standardPoint.AzimuthStart.Value, false);
+
+            var standardBaseEndAzimuth = 
+                    FindBaseAzimuthFromRelativeToDirection(standardPointGeometry,
+                                                           nextPointGeometry,
+                                                           standardPoint.AzimuthEnd.Value, true);
+
+            for (int i = 1; i < _observationPoints.Count; i++)
+            {
+                IPoint currentPointGeometry;
+
+                if (i != _observationPoints.Count - 1)
+                {
+                    currentPointGeometry = nextPointGeometry.Clone();
+                    nextPointGeometry = GetObserverPointGeometry(_observationPoints[i + 1]);
+                }
+                else
+                {
+                    currentPointGeometry = GetObserverPointGeometry(_observationPoints[i - 1]);
+                }
+
+                    var currentPointBaseStartAzimuth =
+                            FindBaseAzimuthFromRelativeToDirection(currentPointGeometry,
+                                                                   nextPointGeometry,
+                                                                   _observationPoints[i].AzimuthStart.Value, false);
+
+                    var currentPointBaseEndAzimuth =
+                            FindBaseAzimuthFromRelativeToDirection(currentPointGeometry,
+                                                                   nextPointGeometry,
+                                                                   _observationPoints[i].AzimuthEnd.Value, true);
+
+                if (_observationPoints[i].AngelMaxH != standardPoint.AngelMaxH
+                    || _observationPoints[i].AngelMinH != standardPoint.AngelMinH
+                    || Math.Abs(currentPointBaseEndAzimuth - standardBaseEndAzimuth) > 0.00001
+                    || Math.Abs(currentPointBaseStartAzimuth - standardBaseStartAzimuth) > 0.00001
+                    || _observationPoints[i].RelativeHeight != standardPoint.RelativeHeight)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private IObserverPoint SetDefaultValuesToGeoCalcPoint(GeoCalcPoint geoCalcPoint)
+        {
+            if (geoCalcPoint == null)
+            {
+                return null;
+            }
+
+            geoCalcPoint.AngelMaxH = geoCalcPoint.AngelMaxH ?? 90;
+            geoCalcPoint.AngelMinH = geoCalcPoint.AngelMinH ?? -90;
+            geoCalcPoint.AzimuthStart = geoCalcPoint.AzimuthStart ?? 0;
+            geoCalcPoint.AzimuthEnd = geoCalcPoint.AzimuthEnd ?? 360;
+            geoCalcPoint.RelativeHeight = geoCalcPoint.RelativeHeight ?? 0;
+
+            return geoCalcPoint;
+        }
+        
+        #endregion
 
         #region ArcMap Eventts
 
