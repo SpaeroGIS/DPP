@@ -849,10 +849,13 @@ namespace MilSpace.Visibility
 
         private void OnFieldChanged(object sender, EventArgs e)
         {
-            if (_selectedPointId > -1 || !_isFieldsChanged || !IsPointFieldsEnabled)
+            if (_selectedPointId == -1 || !_isFieldsChanged || !IsPointFieldsEnabled)
             {
+                _isFieldsChanged = false;
                 return;
             }
+
+            _isFieldsChanged = false;
 
             var selectedPoint = _observPointsController.GetObservPointByIdAsObservationPoint(_selectedPointId);
 
@@ -884,7 +887,7 @@ namespace MilSpace.Visibility
                     case "txtMinDistance":
                         double minValue;
                         string sMsgTextMinValue = LocalizationContext.Instance.FindLocalizedElement(
-                                "MsgValueLessThenZerro", "Значення повинно бути більше нуля.");
+                                "MsgValueLessThenZerro", "Значення має бути більше нуля.");
 
                         if (!Helper.TryParceToDouble(txtMinDistance.Text, out minValue))
                         {
@@ -905,14 +908,23 @@ namespace MilSpace.Visibility
                             return false;
                         }
 
+                        Helper.TryParceToDouble(txtMaxDistance.Text, out double  maxDistanceValue);
+
+                        if (!ValidateMinValue(minValue, maxDistanceValue))
+                        {
+                            txtMinDistance.Text = point.InnerRadius.ToString();
+                            return false;
+                        }
+
                         txtMinDistance.Text = minValue.ToString();
                         break;
+
                     case "txtMaxDistance":
 
                         double maxValue;
                         string sMsgTextMaxValue = LocalizationContext.Instance.FindLocalizedElement(
                                                                                   "MsgValueLessThenZerro",
-                                                                                  "Значення бовинно бути більше нуля.");
+                                                                                  "Значення має бути більше нуля.");
                         if (!Helper.TryParceToDouble(txtMaxDistance.Text, out maxValue))
                         {
                             MessageBox.Show(
@@ -933,8 +945,17 @@ namespace MilSpace.Visibility
                             return false;
                         }
 
+                        Helper.TryParceToDouble(txtMaxDistance.Text, out double minDistanceValue);
+
+                        if (!ValidateMaxValue(maxValue, minDistanceValue))
+                        {
+                            txtMaxDistance.Text = point.OuterRadius.ToString();
+                            return false;
+                        }
+
                         txtMaxDistance.Text = maxValue.ToString();
                         break;
+
                     case "xCoord":
 
                         if (!Regex.IsMatch(xCoord.Text, @"^([-]?[\d]{1,2}\,\d+)$"))
@@ -981,25 +1002,89 @@ namespace MilSpace.Visibility
                         return true;
 
                     case "angleOFViewMin":
-                        return ValidateRange(angleOFViewMin, point.AngelMinH.ToString(), -90, 0);
+
+                        if(ValidateRange(angleOFViewMin, point.AngelMinH.ToString(), -90, 0,
+                                         out double angleOFViewMinValue))
+                        {
+                            Helper.TryParceToDouble(angleOFViewMax.Text, out double angleOFViewMaxConverted);
+                            var isValueValid = ValidateMinValue(angleOFViewMinValue, angleOFViewMaxConverted);
+
+                            if(!isValueValid)
+                            {
+                                angleOFViewMin.Text = point.AngelMinH.ToString();
+                            }
+
+                            return isValueValid;
+                        }
+
+                        return false;
 
                     case "angleOFViewMax":
-                        return ValidateRange(angleOFViewMax, point.AngelMaxH.ToString(), 0, 90);
+
+                        if(ValidateRange(angleOFViewMax, point.AngelMaxH.ToString(), 0, 90,
+                                         out double angleOFViewMaxValue))
+                        {
+                            Helper.TryParceToDouble(angleOFViewMin.Text, out double angleOFViewMinConverted);
+                            var isValueValid = ValidateMaxValue(angleOFViewMaxValue, angleOFViewMinConverted);
+
+                            if(!isValueValid)
+                            {
+                                angleOFViewMax.Text = point.AngelMaxH.ToString();
+                            }
+
+                            return isValueValid;
+                        }
+
+                        return false;
 
                     case "azimuthB":
-                        return ValidateAzimuth(textBox, point.AzimuthStart.ToString());
+
+                        if(ValidateAzimuth(textBox, point.AzimuthStart.ToString(), out double azimuthBValue))
+                        {
+                            Helper.TryParceToDouble(azimuthE.Text, out double azimuthEConverted);
+                            var isValueValid = ValidateMinValue(azimuthBValue, azimuthEConverted);
+
+                            if (!isValueValid)
+                            {
+                                azimuthB.Text = point.AzimuthStart.ToString();
+                            }
+
+                            return isValueValid;
+                        }
+
+                        return false;
 
                     case "azimuthE":
-                        return ValidateAzimuth(textBox, point.AzimuthEnd.ToString());
+
+                        if(ValidateAzimuth(textBox, point.AzimuthEnd.ToString(), out double azimuthEValue))
+                        {
+                            Helper.TryParceToDouble(azimuthB.Text, out double azimuthBConverted);
+                            var isValueValid = ValidateMaxValue(azimuthEValue, azimuthBConverted);
+
+                            if(!isValueValid)
+                            {
+                                azimuthE.Text = point.AzimuthEnd.ToString();
+                            }
+
+                            return isValueValid;
+                        }
+
+                        return false;
 
                     case "azimuthMainAxis":
-                        return ValidateAzimuth(textBox, point.AzimuthMainAxis.ToString());
+
+                        return ValidateAzimuth(textBox, point.AzimuthMainAxis.ToString(),
+                                                out double azimuthMainAxisValue);
 
                     case "cameraRotationH":
-                        return ValidateAzimuth(textBox, point.AngelCameraRotationH.ToString());
+
+                        return ValidateAzimuth(textBox, point.AngelCameraRotationH.ToString(),
+                                                out double cameraRotationHValue);
 
                     case "cameraRotationV":
-                        return ValidateAzimuth(textBox, point.AngelCameraRotationV.ToString());
+
+                        return ValidateAzimuth(textBox, point.AngelCameraRotationV.ToString(),
+                                                out double cameraRotationVValue);
 
                     case "heightCurrent":
                         var currentHeight = ValidateHeight(textBox, point.RelativeHeight.ToString());
@@ -1085,15 +1170,15 @@ namespace MilSpace.Visibility
             }
         }
 
-        private bool ValidateAzimuth(TextBox azimuthTextBox, string defaultValue)
+        private bool ValidateAzimuth(TextBox azimuthTextBox, string defaultValue, out double value)
         {
-            return ValidateRange(azimuthTextBox, defaultValue, 0, 360);
+            return ValidateRange(azimuthTextBox, defaultValue, 0, 360, out value);
         }
 
-        private bool ValidateRange(TextBox textBox, string defaultValue, double lowValue, double upperValue)
+        private bool ValidateRange(TextBox textBox, string defaultValue,
+                                   double lowValue, double upperValue,
+                                   out double value)
         {
-            double value;
-
             if (Helper.TryParceToDouble(textBox.Text, out value))
             {
                 if (value >= lowValue && value <= upperValue)
@@ -1104,9 +1189,9 @@ namespace MilSpace.Visibility
             }
 
             textBox.Text = defaultValue;
-            string sMsgText = LocalizationContext.Instance.FindLocalizedElement(
-                "MsgErrorDataRange",
-                $"Invalid data.\nЗначення має бути від {lowValue} до {upperValue}");
+            string sMsgText = String.Format(LocalizationContext.Instance.FindLocalizedElement(
+                "IncorrectRangeMessage",
+                "Invalid data.\nЗначення має бути від {0} до {1}"), lowValue, upperValue);
             MessageBox.Show(
                 sMsgText,
                 LocalizationContext.Instance.MsgBoxErrorHeader,
@@ -1150,6 +1235,39 @@ namespace MilSpace.Visibility
 
             return -1;
         }
+
+        private bool ValidateMinValue(double minValue, double maxValue)
+        {
+            if(minValue < maxValue)
+            {
+                return true;
+            }
+
+            MessageBox.Show(String.Format(
+                                    LocalizationContext.Instance.FindLocalizedElement("EnterValueLessThanMaxMessage",
+                                                                                      "Invalid data.\nЗначення має бути меншим ніж {0}"),
+                                    maxValue),
+                            LocalizationContext.Instance.MessageBoxCaption);
+
+            return false;
+        }
+
+        private bool ValidateMaxValue(double maxValue, double minValue)
+        {
+            if (maxValue > minValue)
+            {
+                return true;
+            }
+
+            MessageBox.Show(String.Format(
+                                    LocalizationContext.Instance.FindLocalizedElement("EnterValueMoreThanMinMessage",
+                                                                                      "Invalid data.\nЗначення має бути більшим ніж {0}"),
+                                    minValue),
+                            LocalizationContext.Instance.MessageBoxCaption);
+
+            return false;
+        }
+
 
         private void EnableObservPointsControls(bool isAllDisabled = false)
         {

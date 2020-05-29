@@ -13,7 +13,7 @@
 
   <GenerateButton>Генерувати</GenerateButton>
 
-  <MsgValueLessThenZerro>Значення бовинно бути більше нуля</MsgValueLessThenZerro>
+  <MsgValueLessThenZerro>Значення має бути більше нуля</MsgValueLessThenZerro>
   <SurfaceLabel>Поверхня</SurfaceLabel>
 
   <PlantsLayerLabel>рослинність</PlantsLayerLabel>
@@ -297,6 +297,8 @@
   <EmptyValueMessage>Invalid data.\nВкажіть число</EmptyValueMessage>
   <ValueMoreThanMaxMessage>Invalid data.\nЗначення не може перевищувати {0}</ValueMoreThanMaxMessage>
   <ValueLessThanMinMessage>Invalid data.\nЗначення не може бути менше за {0}</ValueLessThanMinMessage>
+  <EnterValueMoreThanMinMessage>Invalid data.\nЗначення має бути більшим ніж {0}</EnterValueMoreThanMinMessage>
+  <EnterValueLessThanMaxMessage>Invalid data.\nЗначення має бути меншим ніж {0}</EnterValueLessThanMaxMessage>
   <InvalidFormatMessage>Invalid data.\nНевірний формат</InvalidFormatMessage>
   <UnableToRemoveTaskMessage>Неможливо видалити результат розрахунку видимості поточного сеансу</UnableToRemoveTaskMessage>
   <UnableToFullRemoveTaskMessage>Неможливо повністтю видалити результат розрахунку</UnableToFullRemoveTaskMessage>
