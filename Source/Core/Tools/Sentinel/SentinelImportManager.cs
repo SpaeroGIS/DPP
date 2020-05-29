@@ -10,11 +10,17 @@ using MilSpace.DataAccess.DataTransfer.Sentinel;
 using System.Net;
 using MilSpace.Configurations;
 using System.Web;
+using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace MilSpace.Tools.Sentinel
 {
     public static class SentinelImportManager
     {
+        public delegate void SentinelProductsDownloaded(string product);
+        public static event SentinelProductsDownloaded OnProductDownloaded;
+        public static event SentinelProductsDownloaded OnProductDownloadingError;
+
         private static Logger logger = Logger.GetLoggerEx("SentinelImportManager");
         public static Dictionary<IndexesEnum, string> IndexesDictionary = typeof(IndexesEnum).GetEnumToDictionary<IndexesEnum>();//(  Enum.GetValues(typeof(IndexesEnum)).Cast<IndexesEnum>().ToDictionary(k => k, v => v.ToString());
         public static Dictionary<ValuebaleProductEnum, string> productItemsDictionary = Enum.GetValues(typeof(ValuebaleProductEnum)).Cast<ValuebaleProductEnum>().ToDictionary(k => k, v => v.ToString().Replace("_", " ").Replace("9", "(").Replace("0", ")"));
@@ -99,5 +105,49 @@ namespace MilSpace.Tools.Sentinel
             return null;
         }
 
+        public static void DownloadProducs(IEnumerable<SentinelProduct> products)
+        {
+            foreach(var product in  products)
+            {
+                DownloadProbuct(product);
+            }
+            
+        }
+
+        private static void DownloadProbuct(SentinelProduct product)
+        {
+
+            using (WebClient client = new WebClient())
+            {
+                client.Credentials = new NetworkCredential(MilSpaceConfiguration.DemStorages.ScihubUserName, MilSpaceConfiguration.DemStorages.ScihubPassword);
+                client.QueryString.Add("Id", product.Identifier);
+                SentinelProductrequestBuildercs builder = new SentinelProductrequestBuildercs(product.Uuid);
+
+                string fileName = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorage, product.Identifier + ".zip");
+                client.DownloadFileCompleted += Client_DownloadFileCompleted;
+                client.DownloadFileAsync(builder.Url, fileName);
+            }
+            
+        }
+
+        private static void Client_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            if (sender is WebClient client)
+            {
+                //TODO: write message
+                if (e.Error != null)
+                {
+
+                    OnProductDownloadingError?.Invoke(client.QueryString["Id"]);
+                    logger.ErrorEx($"Error on download. Product {client.QueryString["Id"]} ");
+                    logger.ErrorEx(e.Error.Message);
+                }
+                else
+                {
+                    OnProductDownloaded?.Invoke(client.QueryString["Id"]);
+                    logger.InfoEx($"Download completed. Product {client.QueryString["Id"]}");
+                }
+            }
+        }
     }
 }
