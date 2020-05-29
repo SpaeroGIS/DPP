@@ -1041,7 +1041,7 @@ namespace MilSpace.Visibility
                         if(ValidateAzimuth(textBox, point.AzimuthStart.ToString(), out double azimuthBValue))
                         {
                             Helper.TryParceToDouble(azimuthE.Text, out double azimuthEConverted);
-                            var isValueValid = ValidateMinValue(azimuthBValue, azimuthEConverted);
+                            var isValueValid = ValidateDiffValues(azimuthBValue, azimuthEConverted);
 
                             if (!isValueValid)
                             {
@@ -1058,7 +1058,7 @@ namespace MilSpace.Visibility
                         if(ValidateAzimuth(textBox, point.AzimuthEnd.ToString(), out double azimuthEValue))
                         {
                             Helper.TryParceToDouble(azimuthB.Text, out double azimuthBConverted);
-                            var isValueValid = ValidateMaxValue(azimuthEValue, azimuthBConverted);
+                            var isValueValid = ValidateDiffValues(azimuthEValue, azimuthBConverted);
 
                             if(!isValueValid)
                             {
@@ -1267,6 +1267,19 @@ namespace MilSpace.Visibility
             return false;
         }
 
+        private bool ValidateDiffValues(double currentValue, double otherValue)
+        {
+            if (currentValue != otherValue)
+            {
+                return true;
+            }
+
+            MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("IncorrectEqualValuesMessage",
+                                                                              "Invalid data.\n Початкове і кінцеве значення не можуть бути рівні"),
+                            LocalizationContext.Instance.MessageBoxCaption);
+
+            return false;
+        }
 
         private void EnableObservPointsControls(bool isAllDisabled = false)
         {
