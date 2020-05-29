@@ -11,45 +11,46 @@ namespace MilSpace.AddDem.ReliefProcessing.GuiData
     {
         public static Dictionary<string, string> PropertyDescription = new Dictionary<string, string>
         {
-            { "Identifier", "Назва" },
             { "DateTime", "Дата" },
-            { "Instrument", "Іструмент" },
             { "OrbitNumber", "Номер орбіти" },
             { "PassDirection", "Напрямок руху" },
-            {"RelativeOrbit", "Відносна орбіта" },
-            { "SliceNumber", "Номер в нарізці"}
+            { "RelativeOrbit", "Відносна орбіта" },
+            { "SliceNumber", "Номер в нарізці"},
+            { "Identifier", "Назва" },
+            { "Instrument", "Іструмент" }
         };
 
         private static Type sentinelProductType = typeof(SentinelProduct);
 
         public static List<string[]> GetProductProperies(SentinelProduct product)
         {
+
+
             var resalt = new List<string[]>();
-
-            foreach (var propertyName in PropertyDescription.Keys)
-            {
-                string propValue = string.Empty;
-                var filedIfo = sentinelProductType.GetField(propertyName);
-                if (filedIfo != null)
+            if (product != null)
+                foreach (var propertyName in PropertyDescription.Keys)
                 {
-                    propValue = filedIfo.GetValue(product).ToString();
-                }
-                else
-                {
-                    var propInfo = sentinelProductType.GetProperty(propertyName);
-                    if (propInfo != null)
+                    string propValue = string.Empty;
+                    var filedIfo = sentinelProductType.GetField(propertyName);
+                    if (filedIfo != null)
                     {
-                        propValue = propInfo.GetValue(product).ToString();
+                        propValue = filedIfo.GetValue(product).ToString();
                     }
+                    else
+                    {
+                        var propInfo = sentinelProductType.GetProperty(propertyName);
+                        if (propInfo != null)
+                        {
+                            propValue = propInfo.GetValue(product).ToString();
+                        }
+                    }
+                    resalt.Add(new string[] { PropertyDescription[propertyName], propValue.ToString() });
                 }
 
-
-                resalt.Add(new string[] { PropertyDescription[propertyName], propValue.ToString() });
-            }
             return resalt;
         }
 
 
-        
+
     }
 }
