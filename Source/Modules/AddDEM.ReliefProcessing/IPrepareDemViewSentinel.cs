@@ -15,11 +15,12 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         string TileLongtitude { get; }
 
-        IEnumerable<Tile> TilesToImport { get; }
+        SentinelTile SelectedTile { get; }
+
+        IEnumerable<SentinelTile> TilesToImport { get; }
 
         DateTime  SentinelRequestDate { get; }
 
-        IEnumerable<SentinelProductGui> SentinelProductsToDownload { get; set; }
         IEnumerable<SentinelProduct> SentinelProducts { get; set; }
 
     }

@@ -23,8 +23,8 @@ namespace MilSpace.AddDem.ReliefProcessing
         internal event ProductsLoaded OnProductLoaded;
         internal event ProductsDownloaded OnProductsDownloaded;
 
-        List<Tile> tilesToImport = new List<Tile>();
-        List<SentinelProductGui> sentinelProductsToDownload = new List<SentinelProductGui>();
+        List<SentinelTile> tilesToImport = new List<SentinelTile>();
+        //List<SentinelProductGui> sentinelProductsToDownload = new List<SentinelProductGui>();
 
         IPrepareDemViewSentinel prepareSentinelView;
         internal PrepareDemControllerSentinel()
@@ -32,22 +32,28 @@ namespace MilSpace.AddDem.ReliefProcessing
             SentinelImportManager.OnProductDownloaded += OnProductDownloaded;
         }
 
-        public IEnumerable<Tile> TilesToImport => tilesToImport;
+        public IEnumerable<SentinelTile> TilesToImport => tilesToImport;
 
         public void AddTileForImport()
         {
             var tile = GetTilesByPoint();
             if (tile != null)
             {
-                tilesToImport.Add(tile);
+                tilesToImport.Add( new SentinelTile() { ParentTile = tile });
             }
+        }
+
+        public SentinelTile GetTileByName(string tileName)
+        {
+            tileName = tileName == null ? string.Empty : tileName;
+            return tilesToImport.FirstOrDefault(st => st.ParentTile.Name.Equals(tileName, StringComparison.OrdinalIgnoreCase));
         }
 
         public void SetView(IPrepareDemViewSentinel view)
         {
             prepareSentinelView = view;
-            prepareSentinelView.SentinelProductsToDownload = sentinelProductsToDownload;
         }
+
 
         public void ReadConfiguration()
         {
@@ -71,7 +77,7 @@ namespace MilSpace.AddDem.ReliefProcessing
                 int lat = Convert.ToInt32(latDouble);
                 int lon = Convert.ToInt32(lonDouble);
 
-                if (!tilesToImport.Any(t => t.Lat == lat && t.Lon == lon))
+                if (!tilesToImport.Select(tl => tl.ParentTile).Any(t => t.Lat == lat && t.Lon == lon))
                 {
                     testTile = new Tile
                     {
@@ -89,10 +95,21 @@ namespace MilSpace.AddDem.ReliefProcessing
         {
             SentineWeblRequestBuilder request = new SentineWeblRequestBuilder();
 
-            prepareSentinelView.TilesToImport.ToList().ForEach(t => request.AddTile(t));
+            request.AddTile(prepareSentinelView.SelectedTile.ParentTile);
             request.Position = prepareSentinelView.SentinelRequestDate;
-            prepareSentinelView.SentinelProducts = SentinelImportManager.GetProductsMetadata(request);
+
+            prepareSentinelView.SelectedTile.AddProducts(SentinelImportManager.GetProductsMetadata(request));
+            prepareSentinelView.SentinelProducts = prepareSentinelView.SelectedTile.TileScenes;
+
             OnProductLoaded?.Invoke(prepareSentinelView.SentinelProducts);
+        }
+
+        public IEnumerable<SentinelProduct> GetScenePairProduct(SentinelProduct baseScene)
+        {
+            var pairs = prepareSentinelView.SentinelProducts.Where(p => p.OrbitNumber == baseScene.OrbitNumber);
+            //TO
+
+            return pairs;
         }
 
         public List<string[]> GetSentinelProductProperties(SentinelProduct product)
@@ -103,31 +120,25 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         public bool CheckProductExistanceToDownload(SentinelProduct product)
         {
-            return sentinelProductsToDownload.Any(pg => pg.Id == product.Id);
+            return product == null || prepareSentinelView.SelectedTile.DownloadingScenes.Any(pg => pg.Id == product.Id);
         }
 
-        public SentinelProductGui AddProductToDownload(SentinelProduct product)
+        public IEnumerable<SentinelProductGui> AddProductsToDownload(IEnumerable<SentinelProduct> products, SentinelProduct asBase)
         {
-            if (!CheckProductExistanceToDownload(product))
-            {
-                var pg = SentinelProductGui.Get(product);
-                pg.BaseScene = sentinelProductsToDownload.Count == 0;
-                sentinelProductsToDownload.Add(pg);
-                return pg;
-            }
-
-            return null;
+            var pgs = products.Select(p => CheckProductExistanceToDownload(p) ? null : SentinelProductGui.Get(p)).Where(p => p != null);
+            prepareSentinelView.SelectedTile.AddProductsToDownload(pgs, asBase);
+            return prepareSentinelView.SelectedTile.DownloadingScenes;
         }
+      
 
         public void DownloadProducts()
         {
             downloading = true;
-            foreach( var p in sentinelProductsToDownload)
+            foreach( var p in prepareSentinelView.SelectedTile.DownloadingScenes)
             {
                 p.Downloading = true;
             }
-
-            SentinelImportManager.DownloadProducs(sentinelProductsToDownload);
+            SentinelImportManager.DownloadProducs(prepareSentinelView.SelectedTile.DownloadingScenes, prepareSentinelView.SelectedTile.ParentTile.Name);
 
         }
 
@@ -135,22 +146,22 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void OnProductDownloaded(string productId)
         {
-            var probuct = sentinelProductsToDownload.FirstOrDefault(p => p.Identifier == productId);
+            var probuct = prepareSentinelView.SelectedTile.DownloadingScenes.FirstOrDefault(p => p.Identifier == productId);
             if (probuct != null)
             {
                 probuct.Downloaded = true;
             }
 
-            if (sentinelProductsToDownload.Any(p => p.Downloading && !p.Downloaded))
+            if (prepareSentinelView.SelectedTile.DownloadingScenes.Any(p => p.Downloading && !p.Downloaded))
             {
                 return;
             }
             downloading = false;
-            foreach (var p in sentinelProductsToDownload)
+            foreach (var p in prepareSentinelView.SelectedTile.DownloadingScenes)
             {
                 p.Downloading = false;
             }
-            OnProductsDownloaded?.Invoke(sentinelProductsToDownload);
+            OnProductsDownloaded?.Invoke(prepareSentinelView.SelectedTile.DownloadingScenes);
         }
     }
 }

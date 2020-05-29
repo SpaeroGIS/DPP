@@ -14,6 +14,13 @@ namespace MilSpace.Configurations
             set { base[ConfigElementNames.RootFolderAttribte] = value; }
         }
 
+        [ConfigurationProperty(ConfigElementNames.DownloadFolderAttribte, IsKey = true, IsRequired = true)]
+        public string DownloadFolder
+        {
+            get { return (string)this[ConfigElementNames.DownloadFolderAttribte]; }
+            set { base[ConfigElementNames.DownloadFolderAttribte] = value; }
+        }
+
         [ConfigurationProperty(ConfigElementNames.MetadataUrlAttribute, IsKey = true, IsRequired = true)]
         public string ScihubMetadataApi
         {
