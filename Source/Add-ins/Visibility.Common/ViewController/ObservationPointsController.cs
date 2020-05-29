@@ -1493,6 +1493,14 @@ namespace MilSpace.Visibility.ViewController
 
         internal void UpdateObservPoint(IObserverPoint newPoint, int objId, ObservationSetsEnum set, bool updateAllPoints = true)
         {
+            if(newPoint == null)
+            {
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("CannotSavePointError", "Виникла помилка. Неможливо зберегти дані точки."),
+                                 LocalizationContext.Instance.MessageBoxCaption);
+
+                return;
+            }
+
             newPoint.Objectid = objId;
 
             switch (set)
@@ -1684,18 +1692,14 @@ namespace MilSpace.Visibility.ViewController
                 var standardPointGeometry = GetObserverPointGeometry(standardPoint);
                 var nextPointGeometry = GetObserverPointGeometry(_observationPoints[1]);
 
-                var standardBaseStartAzimuth =
-                        FindBaseAzimuthFromRelativeToDirection(standardPointGeometry,
-                                                               nextPointGeometry,
-                                                               standardPoint.AzimuthStart.Value,
-                                                               false);
+                var standardPointAzimuths = FindBaseAzimuthFromRelativeToDirection(standardPointGeometry,
+                                                                                   nextPointGeometry,
+                                                                                   standardPoint.AzimuthStart.Value,
+                                                                                   standardPoint.AzimuthEnd.Value);
 
-                var standardBaseEndAzimuth =
-                        FindBaseAzimuthFromRelativeToDirection(standardPointGeometry,
-                                                               nextPointGeometry,
-                                                               standardPoint.AzimuthEnd.Value,
-                                                               true);
-                
+                var standardBaseStartAzimuth = standardPointAzimuths.StartAzimuth;
+                var standardBaseEndAzimuth = standardPointAzimuths.EndAzimuth;
+                 
                 for (int i = 1; i < _observationPoints.Count; i++)
                 {
                     IPoint currentPointGeometry;
@@ -1710,15 +1714,13 @@ namespace MilSpace.Visibility.ViewController
                         currentPointGeometry = GetObserverPointGeometry(_observationPoints[i - 1]);
                     }
 
-                    var currentPointBaseStartAzimuth =
-                                FindAzimuthRelativeToDirection(currentPointGeometry,
-                                                               nextPointGeometry,
-                                                               standardBaseStartAzimuth);
+                    var currentPointAzimuths = FindAzimuthRelativeToDirection(currentPointGeometry,
+                                                                              nextPointGeometry,
+                                                                              standardBaseStartAzimuth,
+                                                                              standardBaseEndAzimuth);
 
-                        var currentPointBaseEndAzimuth =
-                                FindAzimuthRelativeToDirection(currentPointGeometry,
-                                                               nextPointGeometry,
-                                                               standardBaseEndAzimuth);
+                    var currentPointBaseStartAzimuth = currentPointAzimuths.StartAzimuth;
+                    var currentPointBaseEndAzimuth = currentPointAzimuths.EndAzimuth;
                     
                     _observationPoints[i].AngelMaxH = standardPoint.AngelMaxH;
                     _observationPoints[i].AngelMinH = standardPoint.AngelMinH;
@@ -1748,33 +1750,34 @@ namespace MilSpace.Visibility.ViewController
             return lineBetweenPoints.PosAzimuth();
         }
 
-        internal double FindBaseAzimuthFromRelativeToDirection(IPoint currentPoint, IPoint nextPoint,
-                                                                double relativeAzimuth, bool endAzimuth)
+        internal Azimuths FindBaseAzimuthFromRelativeToDirection(IPoint currentPoint, IPoint nextPoint,
+                                                               double relativeStartAzimuth,
+                                                               double relativeEndAzimuth)
         {
             var direction = GetDirection(currentPoint, nextPoint);
-            return FindBaseAzimuthFromRelativeToDirection(direction, relativeAzimuth, endAzimuth);
+            return FindBaseAzimuthFromRelativeToDirection(direction, relativeStartAzimuth, relativeEndAzimuth);
         }
 
-        internal double FindBaseAzimuthFromRelativeToDirection(double direction,
-                                                               double relativeAzimuth, bool endAzimuth)
+        internal Azimuths FindBaseAzimuthFromRelativeToDirection(double direction,
+                                                                 double relativeStartAzimuth,
+                                                                 double relativeEndAzimuth)
         {
-            var baseAzimuth = Math.Round(relativeAzimuth - direction, 0);
+            var azimuths = new Azimuths();
 
-            if (baseAzimuth < 0)
+            if(relativeStartAzimuth == 0 && relativeEndAzimuth == 360)
             {
-                baseAzimuth += 360;
-            }
+                azimuths.StartAzimuth = 0;
+                azimuths.EndAzimuth = 360;
 
-            if (baseAzimuth == 0 && endAzimuth)
-            {
-                baseAzimuth = 360;
+                return azimuths;
             }
-            else if (baseAzimuth == 360 && !endAzimuth)
-            {
-                baseAzimuth = 0;
-            }
+            
+            azimuths.StartAzimuth = Math.Round(relativeStartAzimuth - direction, 0);
+            azimuths.EndAzimuth = Math.Round(relativeEndAzimuth - direction, 0);
 
-            return baseAzimuth;
+            azimuths.FormatAzimuth();
+
+            return azimuths;
         }
 
         internal IObserverPoint GetNextPoint(int currentPointId)
@@ -1817,24 +1820,35 @@ namespace MilSpace.Visibility.ViewController
             return point;
         }
 
-        internal double FindAzimuthRelativeToDirection(IPoint currentPoint, IPoint nextPoint,
-                                                        double baseAzimuth)
+        internal Azimuths FindAzimuthRelativeToDirection(IPoint currentPoint, IPoint nextPoint,
+                                                         double baseStartAzimuth,
+                                                         double baseEndAzimuth)
         {
             var direction = GetDirection(currentPoint, nextPoint);
 
-            return FindAzimuthRelativeToDirection(direction, baseAzimuth);
+            return FindAzimuthRelativeToDirection(direction, baseStartAzimuth, baseEndAzimuth);
         }
 
-        internal double FindAzimuthRelativeToDirection(double direction, double baseAzimuth)
+        internal Azimuths FindAzimuthRelativeToDirection(double direction, 
+                                                         double baseStartAzimuth,
+                                                         double baseEndAzimuth)
         {
-            var relativeAzimuth = Math.Round(baseAzimuth + direction, 0);
+            var azimuths = new Azimuths();
 
-            if (relativeAzimuth > 360)
+            if (baseStartAzimuth == 0 && baseEndAzimuth == 360)
             {
-                relativeAzimuth -= 360;
+                azimuths.StartAzimuth = 0;
+                azimuths.EndAzimuth = 360;
+
+                return azimuths;
             }
 
-            return relativeAzimuth;
+            azimuths.StartAzimuth = Math.Round(baseStartAzimuth + direction, 0);
+            azimuths.EndAzimuth = Math.Round(baseEndAzimuth + direction, 0);
+
+            azimuths.FormatAzimuth();
+
+            return azimuths;
         }
 
         internal void UpdateAllPointsWithRelativeAzimuths(double baseStartAzimuth,
@@ -1856,13 +1870,11 @@ namespace MilSpace.Visibility.ViewController
                     currentPointGeometry = GetObserverPointGeometry(_observationPoints[i - 1]);
                 }
 
-                _observationPoints[i].AzimuthStart = FindAzimuthRelativeToDirection(currentPointGeometry,
-                                                                                     nextPointGeometry,
-                                                                                     baseStartAzimuth);
+                var relativeAzimuth = FindAzimuthRelativeToDirection(currentPointGeometry, nextPointGeometry,
+                                                                      baseStartAzimuth, baseEndAzimuth);
 
-                _observationPoints[i].AzimuthEnd = FindAzimuthRelativeToDirection(currentPointGeometry,
-                                                                                     nextPointGeometry,
-                                                                                     baseEndAzimuth);
+                _observationPoints[i].AzimuthStart = relativeAzimuth.StartAzimuth;
+                _observationPoints[i].AzimuthEnd = relativeAzimuth.EndAzimuth;
 
                 UpdateObservPoint(_observationPoints[i], _observationPoints[i].Objectid, set, false);
             }
@@ -2255,15 +2267,13 @@ namespace MilSpace.Visibility.ViewController
             var standardPointGeometry = GetObserverPointGeometry(standardPoint);
             var nextPointGeometry = GetObserverPointGeometry(_observationPoints[1]);
 
-            var standardBaseStartAzimuth = 
-                    FindBaseAzimuthFromRelativeToDirection(standardPointGeometry,
-                                                           nextPointGeometry,
-                                                           standardPoint.AzimuthStart.Value, false);
+            var standardPointBaseAzimuths = FindBaseAzimuthFromRelativeToDirection(standardPointGeometry,
+                                                                                   nextPointGeometry,
+                                                                                   standardPoint.AzimuthStart.Value,
+                                                                                   standardPoint.AzimuthEnd.Value);
 
-            var standardBaseEndAzimuth = 
-                    FindBaseAzimuthFromRelativeToDirection(standardPointGeometry,
-                                                           nextPointGeometry,
-                                                           standardPoint.AzimuthEnd.Value, true);
+            var standardBaseStartAzimuth = standardPointBaseAzimuths.StartAzimuth;
+            var standardBaseEndAzimuth = standardPointBaseAzimuths.EndAzimuth;
 
             for (int i = 1; i < _observationPoints.Count; i++)
             {
@@ -2279,15 +2289,13 @@ namespace MilSpace.Visibility.ViewController
                     currentPointGeometry = GetObserverPointGeometry(_observationPoints[i - 1]);
                 }
 
-                    var currentPointBaseStartAzimuth =
-                            FindBaseAzimuthFromRelativeToDirection(currentPointGeometry,
-                                                                   nextPointGeometry,
-                                                                   _observationPoints[i].AzimuthStart.Value, false);
+                var currentPointBaseAzimuths = FindBaseAzimuthFromRelativeToDirection(currentPointGeometry,
+                                                                                      nextPointGeometry,
+                                                                                      _observationPoints[i].AzimuthStart.Value,
+                                                                                      _observationPoints[i].AzimuthEnd.Value);
 
-                    var currentPointBaseEndAzimuth =
-                            FindBaseAzimuthFromRelativeToDirection(currentPointGeometry,
-                                                                   nextPointGeometry,
-                                                                   _observationPoints[i].AzimuthEnd.Value, true);
+                var currentPointBaseStartAzimuth = currentPointBaseAzimuths.StartAzimuth;
+                var currentPointBaseEndAzimuth = currentPointBaseAzimuths.EndAzimuth;
 
                 if (_observationPoints[i].AngelMaxH != standardPoint.AngelMaxH
                     || _observationPoints[i].AngelMinH != standardPoint.AngelMinH

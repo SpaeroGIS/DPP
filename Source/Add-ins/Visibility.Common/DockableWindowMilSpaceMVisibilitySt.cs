@@ -648,7 +648,7 @@ namespace MilSpace.Visibility
             log.DebugEx("> UpdateObservPointsList START. IsPointFieldsEnabled:{0}", IsPointFieldsEnabled.ToString());
             if (IsPointFieldsEnabled)
             {
-                _observPointsController.UpdateObservationPointsList();
+                _observPointsController.GetObserverPointsFromSelectedSource(_observerPointSource, false);
             }
             else
             {
@@ -867,13 +867,12 @@ namespace MilSpace.Visibility
             {
                 _observPointsController.UpdateObservPoint(
                     GetObservationPoint(),
-                    VisibilityManager.ObservPointFeature,
-                    ActiveView,
-                    selectedPoint.Objectid
-                    );
+                    selectedPoint.Objectid,
+                    _observerPointSource,
+                    false);
+
                 UpdateObservPointsList();
             }
-
         }
 
         private bool FieldsValidation(object sender, ObservationPoint point)
@@ -1402,28 +1401,29 @@ namespace MilSpace.Visibility
                 //return null;
                 xdd = ydd = 25.2525252525;
             }
-            //TODO DS: Add validation or catch
 
             var sourceType = _observerPointSource;
 
             double azimuthStart;
             double azimuthEnd;
 
+            Helper.TryParceToDouble(azimuthB.Text, out double azimuthStartValue);
+            Helper.TryParceToDouble(azimuthE.Text, out double azimuthEndValue);
+
             if (rbSeparateOP.Checked)
             {
-                azimuthStart = Convert.ToDouble(azimuthB.Text);
-                azimuthEnd = Convert.ToDouble(azimuthE.Text);
+                azimuthStart = azimuthStartValue;
+                azimuthEnd = azimuthEndValue;
             }
             else
             {
-                var direction = Convert.ToDouble(txtDirection.Text);
+                Helper.TryParceToDouble(txtDirection.Text, out double direction);
 
-                azimuthStart = _observPointsController
-                                    .FindAzimuthRelativeToDirection(direction,
-                                                                    Convert.ToDouble(azimuthB.Text));
-                azimuthEnd = _observPointsController
-                                    .FindAzimuthRelativeToDirection(direction,
-                                                                    Convert.ToDouble(azimuthE.Text));
+                var azimuths = _observPointsController
+                                    .FindAzimuthRelativeToDirection(direction, azimuthStartValue,
+                                                                    azimuthEndValue);
+                azimuthStart = azimuths.StartAzimuth;
+                azimuthEnd = azimuths.EndAzimuth;
             }
 
             if (sourceType == ObservationSetsEnum.GeoCalculator)
@@ -1580,29 +1580,20 @@ namespace MilSpace.Visibility
                                                                      _observPointsController.GetObserverPointGeometry(nextPoint));
                 txtDirection.Text = direction.ToFormattedString(0);
 
-                if (selectedPoint.AzimuthStart.HasValue)
+
+                if (selectedPoint.AzimuthStart.HasValue && selectedPoint.AzimuthEnd.HasValue)
                 {
-                    var baseAzimuth =
-                            _observPointsController.FindBaseAzimuthFromRelativeToDirection(direction,
-                                                                                           selectedPoint.AzimuthStart.Value,
-                                                                                           false);
-                    azimuthB.Text = baseAzimuth.ToFormattedString(0);
+                    var azimuths = _observPointsController
+                                            .FindBaseAzimuthFromRelativeToDirection(direction,
+                                                                                    selectedPoint.AzimuthStart.Value,
+                                                                                    selectedPoint.AzimuthEnd.Value);
+
+                    azimuthB.Text = azimuths.StartAzimuth.ToFormattedString(0);
+                    azimuthE.Text = azimuths.EndAzimuth.ToFormattedString(0);
                 }
                 else
                 {
                     azimuthB.Text = ObservPointDefaultValues.AzimuthBText;
-                }
-
-                if (selectedPoint.AzimuthEnd.HasValue)
-                {
-                    var baseAzimuth =
-                            _observPointsController.FindBaseAzimuthFromRelativeToDirection(direction,
-                                                                                           selectedPoint.AzimuthEnd.Value,
-                                                                                           true);
-                    azimuthE.Text = baseAzimuth.ToFormattedString(0);
-                }
-                else
-                {
                     azimuthE.Text = ObservPointDefaultValues.AzimuthEText;
                 }
             }
@@ -2160,9 +2151,9 @@ namespace MilSpace.Visibility
 
                         _observPointsController.UpdateObservPoint(
                             GetObservationPoint(),
-                            VisibilityManager.ObservPointFeature,
-                            ActiveView,
-                            _selectedPointId);
+                            _selectedPointId,
+                            _observerPointSource,
+                            false);
                     }
                     else
                     {

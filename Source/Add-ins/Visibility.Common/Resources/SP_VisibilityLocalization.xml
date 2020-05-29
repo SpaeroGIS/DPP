@@ -311,6 +311,7 @@
   <ErrorInTemporaryStorageGenerating>Під час генерації векторного класу {0} сталася помилка</ErrorInTemporaryStorageGenerating>
   <LayerIsNotFeatureLayerError>Помилка під час зчитування даних шару. Шар {0} не є векторним</LayerIsNotFeatureLayerError>
   <NotEnoughPointsToBuildRoute>Недостатньо точок для побудови маршруту.</NotEnoughPointsToBuildRoute>
+  <CannotSavePointError>Виникла помилка. Неможливо зберегти дані точки.</CannotSavePointError>
   
   <ObservPointRemoveMessage>Ви дійсно бажаєте видалити точку (ПС)?</ObservPointRemoveMessage>
   <VisibilityTaskRemoveMessage>Ви дійсно бажаєте видалити результат розрахунку з поточного сеансу?</VisibilityTaskRemoveMessage>
