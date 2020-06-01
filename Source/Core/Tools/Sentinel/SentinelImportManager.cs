@@ -12,6 +12,7 @@ using MilSpace.Configurations;
 using System.Web;
 using System.Threading.Tasks;
 using System.Net.Http;
+using System.ComponentModel;
 
 namespace MilSpace.Tools.Sentinel
 {
@@ -95,7 +96,7 @@ namespace MilSpace.Tools.Sentinel
                     myWebResponse.Close();
                 }
 
-                return ReadJson(requestContent);
+                return ReadJson(requestContent).OrderBy( s => s.DateTime) ;
             }
             catch (Exception ex)
             {
@@ -105,16 +106,16 @@ namespace MilSpace.Tools.Sentinel
             return null;
         }
 
-        public static void DownloadProducs(IEnumerable<SentinelProduct> products)
+        public static void DownloadProducs(IEnumerable<SentinelProduct> products, string tileFolderName)
         {
             foreach(var product in  products)
             {
-                DownloadProbuct(product);
+                DownloadProbuct(product, tileFolderName);
             }
             
         }
 
-        private static void DownloadProbuct(SentinelProduct product)
+        private static void DownloadProbuct(SentinelProduct product, string tileFolderName)
         {
 
             using (WebClient client = new WebClient())
@@ -123,14 +124,30 @@ namespace MilSpace.Tools.Sentinel
                 client.QueryString.Add("Id", product.Identifier);
                 SentinelProductrequestBuildercs builder = new SentinelProductrequestBuildercs(product.Uuid);
 
-                string fileName = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorage, product.Identifier + ".zip");
+                string tileFolder = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelDownloadStorage, tileFolderName);
+                if (!Directory.Exists(tileFolder))
+                {
+                    try
+                    {
+                        Directory.CreateDirectory(tileFolder);
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.ErrorEx($"Cannot create the folder {tileFolder}");
+                        logger.ErrorEx(ex.Message);
+                        Client_DownloadFileCompleted(client, new AsyncCompletedEventArgs(ex, true, null));
+                        return;
+                    }
+                }
+
+                string fileName = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelDownloadStorage, tileFolderName, product.Identifier + ".zip");
                 client.DownloadFileCompleted += Client_DownloadFileCompleted;
                 client.DownloadFileAsync(builder.Url, fileName);
             }
             
         }
 
-        private static void Client_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        private static void Client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
             if (sender is WebClient client)
             {

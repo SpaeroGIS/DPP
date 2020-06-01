@@ -20,7 +20,6 @@ namespace MilSpace.AddDem.ReliefProcessing
         PrepareDemControllerSrtm controllerSrtm = new PrepareDemControllerSrtm();
         PrepareDemControllerSentinel controllerSentinel = new PrepareDemControllerSentinel();
         private IEnumerable<SentinelProduct> sentinelProducts = null;
-        private IEnumerable<SentinelProductGui> sentinelProductsToDownload = null;
         public PrepareDem()
         {
             controllerSrtm.SetView(this);
@@ -56,8 +55,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             lstSrtmFiles.DataSource = SrtmFilesInfo;
             lstSrtmFiles.DisplayMember = "Name";
 
-
-            lstSentilenProducts.DataSource = sentinelProducts;
+            lstSentilenProducts.DataSourceChanged += LstSentilenProducts_DataSourceChanged;
             lstSentilenProducts.DisplayMember = "Identifier";
 
             controllerSentinel.OnProductLoaded += OnSentinelProductLoaded;
@@ -67,15 +65,41 @@ namespace MilSpace.AddDem.ReliefProcessing
             ShowButtons();
         }
 
+        private void LstSentilenProducts_DataSourceChanged(object sender, EventArgs e)
+        {
+            var curSentineltile = SelectedTile;
+
+            if (SelectedTile.DownloadingScenes != null)
+            {
+                foreach (var sg in SelectedTile.DownloadingScenes)
+                {
+                    AddSceneToDownload(sg);
+                }
+            }
+        }
+
         private void OnSentinelProductLoaded(IEnumerable<SentinelProduct> products)
         {
-            lstSentilenProducts.DataSource = products;
+            var selectedIndx = lstSentilenProducts.SelectedIndex;
+            lstSentinelProductProps.Items.Clear();
+            lstSentinelProductsToDownload.Items.Clear();
+
+            var ttt = products.ToArray();
+            lstSentilenProducts.DataSource = ttt;
             lstSentilenProducts.DisplayMember = "Identifier";
             lstSentilenProducts.Update();
             lstSentilenProducts.Refresh();
 
-            lstSentinelProductProps.Items.Clear();
-            lstSentinelProductsToDownload.Items.Clear();
+            if (products != null && products.Any())
+            {
+                if (products.Count() < selectedIndx)
+                {
+                    selectedIndx = products.Count() - 1;
+                }
+                lstSentilenProducts.SelectedItem = products.First();
+            }
+
+            lstSentilenProducts_SelectedIndexChanged(lstSentilenProducts, null);
 
             ShowButtons();
         }
@@ -83,7 +107,7 @@ namespace MilSpace.AddDem.ReliefProcessing
         private void FillTileSource()
         {
             lstTiles.Items.Clear();
-            TilesToImport?.ToList().ForEach(t => lstTiles.Items.Add(t.Name));
+            TilesToImport?.ToList().ForEach(t => lstTiles.Items.Add(t.ParentTile.Name));
         }
 
         private void LstSrtmFiles_DataSourceChanged(object sender, EventArgs e)
@@ -93,14 +117,14 @@ namespace MilSpace.AddDem.ReliefProcessing
         #region IPrepareDemViewSentinel
         public string SentinelSrtorage { get => lblSentinelStorage.Text; set => lblSentinelStorage.Text = value; }
 
-        public IEnumerable<Tile> TilesToImport { get => controllerSentinel.TilesToImport; }
+        public IEnumerable<SentinelTile> TilesToImport { get => controllerSentinel.TilesToImport; }
+
+        public SentinelTile SelectedTile => controllerSentinel.GetTileByName(lstTiles.SelectedItem?.ToString());
 
         public string TileLatitude { get => txtLatitude.Text; }
         public string TileLongtitude { get => txtLongtitude.Text; }
 
         public IEnumerable<SentinelProduct> SentinelProducts { get => sentinelProducts; set => sentinelProducts = value; }
-
-        public IEnumerable<SentinelProductGui> SentinelProductsToDownload { get => sentinelProductsToDownload; set => sentinelProductsToDownload = value; }
 
         public DateTime SentinelRequestDate { get => dtSentinelProductes.Value; }
         #endregion
@@ -108,6 +132,7 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         public string SrtmSrtorage { get => lblSrtmStorage.Text; set => lblSrtmStorage.Text = value; }
         public IEnumerable<FileInfo> SrtmFilesInfo { get; set; } = new List<FileInfo>();
+
         #endregion
 
         private void btnImportSrtm_Click(object sender, EventArgs e)
@@ -163,7 +188,6 @@ namespace MilSpace.AddDem.ReliefProcessing
                     }
                     MessageBox.Show(message, "Mislspace Msg Cation", MessageBoxButtons.OK, icon);
                 }
-
             }
         }
 
@@ -217,25 +241,40 @@ namespace MilSpace.AddDem.ReliefProcessing
         private void ShowButtons()
         {
             bool selectedProduct = controllerSentinel.CheckProductExistanceToDownload(lstSentilenProducts.SelectedItem as SentinelProduct);
-
+            btnGetScenes.Enabled = SelectedTile != null;
             btnAddSentinelProdToDownload.Enabled = lstSentilenProducts.SelectedItem != null && !selectedProduct;
             btnSetSentinelProdAsBase.Enabled = false;
-            btnDownloadSentinelProd.Enabled = SentinelProductsToDownload != null && SentinelProductsToDownload.Count() >= 2 && !controllerSentinel.DownloadStarted;
+            btnDownloadSentinelProd.Enabled = SelectedTile != null && SelectedTile.DownloadingScenes.Count() >= 2 && !controllerSentinel.DownloadStarted;
         }
 
         private void btnAddSentinelProdToDownload_Click(object sender, EventArgs e)
         {
-            var pg = controllerSentinel.AddProductToDownload(lstSentilenProducts.SelectedItem as SentinelProduct);
+            var pg = lstSentilenProducts.SelectedItem as SentinelProduct;
             if (pg != null)
             {
-                ListViewItem item = new ListViewItem(pg.Identifier);
-                if (pg.BaseScene)
+                var pairs = controllerSentinel.GetScenePairProduct(pg);
+                lstSentinelProductsToDownload.Items.Clear();
+                var pgl = controllerSentinel.AddProductsToDownload(pairs, pg);
+
+                foreach (var p in pgl)
+                {
+                    AddSceneToDownload(p);
+                }
+                ShowButtons();
+            }
+        }
+
+        private void AddSceneToDownload(SentinelProductGui sentinelProduct)
+        {
+            if (sentinelProduct != null)
+            {
+                ListViewItem item = new ListViewItem(sentinelProduct.Identifier);
+                if (sentinelProduct.BaseScene)
                 {
                     item.Font = new Font(item.Font, FontStyle.Bold);
                 }
 
                 lstSentinelProductsToDownload.Items.Add(item);
-                ShowButtons();
             }
         }
 
@@ -243,6 +282,29 @@ namespace MilSpace.AddDem.ReliefProcessing
         {
             controllerSentinel.DownloadProducts();
             ShowButtons();
+        }
+
+        private void FillScenesList()
+        {
+            var selectedTile = SelectedTile;
+            if (selectedTile != null)
+            {
+                OnSentinelProductLoaded(selectedTile.TileScenes);
+            }
+        }
+
+        private void lstTiles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var selectedTile = SelectedTile;
+            if (selectedTile != null)
+            {
+                OnSentinelProductLoaded(selectedTile.TileScenes);
+            }
+        }
+
+        private void btnSetSentinelProdAsBase_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

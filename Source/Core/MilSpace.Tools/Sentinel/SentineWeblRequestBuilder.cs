@@ -57,7 +57,7 @@ namespace MilSpace.Tools.Sentinel
 
         private static string GetPositionParam(DateTime date)
         {
-            var position = date.AddDays(-12).ToUniversalTime().ToString("o");
+            var position = date.AddDays(-24).ToUniversalTime().ToString("o");
             string start = date.ToUniversalTime().ToString("o");
 
             //position = "2020-03-27T00:00:00.000Z";

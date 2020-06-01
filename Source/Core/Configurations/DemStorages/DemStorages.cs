@@ -10,6 +10,7 @@ namespace MilSpace.Configurations.DemStorages
     {
         public string SrtmStorage { get; internal set; }
         public string SentinelStorage { get; internal set; }
+        public string SentinelDownloadStorage { get; internal set; }
         public string ScihubMetadataApi { get; internal set; }
         public string ScihubProductsApi { get; internal set; }
         public string ScihubUserName { get; internal set; }

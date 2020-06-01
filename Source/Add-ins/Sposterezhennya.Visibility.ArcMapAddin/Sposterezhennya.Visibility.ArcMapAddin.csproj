@@ -144,6 +144,9 @@
       <Link>DockableWindowMilSpaceMVisibilitySt.designer.cs</Link>
       <DependentUpon>DockableWindowMilSpaceMVisibilitySt.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\Visibility.Common\DTO\Azimuths.cs">
+      <Link>DTO\Azimuths.cs</Link>
+    </Compile>
     <Compile Include="..\Visibility.Common\DTO\CheckObservPointGui.cs">
       <Link>DTO\CheckObservPointGui.cs</Link>
     </Compile>

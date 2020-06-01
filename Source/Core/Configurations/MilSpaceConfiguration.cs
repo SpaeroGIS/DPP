@@ -72,14 +72,16 @@ namespace MilSpace.Configurations
                 {
                     var groupSection = GetRootSectionGroup.SectionGroups[DemStoragesSections.SectionName] as DemStoragesSections;
 
+                    var sentinel = (groupSection.Sections[SentinelStorageSection.SectionName] as SentinelStorageSection);
                     demStorages = new DemStorages.DemStorages
                     {
                         SrtmStorage  = (groupSection.Sections[SrtmStorageSection.SectionName] as SrtmStorageSection).RootFolder,
-                        SentinelStorage = (groupSection.Sections[SentinelStorageSection.SectionName] as SentinelStorageSection).RootFolder,
-                        ScihubMetadataApi = (groupSection.Sections[SentinelStorageSection.SectionName] as SentinelStorageSection).ScihubMetadataApi,
-                        ScihubProductsApi = (groupSection.Sections[SentinelStorageSection.SectionName] as SentinelStorageSection).ScihubProductsApi,
-                        ScihubPassword = (groupSection.Sections[SentinelStorageSection.SectionName] as SentinelStorageSection).Password,
-                        ScihubUserName = (groupSection.Sections[SentinelStorageSection.SectionName] as SentinelStorageSection).UserName,
+                        SentinelStorage = sentinel.RootFolder,
+                        SentinelDownloadStorage = sentinel.DownloadFolder,
+                        ScihubMetadataApi = sentinel.ScihubMetadataApi,
+                        ScihubProductsApi = sentinel.ScihubProductsApi,
+                        ScihubPassword = sentinel.Password,
+                        ScihubUserName = sentinel.UserName,
                     };
                 }
                 return demStorages;

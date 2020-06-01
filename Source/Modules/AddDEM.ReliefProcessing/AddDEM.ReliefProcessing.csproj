@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="GuiData\SentinelProductGui.cs" />
     <Compile Include="GuiData\SentinelProductHelper.cs" />
+    <Compile Include="GuiData\SentinelTile.cs" />
     <Compile Include="IPrepareDemViewSentinel.cs" />
     <Compile Include="IPrepareDemViewSrtm.cs" />
     <Compile Include="Exceptions\NothingToImportException.cs" />
