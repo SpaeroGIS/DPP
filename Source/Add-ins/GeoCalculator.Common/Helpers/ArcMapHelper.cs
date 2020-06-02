@@ -110,6 +110,5 @@ namespace MilSpace.GeoCalculator
 
             return distanceConverter.GetValue($"{metres}m", spatialReference);
         }
-
     }
 }
