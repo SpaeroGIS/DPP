@@ -47,6 +47,7 @@
             this.btnRefreshOPGraphics = new System.Windows.Forms.Button();
             this.chckDrawOPGraphics = new System.Windows.Forms.CheckBox();
             this.panelRelativeHeight = new System.Windows.Forms.Panel();
+            this.changeAllObserversHeightsButton = new System.Windows.Forms.Button();
             this.heightCurrent = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.panelRadiuses = new System.Windows.Forms.Panel();
@@ -717,6 +718,7 @@
             // 
             // panelRelativeHeight
             // 
+            this.panelRelativeHeight.Controls.Add(this.changeAllObserversHeightsButton);
             this.panelRelativeHeight.Controls.Add(this.heightCurrent);
             this.panelRelativeHeight.Controls.Add(this.label19);
             this.panelRelativeHeight.Dock = System.Windows.Forms.DockStyle.Top;
@@ -725,6 +727,19 @@
             this.panelRelativeHeight.Padding = new System.Windows.Forms.Padding(4, 2, 0, 0);
             this.panelRelativeHeight.Size = new System.Drawing.Size(304, 22);
             this.panelRelativeHeight.TabIndex = 40;
+            // 
+            // changeAllObserversHeightsButton
+            // 
+            this.changeAllObserversHeightsButton.Enabled = false;
+            this.changeAllObserversHeightsButton.ImageKey = "Direction Vert.png";
+            this.changeAllObserversHeightsButton.ImageList = this.imageList1;
+            this.changeAllObserversHeightsButton.Location = new System.Drawing.Point(242, 2);
+            this.changeAllObserversHeightsButton.Margin = new System.Windows.Forms.Padding(7, 3, 3, 3);
+            this.changeAllObserversHeightsButton.Name = "changeAllObserversHeightsButton";
+            this.changeAllObserversHeightsButton.Size = new System.Drawing.Size(20, 20);
+            this.changeAllObserversHeightsButton.TabIndex = 50;
+            this.changeAllObserversHeightsButton.UseVisualStyleBackColor = true;
+            this.changeAllObserversHeightsButton.Click += new System.EventHandler(this.ChangeAllObserversHeightsButton_Click);
             // 
             // heightCurrent
             // 
@@ -3177,5 +3192,6 @@
         private System.Windows.Forms.Panel panel22;
         private System.Windows.Forms.Panel panel21;
         private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Button changeAllObserversHeightsButton;
     }
 }

@@ -1851,9 +1851,11 @@ namespace MilSpace.Visibility.ViewController
             return azimuths;
         }
 
-        internal void UpdateAllPointsWithRelativeAzimuths(double baseStartAzimuth,
-                                                          double baseEndAzimuth,
-                                                          ObservationSetsEnum set)
+        internal void UpdateAllPointsWithNewValues(IObserverPoint newPoint,
+                                                   double baseStartAzimuth,
+                                                   double baseEndAzimuth,
+                                                   ObservationSetsEnum set,
+                                                   bool changeHeight)
         {
             IPoint nextPointGeometry = GetObserverPointGeometry(_observationPoints[0]);
             IPoint currentPointGeometry;
@@ -1875,6 +1877,13 @@ namespace MilSpace.Visibility.ViewController
 
                 _observationPoints[i].AzimuthStart = relativeAzimuth.StartAzimuth;
                 _observationPoints[i].AzimuthEnd = relativeAzimuth.EndAzimuth;
+                _observationPoints[i].AngelMaxH = newPoint.AngelMaxH;
+                _observationPoints[i].AngelMinH = newPoint.AngelMinH;
+
+                if (changeHeight)
+                {
+                    _observationPoints[i].RelativeHeight = newPoint.RelativeHeight;
+                }
 
                 UpdateObservPoint(_observationPoints[i], _observationPoints[i].Objectid, set, false);
             }

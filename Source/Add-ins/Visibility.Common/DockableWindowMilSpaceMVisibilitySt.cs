@@ -43,6 +43,7 @@ namespace MilSpace.Visibility
         private bool _isDropDownItemChangedManualy = false;
         private bool _isFieldsChanged = false;
         private bool _isObservObjectsFieldsChanged = false;
+        private bool _updateForAllFieldsInRouteMode = true;
         private ObservationPoint selectedPointMEM = new ObservationPoint();
 
         private int _selectedPointId => dgvObservationPoints.SelectedRows.Count == 0 ? -1 : Convert.ToInt32(dgvObservationPoints.SelectedRows[0].Cells["Id"].Value);
@@ -65,6 +66,7 @@ namespace MilSpace.Visibility
             this._observPointsController.SetView(this);
             this.Hook = hook;
             SetVisibilitySessionsController();
+            rbSeparateOP.CheckedChanged += OnModeChanged;
 
             log.InfoEx("> DockableWindowMilSpaceMVisibilitySt (Constructor) END");
         }
@@ -167,6 +169,7 @@ namespace MilSpace.Visibility
                 ToolTip toolTip = new ToolTip();
                 toolTip.SetToolTip(this.btnRefreshOPGraphics, LocalizationContext.Instance.FindLocalizedElement("MainW_btnRefreshOPGrahics_Text", "Оновити графіку"));
                 toolTip.SetToolTip(this.btnRefreshObservStationsSet, LocalizationContext.Instance.FindLocalizedElement("MainW_btnRefreshObservStationsSet_Text", "Оновити об'єкти спостреження"));
+                toolTip.SetToolTip(this.changeAllObserversHeightsButton, LocalizationContext.Instance.FindLocalizedElement("MainW_changeAllObserversHeights_ToolTipText", "Встановити дану висоту для всіх точок"));
 
                 SetObservationStationTableView();
 
@@ -226,6 +229,8 @@ namespace MilSpace.Visibility
                 editEvent.OnCreateFeature += _observPointsController.OnCreateFeature;
                 editEvent.OnDeleteFeature += _observPointsController.OnDeleteFeature;
             };
+
+            ArcMap.Events.BeforeCloseDocument += OnDocumentClosing;
 
             log.InfoEx("> SubscribeForEvents END");
         }
@@ -550,6 +555,12 @@ namespace MilSpace.Visibility
             log.DebugEx("> OnContentsChanged END");
         }
 
+        private bool OnDocumentClosing()
+        {
+            _isDropDownItemChangedManualy = false;
+            return false;
+        }
+
         private void OnActivaeViewChanged()
         {
             _observPointsController.SetGrahicsLayerManager();
@@ -863,9 +874,9 @@ namespace MilSpace.Visibility
             {
                 ((TextBox)sender).Focus();
             }
-            if (!selectedPointMEM.Equals(selectedPoint))
+            if (!selectedPointMEM.Equals(selectedPoint) && !rbRouteMode.Checked)
             {
-                _observPointsController.UpdateObservPoint(
+                    _observPointsController.UpdateObservPoint(
                     GetObservationPoint(),
                     selectedPoint.Objectid,
                     _observerPointSource,
@@ -877,6 +888,8 @@ namespace MilSpace.Visibility
 
         private bool FieldsValidation(object sender, ObservationPoint point)
         {
+            _updateForAllFieldsInRouteMode = true;
+
             try
             {
                 var textBox = (TextBox)sender;
@@ -1102,6 +1115,8 @@ namespace MilSpace.Visibility
                             {
                                 heightMin.Text = currentHeight.ToString();
                             }
+
+                            _updateForAllFieldsInRouteMode = false;
 
                             return true;
                         }
@@ -1362,7 +1377,7 @@ namespace MilSpace.Visibility
         {
             var selectedPoint = _observPointsController.GetObservPointByIdAsObservationPoint(_selectedPointId);
 
-            if(rbRouteMode.Checked)
+            if(rbRouteMode.Checked && _updateForAllFieldsInRouteMode)
             {
                 SavePointInRouteMode(selectedPoint);
             }
@@ -1377,15 +1392,19 @@ namespace MilSpace.Visibility
 
         private void SavePointInRouteMode(ObservationPoint selectedPoint)
         {
+            var newObservPoint = GetObservationPoint();
+
             _observPointsController.UpdateObservPoint(
-                GetObservationPoint(),
+                newObservPoint,
                 selectedPoint.Objectid,
                 _observerPointSource,
                 false);
 
-                _observPointsController.UpdateAllPointsWithRelativeAzimuths(Convert.ToDouble(azimuthB.Text),
-                                                                            Convert.ToDouble(azimuthE.Text),
-                                                                            _observerPointSource);
+                _observPointsController.UpdateAllPointsWithNewValues(newObservPoint,
+                                                                     Convert.ToDouble(azimuthB.Text),
+                                                                     Convert.ToDouble(azimuthE.Text),
+                                                                     _observerPointSource, 
+                                                                     _updateForAllFieldsInRouteMode);
        
         }
 
@@ -2889,21 +2908,29 @@ namespace MilSpace.Visibility
         private void RadioButton2_Click(object sender, EventArgs e)
         {
             rbSeparateOP.Checked = !_observPointsController.SetObserverPointsToRouteMode(_observerPointSource);
-
-            OnModeChanged();
         }
 
         private void RbSeparateOP_Click(object sender, EventArgs e)
         {
-            OnModeChanged();
         }
 
-        private void OnModeChanged()
+        private void OnModeChanged(object sender, EventArgs e)
         {
             if (_selectedPointId != -1)
             {
                 FillObservPointsFields(_observPointsController.GetObservPointByIdAsObservationPoint(_selectedPointId));
             }
+
+            changeAllObserversHeightsButton.Enabled = rbRouteMode.Checked;
+        }
+
+        private void ChangeAllObserversHeightsButton_Click(object sender, EventArgs e)
+        {
+            _observPointsController.UpdateAllPointsWithNewValues(GetObservationPoint(),
+                                                                 Convert.ToDouble(azimuthB.Text),
+                                                                 Convert.ToDouble(azimuthE.Text),
+                                                                 _observerPointSource,
+                                                                 true);
         }
     }
 }

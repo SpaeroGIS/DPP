@@ -153,6 +153,7 @@
   <MainW_btnSaveParamPS_Tag>Зберегти зміни</MainW_btnSaveParamPS_Tag>
   <MainW_buttonSaveOPoint_Tag>Зберегти параметри ПС</MainW_buttonSaveOPoint_Tag>
   <MainW_tlbbAddObservObjLayer_Tag>Додати шар ОН до карти</MainW_tlbbAddObservObjLayer_Tag>
+  <MainW_changeAllObserversHeights_ToolTipText>Встановити дану висоту для всіх точок</MainW_changeAllObserversHeights_ToolTipText>
 
   <!-- ######################################################################### -->
   <WindowCaptionMaster>Спостереження. Майстер розрахунку видимостей</WindowCaptionMaster>
