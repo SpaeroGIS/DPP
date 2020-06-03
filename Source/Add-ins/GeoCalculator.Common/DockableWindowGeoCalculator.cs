@@ -1515,7 +1515,9 @@ namespace MilSpace.GeoCalculator
             }
 
             var pointNumber = ++maxNum;
+
             AddPointToGrid(point, pointNumber, pointGuid);
+
             if (projectPoint)
             {
                 ProjectPointAsync(point, pointGuid, false, pointNumber);
@@ -1537,16 +1539,18 @@ namespace MilSpace.GeoCalculator
             if (pointGuid != Guid.Empty)
             {
                 pointModels.Add(pointGuid, pointModel);
-                if (maxNum < PointsGridView.RowCount)
+
+                maxNum = (int)PointsGridView.Rows[0].Cells[0].Value;
+                foreach (DataGridViewRow row in PointsGridView.Rows)
                 {
-                    maxNum = PointsGridView.RowCount + 1;
-                }
-                else
-                {
-                    maxNum++;
+                    var num = (int)row.Cells[0].Value;
+                    if (num > maxNum)
+                    {
+                        maxNum = num;
+                    }
                 }
 
-                var pointNumber = maxNum;
+                var pointNumber = ++maxNum;
 
                 AddPointToGrid(point, pointNumber, pointGuid);
             }
@@ -2171,12 +2175,14 @@ namespace MilSpace.GeoCalculator
 
         private void BtnRefreshGraphic_Click(object sender, EventArgs e)
         {
+            var graphicsLayerManager = GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView);
+
             if (PointsGridView.RowCount == 0)
             {
                 return;
             }
 
-            var graphicsLayerManager = GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView);
+            graphicsLayerManager.RemoveGeoCalcGraphicsFromMap();
 
             foreach (var point in ClickedPointsDictionary)
             {
