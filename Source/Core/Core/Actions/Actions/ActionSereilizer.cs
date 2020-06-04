@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Linq;
-using MilSpace.Core.Actions.Interfaces;
-using System.Xml.Serialization;
+﻿using MilSpace.Core.Actions.Interfaces;
+using System;
 using System.IO;
-using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
 namespace MilSpace.Core.Actions.Actions

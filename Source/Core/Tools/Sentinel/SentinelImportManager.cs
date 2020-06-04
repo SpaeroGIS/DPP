@@ -13,6 +13,10 @@ using System.Web;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.ComponentModel;
+using MilSpace.Core.Actions.Base;
+using MilSpace.Core.Actions.Interfaces;
+using MilSpace.Core.Actions;
+using MilSpace.Core.Actions.ActionResults;
 
 namespace MilSpace.Tools.Sentinel
 {
@@ -115,6 +119,40 @@ namespace MilSpace.Tools.Sentinel
             
         }
 
+        public static void DoPreProcessing()
+        {
+            string commandFile = @"E:\SourceCode\40copoka\DPP\Source\UnitTests\CommandLineAction.UnitTest\Output\CommandLineAction.UnitTest.exe";
+
+            var action = new ActionParam<string>()
+            {
+                ParamName = ActionParamNamesCore.Action,
+                Value = ActionsCore.RunCommandLine
+            };
+
+            var prm = new IActionParam[]
+             {
+                  action,
+                    new ActionParam<string>() { ParamName = ActionParamNamesCore.PathToFile, Value = commandFile},
+                    new ActionParam<string>() { ParamName = ActionParamNamesCore.DataValue, Value = string.Empty},
+                    new ActionParam<ActionProcessCommandLineDelegate>() { ParamName = ActionParamNamesCore.OutputDataReceivedDelegate, Value = OnOutputCommandLine},
+                    new ActionParam<ActionProcessCommandLineDelegate>() { ParamName = ActionParamNamesCore.ErrorDataReceivedDelegate, Value = OnErrorCommandLine}
+
+             };
+
+            var procc = new ActionProcessor(prm);
+            var res = procc.Process<StringActionResult>();
+        }
+
+        public static void OnErrorCommandLine(string consoleMessage, ActironCommandLineStatesEnum state)
+        {
+            logger.ErrorEx(consoleMessage);
+        }
+
+        public static void OnOutputCommandLine(string consoleMessage, ActironCommandLineStatesEnum state)
+        {
+            logger.InfoEx(consoleMessage);
+        }
+
         private static void DownloadProbuct(SentinelProduct product, string tileFolderName)
         {
 
@@ -146,6 +184,7 @@ namespace MilSpace.Tools.Sentinel
             }
             
         }
+
 
         private static void Client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {

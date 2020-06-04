@@ -1577,6 +1577,7 @@
             this.button17.TabIndex = 0;
             this.button17.Text = "обновить";
             this.button17.UseVisualStyleBackColor = true;
+            this.button17.Click += new System.EventHandler(this.button17_Click);
             // 
             // panel59
             // 

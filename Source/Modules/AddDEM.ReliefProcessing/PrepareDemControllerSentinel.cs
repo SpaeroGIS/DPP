@@ -1,7 +1,11 @@
 ﻿using MilSpace.AddDem.ReliefProcessing.GuiData;
 using MilSpace.Configurations;
 using MilSpace.Core;
+using MilSpace.Core.Actions;
+using MilSpace.Core.Actions.Base;
+using MilSpace.Core.Actions.Interfaces;
 using MilSpace.DataAccess.DataTransfer.Sentinel;
+using MilSpace.Tools.CopyRaster.Actions;
 using MilSpace.Tools.Sentinel;
 using System;
 using System.Collections.Generic;
@@ -144,6 +148,13 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         public bool DownloadStarted => downloading;
 
+        public void ProcessPreliminary()
+        {
+            SentinelImportManager.DoPreProcessing();
+        }
+
+
+
         private void OnProductDownloaded(string productId)
         {
             var probuct = prepareSentinelView.SelectedTile.DownloadingScenes.FirstOrDefault(p => p.Identifier == productId);
@@ -163,5 +174,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             }
             OnProductsDownloaded?.Invoke(prepareSentinelView.SelectedTile.DownloadingScenes);
         }
+
+
     }
 }
