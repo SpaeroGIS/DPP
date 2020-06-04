@@ -32,13 +32,13 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
             this.panel16 = new System.Windows.Forms.Panel();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnGenerateList = new System.Windows.Forms.Button();
             this.panel22 = new System.Windows.Forms.Panel();
-            this.label9 = new System.Windows.Forms.Label();
+            this.lblLengthWidth = new System.Windows.Forms.Label();
             this.panel20 = new System.Windows.Forms.Panel();
-            this.label8 = new System.Windows.Forms.Label();
+            this.lblSquare = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.label7 = new System.Windows.Forms.Label();
+            this.lblSizeInfo = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
@@ -47,7 +47,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.panel12 = new System.Windows.Forms.Panel();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lblRightCorner = new System.Windows.Forms.Label();
             this.panel11 = new System.Windows.Forms.Panel();
             this.toolStrip5 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
@@ -56,43 +56,43 @@
             this.pulkovoDMSYTextBox = new System.Windows.Forms.TextBox();
             this.panel13 = new System.Windows.Forms.Panel();
             this.pulkovoDMSXTextBox = new System.Windows.Forms.TextBox();
-            this.PulkovoGeoLabel = new System.Windows.Forms.Label();
+            this.lblLeftConer = new System.Windows.Forms.Label();
             this.panel9 = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblChosenObjInfo = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnChoose = new System.Windows.Forms.Button();
             this.panel7 = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblCreationWay = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.btnShowProfileLine = new System.Windows.Forms.Button();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblWorkZone = new System.Windows.Forms.Label();
             this.panelCoverageCommmon = new System.Windows.Forms.Panel();
             this.panelTableCommmon = new System.Windows.Forms.Panel();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.panel21 = new System.Windows.Forms.Panel();
-            this.button7 = new System.Windows.Forms.Button();
+            this.btnExport = new System.Windows.Forms.Button();
             this.panel17 = new System.Windows.Forms.Panel();
-            this.button6 = new System.Windows.Forms.Button();
+            this.btnLoadFromCatalog = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.button5 = new System.Windows.Forms.Button();
+            this.btnAddToMap = new System.Windows.Forms.Button();
             this.panel24 = new System.Windows.Forms.Panel();
-            this.button8 = new System.Windows.Forms.Button();
+            this.btnCalculation = new System.Windows.Forms.Button();
             this.panel18 = new System.Windows.Forms.Panel();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.chckShowOnMap = new System.Windows.Forms.CheckBox();
+            this.chckNo = new System.Windows.Forms.CheckBox();
+            this.chckYes = new System.Windows.Forms.CheckBox();
             this.panel15 = new System.Windows.Forms.Panel();
-            this.label6 = new System.Windows.Forms.Label();
+            this.lblTilesList = new System.Windows.Forms.Label();
             this.panel19 = new System.Windows.Forms.Panel();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnLoadScheme = new System.Windows.Forms.Button();
             this.panel14 = new System.Windows.Forms.Panel();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.panel5 = new System.Windows.Forms.Panel();
             this.button4 = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblReliefCover = new System.Windows.Forms.Label();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.panel1.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -154,7 +154,7 @@
             // panel16
             // 
             this.panel16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.panel16.Controls.Add(this.button2);
+            this.panel16.Controls.Add(this.btnGenerateList);
             this.panel16.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel16.Location = new System.Drawing.Point(0, 204);
             this.panel16.Name = "panel16";
@@ -162,20 +162,20 @@
             this.panel16.Size = new System.Drawing.Size(291, 30);
             this.panel16.TabIndex = 64;
             // 
-            // button2
+            // btnGenerateList
             // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.button2.Location = new System.Drawing.Point(4, 4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(210, 22);
-            this.button2.TabIndex = 0;
-            this.button2.Text = "сформировать список";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnGenerateList.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnGenerateList.Location = new System.Drawing.Point(4, 4);
+            this.btnGenerateList.Name = "btnGenerateList";
+            this.btnGenerateList.Size = new System.Drawing.Size(210, 22);
+            this.btnGenerateList.TabIndex = 0;
+            this.btnGenerateList.Text = "сформировать список";
+            this.btnGenerateList.UseVisualStyleBackColor = true;
             // 
             // panel22
             // 
             this.panel22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.panel22.Controls.Add(this.label9);
+            this.panel22.Controls.Add(this.lblLengthWidth);
             this.panel22.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel22.Location = new System.Drawing.Point(0, 180);
             this.panel22.Name = "panel22";
@@ -183,20 +183,20 @@
             this.panel22.Size = new System.Drawing.Size(291, 24);
             this.panel22.TabIndex = 67;
             // 
-            // label9
+            // lblLengthWidth
             // 
-            this.label9.AutoSize = true;
-            this.label9.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label9.Location = new System.Drawing.Point(4, 4);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(148, 13);
-            this.label9.TabIndex = 0;
-            this.label9.Text = "длина 150 км ширина 80 км";
+            this.lblLengthWidth.AutoSize = true;
+            this.lblLengthWidth.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblLengthWidth.Location = new System.Drawing.Point(4, 4);
+            this.lblLengthWidth.Name = "lblLengthWidth";
+            this.lblLengthWidth.Size = new System.Drawing.Size(148, 13);
+            this.lblLengthWidth.TabIndex = 0;
+            this.lblLengthWidth.Text = "длина 150 км ширина 80 км";
             // 
             // panel20
             // 
             this.panel20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.panel20.Controls.Add(this.label8);
+            this.panel20.Controls.Add(this.lblSquare);
             this.panel20.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel20.Location = new System.Drawing.Point(0, 156);
             this.panel20.Name = "panel20";
@@ -204,20 +204,20 @@
             this.panel20.Size = new System.Drawing.Size(291, 24);
             this.panel20.TabIndex = 66;
             // 
-            // label8
+            // lblSquare
             // 
-            this.label8.AutoSize = true;
-            this.label8.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label8.Location = new System.Drawing.Point(4, 4);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(111, 13);
-            this.label8.TabIndex = 0;
-            this.label8.Text = "площадь 1200 км кв";
+            this.lblSquare.AutoSize = true;
+            this.lblSquare.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblSquare.Location = new System.Drawing.Point(4, 4);
+            this.lblSquare.Name = "lblSquare";
+            this.lblSquare.Size = new System.Drawing.Size(111, 13);
+            this.lblSquare.TabIndex = 0;
+            this.lblSquare.Text = "площадь 1200 км кв";
             // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.panel3.Controls.Add(this.label7);
+            this.panel3.Controls.Add(this.lblSizeInfo);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(0, 132);
             this.panel3.Name = "panel3";
@@ -225,15 +225,15 @@
             this.panel3.Size = new System.Drawing.Size(291, 24);
             this.panel3.TabIndex = 65;
             // 
-            // label7
+            // lblSizeInfo
             // 
-            this.label7.AutoSize = true;
-            this.label7.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label7.Location = new System.Drawing.Point(4, 4);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(189, 13);
-            this.label7.TabIndex = 0;
-            this.label7.Text = "информация о площади и размерах";
+            this.lblSizeInfo.AutoSize = true;
+            this.lblSizeInfo.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblSizeInfo.Location = new System.Drawing.Point(4, 4);
+            this.lblSizeInfo.Name = "lblSizeInfo";
+            this.lblSizeInfo.Size = new System.Drawing.Size(189, 13);
+            this.lblSizeInfo.TabIndex = 0;
+            this.lblSizeInfo.Text = "информация о площади и размерах";
             // 
             // panel10
             // 
@@ -242,7 +242,7 @@
             this.panel10.Controls.Add(this.textBox1);
             this.panel10.Controls.Add(this.panel12);
             this.panel10.Controls.Add(this.textBox2);
-            this.panel10.Controls.Add(this.label5);
+            this.panel10.Controls.Add(this.lblRightCorner);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel10.Location = new System.Drawing.Point(0, 104);
             this.panel10.Name = "panel10";
@@ -318,16 +318,16 @@
             this.textBox2.Size = new System.Drawing.Size(68, 21);
             this.textBox2.TabIndex = 25;
             // 
-            // label5
+            // lblRightCorner
             // 
-            this.label5.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.label5.Location = new System.Drawing.Point(4, 3);
-            this.label5.Name = "label5";
-            this.label5.Padding = new System.Windows.Forms.Padding(6, 4, 0, 0);
-            this.label5.Size = new System.Drawing.Size(70, 22);
-            this.label5.TabIndex = 22;
-            this.label5.Text = "ПН угол";
+            this.lblRightCorner.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblRightCorner.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.lblRightCorner.Location = new System.Drawing.Point(4, 3);
+            this.lblRightCorner.Name = "lblRightCorner";
+            this.lblRightCorner.Padding = new System.Windows.Forms.Padding(6, 4, 0, 0);
+            this.lblRightCorner.Size = new System.Drawing.Size(70, 22);
+            this.lblRightCorner.TabIndex = 22;
+            this.lblRightCorner.Text = "ПН угол";
             // 
             // panel11
             // 
@@ -336,7 +336,7 @@
             this.panel11.Controls.Add(this.pulkovoDMSYTextBox);
             this.panel11.Controls.Add(this.panel13);
             this.panel11.Controls.Add(this.pulkovoDMSXTextBox);
-            this.panel11.Controls.Add(this.PulkovoGeoLabel);
+            this.panel11.Controls.Add(this.lblLeftConer);
             this.panel11.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel11.Location = new System.Drawing.Point(0, 76);
             this.panel11.Name = "panel11";
@@ -412,21 +412,21 @@
             this.pulkovoDMSXTextBox.Size = new System.Drawing.Size(68, 21);
             this.pulkovoDMSXTextBox.TabIndex = 25;
             // 
-            // PulkovoGeoLabel
+            // lblLeftConer
             // 
-            this.PulkovoGeoLabel.Dock = System.Windows.Forms.DockStyle.Left;
-            this.PulkovoGeoLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.PulkovoGeoLabel.Location = new System.Drawing.Point(4, 3);
-            this.PulkovoGeoLabel.Name = "PulkovoGeoLabel";
-            this.PulkovoGeoLabel.Padding = new System.Windows.Forms.Padding(6, 4, 0, 0);
-            this.PulkovoGeoLabel.Size = new System.Drawing.Size(70, 22);
-            this.PulkovoGeoLabel.TabIndex = 22;
-            this.PulkovoGeoLabel.Text = "ЛВ угол";
+            this.lblLeftConer.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblLeftConer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.lblLeftConer.Location = new System.Drawing.Point(4, 3);
+            this.lblLeftConer.Name = "lblLeftConer";
+            this.lblLeftConer.Padding = new System.Windows.Forms.Padding(6, 4, 0, 0);
+            this.lblLeftConer.Size = new System.Drawing.Size(70, 22);
+            this.lblLeftConer.TabIndex = 22;
+            this.lblLeftConer.Text = "ЛВ угол";
             // 
             // panel9
             // 
             this.panel9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.panel9.Controls.Add(this.label4);
+            this.panel9.Controls.Add(this.lblChosenObjInfo);
             this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel9.Location = new System.Drawing.Point(0, 52);
             this.panel9.Name = "panel9";
@@ -434,21 +434,21 @@
             this.panel9.Size = new System.Drawing.Size(291, 24);
             this.panel9.TabIndex = 2;
             // 
-            // label4
+            // lblChosenObjInfo
             // 
-            this.label4.AutoSize = true;
-            this.label4.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label4.Location = new System.Drawing.Point(4, 4);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(186, 13);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "информация о выбранном объекте";
+            this.lblChosenObjInfo.AutoSize = true;
+            this.lblChosenObjInfo.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblChosenObjInfo.Location = new System.Drawing.Point(4, 4);
+            this.lblChosenObjInfo.Name = "lblChosenObjInfo";
+            this.lblChosenObjInfo.Size = new System.Drawing.Size(186, 13);
+            this.lblChosenObjInfo.TabIndex = 0;
+            this.lblChosenObjInfo.Text = "информация о выбранном объекте";
             // 
             // panel8
             // 
             this.panel8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.panel8.Controls.Add(this.comboBox1);
-            this.panel8.Controls.Add(this.button1);
+            this.panel8.Controls.Add(this.btnChoose);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel8.Location = new System.Drawing.Point(0, 24);
             this.panel8.Name = "panel8";
@@ -471,20 +471,20 @@
             this.comboBox1.Size = new System.Drawing.Size(208, 21);
             this.comboBox1.TabIndex = 0;
             // 
-            // button1
+            // btnChoose
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button1.Location = new System.Drawing.Point(212, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 22);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "выбрать";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnChoose.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnChoose.Location = new System.Drawing.Point(212, 3);
+            this.btnChoose.Name = "btnChoose";
+            this.btnChoose.Size = new System.Drawing.Size(75, 22);
+            this.btnChoose.TabIndex = 1;
+            this.btnChoose.Text = "выбрать";
+            this.btnChoose.UseVisualStyleBackColor = true;
             // 
             // panel7
             // 
             this.panel7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.panel7.Controls.Add(this.label3);
+            this.panel7.Controls.Add(this.lblCreationWay);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel7.Location = new System.Drawing.Point(0, 0);
             this.panel7.Name = "panel7";
@@ -492,21 +492,21 @@
             this.panel7.Size = new System.Drawing.Size(291, 24);
             this.panel7.TabIndex = 0;
             // 
-            // label3
+            // lblCreationWay
             // 
-            this.label3.AutoSize = true;
-            this.label3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label3.Location = new System.Drawing.Point(4, 4);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(88, 13);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "способ задания";
+            this.lblCreationWay.AutoSize = true;
+            this.lblCreationWay.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblCreationWay.Location = new System.Drawing.Point(4, 4);
+            this.lblCreationWay.Name = "lblCreationWay";
+            this.lblCreationWay.Size = new System.Drawing.Size(88, 13);
+            this.lblCreationWay.TabIndex = 0;
+            this.lblCreationWay.Text = "способ задания";
             // 
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.panel4.Controls.Add(this.btnShowProfileLine);
-            this.panel4.Controls.Add(this.label1);
+            this.panel4.Controls.Add(this.lblWorkZone);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(8, 8);
             this.panel4.Name = "panel4";
@@ -743,16 +743,16 @@
             this.imageList1.Images.SetKeyName(211, "Download.png");
             this.imageList1.Images.SetKeyName(212, "Refresh20x20.png");
             // 
-            // label1
+            // lblWorkZone
             // 
-            this.label1.AutoSize = true;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(4, 4);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(101, 17);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "зона роботи";
+            this.lblWorkZone.AutoSize = true;
+            this.lblWorkZone.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblWorkZone.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblWorkZone.Location = new System.Drawing.Point(4, 4);
+            this.lblWorkZone.Name = "lblWorkZone";
+            this.lblWorkZone.Size = new System.Drawing.Size(101, 17);
+            this.lblWorkZone.TabIndex = 0;
+            this.lblWorkZone.Text = "зона роботи";
             // 
             // panelCoverageCommmon
             // 
@@ -806,7 +806,7 @@
             // panel21
             // 
             this.panel21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.panel21.Controls.Add(this.button7);
+            this.panel21.Controls.Add(this.btnExport);
             this.panel21.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel21.Location = new System.Drawing.Point(8, 258);
             this.panel21.Name = "panel21";
@@ -814,20 +814,20 @@
             this.panel21.Size = new System.Drawing.Size(291, 30);
             this.panel21.TabIndex = 73;
             // 
-            // button7
+            // btnExport
             // 
-            this.button7.Dock = System.Windows.Forms.DockStyle.Left;
-            this.button7.Location = new System.Drawing.Point(4, 4);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(210, 22);
-            this.button7.TabIndex = 0;
-            this.button7.Text = "экспорт списка";
-            this.button7.UseVisualStyleBackColor = true;
+            this.btnExport.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnExport.Location = new System.Drawing.Point(4, 4);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(210, 22);
+            this.btnExport.TabIndex = 0;
+            this.btnExport.Text = "экспорт списка";
+            this.btnExport.UseVisualStyleBackColor = true;
             // 
             // panel17
             // 
             this.panel17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.panel17.Controls.Add(this.button6);
+            this.panel17.Controls.Add(this.btnLoadFromCatalog);
             this.panel17.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel17.Location = new System.Drawing.Point(8, 288);
             this.panel17.Name = "panel17";
@@ -835,20 +835,20 @@
             this.panel17.Size = new System.Drawing.Size(291, 30);
             this.panel17.TabIndex = 72;
             // 
-            // button6
+            // btnLoadFromCatalog
             // 
-            this.button6.Dock = System.Windows.Forms.DockStyle.Left;
-            this.button6.Location = new System.Drawing.Point(4, 4);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(210, 22);
-            this.button6.TabIndex = 0;
-            this.button6.Text = "загрузить из каталога";
-            this.button6.UseVisualStyleBackColor = true;
+            this.btnLoadFromCatalog.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnLoadFromCatalog.Location = new System.Drawing.Point(4, 4);
+            this.btnLoadFromCatalog.Name = "btnLoadFromCatalog";
+            this.btnLoadFromCatalog.Size = new System.Drawing.Size(210, 22);
+            this.btnLoadFromCatalog.TabIndex = 0;
+            this.btnLoadFromCatalog.Text = "загрузить из каталога";
+            this.btnLoadFromCatalog.UseVisualStyleBackColor = true;
             // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.panel2.Controls.Add(this.button5);
+            this.panel2.Controls.Add(this.btnAddToMap);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Location = new System.Drawing.Point(8, 318);
             this.panel2.Name = "panel2";
@@ -856,20 +856,20 @@
             this.panel2.Size = new System.Drawing.Size(291, 30);
             this.panel2.TabIndex = 71;
             // 
-            // button5
+            // btnAddToMap
             // 
-            this.button5.Dock = System.Windows.Forms.DockStyle.Left;
-            this.button5.Location = new System.Drawing.Point(4, 4);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(210, 22);
-            this.button5.TabIndex = 0;
-            this.button5.Text = "подключить к карте";
-            this.button5.UseVisualStyleBackColor = true;
+            this.btnAddToMap.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnAddToMap.Location = new System.Drawing.Point(4, 4);
+            this.btnAddToMap.Name = "btnAddToMap";
+            this.btnAddToMap.Size = new System.Drawing.Size(210, 22);
+            this.btnAddToMap.TabIndex = 0;
+            this.btnAddToMap.Text = "подключить к карте";
+            this.btnAddToMap.UseVisualStyleBackColor = true;
             // 
             // panel24
             // 
             this.panel24.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.panel24.Controls.Add(this.button8);
+            this.panel24.Controls.Add(this.btnCalculation);
             this.panel24.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel24.Location = new System.Drawing.Point(8, 348);
             this.panel24.Name = "panel24";
@@ -877,23 +877,23 @@
             this.panel24.Size = new System.Drawing.Size(291, 30);
             this.panel24.TabIndex = 70;
             // 
-            // button8
+            // btnCalculation
             // 
-            this.button8.Dock = System.Windows.Forms.DockStyle.Left;
-            this.button8.Location = new System.Drawing.Point(4, 4);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(210, 22);
-            this.button8.TabIndex = 0;
-            this.button8.Text = "Расчет";
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
+            this.btnCalculation.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnCalculation.Location = new System.Drawing.Point(4, 4);
+            this.btnCalculation.Name = "btnCalculation";
+            this.btnCalculation.Size = new System.Drawing.Size(210, 22);
+            this.btnCalculation.TabIndex = 0;
+            this.btnCalculation.Text = "Расчет";
+            this.btnCalculation.UseVisualStyleBackColor = true;
+            this.btnCalculation.Click += new System.EventHandler(this.button8_Click);
             // 
             // panel18
             // 
             this.panel18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.panel18.Controls.Add(this.checkBox3);
-            this.panel18.Controls.Add(this.checkBox2);
-            this.panel18.Controls.Add(this.checkBox1);
+            this.panel18.Controls.Add(this.chckShowOnMap);
+            this.panel18.Controls.Add(this.chckNo);
+            this.panel18.Controls.Add(this.chckYes);
             this.panel18.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel18.Location = new System.Drawing.Point(8, 120);
             this.panel18.Name = "panel18";
@@ -901,43 +901,43 @@
             this.panel18.Size = new System.Drawing.Size(291, 24);
             this.panel18.TabIndex = 5;
             // 
-            // checkBox3
+            // chckShowOnMap
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkBox3.Location = new System.Drawing.Point(96, 4);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(120, 20);
-            this.checkBox3.TabIndex = 2;
-            this.checkBox3.Text = "показать на карте";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.chckShowOnMap.AutoSize = true;
+            this.chckShowOnMap.Dock = System.Windows.Forms.DockStyle.Left;
+            this.chckShowOnMap.Location = new System.Drawing.Point(96, 4);
+            this.chckShowOnMap.Name = "chckShowOnMap";
+            this.chckShowOnMap.Size = new System.Drawing.Size(120, 20);
+            this.chckShowOnMap.TabIndex = 2;
+            this.chckShowOnMap.Text = "показать на карте";
+            this.chckShowOnMap.UseVisualStyleBackColor = true;
             // 
-            // checkBox2
+            // chckNo
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkBox2.Location = new System.Drawing.Point(53, 4);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(43, 20);
-            this.checkBox2.TabIndex = 1;
-            this.checkBox2.Text = "нет";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.chckNo.AutoSize = true;
+            this.chckNo.Dock = System.Windows.Forms.DockStyle.Left;
+            this.chckNo.Location = new System.Drawing.Point(53, 4);
+            this.chckNo.Name = "chckNo";
+            this.chckNo.Size = new System.Drawing.Size(43, 20);
+            this.chckNo.TabIndex = 1;
+            this.chckNo.Text = "нет";
+            this.chckNo.UseVisualStyleBackColor = true;
             // 
-            // checkBox1
+            // chckYes
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkBox1.Location = new System.Drawing.Point(4, 4);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(49, 20);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "есть";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.chckYes.AutoSize = true;
+            this.chckYes.Dock = System.Windows.Forms.DockStyle.Left;
+            this.chckYes.Location = new System.Drawing.Point(4, 4);
+            this.chckYes.Name = "chckYes";
+            this.chckYes.Size = new System.Drawing.Size(49, 20);
+            this.chckYes.TabIndex = 0;
+            this.chckYes.Text = "есть";
+            this.chckYes.UseVisualStyleBackColor = true;
             // 
             // panel15
             // 
             this.panel15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.panel15.Controls.Add(this.label6);
+            this.panel15.Controls.Add(this.lblTilesList);
             this.panel15.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel15.Location = new System.Drawing.Point(8, 96);
             this.panel15.Name = "panel15";
@@ -945,20 +945,20 @@
             this.panel15.Size = new System.Drawing.Size(291, 24);
             this.panel15.TabIndex = 4;
             // 
-            // label6
+            // lblTilesList
             // 
-            this.label6.AutoSize = true;
-            this.label6.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label6.Location = new System.Drawing.Point(4, 4);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(81, 13);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "список тайлов";
+            this.lblTilesList.AutoSize = true;
+            this.lblTilesList.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblTilesList.Location = new System.Drawing.Point(4, 4);
+            this.lblTilesList.Name = "lblTilesList";
+            this.lblTilesList.Size = new System.Drawing.Size(81, 13);
+            this.lblTilesList.TabIndex = 0;
+            this.lblTilesList.Text = "список тайлов";
             // 
             // panel19
             // 
             this.panel19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.panel19.Controls.Add(this.button3);
+            this.panel19.Controls.Add(this.btnLoadScheme);
             this.panel19.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel19.Location = new System.Drawing.Point(8, 66);
             this.panel19.Name = "panel19";
@@ -966,15 +966,15 @@
             this.panel19.Size = new System.Drawing.Size(291, 30);
             this.panel19.TabIndex = 3;
             // 
-            // button3
+            // btnLoadScheme
             // 
-            this.button3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.button3.Location = new System.Drawing.Point(4, 3);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(210, 24);
-            this.button3.TabIndex = 0;
-            this.button3.Text = "загрузить схему тайлов";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnLoadScheme.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnLoadScheme.Location = new System.Drawing.Point(4, 3);
+            this.btnLoadScheme.Name = "btnLoadScheme";
+            this.btnLoadScheme.Size = new System.Drawing.Size(210, 24);
+            this.btnLoadScheme.TabIndex = 0;
+            this.btnLoadScheme.Text = "загрузить схему тайлов";
+            this.btnLoadScheme.UseVisualStyleBackColor = true;
             // 
             // panel14
             // 
@@ -1016,7 +1016,7 @@
             // 
             this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.panel5.Controls.Add(this.button4);
-            this.panel5.Controls.Add(this.label2);
+            this.panel5.Controls.Add(this.lblReliefCover);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(8, 8);
             this.panel5.Name = "panel5";
@@ -1035,18 +1035,18 @@
             this.button4.TabIndex = 48;
             this.button4.UseVisualStyleBackColor = true;
             // 
-            // label2
+            // lblReliefCover
             // 
-            this.label2.AutoSize = true;
-            this.label2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(4, 4);
-            this.label2.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.label2.Name = "label2";
-            this.label2.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.label2.Size = new System.Drawing.Size(220, 19);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "покриття рельєфу (каталог)";
+            this.lblReliefCover.AutoSize = true;
+            this.lblReliefCover.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblReliefCover.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblReliefCover.Location = new System.Drawing.Point(4, 4);
+            this.lblReliefCover.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.lblReliefCover.Name = "lblReliefCover";
+            this.lblReliefCover.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.lblReliefCover.Size = new System.Drawing.Size(220, 19);
+            this.lblReliefCover.TabIndex = 0;
+            this.lblReliefCover.Text = "покриття рельєфу (каталог)";
             // 
             // DockableDEMWindow
             // 
@@ -1101,34 +1101,34 @@
         #endregion
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblWorkZone;
         private System.Windows.Forms.Panel panelCoverageCommmon;
         private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblReliefCover;
         private System.Windows.Forms.Button btnShowProfileLine;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.Panel panel14;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.Panel panel18;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox chckShowOnMap;
+        private System.Windows.Forms.CheckBox chckNo;
+        private System.Windows.Forms.CheckBox chckYes;
         private System.Windows.Forms.Panel panel15;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblTilesList;
         private System.Windows.Forms.Panel panel19;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnLoadScheme;
         private System.IO.Ports.SerialPort serialPort1;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Panel panel16;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnGenerateList;
         private System.Windows.Forms.Panel panel22;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label lblLengthWidth;
         private System.Windows.Forms.Panel panel20;
-        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label lblSquare;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lblSizeInfo;
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
@@ -1137,7 +1137,7 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblRightCorner;
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.ToolStrip toolStrip5;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
@@ -1146,23 +1146,23 @@
         private System.Windows.Forms.TextBox pulkovoDMSYTextBox;
         private System.Windows.Forms.Panel panel13;
         private System.Windows.Forms.TextBox pulkovoDMSXTextBox;
-        private System.Windows.Forms.Label PulkovoGeoLabel;
+        private System.Windows.Forms.Label lblLeftConer;
         private System.Windows.Forms.Panel panel9;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblChosenObjInfo;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnChoose;
         private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblCreationWay;
         private System.Windows.Forms.Panel panelTableCommmon;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
         private System.Windows.Forms.Panel panel21;
-        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.Panel panel17;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button btnLoadFromCatalog;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button btnAddToMap;
         private System.Windows.Forms.Panel panel24;
-        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button btnCalculation;
     }
 }
