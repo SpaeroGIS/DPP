@@ -33,13 +33,7 @@ namespace MilSpace.Core.Actions.Actions.Pythom
             this.returnResult.Result = string.Empty;
         }
 
-        public override string ActionId
-        {
-            get
-            {
-                return ActionsCore.RunPythot;
-            }
-        }
+        public override string ActionId => ActionsCore.RunPythot;
 
         public override IActionParam[] ParametersTemplate
         {

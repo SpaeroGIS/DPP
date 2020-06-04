@@ -14,12 +14,13 @@ namespace MilSpace.Core.Actions.Base
         protected IActionProcessor Parameters;
 
         protected Logger logger;
-        protected readonly ActionDescription description = new ActionDescription();
+        protected readonly static ActionDescription description = new ActionDescription();
 
 
         protected Action()
         {
             this.FillUserActionParams();
+            if (description.IsEmpty)
             description.Area = Area;
             description.ActionId = this.ActionId;
         }

@@ -2,5 +2,8 @@
 
 namespace MilSpace.Core.Actions
 {
-    public delegate void ActionProcesDelegate(ActionDescription actionDesctiption, ActionStatesEnum state);
+    public delegate void ActionProcessDelegate(ActionDescription actionDesctiption, ActionStatesEnum state);
+
+    public delegate void ActionProcessCommandLineDelegate(string consoleMessage, ActironCommandLineStatesEnum state);
+
 }
