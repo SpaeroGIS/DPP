@@ -48,5 +48,19 @@ namespace MilSpace.Configurations
             get { return (string)this[ConfigElementNames.PasswordAttribute]; }
             set { base[ConfigElementNames.PasswordAttribute] = value; }
         }
+
+        [ConfigurationProperty(ConfigElementNames.GptExecPathAttribute, IsKey = true, IsRequired = true)]
+        public string GptExecPath
+        {
+            get { return (string)this[ConfigElementNames.GptExecPathAttribute]; }
+            set { base[ConfigElementNames.GptExecPathAttribute] = value; }
+        }
+
+        [ConfigurationProperty(ConfigElementNames.GptCommandsPathAttribute, IsKey = true, IsRequired = true)]
+        public string GptCommandsPath
+        {
+            get { return (string)this[ConfigElementNames.GptCommandsPathAttribute]; }
+            set { base[ConfigElementNames.GptCommandsPathAttribute] = value; }
+        }
     }
 }
