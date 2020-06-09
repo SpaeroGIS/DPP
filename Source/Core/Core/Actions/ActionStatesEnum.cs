@@ -12,4 +12,11 @@
         Suspended,
         Finished
     }
+
+    public enum ActironCommandLineStatesEnum : byte
+    {
+        Output,
+        Error
+    }
+
 }

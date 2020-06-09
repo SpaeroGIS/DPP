@@ -13,7 +13,7 @@
 
   <GenerateButton>Генерувати</GenerateButton>
 
-  <MsgValueLessThenZerro>Значення бовинно бути більше нуля</MsgValueLessThenZerro>
+  <MsgValueLessThenZerro>Значення має бути більше нуля</MsgValueLessThenZerro>
   <SurfaceLabel>Поверхня</SurfaceLabel>
 
   <PlantsLayerLabel>рослинність</PlantsLayerLabel>
@@ -153,6 +153,7 @@
   <MainW_btnSaveParamPS_Tag>Зберегти зміни</MainW_btnSaveParamPS_Tag>
   <MainW_buttonSaveOPoint_Tag>Зберегти параметри ПС</MainW_buttonSaveOPoint_Tag>
   <MainW_tlbbAddObservObjLayer_Tag>Додати шар ОН до карти</MainW_tlbbAddObservObjLayer_Tag>
+  <MainW_changeAllObserversHeights_ToolTipText>Встановити дану висоту для всіх точок</MainW_changeAllObserversHeights_ToolTipText>
 
   <!-- ######################################################################### -->
   <WindowCaptionMaster>Спостереження. Майстер розрахунку видимостей</WindowCaptionMaster>
@@ -297,6 +298,9 @@
   <EmptyValueMessage>Invalid data.\nВкажіть число</EmptyValueMessage>
   <ValueMoreThanMaxMessage>Invalid data.\nЗначення не може перевищувати {0}</ValueMoreThanMaxMessage>
   <ValueLessThanMinMessage>Invalid data.\nЗначення не може бути менше за {0}</ValueLessThanMinMessage>
+  <EnterValueMoreThanMinMessage>Invalid data.\nЗначення має бути більшим ніж {0}</EnterValueMoreThanMinMessage>
+  <EnterValueLessThanMaxMessage>Invalid data.\nЗначення має бути меншим ніж {0}</EnterValueLessThanMaxMessage>
+  <IncorrectEqualValuesMessage>Invalid data.\n Початкове і кінцеве значення не можуть бути рівні</IncorrectEqualValuesMessage>
   <InvalidFormatMessage>Invalid data.\nНевірний формат</InvalidFormatMessage>
   <UnableToRemoveTaskMessage>Неможливо видалити результат розрахунку видимості поточного сеансу</UnableToRemoveTaskMessage>
   <UnableToFullRemoveTaskMessage>Неможливо повністтю видалити результат розрахунку</UnableToFullRemoveTaskMessage>
@@ -308,6 +312,8 @@
   <ObservPointscModuleDoesnotExistMessage>Модуль \"Видимість\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</ObservPointscModuleDoesnotExistMessage>
   <ErrorInTemporaryStorageGenerating>Під час генерації векторного класу {0} сталася помилка</ErrorInTemporaryStorageGenerating>
   <LayerIsNotFeatureLayerError>Помилка під час зчитування даних шару. Шар {0} не є векторним</LayerIsNotFeatureLayerError>
+  <NotEnoughPointsToBuildRoute>Недостатньо точок для побудови маршруту.</NotEnoughPointsToBuildRoute>
+  <CannotSavePointError>Виникла помилка. Неможливо зберегти дані точки.</CannotSavePointError>
   
   <ObservPointRemoveMessage>Ви дійсно бажаєте видалити точку (ПС)?</ObservPointRemoveMessage>
   <VisibilityTaskRemoveMessage>Ви дійсно бажаєте видалити результат розрахунку з поточного сеансу?</VisibilityTaskRemoveMessage>
@@ -317,6 +323,7 @@
   <SuccessfullySharedMessage>Доступ для всіх користувачів встановлено</SuccessfullySharedMessage>
   <AlreadySharedMessage>Доступ для усіх користувачів вже встановлено</AlreadySharedMessage>
   <AddNecessaryFieldsMessage>Неможливо використовувати даний шар, відсутні необхідні поля. \nВи бажаєте додати поля?</AddNecessaryFieldsMessage>
+  <RewriteAllPointsToTheSameValues>Неможливо побудувати маршрут з точок, які мають різні параметри. \nВи бажаєте привести всі точки до параметрів першої?</RewriteAllPointsToTheSameValues>
 
   <NameHeaderText>Назва</NameHeaderText>
   <StateHeaderText>Стан</StateHeaderText>

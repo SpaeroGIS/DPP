@@ -10,11 +10,22 @@ using MilSpace.DataAccess.DataTransfer.Sentinel;
 using System.Net;
 using MilSpace.Configurations;
 using System.Web;
+using System.Threading.Tasks;
+using System.Net.Http;
+using System.ComponentModel;
+using MilSpace.Core.Actions.Base;
+using MilSpace.Core.Actions.Interfaces;
+using MilSpace.Core.Actions;
+using MilSpace.Core.Actions.ActionResults;
 
 namespace MilSpace.Tools.Sentinel
 {
     public static class SentinelImportManager
     {
+        public delegate void SentinelProductsDownloaded(string product);
+        public static event SentinelProductsDownloaded OnProductDownloaded;
+        public static event SentinelProductsDownloaded OnProductDownloadingError;
+
         private static Logger logger = Logger.GetLoggerEx("SentinelImportManager");
         public static Dictionary<IndexesEnum, string> IndexesDictionary = typeof(IndexesEnum).GetEnumToDictionary<IndexesEnum>();//(  Enum.GetValues(typeof(IndexesEnum)).Cast<IndexesEnum>().ToDictionary(k => k, v => v.ToString());
         public static Dictionary<ValuebaleProductEnum, string> productItemsDictionary = Enum.GetValues(typeof(ValuebaleProductEnum)).Cast<ValuebaleProductEnum>().ToDictionary(k => k, v => v.ToString().Replace("_", " ").Replace("9", "(").Replace("0", ")"));
@@ -89,7 +100,7 @@ namespace MilSpace.Tools.Sentinel
                     myWebResponse.Close();
                 }
 
-                return ReadJson(requestContent);
+                return ReadJson(requestContent).OrderBy( s => s.DateTime) ;
             }
             catch (Exception ex)
             {
@@ -99,5 +110,100 @@ namespace MilSpace.Tools.Sentinel
             return null;
         }
 
+        public static void DownloadProducs(IEnumerable<SentinelProduct> products, string tileFolderName)
+        {
+            foreach(var product in  products)
+            {
+                DownloadProbuct(product, tileFolderName);
+            }
+            
+        }
+
+        public static void DoPreProcessing()
+        {
+            string commandFile = @"E:\SourceCode\40copoka\DPP\Source\UnitTests\CommandLineAction.UnitTest\Output\CommandLineAction.UnitTest.exe";
+
+            var action = new ActionParam<string>()
+            {
+                ParamName = ActionParamNamesCore.Action,
+                Value = ActionsCore.RunCommandLine
+            };
+
+            var prm = new IActionParam[]
+             {
+                  action,
+                    new ActionParam<string>() { ParamName = ActionParamNamesCore.PathToFile, Value = commandFile},
+                    new ActionParam<string>() { ParamName = ActionParamNamesCore.DataValue, Value = string.Empty},
+                    new ActionParam<ActionProcessCommandLineDelegate>() { ParamName = ActionParamNamesCore.OutputDataReceivedDelegate, Value = OnOutputCommandLine},
+                    new ActionParam<ActionProcessCommandLineDelegate>() { ParamName = ActionParamNamesCore.ErrorDataReceivedDelegate, Value = OnErrorCommandLine}
+
+             };
+
+            var procc = new ActionProcessor(prm);
+            var res = procc.Process<StringActionResult>();
+        }
+
+        public static void OnErrorCommandLine(string consoleMessage, ActironCommandLineStatesEnum state)
+        {
+            logger.ErrorEx(consoleMessage);
+        }
+
+        public static void OnOutputCommandLine(string consoleMessage, ActironCommandLineStatesEnum state)
+        {
+            logger.InfoEx(consoleMessage);
+        }
+
+        private static void DownloadProbuct(SentinelProduct product, string tileFolderName)
+        {
+
+            using (WebClient client = new WebClient())
+            {
+                client.Credentials = new NetworkCredential(MilSpaceConfiguration.DemStorages.ScihubUserName, MilSpaceConfiguration.DemStorages.ScihubPassword);
+                client.QueryString.Add("Id", product.Identifier);
+                SentinelProductrequestBuildercs builder = new SentinelProductrequestBuildercs(product.Uuid);
+
+                string tileFolder = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelDownloadStorage, tileFolderName);
+                if (!Directory.Exists(tileFolder))
+                {
+                    try
+                    {
+                        Directory.CreateDirectory(tileFolder);
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.ErrorEx($"Cannot create the folder {tileFolder}");
+                        logger.ErrorEx(ex.Message);
+                        Client_DownloadFileCompleted(client, new AsyncCompletedEventArgs(ex, true, null));
+                        return;
+                    }
+                }
+
+                string fileName = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelDownloadStorage, tileFolderName, product.Identifier + ".zip");
+                client.DownloadFileCompleted += Client_DownloadFileCompleted;
+                client.DownloadFileAsync(builder.Url, fileName);
+            }
+            
+        }
+
+
+        private static void Client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
+        {
+            if (sender is WebClient client)
+            {
+                //TODO: write message
+                if (e.Error != null)
+                {
+
+                    OnProductDownloadingError?.Invoke(client.QueryString["Id"]);
+                    logger.ErrorEx($"Error on download. Product {client.QueryString["Id"]} ");
+                    logger.ErrorEx(e.Error.Message);
+                }
+                else
+                {
+                    OnProductDownloaded?.Invoke(client.QueryString["Id"]);
+                    logger.InfoEx($"Download completed. Product {client.QueryString["Id"]}");
+                }
+            }
+        }
     }
 }

@@ -43,6 +43,7 @@ namespace MilSpace.Visibility
         private bool _isDropDownItemChangedManualy = false;
         private bool _isFieldsChanged = false;
         private bool _isObservObjectsFieldsChanged = false;
+        private bool _updateForAllFieldsInRouteMode = true;
         private ObservationPoint selectedPointMEM = new ObservationPoint();
 
         private int _selectedPointId => dgvObservationPoints.SelectedRows.Count == 0 ? -1 : Convert.ToInt32(dgvObservationPoints.SelectedRows[0].Cells["Id"].Value);
@@ -65,6 +66,7 @@ namespace MilSpace.Visibility
             this._observPointsController.SetView(this);
             this.Hook = hook;
             SetVisibilitySessionsController();
+            rbSeparateOP.CheckedChanged += OnModeChanged;
 
             log.InfoEx("> DockableWindowMilSpaceMVisibilitySt (Constructor) END");
         }
@@ -167,6 +169,7 @@ namespace MilSpace.Visibility
                 ToolTip toolTip = new ToolTip();
                 toolTip.SetToolTip(this.btnRefreshOPGraphics, LocalizationContext.Instance.FindLocalizedElement("MainW_btnRefreshOPGrahics_Text", "Оновити графіку"));
                 toolTip.SetToolTip(this.btnRefreshObservStationsSet, LocalizationContext.Instance.FindLocalizedElement("MainW_btnRefreshObservStationsSet_Text", "Оновити об'єкти спостреження"));
+                toolTip.SetToolTip(this.changeAllObserversHeightsButton, LocalizationContext.Instance.FindLocalizedElement("MainW_changeAllObserversHeights_ToolTipText", "Встановити дану висоту для всіх точок"));
 
                 SetObservationStationTableView();
 
@@ -226,6 +229,8 @@ namespace MilSpace.Visibility
                 editEvent.OnCreateFeature += _observPointsController.OnCreateFeature;
                 editEvent.OnDeleteFeature += _observPointsController.OnDeleteFeature;
             };
+
+            ArcMap.Events.BeforeCloseDocument += OnDocumentClosing;
 
             log.InfoEx("> SubscribeForEvents END");
         }
@@ -550,6 +555,12 @@ namespace MilSpace.Visibility
             log.DebugEx("> OnContentsChanged END");
         }
 
+        private bool OnDocumentClosing()
+        {
+            _isDropDownItemChangedManualy = false;
+            return false;
+        }
+
         private void OnActivaeViewChanged()
         {
             _observPointsController.SetGrahicsLayerManager();
@@ -648,7 +659,7 @@ namespace MilSpace.Visibility
             log.DebugEx("> UpdateObservPointsList START. IsPointFieldsEnabled:{0}", IsPointFieldsEnabled.ToString());
             if (IsPointFieldsEnabled)
             {
-                _observPointsController.UpdateObservationPointsList();
+                _observPointsController.GetObserverPointsFromSelectedSource(_observerPointSource, false);
             }
             else
             {
@@ -849,10 +860,13 @@ namespace MilSpace.Visibility
 
         private void OnFieldChanged(object sender, EventArgs e)
         {
-            if (_selectedPointId > -1 || !_isFieldsChanged || !IsPointFieldsEnabled)
+            if (_selectedPointId == -1 || !_isFieldsChanged || !IsPointFieldsEnabled)
             {
+                _isFieldsChanged = false;
                 return;
             }
+
+            _isFieldsChanged = false;
 
             var selectedPoint = _observPointsController.GetObservPointByIdAsObservationPoint(_selectedPointId);
 
@@ -860,21 +874,22 @@ namespace MilSpace.Visibility
             {
                 ((TextBox)sender).Focus();
             }
-            if (!selectedPointMEM.Equals(selectedPoint))
+            if (!selectedPointMEM.Equals(selectedPoint) && !rbRouteMode.Checked)
             {
-                _observPointsController.UpdateObservPoint(
+                    _observPointsController.UpdateObservPoint(
                     GetObservationPoint(),
-                    VisibilityManager.ObservPointFeature,
-                    ActiveView,
-                    selectedPoint.Objectid
-                    );
+                    selectedPoint.Objectid,
+                    _observerPointSource,
+                    false);
+
                 UpdateObservPointsList();
             }
-
         }
 
         private bool FieldsValidation(object sender, ObservationPoint point)
         {
+            _updateForAllFieldsInRouteMode = true;
+
             try
             {
                 var textBox = (TextBox)sender;
@@ -884,7 +899,7 @@ namespace MilSpace.Visibility
                     case "txtMinDistance":
                         double minValue;
                         string sMsgTextMinValue = LocalizationContext.Instance.FindLocalizedElement(
-                                "MsgValueLessThenZerro", "Значення повинно бути більше нуля.");
+                                "MsgValueLessThenZerro", "Значення має бути більше нуля.");
 
                         if (!Helper.TryParceToDouble(txtMinDistance.Text, out minValue))
                         {
@@ -905,14 +920,23 @@ namespace MilSpace.Visibility
                             return false;
                         }
 
+                        Helper.TryParceToDouble(txtMaxDistance.Text, out double  maxDistanceValue);
+
+                        if (!ValidateMinValue(minValue, maxDistanceValue))
+                        {
+                            txtMinDistance.Text = point.InnerRadius.ToString();
+                            return false;
+                        }
+
                         txtMinDistance.Text = minValue.ToString();
                         break;
+
                     case "txtMaxDistance":
 
                         double maxValue;
                         string sMsgTextMaxValue = LocalizationContext.Instance.FindLocalizedElement(
                                                                                   "MsgValueLessThenZerro",
-                                                                                  "Значення бовинно бути більше нуля.");
+                                                                                  "Значення має бути більше нуля.");
                         if (!Helper.TryParceToDouble(txtMaxDistance.Text, out maxValue))
                         {
                             MessageBox.Show(
@@ -933,8 +957,17 @@ namespace MilSpace.Visibility
                             return false;
                         }
 
+                        Helper.TryParceToDouble(txtMaxDistance.Text, out double minDistanceValue);
+
+                        if (!ValidateMaxValue(maxValue, minDistanceValue))
+                        {
+                            txtMaxDistance.Text = point.OuterRadius.ToString();
+                            return false;
+                        }
+
                         txtMaxDistance.Text = maxValue.ToString();
                         break;
+
                     case "xCoord":
 
                         if (!Regex.IsMatch(xCoord.Text, @"^([-]?[\d]{1,2}\,\d+)$"))
@@ -981,25 +1014,89 @@ namespace MilSpace.Visibility
                         return true;
 
                     case "angleOFViewMin":
-                        return ValidateRange(angleOFViewMin, point.AngelMinH.ToString(), -90, 0);
+
+                        if(ValidateRange(angleOFViewMin, point.AngelMinH.ToString(), -90, 0,
+                                         out double angleOFViewMinValue))
+                        {
+                            Helper.TryParceToDouble(angleOFViewMax.Text, out double angleOFViewMaxConverted);
+                            var isValueValid = ValidateMinValue(angleOFViewMinValue, angleOFViewMaxConverted);
+
+                            if(!isValueValid)
+                            {
+                                angleOFViewMin.Text = point.AngelMinH.ToString();
+                            }
+
+                            return isValueValid;
+                        }
+
+                        return false;
 
                     case "angleOFViewMax":
-                        return ValidateRange(angleOFViewMax, point.AngelMaxH.ToString(), 0, 90);
+
+                        if(ValidateRange(angleOFViewMax, point.AngelMaxH.ToString(), 0, 90,
+                                         out double angleOFViewMaxValue))
+                        {
+                            Helper.TryParceToDouble(angleOFViewMin.Text, out double angleOFViewMinConverted);
+                            var isValueValid = ValidateMaxValue(angleOFViewMaxValue, angleOFViewMinConverted);
+
+                            if(!isValueValid)
+                            {
+                                angleOFViewMax.Text = point.AngelMaxH.ToString();
+                            }
+
+                            return isValueValid;
+                        }
+
+                        return false;
 
                     case "azimuthB":
-                        return ValidateAzimuth(textBox, point.AzimuthStart.ToString());
+
+                        if(ValidateAzimuth(textBox, point.AzimuthStart.ToString(), out double azimuthBValue))
+                        {
+                            Helper.TryParceToDouble(azimuthE.Text, out double azimuthEConverted);
+                            var isValueValid = ValidateDiffValues(azimuthBValue, azimuthEConverted);
+
+                            if (!isValueValid)
+                            {
+                                azimuthB.Text = point.AzimuthStart.ToString();
+                            }
+
+                            return isValueValid;
+                        }
+
+                        return false;
 
                     case "azimuthE":
-                        return ValidateAzimuth(textBox, point.AzimuthEnd.ToString());
+
+                        if(ValidateAzimuth(textBox, point.AzimuthEnd.ToString(), out double azimuthEValue))
+                        {
+                            Helper.TryParceToDouble(azimuthB.Text, out double azimuthBConverted);
+                            var isValueValid = ValidateDiffValues(azimuthEValue, azimuthBConverted);
+
+                            if(!isValueValid)
+                            {
+                                azimuthE.Text = point.AzimuthEnd.ToString();
+                            }
+
+                            return isValueValid;
+                        }
+
+                        return false;
 
                     case "azimuthMainAxis":
-                        return ValidateAzimuth(textBox, point.AzimuthMainAxis.ToString());
+
+                        return ValidateAzimuth(textBox, point.AzimuthMainAxis.ToString(),
+                                                out double azimuthMainAxisValue);
 
                     case "cameraRotationH":
-                        return ValidateAzimuth(textBox, point.AngelCameraRotationH.ToString());
+
+                        return ValidateAzimuth(textBox, point.AngelCameraRotationH.ToString(),
+                                                out double cameraRotationHValue);
 
                     case "cameraRotationV":
-                        return ValidateAzimuth(textBox, point.AngelCameraRotationV.ToString());
+
+                        return ValidateAzimuth(textBox, point.AngelCameraRotationV.ToString(),
+                                                out double cameraRotationVValue);
 
                     case "heightCurrent":
                         var currentHeight = ValidateHeight(textBox, point.RelativeHeight.ToString());
@@ -1018,6 +1115,8 @@ namespace MilSpace.Visibility
                             {
                                 heightMin.Text = currentHeight.ToString();
                             }
+
+                            _updateForAllFieldsInRouteMode = false;
 
                             return true;
                         }
@@ -1085,15 +1184,15 @@ namespace MilSpace.Visibility
             }
         }
 
-        private bool ValidateAzimuth(TextBox azimuthTextBox, string defaultValue)
+        private bool ValidateAzimuth(TextBox azimuthTextBox, string defaultValue, out double value)
         {
-            return ValidateRange(azimuthTextBox, defaultValue, 0, 360);
+            return ValidateRange(azimuthTextBox, defaultValue, 0, 360, out value);
         }
 
-        private bool ValidateRange(TextBox textBox, string defaultValue, double lowValue, double upperValue)
+        private bool ValidateRange(TextBox textBox, string defaultValue,
+                                   double lowValue, double upperValue,
+                                   out double value)
         {
-            double value;
-
             if (Helper.TryParceToDouble(textBox.Text, out value))
             {
                 if (value >= lowValue && value <= upperValue)
@@ -1104,9 +1203,9 @@ namespace MilSpace.Visibility
             }
 
             textBox.Text = defaultValue;
-            string sMsgText = LocalizationContext.Instance.FindLocalizedElement(
-                "MsgErrorDataRange",
-                $"Invalid data.\nЗначення має бути від {lowValue} до {upperValue}");
+            string sMsgText = String.Format(LocalizationContext.Instance.FindLocalizedElement(
+                "IncorrectRangeMessage",
+                "Invalid data.\nЗначення має бути від {0} до {1}"), lowValue, upperValue);
             MessageBox.Show(
                 sMsgText,
                 LocalizationContext.Instance.MsgBoxErrorHeader,
@@ -1149,6 +1248,52 @@ namespace MilSpace.Visibility
             heightTextBox.Text = defaultValue;
 
             return -1;
+        }
+
+        private bool ValidateMinValue(double minValue, double maxValue)
+        {
+            if(minValue < maxValue)
+            {
+                return true;
+            }
+
+            MessageBox.Show(String.Format(
+                                    LocalizationContext.Instance.FindLocalizedElement("EnterValueLessThanMaxMessage",
+                                                                                      "Invalid data.\nЗначення має бути меншим ніж {0}"),
+                                    maxValue),
+                            LocalizationContext.Instance.MessageBoxCaption);
+
+            return false;
+        }
+
+        private bool ValidateMaxValue(double maxValue, double minValue)
+        {
+            if (maxValue > minValue)
+            {
+                return true;
+            }
+
+            MessageBox.Show(String.Format(
+                                    LocalizationContext.Instance.FindLocalizedElement("EnterValueMoreThanMinMessage",
+                                                                                      "Invalid data.\nЗначення має бути більшим ніж {0}"),
+                                    minValue),
+                            LocalizationContext.Instance.MessageBoxCaption);
+
+            return false;
+        }
+
+        private bool ValidateDiffValues(double currentValue, double otherValue)
+        {
+            if (currentValue != otherValue)
+            {
+                return true;
+            }
+
+            MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("IncorrectEqualValuesMessage",
+                                                                              "Invalid data.\n Початкове і кінцеве значення не можуть бути рівні"),
+                            LocalizationContext.Instance.MessageBoxCaption);
+
+            return false;
         }
 
         private void EnableObservPointsControls(bool isAllDisabled = false)
@@ -1232,10 +1377,35 @@ namespace MilSpace.Visibility
         {
             var selectedPoint = _observPointsController.GetObservPointByIdAsObservationPoint(_selectedPointId);
 
+            if(rbRouteMode.Checked && _updateForAllFieldsInRouteMode)
+            {
+                SavePointInRouteMode(selectedPoint);
+            }
+            else
+            {
+                _observPointsController.UpdateObservPoint(
+                                                    GetObservationPoint(),
+                                                    selectedPoint.Objectid,
+                                                    _observerPointSource);
+            }
+        }
+
+        private void SavePointInRouteMode(ObservationPoint selectedPoint)
+        {
+            var newObservPoint = GetObservationPoint();
+
             _observPointsController.UpdateObservPoint(
-                GetObservationPoint(),
+                newObservPoint,
                 selectedPoint.Objectid,
-                _observerPointSource);
+                _observerPointSource,
+                false);
+
+                _observPointsController.UpdateAllPointsWithNewValues(newObservPoint,
+                                                                     Convert.ToDouble(azimuthB.Text),
+                                                                     Convert.ToDouble(azimuthE.Text),
+                                                                     _observerPointSource, 
+                                                                     _updateForAllFieldsInRouteMode);
+       
         }
 
         //private void CreateNewPoint(ObservationPoint point)
@@ -1263,13 +1433,33 @@ namespace MilSpace.Visibility
                 //return null;
                 xdd = ydd = 25.2525252525;
             }
-            //TODO DS: Add validation or catch
 
             var sourceType = _observerPointSource;
 
+            double azimuthStart;
+            double azimuthEnd;
+
+            Helper.TryParceToDouble(azimuthB.Text, out double azimuthStartValue);
+            Helper.TryParceToDouble(azimuthE.Text, out double azimuthEndValue);
+
+            if (rbSeparateOP.Checked)
+            {
+                azimuthStart = azimuthStartValue;
+                azimuthEnd = azimuthEndValue;
+            }
+            else
+            {
+                Helper.TryParceToDouble(txtDirection.Text, out double direction);
+
+                var azimuths = _observPointsController
+                                    .FindAzimuthRelativeToDirection(direction, azimuthStartValue,
+                                                                    azimuthEndValue);
+                azimuthStart = azimuths.StartAzimuth;
+                azimuthEnd = azimuths.EndAzimuth;
+            }
+
             if (sourceType == ObservationSetsEnum.GeoCalculator)
             {
-
                 if (!(_observPointsController.GetObservPointById(_selectedPointId) is GeoCalcPoint oldPoint))
                 {
                     return null;
@@ -1289,8 +1479,8 @@ namespace MilSpace.Visibility
                     RelativeHeight = Convert.ToDouble(heightCurrent.Text),
                     AvailableHeightLover = Convert.ToDouble(heightMin.Text),
                     AvailableHeightUpper = Convert.ToDouble(heightMax.Text),
-                    AzimuthStart = Convert.ToDouble(azimuthB.Text),
-                    AzimuthEnd = Convert.ToDouble(azimuthE.Text),
+                    AzimuthStart = azimuthStart,
+                    AzimuthEnd = azimuthEnd,
                     //AzimuthMainAxis = Convert.ToDouble(azimuthMainAxis.Text),
                     InnerRadius = Convert.ToDouble(txtMinDistance.Text),
                     OuterRadius = Convert.ToDouble(txtMaxDistance.Text),
@@ -1320,8 +1510,8 @@ namespace MilSpace.Visibility
                 RelativeHeight = Convert.ToDouble(heightCurrent.Text),
                 AvailableHeightLover = Convert.ToDouble(heightMin.Text),
                 AvailableHeightUpper = Convert.ToDouble(heightMax.Text),
-                AzimuthStart = Convert.ToDouble(azimuthB.Text),
-                AzimuthEnd = Convert.ToDouble(azimuthE.Text),
+                AzimuthStart = azimuthStart,
+                AzimuthEnd = azimuthEnd,
                 //AzimuthMainAxis = Convert.ToDouble(azimuthMainAxis.Text),
                 InnerRadius = Convert.ToDouble(txtMinDistance.Text),
                 OuterRadius = Convert.ToDouble(txtMaxDistance.Text),
@@ -1393,15 +1583,52 @@ namespace MilSpace.Visibility
                 FCPoint.Y.ToString("F5") :
                 centerPoint.Y.ToString("F5");
 
-            azimuthB.Text =
-                selectedPoint.AzimuthStart.HasValue ?
-                selectedPoint.AzimuthStart.ToString() :
-                ObservPointDefaultValues.AzimuthBText;
+            if (rbSeparateOP.Checked)
+            {
+                azimuthB.Text =
+                    selectedPoint.AzimuthStart.HasValue ?
+                    selectedPoint.AzimuthStart.Value.ToFormattedString(0) :
+                    ObservPointDefaultValues.AzimuthBText;
 
-            azimuthE.Text =
-                selectedPoint.AzimuthEnd.HasValue ?
-                selectedPoint.AzimuthEnd.ToString() :
-                ObservPointDefaultValues.AzimuthEText;
+                azimuthE.Text =
+                    selectedPoint.AzimuthEnd.HasValue ?
+                    selectedPoint.AzimuthEnd.Value.ToFormattedString(0) :
+                    ObservPointDefaultValues.AzimuthEText;
+
+                txtDirection.Text = "0";
+            }
+            else
+            {
+                IObserverPoint currentPoint = selectedPoint;
+                IObserverPoint nextPoint = _observPointsController.GetNextPoint(selectedPoint.Objectid);
+
+                if(nextPoint == null)
+                {
+                    currentPoint = _observPointsController.GetPrevPoint(selectedPoint.Objectid);
+                    nextPoint = selectedPoint;
+                }
+
+                var direction = _observPointsController.GetDirection(_observPointsController.GetObserverPointGeometry(currentPoint),
+                                                                     _observPointsController.GetObserverPointGeometry(nextPoint));
+                txtDirection.Text = direction.ToFormattedString(0);
+
+
+                if (selectedPoint.AzimuthStart.HasValue && selectedPoint.AzimuthEnd.HasValue)
+                {
+                    var azimuths = _observPointsController
+                                            .FindBaseAzimuthFromRelativeToDirection(direction,
+                                                                                    selectedPoint.AzimuthStart.Value,
+                                                                                    selectedPoint.AzimuthEnd.Value);
+
+                    azimuthB.Text = azimuths.StartAzimuth.ToFormattedString(0);
+                    azimuthE.Text = azimuths.EndAzimuth.ToFormattedString(0);
+                }
+                else
+                {
+                    azimuthB.Text = ObservPointDefaultValues.AzimuthBText;
+                    azimuthE.Text = ObservPointDefaultValues.AzimuthEText;
+                }
+            }
 
             heightCurrent.Text =
                 selectedPoint.RelativeHeight.HasValue ?
@@ -1956,9 +2183,9 @@ namespace MilSpace.Visibility
 
                         _observPointsController.UpdateObservPoint(
                             GetObservationPoint(),
-                            VisibilityManager.ObservPointFeature,
-                            ActiveView,
-                            _selectedPointId);
+                            _selectedPointId,
+                            _observerPointSource,
+                            false);
                     }
                     else
                     {
@@ -2234,7 +2461,6 @@ namespace MilSpace.Visibility
         {
             if (_observPointsController.IsArcMapEditingStarted())
             {
-
                 string sMsgText = LocalizationContext.Instance.FindLocalizedElement(
                     "MsgCannotSaveObservationpoints",
                     $"Для збереження властивостей пункту спостереження {Environment.NewLine} треба вимкнути режим редагування ArcMap.");
@@ -2658,8 +2884,53 @@ namespace MilSpace.Visibility
         {
             if (_isDropDownItemChangedManualy)
             {
-                _observPointsController.SetSelectedObserverPoints(_observerPointSource);
+                _observPointsController.GetObserverPointsFromSelectedSource(_observerPointSource);
             }
+
+            var isObservPointsFromGdb = _observerPointSource == ObservationSetsEnum.Gdb;
+
+            panelRegym.Enabled = !isObservPointsFromGdb;
+
+            if (isObservPointsFromGdb)
+            {
+                rbSeparateOP.Checked = true;
+            }
+
+            if (rbRouteMode.Checked)
+            {
+                if (!_observPointsController.SetObserverPointsToRouteMode(_observerPointSource))
+                {
+                    rbSeparateOP.Checked = true;
+                }
+            }
+        }
+
+        private void RadioButton2_Click(object sender, EventArgs e)
+        {
+            rbSeparateOP.Checked = !_observPointsController.SetObserverPointsToRouteMode(_observerPointSource);
+        }
+
+        private void RbSeparateOP_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void OnModeChanged(object sender, EventArgs e)
+        {
+            if (_selectedPointId != -1)
+            {
+                FillObservPointsFields(_observPointsController.GetObservPointByIdAsObservationPoint(_selectedPointId));
+            }
+
+            changeAllObserversHeightsButton.Enabled = rbRouteMode.Checked;
+        }
+
+        private void ChangeAllObserversHeightsButton_Click(object sender, EventArgs e)
+        {
+            _observPointsController.UpdateAllPointsWithNewValues(GetObservationPoint(),
+                                                                 Convert.ToDouble(azimuthB.Text),
+                                                                 Convert.ToDouble(azimuthE.Text),
+                                                                 _observerPointSource,
+                                                                 true);
         }
     }
 }

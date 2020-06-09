@@ -167,6 +167,9 @@ namespace MilSpace.Core.Actions
         /// </summary>
         public static string DataValue = "dv";
 
+        public static string ErrorDataReceivedDelegate = "onErrorDelegate";
+
+        public static string OutputDataReceivedDelegate = "onOutputDelegate";
 
     }
 }

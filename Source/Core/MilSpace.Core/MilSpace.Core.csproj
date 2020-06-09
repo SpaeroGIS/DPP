@@ -130,85 +130,103 @@
       <Link>Actions\ActionParamNamesCore.cs</Link>
     </Compile>
     <Compile Include="..\Core\Actions\ActionProcessDelegate.cs">
-      <Link>\Actions\ActionProcessDelegate.cs</Link>
+      <Link>Actions\ActionProcessDelegate.cs</Link>
     </Compile>
     <Compile Include="..\Core\Actions\ActionProcessor.cs">
-      <Link>\Actions\ActionProcessor.cs</Link>
+      <Link>Actions\ActionProcessor.cs</Link>
     </Compile>
     <Compile Include="..\Core\Actions\ActionResults\BoolResult.cs">
-      <Link>\Actions\BoolResult.cs</Link>
+      <Link>Actions\Actions\ActionResults\BoolResult.cs</Link>
     </Compile>
     <Compile Include="..\Core\Actions\ActionResults\IntCollectionResult.cs">
-      <Link>\Actions\IntCollectionResult.cs</Link>
+      <Link>Actions\Actions\ActionResults\IntCollectionResult.cs</Link>
     </Compile>
     <Compile Include="..\Core\Actions\ActionResults\IntResult.cs">
-      <Link>\Actions\IntResult.cs</Link>
+      <Link>Actions\Actions\ActionResults\IntResult.cs</Link>
     </Compile>
     <Compile Include="..\Core\Actions\ActionResults\StringActionResult.cs">
-      <Link>\Actions\StringActionResult.cs</Link>
+      <Link>Actions\Actions\ActionResults\StringActionResult.cs</Link>
     </Compile>
     <Compile Include="..\Core\Actions\ActionResults\StringCollectionResult.cs">
-      <Link>\Actions\StringCollectionResult.cs</Link>
+      <Link>Actions\Actions\ActionResults\StringCollectionResult.cs</Link>
     </Compile>
     <Compile Include="..\Core\Actions\ActionsCore.cs">
-      <Link>\Actions\ActionsCore.cs</Link>
+      <Link>Actions\ActionsCore.cs</Link>
     </Compile>
     <Compile Include="..\Core\Actions\ActionStatesEnum.cs">
-      <Link>\Actions\ActionStatesEnum.cs</Link>
+      <Link>Actions\ActionStatesEnum.cs</Link>
     </Compile>
     <Compile Include="..\Core\Actions\Actions\ActionSereilizer.cs">
-      <Link>\Actions\ActionSereilizer.cs</Link>
+      <Link>Actions\Actions\ActionSereilizer.cs</Link>
     </Compile>
     <Compile Include="..\Core\Actions\Actions\AreaDescription.cs">
-      <Link>\Actions\AreaDescription.cs</Link>
+      <Link>Actions\Actions\AreaDescription.cs</Link>
     </Compile>
-    <Compile Include="..\Core\Actions\LoadedActions.cs">
-      <Link>\Actions\LoadedActions.cs</Link>
+    <Compile Include="..\Core\Actions\Actions\CommandLineAction.cs">
+      <Link>Actions\Actions\CommandLineAction.cs</Link>
     </Compile>
     <Compile Include="..\Core\Actions\Actions\Python\RunPythonAction.cs">
-      <Link>\Actions\RunPythonAction.cs</Link>
+      <Link>Actions\Actions\Python\RunPythonAction.cs</Link>
     </Compile>
     <Compile Include="..\Core\Actions\BaseInstance\Action.cs">
-      <Link>\Actions\Action.cs</Link>
+      <Link>Actions\Actions\BaseInstance\Action.cs</Link>
     </Compile>
     <Compile Include="..\Core\Actions\BaseInstance\ActionDefinition.cs">
-      <Link>\Actions\ActionDefinition.cs</Link>
+      <Link>Actions\Actions\BaseInstance\ActionDefinition.cs</Link>
     </Compile>
     <Compile Include="..\Core\Actions\BaseInstance\ActionDescription.cs">
-      <Link>\Actions\ActionDescription.cs</Link>
+      <Link>Actions\Actions\BaseInstance\ActionDescription.cs</Link>
     </Compile>
     <Compile Include="..\Core\Actions\BaseInstance\ActionParam.cs">
-      <Link>\Actions\ActionParam.cs</Link>
+      <Link>Actions\Actions\BaseInstance\ActionParam.cs</Link>
     </Compile>
     <Compile Include="..\Core\Actions\BaseInstance\ActionResultBase.cs">
-      <Link>\Actions\ActionResultBase.cs</Link>
+      <Link>Actions\Actions\BaseInstance\ActionResultBase.cs</Link>
     </Compile>
     <Compile Include="..\Core\Actions\Exceptions\ActiondescriptionNotDefinedException.cs">
-      <Link>\Actions\ActiondescriptionNotDefinedException.cs</Link>
+      <Link>Actions\Actions\Exceptions\ActiondescriptionNotDefinedException.cs</Link>
     </Compile>
     <Compile Include="..\Core\Actions\Exceptions\ActionNotFoundException.cs">
-      <Link>\Actions\ActionNotFoundException.cs</Link>
+      <Link>Actions\Actions\Exceptions\ActionNotFoundException.cs</Link>
     </Compile>
     <Compile Include="..\Core\Actions\Exceptions\CannotAccessThreadException.cs">
-      <Link>\Actions\CannotAccessThreadException.cs</Link>
+      <Link>Actions\Actions\Exceptions\CannotAccessThreadException.cs</Link>
     </Compile>
     <Compile Include="..\Core\Actions\Exceptions\CannotOpenConnectionStringException.cs">
-      <Link>\Actions\CannotOpenConnectionStringException.cs</Link>
+      <Link>Actions\Actions\Exceptions\CannotOpenConnectionStringException.cs</Link>
     </Compile>
     <Compile Include="..\Core\Actions\Exceptions\ExpectActionParameterException.cs">
-      <Link>\Actions\ExpectActionParameterException.cs</Link>
+      <Link>Actions\Actions\Exceptions\ExpectActionParameterException.cs</Link>
     </Compile>
     <Compile Include="..\Core\Actions\Exceptions\ExpectActionResultException.cs">
-      <Link>\Actions\ExpectActionResultException.cs</Link>
+      <Link>Actions\Actions\Exceptions\ExpectActionResultException.cs</Link>
     </Compile>
     <Compile Include="..\Core\Actions\Exceptions\NoConnectionStringConfiguredException.cs">
-      <Link>\Actions\NoConnectionStringConfiguredException.cs</Link>
+      <Link>Actions\Actions\Exceptions\NoConnectionStringConfiguredException.cs</Link>
     </Compile>
     <Compile Include="..\Core\Actions\Exceptions\SpaeroDataException.cs">
-      <Link>\Actions\SpaeroDataException.cs</Link>
+      <Link>Actions\Actions\Exceptions\SpaeroDataException.cs</Link>
     </Compile>
     <Compile Include="..\Core\Actions\Exceptions\SpaeroException.cs">
-      <Link>\Actions\SpaeroException.cs</Link>
+      <Link>Actions\Actions\Exceptions\SpaeroException.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Interfaces\IAcationResult.cs">
+      <Link>Actions\Actions\Interfaces\IAcationResult.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Interfaces\IAction.cs">
+      <Link>Actions\Actions\Interfaces\IAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Interfaces\IActionProcessor.cs">
+      <Link>Actions\Actions\Interfaces\IActionProcessor.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Interfaces\IActonParam.cs">
+      <Link>Actions\Actions\Interfaces\IActonParam.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\Interfaces\IDataEntity.cs">
+      <Link>Actions\Actions\Interfaces\IDataEntity.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Actions\LoadedActions.cs">
+      <Link>Actions\LoadedActions.cs</Link>
     </Compile>
     <Compile Include="..\Core\ArcMap\ArcMapInstance.cs">
       <Link>ArcMap\ArcMapInstance.cs</Link>
@@ -248,21 +266,6 @@
     </Compile>
     <Compile Include="..\Core\Helper\SimpleDataTypesEnum.cs">
       <Link>Helper\SimpleDataTypesEnum.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\Actions\Interfaces\IAcationResult.cs">
-      <Link>\Actions\IAcationResult.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\Actions\Interfaces\IAction.cs">
-      <Link>\Actions\IAction.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\Actions\Interfaces\IActionProcessor.cs">
-      <Link>\Actions\IActionProcessor.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\Actions\Interfaces\IActonParam.cs">
-      <Link>\Actions\IActonParam.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\Actions\Interfaces\IDataEntity.cs">
-      <Link>\Actions\IDataEntity.cs</Link>
     </Compile>
     <Compile Include="..\Core\LocalizationContext.cs">
       <Link>LocalizationContext.cs</Link>

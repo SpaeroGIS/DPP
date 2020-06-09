@@ -75,6 +75,7 @@ namespace MilSpace.Configurations.Base
         internal const string UserNameAttribute = "userName";
         internal const string PasswordAttribute = "password";
         internal const string RootFolderAttribte = "rootFolder";
+        internal const string DownloadFolderAttribte = "downloadFolder";
         internal const string MetadataUrlAttribute = "scihubMetadataUrl";
         internal const string ProductUrlAttribte = "scihubPrtoductsUrl";
 

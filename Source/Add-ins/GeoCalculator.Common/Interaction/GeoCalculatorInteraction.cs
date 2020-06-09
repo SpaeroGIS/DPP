@@ -43,7 +43,7 @@ namespace MilSpace.GeoCalculator.Interaction
 
         public void UpdateGeoCalcPoint(IObserverPoint geoCalcPoint)
         {
-            _controller.UpdatePoint(geoCalcPoint as GeoCalcPoint);
+            _controller.UpdatePointFromVisibility(geoCalcPoint as GeoCalcPoint);
         }
     }
 }

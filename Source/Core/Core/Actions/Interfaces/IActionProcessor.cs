@@ -8,9 +8,9 @@ namespace MilSpace.Core.Actions.Interfaces
     public interface IActionProcessor
     {
 
-        event ActionProcesDelegate ProcessMonitor;
+        event ActionProcessDelegate ProcessMonitor;
 
-        ActionProcesDelegate ProcessMonitorDelegate { get; }
+        ActionProcessDelegate ProcessMonitorDelegate { get; }
 
         T Process<T>();
 

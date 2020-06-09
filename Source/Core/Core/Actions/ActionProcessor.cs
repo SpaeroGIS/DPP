@@ -1,4 +1,7 @@
-﻿using System;
+﻿using MilSpace.Core.Actions.Base;
+using MilSpace.Core.Actions.Exceptions;
+using MilSpace.Core.Actions.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -6,10 +9,6 @@ using System.Runtime.Remoting.Messaging;
 using System.Runtime.Serialization;
 using System.Threading;
 using System.Web;
-using MilSpace.Core.Actions.Actions;
-using MilSpace.Core.Actions.Base;
-using MilSpace.Core.Actions.Exceptions;
-using MilSpace.Core.Actions.Interfaces;
 
 namespace MilSpace.Core.Actions
 {
@@ -43,7 +42,7 @@ namespace MilSpace.Core.Actions
         /// </summary>
         private bool performing = true;
 
-        public event ActionProcesDelegate ProcessMonitor;
+        public event ActionProcessDelegate ProcessMonitor;
 
         public ActionProcessor(HttpContext context)
         {
@@ -268,7 +267,7 @@ namespace MilSpace.Core.Actions
             return result;
         }
 
-        public static IActionResult Process(IEnumerable<IActionParam> args, ActionProcesDelegate monitor = null)
+        public static IActionResult Process(IEnumerable<IActionParam> args, ActionProcessDelegate monitor = null)
         {
 
             var procc = new ActionProcessor(args);
@@ -287,7 +286,7 @@ namespace MilSpace.Core.Actions
 
         }
 
-        public static T Process<T>(IEnumerable<IActionParam> args, ActionProcesDelegate monitor = null) where T : IActionResult
+        public static T Process<T>(IEnumerable<IActionParam> args, ActionProcessDelegate monitor = null) where T : IActionResult
         {
             var procc = new ActionProcessor(args);
             if (monitor != null)
@@ -424,7 +423,7 @@ namespace MilSpace.Core.Actions
             }
         }
 
-        public ActionProcesDelegate ProcessMonitorDelegate
+        public ActionProcessDelegate ProcessMonitorDelegate
         {
             get;
             private set;

@@ -21,5 +21,10 @@
         /// Run python scripts
         /// </summary>
         public const string RunPythot = "runPyton";
+
+        /// <summary>
+        /// Run command line action
+        /// </summary>
+        public const string RunCommandLine = "commandLine";
     }
 }
