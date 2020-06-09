@@ -119,6 +119,9 @@
     <Compile Include="..\AddDEM.Common\Interaction\AddDemInteraction.cs">
       <Link>Interaction\AddDemInteraction.cs</Link>
     </Compile>
+    <Compile Include="..\AddDEM.Common\LocalizationContext.cs">
+      <Link>LocalizationContext.cs</Link>
+    </Compile>
     <Compile Include="Config.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Config.esriaddinx</DependentUpon>
@@ -173,6 +176,13 @@
       <Link>DockableDEMWindow.resx</Link>
       <DependentUpon>DockableDEMWindow.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\AddDEM.Common\Resources\SP_AddDEMLocalization.xml">
+      <Link>Resources\SP_AddDEMLocalization.xml</Link>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>

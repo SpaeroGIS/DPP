@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SP_AddDEM xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <LblWorkZoneText>зона роботи</LblWorkZoneText>
+  <LblCreationWayText>спосіб завдання</LblCreationWayText>
+  <LblChosenObjInfoText>інформація про обраний об'єкт</LblChosenObjInfoText>
+  <LblLeftConerText>ЛВ кут</LblLeftConerText>
+  <LblRightCornerText>ПН кут</LblRightCornerText>
+  <LblSizeInfoText>інформація про площу та розміри</LblSizeInfoText>
+  <LblSquareText>площа {0} км кв</LblSquareText>
+  <LblLengthWidthText>довжина {0} км ширина {1} км</LblLengthWidthText>
+  <LblReliefCoverText>покриття рельєфу (каталог)</LblReliefCoverText>
+  <LblTilesListText>список тайлів</LblTilesListText>
+
+  <ChckYesText>є</ChckYesText>
+  <ChckNoText>немає</ChckNoText>
+  <ChckShowOnMapText>показати на карті</ChckShowOnMapText>
+
+  <BtnChooseText>обрати</BtnChooseText>
+  <BtnGenerateListText>сформувати список</BtnGenerateListText>
+  <BtnLoadSchemeText>завантажити схему тайлів</BtnLoadSchemeText>
+  <BtnExportText>експорт тайлів</BtnExportText>
+  <BtnLoadFromCatalogText>завантажити з каталогу</BtnLoadFromCatalogText>
+  <BtnAddToMapText>приєднати до карти</BtnAddToMapText>
+  <BtnCalculationText>Розрахунок</BtnCalculationText>
+
+</SP_AddDEM>
