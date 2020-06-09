@@ -710,7 +710,7 @@
             this.chckDrawOPGraphics.AutoSize = true;
             this.chckDrawOPGraphics.Location = new System.Drawing.Point(5, 5);
             this.chckDrawOPGraphics.Name = "chckDrawOPGraphics";
-            this.chckDrawOPGraphics.Size = new System.Drawing.Size(118, 17);
+            this.chckDrawOPGraphics.Size = new System.Drawing.Size(150, 21);
             this.chckDrawOPGraphics.TabIndex = 0;
             this.chckDrawOPGraphics.Text = "Показати на карті";
             this.chckDrawOPGraphics.UseVisualStyleBackColor = true;
@@ -1168,7 +1168,7 @@
             this.rbRouteMode.Dock = System.Windows.Forms.DockStyle.Left;
             this.rbRouteMode.Location = new System.Drawing.Point(151, 2);
             this.rbRouteMode.Name = "rbRouteMode";
-            this.rbRouteMode.Size = new System.Drawing.Size(69, 20);
+            this.rbRouteMode.Size = new System.Drawing.Size(87, 20);
             this.rbRouteMode.TabIndex = 1;
             this.rbRouteMode.Text = "маршрут";
             this.rbRouteMode.UseVisualStyleBackColor = true;
