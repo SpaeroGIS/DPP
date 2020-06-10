@@ -153,6 +153,45 @@ namespace MilSpace.Tools.Sentinel
             logger.InfoEx(consoleMessage);
         }
 
+        public static void SavePropertiesData(string sourceFileName, int b1, int b2,
+                                              string outFileName, string path, string fileName = "gpt_Split_Orbit.properties",  string IWN = "IW1")
+        {
+            var extention = ".properties";
+
+            if (!fileName.EndsWith(extention))
+            {
+                var fileNameParts = fileName.Split('.');
+
+                if (fileNameParts.Length == 0)
+                {
+                    fileName += extention;
+                }
+                else
+                {
+                    fileName = fileNameParts[0] + extention;
+                }
+
+            }
+
+            var fullName = $"{path}\\{fileName}";
+
+            var text = new StringBuilder();
+            text.AppendLine($"sourcefilename = {sourceFileName}");
+            text.AppendLine($"IWN = {IWN}");
+            text.AppendLine($"B1 = {b1}");
+            text.AppendLine($"B2 = {b2}");
+            text.AppendLine($"outfilename = {outFileName}");
+
+            try
+            {
+                 File.WriteAllText(fullName, text.ToString());
+            }
+            catch(Exception ex)
+            {
+                logger.ErrorEx($"Saving to file {fullName} ends with exception {ex.Message}");
+            }
+        }
+
         private static void DownloadProbuct(SentinelProduct product, string tileFolderName)
         {
 
