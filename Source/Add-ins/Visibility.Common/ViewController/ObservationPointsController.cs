@@ -523,8 +523,8 @@ namespace MilSpace.Visibility.ViewController
             return new ObservationPoint
             {
                 Objectid = observerPoint.Objectid,
-                Affiliation = ObservationPointTypesEnum.Undefined.ToString(),
-                Type = ObservationPointMobilityTypesEnum.Stationary.ToString(),
+                Affiliation = ObservationPointTypesEnum.All.ToString(),
+                Type = ObservationPointMobilityTypesEnum.All.ToString(),
                 Title = observerPoint.Title,
                 X = observerPoint.X,
                 Y = observerPoint.Y,
@@ -1623,8 +1623,8 @@ namespace MilSpace.Visibility.ViewController
 
             if (_observationPoints != null)
             {
-                view.FillObservationPointList(_observationPoints, view.GetFilter, true);
                 view.SetFieldsEditingAbility(!(set == ObservationSetsEnum.Gdb));
+                view.FillObservationPointList(_observationPoints, view.GetFilter, true);
             }
             else
             {
@@ -1731,8 +1731,8 @@ namespace MilSpace.Visibility.ViewController
                     UpdateObservPoint(_observationPoints[i], _observationPoints[i].Objectid, set, false);
                 }
 
-                view.FillObservationPointList(_observationPoints, view.GetFilter, true);
                 view.SetFieldsEditingAbility(true);
+                view.FillObservationPointList(_observationPoints, view.GetFilter, true);
             }
 
             return true;

@@ -509,8 +509,21 @@ namespace MilSpace.Visibility
         public void SetFieldsEditingAbility(bool areFiedlsReadOnly)
         {
             observPointName.ReadOnly = xCoord.ReadOnly
-                = yCoord.ReadOnly = txtMinDistance.ReadOnly
-                = txtMaxDistance.ReadOnly = areFiedlsReadOnly;
+                = yCoord.ReadOnly = areFiedlsReadOnly;
+           
+            if (areFiedlsReadOnly)
+            {
+                cmbObservTypesEdit.Items.Add(_observPointsController.GetAllMobilityType());
+                cmbAffiliationEdit.Items.Add(_observPointsController.GetAllAffiliationType());
+            }
+            else
+            {
+                cmbObservTypesEdit.Items.Clear();
+                cmbAffiliationEdit.Items.Clear();
+
+                cmbObservTypesEdit.Items.AddRange(GetTypes.ToArray());
+                cmbAffiliationEdit.Items.AddRange(GetAffiliation.ToArray());
+            }
 
             cmbAffiliationEdit.Enabled = cmbObservTypesEdit.Enabled
                 = tlbbGetCoord.Enabled = tlbbPasteCoord.Enabled = !areFiedlsReadOnly;
