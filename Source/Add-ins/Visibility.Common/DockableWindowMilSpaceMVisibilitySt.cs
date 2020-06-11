@@ -1028,7 +1028,7 @@ namespace MilSpace.Visibility
 
                     case "angleOFViewMin":
 
-                        if(ValidateRange(angleOFViewMin, point.AngelMinH.ToString(), -90, 0,
+                        if(ValidateRange(angleOFViewMin, point.AngelMinH.ToString(), -90, 90,
                                          out double angleOFViewMinValue))
                         {
                             Helper.TryParceToDouble(angleOFViewMax.Text, out double angleOFViewMaxConverted);
@@ -1046,7 +1046,7 @@ namespace MilSpace.Visibility
 
                     case "angleOFViewMax":
 
-                        if(ValidateRange(angleOFViewMax, point.AngelMaxH.ToString(), 0, 90,
+                        if(ValidateRange(angleOFViewMax, point.AngelMaxH.ToString(), -90, 90,
                                          out double angleOFViewMaxValue))
                         {
                             Helper.TryParceToDouble(angleOFViewMin.Text, out double angleOFViewMinConverted);
