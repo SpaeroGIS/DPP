@@ -157,23 +157,30 @@ namespace MilSpace.Tools.Sentinel
                                               string outFileName, string path, string fileName = "gpt_Split_Orbit.properties",  string IWN = "IW1")
         {
             var extention = ".properties";
+            var fullName = Path.Combine(path, fileName);
+            var fileInfo = new FileInfo(fullName);
 
-            if (!fileName.EndsWith(extention))
+            if (!fileInfo.Extension.Equals(extention, StringComparison.InvariantCultureIgnoreCase))
             {
-                var fileNameParts = fileName.Split('.');
-
-                if (fileNameParts.Length == 0)
-                {
-                    fileName += extention;
-                }
-                else
-                {
-                    fileName = fileNameParts[0] + extention;
-                }
-
+                fullName = Path.ChangeExtension(fileInfo.FullName, extention);
             }
 
-            var fullName = $"{path}\\{fileName}";
+            if(!File.Exists(sourceFileName))
+            {
+                throw new FileNotFoundException($"Source file {sourceFileName} doesn`t exist");
+            }
+
+            var outFileInfo = new FileInfo(outFileName);
+
+            if (!Directory.Exists(outFileInfo.DirectoryName))
+            {
+                throw new DirectoryNotFoundException($"Directory {outFileInfo.DirectoryName} doesn`t exist");
+            }
+
+            if (!Directory.Exists(path))
+            {
+                throw new DirectoryNotFoundException($"Directory {path} doesn`t exist");
+            }
 
             var text = new StringBuilder();
             text.AppendLine($"sourcefilename = {sourceFileName}");
