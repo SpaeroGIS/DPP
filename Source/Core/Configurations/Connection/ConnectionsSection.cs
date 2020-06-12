@@ -37,5 +37,14 @@ namespace MilSpace.Configurations
             }
 
         }
+
+        public DemPreparatonDBConnectionSection DemPreparatonDBConnectionSection
+        {
+            get
+            {
+                return Sections[DemPreparatonDBConnectionSection.SectionName] as DemPreparatonDBConnectionSection;
+            }
+
+        }
     }
 }
