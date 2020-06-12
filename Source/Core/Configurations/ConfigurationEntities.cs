@@ -42,6 +42,7 @@ namespace MilSpace.Configurations.Base
         internal const string WorkingGDBConnectionSection = "workingGDB";
         internal const string WorkingDBConnectionSection = "workingDB";
         internal const string TemporaryGDBConnectionSection = "temporaryGDB";
+        internal const string DemPreparatonDBConnectionSection = "demPreparation";
 
         /// <summary>
         /// The section group to defibne file storages for SRTM and Santitel files

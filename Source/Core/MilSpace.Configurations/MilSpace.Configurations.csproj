@@ -87,6 +87,9 @@
     <Compile Include="..\Configurations\Connection\ConnectionsSection.cs">
       <Link>Connection\ConnectionsSection.cs</Link>
     </Compile>
+    <Compile Include="..\Configurations\Connection\DemPreparatonDBConnection.cs">
+      <Link>Connection\DemPreparatonDBConnection.cs</Link>
+    </Compile>
     <Compile Include="..\Configurations\Connection\TemporaryGDBConnectionSection.cs">
       <Link>Connection\TemporaryGDBConnectionSection.cs</Link>
     </Compile>
