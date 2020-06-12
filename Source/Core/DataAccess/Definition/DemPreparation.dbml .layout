@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="MilSpaceStorage">
+  <DataContextMoniker Name="/MilSpaceGeoCalcContext" />
+  <nestedChildShapes>
+    <classShape Id="3b33e7f6-1c6a-43b0-96f6-3dcabc594860" absoluteBounds="3.25, 1.375, 2, 4.4631168619791666">
+      <DataClassMoniker Name="/MilSpaceGeoCalcContext/GeoCalcSessionPoint" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d5ad016c-a7a2-4f11-9d33-b0bb666c1999" absoluteBounds="3.2649999999999997, 1.835, 1.9700000000000002, 3.903116861979167" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

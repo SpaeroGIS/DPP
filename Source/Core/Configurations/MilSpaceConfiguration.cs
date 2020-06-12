@@ -24,6 +24,7 @@ namespace MilSpace.Configurations
                             TemporaryGDBConnection = searchPropsConfig.TemporaryGDBConnectionSection.ConnectionString,
                             WorkingDBConnection = searchPropsConfig.WorkingDBConnectionSection.ConnectionString,
                             WorkingGDBConnection = searchPropsConfig.WorkingGDBConnectionSection.ConnectionString,
+                            DemPreparationDBConnection = searchPropsConfig.DemPreparatonDBConnectionSection.ConnectionString,
                         };
                     }
                     catch (Exception ex)

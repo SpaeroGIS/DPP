@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DemPreparation" Class="DemPreparationContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\DemPreparation.mdf;Integrated Security=True;Connect Timeout=30" SettingsObjectName="MilSpace.DataAccess.Properties.Settings" SettingsPropertyName="DemPreparationConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.MilSpace_S1PairCoh" Member="MilSpace_S1PairCohs">
+    <Type Name="MilSpace_S1PairCoh">
+      <Column Name="idrow" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="idSceneBase" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
+      <Column Name="idScentSlave" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
+      <Column Name="fmean" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="fdeviation" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="fmin" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="fmax" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="dto" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="soper" Type="System.String" DbType="NVarChar(64)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MilSpace_S1SRC" Member="MilSpace_S1SRCs">
+    <Type Name="MilSpace_S1SRC">
+      <Column Name="idrow" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idscene" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
+      <Column Name="extend" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="dttime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="nburst" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="norbit" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="dto" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="soper" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MilSpace_S1TilesCover" Member="MilSpace_S1TilesCovers">
+    <Type Name="MilSpace_S1TilesCover">
+      <Column Name="idrow" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DegreeTileName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DTBaseSurvey" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="idPair1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="idPair2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Pair1IW1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Pair1IW1B1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Pair1IW1B2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Pair1IW2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Pair1IW2B1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Pair1IW2B2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Pair1IW3" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Pair1IW3B1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Pair1IW3B2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Pair2IW1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Pair2IW1B1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Pair2IW1B2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Pair2IW2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Pair2IW2B1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Pair2IW2B2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Pair2IW3" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Pair2IW3B1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Pair2IW3B2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>
