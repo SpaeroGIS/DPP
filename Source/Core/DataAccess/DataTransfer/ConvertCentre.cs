@@ -7,6 +7,7 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Collections.Generic;
 using MilSpace.Core;
+using MilSpace.DataAccess.DataTransfer.Sentinel;
 
 namespace MilSpace.DataAccess.DataTransfer
 {
@@ -461,6 +462,126 @@ namespace MilSpace.DataAccess.DataTransfer
             };
 
         }
-    }
 
+
+        internal static SentinelSource Get(this S1Sources source)
+        {
+            return new SentinelSource
+            {
+                IdRow = source.idrow,
+                BurstNumber = source.nburst.HasValue ? source.nburst.Value : -1,
+                DateTime = source.dttime.HasValue ? source.dttime.Value : DateTime.MinValue,
+                Dto = source.dto.HasValue ? source.dto.Value : DateTime.MinValue,
+                Extend = source.extend,
+                Operator = source.soper,
+                OrbitNumber = source.norbit.HasValue ? source.norbit.Value : -1,
+                SceneId = source.idscene,
+            };
+        }
+        internal static S1Sources Get(this SentinelSource source)
+        {
+            return new S1Sources
+            {
+                idrow = source.IdRow,
+                nburst = source.BurstNumber,
+                dttime = source.DateTime,
+                dto = source.Dto,
+                extend = source.Extend,
+                soper = source.Operator,
+                norbit = source.OrbitNumber,
+                idscene = source.SceneId,
+            };
+        }
+        internal static S1TilesCoverage Get(this Sentinel1TilesCoverage source)
+        {
+            return new S1TilesCoverage
+            {
+                DegreeTileName = source.DegreeTileName,
+                DTBaseSurvey = source.DTBaseSurvey,
+                idPair1 = source.idPair1,
+                idPair2 = source.idPair2,
+                idrow = source.IdRow,
+                Pair1IW1 = source.Pair1IW1,
+                Pair1IW1B1 = source.Pair1IW1B1,
+                Pair1IW1B2 = source.Pair1IW1B2,
+                Pair1IW2 = source.Pair1IW2,
+                Pair1IW2B1 = source.Pair1IW2B1,
+                Pair1IW2B2 = source.Pair1IW2B2,
+                Pair1IW3 = source.Pair1IW3,
+                Pair1IW3B1 = source.Pair1IW3B1,
+                Pair1IW3B2 = source.Pair1IW3B2,
+                Pair2IW1 = source.Pair2IW1,
+                Pair2IW1B1 = source.Pair2IW1B1,
+                Pair2IW1B2 = source.Pair2IW1B2,
+                Pair2IW2 = source.Pair2IW2,
+                Pair2IW2B1 = source.Pair2IW2B1,
+                Pair2IW2B2 = source.Pair2IW2B2,
+                Pair2IW3 = source.Pair2IW3,
+                Pair2IW3B1 = source.Pair2IW3B1,
+                Pair2IW3B2 = source.Pair2IW3B2
+            };
+        }
+
+        internal static Sentinel1TilesCoverage Get(this S1TilesCoverage source)
+        {
+            return new Sentinel1TilesCoverage
+            {
+                DegreeTileName = source.DegreeTileName,
+                DTBaseSurvey = source.DTBaseSurvey.HasValue ? source.DTBaseSurvey.Value : DateTime.MaxValue,
+                idPair1 = source.idPair1.HasValue ? source.idPair1.Value : -1,
+                idPair2 = source.idPair2.HasValue ? source.idPair2.Value : -1,
+                IdRow = source.idrow,
+                Pair1IW1 = source.Pair1IW1.HasValue ? source.Pair1IW1.Value : -1,
+                Pair1IW1B1 = source.Pair1IW1B1.HasValue ? source.Pair1IW1B1.Value : -1,
+                Pair1IW1B2 = source.Pair1IW1B2.HasValue ? source.Pair1IW1B2.Value : -1,
+                Pair1IW2 = source.Pair1IW2.HasValue ? source.Pair1IW2.Value : -1,
+                Pair1IW2B1 = source.Pair1IW2B1.HasValue ? source.Pair1IW2B1.Value : -1,
+                Pair1IW2B2 = source.Pair1IW2B2.HasValue ? source.Pair1IW2B2.Value : -1,
+                Pair1IW3 = source.Pair1IW3.HasValue ? source.Pair1IW3.Value : -1,
+                Pair1IW3B1 = source.Pair1IW3B1.HasValue ? source.Pair1IW3B1.Value : -1,
+                Pair1IW3B2 = source.Pair1IW3B2.HasValue ? source.Pair1IW3B2.Value : -1,
+                Pair2IW1 = source.Pair2IW1.HasValue ? source.Pair2IW1.Value : -1,
+                Pair2IW1B1 = source.Pair2IW1B1.HasValue ? source.Pair2IW1B1.Value : -1,
+                Pair2IW1B2 = source.Pair2IW1B2.HasValue ? source.Pair2IW1B2.Value : -1,
+                Pair2IW2 = source.Pair2IW2.HasValue ? source.Pair2IW2.Value : -1,
+                Pair2IW2B1 = source.Pair2IW2B1.HasValue ? source.Pair2IW2B1.Value : -1,
+                Pair2IW2B2 = source.Pair2IW2B2.HasValue ? source.Pair2IW2B2.Value : -1,
+                Pair2IW3 = source.Pair2IW3.HasValue ? source.Pair2IW3.Value : -1,
+                Pair2IW3B1 = source.Pair2IW3B1.HasValue ? source.Pair2IW3B1.Value : -1,
+                Pair2IW3B2 = source.Pair2IW3B2.HasValue ? source.Pair2IW3B2.Value : -1
+            };
+        }
+        internal static SentinelPairCoherence Get(this S1PairCoherence source)
+        {
+            return new SentinelPairCoherence
+            {
+                Deviation = source.fdeviation.HasValue ? source.fdeviation.Value : -1,
+                Dto = source.dto.HasValue ? source.dto.Value : DateTime.MinValue,
+                IdRow = source.idrow,
+                IdSceneBase = source.idSceneBase,
+                IdScentSlave = source.idScentSlave,
+                Max = source.fmax,
+                Min = source.fmin.HasValue ? source.fmin.Value : -1,
+                Mean = source.fmean.HasValue ? source.fmean.Value : -1,
+                Operator = source.soper
+
+            };
+        }
+
+        internal static S1PairCoherence Get(this SentinelPairCoherence source)
+        {
+            return new S1PairCoherence
+            {
+                fdeviation = source.Deviation,
+                dto = source.Dto,
+                idrow = source.IdRow,
+                idSceneBase = source.IdSceneBase,
+                idScentSlave = source.IdScentSlave,
+                fmax = source.Max,
+                fmin = source.Min,
+                fmean = source.Mean,
+                soper = source.Operator
+            };
+        }
+    }
 }
