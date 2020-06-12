@@ -153,6 +153,52 @@ namespace MilSpace.Tools.Sentinel
             logger.InfoEx(consoleMessage);
         }
 
+        public static void SavePropertiesData(string sourceFileName, int b1, int b2,
+                                              string outFileName, string path, string fileName = "gpt_Split_Orbit.properties",  string IWN = "IW1")
+        {
+            var extention = ".properties";
+            var fullName = Path.Combine(path, fileName);
+            var fileInfo = new FileInfo(fullName);
+
+            if (!fileInfo.Extension.Equals(extention, StringComparison.InvariantCultureIgnoreCase))
+            {
+                fullName = Path.ChangeExtension(fileInfo.FullName, extention);
+            }
+
+            if(!File.Exists(sourceFileName))
+            {
+                throw new FileNotFoundException($"Source file {sourceFileName} doesn`t exist");
+            }
+
+            var outFileInfo = new FileInfo(outFileName);
+
+            if (!Directory.Exists(outFileInfo.DirectoryName))
+            {
+                throw new DirectoryNotFoundException($"Directory {outFileInfo.DirectoryName} doesn`t exist");
+            }
+
+            if (!Directory.Exists(path))
+            {
+                throw new DirectoryNotFoundException($"Directory {path} doesn`t exist");
+            }
+
+            var text = new StringBuilder();
+            text.AppendLine($"sourcefilename = {sourceFileName}");
+            text.AppendLine($"IWN = {IWN}");
+            text.AppendLine($"B1 = {b1}");
+            text.AppendLine($"B2 = {b2}");
+            text.AppendLine($"outfilename = {outFileName}");
+
+            try
+            {
+                 File.WriteAllText(fullName, text.ToString());
+            }
+            catch(Exception ex)
+            {
+                logger.ErrorEx($"Saving to file {fullName} ends with exception {ex.Message}");
+            }
+        }
+
         private static void DownloadProbuct(SentinelProduct product, string tileFolderName)
         {
 

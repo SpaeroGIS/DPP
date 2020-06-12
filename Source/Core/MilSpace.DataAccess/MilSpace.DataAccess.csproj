@@ -15,6 +15,21 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -185,6 +200,16 @@
     <Compile Include="..\DataAccess\DataTransfer\WizardResult.cs">
       <Link>DataTransfer\WizardResult.cs</Link>
     </Compile>
+    <Compile Include="..\DataAccess\Definition\DemPreparation.cs">
+      <Link>Definition\DemPreparation.cs</Link>
+      <DependentUpon>DemPreparation.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="..\DataAccess\Definition\DemPreparation.designer.cs">
+      <Link>Definition\DemPreparation.designer.cs</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DemPreparation.dbml</DependentUpon>
+    </Compile>
     <Compile Include="..\DataAccess\Definition\MilSpaceGeoCalc.cs">
       <Link>Definition\MilSpaceGeoCalc.cs</Link>
       <DependentUpon>MilSpaceGeoCalc.dbml</DependentUpon>
@@ -284,6 +309,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\DataAccess\Definition\DemPreparation.dbml">
+      <Link>Definition\DemPreparation.dbml</Link>
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>DemPreparation.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
     <None Include="..\DataAccess\Definition\MilSpaceGeoCalc.dbml.layout">
       <Link>Definition\MilSpaceGeoCalc.dbml.layout</Link>
       <DependentUpon>MilSpaceGeoCalc.dbml</DependentUpon>
@@ -320,6 +351,10 @@
       <Link>Definition\MilSpaceStorage.dbml.layout</Link>
       <DependentUpon>MilSpaceStorage.dbml</DependentUpon>
     </None>
+    <None Include="..\DataAccess\Definition\DemPreparation.dbml.layout">
+      <Link>Definition\DemPreparation.dbml.layout</Link>
+      <DependentUpon>DemPreparation.dbml</DependentUpon>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -334,6 +369,27 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DemPreparation.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DemPreparation_log.ldf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>DemPreparation.mdf</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.8">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.8 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
