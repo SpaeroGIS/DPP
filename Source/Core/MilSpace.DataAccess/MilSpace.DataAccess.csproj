@@ -173,6 +173,9 @@
     <Compile Include="..\DataAccess\DataTransfer\ProfileLine.cs">
       <Link>DataTransfer\ProfileLine.cs</Link>
     </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\SentinelSource.cs">
+      <Link>DataTransfer\Sentinel\SentinelSource.cs</Link>
+    </Compile>
     <Compile Include="..\DataAccess\DataTransfer\Sentinel\SentinelFootprint.cs">
       <Link>DataTransfer\Sentinel\SentinelFootprint.cs</Link>
     </Compile>
@@ -260,6 +263,12 @@
     <Compile Include="..\DataAccess\Facade\DataAccess.cs">
       <Link>Facade\DataAccess.cs</Link>
     </Compile>
+    <Compile Include="..\DataAccess\Facade\DemPreparationDataAccess.cs">
+      <Link>Facade\DemPreparationDataAccess.cs</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\Facade\DemPreparationFacade.cs">
+      <Link>Facade\DemPreparationFacade.cs</Link>
+    </Compile>
     <Compile Include="..\DataAccess\Facade\GdbAccess.cs">
       <Link>Facade\GdbAccess.cs</Link>
     </Compile>
@@ -305,6 +314,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="DataTransfer\Sentinel\Sentinel1TilesCoverage.cs" />
+    <Compile Include="DataTransfer\Sentinel\SentinelPairCoherence.cs" />
     <Compile Include="DataTransfer\Sentinel\Tile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
