@@ -9,7 +9,8 @@ namespace MilSpace.Visibility.ViewController
     {
         void FillObservationPointList(IEnumerable<IObserverPoint> observationPoints,
                                       ValuableObservPointFieldsEnum filter,
-                                      bool newSelection = false);
+                                      bool newSelection = false,
+                                      bool clearUpdatedPointsList = true);
 
         void ClearObserverPointsList();
         void FillVisibilitySessionsList(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded, string newTaskName);

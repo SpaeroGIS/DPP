@@ -281,7 +281,8 @@ namespace MilSpace.Visibility
         }
 
         public void FillObservationPointList(IEnumerable<IObserverPoint> observationPoints,
-                                                ValuableObservPointFieldsEnum filter, bool newSelection = false)
+                                                ValuableObservPointFieldsEnum filter, bool newSelection = false,
+                                                bool clearUpdatedPointsList = true)
         {
             if (observationPoints != null && observationPoints.Any())
             {

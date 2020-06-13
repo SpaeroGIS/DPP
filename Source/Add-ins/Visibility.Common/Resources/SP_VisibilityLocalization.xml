@@ -266,7 +266,7 @@
 
 
   <!-- ######################################################################### -->
-  <Affiliation_All>всі</Affiliation_All>
+  <Affiliation_All>будь-які</Affiliation_All>
   <Affiliation_Own>свої</Affiliation_Own>
   <AffiliationEdit_strangers>чужі</AffiliationEdit_strangers>
   <AffiliationEdit_neutral>нейтральні</AffiliationEdit_neutral>
@@ -288,7 +288,7 @@
   <VisibilityresultSummaryItemsEnum.TrimCalculatedSurface>Обрізати розраховані поверхні</VisibilityresultSummaryItemsEnum.TrimCalculatedSurface>
   <VisibilityresultSummaryItemsEnum.Type>Тип розрахунку</VisibilityresultSummaryItemsEnum.Type>
 
-  <mobilityTypes_All>Всі</mobilityTypes_All>
+  <mobilityTypes_All>Будь-які</mobilityTypes_All>
   <mobilityTypes_Mobile>Мобільні</mobilityTypes_Mobile>
   <mobilityTypes_Stationary>Стаціонарні</mobilityTypes_Stationary>
 
