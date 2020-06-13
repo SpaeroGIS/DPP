@@ -1506,6 +1506,38 @@ namespace MilSpace.Visibility.ViewController
             return VisibilityManager.ObservationStationsFeatureLayer.Name;
         }
 
+        internal void UpdateLocalObservPoint(IObserverPoint newPoint, int pointId,  bool updateTable)
+        {
+           var updatedPointIndex = _observationPoints.FindIndex(point => point.Objectid == pointId);
+           newPoint.Objectid = pointId;
+
+            if(updatedPointIndex == -1)
+            {
+                return;
+            }
+            else
+            {
+                _observationPoints[updatedPointIndex] = newPoint;
+
+                if(updateTable)
+                {
+                    view.FillObservationPointList(_observationPoints, view.GetFilter, false, false);
+                }
+            }
+        }
+
+        internal void UpdateObservPoint(int objId, ObservationSetsEnum set)
+        {
+            var newPoint = _observationPoints.FirstOrDefault(point => point.Objectid == objId);
+
+            if(newPoint == null)
+            {
+                return;
+            }
+
+            UpdateObservPoint(newPoint, objId, set, false);
+        }
+
         internal void UpdateObservPoint(IObserverPoint newPoint, int objId, ObservationSetsEnum set, bool updateAllPoints = true)
         {
             if(newPoint == null)

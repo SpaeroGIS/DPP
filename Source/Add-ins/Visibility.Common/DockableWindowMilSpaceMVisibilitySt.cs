@@ -39,6 +39,7 @@ namespace MilSpace.Visibility
         private bool observatioObjectsSordDirection = true;
         private bool tasksSordDirection = false;
         private BindingList<VisibilityTasknGui> _visibilitySessionsGui = new BindingList<VisibilityTasknGui>();
+        private List<int> _updatedPointsIds = new List<int>();
 
         private bool _isDropDownItemChangedManualy = false;
         private bool _isFieldsChanged = false;
@@ -290,7 +291,8 @@ namespace MilSpace.Visibility
 
         public void FillObservationPointList(IEnumerable<IObserverPoint> observationPoints,
                                                 ValuableObservPointFieldsEnum filter,
-                                                bool newSelection = false)
+                                                bool newSelection = false,
+                                                bool clearUpdatedPointsList = true)
         {
             log.InfoEx("> FillObservationPointList START");
 
@@ -334,7 +336,19 @@ namespace MilSpace.Visibility
                 }
                 dgvObservationPoints.Rows[selected].Selected = true;
 
-                FilterData();
+                if (newSelection)
+                {
+                    FilterData();
+                }
+                else
+                {
+                    FilterData(selected);
+                }
+
+                if (clearUpdatedPointsList)
+                {
+                    _updatedPointsIds.Clear();
+                }
             }
 
             log.InfoEx("> FillObservationPointList END");
@@ -536,6 +550,12 @@ namespace MilSpace.Visibility
             sourceList.Remove(sourceList.First(point => point.Id == id));
 
             dgvObservationPoints.DataSource = sourceList.ToArray();
+
+            var removedPointId = _updatedPointsIds.FirstOrDefault(pointId => pointId == id);
+            if (removedPointId != -1)
+            {
+                _updatedPointsIds.Remove(removedPointId);
+            }
         }
 
         private void OnSelectObserbPoint()
@@ -746,7 +766,7 @@ namespace MilSpace.Visibility
             dgvObservationPoints.Columns["Date"].Visible = chckFilterDate.Checked;
         }
 
-        private void FilterData()
+        private void FilterData(int selectedIndex = -1)
         {
             if (dgvObservationPoints.RowCount == 0)
             {
@@ -767,7 +787,15 @@ namespace MilSpace.Visibility
 
             if (dgvObservationPoints.FirstDisplayedScrollingRowIndex != -1)
             {
-                dgvObservationPoints.Rows[dgvObservationPoints.FirstDisplayedScrollingRowIndex].Selected = true;
+                if (selectedIndex != -1 && dgvObservationPoints.Rows[selectedIndex].Visible)
+                {
+                    dgvObservationPoints.CurrentCell = dgvObservationPoints.Rows[selectedIndex].Cells[1];
+                }
+                else
+                {
+                    dgvObservationPoints.Rows[dgvObservationPoints.FirstDisplayedScrollingRowIndex].Selected = true;
+                }
+
                 if (!IsPointFieldsEnabled) EnableObservPointsControls();
             }
             else
@@ -881,21 +909,23 @@ namespace MilSpace.Visibility
 
             _isFieldsChanged = false;
 
-            var selectedPoint = _observPointsController.GetObservPointByIdAsObservationPoint(_selectedPointId);
+            var selectedPoint = _observPointsController.GetObservationPointFromInterface(GetObservationPoint());
 
             if (!FieldsValidation(sender, selectedPoint))
             {
                 ((TextBox)sender).Focus();
             }
-            if (!selectedPointMEM.Equals(selectedPoint) && !rbRouteMode.Checked)
-            {
-                    _observPointsController.UpdateObservPoint(
-                    GetObservationPoint(),
-                    selectedPoint.Objectid,
-                    _observerPointSource,
-                    false);
 
-                UpdateObservPointsList();
+            if (!selectedPointMEM.Equals(selectedPoint))
+            {
+                if (!_updatedPointsIds.Exists(id => id == selectedPoint.Objectid))
+                {
+                    _updatedPointsIds.Add(selectedPoint.Objectid);
+                }
+
+                var updateTable = (!selectedPointMEM.Title.Equals(selectedPoint.Title));
+
+                _observPointsController.UpdateLocalObservPoint(GetObservationPoint(), _selectedPointId, updateTable);
             }
         }
 
@@ -970,7 +1000,7 @@ namespace MilSpace.Visibility
                             return false;
                         }
 
-                        Helper.TryParceToDouble(txtMaxDistance.Text, out double minDistanceValue);
+                        Helper.TryParceToDouble(txtMinDistance.Text, out double minDistanceValue);
 
                         if (!ValidateMaxValue(maxValue, minDistanceValue))
                         {
@@ -1386,21 +1416,28 @@ namespace MilSpace.Visibility
             }
         }
 
-        private void SavePoint()
+        private void SaveUpdatedPoints()
         {
-            var selectedPoint = _observPointsController.GetObservPointByIdAsObservationPoint(_selectedPointId);
+            foreach (var pointId in _updatedPointsIds)
+            {
+                var selectedPoint = _observPointsController.GetObservPointByIdAsObservationPoint(pointId);
 
-            if(rbRouteMode.Checked && _updateForAllFieldsInRouteMode)
-            {
-                SavePointInRouteMode(selectedPoint);
+                if(selectedPoint == null)
+                {
+                    continue;
+                }
+
+                if (rbRouteMode.Checked && _updateForAllFieldsInRouteMode)
+                {
+                    SavePointInRouteMode(selectedPoint);
+                }
+                else
+                {
+                    _observPointsController.UpdateObservPoint(selectedPoint.Objectid, _observerPointSource);
+                }
             }
-            else
-            {
-                _observPointsController.UpdateObservPoint(
-                                                    GetObservationPoint(),
-                                                    selectedPoint.Objectid,
-                                                    _observerPointSource);
-            }
+
+            _observPointsController.GetObserverPointsFromSelectedSource(_observerPointSource, false);
         }
 
         private void SavePointInRouteMode(ObservationPoint selectedPoint)
@@ -1500,7 +1537,7 @@ namespace MilSpace.Visibility
 
                     GuidId = oldPoint.GuidId,
                     PointNumber = oldPoint.PointNumber,
-                    UserName = observPointCreator.Text
+                    UserName = observPointCreator.Text,
                 };
 
                 return newGeoCalcPointAsObserverPoint;
@@ -1509,6 +1546,7 @@ namespace MilSpace.Visibility
 
             IObserverPoint newObserverPoint = new ObservationPoint()
             {
+                Objectid = _selectedPointId,
                 Title = observPointName.Text,
                 Type = mobilityType.Key.ToString(),
                 Affiliation = affiliationType.Key.ToString(),
@@ -2268,7 +2306,16 @@ namespace MilSpace.Visibility
                 return;
             }
 
-            //  SavePoint();
+            var selectedPoint = _observPointsController.GetObservationPointFromInterface(GetObservationPoint());
+
+            if (!selectedPointMEM.Equals(selectedPoint))
+            {
+                if (!_updatedPointsIds.Exists(id => id == selectedPoint.Objectid))
+                {
+                    _updatedPointsIds.Add(selectedPoint.Objectid);
+                }
+                _observPointsController.UpdateLocalObservPoint(GetObservationPoint(), _selectedPointId, true);
+            }
         }
 
         private void Fields_TextChanged(object sender, EventArgs e)
@@ -2477,7 +2524,7 @@ namespace MilSpace.Visibility
                     MessageBoxIcon.Exclamation);
                 return;
             }
-            SavePoint();
+            SaveUpdatedPoints();
         }
 
         #endregion
@@ -2933,6 +2980,7 @@ namespace MilSpace.Visibility
             }
 
             changeAllObserversHeightsButton.Enabled = rbRouteMode.Checked;
+            _updatedPointsIds.Clear();
         }
 
         private void ChangeAllObserversHeightsButton_Click(object sender, EventArgs e)
