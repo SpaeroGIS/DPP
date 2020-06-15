@@ -1436,8 +1436,6 @@ namespace MilSpace.Visibility
                     _observPointsController.UpdateObservPoint(selectedPoint.Objectid, _observerPointSource);
                 }
             }
-
-            _observPointsController.GetObserverPointsFromSelectedSource(_observerPointSource, false);
         }
 
         private void SavePointInRouteMode(ObservationPoint selectedPoint)
