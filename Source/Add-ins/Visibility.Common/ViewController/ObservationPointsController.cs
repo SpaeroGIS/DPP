@@ -520,6 +520,30 @@ namespace MilSpace.Visibility.ViewController
                 return observerPoint as ObservationPoint;
             }
 
+            if(observerPoint is GeoCalcPoint)
+            {
+                var geoCalcPoint = observerPoint as GeoCalcPoint;
+
+                return new ObservationPoint
+                {
+                    Objectid = geoCalcPoint.Objectid,
+                    Affiliation = ObservationPointTypesEnum.All.ToString(),
+                    Type = ObservationPointMobilityTypesEnum.All.ToString(),
+                    Title = geoCalcPoint.Title,
+                    X = geoCalcPoint.X,
+                    Y = geoCalcPoint.Y,
+                    AngelMaxH = geoCalcPoint.AngelMaxH ?? 90,
+                    AngelMinH = geoCalcPoint.AngelMinH ?? -90,
+                    AzimuthStart = geoCalcPoint.AzimuthStart ?? 0,
+                    AzimuthEnd = geoCalcPoint.AzimuthEnd ?? 360,
+                    RelativeHeight = geoCalcPoint.RelativeHeight ?? 0,
+                    InnerRadius = geoCalcPoint.InnerRadius,
+                    OuterRadius = (geoCalcPoint.OuterRadius == 0)? 1000 : geoCalcPoint.OuterRadius,
+                    Dto = DateTime.Now,
+                    Operator = geoCalcPoint.UserName
+                };
+            }
+
             return new ObservationPoint
             {
                 Objectid = observerPoint.Objectid,
@@ -1294,68 +1318,7 @@ namespace MilSpace.Visibility.ViewController
             var pointGeom = new Point { X = observerPointAsNativeType.X.Value, Y = observerPointAsNativeType.Y.Value, SpatialReference = EsriTools.Wgs84Spatialreference };
             pointGeom.Project(mapDocument.FocusMap.SpatialReference);
 
-            Dictionary<int, IGeometry> geometries = new Dictionary<int, IGeometry>();
-
-            switch (set)
-            {
-                case ObservationSetsEnum.Gdb:
-
-                    geometries = EsriTools.GetGeometriesFromLayer(VisibilityManager.ObservationStationsFeatureLayer, mapDocument.ActiveView);
-
-                    break;
-
-                case ObservationSetsEnum.GeoCalculator:
-
-                    var points = GetPointsFromGeoCalculator();
-
-                    if (points == null)
-                    {
-                        _relationLines = null;
-                        return;
-                    }
-
-                    foreach (var point in points)
-                    {
-                        point.Value.Project(mapDocument.FocusMap.SpatialReference);
-                        geometries.Add(point.Key, point.Value);
-                    }
-
-                    break;
-
-                case ObservationSetsEnum.FeatureLayers:
-
-                    if (string.IsNullOrEmpty(_layerName) || fromNewLayer)
-                    {
-                        var getLayerWindow = new ChooseVectorLayerFromMapModalWindow(mapDocument.ActiveView);
-                        var result = getLayerWindow.ShowDialog();
-
-                        if (result == DialogResult.OK)
-                        {
-                            var layer = EsriTools.GetLayer(getLayerWindow.SelectedLayer, mapDocument.FocusMap);
-
-                            if (layer != null && layer is IFeatureLayer)
-                            {
-                                geometries = EsriTools.GetGeometriesFromLayer(layer as IFeatureLayer, mapDocument.ActiveView);
-                                _layerName = getLayerWindow.SelectedLayer;
-                            }
-                        }
-                        else
-                        {
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        var layer = EsriTools.GetLayer(_layerName, mapDocument.FocusMap);
-
-                        if (layer != null && layer is IFeatureLayer)
-                        {
-                            geometries = EsriTools.GetGeometriesFromLayer(layer as IFeatureLayer, mapDocument.ActiveView);
-                        }
-                    }
-
-                    break;
-            }
+            var geometries = GetObservationObject(set);
 
             if (_coverageArea == null || fromNewCoverageArea)
             {
@@ -1427,6 +1390,72 @@ namespace MilSpace.Visibility.ViewController
             }
         }
 
+        internal Dictionary<int, IGeometry> GetObservationObject(ObservationSetsEnum set)
+        {
+            Dictionary<int, IGeometry> geometries = new Dictionary<int, IGeometry>();
+
+            switch (set)
+            {
+                case ObservationSetsEnum.Gdb:
+
+                    geometries = EsriTools.GetGeometriesFromLayer(VisibilityManager.ObservationStationsFeatureLayer, mapDocument.ActiveView);
+
+                    break;
+
+                case ObservationSetsEnum.GeoCalculator:
+
+                    var points = GetPointsFromGeoCalculator();
+
+                    if (points == null)
+                    {
+                        return null;
+                    }
+
+                    foreach (var point in points)
+                    {
+                        point.Value.Project(mapDocument.FocusMap.SpatialReference);
+                        geometries.Add(point.Key, point.Value);
+                    }
+
+                    break;
+
+                case ObservationSetsEnum.FeatureLayers:
+
+                    if (string.IsNullOrEmpty(_layerName))
+                    {
+                        var getLayerWindow = new ChooseVectorLayerFromMapModalWindow(mapDocument.ActiveView);
+                        var result = getLayerWindow.ShowDialog();
+
+                        if (result == DialogResult.OK)
+                        {
+                            var layer = EsriTools.GetLayer(getLayerWindow.SelectedLayer, mapDocument.FocusMap);
+
+                            if (layer != null && layer is IFeatureLayer)
+                            {
+                                geometries = EsriTools.GetGeometriesFromLayer(layer as IFeatureLayer, mapDocument.ActiveView);
+                                _layerName = getLayerWindow.SelectedLayer;
+                            }
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                    else
+                    {
+                        var layer = EsriTools.GetLayer(_layerName, mapDocument.FocusMap);
+
+                        if (layer != null && layer is IFeatureLayer)
+                        {
+                            geometries = EsriTools.GetGeometriesFromLayer(layer as IFeatureLayer, mapDocument.ActiveView);
+                        }
+                    }
+
+                    break;
+            }
+
+            return geometries;
+        }
 
         internal void DrawObservPointToObservObjectsRelationsGraphics(int id, ObservationSetsEnum set)
         {
@@ -1678,6 +1707,40 @@ namespace MilSpace.Visibility.ViewController
                 view.ClearObserverPointsList();
             }
         }
+
+        internal void FillObservationObjectsInMasterFromSelectedSource(ObservationSetsEnum set, VisibilityCalcTypeEnum visibilityCalcType)
+        {
+            if (visibilityCalcType == VisibilityCalcTypeEnum.BestObservationParameters)
+            {
+                SelectObservationStationFromSet(set);
+            }
+            else
+            {
+                GetObserverPointsFromSelectedSource(set);
+            }
+        }
+
+        internal void FillObserverPointsInMasterFromSelectedSource(ObservationSetsEnum set, VisibilityCalcTypeEnum visibilityCalcType)
+        {
+            if(visibilityCalcType == VisibilityCalcTypeEnum.BestObservationParameters)
+            {
+                SelectObservationPointFromSet(set);
+            }
+            else
+            {
+                GetObserverPointsFromSelectedSource(set);
+            }
+        }
+
+        internal void FillObservationObjectsInMasterFromSelectedSource(ObservationSetsEnum set)
+        {
+            var geometries = GetObservationObject(set);
+        }
+
+        //internal void FillObserverPointsInMainFromSelectedSource(ObservationSetsEnum set, bool newSource = true)
+        //{
+
+        //}
 
         internal void SelectObservationPointFromSet(ObservationSetsEnum set)
         {
