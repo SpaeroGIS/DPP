@@ -87,7 +87,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 331);
             this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Padding = new System.Windows.Forms.Padding(4);
             this.panel1.Size = new System.Drawing.Size(504, 30);
             this.panel1.TabIndex = 0;
             // 
@@ -129,7 +129,7 @@
             this.panel10.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel10.Location = new System.Drawing.Point(0, 30);
             this.panel10.Name = "panel10";
-            this.panel10.Padding = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.panel10.Padding = new System.Windows.Forms.Padding(8);
             this.panel10.Size = new System.Drawing.Size(496, 272);
             this.panel10.TabIndex = 3;
             // 
@@ -156,7 +156,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel9.Location = new System.Drawing.Point(0, 0);
             this.panel9.Name = "panel9";
-            this.panel9.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel9.Padding = new System.Windows.Forms.Padding(4);
             this.panel9.Size = new System.Drawing.Size(496, 30);
             this.panel9.TabIndex = 2;
             // 
@@ -179,7 +179,7 @@
             this.tabPage2.Controls.Add(this.panel7);
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(496, 302);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "графика";
@@ -192,7 +192,7 @@
             this.panel11.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel11.Location = new System.Drawing.Point(3, 174);
             this.panel11.Name = "panel11";
-            this.panel11.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel11.Padding = new System.Windows.Forms.Padding(4);
             this.panel11.Size = new System.Drawing.Size(490, 87);
             this.panel11.TabIndex = 6;
             // 
@@ -218,7 +218,7 @@
             this.panel12.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel12.Location = new System.Drawing.Point(3, 144);
             this.panel12.Name = "panel12";
-            this.panel12.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel12.Padding = new System.Windows.Forms.Padding(4);
             this.panel12.Size = new System.Drawing.Size(490, 30);
             this.panel12.TabIndex = 5;
             // 
@@ -240,7 +240,7 @@
             this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel8.Location = new System.Drawing.Point(3, 33);
             this.panel8.Name = "panel8";
-            this.panel8.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel8.Padding = new System.Windows.Forms.Padding(4);
             this.panel8.Size = new System.Drawing.Size(490, 111);
             this.panel8.TabIndex = 2;
             // 
@@ -268,7 +268,7 @@
             this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel7.Location = new System.Drawing.Point(3, 3);
             this.panel7.Name = "panel7";
-            this.panel7.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel7.Padding = new System.Windows.Forms.Padding(4);
             this.panel7.Size = new System.Drawing.Size(490, 30);
             this.panel7.TabIndex = 1;
             // 
@@ -292,7 +292,7 @@
             this.tabPage1.Controls.Add(this.panel2);
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(496, 302);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "поверхность";
@@ -328,7 +328,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(3, 67);
             this.panel4.Name = "panel4";
-            this.panel4.Padding = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.panel4.Padding = new System.Windows.Forms.Padding(8);
             this.panel4.Size = new System.Drawing.Size(490, 124);
             this.panel4.TabIndex = 2;
             // 
@@ -356,7 +356,7 @@
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(8, 8);
             this.panel5.Name = "panel5";
-            this.panel5.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel5.Padding = new System.Windows.Forms.Padding(4);
             this.panel5.Size = new System.Drawing.Size(474, 30);
             this.panel5.TabIndex = 0;
             // 
@@ -377,7 +377,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(3, 33);
             this.panel3.Name = "panel3";
-            this.panel3.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel3.Padding = new System.Windows.Forms.Padding(4);
             this.panel3.Size = new System.Drawing.Size(490, 34);
             this.panel3.TabIndex = 1;
             // 
@@ -397,7 +397,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel2.Padding = new System.Windows.Forms.Padding(4);
             this.panel2.Size = new System.Drawing.Size(490, 30);
             this.panel2.TabIndex = 0;
             // 
