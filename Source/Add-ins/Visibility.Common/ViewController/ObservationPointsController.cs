@@ -520,6 +520,30 @@ namespace MilSpace.Visibility.ViewController
                 return observerPoint as ObservationPoint;
             }
 
+            if(observerPoint is GeoCalcPoint)
+            {
+                var geoCalcPoint = observerPoint as GeoCalcPoint;
+
+                return new ObservationPoint
+                {
+                    Objectid = geoCalcPoint.Objectid,
+                    Affiliation = ObservationPointTypesEnum.All.ToString(),
+                    Type = ObservationPointMobilityTypesEnum.All.ToString(),
+                    Title = geoCalcPoint.Title,
+                    X = geoCalcPoint.X,
+                    Y = geoCalcPoint.Y,
+                    AngelMaxH = geoCalcPoint.AngelMaxH ?? 90,
+                    AngelMinH = geoCalcPoint.AngelMinH ?? -90,
+                    AzimuthStart = geoCalcPoint.AzimuthStart ?? 0,
+                    AzimuthEnd = geoCalcPoint.AzimuthEnd ?? 360,
+                    RelativeHeight = geoCalcPoint.RelativeHeight ?? 0,
+                    InnerRadius = geoCalcPoint.InnerRadius,
+                    OuterRadius = (geoCalcPoint.OuterRadius == 0)? 1000 : geoCalcPoint.OuterRadius,
+                    Dto = DateTime.Now,
+                    Operator = geoCalcPoint.UserName
+                };
+            }
+
             return new ObservationPoint
             {
                 Objectid = observerPoint.Objectid,
