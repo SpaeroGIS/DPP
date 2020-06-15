@@ -944,6 +944,7 @@ namespace MilSpace.Visibility
             panel14.Visible = !isVisible;
             chckOP.Visible = !isVisible;
             chckOO.Visible = !isVisible;
+            //comment it
             chooseOPPanel.Visible = isVisible;
             chooseOOPanel.Visible = isVisible;
             selectedOPPanel.Visible = isVisible;
@@ -972,7 +973,7 @@ namespace MilSpace.Visibility
 
         private void BtnChooseOP_Click(object sender, EventArgs e)
         {
-            controller.SelectObservationPointFromSet(controller.GetObservPointsSet(cmbOPSource.SelectedItem.ToString()));
+            controller.FillObserverPointsInMasterFromSelectedSource(controller.GetObservPointsSet(cmbOPSource.SelectedItem.ToString()), _stepControl);
         }
 
         private void BtnChooseOO_Click(object sender, EventArgs e)
