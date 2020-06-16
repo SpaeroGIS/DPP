@@ -820,13 +820,13 @@ namespace MilSpace.Visibility.ViewController
             finally
             {
                 //test
-                var layer = EsriTools.GetFeatureLayer(featureLayer);
-                mapDocument.FocusMap.AddLayer(layer);
+                //var layer = EsriTools.GetFeatureLayer(featureLayer);
+                //mapDocument.FocusMap.AddLayer(layer);
 
-                var observPointFeatureClassName = VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.ObservationPoints, calcParams.TaskName, -1);
-                var feature = GdbAccess.Instance.GetFeatureClass(MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection, observPointFeatureClassName);
-                var layer1 = EsriTools.GetFeatureLayer(feature);
-                mapDocument.FocusMap.AddLayer(layer1);
+                //var observPointFeatureClassName = VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.ObservationPoints, calcParams.TaskName, -1);
+                //var feature = GdbAccess.Instance.GetFeatureClass(MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection, observPointFeatureClassName);
+                //var layer1 = EsriTools.GetFeatureLayer(feature);
+                //mapDocument.FocusMap.AddLayer(layer1);
 
 
                 EsriTools.RemoveDataSet(MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection, $"GeoCalculatorPoint_VisiilityMasterResult", esriDatasetType.esriDTFeatureClass);
