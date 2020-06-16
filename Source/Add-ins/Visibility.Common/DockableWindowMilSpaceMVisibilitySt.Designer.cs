@@ -1226,6 +1226,7 @@
             this.dgvObservStationSet.Location = new System.Drawing.Point(0, 0);
             this.dgvObservStationSet.Name = "dgvObservStationSet";
             this.dgvObservStationSet.RowHeadersVisible = false;
+            this.dgvObservStationSet.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvObservStationSet.Size = new System.Drawing.Size(304, 273);
             this.dgvObservStationSet.TabIndex = 0;
             // 

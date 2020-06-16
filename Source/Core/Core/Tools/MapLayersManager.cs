@@ -263,6 +263,8 @@ namespace MilSpace.Core.Tools
                     && featureClass.FindField("AzimuthE") > -1 
                     && featureClass.FindField("AnglMinH") > -1 
                     && featureClass.FindField("AnglMaxH") > -1
+                    && featureClass.FindField("InnerRadius") > -1
+                    && featureClass.FindField("OuterRadius") > -1
                     && featureClass.FindField("HRel") > -1;
         }
 
