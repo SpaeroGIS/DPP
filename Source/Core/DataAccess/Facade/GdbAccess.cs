@@ -9,6 +9,7 @@ using ESRI.ArcGIS.Geometry;
 using MilSpace.Configurations;
 using MilSpace.Core;
 using MilSpace.Core.DataAccess;
+using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Exceptions;
 using System;
@@ -283,26 +284,31 @@ namespace MilSpace.DataAccess.Facade
             return null;
         }
 
-        public IFeatureClass GenerateTemporaryObservationPointFeatureClass(IFields observPointsFCFields, string name)
+        public IFeatureClass GenerateTemporaryObservationPointFeatureClass(IFields observPointsFCFields, string name, bool addUniqueSuffix = false)
         {
+            IWorkspace2 wsp2 = (IWorkspace2)calcWorkspace;
+            IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)calcWorkspace;
+
+            string featureClassName = addUniqueSuffix ? $"{name}_{Helper.GetTemporaryNameSuffix()}" : name;
+
+            if (wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, featureClassName))
+            {
+                EsriTools.RemoveDataSet(MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection, featureClassName, esriDatasetType.esriDTFeatureClass, calcWorkspace);
+            }
+
             IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)calcWorkspace;
             workspaceEdit.StartEditing(true);
             workspaceEdit.StartEditOperation();
 
             IFeatureClass featureClass = null;
 
-            IWorkspace2 wsp2 = (IWorkspace2)calcWorkspace;
-            IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)calcWorkspace;
+            IFeatureClassDescription fcDescription = new FeatureClassDescriptionClass();
+            IObjectClassDescription ocDescription = (IObjectClassDescription)fcDescription;
 
-            if (!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, name))
-            {
-                IFeatureClassDescription fcDescription = new FeatureClassDescriptionClass();
-                IObjectClassDescription ocDescription = (IObjectClassDescription)fcDescription;
+            featureClass = featureWorkspace.CreateFeatureClass(featureClassName, observPointsFCFields,
+                   ocDescription.InstanceCLSID, ocDescription.ClassExtensionCLSID,
+                   esriFeatureType.esriFTSimple, "shape", "");
 
-                featureClass = featureWorkspace.CreateFeatureClass(name, observPointsFCFields,
-                       ocDescription.InstanceCLSID, ocDescription.ClassExtensionCLSID,
-                       esriFeatureType.esriFTSimple, "shape", "");
-            }
 
             workspaceEdit.StopEditOperation();
             workspaceEdit.StopEditing(true);
@@ -552,6 +558,9 @@ namespace MilSpace.DataAccess.Facade
             var pointFeature = featureClass.CreateFeature();
 
             SetObservPointValues(featureClass, pointFeature, point, pointArgs);
+
+            workspaceEdit.StopEditOperation();
+            workspaceEdit.StopEditing(true);
         }
 
         public void UpdateObservPoint(IPoint point, IFeatureClass featureClass, ObservationPoint observPoint, int objectId)
@@ -1026,6 +1035,8 @@ namespace MilSpace.DataAccess.Facade
             var azimuthEIndex = featureClass.FindField("AzimuthE");
             var anglMinIndex = featureClass.FindField("AnglMinH");
             var anglMaxIndex = featureClass.FindField("AnglMaxH");
+            var innerRadiusIndex = featureClass.FindField("InnerRadius");
+            var outerRadiusIndex = featureClass.FindField("OuterRadius");
             var hRelIndex = featureClass.FindField("HRel");
 
             try
@@ -1048,6 +1059,16 @@ namespace MilSpace.DataAccess.Facade
                 if (anglMaxIndex != -1)
                 {
                     feature.set_Value(anglMaxIndex, observerPoint.AngelMaxH);
+                }
+
+                if (innerRadiusIndex != -1)
+                {
+                    feature.set_Value(innerRadiusIndex, observerPoint.InnerRadius);
+                }
+
+                if (outerRadiusIndex != -1)
+                {
+                    feature.set_Value(outerRadiusIndex, observerPoint.OuterRadius);
                 }
 
                 if (hRelIndex != -1)
@@ -1101,6 +1122,24 @@ namespace MilSpace.DataAccess.Facade
                 featureClass.AddField(anglMaxHField);
             }
 
+            if (featureClass.FindField("InnerRadius") == -1)
+            {
+                IField innerRadiusField = new FieldClass();
+                IFieldEdit innerRadiusFieldEdit = (IFieldEdit)innerRadiusField;
+                innerRadiusFieldEdit.Name_2 = "InnerRadius";
+                innerRadiusFieldEdit.Type_2 = esriFieldType.esriFieldTypeDouble;
+                featureClass.AddField(innerRadiusField);
+            }
+
+            if (featureClass.FindField("OuterRadius") == -1)
+            {
+                IField outerRadiusField = new FieldClass();
+                IFieldEdit outerRadiusFieldEdit = (IFieldEdit)outerRadiusField;
+                outerRadiusFieldEdit.Name_2 = "OuterRadius";
+                outerRadiusFieldEdit.Type_2 = esriFieldType.esriFieldTypeDouble;
+                featureClass.AddField(outerRadiusField);
+            }
+
             if (featureClass.FindField("HRel") == -1)
             {
                 IField heightField = new FieldClass();
@@ -1125,6 +1164,8 @@ namespace MilSpace.DataAccess.Facade
                 var azimuthEIndex = featureClass.FindField("AzimuthE");
                 var anglMinIndex = featureClass.FindField("AnglMinH");
                 var anglMaxIndex = featureClass.FindField("AnglMaxH");
+                var innerRadiusIndex = featureClass.FindField("InnerRadius");
+                var outerRadiusIndex = featureClass.FindField("OuterRadius");
                 var hRelIndex = featureClass.FindField("HRel");
 
                 while ((feature = searchCursor.NextFeature()) != null)
@@ -1150,6 +1191,16 @@ namespace MilSpace.DataAccess.Facade
                         feature.set_Value(anglMaxIndex, 90);
                     }
 
+                    if (innerRadiusIndex != -1 && feature.Value[innerRadiusIndex] == DBNull.Value)
+                    {
+                        feature.set_Value(innerRadiusIndex, 0);
+                    }
+
+                    if (outerRadiusIndex != -1 && feature.Value[outerRadiusIndex] == DBNull.Value)
+                    {
+                        feature.set_Value(outerRadiusIndex, 1000);
+                    }
+
                     if (hRelIndex != -1 && feature.Value[hRelIndex] == DBNull.Value)
                     {
                         feature.set_Value(hRelIndex, 0);
@@ -1160,7 +1211,7 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
-            private void SetObservPointValues(IFeatureClass featureClass, IFeature pointFeature, IPoint point, ObservationPoint pointArgs)
+        private void SetObservPointValues(IFeatureClass featureClass, IFeature pointFeature, IPoint point, ObservationPoint pointArgs)
         {
             if (point != null)
             {

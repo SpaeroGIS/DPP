@@ -1,4 +1,4 @@
-﻿namespace MilSpace.Visibility.DTO
+﻿namespace MilSpace.DataAccess.DataTransfer
 {
     public enum ObservationSetsEnum
     {

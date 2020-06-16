@@ -27,6 +27,8 @@ namespace MilSpace.Visibility
         private BindingList<CheckObservPointGui> _observationObjects;
         private ObservationPoint _selectedObservationPoint;
         private IGeometry _selectedGeometry;
+        private ObservationSetsEnum _observPointsSource => controller.GetObservStationSet(cmbOPSource.SelectedItem.ToString());
+        private ObservationSetsEnum _observObjectsSource => controller.GetObservStationSet(cmbOOSource.SelectedItem.ToString());
         internal WizardResult FinalResult = new WizardResult();
 
         private static IActiveView ActiveView => ArcMap.Document.ActiveView;
@@ -215,8 +217,6 @@ namespace MilSpace.Visibility
             SetVOControlsVisibility(true);
             EnableObjList();
             PopulateComboBox();
-            PopulateObservationPointsTypesComboBox();
-            PopulateObservationObjectsTypesComboBox();
         }
 
         public void FillObservPointLabel()
@@ -253,6 +253,9 @@ namespace MilSpace.Visibility
             cmbPositions.Items.Clear();
             cmbPositions.Items.AddRange(controller.GetLayerPositions().ToArray());
             cmbPositions.SelectedItem = controller.GetDefaultLayerPosition();
+
+            PopulateObservationPointsTypesComboBox();
+            PopulateObservationObjectsTypesComboBox();
         }
 
         public void PopulateComboBox()
@@ -389,6 +392,51 @@ namespace MilSpace.Visibility
                     }
                     dgvObjects.Refresh();
                 }
+            }
+            catch (ArgumentNullException)
+            {
+                dgvObjects.Text = "Objects are not found";
+            }
+        }
+
+        public void FillObservationObjectsList(Dictionary<int, IGeometry> observationObjects)
+        {
+            try
+            {
+                var itemsToShow = observationObjects.Select(
+                    t => new CheckObservPointGui
+                    {
+                        Title = t.Key.ToString(),
+                        Affiliation = controller.GetObservObjectsTypeString(ObservationObjectTypesEnum.All),
+                        Id = t.Key,
+                        Type = string.Empty,
+                        Date = DateTime.Now.ToString(Helper.DateFormatSmall)
+                    }).OrderBy(l => l.Title);
+
+
+                dgvObjects.DataSource = null; //Clearing listbox
+
+                _observationObjects = new BindingList<CheckObservPointGui>(itemsToShow.ToArray());
+
+                if (_observationObjects != null)
+                {
+                    dgvObjects.DataSource = _observationObjects;
+                    SetDataGridView_For_Objects();
+                }
+
+                //if (useCurrentExtent)
+                //{
+                //    var onCurrent = controller.GetObservObjectsOnCurrentMapExtent(ActiveView);
+                //    var commonO = (_observationObjects.Select(a => a.Id).Intersect(onCurrent.Select(b => b.ObjectId)));
+                //    foreach (CheckObservPointGui e in _observationObjects)
+                //    {
+                //        if (commonO.Contains(e.Id))
+                //        {
+                //            e.Check = true;
+                //        }
+                //    }
+                //    dgvObjects.Refresh();
+                //}
             }
             catch (ArgumentNullException)
             {
@@ -678,18 +726,24 @@ namespace MilSpace.Visibility
                 return;
             }
 
+            var rasterName = cmbMapLayers.SelectedItem.ToString();
+
             FinalResult = new WizardResult
             {
                 ObservPointIDs = _observPointGuis.Where(p => p.Check).Select(i => i.Id).ToArray(),
                 Table = TableChkBox.Checked,
                 SumFieldOfView = SumChkBox.Checked,
                 RasterLayerName = imagesComboBox.SelectedItem.ToString(),
-                RelativeLayerName = cmbMapLayers.SelectedItem.ToString(),
+                RelativeLayerName = rasterName,
                 ResultLayerPosition = controller.GetPositionByStringValue(cmbPositions.SelectedItem.ToString()),
                 ResultLayerTransparency = Convert.ToInt16(tbTransparency.Text),
                 CalculationType = _stepControl,
                 TaskName = VisibilityManager.GenerateResultId(LocalizationContext.Instance.CalcTypeLocalisationShort[_stepControl]),
-                VisibilityPercent = 100
+                VisibilityPercent = 100,
+                ObserverPointsLayerName = controller.ObserverPointsLayerName,
+                ObservationObjectLayerName = controller.ObservationObjectsLayerName,
+                ObserverPointsSourceType = _observPointsSource,
+                ObserverObjectsSourceType = _observObjectsSource
             };
 
             if (_stepControl == VisibilityCalcTypeEnum.OpservationPoints)
@@ -944,8 +998,6 @@ namespace MilSpace.Visibility
             panel14.Visible = !isVisible;
             chckOP.Visible = !isVisible;
             chckOO.Visible = !isVisible;
-            chooseOPPanel.Visible = isVisible;
-            chooseOOPanel.Visible = isVisible;
             selectedOPPanel.Visible = isVisible;
             selectedOOPanel.Visible = isVisible;
         }
@@ -972,12 +1024,12 @@ namespace MilSpace.Visibility
 
         private void BtnChooseOP_Click(object sender, EventArgs e)
         {
-            controller.SelectObservationPointFromSet(controller.GetObservPointsSet(cmbOPSource.SelectedItem.ToString()));
+            controller.FillObserverPointsInMasterFromSelectedSource(controller.GetObservPointsSet(cmbOPSource.SelectedItem.ToString()), _stepControl);
         }
 
         private void BtnChooseOO_Click(object sender, EventArgs e)
         {
-            controller.SelectObservationStationFromSet(controller.GetObservStationSet(cmbOOSource.SelectedItem.ToString()));
+            controller.FillObservationObjectsInMasterFromSelectedSource(controller.GetObservStationSet(cmbOOSource.SelectedItem.ToString()));
         }
 
 
@@ -1158,7 +1210,7 @@ namespace MilSpace.Visibility
 
         public void ClearObserverPointsList()
         {
-            throw new NotImplementedException();
+            dgvCheckList.DataSource = null;
         }
 
         public void SetFieldsEditingAbility(bool areFiedlsReadOnly)

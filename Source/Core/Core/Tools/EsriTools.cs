@@ -1109,14 +1109,21 @@ namespace MilSpace.Core.Tools
             return null;
         }
 
-        public static bool RemoveDataSet(string gdb, string name)
+        public static bool RemoveDataSet(string gdb, string name,
+                                         esriDatasetType datasetType = esriDatasetType.esriDTAny,
+                                         IWorkspace workspace = null)
         {
             IWorkspaceFactory workspaceFactory = new FileGDBWorkspaceFactory();
-            IWorkspace workspace = workspaceFactory.OpenFromFile(gdb, 0);
+
+            if (workspace == null)
+            {
+                workspace = workspaceFactory.OpenFromFile(gdb, 0);
+            }
+
             IFeatureWorkspaceManage wspManage = (IFeatureWorkspaceManage)workspace;
 
             var result = false;
-            var datasets = workspace.Datasets[esriDatasetType.esriDTAny];
+            var datasets = workspace.Datasets[datasetType];
             var currentDataset = datasets.Next();
 
             while (currentDataset != null && !currentDataset.Name.EndsWith(name))

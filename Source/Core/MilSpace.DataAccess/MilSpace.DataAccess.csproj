@@ -152,6 +152,9 @@
     <Compile Include="..\DataAccess\DataTransfer\ObservationPoint.cs">
       <Link>DataTransfer\ObservationPoint.cs</Link>
     </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\ObservationSetsEnum.cs">
+      <Link>DataTransfer\ObservationSetsEnum.cs</Link>
+    </Compile>
     <Compile Include="..\DataAccess\DataTransfer\ObservationTypesEnum.cs">
       <Link>DataTransfer\ObservationTypesEnum.cs</Link>
     </Compile>

@@ -113,7 +113,14 @@ namespace MilSpace.Tools
         {
             _logger.DebugEx("> SetCoverageAreas START");
 
-            var observPoints = VisibilityZonesFacade.GetObservationPointsByObjectIds(observPointsIds);
+            var observPoints = new List<ObservationPoint>();
+
+            var pointsFromLayer = VisibilityManager.GetObservationPointsFromAppropriateLayer(string.Empty, null,
+                                                                                                null, observPointFC);
+            foreach (int id in observPointsIds)
+            {
+                observPoints.Add(pointsFromLayer.First(point => point.Objectid == id) as ObservationPoint);
+            }
 
             if (observPoints == null || observPoints.Count() == 0)
             {
