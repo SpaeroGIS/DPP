@@ -284,14 +284,16 @@ namespace MilSpace.DataAccess.Facade
             return null;
         }
 
-        public IFeatureClass GenerateTemporaryObservationPointFeatureClass(IFields observPointsFCFields, string name)
+        public IFeatureClass GenerateTemporaryObservationPointFeatureClass(IFields observPointsFCFields, string name, bool addUniqueSuffix = false)
         {
             IWorkspace2 wsp2 = (IWorkspace2)calcWorkspace;
             IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)calcWorkspace;
 
-            if (wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, name))
+            string featureClassName = addUniqueSuffix ? $"{name}_{Helper.GetTemporaryNameSuffix()}" : name;
+
+            if (wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, featureClassName))
             {
-                EsriTools.RemoveDataSet(MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection, name, esriDatasetType.esriDTFeatureClass, calcWorkspace);
+                EsriTools.RemoveDataSet(MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection, featureClassName, esriDatasetType.esriDTFeatureClass, calcWorkspace);
             }
 
             IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)calcWorkspace;
@@ -303,7 +305,7 @@ namespace MilSpace.DataAccess.Facade
             IFeatureClassDescription fcDescription = new FeatureClassDescriptionClass();
             IObjectClassDescription ocDescription = (IObjectClassDescription)fcDescription;
 
-            featureClass = featureWorkspace.CreateFeatureClass(name, observPointsFCFields,
+            featureClass = featureWorkspace.CreateFeatureClass(featureClassName, observPointsFCFields,
                    ocDescription.InstanceCLSID, ocDescription.ClassExtensionCLSID,
                    esriFeatureType.esriFTSimple, "shape", "");
 
@@ -556,6 +558,9 @@ namespace MilSpace.DataAccess.Facade
             var pointFeature = featureClass.CreateFeature();
 
             SetObservPointValues(featureClass, pointFeature, point, pointArgs);
+
+            workspaceEdit.StopEditOperation();
+            workspaceEdit.StopEditing(true);
         }
 
         public void UpdateObservPoint(IPoint point, IFeatureClass featureClass, ObservationPoint observPoint, int objectId)
