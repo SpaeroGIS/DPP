@@ -160,7 +160,8 @@ namespace MilSpace.Visibility
         private void SetDefaultValues()
         {
             txtStep.Text = "1";
-            txtBufferDistance.Text = "1";
+            txtBufferDistance.Text = "10";
+            txtBufferDistanceFroAllObjects.Text = "10";
             txtCoveragePercent.Text = "100";
         }
 
@@ -192,6 +193,10 @@ namespace MilSpace.Visibility
         }
         public void FirstTypePicked()//triggers when user picks first type
         {
+            lblCalculationsType.Text = 
+                    LocalizationContext.Instance
+                                       .CalcTypeLocalisationShort[VisibilityCalcTypeEnum.OpservationPoints];
+
             _stepControl = VisibilityCalcTypeEnum.OpservationPoints;
             controller.UpdateObservationPointsList();
             PopulateComboBox();
@@ -202,6 +207,10 @@ namespace MilSpace.Visibility
         }
         public void SecondTypePicked()//triggers when user picks second type
         {
+            lblCalculationsType.Text =
+                    LocalizationContext.Instance
+                                       .CalcTypeLocalisationShort[VisibilityCalcTypeEnum.ObservationObjects];
+
             _stepControl = VisibilityCalcTypeEnum.ObservationObjects;
             controller.UpdateObservationPointsList();
             EnableObjList();
@@ -213,6 +222,10 @@ namespace MilSpace.Visibility
 
         public void ThirdTypePicked()//triggers when user picks third type
         {
+            lblCalculationsType.Text =
+                     LocalizationContext.Instance
+                                        .CalcTypeLocalisationShort[VisibilityCalcTypeEnum.BestObservationParameters];
+
             _stepControl = VisibilityCalcTypeEnum.BestObservationParameters;
             SetVOControlsVisibility(true);
             EnableObjList();
@@ -299,7 +312,7 @@ namespace MilSpace.Visibility
                             Title = t.Title,
                             Type = LocalizationContext.Instance.MobilityTypes[t.ObservationPointMobilityType],
                             Affiliation = LocalizationContext.Instance.AffiliationTypes[t.ObservationPointAffiliationType],
-                            Date = t.Dto.Value.ToShortDateString(),
+                            Date = t.Dto.Value.ToString(Helper.DateFormatSmall),
                             Id = t.Objectid
                         };
 
@@ -916,6 +929,8 @@ namespace MilSpace.Visibility
             panel1.Enabled = false;
             ObservPointLabel.Text = controller.GetObservPointsFromGdbFeatureClassName();
             SetVOControlsVisibility(false);
+            cmbOPSource.SelectedIndex = 0;
+            cmbOOSource.SelectedIndex = 0;
         }
 
         private void ultraButton1_Click(object sender, EventArgs e)
@@ -990,16 +1005,15 @@ namespace MilSpace.Visibility
 
         private void SetVOControlsVisibility(bool isVisible)
         {
+            panelBufferDistanceForAllObjects.Visible = !isVisible;
             observPointsFiltersPanel.Visible = !isVisible;
             observObjectsFiltersPanel.Visible = !isVisible;
             columnsOOVisibilityPanel.Visible = !isVisible;
             columnsOPVisibilityPanel.Visible = !isVisible;
-            panel13.Visible = !isVisible;
-            panel14.Visible = !isVisible;
-            chckOP.Visible = !isVisible;
-            chckOO.Visible = !isVisible;
             selectedOPPanel.Visible = isVisible;
             selectedOOPanel.Visible = isVisible;
+            chckOP.Visible = !isVisible;
+            chckOO.Visible = !isVisible;
         }
 
         public void FillVisibilitySessionsTree(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded)
@@ -1223,6 +1237,5 @@ namespace MilSpace.Visibility
             throw new NotImplementedException();
         }
         #endregion
-
     }
 }
