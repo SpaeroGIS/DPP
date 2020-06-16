@@ -1704,6 +1704,11 @@ namespace MilSpace.Visibility
 
         private void FillSelectedPointObservationStationTable(ObservationSetsEnum observationStationsSet)
         {
+            if(dgvObservationPoints.Rows.Count == 0)
+            {
+                return;
+            }
+
             var set = _observPointsController.GetObservationStationToObservPointRelations(_selectedPointId, observationStationsSet);
 
             if(observationStationsSet == ObservationSetsEnum.Gdb)
@@ -2988,6 +2993,11 @@ namespace MilSpace.Visibility
                                                                  Convert.ToDouble(azimuthE.Text),
                                                                  _observerPointSource,
                                                                  true);
+        }
+
+        public void FillObservationObjectsList(Dictionary<int, IGeometry> observationObjects)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -16,6 +16,7 @@ namespace MilSpace.Visibility.ViewController
         void FillVisibilitySessionsList(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded, string newTaskName);
         void FillVisibilityResultsTree(IEnumerable<VisibilityCalcResults> visibilityResults);
         void FillObservationObjectsList(IEnumerable<ObservationObject> observationObjects);
+        void FillObservationObjectsList(Dictionary<int, IGeometry> observationObjects);
         void FillSelectedOPFields(ObservationPoint point);
         void AddSelectedOO(IGeometry geometry, string title);
         void ChangeRecord(int id, ObservationPoint observationPoint);
