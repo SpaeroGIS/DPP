@@ -44,6 +44,15 @@ namespace MilSpace.Core
             { esriFieldType.esriFieldTypeSmallInteger, (value) => { return System.Convert.ToInt16(value); }},
         };
 
+        public static Dictionary<esriFieldType, Func<object>> DefaultValueEsriDataTypes = new Dictionary<esriFieldType, Func<object>>()
+        { { esriFieldType.esriFieldTypeDate, () => { return default(DateTime);}} ,
+          { esriFieldType.esriFieldTypeInteger , () => { return default(int);}} ,
+          { esriFieldType.esriFieldTypeDouble , () =>{ return default(double);}} ,
+          { esriFieldType.esriFieldTypeString, () =>{ return default(string);}} ,
+          { esriFieldType.esriFieldTypeOID , () =>{ return default(int);}},
+          { esriFieldType.esriFieldTypeSmallInteger , () =>{ return default(short);}}
+        };
+
         private static string milSpaceRegistryPath = @"SOFTWARE\WOW6432Node\MilSpace\";
 
         public static bool ConvertFromFieldType<T>(esriFieldType fieldType,
@@ -52,6 +61,12 @@ namespace MilSpace.Core
                                                     out string message)
         {
             message = string.Empty;
+
+            if(value == DBNull.Value)
+            {
+                result = (T)System.Convert.ChangeType(DefaultValueEsriDataTypes[fieldType].Invoke(), typeof(T));
+                return true;
+            }
 
             try
             {

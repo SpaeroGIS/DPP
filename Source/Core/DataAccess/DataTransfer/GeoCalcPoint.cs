@@ -42,7 +42,7 @@ namespace MilSpace.DataAccess.DataTransfer
         public double AnglCameraRotationV;
         public double AvailableHeightUpper;
         public double AvailableHeightLover;
-        public double InnerRadius;
-        public double OuterRadius;
+        public double? InnerRadius { get; set; }
+        public double? OuterRadius { get; set; }
     }
 }

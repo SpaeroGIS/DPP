@@ -62,5 +62,7 @@ namespace MilSpace.Core.DataAccess
         /// Default value - 90
         /// </summary>
          double? AngelMinH { get; set; }
+         double? InnerRadius { get; set; }
+         double? OuterRadius { get; set; }
     }
 }

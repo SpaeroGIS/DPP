@@ -1865,6 +1865,8 @@ namespace MilSpace.Visibility.ViewController
                     _observationPoints[i].AngelMinH = standardPoint.AngelMinH;
                     _observationPoints[i].AzimuthEnd = currentPointBaseEndAzimuth;
                     _observationPoints[i].AzimuthStart = currentPointBaseStartAzimuth;
+                    _observationPoints[i].InnerRadius = standardPoint.InnerRadius;
+                    _observationPoints[i].OuterRadius = standardPoint.OuterRadius;
                     _observationPoints[i].RelativeHeight = standardPoint.RelativeHeight;
 
                     UpdateObservPoint(_observationPoints[i], _observationPoints[i].Objectid, set, false);
@@ -1953,6 +1955,11 @@ namespace MilSpace.Visibility.ViewController
 
         internal IPoint GetObserverPointGeometry(IObserverPoint observerPoint)
         {
+            if(observerPoint == null)
+            {
+                return null;
+            }
+
             var point = new Point
             {
                 X = observerPoint.X.Value,

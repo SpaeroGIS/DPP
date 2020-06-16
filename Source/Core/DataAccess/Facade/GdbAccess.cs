@@ -1030,6 +1030,8 @@ namespace MilSpace.DataAccess.Facade
             var azimuthEIndex = featureClass.FindField("AzimuthE");
             var anglMinIndex = featureClass.FindField("AnglMinH");
             var anglMaxIndex = featureClass.FindField("AnglMaxH");
+            var innerRadiusIndex = featureClass.FindField("InnerRadius");
+            var outerRadiusIndex = featureClass.FindField("OuterRadius");
             var hRelIndex = featureClass.FindField("HRel");
 
             try
@@ -1052,6 +1054,16 @@ namespace MilSpace.DataAccess.Facade
                 if (anglMaxIndex != -1)
                 {
                     feature.set_Value(anglMaxIndex, observerPoint.AngelMaxH);
+                }
+
+                if (innerRadiusIndex != -1)
+                {
+                    feature.set_Value(innerRadiusIndex, observerPoint.InnerRadius);
+                }
+
+                if (outerRadiusIndex != -1)
+                {
+                    feature.set_Value(outerRadiusIndex, observerPoint.OuterRadius);
                 }
 
                 if (hRelIndex != -1)
@@ -1147,6 +1159,8 @@ namespace MilSpace.DataAccess.Facade
                 var azimuthEIndex = featureClass.FindField("AzimuthE");
                 var anglMinIndex = featureClass.FindField("AnglMinH");
                 var anglMaxIndex = featureClass.FindField("AnglMaxH");
+                var innerRadiusIndex = featureClass.FindField("InnerRadius");
+                var outerRadiusIndex = featureClass.FindField("OuterRadius");
                 var hRelIndex = featureClass.FindField("HRel");
 
                 while ((feature = searchCursor.NextFeature()) != null)
@@ -1170,6 +1184,16 @@ namespace MilSpace.DataAccess.Facade
                     if (anglMaxIndex != -1 && feature.Value[anglMaxIndex] == DBNull.Value)
                     {
                         feature.set_Value(anglMaxIndex, 90);
+                    }
+
+                    if (innerRadiusIndex != -1 && feature.Value[innerRadiusIndex] == DBNull.Value)
+                    {
+                        feature.set_Value(innerRadiusIndex, 0);
+                    }
+
+                    if (outerRadiusIndex != -1 && feature.Value[outerRadiusIndex] == DBNull.Value)
+                    {
+                        feature.set_Value(outerRadiusIndex, 1000);
                     }
 
                     if (hRelIndex != -1 && feature.Value[hRelIndex] == DBNull.Value)
