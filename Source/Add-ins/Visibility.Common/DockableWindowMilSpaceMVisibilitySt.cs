@@ -1427,14 +1427,7 @@ namespace MilSpace.Visibility
                     continue;
                 }
 
-                if (rbRouteMode.Checked && _updateForAllFieldsInRouteMode)
-                {
-                    SavePointInRouteMode(selectedPoint);
-                }
-                else
-                {
-                    _observPointsController.UpdateObservPoint(selectedPoint.Objectid, _observerPointSource);
-                }
+                _observPointsController.UpdateObservPoint(selectedPoint.Objectid, _observerPointSource);
             }
         }
 
@@ -1490,21 +1483,8 @@ namespace MilSpace.Visibility
             Helper.TryParceToDouble(azimuthB.Text, out double azimuthStartValue);
             Helper.TryParceToDouble(azimuthE.Text, out double azimuthEndValue);
 
-            if (rbSeparateOP.Checked)
-            {
-                azimuthStart = azimuthStartValue;
-                azimuthEnd = azimuthEndValue;
-            }
-            else
-            {
-                Helper.TryParceToDouble(txtDirection.Text, out double direction);
-
-                var azimuths = _observPointsController
-                                    .FindAzimuthRelativeToDirection(direction, azimuthStartValue,
-                                                                    azimuthEndValue);
-                azimuthStart = azimuths.StartAzimuth;
-                azimuthEnd = azimuths.EndAzimuth;
-            }
+            azimuthStart = azimuthStartValue;
+            azimuthEnd = azimuthEndValue;
 
             if (sourceType == ObservationSetsEnum.GeoCalculator)
             {
@@ -2940,22 +2920,22 @@ namespace MilSpace.Visibility
             if (_isDropDownItemChangedManualy)
             {
                 _observPointsController.GetObserverPointsFromSelectedSource(_observerPointSource);
-            }
 
-            var isObservPointsFromGdb = _observerPointSource == ObservationSetsEnum.Gdb;
+                var isObservPointsFromGdb = _observerPointSource == ObservationSetsEnum.Gdb;
 
-            panelRegym.Enabled = !isObservPointsFromGdb;
+                panelRegym.Enabled = !isObservPointsFromGdb;
 
-            if (isObservPointsFromGdb)
-            {
-                rbSeparateOP.Checked = true;
-            }
-
-            if (rbRouteMode.Checked)
-            {
-                if (!_observPointsController.SetObserverPointsToRouteMode(_observerPointSource, chckDrawOPGraphics.Checked))
+                if (isObservPointsFromGdb)
                 {
                     rbSeparateOP.Checked = true;
+                }
+
+                if (rbRouteMode.Checked)
+                {
+                    if (!_observPointsController.SetObserverPointsToRouteMode(_observerPointSource, chckDrawOPGraphics.Checked))
+                    {
+                        rbSeparateOP.Checked = true;
+                    }
                 }
             }
         }

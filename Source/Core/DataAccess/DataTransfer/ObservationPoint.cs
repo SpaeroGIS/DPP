@@ -143,8 +143,8 @@ namespace MilSpace.DataAccess.DataTransfer
         }
 
 
-        public double? InnerRadius;
-        public double? OuterRadius;
+        public double? InnerRadius { get; set; }
+        public double? OuterRadius { get; set; }
         /// <summary>
         /// The date and time when the item was created
         /// </summary>
