@@ -37,7 +37,6 @@ namespace MilSpace.DataAccess.Facade
 
         internal S1Sources AddSource(S1Sources source)
         {
-
             if (GetSoureceByName(source.idscene) == null)
             {
                 context.S1Sources.InsertOnSubmit(source);
@@ -66,6 +65,11 @@ namespace MilSpace.DataAccess.Facade
             }
 
             return null;
+        }
+
+        internal IEnumerable<S1Sources> GetAllSources()
+        {
+            throw new NotImplementedException();
         }
     }
 }

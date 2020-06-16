@@ -2531,14 +2531,14 @@ namespace MilSpace.Visibility.ViewController
             };
         }
 
+        private static string geoCalcTemFeatureClassName = "GCPoints_";
+
         private IFeatureClass CreateGeoCalcPointsFeatureClass(IRaster raster, List<IObserverPoint> observerPoints)
         {
             var observPointsFeatureClass = GetObservatioPointFeatureClass(mapDocument.ActiveView);
-            var observPointsFromGeoCalcTemporaryFeatureClassName = $"GeoCalculatorPoint_VisiilityMasterResult";
 
             var observPointsFromGeoCalcTemporaryFeatureClass =
                         GdbAccess.Instance.GenerateTemporaryObservationPointFeatureClass(observPointsFeatureClass.Fields,
-                                                                                            $"GeoCalculatorPoint_VisiilityMasterResult");
 
             foreach (var point in observerPoints)
             {
