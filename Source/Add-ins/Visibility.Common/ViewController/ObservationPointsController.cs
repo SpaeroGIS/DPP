@@ -541,8 +541,8 @@ namespace MilSpace.Visibility.ViewController
                     AzimuthStart = geoCalcPoint.AzimuthStart ?? 0,
                     AzimuthEnd = geoCalcPoint.AzimuthEnd ?? 360,
                     RelativeHeight = geoCalcPoint.RelativeHeight ?? 0,
-                    InnerRadius = geoCalcPoint.InnerRadius,
-                    OuterRadius = (geoCalcPoint.OuterRadius == 0)? 1000 : geoCalcPoint.OuterRadius,
+                    InnerRadius = geoCalcPoint.InnerRadius ?? 0,
+                    OuterRadius = (geoCalcPoint.OuterRadius == 0 || geoCalcPoint.OuterRadius == null) ? 1000 : geoCalcPoint.OuterRadius,
                     Dto = DateTime.Now,
                     Operator = geoCalcPoint.UserName
                 };
@@ -2496,11 +2496,15 @@ namespace MilSpace.Visibility.ViewController
                 return null;
             }
 
-            geoCalcPoint.AngelMaxH = geoCalcPoint.AngelMaxH ?? 90;
-            geoCalcPoint.AngelMinH = geoCalcPoint.AngelMinH ?? -90;
-            geoCalcPoint.AzimuthStart = geoCalcPoint.AzimuthStart ?? 0;
-            geoCalcPoint.AzimuthEnd = geoCalcPoint.AzimuthEnd ?? 360;
-            geoCalcPoint.RelativeHeight = geoCalcPoint.RelativeHeight ?? 0;
+            Func<double?, bool> isNullOrNaN = (value) => !value.HasValue || double.IsNaN(value.Value);
+
+            geoCalcPoint.AngelMaxH = isNullOrNaN(geoCalcPoint.AngelMaxH)? 90 : geoCalcPoint.AngelMaxH;
+            geoCalcPoint.AngelMinH = isNullOrNaN(geoCalcPoint.AngelMinH)? -90 : geoCalcPoint.AngelMinH;
+            geoCalcPoint.AzimuthStart = isNullOrNaN(geoCalcPoint.AzimuthStart)? 0 : geoCalcPoint.AzimuthStart;
+            geoCalcPoint.AzimuthEnd = isNullOrNaN(geoCalcPoint.AzimuthEnd)? 360 : geoCalcPoint.AzimuthEnd;
+            geoCalcPoint.InnerRadius = isNullOrNaN(geoCalcPoint.InnerRadius) ? 0 : geoCalcPoint.InnerRadius;
+            geoCalcPoint.OuterRadius = isNullOrNaN(geoCalcPoint.OuterRadius) ? 1000 : geoCalcPoint.OuterRadius;
+            geoCalcPoint.RelativeHeight = isNullOrNaN(geoCalcPoint.RelativeHeight) ? 0 : geoCalcPoint.RelativeHeight;
 
             return geoCalcPoint;
         }
