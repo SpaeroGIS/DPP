@@ -1451,7 +1451,7 @@ namespace MilSpace.Visibility
             this.txtBufferDistance.Name = "txtBufferDistance";
             this.txtBufferDistance.Size = new System.Drawing.Size(55, 20);
             this.txtBufferDistance.TabIndex = 25;
-            this.txtBufferDistance.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithDouble_KeyPress);
+            this.txtBufferDistance.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithInteger_KeyPress);
             // 
             // lblCoveragePercent
             // 
@@ -1538,11 +1538,12 @@ namespace MilSpace.Visibility
             // 
             // txtBufferDistanceFroAllObjects
             // 
+            this.txtBufferDistanceFroAllObjects.Enabled = false;
             this.txtBufferDistanceFroAllObjects.Location = new System.Drawing.Point(174, 5);
             this.txtBufferDistanceFroAllObjects.Name = "txtBufferDistanceFroAllObjects";
             this.txtBufferDistanceFroAllObjects.Size = new System.Drawing.Size(55, 20);
             this.txtBufferDistanceFroAllObjects.TabIndex = 26;
-            this.txtBufferDistanceFroAllObjects.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithDouble_KeyPress);
+            this.txtBufferDistanceFroAllObjects.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithInteger_KeyPress);
             // 
             // lblBufferDistanceForAllObjects
             // 

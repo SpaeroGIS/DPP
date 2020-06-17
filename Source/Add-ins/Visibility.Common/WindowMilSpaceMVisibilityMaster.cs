@@ -27,7 +27,7 @@ namespace MilSpace.Visibility
         private BindingList<CheckObservPointGui> _observationObjects;
         private ObservationPoint _selectedObservationPoint;
         private IGeometry _selectedGeometry;
-        private ObservationSetsEnum _observPointsSource => controller.GetObservStationSet(cmbOPSource.SelectedItem.ToString());
+        private ObservationSetsEnum _observPointsSource => controller.GetObservPointsSet(cmbOPSource.SelectedItem.ToString());
         private ObservationSetsEnum _observObjectsSource => controller.GetObservStationSet(cmbOOSource.SelectedItem.ToString());
         internal WizardResult FinalResult = new WizardResult();
 
@@ -756,7 +756,8 @@ namespace MilSpace.Visibility
                 ObserverPointsLayerName = controller.ObserverPointsLayerName,
                 ObservationObjectLayerName = controller.ObservationObjectsLayerName,
                 ObserverPointsSourceType = _observPointsSource,
-                ObserverObjectsSourceType = _observObjectsSource
+                ObserverObjectsSourceType = _observObjectsSource,
+                Buffer = Convert.ToInt32(txtBufferDistanceFroAllObjects.Text)
             };
 
             if (_stepControl == VisibilityCalcTypeEnum.OpservationPoints)
@@ -1043,7 +1044,8 @@ namespace MilSpace.Visibility
 
         private void BtnChooseOO_Click(object sender, EventArgs e)
         {
-            controller.FillObservationObjectsInMasterFromSelectedSource(controller.GetObservStationSet(cmbOOSource.SelectedItem.ToString()));
+            controller.FillObservationObjectsInMasterFromSelectedSource(controller.GetObservStationSet(cmbOOSource.SelectedItem.ToString()), _stepControl);
+            txtBufferDistanceFroAllObjects.Enabled = _observObjectsSource != ObservationSetsEnum.Gdb;
         }
 
 

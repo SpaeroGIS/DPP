@@ -27,7 +27,8 @@ namespace MilSpace.DataAccess.DataTransfer
         public ObservationSetsEnum ObserverPointsSourceType { get; set; }
         public string ObserverPointsLayerName { get; set; }
         public string ObservationObjectLayerName { get; set; }
-        public ObservationSetsEnum ObserverObjectsSourceType;
+        public ObservationSetsEnum ObserverObjectsSourceType { get; set; }
+        public int Buffer { get; set; }
 
     }
 }
