@@ -1224,7 +1224,7 @@ namespace MilSpace.Visibility
             }
         }
 
-        public void ClearObserverPointsList()
+        public void ClearObserverPointsList(bool isOPFromGdb)
         {
             dgvCheckList.DataSource = null;
         }

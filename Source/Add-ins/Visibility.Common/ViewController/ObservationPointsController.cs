@@ -1737,7 +1737,7 @@ namespace MilSpace.Visibility.ViewController
             }
             else
             {
-                view.ClearObserverPointsList();
+                view.ClearObserverPointsList(set == ObservationSetsEnum.Gdb);
             }
         }
 
@@ -2469,7 +2469,7 @@ namespace MilSpace.Visibility.ViewController
 
         private IFeatureLayer GetFeatureLayer(string layerName)
         {
-            var layer = EsriTools.GetLayer(_observPointFromFeatureLayerData.Key, mapDocument.FocusMap);
+            var layer = EsriTools.GetLayer(layerName, mapDocument.FocusMap);
 
             if (layer is IFeatureLayer)
             {
@@ -2477,11 +2477,16 @@ namespace MilSpace.Visibility.ViewController
             }
             else
             {
+                if (layerName == null)
+                {
+                    layerName = string.Empty;
+                }
+
                 MessageBox.Show(String.Format(
                                     LocalizationContext.Instance.FindLocalizedElement(
                                         "LayerIsNotFeatureLayerError",
                                         "Помилка під час зчитування даних шару. Шар {0} не є векторним"),
-                                    layer.Name),
+                                    layerName),
                                 LocalizationContext.Instance.MessageBoxCaption);
                 return null;
             }
