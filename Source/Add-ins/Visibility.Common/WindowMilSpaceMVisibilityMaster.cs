@@ -1236,7 +1236,11 @@ namespace MilSpace.Visibility
 
         public void RemoveObserverPoint(int id)
         {
-            throw new NotImplementedException();
+            var source = dgvCheckList.DataSource as BindingList<CheckObservPointGui>;
+            var sourceList = new BindingList<CheckObservPointGui>(source);
+            sourceList.Remove(sourceList.First(point => point.Id == id));
+
+            dgvCheckList.DataSource = sourceList;
         }
         #endregion
     }

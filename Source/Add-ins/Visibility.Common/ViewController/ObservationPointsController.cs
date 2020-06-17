@@ -1695,7 +1695,8 @@ namespace MilSpace.Visibility.ViewController
             //TEST GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).TestObjects(geometry);
         }
 
-        internal void GetObserverPointsFromSelectedSource(ObservationSetsEnum set, bool newSource = true, bool setFieldsReadOnly = true)
+        internal void GetObserverPointsFromSelectedSource(ObservationSetsEnum set, bool newSource = true,
+                                                            bool mainWindow = true)
         {
             if(newSource)
             {
@@ -1714,7 +1715,7 @@ namespace MilSpace.Visibility.ViewController
 
                 case ObservationSetsEnum.GeoCalculator:
 
-                    _observationPoints = GetObserverPointsFromGeoCalculator();
+                    _observationPoints = GetObserverPointsFromGeoCalculator((newSource && mainWindow));
 
                     break;
 
@@ -1727,7 +1728,7 @@ namespace MilSpace.Visibility.ViewController
 
             if (_observationPoints != null)
             {
-                if (setFieldsReadOnly)
+                if (mainWindow)
                 {
                     view.SetFieldsEditingAbility(!(set == ObservationSetsEnum.Gdb));
                 }
@@ -2032,8 +2033,6 @@ namespace MilSpace.Visibility.ViewController
 
         internal IFeatureClass GetObserverPointsFeatureClass(ObservationSetsEnum source, IRaster raster, string layerName)
         {
-            UnsubscribeFromDeletePointEvent();
-
              string geoCalcTemFeatureClassName = "GCPoints_";
              string featureClassTemFeatureClassName = "FCPoints_";
 
@@ -2045,7 +2044,7 @@ namespace MilSpace.Visibility.ViewController
 
                 case ObservationSetsEnum.GeoCalculator:
 
-                    var observationPoints = GetObserverPointsFromGeoCalculator();
+                    var observationPoints = GetObserverPointsFromGeoCalculator(false);
                     return CreateTempPointsFeatureClass(raster, observationPoints, geoCalcTemFeatureClassName);
 
                 case ObservationSetsEnum.FeatureLayers:
@@ -2317,7 +2316,7 @@ namespace MilSpace.Visibility.ViewController
         }
 
 
-        private List<IObserverPoint> GetObserverPointsFromGeoCalculator()
+        private List<IObserverPoint> GetObserverPointsFromGeoCalculator(bool subscribeOnEvents)
         {
             var geoModule = ModuleInteraction.Instance.GetModuleInteraction<IGeocalculatorInteraction>(out bool changes);
 
@@ -2330,8 +2329,11 @@ namespace MilSpace.Visibility.ViewController
 
             try
             {
-                geoModule.OnPointDeleted += RemoveGeoCalcPointAsObserverPoint;
-                geoModule.OnPointUpdated += UpdateGeoCalcPoints;
+                if (subscribeOnEvents)
+                {
+                    geoModule.OnPointDeleted += RemoveGeoCalcPointAsObserverPoint;
+                    geoModule.OnPointUpdated += UpdateGeoCalcPoints;
+                }
 
                 return geoModule.GetGeoCalcPoints()
                                 .Select(point => SetDefaultValuesToGeoCalcPoint(point as GeoCalcPoint))
