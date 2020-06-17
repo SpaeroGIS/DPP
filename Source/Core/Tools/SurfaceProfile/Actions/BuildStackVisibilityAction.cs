@@ -444,7 +444,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                             visibilityArePolyFCName,
                             pointsCount,
                             exportedFeatureClass,
-                            curPoints.Value[0]);
+                            pointId + 1);
 
                         results.Add(iStepNum.ToString() + ". " + "Сформовані записи таблиці покриття. для ПС: " + pointId.ToString());
                         iStepNum++;
