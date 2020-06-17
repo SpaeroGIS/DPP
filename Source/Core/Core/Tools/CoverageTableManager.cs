@@ -228,9 +228,9 @@ namespace MilSpace.Tools
             {
                 var observPointFeatureClass = GdbAccess.Instance.GetFeatureClass(_gdb, currentPointFeatureClassName);
                 var observPoint = GetObservationPoints(currentPointFeatureClassName).First();
-                var _totalExpectedPolygon = _coverageAreaData.First(area => area.PointId == -1).Polygon;
+                var totalExpectedPolygon = _coverageAreaData.First(area => area.PointId == -1).Polygon;
 
-                if (_totalExpectedPolygon == null)
+                if (totalExpectedPolygon == null)
                 {
                     AddEmptyAreaRow(observPoint.Title, observPoint.Objectid);
                     return;
@@ -238,13 +238,13 @@ namespace MilSpace.Tools
 
                 var visibilityPolygonsForPointFeatureClass = GdbAccess.Instance.GetFeatureClass(_gdb, visibilityAreasFCName);
                 var expectedPolygon = _coverageAreaData.FirstOrDefault(area => area.PointId == observPoint.Objectid).Polygon;
-                var geoDataSet = (IGeoDataset)visibilityPolygonsForPointFeatureClass;
-                expectedPolygon.Project(geoDataSet.SpatialReference);
-                var expectedPolygonArea = (IArea)expectedPolygon;
 
+                var totalExpectedArea = GetProjectedPolygonArea(totalExpectedPolygon, visibilityPolygonsForPointFeatureClass);
+
+                var expectedPolygonArea = GetProjectedPolygonArea(expectedPolygon, visibilityPolygonsForPointFeatureClass);
                 var visibleArea = EsriTools.GetTotalAreaFromFeatureClass(visibilityPolygonsForPointFeatureClass);
 
-                AddVSRowModel(observPoint.Title, observPoint.Objectid, 1, expectedPolygonArea.Area, visibleArea);
+                AddVSRowModel(observPoint.Title, observPoint.Objectid, 1, expectedPolygonArea, visibleArea, totalExpectedArea);
             }
         }
 
@@ -296,8 +296,11 @@ namespace MilSpace.Tools
                             AddEmptyAreaRow(observPoint.Title, curPointId, polygon.Key, obj.Title);
                             continue;
                         }
+
                         var visibilityArea = EsriTools.GetObjVisibilityArea(visibilityPolygonsForPointFeatureClass, polygon.Value);
-                        AddVARowModel(observPoint.Title, curPointId, obj.Title, polygon.Key, 1, visibilityArea);
+                        var objArea = GetProjectedPolygonArea(polygon.Value, visibilityPolygonsForPointFeatureClass);
+
+                        AddVARowModel(observPoint.Title, curPointId, obj.Title, polygon.Key, 1, visibilityArea, objArea);
                     }
                 }
                 catch (Exception ex)
@@ -313,8 +316,8 @@ namespace MilSpace.Tools
         {
             _logger.InfoEx("> CalculateVATotalValues START");
 
-            var totalObjArea = (IArea)_objPolygons[-1];
             var visibilityPolygonsForPointFeatureClass = GdbAccess.Instance.GetFeatureClass(_gdb, visibilityAreasFCName);
+            var totalObjArea = GetProjectedPolygonArea(_objPolygons[-1], visibilityPolygonsForPointFeatureClass);
 
             try
             {
@@ -334,14 +337,16 @@ namespace MilSpace.Tools
                         return;
                     }
 
-                    if (totalObjArea.Area == 0)
+                    if (totalObjArea == 0)
                     {
                         AddEmptyAreaRow(_allTitle, -1, polygon.Key, obj.Title, -1);
                         continue;
                     }
 
                     var visibilityArea = EsriTools.GetObjVisibilityArea(visibilityPolygonsForPointFeatureClass, polygon.Value);
-                    AddVARowModel(_allTitle, -1, obj.Title, polygon.Key, -1, visibilityArea);
+                    var polygonArea = GetProjectedPolygonArea(polygon.Value, visibilityPolygonsForPointFeatureClass);
+
+                    AddVARowModel(_allTitle, -1, obj.Title, polygon.Key, -1, visibilityArea, polygonArea);
                 }
             }
             catch (Exception ex)
@@ -354,7 +359,11 @@ namespace MilSpace.Tools
                 for (int i = 1; i <= pointsCount; i++)
                 {
                     var areaByPointsSee = EsriTools.GetObjVisibilityArea(visibilityPolygonsForPointFeatureClass, _objPolygons[-1], i);
-                    AddVARowModel(_allTitle, -1, _allTitle, -1, i, areaByPointsSee);
+                    var polygon = _objPolygons[-1];
+
+                    var polygonArea = GetProjectedPolygonArea(polygon, visibilityPolygonsForPointFeatureClass); 
+
+                    AddVARowModel(_allTitle, -1, _allTitle, -1, i, areaByPointsSee, polygonArea);
                 }
             }
             catch (Exception ex)
@@ -380,17 +389,14 @@ namespace MilSpace.Tools
                 var visibilityPolygonsFeatureClass = GdbAccess.Instance.GetFeatureClass(_gdb, visibilityAreasFCName);
                 _totalVisibleArea = EsriTools.GetTotalAreaFromFeatureClass(visibilityPolygonsFeatureClass);
 
-                var geoDataSet = (IGeoDataset)visibilityPolygonsFeatureClass;
-                _totalExpectedPolygon.Project(geoDataSet.SpatialReference);
+                var totalExpectedArea = GetProjectedPolygonArea(_totalExpectedPolygon, visibilityPolygonsFeatureClass);
 
-                var totalExpectedArea = _totalExpectedPolygon as IArea;
-
-                AddVSRowModel(_allTitle, -1, -1, totalExpectedArea.Area, _totalVisibleArea);
+                AddVSRowModel(_allTitle, -1, -1, totalExpectedArea, _totalVisibleArea, totalExpectedArea);
 
                 for (int i = 1; i <= pointsCount; i++)
                 {
                     var areaByPointsSee = EsriTools.GetTotalAreaFromFeatureClass(visibilityPolygonsFeatureClass, i);
-                    AddVSRowModel(_allTitle, -1, i, totalExpectedArea.Area, areaByPointsSee);
+                    AddVSRowModel(_allTitle, -1, i, totalExpectedArea, areaByPointsSee, totalExpectedArea);
                 }
             }
             catch (Exception ex)
@@ -422,12 +428,10 @@ namespace MilSpace.Tools
             });
         }
 
-        private void AddVSRowModel(string pointName, int pointId, int pointsCount, double expectedArea, double visibleArea)
+        private void AddVSRowModel(string pointName, int pointId, int pointsCount,
+                                    double expectedArea, double visibleArea, double totalExpectedArea)
         {
             _logger.InfoEx("> AddVSRowModel START. pointName:{0} visibleArea:{1}", pointName, visibleArea);
-
-            var _totalExpectedPolygon = _coverageAreaData.First(area => area.PointId == -1).Polygon;
-            var totalExpectedArea = _totalExpectedPolygon as IArea;
 
             _coverageTableModel.Add(new CoverageTableRowModel
             {
@@ -436,26 +440,27 @@ namespace MilSpace.Tools
                 ExpectedArea = Convert.ToInt32(Math.Round(expectedArea, 0)),
                 VisibilityArea = Convert.ToInt32(Math.Round(visibleArea, 0)),
                 VisibilityPercent = GetPercent(expectedArea, visibleArea),
-                ToAllExpectedAreaPercent = GetPercent(totalExpectedArea.Area, expectedArea),
-                ToAllVisibilityAreaPercent = GetPercent(totalExpectedArea.Area, visibleArea),
+                ToAllExpectedAreaPercent = GetPercent(totalExpectedArea, expectedArea),
+                ToAllVisibilityAreaPercent = GetPercent(totalExpectedArea, visibleArea),
                 ObservPointsSeeCount = pointsCount
             });
             _logger.InfoEx("> AddVSRowModel END");
         }
 
-        private void AddVARowModel(string pointName, int pointId, string objName, int objId, int pointsCount, double visibleArea)
+        private void AddVARowModel(string pointName, int pointId, string objName, int objId,
+                                    int pointsCount, double visibleArea, double objPolygonArea)
         {
             _logger.InfoEx("> AddVARowModel START. pointName:{0} objName:{1} visibleArea:{2}", pointName, objName, visibleArea);
-            var objArea = (IArea)_objPolygons[objId];
+
             _coverageTableModel.Add(new CoverageTableRowModel
             {
                 ObservPointName = pointName,
                 ObservPointId = pointId,
                 ObservObjId = objId,
                 ObservObjName = objName,
-                ObservObjArea = Convert.ToInt32(Math.Round(objArea.Area, 0)),
+                ObservObjArea = Convert.ToInt32(Math.Round(objPolygonArea, 0)),
                 VisibilityArea = Convert.ToInt32(Math.Round(visibleArea, 0)),
-                VisibilityPercent = GetPercent(objArea.Area, visibleArea),
+                VisibilityPercent = GetPercent(objPolygonArea, visibleArea),
                 ObservPointsSeeCount = pointsCount
             });
             _logger.InfoEx("> AddVARowModel END");
@@ -464,6 +469,15 @@ namespace MilSpace.Tools
         private double GetPercent(double totalArea, double pointArea)
         {
             return Math.Round(((pointArea * 100) / totalArea), 1);
+        }
+
+        private double GetProjectedPolygonArea(IPolygon polygon, IFeatureClass featureClass)
+        {
+            var geoDataSet = (IGeoDataset)featureClass;
+            polygon.Project(geoDataSet.SpatialReference);
+
+            var polygonArea = (IArea)polygon;
+            return polygonArea.Area;
         }
         
         private List<ObservationPoint> GetObservationPoints(string observerPointsFeatureClassName)
