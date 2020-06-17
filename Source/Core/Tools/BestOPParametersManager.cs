@@ -24,7 +24,7 @@ namespace MilSpace.Tools
                                                             IActiveView activeView, IRaster raster)
         {
             var observPointTemporaryFeatureClass = 
-                    GdbAccess.Instance.GenerateTemporaryObservationPointFeatureClass(observatioPointsFeatureClass.Fields,
+                    GdbAccess.Instance.GenerateTemporaryFeatureClassWithRequitedFields(observatioPointsFeatureClass.Fields,
                                                                                         $"{calcResult.TaskName}{_temporaryObserverPointParamsFeatureClassSuffix}");
 
             bool isCircle;

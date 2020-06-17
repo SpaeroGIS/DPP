@@ -277,7 +277,7 @@ namespace MilSpace.Tools
             var fields = featureClass.Fields;
 
             var oidFieldIndex = featureClass.FindField(featureClass.OIDFieldName);
-            var titleFieldIndex = featureClass.FindField(titleFieldName);
+            var titleFieldIndex = (featureClass.FindField(titleFieldName) == -1)? oidFieldIndex : featureClass.FindField(titleFieldName);
             var azimuthBFieldIndex = featureClass.FindField("AzimuthB");
             var azimuthEFieldIndex = featureClass.FindField("AzimuthE");
             var anglMinHFieldIndex = featureClass.FindField("AnglMinH");
@@ -419,6 +419,65 @@ namespace MilSpace.Tools
             }
 
             return points;
+        }
+
+        public static List<ObservationObject> GetObservationObjectsFromFeatureClass(IFeatureClass featureClass)
+        {
+            var observationObjects = new List<ObservationObject>();
+
+            var idFieldIndex = featureClass.FindField(featureClass.OIDFieldName);
+            var titleFieldIndex = featureClass.FindField("sTitleOO");
+            
+            if(titleFieldIndex == -1)
+            {
+                titleFieldIndex = idFieldIndex;
+            }
+
+            if (idFieldIndex == -1)
+            {
+                logger.WarnEx($"> GetObservationObjectsFromFeatureClass. Warning: Cannot find fild \"{featureClass.OIDFieldName}\" in featureClass {featureClass.AliasName}");
+                return null;
+            }
+            
+            IQueryFilter queryFilter = new QueryFilter();
+            queryFilter.WhereClause = $"{featureClass.OIDFieldName} >= 0";
+
+            IFeatureCursor featureCursor = featureClass.Search(queryFilter, true);
+            IFeature feature = featureCursor.NextFeature();
+            try
+            {
+                while (feature != null)
+                {
+                    var shape = feature.ShapeCopy;
+
+                    var geometry = shape as IGeometry;
+
+                    var id = (int)feature.Value[idFieldIndex];
+                    var displayedField = feature.Value[titleFieldIndex].ToString();
+
+                    observationObjects.Add( new ObservationObject
+                    {
+                        Id = id.ToString(),
+                        ObjectId = id,
+                        Title = displayedField,
+                        DTO = DateTime.Now,
+                        Creator = Environment.UserName
+                    });
+
+                    feature = featureCursor.NextFeature();
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorEx($"> GetObservationObjectsFromFeatureClass Exception. ex.Message:{ex.Message}");
+                return null;
+            }
+            finally
+            {
+                Marshal.ReleaseComObject(featureCursor);
+            }
+
+            return observationObjects;
         }
 
 

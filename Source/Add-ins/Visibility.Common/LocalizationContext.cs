@@ -74,7 +74,7 @@ namespace MilSpace.Visibility.Localization
             calcTypeLocalisationShort.Add(VisibilityCalcTypeEnum.ObservationObjects, CalcSecondTypeDescriptionShort);
 
             calcTypeLocalisation.Add(VisibilityCalcTypeEnum.BestObservationParameters, CalcTherdTypeDescription);
-            calcTypeLocalisationShort.Add(VisibilityCalcTypeEnum.BestObservationParameters, CalcTherdTypeDescriptionShort);
+            calcTypeLocalisationShort.Add(VisibilityCalcTypeEnum.BestObservationParameters, CalcThirdTypeDescriptionShort);
 
             calcTypeLocalisation.Add(VisibilityCalcTypeEnum.ResultsObservationAnalize, CalcFourthTypeDescription);
             calcTypeLocalisationShort.Add(VisibilityCalcTypeEnum.ResultsObservationAnalize, CalcFourthTypeDescriptionShort);
@@ -183,7 +183,7 @@ namespace MilSpace.Visibility.Localization
         internal string CalcSecondTypeDescription =>
             FindLocalizedElement("CalcSecondTypeDescription", "Визначення видимості в заданих ОН");
 
-        internal string CalcTherdTypeDescriptionShort =>
+        internal string CalcThirdTypeDescriptionShort =>
             FindLocalizedElement("CalcTherdTypeDescriptionShort", "VO");
         internal string CalcTherdTypeDescription =>
             FindLocalizedElement("CalcTherdTypeDescription", "Визначення параметрів пунктів спостереження");

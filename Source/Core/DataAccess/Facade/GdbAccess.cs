@@ -284,7 +284,7 @@ namespace MilSpace.DataAccess.Facade
             return null;
         }
 
-        public IFeatureClass GenerateTemporaryObservationPointFeatureClass(IFields observPointsFCFields, string name, bool addUniqueSuffix = false)
+        public IFeatureClass GenerateTemporaryFeatureClassWithRequitedFields(IFields observPointsFCFields, string name, bool addUniqueSuffix = false)
         {
             IWorkspace2 wsp2 = (IWorkspace2)calcWorkspace;
             IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)calcWorkspace;
@@ -790,17 +790,28 @@ namespace MilSpace.DataAccess.Facade
             if (GdbAccess.Instance.CheckDatasetExistanceInCalcWorkspace(entityFeatureClassName, esriDatasetType.esriDTFeatureClass))
             {
                 var fx = OpenFeatureClass(calcWorkspace, entityFeatureClassName);
-
+                var result = new List<string>();
                 var titleFld = fx.FindField(titleField);
                 var observPoints = fx.Search(null, false);
-                var observPoint = observPoints.NextFeature();
-                var result = new List<string>();
-                while (observPoint != null)
+
+                try
                 {
-                    result.Add(observPoint.Value[titleFld].ToString());
-                    observPoint = observPoints.NextFeature();
+                    var observPoint = observPoints.NextFeature();
+                    while (observPoint != null)
+                    {
+                        result.Add(observPoint.Value[titleFld].ToString());
+                        observPoint = observPoints.NextFeature();
+                    }
                 }
-                Marshal.ReleaseComObject(observPoints);
+                catch (Exception ex)
+                {
+                    logger.ErrorEx($"> GetCalcEntityNamesFromFeatureClass Unexpected exception. Message: {ex.Message}");
+                    return null;
+                }
+                finally
+                {
+                    Marshal.ReleaseComObject(observPoints);
+                }
                 return result;
             }
 
