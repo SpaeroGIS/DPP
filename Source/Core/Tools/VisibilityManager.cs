@@ -252,29 +252,38 @@ namespace MilSpace.Tools
         }
 
         public static List<IObserverPoint> GetObservationPointsFromAppropriateLayer(string layerName,
-                                                            IActiveView activeView, string titleFieldName = null)
+                                                            IActiveView activeView, string titleFieldName = null,
+                                                            IFeatureClass featureClass = null)
         {
-            var mapLayersManager = new MapLayersManager(activeView);
-            var layer = mapLayersManager.GetLayer(layerName);
-            titleFieldName = titleFieldName ?? "TitleOp"; 
-
-            if (!(layer is IFeatureLayer))
-            {
-                return null;
-            }
-
-            var featureLayer = layer as IFeatureLayer;
+            titleFieldName = titleFieldName ?? "TitleOp";
             var points = new List<IObserverPoint>();
 
-            var featureClass = featureLayer.FeatureClass;
+            if (featureClass == null)
+            {
+                var mapLayersManager = new MapLayersManager(activeView);
+                var layer = mapLayersManager.GetLayer(layerName);
+
+                if (!(layer is IFeatureLayer))
+                {
+                    return null;
+                }
+
+                var featureLayer = layer as IFeatureLayer;
+
+
+                featureClass = featureLayer.FeatureClass;
+            }
+
             var fields = featureClass.Fields;
 
             var oidFieldIndex = featureClass.FindField(featureClass.OIDFieldName);
-            var titleFieldIndex = featureClass.FindField(titleFieldName);
+            var titleFieldIndex = (featureClass.FindField(titleFieldName) == -1)? oidFieldIndex : featureClass.FindField(titleFieldName);
             var azimuthBFieldIndex = featureClass.FindField("AzimuthB");
             var azimuthEFieldIndex = featureClass.FindField("AzimuthE");
             var anglMinHFieldIndex = featureClass.FindField("AnglMinH");
             var anglMaxHFieldIndex = featureClass.FindField("AnglMaxH");
+            var innerRadiusFieldIndex = featureClass.FindField("InnerRadius");
+            var outerRadiusFieldIndex = featureClass.FindField("OuterRadius");
             var heightIndex = featureClass.FindField("HRel");
 
 
@@ -351,6 +360,22 @@ namespace MilSpace.Tools
                         }
 
                         if (!Helper.ConvertFromFieldType(
+                                      fields.Field[innerRadiusFieldIndex].Type,
+                                      feature.Value[innerRadiusFieldIndex], out double innerRadius, out message))
+                        {
+                            throw new InvalidCastException(CreateErrorMessage(message,
+                                                               fields.Field[innerRadiusFieldIndex].AliasName));
+                        }
+
+                        if (!Helper.ConvertFromFieldType(
+                                      fields.Field[outerRadiusFieldIndex].Type,
+                                      feature.Value[outerRadiusFieldIndex], out double outerRadius, out message))
+                        {
+                            throw new InvalidCastException(CreateErrorMessage(message,
+                                                               fields.Field[outerRadiusFieldIndex].AliasName));
+                        }
+
+                        if (!Helper.ConvertFromFieldType(
                                       fields.Field[heightIndex].Type,
                                       feature.Value[heightIndex], out double relativeHeight, out message))
                         {
@@ -368,6 +393,8 @@ namespace MilSpace.Tools
                             AzimuthEnd = azimuthE,
                             AngelMinH = angleMin,
                             AngelMaxH = angleMax,
+                            InnerRadius = innerRadius,
+                            OuterRadius = outerRadius,
                             RelativeHeight = relativeHeight
                         });
 
@@ -392,6 +419,65 @@ namespace MilSpace.Tools
             }
 
             return points;
+        }
+
+        public static List<ObservationObject> GetObservationObjectsFromFeatureClass(IFeatureClass featureClass)
+        {
+            var observationObjects = new List<ObservationObject>();
+
+            var idFieldIndex = featureClass.FindField(featureClass.OIDFieldName);
+            var titleFieldIndex = featureClass.FindField("sTitleOO");
+            
+            if(titleFieldIndex == -1)
+            {
+                titleFieldIndex = idFieldIndex;
+            }
+
+            if (idFieldIndex == -1)
+            {
+                logger.WarnEx($"> GetObservationObjectsFromFeatureClass. Warning: Cannot find fild \"{featureClass.OIDFieldName}\" in featureClass {featureClass.AliasName}");
+                return null;
+            }
+            
+            IQueryFilter queryFilter = new QueryFilter();
+            queryFilter.WhereClause = $"{featureClass.OIDFieldName} >= 0";
+
+            IFeatureCursor featureCursor = featureClass.Search(queryFilter, true);
+            IFeature feature = featureCursor.NextFeature();
+            try
+            {
+                while (feature != null)
+                {
+                    var shape = feature.ShapeCopy;
+
+                    var geometry = shape as IGeometry;
+
+                    var id = (int)feature.Value[idFieldIndex];
+                    var displayedField = feature.Value[titleFieldIndex].ToString();
+
+                    observationObjects.Add( new ObservationObject
+                    {
+                        Id = id.ToString(),
+                        ObjectId = id,
+                        Title = displayedField,
+                        DTO = DateTime.Now,
+                        Creator = Environment.UserName
+                    });
+
+                    feature = featureCursor.NextFeature();
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorEx($"> GetObservationObjectsFromFeatureClass Exception. ex.Message:{ex.Message}");
+                return null;
+            }
+            finally
+            {
+                Marshal.ReleaseComObject(featureCursor);
+            }
+
+            return observationObjects;
         }
 
 

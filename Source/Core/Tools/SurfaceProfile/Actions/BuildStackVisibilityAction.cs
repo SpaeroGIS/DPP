@@ -216,11 +216,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             var coverageTableManager = new CoverageTableManager();
             var bestOPParametersManager = new BestOPParametersManager();
 
-            if (calcResults.HasFlag(VisibilityCalculationResultsEnum.CoverageTable))
-            {
-                coverageTableManager.SetCalculateAreas(pointsFilteringIds, stationsFilteringIds, obserpPointsfeatureClass, obserpStationsfeatureClass);
-            }
-
+            
             foreach (var curPoints in pointsIDs)
             {
                 //curPoints.Key is VisibilityCalculationresultsEnum.ObservationPoints or VisibilityCalculationresultsEnum.ObservationPointSingle
@@ -242,6 +238,12 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                     logger.ErrorEx("> ProcessObservationPoint ERROR ExportObservationFeatureClass. errorMessage:{0}", errorMessage);
                     results.Add("Помилка: " + errorMessage + " ПС: " + pointId.ToString());
                     return messages;
+                }
+
+                if (curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints 
+                        && calcResults.HasFlag(VisibilityCalculationResultsEnum.CoverageTable))
+                {
+                    coverageTableManager.SetCalculateAreas(exportedFeatureClass, oservStationsFeatureClassName);
                 }
 
                 results.Add(iStepNum.ToString() + ". " + "Створено копію ПС для розрахунку: " + exportedFeatureClass);
@@ -431,8 +433,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
                         coverageTableManager.AddPotentialArea(
                             visibilityPotentialAreaFCName,
-                            (curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints),
-                            curPoints.Value[0]);
+                            (curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints),  pointId + 1);
 
                         results.Add(iStepNum.ToString() + ". " + "Розраховано потенційне покриття: " + visibilityPotentialAreaFCName + " ПС: " + pointId.ToString());
                         iStepNum++;
@@ -442,6 +443,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                             (pointId == -1),
                             visibilityArePolyFCName,
                             pointsCount,
+                            exportedFeatureClass,
                             curPoints.Value[0]);
 
                         results.Add(iStepNum.ToString() + ". " + "Сформовані записи таблиці покриття. для ПС: " + pointId.ToString());

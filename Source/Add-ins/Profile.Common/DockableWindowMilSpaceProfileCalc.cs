@@ -13,6 +13,7 @@ using MilSpace.Profile.Localization;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -202,8 +203,7 @@ namespace MilSpace.Profile
 
             logger.InfoEx("> OnDocumentOpenFillDropdowns END");
         }
-
-
+        
         public bool RemoveTreeViewItem()
         {
             try
@@ -2066,6 +2066,36 @@ namespace MilSpace.Profile
                 contextMenuProfilesAttributes.Show(
                                                 dgvProfileAttributes,
                                                 new System.Drawing.Point(e.X, e.Y));
+            }
+        }
+
+        private void CmbRasterLayers_DropDownClosed(object sender, EventArgs e)
+        {
+            cmbVegetationLayer.Focus();
+            toolTipRasterDropDown.Hide(cmbRasterLayers);
+        }
+
+        private void CmbRasterLayers_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            toolTipRasterDropDown.Hide(cmbRasterLayers);
+
+            if (e.Index < 0) { return; } 
+            string text = cmbRasterLayers.GetItemText(cmbRasterLayers.Items[e.Index]);
+            e.DrawBackground();
+
+            using (SolidBrush br = new SolidBrush(e.ForeColor))
+            {
+                e.Graphics.DrawString(text, e.Font, br, e.Bounds);
+            }
+
+            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected && cmbRasterLayers.DroppedDown)
+            {
+                toolTipRasterDropDown.Show(text, cmbRasterLayers, e.Bounds.Right, e.Bounds.Bottom);
+            }
+
+            if (cmbRasterLayers.DroppedDown)
+            {
+                e.DrawFocusRectangle();
             }
         }
     }

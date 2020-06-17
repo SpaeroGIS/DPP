@@ -226,6 +226,7 @@
             this.lblProfileInfoTitle = new System.Windows.Forms.Label();
             this.contextMenuProfilesAttributes = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyToolStrip = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolTipRasterDropDown = new System.Windows.Forms.ToolTip(this.components);
             panelGO = new System.Windows.Forms.Panel();
             panelGO.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -2287,14 +2288,17 @@
             // 
             // cmbRasterLayers
             // 
-            this.cmbRasterLayers.BackColor = System.Drawing.SystemColors.Window;
+            this.cmbRasterLayers.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.cmbRasterLayers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cmbRasterLayers.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cmbRasterLayers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbRasterLayers.Location = new System.Drawing.Point(104, 3);
             this.cmbRasterLayers.Name = "cmbRasterLayers";
             this.cmbRasterLayers.Size = new System.Drawing.Size(182, 21);
             this.cmbRasterLayers.TabIndex = 9;
+            this.cmbRasterLayers.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.CmbRasterLayers_DrawItem);
             this.cmbRasterLayers.SelectedIndexChanged += new System.EventHandler(this.CmbRasterLayers_SelectedIndexChanged);
+            this.cmbRasterLayers.DropDownClosed += new System.EventHandler(this.CmbRasterLayers_DropDownClosed);
             // 
             // lblDEM
             // 
@@ -3084,5 +3088,6 @@
         private System.Windows.Forms.DataGridView dgvProfileAttributes;
         private System.Windows.Forms.DataGridViewTextBoxColumn Attribute;
         private System.Windows.Forms.DataGridViewTextBoxColumn Value;
+        private System.Windows.Forms.ToolTip toolTipRasterDropDown;
     }
 }
