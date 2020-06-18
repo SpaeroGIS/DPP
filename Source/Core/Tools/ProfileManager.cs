@@ -90,7 +90,7 @@ namespace MilSpace.Tools
                 {
                     string tempTableName = $"StackProfile{sdtnow}";
                     ITable profiletable = GdbAccess.Instance.GetProfileTable(tempTableName);
-                    IFeatureClass lines = GdbAccess.Instance.GetCalcProfileFeatureClass(profileSourceName);
+                    IFeatureClass lines = GdbAccess.Instance.GetCalcWorkspaceFeatureClass(profileSourceName);
 
                     IQueryFilter queryFilter = new QueryFilter()
                     {

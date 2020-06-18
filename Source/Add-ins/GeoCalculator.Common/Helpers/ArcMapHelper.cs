@@ -105,10 +105,8 @@ namespace MilSpace.GeoCalculator
         {
             var focusMap = (ArcMap.Application.Document as IMxDocument)?.FocusMap;
             var spatialReference = focusMap.SpatialReference;
-
-            IDistanceConverter distanceConverter = new DistanceConverter();
-
-            return distanceConverter.GetValue($"{metres}m", spatialReference);
+            
+            return EsriTools.GetMetresInMapUnits(metres, spatialReference);
         }
     }
 }

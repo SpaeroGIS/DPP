@@ -3,6 +3,7 @@ using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.DataSourcesGDB;
 using ESRI.ArcGIS.DataSourcesRaster;
 using ESRI.ArcGIS.Display;
+using ESRI.ArcGIS.Editor;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geodatabase;
@@ -704,6 +705,7 @@ namespace MilSpace.Core.Tools
 
             return bagClass.Envelope;
         }
+
 
         private static double FindAngleBetweenAzimuths(double maxAzimuth, double minAzimuth, bool between)
         {
@@ -1423,10 +1425,10 @@ namespace MilSpace.Core.Tools
             return resultPolylines;
         }
 
-        public static Dictionary<int, IGeometry> GetGeometriesFromLayer(IFeatureLayer featureLayer, IActiveView activeView)
+        public static Dictionary<int, IGeometry> GetGeometriesFromLayer(IFeatureClass featureClass, ISpatialReference spatialReference = null)
         {
             var geometries = new Dictionary<int, IGeometry>();
-            var featureClass = featureLayer.FeatureClass;
+            //var featureClass = featureLayer.FeatureClass;
 
             var idFieldIndex = featureClass.FindField(featureClass.OIDFieldName);
 
@@ -1444,7 +1446,10 @@ namespace MilSpace.Core.Tools
                 while (feature != null)
                 {
                     var shape = feature.ShapeCopy;
-                    shape.Project(activeView.FocusMap.SpatialReference);
+                    if (spatialReference != null)
+                    {
+                        shape.Project(spatialReference);
+                    }
                     var id = (int)feature.Value[idFieldIndex];
 
                     geometries.Add(id, shape);
@@ -1800,6 +1805,8 @@ namespace MilSpace.Core.Tools
             }
 
             logger.InfoEx("> GetCoverageArea END");
+            coverageArea.SpatialReference = point.SpatialReference;
+
             return coverageArea;
         }
 
@@ -1953,6 +1960,7 @@ namespace MilSpace.Core.Tools
             }
 
             logger.InfoEx("> GetTotalAreaFromFeatureClass END result:{0}", result);
+
             return result;
         }
 
@@ -2256,6 +2264,13 @@ namespace MilSpace.Core.Tools
             return envelope.Height * 0.1;
         }
 
+        public static double GetMetresInMapUnits(double metres, ISpatialReference spatialReference)
+        {
+            IDistanceConverter distanceConverter = new DistanceConverter();
+
+            return distanceConverter.GetValue($"{metres} m", spatialReference);
+        }
+
         public static List<IPoint> GetPointsFromGeometries(IEnumerable<IGeometry> geometries, ISpatialReference spatialReference, out bool isCircle)
         {
             isCircle = false;
@@ -2318,11 +2333,17 @@ namespace MilSpace.Core.Tools
             if(layer is IFeatureLayer)
             {
                 var featureLayer = layer as IFeatureLayer;
-                var geometries = GetGeometriesFromLayer(featureLayer, activeView);
+                var geometries = GetGeometriesFromLayer(featureLayer.FeatureClass, activeView.FocusMap.SpatialReference);
                 return GetEnvelopeOfGeometriesList(geometries.Values);
             }
 
             return null;
+        }
+
+        public static IEnvelope GetFeatreClassExtent(IFeatureClass featureClass)
+        {
+            var geometries = GetGeometriesFromLayer(featureClass);
+            return GetEnvelopeOfGeometriesList(geometries.Values);
         }
     }
 }

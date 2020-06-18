@@ -101,7 +101,7 @@ namespace MilSpace.DataAccess.Facade
                 workspaceEdit.StartEditing(true);
                 workspaceEdit.StartEditOperation();
 
-                IFeatureClass calc = GetCalcProfileFeatureClass(featureClassName);
+                IFeatureClass calc = GetCalcWorkspaceFeatureClass(featureClassName);
                 var GCS_WGS = Helper.GetBasePointSpatialReference();
 
                 profileLines.ToList().ForEach(
@@ -284,7 +284,7 @@ namespace MilSpace.DataAccess.Facade
             return null;
         }
 
-        public IFeatureClass GenerateTemporaryObservationPointFeatureClass(IFields observPointsFCFields, string name, bool addUniqueSuffix = false)
+        public IFeatureClass GenerateTemporaryFeatureClassWithRequitedFields(IFields observPointsFCFields, string name, bool addUniqueSuffix = false)
         {
             IWorkspace2 wsp2 = (IWorkspace2)calcWorkspace;
             IFeatureWorkspace featureWorkspace = (IFeatureWorkspace)calcWorkspace;
@@ -447,7 +447,7 @@ namespace MilSpace.DataAccess.Facade
             workspaceEdit.StartEditing(true);
             workspaceEdit.StartEditOperation();
 
-            IFeatureClass calc = GetCalcProfileFeatureClass(featureClassName);
+            IFeatureClass calc = GetCalcWorkspaceFeatureClass(featureClassName);
             var GCS_WGS = Helper.GetBasePointSpatialReference();
 
             int i = 0;
@@ -484,7 +484,7 @@ namespace MilSpace.DataAccess.Facade
             workspaceEdit.StartEditing(true);
             workspaceEdit.StartEditOperation();
 
-            IFeatureClass calc = GetCalcProfileFeatureClass(featureClassName);
+            IFeatureClass calc = GetCalcWorkspaceFeatureClass(featureClassName);
             var GCS_WGS = Helper.GetBasePointSpatialReference();
 
             int i = 0;
@@ -514,7 +514,7 @@ namespace MilSpace.DataAccess.Facade
             workspaceEdit.StartEditing(true);
             workspaceEdit.StartEditOperation();
 
-            IFeatureClass calc = GetCalcProfileFeatureClass(featureClassName);
+            IFeatureClass calc = GetCalcWorkspaceFeatureClass(featureClassName);
             var GCS_WGS = Helper.GetBasePointSpatialReference();
 
             polygons.ToList().ForEach(polygon =>
@@ -577,7 +577,7 @@ namespace MilSpace.DataAccess.Facade
 
         public void EraseProfileLines()
         {
-            IFeatureClass calc = GetCalcProfileFeatureClass("CalcProfile_L");
+            IFeatureClass calc = GetCalcWorkspaceFeatureClass("CalcProfile_L");
             IQueryFilter queryFilter = new QueryFilterClass
             {
                 WhereClause = $"{calc.OIDFieldName} >= 0"
@@ -688,7 +688,7 @@ namespace MilSpace.DataAccess.Facade
 
         }
 
-        public IFeatureClass GetCalcProfileFeatureClass(string currentFeatureClass)
+        public IFeatureClass GetCalcWorkspaceFeatureClass(string currentFeatureClass)
         {
             return OpenFeatureClass(calcWorkspace, currentFeatureClass);
         }
@@ -790,17 +790,28 @@ namespace MilSpace.DataAccess.Facade
             if (GdbAccess.Instance.CheckDatasetExistanceInCalcWorkspace(entityFeatureClassName, esriDatasetType.esriDTFeatureClass))
             {
                 var fx = OpenFeatureClass(calcWorkspace, entityFeatureClassName);
-
+                var result = new List<string>();
                 var titleFld = fx.FindField(titleField);
                 var observPoints = fx.Search(null, false);
-                var observPoint = observPoints.NextFeature();
-                var result = new List<string>();
-                while (observPoint != null)
+
+                try
                 {
-                    result.Add(observPoint.Value[titleFld].ToString());
-                    observPoint = observPoints.NextFeature();
+                    var observPoint = observPoints.NextFeature();
+                    while (observPoint != null)
+                    {
+                        result.Add(observPoint.Value[titleFld].ToString());
+                        observPoint = observPoints.NextFeature();
+                    }
                 }
-                Marshal.ReleaseComObject(observPoints);
+                catch (Exception ex)
+                {
+                    logger.ErrorEx($"> GetCalcEntityNamesFromFeatureClass Unexpected exception. Message: {ex.Message}");
+                    return null;
+                }
+                finally
+                {
+                    Marshal.ReleaseComObject(observPoints);
+                }
                 return result;
             }
 

@@ -27,8 +27,8 @@ namespace MilSpace.Visibility
         private BindingList<CheckObservPointGui> _observationObjects;
         private ObservationPoint _selectedObservationPoint;
         private IGeometry _selectedGeometry;
-        private ObservationSetsEnum _observPointsSource => controller.GetObservStationSet(cmbOPSource.SelectedItem.ToString());
-        private ObservationSetsEnum _observObjectsSource => controller.GetObservStationSet(cmbOOSource.SelectedItem.ToString());
+        private ObservationSetsEnum _observPointsSource;
+        private ObservationSetsEnum _observObjectsSource;
         internal WizardResult FinalResult = new WizardResult();
 
         private static IActiveView ActiveView => ArcMap.Document.ActiveView;
@@ -160,7 +160,8 @@ namespace MilSpace.Visibility
         private void SetDefaultValues()
         {
             txtStep.Text = "1";
-            txtBufferDistance.Text = "1";
+            txtBufferDistance.Text = "10";
+            txtBufferDistanceFroAllObjects.Text = "10";
             txtCoveragePercent.Text = "100";
         }
 
@@ -192,6 +193,10 @@ namespace MilSpace.Visibility
         }
         public void FirstTypePicked()//triggers when user picks first type
         {
+            lblCalculationsType.Text = 
+                    LocalizationContext.Instance
+                                       .CalcTypeLocalisationShort[VisibilityCalcTypeEnum.OpservationPoints];
+
             _stepControl = VisibilityCalcTypeEnum.OpservationPoints;
             controller.UpdateObservationPointsList();
             PopulateComboBox();
@@ -202,6 +207,10 @@ namespace MilSpace.Visibility
         }
         public void SecondTypePicked()//triggers when user picks second type
         {
+            lblCalculationsType.Text =
+                    LocalizationContext.Instance
+                                       .CalcTypeLocalisationShort[VisibilityCalcTypeEnum.ObservationObjects];
+
             _stepControl = VisibilityCalcTypeEnum.ObservationObjects;
             controller.UpdateObservationPointsList();
             EnableObjList();
@@ -213,6 +222,10 @@ namespace MilSpace.Visibility
 
         public void ThirdTypePicked()//triggers when user picks third type
         {
+            lblCalculationsType.Text =
+                     LocalizationContext.Instance
+                                        .CalcTypeLocalisationShort[VisibilityCalcTypeEnum.BestObservationParameters];
+
             _stepControl = VisibilityCalcTypeEnum.BestObservationParameters;
             SetVOControlsVisibility(true);
             EnableObjList();
@@ -274,6 +287,7 @@ namespace MilSpace.Visibility
             cmbOPSource.Items.Clear();
             cmbOPSource.Items.AddRange(LocalizationContext.Instance.ObservPointSets.Select(set => set.Value).ToArray());
             cmbOPSource.SelectedItem = LocalizationContext.Instance.ObservPointsSet;
+            _observPointsSource = controller.GetObservPointsSet(cmbOPSource.SelectedItem.ToString());
         }
 
         public void PopulateObservationObjectsTypesComboBox()
@@ -281,6 +295,7 @@ namespace MilSpace.Visibility
             cmbOOSource.Items.Clear();
             cmbOOSource.Items.AddRange(LocalizationContext.Instance.ObservObjectsSets.Select(set => set.Value).ToArray());
             cmbOOSource.SelectedItem = LocalizationContext.Instance.ObservObjectsSet;
+            _observObjectsSource = controller.GetObservStationSet(cmbOOSource.SelectedItem.ToString());
         }
 
         public void FillObservationPointList(IEnumerable<IObserverPoint> observationPoints,
@@ -299,7 +314,7 @@ namespace MilSpace.Visibility
                             Title = t.Title,
                             Type = LocalizationContext.Instance.MobilityTypes[t.ObservationPointMobilityType],
                             Affiliation = LocalizationContext.Instance.AffiliationTypes[t.ObservationPointAffiliationType],
-                            Date = t.Dto.Value.ToShortDateString(),
+                            Date = t.Dto.Value.ToString(Helper.DateFormatSmall),
                             Id = t.Objectid
                         };
 
@@ -401,6 +416,12 @@ namespace MilSpace.Visibility
 
         public void FillObservationObjectsList(Dictionary<int, IGeometry> observationObjects)
         {
+            if(observationObjects == null)
+            {
+                dgvObjects.Text = "Objects are not found";
+                return;
+            }
+
             try
             {
                 var itemsToShow = observationObjects.Select(
@@ -423,20 +444,6 @@ namespace MilSpace.Visibility
                     dgvObjects.DataSource = _observationObjects;
                     SetDataGridView_For_Objects();
                 }
-
-                //if (useCurrentExtent)
-                //{
-                //    var onCurrent = controller.GetObservObjectsOnCurrentMapExtent(ActiveView);
-                //    var commonO = (_observationObjects.Select(a => a.Id).Intersect(onCurrent.Select(b => b.ObjectId)));
-                //    foreach (CheckObservPointGui e in _observationObjects)
-                //    {
-                //        if (commonO.Contains(e.Id))
-                //        {
-                //            e.Check = true;
-                //        }
-                //    }
-                //    dgvObjects.Refresh();
-                //}
             }
             catch (ArgumentNullException)
             {
@@ -743,7 +750,8 @@ namespace MilSpace.Visibility
                 ObserverPointsLayerName = controller.ObserverPointsLayerName,
                 ObservationObjectLayerName = controller.ObservationObjectsLayerName,
                 ObserverPointsSourceType = _observPointsSource,
-                ObserverObjectsSourceType = _observObjectsSource
+                ObserverObjectsSourceType = _observObjectsSource,
+                Buffer = Convert.ToInt32(txtBufferDistanceFroAllObjects.Text)
             };
 
             if (_stepControl == VisibilityCalcTypeEnum.OpservationPoints)
@@ -916,6 +924,8 @@ namespace MilSpace.Visibility
             panel1.Enabled = false;
             ObservPointLabel.Text = controller.GetObservPointsFromGdbFeatureClassName();
             SetVOControlsVisibility(false);
+            cmbOPSource.SelectedIndex = 0;
+            cmbOOSource.SelectedIndex = 0;
         }
 
         private void ultraButton1_Click(object sender, EventArgs e)
@@ -990,16 +1000,15 @@ namespace MilSpace.Visibility
 
         private void SetVOControlsVisibility(bool isVisible)
         {
+            panelBufferDistanceForAllObjects.Visible = !isVisible;
             observPointsFiltersPanel.Visible = !isVisible;
             observObjectsFiltersPanel.Visible = !isVisible;
             columnsOOVisibilityPanel.Visible = !isVisible;
             columnsOPVisibilityPanel.Visible = !isVisible;
-            panel13.Visible = !isVisible;
-            panel14.Visible = !isVisible;
-            chckOP.Visible = !isVisible;
-            chckOO.Visible = !isVisible;
             selectedOPPanel.Visible = isVisible;
             selectedOOPanel.Visible = isVisible;
+            chckOP.Visible = !isVisible;
+            chckOO.Visible = !isVisible;
         }
 
         public void FillVisibilitySessionsTree(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded)
@@ -1024,12 +1033,32 @@ namespace MilSpace.Visibility
 
         private void BtnChooseOP_Click(object sender, EventArgs e)
         {
-            controller.FillObserverPointsInMasterFromSelectedSource(controller.GetObservPointsSet(cmbOPSource.SelectedItem.ToString()), _stepControl);
+            _observPointsSource = controller.GetObservPointsSet(cmbOPSource.SelectedItem.ToString());
+
+            if (_observPointsSource == ObservationSetsEnum.Gdb && _stepControl != VisibilityCalcTypeEnum.BestObservationParameters)
+            {
+                FillObservPointsOnCurrentView(controller.GetObservPointsOnCurrentMapExtent(ActiveView));
+            }
+            else
+            {
+                controller.FillObserverPointsInMasterFromSelectedSource(_observPointsSource, _stepControl);
+            }
         }
 
         private void BtnChooseOO_Click(object sender, EventArgs e)
         {
-            controller.FillObservationObjectsInMasterFromSelectedSource(controller.GetObservStationSet(cmbOOSource.SelectedItem.ToString()));
+            _observObjectsSource = controller.GetObservStationSet(cmbOOSource.SelectedItem.ToString());
+
+            if (_observObjectsSource == ObservationSetsEnum.Gdb && _stepControl != VisibilityCalcTypeEnum.BestObservationParameters)
+            {
+                FillObsObj(true);
+            }
+            else
+            {
+                controller.FillObservationObjectsInMasterFromSelectedSource(_observObjectsSource, _stepControl);
+            }
+
+            txtBufferDistanceFroAllObjects.Enabled = _observObjectsSource != ObservationSetsEnum.Gdb;
         }
 
 
@@ -1208,9 +1237,19 @@ namespace MilSpace.Visibility
             }
         }
 
-        public void ClearObserverPointsList()
+        public void ClearObserverPointsList(bool isOPFromGdb)
         {
-            dgvCheckList.DataSource = null;
+            cmbOPSource.SelectedItem = LocalizationContext.Instance.ObservPointsSet;
+
+            if (isOPFromGdb)
+            {
+                dgvCheckList.DataSource = null;
+            }
+            else
+            {
+                _observPointsSource = controller.GetObservPointsSet(cmbOPSource.SelectedItem.ToString());
+                controller.FillObserverPointsInMasterFromSelectedSource(_observPointsSource, _stepControl);
+            }
         }
 
         public void SetFieldsEditingAbility(bool areFiedlsReadOnly)
@@ -1220,9 +1259,12 @@ namespace MilSpace.Visibility
 
         public void RemoveObserverPoint(int id)
         {
-            throw new NotImplementedException();
+            var source = dgvCheckList.DataSource as BindingList<CheckObservPointGui>;
+            var sourceList = new BindingList<CheckObservPointGui>(source);
+            sourceList.Remove(sourceList.First(point => point.Id == id));
+
+            dgvCheckList.DataSource = sourceList;
         }
         #endregion
-
     }
 }

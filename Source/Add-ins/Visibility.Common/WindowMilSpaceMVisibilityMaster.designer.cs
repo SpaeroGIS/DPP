@@ -120,6 +120,9 @@ namespace MilSpace.Visibility
             this.lblSelectedOO = new System.Windows.Forms.Label();
             this.chckOO = new System.Windows.Forms.CheckBox();
             this.dgvObjects = new System.Windows.Forms.DataGridView();
+            this.panelBufferDistanceForAllObjects = new System.Windows.Forms.Panel();
+            this.txtBufferDistanceFroAllObjects = new System.Windows.Forms.TextBox();
+            this.lblBufferDistanceForAllObjects = new System.Windows.Forms.Label();
             this.columnsOOVisibilityPanel = new System.Windows.Forms.Panel();
             this.checkDate_Object = new System.Windows.Forms.CheckBox();
             this.checkB_Affilation = new System.Windows.Forms.CheckBox();
@@ -138,6 +141,7 @@ namespace MilSpace.Visibility
             this.imagesComboBox = new System.Windows.Forms.ComboBox();
             this.label22 = new System.Windows.Forms.Label();
             this.panel47 = new System.Windows.Forms.Panel();
+            this.lblCalculationsType = new System.Windows.Forms.Label();
             this.label30 = new System.Windows.Forms.Label();
             this.stepThree = new System.Windows.Forms.TabPage();
             this.panel25 = new System.Windows.Forms.Panel();
@@ -229,6 +233,7 @@ namespace MilSpace.Visibility
             this.panel19.SuspendLayout();
             this.selectedOOPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvObjects)).BeginInit();
+            this.panelBufferDistanceForAllObjects.SuspendLayout();
             this.columnsOOVisibilityPanel.SuspendLayout();
             this.chooseOOPanel.SuspendLayout();
             this.observObjectsFiltersPanel.SuspendLayout();
@@ -897,6 +902,7 @@ namespace MilSpace.Visibility
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.panel19);
+            this.splitContainer1.Panel2.Controls.Add(this.panelBufferDistanceForAllObjects);
             this.splitContainer1.Panel2.Controls.Add(this.columnsOOVisibilityPanel);
             this.splitContainer1.Panel2.Controls.Add(this.chooseOOPanel);
             this.splitContainer1.Panel2.Controls.Add(this.observObjectsFiltersPanel);
@@ -1377,6 +1383,7 @@ namespace MilSpace.Visibility
             this.panel13.Padding = new System.Windows.Forms.Padding(4, 3, 4, 0);
             this.panel13.Size = new System.Drawing.Size(441, 30);
             this.panel13.TabIndex = 13;
+            this.panel13.Visible = false;
             // 
             // ObservPointLabel
             // 
@@ -1409,7 +1416,7 @@ namespace MilSpace.Visibility
             this.panel19.Location = new System.Drawing.Point(0, 120);
             this.panel19.Margin = new System.Windows.Forms.Padding(0);
             this.panel19.Name = "panel19";
-            this.panel19.Size = new System.Drawing.Size(472, 227);
+            this.panel19.Size = new System.Drawing.Size(472, 197);
             this.panel19.TabIndex = 22;
             // 
             // selectedOOPanel
@@ -1424,7 +1431,7 @@ namespace MilSpace.Visibility
             this.selectedOOPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.selectedOOPanel.Location = new System.Drawing.Point(0, 0);
             this.selectedOOPanel.Name = "selectedOOPanel";
-            this.selectedOOPanel.Size = new System.Drawing.Size(472, 227);
+            this.selectedOOPanel.Size = new System.Drawing.Size(472, 197);
             this.selectedOOPanel.TabIndex = 25;
             // 
             // txtCoveragePercent
@@ -1444,7 +1451,7 @@ namespace MilSpace.Visibility
             this.txtBufferDistance.Name = "txtBufferDistance";
             this.txtBufferDistance.Size = new System.Drawing.Size(55, 20);
             this.txtBufferDistance.TabIndex = 25;
-            this.txtBufferDistance.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithDouble_KeyPress);
+            this.txtBufferDistance.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithInteger_KeyPress);
             // 
             // lblCoveragePercent
             // 
@@ -1515,8 +1522,39 @@ namespace MilSpace.Visibility
             this.dgvObjects.Name = "dgvObjects";
             this.dgvObjects.RowHeadersVisible = false;
             this.dgvObjects.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvObjects.Size = new System.Drawing.Size(472, 227);
+            this.dgvObjects.Size = new System.Drawing.Size(472, 197);
             this.dgvObjects.TabIndex = 23;
+            // 
+            // panelBufferDistanceForAllObjects
+            // 
+            this.panelBufferDistanceForAllObjects.Controls.Add(this.txtBufferDistanceFroAllObjects);
+            this.panelBufferDistanceForAllObjects.Controls.Add(this.lblBufferDistanceForAllObjects);
+            this.panelBufferDistanceForAllObjects.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelBufferDistanceForAllObjects.Location = new System.Drawing.Point(0, 317);
+            this.panelBufferDistanceForAllObjects.Name = "panelBufferDistanceForAllObjects";
+            this.panelBufferDistanceForAllObjects.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.panelBufferDistanceForAllObjects.Size = new System.Drawing.Size(472, 30);
+            this.panelBufferDistanceForAllObjects.TabIndex = 27;
+            // 
+            // txtBufferDistanceFroAllObjects
+            // 
+            this.txtBufferDistanceFroAllObjects.Enabled = false;
+            this.txtBufferDistanceFroAllObjects.Location = new System.Drawing.Point(174, 5);
+            this.txtBufferDistanceFroAllObjects.Name = "txtBufferDistanceFroAllObjects";
+            this.txtBufferDistanceFroAllObjects.Size = new System.Drawing.Size(55, 20);
+            this.txtBufferDistanceFroAllObjects.TabIndex = 26;
+            this.txtBufferDistanceFroAllObjects.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithInteger_KeyPress);
+            // 
+            // lblBufferDistanceForAllObjects
+            // 
+            this.lblBufferDistanceForAllObjects.AutoSize = true;
+            this.lblBufferDistanceForAllObjects.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblBufferDistanceForAllObjects.Location = new System.Drawing.Point(5, 7);
+            this.lblBufferDistanceForAllObjects.Name = "lblBufferDistanceForAllObjects";
+            this.lblBufferDistanceForAllObjects.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
+            this.lblBufferDistanceForAllObjects.Size = new System.Drawing.Size(148, 17);
+            this.lblBufferDistanceForAllObjects.TabIndex = 27;
+            this.lblBufferDistanceForAllObjects.Text = "Відстань для буфера";
             // 
             // columnsOOVisibilityPanel
             // 
@@ -1662,6 +1700,7 @@ namespace MilSpace.Visibility
             this.panel14.Padding = new System.Windows.Forms.Padding(4);
             this.panel14.Size = new System.Drawing.Size(472, 30);
             this.panel14.TabIndex = 14;
+            this.panel14.Visible = false;
             // 
             // observObjectsLabel
             // 
@@ -1706,7 +1745,7 @@ namespace MilSpace.Visibility
             this.imagesComboBox.FormattingEnabled = true;
             this.imagesComboBox.Location = new System.Drawing.Point(224, 3);
             this.imagesComboBox.Name = "imagesComboBox";
-            this.imagesComboBox.Size = new System.Drawing.Size(214, 24);
+            this.imagesComboBox.Size = new System.Drawing.Size(483, 24);
             this.imagesComboBox.TabIndex = 8;
             // 
             // label22
@@ -1723,6 +1762,7 @@ namespace MilSpace.Visibility
             // panel47
             // 
             this.panel47.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.panel47.Controls.Add(this.lblCalculationsType);
             this.panel47.Controls.Add(this.label30);
             this.panel47.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel47.Location = new System.Drawing.Point(0, 0);
@@ -1731,6 +1771,16 @@ namespace MilSpace.Visibility
             this.panel47.Padding = new System.Windows.Forms.Padding(4);
             this.panel47.Size = new System.Drawing.Size(921, 40);
             this.panel47.TabIndex = 66;
+            // 
+            // lblCalculationsType
+            // 
+            this.lblCalculationsType.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lblCalculationsType.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblCalculationsType.Location = new System.Drawing.Point(865, 4);
+            this.lblCalculationsType.Name = "lblCalculationsType";
+            this.lblCalculationsType.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.lblCalculationsType.Size = new System.Drawing.Size(52, 32);
+            this.lblCalculationsType.TabIndex = 8;
             // 
             // label30
             // 
@@ -1953,7 +2003,7 @@ namespace MilSpace.Visibility
             this.cmbPositions.Items.AddRange(new object[] {
             "сверху",
             "снизу"});
-            this.cmbPositions.Location = new System.Drawing.Point(593, 4);
+            this.cmbPositions.Location = new System.Drawing.Point(757, 4);
             this.cmbPositions.Name = "cmbPositions";
             this.cmbPositions.Size = new System.Drawing.Size(153, 24);
             this.cmbPositions.TabIndex = 7;
@@ -1966,7 +2016,7 @@ namespace MilSpace.Visibility
             this.cmbMapLayers.FormattingEnabled = true;
             this.cmbMapLayers.Location = new System.Drawing.Point(311, 4);
             this.cmbMapLayers.Name = "cmbMapLayers";
-            this.cmbMapLayers.Size = new System.Drawing.Size(282, 24);
+            this.cmbMapLayers.Size = new System.Drawing.Size(446, 24);
             this.cmbMapLayers.TabIndex = 6;
             // 
             // label14
@@ -2471,6 +2521,8 @@ namespace MilSpace.Visibility
             this.selectedOOPanel.ResumeLayout(false);
             this.selectedOOPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvObjects)).EndInit();
+            this.panelBufferDistanceForAllObjects.ResumeLayout(false);
+            this.panelBufferDistanceForAllObjects.PerformLayout();
             this.columnsOOVisibilityPanel.ResumeLayout(false);
             this.chooseOOPanel.ResumeLayout(false);
             this.chooseOOPanel.PerformLayout();
@@ -2670,5 +2722,9 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Button btnChooseOP;
         private System.Windows.Forms.Button btnChooseOO;
         private System.Windows.Forms.CheckBox chckSaveOPParams;
+        private System.Windows.Forms.Panel panelBufferDistanceForAllObjects;
+        private System.Windows.Forms.TextBox txtBufferDistanceFroAllObjects;
+        private System.Windows.Forms.Label lblBufferDistanceForAllObjects;
+        private System.Windows.Forms.Label lblCalculationsType;
     }
 }
