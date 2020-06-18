@@ -266,14 +266,13 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
 
                     //Try to clip the raster source by visibilityPotentialAreaFCName
-
                     var visibilityPotentialAreaImgName =
                     VisibilityCalcResults.GetResultName(VisibilityCalculationResultsEnum.VisibilityRastertPotentialArea, outputSourceName, pointId);
                     if (!CalculationLibrary.ClipVisibilityZonesByAreas(
                            rasterSource,
                            visibilityPotentialAreaImgName,
-                           oservStationsFeatureClassName,
-                           messages))
+                           fc.AliasName,
+                           messages, "NONE"))
                     {
                         string errorMessage = $"The result {visibilityPotentialAreaImgName} was not generated";
                         result.Exception = new MilSpaceVisibilityCalcFailedException(errorMessage);
@@ -284,7 +283,10 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                     }
                     else
                     {
-                        results.Add(iStepNum.ToString() + ". " + "Розраховано покриття для розрахунку: " + visibilityPotentialAreaImgName + " ПС: " + pointId.ToString());
+                        results.Add(iStepNum.ToString() + ". " + "Розраховано покриття для розрахунку на основі потенційноі видимості: " + visibilityPotentialAreaImgName + " ПС: " + pointId.ToString());
+                        rasterSource = visibilityPotentialAreaImgName;
+                        //Delete temporary Featureclass usewd for clipping the base image by potential area
+                        GdbAccess.Instance.RemoveFeatureClass(fc.AliasName);
                     }
 
                 }
@@ -553,6 +555,9 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
         {
             var points = EsriTools.GetFeatreClassExtent(GdbAccess.Instance.GetCalcWorkspaceFeatureClass(pointsFCName));
             var poterniallyVisibleArea = EsriTools.GetFeatreClassExtent(GdbAccess.Instance.GetCalcWorkspaceFeatureClass(poterniallyVisibleAreaFCName));
+
+            poterniallyVisibleArea.Project(EsriTools.Wgs84Spatialreference);
+            points.Project(EsriTools.Wgs84Spatialreference);
 
             var combined = EsriTools.GetEnvelopeOfGeometriesList(new IGeometry[] { points, poterniallyVisibleArea });
 
