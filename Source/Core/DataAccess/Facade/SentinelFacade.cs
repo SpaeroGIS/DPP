@@ -14,7 +14,7 @@ namespace MilSpace.DataAccess.Facade
     {
         public static void AddFootprint(SentinelFootprint footprint)
         {
-            IFeatureClass sentinelFeatureClass = GdbAccess.Instance.GetCalcProfileFeatureClass("Sentinel");
+            IFeatureClass sentinelFeatureClass = GdbAccess.Instance.GetCalcWorkspaceFeatureClass("Sentinel");
 
 
 

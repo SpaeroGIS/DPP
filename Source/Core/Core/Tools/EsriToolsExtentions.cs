@@ -31,14 +31,21 @@ namespace MilSpace.Core.Tools
 
             IRaster2 raster2 = (IRaster2)raster;
 
-            //Get the column and row by giving x,y coordinates in a map space.
-            int col = raster2.ToPixelColumn(testPoint.X);
-            int row = raster2.ToPixelRow(testPoint.Y);
+            try
+            {
+                //Get the column and row by giving x,y coordinates in a map space.
+                int col = raster2.ToPixelColumn(testPoint.X);
+                int row = raster2.ToPixelRow(testPoint.Y);
 
-            //Get the value at a given band.
-            var pixel = raster2.GetPixelValue(0, col, row);
+                //Get the value at a given band.
+                var pixel = raster2.GetPixelValue(0, col, row);
 
-            return pixel != null ? (double)Convert.ChangeType(pixel, typeof(double)) : double.NaN;
+                return pixel != null ? (double)Convert.ChangeType(pixel, typeof(double)) : double.NaN;
+            }
+            catch
+            {
+                return double.NaN;
+            }
 
         }
 

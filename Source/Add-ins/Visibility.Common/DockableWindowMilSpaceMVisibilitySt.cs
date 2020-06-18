@@ -354,11 +354,20 @@ namespace MilSpace.Visibility
             log.InfoEx("> FillObservationPointList END");
         }
 
-        public void ClearObserverPointsList()
+        public void ClearObserverPointsList(bool isOPFromGdb)
         {
             log.InfoEx("> ClearObserverPointsList START");
 
-            dgvObservationPoints.DataSource = null;
+            cmbOPSource.SelectedItem = LocalizationContext.Instance.ObservPointsSet;
+
+            if (isOPFromGdb)
+            {
+                dgvObservationPoints.DataSource = null;
+            }
+            else
+            {
+                _observPointsController.GetObserverPointsFromSelectedSource(_observerPointSource);
+            }
 
             log.InfoEx("> ClearObserverPointsList END");
         }
