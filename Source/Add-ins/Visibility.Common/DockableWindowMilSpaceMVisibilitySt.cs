@@ -935,6 +935,7 @@ namespace MilSpace.Visibility
                 var updateTable = (!selectedPointMEM.Title.Equals(selectedPoint.Title));
 
                 _observPointsController.UpdateLocalObservPoint(GetObservationPoint(), _selectedPointId, updateTable);
+                RefreshOPGraphics(true);
             }
         }
 
@@ -1723,6 +1724,22 @@ namespace MilSpace.Visibility
             }
         }
 
+        private void RefreshOPGraphics(bool updateRelationLines)
+        {
+            _observPointsController.RemoveObservPointsGraphics(true, updateRelationLines);
+
+            if (chckDrawOPGraphics.Checked)
+            {
+                _observPointsController.DrawObservPointsGraphics(rbRouteMode.Checked, _selectedPointId);
+            }
+
+            if (chckShowOOGraphics.Checked)
+            {
+                _observPointsController.DrawObservPointToObservObjectsRelationsGraphics(_selectedPointId, _observationStationSetType);
+            }
+        }
+
+
         #endregion
 
         #region VisibilitySessionsPrivateMethods
@@ -2274,12 +2291,12 @@ namespace MilSpace.Visibility
 
             FillSelectedPointObservationStationTable(_observationStationSetType);
 
-            if(chckDrawOPGraphics.Checked && rbSeparateOP.Checked)
+            if (chckDrawOPGraphics.Checked && rbSeparateOP.Checked)
             {
                 _observPointsController.DrawObservPointsGraphics(_selectedPointId);
             }
 
-            if(chckShowOOGraphics.Checked)
+            if (chckShowOOGraphics.Checked)
             {
                 _observPointsController.DrawObservPointToObservObjectsRelationsGraphics(_selectedPointId, _observationStationSetType);
             }
@@ -2879,17 +2896,7 @@ namespace MilSpace.Visibility
 
         private void BtnRefreshOPGraphics_Click(object sender, EventArgs e)
         {
-            _observPointsController.RemoveObservPointsGraphics();
-
-            if(chckDrawOPGraphics.Checked)
-            {
-                _observPointsController.DrawObservPointsGraphics(rbRouteMode.Checked, _selectedPointId);
-            }
-
-            if(chckShowOOGraphics.Checked)
-            {
-                _observPointsController.DrawObservPointToObservObjectsRelationsGraphics(_selectedPointId, _observationStationSetType);
-            }
+            RefreshOPGraphics(true);
         }
 
         private void CmbObservStationSet_SelectedIndexChanged(object sender, EventArgs e)
@@ -2965,11 +2972,7 @@ namespace MilSpace.Visibility
                 FillObservPointsFields(_observPointsController.GetObservPointByIdAsObservationPoint(_selectedPointId));
             }
 
-            if(rbSeparateOP.Checked && chckDrawOPGraphics.Checked)
-            {
-                _observPointsController.RemoveObservPointsGraphics(true, false);
-                _observPointsController.DrawObservPointsGraphics(_selectedPointId);
-            }
+            RefreshOPGraphics(false);
 
             changeAllObserversHeightsButton.Enabled = rbRouteMode.Checked;
             _updatedPointsIds.Clear();
