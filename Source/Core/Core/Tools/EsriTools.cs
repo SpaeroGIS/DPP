@@ -3,6 +3,7 @@ using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.DataSourcesGDB;
 using ESRI.ArcGIS.DataSourcesRaster;
 using ESRI.ArcGIS.Display;
+using ESRI.ArcGIS.Editor;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geodatabase;
@@ -1800,6 +1801,8 @@ namespace MilSpace.Core.Tools
             }
 
             logger.InfoEx("> GetCoverageArea END");
+            coverageArea.SpatialReference = point.SpatialReference;
+
             return coverageArea;
         }
 
@@ -1953,6 +1956,7 @@ namespace MilSpace.Core.Tools
             }
 
             logger.InfoEx("> GetTotalAreaFromFeatureClass END result:{0}", result);
+
             return result;
         }
 
@@ -2254,6 +2258,13 @@ namespace MilSpace.Core.Tools
         public static double GetExtentHeightInMapUnits(IEnvelope envelope, double extentHeight)
         {
             return envelope.Height * 0.1;
+        }
+
+        public static double GetMetresInMapUnits(double metres, ISpatialReference spatialReference)
+        {
+            IDistanceConverter distanceConverter = new DistanceConverter();
+
+            return distanceConverter.GetValue($"{metres} m", spatialReference);
         }
 
         public static List<IPoint> GetPointsFromGeometries(IEnumerable<IGeometry> geometries, ISpatialReference spatialReference, out bool isCircle)
