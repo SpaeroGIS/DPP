@@ -101,7 +101,7 @@ namespace MilSpace.DataAccess.Facade
                 workspaceEdit.StartEditing(true);
                 workspaceEdit.StartEditOperation();
 
-                IFeatureClass calc = GetCalcProfileFeatureClass(featureClassName);
+                IFeatureClass calc = GetCalcWorkspaceFeatureClass(featureClassName);
                 var GCS_WGS = Helper.GetBasePointSpatialReference();
 
                 profileLines.ToList().ForEach(
@@ -447,7 +447,7 @@ namespace MilSpace.DataAccess.Facade
             workspaceEdit.StartEditing(true);
             workspaceEdit.StartEditOperation();
 
-            IFeatureClass calc = GetCalcProfileFeatureClass(featureClassName);
+            IFeatureClass calc = GetCalcWorkspaceFeatureClass(featureClassName);
             var GCS_WGS = Helper.GetBasePointSpatialReference();
 
             int i = 0;
@@ -484,7 +484,7 @@ namespace MilSpace.DataAccess.Facade
             workspaceEdit.StartEditing(true);
             workspaceEdit.StartEditOperation();
 
-            IFeatureClass calc = GetCalcProfileFeatureClass(featureClassName);
+            IFeatureClass calc = GetCalcWorkspaceFeatureClass(featureClassName);
             var GCS_WGS = Helper.GetBasePointSpatialReference();
 
             int i = 0;
@@ -514,7 +514,7 @@ namespace MilSpace.DataAccess.Facade
             workspaceEdit.StartEditing(true);
             workspaceEdit.StartEditOperation();
 
-            IFeatureClass calc = GetCalcProfileFeatureClass(featureClassName);
+            IFeatureClass calc = GetCalcWorkspaceFeatureClass(featureClassName);
             var GCS_WGS = Helper.GetBasePointSpatialReference();
 
             polygons.ToList().ForEach(polygon =>
@@ -577,7 +577,7 @@ namespace MilSpace.DataAccess.Facade
 
         public void EraseProfileLines()
         {
-            IFeatureClass calc = GetCalcProfileFeatureClass("CalcProfile_L");
+            IFeatureClass calc = GetCalcWorkspaceFeatureClass("CalcProfile_L");
             IQueryFilter queryFilter = new QueryFilterClass
             {
                 WhereClause = $"{calc.OIDFieldName} >= 0"
@@ -688,7 +688,7 @@ namespace MilSpace.DataAccess.Facade
 
         }
 
-        public IFeatureClass GetCalcProfileFeatureClass(string currentFeatureClass)
+        public IFeatureClass GetCalcWorkspaceFeatureClass(string currentFeatureClass)
         {
             return OpenFeatureClass(calcWorkspace, currentFeatureClass);
         }

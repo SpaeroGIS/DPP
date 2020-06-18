@@ -1426,7 +1426,7 @@ namespace MilSpace.Visibility.ViewController
             {
                 case ObservationSetsEnum.Gdb:
 
-                    geometries = EsriTools.GetGeometriesFromLayer(VisibilityManager.ObservationStationsFeatureLayer, mapDocument.ActiveView);
+                    geometries = EsriTools.GetGeometriesFromLayer(VisibilityManager.ObservationStationsFeatureLayer.FeatureClass, mapDocument.ActiveView.FocusMap.SpatialReference);
 
                     break;
 
@@ -1460,7 +1460,7 @@ namespace MilSpace.Visibility.ViewController
 
                             if (layer != null && layer is IFeatureLayer)
                             {
-                                geometries = EsriTools.GetGeometriesFromLayer(layer as IFeatureLayer, mapDocument.ActiveView);
+                                geometries = EsriTools.GetGeometriesFromLayer((layer as IFeatureLayer).FeatureClass, mapDocument.ActiveView.FocusMap.SpatialReference);
                                 _observaitonObjectsLayerName = getLayerWindow.SelectedLayer;
                             }
                         }
@@ -1473,9 +1473,9 @@ namespace MilSpace.Visibility.ViewController
                     {
                         var layer = EsriTools.GetLayer(_observaitonObjectsLayerName, mapDocument.FocusMap);
 
-                        if (layer != null && layer is IFeatureLayer)
+                        if (layer != null && layer is IFeatureLayer fetaureLayer)
                         {
-                            geometries = EsriTools.GetGeometriesFromLayer(layer as IFeatureLayer, mapDocument.ActiveView);
+                            geometries = EsriTools.GetGeometriesFromLayer(fetaureLayer.FeatureClass, mapDocument.ActiveView.FocusMap.SpatialReference);
                         }
                     }
 
@@ -2031,11 +2031,12 @@ namespace MilSpace.Visibility.ViewController
             }
         }
 
+        const string geoCalcTemFeatureClassName = "GCPoints_";
+        const string featureClassTemFeatureClassName = "FCPoints_";
+
         internal IFeatureClass GetObserverPointsFeatureClass(ObservationSetsEnum source, IRaster raster, string layerName)
         {
-             string geoCalcTemFeatureClassName = "GCPoints_";
-             string featureClassTemFeatureClassName = "FCPoints_";
-
+            UnsubscribeFromDeletePointEvent();
             switch (source)
             {
                 case ObservationSetsEnum.Gdb:
@@ -2058,14 +2059,13 @@ namespace MilSpace.Visibility.ViewController
             return null;
         }
 
+        const string geoCalcObjTemFeatureClassName = "GCObjects_";
+        const string featureClassObjTemFeatureClassName = "FCObjects_";
+
         internal IFeatureClass GetObserverObjectsFeatureClass(ObservationSetsEnum source,
                                                               string layerName, int buffer)
         {
             UnsubscribeFromDeletePointEvent();
-
-            string geoCalcTemFeatureClassName = "GCObjects_";
-            string featureClassTemFeatureClassName = "FCObjects_";
-
             switch (source)
             {
                 case ObservationSetsEnum.Gdb:
@@ -2077,20 +2077,20 @@ namespace MilSpace.Visibility.ViewController
                     var observationObjects = GetPointsFromGeoCalculator();
                     return CreateOOFeatureClass(observationObjects.Values.Select(obj => obj as IGeometry).ToList(),
                                                  mapDocument.ActiveView,
-                                                 geoCalcTemFeatureClassName, buffer);
+                                                 geoCalcObjTemFeatureClassName, buffer);
 
                 case ObservationSetsEnum.FeatureLayers:
 
                     var layer = EsriTools.GetLayer(layerName, mapDocument.FocusMap);
                     var geometries = new Dictionary<int, IGeometry>();
 
-                    if (layer != null && layer is IFeatureLayer)
+                    if (layer != null && layer is IFeatureLayer featureLayer)
                     {
-                        geometries = EsriTools.GetGeometriesFromLayer(layer as IFeatureLayer, mapDocument.ActiveView);
+                        geometries = EsriTools.GetGeometriesFromLayer(featureLayer.FeatureClass, mapDocument.ActiveView.FocusMap.SpatialReference);
 
                             return CreateOOFeatureClass(geometries.Values.Select(obj => obj as IGeometry).ToList(),
                                                   mapDocument.ActiveView,
-                                                  featureClassTemFeatureClassName, buffer);
+                                                  featureClassObjTemFeatureClassName, buffer);
                     }
                     else
                     {
