@@ -2036,7 +2036,6 @@ namespace MilSpace.Visibility.ViewController
 
         internal IFeatureClass GetObserverPointsFeatureClass(ObservationSetsEnum source, IRaster raster, string layerName)
         {
-            UnsubscribeFromDeletePointEvent();
             switch (source)
             {
                 case ObservationSetsEnum.Gdb:
