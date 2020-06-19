@@ -862,12 +862,20 @@ namespace MilSpace.Visibility.ViewController
                     observPointsFeatureClass,
                     mapDocument.ActiveView,
                     demLayer.Raster);
+
+            //test
+            //var layer = EsriTools.GetFeatureLayer(observerPointTemporaryFeatureClass);
+            //mapDocument.AddLayer(layer);
             exx++;
 
             var observationStationTemporaryFeatureClass = BestOPParametersManager.CreateOOFeatureClass(
                     calcParams.ObservationStation,
                     mapDocument.ActiveView,
                     calcParams.TaskName);
+
+            //test
+            //var layer1 = EsriTools.GetFeatureLayer(observationStationTemporaryFeatureClass);
+            //mapDocument.AddLayer(layer1);
             exx++;
 
             var observPointsIds = BestOPParametersManager.GetAllIdsFromFeatureClass(observerPointTemporaryFeatureClass);
@@ -908,7 +916,7 @@ namespace MilSpace.Visibility.ViewController
 
             exx++;
 
-            BestOPParametersManager.ClearTemporaryData(calcParams.TaskName, calcTask.ReferencedGDB);
+           // BestOPParametersManager.ClearTemporaryData(calcParams.TaskName, calcTask.ReferencedGDB);
             exx++;
 
             if (calcTask.Finished != null)
