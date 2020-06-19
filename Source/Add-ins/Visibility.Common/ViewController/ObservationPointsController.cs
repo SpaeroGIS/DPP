@@ -2017,7 +2017,7 @@ namespace MilSpace.Visibility.ViewController
                 _observationPoints[i].InnerRadius = newPoint.InnerRadius;
                 _observationPoints[i].OuterRadius = newPoint.OuterRadius;
 
-                if (changeHeight)
+                if (_observationPoints[i].Objectid == newPoint.Objectid || changeHeight)
                 {
                     _observationPoints[i].RelativeHeight = newPoint.RelativeHeight;
                 }
