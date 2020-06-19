@@ -111,13 +111,13 @@ namespace MilSpace.Visibility.ViewController
 
         internal ObservationPoint GetObservPointByIdAsObservationPoint(int id)
         {
-           return GetObservationPointFromInterface(
-                    _observationPoints.FirstOrDefault(point => point.Objectid == id));
+            return GetObservationPointFromInterface(
+                     _observationPoints.FirstOrDefault(point => point.Objectid == id));
         }
 
         internal IObserverPoint GetObservPointById(int id)
         {
-            return  _observationPoints.FirstOrDefault(point => point.Objectid == id);
+            return _observationPoints.FirstOrDefault(point => point.Objectid == id);
         }
 
         internal ObservationObject GetObservObjectById(string id)
@@ -514,17 +514,17 @@ namespace MilSpace.Visibility.ViewController
 
         internal ObservationPoint GetObservationPointFromInterface(IObserverPoint observerPoint)
         {
-            if(observerPoint == null)
+            if (observerPoint == null)
             {
                 return null;
             }
 
-            if(observerPoint is ObservationPoint)
+            if (observerPoint is ObservationPoint)
             {
                 return observerPoint as ObservationPoint;
             }
 
-            if(observerPoint is GeoCalcPoint)
+            if (observerPoint is GeoCalcPoint)
             {
                 var geoCalcPoint = observerPoint as GeoCalcPoint;
 
@@ -1256,9 +1256,9 @@ namespace MilSpace.Visibility.ViewController
 
         internal void DrawObservPointsGraphics(bool drawAllGraphics, int id = -1)
         {
-            if(drawAllGraphics)
+            if (drawAllGraphics)
             {
-                foreach(var point in _observationPoints)
+                foreach (var point in _observationPoints)
                 {
                     DrawObservPointsGraphics(point.Objectid);
                 }
@@ -1298,7 +1298,7 @@ namespace MilSpace.Visibility.ViewController
 
         internal double CalcCoverageArea(IPoint pointGeom, ObservationPoint observPoint)
         {
-            if(!observPoint.OuterRadius.HasValue)
+            if (!observPoint.OuterRadius.HasValue)
             {
                 observPoint.OuterRadius = 1000;
             }
@@ -1354,7 +1354,7 @@ namespace MilSpace.Visibility.ViewController
                 {
                     var maxDistance = CalcCoverageArea(pointGeom, observerPointAsNativeType);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     log.ErrorEx($"> CalcRelationLines Unexpected exception: {ex.Message}");
                 }
@@ -1563,12 +1563,12 @@ namespace MilSpace.Visibility.ViewController
             return VisibilityManager.ObservationStationsFeatureLayer.Name;
         }
 
-        internal void UpdateLocalObservPoint(IObserverPoint newPoint, int pointId,  bool updateTable)
+        internal void UpdateLocalObservPoint(IObserverPoint newPoint, int pointId, bool updateTable)
         {
-           var updatedPointIndex = _observationPoints.FindIndex(point => point.Objectid == pointId);
-           newPoint.Objectid = pointId;
+            var updatedPointIndex = _observationPoints.FindIndex(point => point.Objectid == pointId);
+            newPoint.Objectid = pointId;
 
-            if(updatedPointIndex == -1)
+            if (updatedPointIndex == -1)
             {
                 return;
             }
@@ -1576,7 +1576,7 @@ namespace MilSpace.Visibility.ViewController
             {
                 _observationPoints[updatedPointIndex] = newPoint;
 
-                if(updateTable)
+                if (updateTable)
                 {
                     view.FillObservationPointList(_observationPoints, view.GetFilter, false, false);
                 }
@@ -1587,7 +1587,7 @@ namespace MilSpace.Visibility.ViewController
         {
             var newPoint = _observationPoints.FirstOrDefault(point => point.Objectid == objId);
 
-            if(newPoint == null)
+            if (newPoint == null)
             {
                 return;
             }
@@ -1597,7 +1597,7 @@ namespace MilSpace.Visibility.ViewController
 
         internal void UpdateObservPoint(IObserverPoint newPoint, int objId, ObservationSetsEnum set, bool updateAllPoints = true)
         {
-            if(newPoint == null)
+            if (newPoint == null)
             {
                 MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("CannotSavePointError", "Виникла помилка. Неможливо зберегти дані точки."),
                                  LocalizationContext.Instance.MessageBoxCaption);
@@ -1627,7 +1627,7 @@ namespace MilSpace.Visibility.ViewController
 
                     var featureLayer = GetFeatureLayer(_observPointFromFeatureLayerData.Key);
 
-                    if(featureLayer == null)
+                    if (featureLayer == null)
                     {
                         return;
                     }
@@ -1698,7 +1698,7 @@ namespace MilSpace.Visibility.ViewController
         internal void GetObserverPointsFromSelectedSource(ObservationSetsEnum set, bool newSource = true,
                                                             bool mainWindow = true)
         {
-            if(newSource)
+            if (newSource)
             {
                 UnsubscribeFromDeletePointEvent();
             }
@@ -1756,7 +1756,7 @@ namespace MilSpace.Visibility.ViewController
 
         internal void FillObserverPointsInMasterFromSelectedSource(ObservationSetsEnum set, VisibilityCalcTypeEnum visibilityCalcType)
         {
-            if(visibilityCalcType == VisibilityCalcTypeEnum.BestObservationParameters)
+            if (visibilityCalcType == VisibilityCalcTypeEnum.BestObservationParameters)
             {
                 SelectObservationPointFromSet(set);
             }
@@ -1801,7 +1801,7 @@ namespace MilSpace.Visibility.ViewController
 
         internal bool SetObserverPointsToRouteMode(ObservationSetsEnum set, bool showGraphics)
         {
-            if(_observationPoints.Count < 2)
+            if (_observationPoints.Count < 2)
             {
                 MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("NotEnoughPointsToBuildRoute", "Недостатньо точок для побудови маршруту."),
                                 LocalizationContext.Instance.MessageBoxCaption);
@@ -1811,11 +1811,11 @@ namespace MilSpace.Visibility.ViewController
 
             if (!CheckAllPointsHaveSameFields())
             {
-               var dialogResult = MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("RewriteAllPointsToTheSameValues",
-                                                                                  "Неможливо побудувати маршрут з точок, які мають різні параметри. \nВи бажаєте привести всі точки до параметрів першої?"),
-                                LocalizationContext.Instance.MessageBoxCaption, MessageBoxButtons.OKCancel);
+                var dialogResult = MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("RewriteAllPointsToTheSameValues",
+                                                                                   "Неможливо побудувати маршрут з точок, які мають різні параметри. \nВи бажаєте привести всі точки до параметрів першої?"),
+                                 LocalizationContext.Instance.MessageBoxCaption, MessageBoxButtons.OKCancel);
 
-                if(dialogResult != DialogResult.OK)
+                if (dialogResult != DialogResult.OK)
                 {
                     return false;
                 }
@@ -1824,9 +1824,9 @@ namespace MilSpace.Visibility.ViewController
 
                 var standardPointGeometry = GetObserverPointGeometry(standardPoint);
                 var nextPointGeometry = GetObserverPointGeometry(_observationPoints[0]);
-                
+
                 var standardBaseStartAzimuth = standardPoint.AzimuthStart.Value;
-                var standardBaseEndAzimuth =  standardPoint.AzimuthEnd.Value;
+                var standardBaseEndAzimuth = standardPoint.AzimuthEnd.Value;
 
                 for (int i = 0; i < _observationPoints.Count; i++)
                 {
@@ -1893,14 +1893,14 @@ namespace MilSpace.Visibility.ViewController
         {
             var azimuths = new Azimuths();
 
-            if(relativeStartAzimuth == 0 && relativeEndAzimuth == 360)
+            if (relativeStartAzimuth == 0 && relativeEndAzimuth == 360)
             {
                 azimuths.StartAzimuth = 0;
                 azimuths.EndAzimuth = 360;
 
                 return azimuths;
             }
-            
+
             azimuths.StartAzimuth = Math.Round(relativeStartAzimuth - direction, 0);
             azimuths.EndAzimuth = Math.Round(relativeEndAzimuth - direction, 0);
 
@@ -1914,7 +1914,7 @@ namespace MilSpace.Visibility.ViewController
             var currentPoint = _observationPoints.FirstOrDefault(point => point.Objectid == currentPointId);
             var nextPointIndex = _observationPoints.IndexOf(currentPoint) + 1;
 
-            if(nextPointIndex < _observationPoints.Count)
+            if (nextPointIndex < _observationPoints.Count)
             {
                 return _observationPoints[nextPointIndex];
             }
@@ -1937,7 +1937,7 @@ namespace MilSpace.Visibility.ViewController
 
         internal IPoint GetObserverPointGeometry(IObserverPoint observerPoint)
         {
-            if(observerPoint == null)
+            if (observerPoint == null)
             {
                 return null;
             }
@@ -1963,7 +1963,7 @@ namespace MilSpace.Visibility.ViewController
             return FindAzimuthRelativeToDirection(direction, baseStartAzimuth, baseEndAzimuth);
         }
 
-        internal Azimuths FindAzimuthRelativeToDirection(double direction, 
+        internal Azimuths FindAzimuthRelativeToDirection(double direction,
                                                          double baseStartAzimuth,
                                                          double baseEndAzimuth)
         {
@@ -2085,15 +2085,15 @@ namespace MilSpace.Visibility.ViewController
                     {
                         geometries = EsriTools.GetGeometriesFromLayer(featureLayer.FeatureClass, mapDocument.ActiveView.FocusMap.SpatialReference);
 
-                            return CreateOOFeatureClass(geometries.Values.Select(obj => obj as IGeometry).ToList(),
-                                                  mapDocument.ActiveView,
-                                                  featureClassObjTemFeatureClassName, buffer);
+                        return CreateOOFeatureClass(geometries.Values.Select(obj => obj as IGeometry).ToList(),
+                                              mapDocument.ActiveView,
+                                              featureClassObjTemFeatureClassName, buffer);
                     }
                     else
                     {
                         return null;
                     }
-                    
+
             }
 
             return null;
@@ -2184,14 +2184,14 @@ namespace MilSpace.Visibility.ViewController
         {
             var manager = new MapLayersManager(mapDocument.ActiveView);
 
-            var fromLayerPointsListModal = 
+            var fromLayerPointsListModal =
                     new PointsFromLayerModalWindow(
                                                    ArcMap.Document.ActiveView,
                                                    manager.GetObservPointsAppropriateLayers()
                                                           .Where(layer => !layer.EndsWith(GetObservPointsFromGdbFeatureClassName()))
                                                           .ToArray(),
                                                    true);
-                                                     
+
             var result = fromLayerPointsListModal.ShowDialog();
 
             if (result == DialogResult.OK)
@@ -2411,7 +2411,7 @@ namespace MilSpace.Visibility.ViewController
             {
                 featureLayer = GetFeatureLayer(_observPointFromFeatureLayerData.Key);
 
-                if(featureLayer == null)
+                if (featureLayer == null)
                 {
                     return null;
                 }
@@ -2554,10 +2554,10 @@ namespace MilSpace.Visibility.ViewController
 
             Func<double?, bool> isNullOrNaN = (value) => !value.HasValue || double.IsNaN(value.Value);
 
-            geoCalcPoint.AngelMaxH = isNullOrNaN(geoCalcPoint.AngelMaxH)? 90 : geoCalcPoint.AngelMaxH;
-            geoCalcPoint.AngelMinH = isNullOrNaN(geoCalcPoint.AngelMinH)? -90 : geoCalcPoint.AngelMinH;
-            geoCalcPoint.AzimuthStart = isNullOrNaN(geoCalcPoint.AzimuthStart)? 0 : geoCalcPoint.AzimuthStart;
-            geoCalcPoint.AzimuthEnd = isNullOrNaN(geoCalcPoint.AzimuthEnd)? 360 : geoCalcPoint.AzimuthEnd;
+            geoCalcPoint.AngelMaxH = isNullOrNaN(geoCalcPoint.AngelMaxH) ? 90 : geoCalcPoint.AngelMaxH;
+            geoCalcPoint.AngelMinH = isNullOrNaN(geoCalcPoint.AngelMinH) ? -90 : geoCalcPoint.AngelMinH;
+            geoCalcPoint.AzimuthStart = isNullOrNaN(geoCalcPoint.AzimuthStart) ? 0 : geoCalcPoint.AzimuthStart;
+            geoCalcPoint.AzimuthEnd = isNullOrNaN(geoCalcPoint.AzimuthEnd) ? 360 : geoCalcPoint.AzimuthEnd;
             geoCalcPoint.InnerRadius = isNullOrNaN(geoCalcPoint.InnerRadius) ? 0 : geoCalcPoint.InnerRadius;
             geoCalcPoint.OuterRadius = isNullOrNaN(geoCalcPoint.OuterRadius) ? 1000 : geoCalcPoint.OuterRadius;
             geoCalcPoint.RelativeHeight = isNullOrNaN(geoCalcPoint.RelativeHeight) ? 0 : geoCalcPoint.RelativeHeight;
@@ -2587,7 +2587,7 @@ namespace MilSpace.Visibility.ViewController
             };
         }
 
-        
+
         private IFeatureClass CreateTempPointsFeatureClass(IRaster raster, List<IObserverPoint> observerPoints,
                                                             string featureClassName)
         {
@@ -2622,11 +2622,11 @@ namespace MilSpace.Visibility.ViewController
                                                       observPointsFromGeoCalcTemporaryFeatureClass);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 log.ErrorEx($"> CreateTempPointsFeatureClass Unexpected exception: {ex.Message}");
             }
-            
+
             return observPointsFromGeoCalcTemporaryFeatureClass;
         }
 
@@ -2656,7 +2656,64 @@ namespace MilSpace.Visibility.ViewController
             return ArcMap.Editor.EditState == esriEditState.esriStateEditing;
         }
 
-        internal void OnStartEditing()
+        EventListener eventListener;
+
+        public void UnsubscribeForEvents()
+        {
+            if (eventListener != null)
+            {
+                eventListener.Changed -= EventListenerChanged;
+
+                eventListener.ListenToEvents(EventListener.EditorEventEnum.OnStartEditing, false);
+                eventListener.ListenToEvents(EventListener.EditorEventEnum.OnStopEditing, false);
+                eventListener.ListenToEvents(EventListener.EditorEventEnum.OnCreateFeature, false);
+                eventListener.ListenToEvents(EventListener.EditorEventEnum.OnChangeFeature, false);
+                eventListener = null;
+            }
+        }
+
+        public void SubscribeForEvents()
+        {
+            eventListener = new EventListener(ArcMap.Editor);
+
+            eventListener.ListenToEvents(EventListener.EditorEventEnum.OnStartEditing, true);
+            eventListener.ListenToEvents(EventListener.EditorEventEnum.OnStopEditing, true);
+            eventListener.ListenToEvents(EventListener.EditorEventEnum.OnCreateFeature, true);
+            eventListener.ListenToEvents(EventListener.EditorEventEnum.OnChangeFeature, true);
+
+            eventListener.Changed += EventListenerChanged;
+        }
+
+        private void EventListenerChanged(object sender, EditorEventArgs e)
+        {
+            if (e.EventType == EventListener.EditorEventEnum.OnCreateFeature)
+            {
+                //_observPointsController.OnCreateFeature
+                if (e.Object != null)
+                {
+                    OnCreateOrChangeFeature(e.Object);
+                }
+            }
+            if (e.EventType == EventListener.EditorEventEnum.OnChangeFeature)
+            {
+                //_observPointsController.OnCreateFeature
+                if (e.Object != null)
+                {
+                    OnCreateOrChangeFeature(e.Object, false);
+                }
+            }
+            if (e.EventType == EventListener.EditorEventEnum.OnStopEditing)
+            {
+                bool saveEdits = false;
+                if (e.SaveEdits.HasValue)
+                {
+                    saveEdits = e.SaveEdits.Value;
+                }
+                OnStopEditing(saveEdits);
+            }
+        }
+
+        public void OnStartEditing()
         {
             log.InfoEx("> OnStartEditing Event");
         }
@@ -2671,13 +2728,15 @@ namespace MilSpace.Visibility.ViewController
             log.InfoEx("> OnStopEditing Event END");
         }
 
-        internal void OnDeleteFeature(ESRI.ArcGIS.Geodatabase.IObject obj)
-        {
-            log.InfoEx("> OnDeleteFeature Event");
-            //     UpdateObservationPointsList();
-        }
 
-        internal void OnCreateFeature(ESRI.ArcGIS.Geodatabase.IObject obj)
+
+
+        //internal void OnDeleteFeature(ESRI.ArcGIS.Geodatabase.IObject obj)
+        //{
+        //    log.InfoEx("> OnDeleteFeature Event");
+        //}
+
+        private void OnCreateOrChangeFeature(ESRI.ArcGIS.Geodatabase.IObject obj, bool addOrChange = true)
         {
             log.InfoEx("> OnCreateFeature Event START");
 
@@ -2685,26 +2744,34 @@ namespace MilSpace.Visibility.ViewController
             {
                 if (fcl == GetObservatioPointFeatureClass())
                 {
-                    var fldTitleIndex = obj.Fields.FindField("TitleOP");
-                    var fldDtoIndex = obj.Fields.FindField("DTO");
-                    var fldXWgs = obj.Fields.FindField("XWGS");
-                    var fldYWgs = obj.Fields.FindField("YWGS");
-                    var fldIdOP = obj.Fields.FindField("idOP");
-                    var fldHRel = obj.Fields.FindField("HRel");
-
                     IGeometry g = fcl.GetFeature(obj.OID).ShapeCopy;
                     IPoint p = g as IPoint;
                     p.Project(EsriTools.Wgs84Spatialreference);
 
-                    var sidOP = $"OP{DataAccess.Helper.GetTemporaryNameSuffix()}";
-                    obj.Value[fldIdOP] = sidOP;
-                    obj.Value[fldTitleIndex] = LocalizationContext.Instance.DeafultObservationpointTitle.InvariantFormat(obj.OID);
+                    var fldXWgs = obj.Fields.FindField("XWGS");
+                    var fldYWgs = obj.Fields.FindField("YWGS");
+
                     obj.Value[fldXWgs] = p.X;
                     obj.Value[fldYWgs] = p.Y;
-                    obj.Value[fldHRel] = 2500;
+                    if (addOrChange)
+                    {
+                        var fldTitleIndex = obj.Fields.FindField("TitleOP");
+                        var fldDtoIndex = obj.Fields.FindField("DTO");
+                        var fldIdOP = obj.Fields.FindField("idOP");
+                        var fldHRel = obj.Fields.FindField("HRel");
 
-                    log.InfoEx("OnCreateFeature. New observation point was added wiht objectid:{0} idOP:{1} Title {2}",
-                        obj.OID, sidOP, LocalizationContext.Instance.DeafultObservationpointTitle.InvariantFormat(obj.OID));
+                        var sidOP = $"OP{DataAccess.Helper.GetTemporaryNameSuffix()}";
+                        obj.Value[fldIdOP] = sidOP;
+                        obj.Value[fldTitleIndex] = LocalizationContext.Instance.DeafultObservationpointTitle.InvariantFormat(obj.OID);
+                        obj.Value[fldHRel] = 2500;
+
+                        log.InfoEx("OnCreateFeature. New observation point was added wiht objectid:{0} idOP:{1} Title {2}",
+                            obj.OID, sidOP, LocalizationContext.Instance.DeafultObservationpointTitle.InvariantFormat(obj.OID));
+                    }
+                    else
+                    {
+                        log.InfoEx($"OnChaneFeature. New observation point was added wiht objectid:{obj.OID} ");
+                    }
                 }
             }
             log.InfoEx("> OnCreateFeature Event END");
