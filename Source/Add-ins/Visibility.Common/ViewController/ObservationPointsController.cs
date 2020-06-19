@@ -1820,15 +1820,14 @@ namespace MilSpace.Visibility.ViewController
                     return false;
                 }
 
-                _observationPoints.OrderBy(point => point.Objectid);
-
                 var standardPoint = _observationPoints.First();
+
                 var standardPointGeometry = GetObserverPointGeometry(standardPoint);
                 var nextPointGeometry = GetObserverPointGeometry(_observationPoints[0]);
-
+                
                 var standardBaseStartAzimuth = standardPoint.AzimuthStart.Value;
-                var standardBaseEndAzimuth = standardPoint.AzimuthEnd.Value;
-                 
+                var standardBaseEndAzimuth =  standardPoint.AzimuthEnd.Value;
+
                 for (int i = 0; i < _observationPoints.Count; i++)
                 {
                     IPoint currentPointGeometry;
@@ -1850,26 +1849,19 @@ namespace MilSpace.Visibility.ViewController
 
                     var currentPointBaseStartAzimuth = currentPointAzimuths.StartAzimuth;
                     var currentPointBaseEndAzimuth = currentPointAzimuths.EndAzimuth;
-                    
+
                     _observationPoints[i].AngelMaxH = standardPoint.AngelMaxH;
                     _observationPoints[i].AngelMinH = standardPoint.AngelMinH;
-                    _observationPoints[i].AzimuthEnd = currentPointBaseEndAzimuth;
-                    _observationPoints[i].AzimuthStart = currentPointBaseStartAzimuth;
                     _observationPoints[i].InnerRadius = standardPoint.InnerRadius;
                     _observationPoints[i].OuterRadius = standardPoint.OuterRadius;
-                    _observationPoints[i].RelativeHeight = standardPoint.RelativeHeight;
+                    _observationPoints[i].AzimuthEnd = currentPointBaseEndAzimuth;
+                    _observationPoints[i].AzimuthStart = currentPointBaseStartAzimuth;
 
                     UpdateObservPoint(_observationPoints[i], _observationPoints[i].Objectid, set, false);
                 }
 
                 view.SetFieldsEditingAbility(true);
                 view.FillObservationPointList(_observationPoints, view.GetFilter, true);
-
-                if (showGraphics)
-                {
-                    RemoveObservPointsGraphics(true, false);
-                    DrawObservPointsGraphics(true);
-                }
             }
 
             return true;
@@ -1997,7 +1989,8 @@ namespace MilSpace.Visibility.ViewController
                                                    double baseStartAzimuth,
                                                    double baseEndAzimuth,
                                                    ObservationSetsEnum set,
-                                                   bool changeHeight)
+                                                   bool changeHeight,
+                                                   bool savePoints)
         {
             IPoint nextPointGeometry = GetObserverPointGeometry(_observationPoints[0]);
             IPoint currentPointGeometry;
@@ -2021,13 +2014,18 @@ namespace MilSpace.Visibility.ViewController
                 _observationPoints[i].AzimuthEnd = relativeAzimuth.EndAzimuth;
                 _observationPoints[i].AngelMaxH = newPoint.AngelMaxH;
                 _observationPoints[i].AngelMinH = newPoint.AngelMinH;
+                _observationPoints[i].InnerRadius = newPoint.InnerRadius;
+                _observationPoints[i].OuterRadius = newPoint.OuterRadius;
 
                 if (changeHeight)
                 {
                     _observationPoints[i].RelativeHeight = newPoint.RelativeHeight;
                 }
 
-                UpdateObservPoint(_observationPoints[i], _observationPoints[i].Objectid, set, false);
+                if (savePoints)
+                {
+                    UpdateObservPoint(_observationPoints[i], _observationPoints[i].Objectid, set, false);
+                }
             }
         }
 
@@ -2036,7 +2034,6 @@ namespace MilSpace.Visibility.ViewController
 
         internal IFeatureClass GetObserverPointsFeatureClass(ObservationSetsEnum source, IRaster raster, string layerName)
         {
-            UnsubscribeFromDeletePointEvent();
             switch (source)
             {
                 case ObservationSetsEnum.Gdb:
@@ -2100,6 +2097,11 @@ namespace MilSpace.Visibility.ViewController
             }
 
             return null;
+        }
+
+        internal List<int> GetAllIds()
+        {
+            return _observationPoints.Select(point => point.Objectid).ToList();
         }
 
         #region Private methods
@@ -2497,9 +2499,17 @@ namespace MilSpace.Visibility.ViewController
             var standardPoint = _observationPoints.First();
 
             var standardPointGeometry = GetObserverPointGeometry(standardPoint);
-            var nextPointGeometry = GetObserverPointGeometry(_observationPoints[0]);
+            var nextPointGeometry = GetObserverPointGeometry(_observationPoints[1]);
 
-            for (int i = 0; i < _observationPoints.Count; i++)
+            var standardPointBaseAzimuths = FindBaseAzimuthFromRelativeToDirection(standardPointGeometry,
+                                                                                   nextPointGeometry,
+                                                                                   standardPoint.AzimuthStart.Value,
+                                                                                   standardPoint.AzimuthEnd.Value);
+
+            var standardBaseStartAzimuth = standardPointBaseAzimuths.StartAzimuth;
+            var standardBaseEndAzimuth = standardPointBaseAzimuths.EndAzimuth;
+
+            for (int i = 1; i < _observationPoints.Count; i++)
             {
                 IPoint currentPointGeometry;
 
@@ -2523,9 +2533,10 @@ namespace MilSpace.Visibility.ViewController
 
                 if (_observationPoints[i].AngelMaxH != standardPoint.AngelMaxH
                     || _observationPoints[i].AngelMinH != standardPoint.AngelMinH
-                    || Math.Abs(currentPointBaseEndAzimuth - standardPoint.AzimuthEnd.Value) > 0.00001
-                    || Math.Abs(currentPointBaseStartAzimuth - standardPoint.AzimuthStart.Value) > 0.00001
-                    || _observationPoints[i].RelativeHeight != standardPoint.RelativeHeight)
+                    || Math.Abs(currentPointBaseEndAzimuth - standardBaseEndAzimuth) > 0.00001
+                    || Math.Abs(currentPointBaseStartAzimuth - standardBaseStartAzimuth) > 0.00001
+                    || _observationPoints[i].InnerRadius != standardPoint.InnerRadius
+                    || _observationPoints[i].OuterRadius != standardPoint.OuterRadius)
                 {
                     return false;
                 }
