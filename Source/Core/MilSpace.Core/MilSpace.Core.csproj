@@ -246,6 +246,9 @@
     <Compile Include="..\Core\DataAccess\FromLayerPointModel.cs">
       <Link>DataAccess\FromLayerPointModel.cs</Link>
     </Compile>
+    <Compile Include="..\Core\DataAccess\GraphicsTypesEnum.cs">
+      <Link>DataAccess\GraphicsTypesEnum.cs</Link>
+    </Compile>
     <Compile Include="..\Core\DataAccess\IObserverPoint.cs">
       <Link>DataAccess\IObserverPoint.cs</Link>
     </Compile>
