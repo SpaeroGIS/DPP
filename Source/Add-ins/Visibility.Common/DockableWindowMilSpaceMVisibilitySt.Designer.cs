@@ -1172,7 +1172,7 @@
             this.rbRouteMode.TabIndex = 1;
             this.rbRouteMode.Text = "маршрут";
             this.rbRouteMode.UseVisualStyleBackColor = true;
-            this.rbRouteMode.Click += new System.EventHandler(this.RadioButton2_Click);
+            this.rbRouteMode.CheckedChanged += new System.EventHandler(this.RbRouteMode_CheckedChanged);
             // 
             // rbSeparateOP
             // 
@@ -1185,7 +1185,6 @@
             this.rbSeparateOP.TabStop = true;
             this.rbSeparateOP.Text = "отдельные ПН";
             this.rbSeparateOP.UseVisualStyleBackColor = true;
-            this.rbSeparateOP.Click += new System.EventHandler(this.RbSeparateOP_Click);
             // 
             // tabTable
             // 
