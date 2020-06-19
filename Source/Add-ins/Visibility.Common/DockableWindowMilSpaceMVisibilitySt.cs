@@ -44,7 +44,6 @@ namespace MilSpace.Visibility
         private bool _isDropDownItemChangedManualy = false;
         private bool _isFieldsChanged = false;
         private bool _isObservObjectsFieldsChanged = false;
-        private bool _updateForAllFieldsInRouteMode = true;
         private ObservationPoint selectedPointMEM = new ObservationPoint();
 
         private int _selectedPointId => dgvObservationPoints.SelectedRows.Count == 0 ? -1 : Convert.ToInt32(dgvObservationPoints.SelectedRows[0].Cells["Id"].Value);
@@ -945,15 +944,11 @@ namespace MilSpace.Visibility
                                                                          _observerPointSource,
                                                                          false, true);
                 }
-
-                RefreshOPGraphics(true);
             }
         }
 
         private bool FieldsValidation(object sender, ObservationPoint point)
         {
-            _updateForAllFieldsInRouteMode = true;
-
             try
             {
                 var textBox = (TextBox)sender;
@@ -1179,8 +1174,6 @@ namespace MilSpace.Visibility
                             {
                                 heightMin.Text = currentHeight.ToString();
                             }
-
-                            _updateForAllFieldsInRouteMode = false;
 
                             return true;
                         }
@@ -1460,7 +1453,7 @@ namespace MilSpace.Visibility
                                                                      Convert.ToDouble(azimuthB.Text),
                                                                      Convert.ToDouble(azimuthE.Text),
                                                                      _observerPointSource, 
-                                                                     _updateForAllFieldsInRouteMode,
+                                                                     false,
                                                                      true);
        
         }
@@ -2627,6 +2620,8 @@ namespace MilSpace.Visibility
             {
                 SavePointInRouteMode();
             }
+
+            RefreshOPGraphics(true);
         }
 
         #endregion
