@@ -49,11 +49,17 @@ namespace MilSpace.Tools
             //_observerPointsFeatureClass = GdbAccess.Instance.GetFeatureClass(_gdb, observerPointsFeatureClassName);
             SetCoverageAreas(observerPointsFeatureClassName);
 
-            var totalExpectedPolygon = _coverageAreaData.First(area => area.PointId == -1).Polygon;
-            var totalArea = (IArea)totalExpectedPolygon;
 
-
-            _logger.InfoEx("> SetCalculateAreas END. calcType:{0} totalExpectedArea:{1}", _calcType.ToString(), totalArea.Area);
+            var totalExpectedPolygon = _coverageAreaData.FirstOrDefault(area => area.PointId == -1);
+            if (totalExpectedPolygon != null)
+            {
+                var totalArea = (IArea)(totalExpectedPolygon.Polygon);
+                _logger.InfoEx("> SetCalculateAreas END. calcType:{0} totalExpectedArea:{1}", _calcType.ToString(), totalArea.Area);
+            }
+            else
+            {
+                _logger.WarnEx($"> There is no Coverege on {observerPointsFeatureClassName} and {observerPointsFeatureClassName}");
+            }
         }
 
         public void AddPotentialArea(string featureClassName, bool isTotal, int currPointId = 0)
