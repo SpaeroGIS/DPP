@@ -1038,62 +1038,64 @@ namespace MilSpace.DataAccess.Facade
             return newFeatureClassName;
         }
 
-        public void UpdateObservPoint(IFeatureClass featureClass, IObserverPoint observerPoint)
-        {
-            var feature = featureClass.GetFeature(observerPoint.Objectid);
+        //public void UpdateObservPoint(IFeatureClass featureClass, IObserverPoint observerPoint)
+        //{
+        //    var feature = featureClass.GetFeature(observerPoint.Objectid);
 
-            var azimuthBIndex = featureClass.FindField("AzimuthB");
-            var azimuthEIndex = featureClass.FindField("AzimuthE");
-            var anglMinIndex = featureClass.FindField("AnglMinH");
-            var anglMaxIndex = featureClass.FindField("AnglMaxH");
-            var innerRadiusIndex = featureClass.FindField("InnerRadius");
-            var outerRadiusIndex = featureClass.FindField("OuterRadius");
-            var hRelIndex = featureClass.FindField("HRel");
+        //    var azimuthBIndex = featureClass.FindField("AzimuthB");
+        //    var azimuthEIndex = featureClass.FindField("AzimuthE");
+        //    var anglMinIndex = featureClass.FindField("AnglMinH");
+        //    var anglMaxIndex = featureClass.FindField("AnglMaxH");
+        //    var innerRadiusIndex = featureClass.FindField("InnerRadius");
+        //    var outerRadiusIndex = featureClass.FindField("OuterRadius");
+        //    var hRelIndex = featureClass.FindField("HRel");
 
-            try
-            {
-                if (azimuthBIndex != -1)
-                {
-                    feature.set_Value(azimuthBIndex, observerPoint.AzimuthStart);
-                }
+        //    try
+        //    {
+            
 
-                if (azimuthEIndex != -1)
-                {
-                    feature.set_Value(azimuthEIndex, observerPoint.AzimuthEnd);
-                }
+        //        if (azimuthBIndex != -1)
+        //        {
+        //            feature.set_Value(azimuthBIndex, observerPoint.AzimuthStart);
+        //        }
 
-                if (anglMinIndex != -1)
-                {
-                    feature.set_Value(anglMinIndex, observerPoint.AngelMinH);
-                }
+        //        if (azimuthEIndex != -1)
+        //        {
+        //            feature.set_Value(azimuthEIndex, observerPoint.AzimuthEnd);
+        //        }
 
-                if (anglMaxIndex != -1)
-                {
-                    feature.set_Value(anglMaxIndex, observerPoint.AngelMaxH);
-                }
+        //        if (anglMinIndex != -1)
+        //        {
+        //            feature.set_Value(anglMinIndex, observerPoint.AngelMinH);
+        //        }
 
-                if (innerRadiusIndex != -1)
-                {
-                    feature.set_Value(innerRadiusIndex, observerPoint.InnerRadius);
-                }
+        //        if (anglMaxIndex != -1)
+        //        {
+        //            feature.set_Value(anglMaxIndex, observerPoint.AngelMaxH);
+        //        }
 
-                if (outerRadiusIndex != -1)
-                {
-                    feature.set_Value(outerRadiusIndex, observerPoint.OuterRadius);
-                }
+        //        if (innerRadiusIndex != -1)
+        //        {
+        //            feature.set_Value(innerRadiusIndex, observerPoint.InnerRadius);
+        //        }
 
-                if (hRelIndex != -1)
-                {
-                    feature.set_Value(hRelIndex, observerPoint.RelativeHeight);
-                }
+        //        if (outerRadiusIndex != -1)
+        //        {
+        //            feature.set_Value(outerRadiusIndex, observerPoint.OuterRadius);
+        //        }
 
-                feature.Store();
-            }
-            catch(Exception ex)
-            {
-                logger.ErrorEx($"Cannot save observer point with id {observerPoint.Objectid} /n{ex.Message}");
-            }
-        }
+        //        if (hRelIndex != -1)
+        //        {
+        //            feature.set_Value(hRelIndex, observerPoint.RelativeHeight);
+        //        }
+
+        //        feature.Store();
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        logger.ErrorEx($"Cannot save observer point with id {observerPoint.Objectid} /n{ex.Message}");
+        //    }
+        //}
 
         public void AddObserverPointFields(IFeatureClass featureClass)
         {
