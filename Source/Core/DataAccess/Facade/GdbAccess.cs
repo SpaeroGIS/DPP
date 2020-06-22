@@ -1,7 +1,6 @@
 ﻿using ESRI.ArcGIS.ADF;
 using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.DataSourcesGDB;
-using ESRI.ArcGIS.DataSourcesRaster;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geodatabase;
@@ -78,9 +77,9 @@ namespace MilSpace.DataAccess.Facade
                     {
                         instance = new GdbAccess();
                     }
-                    catch
+                    catch (Exception ex)
                     {
-                        //
+                        logger.ErrorEx($"> GdbAccess Cannot create connection to {MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection} Exception. ex.Message: {ex.Message}");
                     }
                 }
                 return instance;
@@ -1089,7 +1088,7 @@ namespace MilSpace.DataAccess.Facade
 
                 feature.Store();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.ErrorEx($"Cannot save observer point with id {observerPoint.Objectid} /n{ex.Message}");
             }
@@ -1325,7 +1324,7 @@ namespace MilSpace.DataAccess.Facade
 
             try
             {
-                if(!wsp2.get_NameExists(esriDatasetType.esriDTTable, tableName))
+                if (!wsp2.get_NameExists(esriDatasetType.esriDTTable, tableName))
                 {
                     table = featureWorkspace.CreateTable(tableName, fieldsEdit, null, null, "");
                 }
@@ -1334,7 +1333,7 @@ namespace MilSpace.DataAccess.Facade
                     table = featureWorkspace.OpenTable(tableName);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.ErrorEx($"Cannot create table {tableName} /n{ex.Message}");
                 return null;
@@ -1350,7 +1349,7 @@ namespace MilSpace.DataAccess.Facade
         {
             ITable table;
             IFieldsEdit fieldsEdit = new FieldsClass();
-            
+
             IFieldEdit2 fieldId = new FieldClass() as IFieldEdit2;
             fieldId.Name_2 = "OBJECTID";
             fieldId.Type_2 = esriFieldType.esriFieldTypeOID;
@@ -1421,7 +1420,7 @@ namespace MilSpace.DataAccess.Facade
 
             try
             {
-                if(!wsp2.get_NameExists(esriDatasetType.esriDTTable, tableName))
+                if (!wsp2.get_NameExists(esriDatasetType.esriDTTable, tableName))
                 {
                     table = featureWorkspace.CreateTable(tableName, fieldsEdit, null, null, "");
                 }
@@ -1430,7 +1429,7 @@ namespace MilSpace.DataAccess.Facade
                     table = featureWorkspace.OpenTable(tableName);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.ErrorEx($"Cannot create table {tableName} /n{ex.Message}");
                 return null;
@@ -1453,7 +1452,7 @@ namespace MilSpace.DataAccess.Facade
             {
                 workspace = workspaceFactory.OpenFromFile(gdb, 0);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.ErrorEx($"FillVACoverageTable. Cannot open GDB from {gdb} /n{ex.Message}");
                 Marshal.ReleaseComObject(workspaceFactory);
@@ -1467,17 +1466,17 @@ namespace MilSpace.DataAccess.Facade
 
             try
             {
-                foreach(var row in tableModel)
+                foreach (var row in tableModel)
                 {
                     var newRow = table.CreateRow();
                     newRow.Value[table.FindField("TitleOp")] = row.ObservPointName;
-                    if(row.ObservPointId != -1)
+                    if (row.ObservPointId != -1)
                     {
                         newRow.Value[table.FindField("IdOP")] = row.ObservPointId;
                     }
                     newRow.Value[table.FindField("TitleOO")] = row.ObservObjName;
 
-                    if(row.ObservObjId != -1)
+                    if (row.ObservObjId != -1)
                     {
                         newRow.Value[table.FindField("IdOO")] = row.ObservObjId;
                     }
@@ -1485,7 +1484,7 @@ namespace MilSpace.DataAccess.Facade
                     newRow.Value[table.FindField("VisibilityArea")] = row.VisibilityArea;
                     newRow.Value[table.FindField("VisibilityPercentage")] = row.VisibilityPercent;
 
-                    if(row.ObservPointsSeeCount != -1)
+                    if (row.ObservPointsSeeCount != -1)
                     {
                         newRow.Value[table.FindField("OPSee")] = row.ObservPointsSeeCount;
                     }
@@ -1496,7 +1495,7 @@ namespace MilSpace.DataAccess.Facade
 
                 Marshal.ReleaseComObject(workspaceFactory);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.ErrorEx($"> FillVACoverageTable Exception {ex.Message}");
                 return;
@@ -1583,8 +1582,8 @@ namespace MilSpace.DataAccess.Facade
                 {
                     var newRow = table.CreateRow();
                     var featureFields = feature.Key.Fields;
-                    
-                    for(int i = 0; i < featureFields.FieldCount; i++)
+
+                    for (int i = 0; i < featureFields.FieldCount; i++)
                     {
                         if (featureFields.Field[i].Name != table.OIDFieldName)
                         {
@@ -1595,12 +1594,12 @@ namespace MilSpace.DataAccess.Facade
                             }
                         }
                     }
-                    
+
                     newRow.Value[table.FindField("VisibilityPercent")] = feature.Value;
 
                     newRow.Store();
                 }
-               
+
                 workspaceEdit.StopEditOperation();
                 workspaceEdit.StopEditing(true);
 
@@ -1678,7 +1677,7 @@ namespace MilSpace.DataAccess.Facade
             {
                 workspace = calcWorkspace;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Marshal.ReleaseComObject(workspaceFactory);
 
@@ -1687,9 +1686,9 @@ namespace MilSpace.DataAccess.Facade
             }
 
             IWorkspace2 wsp2 = workspace as IWorkspace2;
-            if(!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, featureClassName))
+            if (!wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, featureClassName))
             {
-                GenerateCalcPointsTempStorage(featureClassName, workspace, sr); 
+                GenerateCalcPointsTempStorage(featureClassName, workspace, sr);
             }
 
             IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)workspace;
@@ -1701,7 +1700,7 @@ namespace MilSpace.DataAccess.Facade
                 IFeatureClass featureClass = OpenFeatureClass(workspace, featureClassName);
                 int i = 1;
 
-                foreach(var point in points)
+                foreach (var point in points)
                 {
                     var areaFeature = featureClass.CreateFeature();
                     areaFeature.Shape = point;
@@ -1717,7 +1716,7 @@ namespace MilSpace.DataAccess.Facade
                 logger.InfoEx("> AddCalcPointsFeature END");
                 return featureClass;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.ErrorEx("> AddCalcPointsFeature Exception. ex.Message:{0}", ex.Message);
                 return null;
@@ -1772,7 +1771,7 @@ namespace MilSpace.DataAccess.Facade
 
                 logger.InfoEx("> GenerateCalcPointsTempStorage END");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.ErrorEx("> GenerateCalcPointsTempStorage EXCEPTION. ex.Message:{0}", ex.Message);
             }
@@ -1812,7 +1811,7 @@ namespace MilSpace.DataAccess.Facade
                 IFeatureClass featureClass = OpenFeatureClass(workspace, featureClassName);
                 var areaFeature = featureClass.CreateFeature();
                 areaFeature.Shape = polygon;
-                if(pointId != -1)
+                if (pointId != -1)
                 {
                     areaFeature.set_Value(featureClass.FindField("ObservPointId"), pointId);
                 }
@@ -1825,7 +1824,7 @@ namespace MilSpace.DataAccess.Facade
                 logger.InfoEx("> AddCoverageAreaFeature END");
                 return featureClass;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.ErrorEx("> AddCoverageAreaFeature Exception. ex.Message:{0}", ex.Message);
                 return null;
@@ -1841,7 +1840,7 @@ namespace MilSpace.DataAccess.Facade
             {
                 workspace = workspaceFactory.OpenFromFile(gdb, 0);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.ErrorEx($"Cannot open GDB from {gdb} /n{ex.Message}");
                 Marshal.ReleaseComObject(workspaceFactory);
