@@ -179,7 +179,7 @@ namespace MilSpace.Tools
             }
             
             // Get visibility area of observation station
-            var visibilityArea = EsriTools.GetObjVisibilityArea(visibilityPolygonsForPointFeatureClass, observationStationPolygon);
+            var visibilityArea = EsriTools.GetObjVisibilityArea(visibilityPolygonsForPointFeatureClass, VisibilityManager.CurrentMap, observationStationPolygon);
             var observationStationPolygonArea = observationStationPolygon as IArea;
 
             var visibilityPercent = Math.Round(((visibilityArea * 100) / observationStationPolygonArea.Area), 0);

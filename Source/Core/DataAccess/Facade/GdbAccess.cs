@@ -1834,6 +1834,11 @@ namespace MilSpace.DataAccess.Facade
 
         public IFeatureClass GetFeatureClass(string gdb, string featureClassName)
         {
+            if (String.IsNullOrEmpty(featureClassName))
+            {
+                return null;
+            }
+
             IWorkspaceFactory workspaceFactory = new FileGDBWorkspaceFactory();
             IWorkspace workspace;
 
