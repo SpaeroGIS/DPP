@@ -40,7 +40,9 @@ namespace MilSpace.Visibility
         private bool observatioObjectsSordDirection = true;
         private bool tasksSordDirection = false;
         private BindingList<VisibilityTasknGui> _visibilitySessionsGui = new BindingList<VisibilityTasknGui>();
-        private List<int> _updatedPointsIds = new List<int>();
+
+        // Key is changed id and value is information about was coordinates changed or not
+        private Dictionary<int, bool> _updatedPointsIds = new Dictionary<int, bool>();
 
         private bool _isDropDownItemChangedManualy = false;
         private bool _isFieldsChanged = false;
@@ -591,10 +593,9 @@ namespace MilSpace.Visibility
 
             dgvObservationPoints.DataSource = sourceList.ToArray();
 
-            var removedPointId = _updatedPointsIds.FirstOrDefault(pointId => pointId == id);
-            if (removedPointId != -1)
+            if (_updatedPointsIds.Any(pointId => pointId.Key == id))
             {
-                _updatedPointsIds.Remove(removedPointId);
+                _updatedPointsIds.Remove(id);
             }
         }
 
@@ -700,6 +701,18 @@ namespace MilSpace.Visibility
 
             xCoord.Text = Math.Round(resultPoint.X, 5).ToString();
             yCoord.Text = Math.Round(resultPoint.Y, 5).ToString();
+
+            _observPointsController.UpdateLocalObservPoint(GetObservationPoint(), _selectedPointId, false);
+
+            if (!_updatedPointsIds.Any(id => id.Key == _selectedPointId && id.Value == true))
+            {
+                if(_updatedPointsIds.Any(id => id.Key == _selectedPointId))
+                {
+                    _updatedPointsIds.Remove(_selectedPointId);
+                }
+
+                _updatedPointsIds.Add(_selectedPointId, true);
+            }
         }
 
         internal void ArcMap_OnMouseMove(int x, int y)
@@ -952,9 +965,9 @@ namespace MilSpace.Visibility
 
             if (!selectedPointMEM.Equals(selectedPoint))
             {
-                if (!_updatedPointsIds.Exists(id => id == selectedPoint.Objectid))
+                if (!_updatedPointsIds.Any(id => id.Key == selectedPoint.Objectid))
                 {
-                    _updatedPointsIds.Add(selectedPoint.Objectid);
+                    _updatedPointsIds.Add(selectedPoint.Objectid, false);
                 }
 
                 var updateTable = (!selectedPointMEM.Title.Equals(selectedPoint.Title));
@@ -1461,14 +1474,14 @@ namespace MilSpace.Visibility
         {
             foreach (var pointId in _updatedPointsIds)
             {
-                var selectedPoint = _observPointsController.GetObservPointByIdAsObservationPoint(pointId);
+                var selectedPoint = _observPointsController.GetObservPointByIdAsObservationPoint(pointId.Key);
 
                 if (selectedPoint == null)
                 {
                     continue;
                 }
 
-                _observPointsController.UpdateObservPoint(selectedPoint.Objectid, _observerPointSource);
+                _observPointsController.UpdateObservPoint(selectedPoint.Objectid, _observerPointSource, pointId.Value);
             }
         }
 
@@ -2329,11 +2342,17 @@ namespace MilSpace.Visibility
                         xCoord.Text = coords[0];
                         yCoord.Text = coords[1];
 
-                        _observPointsController.UpdateObservPoint(
-                            GetObservationPoint(),
-                            _selectedPointId,
-                            _observerPointSource,
-                            false);
+                        _observPointsController.UpdateLocalObservPoint(GetObservationPoint(), _selectedPointId, false);
+
+                        if (!_updatedPointsIds.Any(id => id.Key == _selectedPointId && id.Value == true))
+                        {
+                            if (_updatedPointsIds.Any(id => id.Key == _selectedPointId))
+                            {
+                                _updatedPointsIds.Remove(_selectedPointId);
+                            }
+
+                            _updatedPointsIds.Add(_selectedPointId, true);
+                        }
                     }
                     else
                     {
@@ -2424,9 +2443,9 @@ namespace MilSpace.Visibility
 
             if (!selectedPointMEM.Equals(selectedPoint))
             {
-                if (!_updatedPointsIds.Exists(id => id == selectedPoint.Objectid))
+                if (!_updatedPointsIds.Any(id => id.Key == selectedPoint.Objectid))
                 {
-                    _updatedPointsIds.Add(selectedPoint.Objectid);
+                    _updatedPointsIds.Add(selectedPoint.Objectid, false);
                 }
                 _observPointsController.UpdateLocalObservPoint(GetObservationPoint(), _selectedPointId, true);
             }

@@ -151,15 +151,15 @@ namespace MilSpace.Visibility.ViewController
             return null;
         }
 
-        internal void UpdateObservPoint(IObserverPoint newPoint, string featureName, IActiveView activeView, int objId)
+        internal void UpdateObservPoint(IObserverPoint newPoint, string featureName,
+                                        IActiveView activeView, int objId, bool isCoordsChanged)
         {
-            var isCoordChanges = false;
             var oldPoint = GetObservPointByIdAsObservationPoint(objId);
 
             var featureClass = GetFeatureClass(featureName, activeView);
             PointClass pointGeometry;
 
-            if (oldPoint.X != newPoint.X && oldPoint.Y != newPoint.Y)
+            if (isCoordsChanged)
             {
                 pointGeometry = new PointClass
                 {
@@ -170,8 +170,6 @@ namespace MilSpace.Visibility.ViewController
 
                 pointGeometry.Z = (double)newPoint.RelativeHeight;
                 pointGeometry.ZAware = true;
-
-                isCoordChanges = true;
             }
             else
             {
@@ -179,9 +177,7 @@ namespace MilSpace.Visibility.ViewController
             }
             GdbAccess.Instance.UpdateObservPoint(pointGeometry, featureClass, GetObservationPointFromInterface(newPoint), objId);
 
-
-
-            if (isCoordChanges)
+            if (isCoordsChanged)
             {
                 activeView.PartialRefresh(esriViewDrawPhase.esriViewGeography, GetFeatureLayer(featureName, activeView), null);
             }
@@ -862,12 +858,20 @@ namespace MilSpace.Visibility.ViewController
                     observPointsFeatureClass,
                     mapDocument.ActiveView,
                     demLayer.Raster);
+
+            //test
+            //var layer = EsriTools.GetFeatureLayer(observerPointTemporaryFeatureClass);
+            //mapDocument.AddLayer(layer);
             exx++;
 
             var observationStationTemporaryFeatureClass = BestOPParametersManager.CreateOOFeatureClass(
                     calcParams.ObservationStation,
                     mapDocument.ActiveView,
                     calcParams.TaskName);
+
+            //test
+            //var layer1 = EsriTools.GetFeatureLayer(observationStationTemporaryFeatureClass);
+            //mapDocument.AddLayer(layer1);
             exx++;
 
             var observPointsIds = BestOPParametersManager.GetAllIdsFromFeatureClass(observerPointTemporaryFeatureClass);
@@ -908,7 +912,7 @@ namespace MilSpace.Visibility.ViewController
 
             exx++;
 
-            BestOPParametersManager.ClearTemporaryData(calcParams.TaskName, calcTask.ReferencedGDB);
+           // BestOPParametersManager.ClearTemporaryData(calcParams.TaskName, calcTask.ReferencedGDB);
             exx++;
 
             if (calcTask.Finished != null)
@@ -1583,7 +1587,7 @@ namespace MilSpace.Visibility.ViewController
             }
         }
 
-        internal void UpdateObservPoint(int objId, ObservationSetsEnum set)
+        internal void UpdateObservPoint(int objId, ObservationSetsEnum set, bool isCoordsChanged)
         {
             var newPoint = _observationPoints.FirstOrDefault(point => point.Objectid == objId);
 
@@ -1592,10 +1596,12 @@ namespace MilSpace.Visibility.ViewController
                 return;
             }
 
-            UpdateObservPoint(newPoint, objId, set, false);
+            UpdateObservPoint(newPoint, objId, set, isCoordsChanged, false);
         }
 
-        internal void UpdateObservPoint(IObserverPoint newPoint, int objId, ObservationSetsEnum set, bool updateAllPoints = true)
+        internal void UpdateObservPoint(IObserverPoint newPoint, int objId,
+                                        ObservationSetsEnum set, bool isCoordsChanged,
+                                        bool updateAllPoints = true)
         {
             if (newPoint == null)
             {
@@ -1613,7 +1619,7 @@ namespace MilSpace.Visibility.ViewController
 
                     var observPointAsNativeType = GetObservationPointFromInterface(newPoint);
                     UpdateObservPoint(observPointAsNativeType, VisibilityManager.ObservPointFeature, mapDocument.ActiveView,
-                                        objId);
+                                        objId, isCoordsChanged);
 
                     break;
 
@@ -2099,9 +2105,15 @@ namespace MilSpace.Visibility.ViewController
             return null;
         }
 
-        internal List<int> GetAllIds()
+        internal Dictionary<int, bool> GetAllIds()
         {
-            return _observationPoints.Select(point => point.Objectid).ToList();
+            var pointsIds = new Dictionary<int, bool>();
+            foreach (var point in _observationPoints)
+            {
+                pointsIds.Add(point.Objectid, false);
+            }
+
+            return pointsIds;
         }
 
         #region Private methods
