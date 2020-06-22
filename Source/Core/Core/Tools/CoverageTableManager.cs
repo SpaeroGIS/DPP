@@ -495,5 +495,25 @@ namespace MilSpace.Tools
 
             return pointsFromLayer.Select(point => { return point as ObservationPoint; }).ToList();
         }
+
+        private void ProjectGeometry(double longtitudeInDegrees, IGeometry geometry)
+        {
+            int iProjCS = Convert.ToInt32(Math.Floor((longtitudeInDegrees + 180) / 6)) + 1 + 32600;
+            ISpatialReferenceFactory spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
+            ISpatialReference spRef = spatialReferenceFactory.CreateProjectedCoordinateSystem(iProjCS) as ISpatialReference;
+
+            try
+            {
+                geometry.Project(spRef);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Cannot project: {0}", ex.Message);
+            }
+            finally
+            {
+                Marshal.ReleaseComObject(spatialReferenceFactory);
+            }
+        }
     }
 }

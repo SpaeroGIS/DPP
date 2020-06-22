@@ -1,10 +1,9 @@
 E:\SourceCode\40copoka\DPP\Source\UnitTests\CommandLineAction.UnitTest\bin\Debug\CommandLineAction.UnitTest.exe.config
 E:\SourceCode\40copoka\DPP\Source\UnitTests\CommandLineAction.UnitTest\bin\Debug\CommandLineAction.UnitTest.exe
 E:\SourceCode\40copoka\DPP\Source\UnitTests\CommandLineAction.UnitTest\bin\Debug\CommandLineAction.UnitTest.pdb
-E:\SourceCode\40copoka\DPP\Source\UnitTests\CommandLineAction.UnitTest\obj\Debug\CommandLineAction.UnitTest.csprojAssemblyReference.cache
-E:\SourceCode\40copoka\DPP\Source\UnitTests\CommandLineAction.UnitTest\obj\Debug\CommandLineAction.UnitTest.csproj.CoreCompileInputs.cache
-E:\SourceCode\40copoka\DPP\Source\UnitTests\CommandLineAction.UnitTest\obj\Debug\CommandLineAction.UnitTest.exe
-E:\SourceCode\40copoka\DPP\Source\UnitTests\CommandLineAction.UnitTest\obj\Debug\CommandLineAction.UnitTest.pdb
 E:\SourceCode\40copoka\DPP\Source\UnitTests\CommandLineAction.UnitTest\Output\CommandLineAction.UnitTest.exe.config
 E:\SourceCode\40copoka\DPP\Source\UnitTests\CommandLineAction.UnitTest\Output\CommandLineAction.UnitTest.exe
 E:\SourceCode\40copoka\DPP\Source\UnitTests\CommandLineAction.UnitTest\Output\CommandLineAction.UnitTest.pdb
+E:\SourceCode\40copoka\DPP\Source\UnitTests\CommandLineAction.UnitTest\obj\Debug\CommandLineAction.UnitTest.csproj.CoreCompileInputs.cache
+E:\SourceCode\40copoka\DPP\Source\UnitTests\CommandLineAction.UnitTest\obj\Debug\CommandLineAction.UnitTest.exe
+E:\SourceCode\40copoka\DPP\Source\UnitTests\CommandLineAction.UnitTest\obj\Debug\CommandLineAction.UnitTest.pdb

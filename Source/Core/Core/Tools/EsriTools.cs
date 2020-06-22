@@ -1574,7 +1574,7 @@ namespace MilSpace.Core.Tools
                 {
                     var minAngleRadians = (minAngle + 90) * (Math.PI / 180);
                     var radians = Math.Tan(minAngleRadians);
-                    return radians * (180 / Math.PI) * height;
+                    return Math.Round(radians * height, 4);
                 }
                 else
                 {
@@ -1591,7 +1591,7 @@ namespace MilSpace.Core.Tools
             {
                 var minAngleRadians = (minAngle + 90) * (Math.PI / 180);
                 var radians = Math.Tan(minAngleRadians);
-                return radians * (180 / Math.PI) * height;
+                return Math.Round(radians * height, 4);
             }
             else
             {
@@ -1610,11 +1610,11 @@ namespace MilSpace.Core.Tools
             {
                 var maxAngleRadians = (maxAngle + 90) * (Math.PI / 180);
                 var radians = Math.Tan(maxAngleRadians);
-                return radians * (180 / Math.PI) * height;
+                return Math.Round(radians * height, 4);
             }
             else
             {
-                return maxDistance;
+                return Math.Round(maxDistance, 4);
             }
         }
 
@@ -1626,11 +1626,11 @@ namespace MilSpace.Core.Tools
             // Find the angle between perpendicular from observation point to surface (height), 
             // which is the tilt angle to the required point 
             //              |\
-            //              |  \ <---- this angle
-            //   1 - >   |    \
-            //              |      \
-            //              |        \
-            //              |_______\<-2     1- height 2- required distance
+            //              | \ <---- this angle
+            //      1 - >   |  \
+            //              |   \
+            //              |    \
+            //              |_____\<-2     1- height 2- required distance
             var sin = distance / toMaxPointDistance;
             var angle = -90 + Math.Asin(sin) * (180 / Math.PI);
 
