@@ -17,14 +17,25 @@ namespace MilSpace.Tools
 {
     public class BestOPParametersManager
     {
+        private int _requiredVisibilityPercent;
+        private int _lastInappropriatePointId = 0;
+        private bool _isMinVisibleIdFound = false;
+        private readonly int _maxId;
         private Dictionary<int, short> _visibilityPercents = new Dictionary<int, short>();
+        
         private const string _temporaryObserverPointParamsFeatureClassSuffix = "_VO_ObservPointParams";
         private const string _temporaryObservationStationFeatureClassSuffix = "_VO_ObservStation";
+
+        public BestOPParametersManager(int requiredVisibilityPercent, int maxId)
+        {
+            _requiredVisibilityPercent = requiredVisibilityPercent;
+            _maxId = maxId;
+        }
 
         public static IFeatureClass CreateOPFeatureClass(WizardResult calcResult, IFeatureClass observatioPointsFeatureClass,
                                                             IActiveView activeView, IRaster raster)
         {
-            var observPointTemporaryFeatureClass = 
+            var observPointTemporaryFeatureClass =
                     GdbAccess.Instance.GenerateTemporaryFeatureClassWithRequitedFields(observatioPointsFeatureClass.Fields,
                                                                                         $"{calcResult.TaskName}{_temporaryObserverPointParamsFeatureClassSuffix}");
 
@@ -52,7 +63,7 @@ namespace MilSpace.Tools
             observerPointGeometry.AddZCoordinate(raster);
             observerPointGeometry.ZAware = true;
 
-            if(double.IsNaN(observerPointGeometry.Z))
+            if (double.IsNaN(observerPointGeometry.Z))
             {
                 throw new MilSpacePointOutOfRatserException(calcResult.ObservationPoint.Objectid, calcResult.RasterLayerName);
             }
@@ -61,12 +72,12 @@ namespace MilSpace.Tools
 
 
             // ---- Get min and max azimuths ----
-            
+
             var points = EsriTools.GetPointsFromGeometries(new IGeometry[] { calcResult.ObservationStation },
                                                             observerPointGeometry.SpatialReference,
                                                             out isCircle).ToArray();
 
-            bool isPointInside = EsriTools.IsPointOnExtent(observStationEnvelope,  observerPointGeometry);
+            bool isPointInside = EsriTools.IsPointOnExtent(observStationEnvelope, observerPointGeometry);
 
             // Set azimuth for circle polygon
             if (isCircle && !isPointInside)
@@ -80,11 +91,11 @@ namespace MilSpace.Tools
                         SpatialReference = observerPointGeometry.SpatialReference
                     };
 
-                    if(i == 0)
+                    if (i == 0)
                     {
                         maxDistance = line.Length;
                     }
-                    else if(maxDistance < line.Length)
+                    else if (maxDistance < line.Length)
                     {
                         maxDistance = line.Length;
                     }
@@ -128,7 +139,7 @@ namespace MilSpace.Tools
                 }
 
                 // Find angle to the farthest point of observation station
-                 maxTiltAngle = EsriTools.FindAngleByDistanceAndHeight(height, maxDistance);
+                maxTiltAngle = EsriTools.FindAngleByDistanceAndHeight(height, maxDistance);
 
                 // Create observation point copy with changing height, distance and angles values
                 var currentObservationPoint = new ObservationPoint();
@@ -168,31 +179,110 @@ namespace MilSpace.Tools
             EsriTools.RemoveDataSet(gdb, $"{taskId}{_temporaryObservationStationFeatureClassSuffix}");
             EsriTools.RemoveDataSet(gdb, $"{taskId}{_temporaryObserverPointParamsFeatureClassSuffix}");
         }
-        
-        public void FindVisibilityPercent(string visibilityArePolyFCName,
+
+        public int FindVisibilityPercent(string visibilityArePolyFCName,
                                                IFeatureClass observStationFeatureClass, int[] observStationsIds,
                                                int pointId)
         {
-            var observationStationPolygon = observStationFeatureClass.GetFeature(observStationsIds.First()).ShapeCopy as IPolygon;
-            var visibilityPolygonsForPointFeatureClass = 
+            IPolygon observationStationPolygon = null;
+
+            if(observStationFeatureClass == null)
+            {
+                throw new MilSpaceVisibilityCalcFailedException($"Observation station feature class doesn`t exists");
+            }
+
+            try
+            {
+               observationStationPolygon = observStationFeatureClass.GetFeature(1).ShapeCopy as IPolygon;
+            }
+            catch (Exception ex)
+            {
+                throw new MilSpaceVisibilityCalcFailedException($"Cannot get observation station polygon from feature class. Exception: {ex.Message}");
+            }
+
+            var visibilityPolygonsForPointFeatureClass =
                     GdbAccess.Instance.GetFeatureClass(MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection,
                                                         visibilityArePolyFCName);
 
-            if(visibilityPolygonsForPointFeatureClass == null)
+            if (visibilityPolygonsForPointFeatureClass == null)
             {
                 _visibilityPercents.Add(pointId, 0);
-                return;
+                return -1;
             }
-            
+
             // Get visibility area of observation station
             var visibilityArea = EsriTools.GetObjVisibilityArea(visibilityPolygonsForPointFeatureClass, VisibilityManager.CurrentMap, observationStationPolygon);
             var observationStationPolygonArea = observationStationPolygon as IArea;
 
             var visibilityPercent = Math.Round(((visibilityArea * 100) / observationStationPolygonArea.Area), 0);
-            
             _visibilityPercents.Add(pointId, Convert.ToInt16(visibilityPercent));
+
+            if (_isMinVisibleIdFound)
+            {
+                return FindNextIdForKnowMinPointIdForRequiredVisibility(pointId);
+            }
+            else
+            {
+                return FindNextId(visibilityPercent, pointId);
+            }
         }
 
+        private int FindNextId(double visibilityPercent, int pointId)
+        {
+            if (visibilityPercent < _requiredVisibilityPercent)
+            {
+                _lastInappropriatePointId = pointId;
+
+                if (pointId >= _maxId)
+                {
+                    if (_visibilityPercents.Count == 0)
+                    {
+                        return -1;
+                    }
+                    else
+                    {
+                        _isMinVisibleIdFound = true;
+                        return _visibilityPercents.Values.Max() + 1;
+                    }
+                }
+                else
+                {
+                    decimal nextId = pointId + (_maxId - pointId) / 2;
+                    return Convert.ToInt32(Math.Round(nextId));
+                }
+            }
+            else
+            {
+                decimal nextId = pointId - (pointId - _lastInappropriatePointId) / 2;
+                return Convert.ToInt32(Math.Round(nextId));
+            }
+        }
+
+        private int FindNextIdForKnowMinPointIdForRequiredVisibility(int pointId)
+        {
+            if (pointId < _maxId)
+            {
+                int nextId = pointId += 1;
+
+                while (_visibilityPercents.Any(percent => percent.Key == nextId))
+                {
+                    nextId += 1;
+                }
+
+                if (nextId <= _maxId)
+                {
+                    return nextId;
+                }
+                else
+                {
+                    return -2;
+                }
+            }
+            else
+            {
+                return -2;
+            }
+        }
 
         public static List<int> GetAllIdsFromFeatureClass(IFeatureClass featureClass)
         {
@@ -229,22 +319,19 @@ namespace MilSpace.Tools
         public bool CreateVOTable(IFeatureClass observPointFeatureClass, int expectedVisibilityPercent,
                                     string bestParamsTableName)
         {
+
+            if(_visibilityPercents.Count == 0)
+            {
+                CreateNullVisibilityVOTable(observPointFeatureClass, expectedVisibilityPercent, bestParamsTableName);
+                return false;
+            }
+
             var appropriateParams = new Dictionary<int, short>();
 
             bool isParametersFound = false;
             KeyValuePair<int, short> bestParams = new KeyValuePair<int, short>(-1, 0);
 
-            // Clone obsever points feature class fields
-            var fieldsClone = observPointFeatureClass.Fields as IClone;
-            var fields = fieldsClone.Clone() as IFields;
-
-            // Remove shape field
-            var shapeFieldIndex = fields.FindField(observPointFeatureClass.ShapeFieldName);
-            var fieldsEdit = (IFieldsEdit)fields;
-            fieldsEdit.DeleteField(fields.Field[shapeFieldIndex]);
-
-            // Generate best parameters table with obsever points feature class fields and visibility percent field
-            var bestParamsTable = GdbAccess.Instance.GenerateVOTable(fields, bestParamsTableName);
+            var bestParamsTable = GenerateVOTable(observPointFeatureClass, bestParamsTableName);
 
             foreach (var paramsVisibilityPercent in _visibilityPercents)
             {
@@ -284,7 +371,35 @@ namespace MilSpace.Tools
             return isParametersFound;
         }
 
-        private static double FindMinDistance(IPoint[] pointsCollection, IPoint centerPoint)
+        public void CreateNullVisibilityVOTable(IFeatureClass observPointFeatureClass, int expectedVisibilityPercent,
+                                    string bestParamsTableName)
+        {
+            var bestParamsTable = GenerateVOTable(observPointFeatureClass, bestParamsTableName);
+
+            var bestParamsFeatures = new Dictionary<IFeature, short>
+            {
+                { observPointFeatureClass.GetFeature(1), 0}
+            };
+
+            GdbAccess.Instance.FillBestParametersTable(bestParamsFeatures, bestParamsTable, bestParamsTableName);
+        }
+
+        private static ITable GenerateVOTable(IFeatureClass observPointFeatureClass, string bestParamsTableName)
+        {
+            // Clone obsever points feature class fields
+            var fieldsClone = observPointFeatureClass.Fields as IClone;
+            var fields = fieldsClone.Clone() as IFields;
+
+            // Remove shape field
+            var shapeFieldIndex = fields.FindField(observPointFeatureClass.ShapeFieldName);
+            var fieldsEdit = (IFieldsEdit)fields;
+            fieldsEdit.DeleteField(fields.Field[shapeFieldIndex]);
+
+            // Generate best parameters table with obsever points feature class fields and visibility percent field
+            return GdbAccess.Instance.GenerateVOTable(fields, bestParamsTableName);
+        }
+
+    private static double FindMinDistance(IPoint[] pointsCollection, IPoint centerPoint)
         {
             double minDistance = 0;
 

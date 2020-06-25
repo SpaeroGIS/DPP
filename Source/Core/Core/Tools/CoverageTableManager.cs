@@ -232,6 +232,11 @@ namespace MilSpace.Tools
 
             if (!isTotal || pointCount == 1)
             {
+                if(isTotal)
+                {
+                    curPointId = 1;
+                }
+
                 var observPointFeatureClass = GdbAccess.Instance.GetFeatureClass(_gdb, currentPointFeatureClassName);
                 var observPoint = GetObservationPoints(currentPointFeatureClassName).First();
                 var totalExpectedPolygon = _coverageAreaData.First(area => area.PointId == -1).Polygon;
@@ -243,7 +248,18 @@ namespace MilSpace.Tools
                 }
 
                 var visibilityPolygonsForPointFeatureClass = GdbAccess.Instance.GetFeatureClass(_gdb, visibilityAreasFCName);
-                var expectedPolygon = _coverageAreaData.FirstOrDefault(area => area.PointId == curPointId).Polygon;
+                var requiredArea = _coverageAreaData.FirstOrDefault(area => area.PointId == curPointId);
+
+                IPolygon expectedPolygon;
+
+                if (requiredArea != null)
+                {
+                    expectedPolygon = requiredArea.Polygon;
+                }
+                else
+                {
+                    return;
+                }
 
                 var totalExpectedArea = GetProjectedPolygonArea(totalExpectedPolygon);
 
