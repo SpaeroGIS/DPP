@@ -1,4 +1,5 @@
-﻿using MilSpace.Tools.Sentinel;
+﻿using MilSpace.Core.Zip;
+using MilSpace.Tools.Sentinel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,8 +15,27 @@ namespace MilSpace.Web
     {
         static void Main(string[] args)
         {
+            using (ZipManager zipMgr = new ZipManager(@"E:\Data\S1\SRC\S1A_IW_SLC__1SDV_20190711T034707_20190711T034737_028064_032B5E_9546.zip"))
+            {
 
-            string url =   "https://scihub.copernicus.eu/dhus/api/stub/products?filter=(%20footprint:%22Intersects(POLYGON((33.0%2044.0,43.0%2044.0,43.0%2054.0,33.0%2054.0,33.0%2044.0)))%22)%20AND%20(beginPosition:[2020-03-27T00:00:00.000Z%20TO%202020-04-08T23:59:59.999Z]%20AND%20endPosition:[2020-03-27T00:00:00.000Z%20TO%202020-04-08T23:59:59.999Z])%20AND%20((platformname:Sentinel-1%20AND%20filename:S1A_*%20AND%20producttype:SLC%20AND%20sensoroperationalmode:IW))&offset=0&limit=150&sortedby=ingestiondate&order=desc";
+                var annotationFolder = zipMgr.GetFoldersStructure().Where(f => f.EndsWith("annotation/")).FirstOrDefault();
+                if (!string.IsNullOrEmpty(annotationFolder))
+                {
+                    var filse = zipMgr.GetFileNamesFormFolder(annotationFolder).ToArray();
+                }
+
+
+                var zipEntry = zipMgr.GetEntry("s1a-iw1-slc-vh-20190711t034707-20190711t034735-028064-032b5e-001.xml");
+
+                zipMgr.GoThrogh();
+            }
+        }
+
+
+        static void Main1(string[] args)
+        {
+
+            string url = "https://scihub.copernicus.eu/dhus/api/stub/products?filter=(%20footprint:%22Intersects(POLYGON((33.0%2044.0,43.0%2044.0,43.0%2054.0,33.0%2054.0,33.0%2044.0)))%22)%20AND%20(beginPosition:[2020-03-27T00:00:00.000Z%20TO%202020-04-08T23:59:59.999Z]%20AND%20endPosition:[2020-03-27T00:00:00.000Z%20TO%202020-04-08T23:59:59.999Z])%20AND%20((platformname:Sentinel-1%20AND%20filename:S1A_*%20AND%20producttype:SLC%20AND%20sensoroperationalmode:IW))&offset=0&limit=150&sortedby=ingestiondate&order=desc";
             string url02 = "https://scihub.copernicus.eu/dhus/api/stub/products?filter=(%20footprint:%22Intersects(POLYGON((33.0%2043.0,33.0%2044.0,34.0%2044.0,34.0%2043.0,33.0%2043.0)))%22)%20AND%20(beginPosition:[2020-03-27T00:00:00.000Z%20TO%202020-04-08T23:59:59.999Z]%20AND%20endPosition:[2020-03-27T00:00:00.000Z%20TO%202020-04-08T23:59:59.999Z])%20AND%20(platformname:Sentinel-1%20AND%20filename:S1A_*%20AND%20producttype:SLC%20AND%20sensoroperationalmode:IW)&offset=0&limit=150&sortedby=ingestiondate&order=desc";
             string url03 = "https://scihub.copernicus.eu/dhus/api/stub/products?filter=(footprint:%22Intersects(POLYGON%20(33.0%2043.0,33.0%2044.0,34.0%2044.0,34.0%2043.0,33.0%2043.0))%22)%20AND%20(beginPosition:[2020-03-27T00:00:00.000Z%20TO%202020-04-08T23:59:59.999Z]%20AND%20endPosition:[2020-03-27T00:00:00.000Z%20TO%202020-04-08T23:59:59.999Z])%20AND%20(platformname:Sentinel-1%20AND%20filename:S1A_*%20AND%20producttype:SLC%20AND%20sensoroperationalmode:IW)&offset=0&limit=150&sortedby=ingestiondate&order=desc";
             string url2 = "https://scihub.copernicus.eu/dhus/api/stub/products?filter=(footprint:%22Intersects(POLYGON((33.0%2043.0,33.0%2044.0,34.0%2044.0,34.0%2043.0,33.0%2043.0)))%22)AND%20(%20beginPosition:[2020-03-27T00:00:00.000Z%20TO%202020-04-08T23:59:59.999Z]%20AND%20endPosition:[2020-03-27T00:00:00.000Z%20TO%202020-04-08T23:59:59.999Z]%20)%20AND%20(%20%20(platformname:Sentinel-1%20AND%20filename:S1A_*%20AND%20producttype:SLC%20AND%20sensoroperationalmode:IW))&offset=0&limit=150&sortedby=ingestiondate&order=desc%22";
