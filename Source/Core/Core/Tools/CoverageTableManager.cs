@@ -238,19 +238,19 @@ namespace MilSpace.Tools
 
                 if (totalExpectedPolygon == null)
                 {
-                    AddEmptyAreaRow(observPoint.Title, observPoint.Objectid);
+                    AddEmptyAreaRow(observPoint.Title, curPointId);
                     return;
                 }
 
                 var visibilityPolygonsForPointFeatureClass = GdbAccess.Instance.GetFeatureClass(_gdb, visibilityAreasFCName);
-                var expectedPolygon = _coverageAreaData.FirstOrDefault(area => area.PointId == observPoint.Objectid).Polygon;
+                var expectedPolygon = _coverageAreaData.FirstOrDefault(area => area.PointId == curPointId).Polygon;
 
                 var totalExpectedArea = GetProjectedPolygonArea(totalExpectedPolygon);
 
                 var expectedPolygonArea = GetProjectedPolygonArea(expectedPolygon);
                 var visibleArea = EsriTools.GetTotalAreaFromFeatureClass(visibilityPolygonsForPointFeatureClass, VisibilityManager.CurrentMap);
 
-                AddVSRowModel(observPoint.Title, observPoint.Objectid, 1, expectedPolygonArea, visibleArea, totalExpectedArea);
+                AddVSRowModel(observPoint.Title, curPointId, 1, expectedPolygonArea, visibleArea, totalExpectedArea);
             }
         }
 

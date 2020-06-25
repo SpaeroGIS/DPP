@@ -1568,7 +1568,7 @@ namespace MilSpace.GeoCalculator
             EsriTools.ProjectToMapSpatialReference(point, FocusMapSpatialReference);
 
             var pointGuid = AddPointToList(point, chkShowLine.Checked, geoPoint.GuidId.ToString(), geoPoint.PointNumber);
-            if (pointGuid != Guid.Empty)
+            if (pointGuid != Guid.Empty && !pointModels.Any(model => model.Key == pointGuid))
             {
                 var pointModel = new PointModel { Latitude = geoPoint.Y.Value, Longitude = geoPoint.X.Value, Number = geoPoint.PointNumber };
                 pointModels.Add(pointGuid, pointModel);

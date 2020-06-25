@@ -159,6 +159,9 @@
     <Compile Include="..\Visibility.Common\DTO\ObservPointGui.cs">
       <Link>DTO\ObservPointGui.cs</Link>
     </Compile>
+    <Compile Include="..\Visibility.Common\DTO\TemporaryFeatureClassInfo.cs">
+      <Link>DTO\TemporaryFeatureClassInfo.cs</Link>
+    </Compile>
     <Compile Include="..\Visibility.Common\DTO\VisibilitySessionGui.cs">
       <Link>DTO\VisibilitySessionGui.cs</Link>
     </Compile>
