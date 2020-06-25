@@ -1549,6 +1549,11 @@ namespace MilSpace.Core.Tools
 
         public static ILayer GetFeatureLayer(IFeatureClass dataset)
         {
+            if (dataset == null)
+            {
+                return null;
+            }
+
             var featurelayer = new FeatureLayer
             {
                 Name = dataset.AliasName,
