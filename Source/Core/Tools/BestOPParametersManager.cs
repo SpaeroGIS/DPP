@@ -7,6 +7,7 @@ using MilSpace.Core;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.Facade;
+using MilSpace.Tools.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,6 +51,11 @@ namespace MilSpace.Tools
 
             observerPointGeometry.AddZCoordinate(raster);
             observerPointGeometry.ZAware = true;
+
+            if(double.IsNaN(observerPointGeometry.Z))
+            {
+                throw new MilSpacePointOutOfRatserException(calcResult.ObservationPoint.Objectid, calcResult.RasterLayerName);
+            }
 
             var minDistance = FindMinDistance(observStationEnvelopePoints, observerPointGeometry);
 

@@ -425,6 +425,11 @@ namespace MilSpace.Visibility.ViewController
                     exx = CalculateBestOPParams(calcParams, animationProgressor);
                 }
             }
+            catch(MilSpacePointOutOfRatserException ex)
+            {
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("PointOutOfRasterErrorMessage", "Обраний пункт спостереження знаходиться за межами растру"),
+                                LocalizationContext.Instance.MessageBoxCaption);
+            }
             catch (Exception ex)
             {
                 log.ErrorEx("> CalculateVisibility Exception. exx:{0} Exception:{1}", exx, ex.Message);
@@ -765,7 +770,7 @@ namespace MilSpace.Visibility.ViewController
                 {
                     if(calcParams.ObservPointIDs.Any(id => id == pointId))
                     {
-                        throw new MilSpaceVisibilityCalcFailedException($"Observer point {pointId} doesn`t locate on the raster layer {demLayer.Name}");
+                        throw new MilSpacePointOutOfRatserException(pointId, demLayer.Name);
                     }
                 }
 
