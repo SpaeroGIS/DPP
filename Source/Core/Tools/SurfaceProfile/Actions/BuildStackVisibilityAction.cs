@@ -232,6 +232,8 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                     observPointFeatureClassName,
                     curPoints.Value);
 
+                results.Add(iStepNum.ToString() + ". " + "Створено копію ПС для розрахунку: " + exportedFeatureClass);
+                iStepNum++;
 
                 if (string.IsNullOrWhiteSpace(exportedFeatureClass))
                 {
@@ -243,10 +245,12 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                     return messages;
                 }
 
-                if (curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints
-                        && calcResults.HasFlag(VisibilityCalculationResultsEnum.CoverageTable))
+                if (calcResults.HasFlag(VisibilityCalculationResultsEnum.CoverageTable))
                 {
-                    coverageTableManager.SetCalculateAreas(exportedFeatureClass, oservStationsFeatureClassName);
+                    if (curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints)
+                    {
+                        coverageTableManager.SetCalculateAreas(exportedFeatureClass, oservStationsFeatureClassName);
+                    }
 
                     var visibilityPotentialAreaFCName =
                     VisibilityCalcResults.GetResultName(pointId > -1 ?
@@ -259,40 +263,42 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
                     results.Add(iStepNum.ToString() + ". " + "Розраховано потенційне покриття: " + visibilityPotentialAreaFCName + " ПС: " + pointId.ToString());
 
-                    //Calc protentilly visiblw area as Image
-                    var fc = GenerateWorknArea(visibilityPotentialAreaFCName, observPointFeatureClassName, outputSourceName);
-
-                    results.Add(iStepNum.ToString() + ". " + "Розраховано потенційне покриття для розрахунку: " + fc.AliasName + " ПС: " + pointId.ToString());
-
-
-                    //Try to clip the raster source by visibilityPotentialAreaFCName
-                    var visibilityPotentialAreaImgName =
-                    VisibilityCalcResults.GetResultName(VisibilityCalculationResultsEnum.VisibilityRastertPotentialArea, outputSourceName, pointId);
-                    if (!CalculationLibrary.ClipVisibilityZonesByAreas(
-                           rasterSource,
-                           visibilityPotentialAreaImgName,
-                           fc.AliasName,
-                           messages, "NONE"))
+                    if (curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints)
                     {
-                        string errorMessage = $"The result {visibilityPotentialAreaImgName} was not generated";
-                        result.Exception = new MilSpaceVisibilityCalcFailedException(errorMessage);
-                        result.ErrorMessage = errorMessage;
-                        logger.ErrorEx("> ProcessObservationPoint ERROR ClipVisibilityZonesByAreas. errorMessage:{0}", errorMessage);
-                        results.Add("Помилка: " + errorMessage + " ПС: " + pointId.ToString());
-                        return messages;
-                    }
-                    else
-                    {
-                        results.Add(iStepNum.ToString() + ". " + "Розраховано покриття для розрахунку на основі потенційноі видимості: " + visibilityPotentialAreaImgName + " ПС: " + pointId.ToString());
-                        rasterSource = visibilityPotentialAreaImgName;
-                        //Delete temporary Featureclass usewd for clipping the base image by potential area
-                        GdbAccess.Instance.RemoveFeatureClass(fc.AliasName);
+                        //Calc protentilly visiblw area as Image
+                        var fc = GenerateWorknArea(visibilityPotentialAreaFCName, observPointFeatureClassName, outputSourceName);
+
+                        results.Add(iStepNum.ToString() + ". " + "Розраховано потенційне покриття для розрахунку: " + fc.AliasName + " ПС: " + pointId.ToString());
+
+
+                        //Try to clip the raster source by visibilityPotentialAreaFCName
+                        var visibilityPotentialAreaImgName =
+                        VisibilityCalcResults.GetResultName(VisibilityCalculationResultsEnum.VisibilityRastertPotentialArea, outputSourceName, pointId);
+                        if (!CalculationLibrary.ClipVisibilityZonesByAreas(
+                               rasterSource,
+                               visibilityPotentialAreaImgName,
+                               fc.AliasName,
+                               messages, "NONE"))
+                        {
+                            string errorMessage = $"The result {visibilityPotentialAreaImgName} was not generated";
+                            result.Exception = new MilSpaceVisibilityCalcFailedException(errorMessage);
+                            result.ErrorMessage = errorMessage;
+                            logger.ErrorEx("> ProcessObservationPoint ERROR ClipVisibilityZonesByAreas. errorMessage:{0}", errorMessage);
+                            results.Add("Помилка: " + errorMessage + " ПС: " + pointId.ToString());
+                            return messages;
+                        }
+                        else
+                        {
+                            results.Add(iStepNum.ToString() + ". " + "Розраховано покриття для розрахунку на основі потенційноі видимості: " + visibilityPotentialAreaImgName + " ПС: " + pointId.ToString());
+                            rasterSource = visibilityPotentialAreaImgName;
+                            //Delete temporary Featureclass usewd for clipping the base image by potential area
+                            GdbAccess.Instance.RemoveFeatureClass(fc.AliasName);
+                        }
                     }
 
                 }
 
-                results.Add(iStepNum.ToString() + ". " + "Створено копію ПС для розрахунку: " + exportedFeatureClass);
-                iStepNum++;
+               
 
                 //Generate Visibility Raster
                 string featureClass = observPointFeatureClassName;
