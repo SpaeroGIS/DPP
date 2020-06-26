@@ -851,6 +851,12 @@ namespace MilSpace.Visibility.ViewController
 
                 }
             }
+            catch (Exception ex)
+            {
+                log.ErrorEx(ex.Message);
+                log.ErrorEx(ex.StackTrace);
+                throw;
+            }
             finally
             {
                 //test
@@ -859,7 +865,6 @@ namespace MilSpace.Visibility.ViewController
 
                 //var observObjectsLayer = EsriTools.GetFeatureLayer(observObjectsLayerInfo.TemporaryFeatureClass);
                 //mapDocument.FocusMap.AddLayer(observObjectsLayer);
-
 
                 EsriTools.RemoveDataSet(MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection,
                                 featureLayerInfo.TemporaryFeatureClass.AliasName, esriDatasetType.esriDTFeatureClass);
