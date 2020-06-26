@@ -138,7 +138,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
             string oservStationsFeatureClassName = null;
             //Used to clip the base immge to make it smaller and reduce the culculation time
-            string potentialAreaFeatureClassName = null;
+            int currentPointIdForBestParamsCalculations = pointsFilteringIds.Last();
 
             //Handle Observation Objects
             if (calcResults.HasFlag(VisibilityCalculationResultsEnum.ObservationObjects))
@@ -218,8 +218,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             }
 
             var coverageTableManager = new CoverageTableManager();
-            var bestOPParametersManager = new BestOPParametersManager();
-
+            var bestOPParametersManager = new BestOPParametersManager(visibilityPercent, currentPointIdForBestParamsCalculations);
 
             // There is no reason to clip image for the BestParameters mode, since the point just shance its Z value
             var clipSourceImageForEveryPoint = true; 
@@ -227,9 +226,15 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
             foreach (var curPoints in pointsIDs)
             {
-                //curPoints.Key is VisibilityCalculationresultsEnum.ObservationPoints or VisibilityCalculationresultsEnum.ObservationPointSingle
-
-                var pointId = curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints ? -1 : ++index;
+                int pointId;
+                if (calcResults.HasFlag(VisibilityCalculationResultsEnum.BestParametersTable))
+                {
+                    pointId = currentPointIdForBestParamsCalculations;
+                }
+                else
+                {
+                    pointId = curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints ? -1 : ++index;
+                }
                 var observPointFeatureClassName = VisibilityTask.GetResultName(curPoints.Key, outputSourceName, pointId);
 
                 var exportedFeatureClass = GdbAccess.Instance.ExportObservationFeatureClass(
@@ -264,7 +269,8 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
                     coverageTableManager.AddPotentialArea(
                         visibilityPotentialAreaFCName,
-                        (curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints), pointId + 1);
+                        (curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints || 
+                        curPoints.Key == VisibilityCalculationResultsEnum.ObservationPointSingle), pointId + 1);
 
                     results.Add(iStepNum.ToString() + ". " + "Розраховано потенційне покриття: " + visibilityPotentialAreaFCName + " ПС: " + pointId.ToString());
 
@@ -508,11 +514,15 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                     {
                         if (pointId != -1)
                         {
-                            bestOPParametersManager.FindVisibilityPercent(visibilityArePolyFCName, observStationsfeatureClass,
-                                                                                   stationsFilteringIds, pointsFilteringIds[pointId]);
+                            currentPointIdForBestParamsCalculations = bestOPParametersManager.FindVisibilityPercent(visibilityArePolyFCName, observStationsfeatureClass,
+                                                                                                                   stationsFilteringIds, pointId);
 
                             results.Add(iStepNum.ToString() + ". " + "Знайдено відсоток покриття для кроку " + pointId.ToString());
                             iStepNum++;
+                            if (currentPointIdForBestParamsCalculations < 0)
+                            {
+                                break;
+                            }
                         }
                     }
                 }
