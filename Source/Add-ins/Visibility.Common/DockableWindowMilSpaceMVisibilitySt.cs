@@ -2921,7 +2921,7 @@ namespace MilSpace.Visibility
 
                     if (control == tbObservObjGroup)
                     {
-                        _isObservObjectsFieldsChanged = _isObservObjectsFieldsChanged || !sourceIten.Group.Equals(control.Text);
+                        _isObservObjectsFieldsChanged = _isObservObjectsFieldsChanged || (sourceIten.Group != null && !sourceIten.Group.Equals(control.Text));
                     }
                     if (control == tbObservObjTitle)
                     {
