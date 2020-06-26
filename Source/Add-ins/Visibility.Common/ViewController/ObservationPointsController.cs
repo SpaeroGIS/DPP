@@ -425,6 +425,11 @@ namespace MilSpace.Visibility.ViewController
                     exx = CalculateBestOPParams(calcParams, animationProgressor);
                 }
             }
+            catch(MilSpacePointOutOfRatserException ex)
+            {
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("PointOutOfRasterErrorMessage", "Обраний пункт спостереження знаходиться за межами растру"),
+                                LocalizationContext.Instance.MessageBoxCaption);
+            }
             catch (Exception ex)
             {
                 log.ErrorEx("> CalculateVisibility Exception. exx:{0} Exception:{1}", exx, ex.Message);
@@ -765,7 +770,7 @@ namespace MilSpace.Visibility.ViewController
                 {
                     if(calcParams.ObservPointIDs.Any(id => id == pointId))
                     {
-                        throw new MilSpaceVisibilityCalcFailedException($"Observer point {pointId} doesn`t locate on the raster layer {demLayer.Name}");
+                        throw new MilSpacePointOutOfRatserException(pointId, demLayer.Name);
                     }
                 }
 
@@ -905,8 +910,8 @@ namespace MilSpace.Visibility.ViewController
                     demLayer.Raster);
 
             //test
-            //var layer = EsriTools.GetFeatureLayer(observerPointTemporaryFeatureClass);
-            //mapDocument.AddLayer(layer);
+            var layer = EsriTools.GetFeatureLayer(observerPointTemporaryFeatureClass);
+            mapDocument.AddLayer(layer);
             exx++;
 
             var observationStationTemporaryFeatureClass = BestOPParametersManager.CreateOOFeatureClass(
@@ -942,37 +947,56 @@ namespace MilSpace.Visibility.ViewController
             animationProgressor.Show();
             animationProgressor.Play(0, 200);
 
-            var calcTask = VisibilityManager.Generate(
-                observerPointTemporaryFeatureClass,
-                observPointsIds,
-                observationStationTemporaryFeatureClass,
-                observStationsIds,
-                calcParams.RasterLayerName,
-                calcParams.VisibilityCalculationResults,
-                calcParams.TaskName,
-                calcParams.TaskName,
-                calcParams.CalculationType,
-                mapDocument.ActiveView.FocusMap,
-                calcParams.VisibilityPercent);
+            VisibilityTask calcTask = null;
 
-            exx++;
-
-           // BestOPParametersManager.ClearTemporaryData(calcParams.TaskName, calcTask.ReferencedGDB);
-            exx++;
-
-            if (calcTask.Finished != null)
+            try
             {
-                var tbls = mapDocument.TableProperties;
+                 calcTask = VisibilityManager.Generate(
+                    observerPointTemporaryFeatureClass,
+                    observPointsIds,
+                    observationStationTemporaryFeatureClass,
+                    observStationsIds,
+                    calcParams.RasterLayerName,
+                    calcParams.VisibilityCalculationResults,
+                    calcParams.TaskName,
+                    calcParams.TaskName,
+                    calcParams.CalculationType,
+                    mapDocument.ActiveView.FocusMap,
+                    calcParams.VisibilityPercent);
 
-                EsriTools.AddTableToMap(
-                    tbls,
-                    VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.BestParametersTable, calcTask.Name),
-                    calcTask.ReferencedGDB,
-                    mapDocument,
-                    application);
                 exx++;
 
+                exx++;
+
+                if (calcTask.Finished != null)
+                {
+                    var tbls = mapDocument.TableProperties;
+
+
+
+                    EsriTools.AddTableToMap(
+                        tbls,
+                        VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.BestParametersTable, calcTask.Name),
+                        calcTask.ReferencedGDB,
+                        mapDocument,
+                        application);
+                    exx++;
+
+                }
             }
+            finally
+            {
+                ArcMapHelper.AddResultsToMapAsGroupLayer(
+                       calcTask,
+                       mapDocument.ActiveView,
+                       calcParams.RelativeLayerName,
+                       true,
+                       calcParams.ResultLayerTransparency
+                       , null);
+
+                BestOPParametersManager.ClearTemporaryData(calcParams.TaskName, calcTask.ReferencedGDB);
+            }
+
             return exx;
         }
 

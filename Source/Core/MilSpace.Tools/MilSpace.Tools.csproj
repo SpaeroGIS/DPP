@@ -154,6 +154,9 @@
     <Compile Include="..\Tools\CopyRaster\ResterStorageTypesEnum.cs">
       <Link>CopyRaster\ResterStorageTypesEnum.cs</Link>
     </Compile>
+    <Compile Include="..\Tools\Exceptions\MilSpacePointOutOfRatserException.cs">
+      <Link>Exceptions\MilSpacePointOutOfRatserException.cs</Link>
+    </Compile>
     <Compile Include="..\Tools\Exceptions\MilSpaceProfileLineNotFound.cs">
       <Link>Exceptions\MilSpaceProfileLineNotFound.cs</Link>
     </Compile>

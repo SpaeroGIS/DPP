@@ -233,6 +233,11 @@ namespace MilSpace.Tools
 
             if (!isTotal || pointCount == 1)
             {
+                if(isTotal)
+                {
+                    curPointId = 1;
+                }
+
                 var observPointFeatureClass = GdbAccess.Instance.GetFeatureClass(_gdb, currentPointFeatureClassName);
                 var observPoint = GetObservationPoints(currentPointFeatureClassName).First();
 
