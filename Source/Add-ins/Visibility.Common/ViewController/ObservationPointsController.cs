@@ -862,22 +862,6 @@ namespace MilSpace.Visibility.ViewController
                 log.ErrorEx(ex.StackTrace);
                 throw;
             }
-            finally
-            {
-                //test
-                //var observPointsLayer = EsriTools.GetFeatureLayer(featureLayerInfo.TemporaryFeatureClass);
-                //mapDocument.FocusMap.AddLayer(observPointsLayer);
-
-                //var observObjectsLayer = EsriTools.GetFeatureLayer(observObjectsLayerInfo.TemporaryFeatureClass);
-                //mapDocument.FocusMap.AddLayer(observObjectsLayer);
-
-                EsriTools.RemoveDataSet(MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection,
-                                featureLayerInfo.TemporaryFeatureClass.AliasName, esriDatasetType.esriDTFeatureClass);
-
-                EsriTools.RemoveDataSet(MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection,
-                                observObjectsLayerInfo.TemporaryFeatureClass.AliasName, esriDatasetType.esriDTFeatureClass);
-
-            }
 
             return exx;
         }
@@ -910,8 +894,8 @@ namespace MilSpace.Visibility.ViewController
                     demLayer.Raster);
 
             //test
-            var layer = EsriTools.GetFeatureLayer(observerPointTemporaryFeatureClass);
-            mapDocument.AddLayer(layer);
+            //var layer = EsriTools.GetFeatureLayer(observerPointTemporaryFeatureClass);
+            //mapDocument.AddLayer(layer);
             exx++;
 
             var observationStationTemporaryFeatureClass = BestOPParametersManager.CreateOOFeatureClass(
