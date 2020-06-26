@@ -8,6 +8,7 @@ using MilSpace.DataAccess.Facade;
 using MilSpace.Tools.SurfaceProfile;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 
@@ -232,25 +233,37 @@ namespace MilSpace.Tools
 
             if (!isTotal || pointCount == 1)
             {
+                if(isTotal)
+                {
+                    curPointId = 1;
+                }
+
                 var observPointFeatureClass = GdbAccess.Instance.GetFeatureClass(_gdb, currentPointFeatureClassName);
                 var observPoint = GetObservationPoints(currentPointFeatureClassName).First();
+
                 var totalExpectedPolygon = _coverageAreaData.First(area => area.PointId == -1).Polygon;
 
                 if (totalExpectedPolygon == null)
                 {
-                    AddEmptyAreaRow(observPoint.Title, observPoint.Objectid);
+                    AddEmptyAreaRow(observPoint.Title, curPointId);
                     return;
                 }
 
                 var visibilityPolygonsForPointFeatureClass = GdbAccess.Instance.GetFeatureClass(_gdb, visibilityAreasFCName);
-                var expectedPolygon = _coverageAreaData.FirstOrDefault(area => area.PointId == observPoint.Objectid).Polygon;
 
-                var totalExpectedArea = GetProjectedPolygonArea(totalExpectedPolygon, visibilityPolygonsForPointFeatureClass);
+                //TODO: Here is the problem  with ID on the first type of calc!!!
+                if (_coverageAreaData.Any(area => area.PointId == curPointId))
+                {
 
-                var expectedPolygonArea = GetProjectedPolygonArea(expectedPolygon, visibilityPolygonsForPointFeatureClass);
-                var visibleArea = EsriTools.GetTotalAreaFromFeatureClass(visibilityPolygonsForPointFeatureClass);
+                    var expectedPolygon = _coverageAreaData.FirstOrDefault(area => area.PointId == curPointId).Polygon;
 
-                AddVSRowModel(observPoint.Title, observPoint.Objectid, 1, expectedPolygonArea, visibleArea, totalExpectedArea);
+                    var totalExpectedArea = GetProjectedPolygonArea(totalExpectedPolygon);
+
+                    var expectedPolygonArea = GetProjectedPolygonArea(expectedPolygon);
+                    var visibleArea = EsriTools.GetTotalAreaFromFeatureClass(visibilityPolygonsForPointFeatureClass, VisibilityManager.CurrentMap);
+
+                    AddVSRowModel(observPoint.Title, curPointId, 1, expectedPolygonArea, visibleArea, totalExpectedArea);
+                }
             }
         }
 
@@ -303,8 +316,8 @@ namespace MilSpace.Tools
                             continue;
                         }
 
-                        var visibilityArea = EsriTools.GetObjVisibilityArea(visibilityPolygonsForPointFeatureClass, polygon.Value);
-                        var objArea = GetProjectedPolygonArea(polygon.Value, visibilityPolygonsForPointFeatureClass);
+                        var visibilityArea = EsriTools.GetObjVisibilityArea(visibilityPolygonsForPointFeatureClass, VisibilityManager.CurrentMap, polygon.Value);
+                        var objArea = GetProjectedPolygonArea(polygon.Value);
 
                         AddVARowModel(observPoint.Title, curPointId, obj.Title, polygon.Key, 1, visibilityArea, objArea);
                     }
@@ -323,7 +336,7 @@ namespace MilSpace.Tools
             _logger.InfoEx("> CalculateVATotalValues START");
 
             var visibilityPolygonsForPointFeatureClass = GdbAccess.Instance.GetFeatureClass(_gdb, visibilityAreasFCName);
-            var totalObjArea = GetProjectedPolygonArea(_objPolygons[-1], visibilityPolygonsForPointFeatureClass);
+            var totalObjArea = GetProjectedPolygonArea(_objPolygons[-1]);
 
             try
             {
@@ -349,8 +362,8 @@ namespace MilSpace.Tools
                         continue;
                     }
 
-                    var visibilityArea = EsriTools.GetObjVisibilityArea(visibilityPolygonsForPointFeatureClass, polygon.Value);
-                    var polygonArea = GetProjectedPolygonArea(polygon.Value, visibilityPolygonsForPointFeatureClass);
+                    var visibilityArea = EsriTools.GetObjVisibilityArea(visibilityPolygonsForPointFeatureClass, VisibilityManager.CurrentMap, polygon.Value);
+                    var polygonArea = GetProjectedPolygonArea(polygon.Value);
 
                     AddVARowModel(_allTitle, -1, obj.Title, polygon.Key, -1, visibilityArea, polygonArea);
                 }
@@ -364,10 +377,10 @@ namespace MilSpace.Tools
             {
                 for (int i = 1; i <= pointsCount; i++)
                 {
-                    var areaByPointsSee = EsriTools.GetObjVisibilityArea(visibilityPolygonsForPointFeatureClass, _objPolygons[-1], i);
+                    var areaByPointsSee = EsriTools.GetObjVisibilityArea(visibilityPolygonsForPointFeatureClass, VisibilityManager.CurrentMap, _objPolygons[-1], i);
                     var polygon = _objPolygons[-1];
 
-                    var polygonArea = GetProjectedPolygonArea(polygon, visibilityPolygonsForPointFeatureClass); 
+                    var polygonArea = GetProjectedPolygonArea(polygon); 
 
                     AddVARowModel(_allTitle, -1, _allTitle, -1, i, areaByPointsSee, polygonArea);
                 }
@@ -393,15 +406,15 @@ namespace MilSpace.Tools
             try
             {
                 var visibilityPolygonsFeatureClass = GdbAccess.Instance.GetFeatureClass(_gdb, visibilityAreasFCName);
-                _totalVisibleArea = EsriTools.GetTotalAreaFromFeatureClass(visibilityPolygonsFeatureClass);
+                _totalVisibleArea = EsriTools.GetTotalAreaFromFeatureClass(visibilityPolygonsFeatureClass, VisibilityManager.CurrentMap);
 
-                var totalExpectedArea = GetProjectedPolygonArea(_totalExpectedPolygon, visibilityPolygonsFeatureClass);
+                var totalExpectedArea = GetProjectedPolygonArea(_totalExpectedPolygon);
 
                 AddVSRowModel(_allTitle, -1, -1, totalExpectedArea, _totalVisibleArea, totalExpectedArea);
 
                 for (int i = 1; i <= pointsCount; i++)
                 {
-                    var areaByPointsSee = EsriTools.GetTotalAreaFromFeatureClass(visibilityPolygonsFeatureClass, i);
+                    var areaByPointsSee = EsriTools.GetTotalAreaFromFeatureClass(visibilityPolygonsFeatureClass, VisibilityManager.CurrentMap, i);
                     AddVSRowModel(_allTitle, -1, i, totalExpectedArea, areaByPointsSee, totalExpectedArea);
                 }
             }
@@ -477,43 +490,28 @@ namespace MilSpace.Tools
             return Math.Round(((pointArea * 100) / totalArea), 1);
         }
 
-        private double GetProjectedPolygonArea(IPolygon polygon, IFeatureClass featureClass)
+        private double GetProjectedPolygonArea(IPolygon polygon)
         {
-            var geoDataSet = (IGeoDataset)featureClass;
-            polygon.Project(geoDataSet.SpatialReference);
+            polygon.Project(VisibilityManager.CurrentMap.SpatialReference);
 
             var polygonArea = (IArea)polygon;
             return polygonArea.Area;
         }
         
-        private List<ObservationPoint> GetObservationPoints(string observerPointsFeatureClassName)
+        private IEnumerable<ObservationPoint> GetObservationPoints(string observerPointsFeatureClassName)
         {
             var observerPointsFeatureClass = GdbAccess.Instance.GetFeatureClass(_gdb, observerPointsFeatureClassName);
             var pointsFromLayer = VisibilityManager
                                        .GetObservationPointsFromAppropriateLayer(string.Empty, null,
                                                                                   null, observerPointsFeatureClass);
 
-            return pointsFromLayer.Select(point => { return point as ObservationPoint; }).ToList();
+            if (!pointsFromLayer.Any())
+            {
+                Debugger.Launch();
+            }
+
+            return pointsFromLayer.Select(point => { return point as ObservationPoint; }).ToArray();
         }
 
-        private void ProjectGeometry(double longtitudeInDegrees, IGeometry geometry)
-        {
-            int iProjCS = Convert.ToInt32(Math.Floor((longtitudeInDegrees + 180) / 6)) + 1 + 32600;
-            ISpatialReferenceFactory spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
-            ISpatialReference spRef = spatialReferenceFactory.CreateProjectedCoordinateSystem(iProjCS) as ISpatialReference;
-
-            try
-            {
-                geometry.Project(spRef);
-            }
-            catch (Exception ex)
-            {
-                Logger.Error("Cannot project: {0}", ex.Message);
-            }
-            finally
-            {
-                Marshal.ReleaseComObject(spatialReferenceFactory);
-            }
-        }
     }
 }

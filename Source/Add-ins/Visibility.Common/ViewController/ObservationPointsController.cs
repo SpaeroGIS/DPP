@@ -425,6 +425,11 @@ namespace MilSpace.Visibility.ViewController
                     exx = CalculateBestOPParams(calcParams, animationProgressor);
                 }
             }
+            catch(MilSpacePointOutOfRatserException ex)
+            {
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("PointOutOfRasterErrorMessage", "Обраний пункт спостереження знаходиться за межами растру"),
+                                LocalizationContext.Instance.MessageBoxCaption);
+            }
             catch (Exception ex)
             {
                 log.ErrorEx("> CalculateVisibility Exception. exx:{0} Exception:{1}", exx, ex.Message);
@@ -746,12 +751,50 @@ namespace MilSpace.Visibility.ViewController
             calcParams.RasterLayerName = demLayer.FilePath;
             exx++;
 
-            var featureLayer =
-                GetObserverPointsFeatureClass(calcParams.ObserverPointsSourceType, demLayer.Raster, calcParams.ObserverPointsLayerName);
-            var observPoints = featureLayer;
+            var featureLayerInfo =
+                GetObserverPointsFeatureClass(calcParams.ObserverPointsSourceType,
+                                                demLayer.Raster, calcParams.ObserverPointsLayerName);
+
+            var observPoints = featureLayerInfo.TemporaryFeatureClass;
             exx++;
-            var observObjects = GetObserverObjectsFeatureClass(calcParams.ObserverObjectsSourceType,
-                                                               calcParams.ObservationObjectLayerName, calcParams.Buffer);
+
+            if (featureLayerInfo.IsIdsInSourceFromZero)
+            {
+                calcParams.ObservPointIDs = calcParams.ObservPointIDs.Select(id => id + 1);
+                featureLayerInfo.PointsNotOnTheRaster = featureLayerInfo.PointsNotOnTheRaster.Select(id => id + 1).ToList();
+            }
+
+            if(featureLayerInfo.PointsNotOnTheRaster != null && featureLayerInfo.PointsNotOnTheRaster.Count > 0)
+            {
+                foreach(var pointId in featureLayerInfo.PointsNotOnTheRaster)
+                {
+                    if(calcParams.ObservPointIDs.Any(id => id == pointId))
+                    {
+                        throw new MilSpacePointOutOfRatserException(pointId, demLayer.Name);
+                    }
+                }
+
+                var bufferToOldValues = 0;
+
+                foreach (var pointId in featureLayerInfo.PointsNotOnTheRaster)
+                {
+                    calcParams.ObservPointIDs = calcParams.ObservPointIDs.Where(id => id + bufferToOldValues > pointId)
+                                                                         .Select(id => id - 1);
+                    bufferToOldValues++;
+                }
+            }
+
+            var observObjectsLayerInfo = GetObserverObjectsFeatureClass(calcParams.ObserverObjectsSourceType,
+                                                               calcParams.ObservationObjectLayerName,
+                                                               calcParams.Buffer);
+
+            var observObjects = observObjectsLayerInfo.TemporaryFeatureClass;
+
+            if (observObjectsLayerInfo.IsIdsInSourceFromZero)
+            {
+                calcParams.ObservObjectIDs = calcParams.ObservObjectIDs.Select(id => id + 1);
+            }
+
             exx++;
 
             if (calcParams.ObservPointIDs == null) // Get points from the current extent
@@ -813,19 +856,26 @@ namespace MilSpace.Visibility.ViewController
 
                 }
             }
+            catch (Exception ex)
+            {
+                log.ErrorEx(ex.Message);
+                log.ErrorEx(ex.StackTrace);
+                throw;
+            }
             finally
             {
                 //test
-                //var layer = EsriTools.GetFeatureLayer(featureLayer);
-                //mapDocument.FocusMap.AddLayer(layer);
+                //var observPointsLayer = EsriTools.GetFeatureLayer(featureLayerInfo.TemporaryFeatureClass);
+                //mapDocument.FocusMap.AddLayer(observPointsLayer);
 
-                //var observPointFeatureClassName = VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.ObservationPoints, calcParams.TaskName, -1);
-                //var feature = GdbAccess.Instance.GetFeatureClass(MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection, observPointFeatureClassName);
-                //var layer1 = EsriTools.GetFeatureLayer(feature);
-                //mapDocument.FocusMap.AddLayer(layer1);
+                //var observObjectsLayer = EsriTools.GetFeatureLayer(observObjectsLayerInfo.TemporaryFeatureClass);
+                //mapDocument.FocusMap.AddLayer(observObjectsLayer);
 
+                EsriTools.RemoveDataSet(MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection,
+                                featureLayerInfo.TemporaryFeatureClass.AliasName, esriDatasetType.esriDTFeatureClass);
 
-                EsriTools.RemoveDataSet(MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection, $"GeoCalculatorPoint_VisiilityMasterResult", esriDatasetType.esriDTFeatureClass);
+                EsriTools.RemoveDataSet(MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection,
+                                observObjectsLayerInfo.TemporaryFeatureClass.AliasName, esriDatasetType.esriDTFeatureClass);
 
             }
 
@@ -860,8 +910,8 @@ namespace MilSpace.Visibility.ViewController
                     demLayer.Raster);
 
             //test
-            //var layer = EsriTools.GetFeatureLayer(observerPointTemporaryFeatureClass);
-            //mapDocument.AddLayer(layer);
+            var layer = EsriTools.GetFeatureLayer(observerPointTemporaryFeatureClass);
+            mapDocument.AddLayer(layer);
             exx++;
 
             var observationStationTemporaryFeatureClass = BestOPParametersManager.CreateOOFeatureClass(
@@ -897,37 +947,56 @@ namespace MilSpace.Visibility.ViewController
             animationProgressor.Show();
             animationProgressor.Play(0, 200);
 
-            var calcTask = VisibilityManager.Generate(
-                observerPointTemporaryFeatureClass,
-                observPointsIds,
-                observationStationTemporaryFeatureClass,
-                observStationsIds,
-                calcParams.RasterLayerName,
-                calcParams.VisibilityCalculationResults,
-                calcParams.TaskName,
-                calcParams.TaskName,
-                calcParams.CalculationType,
-                mapDocument.ActiveView.FocusMap,
-                calcParams.VisibilityPercent);
+            VisibilityTask calcTask = null;
 
-            exx++;
-
-           // BestOPParametersManager.ClearTemporaryData(calcParams.TaskName, calcTask.ReferencedGDB);
-            exx++;
-
-            if (calcTask.Finished != null)
+            try
             {
-                var tbls = mapDocument.TableProperties;
+                 calcTask = VisibilityManager.Generate(
+                    observerPointTemporaryFeatureClass,
+                    observPointsIds,
+                    observationStationTemporaryFeatureClass,
+                    observStationsIds,
+                    calcParams.RasterLayerName,
+                    calcParams.VisibilityCalculationResults,
+                    calcParams.TaskName,
+                    calcParams.TaskName,
+                    calcParams.CalculationType,
+                    mapDocument.ActiveView.FocusMap,
+                    calcParams.VisibilityPercent);
 
-                EsriTools.AddTableToMap(
-                    tbls,
-                    VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.BestParametersTable, calcTask.Name),
-                    calcTask.ReferencedGDB,
-                    mapDocument,
-                    application);
                 exx++;
 
+                exx++;
+
+                if (calcTask.Finished != null)
+                {
+                    var tbls = mapDocument.TableProperties;
+
+
+
+                    EsriTools.AddTableToMap(
+                        tbls,
+                        VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.BestParametersTable, calcTask.Name),
+                        calcTask.ReferencedGDB,
+                        mapDocument,
+                        application);
+                    exx++;
+
+                }
             }
+            finally
+            {
+                ArcMapHelper.AddResultsToMapAsGroupLayer(
+                       calcTask,
+                       mapDocument.ActiveView,
+                       calcParams.RelativeLayerName,
+                       true,
+                       calcParams.ResultLayerTransparency
+                       , null);
+
+                BestOPParametersManager.ClearTemporaryData(calcParams.TaskName, calcTask.ReferencedGDB);
+            }
+
             return exx;
         }
 
@@ -2038,13 +2107,18 @@ namespace MilSpace.Visibility.ViewController
         const string geoCalcTemFeatureClassName = "GCPoints_";
         const string featureClassTemFeatureClassName = "FCPoints_";
 
-        internal IFeatureClass GetObserverPointsFeatureClass(ObservationSetsEnum source, IRaster raster, string layerName)
+        internal TemporaryFeatureClassInfo GetObserverPointsFeatureClass(ObservationSetsEnum source,
+                                                                IRaster raster, string layerName)
         {
             switch (source)
             {
                 case ObservationSetsEnum.Gdb:
 
-                    return GetObservatioPointFeatureClass(mapDocument.ActiveView);
+                    return new TemporaryFeatureClassInfo()
+                    {
+                        TemporaryFeatureClass = GetObservatioPointFeatureClass(mapDocument.ActiveView),
+                        IsIdsInSourceFromZero = false
+                    };
 
                 case ObservationSetsEnum.GeoCalculator:
 
@@ -2065,22 +2139,34 @@ namespace MilSpace.Visibility.ViewController
         const string geoCalcObjTemFeatureClassName = "GCObjects_";
         const string featureClassObjTemFeatureClassName = "FCObjects_";
 
-        internal IFeatureClass GetObserverObjectsFeatureClass(ObservationSetsEnum source,
+        internal TemporaryFeatureClassInfo GetObserverObjectsFeatureClass(ObservationSetsEnum source,
                                                               string layerName, int buffer)
         {
             UnsubscribeFromDeletePointEvent();
+
             switch (source)
             {
                 case ObservationSetsEnum.Gdb:
 
-                    return GetObservatioStationFeatureClass(mapDocument.ActiveView);
+                    return new TemporaryFeatureClassInfo()
+                    {
+                        TemporaryFeatureClass = GetObservatioStationFeatureClass(mapDocument.ActiveView),
+                        IsIdsInSourceFromZero = false
+                    };
 
                 case ObservationSetsEnum.GeoCalculator:
 
                     var observationObjects = GetPointsFromGeoCalculator();
-                    return CreateOOFeatureClass(observationObjects.Values.Select(obj => obj as IGeometry).ToList(),
+
+                    var featureClassFromGeoCalc = CreateOOFeatureClass(observationObjects.Values.Select(obj => obj as IGeometry).ToList(),
                                                  mapDocument.ActiveView,
                                                  geoCalcObjTemFeatureClassName, buffer);
+
+                    return new TemporaryFeatureClassInfo()
+                    {
+                        TemporaryFeatureClass = featureClassFromGeoCalc,
+                        IsIdsInSourceFromZero = false
+                    };
 
                 case ObservationSetsEnum.FeatureLayers:
 
@@ -2091,9 +2177,15 @@ namespace MilSpace.Visibility.ViewController
                     {
                         geometries = EsriTools.GetGeometriesFromLayer(featureLayer.FeatureClass, mapDocument.ActiveView.FocusMap.SpatialReference);
 
-                        return CreateOOFeatureClass(geometries.Values.Select(obj => obj as IGeometry).ToList(),
-                                              mapDocument.ActiveView,
-                                              featureClassObjTemFeatureClassName, buffer);
+                        var featureClass = CreateOOFeatureClass(geometries.Values.Select(obj => obj as IGeometry).ToList(),
+                                               mapDocument.ActiveView,
+                                               featureClassObjTemFeatureClassName, buffer);
+
+                        return new TemporaryFeatureClassInfo()
+                        {
+                            TemporaryFeatureClass = featureClass,
+                            IsIdsInSourceFromZero = geometries.Keys.Any(id => id == 0)
+                        };
                     }
                     else
                     {
@@ -2600,7 +2692,7 @@ namespace MilSpace.Visibility.ViewController
         }
 
 
-        private IFeatureClass CreateTempPointsFeatureClass(IRaster raster, List<IObserverPoint> observerPoints,
+        private TemporaryFeatureClassInfo CreateTempPointsFeatureClass(IRaster raster, List<IObserverPoint> observerPoints,
                                                             string featureClassName)
         {
             var observPointsFeatureClass = GetObservatioPointFeatureClass(mapDocument.ActiveView);
@@ -2608,6 +2700,7 @@ namespace MilSpace.Visibility.ViewController
             var observPointsFromGeoCalcTemporaryFeatureClass =
                         GdbAccess.Instance.GenerateTemporaryFeatureClassWithRequitedFields(observPointsFeatureClass.Fields,
                                                                                           featureClassName, true);
+            var pointsNotOnRasterIds = new List<int>();
 
             try
             {
@@ -2626,12 +2719,21 @@ namespace MilSpace.Visibility.ViewController
                     {
                         observerPointGeometry.ZAware = true;
                         observerPointGeometry.AddZCoordinate(raster);
+
+                        if (double.IsNaN(observerPointGeometry.Z))
+                        {
+                            pointsNotOnRasterIds.Add(point.Objectid);
+                        }
+                        else
+                        {
+                            GdbAccess.Instance.AddObservPoint(observerPointGeometry, GetObservationPointFromInterface(point),
+                                                          observPointsFromGeoCalcTemporaryFeatureClass);
+                        }
                     }
-
-                    // observerPointGeometry.Project(mapDocument.FocusMap.SpatialReference);
-
-                    GdbAccess.Instance.AddObservPoint(observerPointGeometry, GetObservationPointFromInterface(point),
-                                                      observPointsFromGeoCalcTemporaryFeatureClass);
+                    else
+                    {
+                        pointsNotOnRasterIds.Add(point.Objectid);
+                    }
                 }
             }
             catch (Exception ex)
@@ -2639,7 +2741,12 @@ namespace MilSpace.Visibility.ViewController
                 log.ErrorEx($"> CreateTempPointsFeatureClass Unexpected exception: {ex.Message}");
             }
 
-            return observPointsFromGeoCalcTemporaryFeatureClass;
+            return new TemporaryFeatureClassInfo()
+            {
+                TemporaryFeatureClass = observPointsFromGeoCalcTemporaryFeatureClass,
+                IsIdsInSourceFromZero = observerPoints.First().Objectid == 0,
+                PointsNotOnTheRaster = pointsNotOnRasterIds
+            };
         }
 
         public IFeatureClass CreateOOFeatureClass(List<IGeometry> geometries,

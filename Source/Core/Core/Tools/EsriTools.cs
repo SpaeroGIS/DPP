@@ -1428,7 +1428,11 @@ namespace MilSpace.Core.Tools
         public static Dictionary<int, IGeometry> GetGeometriesFromLayer(IFeatureClass featureClass, ISpatialReference spatialReference = null)
         {
             var geometries = new Dictionary<int, IGeometry>();
-            //var featureClass = featureLayer.FeatureClass;
+
+            if(featureClass == null)
+            {
+                return null;
+            }
 
             var idFieldIndex = featureClass.FindField(featureClass.OIDFieldName);
 
@@ -1545,6 +1549,11 @@ namespace MilSpace.Core.Tools
 
         public static ILayer GetFeatureLayer(IFeatureClass dataset)
         {
+            if (dataset == null)
+            {
+                return null;
+            }
+
             var featurelayer = new FeatureLayer
             {
                 Name = dataset.AliasName,
@@ -1810,11 +1819,11 @@ namespace MilSpace.Core.Tools
             return coverageArea;
         }
 
-        public static double GetObjVisibilityArea(IFeatureClass visibility, IPolygon observObject, int gridCode = -1)
+        public static double GetObjVisibilityArea(IFeatureClass visibility, IMap currentMap, IPolygon observObject, int gridCode = -1)
         {
             logger.InfoEx("> GetObjVisibilityArea START. FeatureClass visibility:{0} gridCode:{1}", visibility.AliasName, gridCode);
 
-            var visibilityPolygon = GetTotalPolygonFromFeatureClass(visibility, gridCode);
+            var visibilityPolygon = GetTotalPolygonFromFeatureClass(visibility, currentMap, gridCode);
 
             //for test only-------------------------------------------------------------
             //try
@@ -1911,13 +1920,14 @@ namespace MilSpace.Core.Tools
             }
         }
 
-        public static double GetTotalAreaFromFeatureClass(IFeatureClass featureClass, int gridCode = -1)
+        public static double GetTotalAreaFromFeatureClass(IFeatureClass featureClass, IMap currentMap,
+                                                            int gridCode = -1)
         {
             logger.InfoEx($"> GetTotalAreaFromFeatureClass START");
 
             if (featureClass == null)
             {
-                logger.InfoEx("> GetTotalAreaFromFeatureClass END featureClass IS NULL: {0}", featureClass.AliasName);
+                logger.InfoEx("> GetTotalAreaFromFeatureClass END featureClass IS NULL");
                 return 0;
             }
 
@@ -1937,9 +1947,14 @@ namespace MilSpace.Core.Tools
                 {
                     while (currentFeature != null)
                     {
+
                         if ((int)currentFeature.Value[gridCodeIndex] == gridCode)
                         {
-                            result += (double)currentFeature.Value[areaCodeIndex];
+                            var polygon = currentFeature.ShapeCopy as IPolygon;
+                            polygon.Project(currentMap.SpatialReference);
+                            var polygonArea = (IArea)polygon;
+
+                            result += polygonArea.Area;
                         }
                         currentFeature = featureCursor.NextFeature();
                     }
@@ -1948,7 +1963,12 @@ namespace MilSpace.Core.Tools
                 {
                     while (currentFeature != null)
                     {
-                        result += (double)currentFeature.Value[areaCodeIndex];
+                        var polygon = currentFeature.ShapeCopy as IPolygon;
+
+                        polygon.Project(currentMap.SpatialReference);
+                        var polygonArea = (IArea)polygon;
+
+                        result += polygonArea.Area;
                         currentFeature = featureCursor.NextFeature();
                     }
                 }
@@ -1964,7 +1984,7 @@ namespace MilSpace.Core.Tools
             return result;
         }
 
-        public static IPolygon GetTotalPolygonFromFeatureClass(IFeatureClass featureClass, int gridCode = -1)
+        public static IPolygon GetTotalPolygonFromFeatureClass(IFeatureClass featureClass, IMap currentMap, int gridCode = -1)
         {
             logger.InfoEx("> GetTotalPolygonFromFeatureClass START. gridCode:{0}", gridCode);
 
@@ -2002,7 +2022,10 @@ namespace MilSpace.Core.Tools
 
                     logger.InfoEx("> GetTotalPolygonFromFeatureClass END");
 
-                    return unionedPolygon as IPolygon;
+                    var unionedPolygonAsPolygon = unionedPolygon as IPolygon;
+                    unionedPolygonAsPolygon.Project(currentMap.SpatialReference);
+
+                    return unionedPolygonAsPolygon;
                 }
                 catch (Exception ex)
                 {
@@ -2345,5 +2368,25 @@ namespace MilSpace.Core.Tools
             var geometries = GetGeometriesFromLayer(featureClass);
             return GetEnvelopeOfGeometriesList(geometries.Values);
         }
+
+        //public static void ProjectGeometry(double longtitudeInDegrees, IGeometry geometry)
+        //{
+        //    int iProjCS = Convert.ToInt32(Math.Floor((longtitudeInDegrees + 180) / 6)) + 1 + 32600;
+        //    ISpatialReferenceFactory spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
+
+        //    try
+        //    {
+        //        ISpatialReference spRef = spatialReferenceFactory.CreateProjectedCoordinateSystem(iProjCS) as ISpatialReference;
+        //        geometry.Project(spRef);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Logger.Error("Cannot project: {0}", ex.Message);
+        //    }
+        //    finally
+        //    {
+        //        Marshal.ReleaseComObject(spatialReferenceFactory);
+        //    }
+        //}
     }
 }
