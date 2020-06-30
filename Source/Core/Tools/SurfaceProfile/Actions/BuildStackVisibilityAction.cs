@@ -263,7 +263,15 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
                 if (clipSoutceImageByPotentialArea)//(curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints)
                 {
-                    coverageTableManager.SetCalculateAreas(exportedFeatureClass, oservStationsFeatureClassName);
+                    if (curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints)
+                    {
+                        coverageTableManager.SetCalculateAreas(exportedFeatureClass, oservStationsFeatureClassName);
+                    }
+                    else if (calcResults.HasFlag(VisibilityCalculationResultsEnum.BestParametersTable) && curPoints.Value.First() == 1)
+                    {
+                        coverageTableManager.SetCalculateAreas(observPointsfeatureClass.AliasName, oservStationsFeatureClassName);
+                    }
+
                     clipSourceImageForEveryPoint = !calcResults.HasFlag(VisibilityCalculationResultsEnum.BestParametersTable);
 
                     var visibilityPotentialAreaFCName =

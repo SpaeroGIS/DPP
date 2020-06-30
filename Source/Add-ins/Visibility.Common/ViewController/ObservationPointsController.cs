@@ -933,8 +933,8 @@ namespace MilSpace.Visibility.ViewController
 
             VisibilityTask calcTask = null;
 
-            try
-            {
+            //try
+            //{
                  calcTask = VisibilityManager.Generate(
                     observerPointTemporaryFeatureClass,
                     observPointsIds,
@@ -956,8 +956,6 @@ namespace MilSpace.Visibility.ViewController
                 {
                     var tbls = mapDocument.TableProperties;
 
-
-
                     EsriTools.AddTableToMap(
                         tbls,
                         VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.BestParametersTable, calcTask.Name),
@@ -967,19 +965,11 @@ namespace MilSpace.Visibility.ViewController
                     exx++;
 
                 }
-            }
-            finally
-            {
-                ArcMapHelper.AddResultsToMapAsGroupLayer(
-                       calcTask,
-                       mapDocument.ActiveView,
-                       calcParams.RelativeLayerName,
-                       true,
-                       calcParams.ResultLayerTransparency
-                       , null);
-
-                BestOPParametersManager.ClearTemporaryData(calcParams.TaskName, calcTask.ReferencedGDB);
-            }
+            //}
+            //finally
+            //{
+            //    BestOPParametersManager.ClearTemporaryData(calcParams.TaskName, calcTask.ReferencedGDB);
+            //}
 
             return exx;
         }
