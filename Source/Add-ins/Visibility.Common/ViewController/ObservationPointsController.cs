@@ -1610,7 +1610,7 @@ namespace MilSpace.Visibility.ViewController
             return VisibilityManager.ObservationStationsFeatureLayer.Name;
         }
 
-        internal void UpdateLocalObservPoint(IObserverPoint newPoint, int pointId, bool updateTable)
+        internal void UpdateLocalObservPoint(IObserverPoint newPoint, int pointId)
         {
             var updatedPointIndex = _observationPoints.FindIndex(point => point.Objectid == pointId);
             newPoint.Objectid = pointId;
@@ -1622,11 +1622,6 @@ namespace MilSpace.Visibility.ViewController
             else
             {
                 _observationPoints[updatedPointIndex] = newPoint;
-
-                if (updateTable)
-                {
-                    view.FillObservationPointList(_observationPoints, view.GetFilter, false, false);
-                }
             }
         }
 
