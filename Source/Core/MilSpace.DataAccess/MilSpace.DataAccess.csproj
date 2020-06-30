@@ -134,6 +134,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AssemblyVersionTempleate\AsemblyVersion.cs">
+      <Link>Properties\AsemblyVersion.cs</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AsemblyVersion.tt</DependentUpon>
+    </Compile>
     <Compile Include="..\DataAccess\ArcMapInstance.cs">
       <Link>ArcMapInstance.cs</Link>
     </Compile>
@@ -383,8 +389,14 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\AssemblyVersionTempleate\AsemblyVersion.tt">
+      <Link>Properties\AsemblyVersion.tt</Link>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AsemblyVersion.cs</LastGenOutput>
+    </Content>
     <Content Include="DemPreparation.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

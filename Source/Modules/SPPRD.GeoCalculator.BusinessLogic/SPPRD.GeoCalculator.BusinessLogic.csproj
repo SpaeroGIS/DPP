@@ -75,6 +75,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Core\AssemblyVersionTempleate\AsemblyVersion.cs">
+      <Link>Properties\AsemblyVersion.cs</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AsemblyVersion.tt</DependentUpon>
+    </Compile>
     <Compile Include="..\GeoCalculator.BusinessLogic\BusinessLogic.cs">
       <Link>BusinessLogic.cs</Link>
     </Compile>
@@ -113,6 +119,16 @@
     </Compile>
     <Compile Include="Models\CustomGeoTransformationParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\Core\AssemblyVersionTempleate\AsemblyVersion.tt">
+      <Link>Properties\AsemblyVersion.tt</Link>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AsemblyVersion.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

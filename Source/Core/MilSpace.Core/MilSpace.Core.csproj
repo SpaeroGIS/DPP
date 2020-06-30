@@ -124,6 +124,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AssemblyVersionTempleate\AsemblyVersion.cs">
+      <Link>Properties\AsemblyVersion.cs</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AsemblyVersion.tt</DependentUpon>
+    </Compile>
     <Compile Include="..\Core\Actions\ActionFinishedDelegate.cs">
       <Link>Actions\ActionFinishedDelegate.cs</Link>
     </Compile>
@@ -448,11 +454,19 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\AssemblyVersionTempleate\AsemblyVersion.tt">
+      <Link>Properties\AsemblyVersion.tt</Link>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AsemblyVersion.cs</LastGenOutput>
+    </Content>
     <Content Include="..\Core\Resources\SP_CoreLocalization.xml">
       <Link>Resources\SP_CoreLocalization.xml</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

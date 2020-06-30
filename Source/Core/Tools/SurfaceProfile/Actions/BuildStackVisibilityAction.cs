@@ -235,12 +235,16 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                 {
                     pointId = curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints ? -1 : ++index;
                 }
+
+                int[] curPointsValue = (calcResults.HasFlag(VisibilityCalculationResultsEnum.BestParametersTable)) ?
+                                            new int[] { pointId } : curPoints.Value;
+
                 var observPointFeatureClassName = VisibilityTask.GetResultName(curPoints.Key, outputSourceName, pointId);
 
                 var exportedFeatureClass = GdbAccess.Instance.ExportObservationFeatureClass(
                     observPointsfeatureClass as IDataset,
                     observPointFeatureClassName,
-                    curPoints.Value);
+                    curPointsValue);
 
                 results.Add(iStepNum.ToString() + ". " + "Створено копію ПС для розрахунку: " + exportedFeatureClass);
                 iStepNum++;
@@ -259,7 +263,15 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
                 if (clipSoutceImageByPotentialArea)//(curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints)
                 {
-                    coverageTableManager.SetCalculateAreas(exportedFeatureClass, oservStationsFeatureClassName);
+                    if (curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints)
+                    {
+                        coverageTableManager.SetCalculateAreas(exportedFeatureClass, oservStationsFeatureClassName);
+                    }
+                    else if (calcResults.HasFlag(VisibilityCalculationResultsEnum.BestParametersTable) && curPoints.Value.First() == 1)
+                    {
+                        coverageTableManager.SetCalculateAreas(observPointsfeatureClass.AliasName, oservStationsFeatureClassName);
+                    }
+
                     clipSourceImageForEveryPoint = !calcResults.HasFlag(VisibilityCalculationResultsEnum.BestParametersTable);
 
                     var visibilityPotentialAreaFCName =
@@ -306,8 +318,6 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                         GdbAccess.Instance.RemoveFeatureClass(fc.AliasName);
                     }
                 }
-
-
 
                 //Generate Visibility Raster
                 string featureClass = observPointFeatureClassName;
@@ -486,18 +496,6 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
                     if (calcResults.HasFlag(VisibilityCalculationResultsEnum.CoverageTable))
                     {
-                        //var visibilityPotentialAreaFCName =
-                        //VisibilityTask.GetResultName(pointId > -1 ?
-                        //VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle :
-                        //VisibilityCalculationResultsEnum.VisibilityAreasPotential, outputSourceName, pointId);
-
-                        //coverageTableManager.AddPotentialArea(
-                        //    visibilityPotentialAreaFCName,
-                        //    (curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints),  pointId + 1);
-
-                        //results.Add(iStepNum.ToString() + ". " + "Розраховано потенційне покриття: " + visibilityPotentialAreaFCName + " ПС: " + pointId.ToString());
-                        iStepNum++;
-
                         var pointsCount = pointsFilteringIds.Where(id => id > -1).Count();
                         coverageTableManager.CalculateCoverageTableDataForPoint(
                             (pointId == -1),
