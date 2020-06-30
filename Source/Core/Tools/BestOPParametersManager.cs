@@ -19,6 +19,7 @@ namespace MilSpace.Tools
     {
         private int _requiredVisibilityPercent;
         private int _lastInappropriatePointId = 0;
+        private int _lastAppropriateId = 0;
         private bool _isMinVisibleIdFound = false;
         private readonly int _maxId;
         private Dictionary<int, short> _visibilityPercents = new Dictionary<int, short>();
@@ -204,17 +205,21 @@ namespace MilSpace.Tools
                     GdbAccess.Instance.GetFeatureClass(MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection,
                                                         visibilityArePolyFCName);
 
+            double visibilityPercent;
+
             if (visibilityPolygonsForPointFeatureClass == null)
             {
-                _visibilityPercents.Add(pointId, 0);
-                return -1;
+                visibilityPercent = 0;
+            }
+            else
+            {
+                // Get visibility area of observation station
+                var visibilityArea = EsriTools.GetObjVisibilityArea(visibilityPolygonsForPointFeatureClass, VisibilityManager.CurrentMap, observationStationPolygon);
+                var observationStationPolygonArea = observationStationPolygon as IArea;
+
+                visibilityPercent = Math.Round(((visibilityArea * 100) / observationStationPolygonArea.Area), 0);
             }
 
-            // Get visibility area of observation station
-            var visibilityArea = EsriTools.GetObjVisibilityArea(visibilityPolygonsForPointFeatureClass, VisibilityManager.CurrentMap, observationStationPolygon);
-            var observationStationPolygonArea = observationStationPolygon as IArea;
-
-            var visibilityPercent = Math.Round(((visibilityArea * 100) / observationStationPolygonArea.Area), 0);
             _visibilityPercents.Add(pointId, Convert.ToInt16(visibilityPercent));
 
             if (_isMinVisibleIdFound)
@@ -226,34 +231,52 @@ namespace MilSpace.Tools
                 return FindNextId(visibilityPercent, pointId);
             }
         }
-
+      
         private int FindNextId(double visibilityPercent, int pointId)
         {
             if (visibilityPercent < _requiredVisibilityPercent)
             {
                 _lastInappropriatePointId = pointId;
 
-                if (pointId >= _maxId)
+                if (pointId == _maxId)
                 {
-                    if (_visibilityPercents.Count == 0)
-                    {
-                        return -1;
-                    }
-                    else
-                    {
-                        _isMinVisibleIdFound = true;
-                        return _visibilityPercents.Values.Max() + 1;
-                    }
+                    return -1;
                 }
                 else
                 {
-                    decimal nextId = pointId + (_maxId - pointId) / 2;
-                    return Convert.ToInt32(Math.Round(nextId));
+                    if (pointId == _lastAppropriateId - 1 || pointId == 1)
+                    {
+                        return GetNextVisibleKnownId();
+                    }
+                    else
+                    {
+                        decimal nextId = pointId + (_maxId - pointId) / 2;
+
+                        if (_visibilityPercents.Any(percent => percent.Key == nextId))
+                        {
+                            return FindNextPointIdIfItRepeated(Convert.ToInt32(Math.Round(nextId)));
+                        }
+
+                        return Convert.ToInt32(Math.Round(nextId));
+                    }
                 }
             }
             else
             {
+                _lastAppropriateId = pointId;
+
+                if(pointId == _lastInappropriatePointId + 1)
+                {
+                    return GetNextVisibleKnownId();
+                }
+
                 decimal nextId = pointId - (pointId - _lastInappropriatePointId) / 2;
+
+                if(_visibilityPercents.Any(percent => percent.Key == nextId))
+                {
+                    return FindNextPointIdIfItRepeated(Convert.ToInt32(Math.Round(nextId)));
+                }
+
                 return Convert.ToInt32(Math.Round(nextId));
             }
         }
@@ -275,12 +298,67 @@ namespace MilSpace.Tools
                 }
                 else
                 {
-                    return -2;
+                    return -1;
                 }
             }
             else
             {
-                return -2;
+                return -1;
+            }
+        }
+
+        private int FindNextPointIdIfItRepeated(int repeatedId)
+        {
+            if (repeatedId > _lastInappropriatePointId + 1)
+            {
+                int nextId = repeatedId -= 1;
+
+                while (_visibilityPercents.Any(percent => percent.Key == nextId))
+                {
+                    nextId -= 1;
+
+                    if(nextId <= _lastInappropriatePointId)
+                    {
+                        nextId = -1;
+                    }
+                }
+
+                if (nextId == -1)
+                {
+                    return GetNextVisibleKnownId();
+                }
+                else
+                {
+                    return nextId;
+                }
+            }
+            else
+            {
+                return GetNextVisibleKnownId();
+            }
+        }
+
+        private int GetNextVisibleKnownId()
+        {
+            _isMinVisibleIdFound = true;
+
+            var appropriateVisibilitiesIds = _visibilityPercents.Where(percent => percent.Value >= _requiredVisibilityPercent)
+                                                                         .Select(percent => percent.Key);
+
+            var nextVisibleId = appropriateVisibilitiesIds.Min() + 1;
+
+            while (appropriateVisibilitiesIds.Any(id => id == nextVisibleId))
+            {
+                nextVisibleId += 1;
+            }
+
+            if (nextVisibleId > _maxId)
+            {
+                return -1;
+            }
+            else
+            {
+                return nextVisibleId;
             }
         }
 
@@ -320,7 +398,7 @@ namespace MilSpace.Tools
                                     string bestParamsTableName)
         {
 
-            if(_visibilityPercents.Count == 0)
+            if(_visibilityPercents.Count == 0 || !_visibilityPercents.Any(percent => percent.Value > 0))
             {
                 CreateNullVisibilityVOTable(observPointFeatureClass, expectedVisibilityPercent, bestParamsTableName);
                 return false;
@@ -332,19 +410,23 @@ namespace MilSpace.Tools
             KeyValuePair<int, short> bestParams = new KeyValuePair<int, short>(-1, 0);
 
             var bestParamsTable = GenerateVOTable(observPointFeatureClass, bestParamsTableName);
+            var keysOrderedByPercents = _visibilityPercents.OrderByDescending(percent => percent.Value)
+                                                     .Select(percent => percent.Key);
 
-            foreach (var paramsVisibilityPercent in _visibilityPercents)
+            foreach (var paramsVisibilityId in keysOrderedByPercents)
             {
-                if (paramsVisibilityPercent.Value >= expectedVisibilityPercent)
+                var currentPercent = _visibilityPercents[paramsVisibilityId];
+
+                if (currentPercent >= expectedVisibilityPercent)
                 {
-                    appropriateParams.Add(paramsVisibilityPercent.Key, paramsVisibilityPercent.Value);
+                    appropriateParams.Add(paramsVisibilityId, currentPercent);
                     isParametersFound = true;
                 }
                 else
                 {
-                    if (bestParams.Value < paramsVisibilityPercent.Value)
+                    if (bestParams.Value < currentPercent)
                     {
-                        bestParams = paramsVisibilityPercent;
+                        bestParams = new KeyValuePair<int, short>(paramsVisibilityId, currentPercent);
                     }
                 }
             }
@@ -378,7 +460,7 @@ namespace MilSpace.Tools
 
             var bestParamsFeatures = new Dictionary<IFeature, short>
             {
-                { observPointFeatureClass.GetFeature(1), 0}
+                { observPointFeatureClass.GetFeature(_maxId), 0}
             };
 
             GdbAccess.Instance.FillBestParametersTable(bestParamsFeatures, bestParamsTable, bestParamsTableName);

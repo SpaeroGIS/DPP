@@ -241,9 +241,9 @@ namespace MilSpace.Tools
                 var observPointFeatureClass = GdbAccess.Instance.GetFeatureClass(_gdb, currentPointFeatureClassName);
                 var observPoint = GetObservationPoints(currentPointFeatureClassName).First();
 
-                var totalExpectedPolygon = _coverageAreaData.First(area => area.PointId == -1).Polygon;
+                var totalExpectedPolygonData = _coverageAreaData.FirstOrDefault(area => area.PointId == -1);
 
-                if (totalExpectedPolygon == null)
+                if (totalExpectedPolygonData == null || totalExpectedPolygonData.Polygon == null)
                 {
                     AddEmptyAreaRow(observPoint.Title, curPointId);
                     return;
@@ -257,7 +257,7 @@ namespace MilSpace.Tools
 
                     var expectedPolygon = _coverageAreaData.FirstOrDefault(area => area.PointId == curPointId).Polygon;
 
-                    var totalExpectedArea = GetProjectedPolygonArea(totalExpectedPolygon);
+                    var totalExpectedArea = GetProjectedPolygonArea(totalExpectedPolygonData.Polygon);
 
                     var expectedPolygonArea = GetProjectedPolygonArea(expectedPolygon);
                     var visibleArea = EsriTools.GetTotalAreaFromFeatureClass(visibilityPolygonsForPointFeatureClass, VisibilityManager.CurrentMap);
@@ -395,9 +395,9 @@ namespace MilSpace.Tools
 
         private void CalculateVSTotalValues(int pointsCount, string visibilityAreasFCName)
         {
-            var _totalExpectedPolygon = _coverageAreaData.First(area => area.PointId == -1).Polygon;
+            var totalExpectedPolygonData = _coverageAreaData.FirstOrDefault(area => area.PointId == -1);
 
-            if (_totalExpectedPolygon == null)
+            if (totalExpectedPolygonData == null)
             {
                 AddEmptyAreaRow(_allTitle, -1);
                 return;
@@ -408,7 +408,7 @@ namespace MilSpace.Tools
                 var visibilityPolygonsFeatureClass = GdbAccess.Instance.GetFeatureClass(_gdb, visibilityAreasFCName);
                 _totalVisibleArea = EsriTools.GetTotalAreaFromFeatureClass(visibilityPolygonsFeatureClass, VisibilityManager.CurrentMap);
 
-                var totalExpectedArea = GetProjectedPolygonArea(_totalExpectedPolygon);
+                var totalExpectedArea = GetProjectedPolygonArea(totalExpectedPolygonData.Polygon);
 
                 AddVSRowModel(_allTitle, -1, -1, totalExpectedArea, _totalVisibleArea, totalExpectedArea);
 
