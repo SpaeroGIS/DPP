@@ -99,6 +99,12 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Core\AssemblyVersionTempleate\AsemblyVersion.cs">
+      <Link>Properties\AsemblyVersion.cs</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AsemblyVersion.tt</DependentUpon>
+    </Compile>
     <Compile Include="..\AddDEM.Common\AddInComponents\AddDemController.cs">
       <Link>AddInComponents\AddDemController.cs</Link>
     </Compile>
@@ -178,11 +184,19 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\..\Core\AssemblyVersionTempleate\AsemblyVersion.tt">
+      <Link>Properties\AsemblyVersion.tt</Link>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AsemblyVersion.cs</LastGenOutput>
+    </Content>
     <Content Include="..\AddDEM.Common\Resources\SP_AddDEMLocalization.xml">
       <Link>Resources\SP_AddDEMLocalization.xml</Link>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>
