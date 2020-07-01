@@ -124,23 +124,24 @@ namespace MilSpace.Visibility
                 this.label29.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label29.Text", "Крок 4. Перевірка параметрів розрахунку");
                 this.lblOPType.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblOPType.Text", "Джерело ПС");
                 this.lblOOSource.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblOOSourse.Text", "Джерело ОН");
-                this.lblMinAzimuth.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblMin.Text", "мін.");
-                this.lblMinAngle.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblMin.Text", "мін.");
-                this.lblMaxAzimuth.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblMax.Text", "макс.");
-                this.lblMaxAngle.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblMax.Text", "макс.");
-                this.lblAzimuths.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblAzimuths.Text", "Азимути:");
-                this.lblAngles.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblAngles.Text", "Кути нахилу:");
-                this.lblHeights.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblHeights.Text", "Вибірка висот:");
-                this.lblFrom.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblFrom.Text", "від");
-                this.lblTo.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblTo.Text", "до");
-                this.lblStep.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblStep.Text", "крок");
-                this.lblBufferDistance.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblBufferDistance.Text", "Відстань для буфера");
-                this.lblCoveragePercent.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblCoveragePercent.Text", "Відсоток покриття");
-                this.chckSaveOPParams.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.chckSaveOPParams.Text", "Враховувати параметри ПН");
+                this.lblMinAzimuth.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblMin.Text", "мін.");
+                this.lblMinAngle.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblMin.Text", "мін.");
+                this.lblMaxAzimuth.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblMax.Text", "макс.");
+                this.lblMaxAngle.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblMax.Text", "макс.");
+                this.lblAzimuths.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblAzimuths.Text", "Азимути:");
+                this.lblAngles.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblAngles.Text", "Кути нахилу:");
+                this.lblHeights.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblHeights.Text", "Вибірка висот:");
+                this.lblFrom.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblFrom.Text", "від");
+                this.lblTo.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblTo.Text", "до");
+                this.lblStep.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblStep.Text", "крок");
+                this.lblBufferDistance.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblBufferDistance.Text", "Відстань для буфера");
+                this.lblBufferDistanceForAllObjects.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblBufferDistance.Text", "Відстань для буфера");
+                this.lblCoveragePercent.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblCoveragePercent.Text", "Відсоток покриття");
+                this.chckSaveOPParams.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.chckSaveOPParams.Text", "Враховувати параметри ПН");
 
                 ToolTip toolTip = new ToolTip();
-                toolTip.SetToolTip(btnShowPoint, LocalizationContext.Instance.FindLocalizedElement("MinM.btnShowPoint.ToolTip", "Показати пункт спостеження на мапі"));
-                toolTip.SetToolTip(btnShowOO, LocalizationContext.Instance.FindLocalizedElement("MinM.btnShowOO.ToolTip", "Показати об'єкт спостереження на мапі"));
+                toolTip.SetToolTip(btnShowPoint, LocalizationContext.Instance.FindLocalizedElement("WinM.btnShowPoint.ToolTip", "Показати пункт спостеження на мапі"));
+                toolTip.SetToolTip(btnShowOO, LocalizationContext.Instance.FindLocalizedElement("WinM.btnShowOO.ToolTip", "Показати об'єкт спостереження на мапі"));
 
                 SetDefaultValues();
             }
