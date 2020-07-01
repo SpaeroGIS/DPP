@@ -65,5 +65,18 @@ namespace MilSpace.Visibility
                 cmbTiltleField.SelectedIndex = 0;
             }
         }
+
+        private void LbLayers_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+        }
+
+        private void LbLayers_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyData == Keys.Enter)
+            {
+                DialogResult = DialogResult.OK;
+            }
+        }
     }
 }

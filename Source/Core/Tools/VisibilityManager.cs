@@ -57,7 +57,8 @@ namespace MilSpace.Tools
             string taskId,
             VisibilityCalcTypeEnum calculationType,
             IMap currentMap,
-            short visibilityPercent)
+            short visibilityPercent,
+            bool showAllResults = false)
         {
             logger.InfoEx("> Generate START. Visiblility result {2} using DEM {0} from observation points {1}"
                 .InvariantFormat(sourceDem, obervationPoints, taskId));
@@ -111,7 +112,9 @@ namespace MilSpace.Tools
                new ActionParam<VisibilityTask>()
                { ParamName = ActionParameters.Session, Value = calcTask},
                new ActionParam<short>()
-               {ParamName = ActionParameters.VisibilityPercent, Value =  visibilityPercent}
+               {ParamName = ActionParameters.VisibilityPercent, Value =  visibilityPercent},
+                new ActionParam<bool>()
+               {ParamName = ActionParameters.ShowAllResults, Value =  showAllResults}
             };
 
             var procc = new ActionProcessor(prm);

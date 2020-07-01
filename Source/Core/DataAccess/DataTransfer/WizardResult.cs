@@ -12,6 +12,7 @@ namespace MilSpace.DataAccess.DataTransfer
         public short ResultLayerTransparency { get; set; }
         public bool SumFieldOfView { get; set; }
         public bool Table { get; set; }
+        public bool ShowAllResults { get; set; }
         public VisibilityCalculationResultsEnum VisibilityCalculationResults { get; set; }
         public LayerPositionsEnum ResultLayerPosition { get; set; }
         public ObservationPoint ObservationPoint { get; set; }
