@@ -730,7 +730,6 @@
             // 
             // changeAllObserversHeightsButton
             // 
-            this.changeAllObserversHeightsButton.Enabled = false;
             this.changeAllObserversHeightsButton.ImageKey = "Direction Vert.png";
             this.changeAllObserversHeightsButton.ImageList = this.imageList1;
             this.changeAllObserversHeightsButton.Location = new System.Drawing.Point(242, 2);

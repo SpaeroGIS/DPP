@@ -702,7 +702,7 @@ namespace MilSpace.Visibility
             xCoord.Text = Math.Round(resultPoint.X, 5).ToString();
             yCoord.Text = Math.Round(resultPoint.Y, 5).ToString();
 
-            _observPointsController.UpdateLocalObservPoint(GetObservationPoint(), _selectedPointId, false);
+            _observPointsController.UpdateLocalObservPoint(GetObservationPoint(), _selectedPointId);
 
             if (!_updatedPointsIds.Any(id => id.Key == _selectedPointId && id.Value == true))
             {
@@ -970,11 +970,9 @@ namespace MilSpace.Visibility
                     _updatedPointsIds.Add(selectedPoint.Objectid, false);
                 }
 
-                var updateTable = (!selectedPointMEM.Title.Equals(selectedPoint.Title));
-
                 if (rbSeparateOP.Checked)
                 {
-                    _observPointsController.UpdateLocalObservPoint(GetObservationPoint(), _selectedPointId, updateTable);
+                    _observPointsController.UpdateLocalObservPoint(GetObservationPoint(), _selectedPointId);
                 }
                 else
                 {
@@ -983,6 +981,11 @@ namespace MilSpace.Visibility
                                                                          Convert.ToDouble(azimuthE.Text),
                                                                          _observerPointSource,
                                                                          false, true);
+                }
+
+                if(sender.Equals(observPointName))
+                {
+                    dgvObservationPoints.SelectedRows[0].Cells["Title"].Value = observPointName.Text;
                 }
             }
         }
@@ -2342,7 +2345,7 @@ namespace MilSpace.Visibility
                         xCoord.Text = coords[0];
                         yCoord.Text = coords[1];
 
-                        _observPointsController.UpdateLocalObservPoint(GetObservationPoint(), _selectedPointId, false);
+                        _observPointsController.UpdateLocalObservPoint(GetObservationPoint(), _selectedPointId);
 
                         if (!_updatedPointsIds.Any(id => id.Key == _selectedPointId && id.Value == true))
                         {
@@ -2447,7 +2450,16 @@ namespace MilSpace.Visibility
                 {
                     _updatedPointsIds.Add(selectedPoint.Objectid, false);
                 }
-                _observPointsController.UpdateLocalObservPoint(GetObservationPoint(), _selectedPointId, true);
+                _observPointsController.UpdateLocalObservPoint(GetObservationPoint(), _selectedPointId);
+
+                if(sender.Equals(cmbAffiliationEdit))
+                {
+                    dgvObservationPoints.SelectedRows[0].Cells["Affiliation"].Value = cmbAffiliationEdit.SelectedItem;
+                }
+                else if(sender.Equals(cmbObservTypesEdit))
+                {
+                    dgvObservationPoints.SelectedRows[0].Cells["Type"].Value = cmbObservTypesEdit.SelectedItem;
+                }
             }
         }
 
