@@ -946,7 +946,8 @@ namespace MilSpace.Visibility.ViewController
                     calcParams.TaskName,
                     calcParams.CalculationType,
                     mapDocument.ActiveView.FocusMap,
-                    calcParams.VisibilityPercent);
+                    calcParams.VisibilityPercent,
+                    calcParams.ShowAllResults);
 
                 exx++;
 

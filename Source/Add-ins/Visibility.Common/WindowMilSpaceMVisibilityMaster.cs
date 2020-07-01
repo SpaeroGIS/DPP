@@ -137,7 +137,9 @@ namespace MilSpace.Visibility
                 this.lblBufferDistance.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblBufferDistance.Text", "Відстань для буфера");
                 this.lblBufferDistanceForAllObjects.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblBufferDistance.Text", "Відстань для буфера");
                 this.lblCoveragePercent.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblCoveragePercent.Text", "Відсоток покриття");
+                this.lblResult.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblResults.Text", "Результати");
                 this.chckSaveOPParams.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.chckSaveOPParams.Text", "Враховувати параметри ПН");
+                this.chckShowAllRResults.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.chckShowAllResults.Text", "Відображати всі задовільні результати");
 
                 ToolTip toolTip = new ToolTip();
                 toolTip.SetToolTip(btnShowPoint, LocalizationContext.Instance.FindLocalizedElement("WinM.btnShowPoint.ToolTip", "Показати пункт спостеження на мапі"));
@@ -722,6 +724,7 @@ namespace MilSpace.Visibility
                     ToHeight = toHeight,
                     Step = Convert.ToInt32(txtStep.Text),
                     VisibilityPercent = Convert.ToInt16(txtCoveragePercent.Text),
+                    ShowAllResults = chckShowAllRResults.Checked,
                     VisibilityCalculationResults = VisibilityCalculationResultsEnum.BestParametersTable | VisibilityCalculationResultsEnum.ObservationPoints
                     | VisibilityCalculationResultsEnum.VisibilityAreaRaster
                 };
@@ -801,6 +804,8 @@ namespace MilSpace.Visibility
 
         public void SummaryInfo()
         {
+            lblCalcType.Text = LocalizationContext.Instance.CalcTypeLocalisation[FinalResult.CalculationType];
+
             lblTaskName.Text =
                 FinalResult.TaskName;
             lblDEMName.Text =
@@ -842,6 +847,24 @@ namespace MilSpace.Visibility
 
             if (StepsTabControl.SelectedIndex == 2)
             {
+                if (_stepControl == VisibilityCalcTypeEnum.BestObservationParameters)
+                {
+                    if (_selectedObservationPoint == null || _selectedGeometry == null)
+                    {
+                        HandleLackOfDataCase();
+                        return;
+                    }
+                }
+                else
+                {
+                    if (_observPointGuis == null || !_observPointGuis.Any(objects => objects.Check))
+                    {
+                        HandleLackOfDataCase();
+                        return;
+                    }
+
+                }
+
                 AssemblyWizardResult();
                 SummaryInfo();
             }
@@ -1003,6 +1026,8 @@ namespace MilSpace.Visibility
             selectedOOPanel.Visible = isVisible;
             chckOP.Visible = !isVisible;
             chckOO.Visible = !isVisible;
+
+            panelResults.Visible = isVisible;
         }
 
         public void FillVisibilitySessionsTree(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded)
@@ -1101,6 +1126,20 @@ namespace MilSpace.Visibility
             lblCalculationsType.Text = lblCalculationsTypeStep3.Text = lblCalculationsTypeStep4.Text =
                      LocalizationContext.Instance
                                         .CalcTypeLocalisationShort[_stepControl];
+        }
+
+        private void HandleLackOfDataCase()
+        {
+            MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("LackOfDataForVisibilityCalculationMessage", "Недостатньо даних для розрахунку. \nБудь ласка оберіть пункт спостереження і об'єкт спостереження (за необхідності)."),
+                                    LocalizationContext.Instance.MessageBoxCaption);
+
+            StepsTabControl.SelectedTab.Enabled = false;
+
+            var nextTab = StepsTabControl
+                .TabPages[1] as TabPage;
+
+            nextTab.Enabled = true;
+            StepsTabControl.SelectedIndex = 1;
         }
 
         #region Validation

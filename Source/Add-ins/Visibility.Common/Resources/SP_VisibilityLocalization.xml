@@ -236,6 +236,8 @@
   <WinM.btnShowPoint.ToolTip>Показати пункт спостеження на мапі</WinM.btnShowPoint.ToolTip>
   <WinM.btnShowOO.ToolTip>Показати об'єкт спостереження на мапі</WinM.btnShowOO.ToolTip>
   <WinM.chckSaveOPParams.Text>Враховувати параметри ПН</WinM.chckSaveOPParams.Text>
+  <WinM.lblResults.Text>Результати</WinM.lblResults.Text>
+  <WinM.chckShowAllResults.Text>Відображати всі задовільні результати</WinM.chckShowAllResults.Text>
   
   <WinMErrorValueOutRange>Недійсні дані. Потрібне значення від 0 до 100"</WinMErrorValueOutRange>
   <WinMWarningNoSourceForCalculation>Не вказано поверхню для розрахунку</WinMWarningNoSourceForCalculation>
@@ -315,6 +317,7 @@
   <NotEnoughPointsToBuildRoute>Недостатньо точок для побудови маршруту.</NotEnoughPointsToBuildRoute>
   <CannotSavePointError>Виникла помилка. Неможливо зберегти дані точки.</CannotSavePointError>
   <PointOutOfRasterErrorMessage>Обраний пункт спостереження знаходиться за межами растру</PointOutOfRasterErrorMessage>
+  <LackOfDataForVisibilityCalculationMessage>Недостатньо даних для розрахунку. \nБудь ласка оберіть пункт спостереження і об'єкт спостереження (за необхідності).</LackOfDataForVisibilityCalculationMessage>
   
   <ObservPointRemoveMessage>Ви дійсно бажаєте видалити точку (ПС)?</ObservPointRemoveMessage>
   <VisibilityTaskRemoveMessage>Ви дійсно бажаєте видалити результат розрахунку з поточного сеансу?</VisibilityTaskRemoveMessage>

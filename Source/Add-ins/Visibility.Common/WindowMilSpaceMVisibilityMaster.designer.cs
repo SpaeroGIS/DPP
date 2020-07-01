@@ -203,6 +203,9 @@ namespace MilSpace.Visibility
             this.panel28 = new System.Windows.Forms.Panel();
             this.lblCalculationsTypeStep4 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
+            this.panelResults = new System.Windows.Forms.Panel();
+            this.lblResult = new System.Windows.Forms.Label();
+            this.chckShowAllRResults = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.StepsTabControl.SuspendLayout();
             this.stepOne.SuspendLayout();
@@ -260,6 +263,7 @@ namespace MilSpace.Visibility
             this.panel38.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel28.SuspendLayout();
+            this.panelResults.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -1798,6 +1802,7 @@ namespace MilSpace.Visibility
             // stepThree
             // 
             this.stepThree.BackColor = System.Drawing.SystemColors.Window;
+            this.stepThree.Controls.Add(this.panelResults);
             this.stepThree.Controls.Add(this.panel25);
             this.stepThree.Controls.Add(this.panel24);
             this.stepThree.Controls.Add(this.panel23);
@@ -2494,6 +2499,40 @@ namespace MilSpace.Visibility
             this.label29.TabIndex = 9;
             this.label29.Text = "Крок 4. Перевірка параметрів розрахунку";
             // 
+            // panelResults
+            // 
+            this.panelResults.Controls.Add(this.chckShowAllRResults);
+            this.panelResults.Controls.Add(this.lblResult);
+            this.panelResults.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelResults.Location = new System.Drawing.Point(0, 200);
+            this.panelResults.Name = "panelResults";
+            this.panelResults.Padding = new System.Windows.Forms.Padding(4);
+            this.panelResults.Size = new System.Drawing.Size(921, 32);
+            this.panelResults.TabIndex = 20;
+            // 
+            // lblResult
+            // 
+            this.lblResult.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblResult.Location = new System.Drawing.Point(4, 4);
+            this.lblResult.Name = "lblResult";
+            this.lblResult.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.lblResult.Size = new System.Drawing.Size(180, 24);
+            this.lblResult.TabIndex = 0;
+            this.lblResult.Text = "Результат";
+            // 
+            // chckShowAllRResults
+            // 
+            this.chckShowAllRResults.Dock = System.Windows.Forms.DockStyle.Left;
+            this.chckShowAllRResults.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.chckShowAllRResults.Location = new System.Drawing.Point(184, 4);
+            this.chckShowAllRResults.Name = "chckShowAllRResults";
+            this.chckShowAllRResults.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.chckShowAllRResults.Size = new System.Drawing.Size(316, 24);
+            this.chckShowAllRResults.TabIndex = 5;
+            this.chckShowAllRResults.Text = "відображати всі задовільні результати";
+            this.chckShowAllRResults.UseVisualStyleBackColor = true;
+            // 
             // WindowMilSpaceMVisibilityMaster
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2574,6 +2613,7 @@ namespace MilSpace.Visibility
             this.panel38.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel28.ResumeLayout(false);
+            this.panelResults.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2752,5 +2792,8 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Label lblCalculationsType;
         private System.Windows.Forms.Label lblCalculationsTypeStep3;
         private System.Windows.Forms.Label lblCalculationsTypeStep4;
+        private System.Windows.Forms.Panel panelResults;
+        private System.Windows.Forms.Label lblResult;
+        private System.Windows.Forms.CheckBox chckShowAllRResults;
     }
 }
