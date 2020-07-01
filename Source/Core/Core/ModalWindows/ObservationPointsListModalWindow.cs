@@ -42,7 +42,27 @@ namespace MilSpace.Core.ModalWindows
 
         private void BtnChoosePoint_Click(object sender, EventArgs e)
         {
-            if(dgvPoints.SelectedRows.Count > 0)
+            SelectPoint();
+        }
+
+        private void DgvPoints_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter && dgvPoints.SelectedRows.Count > 0)
+            {
+                SelectPoint();
+                DialogResult = DialogResult.OK;
+            }
+        }
+
+        private void DgvPoints_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            SelectPoint();
+            DialogResult = DialogResult.OK;
+        }
+
+        private void SelectPoint()
+        {
+            if (dgvPoints.SelectedRows.Count > 0)
             {
                 SelectedPoint = _points.First(p => p.ObjId == (int)dgvPoints.SelectedRows[0].Cells["IdCol"].Value);
             }

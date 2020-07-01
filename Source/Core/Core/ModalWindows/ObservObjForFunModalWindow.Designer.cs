@@ -63,6 +63,8 @@
             this.dgvObjects.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvObjects.Size = new System.Drawing.Size(264, 267);
             this.dgvObjects.TabIndex = 11;
+            this.dgvObjects.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DgvObjects_KeyDown);
+            this.dgvObjects.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.DgvObjects_MouseDoubleClick);
             // 
             // ChooseCol
             // 
