@@ -201,6 +201,8 @@ namespace MilSpace.Visibility
             this.label37 = new System.Windows.Forms.Label();
             this.panel28 = new System.Windows.Forms.Panel();
             this.label29 = new System.Windows.Forms.Label();
+            this.lblCalculationsTypeStep3 = new System.Windows.Forms.Label();
+            this.lblCalculationsTypeStep4 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.StepsTabControl.SuspendLayout();
             this.stepOne.SuspendLayout();
@@ -2126,6 +2128,7 @@ namespace MilSpace.Visibility
             // panel20
             // 
             this.panel20.BackColor = System.Drawing.SystemColors.Control;
+            this.panel20.Controls.Add(this.lblCalculationsTypeStep3);
             this.panel20.Controls.Add(this.label10);
             this.panel20.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel20.Location = new System.Drawing.Point(0, 0);
@@ -2451,6 +2454,7 @@ namespace MilSpace.Visibility
             // panel28
             // 
             this.panel28.BackColor = System.Drawing.SystemColors.Control;
+            this.panel28.Controls.Add(this.lblCalculationsTypeStep4);
             this.panel28.Controls.Add(this.label29);
             this.panel28.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel28.Location = new System.Drawing.Point(0, 0);
@@ -2469,6 +2473,26 @@ namespace MilSpace.Visibility
             this.label29.Size = new System.Drawing.Size(435, 32);
             this.label29.TabIndex = 9;
             this.label29.Text = "Крок 4. Перевірка параметрів розрахунку";
+            // 
+            // lblCalculationsTypeStep3
+            // 
+            this.lblCalculationsTypeStep3.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lblCalculationsTypeStep3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblCalculationsTypeStep3.Location = new System.Drawing.Point(865, 4);
+            this.lblCalculationsTypeStep3.Name = "lblCalculationsTypeStep3";
+            this.lblCalculationsTypeStep3.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.lblCalculationsTypeStep3.Size = new System.Drawing.Size(52, 32);
+            this.lblCalculationsTypeStep3.TabIndex = 9;
+            // 
+            // lblCalculationsTypeStep4
+            // 
+            this.lblCalculationsTypeStep4.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lblCalculationsTypeStep4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblCalculationsTypeStep4.Location = new System.Drawing.Point(865, 4);
+            this.lblCalculationsTypeStep4.Name = "lblCalculationsTypeStep4";
+            this.lblCalculationsTypeStep4.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.lblCalculationsTypeStep4.Size = new System.Drawing.Size(52, 32);
+            this.lblCalculationsTypeStep4.TabIndex = 10;
             // 
             // WindowMilSpaceMVisibilityMaster
             // 
@@ -2726,5 +2750,7 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.TextBox txtBufferDistanceFroAllObjects;
         private System.Windows.Forms.Label lblBufferDistanceForAllObjects;
         private System.Windows.Forms.Label lblCalculationsType;
+        private System.Windows.Forms.Label lblCalculationsTypeStep3;
+        private System.Windows.Forms.Label lblCalculationsTypeStep4;
     }
 }

@@ -193,11 +193,9 @@ namespace MilSpace.Visibility
         }
         public void FirstTypePicked()//triggers when user picks first type
         {
-            lblCalculationsType.Text = 
-                    LocalizationContext.Instance
-                                       .CalcTypeLocalisationShort[VisibilityCalcTypeEnum.OpservationPoints];
-
             _stepControl = VisibilityCalcTypeEnum.OpservationPoints;
+
+            SetCalculaionLabels();
             controller.UpdateObservationPointsList();
             PopulateComboBox();
             FillObservPointLabel();
@@ -207,11 +205,9 @@ namespace MilSpace.Visibility
         }
         public void SecondTypePicked()//triggers when user picks second type
         {
-            lblCalculationsType.Text =
-                    LocalizationContext.Instance
-                                       .CalcTypeLocalisationShort[VisibilityCalcTypeEnum.ObservationObjects];
-
             _stepControl = VisibilityCalcTypeEnum.ObservationObjects;
+
+            SetCalculaionLabels();
             controller.UpdateObservationPointsList();
             EnableObjList();
             PopulateComboBox();
@@ -222,11 +218,10 @@ namespace MilSpace.Visibility
 
         public void ThirdTypePicked()//triggers when user picks third type
         {
-            lblCalculationsType.Text =
-                     LocalizationContext.Instance
-                                        .CalcTypeLocalisationShort[VisibilityCalcTypeEnum.BestObservationParameters];
-
+           
             _stepControl = VisibilityCalcTypeEnum.BestObservationParameters;
+
+            SetCalculaionLabels();
             SetVOControlsVisibility(true);
             EnableObjList();
             PopulateComboBox();
@@ -805,8 +800,6 @@ namespace MilSpace.Visibility
 
         public void SummaryInfo()
         {
-            lblCalcType.Text =
-                LocalizationContext.Instance.CalcTypeLocalisation[FinalResult.CalculationType];
             lblTaskName.Text =
                 FinalResult.TaskName;
             lblDEMName.Text =
@@ -1100,6 +1093,13 @@ namespace MilSpace.Visibility
             {
                 _selectedObservationPoint.AngelMaxH = maxAngle;
             }
+        }
+
+        private void SetCalculaionLabels()
+        {
+            lblCalculationsType.Text = lblCalculationsTypeStep3.Text = lblCalculationsTypeStep4.Text =
+                     LocalizationContext.Instance
+                                        .CalcTypeLocalisationShort[_stepControl];
         }
 
         #region Validation
