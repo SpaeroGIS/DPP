@@ -75,6 +75,7 @@
             this.dgvPoints.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvPoints.Size = new System.Drawing.Size(226, 281);
             this.dgvPoints.TabIndex = 12;
+            this.dgvPoints.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DgvPoints_KeyDown);
             // 
             // ChooseCol
             // 

@@ -199,7 +199,7 @@ namespace MilSpace.Core.Actions
         {
             ActionParam<T> paramValue = GetParameter<T>(key, checkingVal);
 
-            if (paramValue.IsDefault || paramValue.Value.Equals(checkingVal))
+            if ((paramValue.IsDefault || paramValue.Value.Equals(checkingVal)) && checkingVal.GetType() != typeof(bool))
             {
                 throw new ExpectActionParameterException(this.act.ActionId, paramValue.ParamName);
             }

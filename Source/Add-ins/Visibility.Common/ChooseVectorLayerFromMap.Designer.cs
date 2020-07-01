@@ -86,6 +86,8 @@
             this.lbLayers.Size = new System.Drawing.Size(234, 210);
             this.lbLayers.TabIndex = 4;
             this.lbLayers.SelectedIndexChanged += new System.EventHandler(this.LbLayers_SelectedIndexChanged);
+            this.lbLayers.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LbLayers_KeyDown);
+            this.lbLayers.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.LbLayers_MouseDoubleClick);
             // 
             // labelPanel
             // 
