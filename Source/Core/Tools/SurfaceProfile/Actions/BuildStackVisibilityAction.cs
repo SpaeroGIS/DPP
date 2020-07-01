@@ -221,25 +221,30 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             var bestOPParametersManager = new BestOPParametersManager(visibilityPercent, currentPointIdForBestParamsCalculations);
 
             // There is no reason to clip image for the BestParameters mode, since the point just shance its Z value
-            var clipSourceImageForEveryPoint = true; 
+            var clipSourceImageForEveryPoint = true;
 
+            //Used to define a result layer name;
+            int pointIndex = -1;
 
             foreach (var curPoints in pointsIDs)
             {
                 int pointId;
+
                 if (calcResults.HasFlag(VisibilityCalculationResultsEnum.BestParametersTable))
                 {
                     pointId = currentPointIdForBestParamsCalculations;
+                    pointIndex = pointId - 1;
                 }
                 else
                 {
                     pointId = curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints ? -1 : ++index;
+                    pointIndex = pointId;
                 }
 
                 int[] curPointsValue = (calcResults.HasFlag(VisibilityCalculationResultsEnum.BestParametersTable)) ?
                                             new int[] { pointId } : curPoints.Value;
 
-                var observPointFeatureClassName = VisibilityTask.GetResultName(curPoints.Key, outputSourceName, pointId);
+                var observPointFeatureClassName = VisibilityTask.GetResultName(curPoints.Key, outputSourceName, pointIndex);
 
                 var exportedFeatureClass = GdbAccess.Instance.ExportObservationFeatureClass(
                     observPointsfeatureClass as IDataset,
@@ -275,9 +280,9 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                     clipSourceImageForEveryPoint = !calcResults.HasFlag(VisibilityCalculationResultsEnum.BestParametersTable);
 
                     var visibilityPotentialAreaFCName =
-                    VisibilityCalcResults.GetResultName(pointId > -1 ?
+                    VisibilityCalcResults.GetResultName(pointIndex > -1 ?
                     VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle :
-                    VisibilityCalculationResultsEnum.VisibilityAreasPotential, outputSourceName, pointId);
+                    VisibilityCalculationResultsEnum.VisibilityAreasPotential, outputSourceName, pointIndex);
 
                     coverageTableManager.AddPotentialArea(
                         visibilityPotentialAreaFCName,
@@ -296,7 +301,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
                     //Try to clip the raster source by visibilityPotentialAreaFCName
                     var visibilityPotentialAreaImgName =
-                    VisibilityCalcResults.GetResultName(VisibilityCalculationResultsEnum.VisibilityRastertPotentialArea, outputSourceName, pointId);
+                    VisibilityCalcResults.GetResultName(VisibilityCalculationResultsEnum.VisibilityRastertPotentialArea, outputSourceName, pointIndex);
                     if (!CalculationLibrary.ClipVisibilityZonesByAreas(
                            rasterSource,
                            visibilityPotentialAreaImgName,
@@ -326,7 +331,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                     VisibilityCalculationResultsEnum.VisibilityAreaRaster :
                     VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle,
                     outputSourceName,
-                    pointId);
+                    pointIndex);
 
                 if (!CalculationLibrary.GenerateVisibilityData(
                     rasterSource,
@@ -353,9 +358,9 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                         && !calcResults.HasFlag(VisibilityCalculationResultsEnum.ObservationObjects))
                     {
                         visibilityArePolyFCName =
-                            VisibilityTask.GetResultName(pointId > -1 ?
+                            VisibilityTask.GetResultName(pointIndex > -1 ?
                             VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle :
-                            VisibilityCalculationResultsEnum.VisibilityAreaPolygons, outputSourceName, pointId);
+                            VisibilityCalculationResultsEnum.VisibilityAreaPolygons, outputSourceName, pointIndex);
 
                         if (!CalculationLibrary.ConvertRasterToPolygon(outImageName, visibilityArePolyFCName, out messages))
                         {
@@ -390,7 +395,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                             VisibilityCalculationResultsEnum.VisibilityObservStationClip;
 
                         var outClipName = VisibilityTask.GetResultName(resultLype,
-                            outputSourceName, pointId);
+                            outputSourceName, pointIndex);
 
                         if (!CalculationLibrary.ClipVisibilityZonesByAreas(
                             inClipName,
@@ -422,11 +427,11 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                                 VisibilityCalculationResultsEnum.VisibilityAreaPolygons;
 
                             visibilityArePolyFCName =
-                                VisibilityTask.GetResultName(pointId > -1 ?
+                                VisibilityTask.GetResultName(pointIndex > -1 ?
                                 VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle :
-                                VisibilityCalculationResultsEnum.VisibilityAreaPolygons, outputSourceName, pointId);
+                                VisibilityCalculationResultsEnum.VisibilityAreaPolygons, outputSourceName, pointIndex);
 
-                            visibilityArePolyFCName = VisibilityTask.GetResultName(curCulcRResult, outputSourceName, pointId);
+                            visibilityArePolyFCName = VisibilityTask.GetResultName(curCulcRResult, outputSourceName, pointIndex);
 
                             var rasterDataset = GdbAccess.Instance.GetDatasetFromCalcWorkspace(
                                 outClipName, VisibilityCalculationResultsEnum.VisibilityAreaRaster);
@@ -468,9 +473,9 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                     {
                         //Clip visibility images to valuable extent
                         var inClipName = outImageName;
-                        var outClipName = VisibilityTask.GetResultName(pointId > -1 ?
+                        var outClipName = VisibilityTask.GetResultName(pointIndex > -1 ?
                           VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle :
-                          VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly, outputSourceName, pointId);
+                          VisibilityCalculationResultsEnum.VisibilityAreasTrimmedByPoly, outputSourceName, pointIndex);
 
                         if (!CalculationLibrary.ClipVisibilityZonesByAreas(
                             inClipName,

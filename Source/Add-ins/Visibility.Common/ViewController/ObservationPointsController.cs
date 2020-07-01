@@ -425,7 +425,7 @@ namespace MilSpace.Visibility.ViewController
                     exx = CalculateBestOPParams(calcParams, animationProgressor);
                 }
             }
-            catch(MilSpacePointOutOfRatserException ex)
+            catch (MilSpacePointOutOfRatserException ex)
             {
                 MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("PointOutOfRasterErrorMessage", "Обраний пункт спостереження знаходиться за межами растру"),
                                 LocalizationContext.Instance.MessageBoxCaption);
@@ -764,11 +764,11 @@ namespace MilSpace.Visibility.ViewController
                 featureLayerInfo.PointsNotOnTheRaster = featureLayerInfo.PointsNotOnTheRaster.Select(id => id + 1).ToList();
             }
 
-            if(featureLayerInfo.PointsNotOnTheRaster != null && featureLayerInfo.PointsNotOnTheRaster.Count > 0)
+            if (featureLayerInfo.PointsNotOnTheRaster != null && featureLayerInfo.PointsNotOnTheRaster.Count > 0)
             {
-                foreach(var pointId in featureLayerInfo.PointsNotOnTheRaster)
+                foreach (var pointId in featureLayerInfo.PointsNotOnTheRaster)
                 {
-                    if(calcParams.ObservPointIDs.Any(id => id == pointId))
+                    if (calcParams.ObservPointIDs.Any(id => id == pointId))
                     {
                         throw new MilSpacePointOutOfRatserException(pointId, demLayer.Name);
                     }
@@ -935,36 +935,47 @@ namespace MilSpace.Visibility.ViewController
 
             //try
             //{
-                 calcTask = VisibilityManager.Generate(
-                    observerPointTemporaryFeatureClass,
-                    observPointsIds,
-                    observationStationTemporaryFeatureClass,
-                    observStationsIds,
-                    calcParams.RasterLayerName,
-                    calcParams.VisibilityCalculationResults,
-                    calcParams.TaskName,
-                    calcParams.TaskName,
-                    calcParams.CalculationType,
-                    mapDocument.ActiveView.FocusMap,
-                    calcParams.VisibilityPercent);
+            calcTask = VisibilityManager.Generate(
+               observerPointTemporaryFeatureClass,
+               observPointsIds,
+               observationStationTemporaryFeatureClass,
+               observStationsIds,
+               calcParams.RasterLayerName,
+               calcParams.VisibilityCalculationResults,
+               calcParams.TaskName,
+               calcParams.TaskName,
+               calcParams.CalculationType,
+               mapDocument.ActiveView.FocusMap,
+               calcParams.VisibilityPercent);
 
-                exx++;
+            exx++;
 
-                exx++;
+            if (calcTask.Finished != null)
+            {
 
-                if (calcTask.Finished != null)
-                {
-                    var tbls = mapDocument.TableProperties;
+                var isLayerAbove = (calcParams.ResultLayerPosition == LayerPositionsEnum.Above);
 
-                    EsriTools.AddTableToMap(
+                var datasets = GdbAccess.Instance.GetDatasetsFromCalcWorkspace(calcTask.ResultsInfo);
+                var tbls = mapDocument.TableProperties;
+
+                ArcMapHelper.AddResultsToMapAsGroupLayer(
+                    calcTask,
+                    mapDocument.ActiveView,
+                    calcParams.RelativeLayerName,
+                    isLayerAbove,
+                    calcParams.ResultLayerTransparency
+                    , null);
+
+
+                EsriTools.AddTableToMap(
                         tbls,
                         VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.BestParametersTable, calcTask.Name),
                         calcTask.ReferencedGDB,
                         mapDocument,
                         application);
-                    exx++;
+                exx++;
 
-                }
+            }
             //}
             //finally
             //{

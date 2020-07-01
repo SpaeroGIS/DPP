@@ -20,11 +20,9 @@ namespace MilSpace.Tools
         private int _requiredVisibilityPercent;
         private int _lastInappropriatePointId = 0;
         private int _lastAppropriateId = 0;
-        private bool _isMinVisibleIdFound = false;
         private readonly int _maxId;
         private Dictionary<int, short> _visibilityPercents = new Dictionary<int, short>();
-        
-        private const string _temporaryObserverPointParamsFeatureClassSuffix = "_VO_ObservPointParams";
+
         private const string _temporaryObservationStationFeatureClassSuffix = "_VO_ObservStation";
 
         public BestOPParametersManager(int requiredVisibilityPercent, int maxId)
@@ -36,9 +34,10 @@ namespace MilSpace.Tools
         public static IFeatureClass CreateOPFeatureClass(WizardResult calcResult, IFeatureClass observatioPointsFeatureClass,
                                                             IActiveView activeView, IRaster raster)
         {
+            var calcObservPointsFeatureClass = VisibilityCalcResults.GetResultName(VisibilityCalculationResultsEnum.ObservationPoints, calcResult.TaskName);
+
             var observPointTemporaryFeatureClass =
-                    GdbAccess.Instance.GenerateTemporaryFeatureClassWithRequitedFields(observatioPointsFeatureClass.Fields,
-                                                                                        $"{calcResult.TaskName}{_temporaryObserverPointParamsFeatureClassSuffix}");
+                    GdbAccess.Instance.GenerateTemporaryFeatureClassWithRequitedFields(observatioPointsFeatureClass.Fields, calcObservPointsFeatureClass);
 
             bool isCircle;
             double maxAzimuth = 0;
@@ -178,7 +177,6 @@ namespace MilSpace.Tools
             }
 
             EsriTools.RemoveDataSet(gdb, $"{taskId}{_temporaryObservationStationFeatureClassSuffix}");
-            EsriTools.RemoveDataSet(gdb, $"{taskId}{_temporaryObserverPointParamsFeatureClassSuffix}");
         }
 
         public int FindVisibilityPercent(string visibilityArePolyFCName,
@@ -187,14 +185,14 @@ namespace MilSpace.Tools
         {
             IPolygon observationStationPolygon = null;
 
-            if(observStationFeatureClass == null)
+            if (observStationFeatureClass == null)
             {
                 throw new MilSpaceVisibilityCalcFailedException($"Observation station feature class doesn`t exists");
             }
 
             try
             {
-               observationStationPolygon = observStationFeatureClass.GetFeature(1).ShapeCopy as IPolygon;
+                observationStationPolygon = observStationFeatureClass.GetFeature(1).ShapeCopy as IPolygon;
             }
             catch (Exception ex)
             {
@@ -224,7 +222,7 @@ namespace MilSpace.Tools
 
             return FindNextId(visibilityPercent, pointId);
         }
-      
+
         private int FindNextId(double visibilityPercent, int pointId)
         {
             if (visibilityPercent < _requiredVisibilityPercent)
@@ -256,7 +254,7 @@ namespace MilSpace.Tools
             }
             else
             {
-                if(visibilityPercent == _requiredVisibilityPercent || pointId == _lastInappropriatePointId + 1)
+                if (visibilityPercent == _requiredVisibilityPercent || pointId == _lastInappropriatePointId + 1)
                 {
                     return -1;
                 }
@@ -293,7 +291,7 @@ namespace MilSpace.Tools
                 {
                     nextId -= 1;
 
-                    if(nextId <= _lastInappropriatePointId)
+                    if (nextId <= _lastInappropriatePointId)
                     {
                         nextId = -1;
                     }
@@ -343,7 +341,7 @@ namespace MilSpace.Tools
                                     string bestParamsTableName)
         {
 
-            if(_visibilityPercents.Count == 0 || !_visibilityPercents.Any(percent => percent.Value > 0))
+            if (_visibilityPercents.Count == 0 || !_visibilityPercents.Any(percent => percent.Value > 0))
             {
                 CreateNullVisibilityVOTable(observPointFeatureClass, expectedVisibilityPercent, bestParamsTableName);
                 return false;
@@ -357,6 +355,9 @@ namespace MilSpace.Tools
             var bestParamsTable = GenerateVOTable(observPointFeatureClass, bestParamsTableName);
             var keysOrderedByPercents = _visibilityPercents.OrderByDescending(percent => percent.Value)
                                                      .Select(percent => percent.Key);
+
+
+            var acceptableResult = _visibilityPercents.ToDictionary(k => k.Key, v => Math.Abs(expectedVisibilityPercent - v.Value)).Where(k => k.Value >= 0).Min(k => k.Key);
 
             var nearestParamsId = _maxId;
             var minDelta = 100;
@@ -429,7 +430,7 @@ namespace MilSpace.Tools
             return GdbAccess.Instance.GenerateVOTable(fields, bestParamsTableName);
         }
 
-    private static double FindMinDistance(IPoint[] pointsCollection, IPoint centerPoint)
+        private static double FindMinDistance(IPoint[] pointsCollection, IPoint centerPoint)
         {
             double minDistance = 0;
 

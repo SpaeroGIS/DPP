@@ -193,7 +193,7 @@ namespace MilSpace.Visibility
         }
         public void FirstTypePicked()//triggers when user picks first type
         {
-            lblCalculationsType.Text = 
+            lblCalculationsType.Text =
                     LocalizationContext.Instance
                                        .CalcTypeLocalisationShort[VisibilityCalcTypeEnum.OpservationPoints];
 
@@ -416,7 +416,7 @@ namespace MilSpace.Visibility
 
         public void FillObservationObjectsList(Dictionary<int, IGeometry> observationObjects)
         {
-            if(observationObjects == null)
+            if (observationObjects == null)
             {
                 dgvObjects.Text = "Objects are not found";
                 return;
@@ -627,7 +627,7 @@ namespace MilSpace.Visibility
             }
         }
 
-        private  void FilterPointsData()
+        private void FilterPointsData()
         {
 
             if (dgvCheckList.Rows.Count == 0)
@@ -699,38 +699,28 @@ namespace MilSpace.Visibility
 
         private void AssemblyWizardResult()
         {
+            double fromHeight = -1;
+            double toHeight = -1;
+            short visibilityPercent = 100;
+            ObservationPoint observationPoint = null;
+            IGeometry observationStation = null;
             if (_stepControl == VisibilityCalcTypeEnum.BestObservationParameters)
             {
                 SaveObservationPointParams();
 
-                double fromHeight;
-                if(!txtMinHeight.Text.TryParceToDouble(out fromHeight))
+                if (!txtMinHeight.Text.TryParceToDouble(out fromHeight))
                 {
                     fromHeight = 0;
                 }
 
-                double toHeight;
-                if(!txtMaxHeight.Text.TryParceToDouble(out toHeight))
+                if (!txtMaxHeight.Text.TryParceToDouble(out toHeight))
                 {
                     toHeight = 0;
                 }
 
-                FinalResult = new WizardResult
-                {
-                    ObservationPoint = _selectedObservationPoint,
-                    ObservationStation = controller.CalculateGeometryWithBuffer(_selectedGeometry, Convert.ToInt32(txtBufferDistance.Text)),
-                    RasterLayerName = imagesComboBox.SelectedItem.ToString(),
-                    CalculationType = _stepControl,
-                    TaskName = VisibilityManager.GenerateResultId(LocalizationContext.Instance.CalcTypeLocalisationShort[_stepControl]),
-                    FromHeight = fromHeight,
-                    ToHeight = toHeight,
-                    Step = Convert.ToInt32(txtStep.Text),
-                    VisibilityPercent = Convert.ToInt16(txtCoveragePercent.Text),
-                    VisibilityCalculationResults = VisibilityCalculationResultsEnum.BestParametersTable | VisibilityCalculationResultsEnum.ObservationPoints
-                    | VisibilityCalculationResultsEnum.VisibilityAreaRaster
-                };
-
-                return;
+                visibilityPercent = Convert.ToInt16(txtCoveragePercent.Text);
+                observationPoint = _selectedObservationPoint;
+                observationStation = controller.CalculateGeometryWithBuffer(_selectedGeometry, Convert.ToInt32(txtBufferDistance.Text));
             }
 
             var rasterName = cmbMapLayers.SelectedItem.ToString();
@@ -746,12 +736,17 @@ namespace MilSpace.Visibility
                 ResultLayerTransparency = Convert.ToInt16(tbTransparency.Text),
                 CalculationType = _stepControl,
                 TaskName = VisibilityManager.GenerateResultId(LocalizationContext.Instance.CalcTypeLocalisationShort[_stepControl]),
-                VisibilityPercent = 100,
+                VisibilityPercent = visibilityPercent,
                 ObserverPointsLayerName = controller.ObserverPointsLayerName,
                 ObservationObjectLayerName = controller.ObservationObjectsLayerName,
                 ObserverPointsSourceType = _observPointsSource,
                 ObserverObjectsSourceType = _observObjectsSource,
-                Buffer = Convert.ToInt32(txtBufferDistanceFroAllObjects.Text)
+                Buffer = Convert.ToInt32(txtBufferDistanceFroAllObjects.Text),
+                FromHeight = fromHeight,
+                ToHeight = toHeight,
+                Step = Convert.ToInt32(txtStep.Text),
+                ObservationPoint = observationPoint,
+                ObservationStation = observationStation
             };
 
             if (_stepControl == VisibilityCalcTypeEnum.OpservationPoints)
@@ -773,6 +768,14 @@ namespace MilSpace.Visibility
                     | VisibilityCalculationResultsEnum.VisibilityAreasPotential /*| VisibilityCalculationResultsEnum.CoverageTable*/
                     : VisibilityCalculationResultsEnum.None)
                     | VisibilityCalculationResultsEnum.ObservationObjects
+                    | VisibilityCalculationResultsEnum.VisibilityObservStationClip;
+            }
+            else if (_stepControl == VisibilityCalcTypeEnum.BestObservationParameters)
+            {
+                FinalResult.VisibilityCalculationResults = VisibilityCalculationResultsEnum.BestParametersTable
+                    | VisibilityCalculationResultsEnum.ObservationPoints
+                    | VisibilityCalculationResultsEnum.VisibilityAreaRaster
+                    | VisibilityCalculationResultsEnum.VisibilityAreasPotential
                     | VisibilityCalculationResultsEnum.VisibilityObservStationClip;
             }
 
@@ -800,7 +803,10 @@ namespace MilSpace.Visibility
                 FinalResult.VisibilityCalculationResults |= VisibilityCalculationResultsEnum.VisibilityAreaRasterSingle | VisibilityCalculationResultsEnum.ObservationPointSingle | VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle;
             }
 
-            FinalResult.VisibilityCalculationResults |= VisibilityCalculationResultsEnum.CoverageTable;
+            if (_stepControl != VisibilityCalcTypeEnum.BestObservationParameters)
+            {
+                FinalResult.VisibilityCalculationResults |= VisibilityCalculationResultsEnum.CoverageTable;
+            }
         }
 
         public void SummaryInfo()
@@ -1015,7 +1021,7 @@ namespace MilSpace.Visibility
         {
             throw new NotImplementedException();
         }
-        
+
         public void FillVisibilityResultsTree(IEnumerable<VisibilityCalcResults> visibilityResults)
         {
             throw new NotImplementedException();
@@ -1081,6 +1087,7 @@ namespace MilSpace.Visibility
 
         private void SaveObservationPointParams()
         {
+
             if (txtMinAzimuth.Text.TryParceToDouble(out double minAzimuth))
             {
                 _selectedObservationPoint.AzimuthStart = minAzimuth;
