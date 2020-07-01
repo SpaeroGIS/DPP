@@ -1155,6 +1155,7 @@
             this.panelRegym.Controls.Add(this.rbRouteMode);
             this.panelRegym.Controls.Add(this.rbSeparateOP);
             this.panelRegym.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelRegym.Enabled = false;
             this.panelRegym.Location = new System.Drawing.Point(0, 0);
             this.panelRegym.Name = "panelRegym";
             this.panelRegym.Padding = new System.Windows.Forms.Padding(4, 2, 4, 0);
