@@ -125,6 +125,12 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Core\AssemblyVersionTempleate\AsemblyVersion.cs">
+      <Link>Properties\AsemblyVersion.cs</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AsemblyVersion.tt</DependentUpon>
+    </Compile>
     <Compile Include="..\Visibility.Common\ButtonMilSpaceMVis.cs">
       <Link>ButtonMilSpaceMVis.cs</Link>
     </Compile>
@@ -296,8 +302,15 @@
       <Name>MilSpace.Tools</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\Core\AssemblyVersionTempleate\AsemblyVersion.tt">
+      <Link>Properties\AsemblyVersion.tt</Link>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AsemblyVersion.cs</LastGenOutput>
+    </Content>
     <Content Include="..\Visibility.Common\Resources\SP_VisibilityLocalization.xml">
       <Link>Resources\SP_VisibilityLocalization.xml</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -980,7 +980,7 @@ namespace MilSpace.Visibility
                                                                          Convert.ToDouble(azimuthB.Text),
                                                                          Convert.ToDouble(azimuthE.Text),
                                                                          _observerPointSource,
-                                                                         false, true);
+                                                                         false, false);
                 }
 
                 if(sender.Equals(observPointName))
@@ -2669,16 +2669,8 @@ namespace MilSpace.Visibility
                     MessageBoxIcon.Exclamation);
                 return;
             }
-
-            if (rbSeparateOP.Checked)
-            {
-                SaveUpdatedPoints();
-            }
-            else
-            {
-                SavePointInRouteMode();
-            }
-
+            
+            SaveUpdatedPoints();
             RefreshOPGraphics(true);
         }
 
