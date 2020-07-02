@@ -90,6 +90,8 @@
             this.lvPoints.Size = new System.Drawing.Size(257, 290);
             this.lvPoints.TabIndex = 2;
             this.lvPoints.UseCompatibleStateImageBehavior = false;
+            this.lvPoints.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LvPoints_KeyDown);
+            this.lvPoints.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.LvPoints_MouseDoubleClick);
             // 
             // PointsListModalWindow
             // 

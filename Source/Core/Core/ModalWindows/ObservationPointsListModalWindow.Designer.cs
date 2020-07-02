@@ -105,6 +105,8 @@
             this.dgvPoints.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvPoints.Size = new System.Drawing.Size(257, 290);
             this.dgvPoints.TabIndex = 5;
+            this.dgvPoints.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DgvPoints_KeyDown);
+            this.dgvPoints.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.DgvPoints_MouseDoubleClick);
             // 
             // IdCol
             // 

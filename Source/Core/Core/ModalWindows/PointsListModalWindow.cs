@@ -48,10 +48,30 @@ namespace MilSpace.Core.ModalWindows
 
         private void BtnChoosePoint_Click(object sender, EventArgs e)
         {
-            if(lvPoints.SelectedItems.Count > 0)
+            SelectPoint();
+        }
+
+        private void LvPoints_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            SelectPoint();
+            DialogResult = DialogResult.OK;
+        }
+        
+        private void LvPoints_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyData == Keys.Enter && lvPoints.SelectedItems.Count > 0)
+            {
+                SelectPoint();
+                DialogResult = DialogResult.OK;
+            }
+        }
+
+        private void SelectPoint()
+        {
+            if (lvPoints.SelectedItems.Count > 0)
             {
                 var pair = _points.First(point => point.Key == Convert.ToInt32(lvPoints.SelectedItems[0].Text));
-                SelectedPoint = new FromLayerPointModel { Point = pair.Value, ObjId = pair.Key, DisplayedField = pair.Key.ToString()};
+                SelectedPoint = new FromLayerPointModel { Point = pair.Value, ObjId = pair.Key, DisplayedField = pair.Key.ToString() };
             }
         }
     }

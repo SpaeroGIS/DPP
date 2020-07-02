@@ -66,6 +66,8 @@
             this.dgvGeometries.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvGeometries.Size = new System.Drawing.Size(315, 243);
             this.dgvGeometries.TabIndex = 18;
+            this.dgvGeometries.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DgvGeometries_KeyDown);
+            this.dgvGeometries.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.DgvGeometries_MouseDoubleClick);
             // 
             // IdCol
             // 
