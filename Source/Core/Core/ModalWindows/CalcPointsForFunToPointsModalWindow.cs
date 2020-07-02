@@ -48,11 +48,25 @@ namespace MilSpace.Core.ModalWindows
 
         private void BtnChoosePoint_Click(object sender, EventArgs e)
         {
+            SelectPoints();
+        }
+
+        private void DgvPoints_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter && dgvPoints.SelectedRows.Count > 0)
+            {
+                SelectPoints();
+                DialogResult = DialogResult.OK;
+            }
+        }
+
+        private void SelectPoints()
+        {
             SelectedPoints = new List<IGeometry>();
 
-            foreach(DataGridViewRow row in dgvPoints.Rows)
+            foreach (DataGridViewRow row in dgvPoints.Rows)
             {
-                if((bool)row.Cells[0].Value)
+                if ((bool)row.Cells[0].Value)
                 {
                     SelectedPoints.Add(_points.First(point => point.Key == (int)row.Cells["NumCol"].Value).Value);
                 }

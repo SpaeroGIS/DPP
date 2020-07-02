@@ -98,6 +98,26 @@ namespace MilSpace.Core.ModalWindows
 
         private void BtnChoosePoint_Click(object sender, EventArgs e)
         {
+            SelectPoint();
+        }
+
+        private void DgvGeometries_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            SelectPoint();
+            DialogResult = DialogResult.OK;
+        }
+
+        private void DgvGeometries_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter && dgvGeometries.SelectedRows.Count > 0)
+            {
+                SelectPoint();
+                DialogResult = DialogResult.OK;
+            }
+        }
+
+        private void SelectPoint()
+        {
             var objId = (int)dgvGeometries.SelectedRows[0].Cells["IdCol"].Value;
             SelectedGeometryTitle = dgvGeometries.SelectedRows[0].Cells["DisplayFieldCol"].Value.ToString();
             SelectedGeometry = _geometries.First(geometry => geometry.ObjId == objId).Geometry;

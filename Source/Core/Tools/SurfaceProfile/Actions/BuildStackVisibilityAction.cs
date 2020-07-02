@@ -20,6 +20,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
         private string rasterSource;
         private string outputSourceName;
         private short visibilityPercent;
+        private bool showAllResults;
         private VisibilityTask session;
 
         private VisibilityCalculationResultsEnum calcResults;
@@ -49,6 +50,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             outputSourceName = parameters.GetParameterWithValidition<string>(ActionParameters.OutputSourceName, string.Empty).Value;
             session = parameters.GetParameterWithValidition<VisibilityTask>(ActionParameters.Session, null).Value;
             visibilityPercent = parameters.GetParameterWithValidition<short>(ActionParameters.VisibilityPercent, -1).Value;
+            showAllResults = parameters.GetParameterWithValidition<bool>(ActionParameters.ShowAllResults, false).Value;
         }
 
         public override string ActionId => ActionsEnum.vblt.ToString();
@@ -67,7 +69,8 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                    new ActionParam<VisibilityCalculationResultsEnum>() { ParamName = ActionParameters.Calculationresults, Value = VisibilityCalculationResultsEnum.None},
                    new ActionParam<string>() { ParamName = ActionParameters.OutputSourceName, Value = null},
                    new ActionParam<string>() { ParamName = ActionParameters.Session, Value = null},
-                   new ActionParam<short>() { ParamName = ActionParameters.VisibilityPercent, Value = -1}
+                   new ActionParam<short>() { ParamName = ActionParameters.VisibilityPercent, Value = -1},
+                   new ActionParam<bool>() { ParamName = ActionParameters.ShowAllResults, Value = false}
                };
             }
         }
@@ -545,7 +548,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                 var bestParamsTableName = VisibilityTask.GetResultName(VisibilityCalculationResultsEnum.BestParametersTable, outputSourceName);
 
                 if (bestOPParametersManager.CreateVOTable(observPointsfeatureClass,
-                                                            visibilityPercent, bestParamsTableName))
+                                                            visibilityPercent, bestParamsTableName, showAllResults))
                 {
                     results.Add(iStepNum.ToString() + ". " + "Збережена таблиця накращих параметрів ПН для мінімальної видимості " + visibilityPercent + "%: " + bestParamsTableName);
                     iStepNum++;

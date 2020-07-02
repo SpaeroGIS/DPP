@@ -114,11 +114,7 @@ namespace MilSpace.Core.ModalWindows
 
         private void BtnChoosePoint_Click(object sender, EventArgs e)
         {
-            if(dgvPoints.SelectedRows.Count > 0)
-            {
-                SelectedPoint = _points.First(point => point.ObjId == (int)dgvPoints.SelectedRows[0].Cells["IdCol"].Value);
-                LayerName = lblLayer.Text;
-            }
+            SelectPoint();
         }
 
         private void PointsFromLayerModalWindow_Shown(object sender, EventArgs e)
@@ -130,6 +126,30 @@ namespace MilSpace.Core.ModalWindows
 
                 this.Close();
                 this.DialogResult = DialogResult.Cancel;
+            }
+        }
+
+        private void DgvPoints_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            SelectPoint();
+            DialogResult = DialogResult.OK;
+        }
+
+        private void DgvPoints_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter && dgvPoints.SelectedRows.Count > 0)
+            {
+                SelectPoint();
+                DialogResult = DialogResult.OK;
+            }
+        }
+
+        private void SelectPoint()
+        {
+            if (dgvPoints.SelectedRows.Count > 0)
+            {
+                SelectedPoint = _points.First(point => point.ObjId == (int)dgvPoints.SelectedRows[0].Cells["IdCol"].Value);
+                LayerName = lblLayer.Text;
             }
         }
     }

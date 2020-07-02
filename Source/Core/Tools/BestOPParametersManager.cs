@@ -338,7 +338,7 @@ namespace MilSpace.Tools
         }
 
         public bool CreateVOTable(IFeatureClass observPointFeatureClass, int expectedVisibilityPercent,
-                                    string bestParamsTableName)
+                                    string bestParamsTableName, bool showAllResults)
         {
 
             if (_visibilityPercents.Count == 0 || !_visibilityPercents.Any(percent => percent.Value > 0))
@@ -353,8 +353,17 @@ namespace MilSpace.Tools
             KeyValuePair<int, short> bestParams = new KeyValuePair<int, short>(-1, 0);
 
             var bestParamsTable = GenerateVOTable(observPointFeatureClass, bestParamsTableName);
-            var keysOrderedByPercents = _visibilityPercents.OrderByDescending(percent => percent.Value)
-                                                     .Select(percent => percent.Key);
+            List<int> keysOrderedByPercents;
+
+            if (showAllResults)
+            {
+                keysOrderedByPercents = _visibilityPercents.Select(percent => percent.Key).ToList();
+            }
+            else
+            {
+                keysOrderedByPercents = _visibilityPercents.OrderByDescending(percent => percent.Value)
+                                                         .Select(percent => percent.Key).ToList();
+            }
 
 
             var acceptableResult = _visibilityPercents.ToDictionary(k => k.Key, v => Math.Abs(expectedVisibilityPercent - v.Value)).Where(k => k.Value >= 0).Min(k => k.Key);
@@ -366,26 +375,38 @@ namespace MilSpace.Tools
             {
                 var currentPercent = _visibilityPercents[paramsVisibilityId];
 
-                if (currentPercent == expectedVisibilityPercent)
+                if (showAllResults)
                 {
                     appropriateParams.Add(paramsVisibilityId, currentPercent);
-                    isParametersFound = true;
-                    break;
+
+                    if (currentPercent == expectedVisibilityPercent)
+                    {
+                        isParametersFound = true;
+                    }
                 }
                 else
                 {
-                    var delta = Math.Abs(expectedVisibilityPercent - currentPercent);
-                    if (delta < minDelta)
+                    if (currentPercent == expectedVisibilityPercent)
                     {
-                        minDelta = delta;
-                        nearestParamsId = paramsVisibilityId;
+                        appropriateParams.Add(paramsVisibilityId, currentPercent);
+                        isParametersFound = true;
+                        break;
+                    }
+                    else
+                    {
+                        var delta = Math.Abs(expectedVisibilityPercent - currentPercent);
+                        if (delta < minDelta)
+                        {
+                            minDelta = delta;
+                            nearestParamsId = paramsVisibilityId;
+                        }
                     }
                 }
             }
 
             var bestParamsFeatures = new Dictionary<IFeature, short>();
 
-            if (isParametersFound)
+            if (isParametersFound || showAllResults)
             {
                 foreach (var parameters in appropriateParams)
                 {

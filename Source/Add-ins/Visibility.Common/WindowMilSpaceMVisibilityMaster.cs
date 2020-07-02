@@ -124,23 +124,26 @@ namespace MilSpace.Visibility
                 this.label29.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label29.Text", "Крок 4. Перевірка параметрів розрахунку");
                 this.lblOPType.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblOPType.Text", "Джерело ПС");
                 this.lblOOSource.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblOOSourse.Text", "Джерело ОН");
-                this.lblMinAzimuth.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblMin.Text", "мін.");
-                this.lblMinAngle.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblMin.Text", "мін.");
-                this.lblMaxAzimuth.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblMax.Text", "макс.");
-                this.lblMaxAngle.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblMax.Text", "макс.");
-                this.lblAzimuths.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblAzimuths.Text", "Азимути:");
-                this.lblAngles.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblAngles.Text", "Кути нахилу:");
-                this.lblHeights.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblHeights.Text", "Вибірка висот:");
-                this.lblFrom.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblFrom.Text", "від");
-                this.lblTo.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblTo.Text", "до");
-                this.lblStep.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblStep.Text", "крок");
-                this.lblBufferDistance.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblBufferDistance.Text", "Відстань для буфера");
-                this.lblCoveragePercent.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.lblCoveragePercent.Text", "Відсоток покриття");
-                this.chckSaveOPParams.Text = LocalizationContext.Instance.FindLocalizedElement("MinM.chckSaveOPParams.Text", "Враховувати параметри ПН");
+                this.lblMinAzimuth.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblMin.Text", "мін.");
+                this.lblMinAngle.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblMin.Text", "мін.");
+                this.lblMaxAzimuth.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblMax.Text", "макс.");
+                this.lblMaxAngle.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblMax.Text", "макс.");
+                this.lblAzimuths.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblAzimuths.Text", "Азимути:");
+                this.lblAngles.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblAngles.Text", "Кути нахилу:");
+                this.lblHeights.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblHeights.Text", "Вибірка висот:");
+                this.lblFrom.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblFrom.Text", "від");
+                this.lblTo.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblTo.Text", "до");
+                this.lblStep.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblStep.Text", "крок");
+                this.lblBufferDistance.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblBufferDistance.Text", "Відстань для буфера");
+                this.lblBufferDistanceForAllObjects.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblBufferDistance.Text", "Відстань для буфера");
+                this.lblCoveragePercent.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblCoveragePercent.Text", "Відсоток покриття");
+                this.lblResult.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblResults.Text", "Результати");
+                this.chckSaveOPParams.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.chckSaveOPParams.Text", "Враховувати параметри ПН");
+                this.chckShowAllRResults.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.chckShowAllResults.Text", "Відображати всі задовільні результати");
 
                 ToolTip toolTip = new ToolTip();
-                toolTip.SetToolTip(btnShowPoint, LocalizationContext.Instance.FindLocalizedElement("MinM.btnShowPoint.ToolTip", "Показати пункт спостеження на мапі"));
-                toolTip.SetToolTip(btnShowOO, LocalizationContext.Instance.FindLocalizedElement("MinM.btnShowOO.ToolTip", "Показати об'єкт спостереження на мапі"));
+                toolTip.SetToolTip(btnShowPoint, LocalizationContext.Instance.FindLocalizedElement("WinM.btnShowPoint.ToolTip", "Показати пункт спостеження на мапі"));
+                toolTip.SetToolTip(btnShowOO, LocalizationContext.Instance.FindLocalizedElement("WinM.btnShowOO.ToolTip", "Показати об'єкт спостереження на мапі"));
 
                 SetDefaultValues();
             }
@@ -193,11 +196,9 @@ namespace MilSpace.Visibility
         }
         public void FirstTypePicked()//triggers when user picks first type
         {
-            lblCalculationsType.Text =
-                    LocalizationContext.Instance
-                                       .CalcTypeLocalisationShort[VisibilityCalcTypeEnum.OpservationPoints];
-
             _stepControl = VisibilityCalcTypeEnum.OpservationPoints;
+
+            SetCalculaionLabels();
             controller.UpdateObservationPointsList();
             PopulateComboBox();
             FillObservPointLabel();
@@ -207,11 +208,9 @@ namespace MilSpace.Visibility
         }
         public void SecondTypePicked()//triggers when user picks second type
         {
-            lblCalculationsType.Text =
-                    LocalizationContext.Instance
-                                       .CalcTypeLocalisationShort[VisibilityCalcTypeEnum.ObservationObjects];
-
             _stepControl = VisibilityCalcTypeEnum.ObservationObjects;
+
+            SetCalculaionLabels();
             controller.UpdateObservationPointsList();
             EnableObjList();
             PopulateComboBox();
@@ -222,11 +221,10 @@ namespace MilSpace.Visibility
 
         public void ThirdTypePicked()//triggers when user picks third type
         {
-            lblCalculationsType.Text =
-                     LocalizationContext.Instance
-                                        .CalcTypeLocalisationShort[VisibilityCalcTypeEnum.BestObservationParameters];
-
+           
             _stepControl = VisibilityCalcTypeEnum.BestObservationParameters;
+
+            SetCalculaionLabels();
             SetVOControlsVisibility(true);
             EnableObjList();
             PopulateComboBox();
@@ -811,8 +809,8 @@ namespace MilSpace.Visibility
 
         public void SummaryInfo()
         {
-            lblCalcType.Text =
-                LocalizationContext.Instance.CalcTypeLocalisation[FinalResult.CalculationType];
+            lblCalcType.Text = LocalizationContext.Instance.CalcTypeLocalisation[FinalResult.CalculationType];
+
             lblTaskName.Text =
                 FinalResult.TaskName;
             lblDEMName.Text =
@@ -854,6 +852,24 @@ namespace MilSpace.Visibility
 
             if (StepsTabControl.SelectedIndex == 2)
             {
+                if (_stepControl == VisibilityCalcTypeEnum.BestObservationParameters)
+                {
+                    if (_selectedObservationPoint == null || _selectedGeometry == null)
+                    {
+                        HandleLackOfDataCase();
+                        return;
+                    }
+                }
+                else
+                {
+                    if (_observPointGuis == null || !_observPointGuis.Any(objects => objects.Check))
+                    {
+                        HandleLackOfDataCase();
+                        return;
+                    }
+
+                }
+
                 AssemblyWizardResult();
                 SummaryInfo();
             }
@@ -1015,6 +1031,8 @@ namespace MilSpace.Visibility
             selectedOOPanel.Visible = isVisible;
             chckOP.Visible = !isVisible;
             chckOO.Visible = !isVisible;
+
+            panelResults.Visible = isVisible;
         }
 
         public void FillVisibilitySessionsTree(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded)
@@ -1107,6 +1125,27 @@ namespace MilSpace.Visibility
             {
                 _selectedObservationPoint.AngelMaxH = maxAngle;
             }
+        }
+
+        private void SetCalculaionLabels()
+        {
+            lblCalculationsType.Text = lblCalculationsTypeStep3.Text = lblCalculationsTypeStep4.Text =
+                     LocalizationContext.Instance
+                                        .CalcTypeLocalisationShort[_stepControl];
+        }
+
+        private void HandleLackOfDataCase()
+        {
+            MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("LackOfDataForVisibilityCalculationMessage", "Недостатньо даних для розрахунку. \nБудь ласка оберіть пункт спостереження і об'єкт спостереження (за необхідності)."),
+                                    LocalizationContext.Instance.MessageBoxCaption);
+
+            StepsTabControl.SelectedTab.Enabled = false;
+
+            var nextTab = StepsTabControl
+                .TabPages[1] as TabPage;
+
+            nextTab.Enabled = true;
+            StepsTabControl.SelectedIndex = 1;
         }
 
         #region Validation

@@ -935,18 +935,19 @@ namespace MilSpace.Visibility.ViewController
 
             //try
             //{
-            calcTask = VisibilityManager.Generate(
-               observerPointTemporaryFeatureClass,
-               observPointsIds,
-               observationStationTemporaryFeatureClass,
-               observStationsIds,
-               calcParams.RasterLayerName,
-               calcParams.VisibilityCalculationResults,
-               calcParams.TaskName,
-               calcParams.TaskName,
-               calcParams.CalculationType,
-               mapDocument.ActiveView.FocusMap,
-               calcParams.VisibilityPercent);
+                 calcTask = VisibilityManager.Generate(
+                    observerPointTemporaryFeatureClass,
+                    observPointsIds,
+                    observationStationTemporaryFeatureClass,
+                    observStationsIds,
+                    calcParams.RasterLayerName,
+                    calcParams.VisibilityCalculationResults,
+                    calcParams.TaskName,
+                    calcParams.TaskName,
+                    calcParams.CalculationType,
+                    mapDocument.ActiveView.FocusMap,
+                    calcParams.VisibilityPercent,
+                    calcParams.ShowAllResults);
 
             exx++;
 
@@ -2199,12 +2200,11 @@ namespace MilSpace.Visibility.ViewController
                 return null;
             }
 
-            if (_observationPoints.Count == 0)
-            {
-                UpdateObservationPointsList();
-            }
+            var observationPoints = VisibilityZonesFacade.GetAllObservationPoints()
+                                                      .Select(point => point as IObserverPoint)
+                                                      .ToList();
 
-            var observPointsModel = _observationPoints.Where(point => point.X.HasValue && point.Y.HasValue).Select(point =>
+            var observPointsModel = observationPoints.Where(point => point.X.HasValue && point.Y.HasValue).Select(point =>
             {
                 return new FromLayerPointModel
                 {
@@ -2223,7 +2223,7 @@ namespace MilSpace.Visibility.ViewController
                 if (observPointsListModal.SelectedPoint != null)
                 {
                     return GetObservationPointFromInterface(
-                            _observationPoints.FirstOrDefault(
+                            observationPoints.FirstOrDefault(
                                     point => point.Objectid == observPointsListModal.SelectedPoint.ObjId));
                 }
             }

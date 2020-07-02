@@ -170,6 +170,7 @@ namespace MilSpace.Visibility
             this.checkBoxOP = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
             this.panel20 = new System.Windows.Forms.Panel();
+            this.lblCalculationsTypeStep3 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.stepFour = new System.Windows.Forms.TabPage();
             this.panel27 = new System.Windows.Forms.Panel();
@@ -200,7 +201,11 @@ namespace MilSpace.Visibility
             this.lblCalcType = new System.Windows.Forms.Label();
             this.label37 = new System.Windows.Forms.Label();
             this.panel28 = new System.Windows.Forms.Panel();
+            this.lblCalculationsTypeStep4 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
+            this.panelResults = new System.Windows.Forms.Panel();
+            this.lblResult = new System.Windows.Forms.Label();
+            this.chckShowAllRResults = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.StepsTabControl.SuspendLayout();
             this.stepOne.SuspendLayout();
@@ -258,6 +263,7 @@ namespace MilSpace.Visibility
             this.panel38.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel28.SuspendLayout();
+            this.panelResults.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -1796,6 +1802,7 @@ namespace MilSpace.Visibility
             // stepThree
             // 
             this.stepThree.BackColor = System.Drawing.SystemColors.Window;
+            this.stepThree.Controls.Add(this.panelResults);
             this.stepThree.Controls.Add(this.panel25);
             this.stepThree.Controls.Add(this.panel24);
             this.stepThree.Controls.Add(this.panel23);
@@ -2126,6 +2133,7 @@ namespace MilSpace.Visibility
             // panel20
             // 
             this.panel20.BackColor = System.Drawing.SystemColors.Control;
+            this.panel20.Controls.Add(this.lblCalculationsTypeStep3);
             this.panel20.Controls.Add(this.label10);
             this.panel20.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel20.Location = new System.Drawing.Point(0, 0);
@@ -2133,6 +2141,16 @@ namespace MilSpace.Visibility
             this.panel20.Padding = new System.Windows.Forms.Padding(4);
             this.panel20.Size = new System.Drawing.Size(921, 40);
             this.panel20.TabIndex = 14;
+            // 
+            // lblCalculationsTypeStep3
+            // 
+            this.lblCalculationsTypeStep3.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lblCalculationsTypeStep3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblCalculationsTypeStep3.Location = new System.Drawing.Point(865, 4);
+            this.lblCalculationsTypeStep3.Name = "lblCalculationsTypeStep3";
+            this.lblCalculationsTypeStep3.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.lblCalculationsTypeStep3.Size = new System.Drawing.Size(52, 32);
+            this.lblCalculationsTypeStep3.TabIndex = 9;
             // 
             // label10
             // 
@@ -2451,6 +2469,7 @@ namespace MilSpace.Visibility
             // panel28
             // 
             this.panel28.BackColor = System.Drawing.SystemColors.Control;
+            this.panel28.Controls.Add(this.lblCalculationsTypeStep4);
             this.panel28.Controls.Add(this.label29);
             this.panel28.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel28.Location = new System.Drawing.Point(0, 0);
@@ -2458,6 +2477,16 @@ namespace MilSpace.Visibility
             this.panel28.Padding = new System.Windows.Forms.Padding(4);
             this.panel28.Size = new System.Drawing.Size(921, 40);
             this.panel28.TabIndex = 10;
+            // 
+            // lblCalculationsTypeStep4
+            // 
+            this.lblCalculationsTypeStep4.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lblCalculationsTypeStep4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblCalculationsTypeStep4.Location = new System.Drawing.Point(865, 4);
+            this.lblCalculationsTypeStep4.Name = "lblCalculationsTypeStep4";
+            this.lblCalculationsTypeStep4.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.lblCalculationsTypeStep4.Size = new System.Drawing.Size(52, 32);
+            this.lblCalculationsTypeStep4.TabIndex = 10;
             // 
             // label29
             // 
@@ -2469,6 +2498,40 @@ namespace MilSpace.Visibility
             this.label29.Size = new System.Drawing.Size(435, 32);
             this.label29.TabIndex = 9;
             this.label29.Text = "Крок 4. Перевірка параметрів розрахунку";
+            // 
+            // panelResults
+            // 
+            this.panelResults.Controls.Add(this.chckShowAllRResults);
+            this.panelResults.Controls.Add(this.lblResult);
+            this.panelResults.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelResults.Location = new System.Drawing.Point(0, 200);
+            this.panelResults.Name = "panelResults";
+            this.panelResults.Padding = new System.Windows.Forms.Padding(4);
+            this.panelResults.Size = new System.Drawing.Size(921, 32);
+            this.panelResults.TabIndex = 20;
+            // 
+            // lblResult
+            // 
+            this.lblResult.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblResult.Location = new System.Drawing.Point(4, 4);
+            this.lblResult.Name = "lblResult";
+            this.lblResult.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.lblResult.Size = new System.Drawing.Size(180, 24);
+            this.lblResult.TabIndex = 0;
+            this.lblResult.Text = "Результат";
+            // 
+            // chckShowAllRResults
+            // 
+            this.chckShowAllRResults.Dock = System.Windows.Forms.DockStyle.Left;
+            this.chckShowAllRResults.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.chckShowAllRResults.Location = new System.Drawing.Point(184, 4);
+            this.chckShowAllRResults.Name = "chckShowAllRResults";
+            this.chckShowAllRResults.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.chckShowAllRResults.Size = new System.Drawing.Size(316, 24);
+            this.chckShowAllRResults.TabIndex = 5;
+            this.chckShowAllRResults.Text = "відображати всі задовільні результати";
+            this.chckShowAllRResults.UseVisualStyleBackColor = true;
             // 
             // WindowMilSpaceMVisibilityMaster
             // 
@@ -2550,6 +2613,7 @@ namespace MilSpace.Visibility
             this.panel38.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel28.ResumeLayout(false);
+            this.panelResults.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2726,5 +2790,10 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.TextBox txtBufferDistanceFroAllObjects;
         private System.Windows.Forms.Label lblBufferDistanceForAllObjects;
         private System.Windows.Forms.Label lblCalculationsType;
+        private System.Windows.Forms.Label lblCalculationsTypeStep3;
+        private System.Windows.Forms.Label lblCalculationsTypeStep4;
+        private System.Windows.Forms.Panel panelResults;
+        private System.Windows.Forms.Label lblResult;
+        private System.Windows.Forms.CheckBox chckShowAllRResults;
     }
 }
