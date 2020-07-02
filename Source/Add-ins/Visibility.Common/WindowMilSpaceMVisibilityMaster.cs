@@ -721,11 +721,12 @@ namespace MilSpace.Visibility
                 observationStation = controller.CalculateGeometryWithBuffer(_selectedGeometry, Convert.ToInt32(txtBufferDistance.Text));
             }
 
+
             var rasterName = cmbMapLayers.SelectedItem.ToString();
 
             FinalResult = new WizardResult
             {
-                ObservPointIDs = _observPointGuis.Where(p => p.Check).Select(i => i.Id).ToArray(),
+                ObservPointIDs = _observPointGuis?.Where(p => p.Check).Select(i => i.Id).ToArray(),
                 Table = TableChkBox.Checked,
                 SumFieldOfView = SumChkBox.Checked,
                 RasterLayerName = imagesComboBox.SelectedItem.ToString(),

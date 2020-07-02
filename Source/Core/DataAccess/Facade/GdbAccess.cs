@@ -833,7 +833,8 @@ namespace MilSpace.DataAccess.Facade
 
         public IDataset GetDatasetFromCalcWorkspace(VisibilityResultInfo visibilityResult)
         {
-            if (visibilityResult.RessutType == VisibilityCalculationResultsEnum.CoverageTable)
+            if (visibilityResult.RessutType == VisibilityCalculationResultsEnum.CoverageTable ||
+                visibilityResult.RessutType == VisibilityCalculationResultsEnum.BestParametersTable)
             {
                 return null;
             }
@@ -863,8 +864,16 @@ namespace MilSpace.DataAccess.Facade
 
         private static bool IsDatasetExist(IWorkspace workspace, string datasetName, esriDatasetType datasetType)
         {
-            IWorkspace2 wsp2 = (IWorkspace2)workspace;
-            return wsp2.NameExists[datasetType, datasetName];
+            try
+            {
+                IWorkspace2 wsp2 = (IWorkspace2)workspace;
+                return wsp2.NameExists[datasetType, datasetName];
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorEx(ex.Message);
+            }
+            return false;
         }
 
         public ILayer GetLayerFromWorkingWorkspace(string featureClassName)
