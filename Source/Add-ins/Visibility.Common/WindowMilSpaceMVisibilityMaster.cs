@@ -702,6 +702,7 @@ namespace MilSpace.Visibility
             short visibilityPercent = 100;
             ObservationPoint observationPoint = null;
             IGeometry observationStation = null;
+            bool showAllresults = true;
             if (_stepControl == VisibilityCalcTypeEnum.BestObservationParameters)
             {
                 SaveObservationPointParams();
@@ -715,7 +716,7 @@ namespace MilSpace.Visibility
                 {
                     toHeight = 0;
                 }
-
+                showAllresults = chckShowAllRResults.Checked;
                 visibilityPercent = Convert.ToInt16(txtCoveragePercent.Text);
                 observationPoint = _selectedObservationPoint;
                 observationStation = controller.CalculateGeometryWithBuffer(_selectedGeometry, Convert.ToInt32(txtBufferDistance.Text));
@@ -745,7 +746,8 @@ namespace MilSpace.Visibility
                 ToHeight = toHeight,
                 Step = Convert.ToInt32(txtStep.Text),
                 ObservationPoint = observationPoint,
-                ObservationStation = observationStation
+                ObservationStation = observationStation,
+                ShowAllResults = showAllresults
             };
 
             if (_stepControl == VisibilityCalcTypeEnum.OpservationPoints)

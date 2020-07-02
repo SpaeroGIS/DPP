@@ -21,14 +21,17 @@ namespace MilSpace.Tools
         private int _lastInappropriatePointId = 0;
         private int _lastAppropriateId = 0;
         private readonly int _maxId;
+        private readonly bool showAllResults;
         private Dictionary<int, short> _visibilityPercents = new Dictionary<int, short>();
+        private Dictionary<int, short> appropriateParams;
 
         private const string _temporaryObservationStationFeatureClassSuffix = "_VO_ObservStation";
 
-        public BestOPParametersManager(int requiredVisibilityPercent, int maxId)
+        public BestOPParametersManager(int requiredVisibilityPercent, int maxId, bool showAllResults)
         {
             _requiredVisibilityPercent = requiredVisibilityPercent;
             _maxId = maxId;
+            this.showAllResults = showAllResults;
         }
 
         public static IFeatureClass CreateOPFeatureClass(WizardResult calcResult, IFeatureClass observatioPointsFeatureClass,
@@ -338,7 +341,7 @@ namespace MilSpace.Tools
         }
 
         public bool CreateVOTable(IFeatureClass observPointFeatureClass, int expectedVisibilityPercent,
-                                    string bestParamsTableName, bool showAllResults)
+                                    string bestParamsTableName)
         {
 
             if (_visibilityPercents.Count == 0 || !_visibilityPercents.Any(percent => percent.Value > 0))
@@ -347,7 +350,7 @@ namespace MilSpace.Tools
                 return false;
             }
 
-            var appropriateParams = new Dictionary<int, short>();
+            appropriateParams = new Dictionary<int, short>();
 
             bool isParametersFound = false;
             KeyValuePair<int, short> bestParams = new KeyValuePair<int, short>(-1, 0);
@@ -404,7 +407,7 @@ namespace MilSpace.Tools
                 }
             }
 
-            var bestParamsFeatures = new Dictionary<IFeature, short>();
+           var bestParamsFeatures = new Dictionary<IFeature, short>();
 
             if (isParametersFound || showAllResults)
             {
@@ -423,6 +426,8 @@ namespace MilSpace.Tools
             return isParametersFound;
         }
 
+
+        public Dictionary<int, short> AppropriateedParams => appropriateParams;
         public void CreateNullVisibilityVOTable(IFeatureClass observPointFeatureClass, int expectedVisibilityPercent,
                                     string bestParamsTableName)
         {

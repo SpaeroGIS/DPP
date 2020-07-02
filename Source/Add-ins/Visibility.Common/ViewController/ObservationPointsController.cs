@@ -931,29 +931,24 @@ namespace MilSpace.Visibility.ViewController
             animationProgressor.Show();
             animationProgressor.Play(0, 200);
 
-            VisibilityTask calcTask = null;
-
-            //try
-            //{
-                 calcTask = VisibilityManager.Generate(
-                    observerPointTemporaryFeatureClass,
-                    observPointsIds,
-                    observationStationTemporaryFeatureClass,
-                    observStationsIds,
-                    calcParams.RasterLayerName,
-                    calcParams.VisibilityCalculationResults,
-                    calcParams.TaskName,
-                    calcParams.TaskName,
-                    calcParams.CalculationType,
-                    mapDocument.ActiveView.FocusMap,
-                    calcParams.VisibilityPercent,
-                    calcParams.ShowAllResults);
+            VisibilityTask calcTask = VisibilityManager.Generate(
+               observerPointTemporaryFeatureClass,
+               observPointsIds,
+               observationStationTemporaryFeatureClass,
+               observStationsIds,
+               calcParams.RasterLayerName,
+               calcParams.VisibilityCalculationResults,
+               calcParams.TaskName,
+               calcParams.TaskName,
+               calcParams.CalculationType,
+               mapDocument.ActiveView.FocusMap,
+               calcParams.VisibilityPercent,
+               calcParams.ShowAllResults);
 
             exx++;
 
             if (calcTask.Finished != null)
             {
-
                 var isLayerAbove = (calcParams.ResultLayerPosition == LayerPositionsEnum.Above);
 
                 var datasets = GdbAccess.Instance.GetDatasetsFromCalcWorkspace(calcTask.ResultsInfo);
@@ -977,11 +972,6 @@ namespace MilSpace.Visibility.ViewController
                 exx++;
 
             }
-            //}
-            //finally
-            //{
-            //    BestOPParametersManager.ClearTemporaryData(calcParams.TaskName, calcTask.ReferencedGDB);
-            //}
 
             return exx;
         }

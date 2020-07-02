@@ -290,9 +290,12 @@ namespace MilSpace.DataAccess.Facade
 
             string featureClassName = addUniqueSuffix ? $"{name}_{Helper.GetTemporaryNameSuffix()}" : name;
 
+
             if (wsp2.get_NameExists(esriDatasetType.esriDTFeatureClass, featureClassName))
             {
-                EsriTools.RemoveDataSet(MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection, featureClassName, esriDatasetType.esriDTFeatureClass, calcWorkspace);
+                RemoveFeatureClass(featureClassName);
+                ///TODO: Rewrite RemoveDataSet like it was implemented in RemoveFeatureClass
+               // EsriTools.RemoveDataSet(MilSpaceConfiguration.ConnectionProperty.TemporaryGDBConnection, featureClassName, esriDatasetType.esriDTFeatureClass, calcWorkspace);
             }
 
             IWorkspaceEdit workspaceEdit = (IWorkspaceEdit)calcWorkspace;
@@ -844,14 +847,15 @@ namespace MilSpace.DataAccess.Facade
 
         public IDataset GetDatasetFromCalcWorkspace(string dataSetName, VisibilityCalculationResultsEnum datasetType)
         {
+            return GetDatasetFromCalcWorkspace(dataSetName, VisibilityTask.GetEsriDataTypeByVisibilityresyltType(datasetType));
+        }
 
-            if (IsDatasetExist(calcWorkspace, dataSetName,
-                VisibilityTask.GetEsriDataTypeByVisibilityresyltType(datasetType)))
+        public IDataset GetDatasetFromCalcWorkspace(string dataSetName, esriDatasetType datasetType)
+        {
+            if (IsDatasetExist(calcWorkspace, dataSetName, datasetType))
             {
-                return GetDataset(calcWorkspace, dataSetName,
-                    VisibilityTask.GetEsriDataTypeByVisibilityresyltType(datasetType));
+                return GetDataset(calcWorkspace, dataSetName, datasetType);
             }
-
             return null;
         }
         public IEnumerable<IDataset> GetDatasetsFromCalcWorkspace(IEnumerable<VisibilityResultInfo> visibilityResults)
@@ -1868,24 +1872,28 @@ namespace MilSpace.DataAccess.Facade
             return featureClass;
         }
 
-        public void RemoveFeatureClass(string name)
+
+        public bool RemoveRasterDataset(string name)
         {
-            IFeatureWorkspaceManage wspManage = (IFeatureWorkspaceManage)calcWorkspace;
-            var datasets = calcWorkspace.Datasets[esriDatasetType.esriDTFeatureClass];
-            var currentDataset = datasets.Next();
+            return RemoveDataset(name, esriDatasetType.esriDTRasterDataset);
+        }
+        public bool RemoveFeatureClass(string name)
+        {
+            return RemoveDataset(name, esriDatasetType.esriDTFeatureClass);
+        }
 
-            while (currentDataset != null && !currentDataset.Name.EndsWith(name))
-            {
-                currentDataset = datasets.Next();
-            }
-
+        private bool RemoveDataset(string dataetName, esriDatasetType type)
+        {
+            var currentDataset = GetDatasetFromCalcWorkspace(dataetName, type);
             if (currentDataset != null)
             {
+                IFeatureWorkspaceManage wspManage = (IFeatureWorkspaceManage)calcWorkspace;
                 if (wspManage.CanDelete(currentDataset.FullName))
                 {
                     try
                     {
                         currentDataset.Delete();
+                        return true;
                     }
                     catch (Exception ex)
                     {
@@ -1893,6 +1901,7 @@ namespace MilSpace.DataAccess.Facade
                     }
                 }
             }
+            return false;
         }
     }
 }
