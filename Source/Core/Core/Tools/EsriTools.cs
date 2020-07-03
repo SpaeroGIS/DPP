@@ -1589,6 +1589,25 @@ namespace MilSpace.Core.Tools
 
             return rasterLayer;
         }
+        
+        public static double GetMaxDistance(double maxDistance, double maxAngle, double height)
+        {
+            // Find the tilt angle to the farthest point from observation point
+             var angle = FindAngleByDistanceAndHeight(height, maxDistance);
+
+            // If founded angle more than the max angle from parameters return the distance to the 
+            // intersection of the surface and the upper tilt limit
+            if (angle > maxAngle)
+            {
+                var maxAngleRadians = (maxAngle + 90) * (Math.PI / 180);
+                var radians = Math.Tan(maxAngleRadians);
+                return Math.Round(radians * height, 4);
+            }
+            else
+            {
+                return Math.Round(maxDistance, 4);
+            }
+        }
 
         public static double GetMinDistance(double minDistance, double minAngle, double height)
         {
@@ -1627,25 +1646,6 @@ namespace MilSpace.Core.Tools
             }
         }
 
-        public static double GetMaxDistance(double maxDistance, double maxAngle, double height)
-        {
-            // Find the tilt angle to the farthest point from observation point
-            var angle = FindAngleByDistanceAndHeight(height, maxDistance);
-
-            // If founded angle more than the max angle from parameters return the distance to the 
-            // intersection of the surface and the upper tilt limit
-            if (angle > maxAngle)
-            {
-                var maxAngleRadians = (maxAngle + 90) * (Math.PI / 180);
-                var radians = Math.Tan(maxAngleRadians);
-                return Math.Round(radians * height, 4);
-            }
-            else
-            {
-                return Math.Round(maxDistance, 4);
-            }
-        }
-
         public static double FindAngleByDistanceAndHeight(double height, double distance)
         {
             // Calculate a distance from point to the end of required distance - hypotenuse
@@ -1663,6 +1663,45 @@ namespace MilSpace.Core.Tools
             var angle = -90 + Math.Asin(sin) * (180 / Math.PI);
 
             return angle;
+        }
+
+        public static double FindAngleByDistanceAndHeight(double height, IPoint pointFrom, IPoint pointTo, IRaster raster)
+        {
+           var distance = Math.Sqrt(Math.Pow(pointTo.X - pointFrom.X, 2) + Math.Pow(pointTo.Y - pointFrom.Y, 2));
+
+            pointFrom.AddZCoordinate(raster);
+            pointTo.AddZCoordinate(raster);
+
+            height += pointFrom.Z;
+
+            double heightAsArg = Math.Abs(height - pointTo.Z);
+
+            if(heightAsArg == 0)
+            {
+                return 0;
+            }
+
+            var tang = distance / heightAsArg;
+            var angle = -90 + Math.Atan(tang) * (180 / Math.PI);
+
+            if (height < pointTo.Z)
+            {
+                angle = 90 - (angle + 90);
+            }
+
+            return angle;
+        }
+
+        public static double GetDistanceBetweenPoints(IPoint pointFrom, IPoint pointTo)
+        {
+            var line = new Line()
+            {
+                FromPoint = pointFrom,
+                ToPoint = pointTo,
+                SpatialReference = pointFrom.SpatialReference
+            };
+
+            return line.Length;
         }
 
         public static IPolygon GetCoverageArea(
@@ -2384,6 +2423,11 @@ namespace MilSpace.Core.Tools
 
         public static IEnvelope GetFeatreClassExtent(IFeatureClass featureClass)
         {
+            if(featureClass == null)
+            {
+                return null;
+            }
+
             var geometries = GetGeometriesFromLayer(featureClass);
             return GetEnvelopeOfGeometriesList(geometries.Values);
         }

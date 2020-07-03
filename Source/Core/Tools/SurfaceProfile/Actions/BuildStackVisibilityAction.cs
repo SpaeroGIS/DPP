@@ -319,7 +319,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                         featureClassName = observPointsfeatureClass.AliasName;
                     }
                     logger.InfoEx($"Calculate potential areat for observation poist in {featureClassName} and objects from {oservStationsFeatureClassName}");
-                    coverageTableManager.SetCalculateAreas(featureClassName, oservStationsFeatureClassName);
+                    coverageTableManager.SetCalculateAreas(featureClassName, oservStationsFeatureClassName, !calcResults.HasFlag(VisibilityCalculationResultsEnum.BestParametersTable));
 
 
                     clipSourceImageForEveryPoint = false;// !calcResults.HasFlag(VisibilityCalculationResultsEnum.BestParametersTable);
