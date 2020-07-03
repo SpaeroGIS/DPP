@@ -144,6 +144,9 @@ namespace MilSpace.Visibility
             this.lblCalculationsType = new System.Windows.Forms.Label();
             this.label30 = new System.Windows.Forms.Label();
             this.stepThree = new System.Windows.Forms.TabPage();
+            this.panelResults = new System.Windows.Forms.Panel();
+            this.chckShowAllRResults = new System.Windows.Forms.CheckBox();
+            this.lblResult = new System.Windows.Forms.Label();
             this.panel25 = new System.Windows.Forms.Panel();
             this.checkBox7 = new System.Windows.Forms.CheckBox();
             this.cmbEmptyDataValue = new System.Windows.Forms.ComboBox();
@@ -203,9 +206,6 @@ namespace MilSpace.Visibility
             this.panel28 = new System.Windows.Forms.Panel();
             this.lblCalculationsTypeStep4 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
-            this.panelResults = new System.Windows.Forms.Panel();
-            this.lblResult = new System.Windows.Forms.Label();
-            this.chckShowAllRResults = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.StepsTabControl.SuspendLayout();
             this.stepOne.SuspendLayout();
@@ -246,6 +246,7 @@ namespace MilSpace.Visibility
             this.panel44.SuspendLayout();
             this.panel47.SuspendLayout();
             this.stepThree.SuspendLayout();
+            this.panelResults.SuspendLayout();
             this.panel25.SuspendLayout();
             this.panel24.SuspendLayout();
             this.panel23.SuspendLayout();
@@ -263,7 +264,6 @@ namespace MilSpace.Visibility
             this.panel38.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel28.SuspendLayout();
-            this.panelResults.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -1816,6 +1816,40 @@ namespace MilSpace.Visibility
             this.stepThree.TabIndex = 2;
             this.stepThree.Text = "Крок 3";
             // 
+            // panelResults
+            // 
+            this.panelResults.Controls.Add(this.chckShowAllRResults);
+            this.panelResults.Controls.Add(this.lblResult);
+            this.panelResults.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelResults.Location = new System.Drawing.Point(0, 200);
+            this.panelResults.Name = "panelResults";
+            this.panelResults.Padding = new System.Windows.Forms.Padding(4);
+            this.panelResults.Size = new System.Drawing.Size(921, 32);
+            this.panelResults.TabIndex = 20;
+            // 
+            // chckShowAllRResults
+            // 
+            this.chckShowAllRResults.Dock = System.Windows.Forms.DockStyle.Left;
+            this.chckShowAllRResults.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.chckShowAllRResults.Location = new System.Drawing.Point(184, 4);
+            this.chckShowAllRResults.Name = "chckShowAllRResults";
+            this.chckShowAllRResults.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.chckShowAllRResults.Size = new System.Drawing.Size(316, 24);
+            this.chckShowAllRResults.TabIndex = 5;
+            this.chckShowAllRResults.Text = "відображати всі задовільні результати";
+            this.chckShowAllRResults.UseVisualStyleBackColor = true;
+            // 
+            // lblResult
+            // 
+            this.lblResult.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblResult.Location = new System.Drawing.Point(4, 4);
+            this.lblResult.Name = "lblResult";
+            this.lblResult.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.lblResult.Size = new System.Drawing.Size(180, 24);
+            this.lblResult.TabIndex = 0;
+            this.lblResult.Text = "Результат";
+            // 
             // panel25
             // 
             this.panel25.Controls.Add(this.checkBox7);
@@ -2499,40 +2533,6 @@ namespace MilSpace.Visibility
             this.label29.TabIndex = 9;
             this.label29.Text = "Крок 4. Перевірка параметрів розрахунку";
             // 
-            // panelResults
-            // 
-            this.panelResults.Controls.Add(this.chckShowAllRResults);
-            this.panelResults.Controls.Add(this.lblResult);
-            this.panelResults.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelResults.Location = new System.Drawing.Point(0, 200);
-            this.panelResults.Name = "panelResults";
-            this.panelResults.Padding = new System.Windows.Forms.Padding(4);
-            this.panelResults.Size = new System.Drawing.Size(921, 32);
-            this.panelResults.TabIndex = 20;
-            // 
-            // lblResult
-            // 
-            this.lblResult.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblResult.Location = new System.Drawing.Point(4, 4);
-            this.lblResult.Name = "lblResult";
-            this.lblResult.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.lblResult.Size = new System.Drawing.Size(180, 24);
-            this.lblResult.TabIndex = 0;
-            this.lblResult.Text = "Результат";
-            // 
-            // chckShowAllRResults
-            // 
-            this.chckShowAllRResults.Dock = System.Windows.Forms.DockStyle.Left;
-            this.chckShowAllRResults.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.chckShowAllRResults.Location = new System.Drawing.Point(184, 4);
-            this.chckShowAllRResults.Name = "chckShowAllRResults";
-            this.chckShowAllRResults.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.chckShowAllRResults.Size = new System.Drawing.Size(316, 24);
-            this.chckShowAllRResults.TabIndex = 5;
-            this.chckShowAllRResults.Text = "відображати всі задовільні результати";
-            this.chckShowAllRResults.UseVisualStyleBackColor = true;
-            // 
             // WindowMilSpaceMVisibilityMaster
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2594,6 +2594,7 @@ namespace MilSpace.Visibility
             this.panel44.ResumeLayout(false);
             this.panel47.ResumeLayout(false);
             this.stepThree.ResumeLayout(false);
+            this.panelResults.ResumeLayout(false);
             this.panel25.ResumeLayout(false);
             this.panel25.PerformLayout();
             this.panel24.ResumeLayout(false);
@@ -2613,7 +2614,6 @@ namespace MilSpace.Visibility
             this.panel38.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel28.ResumeLayout(false);
-            this.panelResults.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
