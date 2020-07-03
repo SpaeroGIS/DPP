@@ -310,7 +310,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                 if (clipSoutceImageByPotentialArea)
                 {
                     //Back the origibnal raster source to make new clip 
-                    rasterSource = orifinalResterSource;
+                    //rasterSource = orifinalResterSource;
 
                     logger.InfoEx($"Clipping calc image to potential area");
                     string featureClassName = exportedFeatureClass;
@@ -322,12 +322,15 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                     coverageTableManager.SetCalculateAreas(featureClassName, oservStationsFeatureClassName);
 
 
-                    clipSourceImageForEveryPoint = !calcResults.HasFlag(VisibilityCalculationResultsEnum.BestParametersTable);
+                    clipSourceImageForEveryPoint = false;// !calcResults.HasFlag(VisibilityCalculationResultsEnum.BestParametersTable);
 
-                    var visibilityPotentialAreaFCName =
-                     VisibilityCalcResults.GetResultName(clipSourceImageForEveryPoint && pointIndex > -1 ?
-                    VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle :
-                    VisibilityCalculationResultsEnum.VisibilityAreasPotential, outputSourceName, pointIndex);
+                    //var visibilityPotentialAreaFCName =
+                    // VisibilityCalcResults.GetResultName(clipSourceImageForEveryPoint && pointIndex > -1 ?
+                    //VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle :
+                    //VisibilityCalculationResultsEnum.VisibilityAreasPotential, outputSourceName, pointIndex);
+
+                    var visibilityPotentialAreaFCName = VisibilityCalcResults.GetResultName(VisibilityCalculationResultsEnum.VisibilityAreasPotential, outputSourceName);
+
                     //Add result To Delete if not to show allresults
                     //if (!showAllResults && generatedResults.ContainsKey(pointId))
                     //{
