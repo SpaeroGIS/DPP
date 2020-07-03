@@ -27,6 +27,7 @@ namespace MilSpace.DataAccess.DataTransfer
             { VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle , "_pvas_r" },
             { VisibilityCalculationResultsEnum.BestParametersTable , "_bp"},
             { VisibilityCalculationResultsEnum.VisibilityRastertPotentialArea , "_imgp"},
+            { VisibilityCalculationResultsEnum.VisibilityRastertPotentialAreaSingle , "_imgps"}
         };
 
         private static readonly Dictionary<VisibilityCalcTypeEnum, IEnumerable<VisibilityCalculationResultsEnum>> ResultsToShow = new Dictionary<VisibilityCalcTypeEnum, IEnumerable<VisibilityCalculationResultsEnum>>
@@ -109,7 +110,8 @@ namespace MilSpace.DataAccess.DataTransfer
             VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle,
             VisibilityCalculationResultsEnum.VisibilityObservStationClipSingle,
             VisibilityCalculationResultsEnum.VisibilityAreaTrimmedByPolySingle,
-            VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle
+            VisibilityCalculationResultsEnum.VisibilityAreaPotentialSingle,
+            VisibilityCalculationResultsEnum.VisibilityRastertPotentialAreaSingle
         };
 
         public const VisibilityCalculationResultsEnum DefaultResultsSet = VisibilityCalculationResultsEnum.ObservationPoints | VisibilityCalculationResultsEnum.ObservationObjects | VisibilityCalculationResultsEnum.VisibilityAreaRaster;

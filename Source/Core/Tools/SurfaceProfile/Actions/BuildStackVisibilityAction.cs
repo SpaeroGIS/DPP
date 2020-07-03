@@ -250,6 +250,9 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             //Used to define a result layer name;
             int pointIndex = -1;
 
+
+            var orifinalResterSource = rasterSource;
+
             foreach (var curPoints in pointsIDs)
             {
                 int pointId;
@@ -306,6 +309,9 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
                 if (clipSoutceImageByPotentialArea)
                 {
+                    //Back the origibnal raster source to make new clip 
+                    rasterSource = orifinalResterSource;
+
                     logger.InfoEx($"Clipping calc image to potential area");
                     string featureClassName = exportedFeatureClass;
                     if (calcResults.HasFlag(VisibilityCalculationResultsEnum.BestParametersTable) && curPoints.Value.First() == 1)
@@ -343,7 +349,10 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
                     //Try to clip the raster source by visibilityPotentialAreaFCName
                     var visibilityPotentialAreaImgName =
-                    VisibilityCalcResults.GetResultName(VisibilityCalculationResultsEnum.VisibilityRastertPotentialArea, outputSourceName, pointIndex);
+                    VisibilityCalcResults.GetResultName(pointIndex > -1 ?
+                                        VisibilityCalculationResultsEnum.VisibilityRastertPotentialAreaSingle :
+                                        VisibilityCalculationResultsEnum.VisibilityRastertPotentialArea,
+                                        outputSourceName, pointIndex);
                     //Add result To Delete if not to show all results. Add OP result
                     if (!showAllResults && generatedResults.ContainsKey(pointId))
                     {
