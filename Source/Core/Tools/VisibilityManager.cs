@@ -58,7 +58,7 @@ namespace MilSpace.Tools
             VisibilityCalcTypeEnum calculationType,
             IMap currentMap,
             short visibilityPercent,
-            bool showAllResults = false)
+            bool showAllResults = true)
         {
             logger.InfoEx("> Generate START. Visiblility result {2} using DEM {0} from observation points {1}"
                 .InvariantFormat(sourceDem, obervationPoints, taskId));

@@ -90,6 +90,11 @@ namespace MilSpace.DataAccess.DataTransfer
         //If this value is in the calculation result number that the raster dataset
         //{taskName}_img should be in the calculation GBD
         VisibilityRastertPotentialArea = 98304,
+
+        //Image with calculated visibility based on a DEM and parameters of the OPs
+        //If this value is in the calculation result number that the raster dataset
+        //{taskName}_img should be in the calculation GBD
+        VisibilityRastertPotentialAreaSingle = 196608
     }
 
     public enum LayerPositionsEnum

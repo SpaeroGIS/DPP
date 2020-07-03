@@ -1111,10 +1111,29 @@ namespace MilSpace.Core.Tools
             return null;
         }
 
+        public static bool IsDatasetExists(string datasetName,
+            esriDatasetType datasetType = esriDatasetType.esriDTAny,
+                                         IWorkspace workspace = null)
+        {
+            try
+            {
+                IWorkspace2 wsp2 = (IWorkspace2)workspace;
+                return wsp2.NameExists[datasetType, datasetName];
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorEx(ex.Message);
+            }
+            return false;
+        }
+
         public static bool RemoveDataSet(string gdb, string name,
                                          esriDatasetType datasetType = esriDatasetType.esriDTAny,
                                          IWorkspace workspace = null)
         {
+
+
+           
             IWorkspaceFactory workspaceFactory = new FileGDBWorkspaceFactory();
 
             if (workspace == null)
