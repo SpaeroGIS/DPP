@@ -30,7 +30,9 @@ namespace MilSpace.Tools
 
         public void SetCalculateAreas(
             string observerPointsFeatureClassName,
-            string observatoinStationFeatureClassName)
+            string observatoinStationFeatureClassName,
+            string demLayer,
+            bool needToRecalcDistance)
         {
             _logger.InfoEx("> SetCalculateAreas START. observPointFC:{0} observObjFC:{1}", observerPointsFeatureClassName,
                                                                                            observatoinStationFeatureClassName);
@@ -48,7 +50,7 @@ namespace MilSpace.Tools
             }
 
             //_observerPointsFeatureClass = GdbAccess.Instance.GetFeatureClass(_gdb, observerPointsFeatureClassName);
-            SetCoverageAreas(observerPointsFeatureClassName);
+            SetCoverageAreas(observerPointsFeatureClassName, demLayer, needToRecalcDistance);
 
 
             var totalExpectedPolygon = _coverageAreaData.FirstOrDefault(area => area.PointId == -1);
@@ -137,7 +139,7 @@ namespace MilSpace.Tools
             _logger.DebugEx("> SetObjPolygons END");
         }
 
-        private void SetCoverageAreas(string observerPointsFeatureClassName)
+        private void SetCoverageAreas(string observerPointsFeatureClassName, string demLayer, bool needToRecalcDistance)
         {
             _logger.DebugEx("> SetCoverageAreas START");
 
@@ -159,8 +161,8 @@ namespace MilSpace.Tools
                 IPoint pointGeom = point.Shape as IPoint;
                 pointGeom.Project(VisibilityManager.CurrentMap.SpatialReference);
 
-                var realMaxDistance = EsriTools.GetMaxDistance(pointModel.OuterRadius.Value, pointModel.AngelMaxH.Value, pointModel.RelativeHeight.Value);
-                var realMinDistance = EsriTools.GetMinDistance(pointModel.InnerRadius.Value, pointModel.AngelMinH.Value, pointModel.RelativeHeight.Value);
+                var realMaxDistance = needToRecalcDistance ? EsriTools.GetMaxDistance(pointModel.OuterRadius.Value, pointModel.AngelMaxH.Value, pointModel.RelativeHeight.Value) : pointModel.OuterRadius.Value;
+                var realMinDistance = needToRecalcDistance ? EsriTools.GetMinDistance(pointModel.InnerRadius.Value, pointModel.AngelMinH.Value, pointModel.RelativeHeight.Value) : pointModel.InnerRadius.Value;
 
                 if (realMaxDistance < realMinDistance)
                 {

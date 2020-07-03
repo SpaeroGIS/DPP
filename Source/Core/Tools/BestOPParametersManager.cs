@@ -79,13 +79,13 @@ namespace MilSpace.Tools
                                                             out isCircle).ToArray();
 
             bool isPointInside = EsriTools.IsPointOnExtent(observStationEnvelope, observerPointGeometry);
-
+            
             // Set azimuth for circle polygon
             if (isCircle && !isPointInside)
             {
                 for (int i = 0; i < observStationEnvelopePoints.Length; i++)
                 {
-                    var line = new Line()
+                  var line = new Line()
                     {
                         FromPoint = observerPointGeometry,
                         ToPoint = observStationEnvelopePoints[i],
@@ -119,11 +119,14 @@ namespace MilSpace.Tools
             }
             // ---- End. Get min and max azimuths ----
 
+            // observerPointGeometry.Project(activeView.FocusMap.SpatialReference);
+            var pointCopy = observerPointGeometry.CloneWithProjecting();
+            (pointCopy as PointClass).ZAware = true;
 
             for (var currentHeight = calcResult.FromHeight; currentHeight <= calcResult.ToHeight; currentHeight += calcResult.Step)
             {
-                double maxTiltAngle = 0;
-                double minTiltAngle = 0;
+                double maxTiltAngle = -90;
+                double minTiltAngle = 90;
 
                 var height = currentHeight;
 
@@ -133,14 +136,21 @@ namespace MilSpace.Tools
                     minTiltAngle = -90;
                     minDistance = 0;
                 }
-                else
+               
+                for (int i = 0; i < observStationEnvelopePoints.Length; i++)
                 {
-                    // Find angle to the nearest point of observation station
-                    minTiltAngle = EsriTools.FindAngleByDistanceAndHeight(height, minDistance);
-                }
+                    var currentTitleAngle = EsriTools.FindAngleByDistanceAndHeight(height, observerPointGeometry, observStationEnvelopePoints[i], raster);
 
-                // Find angle to the farthest point of observation station
-                maxTiltAngle = EsriTools.FindAngleByDistanceAndHeight(height, maxDistance);
+                    if (minTiltAngle > currentTitleAngle)
+                    {
+                        minTiltAngle = currentTitleAngle;
+                    }
+
+                    if (maxTiltAngle < currentTitleAngle)
+                    {
+                        maxTiltAngle = currentTitleAngle;
+                    }
+                }
 
                 // Create observation point copy with changing height, distance and angles values
                 var currentObservationPoint = new ObservationPoint();
@@ -154,7 +164,7 @@ namespace MilSpace.Tools
                 currentObservationPoint.OuterRadius = maxDistance;
                 currentObservationPoint.AzimuthMainAxis = calcResult.ObservationPoint.AzimuthMainAxis;
 
-                GdbAccess.Instance.AddObservPoint(observerPointGeometry, currentObservationPoint, observPointTemporaryFeatureClass);
+                GdbAccess.Instance.AddObservPoint(pointCopy, currentObservationPoint, observPointTemporaryFeatureClass);
             }
 
             return observPointTemporaryFeatureClass;
