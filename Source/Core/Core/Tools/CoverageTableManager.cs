@@ -31,7 +31,6 @@ namespace MilSpace.Tools
         public void SetCalculateAreas(
             string observerPointsFeatureClassName,
             string observatoinStationFeatureClassName,
-            string demLayer,
             bool needToRecalcDistance)
         {
             _logger.InfoEx("> SetCalculateAreas START. observPointFC:{0} observObjFC:{1}", observerPointsFeatureClassName,
@@ -50,7 +49,7 @@ namespace MilSpace.Tools
             }
 
             //_observerPointsFeatureClass = GdbAccess.Instance.GetFeatureClass(_gdb, observerPointsFeatureClassName);
-            SetCoverageAreas(observerPointsFeatureClassName, demLayer, needToRecalcDistance);
+            SetCoverageAreas(observerPointsFeatureClassName, needToRecalcDistance);
 
 
             var totalExpectedPolygon = _coverageAreaData.FirstOrDefault(area => area.PointId == -1);
@@ -139,7 +138,7 @@ namespace MilSpace.Tools
             _logger.DebugEx("> SetObjPolygons END");
         }
 
-        private void SetCoverageAreas(string observerPointsFeatureClassName, string demLayer, bool needToRecalcDistance)
+        private void SetCoverageAreas(string observerPointsFeatureClassName, bool needToRecalcDistance)
         {
             _logger.DebugEx("> SetCoverageAreas START");
 
