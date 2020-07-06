@@ -176,6 +176,9 @@ namespace MilSpace.Visibility
             this.lblCalculationsTypeStep3 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.stepFour = new System.Windows.Forms.TabPage();
+            this.panelVOShowAllResultsInfo = new System.Windows.Forms.Panel();
+            this.lblBestParamsShowAllResultsInfo = new System.Windows.Forms.Label();
+            this.lblBestParamsShowAllResultsSummaryInfoTitle = new System.Windows.Forms.Label();
             this.panel27 = new System.Windows.Forms.Panel();
             this.lblTrimCalcresults = new System.Windows.Forms.Label();
             this.label42 = new System.Windows.Forms.Label();
@@ -206,9 +209,6 @@ namespace MilSpace.Visibility
             this.panel28 = new System.Windows.Forms.Panel();
             this.lblCalculationsTypeStep4 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
-            this.panelVOShowAllResultsInfo = new System.Windows.Forms.Panel();
-            this.lblBestParamsShowAllResultsInfo = new System.Windows.Forms.Label();
-            this.lblBestParamsShowAllResultsSummaryInfoTitle = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.StepsTabControl.SuspendLayout();
             this.stepOne.SuspendLayout();
@@ -257,6 +257,7 @@ namespace MilSpace.Visibility
             this.panel21.SuspendLayout();
             this.panel20.SuspendLayout();
             this.stepFour.SuspendLayout();
+            this.panelVOShowAllResultsInfo.SuspendLayout();
             this.panel27.SuspendLayout();
             this.panel26.SuspendLayout();
             this.panel37.SuspendLayout();
@@ -267,7 +268,6 @@ namespace MilSpace.Visibility
             this.panel38.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel28.SuspendLayout();
-            this.panelVOShowAllResultsInfo.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -2224,6 +2224,37 @@ namespace MilSpace.Visibility
             this.stepFour.TabIndex = 3;
             this.stepFour.Text = "Крок 4";
             // 
+            // panelVOShowAllResultsInfo
+            // 
+            this.panelVOShowAllResultsInfo.Controls.Add(this.lblBestParamsShowAllResultsInfo);
+            this.panelVOShowAllResultsInfo.Controls.Add(this.lblBestParamsShowAllResultsSummaryInfoTitle);
+            this.panelVOShowAllResultsInfo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelVOShowAllResultsInfo.Location = new System.Drawing.Point(0, 310);
+            this.panelVOShowAllResultsInfo.Name = "panelVOShowAllResultsInfo";
+            this.panelVOShowAllResultsInfo.Padding = new System.Windows.Forms.Padding(4, 3, 0, 0);
+            this.panelVOShowAllResultsInfo.Size = new System.Drawing.Size(921, 30);
+            this.panelVOShowAllResultsInfo.TabIndex = 32;
+            // 
+            // lblBestParamsShowAllResultsInfo
+            // 
+            this.lblBestParamsShowAllResultsInfo.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblBestParamsShowAllResultsInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblBestParamsShowAllResultsInfo.Location = new System.Drawing.Point(317, 3);
+            this.lblBestParamsShowAllResultsInfo.Name = "lblBestParamsShowAllResultsInfo";
+            this.lblBestParamsShowAllResultsInfo.Size = new System.Drawing.Size(533, 27);
+            this.lblBestParamsShowAllResultsInfo.TabIndex = 8;
+            this.lblBestParamsShowAllResultsInfo.Text = "Вказати Так/Ні ";
+            // 
+            // lblBestParamsShowAllResultsSummaryInfoTitle
+            // 
+            this.lblBestParamsShowAllResultsSummaryInfoTitle.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblBestParamsShowAllResultsSummaryInfoTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblBestParamsShowAllResultsSummaryInfoTitle.Location = new System.Drawing.Point(4, 3);
+            this.lblBestParamsShowAllResultsSummaryInfoTitle.Name = "lblBestParamsShowAllResultsSummaryInfoTitle";
+            this.lblBestParamsShowAllResultsSummaryInfoTitle.Size = new System.Drawing.Size(313, 27);
+            this.lblBestParamsShowAllResultsSummaryInfoTitle.TabIndex = 7;
+            this.lblBestParamsShowAllResultsSummaryInfoTitle.Text = "Відображати всі задовільні результати";
+            // 
             // panel27
             // 
             this.panel27.Controls.Add(this.lblTrimCalcresults);
@@ -2538,37 +2569,6 @@ namespace MilSpace.Visibility
             this.label29.TabIndex = 9;
             this.label29.Text = "Крок 4. Перевірка параметрів розрахунку";
             // 
-            // panelVOShowAllResultsInfo
-            // 
-            this.panelVOShowAllResultsInfo.Controls.Add(this.lblBestParamsShowAllResultsInfo);
-            this.panelVOShowAllResultsInfo.Controls.Add(this.lblBestParamsShowAllResultsSummaryInfoTitle);
-            this.panelVOShowAllResultsInfo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelVOShowAllResultsInfo.Location = new System.Drawing.Point(0, 310);
-            this.panelVOShowAllResultsInfo.Name = "panelVOShowAllResultsInfo";
-            this.panelVOShowAllResultsInfo.Padding = new System.Windows.Forms.Padding(4, 3, 0, 0);
-            this.panelVOShowAllResultsInfo.Size = new System.Drawing.Size(921, 30);
-            this.panelVOShowAllResultsInfo.TabIndex = 32;
-            // 
-            // lblBestParamsShowAllResultsInfo
-            // 
-            this.lblBestParamsShowAllResultsInfo.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblBestParamsShowAllResultsInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblBestParamsShowAllResultsInfo.Location = new System.Drawing.Point(317, 3);
-            this.lblBestParamsShowAllResultsInfo.Name = "lblBestParamsShowAllResultsInfo";
-            this.lblBestParamsShowAllResultsInfo.Size = new System.Drawing.Size(533, 27);
-            this.lblBestParamsShowAllResultsInfo.TabIndex = 8;
-            this.lblBestParamsShowAllResultsInfo.Text = "Вказати Так/Ні ";
-            // 
-            // lblBestParamsShowAllResultsSummaryInfoTitle
-            // 
-            this.lblBestParamsShowAllResultsSummaryInfoTitle.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblBestParamsShowAllResultsSummaryInfoTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblBestParamsShowAllResultsSummaryInfoTitle.Location = new System.Drawing.Point(4, 3);
-            this.lblBestParamsShowAllResultsSummaryInfoTitle.Name = "lblBestParamsShowAllResultsSummaryInfoTitle";
-            this.lblBestParamsShowAllResultsSummaryInfoTitle.Size = new System.Drawing.Size(313, 27);
-            this.lblBestParamsShowAllResultsSummaryInfoTitle.TabIndex = 7;
-            this.lblBestParamsShowAllResultsSummaryInfoTitle.Text = "Відображати всі задовільні результати";
-            // 
             // WindowMilSpaceMVisibilityMaster
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2640,6 +2640,7 @@ namespace MilSpace.Visibility
             this.panel21.ResumeLayout(false);
             this.panel20.ResumeLayout(false);
             this.stepFour.ResumeLayout(false);
+            this.panelVOShowAllResultsInfo.ResumeLayout(false);
             this.panel27.ResumeLayout(false);
             this.panel26.ResumeLayout(false);
             this.panel37.ResumeLayout(false);
@@ -2650,7 +2651,6 @@ namespace MilSpace.Visibility
             this.panel38.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel28.ResumeLayout(false);
-            this.panelVOShowAllResultsInfo.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
