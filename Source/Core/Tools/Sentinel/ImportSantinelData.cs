@@ -30,15 +30,15 @@ namespace MilSpace.Tools.Sentinel
         public IPolygon JTSfootprintPoly;
     }
 
-    public class Summary
-    {
-        DateTime DateTime;
-        string Filename;
-        string Identifier;
-        string Instrument;
-        string Satellite;
-        double Size;
-    }
+    //public class Summary
+    //{
+    //    DateTime DateTime;
+    //    string Filename;
+    //    string Identifier;
+    //    string Instrument;
+    //    string Satellite;
+    //    double Size;
+    //}
 }
 
    
