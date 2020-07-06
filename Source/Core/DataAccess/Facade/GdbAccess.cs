@@ -1608,7 +1608,7 @@ namespace MilSpace.DataAccess.Facade
                             var fieldIndex = table.FindField(featureFields.Field[i].Name);
                             if (fieldIndex >= 0)
                             {
-                                \ newRow.Value[fieldIndex] = feature.Key.Value[i];
+                                newRow.Value[fieldIndex] = feature.Key.Value[i];
                             }
                         }
                     }
