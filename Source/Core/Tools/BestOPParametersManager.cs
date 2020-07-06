@@ -24,6 +24,11 @@ namespace MilSpace.Tools
         private readonly bool showAllResults;
         private Dictionary<int, short> _visibilityPercents = new Dictionary<int, short>();
         private Dictionary<int, short> appropriateParams;
+        private static string[] bestaParanetersValuebleFields = new string[]
+            {
+            "OBJECTID", "idOP", "TitleOP", "XWGS","YWGS", "HRel", "[AzimuthB", "AzimuthE","AnglMinH", "AnglMaxH"
+            };
+
 
         private const string _temporaryObservationStationFeatureClassSuffix = "_VO_ObservStation";
 
@@ -81,13 +86,13 @@ namespace MilSpace.Tools
                                                             out isCircle).ToArray();
 
             bool isPointInside = EsriTools.IsPointOnExtent(observStationEnvelope, observerPointGeometry);
-            
+
             // Set azimuth for circle polygon
             if (isCircle && !isPointInside)
             {
                 for (int i = 0; i < observStationEnvelopePoints.Length; i++)
                 {
-                  var line = new Line()
+                    var line = new Line()
                     {
                         FromPoint = observerPointGeometry,
                         ToPoint = observStationEnvelopePoints[i],
@@ -125,6 +130,7 @@ namespace MilSpace.Tools
             var pointCopy = observerPointGeometry.CloneWithProjecting();
             (pointCopy as PointClass).ZAware = true;
 
+            int idObserPooint = 0;
             for (var currentHeight = calcResult.FromHeight; currentHeight <= calcResult.ToHeight; currentHeight += calcResult.Step)
             {
                 double maxTiltAngle = -90;
@@ -138,7 +144,7 @@ namespace MilSpace.Tools
                     minTiltAngle = -90;
                     minDistance = 0;
                 }
-               
+
                 for (int i = 0; i < observStationEnvelopePoints.Length; i++)
                 {
                     var currentTitleAngle = EsriTools.FindAngleByDistanceAndHeight(height, observerPointGeometry, observStationEnvelopePoints[i], raster);
@@ -155,8 +161,7 @@ namespace MilSpace.Tools
                 }
 
                 // Create observation point copy with changing height, distance and angles values
-                var currentObservationPoint = new ObservationPoint();
-                currentObservationPoint = calcResult.ObservationPoint.ShallowCopy();
+                 ObservationPoint currentObservationPoint = calcResult.ObservationPoint.ShallowCopy();
                 currentObservationPoint.RelativeHeight = currentHeight;
                 currentObservationPoint.AngelMinH = minTiltAngle;
                 currentObservationPoint.AngelMaxH = maxTiltAngle;
@@ -165,8 +170,10 @@ namespace MilSpace.Tools
                 currentObservationPoint.InnerRadius = minDistance;
                 currentObservationPoint.OuterRadius = maxDistance;
                 currentObservationPoint.AzimuthMainAxis = calcResult.ObservationPoint.AzimuthMainAxis;
+                currentObservationPoint.Id = idObserPooint.ToString();
 
                 GdbAccess.Instance.AddObservPoint(pointCopy, currentObservationPoint, observPointTemporaryFeatureClass);
+                idObserPooint++;
             }
 
             return observPointTemporaryFeatureClass;
@@ -417,7 +424,7 @@ namespace MilSpace.Tools
                 }
             }
 
-           var bestParamsFeatures = new Dictionary<IFeature, short>();
+            var bestParamsFeatures = new Dictionary<IFeature, short>();
 
             if (isParametersFound || showAllResults)
             {
@@ -457,10 +464,20 @@ namespace MilSpace.Tools
             var fieldsClone = observPointFeatureClass.Fields as IClone;
             var fields = fieldsClone.Clone() as IFields;
 
-            // Remove shape field
-            var shapeFieldIndex = fields.FindField(observPointFeatureClass.ShapeFieldName);
+            // Remove unnecessary field
             var fieldsEdit = (IFieldsEdit)fields;
-            fieldsEdit.DeleteField(fields.Field[shapeFieldIndex]);
+            List<IField> toDelete = new List<IField>();
+            for (int fieldIndex = 0; fieldIndex < fields.FieldCount; fieldIndex++)
+            {
+                var fld = fields.Field[fieldIndex];
+                if (bestaParanetersValuebleFields.Any( f => f.Equals(fld.Name, StringComparison.InvariantCultureIgnoreCase)))
+                {
+                    continue;
+                }
+                toDelete.Add(fld);
+            }
+            toDelete.ForEach(f => fieldsEdit.DeleteField(f));
+
 
             // Generate best parameters table with obsever points feature class fields and visibility percent field
             return GdbAccess.Instance.GenerateVOTable(fields, bestParamsTableName);

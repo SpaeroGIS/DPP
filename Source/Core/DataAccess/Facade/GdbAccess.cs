@@ -1242,6 +1242,11 @@ namespace MilSpace.DataAccess.Facade
             }
 
             pointFeature.set_Value(featureClass.FindField("TitleOP"), pointArgs.Title);
+            if (!string.IsNullOrWhiteSpace(pointArgs.Id))
+            {
+                pointFeature.set_Value(featureClass.FindField("idOP"), pointArgs.Id);
+            }
+
             pointFeature.set_Value(featureClass.FindField("TypeOP"), pointArgs.Type);
             pointFeature.set_Value(featureClass.FindField("saffiliation"), pointArgs.Affiliation);
             pointFeature.set_Value(featureClass.FindField("XWGS"), pointArgs.X);
@@ -1603,7 +1608,7 @@ namespace MilSpace.DataAccess.Facade
                             var fieldIndex = table.FindField(featureFields.Field[i].Name);
                             if (fieldIndex >= 0)
                             {
-                                newRow.Value[fieldIndex] = feature.Key.Value[i];
+                                \ newRow.Value[fieldIndex] = feature.Key.Value[i];
                             }
                         }
                     }
