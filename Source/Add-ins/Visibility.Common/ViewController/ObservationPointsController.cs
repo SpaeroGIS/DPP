@@ -1356,7 +1356,6 @@ namespace MilSpace.Visibility.ViewController
             {
                 observPoint.InnerRadius = 0;
             }
-
             // Get min and max distances taking into account min and max distance from parameters and vertical angles
             var realMaxDistance = EsriTools.GetMaxDistance(observPoint.OuterRadius.Value, observPoint.AngelMaxH.Value, observPoint.RelativeHeight.Value);
             var realMinDistance = EsriTools.GetMinDistance(observPoint.InnerRadius.Value, observPoint.AngelMinH.Value, observPoint.RelativeHeight.Value);

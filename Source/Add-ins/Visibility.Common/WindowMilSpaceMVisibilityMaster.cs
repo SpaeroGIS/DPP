@@ -138,6 +138,7 @@ namespace MilSpace.Visibility
                 this.lblBufferDistanceForAllObjects.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblBufferDistance.Text", "Відстань для буфера");
                 this.lblCoveragePercent.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblCoveragePercent.Text", "Відсоток покриття");
                 this.lblResult.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblResults.Text", "Результати");
+                this.lblBestParamsShowAllResultsSummaryInfoTitle.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.chckShowAllResults.Text", "Відображати всі задовільні результати");
                 this.chckSaveOPParams.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.chckSaveOPParams.Text", "Враховувати параметри ПН");
                 this.chckShowAllRResults.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.chckShowAllResults.Text", "Відображати всі задовільні результати");
 
@@ -827,15 +828,26 @@ namespace MilSpace.Visibility
             lblReferencedLayerName.Text =
                 cmbPositions.SelectedItem.ToString() + " " + cmbMapLayers.SelectedItem.ToString();
 
-            var selectedObservPoints =
-                _observPointGuis != null ? _observPointGuis.Where(p => p.Check).Select(o => o.Title).ToArray() : null;
-            var selectedObservObjects =
-                _observationObjects != null ? _observationObjects.Where(p => p.Check).Select(o => o.Title).ToArray() : null;
+            if(_stepControl == VisibilityCalcTypeEnum.BestObservationParameters)
+            {
+                lblObservPointsSummary.Text = lblSelectedOP.Text;
+                lblObservObjectsSummary.Text = lblSelectedOO.Text;
 
-            lblObservPointsSummary.Text =
-                selectedObservPoints == null ? string.Empty : $"{selectedObservPoints.Length} - {string.Join("; ", selectedObservPoints)}";
-            lblObservObjectsSummary.Text =
-                selectedObservObjects == null ? string.Empty : $"{selectedObservObjects.Length} - {string.Join("; ", selectedObservObjects)}";
+                lblBestParamsShowAllResultsInfo.Text =
+                    chckShowAllRResults.Checked ? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord;
+            }
+            else
+            {
+                var selectedObservPoints =
+               _observPointGuis != null ? _observPointGuis.Where(p => p.Check).Select(o => o.Title).ToArray() : null;
+                var selectedObservObjects =
+                    _observationObjects != null ? _observationObjects.Where(p => p.Check).Select(o => o.Title).ToArray() : null;
+
+                lblObservPointsSummary.Text =
+                    selectedObservPoints == null ? string.Empty : $"{selectedObservPoints.Length} - {string.Join("; ", selectedObservPoints)}";
+                lblObservObjectsSummary.Text =
+                    selectedObservObjects == null ? string.Empty : $"{selectedObservObjects.Length} - {string.Join("; ", selectedObservObjects)}";
+            }
 
             lblTrimCalcresults.Text =
                 !chkTrimRaster.Enabled ? string.Empty : (chkTrimRaster.Checked ? LocalizationContext.Instance.YesWord : LocalizationContext.Instance.NoWord);
@@ -852,7 +864,6 @@ namespace MilSpace.Visibility
 
         private void NextStepButton_Click(object sender, EventArgs e)
         {
-
             if (StepsTabControl.SelectedIndex == 2)
             {
                 if (_stepControl == VisibilityCalcTypeEnum.BestObservationParameters)
@@ -1036,6 +1047,7 @@ namespace MilSpace.Visibility
             chckOO.Visible = !isVisible;
 
             panelResults.Visible = isVisible;
+            panelVOShowAllResultsInfo.Visible = isVisible;
         }
 
         public void FillVisibilitySessionsTree(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded)
