@@ -318,7 +318,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                     {
                         featureClassName = observPointsfeatureClass.AliasName;
                     }
-                    logger.InfoEx($"Calculate potential areat for observation poist in {featureClassName} and objects from {oservStationsFeatureClassName}");
+                    logger.InfoEx($"Calculate potential area for observation point in {featureClassName} and objects from {oservStationsFeatureClassName}");
                     coverageTableManager.SetCalculateAreas(featureClassName, oservStationsFeatureClassName);
 
 
@@ -418,12 +418,14 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                 {
                     results.Add(iStepNum.ToString() + ". " + "Розраховано видимість: " + outImageName + " ПС: " + pointId.ToString());
                     iStepNum++;
+                    logger.InfoEx($"Visibility image {outImageName} for point {pointId} was generated");
 
                     string visibilityArePolyFCName = null;
                     //ConvertToPolygon full visibility area
                     if (calcResults.HasFlag(VisibilityCalculationResultsEnum.VisibilityAreaPolygons)
                         && !calcResults.HasFlag(VisibilityCalculationResultsEnum.ObservationObjects))
                     {
+                        logger.InfoEx($"Calculation of {VisibilityCalculationResultsEnum.VisibilityAreaPolygons} (Convert visible areas to polygon) was swithced on");
                         visibilityArePolyFCName =
                             VisibilityTask.GetResultName(pointIndex > -1 ?
                             VisibilityCalculationResultsEnum.VisibilityAreaPolygonSingle :
@@ -449,10 +451,14 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
                             results.Add(iStepNum.ToString() + ". " + "Видимисть відсутня. Полігони не були конвертовані: " + visibilityArePolyFCName + " ПС: " + pointId.ToString());
                             visibilityArePolyFCName = string.Empty;
+                            logger.InfoEx($"There is no visibile areas for OP {pointId}");
+
                         }
                         else
                         {
                             results.Add(iStepNum.ToString() + ". " + "Конвертовано у полігони: " + visibilityArePolyFCName + " ПС: " + pointId.ToString());
+                            logger.InfoEx($"Visibile areas for OP {pointId} was converted into {visibilityArePolyFCName} ");
+
                         }
                         iStepNum++;
                     }
@@ -475,6 +481,8 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                             generatedResults[pointId].Add(outClipName);
                         }
 
+                        logger.InfoEx($"Try to clip the visible areas {inClipName} by orservation  object {oservStationsFeatureClassName}");
+
                         if (!CalculationLibrary.ClipVisibilityZonesByAreas(
                             inClipName,
                             outClipName,
@@ -491,6 +499,8 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                         else
                         {
                             results.Add(iStepNum.ToString() + ". " + "Зона видимості зведена до дійсного розміру: " + outClipName + " ПС: " + pointId.ToString());
+                            logger.InfoEx($"Visible area {inClipName} was clipped by orservation objects {oservStationsFeatureClassName}");
+
                             iStepNum++;
 
                             if (!calcResults.HasFlag(resultLype))
@@ -518,6 +528,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                                     calcResults &= ~curCulcRResult;
                                 }
                                 results.Add($"{iStepNum.ToString()}. Видимість відсутня. Полігони {visibilityArePolyFCName} не було сформовано. ПС: {pointId.ToString()}");
+                                logger.InfoEx($"There is no visible areas in {visibilityArePolyFCName}. Point {pointId}");
                             }
                             else
                             {
@@ -533,6 +544,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                                         return messages;
                                     }
                                     results.Add(iStepNum.ToString() + ". " + "Видимість відсутня. Полігони не було сформовано: " + visibilityArePolyFCName + " ПС: " + pointId.ToString());
+                                    logger.InfoEx($"There is no visible areas. {visibilityArePolyFCName} was not generated. Point {pointId}");
                                 }
                                 else
                                 {
@@ -542,6 +554,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                                         generatedResults[pointId].Add(visibilityArePolyFCName);
                                     }
                                     results.Add(iStepNum.ToString() + ". " + "Конвертовано у полігони: " + visibilityArePolyFCName + " ПС: " + pointId.ToString());
+
                                 }
                             }
                             iStepNum++;
