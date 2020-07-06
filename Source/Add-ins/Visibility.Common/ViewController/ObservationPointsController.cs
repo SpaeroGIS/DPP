@@ -1309,7 +1309,7 @@ namespace MilSpace.Visibility.ViewController
             {
                 foreach (var point in _observationPoints)
                 {
-                    DrawObservPointsGraphics(point.Objectid);
+                    DrawObservPointsGraphics(point.Objectid, (point.Objectid == id));
                 }
             }
             else
@@ -1318,7 +1318,7 @@ namespace MilSpace.Visibility.ViewController
             }
         }
 
-        internal void DrawObservPointsGraphics(int id)
+        internal void DrawObservPointsGraphics(int id, bool addCross = true)
         {
             var observPoint = _observationPoints.FirstOrDefault(point => point.Objectid == id);
 
@@ -1335,7 +1335,11 @@ namespace MilSpace.Visibility.ViewController
                 var maxDistance = CalcCoverageArea(pointGeom, GetObservationPointFromInterface(observPoint));
 
                 GraphicsLayerManager.AddObservPointsGraphicsToMap(_coverageArea, $"coverageArea_{id}");
-                GraphicsLayerManager.AddCrossPointerToPoint(pointGeom, Convert.ToInt32(maxDistance), $"crossPointer_coverageArea_{id}_");
+
+                if (addCross)
+                {
+                    GraphicsLayerManager.AddCrossPointerToPoint(pointGeom, Convert.ToInt32(maxDistance), $"crossPointer_coverageArea_{id}_");
+                }
             }
             catch (ArgumentException exception)
             {
@@ -1343,6 +1347,24 @@ namespace MilSpace.Visibility.ViewController
                 MessageBox.Show(LocalizationContext.Instance.CoverageAreaIsEmptyMessage, LocalizationContext.Instance.MessageBoxCaption);
                 RemoveObservPointsGraphics(true, true);
             }
+        }
+
+        internal void UpdatePointCross(int id)
+        {
+            var observPoint = _observationPoints.FirstOrDefault(point => point.Objectid == id);
+
+            if (observPoint == null || observPoint.X == null || observPoint.Y == null)
+            {
+                return;
+            }
+
+            GraphicsLayerManager.RemoveAllGeometryFromMap($"crossPointer_", MilSpaceGraphicsTypeEnum.Visibility, true);
+
+            var pointGeom = new Point { X = observPoint.X.Value, Y = observPoint.Y.Value, SpatialReference = EsriTools.Wgs84Spatialreference };
+            pointGeom.Project(mapDocument.FocusMap.SpatialReference);
+
+            var realMaxDistance = EsriTools.GetMaxDistance(observPoint.OuterRadius.Value, observPoint.AngelMaxH.Value, observPoint.RelativeHeight.Value);
+            GraphicsLayerManager.AddCrossPointerToPoint(pointGeom, Convert.ToInt32(realMaxDistance), $"crossPointer_coverageArea_{id}_");
         }
 
         internal double CalcCoverageArea(IPoint pointGeom, ObservationPoint observPoint)

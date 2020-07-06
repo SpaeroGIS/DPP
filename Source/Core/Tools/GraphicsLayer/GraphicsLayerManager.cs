@@ -881,7 +881,7 @@ namespace MilSpace.Tools.GraphicsLayer
         public void AddCrossPointerToPoint(IPoint point, int length, string name)
         {
             int segmentLength;
-            int segmentCount;
+            int segmentCount = 5;
             var color = grapchucsTypeColors[MilSpaceGraphicsTypeEnum.Visibility]();
             var fromPoints = new Dictionary<int, IPoint>
             {
@@ -890,25 +890,27 @@ namespace MilSpace.Tools.GraphicsLayer
                 {180, point},
                 {270, point},
             };
+            
+            decimal segments;
 
-            if (length < 1500)
+            if(length % 5 != 0)
             {
-                segmentLength = 100;
+                segments = length / 4;
             }
             else
             {
-                segmentLength = 1000;
+                segments = length / 5;
             }
 
-            var remainder = length % segmentLength;
+            segmentLength = Convert.ToInt32(Math.Round(segments, 0));
 
-            if (remainder == 0)
+            if (segmentLength >= 100)
             {
-                segmentCount = length / segmentLength + 1;
+                segmentLength = segmentLength / 100 * 100;
             }
-            else
+            else if (segmentLength >= 10)
             {
-                segmentCount = length / segmentLength + 2;
+                segmentLength = segmentLength / 10 * 10;
             }
 
             for (int i = 1; i <= segmentCount; i++)
