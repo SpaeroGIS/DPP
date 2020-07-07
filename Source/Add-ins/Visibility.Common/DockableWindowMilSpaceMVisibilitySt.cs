@@ -2418,9 +2418,16 @@ namespace MilSpace.Visibility
 
             FillSelectedPointObservationStationTable(_observationStationSetType);
 
-            if (chckDrawOPGraphics.Checked && rbSeparateOP.Checked)
+            if (chckDrawOPGraphics.Checked)
             {
-                _observPointsController.DrawObservPointsGraphics(_selectedPointId);
+                if (rbSeparateOP.Checked)
+                {
+                    _observPointsController.DrawObservPointsGraphics(_selectedPointId);
+                }
+                else
+                {
+                    _observPointsController.UpdatePointCross(_selectedPointId);
+                }
             }
 
             if (chckShowOOGraphics.Checked)
@@ -3091,6 +3098,8 @@ namespace MilSpace.Visibility
                         rbSeparateOP.Checked = true;
                     }
                 }
+
+                RefreshOPGraphics(true);
             }
         }
 

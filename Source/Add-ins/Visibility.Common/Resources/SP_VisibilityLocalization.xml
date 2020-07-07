@@ -237,7 +237,7 @@
   <WinM.btnShowOO.ToolTip>Показати об'єкт спостереження на мапі</WinM.btnShowOO.ToolTip>
   <WinM.chckSaveOPParams.Text>Враховувати параметри ПН</WinM.chckSaveOPParams.Text>
   <WinM.lblResults.Text>Результати</WinM.lblResults.Text>
-  <WinM.chckShowAllResults.Text>Відображати всі задовільні результати</WinM.chckShowAllResults.Text>
+  <WinM.chckShowAllResults.Text>Відображати всі результати</WinM.chckShowAllResults.Text>
   
   <WinMErrorValueOutRange>Недійсні дані. Потрібне значення від 0 до 100"</WinMErrorValueOutRange>
   <WinMWarningNoSourceForCalculation>Не вказано поверхню для розрахунку</WinMWarningNoSourceForCalculation>

@@ -124,12 +124,6 @@ namespace MilSpace.Visibility
                 this.label29.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.label29.Text", "Крок 4. Перевірка параметрів розрахунку");
                 this.lblOPType.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblOPType.Text", "Джерело ПС");
                 this.lblOOSource.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblOOSourse.Text", "Джерело ОН");
-                this.lblMinAzimuth.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblMin.Text", "мін.");
-                this.lblMinAngle.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblMin.Text", "мін.");
-                this.lblMaxAzimuth.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblMax.Text", "макс.");
-                this.lblMaxAngle.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblMax.Text", "макс.");
-                this.lblAzimuths.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblAzimuths.Text", "Азимути:");
-                this.lblAngles.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblAngles.Text", "Кути нахилу:");
                 this.lblHeights.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblHeights.Text", "Вибірка висот:");
                 this.lblFrom.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblFrom.Text", "від");
                 this.lblTo.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblTo.Text", "до");
@@ -137,9 +131,7 @@ namespace MilSpace.Visibility
                 this.lblBufferDistance.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblBufferDistance.Text", "Відстань для буфера");
                 this.lblBufferDistanceForAllObjects.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblBufferDistance.Text", "Відстань для буфера");
                 this.lblCoveragePercent.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblCoveragePercent.Text", "Відсоток покриття");
-                this.lblResult.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblResults.Text", "Результати");
                 this.lblBestParamsShowAllResultsSummaryInfoTitle.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.chckShowAllResults.Text", "Відображати всі задовільні результати");
-                this.chckSaveOPParams.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.chckSaveOPParams.Text", "Враховувати параметри ПН");
                 this.chckShowAllRResults.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.chckShowAllResults.Text", "Відображати всі задовільні результати");
 
                 ToolTip toolTip = new ToolTip();
@@ -455,10 +447,6 @@ namespace MilSpace.Visibility
             _selectedObservationPoint = point;
 
             lblSelectedOP.Text = point.Title;
-            txtMinAzimuth.Text = point.AzimuthStart.Value.ToFormattedString(1);
-            txtMaxAzimuth.Text = point.AzimuthEnd.Value.ToFormattedString(1);
-            txtMinAngle.Text = point.AngelMinH.Value.ToFormattedString(1);
-            txtMaxAngle.Text = point.AngelMaxH.Value.ToFormattedString(1);
             txtMinHeight.Text = point.RelativeHeight.Value == 0 ? "1" : point.RelativeHeight.Value.ToFormattedString(1);
             txtMaxHeight.Text = (point.RelativeHeight.Value + 100).ToFormattedString(1);
             txtStep.Text = "10";
@@ -478,8 +466,7 @@ namespace MilSpace.Visibility
 
         private void SetSelectedOPControlsEnabled(bool enabled)
         {
-            txtMinAzimuth.Enabled = txtMaxAzimuth.Enabled = txtMinAngle.Enabled = txtMaxAngle.Enabled
-             = txtMinHeight.Enabled = txtMaxHeight.Enabled = txtStep.Enabled = enabled;
+            txtMinHeight.Enabled = txtMaxHeight.Enabled = txtStep.Enabled = enabled;
             btnShowPoint.Enabled = enabled;
         }
 
@@ -706,8 +693,6 @@ namespace MilSpace.Visibility
             bool showAllresults = true;
             if (_stepControl == VisibilityCalcTypeEnum.BestObservationParameters)
             {
-                SaveObservationPointParams();
-
                 if (!txtMinHeight.Text.TryParceToDouble(out fromHeight))
                 {
                     fromHeight = 0;
@@ -1036,18 +1021,13 @@ namespace MilSpace.Visibility
 
         private void SetVOControlsVisibility(bool isVisible)
         {
-            panelBufferDistanceForAllObjects.Visible = !isVisible;
-            observPointsFiltersPanel.Visible = !isVisible;
-            observObjectsFiltersPanel.Visible = !isVisible;
-            columnsOOVisibilityPanel.Visible = !isVisible;
-            columnsOPVisibilityPanel.Visible = !isVisible;
-            selectedOPPanel.Visible = isVisible;
-            selectedOOPanel.Visible = isVisible;
-            chckOP.Visible = !isVisible;
-            chckOO.Visible = !isVisible;
+            panelBufferDistanceForAllObjects.Visible = observPointsFiltersPanel.Visible =
+            observObjectsFiltersPanel.Visible =  columnsOOVisibilityPanel.Visible = 
+            columnsOPVisibilityPanel.Visible = chckOP.Visible = chckOO.Visible = 
+            checkBoxOP.Visible = chkConvertToPolygon.Visible = SumChkBox.Visible = !isVisible;
 
-            panelResults.Visible = isVisible;
-            panelVOShowAllResultsInfo.Visible = isVisible;
+            selectedOPPanel.Visible = selectedOOPanel.Visible = 
+            chckShowAllRResults.Visible = panelVOShowAllResultsInfo.Visible = isVisible;
         }
 
         public void FillVisibilitySessionsTree(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded)
@@ -1118,30 +1098,6 @@ namespace MilSpace.Visibility
             }
         }
 
-        private void SaveObservationPointParams()
-        {
-
-            if (txtMinAzimuth.Text.TryParceToDouble(out double minAzimuth))
-            {
-                _selectedObservationPoint.AzimuthStart = minAzimuth;
-            }
-
-            if (txtMaxAzimuth.Text.TryParceToDouble(out double maxAzimuth))
-            {
-                _selectedObservationPoint.AzimuthEnd = maxAzimuth;
-            }
-
-            if (txtMinAngle.Text.TryParceToDouble(out double minAngle))
-            {
-                _selectedObservationPoint.AngelMinH = minAngle;
-            }
-
-            if (txtMaxAngle.Text.TryParceToDouble(out double maxAngle))
-            {
-                _selectedObservationPoint.AngelMaxH = maxAngle;
-            }
-        }
-
         private void SetCalculaionLabels()
         {
             lblCalculationsType.Text = lblCalculationsTypeStep3.Text = lblCalculationsTypeStep4.Text =
@@ -1192,22 +1148,6 @@ namespace MilSpace.Visibility
         {
             var textBox = (TextBox)sender;
             ValidateRangedValues(textBox, 0, 100, "100");
-        }
-
-        private void TxtAzimuth_Leave(object sender, EventArgs e)
-        {
-            var textBox = sender as TextBox;
-            var replaceValue = (textBox == txtMaxAzimuth) ? _selectedObservationPoint.AzimuthEnd.Value : _selectedObservationPoint.AzimuthStart.Value;
-
-            ValidateRangedValues(textBox, 0, 360, replaceValue.ToFormattedString(1), txtMinAzimuth, txtMaxAzimuth);
-        }
-
-        private void TxtAngle_Leave(object sender, EventArgs e)
-        {
-            var textBox = sender as TextBox;
-            var replaceValue = (textBox == txtMaxAngle) ? _selectedObservationPoint.AngelMaxH.Value : _selectedObservationPoint.AngelMinH.Value;
-
-            ValidateRangedValues(textBox, -90, 90, replaceValue.ToFormattedString(1), txtMinAngle, txtMaxAngle);
         }
 
         private void TxtHeight_Leave(object sender, EventArgs e)
