@@ -8,6 +8,7 @@ using ESRI.ArcGIS.Geometry;
 using MilSpace.Core;
 using MilSpace.Core.DataAccess;
 using MilSpace.Core.ModulesInteraction;
+using MilSpace.Core.SolutionSettings;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Tools;
@@ -2663,22 +2664,25 @@ namespace MilSpace.Visibility
 
         private void ButtonSaveOPoint_Click(object sender, EventArgs e)
         {
-            if (_observPointsController.IsArcMapEditingStarted())
-            {
-                string sMsgText = LocalizationContext.Instance.FindLocalizedElement(
-                    "MsgCannotSaveObservationpoints",
-                    $"Для збереження властивостей пункту спостереження {Environment.NewLine} треба вимкнути режим редагування ArcMap.");
+            //if (_observPointsController.IsArcMapEditingStarted())
+            //{
+            //    string sMsgText = LocalizationContext.Instance.FindLocalizedElement(
+            //        "MsgCannotSaveObservationpoints",
+            //        $"Для збереження властивостей пункту спостереження {Environment.NewLine} треба вимкнути режим редагування ArcMap.");
 
-                MessageBox.Show(
-                    sMsgText,
-                    LocalizationContext.Instance.MsgBoxQueryHeader,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Exclamation);
-                return;
-            }
-            
-            SaveUpdatedPoints();
-            RefreshOPGraphics(true);
+            //    MessageBox.Show(
+            //        sMsgText,
+            //        LocalizationContext.Instance.MsgBoxQueryHeader,
+            //        MessageBoxButtons.OK,
+            //        MessageBoxIcon.Exclamation);
+            //    return;
+            //}
+
+            //SaveUpdatedPoints();
+            //RefreshOPGraphics(true);
+
+            var solSet = new SolutionSettingsForm();
+            solSet.Show();
         }
 
         #endregion
